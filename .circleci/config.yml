@@ -1,0 +1,17 @@
+jobs:
+  build:
+    docker:
+      - image: yalelibraryit/dc-management
+      - image: circleci/postgres:9.5-alpine-ram
+        environment:
+            POSTGRES_DB: yul_dc_management_development
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: password
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run:
+          name: rspec
+          command:  |
+            bundle exec rspec
