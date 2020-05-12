@@ -1,0 +1,9 @@
+.bundle
+.convox
+.env
+.env.*
+node_modules
+.git
+log/*
+tmp
+yarn.lock
