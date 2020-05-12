@@ -7,7 +7,7 @@ jobs:
             POSTGRES_DB: yul_dc_management_development
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: password
-    executor: docker/docker
+    executor: docker
     steps:
       - setup_remote_docker
       - checkout
