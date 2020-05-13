@@ -55,7 +55,7 @@ class VoyagerIndexingService
         bib_id_ssm: orbis_bib_id
       }
       solr_core = ENV["SOLR_CORE"]
-      solr = RSolr.connect :url => "http://solr:8983/solr/#{solr_core}"
+      solr = RSolr.connect :url => "http://localhost:8983/solr/#{solr_core}"
       solr.add([solr_doc])
       solr.commit
     end
