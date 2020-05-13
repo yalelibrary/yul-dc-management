@@ -26,6 +26,7 @@ services:
     tty: true
     depends_on:
       - db
+      - solr
 
   db:
     image: postgres
@@ -36,5 +37,16 @@ services:
     volumes:
       - 'postgres:/var/lib/postgresql/data'
 
+  solr:
+    image: yalelibraryit/dc-solr:${SOLR_TAG:-latest}
+    ports:
+      - '8983:8983'
+    volumes:
+      - solr:/opt/solr/server/solr/mycores
+    env_file:
+      - .env
+    command: bash -c 'precreate-core ${SOLR_CORE} /opt/config; precreate-core ${SOLR_TEST_CORE} /opt/config; exec solr -f'
+
 volumes:
   postgres:
+  solr:
