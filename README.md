@@ -34,7 +34,7 @@
     ```
     bundle exec rails c
     ```
-  - Index sample data (if you press "search" and don't have data, run this command)
+  - Index sample data (if you go to solr and hit "execute query" and don't have data, run this command)
     ```
     bundle exec rake yale:load_voyager_sample_data
     ```
