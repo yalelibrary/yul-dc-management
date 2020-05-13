@@ -19,6 +19,7 @@ gem 'turbolinks', '~> 5'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 4.0'
+gem 'rsolr', '~> 2.3'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
