@@ -1,3 +1,7 @@
+version: 2.1
+orbs:
+  docker: circleci/docker@1.0.1
+
 jobs:
   build:
     docker:
@@ -6,15 +10,21 @@ jobs:
             POSTGRES_DB: yul_dc_management_test
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: password
+            SOLR_CORE: blacklight-core
+      - image: yalelibraryit/dc-solr:79a71ec
+        command: bash -c 'precreate-core blacklight-core /opt/config; exec solr -f'
       - image: circleci/postgres:9.5-alpine-ram
         environment:
             POSTGRES_DB: yul_dc_management_test
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: password
-    executor: docker
+    executor: docker/docker
     steps:
       - setup_remote_docker
       - checkout
+      - run:
+          name: Rubocop
+          command: bundle exec rubocop --parallel
       - run:
           name: rspec
           command:  |
