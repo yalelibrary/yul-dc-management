@@ -1,3 +1,7 @@
+version: 2.1
+orbs:
+  docker: circleci/docker@1.0.1
+
 jobs:
   build:
     docker:
@@ -14,7 +18,7 @@ jobs:
             POSTGRES_DB: yul_dc_management_test
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: password
-    executor: docker
+    executor: docker/docker
     steps:
       - setup_remote_docker
       - checkout
