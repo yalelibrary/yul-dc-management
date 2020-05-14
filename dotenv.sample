@@ -7,8 +7,8 @@ REGISTRY_URI=yalelibraryit/dc-management
 # Required by Postgres
 POSTGRES_HOST=db
 POSTGRES_DB=yul_dc_management_development
-# POSTGRES_USER=postgres
-# POSTGRES_PASSWORD=password
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=password
 
 # Docker Image tags
 MANAGEMENT_TAG=latest
@@ -20,7 +20,7 @@ CANTALOUPE_TAG=latest
 MANIFEST_TAG=demo
 
 # Solr
-SOLR_URL=http://solr:8983/solr/blacklight-core
+SOLR_URL=http://solr:8983/solr/
 
 SOLR_TEST_CORE=blacklight-test
 SOLR_CORE=blacklight-core
