@@ -3,6 +3,8 @@ jobs:
     docker:
       - image: yalelibraryit/dc-management
         environment:
+          SOLR_CORE: blacklight-core
+        environment:
             POSTGRES_DB: yul_dc_management_test
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: password
@@ -19,6 +21,9 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
+      - run:
+          name: Rubocop
+          command: bundle exec rubocop --parallel
       - run:
           name: rspec
           command:  |
