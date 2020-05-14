@@ -3,11 +3,10 @@ jobs:
     docker:
       - image: yalelibraryit/dc-management
         environment:
-          SOLR_CORE: blacklight-core
-        environment:
             POSTGRES_DB: yul_dc_management_test
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: password
+            SOLR_CORE: blacklight-core
       - image: yalelibraryit/dc-solr:79a71ec
         command: bash -c 'precreate-core blacklight-core /opt/config; exec solr -f'
         environment:

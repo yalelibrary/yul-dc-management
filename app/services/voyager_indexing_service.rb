@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rsolr'
 
 class VoyagerIndexingService
@@ -39,6 +41,7 @@ class VoyagerIndexingService
     end
     oid_hash
   end
+
   # Index a single voyager metadata json file
   # @param [String] filename - a full path to a json file
   def index_voyager_json_file(filename)
@@ -55,7 +58,7 @@ class VoyagerIndexingService
         bib_id_ssm: orbis_bib_id
       }
       solr_core = ENV["SOLR_CORE"]
-      solr = RSolr.connect :url => "http://localhost:8983/solr/#{solr_core}"
+      solr = RSolr.connect url: "http://localhost:8983/solr/#{solr_core}"
       solr.add([solr_doc])
       solr.commit
     end
