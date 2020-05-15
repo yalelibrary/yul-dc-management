@@ -8,17 +8,8 @@ WebMock.allow_net_connect!
 
 RSpec.describe MetadataCloudService do
   let(:mcs) { described_class.new }
-  let(:example_request) { Net::HTTP.get('www.example.com', '/') }
 
-  it "can be instantiated" do
-    expect(mcs).to be_instance_of(described_class)
-  end
-
-  it "can connect to an external website" do
-    expect(example_request).to include "Example Domain"
-  end
-
-  it "can connect using http auth" do
-    true
+  it "can connect to the metadata cloud using basic auth" do
+    expect(mcs.mc_get.to_str).to include "Manuscript, on parchment"
   end
 end

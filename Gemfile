@@ -9,6 +9,7 @@ gem 'dotenv-rails', groups: [:development, :test]
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'http', '~> 4.4', '>= 4.4.1'
 gem 'jbuilder', '~> 2.7'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
