@@ -27,5 +27,6 @@ jobs:
           command: bundle exec rubocop --parallel
       - run:
           name: rspec
+          # Excludes tests that require Yale VPN access
           command:  |
-            bundle exec rspec
+            bundle exec rspec --tag ~vpn_only:true
