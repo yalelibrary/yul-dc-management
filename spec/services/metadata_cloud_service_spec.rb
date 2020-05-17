@@ -4,8 +4,6 @@ require "webmock"
 
 WebMock.allow_net_connect!
 
-# Try with adding gem 'http', '~> 4.4', '>= 4.4.1' to gemfile and use basic auth from there
-
 RSpec.describe MetadataCloudService do
   let(:mcs) { described_class.new }
 
