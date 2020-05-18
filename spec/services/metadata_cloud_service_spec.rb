@@ -16,7 +16,6 @@ RSpec.describe MetadataCloudService, vpn_only: true do
   end
 
   it "can loop through the oids and build a metadata cloud default url" do
-    expect(mcs.build_metadata_cloud_url).to include "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16371272?mediaType=json"
+    expect(mcs.build_metadata_cloud_url("2004628")).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628?mediaType=json"
   end
-
 end

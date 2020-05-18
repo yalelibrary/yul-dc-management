@@ -14,16 +14,14 @@ class MetadataCloudService
 
   def build_oid_array
     fixture_ids_table = CSV.read(Rails.root.join("spec", "fixtures", "fixture_ids.csv"), headers: true)
-    oid_array = fixture_ids_table.by_col[0]
+    fixture_ids_table.by_col[0]
   end
 
   def metadata_cloud_url
     @metadata_cloud_url ||= build_metadata_cloud_url
   end
 
-  def build_metadata_cloud_url
-    oid_array.each do |oid|
-      puts "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{oid}?mediaType=json"
-    end
+  def build_metadata_cloud_url(oid)
+    "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{oid}?mediaType=json"
   end
 end
