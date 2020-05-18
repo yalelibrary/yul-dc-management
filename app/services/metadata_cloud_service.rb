@@ -21,5 +21,6 @@ class MetadataCloudService
     "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{oid}?mediaType=json"
   end
 
-  def refresh_data(oid_path); end
+  def refresh_data(oid_path)
+  end
 end

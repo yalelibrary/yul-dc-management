@@ -46,7 +46,7 @@
   ```
 - Start solr
   ``` bash
-  docker-compose up db
+  docker-compose up solr
   ```
 - Run rspec on the command line _outside_ the container
   ``` bash

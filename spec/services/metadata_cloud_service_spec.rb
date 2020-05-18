@@ -23,4 +23,8 @@ RSpec.describe MetadataCloudService, vpn_only: true do
     oid_path = Rails.root.join("spec", "fixtures", "fixture_ids.csv")
     mcs.refresh_data(oid_path)
   end
+
+  it "" do
+    true
+  end
 end
