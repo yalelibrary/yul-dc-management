@@ -43,9 +43,11 @@ RSpec.configure do |config|
 
   # Clear out solr before test
   config.before(clean: true) do
-    solr_core = ENV["SOLR_CORE"] ||= "blacklight-test"
+    solr_core = ENV["SOLR_TEST_CORE"] ||= "blacklight-test"
     solr_url = ENV["SOLR_URL"] ||= "http://localhost:8983/solr"
-    RSolr.connect url: "#{solr_url}/#{solr_core}"
+    solr = RSolr.connect url: "#{solr_url}/#{solr_core}"
+    solr.delete_by_query '*:*'
+    solr.commit
   end
 
   # You can uncomment this line to turn off ActiveRecord support entirely.

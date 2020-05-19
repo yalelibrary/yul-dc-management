@@ -11,6 +11,7 @@ jobs:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: password
             SOLR_CORE: blacklight-test
+            DB_ADAPTER: postgresql
       - image: yalelibraryit/dc-solr:79a71ec
         command: bash -c 'precreate-core blacklight-test /opt/config; exec solr -f'
       - image: circleci/postgres:9.5-alpine-ram
