@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-RSpec.describe VoyagerIndexingService do
+RSpec.describe VoyagerIndexingService, clean: true do
   let(:vis) { described_class.new }
   let(:voyager_metadata_path) { File.join(fixture_path, 'voyager') }
   let(:ladybird_metadata_path) { File.join(fixture_path, 'ladybird') }
@@ -33,7 +33,8 @@ RSpec.describe VoyagerIndexingService do
     vis.ladybird_metadata_path = ladybird_metadata_path
     vis.index_voyager_json_file(voyager_json_file)
     solr_core = ENV["SOLR_CORE"]
-    solr = RSolr.connect url: "http://localhost:8983/solr/#{solr_core}"
+    solr_url = ENV["SOLR_URL"] ||= "http://localhost:8983/solr"
+    solr = RSolr.connect url: "#{solr_url}/#{solr_core}"
     response = solr.get 'select', params: { q: '*:*' }
     expect(response["response"]["numFound"]).to eq 1
     solr_doc = response["response"]["docs"][0]

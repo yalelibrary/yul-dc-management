@@ -57,8 +57,9 @@ class VoyagerIndexingService
         author_tsim: data_hash["creator"],
         bib_id_ssm: orbis_bib_id
       }
-      solr_core = ENV["SOLR_CORE"]
-      solr = RSolr.connect url: "http://localhost:8983/solr/#{solr_core}"
+      solr_core = ENV["SOLR_CORE"] ||= "blacklight-core"
+      solr_url = ENV["SOLR_URL"] ||= "http://localhost:8983/solr"
+      solr = RSolr.connect url: "#{solr_url}/#{solr_core}"
       solr.add([solr_doc])
       solr.commit
     end

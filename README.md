@@ -14,7 +14,7 @@
   docker-compose build web
   ```
 
-  ### Starting the app
+### Starting the app
 - Start the web service
   ``` bash
   docker-compose up web
@@ -38,3 +38,17 @@
     ```
     bundle exec rake yale:load_voyager_sample_data
     ```
+
+### Proposed pattern for development
+- Start the database
+  ``` bash
+  docker-compose up db
+  ```
+- Start solr
+  ``` bash
+  docker-compose up solr
+  ```
+- Run rspec on the command line _outside_ the container
+  ``` bash
+  bundle exec rspec spec
+  ```
