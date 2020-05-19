@@ -6,7 +6,8 @@ WebMock.allow_net_connect!
 
 RSpec.describe MetadataCloudService, vpn_only: true do
   let(:mcs) { described_class.new }
-  let(:oid_url) { "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16371272?mediaType=json" }
+  let(:oid) { "16371272" }
+  let(:oid_url) { "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{oid}?mediaType=json" }
   let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
 
   context "it gets called from a rake task" do
@@ -40,7 +41,7 @@ RSpec.describe MetadataCloudService, vpn_only: true do
     let(:mc_response) { mcs.mc_get(oid_url) }
 
     before do
-      mcs.save_mc_json_to_file(mc_response)
+      mcs.save_mc_json_to_file(mc_response, oid)
     end
 
     it "can save a response to the local file system" do

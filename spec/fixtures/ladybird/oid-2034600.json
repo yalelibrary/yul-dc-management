@@ -1,99 +1,63 @@
 {
   "recordType": "oid",
   "source": "ladybird",
-  "uri": "/ladybird/oid/16371272",
-  "identifierShelfMark": "Takamiya MS 104",
+  "uri": "/ladybird/oid/2034600",
+  "identifierShelfMark": "JWJ A +Eb74",
+  "sourceTitle": "Ebony magazine",
+  "sourceCreated": "Chicago : Johnson Pub. Co",
   "title": [
-    "Bible (Proverbs to Apocalypse)."
+    "[Magazine page with various photographs of Leontyne Price]"
   ],
   "extentOfDigitization": [
-    "Complete work digitized."
-  ],
-  "publicationPlace": [
-    "England,"
+    "Partial work digitized."
   ],
   "date": [
-    "[between 1200 and 1299]"
+    "1961 April"
   ],
   "extent": [
-    "218 l. : parchment ; 212 x 145 mm."
+    "1 p.",
+    "34 cm.",
+    "b&w illustration"
   ],
   "language": [
-    "Latin"
-  ],
-  "description": [
-    "Binding: modern goatskin.",
-    "Decoration: red and blue penwork initials.",
-    "Ex libris Ronald A. Coates; Eric Millar; Brian S. Cron. From the collection of Toshiyuki Takamiya, 2013-.",
-    "Layout: double columns of 49 lines.",
-    "Script: small gothic script.",
-    "With an Oxford pledge note for the Selton Loan Chest dated 1469 and the mark of the stationer John More. There is also a note by M. Paris, possibly Master Thomas Paris of Oriel College."
+    "English"
   ],
   "subjectName": [
-    "Coates, Ronald A.--Autograph.",
-    "Cron, Brian S.--Ownership.",
-    "Millar, Eric George--Bookplate.",
-    "Oriel College.",
-    "University of Oxford."
-  ],
-  "subjectTopic": [
-    "Bible.--Latin.",
-    "Bible.--Latin--Versions--Vulgate.",
-    "Manuscripts, Medieval--Connecticut--New Haven.",
-    "Medieval and Renaissance Manuscripts in Beinecke Library.",
-    "Universities and colleges--Great Britain."
+    "Price, Leontyne"
   ],
   "genre": [
-    "Decorated initials",
-    "Manuscripts, Medieval--England--13th century."
+    "Halftones",
+    "Magazines (periodicals)",
+    "Photographic prints",
+    "Photographs",
+    "Photomechanical prints"
   ],
   "format": [
-    "text"
+    "mixed material"
   ],
   "partOf": "Beinecke Library",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "orbisRecord": "12329381",
-  "orbisBarcode": "39002104624045",
-  "references": [
-    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437.",
-    "Bible (Proverbs to Apocalypse). Takamiya MS 104."
-  ],
+  "orbisRecord": "752400",
   "itemPermission": "Public",
   "dateStructured": [
-    "1200-00-00T00:00:00Z"
+    "1961-04-00T00:00:00Z"
   ],
-  "resourceType": "Archives or Manuscripts",
-  "illustrativeMatter": "141215i12001299ctu                 lat d",
-  "subjectEra": "Universities and colleges--Great Britain.",
+  "resourceType": "Books, Journals & Pamphlets",
   "contributor": [
-    "Coates, Ronald A.--Autograph.",
-    "Cron, Brian S.--Ownership.",
-    "Millar, Eric George--Bookplate.",
-    "Oriel College.",
-    "University of Oxford."
+    "Price, Leontyne"
   ],
   "repository": "Beinecke Library",
-  "contents": [
-    "Binding: modern goatskin.",
-    "Decoration: red and blue penwork initials.",
-    "Ex libris Ronald A. Coates; Eric Millar; Brian S. Cron. From the collection of Toshiyuki Takamiya, 2013-.",
-    "Layout: double columns of 49 lines.",
-    "Script: small gothic script.",
-    "With an Oxford pledge note for the Selton Loan Chest dated 1469 and the mark of the stationer John More. There is also a note by M. Paris, possibly Master Thomas Paris of Oriel College."
+  "subjectGeographic": [
+    "Laurel (Miss.)"
   ],
-  "subjectTitle": "Universities and colleges--Great Britain.",
-  "indexedBy": [
-    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437.",
-    "Bible (Proverbs to Apocalypse). Takamiya MS 104."
-  ],
-  "oid": 16371272,
+  "oid": 2034600,
   "collectionId": 1,
   "children": [
 
   ],
   "abstract": [
-    "Manuscript, on parchment, of the books of the Bible from Proverbs through the Apocalypse."
+    "Reproduced photographs accompanying article about Leontyne Price's visit to hometown of Laurel, Miss."
   ]
 }

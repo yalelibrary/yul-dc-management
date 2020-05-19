@@ -9,7 +9,7 @@ class MetadataCloudService
     mcs.list_of_oids(oid_path).each do |oid|
       metadata_cloud_url = mcs.build_metadata_cloud_url(oid)
       full_response = mcs.mc_get(metadata_cloud_url)
-      mcs.save_mc_json_to_file(full_response)
+      mcs.save_mc_json_to_file(full_response, oid)
     end
   end
 
@@ -23,11 +23,11 @@ class MetadataCloudService
 
   ##
   # Takes a full HTTP response with headers and saves a json file
-  def save_mc_json_to_file(mc_response)
+  def save_mc_json_to_file(mc_response, oid)
     file_folder = Rails.root.join("spec", "fixtures", "ladybird")
     raw_metadata = mc_response.body.to_str
     parsed_metadata = JSON.parse(raw_metadata)
-    File.write(file_folder.join("oid-2034600" + ".json"), JSON.pretty_generate(parsed_metadata))
+    File.write(file_folder.join("oid-#{oid}" + ".json"), JSON.pretty_generate(parsed_metadata))
   end
 
   ##
