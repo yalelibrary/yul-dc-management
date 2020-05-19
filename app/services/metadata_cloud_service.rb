@@ -21,6 +21,8 @@ class MetadataCloudService
     HTTP.basic_auth(user: metadata_cloud_username, pass: metadata_cloud_password).get(oid_url)
   end
 
+  ##
+  # Takes a full HTTP response with headers and saves a json file
   def save_mc_json_to_file(mc_response)
     file_folder = Rails.root.join("spec", "fixtures", "ladybird")
     raw_metadata = mc_response.body.to_str
