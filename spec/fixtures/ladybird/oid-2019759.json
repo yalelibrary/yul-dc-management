@@ -1,6 +1,6 @@
 {
-  "source": "ladybird",
   "recordType": "oid",
+  "source": "ladybird",
   "uri": "/ladybird/oid/2019759",
   "identifierShelfMark": "YCAL MSS 229",
   "sourceTitle": "Jane Wodening and Stan Brakhage scrapbooks",
@@ -13,9 +13,15 @@
     "Jane Wodening and Stan Brakhage scrapbook"
   ],
   "numberOfPages": "Vol. 2",
-  "extentOfDigitization": "Complete work digitized.",
-  "date": "1958-1967",
-  "extent": "2 of 3 vols. ; 36 cm.",
+  "extentOfDigitization": [
+    "Complete work digitized."
+  ],
+  "date": [
+    "1958-1967"
+  ],
+  "extent": [
+    "2 of 3 vols. ; 36 cm."
+  ],
   "language": [
     "English"
   ],
@@ -38,7 +44,6 @@
   "subjectTopic": [
     "Nature photography"
   ],
-  "geoSubject": "Colorado--Maps",
   "genre": [
     "Artifacts",
     "Clippings",
@@ -51,17 +56,48 @@
     "Scrapbooks",
     "Studio portraits"
   ],
-  "format": "still image",
+  "format": [
+    "still image"
+  ],
   "partOf": "Beinecke Library",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "orbisBibId": "7748458",
+  "orbisRecord": "7748458",
   "orbisBarcode": "39002098971758",
-  "dateStructured": "1958-00-00T00:00:00Z",
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1958-00-00T00:00:00Z"
+  ],
   "resourceType": "Archives or Manuscripts",
+  "subjectEra": "Nature photography",
+  "contributor": [
+    "Creeley, Robert, 1926-2005",
+    "Crews, Judson",
+    "Dorn, Edward",
+    "Duncan, Robert, 1918-1988",
+    "Emerson, Ralph Waldo, 1803-1882",
+    "Ginsberg, Allen, 1926-1997",
+    "Hiler, Jerome",
+    "Kubelka, Peter",
+    "Kumari (Hindu deity)",
+    "Levertov, Denise, 1923-1997",
+    "McVicker, Roy H",
+    "Olson, Charles",
+    "Spengler, Oswald, 1880-1936",
+    "Zukofsky, Louis, 1904-1978"
+  ],
+  "repository": "Beinecke Library",
+  "subjectTitle": "Nature photography",
+  "subjectGeographic": [
+    "Colorado--Maps"
+  ],
   "oid": 2019759,
   "collectionId": 1,
-  "children": [],
-  "abstract": "Binding: white with gold embossing."
+  "children": [
+
+  ],
+  "abstract": [
+    "Binding: white with gold embossing."
+  ]
 }

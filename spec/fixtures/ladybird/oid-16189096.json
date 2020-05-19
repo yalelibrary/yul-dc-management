@@ -1,6 +1,6 @@
 {
-  "source": "ladybird",
   "recordType": "oid",
+  "source": "ladybird",
   "uri": "/ladybird/oid/16189096",
   "identifierShelfMark": "Covers 5615 +1857",
   "creator": [
@@ -14,8 +14,12 @@
     "Map of Ta Ch'ing River",
     "直隷大清河源流總圖 / 清河道董醇."
   ],
-  "extentOfDigitization": "Complete work digitized.",
-  "extent": "1 map : color ; 27 x 150 cm, folded to 27 x 13 cm",
+  "extentOfDigitization": [
+    "Complete work digitized."
+  ],
+  "extent": [
+    "1 map : color ; 27 x 150 cm, folded to 27 x 13 cm"
+  ],
   "language": [
     "Chinese"
   ],
@@ -28,23 +32,45 @@
   ],
   "geoSubject": "a-cc---",
   "scale": "Scale not given.",
-  "coordinates": "a",
+  "coordinate": [
+    "a"
+  ],
   "genre": [
     "Maps.--(OCoLC)fst01423704",
     "Pictorial maps."
   ],
-  "format": "cartographic",
+  "format": [
+    "cartographic"
+  ],
   "partOf": "Beinecke Library",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "orbisBibId": "8317945",
+  "orbisRecord": "8317945",
   "orbisBarcode": "39002113593827",
-  "dateStructured": "1857-00-00T00:00:00Z",
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1857-00-00T00:00:00Z"
+  ],
   "resourceType": "Maps, Atlases & Globes",
   "illustrativeMatter": "080805s1857    cc        a     0   chi d",
-  "copyrightDate": "咸豐7 [1857]",
+  "copyrightDate": [
+    "Xianfeng 7 [1857]",
+    "咸豐7 [1857]"
+  ],
+  "subjectEra": "Chinese rare maps.",
+  "repository": "Beinecke Library",
+  "contents": [
+    "Jing zhe zhuang.",
+    "經折裝."
+  ],
+  "subjectTitle": "Chinese rare maps.",
+  "subjectGeographic": [
+    "Hai River (China)--Maps."
+  ],
   "oid": 16189096,
   "collectionId": 1,
-  "children": []
+  "children": [
+
+  ]
 }

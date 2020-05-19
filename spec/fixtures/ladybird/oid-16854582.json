@@ -1,6 +1,6 @@
 {
-  "source": "ladybird",
   "recordType": "oid",
+  "source": "ladybird",
   "uri": "/ladybird/oid/16854582",
   "identifierMfhd": "/repositories/11/archival_objects/699963",
   "identifierShelfMark": "YCAL MSS 702",
@@ -14,9 +14,15 @@
   "title": [
     "Desk files, weekly calendars, grant proposals, resumes, professional correspondence, exhibition announcements and brochures, obituaries, awards, articles, plans for future projects"
   ],
-  "extentOfDigitization": "Partial work digitized.",
-  "date": "1994-2002",
-  "extent": "16 Folders ; 27.8 x 21.1 cm.",
+  "extentOfDigitization": [
+    "Partial work digitized."
+  ],
+  "date": [
+    "1994-2002"
+  ],
+  "extent": [
+    "16 Folders ; 27.8 x 21.1 cm."
+  ],
   "language": [
     "English"
   ],
@@ -25,26 +31,43 @@
     "Photographers--United States--20th Century",
     "Photographers--United States--Archives"
   ],
-  "geoSubject": "United States--Maps, Manuscript",
   "genre": [
     "Manuscript maps",
     "Manuscripts",
     "Typescripts"
   ],
-  "format": "text",
+  "format": [
+    "text"
+  ],
   "partOf": "Beinecke Library",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "orbisBibId": "7151233",
+  "orbisRecord": "7151233",
   "orbisBarcode": "39002104850970",
-  "findingAid": "http://hdl.handle.net/10079/fa/beinecke.giard",
+  "findingAid": [
+    "http://hdl.handle.net/10079/fa/beinecke.giard"
+  ],
   "references": [
     "Robert Giard Papers. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
-  "dateStructured": "1994-00-00T00:00:00Z",
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1994-00-00T00:00:00Z"
+  ],
   "resourceType": "Archives or Manuscripts",
+  "subjectEra": "Photographers--United States--Archives",
+  "repository": "Beinecke Library",
+  "subjectTitle": "Photographers--United States--Archives",
+  "indexedBy": [
+    "Robert Giard Papers. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
+  ],
+  "subjectGeographic": [
+    "United States--Maps, Manuscript"
+  ],
   "oid": 16854582,
   "collectionId": 1,
-  "children": []
+  "children": [
+
+  ]
 }

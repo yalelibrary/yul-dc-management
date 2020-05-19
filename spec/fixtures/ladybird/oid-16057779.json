@@ -1,6 +1,6 @@
 {
-  "source": "ladybird",
   "recordType": "oid",
+  "source": "ladybird",
   "uri": "/ladybird/oid/16057779",
   "identifierShelfMark": "WA MSS S-3019",
   "box": "Box 2",
@@ -9,8 +9,12 @@
   "title": [
     "Rawhide bolas"
   ],
-  "date": "[1870]",
-  "extent": "1 bolas : 121 cm.",
+  "date": [
+    "[1870]"
+  ],
+  "extent": [
+    "1 bolas : 121 cm."
+  ],
   "description": [
     "One twisted rawhide bolas with three rawhide-covered weights, and measuring 121 cm in length. Used to capture running game during a hunt, the bolas is unmarked and its original owner is unidentified."
   ],
@@ -28,22 +32,52 @@
   "genre": [
     "Bolas (projectile weapons)--United States--19th century."
   ],
-  "format": "three dimensional object",
+  "format": [
+    "three dimensional object"
+  ],
   "partOf": "Beinecke Library",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement"
   ],
-  "orbisBibId": "12442385",
-  "importUrl": "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?&amp;CN=WA_MSS_S-3019",
+  "orbisRecord": "12442385",
+  "relatedUrl": [
+    "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?&amp;CN=WA_MSS_S-3019"
+  ],
   "references": [
     "Nathan Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western Americana, Beinecke Rare Book and Manuscript Library."
   ],
-  "dateStructured": "1870-00-00T00:00:00Z",
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1870-00-00T00:00:00Z"
+  ],
   "resourceType": "Tools, Equipment & Instruments",
   "illustrativeMatter": "150424i18701895vp nnn            rneng d",
-  "copyrightDate": "[circa 1870-1895]",
+  "copyrightDate": [
+    "[circa 1870-1895]"
+  ],
+  "subjectEra": "Wild west shows.",
+  "contributor": [
+    "Buffalo Bill,--1846-1917.",
+    "Buffalo Bill's Wild West Company.",
+    "Buffalo Bill's Wild West Show.",
+    "Salsbury, Nathan,--1846-1902.",
+    "Sitting Bull,--1831-1890."
+  ],
+  "repository": "Beinecke Library",
+  "contents": [
+    "One twisted rawhide bolas with three rawhide-covered weights, and measuring 121 cm in length. Used to capture running game during a hunt, the bolas is unmarked and its original owner is unidentified."
+  ],
+  "subjectTitle": "Wild west shows.",
+  "indexedBy": [
+    "Nathan Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western Americana, Beinecke Rare Book and Manuscript Library."
+  ],
   "oid": 16057779,
   "collectionId": 1,
-  "children": [],
-  "abstract": "Nathan Salsbury (1846-1902), Civil War veteran, actor, and theatrical entrepreneur; after 1884 co-owner, producer and manager of \"Buffalo Bill's Wild West Show.\""
+  "children": [
+
+  ],
+  "abstract": [
+    "A collection of weapons and costume accessories owned by Nathan Salsbury and associated with colleagues of William F. \"Buffalo Bill\" Cody, including John Burwell \"Texas Jack\" Omohundro and Sitting Bull. Included are a shotgun, a bolas, a pair of moccasins, and a quiver containing a bow and arrows, as well as a revolver owned by Salsbury.",
+    "Nathan Salsbury (1846-1902), Civil War veteran, actor, and theatrical entrepreneur; after 1884 co-owner, producer and manager of \"Buffalo Bill's Wild West Show.\""
+  ]
 }
