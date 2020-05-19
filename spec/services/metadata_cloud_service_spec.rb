@@ -14,7 +14,7 @@ RSpec.describe MetadataCloudService, vpn_only: true do
     let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "oid-2034600.json") }
     let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
 
-    it "it is easy to invoke" do
+    it "is easy to invoke" do
       time_stamp_before = File.mtime(path_to_example_file.to_s)
       MetadataCloudService.refresh_fixture_data(short_oid_path)
       time_stamp_after = File.mtime(path_to_example_file.to_s)
