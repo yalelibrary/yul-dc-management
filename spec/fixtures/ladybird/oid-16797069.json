@@ -1,6 +1,6 @@
 {
-  "source": "ladybird",
   "recordType": "oid",
+  "source": "ladybird",
   "uri": "/ladybird/oid/16797069",
   "identifierMfhd": "/repositories/11/archival_objects/608223",
   "identifierShelfMark": "YCAL MSS 42",
@@ -15,9 +15,15 @@
   "title": [
     "Grant, Robert\n\n"
   ],
-  "extentOfDigitization": "Complete folder digitized.",
-  "date": "1905-39",
-  "extent": "7 folders",
+  "extentOfDigitization": [
+    "Complete folder digitized."
+  ],
+  "date": [
+    "1905-39"
+  ],
+  "extent": [
+    "7 folders"
+  ],
   "language": [
     "English"
   ],
@@ -32,20 +38,41 @@
   "genre": [
     "correspondence (AAT)"
   ],
-  "format": "text",
+  "format": [
+    "text"
+  ],
   "partOf": "Beinecke Library",
   "rights": [
     "Copyright to material created by Edith Wharton may be held by her estate. To learn more, consult the WATCH file (http://norman.hrc.utexas.edu/watch/)."
   ],
-  "orbisBibId": "3435140",
+  "orbisRecord": "3435140",
   "orbisBarcode": "39002075038423",
-  "findingAid": "http://hdl.handle.net/10079/fa/beinecke.wharton",
+  "findingAid": [
+    "http://hdl.handle.net/10079/fa/beinecke.wharton"
+  ],
   "references": [
     "Edith Wharton Collection. Yale Collection of American Literature. Beinecke Rare Book and Manuscript Library."
   ],
-  "dateStructured": "1902-00-00T00:00:00Z",
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1902-00-00T00:00:00Z"
+  ],
   "resourceType": "Archives or Manuscripts",
+  "contributor": [
+    "Grant, Robert, 1852-1940--Correspondence",
+    "Lapsley, Gaillard Thomas--Correspondence",
+    "Wharton, Edith, 1862-1937 --Correspondence"
+  ],
+  "repository": "Beinecke Library",
+  "contents": [
+    "Folder 790 includes an undated letter from \"L.J.G.\", Jamestown, N.Y."
+  ],
+  "indexedBy": [
+    "Edith Wharton Collection. Yale Collection of American Literature. Beinecke Rare Book and Manuscript Library."
+  ],
   "oid": 16797069,
   "collectionId": 1,
-  "children": []
+  "children": [
+
+  ]
 }
