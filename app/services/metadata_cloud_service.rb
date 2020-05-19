@@ -10,9 +10,9 @@ class MetadataCloudService
 
   def save_mc_json_to_file(mc_response)
     file_folder = Rails.root.join("spec", "fixtures", "new_json")
-    json_metadata = mc_response.body.to_str
-    JSON.parse(json_metadata)
-    File.open(file_folder.join("test_file" + ".json"), "w")
+    raw_metadata = mc_response.body.to_str
+    parsed_metadata = JSON.parse(raw_metadata)
+    File.write(file_folder.join("test_file" + ".json"), JSON.pretty_generate(parsed_metadata))
   end
 
   def list_of_oids(oid_path)

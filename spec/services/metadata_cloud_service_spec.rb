@@ -23,13 +23,17 @@ RSpec.describe MetadataCloudService, vpn_only: true do
     expect(mcs.build_metadata_cloud_url("2004628")).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628?mediaType=json"
   end
 
-  it "can save a response to the local file system" do
-    mcs.save_mc_json_to_file(mc_response)
-    expect(File).to exist(new_fixture_path)
-  end
+  context "saving and writing to a file" do
+    before do
+      mcs.save_mc_json_to_file(mc_response)
+    end
 
-  it "the new file that is created isn't empty.." do
-    
-  end
+    it "can save a response to the local file system" do
+      expect(File).to exist(new_fixture_path)
+    end
 
+    it "the new file that is created isn't empty.." do
+      expect(new_fixture_path.size).not_to eq 0
+    end
+  end
 end
