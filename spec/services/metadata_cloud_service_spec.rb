@@ -10,6 +10,17 @@ RSpec.describe MetadataCloudService, vpn_only: true do
   let(:oid_url) { "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16371272?mediaType=json" }
   let(:new_fixture_path) { Rails.root.join("spec", "fixtures", "new_json", "test_file.json") }
   let(:mc_response) { mcs.mc_get(oid_url) }
+  let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
+  let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "oid-2034600.json") }
+
+  context "it gets called from a rake task" do
+    it "it is easy to invoke" do
+      time_stamp_before = File.mtime(path_to_example_file.to_s)
+      MetadataCloudService.refresh_fixture_data(short_oid_path)
+      time_stamp_after = File.mtime(path_to_example_file.to_s)
+      expect(time_stamp_before).to be < time_stamp_after
+    end
+  end
 
   it "can connect to the metadata cloud using basic auth" do
     expect(mcs.mc_get(oid_url).to_str).to include "Manuscript, on parchment"
