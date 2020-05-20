@@ -34,7 +34,7 @@ jobs:
         # Automatically tags the built image with the git short SHA as per the readme
         tag_with_sha: true
         # Path to the build context
-        path: # optional, default is .
+        path: ../../
         # Path to the Dockerfile (Default is '{path}/Dockerfile')
         dockerfile: # optional
         # Sets the target stage to build
