@@ -37,7 +37,7 @@ RUN chown -R app $APP_HOME
 # this is so that these items are cached and only have to be updated
 RUN /sbin/setuser app /bin/bash -l -c "cd /home/app/webapp && DB_ADAPTER=nulldb bundle exec rake assets:precompile"
 
-# Asset complie and migrate if prod, otherwise just start nginx
+# Asset compile and migrate if prod, otherwise just start nginx
 ADD ops/nginx.sh /etc/service/nginx/run
 RUN chmod +x /etc/service/nginx/run
 RUN rm -f /etc/service/nginx/down
