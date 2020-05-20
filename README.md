@@ -31,12 +31,29 @@
   - Run migrations
   - Access the seed file
   - Access the rails console for debugging
-    ```
+    ```bash
     bundle exec rails c
     ```
+  - Run the tests, excluding those that require the Yale VPN
+    ```bash
+    bundle exec rspec --tag ~vpn_only:true
+    ```
+  - If you are doing development that requires access to the Yale Metadata Cloud, get on the Yale VPN, and add your credentials to your `.env.development` and `.env.test` files. These should never be added to version control.
+  ```
+  # Metadata Cloud
+  MC_USER=YOUR_INFO_HERE
+  MC_PW=YOUR_INFO_HERE
+  ```
 
 ### Running the rake tasks
   - Update fixture data from the MetadataCloud
+    - _NOTE:_ you must be on the Yale VPN
+    - Add your credentials to your `.env.development` file.
+    ```
+    # Metadata Cloud
+    MC_USER=YOUR_INFO_HERE
+    MC_PW=YOUR_INFO_HERE
+    ```
     ```bash
     bundle exec rake yale:refresh_fixture_data
     ```
@@ -44,17 +61,3 @@
     ```bash
     bundle exec rake yale:load_voyager_sample_data
     ```
-
-### Proposed pattern for development
-- Start the database
-  ``` bash
-  docker-compose up db
-  ```
-- Start solr
-  ``` bash
-  docker-compose up solr
-  ```
-- Run rspec on the command line _outside_ the container
-  ``` bash
-  bundle exec rspec spec
-  ```
