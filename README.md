@@ -4,6 +4,20 @@
 - Download [Docker Desktop](https://www.docker.com/products/docker-desktop) and log in
 
 # Docker Development Setup
+### Clone application
+```bash
+git clone git@github.com:yalelibrary/yul-dc-management.git
+```
+### Change to the application directory
+```bash
+cd ./yul-dc-management
+```
+### Create needed files on your command line
+```bash
+touch .env.development \
+touch .env.test
+```
+
 ### If this is your first time working in this repo, build the base service (dependencies, etc. that don't change)
   ``` bash
   docker-compose build base
