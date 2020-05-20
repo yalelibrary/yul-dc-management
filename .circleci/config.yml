@@ -7,6 +7,7 @@ jobs:
     docker:
       - image: yalelibraryit/dc-management
         environment:
+            POSTGRES_HOST: localhost
             POSTGRES_DB: yul_dc_management_test
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: password
