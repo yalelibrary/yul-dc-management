@@ -1,20 +1,17 @@
 # frozen_string_literal: true
 
 namespace :yale do
-  desc "Load sample data"
-  task load_voyager_sample_data: :environment do
-    vis = VoyagerIndexingService.new
-    ladybird_metadata_path = Rails.root.join('spec', 'fixtures', 'ladybird').to_s
-    voyager_metadata_path =  Rails.root.join('spec', 'fixtures', 'voyager').to_s
-    vis.voyager_metadata_path = voyager_metadata_path
-    vis.ladybird_metadata_path = ladybird_metadata_path
-    vis.index_voyager_metadata
-    puts "Voyager sample metadata indexed"
+  desc "Index fixture data"
+  task index_fixture_data: :environment do
+    FixtureIndexingService.index_fixture_data
+    puts "Sample metadata indexed"
   end
 
   desc "Delete all solr documents"
   task clean_solr: :environment do
-    solr = Blacklight.default_index.connection
+    solr_core = ENV["SOLR_CORE"]
+    solr_url = ENV["SOLR_URL"] ||= "http://localhost:8983/solr"
+    solr = RSolr.connect url: "#{solr_url}/#{solr_core}"
     solr.delete_by_query '*:*'
     solr.commit
     puts "All documents deleted from solr"
