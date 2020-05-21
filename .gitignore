@@ -36,5 +36,3 @@ yarn-debug.log*
 .yarn-integrity
 /.idea
 
-# Ignore test and development environment files so can use secrets
-.env.*
