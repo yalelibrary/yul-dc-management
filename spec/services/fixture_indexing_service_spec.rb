@@ -7,7 +7,7 @@ RSpec.describe FixtureIndexingService, clean: true do
   let(:solr_url) { ENV["SOLR_URL"] ||= "http://localhost:8983/solr" }
   let(:oid) { "2034600" }
 
-  xit "can index the contents of a directory to Solr" do
+  it "can index the contents of a directory to Solr" do
     FixtureIndexingService.index_fixture_data
     solr = RSolr.connect url: "#{solr_url}/#{solr_core}"
     response = solr.get 'select', params: { q: '*:*' }
@@ -18,7 +18,7 @@ RSpec.describe FixtureIndexingService, clean: true do
     expect(FixtureIndexingService.ladybird_metadata_path).to eq ladybird_metadata_path
   end
 
-  xit "can index a single file to Solr" do
+  it "can index a single file to Solr" do
     FixtureIndexingService.index_to_solr(oid)
     solr = RSolr.connect url: "#{solr_url}/#{solr_core}"
     response = solr.get 'select', params: { q: '*:*' }

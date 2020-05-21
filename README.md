@@ -74,6 +74,10 @@ touch .env.test
     bundle exec rake yale:refresh_fixture_data
     ```
   - Index sample data (if you go to solr and hit "execute query" and don't have data, run this command)
-    ```bash
-    bundle exec rake yale:load_voyager_sample_data
-    ```
+   ```bash
+        SOLR_CORE=blacklight-core bundle exec rake yale:index_fixture_data
+   ```
+  - Clean out Solr index
+   ```bash
+        SOLR_CORE=blacklight-core bundle exec rake yale:clean_solr
+   ```
