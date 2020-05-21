@@ -38,4 +38,5 @@ workflows:
     jobs:
       - docker/publish:
           image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+          use-docker-credentials-store: true
           tag: test_ci
