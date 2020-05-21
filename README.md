@@ -1,4 +1,6 @@
 # README
+[![CircleCI](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/master.svg?style=svg)](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/master)
+![Docker Image CI](https://github.com/yalelibrary/yul-dc-management/workflows/Docker%20Image%20CI/badge.svg)
 
 # Prerequisites
 - Download [Docker Desktop](https://www.docker.com/products/docker-desktop) and log in

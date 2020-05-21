@@ -5,5 +5,6 @@ namespace :yale do
   task refresh_fixture_data: :environment do
     oid_path = Rails.root.join("spec", "fixtures", "fixture_ids.csv")
     MetadataCloudService.refresh_fixture_data(oid_path)
+    puts "Data refreshed from metadata cloud"
   end
 end
