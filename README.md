@@ -16,8 +16,7 @@ cd ./yul-dc-management
 ```
 ### Create needed files on your command line
 ```bash
-touch .env.development \
-touch .env.test
+touch .secrets
 ```
 
 ### If this is your first time working in this repo, build the base service (dependencies, etc. that don't change)
@@ -64,7 +63,8 @@ touch .env.test
 ### Running the rake tasks
   - Update fixture data from the MetadataCloud
     - _NOTE:_ you must be on the Yale VPN
-    - Add your credentials to your `.env.development` file.
+    - If you have trouble connecting to the MetadataCloud, see the DCE doc on [connecting to VPN from within a container](https://curationexperts.github.io/playbook/tools/docker/containers.html)
+    - Add your credentials to your `.secrets` file.
     ```
     # Metadata Cloud
     MC_USER=YOUR_INFO_HERE
