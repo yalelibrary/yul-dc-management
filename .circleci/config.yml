@@ -1,10 +1,14 @@
 version: 2.1
+workflows:
+  docker_build_and_test_workflow:
+    jobs:
+      - build:
+          context: yul-dc
 orbs:
   # Orb documentation - https://circleci.com/orbs/registry/orb/circleci/docker
   docker: circleci/docker@1.0.1
 jobs:
   build:
-    context: yul-dc
     docker:
       - image: yalelibraryit/dc-management
         environment:
