@@ -9,32 +9,36 @@ orbs:
   docker: circleci/docker@1.0.1
 jobs:
   build:
-    context: yul-dc
+    environment:
+      IMAGE_NAME: yalelibraryit/dc-management
     docker:
-      - image: docker:19.03.5
-    executor: docker/docker
+      - image: circleci/buildpack-deps:stretch
     steps:
       - checkout
-      # - run:
-          # name: Install Docker Compose
-          # command: |
-          #   set -x
-          #   curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-          #   chmod +x /usr/local/bin/docker-compose
       - setup_remote_docker
-      - run: |
-          echo "$DOCKER_PASSWORD"
-          echo "$DOCKER_LOGIN"
-          # | docker login --username $DOCKER_LOGIN --password-stdin
       - run:
-          name: Setup Environment Variables
-          command: |
-            echo "export MANAGEMENT_TAG=$CIRCLE_SHA1" >> $BASH_ENV
-      - run:
-          name: Build docker image using docker-compose
-          command: |
-            touch .secrets
-            docker-compose build web
+          name: Build Docker image
+          command: docker build -t $IMAGE_NAME:latest .
+      # # - run:
+      #     # name: Install Docker Compose
+      #     # command: |
+      #     #   set -x
+      #     #   curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+      #     #   chmod +x /usr/local/bin/docker-compose
+      # - setup_remote_docker
+      # - run: |
+      #     echo "$DOCKER_PASSWORD"
+      #     echo "$DOCKER_LOGIN"
+      #     # | docker login --username $DOCKER_LOGIN --password-stdin
+      # - run:
+      #     name: Setup Environment Variables
+      #     command: |
+      #       echo "export MANAGEMENT_TAG=$CIRCLE_SHA1" >> $BASH_ENV
+      # - run:
+      #     name: Build docker image using docker-compose
+      #     command: |
+      #       touch .secrets
+      #       docker-compose build web
       # - run:
       #     name: Push Docker image
       #     command: |
