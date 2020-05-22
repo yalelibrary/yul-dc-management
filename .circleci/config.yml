@@ -4,9 +4,6 @@ workflows:
     jobs:
       - build:
           context: yul-dc
-orbs:
-  # Orb documentation - https://circleci.com/orbs/registry/orb/circleci/docker
-  docker: circleci/docker@1.0.1
 jobs:
   build:
     environment:
