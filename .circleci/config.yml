@@ -22,9 +22,9 @@ jobs:
             chmod +x /usr/local/bin/docker-compose
       - setup_remote_docker
       - run:
-      name: Setup Environment Variables
-        command: |
-          echo "export MANAGEMENT_TAG=$CIRCLE_SHA1" >> $BASH_ENV
+          name: Setup Environment Variables
+          command: |
+            echo "export MANAGEMENT_TAG=$CIRCLE_SHA1" >> $BASH_ENV
       - run:
           name: Build docker image using docker-compose
           command: |
