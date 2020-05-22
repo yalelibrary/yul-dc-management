@@ -13,9 +13,12 @@ workflows:
           filters:
             branches:
               only: push_from_circle_ci
-      - publish-latest:
+      - run-tests:
           requires:
             - build
+      - publish-latest:
+          requires:
+            - run-tests
           # filters:
           #   branches:
           #     only: master
@@ -46,6 +49,18 @@ jobs:
           root: .
           paths:
             - ./image.tar
+  run-tests:
+    executor: docker-publisher
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker
+      - run:
+          name: Load archived Docker image
+          command: docker load -i /tmp/workspace/image.tar
+      - run:
+          name: Rubocop
+          command: bundle exec rubocop --parallel
   publish-latest:
     executor: docker-publisher
     steps:
