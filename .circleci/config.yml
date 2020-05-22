@@ -32,6 +32,7 @@ jobs:
     docker:
       - image: circleci/buildpack-deps:stretch
     steps:
+      - checkout
       - setup_remote_docker
       - run:
           name: Publish Docker Image to Docker Hub
