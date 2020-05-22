@@ -9,6 +9,7 @@ orbs:
   docker: circleci/docker@1.0.1
 jobs:
   build:
+    context: yul-dc
     docker:
       - image: docker:19.03.5
     executor: docker/docker
