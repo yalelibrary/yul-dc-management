@@ -30,3 +30,4 @@ jobs:
           command: |
             touch .secrets
             docker-compose build web
+            docker-compose push
