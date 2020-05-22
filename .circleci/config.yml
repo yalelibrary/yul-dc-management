@@ -12,7 +12,7 @@ jobs:
     docker:
       - image: phusion/passenger-ruby26
         environment:
-          MANAGEMENT_TAG: ci_build
+          MANAGEMENT_TAG: $CIRCLE_SHA1
     executor: docker/docker
     steps:
       - checkout
