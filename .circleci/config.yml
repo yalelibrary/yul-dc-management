@@ -24,5 +24,6 @@ jobs:
       - run:
           name: Build docker image using docker-compose
           command: |
+            touch .secrets
             docker-compose build web
       # - docker/check
