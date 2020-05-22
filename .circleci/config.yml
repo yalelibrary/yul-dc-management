@@ -22,7 +22,9 @@ jobs:
           #   chmod +x /usr/local/bin/docker-compose
       - setup_remote_docker
       - run: |
-          echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_LOGIN --password-stdin
+          echo "$DOCKER_PASSWORD"
+          echo "$DOCKER_LOGIN"
+          # | docker login --username $DOCKER_LOGIN --password-stdin
       - run:
           name: Setup Environment Variables
           command: |
