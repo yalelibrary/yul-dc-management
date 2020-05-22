@@ -21,11 +21,11 @@ jobs:
             curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
             chmod +x /usr/local/bin/docker-compose
       - setup_remote_docker
+      - docker/check
       - run:
           name: Setup Environment Variables
           command: |
             echo "export MANAGEMENT_TAG=$CIRCLE_SHA1" >> $BASH_ENV
-
       - run:
           name: Build docker image using docker-compose
           command: |
