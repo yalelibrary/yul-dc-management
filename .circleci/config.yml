@@ -36,4 +36,14 @@ jobs:
       - run:
           name: Rubocop
           command: bundle exec rubocop --parallel
+      - run:
+          name: Spin up web container
+          command: |
+            docker-compose up web
+
+      # - run:
+      #     name: rspec
+      #     # Excludes tests that require Yale VPN access
+      #     command:  |
+      #       bundle exec rspec --tag ~vpn_only:true
       # - docker/check
