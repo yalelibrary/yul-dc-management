@@ -11,6 +11,13 @@ jobs:
   build:
     docker:
       - image: yalelibraryit/dc-management
+        environment:
+            POSTGRES_HOST: localhost
+            POSTGRES_DB: yul_dc_management_test
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: password
+            SOLR_CORE: blacklight-test
+            SOLR_URL: http://localhost:8983/solr
     executor: docker/docker
     steps:
       - checkout
