@@ -30,8 +30,8 @@ jobs:
       - setup_remote_docker
       - checkout
       - docker/check
-      - docker/build:
-          image: yalelibraryit/dc-management
+      # - docker/build:
+      #     image: yalelibraryit/dc-management
       - run:
           name: Rubocop
           command: bundle exec rubocop --parallel
