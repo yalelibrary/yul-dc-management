@@ -9,10 +9,14 @@ orbs:
   docker: circleci/docker@1.0.1
 jobs:
   build:
+    parameters:
+      git_sha:
+        type: string
+        default: $CIRCLE_SHA1
     docker:
       - image: phusion/passenger-ruby26
         environment:
-          MANAGEMENT_TAG: $CIRCLE_SHA1
+          MANAGEMENT_TAG: << parameters.git_sha >>
     executor: docker/docker
     steps:
       - checkout
