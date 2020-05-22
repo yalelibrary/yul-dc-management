@@ -32,16 +32,15 @@ jobs:
           name: Build docker image using docker-compose
           command: |
             touch .secrets
-            docker-compose build base
             docker-compose build web
+            docker-compose up web
       - run:
           name: Rubocop
           command: bundle exec rubocop --parallel
-      - run:
-          name: Spin up web container
-          command: |
-            docker-compose up web
-
+      # - run:
+      #     name: Spin up web container
+      #     command: |
+      #       docker-compose up web
       # - run:
       #     name: rspec
       #     # Excludes tests that require Yale VPN access
