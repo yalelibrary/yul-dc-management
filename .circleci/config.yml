@@ -34,7 +34,6 @@ jobs:
             touch .secrets
             docker-compose build base
             docker-compose build web
-            docker-compose up
       - run:
           name: Rubocop
           command: bundle exec rubocop --parallel
