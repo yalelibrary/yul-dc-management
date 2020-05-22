@@ -32,7 +32,7 @@ jobs:
           name: Build docker image using docker-compose
           command: |
             touch .secrets
-            docker-compose build web
+            docker-compose build
       - run:
           name: Rubocop
           command: bundle exec rubocop --parallel
