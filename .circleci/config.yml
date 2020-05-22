@@ -13,4 +13,6 @@ jobs:
       - image: yalelibraryit/dc-management
     executor: docker/docker
     steps:
-      - docker/check
+      - checkout
+      - docker/install-docker-tools
+      # - docker/check
