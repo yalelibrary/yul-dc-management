@@ -25,9 +25,14 @@ jobs:
           name: Setup Environment Variables
           command: |
             echo "export MANAGEMENT_TAG=$CIRCLE_SHA1" >> $BASH_ENV
+
       - run:
           name: Build docker image using docker-compose
           command: |
             touch .secrets
             docker-compose build web
-            docker-compose push
+      - run:
+          name: Push Docker image
+          command: |
+            docker login -u ${docker_login} -p ${docker_password}
+            docker push web
