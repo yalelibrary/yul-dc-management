@@ -11,6 +11,8 @@ jobs:
   build:
     docker:
       - image: phusion/passenger-ruby26
+        environment:
+          MANAGEMENT_TAG: ci_build
     executor: docker/docker
     steps:
       - checkout
