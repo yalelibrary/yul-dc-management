@@ -18,6 +18,12 @@ jobs:
   build:
     environment:
       IMAGE_NAME: yalelibraryit/dc-management
+      POSTGRES_HOST: localhost
+      POSTGRES_DB: yul_dc_management_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      SOLR_CORE: blacklight-test
+      SOLR_URL: http://localhost:8983/solr
     docker:
       - image: circleci/buildpack-deps:stretch
     steps:
