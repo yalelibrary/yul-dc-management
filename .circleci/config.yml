@@ -9,14 +9,8 @@ orbs:
   docker: circleci/docker@1.0.1
 jobs:
   build:
-    parameters:
-      git_sha:
-        type: string
-        default: $CIRCLE_SHA1
     docker:
       - image: phusion/passenger-ruby26
-        environment:
-          MANAGEMENT_TAG: 9011f08
     executor: docker/docker
     steps:
       - checkout
@@ -27,6 +21,10 @@ jobs:
             curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
             chmod +x /usr/local/bin/docker-compose
       - setup_remote_docker
+      - run:
+      name: Setup Environment Variables
+        command: |
+          echo "export MANAGEMENT_TAG=$CIRCLE_SHA1" >> $BASH_ENV
       - run:
           name: Build docker image using docker-compose
           command: |
