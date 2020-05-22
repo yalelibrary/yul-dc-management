@@ -27,8 +27,8 @@ jobs:
             set -x
             curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
             chmod +x /usr/local/bin/docker-compose
-      - setup_remote_docker
-        docker_layer_caching: true
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: Build docker image using docker-compose
           command: |
