@@ -16,7 +16,7 @@ jobs:
     docker:
       - image: phusion/passenger-ruby26
         environment:
-          MANAGEMENT_TAG: << parameters.git_sha >>
+          MANAGEMENT_TAG: 9011f08
     executor: docker/docker
     steps:
       - checkout
