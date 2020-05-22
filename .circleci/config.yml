@@ -1,6 +1,6 @@
 version: 2.1
 workflows:
-  docker_build_and_test_workflow:
+  docker_build_and_push_workflow:
     jobs:
       - build:
           context: yul-dc
@@ -10,14 +10,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: yalelibraryit/dc-management
-        environment:
-            POSTGRES_HOST: localhost
-            POSTGRES_DB: yul_dc_management_test
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: password
-            SOLR_CORE: blacklight-test
-            SOLR_URL: http://localhost:8983/solr
+      - image: phusion/passenger-ruby26
     executor: docker/docker
     steps:
       - checkout
@@ -27,24 +20,10 @@ jobs:
             set -x
             curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
             chmod +x /usr/local/bin/docker-compose
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - setup_remote_docker
       - run:
           name: Build docker image using docker-compose
           command: |
             touch .secrets
             docker-compose build base
             docker-compose build web
-      - run:
-          name: Rubocop
-          command: bundle exec rubocop --parallel
-      # - run:
-      #     name: Spin up web container
-      #     command: |
-      #       docker-compose up web
-      # - run:
-      #     name: rspec
-      #     # Excludes tests that require Yale VPN access
-      #     command:  |
-      #       bundle exec rspec --tag ~vpn_only:true
-      # - docker/check
