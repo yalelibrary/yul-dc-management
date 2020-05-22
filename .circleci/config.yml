@@ -10,7 +10,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: phusion/passenger-ruby26
+      - image: docker:19.03.5
     executor: docker/docker
     steps:
       - checkout
@@ -31,8 +31,8 @@ jobs:
           command: |
             touch .secrets
             docker-compose build web
-      - run:
-          name: Push Docker image
-          command: |
-            docker login -u ${docker_login} -p ${docker_password}
-            docker push web
+      # - run:
+      #     name: Push Docker image
+      #     command: |
+      #       docker login -u ${docker_login} -p ${docker_password}
+      #       docker push web
