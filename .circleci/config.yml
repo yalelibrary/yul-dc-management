@@ -1,9 +1,5 @@
 version: 2.1
-workflows:
-  docker_build_and_push_workflow:
-    jobs:
-      - build:
-          context: yul-dc
+
 jobs:
   build:
     environment:
