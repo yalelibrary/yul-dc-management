@@ -4,6 +4,7 @@ orbs:
   docker: circleci/docker@1.0.1
 jobs:
   build:
+    context: yul-dc
     docker:
       - image: yalelibraryit/dc-management
         environment:
