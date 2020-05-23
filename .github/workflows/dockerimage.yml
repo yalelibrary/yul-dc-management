@@ -51,5 +51,5 @@ jobs:
         add_git_labels: # optional
         # Whether to push the image
         push: true
-    - name: Run tests
-      run: bundle exec rspec --tag ~vpn_only:true      
+    - name: Spin up container?
+      run: docker-compose up web
