@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Image Build
 
 on:
   push:
@@ -51,3 +51,5 @@ jobs:
         add_git_labels: # optional
         # Whether to push the image
         push: true
+    - name: Run tests
+      run: bundle exec rspec --tag ~vpn_only:true      
