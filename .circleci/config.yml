@@ -37,7 +37,7 @@ jobs:
       SOLR_CORE: blacklight-test
       SOLR_URL: http://localhost:8983/solr
     docker:
-      - image: circleci/buildpack-deps:stretch
+      - image: yalelibraryit/dc-management:latest
     steps:
       - setup_remote_docker
       - checkout
