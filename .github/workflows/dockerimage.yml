@@ -26,7 +26,7 @@ jobs:
         # Server address of Docker registry. If not set then will default to Docker Hub
         registry: # optional
         # Docker repository to tag the image with
-        repository: yalelibraryit/dc-management
+        repository: curationexperts/dc-management
         # Comma-delimited list of tags. These will be added to the registry/repository to form the image's tags
         tags: # optional
         # Automatically tags the built image with the git reference as per the readme
@@ -44,7 +44,7 @@ jobs:
         # Comma-delimited list of build-time variables
         build_args: # optional
         # Comma-delimited list of images to consider as cache sources
-        cache_froms: yalelibraryit/dc-management:latest
+        cache_froms: curationexperts/dc-management:latest
         # Comma-delimited list of labels to add to the built image
         labels: test_workflow
         # Adds labels with git repository information to the built image
