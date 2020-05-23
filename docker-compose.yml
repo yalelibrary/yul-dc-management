@@ -14,10 +14,7 @@ services:
     build: .
     image: '${REGISTRY_HOST}curationexperts/dc-management:${MANAGEMENT_TAG:-latest}'
     env_file:
-      - .env
-      - .env.development
-      - .env.test
-      - .secrets
+      - .env.test.ci
     ports:
       - '3000:3000'
     volumes:
