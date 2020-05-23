@@ -12,7 +12,7 @@ services:
 
   web:
     build: .
-    image: '${REGISTRY_HOST}${REGISTRY_URI}:${MANAGEMENT_TAG:-latest}'
+    image: '${REGISTRY_HOST}curationexperts/dc-management:${MANAGEMENT_TAG:-latest}'
     env_file:
       - .env
       - .env.development
