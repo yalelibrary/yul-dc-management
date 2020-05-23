@@ -3,5 +3,4 @@ sut:
   command:  bundle exec rspec --tag ~vpn_only:true
   env_file:
     - .env
-    - .env.development
     - .env.test
