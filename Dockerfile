@@ -9,7 +9,7 @@ COPY ops/env.conf /etc/nginx/main.d/env.conf
 RUN chmod +x /etc/service/nginx/run
 
 # Make the run_tests script executable
-RUN chmod +x .run_tests.sh
+RUN chmod u+x run_tests.sh
 
 COPY  --chown=app . $APP_HOME
 RUN /sbin/setuser app bash -l -c "set -x && \
