@@ -1,3 +1,7 @@
 sut:
   build: .
-  command: ./run_tests.sh
+  command:  bundle exec rspec --tag ~vpn_only:true
+  env_file:
+    - .env
+    - .env.development
+    - .env.test
