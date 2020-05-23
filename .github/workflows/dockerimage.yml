@@ -51,9 +51,8 @@ jobs:
         add_git_labels: # optional
         # Whether to push the image
         push: true
-    - name: Make empty .secrets
-      run: touch .secrets
-    - name: Spin up container
-      run: docker-compose up web
-    - name: Run rspec tests
-      run: bundle exec rspec --tag ~vpn_only:true
+    - name: rspec-tests
+      uses: bartosian/rspec-tests-docker-action@v1
+      with:
+      # What tests to run
+      tests-to-run: ./spec --tag ~vpn_only:true
