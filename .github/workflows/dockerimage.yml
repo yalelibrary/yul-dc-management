@@ -51,8 +51,3 @@ jobs:
         add_git_labels: # optional
         # Whether to push the image
         push: true
-    - name: rspec-tests
-      uses: bartosian/rspec-tests-docker-action@v1
-      with:
-      # What tests to run
-        tests-to-run: ./spec --tag ~vpn_only:true
