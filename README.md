@@ -53,6 +53,14 @@ touch .secrets
     ```bash
     bundle exec rspec --tag ~vpn_only:true
     ```
+  - Run Rubocop to fix any style errors
+    ```bash
+    bundle exec rubocop -a
+    ```
+    - If Rubocop is still flagging something that you've checked and want to keep as-is, add it to the `.rubocop_todo.yml`, either manually, or by running
+    ```bash
+    rubocop --auto-gen-config
+    ```
   - If you are doing development that requires access to the Yale Metadata Cloud, get on the Yale VPN, and add your credentials to your `.env.development` and `.env.test` files. These should never be added to version control.
   ```
   # Metadata Cloud
