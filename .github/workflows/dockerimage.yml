@@ -52,4 +52,5 @@ jobs:
         # Whether to push the image
         push: true
     - name: Spin up container?
-      run: docker-compose up web
+      run: touch .secrets \
+           docker-compose up web
