@@ -55,4 +55,4 @@ jobs:
       uses: bartosian/rspec-tests-docker-action@v1
       with:
       # What tests to run
-      tests-to-run: ./spec --tag ~vpn_only:true
+        tests-to-run: ./spec --tag ~vpn_only:true
