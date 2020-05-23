@@ -1,3 +1,0 @@
-sut:
-  build: .
-  command: bundle exec rspec --tag ~vpn_only:true
