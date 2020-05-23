@@ -6,10 +6,8 @@ COPY ops/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 COPY ops/env.conf /etc/nginx/main.d/env.conf
 
 # Added this because of permissions errors runsv nginx: fatal: unable to start ./run: access denied
-RUN chmod +x /etc/service/nginx/run
-
-# Make the run_tests script executable
-RUN chmod u+x run_tests.sh
+RUN chmod +x /etc/service/nginx/run \
+    chmod u+x run_tests.sh
 
 COPY  --chown=app . $APP_HOME
 RUN /sbin/setuser app bash -l -c "set -x && \
