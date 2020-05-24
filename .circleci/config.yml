@@ -13,7 +13,7 @@ jobs:
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
-  build:
+  run-tests:
     docker:
       # Image pulled from registry
       - image: yalelibraryit/dc-management:$CIRCLE_SHA1
@@ -52,6 +52,6 @@ workflows:
     jobs:
       - build-and-push:
           context: yul-dc
-      - build:
+      - run-tests:
           requires:
             - build-and-push
