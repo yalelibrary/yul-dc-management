@@ -51,5 +51,3 @@ jobs:
         add_git_labels: # optional
         # Whether to push the image
         push: true
-    - name: Run rubocop
-      run: bundle exec rubocop
