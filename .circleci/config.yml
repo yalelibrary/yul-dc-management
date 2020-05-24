@@ -5,6 +5,7 @@ orbs:
 jobs:
   build:
     docker:
+      # Image pulled from registry
       - image: yalelibraryit/dc-management:latest
         environment:
             POSTGRES_HOST: localhost
