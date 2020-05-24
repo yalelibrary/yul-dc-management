@@ -52,4 +52,6 @@ workflows:
     jobs:
       - build-and-push:
           context: yul-dc
-      - build
+      - build:
+          requires:
+            - build-and-push
