@@ -5,7 +5,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: yalelibraryit/dc-management
+      - image: yalelibraryit/dc-management:ci_build
         environment:
             POSTGRES_HOST: localhost
             POSTGRES_DB: yul_dc_management_test
