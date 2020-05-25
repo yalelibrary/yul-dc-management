@@ -42,6 +42,9 @@ jobs:
       - setup_remote_docker
       - checkout
       - run:
+          name: Make an empty .secrets file
+          command: touch .secrets
+      - run:
           name: Build Docker image
           command: docker-compose build web
       - run:
