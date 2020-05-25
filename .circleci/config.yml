@@ -57,19 +57,24 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - setup_remote_docker
-      - image: docker load -i /tmp/workspace/image.tar
       - run:
           name: Load archived Docker image
           command: docker load -i /tmp/workspace/image.tar
+      - run:
+          no_output_timeout: 30m
+          command: |
+             docker run --name tests \
+                        -v /var/run/docker.sock:/var/run/docker.sock \
+                        /bin/bash -c "bundle exec rubocop --parallel"
       # - run:
       #     name: Install Docker Compose
       #     command: |
       #       set -x
       #       curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
       #       chmod +x /usr/local/bin/docker-compose
-      - run:
-          name: Rubocop
-          command: bundle exec rubocop --parallel
+      # - run:
+      #     name: Rubocop
+      #     command: bundle exec rubocop --parallel
   publish-latest:
     executor: docker-publisher
     steps:
