@@ -45,9 +45,6 @@ jobs:
           name: Build Docker image
           command: docker build -t $IMAGE_NAME:latest .
       - run:
-          name: Rubocop
-          command: bundle exec rubocop --parallel
-      - run:
           name: Archive Docker image
           command: docker save -o image.tar $IMAGE_NAME
       - persist_to_workspace:
@@ -60,6 +57,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - setup_remote_docker
+      - image: docker load -i /tmp/workspace/image.tar
       - run:
           name: Load archived Docker image
           command: docker load -i /tmp/workspace/image.tar
@@ -69,9 +67,9 @@ jobs:
       #       set -x
       #       curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
       #       chmod +x /usr/local/bin/docker-compose
-      # - run:
-      #     name: Rubocop
-      #     command: bundle exec rubocop --parallel
+      - run:
+          name: Rubocop
+          command: bundle exec rubocop --parallel
   publish-latest:
     executor: docker-publisher
     steps:
