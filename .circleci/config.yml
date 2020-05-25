@@ -30,7 +30,7 @@ jobs:
     executor: docker-publisher
     environment:
       IMAGE_NAME: yalelibraryit/dc-management
-      POSTGRES_HOST: localhost
+      POSTGRES_HOST: 127.0.0.1
       POSTGRES_DB: yul_dc_management_test
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
