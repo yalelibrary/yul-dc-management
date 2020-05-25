@@ -51,6 +51,7 @@ jobs:
           root: .
           paths:
             - ./image.tar
+
   run-tests:
     executor: docker/docker
     steps:
@@ -61,11 +62,8 @@ jobs:
           name: Load archived Docker image
           command: docker load -i /tmp/workspace/image.tar
       - run:
-          no_output_timeout: 30m
           command: |
-             docker run --name tests \
-                        -v /var/run/docker.sock:/var/run/docker.sock \
-                        /bin/bash -c "bundle exec rubocop --parallel"
+             docker run -i yalelibraryit/dc-management bundle exec rubocop
       # - run:
       #     name: Install Docker Compose
       #     command: |
