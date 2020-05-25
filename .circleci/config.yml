@@ -30,7 +30,7 @@ jobs:
     executor: docker-publisher
     environment:
       IMAGE_NAME: yalelibraryit/dc-management
-      POSTGRES_HOST: db
+      POSTGRES_HOST: localhost
       POSTGRES_DB: yul_dc_management_test
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
@@ -61,6 +61,13 @@ jobs:
       - run:
           name: Load archived Docker image
           command: docker load -i /tmp/workspace/image.tar
+      - image: yalelibraryit/dc-solr:79a71ec
+        command: bash -c 'precreate-core blacklight-test /opt/config; exec solr -f'
+      - image: circleci/postgres:9.5-alpine-ram
+        environment:
+            POSTGRES_DB: blacklight_yul_test
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: password
       - run:
           command: |
              docker run -i yalelibraryit/dc-management bundle exec rubocop
