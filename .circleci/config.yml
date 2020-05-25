@@ -54,12 +54,6 @@ jobs:
 
   run-tests:
     executor: docker/docker
-    docker:
-      - image: circleci/postgres:9.5-alpine-ram
-        environment:
-            POSTGRES_DB: yul_dc_management_test
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: password
     steps:
       - attach_workspace:
           at: /tmp/workspace
