@@ -15,5 +15,6 @@ RUN /sbin/setuser app bash -l -c "set -x && \
     mv ./public/assets ./public/assets-new"
 
 EXPOSE 3000
+EXPOSE 5432
 
 CMD /sbin/my_init
