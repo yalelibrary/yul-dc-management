@@ -61,7 +61,7 @@ touch .secrets
     ```bash
     rubocop --auto-gen-config
     ```
-  - If you are doing development that requires access to the Yale Metadata Cloud, get on the Yale VPN, and add your credentials to your `.env.development` and `.env.test` files. These should never be added to version control.
+  - If you are doing development that requires access to the Yale Metadata Cloud, get on the Yale VPN, and add your credentials to your `.secrets` file. These should never be added to version control.
   ```
   # Metadata Cloud
   MC_USER=YOUR_INFO_HERE
