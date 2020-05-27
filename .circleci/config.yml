@@ -8,10 +8,10 @@ jobs:
       - docker/check
       - docker/build:
           image: yalelibraryit/dc-management
-          tag: pr
+          tag: pr,futuresha
       - docker/push:
           image: yalelibraryit/dc-management
-          tag: pr
+          tag: pr,futuresha
   run-tests:
     docker:
       # Image pulled from registry
