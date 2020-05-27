@@ -11,16 +11,15 @@ jobs:
       - docker/check
       - docker/build:
           image: yalelibraryit/dc-management
-          tag: $GIT_SHA1
+          tag: pr,$GIT_SHA1
       - docker/push:
           image: yalelibraryit/dc-management
-          tag: $GIT_SHA1
+          tag: pr,$GIT_SHA1
   run-tests:
     docker:
       # Image pulled from registry
-      - image: yalelibraryit/dc-management:sha-$SHORT_GIT_HASH
+      - image: yalelibraryit/dc-management:$GIT_SHA1
         environment:
-          SHORT_GIT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)
           POSTGRES_HOST: localhost
           POSTGRES_DB: yul_dc_management_test
           POSTGRES_USER: postgres
@@ -47,8 +46,6 @@ jobs:
           command:  |
             bundle exec rspec --tag ~vpn_only:true
   publish-latest:
-    environment:
-        SHORT_GIT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)
     executor: docker/docker
     steps:
       - setup_remote_docker
@@ -56,10 +53,10 @@ jobs:
       - docker/check
       - docker/build:
           image: yalelibraryit/dc-management
-          tag: master,sha-$SHORT_GIT_HASH
+          tag: master,$GIT_SHA1
       - docker/push:
           image: yalelibraryit/dc-management
-          tag: master,sha-$SHORT_GIT_HASH
+          tag: master,$GIT_SHA1
 orbs:
   docker: circleci/docker@1.0.1
 version: 2.1
