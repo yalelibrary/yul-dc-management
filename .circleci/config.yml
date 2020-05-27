@@ -9,10 +9,10 @@ jobs:
       - docker/check
       - docker/build:
           image: yalelibraryit/dc-management
-          tag: pr,sha-$SHORT_GIT_HASH
+          tag: $SHORT_GIT_HASH
       - docker/push:
           image: yalelibraryit/dc-management
-          tag: pr,sha-$SHORT_GIT_HASH
+          tag: $SHORT_GIT_HASH
   run-tests:
     docker:
       # Image pulled from registry
