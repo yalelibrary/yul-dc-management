@@ -11,7 +11,8 @@ RSpec.describe FixtureIndexingService, clean: true do
     FixtureIndexingService.index_fixture_data
     solr = RSolr.connect url: "#{solr_url}/#{solr_core}"
     response = solr.get 'select', params: { q: '*:*' }
-    expect(response["response"]["numFound"]).to eq 45
+    expect(response["response"]["numFound"]).to be > 45
+    expect(response["response"]["numFound"]).to be < 101
   end
 
   it "knows where to find the ladybird metadata" do

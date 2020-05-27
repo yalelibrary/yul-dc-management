@@ -49,9 +49,13 @@ touch .secrets
     ```bash
     bundle exec rails c
     ```
-  - Run the tests, excluding those that require the Yale VPN
+  - Run the tests, excluding those that require the Yale VPN (the tilda(~) means the tag is excluded)
     ```bash
     bundle exec rspec --tag ~vpn_only:true
+    ```
+  - Run only the tests that require the Yale VPN
+    ```bash
+    bundle exec rspec --tag vpn_only:true
     ```
   - Run Rubocop to fix any style errors
     ```bash
