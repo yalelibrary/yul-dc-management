@@ -1,57 +1,124 @@
+# Orb 'circleci/docker@1.0.1' resolved to 'circleci/docker@1.0.1'
+version: 2
 jobs:
   build-and-push:
-    executor: docker/docker
+    docker:
+    - image: circleci/python:3.6
     steps:
-      - setup_remote_docker
-      - checkout
-      - docker/check
-      - docker/build:
-          image: yalelibraryit/dc-management
-      - docker/push:
-          digest-path: /tmp/digest.txt
-          image: yalelibraryit/dc-management
-      - run:
-          command: |
-            echo "Digest is: $(</tmp/digest.txt)"
+    - setup_remote_docker
+    - checkout
+    - run:
+        command: |
+          if [[ DOCKER_LOGIN == "" ]]; then
+            echo "No required environment variables to check; moving on"
+          else
+            IFS="," read -ra PARAMS <<< "DOCKER_LOGIN"
+
+            for i in "${PARAMS[@]}"; do
+              if [[ -z "${!i}" ]]; then
+                echo "ERROR: Missing environment variable {i}" >&2
+
+                if [[ -n "" ]]; then
+                  echo "" >&2
+                fi
+
+                exit 1
+              else
+                echo "Yes, ${i} is defined!"
+              fi
+            done
+          fi
+        name: Checking if parameters are defined...
+    - run:
+        command: |
+          if [[ DOCKER_PASSWORD == "" ]]; then
+            echo "No required environment variables to check; moving on"
+          else
+            IFS="," read -ra PARAMS <<< "DOCKER_PASSWORD"
+
+            for i in "${PARAMS[@]}"; do
+              if [[ -z "${!i}" ]]; then
+                echo "ERROR: Missing environment variable {i}" >&2
+
+                if [[ -n "" ]]; then
+                  echo "" >&2
+                fi
+
+                exit 1
+              else
+                echo "Yes, ${i} is defined!"
+              fi
+            done
+          fi
+        name: Checking if parameters are defined...
+    - run:
+        command: |
+          echo "$DOCKER_PASSWORD" \
+            | docker login -u "$DOCKER_LOGIN" \
+                --password-stdin docker.io
+        name: Docker login
+    - run:
+        command: |
+          docker_tag_args=""
+
+          IFS="," read -ra DOCKER_TAGS <<< "$CIRCLE_SHA1"
+          for tag in "${DOCKER_TAGS[@]}"; do
+            docker_tag_args="$docker_tag_args -t docker.io/yalelibraryit/dc-management:${tag}"
+          done
+
+          docker build  \
+            -f ./Dockerfile \
+            $docker_tag_args \
+            .
+        name: Docker build
+    - deploy:
+        command: |
+          IFS="," read -ra DOCKER_TAGS <<< "$CIRCLE_SHA1"
+          for tag in "${DOCKER_TAGS[@]}"; do
+            docker push docker.io/yalelibraryit/dc-management:${tag}
+          done
+
+          if [ -n "/tmp/digest.txt" ]; then
+            mkdir -p "$(dirname /tmp/digest.txt)"
+            docker image inspect --format="{{index .RepoDigests 0}}" docker.io/yalelibraryit/dc-management:$CIRCLE_SHA1 > "/tmp/digest.txt"
+          fi
+        name: Docker push
+    - run:
+        command: |
+          echo "Digest is: $(</tmp/digest.txt)"
   run-tests:
     docker:
-      # Image pulled from registry
-      - image: yalelibraryit/dc-management:$CIRCLE_SHA1
-        environment:
-            POSTGRES_HOST: localhost
-            POSTGRES_DB: yul_dc_management_test
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: password
-            SOLR_CORE: blacklight-test
-            SOLR_URL: http://localhost:8983/solr
-      - image: yalelibraryit/dc-solr:79a71ec
-        command: bash -c 'precreate-core blacklight-test /opt/config; exec solr -f'
-      - image: circleci/postgres:9.5-alpine-ram
-        environment:
-            POSTGRES_DB: yul_dc_management_test
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: password
-    executor: docker/docker
+    - image: yalelibraryit/dc-management:$CIRCLE_SHA1
+      environment:
+        POSTGRES_HOST: localhost
+        POSTGRES_DB: yul_dc_management_test
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: password
+        SOLR_CORE: blacklight-test
+        SOLR_URL: http://localhost:8983/solr
+    - image: yalelibraryit/dc-solr:79a71ec
+      command: bash -c 'precreate-core blacklight-test /opt/config; exec solr -f'
+    - image: circleci/postgres:9.5-alpine-ram
+      environment:
+        POSTGRES_DB: yul_dc_management_test
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: password
     steps:
-      - setup_remote_docker
-      - checkout
-      - run:
-          name: Rubocop
-          command: bundle exec rubocop --parallel
-      - run:
-          name: rspec
-          # Excludes tests that require Yale VPN access
-          command:  |
-            bundle exec rspec --tag ~vpn_only:true
-
-orbs:
-  docker: circleci/docker@1.0.1
-version: 2.1
+    - setup_remote_docker
+    - checkout
+    - run:
+        name: Rubocop
+        command: bundle exec rubocop --parallel
+    - run:
+        name: rspec
+        command: |
+          bundle exec rspec --tag ~vpn_only:true
 workflows:
   commit:
     jobs:
-      - build-and-push:
-          context: yul-dc
-      - run-tests:
-          requires:
-            - build-and-push
+    - build-and-push:
+        context: yul-dc
+    - run-tests:
+        requires:
+        - build-and-push
+  version: 2
