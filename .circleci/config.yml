@@ -8,11 +8,7 @@ jobs:
       - docker/build:
           image: yalelibraryit/dc-management
       - docker/push:
-          digest-path: /tmp/digest.txt
           image: yalelibraryit/dc-management
-      - run:
-          command: |
-            echo "Digest is: $(</tmp/digest.txt)"
   run-tests:
     docker:
       # Image pulled from registry
