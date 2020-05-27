@@ -35,6 +35,10 @@ jobs:
           POSTGRES_PASSWORD: password
     executor: docker/docker
     steps:
+      - run:
+          name: Setup Environment Variables
+          command: |
+            echo "export GIT_SHA1=$(echo $CIRCLE_SHA1 | cut -c -7)" >> $BASH_ENV
       - setup_remote_docker
       - checkout
       - run:
@@ -48,6 +52,10 @@ jobs:
   publish-latest:
     executor: docker/docker
     steps:
+      - run:
+          name: Setup Environment Variables
+          command: |
+            echo "export GIT_SHA1=$(echo $CIRCLE_SHA1 | cut -c -7)" >> $BASH_ENV
       - setup_remote_docker
       - checkout
       - docker/check
