@@ -1,4 +1,5 @@
 jobs:
+
   build-and-push:
     executor: docker/docker
     steps:
@@ -39,7 +40,16 @@ jobs:
           # Excludes tests that require Yale VPN access
           command:  |
             bundle exec rspec --tag ~vpn_only:true
-
+  publish-latest:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: yalelibraryit/dc-management:master
+      - docker/push:
+          image: yalelibraryit/dc-management:master
 orbs:
   docker: circleci/docker@1.0.1
 version: 2.1
@@ -51,3 +61,11 @@ workflows:
       - run-tests:
           requires:
             - build-and-push
+      - publish-latest:
+          context: yul-dc
+          requires:
+            - build-and-push
+            - run-tests
+          filters:
+            branches:
+              only: master
