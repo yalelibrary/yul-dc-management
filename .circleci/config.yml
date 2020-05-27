@@ -1,11 +1,19 @@
-version: 2.1
-orbs:
-  docker: circleci/docker@1.0.1
-
 jobs:
-  build:
+
+  build-and-push:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: yalelibraryit/dc-management
+      - docker/push:
+          image: yalelibraryit/dc-management
+  run-tests:
     docker:
-      - image: yalelibraryit/dc-management
+      # Image pulled from registry
+      - image: yalelibraryit/dc-management:$CIRCLE_SHA1
         environment:
             POSTGRES_HOST: localhost
             POSTGRES_DB: yul_dc_management_test
@@ -32,3 +40,32 @@ jobs:
           # Excludes tests that require Yale VPN access
           command:  |
             bundle exec rspec --tag ~vpn_only:true
+  publish-latest:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: yalelibraryit/dc-management:master
+      - docker/push:
+          image: yalelibraryit/dc-management:master
+orbs:
+  docker: circleci/docker@1.0.1
+version: 2.1
+workflows:
+  commit:
+    jobs:
+      - build-and-push:
+          context: yul-dc
+      - run-tests:
+          requires:
+            - build-and-push
+      - publish-latest:
+          context: yul-dc
+          requires:
+            - build-and-push
+            - run-tests
+          filters:
+            branches:
+              only: master
