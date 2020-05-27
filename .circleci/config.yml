@@ -1,8 +1,7 @@
-machine:
-  environment:
-    SHORT_GIT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)
 jobs:
   build-and-push:
+    environment:
+      SHORT_GIT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)
     executor: docker/docker
     steps:
       - setup_remote_docker
@@ -19,19 +18,20 @@ jobs:
       # Image pulled from registry
       - image: yalelibraryit/dc-management:sha-$SHORT_GIT_HASH
         environment:
-            POSTGRES_HOST: localhost
-            POSTGRES_DB: yul_dc_management_test
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: password
-            SOLR_CORE: blacklight-test
-            SOLR_URL: http://localhost:8983/solr
+          SHORT_GIT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)
+          POSTGRES_HOST: localhost
+          POSTGRES_DB: yul_dc_management_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          SOLR_CORE: blacklight-test
+          SOLR_URL: http://localhost:8983/solr
       - image: yalelibraryit/dc-solr:79a71ec
         command: bash -c 'precreate-core blacklight-test /opt/config; exec solr -f'
       - image: circleci/postgres:9.5-alpine-ram
         environment:
-            POSTGRES_DB: yul_dc_management_test
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: password
+          POSTGRES_DB: yul_dc_management_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
     executor: docker/docker
     steps:
       - setup_remote_docker
@@ -45,6 +45,8 @@ jobs:
           command:  |
             bundle exec rspec --tag ~vpn_only:true
   publish-latest:
+    environment:
+        SHORT_GIT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)
     executor: docker/docker
     steps:
       - setup_remote_docker
