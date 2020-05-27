@@ -47,9 +47,11 @@ jobs:
       - checkout
       - docker/check
       - docker/build:
-          image: yalelibraryit/dc-management:master
+          image: yalelibraryit/dc-management
+          tag: master
       - docker/push:
-          image: yalelibraryit/dc-management:master
+          image: yalelibraryit/dc-management
+          tag: master
 orbs:
   docker: circleci/docker@1.0.1
 version: 2.1
