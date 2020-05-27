@@ -1,18 +1,20 @@
 jobs:
   build-and-push:
-    environment:
-      SHORT_GIT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)
     executor: docker/docker
     steps:
+      - run:
+          name: Setup Environment Variables
+          command: |
+            echo "export GIT_SHA1=$CIRCLE_SHA1" >> $BASH_ENV
       - setup_remote_docker
       - checkout
       - docker/check
       - docker/build:
           image: yalelibraryit/dc-management
-          tag: $SHORT_GIT_HASH
+          tag: $GIT_SHA1
       - docker/push:
           image: yalelibraryit/dc-management
-          tag: $SHORT_GIT_HASH
+          tag: $GIT_SHA1
   run-tests:
     docker:
       # Image pulled from registry
