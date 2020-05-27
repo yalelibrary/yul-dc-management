@@ -8,10 +8,10 @@ jobs:
       - docker/check
       - docker/build:
           image: yalelibraryit/dc-management
-          tag: 'pr, $CIRCLE_SHA1'
+          tag: pr, $CIRCLE_SHA1
       - docker/push:
           image: yalelibraryit/dc-management
-          tag: 'pr, $CIRCLE_SHA1'
+          tag: pr, $CIRCLE_SHA1
   run-tests:
     docker:
       # Image pulled from registry
@@ -50,10 +50,10 @@ jobs:
       - docker/check
       - docker/build:
           image: yalelibraryit/dc-management
-          tag: 'master, $CIRCLE_SHA1'
+          tag: master, $CIRCLE_SHA1
       - docker/push:
           image: yalelibraryit/dc-management
-          tag: 'master, $CIRCLE_SHA1'
+          tag: master, $CIRCLE_SHA1
 orbs:
   docker: circleci/docker@1.0.1
 version: 2.1
