@@ -8,10 +8,10 @@ jobs:
       - docker/check
       - docker/build:
           image: yalelibraryit/dc-management
-          tag: pr, test_tag
+          tag: 'pr, test_tag'
       - docker/push:
           image: yalelibraryit/dc-management
-          tag: pr, test_tag
+          tag: 'pr, test_tag'
   run-tests:
     docker:
       # Image pulled from registry
