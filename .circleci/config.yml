@@ -20,6 +20,7 @@ jobs:
       # Image pulled from registry
       - image: yalelibraryit/dc-management:$GIT_SHA1
         environment:
+          GIT_SHA1: $(echo $CIRCLE_SHA1 | cut -c -7)
           POSTGRES_HOST: localhost
           POSTGRES_DB: yul_dc_management_test
           POSTGRES_USER: postgres
@@ -35,10 +36,6 @@ jobs:
           POSTGRES_PASSWORD: password
     executor: docker/docker
     steps:
-      - run:
-          name: Setup Environment Variables
-          command: |
-            echo "export GIT_SHA1=$(echo $CIRCLE_SHA1 | cut -c -7)" >> $BASH_ENV
       - setup_remote_docker
       - checkout
       - run:
