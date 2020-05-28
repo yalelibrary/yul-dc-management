@@ -43,6 +43,7 @@ jobs:
             bundle exec rspec --tag ~vpn_only:true
   publish-latest:
     executor: docker/docker
+    steps:
       - setup_remote_docker
       - checkout
       - docker/check
