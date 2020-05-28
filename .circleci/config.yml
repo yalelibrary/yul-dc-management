@@ -1,5 +1,4 @@
 jobs:
-
   build-and-push:
     executor: docker/docker
     steps:
@@ -8,26 +7,28 @@ jobs:
       - docker/check
       - docker/build:
           image: yalelibraryit/dc-management
+          tag: pr-$CIRCLE_BRANCH,$CIRCLE_SHA1
       - docker/push:
           image: yalelibraryit/dc-management
+          tag: pr-$CIRCLE_BRANCH,$CIRCLE_SHA1
   run-tests:
     docker:
       # Image pulled from registry
       - image: yalelibraryit/dc-management:$CIRCLE_SHA1
         environment:
-            POSTGRES_HOST: localhost
-            POSTGRES_DB: yul_dc_management_test
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: password
-            SOLR_CORE: blacklight-test
-            SOLR_URL: http://localhost:8983/solr
+          POSTGRES_HOST: localhost
+          POSTGRES_DB: yul_dc_management_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          SOLR_CORE: blacklight-test
+          SOLR_URL: http://localhost:8983/solr
       - image: yalelibraryit/dc-solr:79a71ec
         command: bash -c 'precreate-core blacklight-test /opt/config; exec solr -f'
       - image: circleci/postgres:9.5-alpine-ram
         environment:
-            POSTGRES_DB: yul_dc_management_test
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: password
+          POSTGRES_DB: yul_dc_management_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
     executor: docker/docker
     steps:
       - setup_remote_docker
@@ -48,10 +49,10 @@ jobs:
       - docker/check
       - docker/build:
           image: yalelibraryit/dc-management
-          tag: master
+          tag: master,$CIRCLE_SHA1,$CIRCLE_BRANCH
       - docker/push:
           image: yalelibraryit/dc-management
-          tag: master
+          tag: master,$CIRCLE_SHA1,$CIRCLE_BRANCH
 orbs:
   docker: circleci/docker@1.0.1
 version: 2.1
