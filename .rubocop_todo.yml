@@ -9,6 +9,8 @@
 # Offense count: 1
 Metrics/AbcSize:
   Max: 58
+  Exclude:
+    - 'app/services/fixture_indexing_service.rb'
 
 # Offense count: 2
 # Configuration parameters: CountComments, ExcludedMethods.
