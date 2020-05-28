@@ -35,16 +35,3 @@ Metrics/MethodLength:
 # Offense count: 1
 Metrics/PerceivedComplexity:
   Max: 8
-
-# Offense count: 1
-# Configuration parameters: Max.
-RSpec/ExampleLength:
-  Exclude:
-    - 'spec/services/voyager_indexing_service_spec.rb'
-
-# Offense count: 1
-# Configuration parameters: Include.
-# Include: app/**/*.rb, config/**/*.rb, db/**/*.rb, lib/**/*.rb
-Rails/Output:
-  Exclude:
-    - 'app/services/voyager_indexing_service.rb'
