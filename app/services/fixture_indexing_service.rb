@@ -80,7 +80,8 @@ class FixtureIndexingService
       projection_ssim: data_hash["projection"],
 
       date_tsim: data_hash["date"], # Not clear what date this refers to, not in Blacklight
-      public_bsi: true # TEMPORARY, makes everything public
+      public_bsi: true, # TEMPORARY, makes everything public
+      visibility_ssi: data_hash["itemPermission"]
     }
     solr_core = ENV["SOLR_CORE"] ||= "blacklight-core"
     solr_url = ENV["SOLR_URL"] ||= "http://localhost:8983/solr"

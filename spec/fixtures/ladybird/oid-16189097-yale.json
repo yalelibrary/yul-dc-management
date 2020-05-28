@@ -4,7 +4,7 @@
   "uri": "/ladybird/oid/16189097",
   "identifierShelfMark": "Lanman Covers 56 189x",
   "title": [
-    "[Map of China]."
+    "[Map of China]. [yale-only copy]"
   ],
   "extentOfDigitization": [
     "Complete work digitized."
@@ -45,7 +45,7 @@
   ],
   "orbisRecord": "8330740",
   "orbisBarcode": "39002113593819",
-  "itemPermission": "Public",
+  "itemPermission": "Yale Community Only",
   "resourceType": "Maps, Atlases & Globes",
   "illustrativeMatter": "080815s189u    ja ",
   "repository": "Beinecke Library",
@@ -57,9 +57,7 @@
   "subjectGeographic": [
     "China--Maps."
   ],
-  "oid": 16189097,
+  "oid": "16189097-yale",
   "collectionId": 1,
-  "children": [
-
-  ]
+  "children": []
 }
