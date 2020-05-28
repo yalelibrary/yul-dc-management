@@ -20,53 +20,67 @@ class FixtureIndexingService
     solr_doc = {
       id: oid,
       title_tsim: data_hash["title"],
-      language_ssim: data_hash["language"],
-      description_tesim: data_hash["description"],
+      title_vern_ssim: data_hash["title"],
+      # subtitle_tsim
+      # subtitle_vern_ssim
       author_tsim: data_hash["creator"],
-      oid_ss: data_hash["oid"],
-      format_ssim: data_hash["format"],
-      orbis_bib_id_ssim: data_hash["orbisRecord"], # may change to orbisBibId
-      alternative_title_tim: data_hash["alternativeTitle"],
+      author_vern_ssim: data_hash["creator"],
+      extent_ssim: data_hash["extent"],
+      format: data_hash["format"],
+      # url_fulltext_ssim
+      url_suppl_ssim: data_hash["relatedUrl"],
+      language_ssim: data_hash["language"],
+      # published_ssim
+      # published_vern_ssim
+      # lc_callnum_ssim
+      # isbn_ssim
+      description_tesim: data_hash["description"],
+      abstract_ssim: data_hash["abstract"],
+      alternativeTitle_ssim: data_hash["alternativeTitle"],
       alternative_title_tsm: data_hash["alternativeTitleDisplay"],
-      source_ssi: data_hash["source"],
-      record_type_ssi: data_hash["recordType"],
-      identifier_mfhd_ssi: data_hash["identifierMfhd"],
-      identifier_shelf_mark_tsi: data_hash["identifierShelfMark"],
-      box_tsi: data_hash["identifierShelfMark"],
-      source_title_tsi: data_hash["sourceTitle"],
-      source_date_tsi: data_hash["sourceDate"],
-      source_edition_tsi: data_hash["sourceEdition"],
-      source_note_tsi: data_hash["sourceNote"],
-      extent_of_digitization_tsim: data_hash["extentOfDigitization"],
-      date_tsim: data_hash["date"],
-      extent_tsim: data_hash["extent"],
-      subject_name_tsim: data_hash["subjectName"],
+      genre_ssim: data_hash["genre"],
+      geo_subject_ssim: data_hash["geoSubject"],
+      resourceType_ssim: data_hash["resourceType"],
+      subjectName_ssim: data_hash["subjectName"],
       subject_topic_tsim: data_hash["subjectTopic"],
-      genre_tsim: data_hash["genre"],
-      part_of_tsi: data_hash["partOf"],
-      rights_tsim: data_hash["rights"],
-      barcode_tsi: data_hash["orbisBarcode"] || data_hash["barcode"],
-      finding_aid_tsim: data_hash["findingAid"],
-      references_tsim: data_hash["references"],
-      date_structured_ssim: data_hash["dateStructured"],
-      publication_place_tsim: data_hash["publicationPlace"],
-      folder_tsi: data_hash["folder"],
-      number_of_pages_ss: data_hash["numberOfPages"],
-      resource_type_tsi: data_hash["resourceType"],
-      source_created_tsi: data_hash["sourceCreated"],
-      edition_tsim: data_hash["edition"],
-      uri_ssi: data_hash["uri"],
-      abstract_tsim: data_hash["abstract"],
-      geo_subject_tsi: data_hash["geoSubject"],
+      extentOfDigitization_ssim: data_hash["extentOfDigitization"],
+      rights_ssim: data_hash["rights"],
+      publicationPlace_ssim: data_hash["publicationPlace"],
+      sourceCreated_ssim: data_hash["sourceCreated"],
+      publisher_ssim: data_hash["publisher"],
+      copyrightDate_ssim: data_hash["copyrightDate"],
+      source_ssim: data_hash["source"], # refers to source of metadata, e.g. Ladybird, Voyager, etc.
+      recordType_ssim: data_hash["recordType"],
+      sourceTitle_ssim: data_hash["sourceTitle"],
+      sourceDate_ssim: data_hash["sourceDate"],
+      sourceNote_ssim: data_hash["sourceNote"],
+      sourceEdition_ssim: data_hash["sourceEdition"], # Not currently in Blacklight application
+      references_ssim: data_hash["references"],
+      dateStructured_ssim: data_hash["dateStructured"],
+      # children_ssim
+      # importUrl_ssim
       illustrative_matter_tsi: data_hash["illustrativeMatter"],
-      publisher_tsim: data_hash["publisher"],
-      material_tsim: data_hash["material"],
-      scale_tsi: data_hash["scale"],
-      digital_tsi: data_hash["digital"],
-      coordinate_tsim: data_hash["coordinate"],
-      copyright_date_ssim: data_hash["copyrightDate"],
-      projection_tsim: data_hash["projection"],
-      public_bsi: true
+      oid_ssim: data_hash["oid"],
+      identifierMfhd_ssim: data_hash["identifierMfhd"],
+      identifierShelfMark_ssim: data_hash["identifierShelfMark"],
+      box_ssim: data_hash["identifierShelfMark"],
+      folder_ssim: data_hash["folder"],
+      orbisBibId_ssim: data_hash["orbisRecord"], # may change to orbisBibId
+      orbisBarcode_ssim: data_hash["orbisBarcode"] || data_hash["barcode"],
+      findingAid_ssim: data_hash["findingAid"],
+      # collectionId_ssim
+      edition_ssim: data_hash["edition"],
+      uri_ssim: data_hash["uri"],
+      partOf_ssim: data_hash["partOf"],
+      number_of_pages_ss: data_hash["numberOfPages"],
+      material_ssim: data_hash["material"],
+      scale_ssim: data_hash["scale"],
+      digital_ssim: data_hash["digital"],
+      coordinates_ssim: data_hash["coordinate"],
+      projection_ssim: data_hash["projection"],
+
+      date_tsim: data_hash["date"], # Not clear what date this refers to, not in Blacklight
+      public_bsi: true # TEMPORARY, makes everything public 
     }
     solr_core = ENV["SOLR_CORE"] ||= "blacklight-core"
     solr_url = ENV["SOLR_URL"] ||= "http://localhost:8983/solr"
