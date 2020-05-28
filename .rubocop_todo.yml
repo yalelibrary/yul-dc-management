@@ -26,6 +26,9 @@ Metrics/CyclomaticComplexity:
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/MethodLength:
   Max: 58
+  Exclude:
+    - 'spec/**/*.rb'
+    - 'app/services/fixture_indexing_service.rb'
 
 # Offense count: 1
 Metrics/PerceivedComplexity:
