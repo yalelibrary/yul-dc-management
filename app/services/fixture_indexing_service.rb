@@ -66,7 +66,8 @@ class FixtureIndexingService
       coordinate_tsim: data_hash["coordinate"],
       copyright_date_ssim: data_hash["copyrightDate"],
       projection_tsim: data_hash["projection"],
-      public_bsi: true
+      public_bsi: true,
+      visibility_ssi: data_hash["itemPermission"]
     }
     solr_core = ENV["SOLR_CORE"] ||= "blacklight-core"
     solr_url = ENV["SOLR_URL"] ||= "http://localhost:8983/solr"
