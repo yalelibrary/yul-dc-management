@@ -2,25 +2,20 @@ jobs:
   build-and-push:
     executor: docker/docker
     steps:
-      - run:
-          name: Setup Environment Variables
-          command: |
-            echo "export GIT_SHA1=$(echo $CIRCLE_SHA1 | cut -c -7)" >> $BASH_ENV
       - setup_remote_docker
       - checkout
       - docker/check
       - docker/build:
           image: yalelibraryit/dc-management
-          tag: pr,$GIT_SHA1
+          tag: pr-$CIRCLE_BRANCH,$CIRCLE_SHA1
       - docker/push:
           image: yalelibraryit/dc-management
-          tag: pr,$GIT_SHA1
+          tag: pr-$CIRCLE_BRANCH,$CIRCLE_SHA1
   run-tests:
     docker:
       # Image pulled from registry
-      - image: yalelibraryit/dc-management:$GIT_SHA1
+      - image: yalelibraryit/dc-management:$CIRCLE_SHA1
         environment:
-          GIT_SHA1: $(echo $CIRCLE_SHA1 | cut -c -7)
           POSTGRES_HOST: localhost
           POSTGRES_DB: yul_dc_management_test
           POSTGRES_USER: postgres
@@ -36,10 +31,6 @@ jobs:
           POSTGRES_PASSWORD: password
     executor: docker/docker
     steps:
-      - run:
-          name: Setup Environment Variables
-          command: |
-            echo "export GIT_SHA1=$(echo $CIRCLE_SHA1 | cut -c -7)" >> $BASH_ENV
       - setup_remote_docker
       - checkout
       - run:
@@ -52,20 +43,15 @@ jobs:
             bundle exec rspec --tag ~vpn_only:true
   publish-latest:
     executor: docker/docker
-    steps:
-      - run:
-          name: Setup Environment Variables
-          command: |
-            echo "export GIT_SHA1=$(echo $CIRCLE_SHA1 | cut -c -7)" >> $BASH_ENV
       - setup_remote_docker
       - checkout
       - docker/check
       - docker/build:
           image: yalelibraryit/dc-management
-          tag: master,$GIT_SHA1
+          tag: master,$CIRCLE_SHA1,$CIRCLE_BRANCH
       - docker/push:
           image: yalelibraryit/dc-management
-          tag: master,$GIT_SHA1
+          tag: master,$CIRCLE_SHA1,$CIRCLE_BRANCH
 orbs:
   docker: circleci/docker@1.0.1
 version: 2.1
