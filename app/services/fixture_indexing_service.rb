@@ -20,11 +20,11 @@ class FixtureIndexingService
     solr_doc = {
       id: oid,
       title_tsim: data_hash["title"],
-      title_vern_ssim: data_hash["title"],
+      # title_vern_ssim # title in the vernacular
       # subtitle_tsim
-      # subtitle_vern_ssim
+      # subtitle_vern_ssim # subtitle in the vernacular
       author_tsim: data_hash["creator"],
-      author_vern_ssim: data_hash["creator"],
+      # author_vern_ssim # author in the vernacular
       extent_ssim: data_hash["extent"],
       format: data_hash["format"],
       # url_fulltext_ssim
