@@ -34,7 +34,7 @@ touch .secrets
   ``` bash
   docker-compose up web
   ```
-- Access the web app at `http://localhost:3000`
+- Access the web app at `http://localhost:3001`
 - Access the solr instance at `http://localhost:8983`
 
 ##### Accessing the web container

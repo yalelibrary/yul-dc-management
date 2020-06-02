@@ -14,6 +14,6 @@ RUN /sbin/setuser app bash -l -c "set -x && \
     DB_ADAPTER=nulldb bundle exec rake assets:precompile && \
     mv ./public/assets ./public/assets-new"
 
-EXPOSE 3000
+EXPOSE 3001
 
 CMD /sbin/my_init
