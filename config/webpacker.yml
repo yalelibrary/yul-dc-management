@@ -74,6 +74,7 @@ development:
       'Access-Control-Allow-Origin': '*'
     watch_options:
       ignored: '**/node_modules/**'
+    compile: true
 
 
 test:
