@@ -6,7 +6,10 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%# commenting out for now until we have actual CSS for webpacker to pack
+    see https://github.com/rails/webpacker/issues/2071 for context
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %> %>
+
   </head>
 
   <body>
