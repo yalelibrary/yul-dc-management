@@ -31,6 +31,10 @@ module YulDcManagement
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    config.hosts << ".library.yale.edu"
+    config.hosts << ".curationexperts.com"
+    config.hosts << ".elb.amazonaws.com"
+
     # Don't generate system test files.
     config.generators.system_tests = nil
   end
