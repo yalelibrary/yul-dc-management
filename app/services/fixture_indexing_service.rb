@@ -83,9 +83,8 @@ class FixtureIndexingService
       public_bsi: true, # TEMPORARY, makes everything public
       visibility_ssi: data_hash["itemPermission"]
     }
-    solr_core = ENV["SOLR_CORE"] ||= "blacklight-core"
-    solr_url = ENV["SOLR_URL"] ||= "http://localhost:8983/solr"
-    solr = RSolr.connect url: "#{solr_url}/#{solr_core}"
+
+    solr = SolrService.connection
     solr.add([solr_doc])
     solr.commit
   end
