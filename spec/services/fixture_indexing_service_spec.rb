@@ -3,8 +3,8 @@ require "rails_helper"
 
 RSpec.describe FixtureIndexingService, clean: true do
   let(:ladybird_metadata_path) { File.join(fixture_path, 'ladybird') }
-  let(:solr_core) { ENV["SOLR_TEST_CORE"] ||= "blacklight-test" }
-  let(:solr_url) { ENV["SOLR_URL"] ||= "http://localhost:8983/solr" }
+  let(:solr_core) { "blacklight-core" }
+  let(:solr_url) { "http://solr:8983/solr" }
   let(:oid) { "2034600" }
 
   it "can index the contents of a directory to Solr" do
