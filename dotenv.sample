@@ -20,7 +20,7 @@ CANTALOUPE_TAG=latest
 MANIFEST_TAG=demo
 
 # Solr
-SOLR_URL=http://solr:8983/solr/
+SOLR_HOST=http://solr:8983/solr/
 
 SOLR_TEST_CORE=blacklight-test
 SOLR_CORE=blacklight-core
