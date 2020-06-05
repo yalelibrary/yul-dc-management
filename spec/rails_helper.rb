@@ -43,9 +43,7 @@ RSpec.configure do |config|
 
   # Clear out solr before test
   config.before(clean: true) do
-    solr_core = ENV["SOLR_TEST_CORE"] ||= "blacklight-test"
-    solr_url = ENV["SOLR_URL"] ||= "http://localhost:8983/solr"
-    solr = RSolr.connect url: "#{solr_url}/#{solr_core}"
+    solr = SolrService.connection
     solr.delete_by_query '*:*'
     solr.commit
   end

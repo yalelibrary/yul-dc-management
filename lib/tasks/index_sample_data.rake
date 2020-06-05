@@ -9,9 +9,7 @@ namespace :yale do
 
   desc "Delete all solr documents"
   task clean_solr: :environment do
-    solr_core = ENV["SOLR_CORE"]
-    solr_url = ENV["SOLR_URL"] ||= "http://localhost:8983/solr"
-    solr = RSolr.connect url: "#{solr_url}/#{solr_core}"
+    solr = SolrService.connection
     solr.delete_by_query '*:*'
     solr.commit
     puts "All documents deleted from solr"

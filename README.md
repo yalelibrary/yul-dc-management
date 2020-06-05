@@ -40,26 +40,26 @@ touch .secrets
 ##### Accessing the web container
 - Navigate to the app root directory in another tab and run:
   ``` bash
-  docker-compose exec web bash
+  docker-compose run web bundle exec bash
   ```
 - You will need to be inside the container to:
   - Run migrations
   - Access the seed file
   - Access the rails console for debugging
     ```bash
-    bundle exec rails c
+    rails c
     ```
   - Run the tests, excluding those that require the Yale VPN (the tilda(~) means the tag is excluded)
     ```bash
-    bundle exec rspec --tag ~vpn_only:true
+    rspec --tag ~vpn_only:true
     ```
   - Run only the tests that require the Yale VPN
     ```bash
-    bundle exec rspec --tag vpn_only:true
+    rspec --tag vpn_only:true
     ```
   - Run Rubocop to fix any style errors
     ```bash
-    bundle exec rubocop -a
+    rubocop -a
     ```
     - If Rubocop is still flagging something that you've checked and want to keep as-is, add it to the `.rubocop_todo.yml` manually.
 
@@ -81,13 +81,13 @@ touch .secrets
     MC_PW=YOUR_INFO_HERE
     ```
     ```bash
-    bundle exec rake yale:refresh_fixture_data
+    rake yale:refresh_fixture_data
     ```
   - Index sample data (if you go to solr and hit "execute query" and don't have data, run this command)
    ```bash
-        SOLR_CORE=blacklight-core bundle exec rake yale:index_fixture_data
+        rake yale:index_fixture_data
    ```
   - Clean out Solr index
    ```bash
-        SOLR_CORE=blacklight-core bundle exec rake yale:clean_solr
+        rake yale:clean_solr
    ```

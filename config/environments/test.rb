@@ -7,6 +7,7 @@
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  ENV["SOLR_CORE"] = "blacklight-test"
 
   config.hosts.clear
 
