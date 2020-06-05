@@ -83,7 +83,7 @@ touch .secrets
     Valid metadata sources: ils [aka Voyager], aspace, or ladybird.
 
     ```bash
-    rake yale:refresh_fixture_data
+    METADATA_SOURCE=YOUR_SOURCE_HERE rake yale:refresh_fixture_data
     ```
   - Index sample data (if you go to solr and hit "execute query" and don't have data, run this command)
    ```bash

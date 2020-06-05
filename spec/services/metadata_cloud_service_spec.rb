@@ -11,7 +11,7 @@ RSpec.describe MetadataCloudService, vpn_only: true do
   let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
 
   context "it gets called from a rake task" do
-    let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "oid-2034600.json") }
+    let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "LB-2034600.json") }
     let(:metadata_source) { "ladybird" }
 
     it "is easy to invoke" do
@@ -40,4 +40,24 @@ RSpec.describe MetadataCloudService, vpn_only: true do
     end
   end
 
+  context "saving a Voyager record" do
+    let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ils", "V-2034600.json") }
+    let(:metadata_source) { "ils" }
+
+    it "can pull voyager records" do
+      time_stamp_before = File.mtime(path_to_example_file.to_s)
+      MetadataCloudService.refresh_fixture_data(short_oid_path, metadata_source)
+      time_stamp_after = File.mtime(path_to_example_file.to_s)
+      expect(time_stamp_before).to be < time_stamp_after
+    end
+  end
+
+  context "with a Voyager record with a barcode" do
+    let(:oid) { "16414889" }
+    let(:metadata_source) { "ils" }
+
+    it "can take an oid and build a metadata cloud bib-based Voyager url" do
+      expect(mcs.build_metadata_cloud_url(oid, "ils")).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002113596465/bib/3577942?mediaType=json"
+    end
+  end
 end
