@@ -81,13 +81,13 @@ touch .secrets
     MC_PW=YOUR_INFO_HERE
     ```
     ```bash
-    bundle exec rake yale:refresh_fixture_data
+      rake yale:refresh_fixture_data
     ```
   - Index sample data (if you go to solr and hit "execute query" and don't have data, run this command)
    ```bash
-        SOLR_CORE=blacklight-core bundle exec rake yale:index_fixture_data
+      rake yale:index_fixture_data
    ```
   - Clean out Solr index
    ```bash
-        SOLR_CORE=blacklight-core bundle exec rake yale:clean_solr
+      rake yale:clean_solr
    ```
