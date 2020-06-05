@@ -14,8 +14,6 @@ services:
     image: '${REGISTRY_HOST}${REGISTRY_URI}:${MANAGEMENT_TAG:-latest}'
     env_file:
       - .env
-      - .env.development
-      - .env.test
       - .secrets
     ports:
       - '3000:3000'
@@ -34,8 +32,6 @@ services:
     image: postgres
     env_file:
       - .env
-      - .env.development
-      - .env.test
     ports:
       - '5432:5432'
     volumes:
