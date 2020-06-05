@@ -1,0 +1,90 @@
+{
+  "recordType": "bib",
+  "source": "ils",
+  "uri": "/ils/bib/9734763",
+  "title": [
+    "Albergati bible"
+  ],
+  "publicationPlace": [
+    "Italy"
+  ],
+  "publisher": [
+    ""
+  ],
+  "date": [
+    "1428."
+  ],
+  "extent": [
+    "ff. i + 682 + i : 231 x 161 (135 x 111) mm."
+  ],
+  "material": [
+    "parchment ;"
+  ],
+  "language": [
+    "la"
+  ],
+  "description": [
+    "Script: Written in rounded gothic bookhand.",
+    "The Bible is a splendid example of the Italian late gothic illuminated manuscript. The decoration consists of two very richly illuminated pages (f. 5r, Genesis; f. 272r, Psalms), thirteen small miniatures (ff. 1r, 570v-576v), and 79 historiated initials, 7 to 10-line (not including ascenders or descenders) at the beginning of every book of the Bible, the sections of the Psalter, and a few prologues. The miniatures are in thin gold or yellow frames. The historiated initials are composed of acanthus, mauve, blue, pink, orange, and/or green. At least four artists collaborated in the illustration and decoration of the codex. On virtually every folio, recto and verso, are elaborate bar borders, in margins and/or between text columns, full or half-length, gold, blue, green, pink, and/or orange with white filigree, some with curling acanthus, leafy midpoints and terminals with acanthus and hair-spray extension. On folios with miniatures or initials, more elaborate borders (full borders on ff. 1r, 5r): curling hair-spray with gold dots and trefoil leaves, spikey ivy, pink, blue, orange and green flowers, putti, insects, birds, grotesques and, on f. 348v, a marginal scene, lower left corner, a fowler chasing rabbits.",
+    "Ornamental initials (5 to 6-line) at the beginning of the prologues in red, blue, orange, and/or green, acanthus infilled red with white filigree against irregular gold grounds; gold against cusped pink and blue backgrounds with white filigree; some rinceaux initials in Franco-Flemish style, pink or blue with white highlights against cusped gold grounds. 2 and 1-line initials, gold on red and blue grounds with white filigree. Running titles in alternating red and blue letters or in gold against red and blue rectangular grounds with white  filigree. Line fillers (ff. 617r-682r) in red, blue and/or gold. Chapter numbers in red or blue. Rubrics throughout.",
+    "First two leaves slightly creased.",
+    "Binding: 19th-20th centuries. A painted design under the gilt fore edge. Red velvet binding.",
+    "In Latin."
+  ],
+  "subjectName": [
+    "Langton, Stephen, d. 1228."
+  ],
+  "subjectTopic": [
+    "Illumination of books and manuscripts, Medieval",
+    "Manuscripts, Medieval",
+    "Versions",
+    "Vulgate"
+  ],
+  "genre": [
+    "Manuscripts, Medieval Italy 15th century",
+    "Medieval and Renaissance Manuscripts in Beinecke Library"
+  ],
+  "format": [
+    "unspecified"
+  ],
+  "orbisRecord": "9734763",
+  "findingAid": [
+    "https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms407.htm",
+    "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?CN=Beinecke_MS_407"
+  ],
+  "references": [
+    "Albergati Bible. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
+  ],
+  "dateStructured": [
+    "1428   "
+  ],
+  "illustrativeMatter": "   ",
+  "titleStatement": [
+    "Albergati bible"
+  ],
+  "provenanceUncontrolled": "From the collection of A. Chester Beatty (Western MS 79). Acquired from H. P. Kraus in 1969 as the gift of Edwin J. Beinecke.",
+  "subjectTitle": "Bible.",
+  "indexedBy": [
+    "Shailor, B. Catalogue of Medieval and Renaissance Manuscripts in the Beinecke Rare Book and Manuscript Library, MS 407."
+  ],
+  "subjectGeographic": [
+    "Connecticut",
+    "New Haven."
+  ],
+  "subjectTitleDisplay": [
+    "Langton, Stephen, d. 1228.",
+    "Bible. Latin"
+  ],
+  "bibId": 9734763,
+  "suppressInOpac": false,
+  "createDate": "2011-04-20T14:54:55.000+0000",
+  "updateDate": "2019-02-24T22:33:39.000+0000",
+  "holdingId": 0,
+  "itemId": 0,
+  "children": [
+
+  ],
+  "abstract": [
+    "Manuscript on parchment of 1) Bible in the usual order with some prologues. 2) Index of Hebrew names generally attributed to Stephen Langton. 3) Chapters 25-29 of the Testament of the 12 Patriarchs. Written for Cardinal Niccolo Albergati"
+  ]
+}
