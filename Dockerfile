@@ -1,4 +1,4 @@
-FROM yalelibraryit/dc-management-base:v1.0.1
+FROM yalelibraryit/dc-management-base:v1.0.2
 
 ADD https://time.is/just build-time
 COPY ops/nginx.sh /etc/service/nginx/run
