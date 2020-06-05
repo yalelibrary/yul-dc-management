@@ -23,6 +23,7 @@ class FixtureIndexingService
       # title_vern_ssim # title in the vernacular
       # subtitle_tsim
       # subtitle_vern_ssim # subtitle in the vernacular
+      author_ssim: data_hash["creator"],
       author_tsim: data_hash["creator"],
       # author_vern_ssim # author in the vernacular
       extent_ssim: data_hash["extent"],
