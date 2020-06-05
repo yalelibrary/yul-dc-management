@@ -7,8 +7,7 @@
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
-  config.hosts.clear
+  ENV["SOLR_CORE"]="blacklight-test"
 
   config.cache_classes = false
   config.action_view.cache_template_loading = true
