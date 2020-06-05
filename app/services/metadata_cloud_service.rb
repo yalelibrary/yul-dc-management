@@ -4,10 +4,10 @@ require 'csv'
 class MetadataCloudService
   ##
   # This is the method that is called from the yale:refresh_fixture_data rake task
-  def self.refresh_fixture_data(oid_path)
+  def self.refresh_fixture_data(oid_path, metadata_source)
     mcs = MetadataCloudService.new
     mcs.list_of_oids(oid_path).each do |oid|
-      metadata_cloud_url = mcs.build_metadata_cloud_url(oid)
+      metadata_cloud_url = mcs.build_metadata_cloud_url(oid, metadata_source)
       full_response = mcs.mc_get(metadata_cloud_url)
       mcs.save_mc_json_to_file(full_response, oid)
     end
@@ -43,7 +43,13 @@ class MetadataCloudService
     fixture_ids_table.by_col[0]
   end
 
-  def build_metadata_cloud_url(oid)
-    "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{oid}?mediaType=json"
+  def build_metadata_cloud_url(oid, metadata_source)
+    if metadata_source == "ladybird"
+      identifier_type = "oid"
+    elsif metadata_source == "ils"
+      identifier_type = "bib"
+    end
+    
+    "https://metadata-api-test.library.yale.edu/metadatacloud/api/#{metadata_source}/#{identifier_type}/#{oid}?mediaType=json"
   end
 end

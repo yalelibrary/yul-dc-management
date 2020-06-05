@@ -80,6 +80,8 @@ touch .secrets
     MC_USER=YOUR_INFO_HERE
     MC_PW=YOUR_INFO_HERE
     ```
+    Valid metadata sources: ils [aka Voyager], aspace, or ladybird.
+
     ```bash
     rake yale:refresh_fixture_data
     ```

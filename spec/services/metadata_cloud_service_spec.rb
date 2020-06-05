@@ -12,11 +12,11 @@ RSpec.describe MetadataCloudService, vpn_only: true do
 
   context "it gets called from a rake task" do
     let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "oid-2034600.json") }
-    let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
+    let(:metadata_source) { "ladybird" }
 
     it "is easy to invoke" do
       time_stamp_before = File.mtime(path_to_example_file.to_s)
-      MetadataCloudService.refresh_fixture_data(short_oid_path)
+      MetadataCloudService.refresh_fixture_data(short_oid_path, metadata_source)
       time_stamp_after = File.mtime(path_to_example_file.to_s)
       expect(time_stamp_before).to be < time_stamp_after
     end
@@ -32,24 +32,12 @@ RSpec.describe MetadataCloudService, vpn_only: true do
     end
 
     it "can take an oid and build a metadata cloud default url" do
-      expect(mcs.build_metadata_cloud_url("2004628")).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628?mediaType=json"
+      expect(mcs.build_metadata_cloud_url("2034600", "ladybird")).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2034600?mediaType=json"
+    end
+
+    it "can take an oid and build a metadata cloud bib-based Voyager url" do
+      expect(mcs.build_metadata_cloud_url("2034600", "ils")).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/752400?mediaType=json"
     end
   end
 
-  context "saving and writing to a file" do
-    let(:new_fixture_path) { Rails.root.join("spec", "fixtures", "new_json", "test_file.json") }
-    let(:mc_response) { mcs.mc_get(oid_url) }
-
-    before do
-      mcs.save_mc_json_to_file(mc_response, oid)
-    end
-
-    it "can save a response to the local file system" do
-      expect(File).to exist(new_fixture_path)
-    end
-
-    it "the new file that is created isn't empty.." do
-      expect(new_fixture_path.size).not_to eq 0
-    end
-  end
 end
