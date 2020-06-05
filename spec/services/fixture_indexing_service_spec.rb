@@ -6,7 +6,6 @@ RSpec.describe FixtureIndexingService, clean: true do
   let(:oid) { "2034600" }
 
   it "can index the contents of a directory to Solr" do
-    byebug
     FixtureIndexingService.index_fixture_data
     solr = SolrService.connection
     response = solr.get 'select', params: { q: '*:*' }
