@@ -40,7 +40,7 @@ touch .secrets
 ##### Accessing the web container
 - Navigate to the app root directory in another tab and run:
   ``` bash
-  docker-compose run web bundle exec bash
+  docker-compose exec web bundle exec bash
   ```
 - You will need to be inside the container to:
   - Run migrations
