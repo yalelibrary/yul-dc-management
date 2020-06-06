@@ -19,14 +19,14 @@ cd ./yul-dc-management
 touch .secrets
 ```
 
-### If this is your first time working in this repo, build the base service (dependencies, etc. that don't change)
+### If this is your first time working in this repo, pull the base service (dependencies, etc. that don't change)
   ``` bash
-  docker-compose build base
+  docker-compose pull base
   ```
 
-### If this is your first time working in this repo or the Dockerfile has been updated you will need to (re)build your services
+### If this is your first time working in this repo or the Dockerfile has been updated you will need to pull your services
   ``` bash
-  docker-compose build web
+  docker-compose pull web
   ```
 
 ### Starting the app

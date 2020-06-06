@@ -60,11 +60,11 @@ class MetadataCloudService
     elsif metadata_source == "ils"
       bib_id = get_bib_id(oid)
       barcode = get_barcode(oid)
-      if barcode.nil?
-        identifier_block = "bib/#{bib_id}"
-      else
-        identifier_block = "barcode/#{barcode}/bib/#{bib_id}"
-      end
+      identifier_block = if barcode.nil?
+                           "bib/#{bib_id}"
+                         else
+                           "barcode/#{barcode}/bib/#{bib_id}"
+                         end
     end
 
     "https://metadata-api-test.library.yale.edu/metadatacloud/api/#{metadata_source}/#{identifier_block}?mediaType=json"
@@ -78,14 +78,13 @@ class MetadataCloudService
     ladybird_file_folder = Rails.root.join("spec", "fixtures", "ladybird")
     ladybird_file = File.read(ladybird_file_folder.join("LB-#{oid}" + ".json"))
     parsed_ladybird_file = JSON.parse(ladybird_file)
-    bib_id = parsed_ladybird_file["orbisRecord"]
+    parsed_ladybird_file["orbisRecord"]
   end
 
   def get_barcode(oid)
     ladybird_file_folder = Rails.root.join("spec", "fixtures", "ladybird")
     ladybird_file = File.read(ladybird_file_folder.join("LB-#{oid}" + ".json"))
     parsed_ladybird_file = JSON.parse(ladybird_file)
-    barcode = parsed_ladybird_file["orbisBarcode"]
+    parsed_ladybird_file["orbisBarcode"]
   end
-
 end
