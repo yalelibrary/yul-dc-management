@@ -57,7 +57,7 @@ RSpec.describe MetadataCloudService, vpn_only: true do
     let(:metadata_source) { "ils" }
 
     it "can take an oid and build a metadata cloud bib-based Voyager url" do
-      expect(mcs.build_metadata_cloud_url(oid, "ils")).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002113596465/bib/3577942?mediaType=json"
+      expect(mcs.build_metadata_cloud_url(oid, metadata_source)).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002113596465/bib/3577942?mediaType=json"
     end
   end
 end

@@ -84,7 +84,7 @@ class MetadataCloudService
   ##
   # Takes an oid and returns the corresponding bib_id, as defined by ladybird
   # I suspect this approach is going to be super slow, should probably decide how long we want to keep these and figure out
-  # how we want to save them. Like, should refreshing the relationship between the Ladybird IDs and the
+  # how we want to save them. Like, should refreshing the relationship between the Ladybird IDs and the bib ids be done on a chron job?
   def get_bib_id(oid)
     ladybird_file = get_fixture_file(oid, "ladybird")
     parsed_ladybird_file = JSON.parse(ladybird_file)
