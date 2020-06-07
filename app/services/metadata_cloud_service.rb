@@ -22,36 +22,6 @@ class MetadataCloudService
   end
 
   ##
-  # Takes a full HTTP response with headers and saves a json file
-  def save_mc_json_to_file(mc_response, oid, metadata_source)
-    file_folder = Rails.root.join("spec", "fixtures", metadata_source)
-    raw_metadata = mc_response.body.to_str
-    parsed_metadata = JSON.parse(raw_metadata)
-    if metadata_source == "ladybird"
-      file_prefix = "LB"
-    elsif metadata_source == "ils"
-      file_prefix = "V"
-    elsif metadata_source == "aspace"
-      file_prefix = "AS"
-    end
-
-    File.write(file_folder.join("#{file_prefix}-#{oid}" + ".json"), JSON.pretty_generate(parsed_metadata))
-  end
-
-  ##
-  # Takes a csv file
-  def list_of_oids(oid_path)
-    @list_of_oids ||= build_oid_array(oid_path)
-  end
-
-  ##
-  # Takes a csv file and returns an array containing the values from the first column
-  def build_oid_array(oid_path)
-    fixture_ids_table = CSV.read(oid_path, headers: true)
-    fixture_ids_table.by_col[0]
-  end
-
-  ##
   # Takes an oid (Ladybird identifier) and a metadata source (allowed values are ladybird, ils, and aspace), and returns
   # the appropriate URL to pull the metadata from the Yale Metadata Cloud
   def build_metadata_cloud_url(oid, metadata_source)
@@ -71,19 +41,58 @@ class MetadataCloudService
   end
 
   ##
+  # Takes a full HTTP response with headers and saves a json file
+  def save_mc_json_to_file(mc_response, oid, metadata_source)
+    file_folder = Rails.root.join("spec", "fixtures", metadata_source)
+    raw_metadata = mc_response.body.to_str
+    parsed_metadata = JSON.parse(raw_metadata)
+    file_prefix = file_prefix(metadata_source)
+
+    File.write(file_folder.join("#{file_prefix}-#{oid}" + ".json"), JSON.pretty_generate(parsed_metadata))
+  end
+
+  ##
+  # Takes a csv file and returns an array containing the values from the first column
+  def build_oid_array(oid_path)
+    fixture_ids_table = CSV.read(oid_path, headers: true)
+    fixture_ids_table.by_col[0]
+  end
+
+  ##
+  # Takes a csv file
+  def list_of_oids(oid_path)
+    @list_of_oids ||= build_oid_array(oid_path)
+  end
+
+  def get_fixture_file(oid, metadata_source)
+    fixture_file_folder = Rails.root.join("spec", "fixtures", metadata_source)
+    file_prefix = file_prefix(metadata_source)
+    File.read(fixture_file_folder.join("#{file_prefix}-#{oid}" + ".json"))
+  end
+
+  def file_prefix(metadata_source)
+    case metadata_source
+    when "ladybird"
+      "LB"
+    when "ils"
+      "V"
+    when "aspace"
+      "AS"
+    end
+  end
+
+  ##
   # Takes an oid and returns the corresponding bib_id, as defined by ladybird
   # I suspect this approach is going to be super slow, should probably decide how long we want to keep these and figure out
   # how we want to save them. Like, should refreshing the relationship between the Ladybird IDs and the
   def get_bib_id(oid)
-    ladybird_file_folder = Rails.root.join("spec", "fixtures", "ladybird")
-    ladybird_file = File.read(ladybird_file_folder.join("LB-#{oid}" + ".json"))
+    ladybird_file = get_fixture_file(oid, "ladybird")
     parsed_ladybird_file = JSON.parse(ladybird_file)
     parsed_ladybird_file["orbisRecord"]
   end
 
   def get_barcode(oid)
-    ladybird_file_folder = Rails.root.join("spec", "fixtures", "ladybird")
-    ladybird_file = File.read(ladybird_file_folder.join("LB-#{oid}" + ".json"))
+    ladybird_file = get_fixture_file(oid, "ladybird")
     parsed_ladybird_file = JSON.parse(ladybird_file)
     parsed_ladybird_file["orbisBarcode"]
   end
