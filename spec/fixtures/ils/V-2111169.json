@@ -1,0 +1,78 @@
+{
+  "recordType": "bib",
+  "source": "ils",
+  "uri": "/ils/bib/9896328",
+  "creator": [
+    "Galen"
+  ],
+  "title": [
+    "Opera varia"
+  ],
+  "publicationPlace": [
+    "Constantinople or southern Italy"
+  ],
+  "publisher": [
+    ""
+  ],
+  "date": [
+    "[ca. 1300]"
+  ],
+  "language": [
+    "gr"
+  ],
+  "description": [
+    "In Greek."
+  ],
+  "subjectName": [
+    "Galen."
+  ],
+  "subjectTopic": [
+    "Manuscripts, Medieval",
+    "Medicine, Greek and Roman"
+  ],
+  "genre": [
+    "Manuscripts, Medieval Byzantine Empire 14th century",
+    "Manuscripts, Medieval Italy 14th century",
+    "Medieval and Renaissance Manuscripts in Beinecke Library"
+  ],
+  "format": [
+    "unspecified"
+  ],
+  "orbisRecord": "9896328",
+  "findingAid": [
+    "https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms1121.htm",
+    "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=Beinecke_MS_1121"
+  ],
+  "references": [
+    "Galen, Opera Varia. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
+  ],
+  "dateStructured": [
+    "1300   "
+  ],
+  "illustrativeMatter": "   ",
+  "titleStatement": [
+    "Opera varia"
+  ],
+  "subjectGeographic": [
+    "Connecticut",
+    "New Haven."
+  ],
+  "subjectTitleDisplay": [
+    "Galen."
+  ],
+  "creatorDisplay": [
+    "Galen"
+  ],
+  "bibId": 9896328,
+  "suppressInOpac": false,
+  "createDate": "2011-08-09T15:55:02.000+0000",
+  "updateDate": "2018-10-01T19:01:04.000+0000",
+  "holdingId": 0,
+  "itemId": 0,
+  "children": [
+
+  ],
+  "abstract": [
+    "Manuscript on paper"
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "recordType": "bib",
+  "source": "ils",
+  "uri": "/ils/bib/8317945",
+  "creator": [
+    "Dong, Chun (Cartographer), cartographer",
+    "董醇 (Cartographer), cartographer"
+  ],
+  "title": [
+    "Zhi li Da Qing He yuan liu zong tu",
+    "直隷大清河源流總圖"
+  ],
+  "alternativeTitle": [
+    "Map of Ta Ch'ing River"
+  ],
+  "publicationPlace": [
+    "China",
+    "China"
+  ],
+  "publisher": [
+    "publisher not identified",
+    "publisher not identified"
+  ],
+  "date": [
+    "Xianfeng 7 [1857]"
+  ],
+  "extent": [
+    "1 map : 27 x 150 cm, folded to 27 x 13 cm"
+  ],
+  "material": [
+    "color ;"
+  ],
+  "language": [
+    "ch"
+  ],
+  "description": [
+    "Jing zhe zhuang."
+  ],
+  "scale": "Scale not given.",
+  "coordinate": [
+    "a"
+  ],
+  "genre": [
+    "Maps",
+    "Pictorial maps",
+    "Maps",
+    "Chinese rare maps"
+  ],
+  "format": [
+    "cartographic image"
+  ],
+  "orbisRecord": "8317945",
+  "findingAid": [
+    "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16189148"
+  ],
+  "dateStructured": [
+    "1857   "
+  ],
+  "illustrativeMatter": "   ",
+  "titleStatement": [
+    "Zhi li Da Qing He yuan liu zong tu / Qing he dao Dong Chun",
+    "直隷大清河源流總圖 / 清河道董醇"
+  ],
+  "alternativeTitleDisplay": [
+    "Map of Ta Ch'ing River Container has title"
+  ],
+  "subjectGeographic": [
+    "a-cc---",
+    "Hai River (China)"
+  ],
+  "creatorDisplay": [
+    "Dong, Chun (Cartographer), cartographer",
+    "董醇 (Cartographer), cartographer"
+  ],
+  "bibId": 8317945,
+  "suppressInOpac": false,
+  "createDate": "2008-08-05T15:29:21.000+0000",
+  "updateDate": "2018-05-29T15:48:35.000+0000",
+  "holdingId": 0,
+  "itemId": 0,
+  "children": [
+
+  ]
+}
