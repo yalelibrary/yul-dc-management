@@ -7,6 +7,7 @@ class MetadataCloudService
   def self.refresh_fixture_data(oid_path, metadata_source)
     mcs = MetadataCloudService.new
     mcs.list_of_oids(oid_path).each do |oid|
+      next unless mcs.build_metadata_cloud_url(oid, metadata_source)
       metadata_cloud_url = mcs.build_metadata_cloud_url(oid, metadata_source)
       full_response = mcs.mc_get(metadata_cloud_url)
       mcs.save_mc_json_to_file(full_response, oid, metadata_source)
@@ -35,9 +36,35 @@ class MetadataCloudService
                          else
                            "barcode/#{barcode}/bib/#{bib_id}"
                          end
+    elsif metadata_source == "aspace"
+      return nil unless get_archive_space_uri(oid)
+      identifier_block = get_archive_space_uri(oid)
     end
-
     "https://metadata-api-test.library.yale.edu/metadatacloud/api/#{metadata_source}/#{identifier_block}?mediaType=json"
+  end
+
+  def get_archive_space_uri(oid)
+    ladybird_file = get_fixture_file(oid, "ladybird")
+    parsed_ladybird_file = JSON.parse(ladybird_file)
+    uri_starting_slash = parsed_ladybird_file["archiveSpaceUri"]
+    # Removes the beginning slash so that it can follow the pattern for other identifiers
+    uri_starting_slash.sub(/\//, '') if uri_starting_slash.present?
+  end
+
+  ##
+  # Takes an oid and returns the corresponding bib_id, as defined by ladybird
+  # I suspect this approach is going to be super slow, should probably decide how long we want to keep these and figure out
+  # how we want to save them. Like, should refreshing the relationship between the Ladybird IDs and the bib ids be done on a chron job?
+  def get_bib_id(oid)
+    ladybird_file = get_fixture_file(oid, "ladybird")
+    parsed_ladybird_file = JSON.parse(ladybird_file)
+    parsed_ladybird_file["orbisRecord"]
+  end
+
+  def get_barcode(oid)
+    ladybird_file = get_fixture_file(oid, "ladybird")
+    parsed_ladybird_file = JSON.parse(ladybird_file)
+    parsed_ladybird_file["orbisBarcode"]
   end
 
   ##
@@ -79,21 +106,5 @@ class MetadataCloudService
     when "aspace"
       "AS"
     end
-  end
-
-  ##
-  # Takes an oid and returns the corresponding bib_id, as defined by ladybird
-  # I suspect this approach is going to be super slow, should probably decide how long we want to keep these and figure out
-  # how we want to save them. Like, should refreshing the relationship between the Ladybird IDs and the bib ids be done on a chron job?
-  def get_bib_id(oid)
-    ladybird_file = get_fixture_file(oid, "ladybird")
-    parsed_ladybird_file = JSON.parse(ladybird_file)
-    parsed_ladybird_file["orbisRecord"]
-  end
-
-  def get_barcode(oid)
-    ladybird_file = get_fixture_file(oid, "ladybird")
-    parsed_ladybird_file = JSON.parse(ladybird_file)
-    parsed_ladybird_file["orbisBarcode"]
   end
 end
