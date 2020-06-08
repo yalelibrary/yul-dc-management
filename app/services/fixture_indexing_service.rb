@@ -14,7 +14,7 @@ class FixtureIndexingService
   end
 
   def self.index_to_solr(oid)
-    filename = "oid-#{oid}.json"
+    filename = "LB-#{oid}.json"
     file = File.read(File.join(ladybird_metadata_path, filename))
     data_hash = JSON.parse(file)
     solr_doc = {

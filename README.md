@@ -19,14 +19,14 @@ cd ./yul-dc-management
 touch .secrets
 ```
 
-### If this is your first time working in this repo, build the base service (dependencies, etc. that don't change)
+### If this is your first time working in this repo, pull the base service (dependencies, etc. that don't change)
   ``` bash
-  docker-compose build base
+  docker-compose pull base
   ```
 
-### If this is your first time working in this repo or the Dockerfile has been updated you will need to (re)build your services
+### If this is your first time working in this repo or the Dockerfile has been updated you will need to pull your services
   ``` bash
-  docker-compose build web
+  docker-compose pull web
   ```
 
 ### Starting the app
@@ -80,8 +80,9 @@ touch .secrets
     MC_USER=YOUR_INFO_HERE
     MC_PW=YOUR_INFO_HERE
     ```
+    Valid metadata sources: ils [aka Voyager], aspace, or ladybird.
     ```bash
-    rake yale:refresh_fixture_data
+    METADATA_SOURCE=YOUR_SOURCE_HERE rake yale:refresh_fixture_data
     ```
   - Index sample data (if you go to solr and hit "execute query" and don't have data, run this command)
    ```bash
