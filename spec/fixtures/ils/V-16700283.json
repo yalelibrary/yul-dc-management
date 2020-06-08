@@ -1,0 +1,79 @@
+{
+  "recordType": "bib",
+  "source": "ils",
+  "uri": "/ils/bib/13640726",
+  "title": [
+    "Book of hours (fragment)"
+  ],
+  "publicationPlace": [
+    "Flanders"
+  ],
+  "publisher": [
+    ""
+  ],
+  "date": [
+    "[ca. 1300]"
+  ],
+  "extent": [
+    "1 l. : 65 x 85 mm"
+  ],
+  "material": [
+    "parchment ;"
+  ],
+  "language": [
+    "la"
+  ],
+  "description": [
+    "Script: Gothic.",
+    "Decoration: decorated border showing two hounds chasing a stag.",
+    "Byname: Ghistelles Hours.",
+    "In Latin."
+  ],
+  "subjectTopic": [
+    "Books of hours",
+    "Manuscripts, Medieval"
+  ],
+  "genre": [
+    "Manuscripts, Medieval Flanders 14th century",
+    "Early works to 1800",
+    "Medieval and Renaissance Manuscripts in Beinecke Library"
+  ],
+  "format": [
+    "unspecified"
+  ],
+  "orbisRecord": "13640726",
+  "findingAid": [
+    "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16700284"
+  ],
+  "references": [
+    "Book of Hours (Fragment). Takamiya MS 142."
+  ],
+  "dateStructured": [
+    "1400   "
+  ],
+  "illustrativeMatter": "   ",
+  "titleStatement": [
+    "Book of hours (fragment)"
+  ],
+  "provenanceControlled": "Cockerell, Sydney Carlyle, Sir, 1867-1962 Ownership. Thomas, Alan G. Ownership.",
+  "provenanceUncontrolled": "Previously owned by Sir Sydney Cockerell? Previously owned by Alan G. Thomas. Purchased from Toshiyuki Takamiya on the Edwin J. Beinecke Book Fund, 2017.",
+  "indexedBy": [
+    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437."
+  ],
+  "subjectGeographic": [
+    "Connecticut",
+    "New Haven."
+  ],
+  "bibId": 13640726,
+  "suppressInOpac": false,
+  "createDate": "2018-06-18T15:04:26.000+0000",
+  "updateDate": "2019-04-23T14:13:33.000+0000",
+  "holdingId": 0,
+  "itemId": 0,
+  "children": [
+
+  ],
+  "abstract": [
+    "Lower half of a single manuscript leaf, on parchment, containing five lines of text and marginal decoration. From the \"Ghistelles Hours.\""
+  ]
+}

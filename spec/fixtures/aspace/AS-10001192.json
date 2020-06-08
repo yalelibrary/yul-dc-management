@@ -1,0 +1,60 @@
+{
+  "recordType": "archival_object",
+  "source": "aspace",
+  "uri": "/aspace/repositories/11/archival_objects/304086",
+  "identifier": "/aspace/repositories/11/archival_objects/304086",
+  "localRecordNumber": "GEN MSS 963",
+  "containerGrouping": "Box 7",
+  "creator": [
+    "Eliot, George, 1819-1880"
+  ],
+  "title": [
+    "to GE"
+  ],
+  "date": [
+    "1859 Oct 10"
+  ],
+  "extent": [
+    "14.3 linear_feet"
+  ],
+  "language": [
+    "eng"
+  ],
+  "description": [
+    "After George Eliot's death there were four principal groups of her manuscripts and private papers held by the families of Evans, Blackwood, Lewes, and Cross. Her family letters were at Derby in the hands of her grandnieces, the Evans sisters. Her long correspondence about the publication of her books was in the Edinburgh office of William Blackwood and Sons, who have since deposited it in the National Library of Scotland. The Blackwoods also owned the manuscript of Scenes of Clerical Life, which was sold in 1911 to the Pierpont Morgan Library. The manuscripts of her other works George Eliot bequeathed with all her literary rights to Charles Lee Lewes, her residuary legatee and sole executor of her estate. In 1891 his widow presented these manuscripts (except for \"Brother Jacob\" and \"A College Breakfast-Party\"), bound in 24 volumes, to the British Museum. On June 27, 1923 her three daughters sold many of the remaining George Eliot papers at Sotheby's; they were widely dispersed. \n\nCharles Lewes had lent George Eliot's letters and journals to John Walter Cross, who was writing George Eliot's Life (1885). Apparently believing that they belonged to him, Cross retained them. On his death in 1924 they passed to his niece Miss Elsie Druce, who during the 1930's disposed of most of them in several sales at Sotheby's. Through the zealous interest of Professor Chauncey Brewster Tinker, who had been appointed Keeper of Rare Books in 1930, many of them were purchased for Yale. In that year he secured the largest single group, consisting of 620 letters to the Brays and the Hennells, which with 46 early letters to Maria Lewis formed the nucleus of the Yale collection. In 1931 George Eliot's Commonplace Book and her most important Journal (1854-61) were also acquired, as well as her Diary for 1880, and the travel journals of her trips to Germany (1858), to Italy (1860 and 1864), and to Normandy (1865). From his own collection Mr. Tinker gave among other manuscripts George Eliot's Journal (1861-77). Yale thus has all the extant journals and diaries except the diary for 1879, which is in the Berg Collection at the New York Public Library. \n\nFrom Lewes's last surviving granddaughter Mrs. E. Carrington Ouvry (1877-1974), Yale secured the manuscript of \"Brother Jacob\" bound with that of \"A College Breakfast-Party\", and George Eliot's translation of Spinoza's Ethics. Of the greatest value to scholars are all of Lewes's extant journals and diaries except that for 1878, of which there is a microfilm. The manuscripts of five of Lewes's plays are included in the collection. There are several notebooks used for his Biographical History of Philosophy and Goethe's Life, and for his work on physiology and psychology, as well as many fragments of his Problems of Life and Mind, of which George Eliot completed and published the final volume. \n\nAutograph letters have been added continually since the collection began. In 1975 there were more than 1030 by George Eliot and 220 by G. H. Lewes. Of letters to and about them there were more than 1040. The earliest family letters, including the only known one to George Eliot's father, were purchased in 1969 from the widow of his great-great-grandson Robert Evans, and George Eliot's letters to John Walter Cross and his family were purchased from Miss Druce's heir, Mr. Ian Maclean, in 1970. \n\n[above written by] Gordon S. Haight."
+  ],
+  "rights": [
+    "The George Eliot and George Henry Lewes Collection is the physical property of the Beinecke Rare Book and Manuscript Library, Yale University. Literary rights, including copyright, belong to the authors or their legal heirs and assigns. For further information, consult the appropriate curator.",
+    "The materials are open for research."
+  ],
+  "orbisRecord": "3659107",
+  "orbisBarcode": "39002091548348",
+  "resourceType": "mixed_materials",
+  "contributor": [
+    "Lewes, George Henry, 1817-1878"
+  ],
+  "provenanceUncontrolled": "Acquired by gift and purchase from various sources.",
+  "ancestorTitles": [
+    "Bracebridge, Charles Holte, 1799-1872",
+    "Section III. Letters to/about GEORGE ELIOT & GEORGE HENRY LEWES",
+    "George Eliot and George Henry Lewes collection"
+  ],
+  "ancestorIdentifiers": [
+    "/aspace/repositories/11/archival_objects/304076",
+    "/aspace/repositories/11/archival_objects/303906",
+    "/aspace/repositories/11/resources/927"
+  ],
+  "createdBeginDate": [
+    "1859-10-10"
+  ],
+  "createdEndDate": [
+
+  ],
+  "archiveSpaceUri": "/repositories/11/archival_objects/304086",
+  "children": [
+
+  ],
+  "abstract": [
+    "The collection includes correspondence by, to and about Eliot and Lewes. There are 4 journals, 1 diary, several notebooks with notes for a projected novel, quotes, poetry, and early school essays all belonging to George Eliot, accompanied by reviews and scripts of dramatizations of Daniel Deronda in the 1920s and 1970s. With 3 journals, 9 diaries, and notebooks with research notes belonging to George Henry Lewes, accompanied by miscellaneous writings, including several chapters of Problems of Life and Mind. There is also printed material, reviews, memorabilia, and photograph portraits of Eliot and Lewes as well as artwork by others. Principal correspondents include members of the Lewes family, Caroline and Charles Bray, John Emerich Edward Dalberg Acton, Barbara Leigh Smith Bodichon, John Chapman, Anna Chalmers and J. W. Cross, Alexandre D'Albert-Durade, Frederic Harrison, Sara Sophia Hennell, Frances Lucy Evans Houghton, Maria Lewis, Edward Robert Bulwer Lytton, Herbert Spencer, and Anthony Trollope."
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "recordType": "bib",
+  "source": "ils",
+  "uri": "/ils/bib/12286028",
+  "creator": [
+    "Li, Mengquan (Cartographer), cartographer",
+    "李蒙泉 (Cartographer), cartographer"
+  ],
+  "title": [
+    "Su Sheng yu di ying wu quan tu",
+    "蘇省輿地營伍全圖"
+  ],
+  "publicationPlace": [
+    "China"
+  ],
+  "publisher": [
+    "publisher not identified"
+  ],
+  "date": [
+    "[1880?]"
+  ],
+  "extent": [
+    "1 map on 6 volumes : 124 x 159 cm, folded to 27 x 9 cm"
+  ],
+  "material": [
+    "color ;"
+  ],
+  "language": [
+    "ch"
+  ],
+  "description": [
+    "\"Mei fang er shi li\"--Volume 6."
+  ],
+  "subjectTopic": [
+    "Military camps",
+    "Military camps"
+  ],
+  "scale": "Scale not given.",
+  "coordinate": [
+    "a"
+  ],
+  "genre": [
+    "Maps",
+    "Military maps",
+    "Pictorial maps",
+    "Maps",
+    "Chinese rare maps"
+  ],
+  "format": [
+    "cartographic image"
+  ],
+  "orbisRecord": "12286028",
+  "findingAid": [
+    "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16173880"
+  ],
+  "dateStructured": [
+    "1880   "
+  ],
+  "illustrativeMatter": "   ",
+  "titleStatement": [
+    "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua",
+    "蘇省輿地營伍全圖 / 即用知縣李蒙泉, 陳嘉勲仝監畫"
+  ],
+  "contributor": [
+    "Chen, Jiaxun (Cartographer), cartographer."
+  ],
+  "relatedTitle": [
+    ""
+  ],
+  "subjectGeographic": [
+    "a-cc-ku",
+    "China",
+    "Jiangsu Sheng",
+    "China",
+    "Jiangsu Sheng."
+  ],
+  "relatedTitleDisplay": [
+    "Chen, Jiaxun (Cartographer), cartographer",
+    "陳嘉勲 (Cartographer), cartographer"
+  ],
+  "creatorDisplay": [
+    "Li, Mengquan (Cartographer), cartographer",
+    "李蒙泉 (Cartographer), cartographer"
+  ],
+  "contributorDisplay": [
+    "Chen, Jiaxun (Cartographer),"
+  ],
+  "bibId": 12286028,
+  "suppressInOpac": false,
+  "createDate": "2014-10-28T21:12:40.000+0000",
+  "updateDate": "2017-08-01T20:05:06.000+0000",
+  "holdingId": 0,
+  "itemId": 0,
+  "children": [
+
+  ]
+}

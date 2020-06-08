@@ -1,0 +1,61 @@
+{
+  "recordType": "archival_object",
+  "source": "aspace",
+  "uri": "/aspace/repositories/11/archival_objects/699963",
+  "identifier": "/aspace/repositories/11/archival_objects/699963",
+  "localRecordNumber": "YCAL MSS 702",
+  "containerGrouping": "Box 8",
+  "creator": [
+    "Giard, Robert, 1939-2002"
+  ],
+  "title": [
+    "Desk files, weekly calendars, grant proposals, resumes, professional correspondence, exhibition announcements and brochures, obituaries, awards, articles, plans for future projects"
+  ],
+  "date": [
+    "1994-2002"
+  ],
+  "extent": [
+    "50.34 linear_feet",
+    "50.06 linear_feet",
+    "16 folders"
+  ],
+  "language": [
+    "eng"
+  ],
+  "description": [
+    "The papers consist of photographs, correspondence, diaries, financial papers, and printed materials documenting Robert Giard's career as a photographer and personal life, spanning the years 1972 to 2002. The bulk of the papers contain photographic prints by Giard in several sizes of various subjects, including portraits of gay and lesbian writers, landscapes, nudes, still lifes, and portraits of the Thanks Be To Grandmother Winifred Foundation grant recipients.",
+    "This group contains correspondence, professional papers diaries, financial papers, photographs, printed material, journals, and other related papers. \n\nBox 271 contains print-outs of original inventories of 16\" x 20\" photographs. These inventories contain detailed information not found in this finding aid and originate from a data export of a FileMaker Pro Database acquired with the collection.\n\nFormer call number: Uncat MSS 765."
+  ],
+  "rights": [
+    "The materials are open for research.",
+    "The Robert Giard Papers is the physical property of the Beinecke Rare Book and Manuscript Library, Yale University. Literary rights, including copyright, belong to the authors or their legal heirs and assigns. For further information, consult the appropriate curator."
+  ],
+  "orbisRecord": "7151233",
+  "orbisBarcode": "39002104850970",
+  "resourceType": "mixed_materials",
+  "provenanceUncontrolled": "Purchased from Jonathan G. Silin on the Eugene G. O'Neill Memorial Fund, 2004. Gift of Jonathan G. Silin, 2011., Purchased from Jonathan G. Silin on the Eugene G. O'Neill Memorial Fund, 2004.",
+  "ancestorTitles": [
+    "Professional papers",
+    "February 2005 Acquisition",
+    "Robert Giard papers"
+  ],
+  "ancestorIdentifiers": [
+    "/aspace/repositories/11/archival_objects/699956",
+    "/aspace/repositories/11/archival_objects/699949",
+    "/aspace/repositories/11/resources/1746"
+  ],
+  "createdBeginDate": [
+    "1994"
+  ],
+  "createdEndDate": [
+    "2002"
+  ],
+  "createdEarliestDate": "1994",
+  "archiveSpaceUri": "/repositories/11/archival_objects/699963",
+  "children": [
+
+  ],
+  "abstract": [
+    "The papers consist of photographs, correspondence, diaries, financial papers, and printed materials documenting Robert Giard's career as a photographer and personal life, spanning the years 1972 to 2002. The bulk of the papers contain photographic prints by Giard in several sizes of various subjects, including portraits of gay and lesbian writers, landscapes, nudes, still lifes, and portraits of the Thanks Be To Grandmother Winifred Foundation grant recipients."
+  ]
+}
