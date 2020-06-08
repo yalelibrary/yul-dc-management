@@ -15,7 +15,7 @@ class FixtureIndexingService
 
   def self.index_to_solr(oid, metadata_source)
     mcs = MetadataCloudService.new
-    id_prefix =  mcs.file_prefix(metadata_source)
+    id_prefix = mcs.file_prefix(metadata_source)
     file = mcs.get_fixture_file(oid, metadata_source)
     data_hash = JSON.parse(file)
     solr_doc = {

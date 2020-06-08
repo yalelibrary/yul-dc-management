@@ -2,7 +2,6 @@
 require "rails_helper"
 
 RSpec.describe FixtureIndexingService, clean: true do
-
   context "with Voyager fixture data" do
     let(:metadata_fixture_path) { File.join(fixture_path, metadata_source) }
     let(:oid) { "2034600" }
@@ -26,7 +25,6 @@ RSpec.describe FixtureIndexingService, clean: true do
       expect(response["response"]["numFound"]).to be > 45
       expect(response["response"]["numFound"]).to be < 101
     end
-
   end
 
   context "with combined fixture data" do
@@ -39,7 +37,6 @@ RSpec.describe FixtureIndexingService, clean: true do
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 2
     end
-
   end
 
   context "with ladybird fixture data" do
