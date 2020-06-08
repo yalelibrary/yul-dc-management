@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe "Solr Indexing Tasks", type: :system do
+RSpec.describe "Solr Indexing Tasks", type: :system, clean: true do
   describe 'Click solr task button' do
     before do
       visit management_index_path
