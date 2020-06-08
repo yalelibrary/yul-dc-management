@@ -2,4 +2,8 @@
 
 class ManagementController < ApplicationController
   def index; end
+
+  def run_task
+    FixtureIndexingService.index_fixture_data
+  end
 end
