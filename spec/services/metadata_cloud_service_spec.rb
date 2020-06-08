@@ -11,12 +11,12 @@ RSpec.describe MetadataCloudService, vpn_only: true do
   let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
 
   context "it gets called from a rake task" do
-    let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "oid-2034600.json") }
-    let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
+    let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "LB-2034600.json") }
+    let(:metadata_source) { "ladybird" }
 
     it "is easy to invoke" do
       time_stamp_before = File.mtime(path_to_example_file.to_s)
-      MetadataCloudService.refresh_fixture_data(short_oid_path)
+      MetadataCloudService.refresh_fixture_data(short_oid_path, metadata_source)
       time_stamp_after = File.mtime(path_to_example_file.to_s)
       expect(time_stamp_before).to be < time_stamp_after
     end
@@ -31,25 +31,57 @@ RSpec.describe MetadataCloudService, vpn_only: true do
       expect(mcs.list_of_oids(short_oid_path)).to include "2034600"
     end
 
-    it "can take an oid and build a metadata cloud default url" do
-      expect(mcs.build_metadata_cloud_url("2004628")).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628?mediaType=json"
+    it "can take an oid and build a metadata cloud Ladybird url" do
+      expect(mcs.build_metadata_cloud_url("2034600", "ladybird").to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2034600?mediaType=json"
+    end
+
+    it "can take an oid and build a metadata cloud bib-based Voyager url" do
+      expect(mcs.build_metadata_cloud_url("2034600", "ils").to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/752400?mediaType=json"
     end
   end
 
-  context "saving and writing to a file" do
-    let(:new_fixture_path) { Rails.root.join("spec", "fixtures", "new_json", "test_file.json") }
-    let(:mc_response) { mcs.mc_get(oid_url) }
+  context "with an ArchiveSpace record" do
+    let(:oid_with_aspace) { "16854285" }
+    let(:metadata_source) { "aspace" }
+    let(:oid_without_aspace) { "2034600" }
 
-    before do
-      mcs.save_mc_json_to_file(mc_response, oid)
+    it "can take an oid and build a metadata cloud ArchiveSpace url" do
+      expect(mcs.build_metadata_cloud_url(oid_with_aspace, metadata_source).to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/515305?mediaType=json"
     end
 
-    it "can save a response to the local file system" do
-      expect(File).to exist(new_fixture_path)
+    it "does not try to retrieve a metadata cloud record if there is no ArchiveSpace record" do
+      expect(mcs.build_metadata_cloud_url(oid_without_aspace, metadata_source).to_s).to be_empty
     end
 
-    it "the new file that is created isn't empty.." do
-      expect(new_fixture_path.size).not_to eq 0
+    let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "aspace", "AS-16854285.json") }
+    let(:metadata_source) { "aspace" }
+
+    it "can pull ArchiveSpace records" do
+      time_stamp_before = File.mtime(path_to_example_file.to_s)
+      MetadataCloudService.refresh_fixture_data(short_oid_path, metadata_source)
+      time_stamp_after = File.mtime(path_to_example_file.to_s)
+      expect(time_stamp_before).to be < time_stamp_after
+    end
+  end
+
+  context "saving a Voyager record" do
+    let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ils", "V-2034600.json") }
+    let(:metadata_source) { "ils" }
+
+    it "can pull voyager records" do
+      time_stamp_before = File.mtime(path_to_example_file.to_s)
+      MetadataCloudService.refresh_fixture_data(short_oid_path, metadata_source)
+      time_stamp_after = File.mtime(path_to_example_file.to_s)
+      expect(time_stamp_before).to be < time_stamp_after
+    end
+  end
+
+  context "with a Voyager record with a barcode" do
+    let(:oid) { "16414889" }
+    let(:metadata_source) { "ils" }
+
+    it "can take an oid and build a metadata cloud barcode-based Voyager url" do
+      expect(mcs.build_metadata_cloud_url(oid, metadata_source).to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002113596465/bib/3577942?mediaType=json"
     end
   end
 end
