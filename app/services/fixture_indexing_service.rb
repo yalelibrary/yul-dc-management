@@ -1,24 +1,27 @@
 # frozen_string_literal: true
 
 class FixtureIndexingService
-  def self.index_fixture_data
+  def self.index_fixture_data(metadata_source)
     oid_path = Rails.root.join("spec", "fixtures", "fixture_ids.csv")
     mcs = MetadataCloudService.new
     mcs.build_oid_array(oid_path).each do |oid|
-      index_to_solr oid
+      next unless mcs.get_fixture_file(oid, metadata_source)
+      index_to_solr(oid, metadata_source)
     end
   end
 
-  def self.ladybird_metadata_path
-    Rails.root.join('spec', 'fixtures', 'ladybird').to_s
+  def self.metadata_path(metadata_source)
+    Rails.root.join('spec', 'fixtures', metadata_source).to_s
   end
 
-  def self.index_to_solr(oid)
-    filename = "LB-#{oid}.json"
-    file = File.read(File.join(ladybird_metadata_path, filename))
+  def self.index_to_solr(oid, metadata_source)
+    mcs = MetadataCloudService.new
+    id_prefix = mcs.file_prefix(metadata_source)
+    return nil unless mcs.get_fixture_file(oid, metadata_source)
+    file = mcs.get_fixture_file(oid, metadata_source)
     data_hash = JSON.parse(file)
     solr_doc = {
-      id: oid,
+      id: "#{id_prefix}-#{oid}",
       title_tsim: data_hash["title"],
       # title_vern_ssim # title in the vernacular
       # subtitle_tsim
@@ -61,7 +64,7 @@ class FixtureIndexingService
       # children_ssim
       # importUrl_ssim
       illustrative_matter_tsi: data_hash["illustrativeMatter"],
-      oid_ssim: data_hash["oid"],
+      oid_ssim: data_hash["oid"] || oid,
       identifierMfhd_ssim: data_hash["identifierMfhd"],
       identifierShelfMark_ssim: data_hash["identifierShelfMark"],
       box_ssim: data_hash["identifierShelfMark"],

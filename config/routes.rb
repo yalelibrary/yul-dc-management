@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   get 'management/index'
   get 'management/', to: 'management#index'
 
-  get "management/run_task", to: 'management#run_task', as: 'run_solr_index'
+  get "management/run_task/:metadata_source", to: 'management#run_task', as: 'metadata_source'
 end

@@ -4,7 +4,7 @@ class ManagementController < ApplicationController
   def index; end
 
   def run_task
-    FixtureIndexingService.index_fixture_data
+    @metadata_source = FixtureIndexingService.index_fixture_data(params[:metadata_source])
     redirect_to management_index_path
     flash[:notice] = "These files are being indexed in the background and will be ready soon."
   end

@@ -2,65 +2,136 @@
 require "rails_helper"
 
 RSpec.describe FixtureIndexingService, clean: true do
-  let(:ladybird_metadata_path) { File.join(fixture_path, 'ladybird') }
-  let(:solr_core) { ENV["SOLR_TEST_CORE"] ||= "blacklight-test" }
-  let(:solr_url) { ENV["SOLR_URL"] ||= "http://localhost:8983/solr" }
-  let(:oid) { "2034600" }
+  context "with ArchiveSpace fixture data" do
+    let(:metadata_fixture_path) { File.join(fixture_path, metadata_source) }
+    let(:oid) { "16854285" }
+    let(:metadata_source) { "aspace" }
+    let(:non_aspace_oid) { "14716192" }
 
-  it "can index the contents of a directory to Solr" do
-    FixtureIndexingService.index_fixture_data
-    solr = SolrService.connection
-    response = solr.get 'select', params: { q: '*:*' }
-    expect(response["response"]["numFound"]).to be > 45
-    expect(response["response"]["numFound"]).to be < 101
-  end
-
-  it "knows where to find the ladybird metadata" do
-    expect(FixtureIndexingService.ladybird_metadata_path).to eq ladybird_metadata_path
-  end
-
-  it "can index a single file to Solr" do
-    FixtureIndexingService.index_to_solr(oid)
-    solr = SolrService.connection
-    response = solr.get 'select', params: { q: '*:*' }
-    expect(response["response"]["numFound"]).to eq 1
-  end
-
-  context "Private objects" do
-    let(:priv_oid) { "16189097-priv" }
-
-    it "indexes Private as one of the visibility values" do
-      FixtureIndexingService.index_to_solr(priv_oid)
-      solr = SolrService.connection
-      response = solr.get 'select', params: { q: '*:*' }
-      expect(response["response"]["docs"].first["visibility_ssi"]).to eq("Private")
-      expect(response["response"]["docs"].first.dig("title_tsim").join).to eq("[Map of China]. [private copy]")
+    it "knows where to find the ArchiveSpace metadata" do
+      expect(FixtureIndexingService.metadata_path(metadata_source)).to eq metadata_fixture_path
     end
 
-    it "can find objects according to visibility" do
-      FixtureIndexingService.index_fixture_data
+    it "can index a single file to Solr" do
+      FixtureIndexingService.index_to_solr(oid, metadata_source)
       solr = SolrService.connection
-      response = solr.get 'select', params: { q: 'visibility_ssi:"Private"' }
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to eq 1
+    end
+
+    it "does not try to index a non-existent file to Solr" do
+      FixtureIndexingService.index_to_solr(non_aspace_oid, metadata_source)
+      solr = SolrService.connection
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to eq 0
+    end
+
+    it "can index the contents of a CSV file to Solr" do
+      FixtureIndexingService.index_fixture_data(metadata_source)
+      solr = SolrService.connection
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to be > 4
+      expect(response["response"]["numFound"]).to be < 20
+    end
+  end
+
+  context "with Voyager fixture data" do
+    let(:metadata_fixture_path) { File.join(fixture_path, metadata_source) }
+    let(:oid) { "2034600" }
+    let(:metadata_source) { "ils" }
+
+    it "knows where to find the Voyager metadata" do
+      expect(FixtureIndexingService.metadata_path(metadata_source)).to eq metadata_fixture_path
+    end
+
+    it "can index a single file to Solr" do
+      FixtureIndexingService.index_to_solr(oid, metadata_source)
+      solr = SolrService.connection
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to eq 1
+    end
+
+    it "can index the contents of a CSV file to Solr" do
+      FixtureIndexingService.index_fixture_data(metadata_source)
+      solr = SolrService.connection
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to be > 45
+      expect(response["response"]["numFound"]).to be < 101
+    end
+  end
+
+  context "with combined fixture data" do
+    let(:oid) { "2034600" }
+
+    it "can index the same digital object's data from two different metadata sources to Solr" do
+      FixtureIndexingService.index_to_solr(oid, "ladybird")
+      FixtureIndexingService.index_to_solr(oid, "ils")
+      solr = SolrService.connection
+      response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 2
     end
   end
 
-  context "Yale Community Only objects" do
-    let(:yale_oid) { "2107188-yale" }
+  context "with ladybird fixture data" do
+    let(:metadata_fixture_path) { File.join(fixture_path, metadata_source) }
+    let(:oid) { "2034600" }
+    let(:metadata_source) { "ladybird" }
 
-    it "indexes Yale Community Only as one of the visibility values" do
-      FixtureIndexingService.index_to_solr(yale_oid)
+    it "can index the contents of a directory to Solr" do
+      FixtureIndexingService.index_fixture_data(metadata_source)
       solr = SolrService.connection
       response = solr.get 'select', params: { q: '*:*' }
-      expect(response["response"]["docs"].first["visibility_ssi"]).to eq("Yale Community Only")
-      expect(response["response"]["docs"].first.dig("title_tsim").join).to eq("Fair Lucretia’s garland [yale-only copy]")
+      expect(response["response"]["numFound"]).to be > 45
+      expect(response["response"]["numFound"]).to be < 101
     end
 
-    it "can find objects according to visibility" do
-      FixtureIndexingService.index_fixture_data
+    it "knows where to find the ladybird metadata" do
+      expect(FixtureIndexingService.metadata_path(metadata_source)).to eq metadata_fixture_path
+    end
+
+    it "can index a single file to Solr" do
+      FixtureIndexingService.index_to_solr(oid, metadata_source)
       solr = SolrService.connection
-      response = solr.get 'select', params: { q: 'visibility_ssi:"Yale Community Only"' }
-      expect(response["response"]["numFound"]).to eq 2
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to eq 1
+    end
+
+    context "Private objects" do
+      let(:priv_oid) { "16189097-priv" }
+
+      it "indexes Private as one of the visibility values" do
+        FixtureIndexingService.index_to_solr(priv_oid, metadata_source)
+        solr = SolrService.connection
+        response = solr.get 'select', params: { q: '*:*' }
+        expect(response["response"]["docs"].first["visibility_ssi"]).to eq("Private")
+        expect(response["response"]["docs"].first.dig("title_tsim").join).to eq("[Map of China]. [private copy]")
+      end
+
+      it "can find objects according to visibility" do
+        FixtureIndexingService.index_fixture_data(metadata_source)
+        solr = SolrService.connection
+        response = solr.get 'select', params: { q: 'visibility_ssi:"Private"' }
+        expect(response["response"]["numFound"]).to eq 2
+      end
+    end
+
+    context "Yale Community Only objects" do
+      let(:yale_oid) { "2107188-yale" }
+
+      it "indexes Yale Community Only as one of the visibility values" do
+        FixtureIndexingService.index_to_solr(yale_oid, metadata_source)
+        solr = SolrService.connection
+        response = solr.get 'select', params: { q: '*:*' }
+        expect(response["response"]["docs"].first["visibility_ssi"]).to eq("Yale Community Only")
+        expect(response["response"]["docs"].first.dig("title_tsim").join).to eq("Fair Lucretia’s garland [yale-only copy]")
+      end
+
+      it "can find objects according to visibility" do
+        FixtureIndexingService.index_fixture_data(metadata_source)
+        solr = SolrService.connection
+        response = solr.get 'select', params: { q: 'visibility_ssi:"Yale Community Only"' }
+        expect(response["response"]["numFound"]).to eq 2
+      end
     end
   end
 end

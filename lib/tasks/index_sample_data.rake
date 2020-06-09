@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 namespace :yale do
-  desc "Index fixture data"
+  desc "METADATA_SOURCE=aspace|ils|ladybird rake yale:index_fixture_data Index fixture data"
   task index_fixture_data: :environment do
-    FixtureIndexingService.index_fixture_data
+    metadata_source = ENV["METADATA_SOURCE"]
+    FixtureIndexingService.index_fixture_data(metadata_source)
     puts "Sample metadata indexed"
   end
 
