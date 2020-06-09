@@ -8,7 +8,7 @@ RSpec.describe FixtureIndexingService, clean: true do
     let(:metadata_source) { "aspace" }
     let(:non_aspace_oid) { "14716192" }
 
-    it "knows where to find the Voyager metadata" do
+    it "knows where to find the ArchiveSpace metadata" do
       expect(FixtureIndexingService.metadata_path(metadata_source)).to eq metadata_fixture_path
     end
 
