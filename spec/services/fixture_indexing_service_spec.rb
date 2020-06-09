@@ -40,10 +40,6 @@ RSpec.describe FixtureIndexingService, clean: true do
     let(:oid) { "2034600" }
     let(:metadata_source) { "ils" }
 
-  it "knows where to find the ladybird metadata" do
-    expect(FixtureIndexingService.metadata_path(metadata_source)).to eq metadata_fixture_path
-  end
-
     it "knows where to find the Voyager metadata" do
       expect(FixtureIndexingService.metadata_path(metadata_source)).to eq metadata_fixture_path
     end
