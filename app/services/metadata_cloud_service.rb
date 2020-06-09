@@ -94,7 +94,8 @@ class MetadataCloudService
   def get_fixture_file(oid, metadata_source)
     fixture_file_folder = Rails.root.join("spec", "fixtures", metadata_source)
     file_prefix = file_prefix(metadata_source)
-    File.read(fixture_file_folder.join("#{file_prefix}-#{oid}" + ".json"))
+    file_path = fixture_file_folder.join("#{file_prefix}-#{oid}" + ".json")
+    File.read(file_path) if File.exist?(file_path)
   end
 
   def file_prefix(metadata_source)

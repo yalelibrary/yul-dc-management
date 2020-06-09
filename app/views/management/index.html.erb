@@ -2,13 +2,18 @@
 
 
 <div>
-  <h3> Run Rake Task </h3>
+  <h3> Index Metadata to Solr </h3>
     <%= link_to "Index Voyager Records to Solr", metadata_source_path("ils"), class: "btn btn-primary" %>
     <% if flash[:notice] %>
       <div class="notice"><%= flash[:notice] %></div>
     <% end %>
 
     <%= link_to "Index Ladybird Records to Solr", metadata_source_path("ladybird"), class: "btn btn-primary" %>
+    <% if flash[:notice] %>
+      <div class="notice"><%= flash[:notice] %></div>
+    <% end %>
+
+    <%= link_to "Index ArchiveSpace Records to Solr", metadata_source_path("aspace"), class: "btn btn-primary" %>
     <% if flash[:notice] %>
       <div class="notice"><%= flash[:notice] %></div>
     <% end %>

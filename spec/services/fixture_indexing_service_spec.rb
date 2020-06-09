@@ -2,10 +2,47 @@
 require "rails_helper"
 
 RSpec.describe FixtureIndexingService, clean: true do
+  context "with ArchiveSpace fixture data" do
+    let(:metadata_fixture_path) { File.join(fixture_path, metadata_source) }
+    let(:oid) { "16854285" }
+    let(:metadata_source) { "aspace" }
+    let(:non_aspace_oid) { "14716192" }
+
+    it "knows where to find the Voyager metadata" do
+      expect(FixtureIndexingService.metadata_path(metadata_source)).to eq metadata_fixture_path
+    end
+
+    it "can index a single file to Solr" do
+      FixtureIndexingService.index_to_solr(oid, metadata_source)
+      solr = SolrService.connection
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to eq 1
+    end
+
+    it "does not try to index a non-existent file to Solr" do
+      FixtureIndexingService.index_to_solr(non_aspace_oid, metadata_source)
+      solr = SolrService.connection
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to eq 0
+    end
+
+    it "can index the contents of a CSV file to Solr" do
+      FixtureIndexingService.index_fixture_data(metadata_source)
+      solr = SolrService.connection
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to be > 4
+      expect(response["response"]["numFound"]).to be < 20
+    end
+  end
+
   context "with Voyager fixture data" do
     let(:metadata_fixture_path) { File.join(fixture_path, metadata_source) }
     let(:oid) { "2034600" }
     let(:metadata_source) { "ils" }
+
+  it "knows where to find the ladybird metadata" do
+    expect(FixtureIndexingService.metadata_path(metadata_source)).to eq metadata_fixture_path
+  end
 
     it "knows where to find the Voyager metadata" do
       expect(FixtureIndexingService.metadata_path(metadata_source)).to eq metadata_fixture_path

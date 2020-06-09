@@ -5,6 +5,7 @@ class FixtureIndexingService
     oid_path = Rails.root.join("spec", "fixtures", "fixture_ids.csv")
     mcs = MetadataCloudService.new
     mcs.build_oid_array(oid_path).each do |oid|
+      next unless mcs.get_fixture_file(oid, metadata_source)
       index_to_solr(oid, metadata_source)
     end
   end
@@ -16,6 +17,7 @@ class FixtureIndexingService
   def self.index_to_solr(oid, metadata_source)
     mcs = MetadataCloudService.new
     id_prefix = mcs.file_prefix(metadata_source)
+    return nil unless mcs.get_fixture_file(oid, metadata_source)
     file = mcs.get_fixture_file(oid, metadata_source)
     data_hash = JSON.parse(file)
     solr_doc = {
