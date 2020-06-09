@@ -14,7 +14,7 @@ RSpec.describe "Solr Indexing Tasks", type: :system, clean: true do
 
       it 'displays a flash message that indexing is occuring in the background' do
         expect(page.status_code).to eq(200)
-        expect(page).to have_content(/These files are being indexed in the background and will be ready soon./)
+        expect(page).to have_content(/indexed in the background and will be ready soon./)
       end
 
       it "can index the contents of a directory to Solr" do
@@ -31,7 +31,7 @@ RSpec.describe "Solr Indexing Tasks", type: :system, clean: true do
 
       it 'displays a flash message that indexing is occuring in the background' do
         expect(page.status_code).to eq(200)
-        expect(page).to have_content(/These files are being indexed in the background and will be ready soon./)
+        expect(page).to have_content(/indexed in the background and will be ready soon./)
       end
 
       it "can index the contents of a directory to Solr" do
