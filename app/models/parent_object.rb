@@ -1,0 +1,2 @@
+class ParentObject < ApplicationRecord
+end
