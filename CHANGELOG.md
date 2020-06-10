@@ -1,11 +1,21 @@
 # Changelog
 
-## [1.3.0](https://github.com/yalelibrary/yul-dc-management/tree/1.3.0) (2020-06-08)
+## [1.4.0](https://github.com/yalelibrary/yul-dc-management/tree/1.4.0) (2020-06-09)
 
-[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.2.0...1.3.0)
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.3.0...1.4.0)
 
 **Merged pull requests:**
 
+- Slight refactor, more specific name [\#54](https://github.com/yalelibrary/yul-dc-management/pull/54) ([maxkadel](https://github.com/maxkadel))
+- Fixture indexing service takes metadata\_source [\#53](https://github.com/yalelibrary/yul-dc-management/pull/53) ([maxkadel](https://github.com/maxkadel))
+
+## [v1.3.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.3.0) (2020-06-08)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.2.0...v1.3.0)
+
+**Merged pull requests:**
+
+- Prep for 1.3.0 release [\#52](https://github.com/yalelibrary/yul-dc-management/pull/52) ([bess](https://github.com/bess))
 - Re-worked Solr task button [\#51](https://github.com/yalelibrary/yul-dc-management/pull/51) ([dylansalay](https://github.com/dylansalay))
 
 ## [v1.2.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.2.0) (2020-06-08)
