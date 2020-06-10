@@ -46,7 +46,7 @@ touch .secrets
   docker-compose up web
   ```
 
-- Access the web app at `http://localhost:3001`
+- Access the web app at `http://localhost:3001/management`
 
 - Access the solr instance at `http://localhost:8983`
 
@@ -61,7 +61,13 @@ touch .secrets
 - You will need to be inside the container to:
 
   - Run migrations
-  - Access the seed file
+  - Seed the database with a pre-defined list of oids from Ladybird
+
+  ```bash
+  RAILS_ENV=development rails db:seed
+  RAILS_ENV=test rails db:seed
+  ```
+
   - Access the rails console for debugging
 
     ```bash
@@ -119,7 +125,7 @@ touch .secrets
 - Index sample data (if you go to solr and hit "execute query" and don't have data, run this command)
 
   ```bash
-      rake yale:index_fixture_data
+      METADATA_SOURCE=YOUR_SOURCE_HERE rake yale:index_fixture_data
   ```
 
 - Clean out Solr index
