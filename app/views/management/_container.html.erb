@@ -1,0 +1,36 @@
+
+<div class="container service-container">
+  <h3> Containers </h3>
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col"> Name </th>
+        <th scope="col"> Image Tag </th>
+      </tr>
+    </thead>
+      <tr>
+        <td> Management </td>
+        <td> <%= "#{ENV['REGISTRY_HOST'] + ENV['REGISTRY_URI'] + ":" + ENV['MANAGEMENT_TAG']}" %> </td>
+      </tr>
+      <tr>
+        <td> DB </td>
+        <td> postgres </td>
+      </tr>
+      <tr>
+        <td> Blacklight </td>
+        <td> </td>
+      </tr>
+      <tr>
+        <td> Solr </td>
+        <td> <%= "yalelibraryit/dc-solr:" + "#{ENV['SOLR_TAG']}" %> </td>
+      </tr>
+      <tr>
+        <td> iiif_image </td>
+        <td> </td>
+      </tr>
+      <tr>
+        <td> iiif_manifest </td>
+        <td>  </td>
+      </tr>
+  </table>
+</div>
