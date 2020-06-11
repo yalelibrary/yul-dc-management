@@ -11,11 +11,11 @@ RSpec.describe "Management", type: :feature do
       visit management_index_path
     end
 
-    it 'dynamically displays container services' do
+    it 'dynamically displays deployed services' do
       expect(page).to have_content("Containers")
-      expect(page).to have_text("yalelibraryit/dc-management:v1.2.3")
+      expect(page).to have_content("yalelibraryit/dc-management:v1.2.3")
       expect(page).to have_content("postgres")
-      expect(page).to have_text("yalelibraryit/dc-solr:v3.2.1")
+      expect(page).to have_content("yalelibraryit/dc-solr:v3.2.1")
     end
   end
 end
