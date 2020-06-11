@@ -84,4 +84,54 @@ RSpec.describe MetadataCloudService, vpn_only: true do
       expect(mcs.build_metadata_cloud_url(oid, metadata_source).to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002113596465/bib/3577942?mediaType=json"
     end
   end
+
+  context "using the database" do
+    let(:oid) { "2004628" }
+    let(:bib_id) { "3163155" }
+    let(:po) { ParentObject.find_by(oid: oid) }
+
+    it "can update the bib_id" do
+      mcs.create_crosswalk(oid)
+      expect(po["bib_id"]).to eq bib_id
+    end
+
+    context "with all the oids" do
+      let(:oid_1) { "2057976" }
+      let(:po_1) { ParentObject.find_by(oid: oid_1) }
+      let(:bib_id_1) { "7039963" }
+      let(:oid_2) { "2004628" }
+      let(:bib_id_2) { "3163155" }
+      let(:po_2) { ParentObject.find_by(oid: oid_2) }
+
+      it "can crosswalk all oids" do
+        MetadataCloudService.crosswalk_all_oids
+        expect(po_1["bib_id"]).to eq bib_id_1
+        expect(po_2["bib_id"]).to eq bib_id_2
+      end
+    end
+
+    context "with an object without an aspace uri" do
+      let(:oid) { "2004628" }
+      let(:bib_id) { "3163155" }
+      let(:po) { ParentObject.find_by(oid: oid) }
+
+      it "leaves empty values as null" do
+        mcs.create_crosswalk(oid)
+        expect(po["barcode"].nil?).to be true
+        expect(po["aspace_uri"].nil?).to be true
+      end
+    end
+
+    context "with an object with an aspace uri" do
+      let(:oid) { "16854285" }
+      let(:aspace_uri) { "/repositories/11/archival_objects/515305" }
+      let(:po) { ParentObject.find_by(oid: oid) }
+
+      it "adds the aspace uri" do
+        mcs.create_crosswalk(oid)
+        expect(po["aspace_uri"].nil?).to be false
+        expect(po["aspace_uri"]).to eq aspace_uri
+      end
+    end
+  end
 end
