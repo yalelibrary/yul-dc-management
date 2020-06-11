@@ -10,7 +10,7 @@
     </thead>
       <tr>
         <td> Management </td>
-        <td> <%= "#{ENV['REGISTRY_URI'] + ":" + ENV['MANAGEMENT_TAG']}" %> </td>
+        <td> <%= "#{ENV['REGISTRY_HOST'] + ENV['REGISTRY_URI'] + ":" + ENV['MANAGEMENT_TAG']}" %> </td>
       </tr>
       <tr>
         <td> DB </td>
