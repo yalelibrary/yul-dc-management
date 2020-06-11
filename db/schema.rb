@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_10_173827) do
+ActiveRecord::Schema.define(version: 2020_06_11_192817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 2020_06_10_173827) do
     t.datetime "last_mc_update"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "last_id_upate"
+    t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end
 
 end
