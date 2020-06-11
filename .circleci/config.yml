@@ -42,7 +42,6 @@ jobs:
           command:  |
             bundle exec rspec --tag ~vpn_only:true
           environment:
-            REGISTRY_HOST:
             REGISTRY_URI: yalelibraryit/dc-management
             MANAGEMENT_TAG: v1.2.0
             SOLR_TAG: v1.0.0
