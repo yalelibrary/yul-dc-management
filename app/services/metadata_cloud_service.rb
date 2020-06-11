@@ -99,7 +99,7 @@ class MetadataCloudService
     parsed_metadata = JSON.parse(raw_metadata)
     file_prefix = file_prefix(metadata_source)
 
-    File.write(file_folder.join("#{file_prefix}-#{oid}" + ".json"), JSON.pretty_generate(parsed_metadata))
+    File.write(file_folder.join("#{file_prefix}#{oid}" + ".json"), JSON.pretty_generate(parsed_metadata))
   end
 
   ##
@@ -118,18 +118,18 @@ class MetadataCloudService
   def get_fixture_file(oid, metadata_source)
     fixture_file_folder = Rails.root.join("spec", "fixtures", metadata_source)
     file_prefix = file_prefix(metadata_source)
-    file_path = fixture_file_folder.join("#{file_prefix}-#{oid}" + ".json")
+    file_path = fixture_file_folder.join("#{file_prefix}#{oid}" + ".json")
     File.read(file_path) if File.exist?(file_path)
   end
 
   def file_prefix(metadata_source)
     case metadata_source
     when "ladybird"
-      "LB"
+      ""
     when "ils"
-      "V"
+      "V-"
     when "aspace"
-      "AS"
+      "AS-"
     end
   end
 end

@@ -21,7 +21,7 @@ class FixtureIndexingService
     file = mcs.get_fixture_file(oid, metadata_source)
     data_hash = JSON.parse(file)
     solr_doc = {
-      id: "#{id_prefix}-#{oid}",
+      id: "#{id_prefix}#{oid}",
       title_tsim: data_hash["title"],
       # title_vern_ssim # title in the vernacular
       # subtitle_tsim
