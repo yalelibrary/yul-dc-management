@@ -11,7 +11,7 @@ RSpec.describe MetadataCloudService, vpn_only: true do
   let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
 
   context "it gets called from a rake task" do
-    let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "LB-2034600.json") }
+    let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "2034600.json") }
     let(:metadata_source) { "ladybird" }
 
     it "is easy to invoke" do
