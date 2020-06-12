@@ -35,3 +35,7 @@ Metrics/MethodLength:
 # Offense count: 1
 Metrics/PerceivedComplexity:
   Max: 8
+
+RSpec/ExampleLength:
+  Max: 7
+

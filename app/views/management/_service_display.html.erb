@@ -10,27 +10,27 @@
     </thead>
       <tr>
         <td> Management </td>
-        <td> <%= ENV['REGISTRY_URI'] %>:<%= ENV['MANAGEMENT_VERSION'] %> </td>
+        <td> <%= ENV['MANAGEMENT_VERSION'].present? ? "yalelibraryit/dc-management:#{ENV['MANAGEMENT_VERSION']}" : ""  %></td>
       </tr>
       <tr>
         <td> DB </td>
-        <td> postgres </td>
+        <td> <%= ENV['POSTGRES_VERSION'].present? ? "curationexperts/dc-postgres:#{ENV['POSTGRES_VERSION']}" : "postgres"  %></td>
       </tr>
       <tr>
         <td> Blacklight </td>
-        <td> </td>
+        <td> <%= ENV['BLACKLIGHT_VERSION'].present? ? "yalelibraryit/dc-blacklight:#{ENV['BLACKLIGHT_VERSION']}" : ""  %></td>
       </tr>
       <tr>
         <td> Solr </td>
-        <td> <%= "yalelibraryit/dc-solr" %>:<%= ENV['SOLR_VERSION'] %> </td>
+        <td> <%= ENV['SOLR_VERSION'].present? ? "yalelibraryit/dc-solr:#{ENV['SOLR_VERSION']}" : "" %> </td>
       </tr>
       <tr>
         <td> iiif_image </td>
-        <td> </td>
+        <td> <%= ENV['IIIF_IMAGE_VERSION'].present? ? "yalelibraryit/dc-iiif-cantaloupe:#{ENV['IIIF_IMAGE_VERSION']}" : ""  %></td>
       </tr>
       <tr>
         <td> iiif_manifest </td>
-        <td>  </td>
+        <td> <%= ENV['IIIF_MANIFEST_VERSION'].present? ? "yalelibraryit/dc-management:#{ENV['IIIF_MANIFEST_VERSION']}" : ""  %> </td>
       </tr>
   </table>
 </div>
