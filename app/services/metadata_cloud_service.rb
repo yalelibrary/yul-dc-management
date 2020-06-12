@@ -27,28 +27,52 @@ class MetadataCloudService
   # the appropriate URL to pull the metadata from the Yale Metadata Cloud
   def build_metadata_cloud_url(oid, metadata_source)
     if metadata_source == "ladybird"
-      identifier_block = "oid/#{oid}"
+      identifier_block = "/oid/#{oid}"
     elsif metadata_source == "ils"
       bib_id = get_bib_id(oid)
       barcode = get_barcode(oid)
       identifier_block = if barcode.nil?
-                           "bib/#{bib_id}"
+                           "/bib/#{bib_id}"
                          else
-                           "barcode/#{barcode}/bib/#{bib_id}"
+                           "/barcode/#{barcode}/bib/#{bib_id}"
                          end
     elsif metadata_source == "aspace"
       return nil unless get_archive_space_uri(oid)
       identifier_block = get_archive_space_uri(oid)
     end
-    "https://metadata-api-test.library.yale.edu/metadatacloud/api/#{metadata_source}/#{identifier_block}?mediaType=json"
+    "https://metadata-api-test.library.yale.edu/metadatacloud/api/#{metadata_source}#{identifier_block}?mediaType=json"
+  end
+
+  def create_crosswalk(oid)
+    ladybird_file = get_fixture_file(oid, "ladybird")
+    parsed_ladybird_file = JSON.parse(ladybird_file)
+    bib_id = parsed_ladybird_file["orbisRecord"]
+    barcode = parsed_ladybird_file["orbisBarcode"]
+    aspace_uri = parsed_ladybird_file["archiveSpaceUri"]
+
+    po = ParentObject.find_by(oid: oid)
+    po.update(
+      bib_id: bib_id,
+      barcode: barcode,
+      aspace_uri: aspace_uri,
+      last_id_upate: DateTime.current
+    )
+    po.save
+  end
+
+  def self.crosswalk_all_oids
+    mcs = MetadataCloudService.new
+    parent_objects = ParentObject.all
+    parent_objects.each do |parent_object|
+      oid = parent_object["oid"]
+      mcs.create_crosswalk(oid)
+    end
   end
 
   def get_archive_space_uri(oid)
     ladybird_file = get_fixture_file(oid, "ladybird")
     parsed_ladybird_file = JSON.parse(ladybird_file)
-    uri_starting_slash = parsed_ladybird_file["archiveSpaceUri"]
-    # Removes the beginning slash so that it can follow the pattern for other identifiers
-    uri_starting_slash.sub(/\//, '') if uri_starting_slash.present?
+    parsed_ladybird_file["archiveSpaceUri"]
   end
 
   ##
@@ -75,7 +99,7 @@ class MetadataCloudService
     parsed_metadata = JSON.parse(raw_metadata)
     file_prefix = file_prefix(metadata_source)
 
-    File.write(file_folder.join("#{file_prefix}-#{oid}" + ".json"), JSON.pretty_generate(parsed_metadata))
+    File.write(file_folder.join("#{file_prefix}#{oid}" + ".json"), JSON.pretty_generate(parsed_metadata))
   end
 
   ##
@@ -94,18 +118,18 @@ class MetadataCloudService
   def get_fixture_file(oid, metadata_source)
     fixture_file_folder = Rails.root.join("spec", "fixtures", metadata_source)
     file_prefix = file_prefix(metadata_source)
-    file_path = fixture_file_folder.join("#{file_prefix}-#{oid}" + ".json")
+    file_path = fixture_file_folder.join("#{file_prefix}#{oid}" + ".json")
     File.read(file_path) if File.exist?(file_path)
   end
 
   def file_prefix(metadata_source)
     case metadata_source
     when "ladybird"
-      "LB"
+      ""
     when "ils"
-      "V"
+      "V-"
     when "aspace"
-      "AS"
+      "AS-"
     end
   end
 end

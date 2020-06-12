@@ -1,11 +1,23 @@
 # Changelog
 
-## [1.4.0](https://github.com/yalelibrary/yul-dc-management/tree/1.4.0) (2020-06-09)
+## [1.4.1](https://github.com/yalelibrary/yul-dc-management/tree/1.4.1) (2020-06-11)
 
-[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.3.0...1.4.0)
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.4.0...1.4.1)
 
 **Merged pull requests:**
 
+- Remove the prefix for Ladybird records, restore to previous state [\#61](https://github.com/yalelibrary/yul-dc-management/pull/61) ([maxkadel](https://github.com/maxkadel))
+- Creates a crosswalk for parent objects based on their Ladybird records [\#60](https://github.com/yalelibrary/yul-dc-management/pull/60) ([maxkadel](https://github.com/maxkadel))
+- Create a model for ParentObjects and seed the database with example oids [\#59](https://github.com/yalelibrary/yul-dc-management/pull/59) ([maxkadel](https://github.com/maxkadel))
+- Ensure Bootstrap is added to asset pipeline correctly [\#55](https://github.com/yalelibrary/yul-dc-management/pull/55) ([maxkadel](https://github.com/maxkadel))
+
+## [v1.4.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.4.0) (2020-06-09)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.3.0...v1.4.0)
+
+**Merged pull requests:**
+
+- Prep for v1.4.0 [\#56](https://github.com/yalelibrary/yul-dc-management/pull/56) ([FCRodriguez7](https://github.com/FCRodriguez7))
 - Slight refactor, more specific name [\#54](https://github.com/yalelibrary/yul-dc-management/pull/54) ([maxkadel](https://github.com/maxkadel))
 - Fixture indexing service takes metadata\_source [\#53](https://github.com/yalelibrary/yul-dc-management/pull/53) ([maxkadel](https://github.com/maxkadel))
 
@@ -77,7 +89,6 @@
 
 **Merged pull requests:**
 
-- Comment out vernacular until we get mappings [\#33](https://github.com/yalelibrary/yul-dc-management/pull/33) ([maxkadel](https://github.com/maxkadel))
 - remove outdated rake task / service [\#32](https://github.com/yalelibrary/yul-dc-management/pull/32) ([maxkadel](https://github.com/maxkadel))
 - Dependabot puma branch rename [\#31](https://github.com/yalelibrary/yul-dc-management/pull/31) ([maxkadel](https://github.com/maxkadel))
 
@@ -87,10 +98,12 @@
 
 **Merged pull requests:**
 
+- Comment out vernacular until we get mappings [\#33](https://github.com/yalelibrary/yul-dc-management/pull/33) ([maxkadel](https://github.com/maxkadel))
 - update gems for security [\#29](https://github.com/yalelibrary/yul-dc-management/pull/29) ([maxkadel](https://github.com/maxkadel))
 - use the same Solr mapping as Blacklight, same ordering [\#28](https://github.com/yalelibrary/yul-dc-management/pull/28) ([maxkadel](https://github.com/maxkadel))
 - Exclude RuboCop MethodLength check for specs and specific files [\#27](https://github.com/yalelibrary/yul-dc-management/pull/27) ([mark-dce](https://github.com/mark-dce))
 - Add private/restricted fixtures plus specs [\#26](https://github.com/yalelibrary/yul-dc-management/pull/26) ([dylansalay](https://github.com/dylansalay))
+- Update documentation & image info [\#23](https://github.com/yalelibrary/yul-dc-management/pull/23) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.0.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.0.0) (2020-05-28)
 
@@ -100,7 +113,6 @@
 
 - attempt multiple tags [\#25](https://github.com/yalelibrary/yul-dc-management/pull/25) ([maxkadel](https://github.com/maxkadel))
 - tag separate from image name [\#24](https://github.com/yalelibrary/yul-dc-management/pull/24) ([maxkadel](https://github.com/maxkadel))
-- Update documentation & image info [\#23](https://github.com/yalelibrary/yul-dc-management/pull/23) ([maxkadel](https://github.com/maxkadel))
 - CI Spike - circleci new attempt [\#22](https://github.com/yalelibrary/yul-dc-management/pull/22) ([maxkadel](https://github.com/maxkadel))
 - 132 include additional fields when indexing fixture [\#18](https://github.com/yalelibrary/yul-dc-management/pull/18) ([maxkadel](https://github.com/maxkadel))
 - Use .secrets for secrets. [\#16](https://github.com/yalelibrary/yul-dc-management/pull/16) ([maxkadel](https://github.com/maxkadel))
