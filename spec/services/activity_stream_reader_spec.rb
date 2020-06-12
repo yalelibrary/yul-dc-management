@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require "rails_helper"
 require "support/time_helpers"
+require "webmock"
 
 RSpec.describe ActivityStreamReader do
   let(:asr) { described_class.new }
