@@ -17,7 +17,7 @@ RSpec.describe MetadataCloudService do
 
       it "is easy to invoke" do
         time_stamp_before = File.mtime(path_to_example_file.to_s)
-        MetadataCloudService.refresh_fixture_data(short_oid_path, metadata_source)
+        described_class.refresh_fixture_data(short_oid_path, metadata_source)
         time_stamp_after = File.mtime(path_to_example_file.to_s)
         expect(time_stamp_before).to be < time_stamp_after
       end
@@ -35,7 +35,7 @@ RSpec.describe MetadataCloudService do
 
       it "can pull voyager records" do
         time_stamp_before = File.mtime(path_to_example_file.to_s)
-        MetadataCloudService.refresh_fixture_data(short_oid_path, metadata_source)
+        described_class.refresh_fixture_data(short_oid_path, metadata_source)
         time_stamp_after = File.mtime(path_to_example_file.to_s)
         expect(time_stamp_before).to be < time_stamp_after
       end
@@ -46,19 +46,16 @@ RSpec.describe MetadataCloudService do
       let(:metadata_source) { "aspace" }
       let(:oid_without_aspace) { "2034600" }
 
-
       let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "aspace", "AS-16854285.json") }
       let(:metadata_source) { "aspace" }
 
       it "can pull ArchiveSpace records" do
         time_stamp_before = File.mtime(path_to_example_file.to_s)
-        MetadataCloudService.refresh_fixture_data(short_oid_path, metadata_source)
+        described_class.refresh_fixture_data(short_oid_path, metadata_source)
         time_stamp_after = File.mtime(path_to_example_file.to_s)
         expect(time_stamp_before).to be < time_stamp_after
       end
     end
-
-
   end
 
   it "can read from a csv file" do
@@ -97,37 +94,37 @@ RSpec.describe MetadataCloudService do
     end
   end
 
-  context "using the database", vpn_only: false do
+  context "a crosswalk maintained in the database", vpn_only: false do
     let(:oid) { "2004628" }
     let(:bib_id) { "3163155" }
-    let(:po) { ParentObject.find_by(oid: oid) }
+    let(:po) { FactoryBot.create(:parent_object, oid: oid, bib_id: bib_id) }
 
     it "can update the bib_id" do
+      po
       mcs.create_crosswalk(oid)
       expect(po["bib_id"]).to eq bib_id
     end
 
     context "with all the oids" do
       let(:oid_1) { "2057976" }
-      let(:po_1) { ParentObject.find_by(oid: oid_1) }
       let(:bib_id_1) { "7039963" }
+      let(:po_1) { FactoryBot.create(:parent_object, oid: oid_1, bib_id: bib_id_1) }
       let(:oid_2) { "2004628" }
       let(:bib_id_2) { "3163155" }
-      let(:po_2) { ParentObject.find_by(oid: oid_2) }
+      let(:po_2) { FactoryBot.create(:parent_object, oid: oid_2, bib_id: bib_id_2) }
 
-      it "can crosswalk all oids" do
-        MetadataCloudService.crosswalk_all_oids
+      it "can crosswalk multiple oids" do
+        po_1
+        po_2
+        described_class.crosswalk_all_oids
         expect(po_1["bib_id"]).to eq bib_id_1
         expect(po_2["bib_id"]).to eq bib_id_2
       end
     end
 
     context "with an object without an aspace uri" do
-      let(:oid) { "2004628" }
-      let(:bib_id) { "3163155" }
-      let(:po) { ParentObject.find_by(oid: oid) }
-
       it "leaves empty values as null" do
+        po
         mcs.create_crosswalk(oid)
         expect(po["barcode"].nil?).to be true
         expect(po["aspace_uri"].nil?).to be true
@@ -137,9 +134,10 @@ RSpec.describe MetadataCloudService do
     context "with an object with an aspace uri" do
       let(:oid) { "16854285" }
       let(:aspace_uri) { "/repositories/11/archival_objects/515305" }
-      let(:po) { ParentObject.find_by(oid: oid) }
+      let(:po) { FactoryBot.create(:parent_object, oid: oid, aspace_uri: aspace_uri) }
 
       it "adds the aspace uri" do
+        po
         mcs.create_crosswalk(oid)
         expect(po["aspace_uri"].nil?).to be false
         expect(po["aspace_uri"]).to eq aspace_uri
