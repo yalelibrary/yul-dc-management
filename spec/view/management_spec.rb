@@ -5,8 +5,8 @@ RSpec.describe "Management", type: :feature do
   describe 'index page' do
     before do
       ENV['REGISTRY_URI'] = 'yalelibraryit/dc-management'
-      ENV['MANAGEMENT_TAG'] = 'v1beta.gamma'
-      ENV['SOLR_TAG'] = 'v3alpha.omega'
+      ENV['MANAGEMENT_VERSION'] = 'v1beta.gamma'
+      ENV['SOLR_VERSION'] = 'v3alpha.omega'
       visit management_index_path
     end
 
