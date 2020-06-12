@@ -10,7 +10,7 @@
     </thead>
       <tr>
         <td> Management </td>
-        <td> <%= "#{ENV['REGISTRY_URI'] + ":" + ENV['MANAGEMENT_TAG']}" %> </td>
+        <td> <%= ENV['REGISTRY_URI'] %>:<%= ENV['MANAGEMENT_TAG'] %> </td>
       </tr>
       <tr>
         <td> DB </td>
@@ -22,7 +22,7 @@
       </tr>
       <tr>
         <td> Solr </td>
-        <td> <%= "yalelibraryit/dc-solr:" + "#{ENV['SOLR_TAG']}" %> </td>
+        <td> <%= "yalelibraryit/dc-solr" %>:<%= ENV['SOLR_TAG'] %> </td>
       </tr>
       <tr>
         <td> iiif_image </td>
