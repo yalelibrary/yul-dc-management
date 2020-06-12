@@ -24,3 +24,5 @@ RUN /sbin/setuser app bash -l -c " \
     DB_ADAPTER=nulldb bundle exec rake assets:precompile && \
     mv ./public/assets ./public/assets-new && \
     mv ./public/packs ./public/packs-new"
+
+EXPOSE 3001
