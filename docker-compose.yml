@@ -2,7 +2,7 @@ version: '2.1'
 services:
 
   base:
-    image: '${REGISTRY_HOST}${REGISTRY_URI}-base:${MANAGEMENT_BASE_TAG:-latest}'
+    image: '${REGISTRY_HOST}${REGISTRY_URI}-base:${MANAGEMENT_BASE_VERSION:-latest}'
     env_file:
       - .env
     build:
@@ -11,7 +11,7 @@ services:
 
   web:
     build: .
-    image: '${REGISTRY_HOST}${REGISTRY_URI}:${MANAGEMENT_TAG:-latest}'
+    image: '${REGISTRY_HOST}${REGISTRY_URI}:${MANAGEMENT_VERSION:-latest}'
     env_file:
       - .env
       - .secrets
@@ -38,7 +38,7 @@ services:
       - 'postgres:/var/lib/postgresql/data'
 
   solr:
-    image: yalelibraryit/dc-solr:${SOLR_TAG:-latest}
+    image: yalelibraryit/dc-solr:${SOLR_VERSION:-latest}
     ports:
       - '8983:8983'
     volumes:
