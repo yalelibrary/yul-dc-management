@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 require "rails_helper"
 require "support/time_helpers"
-require "webmock"
 require 'http'
+include WebMock::API
 
+WebMock.enable!
 WebMock.disable_net_connect!
 
 RSpec.describe ActivityStreamReader do
