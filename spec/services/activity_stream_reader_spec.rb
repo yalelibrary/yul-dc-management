@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 require "rails_helper"
 require "support/time_helpers"
-require 'http'
-
-WebMock.enable!
 
 RSpec.describe ActivityStreamReader do
   let(:asr) { described_class.new }
@@ -14,7 +11,7 @@ RSpec.describe ActivityStreamReader do
   before do
     freeze_time
     # Apparently the mocked authorization hash matters in passing CI, so you have to provide username and password
-    # matching the mocked stub request
+    # matching the mocked stub request authorization
     ENV["MC_USER"] = "some_username"
     ENV["MC_PW"] = "some_password"
     stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
