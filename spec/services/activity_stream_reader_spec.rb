@@ -3,6 +3,8 @@ require "rails_helper"
 require "support/time_helpers"
 require "webmock"
 
+WebMock.disable_net_connect!
+
 RSpec.describe ActivityStreamReader do
   let(:asr) { described_class.new }
   let(:asl_success) { FactoryBot.create(:successful_activity_stream_log, run_time: 2.hours.ago) }
