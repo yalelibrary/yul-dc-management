@@ -5,7 +5,6 @@ require 'http'
 include WebMock::API
 
 WebMock.enable!
-WebMock.disable_net_connect!
 
 RSpec.describe ActivityStreamReader do
   let(:asr) { described_class.new }
