@@ -2,6 +2,7 @@
 require "rails_helper"
 require "support/time_helpers"
 require "webmock"
+require 'http'
 
 WebMock.disable_net_connect!
 
