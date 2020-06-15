@@ -54,4 +54,8 @@ RSpec.describe ActivityStreamReader do
       expect(asr.walk_the_stream).to eq "bar"
     end
   end
+
+  it "can get a page from the MetadataCloud activity stream" do
+    expect(asr.fetch_page["type"]).to eq "OrderedCollectionPage"
+  end
 end
