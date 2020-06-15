@@ -1,8 +1,8 @@
 # Changelog
 
-## [1.5.0](https://github.com/yalelibrary/yul-dc-management/tree/1.5.0) (2020-06-15)
+## [v1.5.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.5.0) (2020-06-15)
 
-[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v0.0.1...1.5.0)
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v0.0.1...v1.5.0)
 
 **Merged pull requests:**
 
@@ -93,7 +93,6 @@
 **Merged pull requests:**
 
 - add hosts for deployment [\#36](https://github.com/yalelibrary/yul-dc-management/pull/36) ([maxkadel](https://github.com/maxkadel))
-- update gems for security [\#29](https://github.com/yalelibrary/yul-dc-management/pull/29) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.1.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.0) (2020-06-02)
 
@@ -120,6 +119,7 @@
 
 **Merged pull requests:**
 
+- update gems for security [\#29](https://github.com/yalelibrary/yul-dc-management/pull/29) ([maxkadel](https://github.com/maxkadel))
 - use the same Solr mapping as Blacklight, same ordering [\#28](https://github.com/yalelibrary/yul-dc-management/pull/28) ([maxkadel](https://github.com/maxkadel))
 - Exclude RuboCop MethodLength check for specs and specific files [\#27](https://github.com/yalelibrary/yul-dc-management/pull/27) ([mark-dce](https://github.com/mark-dce))
 - Add private/restricted fixtures plus specs [\#26](https://github.com/yalelibrary/yul-dc-management/pull/26) ([dylansalay](https://github.com/dylansalay))
