@@ -26,12 +26,6 @@ cd ./yul-dc-management
 touch .secrets
 ```
 
-## If this is your first time working in this repo, pull the base service (dependencies, etc. that don't change)
-
-```bash
-  docker-compose pull base
-```
-
 ## If this is your first time working in this repo or the Dockerfile has been updated you will need to pull your services
 
 ```bash
@@ -134,7 +128,18 @@ touch .secrets
       rake yale:clean_solr
   ```
 
-  ## Releasing a new version
+## Pulling or Building Docker Images
+  Any time you pull a branch with a Gemfile change you need to pull or build a new Docker image. If you change the Dockerfile, you
+  need to build a new Docker image. If you change a file in ./ops you need to build a new Docker image. These are the primary
+  times in which you need to pull or build.
+
+## When Installing a New Gem
+  For the most part images are created and maintained by the CI process. However, if you change the Gemfile you need
+  to take a few extra steps.  Make sure the application is running before you make your Gemfile change. Once you've
+  updated the Gemfile, inside the container, run `bundle && nginx -s reload`. The next time you stop your running containers
+  you need to rebuild.
+
+## Releasing a new version
 
   1. Decide on a new version number. We use [semantic versioning](https://semver.org/).
   2. Update the version number in `.github_changelog_generator`
