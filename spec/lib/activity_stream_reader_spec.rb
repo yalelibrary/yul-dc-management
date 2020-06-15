@@ -26,13 +26,16 @@ RSpec.describe ActivityStreamReader do
       .to_return(status: 200, body: latest_activity_stream_page, headers: {})
   end
 
-  it "can be instantiated" do
-    asr
-    expect(asr).to be_instance_of(described_class)
-  end
+  # There will be a automated job that fetches updates from the MetadataCloud on some configured schedule.
+  # Each time the activity_stream_reader is run, it creates an activity_stream_log event, which records when it was run,
+  # whether that run was successful, and how and many objects were referenced in that activity stream run.
+  context "daily automated updates" do
 
-  it "can call for updates" do
-    described_class.update
+    it "can call for updates" do
+      expect(ActivityStreamLog.count).to eq 0
+      described_class.update
+      expect(ActivityStreamLog.count).to eq 1
+    end
   end
 
   it "can figure out the last time it was run successfully" do

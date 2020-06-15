@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class ActivityStreamReader
-  def self.update; end
+  # This is the primary way that automated updates will happen.
+  def self.update
+    asr = ActivityStreamReader.new
+    asr.walk_the_stream
+  end
 
   ##
   # Return the last time the Activity Stream was successfully read
