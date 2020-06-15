@@ -1,8 +1,28 @@
 # Changelog
 
-## [1.4.1](https://github.com/yalelibrary/yul-dc-management/tree/1.4.1) (2020-06-11)
+## [1.5.0](https://github.com/yalelibrary/yul-dc-management/tree/1.5.0) (2020-06-15)
 
-[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.4.0...1.4.1)
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v0.0.1...1.5.0)
+
+**Merged pull requests:**
+
+- Parse activity stream [\#66](https://github.com/yalelibrary/yul-dc-management/pull/66) ([maxkadel](https://github.com/maxkadel))
+
+## [v0.0.1](https://github.com/yalelibrary/yul-dc-management/tree/v0.0.1) (2020-06-12)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.4.1...v0.0.1)
+
+**Merged pull requests:**
+
+- Clean up fixtures and enhance parent object documentation [\#65](https://github.com/yalelibrary/yul-dc-management/pull/65) ([maxkadel](https://github.com/maxkadel))
+- Separate vpn-only tests more cleanly [\#64](https://github.com/yalelibrary/yul-dc-management/pull/64) ([maxkadel](https://github.com/maxkadel))
+- Normalize environment variables for tagged versions to match Camerata [\#63](https://github.com/yalelibrary/yul-dc-management/pull/63) ([maxkadel](https://github.com/maxkadel))
+- Replace credentials.yml.enc with new file encoded with a known key [\#62](https://github.com/yalelibrary/yul-dc-management/pull/62) ([mark-dce](https://github.com/mark-dce))
+- Service Status Display Table [\#57](https://github.com/yalelibrary/yul-dc-management/pull/57) ([dylansalay](https://github.com/dylansalay))
+
+## [v1.4.1](https://github.com/yalelibrary/yul-dc-management/tree/v1.4.1) (2020-06-11)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.4.0...v1.4.1)
 
 **Merged pull requests:**
 
@@ -73,6 +93,7 @@
 **Merged pull requests:**
 
 - add hosts for deployment [\#36](https://github.com/yalelibrary/yul-dc-management/pull/36) ([maxkadel](https://github.com/maxkadel))
+- update gems for security [\#29](https://github.com/yalelibrary/yul-dc-management/pull/29) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.1.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.0) (2020-06-02)
 
@@ -89,6 +110,7 @@
 
 **Merged pull requests:**
 
+- Comment out vernacular until we get mappings [\#33](https://github.com/yalelibrary/yul-dc-management/pull/33) ([maxkadel](https://github.com/maxkadel))
 - remove outdated rake task / service [\#32](https://github.com/yalelibrary/yul-dc-management/pull/32) ([maxkadel](https://github.com/maxkadel))
 - Dependabot puma branch rename [\#31](https://github.com/yalelibrary/yul-dc-management/pull/31) ([maxkadel](https://github.com/maxkadel))
 
@@ -98,12 +120,9 @@
 
 **Merged pull requests:**
 
-- Comment out vernacular until we get mappings [\#33](https://github.com/yalelibrary/yul-dc-management/pull/33) ([maxkadel](https://github.com/maxkadel))
-- update gems for security [\#29](https://github.com/yalelibrary/yul-dc-management/pull/29) ([maxkadel](https://github.com/maxkadel))
 - use the same Solr mapping as Blacklight, same ordering [\#28](https://github.com/yalelibrary/yul-dc-management/pull/28) ([maxkadel](https://github.com/maxkadel))
 - Exclude RuboCop MethodLength check for specs and specific files [\#27](https://github.com/yalelibrary/yul-dc-management/pull/27) ([mark-dce](https://github.com/mark-dce))
 - Add private/restricted fixtures plus specs [\#26](https://github.com/yalelibrary/yul-dc-management/pull/26) ([dylansalay](https://github.com/dylansalay))
-- Update documentation & image info [\#23](https://github.com/yalelibrary/yul-dc-management/pull/23) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.0.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.0.0) (2020-05-28)
 
@@ -113,6 +132,7 @@
 
 - attempt multiple tags [\#25](https://github.com/yalelibrary/yul-dc-management/pull/25) ([maxkadel](https://github.com/maxkadel))
 - tag separate from image name [\#24](https://github.com/yalelibrary/yul-dc-management/pull/24) ([maxkadel](https://github.com/maxkadel))
+- Update documentation & image info [\#23](https://github.com/yalelibrary/yul-dc-management/pull/23) ([maxkadel](https://github.com/maxkadel))
 - CI Spike - circleci new attempt [\#22](https://github.com/yalelibrary/yul-dc-management/pull/22) ([maxkadel](https://github.com/maxkadel))
 - 132 include additional fields when indexing fixture [\#18](https://github.com/yalelibrary/yul-dc-management/pull/18) ([maxkadel](https://github.com/maxkadel))
 - Use .secrets for secrets. [\#16](https://github.com/yalelibrary/yul-dc-management/pull/16) ([maxkadel](https://github.com/maxkadel))
