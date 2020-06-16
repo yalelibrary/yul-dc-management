@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# An ActivityStreamReader reads json formatted activity stream documents from the MetadataCloud
 class ActivityStreamReader
   attr_reader :tally
 
@@ -14,6 +15,8 @@ class ActivityStreamReader
     @tally = 0
   end
 
+  # It takes the url for an Activity Stream page, tallies the number of items on that page,
+  # and if there is a link to a previous page, recursively process that page as well, until all pages have been processed.
   def process_page(page_url)
     page = fetch_and_process_page(page_url)
     @tally += page["orderedItems"].count
