@@ -8,7 +8,7 @@ class ActivityStreamReader
   def self.update
     asr = ActivityStreamReader.new
 
-    asr.walk_the_stream
+    asr.process_activity_stream
   end
 
   def initialize
@@ -20,9 +20,14 @@ class ActivityStreamReader
   # and if there is a link to a previous page, recursively process that page as well, until all pages have been processed.
   def process_page(page_url)
     page = fetch_and_parse_page(page_url)
-    @tally += page["orderedItems"].count
-    # Might this be where we want to create our activity_stream_events?
+    page["orderedItems"].each do |item|
+      process_item(item) if last_run_time.nil? || item["endTime"].to_datetime.after?(last_run_time)
+    end
     process_page(previous_page_link(page)) if previous_page_link(page)
+  end
+
+  def process_item(_item)
+    @tally += 1
   end
 
   ##
@@ -33,16 +38,9 @@ class ActivityStreamReader
     @last_run_time ||= ActivityStreamLog.where(status: "Success").last&.run_time&.to_datetime
   end
 
-  def walk_the_stream
-    process_entire_activity_stream if last_run_time.nil?
-  end
-
-  def process_entire_activity_stream
-    page = fetch_and_parse_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
+  def process_activity_stream
     log = ActivityStreamLog.create(run_time: DateTime.current, status: "Running")
-    @tally += page["orderedItems"].count
-    previous_page_link = previous_page_link(page)
-    process_page(previous_page_link)
+    process_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
     log.object_count = @tally
     log.save
   end
