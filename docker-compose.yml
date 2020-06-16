@@ -1,13 +1,5 @@
-version: '2.1'
+version: '3'
 services:
-
-  base:
-    image: '${REGISTRY_HOST}${REGISTRY_URI}-base:${MANAGEMENT_BASE_VERSION:-latest}'
-    env_file:
-      - .env
-    build:
-      context: .
-      dockerfile: Dockerfile.base
 
   web:
     build: .
@@ -29,7 +21,7 @@ services:
       - solr
 
   db:
-    image: postgres
+    image: yalelibraryit/dc-postgres:${POSTGRES_VERSION:-latest}
     env_file:
       - .env
     ports:
