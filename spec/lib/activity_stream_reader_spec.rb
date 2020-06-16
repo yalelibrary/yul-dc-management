@@ -102,6 +102,6 @@ RSpec.describe ActivityStreamReader do
   end
 
   it "can get a page from the MetadataCloud activity stream" do
-    expect(asr.fetch_most_recent_page["type"]).to eq "OrderedCollectionPage"
+    expect(asr.fetch_and_parse_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")["type"]).to eq "OrderedCollectionPage"
   end
 end
