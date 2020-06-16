@@ -40,8 +40,10 @@ class ActivityStreamReader
 
   def process_activity_stream
     log = ActivityStreamLog.create(run_time: DateTime.current, status: "Running")
+    log.save
     process_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
     log.object_count = @tally
+    log.status = "Success"
     log.save
   end
 
