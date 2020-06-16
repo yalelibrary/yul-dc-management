@@ -81,7 +81,7 @@ RSpec.describe ActivityStreamReader do
       expect(ActivityStreamLog.last.object_count).to eq 4000
     end
 
-    it "can call for updates" do
+    it "can process the partial activity stream if there is a previous successful run" do
       asl_old_success
       expect(ActivityStreamLog.count).to eq 1
       expect(ActivityStreamLog.last.object_count).to eq asl_old_success.object_count
