@@ -2,3 +2,7 @@ inherit_from: .rubocop_todo.yml
 
 inherit_gem:
   bixby: bixby_default.yml
+
+RSpec/InstanceVariable:
+  Exclude:
+    - 'spec/lib/activity_stream_reader_spec.rb'

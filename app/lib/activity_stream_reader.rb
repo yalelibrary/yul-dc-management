@@ -1,11 +1,23 @@
 # frozen_string_literal: true
 
 class ActivityStreamReader
+  attr_reader :tally
+
   # This is the primary way that automated updates will happen.
   def self.update
     asr = ActivityStreamReader.new
 
     asr.walk_the_stream
+  end
+
+  def initialize
+    @tally = 0
+  end
+
+  def process_page(page_url)
+    page = fetch_and_process_page(page_url)
+    @tally += page["orderedItems"].count
+    process_page(previous_page_link(page)) if previous_page_link(page)
   end
 
   ##
@@ -23,11 +35,10 @@ class ActivityStreamReader
   def process_entire_activity_stream
     page = fetch_most_recent_page
     log = ActivityStreamLog.create(run_time: DateTime.current, status: "Running")
-    tally = 0
-    tally += page["orderedItems"].count
+    @tally += page["orderedItems"].count
     previous_page_link = previous_page_link(page)
     process_page(previous_page_link)
-    log.object_count = tally
+    log.object_count = @tally
     log.save
   end
 
@@ -48,13 +59,7 @@ class ActivityStreamReader
   def previous_page_link(page)
     http_url = page["prev"]["id"]
     http_url.gsub("http://", "https://")
-  end
-
-  def process_page(page_url)
-    page = fetch_and_process_page(page_url)
-    page["orderedItems"].count
-    # while previous_page_link(page)
-    #   puts page["id"]
-    # end
+  rescue
+    false
   end
 end
