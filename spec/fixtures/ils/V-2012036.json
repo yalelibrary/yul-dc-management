@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/6805375",
+  "uri": "/ils/barcode/39002091459793?bib=6805375",
+  "identifierShelfMark": "202 YCAL MSS",
   "creator": [
     "Whitman, Walt, 1819-1892"
   ],
@@ -80,6 +81,7 @@
     "Walt Whitman collection, 1842-1949"
   ],
   "provenanceUncontrolled": "Acquired by gift from various sources.",
+  "repository": "beinycal",
   "subjectGeographic": [
     "United States"
   ],
@@ -121,12 +123,20 @@
   "creatorDisplay": [
     "Whitman, Walt, 1819-1892"
   ],
+  "barcode": "39002091459793",
+  "volumeEnumeration": "Box 4",
+  "dependentUris": [
+    "/ils/holding/7397126",
+    "/ils/item/8200460",
+    "/ils/bib/6805375",
+    "/ils/barcode/39002091459793"
+  ],
   "bibId": 6805375,
   "suppressInOpac": false,
   "createDate": "2005-02-09T19:05:27.000+0000",
   "updateDate": "2019-04-23T19:24:29.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 7397126,
+  "itemId": 8200460,
   "children": [
 
   ],

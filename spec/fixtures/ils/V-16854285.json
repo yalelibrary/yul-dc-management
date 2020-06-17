@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/12307100",
+  "uri": "/ils/barcode/39002102340669?bib=12307100",
+  "identifierShelfMark": "1000 YCAL MSS",
   "creator": [
     "Fowler & Wells, attributed name"
   ],
@@ -219,6 +220,7 @@
     "[Portrait posters for physiognomy lectures]."
   ],
   "provenanceUncontrolled": "Purchased from Ian Brabner, Bookseller, on the Edwin J. Beinecke Book Fund, 2011.",
+  "repository": "beinycal",
   "subjectGeographic": [
     "United States.",
     "United States."
@@ -308,12 +310,20 @@
   "creatorDisplay": [
     "Fowler & Wells, attributed name"
   ],
+  "barcode": "39002102340669",
+  "volumeEnumeration": "Box 1",
+  "dependentUris": [
+    "/ils/holding/12484205",
+    "/ils/item/10996370",
+    "/ils/bib/12307100",
+    "/ils/barcode/39002102340669"
+  ],
   "bibId": 12307100,
   "suppressInOpac": false,
   "createDate": "2014-11-25T15:46:12.000+0000",
   "updateDate": "2019-12-10T15:48:49.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 12484205,
+  "itemId": 10996370,
   "children": [
 
   ],

@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/9896328",
+  "uri": "/ils/barcode/39002099258734?bib=9896328",
+  "identifierShelfMark": "1121 Beinecke MS",
   "creator": [
     "Galen"
   ],
@@ -53,6 +54,7 @@
   "titleStatement": [
     "Opera varia"
   ],
+  "repository": "beingen",
   "subjectGeographic": [
     "Connecticut",
     "New Haven."
@@ -63,12 +65,19 @@
   "creatorDisplay": [
     "Galen"
   ],
+  "barcode": "39002099258734",
+  "dependentUris": [
+    "/ils/holding/10191430",
+    "/ils/item/9349078",
+    "/ils/bib/9896328",
+    "/ils/barcode/39002099258734"
+  ],
   "bibId": 9896328,
   "suppressInOpac": false,
   "createDate": "2011-08-09T15:55:02.000+0000",
   "updateDate": "2018-10-01T19:01:04.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 10191430,
+  "itemId": 9349078,
   "children": [
 
   ],

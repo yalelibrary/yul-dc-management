@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/9801995",
+  "uri": "/ils/barcode/39002091594300?bib=9801995",
+  "identifierShelfMark": "2 Beinecke MS",
   "creator": [
     "Zeno, Jacopo, 1417-1481"
   ],
@@ -66,6 +67,7 @@
     "Vita Caroli Zeni"
   ],
   "provenanceUncontrolled": "Purchased by William Loring Andrews who presented it to Yale in 1894.",
+  "repository": "beingen",
   "indexedBy": [
     "Shailor, B. Catalogue of Medieval and Renaissance Manuscripts in the Beinecke Rare Book and Manuscript Library, MS 2."
   ],
@@ -80,12 +82,19 @@
   "creatorDisplay": [
     "Zeno, Jacopo, 1417-1481"
   ],
+  "barcode": "39002091594300",
+  "dependentUris": [
+    "/ils/holding/10109058",
+    "/ils/item/9264097",
+    "/ils/bib/9801995",
+    "/ils/barcode/39002091594300"
+  ],
   "bibId": 9801995,
   "suppressInOpac": false,
   "createDate": "2011-06-20T15:39:47.000+0000",
   "updateDate": "2018-10-01T19:00:38.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 10109058,
+  "itemId": 9264097,
   "children": [
 
   ],

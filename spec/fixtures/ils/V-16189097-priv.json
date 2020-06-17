@@ -1,9 +1,10 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/8330740",
+  "uri": "/ils/barcode/39002113593819?bib=8330740",
+  "identifierShelfMark": "189x 56 Lanman Covers",
   "title": [
-    "Dai Min kyūhen bankoku jinseki rotei zenzu [cartographic material] [private copy].",
+    "Dai Min kyūhen bankoku jinseki rotei zenzu [cartographic material].",
     "大明九辺万国人跡路程全図"
   ],
   "alternativeTitle": [
@@ -57,10 +58,11 @@
   ],
   "illustrativeMatter": "i  ",
   "titleStatement": [
-    "Dai Min kyūhen bankoku jinseki rotei zenzu [cartographic material] [private copy].",
+    "Dai Min kyūhen bankoku jinseki rotei zenzu [cartographic material].",
     "大明九辺万国人跡路程全図"
   ],
   "provenanceControlled": "Lanman, Jonathan T. Ownership.",
+  "repository": "beingen",
   "alternativeTitleDisplay": [
     "Dai Min kyōshō kyūhen gaikoku fushūken rotei zu.",
     "大明京省  九辺外国府州県路程図"
@@ -69,11 +71,20 @@
     "a-cc---",
     "China"
   ],
+  "barcode": "39002113593819",
+  "dependentUris": [
+    "/ils/holding/8742070",
+    "/ils/item/11686828",
+    "/ils/bib/8330740",
+    "/ils/barcode/39002113593819"
+  ],
   "bibId": 8330740,
-  "suppressInOpac": true,
+  "suppressInOpac": false,
   "createDate": "2008-08-15T14:47:48.000+0000",
   "updateDate": "2019-06-05T21:33:00.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
-  "children": []
+  "holdingId": 8742070,
+  "itemId": 11686828,
+  "children": [
+
+  ]
 }
