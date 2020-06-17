@@ -88,7 +88,6 @@ RSpec.describe ActivityStreamReader do
       asr.process_activity_stream
       expect(ActivityStreamLog.count).to eq 2
       expect(ActivityStreamLog.last.object_count).to eq 1837
-      expect(ActivityStreamLog.last.object_count).to be < 4000
     end
   end
 
