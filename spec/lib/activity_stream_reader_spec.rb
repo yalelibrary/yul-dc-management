@@ -6,7 +6,7 @@ require "support/time_helpers"
 RSpec.describe ActivityStreamReader do
   let(:asr) { described_class.new }
   let(:asl_new_success) { FactoryBot.create(:successful_activity_stream_log, run_time: 2.hours.ago) }
-  let(:relevant_parent_object) { FactoryBot.create(:parent_object_with_bib_id, oid: 2004628 ) }
+  let(:relevant_parent_object) { FactoryBot.create(:parent_object_with_bib_id, oid: 2_004_628) }
   let(:asl_failed) { FactoryBot.create(:failed_activity_stream_log, run_time: 1.hour.ago) }
   let(:asl_old_success) { FactoryBot.create(:successful_activity_stream_log, run_time: "2020-06-12T21:05:53.000+0000".to_datetime) }
   let(:latest_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read }
@@ -15,19 +15,39 @@ RSpec.describe ActivityStreamReader do
   let(:page_0_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-0.json")).read }
   let(:relevant_item) do
     {
-      "endTime": "2020-06-12T21:05:20.000+0000",
+      "endTime" => "2020-06-12T21:06:53.000+0000",
+      "object" => {
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628",
+        "type" => "Document"
+      },
+      "type" => "Create"
+    }
+  end
+  let(:irrelevant_item_not_ladybird) do
+    {
+      "endTime": "2020-06-12T21:06:15.000+0000",
       "object": {
-        "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628",
+        "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/2004628",
         "type": "Document"
       },
       "type": "Create"
     }
   end
-  let(:irrelevant_item) do
+  let(:irrelevant_item_not_in_db) do
     {
-      "endTime": "2020-06-12T21:05:20.000+0000",
+      "endTime": "2020-06-12T21:06:15.000+0000",
       "object": {
-        "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/15366723",
+        "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/not_in_db",
+        "type": "Document"
+      },
+      "type": "Create"
+    }
+  end
+  let(:irrelevant_item_too_old) do
+    {
+      "endTime": "2020-06-12T20:06:15.000+0000",
+      "object": {
+        "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628",
         "type": "Document"
       },
       "type": "Create"
@@ -112,6 +132,15 @@ RSpec.describe ActivityStreamReader do
     end
   end
 
+  it "can determine whether an item is relevant" do
+    relevant_parent_object
+    asl_old_success
+    expect(asr.relevant?(relevant_item)).to be_truthy
+    expect(asr.relevant?(irrelevant_item_not_ladybird)).to be_falsey
+    expect(asr.relevant?(irrelevant_item_not_in_db)).to be_falsey
+    expect(asr.relevant?(irrelevant_item_too_old)).to be_falsey
+  end
+
   it "can get the uri for the previous page" do
     expect(asr.previous_page_link(json_parsed_page)).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-2"
   end
@@ -129,11 +158,4 @@ RSpec.describe ActivityStreamReader do
   it "can get a page from the MetadataCloud activity stream" do
     expect(asr.fetch_and_parse_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")["type"]).to eq "OrderedCollectionPage"
   end
-
-  it "can determine whether an item is relevant" do
-    relevant_parent_object
-    expect(asr.relevant?(relevant_item)).to be_truthy
-    expect(asr.relevant?(irrelevant_item)).to be_falsey
-  end
-
 end
