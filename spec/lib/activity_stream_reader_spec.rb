@@ -87,8 +87,7 @@ RSpec.describe ActivityStreamReader do
       expect(ActivityStreamLog.last.object_count).to eq asl_old_success.object_count
       asr.process_activity_stream
       expect(ActivityStreamLog.count).to eq 2
-      # should be more than just one page of objects
-      expect(ActivityStreamLog.last.object_count).to be > 1000
+      expect(ActivityStreamLog.last.object_count).to eq 1837
       expect(ActivityStreamLog.last.object_count).to be < 4000
     end
   end
