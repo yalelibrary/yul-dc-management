@@ -26,6 +26,12 @@ class ActivityStreamReader
     process_page(previous_page_link(page)) if previous_page_link(page)
   end
 
+  def relevant?(_item)
+    oid = _item[:object][:id].match(/\/api\/ladybird\/oid\/(\S*)/)
+    byebug
+  end
+
+
   def process_item(_item)
     @tally += 1
   end
@@ -61,4 +67,5 @@ class ActivityStreamReader
   rescue
     false
   end
+
 end
