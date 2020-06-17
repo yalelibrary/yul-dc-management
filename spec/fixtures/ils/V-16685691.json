@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/13881242",
+  "uri": "/ils/barcode/39002131329220?bib=13881242",
+  "identifierShelfMark": "Elephant Folio 2018 22 BrSides",
   "creator": [
     "United States. Hydrographic Office, cartographer"
   ],
@@ -62,18 +63,26 @@
   "titleStatement": [
     "Tracks for full powered steam vessels with the shortest navigable distances in nautical miles from anchorage to anchorage, New York distances are measures to and from the Battery achorage"
   ],
+  "repository": "beingen",
   "subjectGeographic": [
     "x------"
   ],
   "creatorDisplay": [
     "United States. Hydrographic Office, cartographer"
   ],
+  "barcode": "39002131329220",
+  "dependentUris": [
+    "/ils/holding/13895201",
+    "/ils/item/12140816",
+    "/ils/bib/13881242",
+    "/ils/barcode/39002131329220"
+  ],
   "bibId": 13881242,
   "suppressInOpac": false,
   "createDate": "2018-12-11T15:54:53.000+0000",
   "updateDate": "2019-03-18T16:35:52.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 13895201,
+  "itemId": 12140816,
   "children": [
 
   ]

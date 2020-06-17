@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/8394689",
+  "uri": "/ils/barcode/39002091118928?bib=8394689",
+  "identifierShelfMark": "1860A 11",
   "title": [
     "Di qiu quan tu",
     "地球全圖"
@@ -65,6 +66,7 @@
   "contributor": [
     "Chen, Xiutang."
   ],
+  "repository": "beingen",
   "alternativeTitleDisplay": [
     "Shi jie di tu",
     "世界地圖"
@@ -79,12 +81,19 @@
   "contributorDisplay": [
     "Chen, Xiutang."
   ],
+  "barcode": "39002091118928",
+  "dependentUris": [
+    "/ils/holding/8833608",
+    "/ils/item/7599022",
+    "/ils/bib/8394689",
+    "/ils/barcode/39002091118928"
+  ],
   "bibId": 8394689,
   "suppressInOpac": false,
   "createDate": "2008-10-15T15:01:44.000+0000",
   "updateDate": "2018-11-28T16:47:49.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 8833608,
+  "itemId": 7599022,
   "children": [
 
   ]

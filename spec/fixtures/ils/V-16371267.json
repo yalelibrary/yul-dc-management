@@ -68,6 +68,9 @@
   "subjectTitleDisplay": [
     "Lancelot (Legendary character)"
   ],
+  "dependentUris": [
+    "/ils/bib/13006050"
+  ],
   "bibId": 13006050,
   "suppressInOpac": false,
   "createDate": "2016-12-19T15:07:22.000+0000",

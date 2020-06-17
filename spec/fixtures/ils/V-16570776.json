@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/5404463",
+  "uri": "/ils/barcode/39002002294065?bib=5404463",
+  "identifierShelfMark": "794b EEa",
   "creator": [
     "Baldwyn, George Augustus"
   ],
@@ -51,6 +52,7 @@
     "Robertson, Charles Andrew."
   ],
   "provenanceControlled": "Haswell, N.B. Autograph.",
+  "repository": "lsfbeir",
   "relatedTitle": [
     "",
     "",
@@ -69,12 +71,19 @@
     "Outlon, Clement Walley.",
     "Robertson, Charles Andrew."
   ],
+  "barcode": "39002002294065",
+  "dependentUris": [
+    "/ils/holding/5879227",
+    "/ils/item/4267559",
+    "/ils/bib/5404463",
+    "/ils/barcode/39002002294065"
+  ],
   "bibId": 5404463,
   "suppressInOpac": false,
   "createDate": "2002-06-01T04:00:00.000+0000",
   "updateDate": "2019-01-02T18:24:22.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 5879227,
+  "itemId": 4267559,
   "children": [
 
   ]

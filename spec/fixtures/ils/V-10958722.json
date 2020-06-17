@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/9869346",
+  "uri": "/ils/barcode/39002104686564?bib=9869346",
+  "identifierShelfMark": "801 Beinecke MS",
   "title": [
     "Texts on St. Jerome"
   ],
@@ -62,6 +63,7 @@
     "Texts on St. Jerome"
   ],
   "provenanceUncontrolled": "Collection of Bernard M. Rosenthal (MS 38). Purchased from him on the Edwin J. Beinecke Fund.",
+  "repository": "beingen",
   "subjectGeographic": [
     "Connecticut",
     "New Haven."
@@ -69,12 +71,19 @@
   "subjectTitleDisplay": [
     "Jerome, Saint, -419 or 420."
   ],
+  "barcode": "39002104686564",
+  "dependentUris": [
+    "/ils/holding/10167771",
+    "/ils/item/9317044",
+    "/ils/bib/9869346",
+    "/ils/barcode/39002104686564"
+  ],
   "bibId": 9869346,
   "suppressInOpac": false,
   "createDate": "2011-07-22T19:20:26.000+0000",
   "updateDate": "2018-10-10T21:35:20.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 10167771,
+  "itemId": 9317044,
   "children": [
 
   ],

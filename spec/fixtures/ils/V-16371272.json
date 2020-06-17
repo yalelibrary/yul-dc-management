@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/12329381",
+  "uri": "/ils/barcode/39002104624045?bib=12329381",
+  "identifierShelfMark": "104 Takamiya MS",
   "title": [
     "Bible (Proverbs to Apocalypse)."
   ],
@@ -64,6 +65,7 @@
   ],
   "provenanceControlled": "Coates, Ronald A. Autograph. Cron, Brian S. Ownership. Millar, Eric George Bookplate.",
   "provenanceUncontrolled": "Ex libris Ronald A. Coates. Ex libris Eric Millar. Formerly owned by Brian S. Cron. Purchased from Toshiyuki Takamiya on the Edwin J. Beinecke Book Fund, 2017.",
+  "repository": "beingen",
   "subjectTitle": "Bible. Bible.",
   "indexedBy": [
     "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437."
@@ -79,12 +81,20 @@
     "Bible. Latin.",
     "Bible. Latin"
   ],
+  "barcode": "39002104624045",
+  "volumeEnumeration": "Box",
+  "dependentUris": [
+    "/ils/holding/12491792",
+    "/ils/item/11006104",
+    "/ils/bib/12329381",
+    "/ils/barcode/39002104624045"
+  ],
   "bibId": 12329381,
   "suppressInOpac": false,
   "createDate": "2014-12-15T15:09:26.000+0000",
   "updateDate": "2019-02-24T22:34:16.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 12491792,
+  "itemId": 11006104,
   "children": [
 
   ],

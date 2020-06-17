@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/3435140",
+  "uri": "/ils/barcode/39002075038423?bib=3435140",
+  "identifierShelfMark": "42 YCAL MSS",
   "creator": [
     "Wharton, Edith, 1862-1937"
   ],
@@ -91,6 +92,7 @@
     "Edith Wharton collection, 1868-1981 (inclusive)."
   ],
   "provenanceUncontrolled": "Bequest of Edith Wharton (1937); gifts of Louis Auchincloss, Gaillard Lapsley, Percy Lubbock, Oscar Lichtenberg, and Georges Markow-Totevy.",
+  "repository": "beinycal",
   "subjectGeographic": [
     "France.",
     "France.",
@@ -142,12 +144,20 @@
   "creatorDisplay": [
     "Wharton, Edith, 1862-1937"
   ],
+  "barcode": "39002075038423",
+  "volumeEnumeration": "Box 25",
+  "dependentUris": [
+    "/ils/holding/3764443",
+    "/ils/item/8114701",
+    "/ils/bib/3435140",
+    "/ils/barcode/39002075038423"
+  ],
   "bibId": 3435140,
   "suppressInOpac": false,
   "createDate": "2002-06-01T04:00:00.000+0000",
   "updateDate": "2019-05-28T13:10:04.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 3764443,
+  "itemId": 8114701,
   "children": [
 
   ],
