@@ -34,13 +34,13 @@ class MetadataCloudService
       identifier_block = if barcode.nil?
                            "/bib/#{bib_id}"
                          else
-                           "/barcode/#{barcode}/bib/#{bib_id}"
+                           "/barcode/#{barcode}?bib=#{bib_id}"
                          end
     elsif metadata_source == "aspace"
       return nil unless get_archive_space_uri(oid)
       identifier_block = get_archive_space_uri(oid)
     end
-    "https://metadata-api-test.library.yale.edu/metadatacloud/api/#{metadata_source}#{identifier_block}?mediaType=json"
+    "https://metadata-api-test.library.yale.edu/metadatacloud/api/#{metadata_source}#{identifier_block}"
   end
 
   def create_crosswalk(oid)
