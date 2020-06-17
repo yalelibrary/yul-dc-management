@@ -7,6 +7,7 @@ RSpec.describe ActivityStreamReader do
   let(:asr) { described_class.new }
   let(:asl_new_success) { FactoryBot.create(:successful_activity_stream_log, run_time: 2.hours.ago) }
   let(:asl_failed) { FactoryBot.create(:failed_activity_stream_log, run_time: 1.hour.ago) }
+  let(:asl_old_success) { FactoryBot.create(:successful_activity_stream_log, run_time: "2020-06-12T21:05:53.000+0000".to_datetime) }
   let(:latest_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read }
   let(:page_2_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-2.json")).read }
   let(:page_1_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-1.json")).read }
@@ -80,11 +81,14 @@ RSpec.describe ActivityStreamReader do
       expect(ActivityStreamLog.last.object_count).to eq 4000
     end
 
-    # it "can call for updates" do
-    #   expect(ActivityStreamLog.count).to eq 1
-    #   described_class.update
-    #   expect(ActivityStreamLog.count).to eq 2
-    # end
+    it "can process the partial activity stream if there is a previous successful run" do
+      asl_old_success
+      expect(ActivityStreamLog.count).to eq 1
+      expect(ActivityStreamLog.last.object_count).to eq asl_old_success.object_count
+      asr.process_activity_stream
+      expect(ActivityStreamLog.count).to eq 2
+      expect(ActivityStreamLog.last.object_count).to eq 1837
+    end
   end
 
   it "can get the uri for the previous page" do
