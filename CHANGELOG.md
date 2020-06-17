@@ -1,11 +1,26 @@
 # Changelog
 
+## [1.5.1](https://github.com/yalelibrary/yul-dc-management/tree/1.5.1) (2020-06-17)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.5.0...1.5.1)
+
+**Merged pull requests:**
+
+- Rename methods to make process flow more clear [\#74](https://github.com/yalelibrary/yul-dc-management/pull/74) ([maxkadel](https://github.com/maxkadel))
+- Move activity stream reader to lib [\#73](https://github.com/yalelibrary/yul-dc-management/pull/73) ([maxkadel](https://github.com/maxkadel))
+- Use Yale postgres image [\#72](https://github.com/yalelibrary/yul-dc-management/pull/72) ([maxkadel](https://github.com/maxkadel))
+- Configure hosts for production [\#71](https://github.com/yalelibrary/yul-dc-management/pull/71) ([JzGo](https://github.com/JzGo))
+- yul-dc-base 1.0 version bump, no feature changes [\#70](https://github.com/yalelibrary/yul-dc-management/pull/70) ([orangewolf](https://github.com/orangewolf))
+- CI Image Tag instead of Rebuild for Branches and Image Tag on Releases [\#69](https://github.com/yalelibrary/yul-dc-management/pull/69) ([orangewolf](https://github.com/orangewolf))
+- Dockerfile Consolidation [\#67](https://github.com/yalelibrary/yul-dc-management/pull/67) ([orangewolf](https://github.com/orangewolf))
+
 ## [v1.5.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.5.0) (2020-06-15)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v0.0.1...v1.5.0)
 
 **Merged pull requests:**
 
+- generate changelog for 1.5.0 [\#68](https://github.com/yalelibrary/yul-dc-management/pull/68) ([martinlovell](https://github.com/martinlovell))
 - Parse activity stream [\#66](https://github.com/yalelibrary/yul-dc-management/pull/66) ([maxkadel](https://github.com/maxkadel))
 
 ## [v0.0.1](https://github.com/yalelibrary/yul-dc-management/tree/v0.0.1) (2020-06-12)
