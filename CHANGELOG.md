@@ -1,34 +1,39 @@
 # Changelog
 
-## [1.5.1](https://github.com/yalelibrary/yul-dc-management/tree/1.5.1) (2020-06-17)
+## [1.5.2](https://github.com/yalelibrary/yul-dc-management/tree/1.5.2) (2020-06-18)
 
-[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.5.0...1.5.1)
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.5.1...1.5.2)
 
 **Merged pull requests:**
 
+- Add the changelog for release v1.5.2 [\#79](https://github.com/yalelibrary/yul-dc-management/pull/79) ([mark-dce](https://github.com/mark-dce))
+- use same db configuration as blacklight [\#78](https://github.com/yalelibrary/yul-dc-management/pull/78) ([maxkadel](https://github.com/maxkadel))
+- Fix url for Voyager records with barcode so full record is retrieved [\#77](https://github.com/yalelibrary/yul-dc-management/pull/77) ([maxkadel](https://github.com/maxkadel))
+- Activity stream given date [\#75](https://github.com/yalelibrary/yul-dc-management/pull/75) ([maxkadel](https://github.com/maxkadel))
+
+## [v1.5.1](https://github.com/yalelibrary/yul-dc-management/tree/v1.5.1) (2020-06-17)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.5.0...v1.5.1)
+
+**Merged pull requests:**
+
+- Release prep for v1.5.1 [\#76](https://github.com/yalelibrary/yul-dc-management/pull/76) ([FCRodriguez7](https://github.com/FCRodriguez7))
 - Rename methods to make process flow more clear [\#74](https://github.com/yalelibrary/yul-dc-management/pull/74) ([maxkadel](https://github.com/maxkadel))
 - Move activity stream reader to lib [\#73](https://github.com/yalelibrary/yul-dc-management/pull/73) ([maxkadel](https://github.com/maxkadel))
 - Use Yale postgres image [\#72](https://github.com/yalelibrary/yul-dc-management/pull/72) ([maxkadel](https://github.com/maxkadel))
 - Configure hosts for production [\#71](https://github.com/yalelibrary/yul-dc-management/pull/71) ([JzGo](https://github.com/JzGo))
 - yul-dc-base 1.0 version bump, no feature changes [\#70](https://github.com/yalelibrary/yul-dc-management/pull/70) ([orangewolf](https://github.com/orangewolf))
 - CI Image Tag instead of Rebuild for Branches and Image Tag on Releases [\#69](https://github.com/yalelibrary/yul-dc-management/pull/69) ([orangewolf](https://github.com/orangewolf))
-- Dockerfile Consolidation [\#67](https://github.com/yalelibrary/yul-dc-management/pull/67) ([orangewolf](https://github.com/orangewolf))
 
 ## [v1.5.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.5.0) (2020-06-15)
 
-[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v0.0.1...v1.5.0)
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.4.1...v1.5.0)
 
 **Merged pull requests:**
 
 - generate changelog for 1.5.0 [\#68](https://github.com/yalelibrary/yul-dc-management/pull/68) ([martinlovell](https://github.com/martinlovell))
+- Dockerfile Consolidation [\#67](https://github.com/yalelibrary/yul-dc-management/pull/67) ([orangewolf](https://github.com/orangewolf))
 - Parse activity stream [\#66](https://github.com/yalelibrary/yul-dc-management/pull/66) ([maxkadel](https://github.com/maxkadel))
-
-## [v0.0.1](https://github.com/yalelibrary/yul-dc-management/tree/v0.0.1) (2020-06-12)
-
-[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.4.1...v0.0.1)
-
-**Merged pull requests:**
-
 - Clean up fixtures and enhance parent object documentation [\#65](https://github.com/yalelibrary/yul-dc-management/pull/65) ([maxkadel](https://github.com/maxkadel))
 - Separate vpn-only tests more cleanly [\#64](https://github.com/yalelibrary/yul-dc-management/pull/64) ([maxkadel](https://github.com/maxkadel))
 - Normalize environment variables for tagged versions to match Camerata [\#63](https://github.com/yalelibrary/yul-dc-management/pull/63) ([maxkadel](https://github.com/maxkadel))
@@ -89,16 +94,13 @@
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.1.2...v1.1.3)
 
-**Merged pull requests:**
-
-- make sure gemfile.lock matches gemfile [\#39](https://github.com/yalelibrary/yul-dc-management/pull/39) ([maxkadel](https://github.com/maxkadel))
-
 ## [v1.1.2](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.2) (2020-06-03)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.1.1...v1.1.2)
 
 **Merged pull requests:**
 
+- make sure gemfile.lock matches gemfile [\#39](https://github.com/yalelibrary/yul-dc-management/pull/39) ([maxkadel](https://github.com/maxkadel))
 - Add basic management page so there's somewhere to land on deploy [\#37](https://github.com/yalelibrary/yul-dc-management/pull/37) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.1.1](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.1) (2020-06-03)
