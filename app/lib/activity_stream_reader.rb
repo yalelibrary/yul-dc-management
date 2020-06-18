@@ -21,7 +21,7 @@ class ActivityStreamReader
   def process_page(page_url)
     page = fetch_and_parse_page(page_url)
     page["orderedItems"].each do |item|
-      process_item(item) if last_run_time.nil? || item["endTime"].to_datetime.after?(last_run_time)
+      process_item(item) if relevant?(item)
     end
     process_page(previous_page_link(page)) if previous_page_link(page)
   end

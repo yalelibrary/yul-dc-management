@@ -11,10 +11,10 @@
     {
       "endTime": "2020-06-12T21:06:53.000+0000",
       "object": {
-        "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/15369742",
+        "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628",
         "type": "Document"
       },
-      "type": "Create"
+      "type": "Update"
     },
     {
       "endTime": "2020-06-12T21:06:53.000+0000",
