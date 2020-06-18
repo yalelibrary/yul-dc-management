@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 require "rails_helper"
 require "support/time_helpers"
-WebMock.allow_net_connect!
 
 RSpec.describe ActivityStreamReader do
   let(:asr) { described_class.new }
@@ -34,6 +33,10 @@ RSpec.describe ActivityStreamReader do
         .to_return(status: 200, body: page_1_activity_stream_page)
       stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-0")
         .to_return(status: 200, body: page_0_activity_stream_page)
+    end
+
+    it "can get a page from the MetadataCloud activity stream" do
+      expect(asr.fetch_and_parse_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")["type"]).to eq "OrderedCollectionPage"
     end
 
     it "processes the entire activity stream if it has never been run before" do
@@ -144,9 +147,5 @@ RSpec.describe ActivityStreamReader do
     asl_new_success
     asl_failed
     expect(asr.last_run_time).to eq asl_new_success.run_time
-  end
-
-  it "can get a page from the MetadataCloud activity stream" do
-    expect(asr.fetch_and_parse_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")["type"]).to eq "OrderedCollectionPage"
   end
 end
