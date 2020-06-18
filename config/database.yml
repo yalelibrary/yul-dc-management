@@ -83,5 +83,3 @@ test:
 production:
   <<: *default
   database: yul_dc_management_production
-  username: yul_dc_management
-  password: <%= ENV['YUL_DC_MANAGEMENT_DATABASE_PASSWORD'] %>
