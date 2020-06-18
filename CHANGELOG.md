@@ -50,6 +50,7 @@
 - Creates a crosswalk for parent objects based on their Ladybird records [\#60](https://github.com/yalelibrary/yul-dc-management/pull/60) ([maxkadel](https://github.com/maxkadel))
 - Create a model for ParentObjects and seed the database with example oids [\#59](https://github.com/yalelibrary/yul-dc-management/pull/59) ([maxkadel](https://github.com/maxkadel))
 - Ensure Bootstrap is added to asset pipeline correctly [\#55](https://github.com/yalelibrary/yul-dc-management/pull/55) ([maxkadel](https://github.com/maxkadel))
+- Allows us to refresh fixture data from the metadata cloud from ArchiveSpace, Voyager, or Ladybird [\#50](https://github.com/yalelibrary/yul-dc-management/pull/50) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.4.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.4.0) (2020-06-09)
 
@@ -76,7 +77,6 @@
 
 **Merged pull requests:**
 
-- Allows us to refresh fixture data from the metadata cloud from ArchiveSpace, Voyager, or Ladybird [\#50](https://github.com/yalelibrary/yul-dc-management/pull/50) ([maxkadel](https://github.com/maxkadel))
 - Bump websocket-extensions from 0.1.3 to 0.1.4 [\#47](https://github.com/yalelibrary/yul-dc-management/pull/47) ([maxkadel](https://github.com/maxkadel))
 - Bump websocket-extensions from 0.1.4 to 0.1.5 [\#46](https://github.com/yalelibrary/yul-dc-management/pull/46) ([maxkadel](https://github.com/maxkadel))
 - refactor solr connection [\#45](https://github.com/yalelibrary/yul-dc-management/pull/45) ([maxkadel](https://github.com/maxkadel))
@@ -137,7 +137,6 @@
 **Merged pull requests:**
 
 - update gems for security [\#29](https://github.com/yalelibrary/yul-dc-management/pull/29) ([maxkadel](https://github.com/maxkadel))
-- use the same Solr mapping as Blacklight, same ordering [\#28](https://github.com/yalelibrary/yul-dc-management/pull/28) ([maxkadel](https://github.com/maxkadel))
 - Exclude RuboCop MethodLength check for specs and specific files [\#27](https://github.com/yalelibrary/yul-dc-management/pull/27) ([mark-dce](https://github.com/mark-dce))
 - Add private/restricted fixtures plus specs [\#26](https://github.com/yalelibrary/yul-dc-management/pull/26) ([dylansalay](https://github.com/dylansalay))
 
@@ -147,6 +146,7 @@
 
 **Merged pull requests:**
 
+- use the same Solr mapping as Blacklight, same ordering [\#28](https://github.com/yalelibrary/yul-dc-management/pull/28) ([maxkadel](https://github.com/maxkadel))
 - attempt multiple tags [\#25](https://github.com/yalelibrary/yul-dc-management/pull/25) ([maxkadel](https://github.com/maxkadel))
 - tag separate from image name [\#24](https://github.com/yalelibrary/yul-dc-management/pull/24) ([maxkadel](https://github.com/maxkadel))
 - Update documentation & image info [\#23](https://github.com/yalelibrary/yul-dc-management/pull/23) ([maxkadel](https://github.com/maxkadel))
