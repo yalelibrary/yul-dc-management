@@ -41,8 +41,14 @@ class ActivityStreamReader
     true
   end
 
-  def process_item(_item)
+  def process_item(item)
     @tally += 1
+    oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures
+    oids_for_update.add(oid.first)
+  end
+
+  def oids_for_update
+    @oids_for_update ||= Set.new
   end
 
   ##
@@ -57,9 +63,23 @@ class ActivityStreamReader
     log = ActivityStreamLog.create(run_time: DateTime.current, status: "Running")
     log.save
     process_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
+    refresh_updated_items(oids_for_update)
     log.object_count = @tally
     log.status = "Success"
     log.save
+  end
+
+  def refresh_updated_items(oids_for_update)
+    mcs = MetadataCloudService.new
+    metadata_source = "ladybird"
+    oids_for_update.each do |oid|
+      metadata_cloud_url = mcs.build_metadata_cloud_url(oid, metadata_source)
+      full_response = mcs.mc_get(metadata_cloud_url)
+      mcs.save_mc_json_to_file(full_response, oid, metadata_source)
+      po = ParentObject.find_by(oid: oid)
+      po.last_mc_update = DateTime.current
+      po.save
+    end
   end
 
   def fetch_and_parse_page(page_url)
