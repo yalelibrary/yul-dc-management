@@ -131,16 +131,22 @@ RSpec.describe MetadataCloudService do
       end
     end
 
-    context "with an object with an aspace uri" do
+    context "with an object with only an oid set that should have all other identifiers" do
       let(:oid) { "16854285" }
       let(:aspace_uri) { "/repositories/11/archival_objects/515305" }
-      let(:po) { FactoryBot.create(:parent_object, oid: oid, aspace_uri: aspace_uri) }
+      let(:bib_id) { "12307100" }
+      let(:holding_id) { "12484205" }
+      let(:item_id) { "10996370" }
+      let(:po) { FactoryBot.create(:parent_object, oid: oid) }
 
       it "adds the aspace uri" do
         po
         mcs.create_crosswalk(oid)
-        expect(po["aspace_uri"].nil?).to be false
-        expect(po["aspace_uri"]).to eq aspace_uri
+        expect(ParentObject.find_by(oid: oid)["aspace_uri"].nil?).to be false
+        expect(ParentObject.find_by(oid: oid)["aspace_uri"]).to eq aspace_uri
+        expect(ParentObject.find_by(oid: oid)["bib_id"]).to eq bib_id
+        expect(ParentObject.find_by(oid: oid)["holding_id"]).to eq holding_id
+        expect(ParentObject.find_by(oid: oid)["item_id"]).to eq item_id
       end
     end
   end
