@@ -6,125 +6,36 @@ WebMock.allow_net_connect!
 RSpec.describe ActivityStreamReader do
   let(:asr) { described_class.new }
   let(:asl_new_success) { FactoryBot.create(:successful_activity_stream_log, run_time: 2.hours.ago) }
-  let(:relevant_parent_object) { FactoryBot.create(:parent_object_with_bib_id, oid: 2_004_628) }
+  let(:relevant_parent_object) { FactoryBot.create(:parent_object_with_bib_id, oid: "2004628") }
   let(:asl_failed) { FactoryBot.create(:failed_activity_stream_log, run_time: 1.hour.ago) }
   let(:asl_old_success) { FactoryBot.create(:successful_activity_stream_log, run_time: "2020-06-12T21:05:53.000+0000".to_datetime) }
   let(:latest_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read }
   let(:page_2_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-2.json")).read }
   let(:page_1_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-1.json")).read }
   let(:page_0_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-0.json")).read }
-  let(:relevant_item) do
-    {
-      "endTime" => "2020-06-12T21:06:53.000+0000",
-      "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628",
-        "type" => "Document"
-      },
-      "type" => "Update"
-    }
-  end
-  let(:irrelevant_item_not_ladybird) do
-    {
-      "endTime" => "2020-06-12T21:06:53.000+0000",
-      "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/2004628",
-        "type" => "Document"
-      },
-      "type" => "Update"
-    }
-  end
-  let(:irrelevant_item_not_in_db) do
-    {
-      "endTime" => "2020-06-12T21:06:53.000+0000",
-      "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/not_in_db",
-        "type" => "Document"
-      },
-      "type" => "Update"
-    }
-  end
-  let(:irrelevant_item_too_old) do
-    {
-      "endTime" => "2020-06-12T21:04:53.000+0000",
-      "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628",
-        "type" => "Document"
-      },
-      "type" => "Update"
-    }
-  end
-  let(:irrelevant_not_an_update) do
-    {
-      "endTime" => "2020-06-12T21:06:53.000+0000",
-      "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628",
-        "type" => "Document"
-      },
-      "type" => "Create"
-    }
-  end
-
   let(:json_parsed_page) { JSON.parse(latest_activity_stream_page) }
 
   before do
+    # Part of ActiveSupport, see support/time_helpers.rb, behaves similarly to old TimeCop gem
     freeze_time
-    # Apparently the mocked authorization hash matters in passing CI, so you have
-    # to provide username and password matching the mocked stub request authorization
-    @old_mc_user = ENV["MC_USER"]
-    @old_mc_pw = ENV["MC_PW"]
-    ENV["MC_USER"] = "some_username"
-    ENV["MC_PW"] = "some_password"
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
-      .with(
-        headers: {
-          'Authorization' => 'Basic c29tZV91c2VybmFtZTpzb21lX3Bhc3N3b3Jk',
-          'Connection' => 'close',
-          'Host' => 'metadata-api-test.library.yale.edu',
-          'User-Agent' => 'http.rb/4.4.1'
-        }
-      )
-      .to_return(status: 200, body: latest_activity_stream_page, headers: {})
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-2")
-      .with(
-        headers: {
-          'Authorization' => 'Basic c29tZV91c2VybmFtZTpzb21lX3Bhc3N3b3Jk',
-          'Connection' => 'close',
-          'Host' => 'metadata-api-test.library.yale.edu',
-          'User-Agent' => 'http.rb/4.4.1'
-        }
-      )
-      .to_return(status: 200, body: page_2_activity_stream_page, headers: {})
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-1")
-      .with(
-        headers: {
-          'Authorization' => 'Basic c29tZV91c2VybmFtZTpzb21lX3Bhc3N3b3Jk',
-          'Connection' => 'close',
-          'Host' => 'metadata-api-test.library.yale.edu',
-          'User-Agent' => 'http.rb/4.4.1'
-        }
-      )
-      .to_return(status: 200, body: page_1_activity_stream_page, headers: {})
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-0")
-      .with(
-        headers: {
-          'Authorization' => 'Basic c29tZV91c2VybmFtZTpzb21lX3Bhc3N3b3Jk',
-          'Connection' => 'close',
-          'Host' => 'metadata-api-test.library.yale.edu',
-          'User-Agent' => 'http.rb/4.4.1'
-        }
-      )
-      .to_return(status: 200, body: page_0_activity_stream_page, headers: {})
-  end
-
-  after do
-    ENV["MC_USER"] = @old_mc_user
-    ENV["MC_PW"] = @old_mc_pw
   end
 
   # There will be a automated job that fetches updates from the MetadataCloud on some configured schedule.
   # Each time the activity_stream_reader is run, it creates an activity_stream_log event, which records when it was run,
   # whether that run was successful, and how and many objects were referenced in that activity stream run.
   context "daily automated updates" do
+    before do
+      # Stub requests to MetadataCloud activity stream with fixture objects that represent single activity_stream json pages
+      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
+        .to_return(status: 200, body: latest_activity_stream_page)
+      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-2")
+        .to_return(status: 200, body: page_2_activity_stream_page)
+      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-1")
+        .to_return(status: 200, body: page_1_activity_stream_page)
+      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-0")
+        .to_return(status: 200, body: page_0_activity_stream_page)
+    end
+
     it "processes the entire activity stream if it has never been run before" do
       expect(ActivityStreamLog.count).to eq 0
       described_class.update
@@ -142,7 +53,68 @@ RSpec.describe ActivityStreamReader do
     end
   end
 
-  context "determining whether a ladybird item is relevant" do
+  context "determining whether an item from the activity stream is relevant" do
+    let(:relevant_parent_object) { FactoryBot.create(:parent_object_with_bib_id, oid: "2004628") }
+    let(:relevant_oid) { "2004628" }
+    let(:irrelevant_oid) { "not_in_db" }
+    # This is likely to change very soon
+    let(:relevant_metadata_source) { "/ladybird/oid" }
+    let(:irrelevant_metadata_source) { "/ils/bib" }
+    let(:relevant_time) { "2020-06-12T21:06:53.000+0000" }
+    let(:irrelevant_time) { "2020-06-12T21:04:53.000+0000" }
+    let(:relevant_activity_type) { "Update" }
+    let(:irrelevant_activity_type) { "Create" }
+    let(:relevant_item) do
+      {
+        "endTime" => relevant_time,
+        "object" => {
+          "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source}/#{relevant_oid}",
+          "type" => "Document"
+        },
+        "type" => relevant_activity_type
+      }
+    end
+    let(:irrelevant_item_not_ladybird) do
+      {
+        "endTime" => relevant_time,
+        "object" => {
+          "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{irrelevant_metadata_source}/#{relevant_oid}",
+          "type" => "Document"
+        },
+        "type" => relevant_activity_type
+      }
+    end
+    let(:irrelevant_item_not_in_db) do
+      {
+        "endTime" => relevant_time,
+        "object" => {
+          "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source}/#{irrelevant_oid}",
+          "type" => "Document"
+        },
+        "type" => relevant_activity_type
+      }
+    end
+    let(:irrelevant_item_too_old) do
+      {
+        "endTime" => irrelevant_time,
+        "object" => {
+          "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source}/#{relevant_oid}",
+          "type" => "Document"
+        },
+        "type" => relevant_activity_type
+      }
+    end
+    let(:irrelevant_not_an_update) do
+      {
+        "endTime" => "2020-06-12T21:06:53.000+0000",
+        "object" => {
+          "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source}/#{relevant_oid}",
+          "type" => "Document"
+        },
+        "type" => irrelevant_activity_type
+      }
+    end
+
     before do
       relevant_parent_object
       asl_old_success

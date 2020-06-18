@@ -27,17 +27,18 @@ class ActivityStreamReader
   end
 
   ##
-  # It takes an item from the activity stream and returns either True or nil (falsey) depending on whether that object
+  # It takes an item from the activity stream and returns either true or false depending on whether that object
   # - Is in the database, based on its Ladybird OID (this will have to be extended for non-ladybird objects)
   # - Was updated within the timeframe we're interested in (either the entire activity stream if it has not been
   # previously successfully run, or after the last_run_time)
   # - Is an update (for now - will probably want to include deletions and creations in the future)
   def relevant?(item)
+    return false unless item["type"] == "Update"
+    return false unless last_run_time.nil? || item["endTime"].to_datetime.after?(last_run_time)
     oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures
-    is_in_database = ParentObject.find_by(oid: oid)
-    from_relevant_time = last_run_time.nil? || item["endTime"].to_datetime.after?(last_run_time)
-    is_an_update = TRUE if item["type"] == "Update"
-    true if is_in_database && from_relevant_time && is_an_update
+    return false if oid.nil?
+    return false unless ParentObject.find_by(oid: oid)
+    true
   end
 
   def process_item(_item)
