@@ -146,7 +146,7 @@ RSpec.describe ActivityStreamReader do
       expect(ActivityStreamLog.last.object_count).to eq 4
     end
 
-    it "adds relevant oids for update to an array" do
+    it "adds relevant oids for update to a set" do
       expect(asr.oids_for_update.size).to eq 0
       asr.process_item(relevant_item)
       expect(asr.oids_for_update.size).to eq 1
