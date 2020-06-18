@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "rails_helper"
 require "support/time_helpers"
-# WebMock.allow_net_connect!
+WebMock.allow_net_connect!
 
 RSpec.describe ActivityStreamReader do
   let(:asr) { described_class.new }
@@ -20,37 +20,47 @@ RSpec.describe ActivityStreamReader do
         "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628",
         "type" => "Document"
       },
-      "type" => "Create"
+      "type" => "Update"
     }
   end
   let(:irrelevant_item_not_ladybird) do
     {
-      "endTime": "2020-06-12T21:06:15.000+0000",
-      "object": {
-        "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/2004628",
-        "type": "Document"
+      "endTime" => "2020-06-12T21:06:53.000+0000",
+      "object" => {
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/2004628",
+        "type" => "Document"
       },
-      "type": "Create"
+      "type" => "Update"
     }
   end
   let(:irrelevant_item_not_in_db) do
     {
-      "endTime": "2020-06-12T21:06:15.000+0000",
-      "object": {
-        "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/not_in_db",
-        "type": "Document"
+      "endTime" => "2020-06-12T21:06:53.000+0000",
+      "object" => {
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/not_in_db",
+        "type" => "Document"
       },
-      "type": "Create"
+      "type" => "Update"
     }
   end
   let(:irrelevant_item_too_old) do
     {
-      "endTime": "2020-06-12T20:06:15.000+0000",
-      "object": {
-        "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628",
-        "type": "Document"
+      "endTime" => "2020-06-12T21:04:53.000+0000",
+      "object" => {
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628",
+        "type" => "Document"
       },
-      "type": "Create"
+      "type" => "Update"
+    }
+  end
+  let(:irrelevant_not_an_update) do
+    {
+      "endTime" => "2020-06-12T21:06:53.000+0000",
+      "object" => {
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628",
+        "type" => "Document"
+      },
+      "type" => "Create"
     }
   end
 
@@ -132,13 +142,22 @@ RSpec.describe ActivityStreamReader do
     end
   end
 
-  it "can determine whether an item is relevant" do
-    relevant_parent_object
-    asl_old_success
-    expect(asr.relevant?(relevant_item)).to be_truthy
-    expect(asr.relevant?(irrelevant_item_not_ladybird)).to be_falsey
-    expect(asr.relevant?(irrelevant_item_not_in_db)).to be_falsey
-    expect(asr.relevant?(irrelevant_item_too_old)).to be_falsey
+  context "determining whether a ladybird item is relevant" do
+    before do
+      relevant_parent_object
+      asl_old_success
+    end
+
+    it "can confirm that an item is relevant" do
+      expect(asr.relevant?(relevant_item)).to be_truthy
+    end
+
+    it "does not confirm that an irrelevant item is relevant" do
+      expect(asr.relevant?(irrelevant_item_not_ladybird)).to be_falsey
+      expect(asr.relevant?(irrelevant_item_not_in_db)).to be_falsey
+      expect(asr.relevant?(irrelevant_item_too_old)).to be_falsey
+      expect(asr.relevant?(irrelevant_not_an_update)).to be_falsey
+    end
   end
 
   it "can get the uri for the previous page" do
