@@ -24,6 +24,7 @@ RSpec.describe ActivityStreamReader do
   # whether that run was successful, and how and many objects were referenced in that activity stream run.
   context "daily automated updates" do
     before do
+      relevant_parent_object
       # Stub requests to MetadataCloud activity stream with fixture objects that represent single activity_stream json pages
       stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
         .to_return(status: 200, body: latest_activity_stream_page)
@@ -38,26 +39,27 @@ RSpec.describe ActivityStreamReader do
     it "can get a page from the MetadataCloud activity stream" do
       expect(asr.fetch_and_parse_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")["type"]).to eq "OrderedCollectionPage"
     end
-
+    # There are 4000 total items, but only 4 of them are Ladybird updates with the oid of the relevant_parent_object
+    # that has been added to the database in our before block
     it "processes the entire activity stream if it has never been run before" do
       expect(ActivityStreamLog.count).to eq 0
       described_class.update
       expect(ActivityStreamLog.count).to eq 1
-      expect(ActivityStreamLog.last.object_count).to eq 4000
+      expect(ActivityStreamLog.last.object_count).to eq 4
     end
-
+    # There are 1837 total items from the relevant time period, but only 2 of them are Ladybird updates
+    # with the oid of the relevant_parent_object that has been added to the database in our before block
     it "can process the partial activity stream if there is a previous successful run" do
       asl_old_success
       expect(ActivityStreamLog.count).to eq 1
       expect(ActivityStreamLog.last.object_count).to eq asl_old_success.object_count
       asr.process_activity_stream
       expect(ActivityStreamLog.count).to eq 2
-      expect(ActivityStreamLog.last.object_count).to eq 1837
+      expect(ActivityStreamLog.last.object_count).to eq 2
     end
   end
 
   context "determining whether an item from the activity stream is relevant" do
-    let(:relevant_parent_object) { FactoryBot.create(:parent_object_with_bib_id, oid: "2004628") }
     let(:relevant_oid) { "2004628" }
     let(:irrelevant_oid) { "not_in_db" }
     # This is likely to change very soon

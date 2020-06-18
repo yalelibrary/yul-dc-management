@@ -21,7 +21,7 @@ class ActivityStreamReader
   def process_page(page_url)
     page = fetch_and_parse_page(page_url)
     page["orderedItems"].each do |item|
-      process_item(item) if last_run_time.nil? || item["endTime"].to_datetime.after?(last_run_time)
+      process_item(item) if relevant?(item)
     end
     process_page(previous_page_link(page)) if previous_page_link(page)
   end
@@ -33,6 +33,7 @@ class ActivityStreamReader
   # previously successfully run, or after the last_run_time)
   # - Is an update (for now - will probably want to include deletions and creations in the future)
   def relevant?(item)
+    # byebug if item["object"]["id"] == "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628"
     return false unless item["type"] == "Update"
     return false unless last_run_time.nil? || item["endTime"].to_datetime.after?(last_run_time)
     oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures
