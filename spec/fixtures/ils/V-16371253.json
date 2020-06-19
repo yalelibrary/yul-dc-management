@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/12297336",
+  "uri": "/ils/barcode/39002104623971?bib=12297336",
+  "identifierShelfMark": "81 Takamiya MS",
   "title": [
     "Missal, use of Sarum (fragment)"
   ],
@@ -61,6 +62,7 @@
     "Missal, use of Sarum (fragment)"
   ],
   "provenanceUncontrolled": "Purchased from Toshiyuki Takamiya on the Edwin J. Beinecke Book Fund, 2017.",
+  "repository": "beingen",
   "subjectTitle": "Sarum manual.",
   "indexedBy": [
     "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437."
@@ -72,12 +74,20 @@
   "subjectTitleDisplay": [
     "Catholic Church. Sarum manual."
   ],
+  "barcode": "39002104623971",
+  "volumeEnumeration": "File (Oversize)",
+  "dependentUris": [
+    "/ils/holding/12462455",
+    "/ils/item/10982675",
+    "/ils/bib/12297336",
+    "/ils/barcode/39002104623971"
+  ],
   "bibId": 12297336,
   "suppressInOpac": false,
   "createDate": "2014-11-12T19:59:10.000+0000",
   "updateDate": "2019-02-24T22:33:44.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 12462455,
+  "itemId": 10982675,
   "children": [
 
   ],

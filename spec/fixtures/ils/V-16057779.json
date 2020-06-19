@@ -111,6 +111,9 @@
     "Colt's Patent Fire Arms Manufacturing Co.,",
     "James Dalziel Dougall & Sons,"
   ],
+  "dependentUris": [
+    "/ils/bib/12442385"
+  ],
   "bibId": 12442385,
   "suppressInOpac": false,
   "createDate": "2015-04-24T17:38:04.000+0000",

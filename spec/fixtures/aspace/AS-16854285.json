@@ -44,6 +44,12 @@
 
   ],
   "archiveSpaceUri": "/repositories/11/archival_objects/515305",
+  "dependentUris": [
+    "/aspace/repositories/11/archival_objects/515305",
+    "/aspace/repositories/11/resources/1394",
+    "/aspace/agents/corporate_entities/12845",
+    "/aspace/repositories/11/top_containers/66093"
+  ],
   "children": [
 
   ],

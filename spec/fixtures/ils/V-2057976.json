@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/7039963",
+  "uri": "/ils/barcode/39002094210060?bib=7039963",
+  "identifierShelfMark": "7 Osborn Music MS",
   "title": [
     "\"Vaudevilles et chansons\", [18th Century]."
   ],
@@ -30,12 +31,20 @@
     "\"Vaudevilles et chansons\", [18th Century]."
   ],
   "provenanceUncontrolled": "For information on the source of acquisition, consult the appropriate curator.",
+  "repository": "beinosb",
+  "barcode": "39002094210060",
+  "dependentUris": [
+    "/ils/holding/7597151",
+    "/ils/item/8097775",
+    "/ils/bib/7039963",
+    "/ils/barcode/39002094210060"
+  ],
   "bibId": 7039963,
   "suppressInOpac": false,
   "createDate": "2005-08-08T18:02:48.000+0000",
   "updateDate": "2018-07-06T14:27:08.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 7597151,
+  "itemId": 8097775,
   "children": [
 
   ],

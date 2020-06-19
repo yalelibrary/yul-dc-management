@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/1169354",
+  "uri": "/ils/barcode/39002094045136?bib=1169354",
+  "identifierShelfMark": "728 (Oversize) GEN MSS VOL Bound with 1 other title. To view full description, search by call number: GEN MSS VOL 728 (Oversize) Former call number: MS Vault Johnson",
   "creator": [
     "Johnson, Samuel, 1709-1784"
   ],
@@ -44,15 +45,24 @@
     "A dictionary of the English language ... / by Samuel Johnson ..."
   ],
   "provenanceControlled": "Johnson, Samuel, 1709-1784 Ms. notes. Sneyd, Ralph Binding.",
+  "repository": "beingen",
   "creatorDisplay": [
     "Johnson, Samuel, 1709-1784"
+  ],
+  "barcode": "39002094045136",
+  "volumeEnumeration": "2",
+  "dependentUris": [
+    "/ils/holding/1303025",
+    "/ils/item/9136058",
+    "/ils/bib/1169354",
+    "/ils/barcode/39002094045136"
   ],
   "bibId": 1169354,
   "suppressInOpac": false,
   "createDate": "2002-06-01T04:00:00.000+0000",
   "updateDate": "2020-03-03T13:49:15.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 1303025,
+  "itemId": 9136058,
   "children": [
 
   ]

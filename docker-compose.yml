@@ -21,7 +21,7 @@ services:
       - solr
 
   db:
-    image: postgres
+    image: yalelibraryit/dc-postgres:${POSTGRES_VERSION:-latest}
     env_file:
       - .env
     ports:

@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/3798665",
+  "uri": "/ils/barcode/39002094341147?bib=3798665",
+  "identifierShelfMark": "75 Landberg MSS",
   "creator": [
     "Kinānī, ʻAbd al-ʻAzīz ibn Yaḥyá, d. 854 or 5."
   ],
@@ -41,6 +42,7 @@
   "titleStatement": [
     "Kitāb al-ḥaydah / li-ʻAbd al-ʻAzīz al-Kinānī al-Makkī. -- 1116"
   ],
+  "repository": "lsfbeir",
   "indexedBy": [
     "Brockelmann, I, 193; S I, p. 340.",
     "Berlin catalog, 440."
@@ -52,12 +54,20 @@
   "creatorDisplay": [
     "Kinānī, ʻAbd al-ʻAzīz ibn Yaḥyá, d. 854 or 5."
   ],
+  "barcode": "39002094341147",
+  "volumeEnumeration": "Box",
+  "dependentUris": [
+    "/ils/holding/4154518",
+    "/ils/item/10900008",
+    "/ils/bib/3798665",
+    "/ils/barcode/39002094341147"
+  ],
   "bibId": 3798665,
   "suppressInOpac": false,
   "createDate": "2002-06-01T04:00:00.000+0000",
   "updateDate": "2018-10-01T18:58:04.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 4154518,
+  "itemId": 10900008,
   "children": [
 
   ],

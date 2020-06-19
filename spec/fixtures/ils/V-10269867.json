@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/9734851",
+  "uri": "/ils/barcode/39002091597519?bib=9734851",
+  "identifierShelfMark": "410 Beinecke MS",
   "title": [
     "Indulgence scroll"
   ],
@@ -64,6 +65,7 @@
     "Indulgence scroll"
   ],
   "provenanceUncontrolled": "Purchased from H. M. Fletcher in 1969 by Edwin J. Beinecke for the Beinecke Library.",
+  "repository": "beingen",
   "indexedBy": [
     "Shailor, B. Catalogue of Medieval and Renaissance Manuscripts in the Beinecke Rare Book and Manuscript Library, MS 410."
   ],
@@ -74,12 +76,20 @@
   "subjectTitleDisplay": [
     "Catholic Church"
   ],
+  "barcode": "39002091597519",
+  "volumeEnumeration": "Box",
+  "dependentUris": [
+    "/ils/holding/10050461",
+    "/ils/item/9280988",
+    "/ils/bib/9734851",
+    "/ils/barcode/39002091597519"
+  ],
   "bibId": 9734851,
   "suppressInOpac": false,
   "createDate": "2011-04-20T15:43:05.000+0000",
   "updateDate": "2018-10-01T19:00:20.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 10050461,
+  "itemId": 9280988,
   "children": [
 
   ],

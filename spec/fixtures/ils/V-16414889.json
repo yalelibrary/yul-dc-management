@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/3577942",
+  "uri": "/ils/barcode/39002113596465?bib=3577942",
+  "identifierShelfMark": "1351 1978",
   "creator": [
     "Cruikshank, George, 1792-1878"
   ],
@@ -35,15 +36,23 @@
   "titleStatement": [
     "A comic alphabet, designed, etched & published by George Cruikshank, No. 23 Myddelton Terrace, Pentonville"
   ],
+  "repository": "beingen",
   "creatorDisplay": [
     "Cruikshank, George, 1792-1878"
+  ],
+  "barcode": "39002113596465",
+  "dependentUris": [
+    "/ils/holding/3917998",
+    "/ils/item/11873270",
+    "/ils/bib/3577942",
+    "/ils/barcode/39002113596465"
   ],
   "bibId": 3577942,
   "suppressInOpac": false,
   "createDate": "2002-06-01T04:00:00.000+0000",
   "updateDate": "2011-03-30T18:19:01.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 3917998,
+  "itemId": 11873270,
   "children": [
 
   ]

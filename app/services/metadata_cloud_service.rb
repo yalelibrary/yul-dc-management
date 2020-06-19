@@ -34,13 +34,13 @@ class MetadataCloudService
       identifier_block = if barcode.nil?
                            "/bib/#{bib_id}"
                          else
-                           "/barcode/#{barcode}/bib/#{bib_id}"
+                           "/barcode/#{barcode}?bib=#{bib_id}"
                          end
     elsif metadata_source == "aspace"
       return nil unless get_archive_space_uri(oid)
       identifier_block = get_archive_space_uri(oid)
     end
-    "https://metadata-api-test.library.yale.edu/metadatacloud/api/#{metadata_source}#{identifier_block}?mediaType=json"
+    "https://metadata-api-test.library.yale.edu/metadatacloud/api/#{metadata_source}#{identifier_block}"
   end
 
   def create_crosswalk(oid)
@@ -49,12 +49,19 @@ class MetadataCloudService
     bib_id = parsed_ladybird_file["orbisRecord"]
     barcode = parsed_ladybird_file["orbisBarcode"]
     aspace_uri = parsed_ladybird_file["archiveSpaceUri"]
-
+    if bib_id && barcode
+      voyager_file = get_fixture_file(oid, "ils")
+      parsed_voyager_file = JSON.parse(voyager_file)
+      holding_id = parsed_voyager_file["holdingId"]
+      item_id = parsed_voyager_file["itemId"]
+    end
     po = ParentObject.find_by(oid: oid)
     po.update(
       bib_id: bib_id,
       barcode: barcode,
       aspace_uri: aspace_uri,
+      holding_id: holding_id,
+      item_id: item_id,
       last_id_upate: DateTime.current
     )
     po.save

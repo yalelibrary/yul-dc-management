@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/12286028",
+  "uri": "/ils/barcode/39002113593728?bib=12286028",
+  "identifierShelfMark": "+1880 5626 Covers",
   "creator": [
     "Li, Mengquan (Cartographer), cartographer",
     "李蒙泉 (Cartographer), cartographer"
@@ -64,6 +65,7 @@
   "contributor": [
     "Chen, Jiaxun (Cartographer), cartographer."
   ],
+  "repository": "beingen",
   "relatedTitle": [
     ""
   ],
@@ -85,12 +87,19 @@
   "contributorDisplay": [
     "Chen, Jiaxun (Cartographer),"
   ],
+  "barcode": "39002113593728",
+  "dependentUris": [
+    "/ils/holding/12453009",
+    "/ils/item/11656798",
+    "/ils/bib/12286028",
+    "/ils/barcode/39002113593728"
+  ],
   "bibId": 12286028,
   "suppressInOpac": false,
   "createDate": "2014-10-28T21:12:40.000+0000",
   "updateDate": "2017-08-01T20:05:06.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 12453009,
+  "itemId": 11656798,
   "children": [
 
   ]
