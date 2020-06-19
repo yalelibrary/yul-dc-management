@@ -1,11 +1,34 @@
 # Changelog
 
-## [1.5.2](https://github.com/yalelibrary/yul-dc-management/tree/1.5.2) (2020-06-18)
+## [1.6.0](https://github.com/yalelibrary/yul-dc-management/tree/1.6.0) (2020-06-19)
 
-[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.5.1...1.5.2)
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.5.2...1.6.0)
 
 **Merged pull requests:**
 
+- Rename crosswalk method to more specific find\_source\_ids\_for\(oid\) [\#91](https://github.com/yalelibrary/yul-dc-management/pull/91) ([maxkadel](https://github.com/maxkadel))
+- Add honeybader for execption reporting in production [\#90](https://github.com/yalelibrary/yul-dc-management/pull/90) ([mark-dce](https://github.com/mark-dce))
+- Process Activity Stream Updates for Voyager bibs [\#89](https://github.com/yalelibrary/yul-dc-management/pull/89) ([maxkadel](https://github.com/maxkadel))
+- Speed up CircleCi With Caching [\#86](https://github.com/yalelibrary/yul-dc-management/pull/86) ([orangewolf](https://github.com/orangewolf))
+- Complete the crosswalk between oids and other identifiers [\#85](https://github.com/yalelibrary/yul-dc-management/pull/85) ([maxkadel](https://github.com/maxkadel))
+- Save objects from activity stream [\#84](https://github.com/yalelibrary/yul-dc-management/pull/84) ([maxkadel](https://github.com/maxkadel))
+- Only process items that are relevant [\#83](https://github.com/yalelibrary/yul-dc-management/pull/83) ([maxkadel](https://github.com/maxkadel))
+
+## [v1.5.2](https://github.com/yalelibrary/yul-dc-management/tree/v1.5.2) (2020-06-18)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v.1.5.2...v1.5.2)
+
+**Merged pull requests:**
+
+- Determine if an item from the activity stream is relevant [\#82](https://github.com/yalelibrary/yul-dc-management/pull/82) ([maxkadel](https://github.com/maxkadel))
+
+## [v.1.5.2](https://github.com/yalelibrary/yul-dc-management/tree/v.1.5.2) (2020-06-18)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.5.1...v.1.5.2)
+
+**Merged pull requests:**
+
+- Resolve discrepancies in the v1.5.2 changelog [\#81](https://github.com/yalelibrary/yul-dc-management/pull/81) ([mark-dce](https://github.com/mark-dce))
 - Add the changelog for release v1.5.2 [\#79](https://github.com/yalelibrary/yul-dc-management/pull/79) ([mark-dce](https://github.com/mark-dce))
 - use same db configuration as blacklight [\#78](https://github.com/yalelibrary/yul-dc-management/pull/78) ([maxkadel](https://github.com/maxkadel))
 - Fix url for Voyager records with barcode so full record is retrieved [\#77](https://github.com/yalelibrary/yul-dc-management/pull/77) ([maxkadel](https://github.com/maxkadel))
@@ -38,6 +61,7 @@
 - Separate vpn-only tests more cleanly [\#64](https://github.com/yalelibrary/yul-dc-management/pull/64) ([maxkadel](https://github.com/maxkadel))
 - Normalize environment variables for tagged versions to match Camerata [\#63](https://github.com/yalelibrary/yul-dc-management/pull/63) ([maxkadel](https://github.com/maxkadel))
 - Replace credentials.yml.enc with new file encoded with a known key [\#62](https://github.com/yalelibrary/yul-dc-management/pull/62) ([mark-dce](https://github.com/mark-dce))
+- Creates a crosswalk for parent objects based on their Ladybird records [\#60](https://github.com/yalelibrary/yul-dc-management/pull/60) ([maxkadel](https://github.com/maxkadel))
 - Service Status Display Table [\#57](https://github.com/yalelibrary/yul-dc-management/pull/57) ([dylansalay](https://github.com/dylansalay))
 
 ## [v1.4.1](https://github.com/yalelibrary/yul-dc-management/tree/v1.4.1) (2020-06-11)
@@ -47,7 +71,6 @@
 **Merged pull requests:**
 
 - Remove the prefix for Ladybird records, restore to previous state [\#61](https://github.com/yalelibrary/yul-dc-management/pull/61) ([maxkadel](https://github.com/maxkadel))
-- Creates a crosswalk for parent objects based on their Ladybird records [\#60](https://github.com/yalelibrary/yul-dc-management/pull/60) ([maxkadel](https://github.com/maxkadel))
 - Create a model for ParentObjects and seed the database with example oids [\#59](https://github.com/yalelibrary/yul-dc-management/pull/59) ([maxkadel](https://github.com/maxkadel))
 - Ensure Bootstrap is added to asset pipeline correctly [\#55](https://github.com/yalelibrary/yul-dc-management/pull/55) ([maxkadel](https://github.com/maxkadel))
 - Allows us to refresh fixture data from the metadata cloud from ArchiveSpace, Voyager, or Ladybird [\#50](https://github.com/yalelibrary/yul-dc-management/pull/50) ([maxkadel](https://github.com/maxkadel))
@@ -87,7 +110,6 @@
 
 **Merged pull requests:**
 
-- Update base docker image and Ruby for latest passenger [\#42](https://github.com/yalelibrary/yul-dc-management/pull/42) ([maxkadel](https://github.com/maxkadel))
 - add additional author field [\#40](https://github.com/yalelibrary/yul-dc-management/pull/40) ([K8Sewell](https://github.com/K8Sewell))
 
 ## [v1.1.3](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.3) (2020-06-04)
@@ -120,6 +142,7 @@
 
 **Merged pull requests:**
 
+- Update base docker image and Ruby for latest passenger [\#42](https://github.com/yalelibrary/yul-dc-management/pull/42) ([maxkadel](https://github.com/maxkadel))
 - Use port 3001 for management app so it doesn't run into Blacklight ap… [\#35](https://github.com/yalelibrary/yul-dc-management/pull/35) ([maxkadel](https://github.com/maxkadel))
 - README and update tag [\#34](https://github.com/yalelibrary/yul-dc-management/pull/34) ([maxkadel](https://github.com/maxkadel))
 
@@ -140,6 +163,7 @@
 **Merged pull requests:**
 
 - update gems for security [\#29](https://github.com/yalelibrary/yul-dc-management/pull/29) ([maxkadel](https://github.com/maxkadel))
+- use the same Solr mapping as Blacklight, same ordering [\#28](https://github.com/yalelibrary/yul-dc-management/pull/28) ([maxkadel](https://github.com/maxkadel))
 - Exclude RuboCop MethodLength check for specs and specific files [\#27](https://github.com/yalelibrary/yul-dc-management/pull/27) ([mark-dce](https://github.com/mark-dce))
 - Add private/restricted fixtures plus specs [\#26](https://github.com/yalelibrary/yul-dc-management/pull/26) ([dylansalay](https://github.com/dylansalay))
 
@@ -149,7 +173,6 @@
 
 **Merged pull requests:**
 
-- use the same Solr mapping as Blacklight, same ordering [\#28](https://github.com/yalelibrary/yul-dc-management/pull/28) ([maxkadel](https://github.com/maxkadel))
 - attempt multiple tags [\#25](https://github.com/yalelibrary/yul-dc-management/pull/25) ([maxkadel](https://github.com/maxkadel))
 - tag separate from image name [\#24](https://github.com/yalelibrary/yul-dc-management/pull/24) ([maxkadel](https://github.com/maxkadel))
 - Update documentation & image info [\#23](https://github.com/yalelibrary/yul-dc-management/pull/23) ([maxkadel](https://github.com/maxkadel))
