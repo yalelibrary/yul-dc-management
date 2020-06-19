@@ -53,6 +53,9 @@ class ActivityStreamReader
     end
   end
 
+  # This set contains arrays, each of which contains the oid for the item that has been updated,
+  # and the metadata_source that has been updated (Ladybird, Voyager ("ils"), or ArchiveSpace)
+  # @example { ["2004628", "ladybird"], ["2004628", "ils"] }
   def oids_for_update
     @oids_for_update ||= Set.new
   end
