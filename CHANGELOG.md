@@ -1,11 +1,27 @@
 # Changelog
 
-## [1.5.2](https://github.com/yalelibrary/yul-dc-management/tree/1.5.2) (2020-06-18)
+## [1.6.0](https://github.com/yalelibrary/yul-dc-management/tree/1.6.0) (2020-06-19)
 
-[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.5.1...1.5.2)
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.5.2...1.6.0)
 
 **Merged pull requests:**
 
+- Rename crosswalk method to more specific find\_source\_ids\_for\(oid\) [\#91](https://github.com/yalelibrary/yul-dc-management/pull/91) ([maxkadel](https://github.com/maxkadel))
+- Add honeybader for execption reporting in production [\#90](https://github.com/yalelibrary/yul-dc-management/pull/90) ([mark-dce](https://github.com/mark-dce))
+- Process Activity Stream Updates for Voyager bibs [\#89](https://github.com/yalelibrary/yul-dc-management/pull/89) ([maxkadel](https://github.com/maxkadel))
+- Speed up CircleCi With Caching [\#86](https://github.com/yalelibrary/yul-dc-management/pull/86) ([orangewolf](https://github.com/orangewolf))
+- Complete the crosswalk between oids and other identifiers [\#85](https://github.com/yalelibrary/yul-dc-management/pull/85) ([maxkadel](https://github.com/maxkadel))
+- Save objects from activity stream [\#84](https://github.com/yalelibrary/yul-dc-management/pull/84) ([maxkadel](https://github.com/maxkadel))
+- Only process items that are relevant [\#83](https://github.com/yalelibrary/yul-dc-management/pull/83) ([maxkadel](https://github.com/maxkadel))
+
+## [v1.5.2](https://github.com/yalelibrary/yul-dc-management/tree/v1.5.2) (2020-06-18)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.5.1...v1.5.2)
+
+**Merged pull requests:**
+
+- Determine if an item from the activity stream is relevant [\#82](https://github.com/yalelibrary/yul-dc-management/pull/82) ([maxkadel](https://github.com/maxkadel))
+- Resolve discrepancies in the v1.5.2 changelog [\#81](https://github.com/yalelibrary/yul-dc-management/pull/81) ([mark-dce](https://github.com/mark-dce))
 - Add the changelog for release v1.5.2 [\#79](https://github.com/yalelibrary/yul-dc-management/pull/79) ([mark-dce](https://github.com/mark-dce))
 - use same db configuration as blacklight [\#78](https://github.com/yalelibrary/yul-dc-management/pull/78) ([maxkadel](https://github.com/maxkadel))
 - Fix url for Voyager records with barcode so full record is retrieved [\#77](https://github.com/yalelibrary/yul-dc-management/pull/77) ([maxkadel](https://github.com/maxkadel))
@@ -50,7 +66,6 @@
 - Creates a crosswalk for parent objects based on their Ladybird records [\#60](https://github.com/yalelibrary/yul-dc-management/pull/60) ([maxkadel](https://github.com/maxkadel))
 - Create a model for ParentObjects and seed the database with example oids [\#59](https://github.com/yalelibrary/yul-dc-management/pull/59) ([maxkadel](https://github.com/maxkadel))
 - Ensure Bootstrap is added to asset pipeline correctly [\#55](https://github.com/yalelibrary/yul-dc-management/pull/55) ([maxkadel](https://github.com/maxkadel))
-- Allows us to refresh fixture data from the metadata cloud from ArchiveSpace, Voyager, or Ladybird [\#50](https://github.com/yalelibrary/yul-dc-management/pull/50) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.4.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.4.0) (2020-06-09)
 
@@ -77,6 +92,7 @@
 
 **Merged pull requests:**
 
+- Allows us to refresh fixture data from the metadata cloud from ArchiveSpace, Voyager, or Ladybird [\#50](https://github.com/yalelibrary/yul-dc-management/pull/50) ([maxkadel](https://github.com/maxkadel))
 - Bump websocket-extensions from 0.1.3 to 0.1.4 [\#47](https://github.com/yalelibrary/yul-dc-management/pull/47) ([maxkadel](https://github.com/maxkadel))
 - Bump websocket-extensions from 0.1.4 to 0.1.5 [\#46](https://github.com/yalelibrary/yul-dc-management/pull/46) ([maxkadel](https://github.com/maxkadel))
 - refactor solr connection [\#45](https://github.com/yalelibrary/yul-dc-management/pull/45) ([maxkadel](https://github.com/maxkadel))
@@ -87,7 +103,6 @@
 
 **Merged pull requests:**
 
-- Update base docker image and Ruby for latest passenger [\#42](https://github.com/yalelibrary/yul-dc-management/pull/42) ([maxkadel](https://github.com/maxkadel))
 - add additional author field [\#40](https://github.com/yalelibrary/yul-dc-management/pull/40) ([K8Sewell](https://github.com/K8Sewell))
 
 ## [v1.1.3](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.3) (2020-06-04)
@@ -101,10 +116,6 @@
 ## [v1.1.2](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.2) (2020-06-03)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.1.1...v1.1.2)
-
-**Merged pull requests:**
-
-- Add basic management page so there's somewhere to land on deploy [\#37](https://github.com/yalelibrary/yul-dc-management/pull/37) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.1.1](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.1) (2020-06-03)
 
@@ -120,8 +131,11 @@
 
 **Merged pull requests:**
 
+- Update base docker image and Ruby for latest passenger [\#42](https://github.com/yalelibrary/yul-dc-management/pull/42) ([maxkadel](https://github.com/maxkadel))
+- Add basic management page so there's somewhere to land on deploy [\#37](https://github.com/yalelibrary/yul-dc-management/pull/37) ([maxkadel](https://github.com/maxkadel))
 - Use port 3001 for management app so it doesn't run into Blacklight ap… [\#35](https://github.com/yalelibrary/yul-dc-management/pull/35) ([maxkadel](https://github.com/maxkadel))
 - README and update tag [\#34](https://github.com/yalelibrary/yul-dc-management/pull/34) ([maxkadel](https://github.com/maxkadel))
+- Comment out vernacular until we get mappings [\#33](https://github.com/yalelibrary/yul-dc-management/pull/33) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.0.2](https://github.com/yalelibrary/yul-dc-management/tree/v1.0.2) (2020-05-29)
 
@@ -129,7 +143,6 @@
 
 **Merged pull requests:**
 
-- Comment out vernacular until we get mappings [\#33](https://github.com/yalelibrary/yul-dc-management/pull/33) ([maxkadel](https://github.com/maxkadel))
 - remove outdated rake task / service [\#32](https://github.com/yalelibrary/yul-dc-management/pull/32) ([maxkadel](https://github.com/maxkadel))
 - Dependabot puma branch rename [\#31](https://github.com/yalelibrary/yul-dc-management/pull/31) ([maxkadel](https://github.com/maxkadel))
 
@@ -140,6 +153,7 @@
 **Merged pull requests:**
 
 - update gems for security [\#29](https://github.com/yalelibrary/yul-dc-management/pull/29) ([maxkadel](https://github.com/maxkadel))
+- use the same Solr mapping as Blacklight, same ordering [\#28](https://github.com/yalelibrary/yul-dc-management/pull/28) ([maxkadel](https://github.com/maxkadel))
 - Exclude RuboCop MethodLength check for specs and specific files [\#27](https://github.com/yalelibrary/yul-dc-management/pull/27) ([mark-dce](https://github.com/mark-dce))
 - Add private/restricted fixtures plus specs [\#26](https://github.com/yalelibrary/yul-dc-management/pull/26) ([dylansalay](https://github.com/dylansalay))
 
@@ -149,7 +163,6 @@
 
 **Merged pull requests:**
 
-- use the same Solr mapping as Blacklight, same ordering [\#28](https://github.com/yalelibrary/yul-dc-management/pull/28) ([maxkadel](https://github.com/maxkadel))
 - attempt multiple tags [\#25](https://github.com/yalelibrary/yul-dc-management/pull/25) ([maxkadel](https://github.com/maxkadel))
 - tag separate from image name [\#24](https://github.com/yalelibrary/yul-dc-management/pull/24) ([maxkadel](https://github.com/maxkadel))
 - Update documentation & image info [\#23](https://github.com/yalelibrary/yul-dc-management/pull/23) ([maxkadel](https://github.com/maxkadel))
