@@ -5,8 +5,22 @@ require "support/time_helpers"
 RSpec.describe ActivityStreamReader do
   let(:asr) { described_class.new }
   let(:asl_new_success) { FactoryBot.create(:successful_activity_stream_log, run_time: 2.hours.ago) }
-  let(:relevant_parent_object) { FactoryBot.create(:parent_object_with_bib_id, oid: "2004628", last_mc_update: "2020-06-10 17:38:27".to_datetime) }
-  let(:relevant_parent_object_two) { FactoryBot.create(:parent_object_with_bib_id, oid: "2003431", last_mc_update: "2020-06-10 17:38:27".to_datetime) }
+  let(:relevant_parent_object) do
+    FactoryBot.create(
+      :parent_object_with_bib_id,
+      oid: "2004628",
+      last_ladybird_update: "2020-06-10 17:38:27".to_datetime,
+      last_voyager_update: "2020-06-10 17:38:27".to_datetime
+    )
+  end
+  let(:relevant_parent_object_two) do
+    FactoryBot.create(
+      :parent_object_with_bib_id,
+      oid: "2003431",
+      last_ladybird_update: "2020-06-10 17:38:27".to_datetime,
+      last_voyager_update: "2020-06-10 17:38:27".to_datetime
+    )
+  end
   let(:asl_failed) { FactoryBot.create(:failed_activity_stream_log, run_time: 1.hour.ago) }
   let(:asl_old_success) { FactoryBot.create(:successful_activity_stream_log, run_time: "2020-06-12T21:05:53.000+0000".to_datetime) }
   let(:latest_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read }
@@ -15,20 +29,23 @@ RSpec.describe ActivityStreamReader do
   let(:page_0_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-0.json")).read }
   let(:json_parsed_page) { JSON.parse(latest_activity_stream_page) }
   let(:relevant_oid) { "2004628" }
+  let(:relevant_bib_id) { "3163155" }
+  let(:relevant_aspace_uri) { "repositories/11/archival_objects/515305" }
   let(:relevant_oid_two) { "2003431" }
   let(:irrelevant_oid) { "not_in_db" }
   # This is likely to change very soon
-  let(:relevant_metadata_source) { "/ladybird/oid" }
-  let(:irrelevant_metadata_source) { "/ils/bib" }
+  let(:relevant_metadata_source_ladybird) { "/ladybird/oid" }
+  let(:relevant_metadata_source_voyager) { "/ils/bib" }
+  let(:irrelevant_metadata_source_aspace) { "/aspace" }
   let(:relevant_time) { "2020-06-12T21:06:53.000+0000" }
   let(:irrelevant_time) { "2020-06-12T21:04:53.000+0000" }
   let(:relevant_activity_type) { "Update" }
   let(:irrelevant_activity_type) { "Create" }
-  let(:relevant_item) do
+  let(:relevant_item_from_ladybird) do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source}/#{relevant_oid}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_ladybird}/#{relevant_oid}",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -38,17 +55,27 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source}/#{relevant_oid_two}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_ladybird}/#{relevant_oid_two}",
         "type" => "Document"
       },
       "type" => relevant_activity_type
     }
   end
-  let(:irrelevant_item_not_ladybird) do
+  let(:relevant_item_from_voyager) do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{irrelevant_metadata_source}/#{relevant_oid}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_voyager}/#{relevant_bib_id}",
+        "type" => "Document"
+      },
+      "type" => relevant_activity_type
+    }
+  end
+  let(:irrrelevant_item_from_aspace) do
+    {
+      "endTime" => relevant_time,
+      "object" => {
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{irrelevant_metadata_source_aspace}/#{relevant_aspace_uri}",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -58,7 +85,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source}/#{irrelevant_oid}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_ladybird}/#{irrelevant_oid}",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -68,7 +95,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => irrelevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source}/#{relevant_oid}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_ladybird}/#{relevant_oid}",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -78,7 +105,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => "2020-06-12T21:06:53.000+0000",
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source}/#{relevant_oid}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_ladybird}/#{relevant_oid}",
         "type" => "Document"
       },
       "type" => irrelevant_activity_type
@@ -120,14 +147,21 @@ RSpec.describe ActivityStreamReader do
     end
 
     it "saves a Ladybird fixture object to the filesystem" do
-      mc_update_before = relevant_parent_object.last_mc_update
+      ladybird_update_before = relevant_parent_object.last_ladybird_update
       described_class.update
-      mc_update_after = ParentObject.find_by(oid: relevant_oid).last_mc_update
-      expect(mc_update_before).to be < mc_update_after
+      ladybird_update_after = ParentObject.find_by(oid: relevant_oid).last_ladybird_update
+      expect(ladybird_update_before).to be < ladybird_update_after
+    end
+
+    it "saves a Voyager fixture object to the filesystem" do
+      voyager_update_before = relevant_parent_object.last_voyager_update
+      described_class.update
+      voyager_update_after = ParentObject.find_by(oid: relevant_oid).last_voyager_update
+      expect(voyager_update_before).to be < voyager_update_after
     end
 
     # There are 1837 total items from the relevant time period, but only 2 of them are Ladybird updates
-    # with the oid of the relevant_parent_object that has been added to the database in our before block
+    # with the oid of the  that has been added to the database in our before block
     it "can process the partial activity stream if there is a previous successful run" do
       asl_old_success
       expect(ActivityStreamLog.count).to eq 1
@@ -148,7 +182,7 @@ RSpec.describe ActivityStreamReader do
 
     it "adds relevant oids for update to a set" do
       expect(asr.oids_for_update.size).to eq 0
-      asr.process_item(relevant_item)
+      asr.process_item(relevant_item_from_ladybird)
       expect(asr.oids_for_update.size).to eq 1
       asr.process_item(relevant_item_two)
       expect(asr.oids_for_update.size).to eq 2
@@ -161,12 +195,16 @@ RSpec.describe ActivityStreamReader do
       asl_old_success
     end
 
-    it "can confirm that an item is relevant" do
-      expect(asr.relevant?(relevant_item)).to be_truthy
+    it "can confirm that a Ladybird item is relevant" do
+      expect(asr.relevant?(relevant_item_from_ladybird)).to be_truthy
+    end
+
+    it "can confirm that a Voyager item is relevant" do
+      expect(asr.relevant?(relevant_item_from_voyager)).to be_truthy
     end
 
     it "does not confirm that an irrelevant item is relevant" do
-      expect(asr.relevant?(irrelevant_item_not_ladybird)).to be_falsey
+      expect(asr.relevant?(irrrelevant_item_from_aspace)).to be_falsey
       expect(asr.relevant?(irrelevant_item_not_in_db)).to be_falsey
       expect(asr.relevant?(irrelevant_item_too_old)).to be_falsey
       expect(asr.relevant?(irrelevant_not_an_update)).to be_falsey

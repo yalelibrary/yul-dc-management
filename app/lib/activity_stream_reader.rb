@@ -35,9 +35,10 @@ class ActivityStreamReader
   def relevant?(item)
     return false unless item["type"] == "Update"
     return false unless last_run_time.nil? || item["endTime"].to_datetime.after?(last_run_time)
-    oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures
-    return false if oid.nil?
-    return false unless ParentObject.find_by(oid: oid)
+    oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures&.first
+    bib_id = /\/api\/ils\/bib\/(\S*)/.match(item["object"]["id"])&.captures&.first
+    return false unless oid.nil? || bib_id.nil?
+    return false unless ParentObject.find_by(oid: oid) || ParentObject.find_by(bib_id: bib_id)
     true
   end
 
@@ -77,7 +78,7 @@ class ActivityStreamReader
       full_response = mcs.mc_get(metadata_cloud_url)
       mcs.save_mc_json_to_file(full_response, oid, metadata_source)
       po = ParentObject.find_by(oid: oid)
-      po.last_mc_update = DateTime.current
+      po.last_ladybird_update = DateTime.current
       po.save
     end
   end

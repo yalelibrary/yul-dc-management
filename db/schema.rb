@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_12_182744) do
+ActiveRecord::Schema.define(version: 2020_06_18_234004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,10 +30,12 @@ ActiveRecord::Schema.define(version: 2020_06_12_182744) do
     t.string "item_id"
     t.string "barcode"
     t.string "aspace_uri"
-    t.datetime "last_mc_update"
+    t.datetime "last_ladybird_update"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.datetime "last_id_upate"
+    t.datetime "last_id_update"
+    t.datetime "last_voyager_update"
+    t.datetime "last_aspace_update"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end
 

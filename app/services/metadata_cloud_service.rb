@@ -62,7 +62,7 @@ class MetadataCloudService
       aspace_uri: aspace_uri,
       holding_id: holding_id,
       item_id: item_id,
-      last_id_upate: DateTime.current
+      last_id_update: DateTime.current
     )
     po.save
   end
