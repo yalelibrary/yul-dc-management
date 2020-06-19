@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/9734763",
+  "uri": "/ils/barcode/39002091549668?bib=9734763",
+  "identifierShelfMark": "407 Beinecke MS",
   "title": [
     "Albergati bible"
   ],
@@ -15,7 +16,7 @@
     "1428."
   ],
   "extent": [
-    "ff. i + 682 + i : 231 x 161 (135 x 111) mm."
+    "ff. i + 682 + i : 231 x 161 (135 x 111) mm"
   ],
   "material": [
     "parchment ;"
@@ -32,7 +33,7 @@
     "In Latin."
   ],
   "subjectName": [
-    "Langton, Stephen, d. 1228."
+    "Langton, Stephen, -1228."
   ],
   "subjectTopic": [
     "Illumination of books and manuscripts, Medieval",
@@ -63,24 +64,35 @@
     "Albergati bible"
   ],
   "provenanceUncontrolled": "From the collection of A. Chester Beatty (Western MS 79). Acquired from H. P. Kraus in 1969 as the gift of Edwin J. Beinecke.",
+  "repository": "beingen",
   "subjectTitle": "Bible.",
   "indexedBy": [
     "Shailor, B. Catalogue of Medieval and Renaissance Manuscripts in the Beinecke Rare Book and Manuscript Library, MS 407."
   ],
   "subjectGeographic": [
+    "n-us-ct",
+    "e-it---",
     "Connecticut",
     "New Haven."
   ],
   "subjectTitleDisplay": [
-    "Langton, Stephen, d. 1228.",
+    "Langton, Stephen, -1228.",
     "Bible. Latin"
+  ],
+  "barcode": "39002091549668",
+  "volumeEnumeration": "Box",
+  "dependentUris": [
+    "/ils/holding/10050400",
+    "/ils/item/10763785",
+    "/ils/bib/9734763",
+    "/ils/barcode/39002091549668"
   ],
   "bibId": 9734763,
   "suppressInOpac": false,
   "createDate": "2011-04-20T14:54:55.000+0000",
-  "updateDate": "2019-02-24T22:33:39.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "updateDate": "2020-06-05T03:09:29.000+0000",
+  "holdingId": 10050400,
+  "itemId": 10763785,
   "children": [
 
   ],

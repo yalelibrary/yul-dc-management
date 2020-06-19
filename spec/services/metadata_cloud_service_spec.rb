@@ -64,11 +64,11 @@ RSpec.describe MetadataCloudService do
 
   context "it can build MetadataCloud urls for ParentObjects", vpn_only: false do
     it "can take an oid and build a metadata cloud Ladybird url" do
-      expect(mcs.build_metadata_cloud_url("2034600", "ladybird").to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2034600?mediaType=json"
+      expect(mcs.build_metadata_cloud_url("2034600", "ladybird").to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2034600"
     end
 
     it "can take an oid and build a metadata cloud bib-based Voyager url" do
-      expect(mcs.build_metadata_cloud_url("2034600", "ils").to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/752400?mediaType=json"
+      expect(mcs.build_metadata_cloud_url("2034600", "ils").to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/752400"
     end
 
     context "with a Voyager record with a barcode" do
@@ -76,7 +76,7 @@ RSpec.describe MetadataCloudService do
       let(:metadata_source) { "ils" }
 
       it "can take an oid and build a metadata cloud barcode-based Voyager url" do
-        expect(mcs.build_metadata_cloud_url(oid, metadata_source).to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002113596465/bib/3577942?mediaType=json"
+        expect(mcs.build_metadata_cloud_url(oid, metadata_source).to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002113596465?bib=3577942"
       end
     end
 
@@ -85,7 +85,7 @@ RSpec.describe MetadataCloudService do
       let(:oid_without_aspace) { "2034600" }
 
       it "can take an oid and build a metadata cloud ArchiveSpace url" do
-        expect(mcs.build_metadata_cloud_url(oid_with_aspace, "aspace").to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/515305?mediaType=json"
+        expect(mcs.build_metadata_cloud_url(oid_with_aspace, "aspace").to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/515305"
       end
 
       it "does not try to retrieve a metadata cloud record if there is no ArchiveSpace record" do
@@ -131,16 +131,22 @@ RSpec.describe MetadataCloudService do
       end
     end
 
-    context "with an object with an aspace uri" do
+    context "with an object with only an oid set that should have all other identifiers" do
       let(:oid) { "16854285" }
       let(:aspace_uri) { "/repositories/11/archival_objects/515305" }
-      let(:po) { FactoryBot.create(:parent_object, oid: oid, aspace_uri: aspace_uri) }
+      let(:bib_id) { "12307100" }
+      let(:holding_id) { "12484205" }
+      let(:item_id) { "10996370" }
+      let(:po) { FactoryBot.create(:parent_object, oid: oid) }
 
       it "adds the aspace uri" do
         po
         mcs.create_crosswalk(oid)
-        expect(po["aspace_uri"].nil?).to be false
-        expect(po["aspace_uri"]).to eq aspace_uri
+        expect(ParentObject.find_by(oid: oid)["aspace_uri"].nil?).to be false
+        expect(ParentObject.find_by(oid: oid)["aspace_uri"]).to eq aspace_uri
+        expect(ParentObject.find_by(oid: oid)["bib_id"]).to eq bib_id
+        expect(ParentObject.find_by(oid: oid)["holding_id"]).to eq holding_id
+        expect(ParentObject.find_by(oid: oid)["item_id"]).to eq item_id
       end
     end
   end

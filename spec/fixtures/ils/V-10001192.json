@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/3659107",
+  "uri": "/ils/barcode/39002091548348?bib=3659107",
+  "identifierShelfMark": "963 GEN MSS Former call number: MS Vault Eliot",
   "creator": [
     "Eliot, George, 1819-1880"
   ],
@@ -79,6 +80,7 @@
   ],
   "provenanceControlled": "Lewes, Gertrude.",
   "provenanceUncontrolled": "Purchased and acquired from various sources.",
+  "repository": "beingen",
   "relatedTitle": [
     ""
   ],
@@ -116,12 +118,20 @@
   "contributorDisplay": [
     "Lewes, George Henry, 1817-1878."
   ],
+  "barcode": "39002091548348",
+  "volumeEnumeration": "Box 7",
+  "dependentUris": [
+    "/ils/holding/4004455",
+    "/ils/item/10558993",
+    "/ils/bib/3659107",
+    "/ils/barcode/39002091548348"
+  ],
   "bibId": 3659107,
   "suppressInOpac": false,
   "createDate": "2002-06-01T04:00:00.000+0000",
   "updateDate": "2019-04-23T19:21:08.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 4004455,
+  "itemId": 10558993,
   "children": [
 
   ],

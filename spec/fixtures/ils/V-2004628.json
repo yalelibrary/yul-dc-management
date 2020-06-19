@@ -76,6 +76,9 @@
   "creatorDisplay": [
     "Kane, Paul, 1810-1871"
   ],
+  "dependentUris": [
+    "/ils/bib/3163155"
+  ],
   "bibId": 3163155,
   "suppressInOpac": false,
   "createDate": "2002-06-01T04:00:00.000+0000",

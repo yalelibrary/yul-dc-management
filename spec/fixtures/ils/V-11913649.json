@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/3827095",
+  "uri": "/ils/barcode/39002097273412?bib=3827095",
+  "identifierShelfMark": "492 Landberg MSS",
   "creator": [
     "Maqrīzī, Aḥmad ibn ʻAlī, 1364-1442"
   ],
@@ -34,18 +35,27 @@
   "titleStatement": [
     "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī. -- [18--?]."
   ],
+  "repository": "lsfbeir",
   "indexedBy": [
     "Brockelmann, II, 40; S II, p. 37."
   ],
   "creatorDisplay": [
     "Maqrīzī, Aḥmad ibn ʻAlī, 1364-1442"
   ],
+  "barcode": "39002097273412",
+  "volumeEnumeration": "Box",
+  "dependentUris": [
+    "/ils/holding/4184367",
+    "/ils/item/10907425",
+    "/ils/bib/3827095",
+    "/ils/barcode/39002097273412"
+  ],
   "bibId": 3827095,
   "suppressInOpac": false,
   "createDate": "2002-06-01T04:00:00.000+0000",
   "updateDate": "2018-10-01T18:58:13.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 4184367,
+  "itemId": 10907425,
   "children": [
 
   ],

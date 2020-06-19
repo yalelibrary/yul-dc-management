@@ -1,7 +1,8 @@
 {
   "recordType": "bib",
   "source": "ils",
-  "uri": "/ils/bib/7748458",
+  "uri": "/ils/barcode/39002098971758?bib=7748458",
+  "identifierShelfMark": "229 YCAL MSS",
   "creator": [
     "Wodening, Jane, 1936-"
   ],
@@ -105,6 +106,7 @@
     "http://id.loc.gov/authorities/names/n79032189"
   ],
   "provenanceUncontrolled": "Purchased from Granary Books on the Elizabeth Wakeman Dwight Memorial Fund, 2006.",
+  "repository": "beinycal",
   "relatedTitle": [
     "",
     "Snarling garland of Xmas verses.",
@@ -174,12 +176,20 @@
     "Kelly, Robert, 1935-",
     "McClure, Michael."
   ],
+  "barcode": "39002098971758",
+  "volumeEnumeration": "2",
+  "dependentUris": [
+    "/ils/holding/8398033",
+    "/ils/item/8246363",
+    "/ils/bib/7748458",
+    "/ils/barcode/39002098971758"
+  ],
   "bibId": 7748458,
   "suppressInOpac": false,
   "createDate": "2006-11-30T21:58:33.000+0000",
   "updateDate": "2019-10-23T20:51:00.000+0000",
-  "holdingId": 0,
-  "itemId": 0,
+  "holdingId": 8398033,
+  "itemId": 8246363,
   "children": [
 
   ],
