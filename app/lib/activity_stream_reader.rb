@@ -37,7 +37,7 @@ class ActivityStreamReader
     return false unless last_run_time.nil? || item["endTime"].to_datetime.after?(last_run_time)
     oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures&.first
     bib_id = /\/api\/ils\/bib\/(\S*)/.match(item["object"]["id"])&.captures&.first
-    return false unless oid.nil? || bib_id.nil?
+    return false if oid.nil? && bib_id.nil?
     return false unless ParentObject.find_by(oid: oid) || ParentObject.find_by(bib_id: bib_id)
     true
   end
