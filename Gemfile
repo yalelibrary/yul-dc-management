@@ -7,8 +7,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap', '~> 4.5'
 gem 'github_changelog_generator'
-gem 'http', '~> 4.4', '>= 4.4.1'
 gem 'honeybadger', '~> 4.0'
+gem 'http', '~> 4.4', '>= 4.4.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails', '~> 4.4'
