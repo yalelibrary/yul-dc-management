@@ -101,7 +101,7 @@ RSpec.describe MetadataCloudService do
 
     it "can update the bib_id" do
       po
-      mcs.create_crosswalk(oid)
+      mcs.find_source_ids_for(oid)
       expect(po["bib_id"]).to eq bib_id
     end
 
@@ -116,7 +116,7 @@ RSpec.describe MetadataCloudService do
       it "can crosswalk multiple oids" do
         po_1
         po_2
-        described_class.crosswalk_all_oids
+        described_class.find_source_ids
         expect(po_1["bib_id"]).to eq bib_id_1
         expect(po_2["bib_id"]).to eq bib_id_2
       end
@@ -125,7 +125,7 @@ RSpec.describe MetadataCloudService do
     context "with an object without an aspace uri" do
       it "leaves empty values as null" do
         po
-        mcs.create_crosswalk(oid)
+        mcs.find_source_ids_for(oid)
         expect(po["barcode"].nil?).to be true
         expect(po["aspace_uri"].nil?).to be true
       end
@@ -141,7 +141,7 @@ RSpec.describe MetadataCloudService do
 
       it "adds the aspace uri" do
         po
-        mcs.create_crosswalk(oid)
+        mcs.find_source_ids_for(oid)
         expect(ParentObject.find_by(oid: oid)["aspace_uri"].nil?).to be false
         expect(ParentObject.find_by(oid: oid)["aspace_uri"]).to eq aspace_uri
         expect(ParentObject.find_by(oid: oid)["bib_id"]).to eq bib_id
