@@ -10,8 +10,10 @@ class ParentObject < ApplicationRecord
   # t.string "item_id" - Identifier from Voyager
   # t.string "barcode"
   # t.string "aspace_uri" - Identifier from ArchiveSpace
-  # t.datetime "last_mc_update" - Last time the record was updated from MetadataCloud
   # t.datetime "created_at", precision: 6, null: false
   # t.datetime "updated_at", precision: 6, null: false
-  # t.datetime "last_id_upate" - Last time the crosswalk between all the ids was updated based on the Ladybird data
+  # t.datetime "last_id_update" - Last time the crosswalk between all the ids was updated based on the Ladybird data
+  # t.datetime "last_ladybird_update" - Last time the Ladybird record was updated from MetadataCloud
+  # t.datetime "last_voyager_update" - Last time the Voyager record was updated from MetadataCloud
+  # t.datetime "last_aspace_update" - Last time the ArchiveSpace record was updated from MetadataCloud
 end

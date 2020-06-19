@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :parent_object do
     oid { "MyString" }
     bib_id { "MyString" }
-    last_mc_update { "2020-06-10 17:38:27" }
+    last_ladybird_update { "2020-06-10 17:38:27" }
     factory :parent_object_with_bib_id do
       oid { "2004628" }
       bib_id { "3163155" }

@@ -35,18 +35,27 @@ class ActivityStreamReader
   def relevant?(item)
     return false unless item["type"] == "Update"
     return false unless last_run_time.nil? || item["endTime"].to_datetime.after?(last_run_time)
-    oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures
-    return false if oid.nil?
-    return false unless ParentObject.find_by(oid: oid)
+    oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures&.first
+    bib_id = /\/api\/ils\/bib\/(\S*)/.match(item["object"]["id"])&.captures&.first
+    return false if oid.nil? && bib_id.nil?
+    return false unless ParentObject.find_by(oid: oid) || ParentObject.find_by(bib_id: bib_id)
     true
   end
 
   def process_item(item)
     @tally += 1
-    oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures
-    oids_for_update.add(oid.first)
+    oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures&.first
+    return oids_for_update.add([oid, "ladybird"]) if oid
+    bib_id = /\/api\/ils\/bib\/(\S*)/.match(item["object"]["id"])&.captures&.first
+    if bib_id
+      oid = ParentObject.find_by(bib_id: bib_id).oid
+      return oids_for_update.add([oid, "ils"])
+    end
   end
 
+  # This set contains arrays, each of which contains the oid for the item that has been updated,
+  # and the metadata_source that has been updated (Ladybird, Voyager ("ils"), or ArchiveSpace)
+  # @example { ["2004628", "ladybird"], ["2004628", "ils"] }
   def oids_for_update
     @oids_for_update ||= Set.new
   end
@@ -71,13 +80,18 @@ class ActivityStreamReader
 
   def refresh_updated_items(oids_for_update)
     mcs = MetadataCloudService.new
-    metadata_source = "ladybird"
-    oids_for_update.each do |oid|
+    oids_for_update.each do |oid_array|
+      oid = oid_array[0]
+      metadata_source = oid_array[1]
       metadata_cloud_url = mcs.build_metadata_cloud_url(oid, metadata_source)
       full_response = mcs.mc_get(metadata_cloud_url)
       mcs.save_mc_json_to_file(full_response, oid, metadata_source)
       po = ParentObject.find_by(oid: oid)
-      po.last_mc_update = DateTime.current
+      if metadata_source == "ladybird"
+        po.last_ladybird_update = DateTime.current
+      elsif metadata_source == "ils"
+        po.last_voyager_update = DateTime.current
+      end
       po.save
     end
   end

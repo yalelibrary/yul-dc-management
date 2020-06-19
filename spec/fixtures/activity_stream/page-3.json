@@ -19,10 +19,10 @@
     {
       "endTime": "2020-06-12T21:06:53.000+0000",
       "object": {
-        "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/15369741",
+        "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/3163155",
         "type": "Document"
       },
-      "type": "Create"
+      "type": "Update"
     },
     {
       "endTime": "2020-06-12T21:06:53.000+0000",
