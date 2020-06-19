@@ -43,12 +43,13 @@ class MetadataCloudService
     "https://metadata-api-test.library.yale.edu/metadatacloud/api/#{metadata_source}#{identifier_block}"
   end
 
-  def create_crosswalk(oid)
+  def find_source_ids_for(oid)
     ladybird_file = get_fixture_file(oid, "ladybird")
     parsed_ladybird_file = JSON.parse(ladybird_file)
     bib_id = parsed_ladybird_file["orbisRecord"]
     barcode = parsed_ladybird_file["orbisBarcode"]
     aspace_uri = parsed_ladybird_file["archiveSpaceUri"]
+    # May not have both holding_id and item_id even with barcode
     if bib_id && barcode
       voyager_file = get_fixture_file(oid, "ils")
       parsed_voyager_file = JSON.parse(voyager_file)
@@ -67,12 +68,12 @@ class MetadataCloudService
     po.save
   end
 
-  def self.crosswalk_all_oids
+  def self.find_source_ids
     mcs = MetadataCloudService.new
     parent_objects = ParentObject.all
     parent_objects.each do |parent_object|
       oid = parent_object["oid"]
-      mcs.create_crosswalk(oid)
+      mcs.find_source_ids_for(oid)
     end
   end
 
