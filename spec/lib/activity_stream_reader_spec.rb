@@ -7,16 +7,16 @@ RSpec.describe ActivityStreamReader do
   let(:asl_new_success) { FactoryBot.create(:successful_activity_stream_log, run_time: 2.hours.ago) }
   let(:relevant_parent_object) do
     FactoryBot.create(
-      :parent_object_with_bib_id,
+      :parent_object_with_bib,
       oid: "2004628",
-      bib_id: "3163155",
+      bib: "3163155",
       last_ladybird_update: "2020-06-10 17:38:27".to_datetime,
       last_voyager_update: "2020-06-10 17:38:27".to_datetime
     )
   end
   let(:relevant_parent_object_two) do
     FactoryBot.create(
-      :parent_object_with_bib_id,
+      :parent_object_with_bib,
       oid: "2003431",
       last_ladybird_update: "2020-06-10 17:38:27".to_datetime,
       last_voyager_update: "2020-06-10 17:38:27".to_datetime
@@ -30,7 +30,7 @@ RSpec.describe ActivityStreamReader do
   let(:page_0_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-0.json")).read }
   let(:json_parsed_page) { JSON.parse(latest_activity_stream_page) }
   let(:relevant_oid) { "2004628" }
-  let(:relevant_bib_id) { "3163155" }
+  let(:relevant_bib) { "3163155" }
   let(:relevant_aspace_uri) { "repositories/11/archival_objects/515305" }
   let(:relevant_oid_two) { "2003431" }
   let(:irrelevant_oid) { "not_in_db" }
@@ -66,7 +66,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_voyager}/#{relevant_bib_id}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_voyager}/#{relevant_bib}",
         "type" => "Document"
       },
       "type" => relevant_activity_type

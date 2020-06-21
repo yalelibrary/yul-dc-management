@@ -29,12 +29,12 @@ class MetadataCloudService
     if metadata_source == "ladybird"
       identifier_block = "/oid/#{oid}"
     elsif metadata_source == "ils"
-      bib_id = get_bib_id(oid)
+      bib = get_bib(oid)
       barcode = get_barcode(oid)
       identifier_block = if barcode.nil?
-                           "/bib/#{bib_id}"
+                           "/bib/#{bib}"
                          else
-                           "/barcode/#{barcode}?bib=#{bib_id}"
+                           "/barcode/#{barcode}?bib=#{bib}"
                          end
     elsif metadata_source == "aspace"
       return nil unless get_archive_space_uri(oid)
@@ -46,23 +46,23 @@ class MetadataCloudService
   def find_source_ids_for(oid)
     ladybird_file = get_fixture_file(oid, "ladybird")
     parsed_ladybird_file = JSON.parse(ladybird_file)
-    bib_id = parsed_ladybird_file["orbisRecord"]
+    bib = parsed_ladybird_file["orbisRecord"]
     barcode = parsed_ladybird_file["orbisBarcode"]
     aspace_uri = parsed_ladybird_file["archiveSpaceUri"]
-    # May not have both holding_id and item_id even with barcode
-    if bib_id && barcode
+    # May not have both holding and item even with barcode
+    if bib && barcode
       voyager_file = get_fixture_file(oid, "ils")
       parsed_voyager_file = JSON.parse(voyager_file)
-      holding_id = parsed_voyager_file["holdingId"]
-      item_id = parsed_voyager_file["itemId"]
+      holding = parsed_voyager_file["holdingId"]
+      item = parsed_voyager_file["itemId"]
     end
     po = ParentObject.find_by(oid: oid)
     po.update(
-      bib_id: bib_id,
+      bib: bib,
       barcode: barcode,
       aspace_uri: aspace_uri,
-      holding_id: holding_id,
-      item_id: item_id,
+      holding: holding,
+      item: item,
       last_id_update: DateTime.current
     )
     po.save
@@ -84,10 +84,10 @@ class MetadataCloudService
   end
 
   ##
-  # Takes an oid and returns the corresponding bib_id, as defined by ladybird
+  # Takes an oid and returns the corresponding bib, as defined by ladybird
   # I suspect this approach is going to be super slow, should probably decide how long we want to keep these and figure out
   # how we want to save them. Like, should refreshing the relationship between the Ladybird IDs and the bib ids be done on a chron job?
-  def get_bib_id(oid)
+  def get_bib(oid)
     ladybird_file = get_fixture_file(oid, "ladybird")
     parsed_ladybird_file = JSON.parse(ladybird_file)
     parsed_ladybird_file["orbisRecord"]

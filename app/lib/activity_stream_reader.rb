@@ -36,9 +36,9 @@ class ActivityStreamReader
     return false unless item["type"] == "Update"
     return false unless last_run_time.nil? || item["endTime"].to_datetime.after?(last_run_time)
     oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures&.first
-    bib_id = /\/api\/ils\/bib\/(\S*)/.match(item["object"]["id"])&.captures&.first
-    return false if oid.nil? && bib_id.nil?
-    return false unless ParentObject.find_by(oid: oid) || ParentObject.find_by(bib_id: bib_id)
+    bib = /\/api\/ils\/bib\/(\S*)/.match(item["object"]["id"])&.captures&.first
+    return false if oid.nil? && bib.nil?
+    return false unless ParentObject.find_by(oid: oid) || ParentObject.find_by(bib: bib)
     true
   end
 
@@ -46,9 +46,9 @@ class ActivityStreamReader
     @tally += 1
     oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures&.first
     return oids_for_update.add([oid, "ladybird"]) if oid
-    bib_id = /\/api\/ils\/bib\/(\S*)/.match(item["object"]["id"])&.captures&.first
-    if bib_id
-      oid = ParentObject.find_by(bib_id: bib_id).oid
+    bib = /\/api\/ils\/bib\/(\S*)/.match(item["object"]["id"])&.captures&.first
+    if bib
+      oid = ParentObject.find_by(bib: bib).oid
       return oids_for_update.add([oid, "ils"])
     end
   end

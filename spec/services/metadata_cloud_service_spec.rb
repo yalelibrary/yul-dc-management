@@ -96,29 +96,29 @@ RSpec.describe MetadataCloudService do
 
   context "a crosswalk maintained in the database", vpn_only: false do
     let(:oid) { "2004628" }
-    let(:bib_id) { "3163155" }
-    let(:po) { FactoryBot.create(:parent_object, oid: oid, bib_id: bib_id) }
+    let(:bib) { "3163155" }
+    let(:po) { FactoryBot.create(:parent_object, oid: oid, bib: bib) }
 
-    it "can update the bib_id" do
+    it "can update the bib" do
       po
       mcs.find_source_ids_for(oid)
-      expect(po["bib_id"]).to eq bib_id
+      expect(po["bib"]).to eq bib
     end
 
     context "with all the oids" do
       let(:oid_1) { "2057976" }
-      let(:bib_id_1) { "7039963" }
-      let(:po_1) { FactoryBot.create(:parent_object, oid: oid_1, bib_id: bib_id_1) }
+      let(:bib_1) { "7039963" }
+      let(:po_1) { FactoryBot.create(:parent_object, oid: oid_1, bib: bib_1) }
       let(:oid_2) { "2004628" }
-      let(:bib_id_2) { "3163155" }
-      let(:po_2) { FactoryBot.create(:parent_object, oid: oid_2, bib_id: bib_id_2) }
+      let(:bib_2) { "3163155" }
+      let(:po_2) { FactoryBot.create(:parent_object, oid: oid_2, bib: bib_2) }
 
       it "can crosswalk multiple oids" do
         po_1
         po_2
         described_class.find_source_ids
-        expect(po_1["bib_id"]).to eq bib_id_1
-        expect(po_2["bib_id"]).to eq bib_id_2
+        expect(po_1["bib"]).to eq bib_1
+        expect(po_2["bib"]).to eq bib_2
       end
     end
 
@@ -134,9 +134,9 @@ RSpec.describe MetadataCloudService do
     context "with an object with only an oid set that should have all other identifiers" do
       let(:oid) { "16854285" }
       let(:aspace_uri) { "/repositories/11/archival_objects/515305" }
-      let(:bib_id) { "12307100" }
-      let(:holding_id) { "12484205" }
-      let(:item_id) { "10996370" }
+      let(:bib) { "12307100" }
+      let(:holding) { "12484205" }
+      let(:item) { "10996370" }
       let(:po) { FactoryBot.create(:parent_object, oid: oid) }
 
       it "adds the aspace uri" do
@@ -144,9 +144,9 @@ RSpec.describe MetadataCloudService do
         mcs.find_source_ids_for(oid)
         expect(ParentObject.find_by(oid: oid)["aspace_uri"].nil?).to be false
         expect(ParentObject.find_by(oid: oid)["aspace_uri"]).to eq aspace_uri
-        expect(ParentObject.find_by(oid: oid)["bib_id"]).to eq bib_id
-        expect(ParentObject.find_by(oid: oid)["holding_id"]).to eq holding_id
-        expect(ParentObject.find_by(oid: oid)["item_id"]).to eq item_id
+        expect(ParentObject.find_by(oid: oid)["bib"]).to eq bib
+        expect(ParentObject.find_by(oid: oid)["holding"]).to eq holding
+        expect(ParentObject.find_by(oid: oid)["item"]).to eq item
       end
     end
   end
