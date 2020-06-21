@@ -18,6 +18,10 @@ RSpec.describe ActivityStreamReader do
     FactoryBot.create(
       :parent_object_with_bib,
       oid: "2003431",
+      bib: "9734763",
+      holding: "10050400",
+      item: "10763785",
+      barcode: "39002091549668",
       last_ladybird_update: "2020-06-10 17:38:27".to_datetime,
       last_voyager_update: "2020-06-10 17:38:27".to_datetime
     )
@@ -67,6 +71,26 @@ RSpec.describe ActivityStreamReader do
       "endTime" => relevant_time,
       "object" => {
         "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_voyager}/#{relevant_bib}",
+        "type" => "Document"
+      },
+      "type" => relevant_activity_type
+    }
+  end
+  let(:relevant_item_from_voyager_holding) do
+    {
+      "endTime" => relevant_time,
+      "object" => {
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/holding/10050400",
+        "type" => "Document"
+      },
+      "type" => relevant_activity_type
+    }
+  end
+  let(:relevant_item_from_voyager_item) do
+    {
+      "endTime" => relevant_time,
+      "object" => {
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/item/10763785",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -194,6 +218,7 @@ RSpec.describe ActivityStreamReader do
   context "determining whether an item from the activity stream is relevant" do
     before do
       relevant_parent_object
+      relevant_parent_object_two
       asl_old_success
     end
 
@@ -203,6 +228,8 @@ RSpec.describe ActivityStreamReader do
 
     it "can confirm that a Voyager item is relevant" do
       expect(asr.relevant?(relevant_item_from_voyager)).to be_truthy
+      expect(asr.relevant?(relevant_item_from_voyager_holding)).to be_truthy
+      expect(asr.relevant?(relevant_item_from_voyager_item)).to be_truthy
     end
 
     it "does not confirm that an irrelevant item is relevant" do

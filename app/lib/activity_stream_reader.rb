@@ -35,10 +35,27 @@ class ActivityStreamReader
   def relevant?(item)
     return false unless item["type"] == "Update"
     return false unless last_run_time.nil? || item["endTime"].to_datetime.after?(last_run_time)
-    oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures&.first
-    bib = /\/api\/ils\/bib\/(\S*)/.match(item["object"]["id"])&.captures&.first
-    return false if oid.nil? && bib.nil?
-    return false unless ParentObject.find_by(oid: oid) || ParentObject.find_by(bib: bib)
+    return false unless find_by_id(item)
+    true
+  end
+
+  def find_by_id(item)
+    match_data = /\/api\/(\w*)\/(\w*)\/(\S*)/.match(item["object"]["id"])&.captures
+    metadata_source = match_data[0]
+    if metadata_source == "ladybird" || metadata_source == "ils"
+      source_id_type = match_data[1]
+      source_id = match_data[2]
+      oid = ParentObject.where(source_id_type.to_s => source_id.to_s)&.first&.oid
+      return false unless oid
+    elsif metadata_source == "aspace"
+      part_one = match_data[1]
+      part_two = match_data[2]
+      source_id = (part_one + "/" + part_two).to_s
+      oid = ParentObject.where("aspace_uri" => source_id.to_s)&.first&.oid
+      return false unless oid
+    else
+      return false
+    end
     true
   end
 
