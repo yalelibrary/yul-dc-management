@@ -47,27 +47,22 @@ class ActivityStreamReader
       source_id = match_data[2]
       oid = ParentObject.where(source_id_type.to_s => source_id.to_s)&.first&.oid
       return false unless oid
+      oids_for_update.add([oid, metadata_source])
     elsif metadata_source == "aspace"
       part_one = match_data[1]
       part_two = match_data[2]
-      source_id = (part_one + "/" + part_two).to_s
+      source_id = ("/" + part_one + "/" + part_two).to_s
       oid = ParentObject.where("aspace_uri" => source_id.to_s)&.first&.oid
       return false unless oid
+      oids_for_update.add([oid, metadata_source])
     else
       return false
     end
     true
   end
 
-  def process_item(item)
+  def process_item(_item)
     @tally += 1
-    oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures&.first
-    return oids_for_update.add([oid, "ladybird"]) if oid
-    bib = /\/api\/ils\/bib\/(\S*)/.match(item["object"]["id"])&.captures&.first
-    if bib
-      oid = ParentObject.find_by(bib: bib).oid
-      return oids_for_update.add([oid, "ils"])
-    end
   end
 
   # This set contains arrays, each of which contains the oid for the item that has been updated,
@@ -108,6 +103,8 @@ class ActivityStreamReader
         po.last_ladybird_update = DateTime.current
       elsif metadata_source == "ils"
         po.last_voyager_update = DateTime.current
+      elsif metadata_source == "aspace"
+        po.last_aspace_update = DateTime.current
       end
       po.save
     end
