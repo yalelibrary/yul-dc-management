@@ -44,21 +44,17 @@ class ActivityStreamReader
   ##
   # It takes an activity stream item and returns true or false based on whether that item is in the database.
   # If the item is in the database, it adds the item's oid and metadata source to the oids_for_update set.
-  # In order to do so, it parses the metadata source (Ladybird, Voyager ("ils"), or ArchiveSpace),
-  # source id type (whether an oid, bib, holding, etc.), and the source id itself.
   def find_by_id(item)
-    match_data = /\/api\/(\w*)\/(\w*)\/(\S*)/.match(item["object"]["id"])&.captures
-    metadata_source = match_data[0]
+    parsed_identifier_uri = parse_identifier_uri(item)
+    metadata_source = parsed_identifier_uri[0]
+    source_id_type = parsed_identifier_uri[1]
+    source_id = parsed_identifier_uri[2]
     if metadata_source == "ladybird" || metadata_source == "ils" # aka Voyager
-      source_id_type = match_data[1]
-      source_id = match_data[2]
       oid = ParentObject.where(source_id_type.to_s => source_id.to_s)&.first&.oid
       return false unless oid
       oids_for_update.add([oid, metadata_source])
     elsif metadata_source == "aspace"
-      part_one = match_data[1]
-      part_two = match_data[2]
-      source_id = ("/" + part_one + "/" + part_two).to_s
+      source_id = ("/" + source_id_type + "/" + source_id).to_s
       oid = ParentObject.where("aspace_uri" => source_id.to_s)&.first&.oid
       return false unless oid
       oids_for_update.add([oid, metadata_source])
@@ -66,6 +62,15 @@ class ActivityStreamReader
       return false
     end
     true
+  end
+
+  ##
+  # Takes an activity stream item and returns an array containing the metadata source (Ladybird, Voyager ("ils"),
+  # or ArchiveSpace),source id type (whether an oid, bib, holding, etc.), and the source id itself.
+  # @example
+  #  ["ladybird", "oid", "2004628"]
+  def parse_identifier_uri(item)
+    /\/api\/(\w*)\/(\w*)\/(\S*)/.match(item["object"]["id"])&.captures
   end
 
   def process_item(_item)
