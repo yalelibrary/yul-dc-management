@@ -41,11 +41,11 @@ class ActivityStreamReader
     true
   end
 
-##
-# It takes an activity stream item and returns true or false based on whether that item is in the database.
-# If the item is in the database, it adds the item's oid and metadata source to the oids_for_update set.
-# In order to do so, it parses the metadata source (Ladybird, Voyager ("ils"), or ArchiveSpace),
-# source id type (whether an oid, bib, holding, etc.), and the source id itself.
+  ##
+  # It takes an activity stream item and returns true or false based on whether that item is in the database.
+  # If the item is in the database, it adds the item's oid and metadata source to the oids_for_update set.
+  # In order to do so, it parses the metadata source (Ladybird, Voyager ("ils"), or ArchiveSpace),
+  # source id type (whether an oid, bib, holding, etc.), and the source id itself.
   def find_by_id(item)
     match_data = /\/api\/(\w*)\/(\w*)\/(\S*)/.match(item["object"]["id"])&.captures
     metadata_source = match_data[0]
@@ -122,7 +122,7 @@ class ActivityStreamReader
 
   ##
   # Takes a MetadataCloud url as a string and returns a parsed JSON object
-  # containing the body of the response 
+  # containing the body of the response
   def fetch_and_parse_page(page_url)
     mcs = MetadataCloudService.new
     latest_page = mcs.mc_get(page_url).body.to_s
