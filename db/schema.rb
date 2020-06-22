@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_18_234004) do
+ActiveRecord::Schema.define(version: 2020_06_21_104105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,9 +25,9 @@ ActiveRecord::Schema.define(version: 2020_06_18_234004) do
 
   create_table "parent_objects", force: :cascade do |t|
     t.string "oid"
-    t.string "bib_id"
-    t.string "holding_id"
-    t.string "item_id"
+    t.string "bib"
+    t.string "holding"
+    t.string "item"
     t.string "barcode"
     t.string "aspace_uri"
     t.datetime "last_ladybird_update"

@@ -11,6 +11,14 @@
     {
       "endTime": "2020-06-12T21:06:53.000+0000",
       "object": {
+        "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/515305",
+        "type": "Document"
+      },
+      "type": "Update"
+    },
+    {
+      "endTime": "2020-06-12T21:06:53.000+0000",
+      "object": {
         "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628",
         "type": "Document"
       },
