@@ -1,7 +1,9 @@
-<h1>Management#index</h1>
 
 
-<div>
+
+<div class="container">
+  <h1>Management Dashboard</h1>
+  
   <h3> Index Metadata to Solr </h3>
     <% if flash[:notice] %>
       <div class="notice"><%= flash[:notice] %></div>
@@ -11,7 +13,5 @@
     <%= link_to "Index ArchiveSpace Records to Solr", metadata_source_path("aspace"), class: "btn btn-primary" %>
 </div>
 
-<br /> 
-
+<br />
 <%= render partial: "service_display" %>
-
