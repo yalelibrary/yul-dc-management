@@ -1,11 +1,20 @@
 # Changelog
 
+## [v1.7.1](https://github.com/yalelibrary/yul-dc-management/tree/v1.7.1) (2020-06-22)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.7.0...v1.7.1)
+
+**Merged pull requests:**
+
+- Correct earlier migration error - never replace all [\#98](https://github.com/yalelibrary/yul-dc-management/pull/98) ([maxkadel](https://github.com/maxkadel))
+
 ## [v1.7.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.7.0) (2020-06-22)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.6.0...v1.7.0)
 
 **Merged pull requests:**
 
+- Prepare for 1.7.0 release [\#96](https://github.com/yalelibrary/yul-dc-management/pull/96) ([maxkadel](https://github.com/maxkadel))
 - Dashboard formatting [\#95](https://github.com/yalelibrary/yul-dc-management/pull/95) ([maxkadel](https://github.com/maxkadel))
 - Read ArchiveSpace and Voyager non-bib updates from activity stream [\#94](https://github.com/yalelibrary/yul-dc-management/pull/94) ([maxkadel](https://github.com/maxkadel))
 
