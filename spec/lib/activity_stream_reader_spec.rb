@@ -200,7 +200,8 @@ RSpec.describe ActivityStreamReader do
       expect(aspace_update_before).to be < aspace_update_after
     end
 
-    # There are ~1837 total items from the relevant time period, but only 4 of them are Ladybird or Voyager updates
+    # There are ~1837 total items from the relevant time period, but only 6 of them
+    # are Ladybird, Voyager, or ArchiveSpace updates
     # with the oid that has been added to the database in our before block
     it "can process the partial activity stream if there is a previous successful run" do
       asl_old_success
@@ -211,8 +212,9 @@ RSpec.describe ActivityStreamReader do
       expect(ActivityStreamLog.last.object_count).to eq 6
     end
 
-    # There are ~4000 total items, but only 8 of them are Ladybird or Voyager updates with the oid of the relevant_parent_object
-    # that has been added to the database in our before block
+    # There are ~4000 total items, but only 12 of them are Ladybird, Voyager,
+    # or ArchiveSpace updates with the oid of the relevant_parent_object
+    # that have been added to the database in our before block
     it "processes the entire activity stream if it has never been run before" do
       expect(ActivityStreamLog.count).to eq 0
       described_class.update
