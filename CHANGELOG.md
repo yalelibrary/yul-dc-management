@@ -1,11 +1,20 @@
 # Changelog
 
+## [v1.7.2](https://github.com/yalelibrary/yul-dc-management/tree/v1.7.2) (2020-06-22)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.7.1...v1.7.2)
+
+**Merged pull requests:**
+
+- Just don't set hosts for now to get it running in production, can re-… [\#100](https://github.com/yalelibrary/yul-dc-management/pull/100) ([maxkadel](https://github.com/maxkadel))
+
 ## [v1.7.1](https://github.com/yalelibrary/yul-dc-management/tree/v1.7.1) (2020-06-22)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.7.0...v1.7.1)
 
 **Merged pull requests:**
 
+- Prep for v1.7.1 release [\#99](https://github.com/yalelibrary/yul-dc-management/pull/99) ([maxkadel](https://github.com/maxkadel))
 - Correct earlier migration error - never replace all [\#98](https://github.com/yalelibrary/yul-dc-management/pull/98) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.7.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.7.0) (2020-06-22)
