@@ -16,8 +16,8 @@ class ActivityStreamReader
   end
 
   ##
-  # It takes the url for an Activity Stream page, tallies the number of items on that page,
-  # and if there is a link to a previous page, recursively process that page as well, until all pages have been processed.
+  # It takes the url for an Activity Stream page, and if there is a link to a previous page,
+  # recursively processes that page as well, until all pages have been processed.
   def process_page(page_url)
     page = fetch_and_parse_page(page_url)
     page["orderedItems"].each do |item|
@@ -28,29 +28,53 @@ class ActivityStreamReader
 
   ##
   # It takes an item from the activity stream and returns either true or false depending on whether that object
-  # - Is in the database, based on its Ladybird OID (this will have to be extended for non-ladybird objects)
-  # - Was updated within the timeframe we're interested in (either the entire activity stream if it has not been
+  # - Is an update
+  # - Was updated within the timeframe we're interested in
+  # (either the entire activity stream if it has not been
   # previously successfully run, or after the last_run_time)
-  # - Is an update (for now - will probably want to include deletions and creations in the future)
+  # - Is in the database
+
   def relevant?(item)
     return false unless item["type"] == "Update"
     return false unless last_run_time.nil? || item["endTime"].to_datetime.after?(last_run_time)
-    oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures&.first
-    bib_id = /\/api\/ils\/bib\/(\S*)/.match(item["object"]["id"])&.captures&.first
-    return false if oid.nil? && bib_id.nil?
-    return false unless ParentObject.find_by(oid: oid) || ParentObject.find_by(bib_id: bib_id)
+    return false unless find_by_id(item)
     true
   end
 
-  def process_item(item)
-    @tally += 1
-    oid = /\/api\/ladybird\/oid\/(\S*)/.match(item["object"]["id"])&.captures&.first
-    return oids_for_update.add([oid, "ladybird"]) if oid
-    bib_id = /\/api\/ils\/bib\/(\S*)/.match(item["object"]["id"])&.captures&.first
-    if bib_id
-      oid = ParentObject.find_by(bib_id: bib_id).oid
-      return oids_for_update.add([oid, "ils"])
+  ##
+  # It takes an activity stream item and returns true or false based on whether that item is in the database.
+  # If the item is in the database, it adds the item's oid and metadata source to the oids_for_update set.
+  def find_by_id(item)
+    parsed_identifier_uri = parse_identifier_uri(item)
+    metadata_source = parsed_identifier_uri[0]
+    source_id_type = parsed_identifier_uri[1]
+    source_id = parsed_identifier_uri[2]
+    if metadata_source == "ladybird" || metadata_source == "ils" # aka Voyager
+      oid = ParentObject.where(source_id_type.to_s => source_id.to_s)&.first&.oid
+      return false unless oid
+      oids_for_update.add([oid, metadata_source])
+    elsif metadata_source == "aspace"
+      source_id = ("/" + source_id_type + "/" + source_id).to_s
+      oid = ParentObject.where("aspace_uri" => source_id.to_s)&.first&.oid
+      return false unless oid
+      oids_for_update.add([oid, metadata_source])
+    else
+      return false
     end
+    true
+  end
+
+  ##
+  # Takes an activity stream item and returns an array containing the metadata source (Ladybird, Voyager ("ils"),
+  # or ArchiveSpace),source id type (whether an oid, bib, holding, etc.), and the source id itself.
+  # @example
+  #  ["ladybird", "oid", "2004628"]
+  def parse_identifier_uri(item)
+    /\/api\/(\w*)\/(\w*)\/(\S*)/.match(item["object"]["id"])&.captures
+  end
+
+  def process_item(_item)
+    @tally += 1
   end
 
   # This set contains arrays, each of which contains the oid for the item that has been updated,
@@ -78,6 +102,9 @@ class ActivityStreamReader
     log.save
   end
 
+  ##
+  # Takes a set of arrays (see oids_for_update), retrieves the appropriate record from the MetadataCloud,
+  # and saves it to disk.
   def refresh_updated_items(oids_for_update)
     mcs = MetadataCloudService.new
     oids_for_update.each do |oid_array|
@@ -91,11 +118,16 @@ class ActivityStreamReader
         po.last_ladybird_update = DateTime.current
       elsif metadata_source == "ils"
         po.last_voyager_update = DateTime.current
+      elsif metadata_source == "aspace"
+        po.last_aspace_update = DateTime.current
       end
       po.save
     end
   end
 
+  ##
+  # Takes a MetadataCloud url as a string and returns a parsed JSON object
+  # containing the body of the response
   def fetch_and_parse_page(page_url)
     mcs = MetadataCloudService.new
     latest_page = mcs.mc_get(page_url).body.to_s

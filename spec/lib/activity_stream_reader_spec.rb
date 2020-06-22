@@ -7,19 +7,33 @@ RSpec.describe ActivityStreamReader do
   let(:asl_new_success) { FactoryBot.create(:successful_activity_stream_log, run_time: 2.hours.ago) }
   let(:relevant_parent_object) do
     FactoryBot.create(
-      :parent_object_with_bib_id,
+      :parent_object_with_bib,
       oid: "2004628",
-      bib_id: "3163155",
+      bib: "3163155",
       last_ladybird_update: "2020-06-10 17:38:27".to_datetime,
       last_voyager_update: "2020-06-10 17:38:27".to_datetime
     )
   end
   let(:relevant_parent_object_two) do
     FactoryBot.create(
-      :parent_object_with_bib_id,
+      :parent_object_with_bib,
       oid: "2003431",
+      bib: "9734763",
+      holding: "10050400",
+      item: "10763785",
+      barcode: "39002091549668",
       last_ladybird_update: "2020-06-10 17:38:27".to_datetime,
       last_voyager_update: "2020-06-10 17:38:27".to_datetime
+    )
+  end
+  let(:parent_object_with_aspace_uri) do
+    FactoryBot.create(
+      :parent_object_with_aspace_uri,
+      oid: "16854285",
+      bib: "12307100",
+      barcode: "39002102340669",
+      aspace_uri: "/repositories/11/archival_objects/515305",
+      last_aspace_update: "2020-06-10 17:38:27".to_datetime
     )
   end
   let(:asl_failed) { FactoryBot.create(:failed_activity_stream_log, run_time: 1.hour.ago) }
@@ -30,14 +44,14 @@ RSpec.describe ActivityStreamReader do
   let(:page_0_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-0.json")).read }
   let(:json_parsed_page) { JSON.parse(latest_activity_stream_page) }
   let(:relevant_oid) { "2004628" }
-  let(:relevant_bib_id) { "3163155" }
-  let(:relevant_aspace_uri) { "repositories/11/archival_objects/515305" }
+  let(:relevant_bib) { "3163155" }
+  let(:relevant_aspace_uri) { "/repositories/11/archival_objects/515305" }
   let(:relevant_oid_two) { "2003431" }
   let(:irrelevant_oid) { "not_in_db" }
   # This is likely to change very soon
   let(:relevant_metadata_source_ladybird) { "/ladybird/oid" }
   let(:relevant_metadata_source_voyager) { "/ils/bib" }
-  let(:irrelevant_metadata_source_aspace) { "/aspace" }
+  let(:relevant_metadata_source_aspace) { "/aspace" }
   let(:relevant_time) { "2020-06-12T21:06:53.000+0000" }
   let(:irrelevant_time) { "2020-06-12T21:04:53.000+0000" }
   let(:relevant_activity_type) { "Update" }
@@ -66,17 +80,37 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_voyager}/#{relevant_bib_id}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_voyager}/#{relevant_bib}",
         "type" => "Document"
       },
       "type" => relevant_activity_type
     }
   end
-  let(:irrelevant_item_from_aspace) do
+  let(:relevant_item_from_voyager_holding) do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{irrelevant_metadata_source_aspace}/#{relevant_aspace_uri}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/holding/10050400",
+        "type" => "Document"
+      },
+      "type" => relevant_activity_type
+    }
+  end
+  let(:relevant_item_from_voyager_item) do
+    {
+      "endTime" => relevant_time,
+      "object" => {
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/item/10763785",
+        "type" => "Document"
+      },
+      "type" => relevant_activity_type
+    }
+  end
+  let(:relevant_item_from_aspace) do
+    {
+      "endTime" => relevant_time,
+      "object" => {
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_aspace}#{relevant_aspace_uri}",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -124,6 +158,8 @@ RSpec.describe ActivityStreamReader do
   context "daily automated updates" do
     before do
       relevant_parent_object
+      relevant_parent_object_two
+      parent_object_with_aspace_uri
       # Stub requests to MetadataCloud activity stream with fixture objects that represent single activity_stream json pages
       stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
         .to_return(status: 200, body: latest_activity_stream_page)
@@ -139,10 +175,13 @@ RSpec.describe ActivityStreamReader do
         .to_return(status: 200, body: relevant_mc_response_2)
       stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/3163155")
         .to_return(status: 200, body: relevant_mc_response_voyager)
+      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/515305")
+        .to_return(status: 200, body: relevant_mc_response_aspace)
     end
     let(:relevant_mc_response_1) { File.open(File.join(fixture_path, "ladybird", "2004628.json")).read }
     let(:relevant_mc_response_2) { File.open(File.join(fixture_path, "ladybird", "2003431.json")).read }
     let(:relevant_mc_response_voyager) { File.open(File.join(fixture_path, "ils", "V-2004628.json")).read }
+    let(:relevant_mc_response_aspace) { File.open(File.join(fixture_path, "aspace", "AS-16854285.json")).read }
 
     it "can get a page from the MetadataCloud activity stream" do
       expect(asr.fetch_and_parse_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")["type"]).to eq "OrderedCollectionPage"
@@ -151,14 +190,18 @@ RSpec.describe ActivityStreamReader do
     it "marks objects as updated in the database" do
       ladybird_update_before = relevant_parent_object.last_ladybird_update
       voyager_update_before = relevant_parent_object.last_voyager_update
+      aspace_update_before = parent_object_with_aspace_uri.last_aspace_update
       described_class.update
       ladybird_update_after = ParentObject.find_by(oid: relevant_oid).last_ladybird_update
       voyager_update_after = ParentObject.find_by(oid: relevant_oid).last_voyager_update
+      aspace_update_after = ParentObject.find_by(aspace_uri: relevant_aspace_uri).last_aspace_update
       expect(ladybird_update_before).to be < ladybird_update_after
       expect(voyager_update_before).to be < voyager_update_after
+      expect(aspace_update_before).to be < aspace_update_after
     end
 
-    # There are ~1837 total items from the relevant time period, but only 4 of them are Ladybird or Voyager updates
+    # There are ~1837 total items from the relevant time period, but only 6 of them
+    # are Ladybird, Voyager, or ArchiveSpace updates
     # with the oid that has been added to the database in our before block
     it "can process the partial activity stream if there is a previous successful run" do
       asl_old_success
@@ -166,34 +209,51 @@ RSpec.describe ActivityStreamReader do
       expect(ActivityStreamLog.last.object_count).to eq asl_old_success.object_count
       asr.process_activity_stream
       expect(ActivityStreamLog.count).to eq 2
-      expect(ActivityStreamLog.last.object_count).to eq 4
+      expect(ActivityStreamLog.last.object_count).to eq 6
     end
 
-    # There are ~4000 total items, but only 8 of them are Ladybird or Voyager updates with the oid of the relevant_parent_object
-    # that has been added to the database in our before block
+    # There are ~4000 total items, but only 12 of them are Ladybird, Voyager,
+    # or ArchiveSpace updates with the oid of the relevant_parent_object
+    # that have been added to the database in our before block
     it "processes the entire activity stream if it has never been run before" do
       expect(ActivityStreamLog.count).to eq 0
       described_class.update
       expect(ActivityStreamLog.count).to eq 1
-      expect(ActivityStreamLog.last.object_count).to eq 8
+      expect(ActivityStreamLog.last.object_count).to eq 12
+    end
+
+    it "tallies the number of items processed" do
+      expect(asr.tally).to eq 0
+      asr.process_item(relevant_item_from_ladybird)
+      expect(asr.tally).to eq 1
+      asr.process_item(relevant_item_two)
+      expect(asr.tally).to eq 2
+      asr.process_item(relevant_item_from_voyager)
+      expect(asr.tally).to eq 3
     end
 
     it "adds relevant oids for update to a set" do
       expect(asr.oids_for_update.size).to eq 0
-      asr.process_item(relevant_item_from_ladybird)
+      asr.find_by_id(relevant_item_from_ladybird)
       expect(asr.oids_for_update.size).to eq 1
-      asr.process_item(relevant_item_two)
+      asr.find_by_id(relevant_item_two)
       expect(asr.oids_for_update.size).to eq 2
-      asr.process_item(relevant_item_from_voyager)
+      asr.find_by_id(relevant_item_from_voyager)
       expect(asr.oids_for_update.size).to eq 3
       expect(asr.oids_for_update).not_to include nil
       expect(asr.oids_for_update).to include ["2004628", "ils"]
+      asr.find_by_id(relevant_item_from_voyager_holding)
+      expect(asr.oids_for_update.size).to eq 4
+      asr.find_by_id(relevant_item_from_aspace)
+      expect(asr.oids_for_update.size).to eq 5
     end
   end
 
   context "determining whether an item from the activity stream is relevant" do
     before do
       relevant_parent_object
+      relevant_parent_object_two
+      parent_object_with_aspace_uri
       asl_old_success
     end
 
@@ -203,10 +263,15 @@ RSpec.describe ActivityStreamReader do
 
     it "can confirm that a Voyager item is relevant" do
       expect(asr.relevant?(relevant_item_from_voyager)).to be_truthy
+      expect(asr.relevant?(relevant_item_from_voyager_holding)).to be_truthy
+      expect(asr.relevant?(relevant_item_from_voyager_item)).to be_truthy
+    end
+
+    it "can confirm that an ArchiveSpace item is relevant" do
+      expect(asr.relevant?(relevant_item_from_aspace)).to be_truthy
     end
 
     it "does not confirm that an irrelevant item is relevant" do
-      expect(asr.relevant?(irrelevant_item_from_aspace)).to be_falsey
       expect(asr.relevant?(irrelevant_item_not_in_db)).to be_falsey
       expect(asr.relevant?(irrelevant_item_too_old)).to be_falsey
       expect(asr.relevant?(irrelevant_not_an_update)).to be_falsey
