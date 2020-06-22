@@ -1,11 +1,21 @@
 # Changelog
 
-## [1.6.0](https://github.com/yalelibrary/yul-dc-management/tree/1.6.0) (2020-06-19)
+## [v1.7.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.7.0) (2020-06-22)
 
-[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.5.2...1.6.0)
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.6.0...v1.7.0)
 
 **Merged pull requests:**
 
+- Dashboard formatting [\#95](https://github.com/yalelibrary/yul-dc-management/pull/95) ([maxkadel](https://github.com/maxkadel))
+- Read ArchiveSpace and Voyager non-bib updates from activity stream [\#94](https://github.com/yalelibrary/yul-dc-management/pull/94) ([maxkadel](https://github.com/maxkadel))
+
+## [v1.6.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.6.0) (2020-06-19)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.5.2...v1.6.0)
+
+**Merged pull requests:**
+
+- Generate the changelog for a v1.6.0 release [\#93](https://github.com/yalelibrary/yul-dc-management/pull/93) ([mark-dce](https://github.com/mark-dce))
 - Rename crosswalk method to more specific find\_source\_ids\_for\(oid\) [\#91](https://github.com/yalelibrary/yul-dc-management/pull/91) ([maxkadel](https://github.com/maxkadel))
 - Add honeybader for execption reporting in production [\#90](https://github.com/yalelibrary/yul-dc-management/pull/90) ([mark-dce](https://github.com/mark-dce))
 - Process Activity Stream Updates for Voyager bibs [\#89](https://github.com/yalelibrary/yul-dc-management/pull/89) ([maxkadel](https://github.com/maxkadel))
@@ -103,6 +113,7 @@
 
 **Merged pull requests:**
 
+- Update base docker image and Ruby for latest passenger [\#42](https://github.com/yalelibrary/yul-dc-management/pull/42) ([maxkadel](https://github.com/maxkadel))
 - add additional author field [\#40](https://github.com/yalelibrary/yul-dc-management/pull/40) ([K8Sewell](https://github.com/K8Sewell))
 
 ## [v1.1.3](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.3) (2020-06-04)
@@ -116,6 +127,10 @@
 ## [v1.1.2](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.2) (2020-06-03)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.1.1...v1.1.2)
+
+**Merged pull requests:**
+
+- Add basic management page so there's somewhere to land on deploy [\#37](https://github.com/yalelibrary/yul-dc-management/pull/37) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.1.1](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.1) (2020-06-03)
 
@@ -131,11 +146,8 @@
 
 **Merged pull requests:**
 
-- Update base docker image and Ruby for latest passenger [\#42](https://github.com/yalelibrary/yul-dc-management/pull/42) ([maxkadel](https://github.com/maxkadel))
-- Add basic management page so there's somewhere to land on deploy [\#37](https://github.com/yalelibrary/yul-dc-management/pull/37) ([maxkadel](https://github.com/maxkadel))
 - Use port 3001 for management app so it doesn't run into Blacklight ap… [\#35](https://github.com/yalelibrary/yul-dc-management/pull/35) ([maxkadel](https://github.com/maxkadel))
 - README and update tag [\#34](https://github.com/yalelibrary/yul-dc-management/pull/34) ([maxkadel](https://github.com/maxkadel))
-- Comment out vernacular until we get mappings [\#33](https://github.com/yalelibrary/yul-dc-management/pull/33) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.0.2](https://github.com/yalelibrary/yul-dc-management/tree/v1.0.2) (2020-05-29)
 
@@ -143,6 +155,7 @@
 
 **Merged pull requests:**
 
+- Comment out vernacular until we get mappings [\#33](https://github.com/yalelibrary/yul-dc-management/pull/33) ([maxkadel](https://github.com/maxkadel))
 - remove outdated rake task / service [\#32](https://github.com/yalelibrary/yul-dc-management/pull/32) ([maxkadel](https://github.com/maxkadel))
 - Dependabot puma branch rename [\#31](https://github.com/yalelibrary/yul-dc-management/pull/31) ([maxkadel](https://github.com/maxkadel))
 
