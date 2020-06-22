@@ -7,20 +7,26 @@ RSpec.describe "Management", type: :feature do
       ENV['MANAGEMENT_VERSION'] = 'v1beta.gamma'
       ENV['POSTGRES_VERSION'] = 'SQLite'
       ENV['BLACKLIGHT_VERSION'] = 'v2.alpha.sigma'
-      ENV['SOLR_VERSION'] = 'v3alpha.omega'
-      ENV['IIIF_IMAGE_VERSION'] = 'v4delta.chi'
-      ENV['IIIF_MANIFEST_VERSION'] = 'v5lambda.phi'
+      ENV['SOLR_VERSION'] = 'v3.alpha.omega'
+      ENV['IIIF_IMAGE_VERSION'] = 'v4.delta.chi'
+      ENV['IIIF_MANIFEST_VERSION'] = 'v5.lambda.phi'
       visit management_index_path
     end
 
     it 'dynamically displays deployed services' do
       expect(page).to have_content("Containers")
-      expect(page).to have_content("yalelibraryit/dc-management:v1beta.gamma")
-      expect(page).to have_content("yalelibraryit/dc-postgres:SQLite")
-      expect(page).to have_content("yalelibraryit/dc-blacklight:v2.alpha.sigma")
-      expect(page).to have_content("yalelibraryit/dc-solr:v3alpha.omega")
-      expect(page).to have_content("yalelibraryit/dc-iiif-cantaloupe:v4delta.chi")
-      expect(page).to have_content("yalelibraryit/dc-management:v5lambda.phi")
+      expect(page).to have_content("v1beta.gamma")
+      expect(page).to have_content("yalelibraryit/dc-management")
+      expect(page).to have_content("SQLite")
+      expect(page).to have_content("yalelibraryit/dc-postgres")
+      expect(page).to have_content("v2.alpha.sigma")
+      expect(page).to have_content("yalelibraryit/dc-blacklight")
+      expect(page).to have_content("v3.alpha.omega")
+      expect(page).to have_content("yalelibraryit/dc-solr")
+      expect(page).to have_content("v4.delta.chi")
+      expect(page).to have_content("yalelibraryit/dc-iiif-cantaloupe")
+      expect(page).to have_content("v5.lambda.phi")
+      expect(page).to have_content("yalelibraryit/dc-management")
     end
   end
 end
