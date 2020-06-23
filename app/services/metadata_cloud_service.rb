@@ -49,6 +49,7 @@ class MetadataCloudService
     bib = parsed_ladybird_file["orbisRecord"]
     barcode = parsed_ladybird_file["orbisBarcode"]
     aspace_uri = parsed_ladybird_file["archiveSpaceUri"]
+    visibility = parsed_ladybird_file["itemPermission"]
     # May not have both holding and item even with barcode
     if bib && barcode
       voyager_file = get_fixture_file(oid, "ils")
@@ -63,6 +64,7 @@ class MetadataCloudService
       aspace_uri: aspace_uri,
       holding: holding,
       item: item,
+      visibility: visibility,
       last_id_update: DateTime.current
     )
     po.save

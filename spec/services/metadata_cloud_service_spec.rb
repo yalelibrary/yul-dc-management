@@ -139,7 +139,7 @@ RSpec.describe MetadataCloudService do
       let(:item) { "10996370" }
       let(:po) { FactoryBot.create(:parent_object, oid: oid) }
 
-      it "adds the aspace uri" do
+      it "adds all the related ids and visibility" do
         po
         mcs.find_source_ids_for(oid)
         expect(ParentObject.find_by(oid: oid)["aspace_uri"].nil?).to be false
@@ -147,6 +147,7 @@ RSpec.describe MetadataCloudService do
         expect(ParentObject.find_by(oid: oid)["bib"]).to eq bib
         expect(ParentObject.find_by(oid: oid)["holding"]).to eq holding
         expect(ParentObject.find_by(oid: oid)["item"]).to eq item
+        expect(ParentObject.find_by(oid: oid)["visibility"]).to eq "Public"
       end
     end
   end
