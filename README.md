@@ -29,27 +29,39 @@ touch .secrets
 ## If this is your first time working in this repo or the Dockerfile has been updated you will need to pull your services
 
 ```bash
-  docker-compose pull web
+  docker-compose pull management
 ```
 
 ## Starting the app
 
-- Start the web service
+- Start the management service and its dependencies
 
   ```bash
-  docker-compose up web
+  docker-compose up management
   ```
 
-- Access the web app at `http://localhost:3001/management`
+- Access the Management app at http://localhost:3001/management
 
-- Access the solr instance at `http://localhost:8983`
+- Access the solr instance at http://localhost:8983
 
-### Accessing the web container
+- If you would like to see how items indexed by the Management application appear in the Discovery application,
+  you can bring down the Management application (ctrl-c or `docker-compose down`), and bring up the Management and
+  Discovery applications together:
+  ```bash
+  docker-compose up blacklight  
+  ```
+  - _NOTE_: In order to keep the docker-compose file focused on development for the Management application, it does not
+    contain all the services required for the Discovery application to display images (the manifest and image services). If
+    you need to test images in the Discovery application, you can add these services to docker-compose file.
+
+  - Access the Discovery application at http://localhost:3000
+
+### Accessing the management container
 
 - Navigate to the app root directory in another tab and run:
 
   ```bash
-  docker-compose exec web bundle exec bash
+  docker-compose exec management bundle exec bash
   ```
 
 - You will need to be inside the container to:
@@ -57,10 +69,10 @@ touch .secrets
   - Run migrations
   - Seed the database with a pre-defined list of oids from Ladybird
 
-  ```bash
-  RAILS_ENV=development rails db:seed
-  RAILS_ENV=test rails db:seed
-  ```
+    ```bash
+    RAILS_ENV=development rails db:seed
+    RAILS_ENV=test rails db:seed
+    ```
 
   - Access the rails console for debugging
 
@@ -147,11 +159,5 @@ touch .secrets
   4. Commit and merge the changes you just made.
   5. Once those changes are merged to the `master` branch, in the github web UI go to `Releases` and tag a new release with the right version number. Paste in the release notes for this version from the changelog you generated. In the release notes, split out `Features`, `Bug Fixes`, and `Other`
   6. Once the CI build has completed for `master`, tag and push a docker hub image with the same release number:
-
-    ```
-    docker pull yalelibraryit/dc-management:f93089f70e18d6c6d77ee1a6b3b4866b6d284078 <-- the tag created by circleci
-    docker tag yalelibraryit/dc-management:f93089f70e18d6c6d77ee1a6b3b4866b6d284078 yalelibraryit/dc-management:v1.2.1 <-- the new, semantically versioned tag
-    docker push yalelibraryit/dc-management:v1.2.1 <-- now our semantically versioned tag will be available from docker hub
-    ```
 
   7. Update `yul-dc-camerata` with the new version of management and submit a PR.
