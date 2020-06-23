@@ -8,6 +8,6 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*.rb'
 
-RSpec/InstanceVariable:
+RSpec/ExampleLength:
   Exclude:
-    - 'spec/lib/activity_stream_reader_spec.rb'
+    - 'spec/**/*.rb'

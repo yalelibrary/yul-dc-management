@@ -76,6 +76,7 @@ RSpec.describe FixtureIndexingService, clean: true do
     let(:metadata_fixture_path) { File.join(fixture_path, metadata_source) }
     let(:oid) { "2034600" }
     let(:metadata_source) { "ladybird" }
+    let(:id_prefix) { "" }
 
     it "can index the contents of a directory to Solr" do
       FixtureIndexingService.index_fixture_data(metadata_source)
@@ -94,6 +95,14 @@ RSpec.describe FixtureIndexingService, clean: true do
       solr = SolrService.connection
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 1
+    end
+
+    it "can create a Solr document for a record" do
+      mcs = MetadataCloudService.new
+      data_hash = JSON.parse(mcs.get_fixture_file(oid, metadata_source))
+      fis = FixtureIndexingService.new
+      solr_document = fis.build_solr_document(id_prefix, oid, data_hash)
+      expect(solr_document[:title_tsim]).to include "[Magazine page with various photographs of Leontyne Price]"
     end
 
     context "Private objects" do
