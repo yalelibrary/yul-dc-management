@@ -158,6 +158,4 @@ touch .secrets
   3. github_changelog_generator --user yalelibrary --project yul-dc-management --token $YOUR_GITHUB_TOKEN
   4. Commit and merge the changes you just made.
   5. Once those changes are merged to the `master` branch, in the github web UI go to `Releases` and tag a new release with the right version number. Paste in the release notes for this version from the changelog you generated. In the release notes, split out `Features`, `Bug Fixes`, and `Other`
-  6. Once the CI build has completed for `master`, tag and push a docker hub image with the same release number:
-
   7. Update `yul-dc-camerata` with the new version of management and submit a PR.
