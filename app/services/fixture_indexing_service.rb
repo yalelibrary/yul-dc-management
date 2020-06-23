@@ -14,13 +14,8 @@ class FixtureIndexingService
     Rails.root.join('spec', 'fixtures', metadata_source).to_s
   end
 
-  def self.index_to_solr(oid, metadata_source)
-    mcs = MetadataCloudService.new
-    id_prefix = mcs.file_prefix(metadata_source)
-    return nil unless mcs.get_fixture_file(oid, metadata_source)
-    file = mcs.get_fixture_file(oid, metadata_source)
-    data_hash = JSON.parse(file)
-    solr_doc = {
+  def build_solr_document(id_prefix, oid, data_hash)
+    {
       id: "#{id_prefix}#{oid}",
       title_tsim: data_hash["title"],
       # title_vern_ssim # title in the vernacular
@@ -85,11 +80,20 @@ class FixtureIndexingService
       digital_ssim: data_hash["digital"],
       coordinates_ssim: data_hash["coordinate"],
       projection_ssim: data_hash["projection"],
-
       date_tsim: data_hash["date"], # Not clear what date this refers to, not in Blacklight
       public_bsi: true, # TEMPORARY, makes everything public
       visibility_ssi: data_hash["itemPermission"]
     }
+  end
+
+  def self.index_to_solr(oid, metadata_source)
+    mcs = MetadataCloudService.new
+    fis = FixtureIndexingService.new
+    id_prefix = mcs.file_prefix(metadata_source)
+    return nil unless mcs.get_fixture_file(oid, metadata_source)
+    file = mcs.get_fixture_file(oid, metadata_source)
+    data_hash = JSON.parse(file)
+    solr_doc = fis.build_solr_document(id_prefix, oid, data_hash)
     solr = SolrService.connection
     solr.add([solr_doc])
     solr.commit
