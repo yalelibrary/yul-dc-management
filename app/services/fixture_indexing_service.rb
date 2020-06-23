@@ -67,7 +67,10 @@ class FixtureIndexingService
       oid_ssim: data_hash["oid"] || oid,
       identifierMfhd_ssim: data_hash["identifierMfhd"],
       identifierShelfMark_ssim: data_hash["identifierShelfMark"],
-      box_ssim: data_hash["identifierShelfMark"],
+      # I do not think the current box_ssim is how we want to continue to do deal with differences in field names
+      # However I do not think we currently have enough information to create the alternative (Max)
+      # Ladybird data_hash["box"] || Voyager data_hash["volumeEnumeration"] || ArchiveSpace data_hash["containerGrouping"]
+      box_ssim: data_hash["box"] || data_hash["volumeEnumeration"] || data_hash["containerGrouping"],
       folder_ssim: data_hash["folder"],
       orbisBibId_ssim: data_hash["orbisRecord"], # may change to orbisBibId
       orbisBarcode_ssim: data_hash["orbisBarcode"] || data_hash["barcode"],
