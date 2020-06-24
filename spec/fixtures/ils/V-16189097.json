@@ -30,7 +30,7 @@
     "col. ;"
   ],
   "language": [
-    "jp"
+    "jpn"
   ],
   "description": [
     "Relief shown pictorially.",
@@ -50,13 +50,14 @@
     "cartographic image"
   ],
   "orbisRecord": "8330740",
+  "orbisBarcode": "39002113593819",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16189150"
   ],
   "dateStructured": [
-    "189u   "
+    "189u    "
   ],
-  "illustrativeMatter": "i  ",
+  "illustrativeMatter": "i   ",
   "titleStatement": [
     "Dai Min kyūhen bankoku jinseki rotei zenzu [cartographic material].",
     "大明九辺万国人跡路程全図"
@@ -71,7 +72,6 @@
     "a-cc---",
     "China"
   ],
-  "barcode": "39002113593819",
   "dependentUris": [
     "/ils/holding/8742070",
     "/ils/item/11686828",

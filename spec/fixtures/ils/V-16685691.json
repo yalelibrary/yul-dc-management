@@ -29,7 +29,7 @@
     "color ;"
   ],
   "language": [
-    "en"
+    "eng"
   ],
   "description": [
     "\"Small corrections from notices to mariners ('15-2, 18, 30, from other sources I '16.\"",
@@ -53,13 +53,14 @@
     "cartographic image"
   ],
   "orbisRecord": "13881242",
+  "orbisBarcode": "39002131329220",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16686253"
   ],
   "dateStructured": [
-    "1916   "
+    "1916    "
   ],
-  "illustrativeMatter": "dg ",
+  "illustrativeMatter": "dg  ",
   "titleStatement": [
     "Tracks for full powered steam vessels with the shortest navigable distances in nautical miles from anchorage to anchorage, New York distances are measures to and from the Battery achorage"
   ],
@@ -70,7 +71,6 @@
   "creatorDisplay": [
     "United States. Hydrographic Office, cartographer"
   ],
-  "barcode": "39002131329220",
   "dependentUris": [
     "/ils/holding/13895201",
     "/ils/item/12140816",

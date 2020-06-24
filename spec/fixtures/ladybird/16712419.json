@@ -72,6 +72,9 @@
     "Goethe, Johann Wolfgang von,--1749-1832.--Faust--Illustrations.",
     "Miltitz, Carl Borromäus von, 1781-1845"
   ],
+  "dependentUris": [
+    "/ladybird/oid/16712419"
+  ],
   "oid": 16712419,
   "collectionId": 1,
   "children": [

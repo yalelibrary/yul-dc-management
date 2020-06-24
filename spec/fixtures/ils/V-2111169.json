@@ -19,7 +19,7 @@
     "[ca. 1300]"
   ],
   "language": [
-    "gr"
+    "grc"
   ],
   "description": [
     "In Greek."
@@ -40,6 +40,7 @@
     "unspecified"
   ],
   "orbisRecord": "9896328",
+  "orbisBarcode": "39002099258734",
   "findingAid": [
     "https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms1121.htm",
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=Beinecke_MS_1121"
@@ -48,9 +49,9 @@
     "Galen, Opera Varia. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1300   "
+    "1300    "
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "titleStatement": [
     "Opera varia"
   ],
@@ -65,7 +66,6 @@
   "creatorDisplay": [
     "Galen"
   ],
-  "barcode": "39002099258734",
   "dependentUris": [
     "/ils/holding/10191430",
     "/ils/item/9349078",

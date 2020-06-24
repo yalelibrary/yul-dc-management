@@ -34,6 +34,9 @@
   ],
   "itemPermission": "Public",
   "repository": "Beinecke Library",
+  "dependentUris": [
+    "/ladybird/oid/2005512"
+  ],
   "oid": 2005512,
   "collectionId": 1,
   "children": [

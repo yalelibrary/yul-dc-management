@@ -22,7 +22,7 @@
     "sepia ink and wash on paper mounted on linen, with wooden rods ;"
   ],
   "language": [
-    "en"
+    "eng"
   ],
   "description": [
     "Title devised by cataloger.",
@@ -205,6 +205,7 @@
     "still image"
   ],
   "orbisRecord": "12307100",
+  "orbisBarcode": "39002102340669",
   "findingAid": [
     "http://hdl.handle.net/10079/fa/beinecke.phrenology",
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=YCAL_MSS_1000"
@@ -213,9 +214,9 @@
     "Fowler & Wells, Portrait Posters for Physiognomy Lectures. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
   "dateStructured": [
-    "1860186"
+    "18601860"
   ],
-  "illustrativeMatter": "nnn",
+  "illustrativeMatter": "nnn ",
   "titleStatement": [
     "[Portrait posters for physiognomy lectures]."
   ],
@@ -310,7 +311,6 @@
   "creatorDisplay": [
     "Fowler & Wells, attributed name"
   ],
-  "barcode": "39002102340669",
   "volumeEnumeration": "Box 1",
   "dependentUris": [
     "/ils/holding/12484205",

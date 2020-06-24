@@ -115,6 +115,9 @@
     "Spengler, Oswald, 1880-1936",
     "Zukofsky, Louis, 1904-1978"
   ],
+  "dependentUris": [
+    "/ladybird/oid/2019759"
+  ],
   "oid": 2019759,
   "collectionId": 1,
   "children": [

@@ -83,6 +83,9 @@
     "Smith, Jessie Willcox, 1863-1935",
     "Stevenson, Robert Louis, 1850-1894"
   ],
+  "dependentUris": [
+    "/ladybird/oid/2019757"
+  ],
   "oid": 2019757,
   "collectionId": 1,
   "children": [

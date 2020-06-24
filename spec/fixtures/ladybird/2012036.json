@@ -75,6 +75,9 @@
     "Whitman, Walt, 1819-1892"
   ],
   "archiveSpaceUri": "/repositories/11/archival_objects/555049",
+  "dependentUris": [
+    "/ladybird/oid/2012036"
+  ],
   "oid": 2012036,
   "collectionId": 1,
   "children": [
