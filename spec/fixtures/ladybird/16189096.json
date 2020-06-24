@@ -75,6 +75,9 @@
     "Dong, Chun (Cartographer), cartographer.",
     "董醇 (Cartographer), cartographer."
   ],
+  "dependentUris": [
+    "/ladybird/oid/16189096"
+  ],
   "oid": 16189096,
   "collectionId": 1,
   "children": [

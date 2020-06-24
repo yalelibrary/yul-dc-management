@@ -25,7 +25,7 @@
     "paper ;"
   ],
   "language": [
-    "en"
+    "enm"
   ],
   "description": [
     "Layout: single columns of 17 lines.",
@@ -54,6 +54,7 @@
     "unspecified"
   ],
   "orbisRecord": "11756910",
+  "orbisBarcode": "39002091549304",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16157343"
   ],
@@ -61,9 +62,9 @@
     "Mirour of mans salvacioune (Takamiya MS 97). General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1450   "
+    "1450    "
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "subjectEra": "Middle English, 1100-1500. Middle English, 1100-1500.",
   "titleStatement": [
     "Mirour of mans salvacioune"
@@ -78,7 +79,6 @@
     "Connecticut",
     "New Haven."
   ],
-  "barcode": "39002091549304",
   "volumeEnumeration": "Box",
   "dependentUris": [
     "/ils/holding/11876007",

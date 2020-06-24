@@ -86,6 +86,9 @@
     "Outlon, Clement Walley.",
     "Robertson, Charles Andrew."
   ],
+  "dependentUris": [
+    "/ladybird/oid/16570776"
+  ],
   "oid": 16570776,
   "collectionId": 1,
   "children": [

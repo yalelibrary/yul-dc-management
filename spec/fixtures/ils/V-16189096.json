@@ -32,7 +32,7 @@
     "color ;"
   ],
   "language": [
-    "ch"
+    "chi"
   ],
   "description": [
     "Jing zhe zhuang."
@@ -51,13 +51,14 @@
     "cartographic image"
   ],
   "orbisRecord": "8317945",
+  "orbisBarcode": "39002113593827",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16189148"
   ],
   "dateStructured": [
-    "1857   "
+    "1857    "
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "titleStatement": [
     "Zhi li Da Qing He yuan liu zong tu / Qing he dao Dong Chun",
     "直隷大清河源流總圖 / 清河道董醇"
@@ -74,7 +75,6 @@
     "Dong, Chun (Cartographer), cartographer",
     "董醇 (Cartographer), cartographer"
   ],
-  "barcode": "39002113593827",
   "dependentUris": [
     "/ils/holding/8710417",
     "/ils/item/11686833",

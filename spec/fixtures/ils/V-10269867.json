@@ -22,7 +22,7 @@
     "parchment ;"
   ],
   "language": [
-    "la"
+    "lat"
   ],
   "description": [
     "Script: Written in gothic liturgical script in brown and red ink.",
@@ -50,6 +50,7 @@
     "unspecified"
   ],
   "orbisRecord": "9734851",
+  "orbisBarcode": "39002091597519",
   "findingAid": [
     "https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms410.htm",
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=1003311"
@@ -58,9 +59,9 @@
     "Indulgence Scroll. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1475150"
+    "14751500"
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "titleStatement": [
     "Indulgence scroll"
   ],
@@ -76,7 +77,6 @@
   "subjectTitleDisplay": [
     "Catholic Church"
   ],
-  "barcode": "39002091597519",
   "volumeEnumeration": "Box",
   "dependentUris": [
     "/ils/holding/10050461",

@@ -93,6 +93,9 @@
   "contributorDisplay": [
     "Jerome,--Saint,--d. 419 or 20"
   ],
+  "dependentUris": [
+    "/ladybird/oid/10958722"
+  ],
   "oid": 10958722,
   "collectionId": 1,
   "children": [

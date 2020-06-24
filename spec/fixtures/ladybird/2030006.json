@@ -52,6 +52,9 @@
   "contributorDisplay": [
     "Anne, Queen of Great Britain, 1665-1714"
   ],
+  "dependentUris": [
+    "/ladybird/oid/2030006"
+  ],
   "oid": 2030006,
   "collectionId": 1,
   "children": [
