@@ -16,7 +16,7 @@
     "14.5 linear ft. (64 boxes)"
   ],
   "language": [
-    "en"
+    "eng"
   ],
   "description": [
     "Finding aid available."
@@ -57,6 +57,7 @@
     "Archives"
   ],
   "orbisRecord": "3659107",
+  "orbisBarcode": "39002091548348",
   "findingAid": [
     "http://hdl.handle.net/10079/fa/beinecke.eliot",
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=GEN_MSS_963"
@@ -65,9 +66,9 @@
     "George Eliot and George Henry Lewes Collection. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1834198"
+    "18341981"
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "subjectEra": "19th century 19th century",
   "titleStatement": [
     "George Eliot and George Henry Lewes collection, 1834-1981"
@@ -118,7 +119,6 @@
   "contributorDisplay": [
     "Lewes, George Henry, 1817-1878."
   ],
-  "barcode": "39002091548348",
   "volumeEnumeration": "Box 7",
   "dependentUris": [
     "/ils/holding/4004455",

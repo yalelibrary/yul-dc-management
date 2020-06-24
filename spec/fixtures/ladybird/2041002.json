@@ -50,6 +50,9 @@
   "creatorDisplay": [
     "Johnson, Samuel, 1709-1784"
   ],
+  "dependentUris": [
+    "/ladybird/oid/2041002"
+  ],
   "oid": 2041002,
   "collectionId": 1,
   "children": [
