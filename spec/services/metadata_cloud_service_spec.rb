@@ -138,8 +138,12 @@ RSpec.describe MetadataCloudService do
       let(:holding) { "12484205" }
       let(:item) { "10996370" }
       let(:po) { FactoryBot.create(:parent_object, oid: oid) }
+      let(:private_oid) { "16189097-priv" }
+      let(:private_object) { FactoryBot.create(:parent_object, oid: private_oid) }
+      let(:yale_only_oid) { "16189097-yale" }
+      let(:yale_only_object) { FactoryBot.create(:parent_object, oid: yale_only_oid) }
 
-      it "adds the aspace uri" do
+      it "adds all the related ids and visibility" do
         po
         mcs.find_source_ids_for(oid)
         expect(ParentObject.find_by(oid: oid)["aspace_uri"].nil?).to be false
@@ -147,6 +151,16 @@ RSpec.describe MetadataCloudService do
         expect(ParentObject.find_by(oid: oid)["bib"]).to eq bib
         expect(ParentObject.find_by(oid: oid)["holding"]).to eq holding
         expect(ParentObject.find_by(oid: oid)["item"]).to eq item
+        expect(ParentObject.find_by(oid: oid)["visibility"]).to eq "Public"
+      end
+
+      it "adds the visibility for non-public objects" do
+        private_object
+        yale_only_object
+        mcs.find_source_ids_for(private_oid)
+        mcs.find_source_ids_for(yale_only_oid)
+        expect(ParentObject.find_by(oid: private_oid)["visibility"]).to eq "Private"
+        expect(ParentObject.find_by(oid: yale_only_oid)["visibility"]).to eq "Yale Community Only"
       end
     end
   end

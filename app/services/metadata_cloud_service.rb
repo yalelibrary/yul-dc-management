@@ -48,7 +48,6 @@ class MetadataCloudService
     parsed_ladybird_file = JSON.parse(ladybird_file)
     bib = parsed_ladybird_file["orbisRecord"]
     barcode = parsed_ladybird_file["orbisBarcode"]
-    aspace_uri = parsed_ladybird_file["archiveSpaceUri"]
     # May not have both holding and item even with barcode
     if bib && barcode
       voyager_file = get_fixture_file(oid, "ils")
@@ -58,11 +57,12 @@ class MetadataCloudService
     end
     po = ParentObject.find_by(oid: oid)
     po.update(
-      bib: bib,
-      barcode: barcode,
-      aspace_uri: aspace_uri,
+      bib: parsed_ladybird_file["orbisRecord"],
+      barcode: parsed_ladybird_file["orbisBarcode"],
+      aspace_uri: parsed_ladybird_file["archiveSpaceUri"],
       holding: holding,
       item: item,
+      visibility: parsed_ladybird_file["itemPermission"],
       last_id_update: DateTime.current
     )
     po.save
