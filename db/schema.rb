@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_21_104105) do
+ActiveRecord::Schema.define(version: 2020_06_23_204727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2020_06_21_104105) do
     t.datetime "last_id_update"
     t.datetime "last_voyager_update"
     t.datetime "last_aspace_update"
+    t.string "visibility"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end
 

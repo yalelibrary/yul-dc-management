@@ -62,10 +62,7 @@ class FixtureIndexingService
       oid_ssim: data_hash["oid"] || oid,
       identifierMfhd_ssim: data_hash["identifierMfhd"],
       identifierShelfMark_ssim: data_hash["identifierShelfMark"],
-      # I do not think the current box_ssim is how we want to continue to do deal with differences in field names
-      # However I do not think we currently have enough information to create the alternative (Max)
-      # Ladybird data_hash["box"] || Voyager data_hash["volumeEnumeration"] || ArchiveSpace data_hash["containerGrouping"]
-      box_ssim: data_hash["box"] || data_hash["volumeEnumeration"] || data_hash["containerGrouping"],
+      box_ssim: extract_box_ssim(data_hash),
       folder_ssim: data_hash["folder"],
       orbisBibId_ssim: data_hash["orbisRecord"], # may change to orbisBibId
       orbisBarcode_ssim: data_hash["orbisBarcode"] || data_hash["barcode"],
@@ -82,8 +79,19 @@ class FixtureIndexingService
       projection_ssim: data_hash["projection"],
       date_tsim: data_hash["date"], # Not clear what date this refers to, not in Blacklight
       public_bsi: true, # TEMPORARY, makes everything public
-      visibility_ssi: data_hash["itemPermission"]
+      visibility_ssi: extract_visibility(oid, data_hash)
     }
+  end
+
+  def extract_visibility(oid, data_hash)
+    data_hash["itemPermission"] || ParentObject.find_by(oid: oid)&.visibility
+  end
+
+  # I do not think the current box_ssim is how we want to continue to do deal with differences in field names
+  # However I do not think we currently have enough information to create the alternative (Max)
+  # Ladybird data_hash["box"] || Voyager data_hash["volumeEnumeration"] || ArchiveSpace data_hash["containerGrouping"]
+  def extract_box_ssim(data_hash)
+    data_hash["box"] || data_hash["volumeEnumeration"] || data_hash["containerGrouping"]
   end
 
   def self.index_to_solr(oid, metadata_source)
