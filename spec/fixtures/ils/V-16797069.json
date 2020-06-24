@@ -16,7 +16,7 @@
     "31.0 linear feet (69 boxes) + 12 broadside, 4 art."
   ],
   "language": [
-    "en",
+    "eng",
     "eng",
     "fre"
   ],
@@ -76,6 +76,7 @@
     "Photographs"
   ],
   "orbisRecord": "3435140",
+  "orbisBarcode": "39002075038423",
   "findingAid": [
     "http://hdl.handle.net/10079/fa/beinecke.wharton",
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=YCAL_MSS_42"
@@ -84,9 +85,9 @@
     "Edith Wharton Collection. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
   "dateStructured": [
-    "1868198"
+    "18681981"
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "subjectEra": "20th century. 20th century. 20th century. 20th century. 20th century.",
   "titleStatement": [
     "Edith Wharton collection, 1868-1981 (inclusive)."
@@ -144,7 +145,6 @@
   "creatorDisplay": [
     "Wharton, Edith, 1862-1937"
   ],
-  "barcode": "39002075038423",
   "volumeEnumeration": "Box 25",
   "dependentUris": [
     "/ils/holding/3764443",

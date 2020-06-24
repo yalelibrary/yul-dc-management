@@ -16,7 +16,7 @@
     "11.65 linear ft. (18 boxes) + 1 broadside folder + 7 art."
   ],
   "language": [
-    "en"
+    "eng"
   ],
   "description": [
     "Walt Whitman (1819-1892), poet and author.",
@@ -65,6 +65,7 @@
     "Archives"
   ],
   "orbisRecord": "6805375",
+  "orbisBarcode": "39002091459793",
   "findingAid": [
     "http://hdl.handle.net/10079/fa/beinecke.whitman",
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=YCAL_MSS_202"
@@ -73,9 +74,9 @@
     "Walt Whitman Collection. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
   "dateStructured": [
-    "1842194"
+    "18421949"
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "subjectEra": "19th century. 19th century Civil War, 1861-1865.",
   "titleStatement": [
     "Walt Whitman collection, 1842-1949"
@@ -123,7 +124,6 @@
   "creatorDisplay": [
     "Whitman, Walt, 1819-1892"
   ],
-  "barcode": "39002091459793",
   "volumeEnumeration": "Box 4",
   "dependentUris": [
     "/ils/holding/7397126",

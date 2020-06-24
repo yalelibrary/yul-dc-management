@@ -73,6 +73,9 @@
     "Giard, Robert, 1939-2002"
   ],
   "archiveSpaceUri": "/repositories/11/archival_objects/699963",
+  "dependentUris": [
+    "/ladybird/oid/16854582"
+  ],
   "oid": 16854582,
   "collectionId": 1,
   "children": [
