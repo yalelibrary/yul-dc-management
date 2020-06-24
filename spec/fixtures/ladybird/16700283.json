@@ -84,6 +84,9 @@
     "Cockerell, Sydney Carlyle,--Sir,--1867-1962--Ownership.",
     "Thomas, Alan G.--Ownership."
   ],
+  "dependentUris": [
+    "/ladybird/oid/16700283"
+  ],
   "oid": 16700283,
   "collectionId": 1,
   "children": [

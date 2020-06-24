@@ -90,6 +90,9 @@
     "Chen, Jiaxun (Cartographer), cartographer.",
     "陳嘉勲 (Cartographer), cartographer."
   ],
+  "dependentUris": [
+    "/ladybird/oid/16173726"
+  ],
   "oid": 16173726,
   "collectionId": 1,
   "children": [

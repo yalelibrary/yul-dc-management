@@ -13,7 +13,7 @@
     "15 33 x 22 cm. leaves ;"
   ],
   "language": [
-    "ar"
+    "ara"
   ],
   "description": [
     "Modern (19th century) naskhī."
@@ -25,13 +25,14 @@
     "unspecified"
   ],
   "orbisRecord": "3827095",
+  "orbisBarcode": "39002097273412",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=11977426"
   ],
   "dateStructured": [
-    "1800189"
+    "18001899"
   ],
-  "illustrativeMatter": "|| ",
+  "illustrativeMatter": "||  ",
   "titleStatement": [
     "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī. -- [18--?]."
   ],
@@ -42,7 +43,6 @@
   "creatorDisplay": [
     "Maqrīzī, Aḥmad ibn ʻAlī, 1364-1442"
   ],
-  "barcode": "39002097273412",
   "volumeEnumeration": "Box",
   "dependentUris": [
     "/ils/holding/4184367",

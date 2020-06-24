@@ -16,7 +16,7 @@
     "50.34 linear feet (271 boxes)"
   ],
   "language": [
-    "en"
+    "eng"
   ],
   "description": [
     "Robert Giard was an American photographer, born in Hartford, Connecticut in 1939. He received a Bachelor of Arts from Yale University in 1961, and Master of Arts in Comparative Literature from Boston University in 1965. In 1972 he began to take photographs, focusing on landscapes and portraits of his friends, artists, writers, and nudes. His monograph Particular Voices: Portraits of Gay and Lesbian Writers, published by MIT Press in 1997, contains a selection from over 500 portraits he had taken in the previous decade. In 1996, Giard was commissioned to document the 321 grant recipients of the Thanks Be To Grandmother Winifred Foundation. The grant recipients were women over the age of 54 whose projects benefited adult women. From 1996 to 2001, Giard traveled across the U. S. to photograph each year's grant recipents. He died in 2002 of a heart attack.",
@@ -42,6 +42,7 @@
     "LGBTQ resource"
   ],
   "orbisRecord": "7151233",
+  "orbisBarcode": "39002104850970",
   "findingAid": [
     "http://hdl.handle.net/10079/fa/beinecke.giard",
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?CN=YCAL_MSS_702"
@@ -50,9 +51,9 @@
     "Robert Giard Papers. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
   "dateStructured": [
-    "1972200"
+    "19722002"
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "subjectEra": "20th century.",
   "titleStatement": [
     "Robert Giard papers, 1972-2002"
@@ -75,7 +76,6 @@
   "creatorDisplay": [
     "Giard, Robert"
   ],
-  "barcode": "39002104850970",
   "volumeEnumeration": "Box 8",
   "dependentUris": [
     "/ils/holding/7686921",

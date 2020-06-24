@@ -94,6 +94,9 @@
     "Salsbury, Nathan,--1846-1902.",
     "Sitting Bull,--1831-1890."
   ],
+  "dependentUris": [
+    "/ladybird/oid/16057780"
+  ],
   "oid": 16057780,
   "collectionId": 1,
   "children": [

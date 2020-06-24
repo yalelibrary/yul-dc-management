@@ -22,7 +22,7 @@
     "3 v. ; 43 cm."
   ],
   "language": [
-    "en"
+    "eng"
   ],
   "description": [
     "BEIN GEN MSS VOL 728 (Oversize):  Incomplete copy of mixed sheets and proofs of the first edition, with corrections by Johnson and his amanuenses, which first appeared in the 4th edition, 1773. Without t.p.'s and preliminary matter; with some omissions, text runs from A-Pum. Armorial binding of Ralph Sneyd."
@@ -34,13 +34,14 @@
     "Dictionaries"
   ],
   "orbisRecord": "1169354",
+  "orbisBarcode": "39002094045136",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=GEN_MSS_VOL_728_(Oversize)"
   ],
   "dateStructured": [
-    "1755   "
+    "1755    "
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "titleStatement": [
     "A dictionary of the English language ... / by Samuel Johnson ..."
   ],
@@ -49,7 +50,6 @@
   "creatorDisplay": [
     "Johnson, Samuel, 1709-1784"
   ],
-  "barcode": "39002094045136",
   "volumeEnumeration": "2",
   "dependentUris": [
     "/ils/holding/1303025",
