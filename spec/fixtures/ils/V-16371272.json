@@ -22,7 +22,7 @@
     "parchment ;"
   ],
   "language": [
-    "la"
+    "lat"
   ],
   "description": [
     "With an Oxford pledge note for the Selton Loan Chest dated 1469 and the mark of the stationer John More. There is also a note by M. Paris, possibly Master Thomas Paris of Oriel College.",
@@ -50,6 +50,7 @@
     "unspecified"
   ],
   "orbisRecord": "12329381",
+  "orbisBarcode": "39002104624045",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16565592"
   ],
@@ -57,9 +58,9 @@
     "Bible (Proverbs to Apocalypse) (Takamiya MS 104)."
   ],
   "dateStructured": [
-    "1200129"
+    "12001299"
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "titleStatement": [
     "Bible (Proverbs to Apocalypse)."
   ],
@@ -81,7 +82,6 @@
     "Bible. Latin.",
     "Bible. Latin"
   ],
-  "barcode": "39002104624045",
   "volumeEnumeration": "Box",
   "dependentUris": [
     "/ils/holding/12491792",

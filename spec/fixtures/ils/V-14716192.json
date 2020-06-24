@@ -16,7 +16,7 @@
     "82 21.5 x 15 cm. leaves ;"
   ],
   "language": [
-    "ar"
+    "ara"
   ],
   "description": [
     "Fair naskhī."
@@ -32,13 +32,14 @@
     "unspecified"
   ],
   "orbisRecord": "3798665",
+  "orbisBarcode": "39002094341147",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=14716294"
   ],
   "dateStructured": [
-    "1116   "
+    "1116    "
   ],
-  "illustrativeMatter": "|| ",
+  "illustrativeMatter": "||  ",
   "titleStatement": [
     "Kitāb al-ḥaydah / li-ʻAbd al-ʻAzīz al-Kinānī al-Makkī. -- 1116"
   ],
@@ -54,7 +55,6 @@
   "creatorDisplay": [
     "Kinānī, ʻAbd al-ʻAzīz ibn Yaḥyá, d. 854 or 5."
   ],
-  "barcode": "39002094341147",
   "volumeEnumeration": "Box",
   "dependentUris": [
     "/ils/holding/4154518",

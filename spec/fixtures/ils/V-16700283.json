@@ -22,7 +22,7 @@
     "parchment ;"
   ],
   "language": [
-    "la"
+    "lat"
   ],
   "description": [
     "Script: Gothic.",
@@ -43,6 +43,7 @@
     "unspecified"
   ],
   "orbisRecord": "13640726",
+  "orbisBarcode": "39002094365690",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16700284"
   ],
@@ -50,9 +51,9 @@
     "Book of Hours (Fragment). Takamiya MS 142."
   ],
   "dateStructured": [
-    "1400   "
+    "1400    "
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "titleStatement": [
     "Book of hours (fragment)"
   ],
@@ -66,7 +67,6 @@
     "Connecticut",
     "New Haven."
   ],
-  "barcode": "39002094365690",
   "volumeEnumeration": "File",
   "dependentUris": [
     "/ils/holding/13669853",

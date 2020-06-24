@@ -126,6 +126,9 @@
     "Stein, Gertrude, 1874-1946",
     "Steinbeck, John, 1902-1968"
   ],
+  "dependentUris": [
+    "/ladybird/oid/16301942"
+  ],
   "oid": 16301942,
   "collectionId": 1,
   "children": [
