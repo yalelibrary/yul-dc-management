@@ -45,6 +45,9 @@
     "By or after Lieutenant Warre.",
     "Paintings described by Mr. C. P. Wilson in an article “Early Western Paintings” which appeared in The Beaver, June 1949 (no. 280)."
   ],
+  "dependentUris": [
+    "/ladybird/oid/2004628"
+  ],
   "oid": 2004628,
   "collectionId": 1,
   "children": [

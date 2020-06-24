@@ -22,7 +22,7 @@
     "parchment ;"
   ],
   "language": [
-    "la"
+    "lat"
   ],
   "description": [
     "Layout: double columns of 39 lines.",
@@ -48,6 +48,7 @@
     "unspecified"
   ],
   "orbisRecord": "12297336",
+  "orbisBarcode": "39002104623971",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16394803"
   ],
@@ -55,9 +56,9 @@
     "Missal, Use of Sarum (Fragment) (Takamiya MS 81). General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1400145"
+    "14001450"
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "titleStatement": [
     "Missal, use of Sarum (fragment)"
   ],
@@ -74,7 +75,6 @@
   "subjectTitleDisplay": [
     "Catholic Church. Sarum manual."
   ],
-  "barcode": "39002104623971",
   "volumeEnumeration": "File (Oversize)",
   "dependentUris": [
     "/ils/holding/12462455",

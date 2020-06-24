@@ -19,7 +19,7 @@
     "1 volume (72 leaves) ; 19 cm"
   ],
   "language": [
-    "ar",
+    "ara",
     "ara",
     "ota"
   ],
@@ -48,6 +48,7 @@
     "text"
   ],
   "orbisRecord": "13226126",
+  "orbisBarcode": "39002099391428",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=Arabic_MSS_suppl._584"
   ],
@@ -55,15 +56,14 @@
     "Islamic prayers, invocations and decorations. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "17uu   "
+    "17uu    "
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "titleStatement": [
     "Islamic prayers, invocations and decorations : manuscript"
   ],
   "provenanceUncontrolled": "Purchased from Worldwide Antiquarian on the Edwin J. Beinecke Book Fund, 2005.",
   "repository": "beingen",
-  "barcode": "39002099391428",
   "dependentUris": [
     "/ils/holding/13289360",
     "/ils/item/11683506",

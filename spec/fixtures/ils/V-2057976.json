@@ -10,13 +10,14 @@
     "1 v. (ca. 300 p.) ; 25 x 18 cm."
   ],
   "language": [
-    "fr"
+    "fre"
   ],
   "description": [
     "Binding: Contemporary French blue morocco, gilt with the arms of Michel Begon on front and back.",
     "Bookplate of E. Valdruche."
   ],
   "orbisRecord": "7039963",
+  "orbisBarcode": "39002094210060",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=1262704"
   ],
@@ -24,15 +25,14 @@
     "Vaudevilles et Chansons. James Marshall and Marie-Louise Osborn Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "17uu   "
+    "17uu    "
   ],
-  "illustrativeMatter": "uuu",
+  "illustrativeMatter": "uuu ",
   "titleStatement": [
     "\"Vaudevilles et chansons\", [18th Century]."
   ],
   "provenanceUncontrolled": "For information on the source of acquisition, consult the appropriate curator.",
   "repository": "beinosb",
-  "barcode": "39002094210060",
   "dependentUris": [
     "/ils/holding/7597151",
     "/ils/item/8097775",

@@ -76,6 +76,9 @@
     "Eliot, George, 1819-1880"
   ],
   "archiveSpaceUri": "/repositories/11/archival_objects/304086",
+  "dependentUris": [
+    "/ladybird/oid/10001192"
+  ],
   "oid": 10001192,
   "collectionId": 1,
   "children": [

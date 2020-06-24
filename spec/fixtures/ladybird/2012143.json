@@ -39,6 +39,9 @@
   "contents": [
     "Leaves are sewn vertically, end to end."
   ],
+  "dependentUris": [
+    "/ladybird/oid/2012143"
+  ],
   "oid": 2012143,
   "collectionId": 1,
   "children": [

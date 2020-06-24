@@ -27,7 +27,7 @@
     "color ;"
   ],
   "language": [
-    "ch"
+    "chi"
   ],
   "description": [
     "\"Mei fang er shi li\"--Volume 6."
@@ -51,13 +51,14 @@
     "cartographic image"
   ],
   "orbisRecord": "12286028",
+  "orbisBarcode": "39002113593728",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16173880"
   ],
   "dateStructured": [
-    "1880   "
+    "1880    "
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "titleStatement": [
     "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua",
     "蘇省輿地營伍全圖 / 即用知縣李蒙泉, 陳嘉勲仝監畫"
@@ -87,7 +88,6 @@
   "contributorDisplay": [
     "Chen, Jiaxun (Cartographer),"
   ],
-  "barcode": "39002113593728",
   "dependentUris": [
     "/ils/holding/12453009",
     "/ils/item/11656798",

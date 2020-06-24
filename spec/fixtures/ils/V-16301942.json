@@ -16,7 +16,7 @@
     "3 v."
   ],
   "language": [
-    "en"
+    "eng"
   ],
   "description": [
     "Jane Wodening (1936-), writer.",
@@ -76,6 +76,7 @@
     "Scrapbooks"
   ],
   "orbisRecord": "7748458",
+  "orbisBarcode": "39002098971766",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=YCAL_MSS_229"
   ],
@@ -83,9 +84,9 @@
     "Jane Wodening and Stan Brakhage Scrapbooks. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
   "dateStructured": [
-    "1958196"
+    "19581967"
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "subjectEra": "20th century. 20th century.",
   "titleStatement": [
     "Jane Wodening and Stan Brakhage scrapbooks, 1958-1967"
@@ -176,7 +177,6 @@
     "Kelly, Robert, 1935-",
     "McClure, Michael."
   ],
-  "barcode": "39002098971766",
   "volumeEnumeration": "3",
   "dependentUris": [
     "/ils/holding/8398033",

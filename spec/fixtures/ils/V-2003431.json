@@ -22,7 +22,7 @@
     "parchment ;"
   ],
   "language": [
-    "la"
+    "lat"
   ],
   "description": [
     "Script: Written in rounded gothic bookhand.",
@@ -49,6 +49,7 @@
     "unspecified"
   ],
   "orbisRecord": "9734763",
+  "orbisBarcode": "39002091549668",
   "findingAid": [
     "https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms407.htm",
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?CN=Beinecke_MS_407"
@@ -57,9 +58,9 @@
     "Albergati Bible. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1428   "
+    "1428    "
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "titleStatement": [
     "Albergati bible"
   ],
@@ -79,7 +80,6 @@
     "Langton, Stephen, -1228.",
     "Bible. Latin"
   ],
-  "barcode": "39002091549668",
   "volumeEnumeration": "Box",
   "dependentUris": [
     "/ils/holding/10050400",

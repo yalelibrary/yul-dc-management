@@ -33,7 +33,7 @@
     "color ;"
   ],
   "language": [
-    "ch"
+    "chi"
   ],
   "subjectTopic": [
     "World maps",
@@ -52,13 +52,14 @@
     "cartographic image"
   ],
   "orbisRecord": "8394689",
+  "orbisBarcode": "39002091118928",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16595618"
   ],
   "dateStructured": [
-    "1855   "
+    "1855    "
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "titleStatement": [
     "Di qiu quan tu / Dechen zhi ; Chen Xiutang zhu zi.",
     "地球全圖 / 德臣製 ; 陳修堂註字"
@@ -81,7 +82,6 @@
   "contributorDisplay": [
     "Chen, Xiutang."
   ],
-  "barcode": "39002091118928",
   "dependentUris": [
     "/ils/holding/8833608",
     "/ils/item/7599022",
