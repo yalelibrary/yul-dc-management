@@ -68,7 +68,7 @@ RSpec.describe FixtureIndexingService, clean: true do
     it "can create a Solr document for a record, including visibility from Ladybird" do
       parent_object_with_public_visibility
       mcs = MetadataCloudService.new
-      data_hash = JSON.parse(mcs.get_fixture_file(oid, metadata_source))
+      data_hash = mcs.fixture_file_to_hash(oid, metadata_source)
       fis = FixtureIndexingService.new
       solr_document = fis.build_solr_document(id_prefix, oid, data_hash)
       expect(solr_document[:title_tsim]).to include "Ebony"
@@ -78,7 +78,7 @@ RSpec.describe FixtureIndexingService, clean: true do
     it "does not assign a visibility if one does not exist" do
       parent_object_without_visibility
       mcs = MetadataCloudService.new
-      data_hash = JSON.parse(mcs.get_fixture_file(oid, metadata_source))
+      data_hash = mcs.fixture_file_to_hash(oid, metadata_source)
       fis = FixtureIndexingService.new
       solr_document = fis.build_solr_document(id_prefix, oid, data_hash)
       expect(solr_document[:title_tsim]).to include "Ebony"
@@ -88,7 +88,7 @@ RSpec.describe FixtureIndexingService, clean: true do
     it "assigns private visibility from Ladybird data" do
       parent_object_with_private_visibility
       mcs = MetadataCloudService.new
-      data_hash = JSON.parse(mcs.get_fixture_file(priv_oid, metadata_source))
+      data_hash = mcs.fixture_file_to_hash(priv_oid, metadata_source)
       fis = FixtureIndexingService.new
       solr_document = fis.build_solr_document(id_prefix, priv_oid, data_hash)
       expect(solr_document[:title_tsim].first).to include "Dai Min kyūhen bankoku jinseki rotei zenzu"
@@ -135,7 +135,7 @@ RSpec.describe FixtureIndexingService, clean: true do
 
     it "can create a Solr document for a record" do
       mcs = MetadataCloudService.new
-      data_hash = JSON.parse(mcs.get_fixture_file(oid, metadata_source))
+      data_hash = mcs.fixture_file_to_hash(oid, metadata_source)
       fis = FixtureIndexingService.new
       solr_document = fis.build_solr_document(id_prefix, oid, data_hash)
       expect(solr_document[:title_tsim]).to include "[Magazine page with various photographs of Leontyne Price]"
