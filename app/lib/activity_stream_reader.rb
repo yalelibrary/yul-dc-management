@@ -106,13 +106,12 @@ class ActivityStreamReader
   # Takes a set of arrays (see oids_for_update), retrieves the appropriate record from the MetadataCloud,
   # and saves it to disk.
   def refresh_updated_items(oids_for_update)
-    mcs = MetadataCloudService.new
     oids_for_update.each do |oid_array|
       oid = oid_array[0]
       metadata_source = oid_array[1]
-      metadata_cloud_url = mcs.build_metadata_cloud_url(oid, metadata_source)
-      full_response = mcs.mc_get(metadata_cloud_url)
-      mcs.save_mc_json_to_file(full_response, oid, metadata_source)
+      metadata_cloud_url = MetadataCloudService.build_metadata_cloud_url(oid, metadata_source)
+      full_response = MetadataCloudService.mc_get(metadata_cloud_url)
+      MetadataCloudService.save_mc_json_to_file(full_response, oid, metadata_source)
       po = ParentObject.find_by(oid: oid)
       if metadata_source == "ladybird"
         po.last_ladybird_update = DateTime.current
@@ -129,8 +128,7 @@ class ActivityStreamReader
   # Takes a MetadataCloud url as a string and returns a parsed JSON object
   # containing the body of the response
   def fetch_and_parse_page(page_url)
-    mcs = MetadataCloudService.new
-    latest_page = mcs.mc_get(page_url).body.to_s
+    latest_page = MetadataCloudService.mc_get(page_url).body.to_s
     JSON.parse(latest_page)
   end
 

@@ -19,7 +19,7 @@ RSpec.describe FixtureParsingService do
 
     it "can update the bib" do
       po
-      fps.find_source_ids_for(oid)
+      described_class.find_source_ids_for(oid)
       expect(po["bib"]).to eq bib
     end
 
@@ -43,7 +43,7 @@ RSpec.describe FixtureParsingService do
     context "with an object without an aspace uri" do
       it "leaves empty values as null" do
         po
-        fps.find_source_ids_for(oid)
+        described_class.find_source_ids_for(oid)
         expect(ParentObject.find_by(oid: oid)["barcode"].nil?).to be true
         expect(ParentObject.find_by(oid: oid)["aspace_uri"].nil?).to be true
       end
@@ -63,7 +63,7 @@ RSpec.describe FixtureParsingService do
 
       it "adds all the related ids and visibility" do
         parent_object
-        fps.find_source_ids_for(oid)
+        described_class.find_source_ids_for(oid)
         expect(ParentObject.find_by(oid: oid)["aspace_uri"]).to eq aspace_uri
         expect(ParentObject.find_by(oid: oid)["bib"]).to eq bib
         expect(ParentObject.find_by(oid: oid)["holding"]).to eq holding
@@ -74,8 +74,8 @@ RSpec.describe FixtureParsingService do
       it "adds the visibility for non-public objects" do
         private_object
         yale_only_object
-        fps.find_source_ids_for(private_oid)
-        fps.find_source_ids_for(yale_only_oid)
+        described_class.find_source_ids_for(private_oid)
+        described_class.find_source_ids_for(yale_only_oid)
         expect(ParentObject.find_by(oid: private_oid)["visibility"]).to eq "Private"
         expect(ParentObject.find_by(oid: yale_only_oid)["visibility"]).to eq "Yale Community Only"
       end
