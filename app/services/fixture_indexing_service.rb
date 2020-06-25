@@ -3,9 +3,8 @@
 class FixtureIndexingService
   def self.index_fixture_data(metadata_source)
     oid_path = Rails.root.join("spec", "fixtures", "fixture_ids.csv")
-    mcs = MetadataCloudService.new
-    mcs.build_oid_array(oid_path).each do |oid|
-      next unless mcs.fixture_file_to_hash(oid, metadata_source)
+    FixtureParsingService.build_oid_array(oid_path).each do |oid|
+      next unless FixtureParsingService.fixture_file_to_hash(oid, metadata_source)
       index_to_solr(oid, metadata_source)
     end
   end
@@ -95,11 +94,11 @@ class FixtureIndexingService
   end
 
   def self.index_to_solr(oid, metadata_source)
-    mcs = MetadataCloudService.new
+    fps = FixtureParsingService.new
     fis = FixtureIndexingService.new
-    id_prefix = mcs.file_prefix(metadata_source)
-    return nil unless mcs.fixture_file_to_hash(oid, metadata_source)
-    data_hash = mcs.fixture_file_to_hash(oid, metadata_source)
+    id_prefix = fps.file_prefix(metadata_source)
+    return nil unless FixtureParsingService.fixture_file_to_hash(oid, metadata_source)
+    data_hash = FixtureParsingService.fixture_file_to_hash(oid, metadata_source)
     solr_doc = fis.build_solr_document(id_prefix, oid, data_hash)
     solr = SolrService.connection
     solr.add([solr_doc])
