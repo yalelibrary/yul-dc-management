@@ -10,25 +10,25 @@ RSpec.describe FixtureIndexingService, clean: true do
     let(:parent_object_with_public_visibility) { FactoryBot.create(:parent_object, oid: oid, visibility: "Public") }
 
     it "knows where to find the ArchiveSpace metadata" do
-      expect(FixtureIndexingService.metadata_path(metadata_source)).to eq metadata_fixture_path
+      expect(described_class.metadata_path(metadata_source)).to eq metadata_fixture_path
     end
 
     it "can index a single file to Solr" do
-      FixtureIndexingService.index_to_solr(oid, metadata_source)
+      described_class.index_to_solr(oid, metadata_source)
       solr = SolrService.connection
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 1
     end
 
     it "does not try to index a non-existent file to Solr" do
-      FixtureIndexingService.index_to_solr(non_aspace_oid, metadata_source)
+      described_class.index_to_solr(non_aspace_oid, metadata_source)
       solr = SolrService.connection
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 0
     end
 
     it "can index the contents of a CSV file to Solr" do
-      FixtureIndexingService.index_fixture_data(metadata_source)
+      described_class.index_fixture_data(metadata_source)
       solr = SolrService.connection
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to be > 4
@@ -47,18 +47,18 @@ RSpec.describe FixtureIndexingService, clean: true do
     let(:parent_object_with_private_visibility) { FactoryBot.create(:parent_object, oid: priv_oid, visibility: "Private") }
 
     it "knows where to find the Voyager metadata" do
-      expect(FixtureIndexingService.metadata_path(metadata_source)).to eq metadata_fixture_path
+      expect(described_class.metadata_path(metadata_source)).to eq metadata_fixture_path
     end
 
     it "can index a single file to Solr" do
-      FixtureIndexingService.index_to_solr(oid, metadata_source)
+      described_class.index_to_solr(oid, metadata_source)
       solr = SolrService.connection
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 1
     end
 
     it "can index the contents of a CSV file to Solr" do
-      FixtureIndexingService.index_fixture_data(metadata_source)
+      described_class.index_fixture_data(metadata_source)
       solr = SolrService.connection
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to be > 45
@@ -67,30 +67,24 @@ RSpec.describe FixtureIndexingService, clean: true do
 
     it "can create a Solr document for a record, including visibility from Ladybird" do
       parent_object_with_public_visibility
-      mcs = MetadataCloudService.new
-      data_hash = mcs.fixture_file_to_hash(oid, metadata_source)
-      fis = FixtureIndexingService.new
-      solr_document = fis.build_solr_document(id_prefix, oid, data_hash)
+      data_hash = FixtureParsingService.fixture_file_to_hash(oid, metadata_source)
+      solr_document = described_class.build_solr_document(id_prefix, oid, data_hash)
       expect(solr_document[:title_tsim]).to include "Ebony"
       expect(solr_document[:visibility_ssi]).to include "Public"
     end
 
     it "does not assign a visibility if one does not exist" do
       parent_object_without_visibility
-      mcs = MetadataCloudService.new
-      data_hash = mcs.fixture_file_to_hash(oid, metadata_source)
-      fis = FixtureIndexingService.new
-      solr_document = fis.build_solr_document(id_prefix, oid, data_hash)
+      data_hash = FixtureParsingService.fixture_file_to_hash(oid, metadata_source)
+      solr_document = described_class.build_solr_document(id_prefix, oid, data_hash)
       expect(solr_document[:title_tsim]).to include "Ebony"
       expect(solr_document[:visibility_ssi]).to be nil
     end
 
     it "assigns private visibility from Ladybird data" do
       parent_object_with_private_visibility
-      mcs = MetadataCloudService.new
-      data_hash = mcs.fixture_file_to_hash(priv_oid, metadata_source)
-      fis = FixtureIndexingService.new
-      solr_document = fis.build_solr_document(id_prefix, priv_oid, data_hash)
+      data_hash = FixtureParsingService.fixture_file_to_hash(priv_oid, metadata_source)
+      solr_document = described_class.build_solr_document(id_prefix, priv_oid, data_hash)
       expect(solr_document[:title_tsim].first).to include "Dai Min kyūhen bankoku jinseki rotei zenzu"
       expect(solr_document[:visibility_ssi]).to include "Private"
     end
@@ -100,8 +94,8 @@ RSpec.describe FixtureIndexingService, clean: true do
     let(:oid) { "2034600" }
 
     it "can index the same digital object's data from two different metadata sources to Solr" do
-      FixtureIndexingService.index_to_solr(oid, "ladybird")
-      FixtureIndexingService.index_to_solr(oid, "ils")
+      described_class.index_to_solr(oid, "ladybird")
+      described_class.index_to_solr(oid, "ils")
       solr = SolrService.connection
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 2
@@ -115,7 +109,7 @@ RSpec.describe FixtureIndexingService, clean: true do
     let(:id_prefix) { "" }
 
     it "can index the contents of a directory to Solr" do
-      FixtureIndexingService.index_fixture_data(metadata_source)
+      described_class.index_fixture_data(metadata_source)
       solr = SolrService.connection
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to be > 45
@@ -123,21 +117,19 @@ RSpec.describe FixtureIndexingService, clean: true do
     end
 
     it "knows where to find the ladybird metadata" do
-      expect(FixtureIndexingService.metadata_path(metadata_source)).to eq metadata_fixture_path
+      expect(described_class.metadata_path(metadata_source)).to eq metadata_fixture_path
     end
 
     it "can index a single file to Solr" do
-      FixtureIndexingService.index_to_solr(oid, metadata_source)
+      described_class.index_to_solr(oid, metadata_source)
       solr = SolrService.connection
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 1
     end
 
     it "can create a Solr document for a record" do
-      mcs = MetadataCloudService.new
-      data_hash = mcs.fixture_file_to_hash(oid, metadata_source)
-      fis = FixtureIndexingService.new
-      solr_document = fis.build_solr_document(id_prefix, oid, data_hash)
+      data_hash = FixtureParsingService.fixture_file_to_hash(oid, metadata_source)
+      solr_document = described_class.build_solr_document(id_prefix, oid, data_hash)
       expect(solr_document[:title_tsim]).to include "[Magazine page with various photographs of Leontyne Price]"
       expect(solr_document[:visibility_ssi]).to include "Public"
     end
@@ -146,7 +138,7 @@ RSpec.describe FixtureIndexingService, clean: true do
       let(:priv_oid) { "16189097-priv" }
 
       it "indexes Private as one of the visibility values" do
-        FixtureIndexingService.index_to_solr(priv_oid, metadata_source)
+        described_class.index_to_solr(priv_oid, metadata_source)
         solr = SolrService.connection
         response = solr.get 'select', params: { q: '*:*' }
         expect(response["response"]["docs"].first["visibility_ssi"]).to eq("Private")
@@ -154,7 +146,7 @@ RSpec.describe FixtureIndexingService, clean: true do
       end
 
       it "can find objects according to visibility" do
-        FixtureIndexingService.index_fixture_data(metadata_source)
+        described_class.index_fixture_data(metadata_source)
         solr = SolrService.connection
         response = solr.get 'select', params: { q: 'visibility_ssi:"Private"' }
         expect(response["response"]["numFound"]).to eq 2
@@ -165,7 +157,7 @@ RSpec.describe FixtureIndexingService, clean: true do
       let(:yale_oid) { "2107188-yale" }
 
       it "indexes Yale Community Only as one of the visibility values" do
-        FixtureIndexingService.index_to_solr(yale_oid, metadata_source)
+        described_class.index_to_solr(yale_oid, metadata_source)
         solr = SolrService.connection
         response = solr.get 'select', params: { q: '*:*' }
         expect(response["response"]["docs"].first["visibility_ssi"]).to eq("Yale Community Only")
@@ -173,7 +165,7 @@ RSpec.describe FixtureIndexingService, clean: true do
       end
 
       it "can find objects according to visibility" do
-        FixtureIndexingService.index_fixture_data(metadata_source)
+        described_class.index_fixture_data(metadata_source)
         solr = SolrService.connection
         response = solr.get 'select', params: { q: 'visibility_ssi:"Yale Community Only"' }
         expect(response["response"]["numFound"]).to eq 2

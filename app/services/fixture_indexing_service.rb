@@ -3,18 +3,27 @@
 class FixtureIndexingService
   def self.index_fixture_data(metadata_source)
     oid_path = Rails.root.join("spec", "fixtures", "fixture_ids.csv")
-    mcs = MetadataCloudService.new
-    mcs.build_oid_array(oid_path).each do |oid|
-      next unless mcs.fixture_file_to_hash(oid, metadata_source)
+    FixtureParsingService.build_oid_array(oid_path).each do |oid|
+      next unless FixtureParsingService.fixture_file_to_hash(oid, metadata_source)
       index_to_solr(oid, metadata_source)
     end
+  end
+
+  def self.index_to_solr(oid, metadata_source)
+    id_prefix = FixtureParsingService.file_prefix(metadata_source)
+    return nil unless FixtureParsingService.fixture_file_to_hash(oid, metadata_source)
+    data_hash = FixtureParsingService.fixture_file_to_hash(oid, metadata_source)
+    solr_doc = build_solr_document(id_prefix, oid, data_hash)
+    solr = SolrService.connection
+    solr.add([solr_doc])
+    solr.commit
   end
 
   def self.metadata_path(metadata_source)
     Rails.root.join('spec', 'fixtures', metadata_source).to_s
   end
 
-  def build_solr_document(id_prefix, oid, data_hash)
+  def self.build_solr_document(id_prefix, oid, data_hash)
     {
       id: "#{id_prefix}#{oid}",
       title_tsim: data_hash["title"],
@@ -83,26 +92,14 @@ class FixtureIndexingService
     }
   end
 
-  def extract_visibility(oid, data_hash)
+  def self.extract_visibility(oid, data_hash)
     data_hash["itemPermission"] || ParentObject.find_by(oid: oid)&.visibility
   end
 
   # I do not think the current box_ssim is how we want to continue to do deal with differences in field names
   # However I do not think we currently have enough information to create the alternative (Max)
   # Ladybird data_hash["box"] || Voyager data_hash["volumeEnumeration"] || ArchiveSpace data_hash["containerGrouping"]
-  def extract_box_ssim(data_hash)
+  def self.extract_box_ssim(data_hash)
     data_hash["box"] || data_hash["volumeEnumeration"] || data_hash["containerGrouping"]
-  end
-
-  def self.index_to_solr(oid, metadata_source)
-    mcs = MetadataCloudService.new
-    fis = FixtureIndexingService.new
-    id_prefix = mcs.file_prefix(metadata_source)
-    return nil unless mcs.fixture_file_to_hash(oid, metadata_source)
-    data_hash = mcs.fixture_file_to_hash(oid, metadata_source)
-    solr_doc = fis.build_solr_document(id_prefix, oid, data_hash)
-    solr = SolrService.connection
-    solr.add([solr_doc])
-    solr.commit
   end
 end
