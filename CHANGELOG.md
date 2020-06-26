@@ -1,11 +1,30 @@
 # Changelog
 
+## [v1.8.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.8.0) (2020-06-26)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.7.2...v1.8.0)
+
+**Merged pull requests:**
+
+- Refactor Metadata cloud service - put parsing tasks in own class [\#114](https://github.com/yalelibrary/yul-dc-management/pull/114) ([maxkadel](https://github.com/maxkadel))
+- update actionpack [\#113](https://github.com/yalelibrary/yul-dc-management/pull/113) ([maxkadel](https://github.com/maxkadel))
+- Refactor, return hash so file doesn't have to be parsed subsequently [\#112](https://github.com/yalelibrary/yul-dc-management/pull/112) ([maxkadel](https://github.com/maxkadel))
+- Upgrade webpacker due to failing local tests & peer dependency [\#111](https://github.com/yalelibrary/yul-dc-management/pull/111) ([maxkadel](https://github.com/maxkadel))
+- Bump rack from 2.2.2 to 2.2.3 [\#110](https://github.com/yalelibrary/yul-dc-management/pull/110) ([dependabot[bot]](https://github.com/apps/dependabot))
+- added dropdown for solr indexing [\#109](https://github.com/yalelibrary/yul-dc-management/pull/109) ([jpengst](https://github.com/jpengst))
+- Update fixture objects from MetadataCloud [\#108](https://github.com/yalelibrary/yul-dc-management/pull/108) ([maxkadel](https://github.com/maxkadel))
+- Calculate code coverage [\#106](https://github.com/yalelibrary/yul-dc-management/pull/106) ([bess](https://github.com/bess))
+- Add visibility from SOA Ladybird for all items [\#105](https://github.com/yalelibrary/yul-dc-management/pull/105) ([maxkadel](https://github.com/maxkadel))
+- Add Camerata to versions dashboard [\#104](https://github.com/yalelibrary/yul-dc-management/pull/104) ([maxkadel](https://github.com/maxkadel))
+- Add temporary fix for Box pending more detailed requirements [\#103](https://github.com/yalelibrary/yul-dc-management/pull/103) ([maxkadel](https://github.com/maxkadel))
+
 ## [v1.7.2](https://github.com/yalelibrary/yul-dc-management/tree/v1.7.2) (2020-06-22)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.7.1...v1.7.2)
 
 **Merged pull requests:**
 
+- Prep for v1.7.2 release [\#101](https://github.com/yalelibrary/yul-dc-management/pull/101) ([maxkadel](https://github.com/maxkadel))
 - Just don't set hosts for now to get it running in production, can re-… [\#100](https://github.com/yalelibrary/yul-dc-management/pull/100) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.7.1](https://github.com/yalelibrary/yul-dc-management/tree/v1.7.1) (2020-06-22)
