@@ -56,9 +56,7 @@ class ActivityStreamReader
     elsif metadata_source == "aspace"
       source_id = ("/" + source_id_type + "/" + source_id).to_s
       oid = ParentObject.where("aspace_uri" => source_id.to_s)&.first&.oid
-      if oid.nil?
-        oid = DependentObject.where(dependent_uri: source_id.to_s)&.first&.parent_object_id&.to_s
-      end
+      oid = DependentObject.where(dependent_uri: source_id.to_s)&.first&.parent_object_id&.to_s if oid.nil?
       return false unless oid
       oids_for_update.add([oid, metadata_source])
     else
