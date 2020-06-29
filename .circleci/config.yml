@@ -55,7 +55,8 @@ jobs:
           name: rspec
           # Excludes tests that require Yale VPN access
           command: |
-            cd /home/app/webapp && bundle exec rspec --tag ~vpn_only:true
+            mkdir /tmp/test-results
+            cd /home/app/webapp && bundle exec rspec --tag ~vpn_only:true $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
       - run:
           name: Upload code coverage stats
           command: curl -k https://coveralls.io/webhook?repo_token=${COVERALLS_API_KEY} -d "payload[build_num]=${CIRCLE_BUILD_NUM}&payload[status]=done"
