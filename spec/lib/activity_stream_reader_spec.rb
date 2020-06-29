@@ -36,6 +36,13 @@ RSpec.describe ActivityStreamReader do
       last_aspace_update: "2020-06-10 17:38:27".to_datetime
     )
   end
+  let(:dependent_object_aspace) do
+    FactoryBot.create(
+      :dependent_object,
+      parent_object_id: "16854285",
+      dependent_uri: "/agents/corporate_entities/2251"
+    )
+  end
   let(:asl_failed) { FactoryBot.create(:failed_activity_stream_log, run_time: 1.hour.ago) }
   let(:asl_old_success) { FactoryBot.create(:successful_activity_stream_log, run_time: "2020-06-12T21:05:53.000+0000".to_datetime) }
   let(:latest_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read }
@@ -46,6 +53,7 @@ RSpec.describe ActivityStreamReader do
   let(:relevant_oid) { "2004628" }
   let(:relevant_bib) { "3163155" }
   let(:relevant_aspace_uri) { "/repositories/11/archival_objects/515305" }
+  let(:relevant_dependent_aspace_uri) { "/agents/corporate_entities/2251" }
   let(:relevant_oid_two) { "2003431" }
   let(:irrelevant_oid) { "not_in_db" }
   # This is likely to change very soon
@@ -111,6 +119,16 @@ RSpec.describe ActivityStreamReader do
       "endTime" => relevant_time,
       "object" => {
         "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_aspace}#{relevant_aspace_uri}",
+        "type" => "Document"
+      },
+      "type" => relevant_activity_type
+    }
+  end
+  let(:relevant_item_from_aspace_dependent_uri) do
+    {
+      "endTime" => relevant_time,
+      "object" => {
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_aspace}#{relevant_dependent_aspace_uri}",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -269,6 +287,11 @@ RSpec.describe ActivityStreamReader do
 
     it "can confirm that an ArchiveSpace item is relevant" do
       expect(asr.relevant?(relevant_item_from_aspace)).to be_truthy
+    end
+
+    it "can confirm that an ArchiveSpace item is relevant based on its dependent URI" do
+      dependent_object_aspace
+      expect(asr.relevant?(relevant_item_from_aspace_dependent_uri)).to be_truthy
     end
 
     it "does not confirm that an irrelevant item is relevant" do
