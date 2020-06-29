@@ -8,4 +8,5 @@ Rails.application.routes.draw do
 
   get "management/index_to_solr/:metadata_source", to: 'management#index_to_solr', as: 'metadata_source'
   get "management/update_database", to: 'management#update_database', as: 'update_database'
+  get "management/update_from_activity_stream", to: "management#update_from_activity_stream", as: "update_from_activity_stream"
 end

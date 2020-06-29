@@ -14,4 +14,10 @@ class ManagementController < ApplicationController
     redirect_to management_index_path
     flash[:notice] = "The database has been updated."
   end
+
+  def update_from_activity_stream
+    ActivityStreamReader.update
+    redirect_to management_index_path
+    flash[:notice] = "Updated from Activity Stream."
+  end
 end
