@@ -85,4 +85,28 @@ RSpec.describe FixtureParsingService do
   it "can read from a csv file" do
     expect(described_class.build_oid_array(short_oid_path)).to include "2034600"
   end
+
+  context "an empty database" do
+    let(:oid) { "16854285" }
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: oid) }
+
+    it "adds database records if none exist in the database" do
+      expect(ParentObject.count).to eq 0
+      described_class.seed_database
+      expect(ParentObject.count).to be > 40
+    end
+
+    it "adds database records if none exist in the database when finding all source ids" do
+      expect(ParentObject.count).to eq 0
+      described_class.find_source_ids
+      expect(ParentObject.count).to be > 40
+    end
+
+    it "does not add database records if the database is already populated" do
+      parent_object
+      expect(ParentObject.count).to eq 1
+      described_class.find_source_ids
+      expect(ParentObject.count).to eq 1
+    end
+  end
 end

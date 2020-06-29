@@ -12,9 +12,9 @@ RSpec.describe "Solr Indexing Tasks", type: :system, clean: true do
         click_on("Index Voyager Records to Solr")
       end
 
-      it 'displays a flash message that indexing is occuring in the background' do
+      it 'displays a flash message that indexing has occurred' do
         expect(page.status_code).to eq(200)
-        expect(page).to have_content(/indexed in the background and will be ready soon./)
+        expect(page).to have_content(/Your files have been indexed to Solr/)
       end
 
       it "can index the contents of a directory to Solr" do
@@ -29,9 +29,9 @@ RSpec.describe "Solr Indexing Tasks", type: :system, clean: true do
         click_on("Index Ladybird Records to Solr")
       end
 
-      it 'displays a flash message that indexing is occuring in the background' do
+      it 'displays a flash message that indexing has occurred' do
         expect(page.status_code).to eq(200)
-        expect(page).to have_content(/indexed in the background and will be ready soon./)
+        expect(page).to have_content(/Your files have been indexed to Solr/)
       end
 
       it "can index the contents of a directory to Solr" do

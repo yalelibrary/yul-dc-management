@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   get 'management/', to: 'management#index'
 
   get "management/index_to_solr/:metadata_source", to: 'management#index_to_solr', as: 'metadata_source'
+  get "management/update_database", to: 'management#update_database', as: 'update_database'
 end

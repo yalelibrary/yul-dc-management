@@ -1,22 +1,12 @@
 <div class="container">
   <h1>Management Dashboard</h1>
   <br />
-  <div class="btn-group">
-    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Index Metadata to Solr
-    </button>
-    <div class="dropdown-menu">
-      <%= link_to "Index Voyager Records to Solr", metadata_source_path("ils"), class: "dropdown-item" %>
-      <%= link_to "Index Ladybird Records to Solr", metadata_source_path("ladybird"), class: "dropdown-item" %>
-      <%= link_to "Index ArchiveSpace Records to Solr", metadata_source_path("aspace"), class: "dropdown-item" %>
-    </div>
-  </div>
-  <br />
   <% if flash[:notice] %>
-    <div class="notice"><%= flash[:notice] %></div>
+    <div class="alert alert-success"><%= flash[:notice] %></div>
   <% end %>
+  <%= render partial: "database_dash" %>
+  <br />
+  <%= render partial: "solr_index_dash" %>
+  <br />
+  <%= render partial: "service_display" %>
 </div>
-<br />
-
-<br />
-<%= render partial: "service_display" %>

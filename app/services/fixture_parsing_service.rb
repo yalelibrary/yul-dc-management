@@ -14,10 +14,22 @@ class FixtureParsingService
   end
 
   def self.find_source_ids
+    seed_database if ParentObject.count.zero?
     parent_objects = ParentObject.all
     parent_objects.each do |parent_object|
       oid = parent_object["oid"]
       find_source_ids_for(oid)
+    end
+  end
+
+  def self.seed_database
+    oid_path = Rails.root.join("db", "parent_oids.csv")
+    fixture_ids_table = CSV.read(oid_path, headers: true)
+    oids = fixture_ids_table.by_col[0]
+    oids.each do |row|
+      po = ParentObject.new
+      po.oid = row
+      po.save
     end
   end
 
