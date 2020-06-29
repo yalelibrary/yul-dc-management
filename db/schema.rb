@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_26_165917) do
+ActiveRecord::Schema.define(version: 2020_06_29_193402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2020_06_26_165917) do
     t.bigint "parent_object_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "metadata_source"
     t.index ["parent_object_id"], name: "index_dependent_objects_on_parent_object_id"
   end
 

@@ -4,7 +4,6 @@ require "support/time_helpers"
 
 RSpec.describe ActivityStreamReader do
   let(:asr) { described_class.new }
-  let(:asl_new_success) { FactoryBot.create(:successful_activity_stream_log, run_time: 2.hours.ago) }
   let(:relevant_parent_object) do
     FactoryBot.create(
       :parent_object_with_bib,
@@ -12,6 +11,38 @@ RSpec.describe ActivityStreamReader do
       bib: "3163155",
       last_ladybird_update: "2020-06-10 17:38:27".to_datetime,
       last_voyager_update: "2020-06-10 17:38:27".to_datetime
+    )
+  end
+  let(:dependent_object_ladybird) do
+    FactoryBot.create(
+      :dependent_object,
+      parent_object_id: "2004628",
+      metadata_source: "ladybird",
+      dependent_uri: "/ladybird/oid/2004628"
+    )
+  end
+  let(:dependent_object_voyager_bib) do
+    FactoryBot.create(
+      :dependent_object,
+      parent_object_id: "2004628",
+      metadata_source: "ils",
+      dependent_uri: "/ils/bib/3163155"
+    )
+  end
+  let(:dependent_object_voyager_holding) do
+    FactoryBot.create(
+      :dependent_object,
+      parent_object_id: "2003431",
+      metadata_source: "ils",
+      dependent_uri: "/ils/holding/10050400"
+    )
+  end
+  let(:dependent_object_voyager_item) do
+    FactoryBot.create(
+      :dependent_object,
+      parent_object_id: "2003431",
+      metadata_source: "ils",
+      dependent_uri: "/ils/item/10763785"
     )
   end
   let(:relevant_parent_object_two) do
@@ -26,6 +57,14 @@ RSpec.describe ActivityStreamReader do
       last_voyager_update: "2020-06-10 17:38:27".to_datetime
     )
   end
+  let(:dependent_object_ladybird_two) do
+    FactoryBot.create(
+      :dependent_object,
+      parent_object_id: "2003431",
+      metadata_source: "ladybird",
+      dependent_uri: "/ladybird/oid/2003431"
+    )
+  end
   let(:parent_object_with_aspace_uri) do
     FactoryBot.create(
       :parent_object_with_aspace_uri,
@@ -36,30 +75,25 @@ RSpec.describe ActivityStreamReader do
       last_aspace_update: "2020-06-10 17:38:27".to_datetime
     )
   end
-  let(:dependent_object_aspace) do
+  let(:dependent_object_aspace_repository) do
     FactoryBot.create(
       :dependent_object,
       parent_object_id: "16854285",
-      dependent_uri: "/agents/corporate_entities/2251"
+      metadata_source: "aspace",
+      dependent_uri: "/aspace/repositories/11/archival_objects/515305"
     )
   end
-  let(:asl_failed) { FactoryBot.create(:failed_activity_stream_log, run_time: 1.hour.ago) }
-  let(:asl_old_success) { FactoryBot.create(:successful_activity_stream_log, run_time: "2020-06-12T21:05:53.000+0000".to_datetime) }
-  let(:latest_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read }
-  let(:page_2_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-2.json")).read }
-  let(:page_1_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-1.json")).read }
-  let(:page_0_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-0.json")).read }
-  let(:json_parsed_page) { JSON.parse(latest_activity_stream_page) }
+  let(:dependent_object_aspace_agent) do
+    FactoryBot.create(
+      :dependent_object,
+      parent_object_id: "16854285",
+      metadata_source: "aspace",
+      dependent_uri: "/aspace/agents/corporate_entities/2251"
+    )
+  end
+
   let(:relevant_oid) { "2004628" }
-  let(:relevant_bib) { "3163155" }
-  let(:relevant_aspace_uri) { "/repositories/11/archival_objects/515305" }
-  let(:relevant_dependent_aspace_uri) { "/agents/corporate_entities/2251" }
-  let(:relevant_oid_two) { "2003431" }
   let(:irrelevant_oid) { "not_in_db" }
-  # This is likely to change very soon
-  let(:relevant_metadata_source_ladybird) { "/ladybird/oid" }
-  let(:relevant_metadata_source_voyager) { "/ils/bib" }
-  let(:relevant_metadata_source_aspace) { "/aspace" }
   let(:relevant_time) { "2020-06-12T21:06:53.000+0000" }
   let(:irrelevant_time) { "2020-06-12T21:04:53.000+0000" }
   let(:relevant_activity_type) { "Update" }
@@ -68,7 +102,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_ladybird}/#{relevant_oid}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -78,7 +112,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_ladybird}/#{relevant_oid_two}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2003431",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -88,7 +122,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_voyager}/#{relevant_bib}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/3163155",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -118,7 +152,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_aspace}#{relevant_aspace_uri}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/515305",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -128,7 +162,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_aspace}#{relevant_dependent_aspace_uri}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/agents/corporate_entities/2251",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -138,7 +172,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_ladybird}/#{irrelevant_oid}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{irrelevant_oid}",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -148,7 +182,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => irrelevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_ladybird}/#{relevant_oid}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{relevant_oid}",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -158,7 +192,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => "2020-06-12T21:06:53.000+0000",
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api#{relevant_metadata_source_ladybird}/#{relevant_oid}",
+        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{relevant_oid}",
         "type" => "Document"
       },
       "type" => irrelevant_activity_type
@@ -174,10 +208,24 @@ RSpec.describe ActivityStreamReader do
   # Each time the activity_stream_reader is run, it creates an activity_stream_log event, which records when it was run,
   # whether that run was successful, and how and many objects were referenced in that activity stream run.
   context "daily automated updates" do
+    let(:relevant_mc_response_1) { File.open(File.join(fixture_path, "ladybird", "2004628.json")).read }
+    let(:relevant_mc_response_2) { File.open(File.join(fixture_path, "ladybird", "2003431.json")).read }
+    let(:relevant_mc_response_voyager) { File.open(File.join(fixture_path, "ils", "V-2004628.json")).read }
+    let(:relevant_mc_response_aspace) { File.open(File.join(fixture_path, "aspace", "AS-16854285.json")).read }
+    let(:asl_old_success) { FactoryBot.create(:successful_activity_stream_log, run_time: "2020-06-12T21:05:53.000+0000".to_datetime) }
+    let(:latest_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read }
+    let(:page_2_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-2.json")).read }
+    let(:page_1_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-1.json")).read }
+    let(:page_0_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-0.json")).read }
     before do
       relevant_parent_object
+      dependent_object_ladybird
+      dependent_object_voyager_bib
       relevant_parent_object_two
+      dependent_object_voyager_holding
+      dependent_object_ladybird_two
       parent_object_with_aspace_uri
+      dependent_object_aspace_repository
       # Stub requests to MetadataCloud activity stream with fixture objects that represent single activity_stream json pages
       stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
         .to_return(status: 200, body: latest_activity_stream_page)
@@ -196,10 +244,6 @@ RSpec.describe ActivityStreamReader do
       stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/515305")
         .to_return(status: 200, body: relevant_mc_response_aspace)
     end
-    let(:relevant_mc_response_1) { File.open(File.join(fixture_path, "ladybird", "2004628.json")).read }
-    let(:relevant_mc_response_2) { File.open(File.join(fixture_path, "ladybird", "2003431.json")).read }
-    let(:relevant_mc_response_voyager) { File.open(File.join(fixture_path, "ils", "V-2004628.json")).read }
-    let(:relevant_mc_response_aspace) { File.open(File.join(fixture_path, "aspace", "AS-16854285.json")).read }
 
     it "can get a page from the MetadataCloud activity stream" do
       expect(asr.fetch_and_parse_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")["type"]).to eq "OrderedCollectionPage"
@@ -212,7 +256,7 @@ RSpec.describe ActivityStreamReader do
       described_class.update
       ladybird_update_after = ParentObject.find_by(oid: relevant_oid).last_ladybird_update
       voyager_update_after = ParentObject.find_by(oid: relevant_oid).last_voyager_update
-      aspace_update_after = ParentObject.find_by(aspace_uri: relevant_aspace_uri).last_aspace_update
+      aspace_update_after = ParentObject.find_by(aspace_uri: "/repositories/11/archival_objects/515305").last_aspace_update
       expect(ladybird_update_before).to be < ladybird_update_after
       expect(voyager_update_before).to be < voyager_update_after
       expect(aspace_update_before).to be < aspace_update_after
@@ -268,29 +312,35 @@ RSpec.describe ActivityStreamReader do
   end
 
   context "determining whether an item from the activity stream is relevant" do
-    before do
-      relevant_parent_object
-      relevant_parent_object_two
-      parent_object_with_aspace_uri
-      asl_old_success
-    end
-
     it "can confirm that a Ladybird item is relevant" do
+      relevant_parent_object
+      dependent_object_ladybird
       expect(asr.relevant?(relevant_item_from_ladybird)).to be_truthy
     end
 
-    it "can confirm that a Voyager item is relevant" do
+    it "can confirm that a Voyager item is relevant using bib id" do
+      relevant_parent_object
+      dependent_object_voyager_bib
       expect(asr.relevant?(relevant_item_from_voyager)).to be_truthy
+    end
+
+    it "can confirm that a Voyager item is relevant using item and holding ids" do
+      relevant_parent_object_two
+      dependent_object_voyager_holding
+      dependent_object_voyager_item
       expect(asr.relevant?(relevant_item_from_voyager_holding)).to be_truthy
       expect(asr.relevant?(relevant_item_from_voyager_item)).to be_truthy
     end
 
     it "can confirm that an ArchiveSpace item is relevant" do
+      parent_object_with_aspace_uri
+      dependent_object_aspace_repository
       expect(asr.relevant?(relevant_item_from_aspace)).to be_truthy
     end
 
     it "can confirm that an ArchiveSpace item is relevant based on its dependent URI" do
-      dependent_object_aspace
+      parent_object_with_aspace_uri
+      dependent_object_aspace_agent
       expect(asr.relevant?(relevant_item_from_aspace_dependent_uri)).to be_truthy
     end
 
@@ -301,17 +351,27 @@ RSpec.describe ActivityStreamReader do
     end
   end
 
-  it "can get the uri for the previous page" do
-    expect(asr.previous_page_link(json_parsed_page)).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-2"
+  context "getting the uri for the previous page" do
+    let(:json_parsed_page) { JSON.parse(latest_activity_stream_page) }
+    let(:latest_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read }
+
+    it "can get the uri for the previous page" do
+      expect(asr.previous_page_link(json_parsed_page)).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-2"
+    end
   end
 
   it "has a tally of 0 when first initialized" do
     expect(asr.tally).to eq 0
   end
 
-  it "can figure out the last time it was run successfully" do
-    asl_new_success
-    asl_failed
-    expect(asr.last_run_time).to eq asl_new_success.run_time
+  context "determining the last successful run" do
+    let(:asl_failed) { FactoryBot.create(:failed_activity_stream_log, run_time: 1.hour.ago) }
+    let(:asl_new_success) { FactoryBot.create(:successful_activity_stream_log, run_time: 2.hours.ago) }
+
+    it "can figure out the last time it was run successfully" do
+      asl_new_success
+      asl_failed
+      expect(asr.last_run_time).to eq asl_new_success.run_time
+    end
   end
 end

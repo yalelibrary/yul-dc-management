@@ -6,8 +6,7 @@ class FixtureParsingService
   # Takes an oid and a metadata_source and returns a hash of the fixture file associated with that oid and metadata_source
   def self.fixture_file_to_hash(oid, metadata_source)
     fixture_file_folder = Rails.root.join("spec", "fixtures", metadata_source)
-    file_prefix = file_prefix(metadata_source)
-    file_path = fixture_file_folder.join("#{file_prefix}#{oid}" + ".json")
+    file_path = fixture_file_folder.join("#{file_prefix(metadata_source)}#{oid}" + ".json")
     return false unless File.exist?(file_path)
     fixture_file = File.read(file_path)
     JSON.parse(fixture_file)
@@ -48,6 +47,7 @@ class FixtureParsingService
     hash["dependentUris"].each do |uri|
       dep_obj = DependentObject.find_or_create_by(
         dependent_uri: uri,
+        metadata_source: metadata_source,
         parent_object_id: oid
       )
       dep_obj.save

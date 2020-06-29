@@ -47,21 +47,9 @@ class ActivityStreamReader
   def find_by_id(item)
     parsed_identifier_uri = parse_identifier_uri(item)
     metadata_source = parsed_identifier_uri[0]
-    source_id_type = parsed_identifier_uri[1]
-    source_id = parsed_identifier_uri[2]
-    if metadata_source == "ladybird" || metadata_source == "ils" # aka Voyager
-      oid = ParentObject.where(source_id_type.to_s => source_id.to_s)&.first&.oid
-      return false unless oid
-      oids_for_update.add([oid, metadata_source])
-    elsif metadata_source == "aspace"
-      source_id = ("/" + source_id_type + "/" + source_id).to_s
-      oid = ParentObject.where("aspace_uri" => source_id.to_s)&.first&.oid
-      oid = DependentObject.where(dependent_uri: source_id.to_s)&.first&.parent_object_id&.to_s if oid.nil?
-      return false unless oid
-      oids_for_update.add([oid, metadata_source])
-    else
-      return false
-    end
+    oid = DependentObject.where(dependent_uri: parse_dependent_uri(item))&.first&.parent_object_id&.to_s
+    return false unless oid
+    oids_for_update.add([oid, metadata_source])
     true
   end
 
@@ -72,6 +60,10 @@ class ActivityStreamReader
   #  ["ladybird", "oid", "2004628"]
   def parse_identifier_uri(item)
     /\/api\/(\w*)\/(\w*)\/(\S*)/.match(item["object"]["id"])&.captures
+  end
+
+  def parse_dependent_uri(item)
+    /\/api(\S*)/.match(item["object"]["id"])&.captures
   end
 
   def process_item(_item)
