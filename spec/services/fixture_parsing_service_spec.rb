@@ -20,7 +20,7 @@ RSpec.describe FixtureParsingService do
     it "can update the bib" do
       po
       described_class.find_source_ids_for(oid)
-      expect(po["bib"]).to eq bib
+      expect(ParentObject.find_by(oid: oid)["bib"]).to eq bib
     end
 
     context "with all the oids" do
@@ -78,6 +78,13 @@ RSpec.describe FixtureParsingService do
         described_class.find_source_ids_for(yale_only_oid)
         expect(ParentObject.find_by(oid: private_oid)["visibility"]).to eq "Private"
         expect(ParentObject.find_by(oid: yale_only_oid)["visibility"]).to eq "Yale Community Only"
+      end
+
+      it "finds the dependent uris for an aspace object" do
+        parent_object
+        described_class.find_dependent_uris(oid, "ladybird")
+        expect(DependentObject.find_by(parent_object_id: oid)).not_to be nil
+        expect(DependentObject.find_by(parent_object_id: oid).dependent_uri).to include "/ladybird/oid/16854285"
       end
     end
   end

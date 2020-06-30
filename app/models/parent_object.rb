@@ -3,6 +3,8 @@
 # It is synonymous with a parent oid in Ladybird.
 
 class ParentObject < ApplicationRecord
+  has_many :dependent_objects
+  self.primary_key = 'oid'
   # t.string "oid" - Unique identifier for a ParentObject, currently from Ladybird, eventually will be minted by this application
   # t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   # t.string "bib" - Identifier from Voyager, the integrated library system ("ils"). Short for Bibliographic record.

@@ -9,7 +9,8 @@ RSpec.describe ActivityStreamLog, type: :model do
     asl
 
     expect(asl.run_time).to eq "2020-06-12 18:27:44"
-    expect(asl.object_count).to eq 673
+    expect(asl.activity_stream_items).to eq 673
+    expect(asl.retrieved_records).to eq 4
     expect(asl.status).to eq "Success"
   end
 end

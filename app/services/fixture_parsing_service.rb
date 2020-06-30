@@ -6,8 +6,7 @@ class FixtureParsingService
   # Takes an oid and a metadata_source and returns a hash of the fixture file associated with that oid and metadata_source
   def self.fixture_file_to_hash(oid, metadata_source)
     fixture_file_folder = Rails.root.join("spec", "fixtures", metadata_source)
-    file_prefix = FixtureParsingService.file_prefix(metadata_source)
-    file_path = fixture_file_folder.join("#{file_prefix}#{oid}" + ".json")
+    file_path = fixture_file_folder.join("#{file_prefix(metadata_source)}#{oid}" + ".json")
     return false unless File.exist?(file_path)
     fixture_file = File.read(file_path)
     JSON.parse(fixture_file)
@@ -22,11 +21,11 @@ class FixtureParsingService
   end
 
   def self.find_source_ids_for(oid)
-    ladybird_hash = FixtureParsingService.fixture_file_to_hash(oid, "ladybird")
+    ladybird_hash = fixture_file_to_hash(oid, "ladybird")
     bib = ladybird_hash["orbisRecord"]
     barcode = ladybird_hash["orbisBarcode"]
     if bib && barcode
-      voyager_hash = FixtureParsingService.fixture_file_to_hash(oid, "ils")
+      voyager_hash = fixture_file_to_hash(oid, "ils")
       holding = voyager_hash["holdingId"]
       item = voyager_hash["itemId"]
     end
@@ -41,6 +40,18 @@ class FixtureParsingService
       last_id_update: DateTime.current
     )
     po.save
+  end
+
+  def self.find_dependent_uris(oid, metadata_source)
+    hash = fixture_file_to_hash(oid, metadata_source)
+    hash["dependentUris"].each do |uri|
+      dep_obj = DependentObject.find_or_create_by(
+        dependent_uri: uri,
+        metadata_source: metadata_source,
+        parent_object_id: oid
+      )
+      dep_obj.save
+    end
   end
 
   ##

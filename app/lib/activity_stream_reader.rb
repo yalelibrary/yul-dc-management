@@ -2,17 +2,29 @@
 
 # An ActivityStreamReader reads json formatted activity stream documents from the MetadataCloud
 class ActivityStreamReader
-  attr_reader :tally
+  attr_reader :tally_activity_stream_items, :tally_retrieved_records
 
   # This is the primary way that automated updates will happen.
   def self.update
     asr = ActivityStreamReader.new
-
     asr.process_activity_stream
   end
 
   def initialize
-    @tally = 0
+    @tally_activity_stream_items = 0
+    @tally_retrieved_records = 0
+  end
+
+  # Logs and kicks off processing the activity stream from the MetadataCloud
+  def process_activity_stream
+    log = ActivityStreamLog.create(run_time: DateTime.current, status: "Running")
+    log.save
+    process_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
+    refresh_updated_items(parent_objects_for_update)
+    log.activity_stream_items = @tally_activity_stream_items
+    log.retrieved_records = @tally_retrieved_records
+    log.status = "Success"
+    log.save
   end
 
   ##
@@ -21,9 +33,19 @@ class ActivityStreamReader
   def process_page(page_url)
     page = fetch_and_parse_page(page_url)
     page["orderedItems"].each do |item|
+      @tally_activity_stream_items += 1
       process_item(item) if relevant?(item)
     end
     process_page(previous_page_link(page)) if previous_page_link(page)
+  end
+
+  ##
+  # Only adds the item to the Set of parent_objects_for_update if the dependent_uri is represented in the database
+  def process_item(item)
+    dependent_uri = parse_item_identifier(item)
+    dependent_objects = dependent_objects_based_on(dependent_uri)
+    return false unless dependent_objects
+    add_to_parent_objects_for_update_set(dependent_objects)
   end
 
   ##
@@ -32,56 +54,45 @@ class ActivityStreamReader
   # - Was updated within the timeframe we're interested in
   # (either the entire activity stream if it has not been
   # previously successfully run, or after the last_run_time)
-  # - Is in the database
-
   def relevant?(item)
     return false unless item["type"] == "Update"
     return false unless last_run_time.nil? || item["endTime"].to_datetime.after?(last_run_time)
-    return false unless find_by_id(item)
     true
   end
 
   ##
-  # It takes an activity stream item and returns true or false based on whether that item is in the database.
-  # If the item is in the database, it adds the item's oid and metadata source to the oids_for_update set.
-  def find_by_id(item)
-    parsed_identifier_uri = parse_identifier_uri(item)
-    metadata_source = parsed_identifier_uri[0]
-    source_id_type = parsed_identifier_uri[1]
-    source_id = parsed_identifier_uri[2]
-    if metadata_source == "ladybird" || metadata_source == "ils" # aka Voyager
-      oid = ParentObject.where(source_id_type.to_s => source_id.to_s)&.first&.oid
-      return false unless oid
-      oids_for_update.add([oid, metadata_source])
-    elsif metadata_source == "aspace"
-      source_id = ("/" + source_id_type + "/" + source_id).to_s
-      oid = ParentObject.where("aspace_uri" => source_id.to_s)&.first&.oid
-      return false unless oid
-      oids_for_update.add([oid, metadata_source])
-    else
-      return false
+  # Takes the dependent_uri of an item from the activity stream, matches it to DependentObjects
+  # from the database, and returns those DependentObjects
+  def dependent_objects_based_on(dependent_uri)
+    dependent_objects = DependentObject.where(dependent_uri: dependent_uri)
+    return false if dependent_objects.empty?
+    dependent_objects
+  end
+
+  ##
+  # Takes DependentObjects and adds an array containing each DependentObject's parent_object_id (the parent object's oid)
+  # and metadata_source to the parent_objects_for_update set
+  def add_to_parent_objects_for_update_set(dependent_objects)
+    dependent_objects.each do |dep_obj|
+      parent_objects_for_update.add([dep_obj.parent_object_id.to_s, dep_obj.metadata_source])
     end
-    true
   end
 
   ##
-  # Takes an activity stream item and returns an array containing the metadata source (Ladybird, Voyager ("ils"),
-  # or ArchiveSpace),source id type (whether an oid, bib, holding, etc.), and the source id itself.
+  # Takes an activity stream item and returns the item's unique identifier, matches the
+  # "dependent_uri" for records from the MetadataCloud
   # @example
-  #  ["ladybird", "oid", "2004628"]
-  def parse_identifier_uri(item)
-    /\/api\/(\w*)\/(\w*)\/(\S*)/.match(item["object"]["id"])&.captures
-  end
-
-  def process_item(_item)
-    @tally += 1
+  #  "/ladybird/oid/2003431"
+  def parse_item_identifier(item)
+    item_id = item["object"]["id"]
+    /\/api(\S*)/.match(item_id).captures.first
   end
 
   # This set contains arrays, each of which contains the oid for the item that has been updated,
   # and the metadata_source that has been updated (Ladybird, Voyager ("ils"), or ArchiveSpace)
   # @example { ["2004628", "ladybird"], ["2004628", "ils"] }
-  def oids_for_update
-    @oids_for_update ||= Set.new
+  def parent_objects_for_update
+    @parent_objects_for_update ||= Set.new
   end
 
   ##
@@ -92,23 +103,13 @@ class ActivityStreamReader
     @last_run_time ||= ActivityStreamLog.where(status: "Success").last&.run_time&.to_datetime
   end
 
-  def process_activity_stream
-    log = ActivityStreamLog.create(run_time: DateTime.current, status: "Running")
-    log.save
-    process_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
-    refresh_updated_items(oids_for_update)
-    log.object_count = @tally
-    log.status = "Success"
-    log.save
-  end
-
   ##
-  # Takes a set of arrays (see oids_for_update), retrieves the appropriate record from the MetadataCloud,
+  # Takes a set of arrays (see parent_objects_for_update), retrieves the appropriate record from the MetadataCloud,
   # and saves it to disk.
-  def refresh_updated_items(oids_for_update)
-    oids_for_update.each do |oid_array|
-      oid = oid_array[0]
-      metadata_source = oid_array[1]
+  def refresh_updated_items(parent_objects_for_update)
+    parent_objects_for_update.each do |parent_object_array|
+      oid = parent_object_array[0]
+      metadata_source = parent_object_array[1]
       metadata_cloud_url = MetadataCloudService.build_metadata_cloud_url(oid, metadata_source)
       full_response = MetadataCloudService.mc_get(metadata_cloud_url)
       MetadataCloudService.save_mc_json_to_file(full_response, oid, metadata_source)
@@ -121,6 +122,7 @@ class ActivityStreamReader
         po.last_aspace_update = DateTime.current
       end
       po.save
+      @tally_retrieved_records += 1
     end
   end
 
