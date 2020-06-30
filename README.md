@@ -152,3 +152,7 @@ For the most part images are created and maintained by the CI process. However, 
   ```
 
 7. Update `yul-dc-camerata` with the new version of management and submit a PR.
+
+## Test coverage
+
+We use [coveralls](https://coveralls.io/github/yalelibrary/yul-dc-management) to measure test coverage. More details [here](https://github.com/yalelibrary/yul-dc-management/wiki/code-coverage).
