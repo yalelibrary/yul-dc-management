@@ -10,17 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_29_193402) do
+ActiveRecord::Schema.define(version: 2020_06_30_193008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "activity_stream_logs", force: :cascade do |t|
     t.datetime "run_time"
-    t.integer "object_count"
+    t.integer "activity_stream_items"
     t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "relevant_records"
+    t.integer "retrieved_records"
   end
 
   create_table "dependent_objects", force: :cascade do |t|

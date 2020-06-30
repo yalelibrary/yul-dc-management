@@ -2,7 +2,7 @@
 
 # An ActivityStreamReader reads json formatted activity stream documents from the MetadataCloud
 class ActivityStreamReader
-  attr_reader :tally
+  attr_reader :tally_activity_stream_items, :tally_retrieved_records
 
   # This is the primary way that automated updates will happen.
   def self.update
@@ -11,7 +11,8 @@ class ActivityStreamReader
   end
 
   def initialize
-    @tally = 0
+    @tally_activity_stream_items = 0
+    @tally_retrieved_records = 0
   end
 
   # Logs and kicks off processing the activity stream from the MetadataCloud
@@ -20,7 +21,8 @@ class ActivityStreamReader
     log.save
     process_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
     refresh_updated_items(parent_objects_for_update)
-    log.object_count = @tally
+    log.activity_stream_items = @tally_activity_stream_items
+    log.retrieved_records = @tally_retrieved_records
     log.status = "Success"
     log.save
   end
@@ -31,17 +33,19 @@ class ActivityStreamReader
   def process_page(page_url)
     page = fetch_and_parse_page(page_url)
     page["orderedItems"].each do |item|
+      @tally_activity_stream_items += 1
       process_item(item) if relevant?(item)
     end
     process_page(previous_page_link(page)) if previous_page_link(page)
   end
 
+  ##
+  # Only adds the item to the Set of parent_objects_for_update if the dependent_uri is represented in the database
   def process_item(item)
     dependent_uri = parse_item_identifier(item)
     dependent_objects = dependent_objects_based_on(dependent_uri)
     return false unless dependent_objects
     add_to_parent_objects_for_update_set(dependent_objects)
-    @tally += 1
   end
 
   ##
@@ -118,6 +122,7 @@ class ActivityStreamReader
         po.last_aspace_update = DateTime.current
       end
       po.save
+      @tally_retrieved_records += 1
     end
   end
 

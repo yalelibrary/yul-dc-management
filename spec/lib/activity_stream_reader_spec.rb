@@ -262,42 +262,27 @@ RSpec.describe ActivityStreamReader do
       expect(aspace_update_before).to be < aspace_update_after
     end
 
-    # There are ~1837 total items from the relevant time period, but only 6 of them
-    # are Ladybird, Voyager, or ArchiveSpace updates
+    # There are ~1837 total items from the relevant time period, but only 3 of them
+    # are unique Ladybird, Voyager, or ArchiveSpace updates
     # with the oid that has been added to the database in our before block
     it "can process the partial activity stream if there is a previous successful run" do
       asl_old_success
       expect(ActivityStreamLog.count).to eq 1
-      expect(ActivityStreamLog.last.object_count).to eq asl_old_success.object_count
+      expect(ActivityStreamLog.last.retrieved_records).to eq asl_old_success.retrieved_records
       asr.process_activity_stream
       expect(ActivityStreamLog.count).to eq 2
-      expect(ActivityStreamLog.last.object_count).to eq 6
+      expect(ActivityStreamLog.last.retrieved_records).to eq 3
     end
 
-    # There are ~4000 total items, but only 12 of them are Ladybird, Voyager,
+    # There are ~4000 total items, but only 3 of them are unique Ladybird, Voyager,
     # or ArchiveSpace updates with the oid of the relevant_parent_object
     # that have been added to the database in our before block
     it "processes the entire activity stream if it has never been run before" do
       expect(ActivityStreamLog.count).to eq 0
       described_class.update
       expect(ActivityStreamLog.count).to eq 1
-      expect(ActivityStreamLog.last.object_count).to eq 12
-    end
-
-    it "tallies the number of items processed" do
-      expect(asr.tally).to eq 0
-      asr.process_item(relevant_item_from_ladybird)
-      expect(asr.tally).to eq 1
-      asr.process_item(relevant_item_two)
-      expect(asr.tally).to eq 2
-      asr.process_item(relevant_item_from_voyager)
-      expect(asr.tally).to eq 3
-    end
-
-    it "does not tally items not queued for update" do
-      expect(asr.tally).to eq 0
-      asr.process_item(irrelevant_item_not_in_db)
-      expect(asr.tally).to eq 0
+      expect(ActivityStreamLog.last.activity_stream_items).to be > 4000
+      expect(ActivityStreamLog.last.retrieved_records).to eq 3
     end
 
     it "adds relevant oids for update to a set" do
@@ -318,7 +303,12 @@ RSpec.describe ActivityStreamReader do
   end
 
   context "determining whether an item from the activity stream is relevant" do
-    let(:asl_old_success) { FactoryBot.create(:successful_activity_stream_log, run_time: "2020-06-12T21:05:53.000+0000".to_datetime) }
+    let(:asl_old_success) do
+      FactoryBot.create(
+        :successful_activity_stream_log,
+        run_time: "2020-06-12T21:05:53.000+0000".to_datetime
+      )
+    end
 
     it "can confirm that a Ladybird item is relevant" do
       relevant_parent_object
@@ -371,8 +361,8 @@ RSpec.describe ActivityStreamReader do
     end
   end
 
-  it "has a tally of 0 when first initialized" do
-    expect(asr.tally).to eq 0
+  it "has a tally_activity_stream_items of 0 when first initialized" do
+    expect(asr.tally_activity_stream_items).to eq 0
   end
 
   context "determining the last successful run" do
