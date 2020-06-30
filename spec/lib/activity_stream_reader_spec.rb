@@ -294,24 +294,32 @@ RSpec.describe ActivityStreamReader do
       expect(asr.tally).to eq 3
     end
 
+    it "does not tally items not queued for update" do
+      expect(asr.tally).to eq 0
+      asr.process_item(irrelevant_item_not_in_db)
+      expect(asr.tally).to eq 0
+    end
+
     it "adds relevant oids for update to a set" do
-      expect(asr.oids_for_update.size).to eq 0
-      asr.find_by_id(relevant_item_from_ladybird)
-      expect(asr.oids_for_update.size).to eq 1
-      asr.find_by_id(relevant_item_two)
-      expect(asr.oids_for_update.size).to eq 2
-      asr.find_by_id(relevant_item_from_voyager)
-      expect(asr.oids_for_update.size).to eq 3
-      expect(asr.oids_for_update).not_to include nil
-      expect(asr.oids_for_update).to include ["2004628", "ils"]
-      asr.find_by_id(relevant_item_from_voyager_holding)
-      expect(asr.oids_for_update.size).to eq 4
-      asr.find_by_id(relevant_item_from_aspace)
-      expect(asr.oids_for_update.size).to eq 5
+      expect(asr.parent_objects_for_update.size).to eq 0
+      asr.process_item(relevant_item_from_ladybird)
+      expect(asr.parent_objects_for_update.size).to eq 1
+      asr.process_item(relevant_item_two)
+      expect(asr.parent_objects_for_update.size).to eq 2
+      asr.process_item(relevant_item_from_voyager)
+      expect(asr.parent_objects_for_update.size).to eq 3
+      expect(asr.parent_objects_for_update).not_to include nil
+      expect(asr.parent_objects_for_update).to include ["2004628", "ils"]
+      asr.process_item(relevant_item_from_voyager_holding)
+      expect(asr.parent_objects_for_update.size).to eq 4
+      asr.process_item(relevant_item_from_aspace)
+      expect(asr.parent_objects_for_update.size).to eq 5
     end
   end
 
   context "determining whether an item from the activity stream is relevant" do
+    let(:asl_old_success) { FactoryBot.create(:successful_activity_stream_log, run_time: "2020-06-12T21:05:53.000+0000".to_datetime) }
+
     it "can confirm that a Ladybird item is relevant" do
       relevant_parent_object
       dependent_object_ladybird
@@ -344,9 +352,12 @@ RSpec.describe ActivityStreamReader do
       expect(asr.relevant?(relevant_item_from_aspace_dependent_uri)).to be_truthy
     end
 
-    it "does not confirm that an irrelevant item is relevant" do
-      expect(asr.relevant?(irrelevant_item_not_in_db)).to be_falsey
+    it "does not confirm that an irrelevant item is relevant - age" do
+      asl_old_success
       expect(asr.relevant?(irrelevant_item_too_old)).to be_falsey
+    end
+
+    it "does not confirm that an irrelevant item is relevant - not update" do
       expect(asr.relevant?(irrelevant_not_an_update)).to be_falsey
     end
   end
@@ -372,6 +383,35 @@ RSpec.describe ActivityStreamReader do
       asl_new_success
       asl_failed
       expect(asr.last_run_time).to eq asl_new_success.run_time
+    end
+  end
+
+  context "with multiple oids for a single dependent uri" do
+    let(:parent_object_aspace_2) do
+      FactoryBot.create(
+        :parent_object_with_aspace_uri,
+        oid: "12345",
+        aspace_uri: "/repositories/11/archival_objects/515305",
+        last_aspace_update: "2020-06-10 17:38:27".to_datetime
+      )
+    end
+    let(:dependent_object_aspace_agent_2) do
+      FactoryBot.create(
+        :dependent_object,
+        parent_object_id: "12345",
+        metadata_source: "aspace",
+        dependent_uri: "/aspace/agents/corporate_entities/2251"
+      )
+    end
+
+    it "adds multiple oids to the array when there are multiple ParentObjects for a single DependentObject" do
+      parent_object_with_aspace_uri
+      dependent_object_aspace_agent
+      parent_object_aspace_2
+      dependent_object_aspace_agent_2
+      expect(asr.parent_objects_for_update.size).to eq 0
+      asr.process_item(relevant_item_from_aspace_dependent_uri)
+      expect(asr.parent_objects_for_update.size).to eq 2
     end
   end
 end
