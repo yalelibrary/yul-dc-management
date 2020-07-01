@@ -34,7 +34,6 @@ class ActivityStreamReader
   # recursively processes that page as well, until all pages have been processed.
   def process_page(page_url)
     page = fetch_and_parse_page(page_url)
-    page["orderedItems"].last["endTime"]
     page["orderedItems"].each do |item|
       @tally_activity_stream_items += 1
       process_item(item) if relevant?(item)
@@ -50,8 +49,7 @@ class ActivityStreamReader
   end
 
   ##
-  # It takes an item from the activity stream and returns either true or false depending on whether that object
-  # - Is an update
+  # It takes an item from the activity stream and returns either true or false depending on whether that object is an update
   def relevant?(item)
     return false unless item["type"] == "Update"
     true
@@ -108,15 +106,6 @@ class ActivityStreamReader
     dependent_objects = common_uris.map { |uri| DependentObject.find_by(dependent_uri: uri) }
     parent_objects_for_update = dependent_objects.map { |depobj| [depobj.parent_object_id, depobj.metadata_source] }
     parent_objects_for_update.to_set
-  end
-
-  ##
-  # Takes an activity stream item url and returns the item's unique identifier, matches the
-  # "dependent_uri" for records from the MetadataCloud
-  # @example
-  #  "/ladybird/oid/2003431"
-  def parse_item_identifier(item_url)
-    /\/api(\S*)/.match(item_url).captures.first
   end
 
   ##
