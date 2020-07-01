@@ -80,11 +80,21 @@ RSpec.describe FixtureParsingService do
         expect(ParentObject.find_by(oid: yale_only_oid)["visibility"]).to eq "Yale Community Only"
       end
 
-      it "finds the dependent uris for an aspace object" do
+      it "finds the dependent uris for a ladybird object" do
         parent_object
-        described_class.find_dependent_uris(oid, "ladybird")
+        described_class.find_dependent_uri_for(oid, "ladybird")
         expect(DependentObject.find_by(parent_object_id: oid)).not_to be nil
         expect(DependentObject.find_by(parent_object_id: oid).dependent_uri).to include "/ladybird/oid/16854285"
+      end
+
+      it "finds the dependent uris for multiple objects" do
+        parent_object
+        private_object
+        yale_only_object
+        described_class.find_dependent_uris(metadata_source)
+        expect(DependentObject.find_by(parent_object_id: oid).dependent_uri).to include "/ladybird/oid/16854285"
+        expect(DependentObject.find_by(parent_object_id: private_oid).dependent_uri).to include "/ladybird/oid/16189097-priv"
+        expect(DependentObject.find_by(parent_object_id: yale_only_oid).dependent_uri).to include "/ladybird/oid/16189097-yale"
       end
     end
   end

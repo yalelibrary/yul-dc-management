@@ -61,6 +61,14 @@ class ActivityStreamReader
   end
 
   ##
+  # Return the last time the Activity Stream was successfully read
+  # If the ActivityStreamReader has not yet successfully run (if the ActivityStreamLog is empty or does not have successes),
+  # then the ActivityStreamReader should read through the entire activity stream from the MetadataCloud.
+  def last_run_time
+    @last_run_time ||= ActivityStreamLog.where(status: "Success").last&.run_time&.to_datetime
+  end
+
+  ##
   # Takes the dependent_uri of an item from the activity stream, matches it to DependentObjects
   # from the database, and returns those DependentObjects
   def dependent_objects_based_on(dependent_uri)
@@ -93,14 +101,6 @@ class ActivityStreamReader
   # @example { ["2004628", "ladybird"], ["2004628", "ils"] }
   def parent_objects_for_update
     @parent_objects_for_update ||= Set.new
-  end
-
-  ##
-  # Return the last time the Activity Stream was successfully read
-  # If the ActivityStreamReader has not yet successfully run (if the ActivityStreamLog is empty or does not have successes),
-  # then the ActivityStreamReader should read through the entire activity stream from the MetadataCloud.
-  def last_run_time
-    @last_run_time ||= ActivityStreamLog.where(status: "Success").last&.run_time&.to_datetime
   end
 
   ##

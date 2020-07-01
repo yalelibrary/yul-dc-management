@@ -42,7 +42,15 @@ class FixtureParsingService
     po.save
   end
 
-  def self.find_dependent_uris(oid, metadata_source)
+  def self.find_dependent_uris(metadata_source)
+    parent_objects = ParentObject.all
+    parent_objects.each do |parent_object|
+      oid = parent_object["oid"]
+      find_dependent_uri_for(oid, metadata_source)
+    end
+  end
+
+  def self.find_dependent_uri_for(oid, metadata_source)
     hash = fixture_file_to_hash(oid, metadata_source)
     hash["dependentUris"].each do |uri|
       dep_obj = DependentObject.find_or_create_by(
