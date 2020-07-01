@@ -274,6 +274,12 @@ RSpec.describe ActivityStreamReader do
       expect(ActivityStreamLog.last.retrieved_records).to eq 3
     end
 
+    xit "does not continue to try to retrieve older pages if there is a previous successful run" do
+      asl_old_success
+
+      asr.process_activity_stream
+    end
+
     # There are ~4000 total items, but only 3 of them are unique Ladybird, Voyager,
     # or ArchiveSpace updates with the oid of the relevant_parent_object
     # that have been added to the database in our before block
@@ -285,20 +291,22 @@ RSpec.describe ActivityStreamReader do
       expect(ActivityStreamLog.last.retrieved_records).to eq 3
     end
 
-    it "adds relevant oids for update to a set" do
-      expect(asr.parent_objects_for_update.size).to eq 0
-      asr.process_item(relevant_item_from_ladybird)
-      expect(asr.parent_objects_for_update.size).to eq 1
-      asr.process_item(relevant_item_two)
-      expect(asr.parent_objects_for_update.size).to eq 2
-      asr.process_item(relevant_item_from_voyager)
-      expect(asr.parent_objects_for_update.size).to eq 3
-      expect(asr.parent_objects_for_update).not_to include nil
-      expect(asr.parent_objects_for_update).to include ["2004628", "ils"]
-      asr.process_item(relevant_item_from_voyager_holding)
-      expect(asr.parent_objects_for_update.size).to eq 4
-      asr.process_item(relevant_item_from_aspace)
-      expect(asr.parent_objects_for_update.size).to eq 5
+    context "creates a set of remote_dependent_uris from activity stream entries" do
+      it "adds relevant oids for update to an array" do
+        expect(asr.remote_dependent_uris.size).to eq 0
+        asr.process_item(relevant_item_from_ladybird)
+        expect(asr.remote_dependent_uris.size).to eq 1
+        asr.process_item(relevant_item_two)
+        expect(asr.remote_dependent_uris.size).to eq 2
+        asr.process_item(relevant_item_from_voyager)
+        expect(asr.remote_dependent_uris.size).to eq 3
+        expect(asr.remote_dependent_uris).not_to include nil
+        expect(asr.remote_dependent_uris).to include "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/3163155"
+        asr.process_item(relevant_item_from_voyager_holding)
+        expect(asr.remote_dependent_uris.size).to eq 4
+        asr.process_item(relevant_item_from_aspace)
+        expect(asr.remote_dependent_uris.size).to eq 5
+      end
     end
   end
 
@@ -394,14 +402,16 @@ RSpec.describe ActivityStreamReader do
       )
     end
 
-    it "adds multiple oids to the array when there are multiple ParentObjects for a single DependentObject" do
-      parent_object_with_aspace_uri
-      dependent_object_aspace_agent
-      parent_object_aspace_2
-      dependent_object_aspace_agent_2
-      expect(asr.parent_objects_for_update.size).to eq 0
-      asr.process_item(relevant_item_from_aspace_dependent_uri)
-      expect(asr.parent_objects_for_update.size).to eq 2
+    context "creating a set of dependent_uris from database" do
+      it "creates a set of local dependent uris" do
+        parent_object_with_aspace_uri
+        relevant_parent_object
+        relevant_parent_object_two
+        expect(asr.local_dependent_uris).not_to be nil
+        expect(asr.local_dependent_uris.class).to eq Set
+        expect(asr.local_dependent_uris.count).to eq 16
+        expect(asr.local_dependent_uris.include?("/ils/bib/3163155")).to be_truthy
+      end
     end
   end
 end

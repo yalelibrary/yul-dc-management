@@ -20,6 +20,8 @@ class ActivityStreamReader
     log = ActivityStreamLog.create(run_time: DateTime.current, status: "Running")
     log.save
     process_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
+    common_uris = intersection_of_dependent_uris(remote_dependent_uris, local_dependent_uris)
+    parent_objects_for_update = items_for_update_from_dependent_uris(common_uris)
     refresh_updated_items(parent_objects_for_update)
     log.activity_stream_items = @tally_activity_stream_items
     log.retrieved_records = @tally_retrieved_records
@@ -32,20 +34,19 @@ class ActivityStreamReader
   # recursively processes that page as well, until all pages have been processed.
   def process_page(page_url)
     page = fetch_and_parse_page(page_url)
+    page["orderedItems"].last["endTime"]
     page["orderedItems"].each do |item|
       @tally_activity_stream_items += 1
       process_item(item) if relevant?(item)
     end
+
     process_page(previous_page_link(page)) if previous_page_link(page)
   end
 
   ##
-  # Only adds the item to the Set of parent_objects_for_update if the dependent_uri is represented in the database
+  # Adds the item's uri to the array of remote_dependent_uris, for later comparison to the set of local_dependent_uris
   def process_item(item)
-    dependent_uri = parse_item_identifier(item)
-    dependent_objects = dependent_objects_based_on(dependent_uri)
-    return false unless dependent_objects
-    add_to_parent_objects_for_update_set(dependent_objects)
+    remote_dependent_uris.push(item["object"]["id"])
   end
 
   ##
@@ -68,44 +69,63 @@ class ActivityStreamReader
     @last_run_time ||= ActivityStreamLog.where(status: "Success").last&.run_time&.to_datetime
   end
 
-  ##
-  # Takes the dependent_uri of an item from the activity stream, matches it to DependentObjects
-  # from the database, and returns those DependentObjects
-  def dependent_objects_based_on(dependent_uri)
-    dependent_objects = DependentObject.where(dependent_uri: dependent_uri)
-    return false if dependent_objects.empty?
-    dependent_objects
+  def local_dependent_uris
+    @local_dependent_uris ||= build_local_dependent_uri_set
   end
 
   ##
-  # Takes DependentObjects and adds an array containing each DependentObject's parent_object_id (the parent object's oid)
-  # and metadata_source to the parent_objects_for_update set
-  def add_to_parent_objects_for_update_set(dependent_objects)
-    dependent_objects.each do |dep_obj|
-      parent_objects_for_update.add([dep_obj.parent_object_id.to_s, dep_obj.metadata_source])
-    end
+  # Ensures that the existing dependent URIs from the fixture objects have been updated in the database
+  def update_local_dependent_uris
+    FixtureParsingService.find_dependent_uris("aspace")
+    FixtureParsingService.find_dependent_uris("ladybird")
+    FixtureParsingService.find_dependent_uris("ils")
   end
 
   ##
-  # Takes an activity stream item and returns the item's unique identifier, matches the
+  # Creates a set of all the dependent uris in the database for later comparison with the dependent_uris from the activity stream
+  def build_local_dependent_uri_set
+    update_local_dependent_uris
+    dependent_uri_array = DependentObject.all.map(&:dependent_uri)
+    dependent_uri_array.to_set
+  end
+
+  def remote_dependent_uris
+    @remote_dependent_uris ||= []
+  end
+
+  ##
+  # Takes the array of remote_dependent_uris and the set of local_dependent_uris and returns a Set that
+  # is the intersection of local and remote dependent uris - that is, the uris of objects we want to update
+  # from the MetadataCloud.
+  def intersection_of_dependent_uris(remote_dependent_uris, local_dependent_uris)
+    remote_dependent_uris_short = remote_dependent_uris.map { |uri| /\/api(\S*)/.match(uri).captures.first }
+    remote_dependent_uris_short.to_set.intersection local_dependent_uris
+  end
+
+  ##
+  # Takes the Set of dependent_uris that we are interested in refreshing (those that appear in the Activity Stream and
+  # are in our local database), and returns a set containing the oid and metadata_source needed for the object's record
+  # to be retrieved from the MetadataCloud.
+  # @example
+  #  { ["2004628", "ladybird"], ["2004628", "ils"] }
+  def items_for_update_from_dependent_uris(common_uris)
+    dependent_objects = common_uris.map { |uri| DependentObject.find_by(dependent_uri: uri) }
+    parent_objects_for_update = dependent_objects.map { |depobj| [depobj.parent_object_id, depobj.metadata_source] }
+    parent_objects_for_update.to_set
+  end
+
+  ##
+  # Takes an activity stream item url and returns the item's unique identifier, matches the
   # "dependent_uri" for records from the MetadataCloud
   # @example
   #  "/ladybird/oid/2003431"
-  def parse_item_identifier(item)
-    item_id = item["object"]["id"]
-    /\/api(\S*)/.match(item_id).captures.first
-  end
-
-  # This set contains arrays, each of which contains the oid for the item that has been updated,
-  # and the metadata_source that has been updated (Ladybird, Voyager ("ils"), or ArchiveSpace)
-  # @example { ["2004628", "ladybird"], ["2004628", "ils"] }
-  def parent_objects_for_update
-    @parent_objects_for_update ||= Set.new
+  def parse_item_identifier(item_url)
+    /\/api(\S*)/.match(item_url).captures.first
   end
 
   ##
-  # Takes a set of arrays (see parent_objects_for_update), retrieves the appropriate record from the MetadataCloud,
-  # and saves it to disk.
+  # Takes a set of arrays (see tems_for_update_from_dependent_uris(common_uris) for example), retrieves the appropriate record from
+  # the MetadataCloud, and saves it to disk.
   def refresh_updated_items(parent_objects_for_update)
     parent_objects_for_update.each do |parent_object_array|
       oid = parent_object_array[0]

@@ -52,6 +52,7 @@ class FixtureParsingService
 
   def self.find_dependent_uri_for(oid, metadata_source)
     hash = fixture_file_to_hash(oid, metadata_source)
+    return unless hash
     hash["dependentUris"].each do |uri|
       dep_obj = DependentObject.find_or_create_by(
         dependent_uri: uri,
