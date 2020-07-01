@@ -10,8 +10,10 @@
       <%= link_to "Index Ladybird Records to Solr", metadata_source_path("ladybird"), class: "dropdown-item" %>
       <%= link_to "Index ArchiveSpace Records to Solr", metadata_source_path("aspace"), class: "dropdown-item" %>
     </div>
-    <%= render partial: "oid_imports/form" %>
   </div>
+  <br />
+  <br />
+  <%= render partial: "oid_imports/form" %>
   <br />
   <% if flash[:notice] %>
     <div class="notice"><%= flash[:notice] %></div>
