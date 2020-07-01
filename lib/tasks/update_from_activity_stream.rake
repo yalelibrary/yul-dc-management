@@ -5,7 +5,9 @@ namespace :yale do
   task update_from_activity_stream: :environment do
     ActivityStreamReader.update
     puts "update successful"
-    # puts "#{ActivityStreamLog.last.activity_stream_items} in the Activity Stream,
-    # #{ActivityStreamLog.last.retrieved_records} data refreshed from metadata cloud"
+    puts "
+    #{ActivityStreamLog.last.activity_stream_items} items in the Activity Stream,
+    #{ActivityStreamLog.last.retrieved_records} records refreshed from metadata cloud
+    "
   end
 end

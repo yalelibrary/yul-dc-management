@@ -39,8 +39,8 @@ class ActivityStreamReader
       @tally_activity_stream_items += 1
       process_item(item) if relevant?(item)
     end
-
-    process_page(previous_page_link(page)) if previous_page_link(page)
+    earliest_item_on_page = page["orderedItems"].last["endTime"].to_datetime
+    process_page(previous_page_link(page)) if (previous_page_link(page) && last_run_time.nil?) || (previous_page_link(page) && earliest_item_on_page.after?(last_run_time))
   end
 
   ##
@@ -52,12 +52,8 @@ class ActivityStreamReader
   ##
   # It takes an item from the activity stream and returns either true or false depending on whether that object
   # - Is an update
-  # - Was updated within the timeframe we're interested in
-  # (either the entire activity stream if it has not been
-  # previously successfully run, or after the last_run_time)
   def relevant?(item)
     return false unless item["type"] == "Update"
-    return false unless last_run_time.nil? || item["endTime"].to_datetime.after?(last_run_time)
     true
   end
 

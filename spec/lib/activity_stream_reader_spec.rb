@@ -274,12 +274,6 @@ RSpec.describe ActivityStreamReader do
       expect(ActivityStreamLog.last.retrieved_records).to eq 3
     end
 
-    xit "does not continue to try to retrieve older pages if there is a previous successful run" do
-      asl_old_success
-
-      asr.process_activity_stream
-    end
-
     # There are ~4000 total items, but only 3 of them are unique Ladybird, Voyager,
     # or ArchiveSpace updates with the oid of the relevant_parent_object
     # that have been added to the database in our before block
@@ -348,11 +342,6 @@ RSpec.describe ActivityStreamReader do
       parent_object_with_aspace_uri
       dependent_object_aspace_agent
       expect(asr.relevant?(relevant_item_from_aspace_dependent_uri)).to be_truthy
-    end
-
-    it "does not confirm that an irrelevant item is relevant - age" do
-      asl_old_success
-      expect(asr.relevant?(irrelevant_item_too_old)).to be_falsey
     end
 
     it "does not confirm that an irrelevant item is relevant - not update" do
