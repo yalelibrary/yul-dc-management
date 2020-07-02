@@ -11,5 +11,4 @@ Rails.application.routes.draw do
   resources :oid_imports do
     collection { post :import }
   end
-
 end

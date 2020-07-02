@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OidImportsController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid, with: :show_errors
 
@@ -31,5 +33,4 @@ class OidImportsController < ApplicationController
       exception.record.new_record?
       redirect_to management_index_path, notice: "A validation error has occurred"
     end
-
 end

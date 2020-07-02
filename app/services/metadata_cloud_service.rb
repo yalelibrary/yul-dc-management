@@ -9,7 +9,7 @@ class MetadataCloudService
   end
 
   def self.refresh_from_upload(csv, metadata_source)
-    oids = csv.entries.map {|r| r['oid']}
+    oids = csv.entries.map { |r| r['oid'] }
     save_json_from_oids(oids, metadata_source)
   end
 
