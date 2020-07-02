@@ -1,11 +1,26 @@
 # Changelog
 
+## [v2.0.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.0.0) (2020-07-02)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.8.0...v2.0.0)
+
+**Merged pull requests:**
+
+- Normalize db names [\#126](https://github.com/yalelibrary/yul-dc-management/pull/126) ([maxkadel](https://github.com/maxkadel))
+- Pass Rails relative url root in to app [\#123](https://github.com/yalelibrary/yul-dc-management/pull/123) ([orangewolf](https://github.com/orangewolf))
+- Activity stream performance [\#122](https://github.com/yalelibrary/yul-dc-management/pull/122) ([maxkadel](https://github.com/maxkadel))
+- Remove unused base file [\#121](https://github.com/yalelibrary/yul-dc-management/pull/121) ([orangewolf](https://github.com/orangewolf))
+- Update wiki with info about test coverage [\#120](https://github.com/yalelibrary/yul-dc-management/pull/120) ([bess](https://github.com/bess))
+- Report coverage from CircleCI [\#119](https://github.com/yalelibrary/yul-dc-management/pull/119) ([bess](https://github.com/bess))
+- Add dependent object model method to populate [\#117](https://github.com/yalelibrary/yul-dc-management/pull/117) ([maxkadel](https://github.com/maxkadel))
+
 ## [v1.8.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.8.0) (2020-06-26)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.7.2...v1.8.0)
 
 **Merged pull requests:**
 
+- prep for release 1.8.0 [\#116](https://github.com/yalelibrary/yul-dc-management/pull/116) ([maxkadel](https://github.com/maxkadel))
 - Refactor Metadata cloud service - put parsing tasks in own class [\#114](https://github.com/yalelibrary/yul-dc-management/pull/114) ([maxkadel](https://github.com/maxkadel))
 - update actionpack [\#113](https://github.com/yalelibrary/yul-dc-management/pull/113) ([maxkadel](https://github.com/maxkadel))
 - Refactor, return hash so file doesn't have to be parsed subsequently [\#112](https://github.com/yalelibrary/yul-dc-management/pull/112) ([maxkadel](https://github.com/maxkadel))
