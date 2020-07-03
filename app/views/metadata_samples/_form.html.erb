@@ -1,0 +1,32 @@
+<%= form_with(model: metadata_sample, local: true) do |form| %>
+  <% if metadata_sample.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(metadata_sample.errors.count, "error") %> prohibited this metadata_sample from being saved:</h2>
+
+      <ul>
+        <% metadata_sample.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :metadata_source %>
+    <%= form.text_field :metadata_source %>
+  </div>
+
+  <div class="field">
+    <%= form.label :number_of_samples %>
+    <%= form.number_field :number_of_samples %>
+  </div>
+
+  <div class="field">
+    <%= form.label :seconds_elapsed %>
+    <%= form.text_field :seconds_elapsed %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

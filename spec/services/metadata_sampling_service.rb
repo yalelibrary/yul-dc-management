@@ -18,8 +18,14 @@ RSpec.describe MetadataSamplingService, vpn_only: true do
     end
 
     context "after running the task" do
+      let(:metadata_sample) { FactoryBot.create(
+        :metadata_sample,
+        metadata_source: "ladybird",
+        number_of_samples: 2
+        )
+      }
       before do
-        described_class.field_statistics
+        described_class.get_field_statistics(metadata_sample)
       end
 
       it "has created one MetadataSample and several SampleField records" do
@@ -33,16 +39,14 @@ RSpec.describe MetadataSamplingService, vpn_only: true do
     end
   end
 
-
   xit "can retrieve from different metadata sources" do
     expect(MetadataSample.count).to eq 0
-    described_class.field_statistics("ladybird", 12)
+    described_class.get_field_statistics("ladybird", 12)
     expect(MetadataSample.count).to eq 1
     expect(MetadataSample.last.metadata_source).to eq "ladybird"
     expect(MetadataSample.last.number_of_samples).to eq 12
-    described_class.field_statistics("ils", 4)
+    described_class.get_field_statistics("ils", 4)
     expect(MetadataSample.last.metadata_source).to eq "ils"
     expect(MetadataSample.last.number_of_samples).to eq 4
   end
-
 end

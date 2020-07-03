@@ -1,7 +1,7 @@
+# frozen_string_literal: true
 
 class MetadataSamplingService
-
-  def self.field_statistics(metadata_source="ladybird", number_of_records=2)
+  def self.get_field_statistics(metadata_sample, metadata_source="ladybird", number_of_records=2)
     start_time
     csv_path = Rails.root.join("spec", "fixtures", "public_oids_comma.csv")
     sample_oids = oids_for_measurement(csv_path, number_of_records)
@@ -48,7 +48,6 @@ class MetadataSamplingService
   def self.record_initial_findings
     cf = collected_fields.flatten
     grouped_fields = cf.group_by(&:itself).transform_values(&:count)
-    total_fields_found = grouped_fields.values.sum
     grouped_fields.each do |field|
       field_over_total = field[1].to_f / grouped_fields.values.sum
       percent = field_over_total * 100
@@ -69,5 +68,4 @@ class MetadataSamplingService
   def self.start_time
     @start_time ||= Process.clock_gettime(Process::CLOCK_MONOTONIC)
   end
-
 end
