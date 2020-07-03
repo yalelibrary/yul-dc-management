@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class OidImportsController < ApplicationController
-  rescue_from ActiveRecord::RecordInvalid, with: :show_errors
 
   def index
     @oid_imports = OidImport.all
@@ -29,8 +28,4 @@ class OidImportsController < ApplicationController
       params.require(:oid_import).permit(:file)
     end
 
-    def show_errors(exception)
-      exception.record.new_record?
-      redirect_to management_index_path, notice: "A validation error has occurred"
-    end
 end
