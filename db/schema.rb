@@ -33,6 +33,12 @@ ActiveRecord::Schema.define(version: 2020_07_01_132914) do
     t.index ["parent_object_id"], name: "index_dependent_objects_on_parent_object_id"
   end
 
+  create_table "oid_imports", force: :cascade do |t|
+    t.text "csv"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "parent_objects", force: :cascade do |t|
     t.string "oid"
     t.string "bib"
