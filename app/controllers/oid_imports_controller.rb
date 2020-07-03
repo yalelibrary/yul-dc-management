@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class OidImportsController < ApplicationController
-
   def index
     @oid_imports = OidImport.all
   end
@@ -27,5 +26,4 @@ class OidImportsController < ApplicationController
     def oid_import_params
       params.require(:oid_import).permit(:file)
     end
-
 end
