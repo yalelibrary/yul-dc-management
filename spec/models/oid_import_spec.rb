@@ -3,22 +3,22 @@
 require 'rails_helper'
 
 RSpec.describe OidImport, type: :model do
+  subject(:oid_import) { described_class.new }
   describe "csv file import" do
-    let!(:csv_file) { File.new(fixture_path + '/short_fixture_ids.csv') }
-
-    it "is valid with valid attributes" do
+    it "requires no attributes" do
       expect(OidImport.new).to be_valid
     end
 
-    it "is valid with valid attribute" do
-      subject { File.new(fixture_path + '/short_fixture_ids.csv') }
-      expect(subject).to be_valid
+    it "accepts a csv file as a virtual attribute and read the csv into the csv property" do
+      oid_import.file = File.new(fixture_path + '/short_fixture_ids.csv')
+      expect(oid_import.csv).to be_present
+      expect(oid_import).to be_valid
     end
 
-    it "is valid with valid attribute" do
-      subject { File.new(fixture_path + '/short_fixture_ids.pdf') }
-      expect(subject.id).to eq nil
+    it "does not accept non csv files" do
+      oid_import.file = File.new(Rails.root.join('public', 'favicon.ico'))
+      expect(oid_import).not_to be_valid
+      expect(oid_import.csv).to be_blank
     end
-
   end
 end

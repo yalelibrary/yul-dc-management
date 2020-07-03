@@ -1,9 +1,16 @@
 # frozen_string_literal: true
 
 class OidImport < ApplicationRecord
-  attr_accessor :file
+  attr_reader :file
+  validate :check_file_type
+
+  def check_file_type
+    return if file.blank?
+    errors.add(:file, 'must be a csv') if CSV.read(file).blank?
+  end
 
   def file=(value)
+    @file = value
     self[:csv] = value.read
   end
 
