@@ -13,24 +13,23 @@ RSpec.describe MetadataSamplingService, vpn_only: true do
     end
 
     context "after running the task" do
+      before do
+        described_class.get_field_statistics(metadata_sample)
+      end
       let(:metadata_sample) do
         FactoryBot.create(
           :metadata_sample,
           metadata_source: "ladybird",
-          number_of_samples: 2
+          number_of_samples: 3
         )
       end
-      before do
-        described_class.get_field_statistics(metadata_sample)
-      end
+      let(:sample_fields) { SampleField.where(metadata_sample_id: MetadataSample.last.id) }
 
       it "has created one MetadataSample and several SampleField records" do
         expect(MetadataSample.count).to eq 1
         expect(SampleField.count).to be > 5
-      end
-
-      it "records the time elapsed" do
         expect(MetadataSample.last.seconds_elapsed).not_to be nil
+        expect(sample_fields.where("field_count > 3")).to be_empty
       end
     end
   end

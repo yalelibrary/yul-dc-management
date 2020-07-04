@@ -35,14 +35,14 @@ class MetadataSamplingService
   def self.record_initial_findings(metadata_sample)
     cf = collected_fields.flatten
     grouped_fields = cf.group_by(&:itself).transform_values(&:count)
-    grouped_fields.each do |field|
-      field_over_total = field[1].to_f / grouped_fields.values.sum
+    grouped_fields.each do |key, value|
+      field_over_total = value.to_f / grouped_fields.values.sum
       percent = field_over_total * 100
       sf = SampleField.new
       sf.update(
-        field_name: field[0],
-        field_count: field[1],
-        field_percent_of_total: percent.round(4),
+        field_name: key,
+        field_count: value,
+        field_percent_of_total: percent.round(2),
         metadata_sample_id: metadata_sample.id
       )
     end

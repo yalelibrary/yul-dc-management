@@ -15,5 +15,9 @@ RSpec.describe "Metadata Sample tasks", type: :system, clean: true do
       expect(SampleField.count).to be > 5
       expect(MetadataSample.last.seconds_elapsed).to be > 0
     end
+
+    it "displays the fields related to that Metadata Sample" do
+      expect(page.body).to include "Sample fields"
+    end
   end
 end

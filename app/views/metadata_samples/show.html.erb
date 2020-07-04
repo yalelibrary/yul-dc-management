@@ -1,19 +1,22 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Metadata source:</strong>
-  <%= @metadata_sample.metadata_source %>
-</p>
+  <p>
+    <strong>Metadata source:</strong>
+    <%= @metadata_sample.metadata_source %>
+  </p>
 
-<p>
-  <strong>Number of samples:</strong>
-  <%= @metadata_sample.number_of_samples %>
-</p>
+  <p>
+    <strong>Number of samples:</strong>
+    <%= @metadata_sample.number_of_samples %>
+  </p>
 
-<p>
-  <strong>Seconds elapsed:</strong>
-  <%= @metadata_sample.seconds_elapsed %>
-</p>
+  <p>
+    <strong>Seconds elapsed:</strong>
+    <%= @metadata_sample.seconds_elapsed %>
+  </p>
 
-<%= link_to 'Edit', edit_metadata_sample_path(@metadata_sample) %> |
-<%= link_to 'Back', metadata_samples_path %>
+  <%= render 'fields_display' %>
+
+  <%= link_to 'Back', metadata_samples_path %>
+</div>

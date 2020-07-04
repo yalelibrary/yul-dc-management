@@ -18,9 +18,6 @@ class MetadataSamplesController < ApplicationController
     @metadata_sample = MetadataSample.new
   end
 
-  # GET /metadata_samples/1/edit
-  def edit; end
-
   # POST /metadata_samples
   # POST /metadata_samples.json
   def create
@@ -33,20 +30,6 @@ class MetadataSamplesController < ApplicationController
         format.json { render :show, status: :created, location: @metadata_sample }
       else
         format.html { render :new }
-        format.json { render json: @metadata_sample.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /metadata_samples/1
-  # PATCH/PUT /metadata_samples/1.json
-  def update
-    respond_to do |format|
-      if @metadata_sample.update(metadata_sample_params)
-        format.html { redirect_to @metadata_sample, notice: 'Metadata sample was successfully updated.' }
-        format.json { render :show, status: :ok, location: @metadata_sample }
-      else
-        format.html { render :edit }
         format.json { render json: @metadata_sample.errors, status: :unprocessable_entity }
       end
     end
