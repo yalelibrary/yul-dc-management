@@ -4,11 +4,6 @@ require "rails_helper"
 WebMock.allow_net_connect!
 
 RSpec.describe MetadataSamplingService, vpn_only: true do
-  # Note: Currently in order to get these tests to pass, you must be on the VPN and run them
-  # one at a time. The call and response to the MetadataCloud is slow enough that more than that
-  # breaks the test. My understanding is that this is more of an information-gathering portion of the code,
-  # so it's not clear that mocking out the randomness & calls to the cloud are a good use of time.
-
   context "before an after running the task" do
     context "before running the task" do
       it "has no MetadataSample or SampleFields records prior to running the task" do
@@ -18,12 +13,13 @@ RSpec.describe MetadataSamplingService, vpn_only: true do
     end
 
     context "after running the task" do
-      let(:metadata_sample) { FactoryBot.create(
-        :metadata_sample,
-        metadata_source: "ladybird",
-        number_of_samples: 2
+      let(:metadata_sample) do
+        FactoryBot.create(
+          :metadata_sample,
+          metadata_source: "ladybird",
+          number_of_samples: 2
         )
-      }
+      end
       before do
         described_class.get_field_statistics(metadata_sample)
       end

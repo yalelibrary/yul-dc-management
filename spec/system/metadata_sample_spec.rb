@@ -2,8 +2,8 @@
 require 'rails_helper'
 WebMock.allow_net_connect!
 
-RSpec.describe "Solr Indexing Tasks", type: :system, clean: true do
-  describe 'Click Index to Solr button' do
+RSpec.describe "Metadata Sample tasks", type: :system, clean: true do
+  describe 'Click create metadata sample' do
     before do
       visit new_metadata_sample_path
       fill_in('Metadata source', with: 'ladybird')
@@ -12,7 +12,8 @@ RSpec.describe "Solr Indexing Tasks", type: :system, clean: true do
     end
 
     it "runs the metadata sampling service" do
-      true
+      expect(SampleField.count).to be > 5
+      expect(MetadataSample.last.seconds_elapsed).to be > 0
     end
   end
 end

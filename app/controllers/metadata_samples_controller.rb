@@ -25,7 +25,8 @@ class MetadataSamplesController < ApplicationController
   # POST /metadata_samples.json
   def create
     @metadata_sample = MetadataSample.new(metadata_sample_params)
-    @mss = MetadataSamplingService.field_statistics(metadata_sample, metadata_source, number_of_samples)
+    @metadata_sample.save
+    @mss = MetadataSamplingService.get_field_statistics(@metadata_sample)
     respond_to do |format|
       if @metadata_sample.save
         format.html { redirect_to @metadata_sample, notice: 'Metadata sample was successfully created.' }

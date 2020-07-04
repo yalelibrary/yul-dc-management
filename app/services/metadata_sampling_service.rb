@@ -1,29 +1,16 @@
 # frozen_string_literal: true
 
 class MetadataSamplingService
-  def self.get_field_statistics(metadata_sample, metadata_source="ladybird", number_of_records=2)
+  def self.get_field_statistics(metadata_sample)
     start_time
     csv_path = Rails.root.join("spec", "fixtures", "public_oids_comma.csv")
-    sample_oids = oids_for_measurement(csv_path, number_of_records)
-    retrieve_sample_fields(sample_oids, metadata_source)
-    create_metadata_sample(metadata_source, number_of_records)
-    record_initial_findings
-    record_time_elapsed
+    sample_oids = oids_for_measurement(csv_path, metadata_sample.number_of_samples)
+    retrieve_sample_fields(sample_oids, metadata_sample.metadata_source)
+    record_initial_findings(metadata_sample)
+    record_time_elapsed(metadata_sample)
   end
 
-  def self.create_metadata_sample(metadata_source, number_of_records)
-    metadata_sample.update(
-      metadata_source: metadata_source,
-      number_of_samples: number_of_records
-    )
-    metadata_sample.save!
-  end
-
-  def self.metadata_sample
-    @metadata_sample ||= MetadataSample.new
-  end
-
-  def self.record_time_elapsed
+  def self.record_time_elapsed(metadata_sample)
     elapsed_time = Process.clock_gettime(Process::CLOCK_MONOTONIC) - start_time
     metadata_sample.update(
       seconds_elapsed: elapsed_time
@@ -45,7 +32,7 @@ class MetadataSamplingService
     end
   end
 
-  def self.record_initial_findings
+  def self.record_initial_findings(metadata_sample)
     cf = collected_fields.flatten
     grouped_fields = cf.group_by(&:itself).transform_values(&:count)
     grouped_fields.each do |field|
