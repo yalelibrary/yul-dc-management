@@ -1,11 +1,21 @@
 # Changelog
 
+## [v2.1.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.1.0) (2020-07-06)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.0.0...v2.1.0)
+
+**Merged pull requests:**
+
+- Pass ability to set logs to stdout [\#128](https://github.com/yalelibrary/yul-dc-management/pull/128) ([orangewolf](https://github.com/orangewolf))
+- 257 oid csv upload [\#124](https://github.com/yalelibrary/yul-dc-management/pull/124) ([jpengst](https://github.com/jpengst))
+
 ## [v2.0.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.0.0) (2020-07-02)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.8.0...v2.0.0)
 
 **Merged pull requests:**
 
+- Prep for 2.0.0 release [\#127](https://github.com/yalelibrary/yul-dc-management/pull/127) ([maxkadel](https://github.com/maxkadel))
 - Normalize db names [\#126](https://github.com/yalelibrary/yul-dc-management/pull/126) ([maxkadel](https://github.com/maxkadel))
 - Pass Rails relative url root in to app [\#123](https://github.com/yalelibrary/yul-dc-management/pull/123) ([orangewolf](https://github.com/orangewolf))
 - Activity stream performance [\#122](https://github.com/yalelibrary/yul-dc-management/pull/122) ([maxkadel](https://github.com/maxkadel))
@@ -158,6 +168,7 @@
 - Bump websocket-extensions from 0.1.3 to 0.1.4 [\#47](https://github.com/yalelibrary/yul-dc-management/pull/47) ([maxkadel](https://github.com/maxkadel))
 - Bump websocket-extensions from 0.1.4 to 0.1.5 [\#46](https://github.com/yalelibrary/yul-dc-management/pull/46) ([maxkadel](https://github.com/maxkadel))
 - refactor solr connection [\#45](https://github.com/yalelibrary/yul-dc-management/pull/45) ([maxkadel](https://github.com/maxkadel))
+- add additional author field [\#40](https://github.com/yalelibrary/yul-dc-management/pull/40) ([K8Sewell](https://github.com/K8Sewell))
 
 ## [v1.1.4](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.4) (2020-06-05)
 
@@ -166,7 +177,6 @@
 **Merged pull requests:**
 
 - Update base docker image and Ruby for latest passenger [\#42](https://github.com/yalelibrary/yul-dc-management/pull/42) ([maxkadel](https://github.com/maxkadel))
-- add additional author field [\#40](https://github.com/yalelibrary/yul-dc-management/pull/40) ([K8Sewell](https://github.com/K8Sewell))
 
 ## [v1.1.3](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.3) (2020-06-04)
 
