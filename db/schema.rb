@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_01_132914) do
+ActiveRecord::Schema.define(version: 2020_07_06_132234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,12 @@ ActiveRecord::Schema.define(version: 2020_07_01_132914) do
     t.index ["parent_object_id"], name: "index_dependent_objects_on_parent_object_id"
   end
 
+  create_table "metadata_samples", force: :cascade do |t|
+    t.string "metadata_source"
+    t.integer "number_of_samples"
+    t.decimal "seconds_elapsed"
+  end
+  
   create_table "oid_imports", force: :cascade do |t|
     t.text "csv"
     t.datetime "created_at", precision: 6, null: false
@@ -56,4 +62,15 @@ ActiveRecord::Schema.define(version: 2020_07_01_132914) do
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end
 
+  create_table "sample_fields", force: :cascade do |t|
+    t.string "field_name"
+    t.integer "field_count"
+    t.decimal "field_percent_of_total"
+    t.bigint "metadata_sample_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["metadata_sample_id"], name: "index_sample_fields_on_metadata_sample_id"
+  end
+
+  add_foreign_key "sample_fields", "metadata_samples", on_delete: :cascade
 end

@@ -139,7 +139,7 @@ For the most part images are created and maintained by the CI process. However, 
 ## Releasing a new version
 
 1. Decide on a new version number. We use [semantic versioning](https://semver.org/).
-2. Update the version number in `.github_changelog_generator`
+2. Update the version number in `.github_changelog_generator` && `.env`
 3. Go through all PRs since the last release and ensure that any **features** and **bug fixes** have been tagged with the appropriate label. No need to label it unless it is a feature or a bug fix.
 4. Run this command: `github_changelog_generator --token $YOUR_GITHUB_TOKEN`. This will re-generate `CHANGELOG.md`.
 5. Commit and merge the changes you just made with a message like "Prep for vX.Y.Z release"
