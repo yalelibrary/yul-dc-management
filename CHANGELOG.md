@@ -2,6 +2,19 @@
 
 ## [v2.1.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.1.0) (2020-07-06)
 
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.1.0...v2.1.0)
+
+**New Features:**
+
+- Ladybird statistics [\#129](https://github.com/yalelibrary/yul-dc-management/pull/129) ([maxkadel](https://github.com/maxkadel))
+
+**Technical Enhancements:**
+
+- Parallel naming for app and spec directories [\#132](https://github.com/yalelibrary/yul-dc-management/pull/132) ([maxkadel](https://github.com/maxkadel))
+- Update version in .env and update readme to include in release process [\#131](https://github.com/yalelibrary/yul-dc-management/pull/131) ([maxkadel](https://github.com/maxkadel))
+
+## [v2.1.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.1.0) (2020-07-06)
+
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.0.0...v2.1.0)
 
 **New Features:**
@@ -17,16 +30,22 @@
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.8.0...v2.0.0)
 
-**Technical Enhancements:**
+**New Features:**
 
-- Prep for 2.0.0 release [\#127](https://github.com/yalelibrary/yul-dc-management/pull/127) ([maxkadel](https://github.com/maxkadel))
+- Activity stream performance [\#122](https://github.com/yalelibrary/yul-dc-management/pull/122) ([maxkadel](https://github.com/maxkadel))
+- Add dependent object model method to populate [\#117](https://github.com/yalelibrary/yul-dc-management/pull/117) ([maxkadel](https://github.com/maxkadel))
+
+**Fixed bugs:**
+
 - Normalize db names [\#126](https://github.com/yalelibrary/yul-dc-management/pull/126) ([maxkadel](https://github.com/maxkadel))
 - Pass Rails relative url root in to app [\#123](https://github.com/yalelibrary/yul-dc-management/pull/123) ([orangewolf](https://github.com/orangewolf))
-- Activity stream performance [\#122](https://github.com/yalelibrary/yul-dc-management/pull/122) ([maxkadel](https://github.com/maxkadel))
 - Remove unused base file [\#121](https://github.com/yalelibrary/yul-dc-management/pull/121) ([orangewolf](https://github.com/orangewolf))
 - Update wiki with info about test coverage [\#120](https://github.com/yalelibrary/yul-dc-management/pull/120) ([bess](https://github.com/bess))
 - Report coverage from CircleCI [\#119](https://github.com/yalelibrary/yul-dc-management/pull/119) ([bess](https://github.com/bess))
-- Add dependent object model method to populate [\#117](https://github.com/yalelibrary/yul-dc-management/pull/117) ([maxkadel](https://github.com/maxkadel))
+
+**Technical Enhancements:**
+
+- Prep for 2.0.0 release [\#127](https://github.com/yalelibrary/yul-dc-management/pull/127) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.8.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.8.0) (2020-06-26)
 
@@ -154,6 +173,7 @@
 
 - Prep for v1.4.0 [\#56](https://github.com/yalelibrary/yul-dc-management/pull/56) ([FCRodriguez7](https://github.com/FCRodriguez7))
 - Slight refactor, more specific name [\#54](https://github.com/yalelibrary/yul-dc-management/pull/54) ([maxkadel](https://github.com/maxkadel))
+- Fixture indexing service takes metadata\_source [\#53](https://github.com/yalelibrary/yul-dc-management/pull/53) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.3.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.3.0) (2020-06-08)
 
@@ -170,7 +190,6 @@
 
 **Technical Enhancements:**
 
-- Fixture indexing service takes metadata\_source [\#53](https://github.com/yalelibrary/yul-dc-management/pull/53) ([maxkadel](https://github.com/maxkadel))
 - Allows us to refresh fixture data from the metadata cloud from ArchiveSpace, Voyager, or Ladybird [\#50](https://github.com/yalelibrary/yul-dc-management/pull/50) ([maxkadel](https://github.com/maxkadel))
 - Bump websocket-extensions from 0.1.3 to 0.1.4 [\#47](https://github.com/yalelibrary/yul-dc-management/pull/47) ([maxkadel](https://github.com/maxkadel))
 - Bump websocket-extensions from 0.1.4 to 0.1.5 [\#46](https://github.com/yalelibrary/yul-dc-management/pull/46) ([maxkadel](https://github.com/maxkadel))
