@@ -4,7 +4,17 @@ class MetadataCloudService
   ##
   # This is the method that is called from the yale:refresh_fixture_data rake task
   def self.refresh_fixture_data(oid_path, metadata_source)
-    MetadataCloudService.list_of_oids(oid_path).each do |oid|
+    oids = MetadataCloudService.list_of_oids(oid_path)
+    save_json_from_oids(oids, metadata_source)
+  end
+
+  def self.refresh_from_upload(csv, metadata_source)
+    oids = csv.entries.map { |r| r['oid'] }
+    save_json_from_oids(oids, metadata_source)
+  end
+
+  def self.save_json_from_oids(oids, metadata_source)
+    oids.each do |oid|
       next unless MetadataCloudService.build_metadata_cloud_url(oid, metadata_source)
       metadata_cloud_url = MetadataCloudService.build_metadata_cloud_url(oid, metadata_source)
       full_response = MetadataCloudService.mc_get(metadata_cloud_url)

@@ -1,0 +1,22 @@
+<div class="container">
+<h1>Oid Imports</h1>
+<%= link_to "Management Index", management_index_path, class: 'btn btn-primary mb-2' %>
+  <% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
+<br />
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col"> ID </th>
+        <th scope="col"> Created  </th>
+      </tr>
+    </thead>
+    <% @oid_imports.each do |object| %>
+    <tr>
+      <td><%= object.id %></td>
+      <td><%= object.created_at %></td>    
+    </tr>
+    <% end %>
+  </table>
+</div>

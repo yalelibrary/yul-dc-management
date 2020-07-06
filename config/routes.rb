@@ -8,4 +8,8 @@ Rails.application.routes.draw do
   get 'management/', to: 'management#index'
 
   get "management/index_to_solr/:metadata_source", to: 'management#index_to_solr', as: 'metadata_source'
+
+  resources :oid_imports do
+    collection { post :import }
+  end
 end
