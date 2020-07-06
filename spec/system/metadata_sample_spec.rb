@@ -6,7 +6,7 @@ RSpec.describe "Metadata Sample tasks", type: :system, clean: true do
   describe 'Click create metadata sample' do
     before do
       visit new_metadata_sample_path
-      fill_in('Metadata source', with: 'ladybird')
+      select('Ladybird')
       fill_in('Number of samples', with: 2)
       click_on("Create Metadata sample")
     end

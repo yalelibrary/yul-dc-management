@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_03_144638) do
+ActiveRecord::Schema.define(version: 2020_07_06_132234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,5 +68,5 @@ ActiveRecord::Schema.define(version: 2020_07_03_144638) do
     t.index ["metadata_sample_id"], name: "index_sample_fields_on_metadata_sample_id"
   end
 
-  add_foreign_key "sample_fields", "metadata_samples"
+  add_foreign_key "sample_fields", "metadata_samples", on_delete: :cascade
 end

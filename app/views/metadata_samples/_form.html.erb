@@ -11,9 +11,9 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :metadata_source %>
-    <%= form.text_field :metadata_source %>
+    <%= form.select(:metadata_source, [['Ladybird', 'ladybird'], ['Voyager', 'ils', disabled: true], ['ArchiveSpace', 'aspace', disabled: true]]) %>
   </div>
 
   <div class="field">
