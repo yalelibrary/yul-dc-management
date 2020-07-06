@@ -2,7 +2,7 @@
 require 'rails_helper'
 WebMock.allow_net_connect!
 
-RSpec.describe "Metadata Sample tasks", type: :system, clean: true do
+RSpec.describe "Metadata Sample tasks", type: :system, vpn_only: true do
   describe 'Click create metadata sample' do
     before do
       visit new_metadata_sample_path
