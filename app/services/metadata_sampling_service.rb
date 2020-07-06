@@ -13,7 +13,7 @@ class MetadataSamplingService
   def self.record_time_elapsed(metadata_sample)
     elapsed_time = Process.clock_gettime(Process::CLOCK_MONOTONIC) - start_time
     metadata_sample.update(
-      seconds_elapsed: elapsed_time
+      seconds_elapsed: elapsed_time.round(2)
     )
     metadata_sample.save!
   end
@@ -36,7 +36,7 @@ class MetadataSamplingService
     cf = collected_fields.flatten
     grouped_fields = cf.group_by(&:itself).transform_values(&:count)
     grouped_fields.each do |key, value|
-      field_over_total = value.to_f / grouped_fields.values.sum
+      field_over_total = value.to_f / metadata_sample.number_of_samples
       percent = field_over_total * 100
       sf = SampleField.new
       sf.update(

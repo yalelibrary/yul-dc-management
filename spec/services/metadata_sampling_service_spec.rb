@@ -30,6 +30,8 @@ RSpec.describe MetadataSamplingService, vpn_only: true do
         expect(SampleField.count).to be > 5
         expect(MetadataSample.last.seconds_elapsed).not_to be nil
         expect(sample_fields.where("field_count > 3")).to be_empty
+        record_type_sample = SampleField.where(field_name: "recordType").last
+        expect(record_type_sample.field_percent_of_total).to eq 100
       end
     end
   end

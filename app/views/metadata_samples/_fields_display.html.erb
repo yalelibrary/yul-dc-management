@@ -4,15 +4,13 @@
   <table class="table table-bordered table-striped">
     <thead class="thead-dark">
       <tr>
-        <th scope="col"> metadata_sample_id </th>
         <th scope="col"> Field Name </th>
         <th scope="col"> Field Count </th>
-        <th scope="col"> Field Percent of Total Fields </th>
+        <th scope="col"> Percent of Samples with Field </th>
       </tr>
     </thead>
     <% SampleField.where(metadata_sample_id: @metadata_sample.id).each do |field| %>
       <tr>
-        <td><%=  @metadata_sample.id  %></td>
         <td><%=  field.field_name  %></td>
         <td><%=  field.field_count  %></td>
         <td><%=  field.field_percent_of_total  %></td>
