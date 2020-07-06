@@ -21,7 +21,7 @@ COPY  --chown=app . $APP_HOME
 # cached pages / assets to be kept and cleaned the way Rails expects them to be while keeping deployment very fast.
 # The assets/packs get copied back by rsync on app load (see ops/nginx.sh)
 RUN /sbin/setuser app bash -l -c " \
-    DB_ADAPTER=nulldb bundle exec rake assets:precompile && \
+    RAILS_RELATIVE_URL_ROOT=/management DB_ADAPTER=nulldb bundle exec rake assets:precompile && \
     mv ./public/assets ./public/assets-new && \
     mv ./public/packs ./public/packs-new"
 
