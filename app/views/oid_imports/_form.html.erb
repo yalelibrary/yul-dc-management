@@ -1,0 +1,21 @@
+<h1>Import CSV</h1>
+<%= form_for(@oid_import, class: 'btn', multipart: true) do |f| %>
+  <% if @oid_import.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@oid_import.errors.count, "error") %> prohibited this event from being saved:</h2>
+      <ul>
+      <% @oid_import.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field" >
+    <%= f.file_field :file %>
+  </div>
+  <br />
+  <div class="actions">
+    <%= f.submit "Import", class: "btn btn-primary" %>
+    <%= link_to "OID Imports Index", oid_imports_path, class: 'btn btn-primary' %>
+  </div>
+<% end %>
