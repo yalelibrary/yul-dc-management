@@ -140,17 +140,10 @@ For the most part images are created and maintained by the CI process. However, 
 
 1. Decide on a new version number. We use [semantic versioning](https://semver.org/).
 2. Update the version number in `.github_changelog_generator`
-3. github_changelog_generator --user yalelibrary --project yul-dc-management --token $YOUR_GITHUB_TOKEN
-4. Commit and merge the changes you just made.
-5. Once those changes are merged to the `master` branch, in the github web UI go to `Releases` and tag a new release with the right version number. Paste in the release notes for this version from the changelog you generated. In the release notes, split out `Features`, `Bug Fixes`, and `Other`
-6. Once the CI build has completed for `master`, tag and push a docker hub image with the same release number:
-
-  ```
-  docker pull yalelibraryit/dc-management:f93089f70e18d6c6d77ee1a6b3b4866b6d284078 <-- the tag created by circleci
-  docker tag yalelibraryit/dc-management:f93089f70e18d6c6d77ee1a6b3b4866b6d284078 yalelibraryit/dc-management:v1.2.1 <-- the new, semantically versioned tag
-  docker push yalelibraryit/dc-management:v1.2.1 <-- now our semantically versioned tag will be available from docker hub
-  ```
-
+3. Go through all PRs since the last release and ensure that any **features** and **bug fixes** have been tagged with the appropriate label. No need to label it unless it is a feature or a bug fix.
+4. Run this command: `github_changelog_generator --token $YOUR_GITHUB_TOKEN`. This will re-generate `CHANGELOG.md`.
+5. Commit and merge the changes you just made with a message like "Prep for vX.Y.Z release"
+6. Once those changes are merged to the `master` branch, in the github web UI go to `Releases` and tag a new release with the right version number. Paste in the release notes for this release from the top of `CHANGELOG.md`
 7. Update `yul-dc-camerata` with the new version of management and submit a PR.
 
 ## Test coverage
