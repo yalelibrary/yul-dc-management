@@ -19,5 +19,10 @@ RSpec.describe "Metadata Sample tasks", type: :system, clean: true do
     it "displays the fields related to that Metadata Sample" do
       expect(page.body).to include "Sample fields"
     end
+
+    it "can delete a sample" do
+      visit metadata_samples_path
+      click_on("Destroy")
+    end
   end
 end

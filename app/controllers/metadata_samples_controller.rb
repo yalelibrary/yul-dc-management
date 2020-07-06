@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MetadataSamplesController < ApplicationController
-  before_action :set_metadata_sample, only: [:show, :edit, :update, :destroy]
+  before_action :set_metadata_sample, only: [:show, :destroy]
 
   # GET /metadata_samples
   # GET /metadata_samples.json
