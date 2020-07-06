@@ -93,4 +93,21 @@ RSpec.describe MetadataCloudService do
       end
     end
   end
+
+  context "if the MetadataCloud cannot find an object" do
+    let(:unfindable_oid_array) { ["17063396", "17029210"] }
+    let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "17063396.json") }
+    before do
+      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/17063396")
+        .to_return(status: 400, body: "ex: can't connect to ladybird")
+      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/17029210")
+        .to_return(status: 400, body: "ex: can't connect to ladybird")
+    end
+
+    it "does not save the response to the local filesystem" do
+      expect(path_to_example_file).not_to exist
+      described_class.save_json_from_oids(unfindable_oid_array, "ladybird")
+      expect(path_to_example_file).not_to exist
+    end
+  end
 end

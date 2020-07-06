@@ -18,6 +18,7 @@ class MetadataCloudService
       next unless MetadataCloudService.build_metadata_cloud_url(oid, metadata_source)
       metadata_cloud_url = MetadataCloudService.build_metadata_cloud_url(oid, metadata_source)
       full_response = MetadataCloudService.mc_get(metadata_cloud_url)
+      next unless full_response.status == 200
       MetadataCloudService.save_mc_json_to_file(full_response, oid, metadata_source)
     end
   end
