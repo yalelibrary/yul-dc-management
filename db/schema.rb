@@ -37,8 +37,10 @@ ActiveRecord::Schema.define(version: 2020_07_06_132234) do
     t.string "metadata_source"
     t.integer "number_of_samples"
     t.decimal "seconds_elapsed"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
-  
+
   create_table "oid_imports", force: :cascade do |t|
     t.text "csv"
     t.datetime "created_at", precision: 6, null: false
