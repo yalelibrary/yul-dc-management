@@ -37,7 +37,7 @@ services:
       - solr:/opt/solr/server/solr/mycores
     env_file:
       - .env
-    command: bash -c 'precreate-core ${SOLR_CORE} /opt/config; precreate-core ${SOLR_TEST_CORE} /opt/config; exec solr -f'
+    command: bash -c 'precreate-core ${SOLR_CORE} /opt/config; precreate-core ${SOLR_TEST_CORE} /opt/config;  precreate-core sample_from_ladybird /opt/config; exec solr -f'
 
 volumes:
   postgres:
