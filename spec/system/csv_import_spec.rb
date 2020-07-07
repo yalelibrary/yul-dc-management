@@ -19,7 +19,7 @@ RSpec.describe "Oid CSV Import", type: :system do
       .to_return(status: 200, body: metadata_cloud_response_body_4)
     stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16854285")
       .to_return(status: 200, body: metadata_cloud_response_body_5)
-    visit management_index_path
+    visit root_path
   end
 
   context "with existing oids" do

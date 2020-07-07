@@ -11,7 +11,7 @@ RSpec.describe "Management", type: :feature do
       ENV['IIIF_IMAGE_VERSION'] = 'v4.delta.chi'
       ENV['IIIF_MANIFEST_VERSION'] = 'v5.lambda.phi'
       ENV['CAMERATA_VERSION'] = 'v6.lambda.phi'
-      visit management_index_path
+      visit root_path
     end
 
     it 'dynamically displays deployed services' do
