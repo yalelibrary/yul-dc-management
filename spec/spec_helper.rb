@@ -17,7 +17,7 @@ Coveralls.wear!
 #
 
 ENV["RAILS_ENV"] ||= 'test'
-
+ENV["RAILS_RELATIVE_URL_ROOT"] = "/"
 require 'capybara/rspec'
 require 'webmock/rspec'
 

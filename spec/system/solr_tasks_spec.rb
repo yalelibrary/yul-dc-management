@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe "Solr Indexing Tasks", type: :system, clean: true do
   describe 'Click Index to Solr button' do
     before do
-      visit management_index_path
+      visit root_path
     end
 
     context "with a Voyager button press" do
