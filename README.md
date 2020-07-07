@@ -139,11 +139,12 @@ For the most part images are created and maintained by the CI process. However, 
 ## Releasing a new version
 
 1. Decide on a new version number. We use [semantic versioning](https://semver.org/).
-1. Update the version number in `.github_changelog_generator` && `.env`
-1. github_changelog_generator --user yalelibrary --project yul-dc-management --token $YOUR_GITHUB_TOKEN
-1. Commit and merge the changes you just made.
-1. Once those changes are merged to the `master` branch, in the github web UI go to `Releases` and tag a new release with the right version number. Paste in the release notes for this version from the changelog you generated. In the release notes, split out `Features`, `Bug Fixes`, and `Other`
-1. Once the CI build has completed for the new tag, update `yul-dc-camerata` with the new version of management and submit a PR.
+2. Update the version number in `.github_changelog_generator` && `.env`
+3. Go through all PRs since the last release and ensure that any **features** and **bug fixes** have been tagged with the appropriate label. No need to label it unless it is a feature or a bug fix.
+4. Run this command: `github_changelog_generator --token $YOUR_GITHUB_TOKEN`. This will re-generate `CHANGELOG.md`.
+5. Commit and merge the changes you just made with a message like "Prep for vX.Y.Z release"
+6. Once those changes are merged to the `master` branch, in the github web UI go to `Releases` and tag a new release with the right version number. Paste in the release notes for this release from the top of `CHANGELOG.md`
+7. Update `yul-dc-camerata` with the new version of management and submit a PR.
 
 ## Test coverage
 
