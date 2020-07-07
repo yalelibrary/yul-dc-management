@@ -20,3 +20,21 @@ oids.each do |row|
 end
 
 puts "There are now #{ParentObject.count} rows in the parent object table"
+
+metadata_sources = MetadataSource.create([
+  {
+    metadata_cloud_name: "ladybird",
+    display_name: "Ladybird",
+    file_prefix: ""
+  },
+  {
+    metadata_cloud_name: "ils",
+    display_name: "Voyager",
+    file_prefix: "V-"
+  },
+  {
+    metadata_cloud_name: "aspace",
+    display_name: "ArchiveSpace",
+    file_prefix: "AS-"
+  }
+  ])
