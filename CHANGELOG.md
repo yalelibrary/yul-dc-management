@@ -1,12 +1,18 @@
 # Changelog
 
-## [v2.1.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.1.0) (2020-07-06)
+## [v2.2.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.2.0) (2020-07-07)
 
-[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.1.0...v2.1.0)
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.1.0...v2.2.0)
 
 **New Features:**
 
+- Automate categories in change log & Release Notes [\#135](https://github.com/yalelibrary/yul-dc-management/pull/135) ([jpengst](https://github.com/jpengst))
+- Don't save responses from MetadataCloud if they are not successful [\#133](https://github.com/yalelibrary/yul-dc-management/pull/133) ([maxkadel](https://github.com/maxkadel))
 - Ladybird statistics [\#129](https://github.com/yalelibrary/yul-dc-management/pull/129) ([maxkadel](https://github.com/maxkadel))
+
+**Fixed bugs:**
+
+- Increase development and production parity by always using /management [\#134](https://github.com/yalelibrary/yul-dc-management/pull/134) ([orangewolf](https://github.com/orangewolf))
 
 **Technical Enhancements:**
 
@@ -194,6 +200,7 @@
 - Bump websocket-extensions from 0.1.3 to 0.1.4 [\#47](https://github.com/yalelibrary/yul-dc-management/pull/47) ([maxkadel](https://github.com/maxkadel))
 - Bump websocket-extensions from 0.1.4 to 0.1.5 [\#46](https://github.com/yalelibrary/yul-dc-management/pull/46) ([maxkadel](https://github.com/maxkadel))
 - refactor solr connection [\#45](https://github.com/yalelibrary/yul-dc-management/pull/45) ([maxkadel](https://github.com/maxkadel))
+- add additional author field [\#40](https://github.com/yalelibrary/yul-dc-management/pull/40) ([K8Sewell](https://github.com/K8Sewell))
 
 ## [v1.1.4](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.4) (2020-06-05)
 
@@ -202,15 +209,10 @@
 **Technical Enhancements:**
 
 - Update base docker image and Ruby for latest passenger [\#42](https://github.com/yalelibrary/yul-dc-management/pull/42) ([maxkadel](https://github.com/maxkadel))
-- add additional author field [\#40](https://github.com/yalelibrary/yul-dc-management/pull/40) ([K8Sewell](https://github.com/K8Sewell))
 
 ## [v1.1.3](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.3) (2020-06-04)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.1.2...v1.1.3)
-
-**Technical Enhancements:**
-
-- make sure gemfile.lock matches gemfile [\#39](https://github.com/yalelibrary/yul-dc-management/pull/39) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.1.2](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.2) (2020-06-03)
 
@@ -243,6 +245,7 @@
 
 **Technical Enhancements:**
 
+- make sure gemfile.lock matches gemfile [\#39](https://github.com/yalelibrary/yul-dc-management/pull/39) ([maxkadel](https://github.com/maxkadel))
 - Comment out vernacular until we get mappings [\#33](https://github.com/yalelibrary/yul-dc-management/pull/33) ([maxkadel](https://github.com/maxkadel))
 - remove outdated rake task / service [\#32](https://github.com/yalelibrary/yul-dc-management/pull/32) ([maxkadel](https://github.com/maxkadel))
 - Dependabot puma branch rename [\#31](https://github.com/yalelibrary/yul-dc-management/pull/31) ([maxkadel](https://github.com/maxkadel))
