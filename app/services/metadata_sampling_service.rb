@@ -44,14 +44,12 @@ class MetadataSamplingService
   end
 
   def self.summarize_data_from_solr
-    # Get all the field names from Solr
     solr = RSolr.connect url: "http://solr:8983/solr/sample_from_ladybird"
     all_fields = solr.get 'select', params: { q: '*:*', wt: 'csv', rows: 0, facet: true }
     all_fields.chomp!
     fields = all_fields.split(",")
     solr_only = ["_version_", "id", "score", "timestamp"]
     fields -= solr_only
-    # sort alphabetically
     fields.sort!
     results_csv = CSV.open('ladybird_results.csv', "w+", write_headers: true, headers: true)
     results_csv << ["field", "count", "missing", "count_distinct"]
@@ -64,13 +62,6 @@ class MetadataSamplingService
       results_csv.add_row(row)
     end
     results_csv.close
-    # for each field, do a loop
-    #    request the count, missing, etc.
-    #    parse it from JSON response
-    #    write as row to CSV
-    #  end
-    # close CSV
-    #
   end
 
   def self.all_the_files_with_keys
