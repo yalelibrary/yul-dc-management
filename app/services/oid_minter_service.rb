@@ -9,4 +9,9 @@ class OidMinterService
     end
     oids
   end
+
+  def self.initialize_sequence!
+    initial_value = Rails.application.config.oid_sequence_initial_value
+    ActiveRecord::Base.connection.execute("CREATE SEQUENCE IF NOT EXISTS OID_SEQUENCE START WITH #{initial_value};") unless 'nulldb'.equal?(ENV['DB_ADAPTER'])
+  end
 end
