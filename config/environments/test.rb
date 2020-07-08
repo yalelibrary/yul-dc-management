@@ -49,4 +49,7 @@ Rails.application.configure do
 
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
+
+  # Set the initial value for the OID sequence
+  config.oid_sequence_initial_value = 200_000_000
 end
