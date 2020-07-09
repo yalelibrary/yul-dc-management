@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   resources :oid_imports do
     collection { post :import }
   end
+
+  get 'api/oid/new(/:number)', to: 'oid_minter#generate_oids', as: :new_oid
 end
