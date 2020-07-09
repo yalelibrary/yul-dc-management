@@ -67,6 +67,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  # Set the initial value for the OID sequence
+  # Set the initial value for the OID sequence.
+  # The dev and test environments have very high starting values to distinguish from prod
   config.oid_sequence_initial_value = 300_000_000
 end
