@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe "/api/oid", type: :request do
+RSpec.describe "Request new OIDs", type: :request do
   context "Requesting a single OID" do
     it "returns a successful JSON response" do
       headers = { 'ACCEPT' => "application/json" }
