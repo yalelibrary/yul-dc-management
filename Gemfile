@@ -38,8 +38,6 @@ gem 'webpacker', '~> 4.0'
 # gem 'image_processing', '~> 1.2'
 
 group :development, :test do
-  # Used during Docker build
-  gem 'activerecord-nulldb-adapter'
   # Using Bixby for style for consistency with Blacklight application(s)
   gem 'bixby'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
