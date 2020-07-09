@@ -8,3 +8,4 @@ log/*
 tmp
 yarn.lock
 .github
+data_samples
