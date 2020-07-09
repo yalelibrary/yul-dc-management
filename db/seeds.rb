@@ -20,3 +20,13 @@ oids.each do |row|
 end
 
 puts "There are now #{ParentObject.count} rows in the parent object table"
+
+3.times do |user|
+  User.create!(
+    :email => "user#{user}@example.com",
+    :password => 'testing123'
+  )
+end
+
+puts "3 Users created"
+
