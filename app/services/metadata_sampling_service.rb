@@ -107,7 +107,7 @@ class MetadataSamplingService
     end
   end
 
-  def self.reverse_engineer_oids
+  def self.extract_oids_from_filenames
     Dir.foreach(File.join("spec", "fixtures", "ladybird")) do |filename|
       next if (filename == '.') || (filename == '..')
       oid = filename.match(/(\d*).json/)[1]
