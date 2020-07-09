@@ -10,5 +10,5 @@ Rails.application.routes.draw do
     collection { post :import }
   end
 
-  get 'api/oid(/:number)', to: 'oid_minter#generate_oids'
+  get 'api/oid/new(/:number)', to: 'oid_minter#generate_oids', as: :new_oid
 end
