@@ -3,7 +3,7 @@ services:
 
   web:
     build: .
-    image: '${REGISTRY_HOST}${REGISTRY_URI}:${MANAGEMENT_VERSION:-latest}'
+    image: '${REGISTRY_HOST}${REGISTRY_URI}:master'
     env_file:
       - .env
       - .secrets
