@@ -1,5 +1,18 @@
 # Changelog
 
+## [v2.3.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.3.0) (2020-07-10)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.2.0...v2.3.0)
+
+**New Features:**
+
+- Add an OID minter service and controller [\#137](https://github.com/yalelibrary/yul-dc-management/pull/137) ([mikeapp](https://github.com/mikeapp))
+
+**Technical Enhancements:**
+
+- For development pull master docker tag not the version docker tag [\#139](https://github.com/yalelibrary/yul-dc-management/pull/139) ([orangewolf](https://github.com/orangewolf))
+- Sample and save [\#138](https://github.com/yalelibrary/yul-dc-management/pull/138) ([dylansalay](https://github.com/dylansalay))
+
 ## [v2.2.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.2.0) (2020-07-07)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.1.0...v2.2.0)
@@ -16,6 +29,7 @@
 
 **Technical Enhancements:**
 
+- Version bump for 2.2.0 [\#136](https://github.com/yalelibrary/yul-dc-management/pull/136) ([orangewolf](https://github.com/orangewolf))
 - Parallel naming for app and spec directories [\#132](https://github.com/yalelibrary/yul-dc-management/pull/132) ([maxkadel](https://github.com/maxkadel))
 - Update version in .env and update readme to include in release process [\#131](https://github.com/yalelibrary/yul-dc-management/pull/131) ([maxkadel](https://github.com/maxkadel))
 
@@ -158,7 +172,6 @@
 - Separate vpn-only tests more cleanly [\#64](https://github.com/yalelibrary/yul-dc-management/pull/64) ([maxkadel](https://github.com/maxkadel))
 - Normalize environment variables for tagged versions to match Camerata [\#63](https://github.com/yalelibrary/yul-dc-management/pull/63) ([maxkadel](https://github.com/maxkadel))
 - Replace credentials.yml.enc with new file encoded with a known key [\#62](https://github.com/yalelibrary/yul-dc-management/pull/62) ([mark-dce](https://github.com/mark-dce))
-- Service Status Display Table [\#57](https://github.com/yalelibrary/yul-dc-management/pull/57) ([dylansalay](https://github.com/dylansalay))
 
 ## [v1.4.1](https://github.com/yalelibrary/yul-dc-management/tree/v1.4.1) (2020-06-11)
 
@@ -196,11 +209,11 @@
 
 **Technical Enhancements:**
 
+- Service Status Display Table [\#57](https://github.com/yalelibrary/yul-dc-management/pull/57) ([dylansalay](https://github.com/dylansalay))
 - Allows us to refresh fixture data from the metadata cloud from ArchiveSpace, Voyager, or Ladybird [\#50](https://github.com/yalelibrary/yul-dc-management/pull/50) ([maxkadel](https://github.com/maxkadel))
 - Bump websocket-extensions from 0.1.3 to 0.1.4 [\#47](https://github.com/yalelibrary/yul-dc-management/pull/47) ([maxkadel](https://github.com/maxkadel))
 - Bump websocket-extensions from 0.1.4 to 0.1.5 [\#46](https://github.com/yalelibrary/yul-dc-management/pull/46) ([maxkadel](https://github.com/maxkadel))
 - refactor solr connection [\#45](https://github.com/yalelibrary/yul-dc-management/pull/45) ([maxkadel](https://github.com/maxkadel))
-- add additional author field [\#40](https://github.com/yalelibrary/yul-dc-management/pull/40) ([K8Sewell](https://github.com/K8Sewell))
 
 ## [v1.1.4](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.4) (2020-06-05)
 
@@ -209,10 +222,15 @@
 **Technical Enhancements:**
 
 - Update base docker image and Ruby for latest passenger [\#42](https://github.com/yalelibrary/yul-dc-management/pull/42) ([maxkadel](https://github.com/maxkadel))
+- add additional author field [\#40](https://github.com/yalelibrary/yul-dc-management/pull/40) ([K8Sewell](https://github.com/K8Sewell))
 
 ## [v1.1.3](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.3) (2020-06-04)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v1.1.2...v1.1.3)
+
+**Technical Enhancements:**
+
+- make sure gemfile.lock matches gemfile [\#39](https://github.com/yalelibrary/yul-dc-management/pull/39) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.1.2](https://github.com/yalelibrary/yul-dc-management/tree/v1.1.2) (2020-06-03)
 
@@ -245,7 +263,6 @@
 
 **Technical Enhancements:**
 
-- make sure gemfile.lock matches gemfile [\#39](https://github.com/yalelibrary/yul-dc-management/pull/39) ([maxkadel](https://github.com/maxkadel))
 - Comment out vernacular until we get mappings [\#33](https://github.com/yalelibrary/yul-dc-management/pull/33) ([maxkadel](https://github.com/maxkadel))
 - remove outdated rake task / service [\#32](https://github.com/yalelibrary/yul-dc-management/pull/32) ([maxkadel](https://github.com/maxkadel))
 - Dependabot puma branch rename [\#31](https://github.com/yalelibrary/yul-dc-management/pull/31) ([maxkadel](https://github.com/maxkadel))
