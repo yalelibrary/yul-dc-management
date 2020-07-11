@@ -41,6 +41,14 @@ ActiveRecord::Schema.define(version: 2020_07_07_130921) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "metadata_sources", force: :cascade do |t|
+    t.string "metadata_cloud_name"
+    t.string "display_name"
+    t.string "file_prefix"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "oid_imports", force: :cascade do |t|
     t.text "csv"
     t.datetime "created_at", precision: 6, null: false
