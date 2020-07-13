@@ -21,25 +21,93 @@ class ParentObjectsController < ApplicationController
   # GET /parent_objects/1/edit
   def edit; end
 
-  def fetch_and_save_ladybird_record(oid)
-    mc_url = "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{oid}"
+  def mc_get(mc_url)
     metadata_cloud_username = ENV["MC_USER"]
     metadata_cloud_password = ENV["MC_PW"]
-    full_response = HTTP.basic_auth(user: metadata_cloud_username, pass: metadata_cloud_password).get(mc_url)
+    HTTP.basic_auth(user: metadata_cloud_username, pass: metadata_cloud_password).get(mc_url)
+  end
+
+  # Takes an oid and returns the MetadataCloud Ladybird record as parsed JSON
+  def fetch_ladybird_record(oid)
+    mc_url = "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{oid}"
+    fetch_record(mc_url)
+  end
+
+  # Takes a JSON record from the MetadataCloud and saves the Ladybird-specific info to the DB
+  def save_ladybird_info_to_db(lb_record)
+    @parent_object.update(
+      bib: lb_record["orbisRecord"],
+      barcode: lb_record["orbisBarcode"],
+      aspace_uri: lb_record["archiveSpaceUri"],
+      visibility: lb_record["itemPermission"],
+      ladybird_json: lb_record,
+      last_ladybird_update: DateTime.current
+    )
+    @parent_object.save
+  end
+
+  def fetch_voyager_record(lb_record, _oid)
+    identifier_block = if lb_record["orbisBarcode"].nil?
+                         "/bib/#{lb_record['orbisRecord']}"
+                       else
+                         "/barcode/#{lb_record['orbisBarcode']}?bib=#{lb_record['orbisRecord']}"
+                       end
+    mc_url = "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils#{identifier_block}"
+    fetch_record(mc_url)
+  end
+
+  def save_voyager_info_to_db(v_record)
+    @parent_object.update(
+      holding: v_record["holdingId"],
+      item: v_record["itemId"],
+      voyager_json: v_record,
+      last_id_update: DateTime.current,
+      last_voyager_update: DateTime.current
+    )
+    @parent_object.save
+  end
+
+  def fetch_aspace_record(lb_record)
+    identifier_block = lb_record["archiveSpaceUri"]
+    mc_url = "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace#{identifier_block}"
+    fetch_record(mc_url)
+  end
+
+  def fetch_record(mc_url)
+    full_response = mc_get(mc_url)
     return unless full_response.status == 200
-    MetadataCloudService.save_mc_json_to_file(full_response, oid, "ladybird")
+    raw_metadata = full_response.body.to_str
+    JSON.parse(raw_metadata)
+  end
+
+  def save_aspace_info_to_db(v_record)
+    @parent_object.update(
+      aspace_json: v_record,
+      last_aspace_update: DateTime.current
+    )
+    @parent_object.save
+  end
+
+  def get_all_mc_data(parent_object_params)
+    lb_record = fetch_ladybird_record(parent_object_params[:oid])
+    save_ladybird_info_to_db(lb_record)
+    v_record = fetch_voyager_record(lb_record, parent_object_params[:oid])
+    save_voyager_info_to_db(v_record)
+    return unless lb_record["archiveSpaceUri"]
+    a_record = fetch_aspace_record(lb_record)
+    save_aspace_info_to_db(a_record)
   end
 
   # POST /parent_objects
   # POST /parent_objects.json
   def create
     @parent_object = ParentObject.new(parent_object_params)
-
+    get_all_mc_data(parent_object_params)
     respond_to do |format|
       if @parent_object.save
         format.html { redirect_to @parent_object, notice: 'Parent object was successfully created.' }
         format.json { render :show, status: :created, location: @parent_object }
-        fetch_and_save_ladybird_record(parent_object_params[:oid])
+
       else
         format.html { render :new }
         format.json { render json: @parent_object.errors, status: :unprocessable_entity }
