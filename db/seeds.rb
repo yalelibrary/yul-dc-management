@@ -6,21 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-require 'csv'
-
-oid_path = Rails.root.join("db", "parent_oids.csv")
-fixture_ids_table = CSV.read(oid_path, headers: true)
-oids = fixture_ids_table.by_col[0]
-
-oids.each do |row|
-  po = ParentObject.new
-  po.oid = row
-  po.save
-  puts "#{po.oid} saved"
-end
-
-puts "There are now #{ParentObject.count} rows in the parent object table"
-
 metadata_sources = MetadataSource.create([
   {
     metadata_cloud_name: "ladybird",
@@ -38,3 +23,18 @@ metadata_sources = MetadataSource.create([
     file_prefix: "AS-"
   }
   ])
+
+require 'csv'
+
+oid_path = Rails.root.join("db", "parent_oids.csv")
+fixture_ids_table = CSV.read(oid_path, headers: true)
+oids = fixture_ids_table.by_col[0]
+
+oids.each do |row|
+  po = ParentObject.new
+  po.oid = row
+  po.save
+  puts "#{po.oid} saved"
+end
+
+puts "There are now #{ParentObject.count} rows in the parent object table"

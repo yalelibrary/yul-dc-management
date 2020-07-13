@@ -4,9 +4,9 @@
   "uri": "/aspace/repositories/11/archival_objects/515305",
   "identifier": "/aspace/repositories/11/archival_objects/515305",
   "localRecordNumber": "YCAL MSS 1000",
-  "containerGrouping": "1",
+  "containerGrouping": "Box 1",
   "creator": [
-    "Unauthorized"
+    "Fowler & Wells"
   ],
   "title": [
     "Poster 1: Destructiveness small, Destructiveness large, Hydrocephalus James Cardinal, Thomas Sewall, Red Jacket, Language large"
@@ -21,7 +21,7 @@
     "A set of nineteen posters with 112 bust portraits depicting identified men and women, primarily authors, artists, scientists, monarchs, and religious and political leaders from the eighteenth and nineteenth centuries, with a group of idealized heads illustrating characteristics identified by phrenologists, such as inhabitiveness and philoprogenitivenes. The portraits, or plates, were rendered in sepia ink and wash on paper, and were mounted on linen or canvas in groups of six; each set has wooden rods at each end to aid in hanging for display, and rolling for compact storage and travel. Each portrait or head is captioned with name of the sitter or the prominent character type portrayed. The posters were likely intended as exhibits supporting phrenology lectures."
   ],
   "rights": [
-    "This collection is open for research.",
+    "The materials are open for research.",
     "The Fowler & Wells Portrait Posters for Physiognomy Lectures is the physical property of the Beinecke Rare Book and Manuscript Library, Yale University. Literary rights, including copyright, belong to the authors or their legal heirs and assigns. For further information, consult the appropriate curator."
   ],
   "orbisRecord": "12307100",
@@ -44,7 +44,7 @@
   "dependentUris": [
     "/aspace/repositories/11/archival_objects/515305",
     "/aspace/repositories/11/resources/1394",
-    "/aspace/agents/corporate_entities/2251",
+    "/aspace/agents/corporate_entities/12845",
     "/aspace/repositories/11/top_containers/66093"
   ],
   "children": [

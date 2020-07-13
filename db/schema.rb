@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_07_130921) do
+ActiveRecord::Schema.define(version: 2020_07_11_130412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,11 @@ ActiveRecord::Schema.define(version: 2020_07_07_130921) do
     t.datetime "last_voyager_update"
     t.datetime "last_aspace_update"
     t.string "visibility"
+    t.bigint "metadata_source_id", default: 1, null: false
+    t.jsonb "ladybird_json"
+    t.jsonb "voyager_json"
+    t.jsonb "aspace_json"
+    t.index ["metadata_source_id"], name: "index_parent_objects_on_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end
 
@@ -82,5 +87,6 @@ ActiveRecord::Schema.define(version: 2020_07_07_130921) do
     t.index ["metadata_sample_id"], name: "index_sample_fields_on_metadata_sample_id"
   end
 
+  add_foreign_key "parent_objects", "metadata_sources"
   add_foreign_key "sample_fields", "metadata_samples", on_delete: :cascade
 end

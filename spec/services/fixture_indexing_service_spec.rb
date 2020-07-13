@@ -2,6 +2,10 @@
 require "rails_helper"
 
 RSpec.describe FixtureIndexingService, clean: true do
+  let(:ms) { FactoryBot.create(:metadata_source) }
+  before do
+    ms
+  end
   context "with ArchiveSpace fixture data" do
     let(:metadata_fixture_path) { File.join(fixture_path, metadata_source) }
     let(:oid) { "16854285" }

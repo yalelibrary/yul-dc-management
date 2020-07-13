@@ -4,6 +4,7 @@ require "rails_helper"
 RSpec.describe FixtureParsingService do
   let(:oid) { "2003431" }
   let(:metadata_source) { "ladybird" }
+  let(:ms) { FactoryBot.create(:metadata_source) }
   let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
 
   it "can return a hash from a fixture file" do
@@ -16,6 +17,9 @@ RSpec.describe FixtureParsingService do
     let(:bib) { "3163155" }
     let(:po) { FactoryBot.create(:parent_object, oid: oid, bib: bib) }
     let(:fps) { described_class.new }
+    before do
+      ms
+    end
 
     it "can update the bib" do
       po

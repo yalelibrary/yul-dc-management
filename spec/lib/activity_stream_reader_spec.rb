@@ -3,6 +3,7 @@ require "rails_helper"
 require "support/time_helpers"
 
 RSpec.describe ActivityStreamReader do
+  let(:ms) { FactoryBot.create(:metadata_source) }
   let(:asr) { described_class.new }
   let(:relevant_parent_object) do
     FactoryBot.create(
@@ -202,6 +203,7 @@ RSpec.describe ActivityStreamReader do
   before do
     # Part of ActiveSupport, see support/time_helpers.rb, behaves similarly to old TimeCop gem
     freeze_time
+    ms
   end
 
   # There will be a automated job that fetches updates from the MetadataCloud on some configured schedule.
