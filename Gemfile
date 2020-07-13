@@ -4,8 +4,10 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Reduces boot times through caching; required in config/boot.rb
+gem 'activerecord-nulldb-adapter'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap', '~> 4.5'
+gem 'devise'
 gem 'github_changelog_generator'
 gem 'honeybadger', '~> 4.0'
 gem 'http', '~> 4.4', '>= 4.4.1'
