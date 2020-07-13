@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   resources :parent_objects
+  devise_for :users
   resources :metadata_samples
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: 'management#index'

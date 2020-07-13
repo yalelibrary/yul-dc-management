@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class OidMinterController < ApplicationController
+  before_action :authenticate_user!
+
   def generate_oids
     number = params[:number]
     number ||= 1
