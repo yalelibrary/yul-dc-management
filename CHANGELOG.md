@@ -1,5 +1,17 @@
 # Changelog
 
+## [v2.4.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.4.0) (2020-07-13)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.3.0...v2.4.0)
+
+**New Features:**
+
+- 322 Authenticate oid request [\#141](https://github.com/yalelibrary/yul-dc-management/pull/141) ([dylansalay](https://github.com/dylansalay))
+
+**Technical Enhancements:**
+
+- Configure yarn correctly, set up volumes to boost dev speed [\#142](https://github.com/yalelibrary/yul-dc-management/pull/142) ([orangewolf](https://github.com/orangewolf))
+
 ## [v2.3.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.3.0) (2020-07-10)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.2.0...v2.3.0)
@@ -10,6 +22,7 @@
 
 **Technical Enhancements:**
 
+- Prep for v2.3.0 [\#140](https://github.com/yalelibrary/yul-dc-management/pull/140) ([FCRodriguez7](https://github.com/FCRodriguez7))
 - For development pull master docker tag not the version docker tag [\#139](https://github.com/yalelibrary/yul-dc-management/pull/139) ([orangewolf](https://github.com/orangewolf))
 - Sample and save [\#138](https://github.com/yalelibrary/yul-dc-management/pull/138) ([dylansalay](https://github.com/dylansalay))
 
@@ -172,6 +185,7 @@
 - Separate vpn-only tests more cleanly [\#64](https://github.com/yalelibrary/yul-dc-management/pull/64) ([maxkadel](https://github.com/maxkadel))
 - Normalize environment variables for tagged versions to match Camerata [\#63](https://github.com/yalelibrary/yul-dc-management/pull/63) ([maxkadel](https://github.com/maxkadel))
 - Replace credentials.yml.enc with new file encoded with a known key [\#62](https://github.com/yalelibrary/yul-dc-management/pull/62) ([mark-dce](https://github.com/mark-dce))
+- Service Status Display Table [\#57](https://github.com/yalelibrary/yul-dc-management/pull/57) ([dylansalay](https://github.com/dylansalay))
 
 ## [v1.4.1](https://github.com/yalelibrary/yul-dc-management/tree/v1.4.1) (2020-06-11)
 
@@ -209,7 +223,6 @@
 
 **Technical Enhancements:**
 
-- Service Status Display Table [\#57](https://github.com/yalelibrary/yul-dc-management/pull/57) ([dylansalay](https://github.com/dylansalay))
 - Allows us to refresh fixture data from the metadata cloud from ArchiveSpace, Voyager, or Ladybird [\#50](https://github.com/yalelibrary/yul-dc-management/pull/50) ([maxkadel](https://github.com/maxkadel))
 - Bump websocket-extensions from 0.1.3 to 0.1.4 [\#47](https://github.com/yalelibrary/yul-dc-management/pull/47) ([maxkadel](https://github.com/maxkadel))
 - Bump websocket-extensions from 0.1.4 to 0.1.5 [\#46](https://github.com/yalelibrary/yul-dc-management/pull/46) ([maxkadel](https://github.com/maxkadel))
