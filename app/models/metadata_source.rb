@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class MetadataSource < ApplicationRecord
-
   def fetch_record(parent_object)
     mc_url = parent_object.send(url_type)
     full_response = mc_get(mc_url)

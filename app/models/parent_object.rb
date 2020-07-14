@@ -17,24 +17,24 @@ class ParentObject < ApplicationRecord
   # Takes a JSON record from the MetadataCloud and saves the Ladybird-specific info to the DB
   def ladybird_json=(lb_record)
     super(lb_record)
-    bib = lb_record["orbisRecord"]
-    barcode = lb_record["orbisBarcode"]
-    aspace_uri = lb_record["archiveSpaceUri"]
-    visibility = lb_record["itemPermission"]
-    last_ladybird_update = DateTime.current
+    self.bib = lb_record["orbisRecord"]
+    self.barcode = lb_record["orbisBarcode"]
+    self.aspace_uri = lb_record["archiveSpaceUri"]
+    self.visibility = lb_record["itemPermission"]
+    self.last_ladybird_update = DateTime.current
   end
 
   def voyager_json=(v_record)
     super(v_record)
-    holding = v_record["holdingId"]
-    item = v_record["itemId"]
-    last_id_update = DateTime.current
-    last_voyager_update = DateTime.current
+    self.holding = v_record["holdingId"]
+    self.item = v_record["itemId"]
+    self.last_id_update = DateTime.current
+    self.last_voyager_update = DateTime.current
   end
 
   def aspace_json=(a_record)
     super(a_record)
-    last_aspace_update = DateTime.current
+    self.last_aspace_update = DateTime.current
   end
 
   def ladybird_cloud_url
