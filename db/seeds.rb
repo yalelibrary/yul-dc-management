@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-metadata_sources = MetadataSource.create([
+[
   {
     metadata_cloud_name: "ladybird",
     display_name: "Ladybird",
@@ -22,29 +22,45 @@ metadata_sources = MetadataSource.create([
     display_name: "ArchiveSpace",
     file_prefix: "AS-"
   }
-  ])
+].each do |obj|
+  MetadataSource.where(metadata_cloud_name: obj[:metadata_cloud_name]).first_or_create do |ms|
+    ms.display_name = obj[:display_name]
+    ms.file_prefix = obj[:file_prefix]
 
-require 'csv'
-
-oid_path = Rails.root.join("db", "parent_oids.csv")
-fixture_ids_table = CSV.read(oid_path, headers: true)
-oids = fixture_ids_table.by_col[0]
-
-oids.each do |row|
-  po = ParentObject.new
-  po.oid = row
-  po.save
-  puts "#{po.oid} saved"
+    puts "MetadataSource created #{ms.metadata_cloud_name}"
+  end
 end
+puts "MetadataSources verified"
 
-puts "There are now #{ParentObject.count} rows in the parent object table"
+[{
+  email: "goobi@yale.edu",
+  password: ENV["GOOBI_USER_PASSWORD"] || "testing123"
+  },
+{
+  email: "admin@yale.edu",
+  password: ENV["ADMIN_USER_PASSWORD"] || "testing123"
+}].each do |obj|
+  User.where(email: obj[:email]).first_or_create do |u|
+    u.password = obj[:password]
 
-3.times do |user|
-  User.create!(
-    :email => "user#{user}@example.com",
-    :password => 'testing123'
-  )
+    puts "User created #{u.email}"
+  end
 end
+puts "Initial users verified"
 
-puts "3 Users created"
+if Rails.env.development?
+  require 'csv'
 
+  oid_path = Rails.root.join("db", "parent_oids.csv")
+  fixture_ids_table = CSV.read(oid_path, headers: true)
+  oids = fixture_ids_table.by_col[0]
+
+  oids.each do |row|
+    po = ParentObject.new
+    po.oid = row
+    po.save
+    puts "#{po.oid} saved"
+  end
+
+  puts "There are now #{ParentObject.count} rows in the parent object table"
+end

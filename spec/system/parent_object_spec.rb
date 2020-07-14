@@ -2,7 +2,9 @@
 require 'rails_helper'
 
 RSpec.describe "ParentObjects", type: :system do
-  let(:ms) { FactoryBot.create(:metadata_source) }
+  let(:ms_ladybird) { FactoryBot.create(:metadata_source) }
+  let(:ms_voyager) { FactoryBot.create(:metadata_source_voyager) }
+  let(:ms_aspace) { FactoryBot.create(:metadata_source_aspace) }
   let(:path_to_ladybird_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "2012036.json") }
   let(:path_to_voyager_example_file) { Rails.root.join("spec", "fixtures", "ils", "V-2012036.json") }
   let(:path_to_aspace_example_file) { Rails.root.join("spec", "fixtures", "aspace", "AS-2012036.json") }
@@ -12,7 +14,9 @@ RSpec.describe "ParentObjects", type: :system do
 
   context "creating a new ParentObject" do
     before do
-      ms
+      ms_ladybird
+      ms_voyager
+      ms_aspace
       visit parent_objects_path
       stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2012036")
         .to_return(status: 200, body: mc_ladybird_response_body)

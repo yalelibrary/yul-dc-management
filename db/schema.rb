@@ -69,11 +69,11 @@ ActiveRecord::Schema.define(version: 2020_07_11_130412) do
     t.datetime "last_voyager_update"
     t.datetime "last_aspace_update"
     t.string "visibility"
-    t.bigint "metadata_source_id", default: 1, null: false
+    t.bigint "authoritative_metadata_source_id", default: 1, null: false
     t.jsonb "ladybird_json"
     t.jsonb "voyager_json"
     t.jsonb "aspace_json"
-    t.index ["metadata_source_id"], name: "index_parent_objects_on_metadata_source_id"
+    t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end
 
@@ -99,6 +99,5 @@ ActiveRecord::Schema.define(version: 2020_07_11_130412) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "parent_objects", "metadata_sources"
   add_foreign_key "sample_fields", "metadata_samples", on_delete: :cascade
 end
