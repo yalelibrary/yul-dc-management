@@ -8,9 +8,9 @@
     </button>
 
     <div class="dropdown-menu">
-      <%= link_to "Index Voyager Records to Solr", ms_path("ils"), class: "dropdown-item" %>
-      <%= link_to "Index Ladybird Records to Solr", ms_path("ladybird"), class: "dropdown-item" %>
-      <%= link_to "Index ArchiveSpace Records to Solr", ms_path("aspace"), class: "dropdown-item" %>
+      <%= link_to "Index Voyager Records to Solr", metadata_source_path("ils"), class: "dropdown-item" %>
+      <%= link_to "Index Ladybird Records to Solr", metadata_source_path("ladybird"), class: "dropdown-item" %>
+      <%= link_to "Index ArchiveSpace Records to Solr", metadata_source_path("aspace"), class: "dropdown-item" %>
     </div>
   </div>
   <br />
