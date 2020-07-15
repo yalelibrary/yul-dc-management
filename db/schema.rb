@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_09_205615) do
+ActiveRecord::Schema.define(version: 2020_07_11_130412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,14 @@ ActiveRecord::Schema.define(version: 2020_07_09_205615) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "metadata_sources", force: :cascade do |t|
+    t.string "metadata_cloud_name"
+    t.string "display_name"
+    t.string "file_prefix"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "oid_imports", force: :cascade do |t|
     t.text "csv"
     t.datetime "created_at", precision: 6, null: false
@@ -61,6 +69,11 @@ ActiveRecord::Schema.define(version: 2020_07_09_205615) do
     t.datetime "last_voyager_update"
     t.datetime "last_aspace_update"
     t.string "visibility"
+    t.bigint "authoritative_metadata_source_id", default: 1, null: false
+    t.jsonb "ladybird_json"
+    t.jsonb "voyager_json"
+    t.jsonb "aspace_json"
+    t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end
 

@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Oid:</strong>
+  <%= @parent_object.oid %>
+</p>
+
+<p>
+  <strong>Bib:</strong>
+  <%= @parent_object.bib %>
+</p>
+
+<p>
+  <strong>Holding:</strong>
+  <%= @parent_object.holding %>
+</p>
+
+<p>
+  <strong>Item:</strong>
+  <%= @parent_object.item %>
+</p>
+
+<p>
+  <strong>Barcode:</strong>
+  <%= @parent_object.barcode %>
+</p>
+
+<p>
+  <strong>Aspace uri:</strong>
+  <%= @parent_object.aspace_uri %>
+</p>
+
+<p>
+  <strong>Last ladybird update:</strong>
+  <%= @parent_object.last_ladybird_update %>
+</p>
+
+<p>
+  <strong>Last voyager update:</strong>
+  <%= @parent_object.last_voyager_update %>
+</p>
+
+<p>
+  <strong>Last aspace update:</strong>
+  <%= @parent_object.last_aspace_update %>
+</p>
+
+<p>
+  <strong>Visibility:</strong>
+  <%= @parent_object.visibility %>
+</p>
+
+<p>
+  <strong>Last id update:</strong>
+  <%= @parent_object.last_id_update %>
+</p>
+
+<p>
+  <strong>Metadata source:</strong>
+  <%= @parent_object.authoritative_metadata_source_id %>
+</p>
+
+<%= link_to 'Edit', edit_parent_object_path(@parent_object) %> |
+<%= link_to 'Back', parent_objects_path %>

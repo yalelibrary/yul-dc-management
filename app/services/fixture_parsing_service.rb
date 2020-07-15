@@ -12,36 +12,6 @@ class FixtureParsingService
     JSON.parse(fixture_file)
   end
 
-  def self.find_source_ids
-    parent_objects = ParentObject.all
-    parent_objects.each do |parent_object|
-      oid = parent_object["oid"]
-      find_source_ids_for(oid)
-    end
-  end
-
-  def self.find_source_ids_for(oid)
-    ladybird_hash = fixture_file_to_hash(oid, "ladybird")
-    bib = ladybird_hash["orbisRecord"]
-    barcode = ladybird_hash["orbisBarcode"]
-    if bib && barcode
-      voyager_hash = fixture_file_to_hash(oid, "ils")
-      holding = voyager_hash["holdingId"]
-      item = voyager_hash["itemId"]
-    end
-    po = ParentObject.find_by(oid: oid)
-    po.update(
-      bib: ladybird_hash["orbisRecord"],
-      barcode: ladybird_hash["orbisBarcode"],
-      aspace_uri: ladybird_hash["archiveSpaceUri"],
-      holding: holding,
-      item: item,
-      visibility: ladybird_hash["itemPermission"],
-      last_id_update: DateTime.current
-    )
-    po.save
-  end
-
   def self.find_dependent_uris(metadata_source)
     parent_objects = ParentObject.all
     parent_objects.each do |parent_object|
