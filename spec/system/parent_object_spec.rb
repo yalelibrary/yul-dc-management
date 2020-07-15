@@ -2,29 +2,19 @@
 require 'rails_helper'
 
 RSpec.describe "ParentObjects", type: :system do
-  let(:ms_ladybird) { FactoryBot.create(:metadata_source) }
-  let(:ms_voyager) { FactoryBot.create(:metadata_source_voyager) }
-  let(:ms_aspace) { FactoryBot.create(:metadata_source_aspace) }
-  let(:path_to_ladybird_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "2012036.json") }
-  let(:path_to_voyager_example_file) { Rails.root.join("spec", "fixtures", "ils", "V-2012036.json") }
-  let(:path_to_aspace_example_file) { Rails.root.join("spec", "fixtures", "aspace", "AS-2012036.json") }
-  let(:mc_ladybird_response_body) { File.open(path_to_ladybird_example_file).read }
-  let(:mc_voyager_response_body) { File.open(path_to_voyager_example_file).read }
-  let(:mc_aspace_response_body) { File.open(path_to_aspace_example_file).read }
-
+  before do
+    prep_metadata_call
+    visit parent_objects_path
+    click_on("New Parent Object")
+  end
   context "creating a new ParentObject" do
     before do
-      ms_ladybird
-      ms_voyager
-      ms_aspace
-      visit parent_objects_path
       stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2012036")
-        .to_return(status: 200, body: mc_ladybird_response_body)
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012036.json")).read)
       stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002091459793?bib=6805375")
-        .to_return(status: 200, body: mc_voyager_response_body)
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2012036.json")).read)
       stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/555049")
-        .to_return(status: 200, body: mc_aspace_response_body)
-      click_on("New Parent Object")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-2012036.json")).read)
       fill_in('Oid', with: "2012036")
       click_on("Create Parent object")
     end
@@ -36,21 +26,77 @@ RSpec.describe "ParentObjects", type: :system do
     it "saves the Ladybird record from the MC to the DB" do
       po = ParentObject.find_by(oid: "2012036")
       expect(po.ladybird_json).not_to be nil
+      expect(po.ladybird_json).not_to be_empty
     end
 
     it "has the ids from the Ladybird record" do
       po = ParentObject.find_by(oid: "2012036")
       expect(po.bib).to eq "6805375"
+      expect(po.barcode).to eq "39002091459793"
+      expect(po.aspace_uri).to eq "/repositories/11/archival_objects/555049"
+      expect(po.visibility).to eq "Public"
     end
 
-    it "fetches the Voyager record" do
+    it "has the record and ids from the Voyager record" do
       po = ParentObject.find_by(oid: "2012036")
       expect(po.voyager_json).not_to be nil
+      expect(po.voyager_json).not_to be_empty
+      expect(po.holding).to eq "7397126"
+      expect(po.item).to eq "8200460"
     end
 
-    it "fetches the ArchiveSpace record, if applicable" do
+    it "fetches the ArchiveSpace record when applicable" do
       po = ParentObject.find_by(oid: "2012036")
       expect(po.aspace_json).not_to be nil
+      expect(po.aspace_json).not_to be_empty
+    end
+  end
+
+  context "with a ParentObject with only some relevant identifiers" do
+    before do
+      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
+      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/3163155")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2004628.json")).read)
+      fill_in('Oid', with: "2004628")
+      click_on("Create Parent object")
+    end
+
+    it "leaves empty values as nil" do
+      expect(ParentObject.find_by(oid: "2004628")["barcode"].nil?).to be true
+      expect(ParentObject.find_by(oid: "2004628")["aspace_uri"].nil?).to be true
+    end
+
+    it "still fills in non-empty values" do
+      expect(ParentObject.find_by(oid: "2004628")["bib"]).to eq "3163155"
+    end
+  end
+
+  context "with a Private fixture object" do
+    before do
+      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16189097-priv")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16189097-priv.json")).read)
+      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002113593819?bib=8330740")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16189097-priv.json")).read)
+      fill_in('Oid', with: "16189097-priv")
+      click_on("Create Parent object")
+    end
+    it "adds the visibility for private objects" do
+      expect(ParentObject.find_by(oid: "16189097-priv")["visibility"]).to eq "Private"
+    end
+  end
+
+  context "with a Yale only fixture object" do
+    before do
+      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16189097-yale")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16189097-yale.json")).read)
+      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002113593819?bib=8330740")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16189097-yale.json")).read)
+      fill_in('Oid', with: "16189097-yale")
+      click_on("Create Parent object")
+    end
+    it "adds the visibility for non-public objects" do
+      expect(ParentObject.find_by(oid: "16189097-yale")["visibility"]).to eq "Yale Community Only"
     end
   end
 end

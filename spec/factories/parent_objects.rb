@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :parent_object do
     oid { "2004628" }
-    metadata_source_id { "1" }
+    authoritative_metadata_source_id { "1" }
     last_ladybird_update { "2020-06-10 17:38:27" }
     factory :parent_object_with_bib do
       oid { "2004628" }
