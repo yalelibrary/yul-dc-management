@@ -74,5 +74,4 @@ module MetsStructure
   #     end
   #     label
   #   end
-
 end
