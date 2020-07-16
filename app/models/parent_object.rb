@@ -7,8 +7,8 @@ class ParentObject < ApplicationRecord
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
 
   self.primary_key = 'oid'
-
-  before_create :default_fetch, unless: proc { ladybird_json.present? }
+  before_create :default_fetch, unless: proc { ladybird_json.present? || oid.nil? }
+  after_create :parse_goobi_xml, unless: proc { goobi_xml.nil? }
 
   # Fetches the record from the authoritative_metadata_source
   def default_fetch
@@ -29,6 +29,13 @@ class ParentObject < ApplicationRecord
     self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
     return unless ladybird_json["archiveSpaceUri"]
     self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
+  end
+
+  def parse_goobi_xml
+    goobi_doc = Nokogiri::XML.parse(self.goobi_xml)
+    byebug
+    goobi_hash = Hash.from_xml(self.goobi_xml)
+    goobi_data = goobi_hash["mets"]["dmdSec"].first["mdWrap"]
   end
 
   # Takes a JSON record from the MetadataCloud and saves the Ladybird-specific info to the DB
