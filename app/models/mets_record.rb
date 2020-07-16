@@ -13,8 +13,8 @@ class MetsRecord < MetsDocument
   # # local metadata
   # ATTRIBUTES = %w[
   #   identifier
-  #   source_metadata_identifier
   #   viewing_direction
+  #   pagination
   # ].freeze
   #
   # def attributes
@@ -22,35 +22,15 @@ class MetsRecord < MetsDocument
   # end
   #
   # def identifier
-  #   ark_id
+  #   oid
   # end
-  #
-  # def source_metadata_identifier
-  #   bib_id
-  # end
-  #
-  # # no default metadata
   #
   # # ingest metadata
-  # def volumes
-  #   volumes = []
-  #   volume_ids.each do |volume_id|
-  #     volume_hash = {}
-  #     volume_hash[:title] = [label_for_volume(volume_id)]
-  #     volume_hash[:structure] = structure_for_volume(volume_id)
-  #     volume_hash[:files] = files_for_volume(volume_id)
-  #     volumes << volume_hash
-  #   end
-  #   volumes
-  # end
   #
   # def files
   #   add_file_attributes super
   # end
   #
-  # def collections
-  #   Array.wrap(collection_slugs)
-  # end
 
   # private
 
@@ -61,9 +41,5 @@ class MetsRecord < MetsDocument
   #     f[:attributes][:title] = [file_label(f[:id])]
   #   end
   #   file_hash_array
-  # end
-  #
-  # def files_for_volume(volume_id)
-  #   add_file_attributes super
   # end
 end

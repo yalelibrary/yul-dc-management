@@ -5,11 +5,6 @@ module MetsStructure
   #   structure_type('logical')
   # end
   #
-  # def structure_for_volume(volume_id)
-  #   volume = volume_nodes.find { |vol| vol.attribute("ID").value == volume_id }
-  #   { nodes: structure_for_nodeset(volume.element_children) }
-  # end
-  #
   # def file_label(file_id)
   #   struct = structure_map('logical')
   #   node = struct.xpath(".//mets:fptr[@FILEID='#{file_id}']").first if struct
@@ -73,23 +68,11 @@ module MetsStructure
   #     return nil unless node['FILEID']
   #     current = node
   #     label = current['FILEID']
-  #     while current.parent['FILEID'] && in_scope(current.parent)
+  #     while current.parent['FILEID']
   #       label = "#{current.parent['FILEID']}. #{label}"
   #       current = current.parent
   #     end
   #     label
   #   end
-  #
-  #   def in_scope(node)
-  #     if multi_volume?
-  #       node.parent.parent.name == 'div'
-  #     else
-  #       node.parent.name == 'div'
-  #     end
-  #   end
-  #
-  #   def label_from_related_objects(id)
-  #     @mets.xpath("/mets:mets/mets:structMap[@TYPE='RelatedObjects']" \
-  #                 "//mets:div[mets:fptr/@FILEID='#{id}']/@FILEID").to_s
-  #   end
+
 end
