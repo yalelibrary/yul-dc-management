@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_16_141702) do
+ActiveRecord::Schema.define(version: 2020_07_16_181815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 2020_07_16_141702) do
     t.datetime "last_id_update"
     t.datetime "last_voyager_update"
     t.datetime "last_aspace_update"
-    t.string "visibility"
+    t.string "visibility", default: "Private"
     t.bigint "authoritative_metadata_source_id", default: 1, null: false
     t.jsonb "ladybird_json"
     t.jsonb "voyager_json"
