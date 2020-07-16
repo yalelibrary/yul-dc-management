@@ -73,7 +73,6 @@ ActiveRecord::Schema.define(version: 2020_07_16_141702) do
     t.jsonb "ladybird_json"
     t.jsonb "voyager_json"
     t.jsonb "aspace_json"
-    t.xml "goobi_xml"
     t.string "reading_direction", default: "ltr"
     t.string "pagination", default: "individuals"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
