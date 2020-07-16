@@ -7,7 +7,7 @@ class ParentObject < ApplicationRecord
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
 
   self.primary_key = 'oid'
-  before_create :default_fetch, unless: proc { ladybird_json.present? || oid.nil? }
+  before_create :default_fetch, unless: proc { ladybird_json.present? }
 
   # Fetches the record from the authoritative_metadata_source
   def default_fetch
@@ -71,4 +71,17 @@ class ParentObject < ApplicationRecord
     return nil unless ladybird_json.present?
     "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace#{ladybird_json['archiveSpaceUri']}"
   end
+  # t.string "oid" - Unique identifier for a ParentObject, currently from Ladybird, eventually will be minted by this application
+  # t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
+  # t.string "bib" - Identifier from Voyager, the integrated library system ("ils"). Short for Bibliographic record.
+  # t.string "holding" - Identifier from Voyager
+  # t.string "item" - Identifier from Voyager
+  # t.string "barcode"
+  # t.string "aspace_uri" - Identifier from ArchiveSpace
+  # t.datetime "created_at", precision: 6, null: false
+  # t.datetime "updated_at", precision: 6, null: false
+  # t.datetime "last_id_update" - Last time the crosswalk between all the ids was updated based on the Ladybird data
+  # t.datetime "last_ladybird_update" - Last time the Ladybird record was updated from MetadataCloud
+  # t.datetime "last_voyager_update" - Last time the Voyager record was updated from MetadataCloud
+  # t.datetime "last_aspace_update" - Last time the ArchiveSpace record was updated from MetadataCloud
 end
