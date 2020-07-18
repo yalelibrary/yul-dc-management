@@ -37,6 +37,7 @@ jobs:
           POSTGRES_PASSWORD: password
           SOLR_CORE: blacklight-test
           SOLR_BASE_URL: http://localhost:8983/solr
+          COVERALLS_REPO_TOKEN: YwvJNySEqDYM8pwjnI0AQqlPuIvQfRB3Z
       - image: yalelibraryit/dc-solr:v1.0.1
         command: bash -c 'precreate-core blacklight-test /opt/config; exec solr -f'
       - image: circleci/postgres:9.5-alpine-ram
@@ -59,8 +60,6 @@ jobs:
             cd /home/app/webapp && bundle exec rspec --tag ~vpn_only:true $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
       - deploy:
           name: Upload code coverage stats
-          environment:
-            COVERALLS_REPO_TOKEN: YwvJNySEqDYM8pwjnI0AQqlPuIvQfRB3Z
           command: curl -k https://coveralls.io/webhook?repo_token=$COVERALLS_REPO_TOKEN -d "payload[build_num]=$CIRCLE_BUILD_NUM&payload[status]=done"
 
   publish-latest:
