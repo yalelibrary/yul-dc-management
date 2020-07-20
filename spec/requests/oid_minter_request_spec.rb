@@ -69,6 +69,26 @@ RSpec.describe "Request new OIDs", type: :request do
         expect(response).to have_http_status(406)
       end
     end
+
+    context "logging an oid request" do
+      let(:logger_mock) { instance_double("Rails.logger").as_null_object }
+
+      it 'logs the user email, ip address and OIDs' do
+        Rails.stub_chain(:logger, :info).and_return(logger_mock)
+        headers = login_header(user).merge('ACCEPT' => "application/json")
+        number = 5
+
+        get new_oid_path(number), headers: headers
+        json_response = JSON.parse(response.body)
+        oids = json_response['oids']
+        request_ip = "127.0.0.1"
+
+        expect(Rails.logger).to have_received(:info)
+          .with("OID's Created: #{user.email} (#{request_ip}) ~ #{oids}")
+
+        Rails.unstub(:logger)
+      end
+    end
   end
 
   describe "when not authenticated" do
