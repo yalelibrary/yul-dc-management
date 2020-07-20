@@ -84,8 +84,7 @@ RSpec.describe "Request new OIDs", type: :request do
         request_ip = "127.0.0.1"
 
         expect(Rails.logger).to have_received(:info)
-          .with("OID's Created:\n User: #{user.email}\n IP Address: (#{request_ip})\n OID's generated: #{oids}")
-
+          .with("OID's Created:\n {\"email\":\"#{user.email}\",\"ip_address\":\"#{request_ip}\",\"oids\":\"#{oids}\"}")
         Rails.unstub(:logger)
       end
     end
