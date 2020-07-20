@@ -12,7 +12,7 @@ class OidMinterController < ApplicationController
         format.text { render plain: oids.join("\n") }
         format.any  { render plain: "Please request text/plain or application/json content types.", status: :not_acceptable }
       end
-      Rails.logger.info("OID's Created: #{current_user.email} (#{request.remote_ip}) ~ #{oids}")
+      Rails.logger.info("OID's Created:\n User: #{current_user.email}\n IP Address: (#{request.remote_ip})\n OID's generated: #{oids}")
     else
       render plain: "Invalid request, please supply an integer value", status: :bad_request
     end
