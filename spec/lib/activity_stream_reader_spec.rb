@@ -199,24 +199,44 @@ RSpec.describe ActivityStreamReader do
     }
   end
 
+  let(:asl_old_success) { FactoryBot.create(:successful_activity_stream_log, run_time: "2020-06-12T21:05:53.000+0000".to_datetime) }
+
   before do
     # Part of ActiveSupport, see support/time_helpers.rb, behaves similarly to old TimeCop gem
     freeze_time
+    prep_metadata_call
+    # OID 2004628
+    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
+    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/3163155")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2004628.json")).read)
+    # OID 2003431
+    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2003431")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2003431.json")).read)
+    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002091549668?bib=9734763")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2003431.json")).read)
+    # OID 16854285
+    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16854285")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16854285.json")).read)
+    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002102340669?bib=12307100")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16854285.json")).read)
+    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/515305")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-16854285.json")).read)
+    # Activity Stream - stub requests to MetadataCloud activity stream with fixture objects that represent single activity_stream json pages
+    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read)
+    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-2")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-2.json")).read)
+    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-1")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-1.json")).read)
+    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-0")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-0.json")).read)
   end
 
   # There will be a automated job that fetches updates from the MetadataCloud on some configured schedule.
   # Each time the activity_stream_reader is run, it creates an activity_stream_log event, which records when it was run,
   # whether that run was successful, and how and many objects were referenced in that activity stream run.
   context "daily automated updates" do
-    let(:relevant_mc_response_1) { File.open(File.join(fixture_path, "ladybird", "2004628.json")).read }
-    let(:relevant_mc_response_2) { File.open(File.join(fixture_path, "ladybird", "2003431.json")).read }
-    let(:relevant_mc_response_voyager) { File.open(File.join(fixture_path, "ils", "V-2004628.json")).read }
-    let(:relevant_mc_response_aspace) { File.open(File.join(fixture_path, "aspace", "AS-16854285.json")).read }
-    let(:asl_old_success) { FactoryBot.create(:successful_activity_stream_log, run_time: "2020-06-12T21:05:53.000+0000".to_datetime) }
-    let(:latest_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read }
-    let(:page_2_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-2.json")).read }
-    let(:page_1_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-1.json")).read }
-    let(:page_0_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-0.json")).read }
     before do
       relevant_parent_object
       dependent_object_ladybird
@@ -226,23 +246,6 @@ RSpec.describe ActivityStreamReader do
       dependent_object_ladybird_two
       parent_object_with_aspace_uri
       dependent_object_aspace_repository
-      # Stub requests to MetadataCloud activity stream with fixture objects that represent single activity_stream json pages
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
-        .to_return(status: 200, body: latest_activity_stream_page)
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-2")
-        .to_return(status: 200, body: page_2_activity_stream_page)
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-1")
-        .to_return(status: 200, body: page_1_activity_stream_page)
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-0")
-        .to_return(status: 200, body: page_0_activity_stream_page)
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628")
-        .to_return(status: 200, body: relevant_mc_response_1)
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2003431")
-        .to_return(status: 200, body: relevant_mc_response_2)
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/3163155")
-        .to_return(status: 200, body: relevant_mc_response_voyager)
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/515305")
-        .to_return(status: 200, body: relevant_mc_response_aspace)
     end
 
     it "can get a page from the MetadataCloud activity stream" do
@@ -250,8 +253,11 @@ RSpec.describe ActivityStreamReader do
     end
 
     it "marks objects as updated in the database" do
+      relevant_parent_object.last_ladybird_update = 2.days.ago
       ladybird_update_before = relevant_parent_object.last_ladybird_update
+      relevant_parent_object.last_voyager_update = 3.days.ago
       voyager_update_before = relevant_parent_object.last_voyager_update
+      parent_object_with_aspace_uri.last_aspace_update = 4.days.ago
       aspace_update_before = parent_object_with_aspace_uri.last_aspace_update
       described_class.update
       ladybird_update_after = ParentObject.find_by(oid: relevant_oid).last_ladybird_update

@@ -11,3 +11,7 @@ Metrics/BlockLength:
 RSpec/ExampleLength:
   Exclude:
     - 'spec/**/*.rb'
+
+RSpec/MessageChain:
+  Exclude:
+    - 'spec/**/*.rb'
