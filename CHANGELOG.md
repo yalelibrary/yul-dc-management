@@ -1,15 +1,36 @@
 # Changelog
 
+## [v2.5.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.5.0) (2020-07-20)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.4.0...v2.5.0)
+
+**New Features:**
+
+- OID request logger and spec [\#151](https://github.com/yalelibrary/yul-dc-management/pull/151) ([dylansalay](https://github.com/dylansalay))
+
+**Security fixes:**
+
+- Bump lodash from 4.17.15 to 4.17.19 [\#153](https://github.com/yalelibrary/yul-dc-management/pull/153) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+**Technical Enhancements:**
+
+- Goobi parent objects [\#150](https://github.com/yalelibrary/yul-dc-management/pull/150) ([maxkadel](https://github.com/maxkadel))
+- Set honeybadger key from env var [\#149](https://github.com/yalelibrary/yul-dc-management/pull/149) ([JzGo](https://github.com/JzGo))
+- Coveralls test coverage badge [\#146](https://github.com/yalelibrary/yul-dc-management/pull/146) ([jpengst](https://github.com/jpengst))
+- Update to latest Solr image for dev [\#145](https://github.com/yalelibrary/yul-dc-management/pull/145) ([maxkadel](https://github.com/maxkadel))
+
 ## [v2.4.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.4.0) (2020-07-13)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.3.0...v2.4.0)
 
 **New Features:**
 
+- Refactor parent objects [\#144](https://github.com/yalelibrary/yul-dc-management/pull/144) ([maxkadel](https://github.com/maxkadel))
 - 322 Authenticate oid request [\#141](https://github.com/yalelibrary/yul-dc-management/pull/141) ([dylansalay](https://github.com/dylansalay))
 
 **Technical Enhancements:**
 
+- Prep for v2.4.0 release [\#143](https://github.com/yalelibrary/yul-dc-management/pull/143) ([bess](https://github.com/bess))
 - Configure yarn correctly, set up volumes to boost dev speed [\#142](https://github.com/yalelibrary/yul-dc-management/pull/142) ([orangewolf](https://github.com/orangewolf))
 
 ## [v2.3.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.3.0) (2020-07-10)
