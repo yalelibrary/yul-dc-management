@@ -21,6 +21,56 @@
     <%= form.select(:authoritative_metadata_source_id, [['Ladybird', 1], ['Voyager', 2], ['ArchiveSpace', 3]]) %>
   </div>
 
+  <div class="field">
+    <%= form.label :bib %>
+    <%= form.text_field :bib %>
+  </div>
+
+  <div class="field">
+    <%= form.label :holding %>
+    <%= form.text_field :holding %>
+  </div>
+
+  <div class="field">
+    <%= form.label :item %>
+    <%= form.text_field :item %>
+  </div>
+
+  <div class="field">
+    <%= form.label :barcode %>
+    <%= form.text_field :barcode %>
+  </div>
+
+  <div class="field">
+    <%= form.label :aspace_uri %>
+    <%= form.text_field :aspace_uri %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_ladybird_update %>
+    <%= form.text_field :last_ladybird_update %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_voyager_update %>
+    <%= form.text_field :last_voyager_update %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_aspace_update %>
+    <%= form.text_field :last_aspace_update %>
+  </div>
+
+  <div class="field">
+    <%= form.label :visibility %>
+    <%= form.text_field :visibility %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_id_update %>
+    <%= form.text_field :last_id_update %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
