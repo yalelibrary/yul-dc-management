@@ -16,6 +16,11 @@
     <%= form.text_field :oid %>
   </div>
 
+  <div class="form-group">
+    <%= form.label :authoritative_metadata_source %>
+    <%= form.select(:authoritative_metadata_source_id, [['Ladybird', 1], ['Voyager', 2], ['ArchiveSpace', 3]]) %>
+  </div>
+
   <div class="field">
     <%= form.label :bib %>
     <%= form.text_field :bib %>

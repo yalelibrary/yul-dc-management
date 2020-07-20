@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class MetadataSource < ApplicationRecord
+  has_many :parent_objects, foreign_key: "authoritative_metadata_source_id"
+
   def fetch_record(parent_object)
     mc_url = parent_object.send(url_type)
     full_response = mc_get(mc_url)

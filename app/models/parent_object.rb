@@ -4,8 +4,24 @@
 
 class ParentObject < ApplicationRecord
   has_many :dependent_objects
+  belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
+
   self.primary_key = 'oid'
-  before_create :complete_fetch
+  before_create :default_fetch, unless: proc { ladybird_json.present? }
+
+  # Fetches the record from the authoritative_metadata_source
+  def default_fetch
+    case authoritative_metadata_source.metadata_cloud_name
+    when "ladybird"
+      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
+    when "ils"
+      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
+      self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
+    when "aspace"
+      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
+      self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
+    end
+  end
 
   def complete_fetch
     self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
@@ -55,7 +71,6 @@ class ParentObject < ApplicationRecord
     return nil unless ladybird_json.present?
     "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace#{ladybird_json['archiveSpaceUri']}"
   end
-
   # t.string "oid" - Unique identifier for a ParentObject, currently from Ladybird, eventually will be minted by this application
   # t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   # t.string "bib" - Identifier from Voyager, the integrated library system ("ils"). Short for Bibliographic record.
