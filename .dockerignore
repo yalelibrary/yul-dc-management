@@ -3,7 +3,7 @@
 .env
 .env.*
 node_modules
-.git
+#.git
 log/*
 tmp
 yarn.lock
