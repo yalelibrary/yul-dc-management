@@ -55,11 +55,13 @@ if Rails.env.development?
   fixture_ids_table = CSV.read(oid_path, headers: true)
   oids = fixture_ids_table.by_col[0]
 
-  oids.each do |row|
-    po = ParentObject.new
-    po.oid = row
-    po.save
-    puts "#{po.oid} saved"
+  unless ParentObject.count > 0
+    oids.each do |row|
+      po = ParentObject.new
+      po.oid = row
+      po.save
+      puts "#{po.oid} saved"
+    end
   end
 
   puts "There are now #{ParentObject.count} rows in the parent object table"
