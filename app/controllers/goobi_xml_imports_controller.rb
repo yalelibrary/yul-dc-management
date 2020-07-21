@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GoobiXmlImportsController < ApplicationController
   before_action :set_goobi_xml_import, only: [:show, :edit, :update, :destroy]
 
@@ -9,8 +11,7 @@ class GoobiXmlImportsController < ApplicationController
 
   # GET /goobi_xml_imports/1
   # GET /goobi_xml_imports/1.json
-  def show
-  end
+  def show; end
 
   # GET /goobi_xml_imports/new
   def new
@@ -18,8 +19,7 @@ class GoobiXmlImportsController < ApplicationController
   end
 
   # GET /goobi_xml_imports/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /goobi_xml_imports
   # POST /goobi_xml_imports.json
@@ -62,6 +62,7 @@ class GoobiXmlImportsController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_goobi_xml_import
       @goobi_xml_import = GoobiXmlImport.find(params[:id])
