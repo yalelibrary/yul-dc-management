@@ -10,6 +10,24 @@ RSpec.describe MetadataCloudService do
   let(:oid_url) { "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{oid}?mediaType=json" }
   let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
 
+  before do
+    prep_metadata_call
+  end
+
+  context "creating a ParentObject from an import" do
+    before do
+      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16371272")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16371272.json")).read)
+    end
+    it "can create a parent_object from an array of oids" do
+      expect(ParentObject.count).to eq 0
+      described_class.create_parent_objects_from_oids(["16371272"], "ladybird")
+      expect(ParentObject.count).to eq 1
+      expect(ParentObject.where(oid: "16371272").first.ladybird_json).not_to be nil
+      expect(ParentObject.where(oid: "16371272").first.ladybird_json).not_to be_empty
+    end
+  end
+
   context "it needs to be on the VPN to pass", vpn_only: true do
     context "it gets called from a rake task" do
       let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "2034600.json") }
@@ -91,23 +109,6 @@ RSpec.describe MetadataCloudService do
       it "does not try to retrieve a metadata cloud record if there is no ArchiveSpace record" do
         expect(described_class.build_metadata_cloud_url(oid_without_aspace, "aspace").to_s).to be_empty
       end
-    end
-  end
-
-  context "if the MetadataCloud cannot find an object" do
-    let(:unfindable_oid_array) { ["17063396", "17029210"] }
-    let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "17063396.json") }
-    before do
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/17063396")
-        .to_return(status: 400, body: "ex: can't connect to ladybird")
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/17029210")
-        .to_return(status: 400, body: "ex: can't connect to ladybird")
-    end
-
-    it "does not save the response to the local filesystem" do
-      expect(path_to_example_file).not_to exist
-      described_class.save_json_from_oids(unfindable_oid_array, "ladybird")
-      expect(path_to_example_file).not_to exist
     end
   end
 end
