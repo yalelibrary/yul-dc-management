@@ -20,6 +20,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3'
+gem "rails_semantic_logger", ">=4.4.4"
 # Use rsolr to connect to Solr
 gem 'rsolr', '~> 2.3'
 # Use SCSS for stylesheets
@@ -40,6 +41,7 @@ gem 'webpacker', '~> 4.0'
 # gem 'image_processing', '~> 1.2'
 
 group :development, :test do
+  gem "amazing_print", ">=1.2.1" # colorized logging
   # Using Bixby for style for consistency with Blacklight application(s)
   gem 'bixby'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
