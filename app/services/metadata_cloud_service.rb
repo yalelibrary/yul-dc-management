@@ -53,6 +53,27 @@ class MetadataCloudService
     ladybird_hash["archiveSpaceUri"]
   end
 
+  def self.save_json_from_oids(oids, metadata_source)
+    oids.each do |oid|
+      next unless MetadataCloudService.build_metadata_cloud_url(oid, metadata_source)
+      metadata_cloud_url = MetadataCloudService.build_metadata_cloud_url(oid, metadata_source)
+      full_response = MetadataCloudService.mc_get(metadata_cloud_url)
+      next unless full_response.status == 200
+      MetadataCloudService.save_mc_json_to_file(full_response, oid, metadata_source)
+    end
+  end
+
+  ##
+  # Takes a full HTTP response with headers and saves a json file
+  def self.save_mc_json_to_file(mc_response, oid, metadata_source)
+    file_folder = Rails.root.join("spec", "fixtures", metadata_source)
+    raw_metadata = mc_response.body.to_str
+    parsed_metadata = JSON.parse(raw_metadata)
+    file_prefix = FixtureParsingService.file_prefix(metadata_source)
+
+    File.write(file_folder.join("#{file_prefix}#{oid}" + ".json"), JSON.pretty_generate(parsed_metadata))
+  end
+
   ##
   # Takes an oid and returns the corresponding bib, as defined by ladybird
   # I suspect this approach is going to be super slow, should probably decide how long we want to keep these and figure out
