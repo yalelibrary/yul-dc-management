@@ -9,8 +9,21 @@ class MetsDocument
     @mets = File.open(@source_file) { |f| Nokogiri::XML(f) }
   end
 
+  # Takes a string of xml
+  # def initialize(mets_string)
+  #   @source_string = mets_string
+  #   @mets = Nokogiri::XML(@source_string)
+  # end
+
   def oid
-    @mets.xpath("//goobi:metadata[@name='CatalogIDDigital']").first.content.to_s
+    @mets.xpath("//goobi:metadata[@name='CatalogIDDigital']").first&.content&.to_s
+  end
+
+  def valid_mets?
+    return false unless @mets.xml?
+    return false unless @mets.collect_namespaces.include?("xmlns:mets")
+    return false unless @mets.xpath("//mets:file").count >= 1
+    true
   end
 
   # def viewing_direction
