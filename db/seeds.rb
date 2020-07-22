@@ -55,14 +55,13 @@ if Rails.env.development?
   fixture_ids_table = CSV.read(oid_path, headers: true)
   oids = fixture_ids_table.by_col[0]
 
-  unless ParentObject.count > 0
-    oids.each do |row|
-      po = ParentObject.new
-      po.oid = row
-      po.save
-      puts "#{po.oid} saved"
+  oids.each do |oid|
+    [{ oid: oid }].each do |obj|
+      ParentObject.where(oid: obj[:oid]).first_or_create do |po|
+        po.oid = obj[:oid]
+        puts "Parent Object created #{po.oid}"
+      end
     end
   end
-
   puts "There are now #{ParentObject.count} rows in the parent object table"
 end
