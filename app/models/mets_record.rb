@@ -2,13 +2,13 @@
 
 class MetsRecord < MetsDocument
   # Source is a string containing xml
-  def initialize(id, source)
-    @id = id
+  def initialize(oid, source)
+    @oid = oid
     @source = source
     @mets = Nokogiri::XML(source)
   end
 
-  attr_reader :id, :source
+  attr_reader :oid, :source
 
   # # local metadata
   # ATTRIBUTES = %w[
