@@ -87,7 +87,7 @@ class MetadataCloudService
   def self.list_of_oids(oid_path)
     @list_of_oids ||= FixtureParsingService.build_oid_array(oid_path)
   end
-  
+
   def self.metadata_cloud_host
     "metadata-api-uat.library.yale.edu"
   end
