@@ -16,7 +16,7 @@ class MetsDocument
   # end
 
   def oid
-    catalog_id_digital = @mets.xpath("//goobi:metadata[@name='CatalogIDDigital']").first&.content.to_s
+    @mets.xpath("//goobi:metadata[@name='CatalogIDDigital']").first&.content.to_s
   end
 
   def valid_mets?
