@@ -49,7 +49,7 @@ class MetadataCloudService
       return nil unless MetadataCloudService.get_archive_space_uri(oid)
       identifier_block = MetadataCloudService.get_archive_space_uri(oid)
     end
-    "https://metadata-api-test.library.yale.edu/metadatacloud/api/#{metadata_source}#{identifier_block}"
+    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/#{metadata_source}#{identifier_block}"
   end
 
   def self.get_archive_space_uri(oid)
@@ -86,5 +86,9 @@ class MetadataCloudService
   # Takes a csv file
   def self.list_of_oids(oid_path)
     @list_of_oids ||= FixtureParsingService.build_oid_array(oid_path)
+  end
+  
+  def self.metadata_cloud_host
+    "metadata-api-uat.library.yale.edu"
   end
 end
