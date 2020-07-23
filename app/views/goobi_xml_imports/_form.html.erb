@@ -1,0 +1,21 @@
+<%= form_with(model: goobi_xml_import, local: true) do |form| %>
+  <% if goobi_xml_import.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(goobi_xml_import.errors.count, "error") %> prohibited this goobi_xml_import from being saved:</h2>
+
+      <ul>
+        <% goobi_xml_import.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field" >
+    <%= form.file_field(:file, accept: 'xml') %>
+  </div>
+  <br />
+  <div class="actions">
+    <%= form.submit "Import", class: "btn btn-primary" %>
+  </div>
+<% end %>
