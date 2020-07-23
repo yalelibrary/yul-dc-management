@@ -58,11 +58,10 @@ if Rails.env.development?
   oids = fixture_ids_table.by_col[0]
 
   oids.each do |row|
-    po = ParentObject.new
-    po.oid = row
-    po.save
-    puts "#{po.oid} saved"
+    ParentObject.where(oid: row).first_or_create do |po|
+      po.oid = row
+      puts "Parent Object created #{po.oid}"
+    end
   end
-
   puts "There are now #{ParentObject.count} rows in the parent object table"
 end

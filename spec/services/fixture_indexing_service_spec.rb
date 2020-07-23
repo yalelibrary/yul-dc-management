@@ -67,11 +67,11 @@ RSpec.describe FixtureIndexingService, clean: true do
       let(:parent_object_with_public_visibility) { FactoryBot.create(:parent_object, oid: oid, visibility: "Public") }
 
       before do
-        stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2012036")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2012036")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012036.json")).read)
-        stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002091459793?bib=6805375")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002091459793?bib=6805375")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2012036.json")).read)
-        stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/555049")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace/repositories/11/archival_objects/555049")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-2012036.json")).read)
       end
 
@@ -88,9 +88,9 @@ RSpec.describe FixtureIndexingService, clean: true do
       let(:parent_object_without_visibility) { FactoryBot.create(:parent_object, oid: no_vis_oid) }
 
       before do
-        stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16189097-no_vis")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16189097-no_vis")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16189097-no_vis.json")).read)
-        stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002113593819?bib=8330740")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002113593819?bib=8330740")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16189097-no_vis.json")).read)
       end
 
@@ -107,9 +107,9 @@ RSpec.describe FixtureIndexingService, clean: true do
       let(:priv_oid) { "16189097-priv" }
       let(:parent_object_with_private_visibility) { FactoryBot.create(:parent_object, oid: priv_oid, visibility: "Private") }
       before do
-        stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16189097-priv")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16189097-priv")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16189097-priv.json")).read)
-        stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002113593819?bib=8330740")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002113593819?bib=8330740")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16189097-priv.json")).read)
       end
 

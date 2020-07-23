@@ -16,12 +16,24 @@ require 'rails_helper'
 RSpec.describe "/parent_objects", type: :request do
   # ParentObject. As you add validations to ParentObject, be sure to
   # adjust the attributes here as well.
+  before do
+    prep_metadata_call
+    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
+  end
+
   let(:valid_attributes) do
-    skip("Add a hash of attributes valid for your model")
+    {
+      oid: "2004628",
+      authoritative_metadata_source_id: 1
+    }
   end
 
   let(:invalid_attributes) do
-    skip("Add a hash of attributes invalid for your model")
+    {
+      oid: "2004628",
+      authoritative_metadata_source_id: 4
+    }
   end
 
   describe "GET /index" do
@@ -86,14 +98,16 @@ RSpec.describe "/parent_objects", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) do
-        skip("Add a hash of attributes valid for your model")
+        {
+          authoritative_metadata_source_id: 2
+        }
       end
 
       it "updates the requested parent_object" do
         parent_object = ParentObject.create! valid_attributes
         patch parent_object_url(parent_object), params: { parent_object: new_attributes }
         parent_object.reload
-        skip("Add assertions for updated state")
+        expect(parent_object.authoritative_metadata_source_id).to eq 2
       end
 
       it "redirects to the parent_object" do
