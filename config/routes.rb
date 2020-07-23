@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :goobi_xml_imports
   resources :parent_objects
   devise_for :users
   resources :metadata_samples
