@@ -45,7 +45,7 @@ class MetsDocument
       id: file.xpath('@ID').to_s,
       checksum: file.xpath('@CHECKSUM').to_s,
       mime_type: file.xpath('@MIMETYPE').to_s,
-      url: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\/\//, '')
+      url: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, '')
     }
   end
 

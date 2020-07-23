@@ -43,7 +43,7 @@
                <mods:extension>
                   <goobi:goobi>
                      <goobi:metadata name="PhysicalLocation">Goobi</goobi:metadata>
-                     <goobi:metadata name="pathimagefiles">file:///Users/mark/_no_backup_/g2g/goobi/metadata/2012315/images/TEST0003_tif</goobi:metadata>
+                     <goobi:metadata name="pathimagefiles">file://spec/fixtures/goobi/metadata/2012315/images/TEST0003_tif</goobi:metadata>
                   </goobi:goobi>
                </mods:extension>
             </mods:mods>
