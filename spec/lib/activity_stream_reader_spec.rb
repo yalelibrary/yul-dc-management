@@ -102,7 +102,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628",
+        "id" => "http://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2004628",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -112,7 +112,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2003431",
+        "id" => "http://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2003431",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -122,7 +122,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/3163155",
+        "id" => "http://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/bib/3163155",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -132,7 +132,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/holding/10050400",
+        "id" => "http://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/holding/10050400",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -142,7 +142,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/item/10763785",
+        "id" => "http://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/item/10763785",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -152,7 +152,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/515305",
+        "id" => "http://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace/repositories/11/archival_objects/515305",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -162,7 +162,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/agents/corporate_entities/2251",
+        "id" => "http://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace/agents/corporate_entities/2251",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -172,7 +172,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{irrelevant_oid}",
+        "id" => "http://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{irrelevant_oid}",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -182,7 +182,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => irrelevant_time,
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{relevant_oid}",
+        "id" => "http://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{relevant_oid}",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -192,7 +192,7 @@ RSpec.describe ActivityStreamReader do
     {
       "endTime" => "2020-06-12T21:06:53.000+0000",
       "object" => {
-        "id" => "http://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{relevant_oid}",
+        "id" => "http://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{relevant_oid}",
         "type" => "Document"
       },
       "type" => irrelevant_activity_type
@@ -206,30 +206,30 @@ RSpec.describe ActivityStreamReader do
     freeze_time
     prep_metadata_call
     # OID 2004628
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628")
+    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2004628")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/3163155")
+    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/bib/3163155")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2004628.json")).read)
     # OID 2003431
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2003431")
+    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2003431")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2003431.json")).read)
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002091549668?bib=9734763")
+    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002091549668?bib=9734763")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2003431.json")).read)
     # OID 16854285
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16854285")
+    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16854285")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16854285.json")).read)
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002102340669?bib=12307100")
+    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002102340669?bib=12307100")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16854285.json")).read)
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/515305")
+    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace/repositories/11/archival_objects/515305")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-16854285.json")).read)
     # Activity Stream - stub requests to MetadataCloud activity stream with fixture objects that represent single activity_stream json pages
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
+    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/streams/activity")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read)
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-2")
+    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/streams/activity/page-2")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-2.json")).read)
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-1")
+    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/streams/activity/page-1")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-1.json")).read)
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-0")
+    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/streams/activity/page-0")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-0.json")).read)
   end
 
@@ -249,7 +249,7 @@ RSpec.describe ActivityStreamReader do
     end
 
     it "can get a page from the MetadataCloud activity stream" do
-      expect(asr.fetch_and_parse_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")["type"]).to eq "OrderedCollectionPage"
+      expect(asr.fetch_and_parse_page("https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/streams/activity")["type"]).to eq "OrderedCollectionPage"
     end
 
     it "marks objects as updated in the database" do
@@ -301,7 +301,7 @@ RSpec.describe ActivityStreamReader do
         asr.process_item(relevant_item_from_voyager)
         expect(asr.remote_dependent_uris.size).to eq 3
         expect(asr.remote_dependent_uris).not_to include nil
-        expect(asr.remote_dependent_uris).to include "http://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/3163155"
+        expect(asr.remote_dependent_uris).to include "http://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/bib/3163155"
         asr.process_item(relevant_item_from_voyager_holding)
         expect(asr.remote_dependent_uris.size).to eq 4
         asr.process_item(relevant_item_from_aspace)
@@ -360,7 +360,7 @@ RSpec.describe ActivityStreamReader do
     let(:latest_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read }
 
     it "can get the uri for the previous page" do
-      expect(asr.previous_page_link(json_parsed_page)).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-2"
+      expect(asr.previous_page_link(json_parsed_page)).to eq "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/streams/activity/page-2"
     end
   end
 

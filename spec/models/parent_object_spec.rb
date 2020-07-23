@@ -21,7 +21,7 @@ RSpec.describe ParentObject, type: :model do
   context "a newly created ParentObject with just the oid and default authoritative_metadata_source (Ladybird for now)" do
     let(:parent_object) { described_class.create(oid: "2004628") }
     before do
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628")
+      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2004628")
         .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
     end
 
@@ -37,9 +37,9 @@ RSpec.describe ParentObject, type: :model do
   context "a newly created ParentObject with Voyager as authoritative_metadata_source" do
     let(:parent_object) { described_class.create(oid: "2004628", authoritative_metadata_source_id: voyager) }
     before do
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628")
+      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2004628")
         .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/3163155")
+      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/bib/3163155")
         .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2004628.json")).read)
     end
 
@@ -60,9 +60,9 @@ RSpec.describe ParentObject, type: :model do
   context "a newly created ParentObject with ArchiveSpace as authoritative_metadata_source" do
     let(:parent_object) { described_class.create(oid: "2012036", authoritative_metadata_source_id: aspace) }
     before do
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2012036")
+      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2012036")
         .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012036.json")).read)
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/555049")
+      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace/repositories/11/archival_objects/555049")
         .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-2012036.json")).read)
     end
 
