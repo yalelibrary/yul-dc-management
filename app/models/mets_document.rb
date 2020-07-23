@@ -21,8 +21,7 @@ class MetsDocument
   end
 
   def all_images_present?
-    image_present = files.map { |file| File.exist?(Rails.root.join(file[:url])) }
-    return true unless image_present.include?(false)
+    files.all? { |file| File.exist?(Rails.root.join(file[:url])) }
   end
 
   # def viewing_direction
