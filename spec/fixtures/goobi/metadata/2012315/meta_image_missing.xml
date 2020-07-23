@@ -82,6 +82,10 @@
          <mets:file ID="FILE_0010" MIMETYPE="">
             <mets:FLocat LOCTYPE="URL" xlink:href="file:///spec/fixtures/goobi/metadata/2012315/images/TEST0003_media/1102081.jpg"/>
          </mets:file>
+         <mets:file ID="FILE_0011" MIMETYPE="">
+           <!-- Fake image - not in file system -->
+            <mets:FLocat LOCTYPE="URL" xlink:href="file:///spec/fixtures/goobi/metadata/2012315/images/TEST0003_media/1102089.jpg"/>
+         </mets:file>
       </mets:fileGrp>
    </mets:fileSec>
    <mets:structMap TYPE="LOGICAL">
