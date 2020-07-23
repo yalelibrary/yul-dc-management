@@ -5,8 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-OidMinterService.initialize_sequence!
-puts "Oid Minter Initialized"
+sequence = OidMinterService.initialize_sequence!
+current = ActiveRecord::Base.connection.execute("SELECT last_value from OID_SEQUENCE").first['last_value']
+puts "Oid Minter Initialized, initialization was #{sequence}, current value is #{current}"
 
 [
   {
