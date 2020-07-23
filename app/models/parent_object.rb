@@ -54,7 +54,7 @@ class ParentObject < ApplicationRecord
   end
 
   def ladybird_cloud_url
-    "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{oid}"
+    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}"
   end
 
   def voyager_cloud_url
@@ -64,12 +64,12 @@ class ParentObject < ApplicationRecord
                        else
                          "/barcode/#{ladybird_json['orbisBarcode']}?bib=#{ladybird_json['orbisRecord']}"
                        end
-    "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils#{identifier_block}"
+    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils#{identifier_block}"
   end
 
   def aspace_cloud_url
     return nil unless ladybird_json.present?
-    "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace#{ladybird_json['archiveSpaceUri']}"
+    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace#{ladybird_json['archiveSpaceUri']}"
   end
   # t.string "oid" - Unique identifier for a ParentObject, currently from Ladybird, eventually will be minted by this application
   # t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
