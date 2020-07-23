@@ -22,20 +22,18 @@ RSpec.describe "Oid CSV Import", type: :system do
     visit root_path
   end
 
-  context "with existing oids" do
-    it "Does not error" do
-      page.attach_file("oid_import_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
-      click_button("Import")
-      expect(page).to have_content("Your records have been retrieved from the MetadataCloud and are ready to be indexed to Solr.")
-    end
-  end
-
   context "when uploading a csv" do
     it "uploads and increases csv count" do
       expect(OidImport.count).to eq 0
       page.attach_file("oid_import_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
       click_button("Import")
       expect(OidImport.count).to eq 1
+    end
+
+    it "Gives a success message" do
+      page.attach_file("oid_import_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
+      click_button("Import")
+      expect(page).to have_content("Your records have been retrieved from the MetadataCloud and are ready to be indexed to Solr.")
     end
   end
 end

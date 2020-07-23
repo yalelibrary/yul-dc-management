@@ -3,6 +3,7 @@
 # It is synonymous with a parent oid in Ladybird.
 
 class ParentObject < ApplicationRecord
+  include JsonFile
   has_many :dependent_objects
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
 
@@ -20,6 +21,19 @@ class ParentObject < ApplicationRecord
     when "aspace"
       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
       self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
+    end
+  end
+
+  def authoritative_json
+    case authoritative_metadata_source.metadata_cloud_name
+    when "ladybird"
+      ladybird_json
+    when "ils"
+      voyager_json
+    when "aspace"
+      aspace_json
+    else
+      raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
   end
 
