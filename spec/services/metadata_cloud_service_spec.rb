@@ -7,8 +7,26 @@ WebMock.allow_net_connect!
 RSpec.describe MetadataCloudService do
   let(:mcs) { described_class.new }
   let(:oid) { "16371272" }
-  let(:oid_url) { "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{oid}?mediaType=json" }
+  let(:oid_url) { "https://#{described_class.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?mediaType=json" }
   let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
+
+  before do
+    prep_metadata_call
+  end
+
+  context "creating a ParentObject from an import" do
+    before do
+      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16371272")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16371272.json")).read)
+    end
+    it "can create a parent_object from an array of oids" do
+      expect(ParentObject.count).to eq 0
+      described_class.create_parent_objects_from_oids(["16371272"], "ladybird")
+      expect(ParentObject.count).to eq 1
+      expect(ParentObject.where(oid: "16371272").first.ladybird_json).not_to be nil
+      expect(ParentObject.where(oid: "16371272").first.ladybird_json).not_to be_empty
+    end
+  end
 
   context "it needs to be on the VPN to pass", vpn_only: true do
     context "it gets called from a rake task" do
@@ -64,11 +82,11 @@ RSpec.describe MetadataCloudService do
 
   context "it can build MetadataCloud urls for ParentObjects", vpn_only: false do
     it "can take an oid and build a metadata cloud Ladybird url" do
-      expect(described_class.build_metadata_cloud_url("2034600", "ladybird").to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2034600"
+      expect(described_class.build_metadata_cloud_url("2034600", "ladybird").to_s).to eq "https://#{described_class.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2034600"
     end
 
     it "can take an oid and build a metadata cloud bib-based Voyager url" do
-      expect(described_class.build_metadata_cloud_url("2034600", "ils").to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/bib/752400"
+      expect(described_class.build_metadata_cloud_url("2034600", "ils").to_s).to eq "https://#{described_class.metadata_cloud_host}/metadatacloud/api/ils/bib/752400"
     end
 
     context "with a Voyager record with a barcode" do
@@ -76,7 +94,7 @@ RSpec.describe MetadataCloudService do
       let(:metadata_source) { "ils" }
 
       it "can take an oid and build a metadata cloud barcode-based Voyager url" do
-        expect(described_class.build_metadata_cloud_url(oid, metadata_source).to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002113596465?bib=3577942"
+        expect(described_class.build_metadata_cloud_url(oid, metadata_source).to_s).to eq "https://#{described_class.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002113596465?bib=3577942"
       end
     end
 
@@ -85,7 +103,8 @@ RSpec.describe MetadataCloudService do
       let(:oid_without_aspace) { "2034600" }
 
       it "can take an oid and build a metadata cloud ArchiveSpace url" do
-        expect(described_class.build_metadata_cloud_url(oid_with_aspace, "aspace").to_s).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/515305"
+        expect(described_class.build_metadata_cloud_url(oid_with_aspace, "aspace").to_s)
+          .to eq "https://#{described_class.metadata_cloud_host}/metadatacloud/api/aspace/repositories/11/archival_objects/515305"
       end
 
       it "does not try to retrieve a metadata cloud record if there is no ArchiveSpace record" do
@@ -93,14 +112,13 @@ RSpec.describe MetadataCloudService do
       end
     end
   end
-
   context "if the MetadataCloud cannot find an object" do
     let(:unfindable_oid_array) { ["17063396", "17029210"] }
     let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "17063396.json") }
     before do
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/17063396")
+      stub_request(:get, "https://#{described_class.metadata_cloud_host}/metadatacloud/api/ladybird/oid/17063396")
         .to_return(status: 400, body: "ex: can't connect to ladybird")
-      stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/17029210")
+      stub_request(:get, "https://#{described_class.metadata_cloud_host}/metadatacloud/api/ladybird/oid/17029210")
         .to_return(status: 400, body: "ex: can't connect to ladybird")
     end
 

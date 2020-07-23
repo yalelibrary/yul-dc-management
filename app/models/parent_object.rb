@@ -3,6 +3,7 @@
 # It is synonymous with a parent oid in Ladybird.
 
 class ParentObject < ApplicationRecord
+  include JsonFile
   has_many :dependent_objects
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
 
@@ -20,6 +21,19 @@ class ParentObject < ApplicationRecord
     when "aspace"
       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
       self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
+    end
+  end
+
+  def authoritative_json
+    case authoritative_metadata_source.metadata_cloud_name
+    when "ladybird"
+      ladybird_json
+    when "ils"
+      voyager_json
+    when "aspace"
+      aspace_json
+    else
+      raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
   end
 
@@ -54,7 +68,7 @@ class ParentObject < ApplicationRecord
   end
 
   def ladybird_cloud_url
-    "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/#{oid}"
+    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}"
   end
 
   def voyager_cloud_url
@@ -64,12 +78,12 @@ class ParentObject < ApplicationRecord
                        else
                          "/barcode/#{ladybird_json['orbisBarcode']}?bib=#{ladybird_json['orbisRecord']}"
                        end
-    "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils#{identifier_block}"
+    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils#{identifier_block}"
   end
 
   def aspace_cloud_url
     return nil unless ladybird_json.present?
-    "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace#{ladybird_json['archiveSpaceUri']}"
+    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace#{ladybird_json['archiveSpaceUri']}"
   end
   # t.string "oid" - Unique identifier for a ParentObject, currently from Ladybird, eventually will be minted by this application
   # t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
