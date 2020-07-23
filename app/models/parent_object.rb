@@ -32,6 +32,8 @@ class ParentObject < ApplicationRecord
       voyager_json
     when "aspace"
       aspace_json
+    else
+      raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
   end
 
