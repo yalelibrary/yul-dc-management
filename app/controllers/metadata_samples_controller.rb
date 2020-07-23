@@ -13,6 +13,8 @@ class MetadataSamplesController < ApplicationController
   # GET /metadata_samples/1.json
   def show; end
 
+  def edit; end
+
   # GET /metadata_samples/new
   def new
     @metadata_sample = MetadataSample.new
