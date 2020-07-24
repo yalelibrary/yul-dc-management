@@ -16,24 +16,12 @@ require 'rails_helper'
 RSpec.describe "/metadata_samples", type: :request do
   # MetadataSample. As you add validations to MetadataSample, be sure to
   # adjust the attributes here as well.
-  before do
-    prep_metadata_call
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
-  end
-
   let(:valid_attributes) do
-    {
-      metadata_source: "ladybird",
-      number_of_samples: 1
-    }
+    skip("Add a hash of attributes valid for your model")
   end
 
   let(:invalid_attributes) do
-    {
-      metadata_source: "ladybird",
-      number_of_samples: 6
-    }
+    skip("Add a hash of attributes invalid for your model")
   end
 
   describe "GET /index" do
@@ -67,76 +55,76 @@ RSpec.describe "/metadata_samples", type: :request do
     end
   end
 
-  # describe "POST /create" do
-  #   context "with valid parameters" do
-  #     it "creates a new MetadataSample" do
-  #       expect do
-  #         post metadata_samples_url, params: { metadata_sample: valid_attributes }
-  #       end.to change(MetadataSample, :count).by(1)
-  #     end
+  describe "POST /create" do
+    context "with valid parameters" do
+      it "creates a new MetadataSample" do
+        expect do
+          post metadata_samples_url, params: { metadata_sample: valid_attributes }
+        end.to change(MetadataSample, :count).by(1)
+      end
 
-  #     it "redirects to the created metadata_sample" do
-  #       post metadata_samples_url, params: { metadata_sample: valid_attributes }
-  #       expect(response).to redirect_to(metadata_sample_url(MetadataSample.last))
-  #     end
-  #   end
+      it "redirects to the created metadata_sample" do
+        post metadata_samples_url, params: { metadata_sample: valid_attributes }
+        expect(response).to redirect_to(metadata_sample_url(MetadataSample.last))
+      end
+    end
 
-  #   context "with invalid parameters" do
-  #     it "does not create a new MetadataSample" do
-  #       expect do
-  #         post metadata_samples_url, params: { metadata_sample: invalid_attributes }
-  #       end.to change(MetadataSample, :count).by(0)
-  #     end
+    context "with invalid parameters" do
+      it "does not create a new MetadataSample" do
+        expect do
+          post metadata_samples_url, params: { metadata_sample: invalid_attributes }
+        end.to change(MetadataSample, :count).by(0)
+      end
 
-  #     it "renders a successful response (i.e. to display the 'new' template)" do
-  #       post metadata_samples_url, params: { metadata_sample: invalid_attributes }
-  #       expect(response).to be_successful
-  #     end
-  #   end
-  # end
+      it "renders a successful response (i.e. to display the 'new' template)" do
+        post metadata_samples_url, params: { metadata_sample: invalid_attributes }
+        expect(response).to be_successful
+      end
+    end
+  end
 
-  # describe "PATCH /update" do
-  #   context "with valid parameters" do
-  #     let(:new_attributes) do
-  #       skip("Add a hash of attributes valid for your model")
-  #     end
+  describe "PATCH /update" do
+    context "with valid parameters" do
+      let(:new_attributes) do
+        skip("Add a hash of attributes valid for your model")
+      end
 
-  #     it "updates the requested metadata_sample" do
-  #       metadata_sample = MetadataSample.create! valid_attributes
-  #       patch metadata_sample_url(metadata_sample), params: { metadata_sample: new_attributes }
-  #       metadata_sample.reload
-  #       skip("Add assertions for updated state")
-  #     end
+      it "updates the requested metadata_sample" do
+        metadata_sample = MetadataSample.create! valid_attributes
+        patch metadata_sample_url(metadata_sample), params: { metadata_sample: new_attributes }
+        metadata_sample.reload
+        skip("Add assertions for updated state")
+      end
 
-  #     it "redirects to the metadata_sample" do
-  #       metadata_sample = MetadataSample.create! valid_attributes
-  #       patch metadata_sample_url(metadata_sample), params: { metadata_sample: new_attributes }
-  #       metadata_sample.reload
-  #       expect(response).to redirect_to(metadata_sample_url(metadata_sample))
-  #     end
-  #   end
+      it "redirects to the metadata_sample" do
+        metadata_sample = MetadataSample.create! valid_attributes
+        patch metadata_sample_url(metadata_sample), params: { metadata_sample: new_attributes }
+        metadata_sample.reload
+        expect(response).to redirect_to(metadata_sample_url(metadata_sample))
+      end
+    end
 
-  #   context "with invalid parameters" do
-  #     it "renders a successful response (i.e. to display the 'edit' template)" do
-  #       metadata_sample = MetadataSample.create! valid_attributes
-  #       patch metadata_sample_url(metadata_sample), params: { metadata_sample: invalid_attributes }
-  #       expect(response).to be_successful
-  #     end
-  #   end
-  # end
+    context "with invalid parameters" do
+      it "renders a successful response (i.e. to display the 'edit' template)" do
+        metadata_sample = MetadataSample.create! valid_attributes
+        patch metadata_sample_url(metadata_sample), params: { metadata_sample: invalid_attributes }
+        expect(response).to be_successful
+      end
+    end
+  end
 
-  # describe "DELETE /destroy" do
-  #   it "destroys the requested metadata_sample" do
-  #     metadata_sample = MetadataSample.create! valid_attributes
-  #     expect do
-  #       delete metadata_sample_url(metadata_sample)
-  #     end.to change(MetadataSample, :count).by(-1)
-  #   end
+  describe "DELETE /destroy" do
+    it "destroys the requested metadata_sample" do
+      metadata_sample = MetadataSample.create! valid_attributes
+      expect do
+        delete metadata_sample_url(metadata_sample)
+      end.to change(MetadataSample, :count).by(-1)
+    end
 
-  #   it "redirects to the metadata_samples list" do
-  #     metadata_sample = MetadataSample.create! valid_attributes
-  #     delete metadata_sample_url(metadata_sample)
-  #     expect(response).to redirect_to(metadata_samples_url)
-  #   end
-  # end
+    it "redirects to the metadata_samples list" do
+      metadata_sample = MetadataSample.create! valid_attributes
+      delete metadata_sample_url(metadata_sample)
+      expect(response).to redirect_to(metadata_samples_url)
+    end
+  end
 end
