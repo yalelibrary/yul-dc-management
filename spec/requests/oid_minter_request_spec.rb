@@ -74,7 +74,7 @@ RSpec.describe "Request new OIDs", type: :request do
       let(:logger_mock) { instance_double("Rails.logger").as_null_object }
 
       it 'logs the user email, ip address and OIDs' do
-        Rails.stub_chain(:logger, :info).and_return(logger_mock)
+        allow(Rails.logger).to receive(:info) { :logger_mock }
         headers = login_header(user).merge('ACCEPT' => "application/json")
         number = 5
 
@@ -85,7 +85,6 @@ RSpec.describe "Request new OIDs", type: :request do
 
         expect(Rails.logger).to have_received(:info)
           .with("OIDs Created:\n {\"email\":\"#{user.email}\",\"ip_address\":\"#{request_ip}\",\"oids\":\"#{oids}\"}")
-        Rails.unstub(:logger)
       end
     end
   end
