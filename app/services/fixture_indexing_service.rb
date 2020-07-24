@@ -5,17 +5,29 @@ class FixtureIndexingService
     oid_path = Rails.root.join("spec", "fixtures", "fixture_ids.csv")
     FixtureParsingService.build_oid_array(oid_path).each do |oid|
       next unless FixtureParsingService.fixture_file_to_hash(oid, metadata_source)
-      index_to_solr(oid, metadata_source)
+      index_from_fixture_to_solr(oid, metadata_source)
     end
   end
 
-  def self.index_to_solr(oid, metadata_source)
+  def self.index_from_fixture_to_solr(oid, metadata_source)
     id_prefix = FixtureParsingService.file_prefix(metadata_source)
     return nil unless FixtureParsingService.fixture_file_to_hash(oid, metadata_source)
     data_hash = FixtureParsingService.fixture_file_to_hash(oid, metadata_source)
     solr_doc = build_solr_document(id_prefix, oid, data_hash)
     solr = SolrService.connection
     solr.add([solr_doc])
+    solr.commit
+  end
+
+  def self.index_from_database_to_solr
+    solr = SolrService.connection
+    ParentObject.all.map do |parent_object|
+      data_hash = parent_object.authoritative_json
+      id_prefix = parent_object.authoritative_metadata_source.file_prefix
+      oid = parent_object.oid
+      solr_doc = build_solr_document(id_prefix, oid, data_hash)
+      solr.add([solr_doc])
+    end
     solr.commit
   end
 
