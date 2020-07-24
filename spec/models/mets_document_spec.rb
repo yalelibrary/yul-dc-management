@@ -8,6 +8,7 @@ RSpec.describe MetsDocument, type: :model do
   let(:no_image_files_path) { File.join(fixture_path, "goobi", "metadata", "2012315", "meta_no_image_files.xml") }
   let(:no_oid_path) { File.join(fixture_path, "goobi", "metadata", "2012315", "meta_no_oid.xml") }
   let(:blank_oid_path) { File.join(fixture_path, "goobi", "metadata", "2012315", "meta_blank_oid.xml") }
+  let(:image_missing_path) { File.join(fixture_path, "goobi", "metadata", "2012315", "meta_image_missing.xml") }
 
   it "can return the oid" do
     mets_doc = described_class.new(goobi_path)
@@ -35,9 +36,21 @@ RSpec.describe MetsDocument, type: :model do
       expect(mets_doc.valid_mets?).to be_falsey
     end
 
-    it "returns false for a valid METs file that does not point to any images" do
+    it "returns false for a valid METs file that does not reference any images" do
       mets_doc = described_class.new(no_image_files_path)
       expect(mets_doc.valid_mets?).to be_falsey
+    end
+  end
+
+  describe "determining if the image files described are available to the application" do
+    it "returns false for a valid METs file that points to images that are all available on the file system" do
+      mets_doc = described_class.new(image_missing_path)
+      expect(mets_doc.all_images_present?).to be_falsey
+    end
+
+    it "returns true for a valid METs file that points to images that are not available on the file system" do
+      mets_doc = described_class.new(goobi_path)
+      expect(mets_doc.all_images_present?).to be_truthy
     end
   end
 end

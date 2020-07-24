@@ -52,6 +52,40 @@
    </mets:dmdSec>
    <mets:fileSec>
       <mets:fileGrp USE="LOCAL">
+         <mets:file ID="FILE_0001" MIMETYPE="">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file://spec/fixtures/goobi/metadata/2012315/images/TEST0003_media/1053442.jpg"/>
+         </mets:file>
+         <mets:file ID="FILE_0002" MIMETYPE="">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file://spec/fixtures/goobi/metadata/2012315/images/TEST0003_media/1053443.jpg"/>
+         </mets:file>
+         <mets:file ID="FILE_0003" MIMETYPE="">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file://spec/fixtures/goobi/metadata/2012315/images/TEST0003_media/1053444.jpg"/>
+         </mets:file>
+         <mets:file ID="FILE_0004" MIMETYPE="">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file://spec/fixtures/goobi/metadata/2012315/images/TEST0003_media/1053445.jpg"/>
+         </mets:file>
+         <mets:file ID="FILE_0005" MIMETYPE="">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file://spec/fixtures/goobi/metadata/2012315/images/TEST0003_media/1053446.jpg"/>
+         </mets:file>
+         <mets:file ID="FILE_0006" MIMETYPE="">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file://spec/fixtures/goobi/metadata/2012315/images/TEST0003_media/1053447.jpg"/>
+         </mets:file>
+         <mets:file ID="FILE_0007" MIMETYPE="">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file://spec/fixtures/goobi/metadata/2012315/images/TEST0003_media/1053448.jpg"/>
+         </mets:file>
+         <mets:file ID="FILE_0008" MIMETYPE="">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file://spec/fixtures/goobi/metadata/2012315/images/TEST0003_media/1053449.jpg"/>
+         </mets:file>
+         <mets:file ID="FILE_0009" MIMETYPE="">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file://spec/fixtures/goobi/metadata/2012315/images/TEST0003_media/1100020.jpg"/>
+         </mets:file>
+         <mets:file ID="FILE_0010" MIMETYPE="">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file://spec/fixtures/goobi/metadata/2012315/images/TEST0003_media/1102081.jpg"/>
+         </mets:file>
+         <mets:file ID="FILE_0011" MIMETYPE="">
+           <!-- Fake image - not in file system -->
+            <mets:FLocat LOCTYPE="URL" xlink:href="file://spec/fixtures/goobi/metadata/2012315/images/TEST0003_media/1102089.jpg"/>
+         </mets:file>
       </mets:fileGrp>
    </mets:fileSec>
    <mets:structMap TYPE="LOGICAL">
