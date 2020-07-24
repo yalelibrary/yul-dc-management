@@ -25,70 +25,106 @@ class FixtureIndexingService
 
   def self.build_solr_document(id_prefix, oid, data_hash)
     {
+      # example_suffix: data_hash[""],
       id: "#{id_prefix}#{oid}",
-      title_tsim: data_hash["title"],
-      # title_vern_ssim # title in the vernacular
-      # subtitle_tsim
-      # subtitle_vern_ssim # subtitle in the vernacular
+      abstract_tesim: data_hash["abstract"],
+      accessionNumber_ssi: data_hash["accessionNumber"],
+      accessRestrictions_tesim: data_hash["accessRestrictions"],
+      alternativeTitle_tesim: data_hash["alternativeTitle"],
+      alternativeTitleDisplay_tesim: data_hash["alternativeTitleDisplay"],
+      archiveSpaceUri_ssi: data_hash["archiveSpaceUri"],
       author_ssim: data_hash["creator"],
       author_tsim: data_hash["creator"],
-      # author_vern_ssim # author in the vernacular
-      extent_ssim: data_hash["extent"],
-      format: data_hash["format"],
-      # url_fulltext_ssim
-      url_suppl_ssim: data_hash["relatedUrl"],
-      language_ssim: data_hash["language"],
-      # published_ssim
-      # published_vern_ssim
-      # lc_callnum_ssim
-      # isbn_ssim
-      description_tesim: data_hash["description"],
-      abstract_ssim: data_hash["abstract"],
-      alternativeTitle_ssim: data_hash["alternativeTitle"],
-      alternative_title_tsm: data_hash["alternativeTitleDisplay"],
-      genre_ssim: data_hash["genre"],
-      geo_subject_ssim: data_hash["geoSubject"],
-      resourceType_ssim: data_hash["resourceType"],
-      subjectName_ssim: data_hash["subjectName"],
-      subject_topic_tsim: data_hash["subjectTopic"],
-      extentOfDigitization_ssim: data_hash["extentOfDigitization"],
-      rights_ssim: data_hash["rights"],
-      publicationPlace_ssim: data_hash["publicationPlace"],
-      sourceCreated_ssim: data_hash["sourceCreated"],
-      publisher_ssim: data_hash["publisher"],
+      box_ssim: extract_box_ssim(data_hash),
+      caption_tesim: data_hash["caption"],
+      collectionId_ssim: data_hash["collectionId"],
+      collectionId_tesim: data_hash["collectionId"],
+      contents_tesim: data_hash["contents"],
+      contributor_tsim: data_hash["contributor"],
+      contributorDisplay_tsim: data_hash["contributorDisplay"],
+      coordinates_ssim: data_hash["coordinate"],
       copyrightDate_ssim: data_hash["copyrightDate"],
-      source_ssim: data_hash["source"], # refers to source of metadata, e.g. Ladybird, Voyager, etc.
-      recordType_ssim: data_hash["recordType"],
-      sourceTitle_ssim: data_hash["sourceTitle"],
-      sourceDate_ssim: data_hash["sourceDate"],
-      sourceNote_ssim: data_hash["sourceNote"],
-      sourceEdition_ssim: data_hash["sourceEdition"], # Not currently in Blacklight application
-      references_ssim: data_hash["references"],
-      dateStructured_ssim: data_hash["dateStructured"],
-      # children_ssim
-      # importUrl_ssim
-      illustrative_matter_tsi: data_hash["illustrativeMatter"],
-      oid_ssim: data_hash["oid"] || oid,
+      creatorDisplay_tsim: data_hash["creatorDisplay"],
+      date_ssim: data_hash["date"],
+      dateDepicted_ssim: data_hash["dateDepicted"],
+      dateStructured_ssim: data_hash["dateStructured"], # keeping as ssim for now, dtsi suffix errors out, have invalid values from MC
+      dependentUris_ssim: data_hash["dependentUris"],
+      description_tesim: data_hash["description"],
+      digital_ssim: data_hash["digital"],
+      edition_ssim: data_hash["edition"],
+      extent_ssim: data_hash["extent"],
+      extentOfDigitization_ssim: data_hash["extentOfDigitization"],
+      findingAid_ssim: data_hash["findingAid"],
+      folder_ssim: data_hash["folder"],
+      format: data_hash["format"],
+      genre_ssim: data_hash["genre"],
+      geoSubject_ssim: data_hash["geoSubject"],
       identifierMfhd_ssim: data_hash["identifierMfhd"],
       identifierShelfMark_ssim: data_hash["identifierShelfMark"],
-      box_ssim: extract_box_ssim(data_hash),
-      folder_ssim: data_hash["folder"],
-      orbisBibId_ssim: data_hash["orbisRecord"], # may change to orbisBibId
-      orbisBarcode_ssim: data_hash["orbisBarcode"] || data_hash["barcode"],
-      findingAid_ssim: data_hash["findingAid"],
-      # collectionId_ssim
-      edition_ssim: data_hash["edition"],
-      uri_ssim: data_hash["uri"],
-      partOf_ssim: data_hash["partOf"],
+      illustrativeMatter_tesim: data_hash["illustrativeMatter"],
+      indexedBy_tsim: data_hash["indexedBy"],
+      language_ssim: data_hash["language"],
+      localRecordNumber_ssim: data_hash["localRecordNumber"],
+      material_tesim: data_hash["material"],
       number_of_pages_ss: data_hash["numberOfPages"],
-      material_ssim: data_hash["material"],
-      scale_ssim: data_hash["scale"],
-      digital_ssim: data_hash["digital"],
-      coordinates_ssim: data_hash["coordinate"],
-      projection_ssim: data_hash["projection"],
-      date_tsim: data_hash["date"], # Not clear what date this refers to, not in Blacklight
+      oid_ssi: data_hash["oid"] || oid,
+      orbisBarcode_ssi: data_hash["orbisBarcode"] || data_hash["barcode"],
+      orbisBibId_ssi: data_hash["orbisRecord"], # may change to orbisBibId
+      partOf_tesim: data_hash["partOf"],
+      partOf_ssim: data_hash["partOf"],
+      projection_tesim: data_hash["projection"],
       public_bsi: true, # TEMPORARY, makes everything public
-      visibility_ssi: extract_visibility(oid, data_hash)
+      publicationPlace_ssim: data_hash["publicationPlace"],
+      publicationPlace_tesim: data_hash["publicationPlace"],
+      publisher_tesim: data_hash["publisher"],
+      publisher_ssim: data_hash["publisher"],
+      recordType_ssi: data_hash["recordType"],
+      references_tesim: data_hash["references"],
+      repository_ssim: data_hash["repository"],
+      resourceType_ssim: data_hash["resourceType"],
+      rights_ssim: data_hash["rights"],
+      rights_tesim: data_hash["rights"],
+      scale_tesim: data_hash["scale"],
+      source_ssim: data_hash["source"], # refers to source of metadata, e.g. Ladybird, Voyager, etc.
+      sourceCreated_tesim: data_hash["sourceCreated"],
+      sourceDate_tesim: data_hash["sourceDate"],
+      sourceEdition_tesim: data_hash["sourceEdition"], # Not currently in Blacklight application
+      sourceNote_tesim: data_hash["sourceNote"],
+      sourceTitle_tesim: data_hash["sourceTitle"],
+      subjectEra_ssim: data_hash["subjectEra"],
+      subjectGeographic_tesim: data_hash["subjectGeographic"],
+      subjectTitle_tsim: data_hash["subjectTitle"],
+      subjectTitleDisplay_tsim: data_hash["subjectTitleDisplay"],
+      subjectName_ssim: data_hash["subjectName"],
+      subjectName_tesim: data_hash["subjectName"],
+      subjectTopic_tesim: data_hash["subjectTopic"],
+      subjectTopic_ssim: data_hash["subjectTopic"],
+      title_tesim: data_hash["title"],
+      uri_ssim: data_hash["uri"],
+      url_suppl_ssim: data_hash["relatedUrl"],
+      visibility_ssi: extract_visibility(oid, data_hash),
+      # fields below this point will be deprecated in a future release
+      abstract_ssim: data_hash["abstract"], # replaced by abstract_tesim
+      alternativeTitle_ssim: data_hash["alternativeTitle"], # replaced by alternativeTitle_tesim
+      alternative_title_tsm: data_hash["alternativeTitleDisplay"], # replaced by alternativeTitleDisplay_tesim
+      date_tsim: data_hash["date"], # replaced by date_ssim
+      geo_subject_ssim: data_hash["geoSubject"], # replaced by geoSubject_ssim
+      illustrative_matter_tsi: data_hash["illustrativeMatter"], # replaced by illustrativeMatter_tesim
+      material_ssim: data_hash["material"], # replaced by material_tesim
+      oid_ssim: data_hash["oid"] || oid, # replaced by oid_ssi
+      orbisBarcode_ssim: data_hash["orbisBarcode"] || data_hash["barcode"], # replaced by orbisBarcode_ssi
+      orbisBibId_ssim: data_hash["orbisRecord"], # replaced by orbisBibId_ssi
+      projection_ssim: data_hash["projection"], # replaced by projection_tesim
+      recordType_ssim: data_hash["recordType"], # replaced by recordType_ssi
+      references_ssim: data_hash["references"], # replaced by references_tesim
+      scale_ssim: data_hash["scale"], # replaced by scale_tesim
+      sourceCreated_ssim: data_hash["sourceCreated"], # replaced by sourceCreated_tesim
+      sourceDate_ssim: data_hash["sourceDate"], # replaced by sourceDate_tesim
+      sourceEdition_ssim: data_hash["sourceEdition"], # replaced by sourceEdition_tesim
+      sourceNote_ssim: data_hash["sourceNote"], # replaced by sourceNote_tesim
+      sourceTitle_ssim: data_hash["sourceTitle"], # repleaced by sourceTitle_tesim
+      subject_topic_tsim: data_hash["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
+      title_tsim: data_hash["title"] # replaced by title_tesim
     }
   end
 
