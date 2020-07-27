@@ -5,6 +5,46 @@ RSpec.describe FixtureIndexingService, clean: true do
   before do
     prep_metadata_call
   end
+
+  context "indexing to Solr from the database with Ladybird ParentObjects" do
+    let(:parent_object_1) { FactoryBot.create(:parent_object, oid: "2034600") }
+    let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "2046567") }
+    let(:parent_object_3) { FactoryBot.create(:parent_object, oid: "16414889") }
+    let(:parent_object_4) { FactoryBot.create(:parent_object, oid: "14716192") }
+    let(:parent_object_5) { FactoryBot.create(:parent_object, oid: "16854285") }
+
+    let(:metadata_cloud_response_body_1) { File.open(File.join(fixture_path, "ladybird", "2034600.json")).read }
+    let(:metadata_cloud_response_body_2) { File.open(File.join(fixture_path, "ladybird", "2046567.json")).read }
+    let(:metadata_cloud_response_body_3) { File.open(File.join(fixture_path, "ladybird", "16414889.json")).read }
+    let(:metadata_cloud_response_body_4) { File.open(File.join(fixture_path, "ladybird", "14716192.json")).read }
+    let(:metadata_cloud_response_body_5) { File.open(File.join(fixture_path, "ladybird", "16854285.json")).read }
+    before do
+      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2034600")
+        .to_return(status: 200, body: metadata_cloud_response_body_1)
+      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2046567")
+        .to_return(status: 200, body: metadata_cloud_response_body_2)
+      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16414889")
+        .to_return(status: 200, body: metadata_cloud_response_body_3)
+      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/14716192")
+        .to_return(status: 200, body: metadata_cloud_response_body_4)
+      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16854285")
+        .to_return(status: 200, body: metadata_cloud_response_body_5)
+      parent_object_1
+      parent_object_2
+      parent_object_3
+      parent_object_4
+      parent_object_5
+    end
+    it "can index the 5 parent objects in the database to Solr" do
+      expect(ParentObject.count).to eq 5
+      solr = SolrService.connection
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to eq 0
+      described_class.index_from_database_to_solr
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to eq 5
+    end
+  end
   context "with ArchiveSpace fixture data" do
     let(:metadata_fixture_path) { File.join(fixture_path, metadata_source) }
     let(:oid) { "16854285" }
@@ -16,14 +56,14 @@ RSpec.describe FixtureIndexingService, clean: true do
     end
 
     it "can index a single file to Solr" do
-      described_class.index_to_solr(oid, metadata_source)
+      described_class.index_from_fixture_to_solr(oid, metadata_source)
       solr = SolrService.connection
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 1
     end
 
     it "does not try to index a non-existent file to Solr" do
-      described_class.index_to_solr(non_aspace_oid, metadata_source)
+      described_class.index_from_fixture_to_solr(non_aspace_oid, metadata_source)
       solr = SolrService.connection
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 0
@@ -49,7 +89,7 @@ RSpec.describe FixtureIndexingService, clean: true do
     end
 
     it "can index a single file to Solr" do
-      described_class.index_to_solr(oid, metadata_source)
+      described_class.index_from_fixture_to_solr(oid, metadata_source)
       solr = SolrService.connection
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 1
@@ -67,11 +107,11 @@ RSpec.describe FixtureIndexingService, clean: true do
       let(:parent_object_with_public_visibility) { FactoryBot.create(:parent_object, oid: oid, visibility: "Public") }
 
       before do
-        stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2012036")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2012036")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012036.json")).read)
-        stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002091459793?bib=6805375")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002091459793?bib=6805375")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2012036.json")).read)
-        stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/555049")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace/repositories/11/archival_objects/555049")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-2012036.json")).read)
       end
 
@@ -88,9 +128,9 @@ RSpec.describe FixtureIndexingService, clean: true do
       let(:parent_object_without_visibility) { FactoryBot.create(:parent_object, oid: no_vis_oid) }
 
       before do
-        stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16189097-no_vis")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16189097-no_vis")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16189097-no_vis.json")).read)
-        stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002113593819?bib=8330740")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002113593819?bib=8330740")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16189097-no_vis.json")).read)
       end
 
@@ -107,9 +147,9 @@ RSpec.describe FixtureIndexingService, clean: true do
       let(:priv_oid) { "16189097-priv" }
       let(:parent_object_with_private_visibility) { FactoryBot.create(:parent_object, oid: priv_oid, visibility: "Private") }
       before do
-        stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16189097-priv")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16189097-priv")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16189097-priv.json")).read)
-        stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ils/barcode/39002113593819?bib=8330740")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002113593819?bib=8330740")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16189097-priv.json")).read)
       end
 
@@ -127,8 +167,8 @@ RSpec.describe FixtureIndexingService, clean: true do
     let(:oid) { "2034600" }
 
     it "can index the same digital object's data from two different metadata sources to Solr" do
-      described_class.index_to_solr(oid, "ladybird")
-      described_class.index_to_solr(oid, "ils")
+      described_class.index_from_fixture_to_solr(oid, "ladybird")
+      described_class.index_from_fixture_to_solr(oid, "ils")
       solr = SolrService.connection
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 2
@@ -154,7 +194,7 @@ RSpec.describe FixtureIndexingService, clean: true do
     end
 
     it "can index a single file to Solr" do
-      described_class.index_to_solr(oid, metadata_source)
+      described_class.index_from_fixture_to_solr(oid, metadata_source)
       solr = SolrService.connection
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 1
@@ -171,7 +211,7 @@ RSpec.describe FixtureIndexingService, clean: true do
       let(:priv_oid) { "16189097-priv" }
 
       it "indexes Private as one of the visibility values" do
-        described_class.index_to_solr(priv_oid, metadata_source)
+        described_class.index_from_fixture_to_solr(priv_oid, metadata_source)
         solr = SolrService.connection
         response = solr.get 'select', params: { q: '*:*' }
         expect(response["response"]["docs"].first["visibility_ssi"]).to eq("Private")
@@ -190,7 +230,7 @@ RSpec.describe FixtureIndexingService, clean: true do
       let(:yale_oid) { "2107188-yale" }
 
       it "indexes Yale Community Only as one of the visibility values" do
-        described_class.index_to_solr(yale_oid, metadata_source)
+        described_class.index_from_fixture_to_solr(yale_oid, metadata_source)
         solr = SolrService.connection
         response = solr.get 'select', params: { q: '*:*' }
         expect(response["response"]["docs"].first["visibility_ssi"]).to eq("Yale Community Only")
