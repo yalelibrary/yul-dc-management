@@ -10,7 +10,18 @@ class MetsDocument
   end
 
   def oid
-    @mets.xpath("//goobi:metadata[@name='CatalogIDDigital']").first.content.to_s
+    @mets.xpath("//goobi:metadata[@name='CatalogIDDigital']").first&.content&.to_s
+  end
+
+  def valid_mets?
+    return false unless @mets.xml?
+    return false unless @mets.collect_namespaces.include?("xmlns:mets")
+    return false unless @mets.xpath("//mets:file").count >= 1
+    true
+  end
+
+  def all_images_present?
+    files.all? { |file| File.exist?(Rails.root.join(file[:url])) }
   end
 
   # def viewing_direction
@@ -22,21 +33,21 @@ class MetsDocument
   #        .to_s.start_with? 'RTL'
   # end
 
-  # def files
-  #   @mets.xpath("/mets:mets/mets:fileSec/mets:fileGrp" \
-  #               "/mets:file").map do |f|
-  #     file_info(f)
-  #   end
-  # end
+  def files
+    @mets.xpath("/mets:mets/mets:fileSec/mets:fileGrp" \
+                "/mets:file").map do |f|
+      file_info(f)
+    end
+  end
 
-  # def file_info(file)
-  #   {
-  #     id: file.xpath('@ID').to_s,
-  #     checksum: file.xpath('@CHECKSUM').to_s,
-  #     mime_type: file.xpath('@MIMETYPE').to_s,
-  #     url: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, '')
-  #   }
-  # end
+  def file_info(file)
+    {
+      id: file.xpath('@ID').to_s,
+      checksum: file.xpath('@CHECKSUM').to_s,
+      mime_type: file.xpath('@MIMETYPE').to_s,
+      url: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, '')
+    }
+  end
 
   # def file_opts(file)
   #   return {} if

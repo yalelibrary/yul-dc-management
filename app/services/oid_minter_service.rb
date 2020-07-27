@@ -15,5 +15,6 @@ class OidMinterService
     initial_value = Rails.application.config.oid_sequence_initial_value
     # This does nothing if the sequence already exists
     ActiveRecord::Base.connection.execute("CREATE SEQUENCE IF NOT EXISTS OID_SEQUENCE START WITH #{initial_value};")
+    initial_value
   end
 end

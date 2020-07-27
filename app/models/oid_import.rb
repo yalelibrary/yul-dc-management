@@ -19,6 +19,7 @@ class OidImport < ApplicationRecord
   end
 
   def refresh_metadata_cloud
-    MetadataCloudService.refresh_from_upload(parsed_csv, 'ladybird') # TODO: make 'ladybird' a metadata source attribute on this object
+    oids = parsed_csv.entries.map { |r| r['oid'] }
+    MetadataCloudService.create_parent_objects_from_oids(oids, 'ladybird') # TODO: make 'ladybird' a metadata source attribute on this object
   end
 end

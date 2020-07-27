@@ -3,10 +3,22 @@ inherit_from: .rubocop_todo.yml
 inherit_gem:
   bixby: bixby_default.yml
 
+Metrics/AbcSize:
+  Exclude:
+    - 'app/services/fixture_indexing_service.rb'
+
 Metrics/BlockLength:
   Max: 38
   Exclude:
     - 'spec/**/*.rb'
+
+Metrics/ClassLength:
+  Exclude:
+    - 'app/services/fixture_indexing_service.rb'
+
+Metrics/MethodLength:
+    Exclude:
+      - 'app/services/fixture_indexing_service.rb'
 
 RSpec/ExampleLength:
   Exclude:
