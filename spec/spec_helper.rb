@@ -7,6 +7,7 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
                                                                  Coveralls::SimpleCov::Formatter
                                                                ])
 SimpleCov.start do
+  add_filter 'app/controllers/metadata_samples_controller.rb'
   add_filter 'app/services/metadata_sampling_service.rb'
 end
 SimpleCov.start 'rails'

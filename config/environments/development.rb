@@ -76,4 +76,7 @@ Rails.application.configure do
   # Set the initial value for the OID sequence.
   # The dev and test environments have very high starting values to distinguish from prod
   config.oid_sequence_initial_value = 300_000_000
+
+  # Metadata Cloud Host
+  config.metadata_cloud_host = "metadata-api-test.library.yale.edu"
 end

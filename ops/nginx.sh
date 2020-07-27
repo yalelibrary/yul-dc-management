@@ -14,12 +14,12 @@ declare -p | grep -Ev 'BASHOPTS|PWD|BASH_VERSINFO|EUID|PPID|SHELLOPTS|UID' > /co
 
 if [[ $PASSENGER_APP_ENV == "development" ]] || [[ $PASSENGER_APP_ENV == "test" ]]
 then
-    /sbin/setuser app /bin/bash -l -c 'cd /home/app/webapp && yarn && bundle exec rails db:migrate db:test:prepare'
+    /sbin/setuser app /bin/bash -l -c 'cd /home/app/webapp && yarn && bundle exec rails db:migrate db:seed db:test:prepare'
 fi
 
 if [[ $PASSENGER_APP_ENV == "production" ]] || [[ $PASSENGER_APP_ENV == "staging" ]]
 then
-    /sbin/setuser app /bin/bash -l -c 'cd /home/app/webapp && bundle exec rake db:migrate'
+    /sbin/setuser app /bin/bash -l -c 'cd /home/app/webapp && bundle exec rake db:migrate db:seed'
     if [ -d /home/app/webapp/public/assets-new ]; then
         /sbin/setuser app /bin/bash -l -c 'cd /home/app/webapp && rsync -a public/assets-new/ public/assets/'
     fi

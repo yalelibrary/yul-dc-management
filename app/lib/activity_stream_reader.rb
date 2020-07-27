@@ -19,7 +19,7 @@ class ActivityStreamReader
   def process_activity_stream
     log = ActivityStreamLog.create(run_time: DateTime.current, status: "Running")
     log.save
-    process_page("https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity")
+    process_page("https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/streams/activity")
     common_uris = intersection_of_dependent_uris(remote_dependent_uris, local_dependent_uris)
     parent_objects_for_update = items_for_update_from_dependent_uris(common_uris)
     refresh_updated_items(parent_objects_for_update)
