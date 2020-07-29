@@ -4,11 +4,21 @@ class MetadataSource < ApplicationRecord
   has_many :parent_objects, foreign_key: "authoritative_metadata_source_id"
 
   def fetch_record(parent_object)
-    mc_url = parent_object.send(url_type)
-    full_response = mc_get(mc_url)
-    return unless full_response.status == 200
-    raw_metadata = full_response.body.to_str
+    raw_metadata = if ENV['VPN']
+                     mc_url = parent_object.send(url_type)
+                     full_response = mc_get(mc_url)
+                     return unless full_response.status == 200
+                     full_response.body.to_str
+                   else
+                     file = Rails.root.join('spec', 'fixtures', metadata_cloud_name, file_name(parent_object))
+                     return unless File.exist?(file)
+                     File.read(file)
+                   end
     JSON.parse(raw_metadata)
+  end
+
+  def file_name(parent_object)
+    "#{self.file_prefix}#{parent_object.oid}.json"
   end
 
   def url_type

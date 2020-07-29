@@ -25,7 +25,11 @@ class ParentObject < ApplicationRecord
   end
 
   def authoritative_json
-    case authoritative_metadata_source.metadata_cloud_name
+    json_for(authoritative_metadata_source.metadata_cloud_name)
+  end
+
+  def json_for(source_name)
+    case source_name
     when "ladybird"
       ladybird_json
     when "ils"
@@ -33,7 +37,7 @@ class ParentObject < ApplicationRecord
     when "aspace"
       aspace_json
     else
-      raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
+    raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
   end
 
@@ -47,24 +51,30 @@ class ParentObject < ApplicationRecord
   # Takes a JSON record from the MetadataCloud and saves the Ladybird-specific info to the DB
   def ladybird_json=(lb_record)
     super(lb_record)
-    self.bib = lb_record["orbisRecord"]
-    self.barcode = lb_record["orbisBarcode"]
-    self.aspace_uri = lb_record["archiveSpaceUri"]
-    self.visibility = lb_record["itemPermission"]
-    self.last_ladybird_update = DateTime.current
+    if lb_record.present?
+      self.bib = lb_record["orbisRecord"]
+      self.barcode = lb_record["orbisBarcode"]
+      self.aspace_uri = lb_record["archiveSpaceUri"]
+      self.visibility = lb_record["itemPermission"]
+      self.last_ladybird_update = DateTime.current
+    end
   end
 
   def voyager_json=(v_record)
     super(v_record)
-    self.holding = v_record["holdingId"]
-    self.item = v_record["itemId"]
-    self.last_id_update = DateTime.current
-    self.last_voyager_update = DateTime.current
+    if v_record.present?
+      self.holding = v_record["holdingId"]
+      self.item = v_record["itemId"]
+      self.last_id_update = DateTime.current
+      self.last_voyager_update = DateTime.current
+    end
   end
 
   def aspace_json=(a_record)
     super(a_record)
-    self.last_aspace_update = DateTime.current
+    if a_record.present?
+      self.last_aspace_update = DateTime.current
+    end
   end
 
   def ladybird_cloud_url
@@ -85,17 +95,12 @@ class ParentObject < ApplicationRecord
     return nil unless ladybird_json.present?
     "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace#{ladybird_json['archiveSpaceUri']}"
   end
-  # t.string "oid" - Unique identifier for a ParentObject, currently from Ladybird, eventually will be minted by this application
-  # t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
-  # t.string "bib" - Identifier from Voyager, the integrated library system ("ils"). Short for Bibliographic record.
-  # t.string "holding" - Identifier from Voyager
-  # t.string "item" - Identifier from Voyager
-  # t.string "barcode"
-  # t.string "aspace_uri" - Identifier from ArchiveSpace
-  # t.datetime "created_at", precision: 6, null: false
-  # t.datetime "updated_at", precision: 6, null: false
-  # t.datetime "last_id_update" - Last time the crosswalk between all the ids was updated based on the Ladybird data
-  # t.datetime "last_ladybird_update" - Last time the Ladybird record was updated from MetadataCloud
-  # t.datetime "last_voyager_update" - Last time the Voyager record was updated from MetadataCloud
-  # t.datetime "last_aspace_update" - Last time the ArchiveSpace record was updated from MetadataCloud
+
+  def source_name=(metadata_source)
+    self.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: metadata_source)
+  end
+
+  def source_name
+    self.authoritative_metadata_source&.metadata_cloud_name
+  end
 end

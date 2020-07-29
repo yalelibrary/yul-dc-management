@@ -20,7 +20,7 @@ RSpec.describe FixtureParsingService do
     expect(data_hash["title"]).to include "Albergati Bible"
   end
 
-  context "a crosswalk maintained in the database", vpn_only: false do
+  context "a crosswalk maintained in the database" do
     let(:oid) { "2004628" }
     let(:bib) { "3163155" }
     let(:po) { FactoryBot.create(:parent_object, oid: oid, bib: bib) }

@@ -83,10 +83,9 @@ class MetadataSamplingService
 
   def self.retrieve_sample_fields(sample_oids, metadata_source)
     sample_oids.each do |oid|
-      metadata_cloud_url = MetadataCloudService.build_metadata_cloud_url(oid, metadata_source)
-      full_response = MetadataCloudService.mc_get(metadata_cloud_url)
-
-      fields = JSON.parse(full_response.body).keys
+      parent_object = ParentObject.new(oid: oid, source_name: metadata_source)
+      parent_object.default_fetch
+      fields = parent_object.authoritative_json.keys
       collected_fields.push(fields)
     end
   end
