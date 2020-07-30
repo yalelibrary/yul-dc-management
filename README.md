@@ -26,30 +26,86 @@ cd ./yul-dc-management
 touch .secrets
 ```
 
-## If this is your first time working in this repo or the Dockerfile has been updated you will need to pull your services
+## Install
+
+Clone the yul-dc-camerata repo and install the gem.
 
 ```bash
-  docker-compose pull web
+git clone git@github.com:yalelibrary/yul-dc-camerata.git
+cd yul-dc-camerata
+bundle install
+rake install
 ```
 
-## Starting the app
+## Updates
 
-- Start the web service
+You can get the latest version at any point by updating the code and reinstalling
 
-  ```bash
-  docker-compose up web
-  ```
+```bash
+cd yul-dc-camerata
+git pull origin master
+bundle install
+rake install
+```
 
-- Access the web app at `http://localhost:3001/management`
+## General Use
+
+Once camerata is installed on your system, interactions happen through the 
+camerata command-line tool or through its alias `cam`.  The camerata tool can be 
+used to bring the development stack up and down locally, interact with the 
+docker containers, deploy, run the smoke tests and otherwise do development 
+tasks common to the various applications in the yul-dc application stack.
+
+All buildin commands can be listed with `cam help` and individual usage 
+information is available with `cam help COMMAND`.  Please note that deployment 
+commands (found in the `./bin` directory) are pass through and are therefor not 
+listed by the help command.  See th usage for those below. 
+
+To start the application stack, run `cam up` in the management directory. This starts all of the applications as they are 
+all dependencies of yul-management. Camerata is smart. If you start `cam up` from 
+a management code check out it will mount that code for local development 
+(changes to the outside code will affect the inside container). If you start the 
+`cam up` from the management application you will get the management code mounted
+for local development and the management code will run as it is in the downloaded 
+image. You can also start the two applications both mounted for development by 
+starting the management application with `--without blacklight` and the 
+blacklight application `--without solr --withouth db` each from their respective 
+code checkouts.
+
+
+- Access the blacklight app at `http://localhost:3000`
 
 - Access the solr instance at `http://localhost:8983`
+
+- Access the image instance at `http://localhost:8182`
+
+- Access the manifests instance at `http://localhost`
+
+- Access the management app at `http://localhost:3001/management`
+
+## Troubleshooting
+
+If you receive an `please set your AWS_PROFILE and AWS_DEFAULT_REGION (RuntimeError)` error when you `cam up`, you will need to set your AWS credentials. Credentials can be set in the `~/.aws/credentials` file in the following format:
+```bash
+[dce-hosting]
+aws_access_key_id=YOUR_ACCESS_KEY
+aws_secret_access_key=YOUR_SECRET_ACCESS_KEY
+```
+After the credentials have been set, you will need to export the following settings via the command line:
+```bash
+export AWS_PROFILE=dce-hosting && export AWS_DEFAULT_REGION=us-east-1
+```
+Note: AWS_PROFILE name needs to match the credentials profile name (`[dce-hosting]`). After you set the credentials, you will need to re-install camerata: `rake install`
+
+If you use rbenv, you must run the following command after installing camerata:
+`rbenv rehash`
 
 ### Accessing the web container
 
 - Navigate to the app root directory in another tab and run:
 
   ```bash
-  docker-compose exec web bundle exec bash
+  docker exec -it yul-dc-management_management_1 /bin/bash
   ```
 
 - You will need to be inside the container to:
@@ -65,25 +121,25 @@ touch .secrets
   - Access the rails console for debugging
 
     ```bash
-    rails c
+    bundle exec rails c
     ```
 
   - Run the tests, excluding those that require the Yale VPN (the tilda(~) means the tag is excluded)
 
     ```bash
-    rspec --tag ~vpn_only:true
+    bundle exec rspec --tag ~vpn_only:true
     ```
 
   - Run only the tests that require the Yale VPN
 
     ```bash
-    rspec --tag vpn_only:true
+    bundle exec rspec --tag vpn_only:true
     ```
 
   - Run Rubocop to fix any style errors
 
     ```bash
-    rubocop -a
+    bundle exec rubocop -a
     ```
 
     - If Rubocop is still flagging something that you've checked and want to keep as-is, add it to the `.rubocop_todo.yml` manually.
