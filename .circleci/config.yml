@@ -86,7 +86,7 @@ jobs:
       - setup_remote_docker
       - docker/check
       - run: |
-        ./bin/wait-for-docker-image yalelibraryit/dc-management $CIRCLE_SHA1
+          ./bin/wait-for-docker-image yalelibraryit/dc-management $CIRCLE_SHA1
       - docker/pull:
           images: yalelibraryit/dc-management:$CIRCLE_SHA1
       - docker-tag:
