@@ -3,10 +3,48 @@
 require 'rails_helper'
 
 RSpec.describe MetadataSource, type: :model do
-  context "with vpn on", vpn_only: true do
-    pending "specs for when vpn is on"
+  context "with vpn on" do
+    it "uses the correct url type method" do
+      {
+        'ladybird' => 'ladybird_cloud_url',
+        'ils' => 'voyager_cloud_url',
+        'aspace' => 'aspace_cloud_url'
+      }.each do |k, v|
+        expect(MetadataSource.new(metadata_cloud_name: k).url_type).to eq v
+      end
+    end
 
-    context "it can talk to the metadata cloud" do
+    context "with vpn mocked" do
+      let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
+      let(:ladybird_source) { FactoryBot.build(:metadata_source) }
+
+      before do
+        prep_metadata_call
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16797069")
+          .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16797069.json")).read)
+        stub_request(:put, "https://yul-development-samples.s3.amazonaws.com/ladybird/16797069.json").to_return(status: 200)
+      end
+
+      around do |example|
+        original_vpn = ENV['VPN']
+        ENV['VPN'] = 'true'
+        example.run
+        ENV['VPN'] = original_vpn
+      end
+
+      # Note we stub Metadata cloud, but not S3 download here proving this works
+      # as intended
+      it "loads the record from metadata cloud" do
+        ladybird_result = ladybird_source.fetch_record(parent_object)
+        expect(ladybird_result).to be
+        expect(ladybird_result['uri']).to eq('/ladybird/oid/16797069')
+      end
+    end
+
+    # TODO: The goal of this spec is for it to be the one section that really talks to
+    # the metadata cloud for now. This should be moved to the metadata cloud validation
+    # spec file once that file gets created
+    context "it can talk to the metadata cloud", vpn_only: true do
       let(:oid) { "16371272" }
       let(:oid_url) { "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?mediaType=json" }
       let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "2034600.json") }
@@ -22,6 +60,18 @@ RSpec.describe MetadataSource, type: :model do
     let(:ladybird_source) { FactoryBot.build(:metadata_source) }
     let(:voyager_source) { FactoryBot.build(:metadata_source_voyager) }
     let(:aspace_source) { FactoryBot.build(:metadata_source_aspace) }
+
+    before do
+      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/000000.json")
+        .to_return(status: 404)
+      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16797069.json")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16797069.json")).read)
+      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-16797069.json")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16797069.json")).read)
+      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/aspace/AS-16797069.json")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-16797069.json")).read)
+    end
+
     around do |example|
       original_vpn = ENV['VPN']
       ENV['VPN'] = nil
@@ -64,7 +114,7 @@ RSpec.describe MetadataSource, type: :model do
 
       it "returns nil if the cached json does not exist" do
         ladybird_result = ladybird_source.fetch_record(parent_object)
-        expect(ladybird_result).to_not be
+        expect(ladybird_result).not_to be
       end
 
       it "does not call mc_get or url_type" do

@@ -47,10 +47,10 @@ class MetadataCloudService
 
   def self.save_json_from_oids(oids, metadata_source)
     oids.each do |oid|
-      parent_object = ParentObject.where(oid: oid).first_or_create do |parent_object|
-        parent_object.source_name = metadata_source
+      parent_object = ParentObject.where(oid: oid).first_or_create do |object|
+        object.source_name = metadata_source
       end
-      parent_object.to_json_file if parent_object && parent_object.valid?
+      parent_object.to_json_file if parent_object&.valid?
     end
   end
 

@@ -37,7 +37,7 @@ class ParentObject < ApplicationRecord
     when "aspace"
       aspace_json
     else
-    raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
+      raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
   end
 
@@ -51,30 +51,26 @@ class ParentObject < ApplicationRecord
   # Takes a JSON record from the MetadataCloud and saves the Ladybird-specific info to the DB
   def ladybird_json=(lb_record)
     super(lb_record)
-    if lb_record.present?
-      self.bib = lb_record["orbisRecord"]
-      self.barcode = lb_record["orbisBarcode"]
-      self.aspace_uri = lb_record["archiveSpaceUri"]
-      self.visibility = lb_record["itemPermission"]
-      self.last_ladybird_update = DateTime.current
-    end
+    return lb_record if lb_record.blank?
+    self.bib = lb_record["orbisRecord"]
+    self.barcode = lb_record["orbisBarcode"]
+    self.aspace_uri = lb_record["archiveSpaceUri"]
+    self.visibility = lb_record["itemPermission"]
+    self.last_ladybird_update = DateTime.current
   end
 
   def voyager_json=(v_record)
     super(v_record)
-    if v_record.present?
-      self.holding = v_record["holdingId"]
-      self.item = v_record["itemId"]
-      self.last_id_update = DateTime.current
-      self.last_voyager_update = DateTime.current
-    end
+    return v_record if v_record.blank?
+    self.holding = v_record["holdingId"]
+    self.item = v_record["itemId"]
+    self.last_id_update = DateTime.current
+    self.last_voyager_update = DateTime.current
   end
 
   def aspace_json=(a_record)
     super(a_record)
-    if a_record.present?
-      self.last_aspace_update = DateTime.current
-    end
+    self.last_aspace_update = DateTime.current if a_record.present?
   end
 
   def ladybird_cloud_url
@@ -101,6 +97,6 @@ class ParentObject < ApplicationRecord
   end
 
   def source_name
-    self.authoritative_metadata_source&.metadata_cloud_name
+    authoritative_metadata_source&.metadata_cloud_name
   end
 end

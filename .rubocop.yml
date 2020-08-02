@@ -27,3 +27,7 @@ RSpec/ExampleLength:
 RSpec/MessageChain:
   Exclude:
     - 'spec/**/*.rb'
+
+RSpec/MessageSpies:
+  Exclude:
+    - 'spec/**/*.rb'
