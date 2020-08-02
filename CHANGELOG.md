@@ -1,5 +1,39 @@
 # Changelog
 
+## [v2.6.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.6.0) (2020-07-29)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.5.0...v2.6.0)
+
+**New Features:**
+
+- Add solr field types tesim [\#177](https://github.com/yalelibrary/yul-dc-management/pull/177) ([dylansalay](https://github.com/dylansalay))
+- Create new method to index from the database to Solr [\#172](https://github.com/yalelibrary/yul-dc-management/pull/172) ([maxkadel](https://github.com/maxkadel))
+- Index more fields [\#169](https://github.com/yalelibrary/yul-dc-management/pull/169) ([maxkadel](https://github.com/maxkadel))
+- METs upload creates parent object [\#168](https://github.com/yalelibrary/yul-dc-management/pull/168) ([maxkadel](https://github.com/maxkadel))
+- Upload mets file [\#159](https://github.com/yalelibrary/yul-dc-management/pull/159) ([maxkadel](https://github.com/maxkadel))
+
+**Fixed bugs:**
+
+- Fix metadata\_cloud\_host in development environment [\#174](https://github.com/yalelibrary/yul-dc-management/pull/174) ([maxkadel](https://github.com/maxkadel))
+- remove sourcemaps from Webpack [\#167](https://github.com/yalelibrary/yul-dc-management/pull/167) ([dylansalay](https://github.com/dylansalay))
+
+**Technical Enhancements:**
+
+- Oid Imports controller spec [\#176](https://github.com/yalelibrary/yul-dc-management/pull/176) ([dylansalay](https://github.com/dylansalay))
+- 378 code coverage [\#173](https://github.com/yalelibrary/yul-dc-management/pull/173) ([jpengst](https://github.com/jpengst))
+- Reapplying "Sanitize branch name in CI \(\#158\)" [\#171](https://github.com/yalelibrary/yul-dc-management/pull/171) ([fnibbit](https://github.com/fnibbit))
+- Address test warning and deprecation [\#170](https://github.com/yalelibrary/yul-dc-management/pull/170) ([maxkadel](https://github.com/maxkadel))
+- 392 metadata cloud url change [\#165](https://github.com/yalelibrary/yul-dc-management/pull/165) ([martinlovell](https://github.com/martinlovell))
+- Revert "Sanitize branch name in CI \(\#158\)" [\#164](https://github.com/yalelibrary/yul-dc-management/pull/164) ([maxkadel](https://github.com/maxkadel))
+- Refactor metadata cloud service [\#163](https://github.com/yalelibrary/yul-dc-management/pull/163) ([maxkadel](https://github.com/maxkadel))
+- make code coverage skip the metadata\_sampling service [\#162](https://github.com/yalelibrary/yul-dc-management/pull/162) ([orangewolf](https://github.com/orangewolf))
+- seeds will not error when ran a second time [\#161](https://github.com/yalelibrary/yul-dc-management/pull/161) ([jpengst](https://github.com/jpengst))
+- Seed production and dev on load, run OID Minter on seed [\#160](https://github.com/yalelibrary/yul-dc-management/pull/160) ([orangewolf](https://github.com/orangewolf))
+- Sanitize branch name in CI [\#158](https://github.com/yalelibrary/yul-dc-management/pull/158) ([fnibbit](https://github.com/fnibbit))
+- Remove dead code [\#156](https://github.com/yalelibrary/yul-dc-management/pull/156) ([maxkadel](https://github.com/maxkadel))
+- added value descriptions [\#155](https://github.com/yalelibrary/yul-dc-management/pull/155) ([jpengst](https://github.com/jpengst))
+- Fix coveralls by allowing git to be present in build [\#152](https://github.com/yalelibrary/yul-dc-management/pull/152) ([orangewolf](https://github.com/orangewolf))
+
 ## [v2.5.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.5.0) (2020-07-20)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.4.0...v2.5.0)
@@ -7,6 +41,7 @@
 **New Features:**
 
 - OID request logger and spec [\#151](https://github.com/yalelibrary/yul-dc-management/pull/151) ([dylansalay](https://github.com/dylansalay))
+- Refactor parent objects [\#144](https://github.com/yalelibrary/yul-dc-management/pull/144) ([maxkadel](https://github.com/maxkadel))
 
 **Security fixes:**
 
@@ -14,6 +49,7 @@
 
 **Technical Enhancements:**
 
+- prep for v2.5.0 release [\#154](https://github.com/yalelibrary/yul-dc-management/pull/154) ([maxkadel](https://github.com/maxkadel))
 - Goobi parent objects [\#150](https://github.com/yalelibrary/yul-dc-management/pull/150) ([maxkadel](https://github.com/maxkadel))
 - Set honeybadger key from env var [\#149](https://github.com/yalelibrary/yul-dc-management/pull/149) ([JzGo](https://github.com/JzGo))
 - Coveralls test coverage badge [\#146](https://github.com/yalelibrary/yul-dc-management/pull/146) ([jpengst](https://github.com/jpengst))
@@ -25,7 +61,6 @@
 
 **New Features:**
 
-- Refactor parent objects [\#144](https://github.com/yalelibrary/yul-dc-management/pull/144) ([maxkadel](https://github.com/maxkadel))
 - 322 Authenticate oid request [\#141](https://github.com/yalelibrary/yul-dc-management/pull/141) ([dylansalay](https://github.com/dylansalay))
 
 **Technical Enhancements:**
