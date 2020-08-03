@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets OBJID="39" xsi:schemaLocation="http://www.loc.gov/standards/premis/ http://www.loc.gov/standards/premis/v2/premis-v2-0.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/standards/mix/ http://www.loc.gov/standards/mix/mix.xsd" xmlns:mets="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:intranda="http://intranda.com/MODS/" xmlns:dv="http://dfg-viewer.de/" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <mets:metsHdr CREATEDATE="2020-07-23T18:32:12Z">
+      <mets:agent OTHERTYPE="SOFTWARE" ROLE="CREATOR" TYPE="OTHER">
+         <mets:name>Goobi - 9d4e2 - 2020-06-25 04:07:26+0000</mets:name>
+         <mets:note>Goobi</mets:note>
+      </mets:agent>
+   </mets:metsHdr>
+   <mets:dmdSec ID="DMDLOG_0000">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:titleInfo>
+                  <mods:title>Indulgence scroll</mods:title>
+               </mods:titleInfo>
+               <mods:identifier type="PPNanalog">/ils/barcode/39002091597519?bib=9734851</mods:identifier>
+               <mods:recordInfo>
+                  <mods:recordIdentifier source="gbv-ppn">1595528690276</mods:recordIdentifier>
+               </mods:recordInfo>
+               <mods:classification authority="ivdcc">DefaultCollection</mods:classification>
+               <mods:originInfo>
+                  <mods:dateIssued keyDate="no">[between 1475 and 1500]</mods:dateIssued>
+                  <mods:dateIssued keyDate="yes">14751500</mods:dateIssued>
+               </mods:originInfo>
+               <mods:note type="source dimensions">Box</mods:note>
+               <mods:physicalDescription>
+                  <mods:form type="material">ms</mods:form>
+               </mods:physicalDescription>
+               <mods:extension>
+                  <intranda:intranda>
+                     <intranda:directionRTL>false</intranda:directionRTL>
+                  </intranda:intranda>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:amdSec ID="AMD">
+      <mets:rightsMD ID="RIGHTS">
+         <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVRIGHTS">
+            <mets:xmlData>
+               <dv:rights>
+                  <dv:owner>Beinecke Rare Book &amp; Manuscript Library</dv:owner>
+                  <dv:ownerLogo/>
+                  <dv:ownerSiteURL>https://beinecke.library.yale.edu/</dv:ownerSiteURL>
+                  <dv:ownerContact/>
+                  <dv:sponsorSiteURL>info@intranda.com</dv:sponsorSiteURL>
+               </dv:rights>
+            </mets:xmlData>
+         </mets:mdWrap>
+      </mets:rightsMD>
+      <mets:digiprovMD ID="DIGIPROV">
+         <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVLINKS">
+            <mets:xmlData>
+               <dv:links>
+                  <dv:reference/>
+                  <dv:presentation/>
+               </dv:links>
+            </mets:xmlData>
+         </mets:mdWrap>
+      </mets:digiprovMD>
+   </mets:amdSec>
+   <mets:fileSec>
+      <mets:fileGrp USE="PRESENTATION">
+         <mets:file ID="FILE_0001_PRESENTATION" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/media/1595528690276/1003311.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0002_PRESENTATION" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/media/1595528690276/1003312.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0003_PRESENTATION" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/media/1595528690276/1003313.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0004_PRESENTATION" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/media/1595528690276/15512394.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0005_PRESENTATION" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/media/1595528690276/15512395.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0006_PRESENTATION" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/media/1595528690276/15512396.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0007_PRESENTATION" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/media/1595528690276/15512397.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0008_PRESENTATION" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/media/1595528690276/15512398.tif"/>
+         </mets:file>
+      </mets:fileGrp>
+   </mets:fileSec>
+   <mets:structMap TYPE="LOGICAL">
+      <mets:div ADMID="AMD" DMDID="DMDLOG_0000" ID="LOG_0000" LABEL="Indulgence scroll" TYPE="monograph"/>
+   </mets:structMap>
+   <mets:structMap TYPE="PHYSICAL">
+      <mets:div ID="PHYS_0000" TYPE="physSequence">
+         <mets:div ID="PHYS_0001" ORDER="1" ORDERLABEL="1r" TYPE="page">
+            <mets:fptr FILEID="FILE_0001_PRESENTATION"/>
+         </mets:div>
+         <mets:div ID="PHYS_0002" ORDER="2" ORDERLABEL="2r" TYPE="page">
+            <mets:fptr FILEID="FILE_0002_PRESENTATION"/>
+         </mets:div>
+         <mets:div ID="PHYS_0003" ORDER="3" ORDERLABEL="3r" TYPE="page">
+            <mets:fptr FILEID="FILE_0003_PRESENTATION"/>
+         </mets:div>
+         <mets:div ID="PHYS_0004" ORDER="4" ORDERLABEL="4r" TYPE="page">
+            <mets:fptr FILEID="FILE_0004_PRESENTATION"/>
+         </mets:div>
+         <mets:div ID="PHYS_0005" ORDER="5" ORDERLABEL="5r" TYPE="page">
+            <mets:fptr FILEID="FILE_0005_PRESENTATION"/>
+         </mets:div>
+         <mets:div ID="PHYS_0006" ORDER="6" ORDERLABEL="6r" TYPE="page">
+            <mets:fptr FILEID="FILE_0006_PRESENTATION"/>
+         </mets:div>
+         <mets:div ID="PHYS_0007" ORDER="7" ORDERLABEL="7r" TYPE="page">
+            <mets:fptr FILEID="FILE_0007_PRESENTATION"/>
+         </mets:div>
+         <mets:div ID="PHYS_0008" ORDER="8" ORDERLABEL="8r" TYPE="page">
+            <mets:fptr FILEID="FILE_0008_PRESENTATION"/>
+         </mets:div>
+      </mets:div>
+   </mets:structMap>
+   <mets:structLink>
+      <mets:smLink xlink:to="PHYS_0001" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0002" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0003" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0004" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0005" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0006" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0007" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0008" xlink:from="LOG_0000"/>
+   </mets:structLink>
+</mets:mets>
