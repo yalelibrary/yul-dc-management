@@ -4,7 +4,8 @@ class MetadataSource < ApplicationRecord
   has_many :parent_objects, foreign_key: "authoritative_metadata_source_id"
 
   def fetch_record(parent_object)
-    raw_metadata = if ENV['VPN']
+    # The environment value has to be set as a string, real booleans do not work
+    raw_metadata = if ENV["VPN"] == "true"
                      fetch_record_on_vpn(parent_object)
                    else
                      S3Service.download("#{metadata_cloud_name}/#{file_name(parent_object)}")
