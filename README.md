@@ -45,10 +45,10 @@ rake install
 
 ## General Use
 
-Once camerata is installed on your system, interactions happen through the 
-camerata command-line tool or through its alias `cam`.  The camerata tool can be 
-used to bring the development stack up and down locally, interact with the 
-docker containers, deploy, run the smoke tests and otherwise do development 
+Once camerata is installed on your system, interactions happen through the
+camerata command-line tool or through its alias `cam`.  The camerata tool can be
+used to bring the development stack up and down locally, interact with the
+docker containers, deploy, run the smoke tests and otherwise do development
 tasks common to the various applications in the yul-dc application stack.
 
 All built in commands can be listed with `cam help` and individual usage 
@@ -80,7 +80,10 @@ code checkouts.
 
 ## Troubleshooting
 
-If you receive an `please set your AWS_PROFILE and AWS_DEFAULT_REGION (RuntimeError)` error when you `cam up`, you will need to set your AWS credentials. Credentials can be set in the `~/.aws/credentials` file in the following format:
+If you receive an `please set your AWS_PROFILE and AWS_DEFAULT_REGION (RuntimeError)`
+error when you `cam up`, you will need to set your AWS credentials. Credentials
+can be set in the `~/.aws/credentials` file in the following format:
+
 ```bash
 [dce-hosting]
 aws_access_key_id=YOUR_ACCESS_KEY
@@ -94,6 +97,14 @@ Note: AWS_PROFILE name needs to match the credentials profile name (`[dce-hostin
 
 If you use rbenv, you must run the following command after installing camerata:
 `rbenv rehash`
+
+
+## Running on the VPN
+
+If you'd like to hit the Metadata cloud endpoint and are running on the VPN,
+then start the application with `VPN=true cam up` or `VPN=true cam up
+management`. Setting this variable will enable VPN specs and make full requests
+to the Yale services.
 
 ### Accessing the web container
 
@@ -175,11 +186,18 @@ If you use rbenv, you must run the following command after installing camerata:
 
 ## Pulling or Building Docker Images
 
-Any time you pull a branch with a Gemfile change you need to pull or build a new Docker image. If you change the Dockerfile, you need to build a new Docker image. If you change a file in ./ops you need to build a new Docker image. These are the primary times in which you need to pull or build.
+Any time you pull a branch with a Gemfile change you need to pull or build a new
+Docker image. If you change the Dockerfile, you need to build a new Docker image.
+If you change a file in ./ops you need to build a new Docker image. These are
+the primary times in which you need to pull or build.
 
 ## When Installing a New Gem
 
-For the most part images are created and maintained by the CI process. However, if you change the Gemfile you need to take a few extra steps. Make sure the application is running before you make your Gemfile change. Once you've updated the Gemfile, inside the container, run `bundle && nginx -s reload`. The next time you stop your running containers you need to rebuild.
+For the most part images are created and maintained by the CI process. However,
+if you change the Gemfile you need to take a few extra steps. Make sure the
+application is running before you make your Gemfile change. Once you've updated
+the Gemfile, inside the container, run `bundle && nginx -s reload`. The next time
+you stop your running containers you need to rebuild.
 
 ## Releasing a new version
 
