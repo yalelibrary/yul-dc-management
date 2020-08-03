@@ -1,5 +1,26 @@
 # Changelog
 
+## [v2.7.2](https://github.com/yalelibrary/yul-dc-management/tree/v2.7.2) (2020-08-03)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.7.1...v2.7.2)
+
+**Fixed bugs:**
+
+- Does not try to fetch from MetadataCloud if VPN is set to empty string [\#187](https://github.com/yalelibrary/yul-dc-management/pull/187) ([maxkadel](https://github.com/maxkadel))
+
+**Technical Enhancements:**
+
+- Added camerata instructions to management readme [\#180](https://github.com/yalelibrary/yul-dc-management/pull/180) ([jpengst](https://github.com/jpengst))
+
+## [v2.7.1](https://github.com/yalelibrary/yul-dc-management/tree/v2.7.1) (2020-08-03)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.7.0...v2.7.1)
+
+**Technical Enhancements:**
+
+- Earlier commit reverted, re-create changelog for 2.7.0 release [\#186](https://github.com/yalelibrary/yul-dc-management/pull/186) ([maxkadel](https://github.com/maxkadel))
+- Revert "Circle ci wait on release" [\#185](https://github.com/yalelibrary/yul-dc-management/pull/185) ([maxkadel](https://github.com/maxkadel))
+
 ## [v2.7.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.7.0) (2020-08-03)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.7.0.pre...v2.7.0)
@@ -15,7 +36,6 @@
 **Technical Enhancements:**
 
 - Prep for v2.7.0 release [\#184](https://github.com/yalelibrary/yul-dc-management/pull/184) ([maxkadel](https://github.com/maxkadel))
-- Revert "Circle ci wait on release" [\#185](https://github.com/yalelibrary/yul-dc-management/pull/185) ([maxkadel](https://github.com/maxkadel))
 - Circle ci wait on release [\#181](https://github.com/yalelibrary/yul-dc-management/pull/181) ([JzGo](https://github.com/JzGo))
 - Logging [\#166](https://github.com/yalelibrary/yul-dc-management/pull/166) ([mlooney](https://github.com/mlooney))
 
@@ -183,6 +203,7 @@
 - Add visibility from SOA Ladybird for all items [\#105](https://github.com/yalelibrary/yul-dc-management/pull/105) ([maxkadel](https://github.com/maxkadel))
 - Add Camerata to versions dashboard [\#104](https://github.com/yalelibrary/yul-dc-management/pull/104) ([maxkadel](https://github.com/maxkadel))
 - Add temporary fix for Box pending more detailed requirements [\#103](https://github.com/yalelibrary/yul-dc-management/pull/103) ([maxkadel](https://github.com/maxkadel))
+- Prep for v1.7.2 release [\#101](https://github.com/yalelibrary/yul-dc-management/pull/101) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.7.2](https://github.com/yalelibrary/yul-dc-management/tree/v1.7.2) (2020-06-22)
 
@@ -190,7 +211,6 @@
 
 **Technical Enhancements:**
 
-- Prep for v1.7.2 release [\#101](https://github.com/yalelibrary/yul-dc-management/pull/101) ([maxkadel](https://github.com/maxkadel))
 - Just don't set hosts for now to get it running in production, can re-… [\#100](https://github.com/yalelibrary/yul-dc-management/pull/100) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.7.1](https://github.com/yalelibrary/yul-dc-management/tree/v1.7.1) (2020-06-22)
