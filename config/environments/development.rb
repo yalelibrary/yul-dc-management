@@ -78,5 +78,5 @@ Rails.application.configure do
   config.oid_sequence_initial_value = 300_000_000
 
   # Metadata Cloud Host
-  config.metadata_cloud_host = "metadata-api-test.library.yale.edu"
+  config.metadata_cloud_host = "metadata-api-uat.library.yale.edu"
 end
