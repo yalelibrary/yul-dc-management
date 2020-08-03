@@ -14,6 +14,8 @@
 
 **Technical Enhancements:**
 
+- Prep for v2.7.0 release [\#184](https://github.com/yalelibrary/yul-dc-management/pull/184) ([maxkadel](https://github.com/maxkadel))
+- Revert "Circle ci wait on release" [\#185](https://github.com/yalelibrary/yul-dc-management/pull/185) ([maxkadel](https://github.com/maxkadel))
 - Circle ci wait on release [\#181](https://github.com/yalelibrary/yul-dc-management/pull/181) ([JzGo](https://github.com/JzGo))
 - Logging [\#166](https://github.com/yalelibrary/yul-dc-management/pull/166) ([mlooney](https://github.com/mlooney))
 
@@ -137,6 +139,7 @@
 **Technical Enhancements:**
 
 - release 2.1.0 [\#130](https://github.com/yalelibrary/yul-dc-management/pull/130) ([jpengst](https://github.com/jpengst))
+- Pass ability to set logs to stdout [\#128](https://github.com/yalelibrary/yul-dc-management/pull/128) ([orangewolf](https://github.com/orangewolf))
 
 ## [v2.0.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.0.0) (2020-07-02)
 
@@ -157,7 +160,6 @@
 
 **Technical Enhancements:**
 
-- Pass ability to set logs to stdout [\#128](https://github.com/yalelibrary/yul-dc-management/pull/128) ([orangewolf](https://github.com/orangewolf))
 - Prep for 2.0.0 release [\#127](https://github.com/yalelibrary/yul-dc-management/pull/127) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.8.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.8.0) (2020-06-26)
