@@ -94,14 +94,14 @@ RSpec.describe MetadataSource, type: :model do
         ladybird_source.fetch_record(parent_object)
       end
 
-      it "returns aspace json for aspace metadata soruce type" do
+      it "returns aspace json for aspace metadata source type" do
         aspace_result = aspace_source.fetch_record(parent_object)
         expect(aspace_result).to be
         expect(aspace_result['uri']).to eq('/aspace/repositories/11/archival_objects/608223')
         expect(aspace_result['source']).to eq('aspace')
       end
 
-      it "returns voyager json for voyager metadata soruce type" do
+      it "returns voyager json for voyager metadata source type" do
         voyager_result = voyager_source.fetch_record(parent_object)
         expect(voyager_result).to be
         expect(voyager_result['uri']).to eq('/ils/barcode/39002075038423?bib=3435140')
