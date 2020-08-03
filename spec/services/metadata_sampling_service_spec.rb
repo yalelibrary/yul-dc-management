@@ -3,7 +3,7 @@ require "rails_helper"
 
 WebMock.allow_net_connect!
 
-RSpec.describe MetadataSamplingService, vpn_only: true do
+RSpec.describe MetadataSamplingService do
   context "before an after running the task" do
     context "before running the task" do
       it "has no MetadataSample or SampleFields records prior to running the task" do

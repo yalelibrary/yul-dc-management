@@ -115,18 +115,13 @@ class ActivityStreamReader
     parent_objects_for_update.each do |parent_object_array|
       oid = parent_object_array[0]
       metadata_source = parent_object_array[1]
-      metadata_cloud_url = MetadataCloudService.build_metadata_cloud_url(oid, metadata_source)
-      full_response = MetadataCloudService.mc_get(metadata_cloud_url)
-      MetadataCloudService.save_mc_json_to_file(full_response, oid, metadata_source)
       po = ParentObject.find_by(oid: oid)
-      if metadata_source == "ladybird"
-        po.last_ladybird_update = DateTime.current
-      elsif metadata_source == "ils"
-        po.last_voyager_update = DateTime.current
-      elsif metadata_source == "aspace"
-        po.last_aspace_update = DateTime.current
+      if po
+        po.complete_fetch
+        po.save
       end
-      po.save
+
+      po.to_json_file(metadata_source: MetadataSource.find_by(metadata_cloud_name: metadata_source))
       @tally_retrieved_records += 1
     end
   end
@@ -135,7 +130,7 @@ class ActivityStreamReader
   # Takes a MetadataCloud url as a string and returns a parsed JSON object
   # containing the body of the response
   def fetch_and_parse_page(page_url)
-    latest_page = MetadataCloudService.mc_get(page_url).body.to_s
+    latest_page = MetadataSource.new.mc_get(page_url).body.to_s
     JSON.parse(latest_page)
   end
 

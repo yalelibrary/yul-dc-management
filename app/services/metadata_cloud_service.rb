@@ -20,14 +20,6 @@ class MetadataCloudService
   end
 
   ##
-  # Takes a Metadata Cloud formatted url and returns the full HTTP response with headers
-  def self.mc_get(mc_url)
-    metadata_cloud_username = ENV["MC_USER"]
-    metadata_cloud_password = ENV["MC_PW"]
-    HTTP.basic_auth(user: metadata_cloud_username, pass: metadata_cloud_password).get(mc_url)
-  end
-
-  ##
   # Takes an oid (Ladybird identifier) and a metadata source (allowed values are ladybird, ils, and aspace), and returns
   # the appropriate URL to pull the metadata from the Yale Metadata Cloud
   def self.build_metadata_cloud_url(oid, metadata_source)
@@ -55,11 +47,10 @@ class MetadataCloudService
 
   def self.save_json_from_oids(oids, metadata_source)
     oids.each do |oid|
-      next unless MetadataCloudService.build_metadata_cloud_url(oid, metadata_source)
-      metadata_cloud_url = MetadataCloudService.build_metadata_cloud_url(oid, metadata_source)
-      full_response = MetadataCloudService.mc_get(metadata_cloud_url)
-      next unless full_response.status == 200
-      MetadataCloudService.save_mc_json_to_file(full_response, oid, metadata_source)
+      parent_object = ParentObject.where(oid: oid).first_or_create do |object|
+        object.source_name = metadata_source
+      end
+      parent_object.to_json_file if parent_object&.valid?
     end
   end
 

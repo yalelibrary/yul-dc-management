@@ -1,6 +1,29 @@
 # Changelog
 
-## [v2.6.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.6.0) (2020-07-29)
+## [v2.7.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.7.0) (2020-08-03)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.7.0.pre...v2.7.0)
+
+**New Features:**
+
+- Load samples from S3 if no VPN, cache them to S3 when VPN is on [\#183](https://github.com/yalelibrary/yul-dc-management/pull/183) ([orangewolf](https://github.com/orangewolf))
+
+**Security fixes:**
+
+- Bump elliptic from 6.5.2 to 6.5.3 [\#182](https://github.com/yalelibrary/yul-dc-management/pull/182) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+**Technical Enhancements:**
+
+- Prep for v2.7.0 release [\#184](https://github.com/yalelibrary/yul-dc-management/pull/184) ([maxkadel](https://github.com/maxkadel))
+- Revert "Circle ci wait on release" [\#185](https://github.com/yalelibrary/yul-dc-management/pull/185) ([maxkadel](https://github.com/maxkadel))
+- Circle ci wait on release [\#181](https://github.com/yalelibrary/yul-dc-management/pull/181) ([JzGo](https://github.com/JzGo))
+- Logging [\#166](https://github.com/yalelibrary/yul-dc-management/pull/166) ([mlooney](https://github.com/mlooney))
+
+## [v2.7.0.pre](https://github.com/yalelibrary/yul-dc-management/tree/v2.7.0.pre) (2020-08-02)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.6.0...v2.7.0.pre)
+
+## [v2.6.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.6.0) (2020-07-30)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.5.0...v2.6.0)
 
@@ -19,7 +42,10 @@
 
 **Technical Enhancements:**
 
+- Fix simplecov line [\#179](https://github.com/yalelibrary/yul-dc-management/pull/179) ([orangewolf](https://github.com/orangewolf))
+- prep for 2.6.0 [\#178](https://github.com/yalelibrary/yul-dc-management/pull/178) ([orangewolf](https://github.com/orangewolf))
 - Oid Imports controller spec [\#176](https://github.com/yalelibrary/yul-dc-management/pull/176) ([dylansalay](https://github.com/dylansalay))
+- Use Metadata Cloud UAT for Dev Environment [\#175](https://github.com/yalelibrary/yul-dc-management/pull/175) ([orangewolf](https://github.com/orangewolf))
 - 378 code coverage [\#173](https://github.com/yalelibrary/yul-dc-management/pull/173) ([jpengst](https://github.com/jpengst))
 - Reapplying "Sanitize branch name in CI \(\#158\)" [\#171](https://github.com/yalelibrary/yul-dc-management/pull/171) ([fnibbit](https://github.com/fnibbit))
 - Address test warning and deprecation [\#170](https://github.com/yalelibrary/yul-dc-management/pull/170) ([maxkadel](https://github.com/maxkadel))
