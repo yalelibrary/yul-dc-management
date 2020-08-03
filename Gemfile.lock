@@ -60,6 +60,7 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    amazing_print (1.2.1)
     ast (2.4.0)
     autoprefixer-rails (9.7.6)
       execjs
@@ -228,6 +229,10 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.3.0)
       loofah (~> 2.3)
+    rails_semantic_logger (4.4.4)
+      rack
+      railties (>= 3.2)
+      semantic_logger (~> 4.4)
     railties (6.0.3.2)
       actionpack (= 6.0.3.2)
       activesupport (= 6.0.3.2)
@@ -293,6 +298,8 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    semantic_logger (4.7.1)
+      concurrent-ruby (~> 1.0)
     simplecov (0.16.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -358,6 +365,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-nulldb-adapter
   aws-sdk-s3
+  amazing_print (>= 1.2.1)
   bixby
   bootsnap (>= 1.4.2)
   bootstrap (~> 4.5)
@@ -375,6 +383,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   puma (~> 4.3)
   rails (~> 6.0.3)
+  rails_semantic_logger (>= 4.4.4)
   rsolr (~> 2.3)
   rspec-rails (~> 4.0.0)
   sass-rails (>= 6)
