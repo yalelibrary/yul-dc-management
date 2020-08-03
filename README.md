@@ -20,15 +20,10 @@ git clone git@github.com:yalelibrary/yul-dc-management.git
 cd ./yul-dc-management
 ```
 
-## Create needed files on your command line
-
-```bash
-touch .secrets
-```
-
-## Install
+## Install Camerata
 
 Clone the yul-dc-camerata repo and install the gem.
+Note: Clone Camerata in your project directory (not inside your management repo)
 
 ```bash
 git clone git@github.com:yalelibrary/yul-dc-camerata.git
@@ -37,7 +32,7 @@ bundle install
 rake install
 ```
 
-## Updates
+## Update Camerata
 
 You can get the latest version at any point by updating the code and reinstalling
 
@@ -56,13 +51,13 @@ used to bring the development stack up and down locally, interact with the
 docker containers, deploy, run the smoke tests and otherwise do development 
 tasks common to the various applications in the yul-dc application stack.
 
-All buildin commands can be listed with `cam help` and individual usage 
+All built in commands can be listed with `cam help` and individual usage 
 information is available with `cam help COMMAND`.  Please note that deployment 
-commands (found in the `./bin` directory) are pass through and are therefor not 
-listed by the help command.  See th usage for those below. 
+commands (found in the `./bin` directory) are passed through and are therefore not 
+listed by the help command.  See the usage for those below. 
 
 To start the application stack, run `cam up` in the management directory. This starts all of the applications as they are 
-all dependencies of yul-management. Camerata is smart. If you start `cam up` from 
+all dependencies of yul-blacklight. Camerata is smart. If you start `cam up` from 
 a management code check out it will mount that code for local development 
 (changes to the outside code will affect the inside container). If you start the 
 `cam up` from the management application you will get the management code mounted
@@ -105,7 +100,7 @@ If you use rbenv, you must run the following command after installing camerata:
 - Navigate to the app root directory in another tab and run:
 
   ```bash
-  docker exec -it yul-dc-management_management_1 /bin/bash
+  cam sh management
   ```
 
 - You will need to be inside the container to:
@@ -121,25 +116,19 @@ If you use rbenv, you must run the following command after installing camerata:
   - Access the rails console for debugging
 
     ```bash
-    bundle exec rails c
+    rails c
     ```
 
-  - Run the tests, excluding those that require the Yale VPN (the tilda(~) means the tag is excluded)
+  - Run the tests. Note: You will need to be on the VPN.
 
     ```bash
-    bundle exec rspec --tag ~vpn_only:true
-    ```
-
-  - Run only the tests that require the Yale VPN
-
-    ```bash
-    bundle exec rspec --tag vpn_only:true
+    rspec
     ```
 
   - Run Rubocop to fix any style errors
 
     ```bash
-    bundle exec rubocop -a
+    rubocop -a
     ```
 
     - If Rubocop is still flagging something that you've checked and want to keep as-is, add it to the `.rubocop_todo.yml` manually.
