@@ -364,8 +364,8 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-nulldb-adapter
-  aws-sdk-s3
   amazing_print (>= 1.2.1)
+  aws-sdk-s3
   bixby
   bootsnap (>= 1.4.2)
   bootstrap (~> 4.5)
