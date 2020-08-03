@@ -20,36 +20,98 @@ git clone git@github.com:yalelibrary/yul-dc-management.git
 cd ./yul-dc-management
 ```
 
-## Create needed files on your command line
+## Install Camerata
+
+Clone the yul-dc-camerata repo and install the gem.
+Note: Clone Camerata in your project directory (not inside your management repo)
 
 ```bash
-touch .secrets
+git clone git@github.com:yalelibrary/yul-dc-camerata.git
+cd yul-dc-camerata
+bundle install
+rake install
 ```
 
-## If this is your first time working in this repo or the Dockerfile has been updated you will need to pull your services
+## Update Camerata
+
+You can get the latest version at any point by updating the code and reinstalling
 
 ```bash
-  docker-compose pull web
+cd yul-dc-camerata
+git pull origin master
+bundle install
+rake install
 ```
 
-## Starting the app
+## General Use
 
-- Start the web service
+Once camerata is installed on your system, interactions happen through the
+camerata command-line tool or through its alias `cam`.  The camerata tool can be
+used to bring the development stack up and down locally, interact with the
+docker containers, deploy, run the smoke tests and otherwise do development
+tasks common to the various applications in the yul-dc application stack.
 
-  ```bash
-  docker-compose up web
-  ```
+All built in commands can be listed with `cam help` and individual usage 
+information is available with `cam help COMMAND`.  Please note that deployment 
+commands (found in the `./bin` directory) are passed through and are therefore not 
+listed by the help command.  See the usage for those below. 
 
-- Access the web app at `http://localhost:3001/management`
+To start the application stack, run `cam up` in the management directory. This starts all of the applications as they are 
+all dependencies of yul-blacklight. Camerata is smart. If you start `cam up` from 
+a management code check out it will mount that code for local development 
+(changes to the outside code will affect the inside container). If you start the 
+`cam up` from the management application you will get the management code mounted
+for local development and the management code will run as it is in the downloaded 
+image. You can also start the two applications both mounted for development by 
+starting the management application with `--without blacklight` and the 
+blacklight application `--without solr --withouth db` each from their respective 
+code checkouts.
+
+
+- Access the blacklight app at `http://localhost:3000`
 
 - Access the solr instance at `http://localhost:8983`
+
+- Access the image instance at `http://localhost:8182`
+
+- Access the manifests instance at `http://localhost`
+
+- Access the management app at `http://localhost:3001/management`
+
+## Troubleshooting
+
+If you receive an `please set your AWS_PROFILE and AWS_DEFAULT_REGION (RuntimeError)`
+error when you `cam up`, you will need to set your AWS credentials. Credentials
+can be set in the `~/.aws/credentials` file in the following format:
+
+```bash
+[dce-hosting]
+aws_access_key_id=YOUR_ACCESS_KEY
+aws_secret_access_key=YOUR_SECRET_ACCESS_KEY
+```
+After the credentials have been set, you will need to export the following settings via the command line:
+```bash
+export AWS_PROFILE=dce-hosting && export AWS_DEFAULT_REGION=us-east-1
+```
+Note: AWS_PROFILE name needs to match the credentials profile name (`[dce-hosting]`). After you set the credentials, you will need to re-install camerata: `rake install`
+
+If you use rbenv, you must run the following command after installing camerata:
+`rbenv rehash`
+
+
+## Running on the VPN
+
+If you'd like to hit the Metadata cloud endpoint and are running on the VPN,
+then start the application with `VPN=true cam up` or `VPN=true cam up
+management`. Setting this variable will enable VPN specs and make full requests
+to the Yale services.
 
 ### Accessing the web container
 
 - Navigate to the app root directory in another tab and run:
 
   ```bash
-  docker-compose exec web bundle exec bash
+  cam sh management
   ```
 
 - You will need to be inside the container to:
@@ -68,16 +130,10 @@ touch .secrets
     rails c
     ```
 
-  - Run the tests, excluding those that require the Yale VPN (the tilda(~) means the tag is excluded)
+  - Run the tests. Note: You will need to be on the VPN.
 
     ```bash
-    rspec --tag ~vpn_only:true
-    ```
-
-  - Run only the tests that require the Yale VPN
-
-    ```bash
-    rspec --tag vpn_only:true
+    rspec
     ```
 
   - Run Rubocop to fix any style errors
@@ -130,11 +186,18 @@ touch .secrets
 
 ## Pulling or Building Docker Images
 
-Any time you pull a branch with a Gemfile change you need to pull or build a new Docker image. If you change the Dockerfile, you need to build a new Docker image. If you change a file in ./ops you need to build a new Docker image. These are the primary times in which you need to pull or build.
+Any time you pull a branch with a Gemfile change you need to pull or build a new
+Docker image. If you change the Dockerfile, you need to build a new Docker image.
+If you change a file in ./ops you need to build a new Docker image. These are
+the primary times in which you need to pull or build.
 
 ## When Installing a New Gem
 
-For the most part images are created and maintained by the CI process. However, if you change the Gemfile you need to take a few extra steps. Make sure the application is running before you make your Gemfile change. Once you've updated the Gemfile, inside the container, run `bundle && nginx -s reload`. The next time you stop your running containers you need to rebuild.
+For the most part images are created and maintained by the CI process. However,
+if you change the Gemfile you need to take a few extra steps. Make sure the
+application is running before you make your Gemfile change. Once you've updated
+the Gemfile, inside the container, run `bundle && nginx -s reload`. The next time
+you stop your running containers you need to rebuild.
 
 ## Releasing a new version
 

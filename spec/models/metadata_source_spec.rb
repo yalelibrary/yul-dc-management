@@ -74,7 +74,7 @@ RSpec.describe MetadataSource, type: :model do
 
     around do |example|
       original_vpn = ENV['VPN']
-      ENV['VPN'] = nil
+      ENV['VPN'] = ""
       example.run
       ENV['VPN'] = original_vpn
     end
