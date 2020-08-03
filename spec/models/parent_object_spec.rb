@@ -75,4 +75,43 @@ RSpec.describe ParentObject, type: :model do
       expect(parent_object.voyager_json).to be nil
     end
   end
+
+  context "has a shortcut for the metadata_cloud_name" do
+    let(:parent_object) { described_class.create(oid: "2004628", authoritative_metadata_source_id: voyager) }
+    it 'returns source name when authoritative source is set' do
+      expect(parent_object.source_name).to eq 'ils'
+    end
+
+    it 'returns nil when authoritative source is not set' do
+      expect(ParentObject.new(authoritative_metadata_source_id: nil).source_name).to eq nil
+    end
+  end
+
+  context 'with ladybird_json' do
+    let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069', ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16797069.json")))) }
+
+    it 'returns a ladybird url' do
+      expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16797069"
+    end
+
+    it 'returns a voyager url' do
+      expect(parent_object.voyager_cloud_url).to eq "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002075038423?bib=3435140"
+    end
+
+    it 'returns an aspace url' do
+      expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace/repositories/11/archival_objects/608223"
+    end
+  end
+
+  context 'without ladybird_json' do
+    let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
+
+    it 'returns a voyager url' do
+      expect(parent_object.voyager_cloud_url).to eq nil
+    end
+
+    it 'returns an aspace url' do
+      expect(parent_object.aspace_cloud_url).to eq nil
+    end
+  end
 end

@@ -4,11 +4,25 @@ class MetadataSource < ApplicationRecord
   has_many :parent_objects, foreign_key: "authoritative_metadata_source_id"
 
   def fetch_record(parent_object)
+    raw_metadata = if ENV['VPN']
+                     fetch_record_on_vpn(parent_object)
+                   else
+                     S3Service.download("#{metadata_cloud_name}/#{file_name(parent_object)}")
+                   end
+    JSON.parse(raw_metadata) if raw_metadata
+  end
+
+  def fetch_record_on_vpn(parent_object)
     mc_url = parent_object.send(url_type)
     full_response = mc_get(mc_url)
     return unless full_response.status == 200
-    raw_metadata = full_response.body.to_str
-    JSON.parse(raw_metadata)
+    response_text = full_response.body.to_str
+    S3Service.upload("#{metadata_cloud_name}/#{file_name(parent_object)}", response_text)
+    response_text
+  end
+
+  def file_name(parent_object)
+    "#{file_prefix}#{parent_object.oid}.json"
   end
 
   def url_type

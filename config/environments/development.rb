@@ -3,6 +3,9 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  config.rails_semantic_logger.semantic = false # turn off semantic logging conversion in dev
+  config.colorize_logging = true # turn on fancy colorized logs in dev
+
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
@@ -75,5 +78,5 @@ Rails.application.configure do
   config.oid_sequence_initial_value = 300_000_000
 
   # Metadata Cloud Host
-  config.metadata_cloud_host = "metadata-api-test.library.yale.edu"
+  config.metadata_cloud_host = "metadata-api-uat.library.yale.edu"
 end
