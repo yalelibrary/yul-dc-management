@@ -2,7 +2,7 @@
 require "rails_helper"
 require "support/time_helpers"
 
-RSpec.describe ActivityStreamReader do
+RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
   let(:asr) { described_class.new }
   let(:relevant_parent_object) do
     FactoryBot.create(
@@ -204,23 +204,22 @@ RSpec.describe ActivityStreamReader do
   before do
     # Part of ActiveSupport, see support/time_helpers.rb, behaves similarly to old TimeCop gem
     freeze_time
-    prep_metadata_call
     # OID 2004628
-    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2004628")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2004628.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
-    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/bib/3163155")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-2004628.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2004628.json")).read)
     # OID 2003431
-    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2003431")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2003431.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2003431.json")).read)
     stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002091549668?bib=9734763")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2003431.json")).read)
     # OID 16854285
-    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16854285")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16854285.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16854285.json")).read)
-    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002102340669?bib=12307100")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-16854285.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16854285.json")).read)
-    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace/repositories/11/archival_objects/515305")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/aspace/AS-16854285.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-16854285.json")).read)
     # Activity Stream - stub requests to MetadataCloud activity stream with fixture objects that represent single activity_stream json pages
     stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/streams/activity")

@@ -13,12 +13,11 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/parent_objects", type: :request do
+RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
   # ParentObject. As you add validations to ParentObject, be sure to
   # adjust the attributes here as well.
   before do
-    prep_metadata_call
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2004628")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2004628.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
   end
 

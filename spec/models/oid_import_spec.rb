@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe OidImport, type: :model do
+RSpec.describe OidImport, type: :model, prep_metadata_sources: true do
   subject(:oid_import) { described_class.new }
   let(:metadata_cloud_response_body_1) { File.open(File.join(fixture_path, "ladybird", "2034600.json")).read }
   let(:metadata_cloud_response_body_2) { File.open(File.join(fixture_path, "ladybird", "2046567.json")).read }
@@ -21,7 +21,6 @@ RSpec.describe OidImport, type: :model do
       .to_return(status: 200, body: metadata_cloud_response_body_4)
     stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16854285.json")
       .to_return(status: 200, body: metadata_cloud_response_body_5)
-    prep_metadata_call
   end
 
   describe "csv file import" do

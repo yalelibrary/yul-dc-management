@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-RSpec.describe FixtureIndexingService, clean: true do
-  before do
-    prep_metadata_call
-  end
-
+RSpec.describe FixtureIndexingService, clean: true, prep_metadata_sources: true do
   context "indexing to Solr from the database with Ladybird ParentObjects" do
     let(:parent_object_1) { FactoryBot.create(:parent_object, oid: "2034600") }
     let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "2046567") }
@@ -19,15 +15,15 @@ RSpec.describe FixtureIndexingService, clean: true do
     let(:metadata_cloud_response_body_4) { File.open(File.join(fixture_path, "ladybird", "14716192.json")).read }
     let(:metadata_cloud_response_body_5) { File.open(File.join(fixture_path, "ladybird", "16854285.json")).read }
     before do
-      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2034600")
+      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2034600.json")
         .to_return(status: 200, body: metadata_cloud_response_body_1)
-      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2046567")
+      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2046567.json")
         .to_return(status: 200, body: metadata_cloud_response_body_2)
-      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16414889")
+      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16414889.json")
         .to_return(status: 200, body: metadata_cloud_response_body_3)
-      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/14716192")
+      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/14716192.json")
         .to_return(status: 200, body: metadata_cloud_response_body_4)
-      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16854285")
+      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16854285.json")
         .to_return(status: 200, body: metadata_cloud_response_body_5)
       parent_object_1
       parent_object_2
@@ -107,11 +103,11 @@ RSpec.describe FixtureIndexingService, clean: true do
       let(:parent_object_with_public_visibility) { FactoryBot.create(:parent_object, oid: oid, visibility: "Public") }
 
       before do
-        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2012036")
+        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012036.json")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012036.json")).read)
-        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002091459793?bib=6805375")
+        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-2012036.json")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2012036.json")).read)
-        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace/repositories/11/archival_objects/555049")
+        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/aspace/AS-2012036.json")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-2012036.json")).read)
       end
 
@@ -128,9 +124,9 @@ RSpec.describe FixtureIndexingService, clean: true do
       let(:parent_object_without_visibility) { FactoryBot.create(:parent_object, oid: no_vis_oid) }
 
       before do
-        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16189097-no_vis")
+        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16189097-no_vis.json")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16189097-no_vis.json")).read)
-        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002113593819?bib=8330740")
+        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/V-16189097-no_vis.json")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16189097-no_vis.json")).read)
       end
 
@@ -147,9 +143,9 @@ RSpec.describe FixtureIndexingService, clean: true do
       let(:priv_oid) { "16189097-priv" }
       let(:parent_object_with_private_visibility) { FactoryBot.create(:parent_object, oid: priv_oid, visibility: "Private") }
       before do
-        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16189097-priv")
+        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16189097-priv.json")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16189097-priv.json")).read)
-        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002113593819?bib=8330740")
+        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-16189097-priv.json")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16189097-priv.json")).read)
       end
 
