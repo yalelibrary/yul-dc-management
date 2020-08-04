@@ -28,7 +28,6 @@ class GoobiXmlImportsController < ApplicationController
 
     respond_to do |format|
       if @goobi_xml_import.save
-        @goobi_xml_import.refresh_metadata_cloud
         format.html { redirect_to @goobi_xml_import, notice: 'Goobi xml import was successfully created.' }
         format.json { render :show, status: :created, location: @goobi_xml_import }
       else

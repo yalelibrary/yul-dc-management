@@ -13,7 +13,6 @@ class OidImportsController < ApplicationController
     @oid_import = OidImport.new(oid_import_params)
     respond_to do |format|
       if @oid_import.save
-        @oid_import.refresh_metadata_cloud
         format.html { redirect_to oid_imports_path, notice: "Your records have been retrieved from the MetadataCloud and are ready to be indexed to Solr." }
       else
         format.html { render :new }
