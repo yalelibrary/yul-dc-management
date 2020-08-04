@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe "Goobi Xml Imports", type: :system do
+RSpec.describe "Goobi Xml Imports", type: :system, prep_metadata_sources: true do
   let(:metadata_cloud_response_body_1) { File.open(File.join(fixture_path, "ladybird", "2012315.json")).read }
 
   before do
     stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012315.json")
       .to_return(status: 200, body: metadata_cloud_response_body_1)
-    prep_metadata_call
   end
 
   context "when uploading a Goobi xml" do
