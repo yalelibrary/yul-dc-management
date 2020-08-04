@@ -5,17 +5,20 @@ RSpec.describe "Goobi Xml Imports", type: :system do
   let(:metadata_cloud_response_body_1) { File.open(File.join(fixture_path, "ladybird", "2012315.json")).read }
 
   before do
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2012315")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012315.json")
       .to_return(status: 200, body: metadata_cloud_response_body_1)
+    prep_metadata_call
   end
 
   context "when uploading a Goobi xml" do
-    it "uploads and increases GoobiImport count" do
+    it "uploads and increases GoobiImport and ParentObject count" do
       visit new_goobi_xml_import_path
       expect(GoobiXmlImport.count).to eq 0
+      expect(ParentObject.count).to eq 0
       page.attach_file("goobi_xml_import_file", fixture_path + "/goobi/metadata/2012315/meta.xml")
       click_button("Import")
       expect(GoobiXmlImport.count).to eq 1
+      expect(ParentObject.count).to eq 1
       expect(GoobiXmlImport.last.goobi_xml).not_to eq nil
       expect(GoobiXmlImport.last.goobi_xml).not_to be_empty
     end

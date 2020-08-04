@@ -2,6 +2,7 @@
 
 class OidImport < ApplicationRecord
   attr_reader :file
+  after_create :refresh_metadata_cloud
   validate :check_file_type
 
   def check_file_type

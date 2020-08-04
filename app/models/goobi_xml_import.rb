@@ -2,8 +2,8 @@
 
 class GoobiXmlImport < ApplicationRecord
   attr_reader :file
-  before_create :file
   validate :validate_upload
+  after_create :refresh_metadata_cloud
 
   def file=(value)
     @file = value
