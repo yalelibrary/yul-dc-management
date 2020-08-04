@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe OidImport, type: :model do
+RSpec.describe OidImport, type: :model, prep_metadata_sources: true do
   subject(:oid_import) { described_class.new }
   let(:metadata_cloud_response_body_1) { File.open(File.join(fixture_path, "ladybird", "2034600.json")).read }
   let(:metadata_cloud_response_body_2) { File.open(File.join(fixture_path, "ladybird", "2046567.json")).read }
@@ -11,17 +11,16 @@ RSpec.describe OidImport, type: :model do
   let(:metadata_cloud_response_body_5) { File.open(File.join(fixture_path, "ladybird", "16854285.json")).read }
 
   before do
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2034600")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2034600.json")
       .to_return(status: 200, body: metadata_cloud_response_body_1)
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2046567")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2046567.json")
       .to_return(status: 200, body: metadata_cloud_response_body_2)
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16414889")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16414889.json")
       .to_return(status: 200, body: metadata_cloud_response_body_3)
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/14716192")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/14716192.json")
       .to_return(status: 200, body: metadata_cloud_response_body_4)
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/16854285")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16854285.json")
       .to_return(status: 200, body: metadata_cloud_response_body_5)
-    prep_metadata_call
   end
 
   describe "csv file import" do

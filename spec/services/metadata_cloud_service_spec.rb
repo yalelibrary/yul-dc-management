@@ -4,15 +4,11 @@ require "webmock"
 
 WebMock.allow_net_connect!
 
-RSpec.describe MetadataCloudService do
+RSpec.describe MetadataCloudService, prep_metadata_sources: true do
   let(:mcs) { described_class.new }
   let(:oid) { "16371272" }
   let(:oid_url) { "https://#{described_class.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?mediaType=json" }
   let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
-
-  before do
-    prep_metadata_call
-  end
 
   context "creating a ParentObject from an import" do
     before do

@@ -2,14 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe GoobiXmlImport, type: :model do
+RSpec.describe GoobiXmlImport, type: :model, prep_metadata_sources: true do
   let(:goobi_import) { described_class.new }
   let(:metadata_cloud_response_body_1) { File.open(File.join(fixture_path, "ladybird", "2012315.json")).read }
 
   before do
     stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012315.json")
       .to_return(status: 200, body: metadata_cloud_response_body_1)
-    prep_metadata_call
   end
 
   it "evaluates a valid Goobi METs file as valid" do
