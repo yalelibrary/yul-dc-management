@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-
 class IiifManifestFactory
-  attr_reader :oid, :manifest
+  attr_reader :oid, :manifest, :parent_object
 
   require 'iiif/presentation'
 
   def initialize(oid)
     @oid = oid
+    @parent_object = ParentObject.find_by(oid: oid)
     @manifest = construct_manifest
   end
 
@@ -19,65 +19,18 @@ class IiifManifestFactory
 
   def seed
     {
-        '@id' => "#{ENV["IIIF_MANIFESTS_BASE_URL"]}#{@oid}.json",
-        'label' => 'My Manifest'
+      '@id' => "http://127.0.0.1/manifests/#{@oid}.json",
+      'label' => @parent_object.authoritative_json["title"].first
     }
   end
 
-  # def self.generate_manifest(oid)
-  #   manifest = iiif_manifest.new
-  #   seed = {
-  #       '@id' => "#{ENV["IIIF_MANIFESTS_BASE_URL"]}#{oid}.json",
-  #       'label' => 'My Manifest'
-  #   }
-  #   # Any options you add are added to the object
-  #   manifest = IIIF::Presentation::Manifest.new(seed)
-  #   manifest
-    #
-    # canvas = IIIF::Presentation::Canvas.new()
-    # # All classes act like `ActiveSupport::OrderedHash`es, for the most part.
-    # # Use `[]=` to set JSON-LD properties...
-    # canvas['@id'] = 'http://example.com/canvas'
-    # # ...but there are also accessors and mutators for the properties mentioned in
-    # # the spec
-    # canvas.width = 10
-    # canvas.height = 20
-    # canvas.label = 'My Canvas'
-    #
-    # oc = IIIF::Presentation::Resource.new('@id' => 'http://example.com/content')
-    # canvas.other_content << oc
-    #
-    # manifest.sequences << canvas
+  def fetch_manifest
+    S3Service.download("manifests/#{@oid}.json")
+  end
 
-    # manifest.to_json(pretty: true)
-  # end
-
-
-#   def self.generate_manifest(oid)
-#     fest = IiifManifest.new
-#     fest.manifest_hash(oid).to_json
-#   end
-#
-#   def fetch_manifest(oid)
-#     S3Service.download("manifests/#{oid}.json")
-#   end
-# #
-#   def save_manifest(oid)
-#     S3Service.upload("manifests/#{oid}.json", IiifManifest.generate_manifest(oid))
-#     iiif_info = { oid: oid }
-#     Rails.logger.info("IIIF Manifest Saved: #{iiif_info.to_json}")
-#   end
-#
-#   def manifest_hash(oid)
-#     {
-#       "@context": "http://iiif.io/api/presentation/2/context.json",
-#       "@type": "sc:Manifest",
-#       "@id": "#{ENV["IIIF_MANIFESTS_BASE_URL"]}#{oid}.json",
-#       "label": "Fair Lucretia’s garland"
-#     }
-#   end
-#
-#   def iiif_manifest
-#     File.open(File.join("spec", "fixtures", "manifests", "2107188.json")).read
-#   end
+  def save_manifest
+    S3Service.upload("manifests/#{oid}.json", @manifest.to_json(pretty: true))
+    iiif_info = { oid: @oid }
+    Rails.logger.info("IIIF Manifest Saved: #{iiif_info.to_json}")
+  end
 end
