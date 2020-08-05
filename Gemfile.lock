@@ -161,6 +161,10 @@ GEM
       ffi-compiler (>= 1.0, < 2.0)
     i18n (1.8.3)
       concurrent-ruby (~> 1.0)
+    iiif-presentation (1.0.0)
+      activesupport (>= 3.2.18)
+      faraday (>= 0.9)
+      json
     jaro_winkler (1.5.4)
     jbuilder (2.10.0)
       activesupport (>= 5.0.0)
@@ -377,6 +381,7 @@ DEPENDENCIES
   github_changelog_generator
   honeybadger (~> 4.0)
   http (~> 4.4, >= 4.4.1)
+  iiif-presentation (~> 1.0)
   jbuilder (~> 2.7)
   jquery-rails (~> 4.4)
   listen (~> 3.2)
