@@ -118,6 +118,13 @@ RSpec.describe FixtureIndexingService, clean: true, prep_metadata_sources: true 
         expect(solr_document[:title_tsim]).to eq ["Walt Whitman collection, 1842-1949"]
         expect(solr_document[:visibility_ssi]).to include "Public"
       end
+
+      it "can index an item's image count to Solr" do
+        parent_object_with_public_visibility
+        data_hash = FixtureParsingService.fixture_file_to_hash(oid, metadata_source)
+        solr_document = described_class.build_solr_document(id_prefix, oid, data_hash)
+        expect(solr_document[:imageCount_isi]).to eq 5
+      end
     end
     context "with an item without visibility" do
       let(:no_vis_oid) { "16189097-no_vis" }
