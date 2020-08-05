@@ -4,7 +4,7 @@ require 'rails_helper'
 
 WebMock.allow_net_connect!
 
-RSpec.describe IiifManifest, type: :model do
+RSpec.describe IiifManifest do
   let(:oid) { "2107188" }
   let(:manifest) { described_class.new }
   let(:logger_mock) { instance_double("Rails.logger").as_null_object }
@@ -22,5 +22,9 @@ RSpec.describe IiifManifest, type: :model do
     manifest.save_manifest(oid)
     expect(Rails.logger).to have_received(:info)
       .with("IIIF Manifest Saved: {\"oid\":\"#{oid}\"}")
+  end
+
+  it "can generate valid json" do
+    expect(manifest.generate_manifest).to
   end
 end
