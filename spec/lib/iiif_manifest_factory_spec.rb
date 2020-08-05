@@ -2,16 +2,19 @@
 
 require 'rails_helper'
 
-WebMock.allow_net_connect!
-
 RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   let(:oid) { "2107188" }
   let(:manifest_factory) { IiifManifestFactory.new(oid) }
   let(:logger_mock) { instance_double("Rails.logger").as_null_object }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: oid) }
   before do
-    stub_request(:post, "https://yul-development-samples.s3.amazonaws.com/manifests/2107188.json")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/manifests/2107188.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "manifests", "2107188.json")).read)
+    stub_request(:put, "https://yul-development-samples.s3.amazonaws.com/manifests/2107188.json")
+      .to_return(status: 200)
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2107188.json")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2107188.json")).read)
+
     parent_object
   end
 
