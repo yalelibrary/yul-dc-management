@@ -44,7 +44,8 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   end
 
   it "can download a manifest from S3" do
-    expect(JSON.parse(manifest_factory.fetch_manifest)["label"]).to eq "Fair Lucretia’s garland"
+    fetch_manifest = JSON.parse(manifest_factory.fetch_manifest)
+    expect(fetch_manifest["label"]).to eq "Fair Lucretia’s garland"
   end
 
   it "can save a manifest to S3" do
