@@ -1,8 +1,12 @@
 # Changelog
 
-## [v2.7.3](https://github.com/yalelibrary/yul-dc-management/tree/v2.7.3) (2020-08-05)
+## [v2.8.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.8.0) (2020-08-05)
 
-[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.7.2...v2.7.3)
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.7.2...v2.8.0)
+
+**New Features:**
+
+- Index \# of images associated with a work [\#197](https://github.com/yalelibrary/yul-dc-management/pull/197) ([dylansalay](https://github.com/dylansalay))
 
 **Fixed bugs:**
 
@@ -14,7 +18,6 @@
 
 **Technical Enhancements:**
 
-- Index \# of images associated with a work [\#197](https://github.com/yalelibrary/yul-dc-management/pull/197) ([dylansalay](https://github.com/dylansalay))
 - Only log errors for test environment [\#194](https://github.com/yalelibrary/yul-dc-management/pull/194) ([maxkadel](https://github.com/maxkadel))
 
 ## [v2.7.2](https://github.com/yalelibrary/yul-dc-management/tree/v2.7.2) (2020-08-03)
