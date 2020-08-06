@@ -1,0 +1,98 @@
+{
+  "@id": "http://127.0.0.1/manifests/2107188.json",
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@type": "sc:Manifest",
+  "label": "Fair Lucretia’s garland",
+  "metadata": [
+    {
+      "label": "Title",
+      "value": [
+        "Fair Lucretia’s garland"
+      ]
+    },
+    {
+      "label": "Creator",
+      "value": [
+        "Viets, Dan, 1751-"
+      ]
+    },
+    {
+      "label": "Date",
+      "value": "September, MDCCLXXIX [1779]"
+    },
+    {
+      "label": "Extent",
+      "value": "36 x 24 cm."
+    },
+    {
+      "label": "Call number",
+      "value": "Brsides 2007 18"
+    },
+    {
+      "label": "Object Identifier (OID)",
+      "value": "2107188"
+    }
+  ],
+  "sequences": [
+    {
+      "@id": "http://127.0.0.1/manifests/sequence/2107188",
+      "@type": "sc:Sequence",
+      "canvases": [
+        {
+          "@id": "http://127.0.0.1/manifests/oid/2107188/canvas/1329643",
+          "@type": "sc:Canvas",
+          "label": "Recto",
+          "height": 5715,
+          "width": 3744,
+          "images": [
+            {
+              "@id": "http://127.0.0.1/manifests/oid/2107188/canvas/1329643/image/1",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "on": "http://127.0.0.1/manifests/oid/2107188/canvas/1329643",
+              "resource": {
+                "@id": "http://127.0.0.1/iiif/2/1329643/full/250,/0/default.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "height": 5715,
+                "width": 3744,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://127.0.0.1/iiif/2/1329643",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "@id": "http://127.0.0.1/manifests/oid/2107188/canvas/1329644",
+          "@type": "sc:Canvas",
+          "label": "Verso",
+          "height": 5708,
+          "width": 3738,
+          "images": [
+            {
+              "@id": "http://127.0.0.1/manifests/oid/2107188/canvas/1329644/image/1",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "on": "http://127.0.0.1/manifests/oid/2107188/canvas/1329644",
+              "resource": {
+                "@id": "http://127.0.0.1/iiif/2/1329644/full/250,/0/default.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "height": 5708,
+                "width": 3738,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://127.0.0.1/iiif/2/1329644",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
