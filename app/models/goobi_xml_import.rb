@@ -15,7 +15,7 @@ class GoobiXmlImport < ApplicationRecord
   end
 
   def mets_doc
-    @mets_doc ||= MetsDocument.new(@file)
+    @mets_doc ||= MetsDocument.new(goobi_xml)
   end
 
   def validate_upload
@@ -27,7 +27,6 @@ class GoobiXmlImport < ApplicationRecord
   end
 
   def refresh_metadata_cloud
-    mets_doc = MetsDocument.new(@file)
     MetadataCloudService.create_parent_objects_from_oids([mets_doc.oid], 'ladybird') # TODO: make 'ladybird' a metadata source attribute on this object
   end
 end
