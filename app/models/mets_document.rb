@@ -2,11 +2,11 @@
 
 class MetsDocument
   include MetsStructure
-  attr_reader :source_file
+  attr_reader :source_xml
   # Takes a path to the mets file
-  def initialize(mets_file)
-    @source_file = mets_file
-    @mets = File.open(@source_file) { |f| Nokogiri::XML(f) }
+  def initialize(mets_xml)
+    @source_xml = mets_xml
+    @mets = Nokogiri::XML(@source_xml)
   end
 
   def oid

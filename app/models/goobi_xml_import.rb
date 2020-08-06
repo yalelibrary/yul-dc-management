@@ -10,8 +10,16 @@ class GoobiXmlImport < ApplicationRecord
     self[:goobi_xml] = value.read
   end
 
+  def oid
+    self[:oid] = mets_doc.oid
+  end
+
+  def mets_doc
+    @mets_doc ||= MetsDocument.new(goobi_xml)
+  end
+
   def validate_upload
-    mets_doc = MetsDocument.new(@file)
+    # The includes_goobi? method is likely to be deprecated once we have a more final METS document
     return errors.add(:file, 'must contain a xmlns:goobi namespace') unless mets_doc.includes_goobi?
     return errors.add(:file, 'must contain an oid') if mets_doc.oid.nil? || mets_doc.oid.empty?
     return errors.add(:file, 'must be a valid Goobi METs file') unless mets_doc.valid_mets?
@@ -19,7 +27,6 @@ class GoobiXmlImport < ApplicationRecord
   end
 
   def refresh_metadata_cloud
-    mets_doc = MetsDocument.new(@file)
     MetadataCloudService.create_parent_objects_from_oids([mets_doc.oid], 'ladybird') # TODO: make 'ladybird' a metadata source attribute on this object
   end
 end
