@@ -2,14 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe GoobiXmlImport, type: :model do
+RSpec.describe GoobiXmlImport, type: :model, prep_metadata_sources: true do
   let(:goobi_import) { described_class.new }
   let(:metadata_cloud_response_body_1) { File.open(File.join(fixture_path, "ladybird", "2012315.json")).read }
 
   before do
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/2012315")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012315.json")
       .to_return(status: 200, body: metadata_cloud_response_body_1)
-    prep_metadata_call
   end
 
   it "evaluates a valid Goobi METs file as valid" do
@@ -43,5 +42,12 @@ RSpec.describe GoobiXmlImport, type: :model do
     goobi_import.file = File.new(File.join(fixture_path, "goobi", "metadata", "2012315", "meta.xml"))
     goobi_import.refresh_metadata_cloud
     expect(ParentObject.count).to eq 1
+  end
+
+  context "with a valid mets xml without a Goobi namespace" do
+    it "does not error out" do
+      goobi_import.file = File.new(fixture_path + '/goobi/no_goobi_namespace.xml')
+      expect(goobi_import).not_to be_valid
+    end
   end
 end

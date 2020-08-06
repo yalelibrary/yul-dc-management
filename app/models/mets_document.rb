@@ -20,6 +20,11 @@ class MetsDocument
     true
   end
 
+  def includes_goobi?
+    return false unless @mets.collect_namespaces.include?("xmlns:goobi")
+    true
+  end
+
   def all_images_present?
     files.all? { |file| File.exist?(Rails.root.join(file[:url])) }
   end

@@ -1,5 +1,48 @@
 # Changelog
 
+## [v2.8.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.8.0) (2020-08-05)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.7.2...v2.8.0)
+
+**New Features:**
+
+- Index \# of images associated with a work [\#197](https://github.com/yalelibrary/yul-dc-management/pull/197) ([dylansalay](https://github.com/dylansalay))
+
+**Fixed bugs:**
+
+- Fix merge problem with previous PR [\#196](https://github.com/yalelibrary/yul-dc-management/pull/196) ([maxkadel](https://github.com/maxkadel))
+- Refactor tests to use tag for prepping metadata sources [\#195](https://github.com/yalelibrary/yul-dc-management/pull/195) ([maxkadel](https://github.com/maxkadel))
+- Call method in controller to create ParentObject [\#193](https://github.com/yalelibrary/yul-dc-management/pull/193) ([maxkadel](https://github.com/maxkadel))
+- Oid Logger [\#192](https://github.com/yalelibrary/yul-dc-management/pull/192) ([dylansalay](https://github.com/dylansalay))
+- Will not error out if there is not goobi namespace in xml [\#191](https://github.com/yalelibrary/yul-dc-management/pull/191) ([maxkadel](https://github.com/maxkadel))
+
+**Technical Enhancements:**
+
+- Only log errors for test environment [\#194](https://github.com/yalelibrary/yul-dc-management/pull/194) ([maxkadel](https://github.com/maxkadel))
+
+## [v2.7.2](https://github.com/yalelibrary/yul-dc-management/tree/v2.7.2) (2020-08-03)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.7.1...v2.7.2)
+
+**Fixed bugs:**
+
+- Does not try to fetch from MetadataCloud if VPN is set to empty string [\#187](https://github.com/yalelibrary/yul-dc-management/pull/187) ([maxkadel](https://github.com/maxkadel))
+
+**Technical Enhancements:**
+
+- Prep for v2.7.2 release [\#190](https://github.com/yalelibrary/yul-dc-management/pull/190) ([maxkadel](https://github.com/maxkadel))
+- Circle ci wait on release [\#188](https://github.com/yalelibrary/yul-dc-management/pull/188) ([JzGo](https://github.com/JzGo))
+- Added camerata instructions to management readme [\#180](https://github.com/yalelibrary/yul-dc-management/pull/180) ([jpengst](https://github.com/jpengst))
+
+## [v2.7.1](https://github.com/yalelibrary/yul-dc-management/tree/v2.7.1) (2020-08-03)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.7.0...v2.7.1)
+
+**Technical Enhancements:**
+
+- Earlier commit reverted, re-create changelog for 2.7.0 release [\#186](https://github.com/yalelibrary/yul-dc-management/pull/186) ([maxkadel](https://github.com/maxkadel))
+- Revert "Circle ci wait on release" [\#185](https://github.com/yalelibrary/yul-dc-management/pull/185) ([maxkadel](https://github.com/maxkadel))
+
 ## [v2.7.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.7.0) (2020-08-03)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.7.0.pre...v2.7.0)
@@ -15,7 +58,6 @@
 **Technical Enhancements:**
 
 - Prep for v2.7.0 release [\#184](https://github.com/yalelibrary/yul-dc-management/pull/184) ([maxkadel](https://github.com/maxkadel))
-- Revert "Circle ci wait on release" [\#185](https://github.com/yalelibrary/yul-dc-management/pull/185) ([maxkadel](https://github.com/maxkadel))
 - Circle ci wait on release [\#181](https://github.com/yalelibrary/yul-dc-management/pull/181) ([JzGo](https://github.com/JzGo))
 - Logging [\#166](https://github.com/yalelibrary/yul-dc-management/pull/166) ([mlooney](https://github.com/mlooney))
 

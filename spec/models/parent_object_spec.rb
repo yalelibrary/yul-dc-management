@@ -2,13 +2,16 @@
 
 require 'rails_helper'
 
-RSpec.describe ParentObject, type: :model do
+RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   let(:ladybird) { 1 }
   let(:voyager) { 2 }
   let(:aspace) { 3 }
   let(:unexpected_metadata_source) { 4 }
   before do
-    prep_metadata_call
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2004628.json")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-2004628.json")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2004628.json")).read)
   end
 
   context "a newly created ParentObject with an unexpected authoritative_metadata_source" do
@@ -20,10 +23,6 @@ RSpec.describe ParentObject, type: :model do
   end
   context "a newly created ParentObject with just the oid and default authoritative_metadata_source (Ladybird for now)" do
     let(:parent_object) { described_class.create(oid: "2004628") }
-    before do
-      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2004628")
-        .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
-    end
 
     it "pulls from the MetadataCloud for Ladybird and not Voyager or ArchiveSpace" do
       expect(parent_object.authoritative_metadata_source_id).to eq ladybird
@@ -36,12 +35,6 @@ RSpec.describe ParentObject, type: :model do
 
   context "a newly created ParentObject with Voyager as authoritative_metadata_source" do
     let(:parent_object) { described_class.create(oid: "2004628", authoritative_metadata_source_id: voyager) }
-    before do
-      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2004628")
-        .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
-      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/bib/3163155")
-        .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2004628.json")).read)
-    end
 
     it "pulls from the MetadataCloud for Ladybird and Voyager and not ArchiveSpace" do
       expect(parent_object.authoritative_metadata_source_id).to eq voyager
@@ -60,9 +53,9 @@ RSpec.describe ParentObject, type: :model do
   context "a newly created ParentObject with ArchiveSpace as authoritative_metadata_source" do
     let(:parent_object) { described_class.create(oid: "2012036", authoritative_metadata_source_id: aspace) }
     before do
-      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2012036")
+      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012036.json")
         .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012036.json")).read)
-      stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace/repositories/11/archival_objects/555049")
+      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/aspace/AS-2012036.json")
         .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-2012036.json")).read)
     end
 

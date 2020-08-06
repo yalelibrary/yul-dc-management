@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-RSpec.describe JsonFile do
+RSpec.describe JsonFile, prep_metadata_sources: true do
   let(:parent_object) { FactoryBot.create(:parent_object, oid: '100001') }
   let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "100001.json") }
   before do
-    prep_metadata_call
-    stub_request(:get, "https://metadata-api-test.library.yale.edu/metadatacloud/api/ladybird/oid/100001")
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/100001.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "100001.json")).read)
   end
 
