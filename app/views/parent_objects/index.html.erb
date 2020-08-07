@@ -1,22 +1,33 @@
 <p id="notice"><%= notice %></p>
+<div class='row'>
+  <div class='col'>
+    <h1>Parent Objects</h1>
+  </div>
+  <div class='col'>
+    <div class='float-right'>
+      <%= link_to 'Reindex', reindex_parent_objects_path, method: 'post', class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>
+<div class='row'>
+  <div class='col'>
 
-<h1>Parent Objects</h1>
-
-<table>
-  <thead>
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
     <tr>
-      <th>Oid</th>
-      <th>Bib</th>
-      <th>Holding</th>
-      <th>Item</th>
-      <th>Barcode</th>
-      <th>Aspace uri</th>
-      <th>Last ladybird update</th>
-      <th>Last voyager update</th>
-      <th>Last aspace update</th>
-      <th>Visibility</th>
-      <th>Last id update</th>
-      <th colspan="3"></th>
+      <th scope="col">Oid</th>
+      <th scope="col">Authoritative Source</th>
+      <th scope="col">Bib</th>
+      <th scope="col">Holding</th>
+      <th scope="col">Item</th>
+      <th scope="col">Barcode</th>
+      <th scope="col">Aspace uri</th>
+      <th scope="col">Last ladybird update</th>
+      <th scope="col">Last voyager update</th>
+      <th scope="col">Last aspace update</th>
+      <th scope="col">Visibility</th>
+      <th scope="col">Last id update</th>
+      <th scope="col"></th>
     </tr>
   </thead>
 
@@ -24,6 +35,7 @@
     <% @parent_objects.each do |parent_object| %>
       <tr>
         <td><%= parent_object.oid %></td>
+        <td><%= parent_object.source_name %></td>
         <td><%= parent_object.bib %></td>
         <td><%= parent_object.holding %></td>
         <td><%= parent_object.item %></td>
@@ -34,14 +46,17 @@
         <td><%= parent_object.last_aspace_update %></td>
         <td><%= parent_object.visibility %></td>
         <td><%= parent_object.last_id_update %></td>
-        <td><%= link_to 'Show', parent_object %></td>
-        <td><%= link_to 'Edit', edit_parent_object_path(parent_object) %></td>
-        <td><%= link_to 'Destroy', parent_object, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to 'Show', parent_object %>
+          |
+          <%= link_to 'Edit', edit_parent_object_path(parent_object) %>
+          |
+          <%= link_to 'Destroy', parent_object, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
+</div>
+</div>
 <%= link_to 'New Parent Object', new_parent_object_path %>
