@@ -6,6 +6,7 @@ inherit_gem:
 Metrics/AbcSize:
   Exclude:
     - 'app/services/fixture_indexing_service.rb'
+    - 'app/models/concerns/solr_indexable.rb'
 
 Metrics/BlockLength:
   Max: 38
@@ -16,9 +17,14 @@ Metrics/ClassLength:
   Exclude:
     - 'app/services/fixture_indexing_service.rb'
 
+Metrics/ModuleLength:
+  Exclude:
+    - 'app/models/concerns/solr_indexable.rb'
+
 Metrics/MethodLength:
     Exclude:
       - 'app/services/fixture_indexing_service.rb'
+      - 'app/models/concerns/solr_indexable.rb'
 
 RSpec/ExampleLength:
   Exclude:

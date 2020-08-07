@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-RSpec.describe FixtureIndexingService, clean: true, prep_metadata_sources: true do
+RSpec.describe FixtureIndexingService, clean: true, prep_metadata_sources: true, solr: true do
   context "indexing to Solr from the database with Ladybird ParentObjects" do
     let(:parent_object_1) { FactoryBot.create(:parent_object, oid: "2034600") }
     let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "2046567") }

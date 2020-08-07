@@ -6,7 +6,7 @@ module SolrIndexable
     def solr_index
       solr = SolrService.connection
       # Groups of 500
-      self.find_in_batches do |group|
+      find_in_batches do |group|
         solr.add(group.map(&:to_solr))
         solr.commit
       end
@@ -15,12 +15,13 @@ module SolrIndexable
 
   def solr_index
     solr = SolrService.connection
-    solr.add([self.to_solr])
+    solr.add([to_solr])
     solr.commit
   end
 
-  def to_solr(json_to_index=nil)
+  def to_solr(json_to_index = nil)
     json_to_index ||= authoritative_json
+    return { id: "#{id_prefix}#{oid}" } if json_to_index.blank?
     {
       # example_suffix: json_to_index[""],
       id: "#{id_prefix}#{oid}",
@@ -129,11 +130,11 @@ module SolrIndexable
   end
 
   def id_prefix
-    @id_prefix ||= self.authoritative_metadata_source&.file_prefix
+    @id_prefix ||= authoritative_metadata_source&.file_prefix
   end
 
   def extract_visibility(json_to_index)
-    json_to_index["itemPermission"] || self.visibility
+    json_to_index["itemPermission"] || visibility
   end
 
   # I do not think the current box_ssim is how we want to continue to do deal with differences in field names
@@ -185,5 +186,4 @@ module SolrIndexable
     "2107188" => 2,
     "2111169" => 315
   }.freeze
-
 end

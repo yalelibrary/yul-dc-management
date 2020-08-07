@@ -8,7 +8,7 @@ class SolrService
   end
 
   def self.delete_all
-    self.connection.delete_by_query("*:*")
-    self.connection.commit
+    connection.delete_by_query("*:*")
+    connection.commit
   end
 end
