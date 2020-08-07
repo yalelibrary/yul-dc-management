@@ -1,20 +1,41 @@
 # frozen_string_literal: true
 
 class IiifManifestFactory
-  attr_reader :oid, :manifest, :parent_object
+  attr_reader :oid, :manifest, :parent_object, :mets_doc
 
   require 'iiif/presentation'
 
   def initialize(oid)
     @oid = oid
     @parent_object = ParentObject.find_by(oid: oid)
+    goobi_object = GoobiXmlImport.find_by(oid: oid)
+    return unless goobi_object
+    @mets_doc = MetsDocument.new(goobi_object.goobi_xml)
     @manifest = construct_manifest
   end
 
   # Build the actual manifest object
   def construct_manifest
     manifest = IIIF::Presentation::Manifest.new(seed)
+    manifest.sequences << construct_sequences
+    manifest.sequences << construct_canvases
     manifest
+  end
+
+  def construct_sequences
+    sequence = IIIF::Presentation::Sequence.new
+    sequence["@id"] = "http://127.0.0.1/manifests/sequence/#{@oid}"
+    sequence
+  end
+
+  def construct_canvases
+    canvas = IIIF::Presentation::Canvas.new
+    files = @mets_doc.files
+    canvas['@id'] = "http://127.0.0.1/manifests/oid/#{@oid}/canvas/#{files.first[:image_id]}"
+    canvas['label'] = "7v"
+    canvas['width'] = 1
+    canvas['height'] = 2
+    canvas
   end
 
   def seed

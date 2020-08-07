@@ -89,34 +89,34 @@
    </mets:structMap>
    <mets:structMap TYPE="PHYSICAL">
       <mets:div DMDID="DMDPHYS_0000" ID="PHYS_0000" TYPE="BoundBook">
-         <mets:div ID="PHYS_0001" ORDER="1" ORDERLABEL="I" TYPE="page">
+         <mets:div ID="PHYS_0001" ORDER="1" ORDERLABEL="7v" TYPE="page">
             <mets:fptr FILEID="FILE_0001"/>
          </mets:div>
-         <mets:div ID="PHYS_0002" ORDER="2" ORDERLABEL="II" TYPE="page">
+         <mets:div ID="PHYS_0002" ORDER="2" ORDERLABEL="8r" TYPE="page">
             <mets:fptr FILEID="FILE_0002"/>
          </mets:div>
-         <mets:div ID="PHYS_0003" ORDER="3" ORDERLABEL="III" TYPE="page">
+         <mets:div ID="PHYS_0003" ORDER="3" ORDERLABEL="8v" TYPE="page">
             <mets:fptr FILEID="FILE_0003"/>
          </mets:div>
-         <mets:div ID="PHYS_0004" ORDER="4" ORDERLABEL="IV" TYPE="page">
+         <mets:div ID="PHYS_0004" ORDER="4" ORDERLABEL="10v" TYPE="page">
             <mets:fptr FILEID="FILE_0004"/>
          </mets:div>
-         <mets:div ID="PHYS_0005" ORDER="5" ORDERLABEL="V" TYPE="page">
+         <mets:div ID="PHYS_0005" ORDER="5" ORDERLABEL="12v" TYPE="page">
             <mets:fptr FILEID="FILE_0005"/>
          </mets:div>
-         <mets:div ID="PHYS_0006" ORDER="6" ORDERLABEL="VI" TYPE="page">
+         <mets:div ID="PHYS_0006" ORDER="6" ORDERLABEL="13r" TYPE="page">
             <mets:fptr FILEID="FILE_0006"/>
          </mets:div>
-         <mets:div ID="PHYS_0007" ORDER="7" ORDERLABEL="VII" TYPE="page">
+         <mets:div ID="PHYS_0007" ORDER="7" ORDERLABEL="13v" TYPE="page">
             <mets:fptr FILEID="FILE_0007"/>
          </mets:div>
-         <mets:div ID="PHYS_0008" ORDER="8" ORDERLABEL="VIII" TYPE="page">
+         <mets:div ID="PHYS_0008" ORDER="8" ORDERLABEL="14r" TYPE="page">
             <mets:fptr FILEID="FILE_0008"/>
          </mets:div>
-         <mets:div ID="PHYS_0009" ORDER="9" ORDERLABEL="IX" TYPE="page">
+         <mets:div ID="PHYS_0009" ORDER="9" ORDERLABEL="12r" TYPE="page">
             <mets:fptr FILEID="FILE_0009"/>
          </mets:div>
-         <mets:div ID="PHYS_0010" ORDER="10" ORDERLABEL="X" TYPE="page">
+         <mets:div ID="PHYS_0010" ORDER="10" ORDERLABEL="41v-42r" TYPE="page">
             <mets:fptr FILEID="FILE_0010"/>
          </mets:div>
       </mets:div>
