@@ -1,5 +1,15 @@
 # Changelog
 
+## [v2.8.1](https://github.com/yalelibrary/yul-dc-management/tree/v2.8.1) (2020-08-07)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.8.0...v2.8.1)
+
+**Technical Enhancements:**
+
+- Parent object search indexing [\#202](https://github.com/yalelibrary/yul-dc-management/pull/202) ([orangewolf](https://github.com/orangewolf))
+- Parent object model spec [\#201](https://github.com/yalelibrary/yul-dc-management/pull/201) ([dylansalay](https://github.com/dylansalay))
+- Create iiif manifest [\#199](https://github.com/yalelibrary/yul-dc-management/pull/199) ([maxkadel](https://github.com/maxkadel))
+
 ## [v2.8.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.8.0) (2020-08-05)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.7.2...v2.8.0)
@@ -18,6 +28,7 @@
 
 **Technical Enhancements:**
 
+- Prep for v2.8.0 release [\#198](https://github.com/yalelibrary/yul-dc-management/pull/198) ([dylansalay](https://github.com/dylansalay))
 - Only log errors for test environment [\#194](https://github.com/yalelibrary/yul-dc-management/pull/194) ([maxkadel](https://github.com/maxkadel))
 
 ## [v2.7.2](https://github.com/yalelibrary/yul-dc-management/tree/v2.7.2) (2020-08-03)
