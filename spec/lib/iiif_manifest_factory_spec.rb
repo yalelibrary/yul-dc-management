@@ -70,14 +70,23 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
     expect(manifest_factory.manifest.sequences.first.first.class).to eq IIIF::Presentation::Canvas
   end
 
+  it "creates a canvas for each file" do
+    expect(manifest_factory.construct_canvases.count).to eq 10
+  end
+
   it "has a canvas with an id and label" do
-    expect(manifest_factory.construct_canvases["@id"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053442"
-    expect(manifest_factory.construct_canvases["label"]).to eq "7v"
+    expect(manifest_factory.construct_canvases.first["@id"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053442"
+    expect(manifest_factory.construct_canvases.first["label"]).to eq "7v"
   end
 
   it "has a canvas with width and height" do
-    expect(manifest_factory.construct_canvases["width"]).to eq 1
-    expect(manifest_factory.construct_canvases["height"]).to eq 2
+    expect(manifest_factory.construct_canvases.first["width"]).to eq 1
+    expect(manifest_factory.construct_canvases.first["height"]).to eq 2
+  end
+
+  it "can output a manifest as json" do
+    byebug
+    expect(manifest_factory.manifest.to_json(pretty: true)).to include "Islamic prayers, invocations and decorations : manuscript."
   end
 
   it "can save a manifest to S3" do

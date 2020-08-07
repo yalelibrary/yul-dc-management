@@ -38,6 +38,27 @@ class MetsDocument
   #        .to_s.start_with? 'RTL'
   # end
 
+  # Combines the physical info and file info for a given image, used for iiif manifest creation
+  def combined
+    zipped = files.zip(physical_divs)
+    zipped.map { |file, physical_div| file.merge(physical_div) }
+  end
+
+  def physical_divs
+    @mets.xpath("/mets:mets/mets:structMap[@TYPE='PHYSICAL']/mets:div" \
+                "/mets:div").map do |p|
+      physical_info(p)
+    end
+  end
+
+  def physical_info(physical_div)
+    {
+      phys_id: physical_div.xpath('@ID').to_s,
+      file_id: physical_div.xpath('mets:fptr/@FILEID').to_s,
+      order_label: physical_div.xpath("@ORDERLABEL").to_s
+    }
+  end
+
   def files
     @mets.xpath("/mets:mets/mets:fileSec/mets:fileGrp" \
                 "/mets:file").map do |f|

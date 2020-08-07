@@ -17,25 +17,31 @@ class IiifManifestFactory
   # Build the actual manifest object
   def construct_manifest
     manifest = IIIF::Presentation::Manifest.new(seed)
-    manifest.sequences << construct_sequences
+    manifest.sequences = construct_sequences
     manifest.sequences << construct_canvases
     manifest
   end
 
   def construct_sequences
+    sequences = []
     sequence = IIIF::Presentation::Sequence.new
     sequence["@id"] = "http://127.0.0.1/manifests/sequence/#{@oid}"
-    sequence
+    sequences << sequence
+    sequences
   end
 
   def construct_canvases
-    canvas = IIIF::Presentation::Canvas.new
-    files = @mets_doc.files
-    canvas['@id'] = "http://127.0.0.1/manifests/oid/#{@oid}/canvas/#{files.first[:image_id]}"
-    canvas['label'] = "7v"
-    canvas['width'] = 1
-    canvas['height'] = 2
-    canvas
+    canvases = []
+    images = @mets_doc.combined
+    images.map do |image|
+      canvas = IIIF::Presentation::Canvas.new
+      canvas['@id'] = "http://127.0.0.1/manifests/oid/#{@oid}/canvas/#{image[:image_id]}"
+      canvas['label'] = image[:order_label]
+      canvas['width'] = 1
+      canvas['height'] = 2
+      canvases << canvas
+    end
+    canvases
   end
 
   def seed

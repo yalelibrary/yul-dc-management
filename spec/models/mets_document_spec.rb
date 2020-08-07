@@ -21,6 +21,23 @@ RSpec.describe MetsDocument, type: :model do
     expect(mets_doc.oid).to eq "2012315"
   end
 
+  it "can return the first file id" do
+    mets_doc = described_class.new(valid_goobi_xml)
+    expect(mets_doc.files.first[:id]).to eq "FILE_0001"
+  end
+
+  it "can return the combined data needed for the iiif manifest" do
+    mets_doc = described_class.new(valid_goobi_xml)
+    expect(mets_doc.combined.first[:order_label]).to eq "7v"
+  end
+
+  it "can return the ORDERLABEL, id for the physical structure, and file id" do
+    mets_doc = described_class.new(valid_goobi_xml)
+    expect(mets_doc.physical_divs.first[:order_label]).to eq "7v"
+    expect(mets_doc.physical_divs.first[:phys_id]).to eq "PHYS_0001"
+    expect(mets_doc.physical_divs.first[:file_id]).to eq "FILE_0001"
+  end
+
   it "returns nil if there is no oid field in the METs document" do
     mets_doc = described_class.new(no_oid_file)
     expect(mets_doc.oid).to eq nil
