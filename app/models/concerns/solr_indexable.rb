@@ -1,0 +1,189 @@
+# frozen_string_literal: true
+
+module SolrIndexable
+  extend ActiveSupport::Concern
+  class_methods do
+    def solr_index
+      solr = SolrService.connection
+      # Groups of 500
+      self.find_in_batches do |group|
+        solr.add(group.map(&:to_solr))
+        solr.commit
+      end
+    end
+  end
+
+  def solr_index
+    solr = SolrService.connection
+    solr.add([self.to_solr])
+    solr.commit
+  end
+
+  def to_solr(json_to_index=nil)
+    json_to_index ||= authoritative_json
+    {
+      # example_suffix: json_to_index[""],
+      id: "#{id_prefix}#{oid}",
+      abstract_tesim: json_to_index["abstract"],
+      accessionNumber_ssi: json_to_index["accessionNumber"],
+      accessRestrictions_tesim: json_to_index["accessRestrictions"],
+      alternativeTitle_tesim: json_to_index["alternativeTitle"],
+      alternativeTitleDisplay_tesim: json_to_index["alternativeTitleDisplay"],
+      archiveSpaceUri_ssi: json_to_index["archiveSpaceUri"],
+      author_ssim: json_to_index["creator"],
+      author_tsim: json_to_index["creator"],
+      box_ssim: extract_box_ssim(json_to_index),
+      caption_tesim: json_to_index["caption"],
+      collectionId_ssim: json_to_index["collectionId"],
+      collectionId_tesim: json_to_index["collectionId"],
+      contents_tesim: json_to_index["contents"],
+      contributor_tsim: json_to_index["contributor"],
+      contributorDisplay_tsim: json_to_index["contributorDisplay"],
+      coordinates_ssim: json_to_index["coordinate"],
+      copyrightDate_ssim: json_to_index["copyrightDate"],
+      creatorDisplay_tsim: json_to_index["creatorDisplay"],
+      date_ssim: json_to_index["date"],
+      dateDepicted_ssim: json_to_index["dateDepicted"],
+      dateStructured_ssim: json_to_index["dateStructured"], # keeping as ssim for now, dtsi suffix errors out, have invalid values from MC
+      dependentUris_ssim: json_to_index["dependentUris"],
+      description_tesim: json_to_index["description"],
+      digital_ssim: json_to_index["digital"],
+      edition_ssim: json_to_index["edition"],
+      extent_ssim: json_to_index["extent"],
+      extentOfDigitization_ssim: json_to_index["extentOfDigitization"],
+      findingAid_ssim: json_to_index["findingAid"],
+      folder_ssim: json_to_index["folder"],
+      format: json_to_index["format"],
+      genre_ssim: json_to_index["genre"],
+      geoSubject_ssim: json_to_index["geoSubject"],
+      identifierMfhd_ssim: json_to_index["identifierMfhd"],
+      identifierShelfMark_ssim: json_to_index["identifierShelfMark"],
+      identifierShelfMark_tesim: json_to_index["identifierShelfMark"],
+      illustrativeMatter_tesim: json_to_index["illustrativeMatter"],
+      imageCount_isi: OID_TO_COUNT_MAPPING[oid.to_s],
+      indexedBy_tsim: json_to_index["indexedBy"],
+      language_ssim: json_to_index["language"],
+      localRecordNumber_ssim: json_to_index["localRecordNumber"],
+      material_tesim: json_to_index["material"],
+      number_of_pages_ss: json_to_index["numberOfPages"],
+      oid_ssi: json_to_index["oid"] || oid,
+      orbisBarcode_ssi: json_to_index["orbisBarcode"] || json_to_index["barcode"],
+      orbisBibId_ssi: json_to_index["orbisRecord"], # may change to orbisBibId
+      partOf_tesim: json_to_index["partOf"],
+      partOf_ssim: json_to_index["partOf"],
+      projection_tesim: json_to_index["projection"],
+      public_bsi: true, # TEMPORARY, makes everything public
+      publicationPlace_ssim: json_to_index["publicationPlace"],
+      publicationPlace_tesim: json_to_index["publicationPlace"],
+      publisher_tesim: json_to_index["publisher"],
+      publisher_ssim: json_to_index["publisher"],
+      recordType_ssi: json_to_index["recordType"],
+      references_tesim: json_to_index["references"],
+      repository_ssim: json_to_index["repository"],
+      resourceType_ssim: json_to_index["resourceType"],
+      resourceType_tesim: json_to_index["resourceType"],
+      rights_ssim: json_to_index["rights"],
+      rights_tesim: json_to_index["rights"],
+      scale_tesim: json_to_index["scale"],
+      source_ssim: json_to_index["source"], # refers to source of metadata, e.g. Ladybird, Voyager, etc.
+      sourceCreated_tesim: json_to_index["sourceCreated"],
+      sourceDate_tesim: json_to_index["sourceDate"],
+      sourceEdition_tesim: json_to_index["sourceEdition"], # Not currently in Blacklight application
+      sourceNote_tesim: json_to_index["sourceNote"],
+      sourceTitle_tesim: json_to_index["sourceTitle"],
+      subjectEra_ssim: json_to_index["subjectEra"],
+      subjectGeographic_tesim: json_to_index["subjectGeographic"],
+      subjectTitle_tsim: json_to_index["subjectTitle"],
+      subjectTitleDisplay_tsim: json_to_index["subjectTitleDisplay"],
+      subjectName_ssim: json_to_index["subjectName"],
+      subjectName_tesim: json_to_index["subjectName"],
+      subjectTopic_tesim: json_to_index["subjectTopic"],
+      subjectTopic_ssim: json_to_index["subjectTopic"],
+      title_tesim: json_to_index["title"],
+      uri_ssim: json_to_index["uri"],
+      url_suppl_ssim: json_to_index["relatedUrl"],
+      visibility_ssi: extract_visibility(json_to_index),
+      # fields below this point will be deprecated in a future release
+      abstract_ssim: json_to_index["abstract"], # replaced by abstract_tesim
+      alternativeTitle_ssim: json_to_index["alternativeTitle"], # replaced by alternativeTitle_tesim
+      alternative_title_tsm: json_to_index["alternativeTitleDisplay"], # replaced by alternativeTitleDisplay_tesim
+      date_tsim: json_to_index["date"], # replaced by date_ssim
+      geo_subject_ssim: json_to_index["geoSubject"], # replaced by geoSubject_ssim
+      illustrative_matter_tsi: json_to_index["illustrativeMatter"], # replaced by illustrativeMatter_tesim
+      material_ssim: json_to_index["material"], # replaced by material_tesim
+      oid_ssim: json_to_index["oid"] || oid, # replaced by oid_ssi
+      orbisBarcode_ssim: json_to_index["orbisBarcode"] || json_to_index["barcode"], # replaced by orbisBarcode_ssi
+      orbisBibId_ssim: json_to_index["orbisRecord"], # replaced by orbisBibId_ssi
+      projection_ssim: json_to_index["projection"], # replaced by projection_tesim
+      recordType_ssim: json_to_index["recordType"], # replaced by recordType_ssi
+      references_ssim: json_to_index["references"], # replaced by references_tesim
+      scale_ssim: json_to_index["scale"], # replaced by scale_tesim
+      sourceCreated_ssim: json_to_index["sourceCreated"], # replaced by sourceCreated_tesim
+      sourceDate_ssim: json_to_index["sourceDate"], # replaced by sourceDate_tesim
+      sourceEdition_ssim: json_to_index["sourceEdition"], # replaced by sourceEdition_tesim
+      sourceNote_ssim: json_to_index["sourceNote"], # replaced by sourceNote_tesim
+      sourceTitle_ssim: json_to_index["sourceTitle"], # repleaced by sourceTitle_tesim
+      subject_topic_tsim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
+      title_tsim: json_to_index["title"] # replaced by title_tesim
+    }
+  end
+
+  def id_prefix
+    @id_prefix ||= self.authoritative_metadata_source&.file_prefix
+  end
+
+  def extract_visibility(json_to_index)
+    json_to_index["itemPermission"] || self.visibility
+  end
+
+  # I do not think the current box_ssim is how we want to continue to do deal with differences in field names
+  # However I do not think we currently have enough information to create the alternative (Max)
+  # Ladybird json_to_index["box"] || Voyager json_to_index["volumeEnumeration"] || ArchiveSpace json_to_index["containerGrouping"]
+  def extract_box_ssim(json_to_index)
+    json_to_index["box"] || json_to_index["volumeEnumeration"] || json_to_index["containerGrouping"]
+  end
+
+  OID_TO_COUNT_MAPPING = {
+    "10001192" => 2,
+    "10269867" => 8,
+    "10958722" => 185,
+    "11607445" => 85,
+    "11684565" => 398,
+    "11913649" => 40,
+    "14716192" => 178,
+    "16057777" => 18,
+    "16057779" => 4,
+    "16057780" => 17,
+    "16156712" => 144,
+    "16162984" => 6,
+    "16173726" => 13,
+    "16189096" => 2,
+    "16189097" => 2,
+    "16371253" => 6,
+    "16371267" => 6,
+    "16371272" => 464,
+    "16414889" => 28,
+    "16425155" => 10,
+    "16570776" => 1128,
+    "16685691" => 1,
+    "16700283" => 2,
+    "16712419" => 159,
+    "16797069" => 336,
+    "16854285" => 4,
+    "16854582" => 9,
+    "2003431" => 1366,
+    "2005512" => 2,
+    "2012036" => 5,
+    "2012143" => 4,
+    "2012315" => 10,
+    "2019757" => 451,
+    "2019759" => 292,
+    "2030006" => 1,
+    "2041002" => 1318,
+    "2046567" => 1188,
+    "2055095" => 841,
+    "2107188" => 2,
+    "2111169" => 315
+  }.freeze
+
+end

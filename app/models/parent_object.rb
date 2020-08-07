@@ -4,11 +4,13 @@
 
 class ParentObject < ApplicationRecord
   include JsonFile
+  include SolrIndexable
   has_many :dependent_objects
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
 
   self.primary_key = 'oid'
   before_create :default_fetch, unless: proc { ladybird_json.present? }
+  after_save :solr_index
 
   # Fetches the record from the authoritative_metadata_source
   def default_fetch
