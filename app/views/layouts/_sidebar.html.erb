@@ -1,0 +1,11 @@
+<div class="bg-light border-right" id="sidebar-wrapper">
+  <div class="sidebar-heading">Management</div>
+  <div class="list-group list-group-flush">
+    <%= link_to 'Dashboard', root_path, class: 'list-group-item list-group-item-action bg-light' %>
+    <%= link_to 'Parent Objects', parent_objects_path, class: 'list-group-item list-group-item-action bg-light' %>
+    <%= link_to 'Metadata Samples', metadata_samples_path, class: 'list-group-item list-group-item-action bg-light' %>
+    <%= link_to 'METS Imports', goobi_xml_imports_path, class: 'list-group-item list-group-item-action bg-light' %>
+    <%= link_to 'CSV Imports', oid_imports_path, class: 'list-group-item list-group-item-action bg-light' %>
+
+  </div>
+</div>
