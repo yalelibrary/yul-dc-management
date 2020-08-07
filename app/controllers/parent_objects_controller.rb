@@ -61,6 +61,14 @@ class ParentObjectsController < ApplicationController
     end
   end
 
+  def reindex
+    ParentObject.solr_index
+    respond_to do |format|
+      format.html { redirect_to parent_objects_url, notice: 'Parent objects have been reindexed.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
