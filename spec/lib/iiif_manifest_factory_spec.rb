@@ -2,8 +2,6 @@
 
 require 'rails_helper'
 
-WebMock.allow_net_connect!
-
 RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   let(:oid) { "2012315" }
   let(:path_to_xml) { File.join("spec", "fixtures", "goobi", "metadata", "2012315", "meta.xml") }
@@ -98,10 +96,16 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   end
 
   it "has an image with a resource" do
-    expect(first_canvas.images.first["resources"]["@id"]).to eq "http://iiif_image:8182/iiif/2/1053442/full/!200,200/0/default.jpg"
-    expect(third_to_last_canvas.images.first["resources"]["@id"]).to eq "http://iiif_image:8182/iiif/2/1053448/full/!200,200/0/default.jpg"
-    expect(first_canvas.images.first["resources"]["@type"]).to eq "dctypes:Image"
-    expect(first_canvas.images.first["resources"]["width"]).to eq 2591
+    expect(first_canvas.images.first["resource"]["@id"]).to eq "http://iiif_image:8182/iiif/2/1053442/full/!200,200/0/default.jpg"
+    expect(third_to_last_canvas.images.first["resource"]["@id"]).to eq "http://iiif_image:8182/iiif/2/1053448/full/!200,200/0/default.jpg"
+    expect(first_canvas.images.first["resource"]["@type"]).to eq "dctypes:Image"
+    expect(first_canvas.images.first["resource"]["width"]).to eq 2591
+  end
+
+  it "has an image resource with a service" do
+    expect(first_canvas.images.first["resource"]["service"]["@id"]).to eq "http://iiif_image:8182/iiif/2/1053442"
+    expect(third_to_last_canvas.images.first["resource"]["service"]["@id"]).to eq "http://iiif_image:8182/iiif/2/1053448"
+    expect(first_canvas.images.first["resource"]["service"]["@context"]).to eq "http://iiif.io/api/image/2/context.json"
   end
 
   it "can output a manifest as json" do

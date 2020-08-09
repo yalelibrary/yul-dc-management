@@ -40,7 +40,7 @@ class IiifManifestFactory
     image_resource = IIIF::Presentation::ImageResource.create_image_api_image_resource(
       service_id: "#{base_url}/2/#{file[:image_id]}"
     )
-    image["resources"] = image_resource
+    image["resource"] = image_resource
     images << image
   end
 
