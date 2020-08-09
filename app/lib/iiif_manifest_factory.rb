@@ -35,6 +35,12 @@ class IiifManifestFactory
     image['@type'] = "oa:Annotation"
     image["motivation"] = "sc:painting"
     image["on"] = "http://127.0.0.1/manifests/oid/#{@oid}/canvas/#{file[:image_id]}"
+
+    base_url = ENV["IIIF_IMAGE_BASE_URL"]
+    image_resource = IIIF::Presentation::ImageResource.create_image_api_image_resource(
+      service_id: "#{base_url}/2/#{file[:image_id]}"
+    )
+    image["resources"] = image_resource
     images << image
   end
 
@@ -46,8 +52,8 @@ class IiifManifestFactory
       canvas = IIIF::Presentation::Canvas.new
       canvas['@id'] = "http://127.0.0.1/manifests/oid/#{@oid}/canvas/#{file[:image_id]}"
       canvas['label'] = file[:order_label]
-      canvas['width'] = 400
-      canvas['height'] = 400
+      canvas['height'] = 4075
+      canvas['width'] = 2630
       add_image_to_canvas(file, canvas)
       canvases << canvas
     end

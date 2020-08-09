@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+WebMock.allow_net_connect!
+
 RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   let(:oid) { "2012315" }
   let(:path_to_xml) { File.join("spec", "fixtures", "goobi", "metadata", "2012315", "meta.xml") }
@@ -78,8 +80,8 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   end
 
   it "has a canvas with width and height" do
-    expect(first_canvas["width"]).to eq 400
-    expect(first_canvas["height"]).to eq 400
+    expect(first_canvas["height"]).to eq 4075
+    expect(first_canvas["width"]).to eq 2630
   end
 
   it "has canvases with images" do
@@ -93,6 +95,13 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
     expect(third_to_last_canvas.images.first["@type"]).to eq "oa:Annotation"
     expect(third_to_last_canvas.images.first["motivation"]).to eq "sc:painting"
     expect(third_to_last_canvas.images.first["on"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053448"
+  end
+
+  it "has an image with a resource" do
+    expect(first_canvas.images.first["resources"]["@id"]).to eq "http://iiif_image:8182/iiif/2/1053442/full/!200,200/0/default.jpg"
+    expect(third_to_last_canvas.images.first["resources"]["@id"]).to eq "http://iiif_image:8182/iiif/2/1053448/full/!200,200/0/default.jpg"
+    expect(first_canvas.images.first["resources"]["@type"]).to eq "dctypes:Image"
+    expect(first_canvas.images.first["resources"]["width"]).to eq 2591
   end
 
   it "can output a manifest as json" do
