@@ -29,6 +29,7 @@ RSpec.describe MetsDocument, type: :model do
   it "can return the combined data needed for the iiif manifest" do
     mets_doc = described_class.new(valid_goobi_xml)
     expect(mets_doc.combined.first[:order_label]).to eq "7v"
+    expect(mets_doc.combined.first[:order]).to eq "1"
   end
 
   it "can return the ORDERLABEL, id for the physical structure, and file id" do

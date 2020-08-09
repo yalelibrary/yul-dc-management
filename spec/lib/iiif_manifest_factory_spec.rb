@@ -9,6 +9,8 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   let(:manifest_factory) { IiifManifestFactory.new(oid) }
   let(:logger_mock) { instance_double("Rails.logger").as_null_object }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: oid) }
+  let(:first_canvas) { manifest_factory.manifest.sequences.first.canvases.first }
+  let(:third_to_last_canvas) { manifest_factory.manifest.sequences.first.canvases.third_to_last }
   before do
     stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/manifests/2012315.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "manifests", "2012315.json")).read)
@@ -63,29 +65,37 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
     expect(manifest_factory.manifest.sequences.first["@id"]).to eq "http://127.0.0.1/manifests/sequence/2012315"
   end
 
-  # I'm a little unsure of what the "to_json" method does in this context -
-  # It seems to do more validation than the vanilla "to_json" method and I'm not sure if that includes
-  # embedding the canvases in the sequence.
-  xit "has a sequence with one or more canvases" do
-    expect(manifest_factory.manifest.sequences.first.first.class).to eq IIIF::Presentation::Canvas
-  end
-
   it "creates a canvas for each file" do
-    expect(manifest_factory.construct_canvases.count).to eq 10
+    canvas_count = manifest_factory.manifest.sequences.first.canvases.count
+    expect(canvas_count).to eq 10
   end
 
-  it "has a canvas with an id and label" do
-    expect(manifest_factory.construct_canvases.first["@id"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053442"
-    expect(manifest_factory.construct_canvases.first["label"]).to eq "7v"
+  it "has a canvases with an ids and labels" do
+    expect(first_canvas["@id"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053442"
+    expect(third_to_last_canvas["@id"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053448"
+    expect(first_canvas["label"]).to eq "7v"
+    expect(third_to_last_canvas["label"]).to eq "13v"
   end
 
   it "has a canvas with width and height" do
-    expect(manifest_factory.construct_canvases.first["width"]).to eq 1
-    expect(manifest_factory.construct_canvases.first["height"]).to eq 2
+    expect(first_canvas["width"]).to eq 400
+    expect(first_canvas["height"]).to eq 400
+  end
+
+  it "has canvases with images" do
+    expect(first_canvas.images).to be_instance_of Array
+    expect(first_canvas.images.count).to eq 1
+    expect(first_canvas.images.first["@id"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053442/image/1"
+    expect(first_canvas.images.first["@type"]).to eq "oa:Annotation"
+    expect(first_canvas.images.first["motivation"]).to eq "sc:painting"
+    expect(first_canvas.images.first["on"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053442"
+    expect(third_to_last_canvas.images.first["@id"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053448/image/1"
+    expect(third_to_last_canvas.images.first["@type"]).to eq "oa:Annotation"
+    expect(third_to_last_canvas.images.first["motivation"]).to eq "sc:painting"
+    expect(third_to_last_canvas.images.first["on"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053448"
   end
 
   it "can output a manifest as json" do
-    byebug
     expect(manifest_factory.manifest.to_json(pretty: true)).to include "Islamic prayers, invocations and decorations : manuscript."
   end
 

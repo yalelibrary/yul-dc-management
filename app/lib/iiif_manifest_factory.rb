@@ -17,31 +17,40 @@ class IiifManifestFactory
   # Build the actual manifest object
   def construct_manifest
     manifest = IIIF::Presentation::Manifest.new(seed)
-    manifest.sequences = construct_sequences
-    manifest.sequences << construct_canvases
+    manifest.sequences << create_first_sequence(oid)
+    add_canvases_to_sequence(manifest.sequences.first)
     manifest
   end
 
-  def construct_sequences
-    sequences = []
+  def create_first_sequence(oid)
     sequence = IIIF::Presentation::Sequence.new
-    sequence["@id"] = "http://127.0.0.1/manifests/sequence/#{@oid}"
-    sequences << sequence
-    sequences
+    sequence["@id"] = "http://127.0.0.1/manifests/sequence/#{oid}"
+    sequence
   end
 
-  def construct_canvases
-    canvases = []
-    images = @mets_doc.combined
-    images.map do |image|
+  def add_image_to_canvas(file, canvas)
+    images = canvas.images
+    image = IIIF::Presentation::Resource.new
+    image['@id'] = "http://127.0.0.1/manifests/oid/#{@oid}/canvas/#{file[:image_id]}/image/1"
+    image['@type'] = "oa:Annotation"
+    image["motivation"] = "sc:painting"
+    image["on"] = "http://127.0.0.1/manifests/oid/#{@oid}/canvas/#{file[:image_id]}"
+    images << image
+  end
+
+  def add_canvases_to_sequence(sequence)
+    canvases = sequence.canvases
+    image_files = @mets_doc.combined
+    image_files.sort_by! { |file| file[:order].to_i }
+    image_files.map do |file|
       canvas = IIIF::Presentation::Canvas.new
-      canvas['@id'] = "http://127.0.0.1/manifests/oid/#{@oid}/canvas/#{image[:image_id]}"
-      canvas['label'] = image[:order_label]
-      canvas['width'] = 1
-      canvas['height'] = 2
+      canvas['@id'] = "http://127.0.0.1/manifests/oid/#{@oid}/canvas/#{file[:image_id]}"
+      canvas['label'] = file[:order_label]
+      canvas['width'] = 400
+      canvas['height'] = 400
+      add_image_to_canvas(file, canvas)
       canvases << canvas
     end
-    canvases
   end
 
   def seed

@@ -1,5 +1,5 @@
 {
-  "@id": "https://collections-test.curationexperts.com/manifests/2012315.json",
+  "@id": "http://127.0.0.1/manifests/2012315.json",
   "@context": "http://iiif.io/api/presentation/2/context.json",
   "@type": "sc:Manifest",
   "label": "Islamic prayers, invocations and decorations : manuscript.",
@@ -49,30 +49,30 @@
   ],
   "sequences": [
     {
-      "@id": "https://collections-test.curationexperts.com/manifests/sequence/2012315",
+      "@id": "http://127.0.0.1/manifests/sequence/2012315",
       "@type": "sc:Sequence",
       "canvases": [
         {
-          "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053442",
+          "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053442",
           "@type": "sc:Canvas",
           "label": "7v",
           "height": 4056,
           "width": 2591,
           "images": [
             {
-              "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053442/image/1",
+              "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053442/image/1",
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
-              "on": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053442",
+              "on": "http://127.0.0.1/manifests/oid/2012315/canvas/1053442",
               "resource": {
-                "@id": "https://collections-test.curationexperts.com/iiif/2/1053442/full/250,/0/default.jpg",
+                "@id": "http://127.0.0.1/iiif/2/1053442/full/250,/0/default.jpg",
                 "@type": "dctypes:Image",
                 "format": "image/jpeg",
                 "height": 4056,
                 "width": 2591,
                 "service": {
                   "@context": "http://iiif.io/api/image/2/context.json",
-                  "@id": "https://collections-test.curationexperts.com/iiif/2/1053442",
+                  "@id": "http://127.0.0.1/iiif/2/1053442",
                   "profile": "http://iiif.io/api/image/2/level1.json"
                 }
               }
@@ -80,26 +80,26 @@
           ]
         },
         {
-          "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053443",
+          "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053443",
           "@type": "sc:Canvas",
           "label": "8r",
           "height": 4056,
           "width": 2541,
           "images": [
             {
-              "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053443/image/1",
+              "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053443/image/1",
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
-              "on": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053443",
+              "on": "http://127.0.0.1/manifests/oid/2012315/canvas/1053443",
               "resource": {
-                "@id": "https://collections-test.curationexperts.com/iiif/2/1053443/full/250,/0/default.jpg",
+                "@id": "http://127.0.0.1/iiif/2/1053443/full/250,/0/default.jpg",
                 "@type": "dctypes:Image",
                 "format": "image/jpeg",
                 "height": 4056,
                 "width": 2541,
                 "service": {
                   "@context": "http://iiif.io/api/image/2/context.json",
-                  "@id": "https://collections-test.curationexperts.com/iiif/2/1053443",
+                  "@id": "http://127.0.0.1/iiif/2/1053443",
                   "profile": "http://iiif.io/api/image/2/level1.json"
                 }
               }
@@ -107,26 +107,26 @@
           ]
         },
         {
-          "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053444",
+          "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053444",
           "@type": "sc:Canvas",
           "label": "8v",
           "height": 4056,
           "width": 2592,
           "images": [
             {
-              "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053444/image/1",
+              "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053444/image/1",
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
-              "on": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053444",
+              "on": "http://127.0.0.1/manifests/oid/2012315/canvas/1053444",
               "resource": {
-                "@id": "https://collections-test.curationexperts.com/iiif/2/1053444/full/250,/0/default.jpg",
+                "@id": "http://127.0.0.1/iiif/2/1053444/full/250,/0/default.jpg",
                 "@type": "dctypes:Image",
                 "format": "image/jpeg",
                 "height": 4056,
                 "width": 2592,
                 "service": {
                   "@context": "http://iiif.io/api/image/2/context.json",
-                  "@id": "https://collections-test.curationexperts.com/iiif/2/1053444",
+                  "@id": "http://127.0.0.1/iiif/2/1053444",
                   "profile": "http://iiif.io/api/image/2/level1.json"
                 }
               }
@@ -134,26 +134,26 @@
           ]
         },
         {
-          "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053445",
+          "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053445",
           "@type": "sc:Canvas",
           "label": "10v",
           "height": 4069,
           "width": 2592,
           "images": [
             {
-              "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053445/image/1",
+              "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053445/image/1",
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
-              "on": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053445",
+              "on": "http://127.0.0.1/manifests/oid/2012315/canvas/1053445",
               "resource": {
-                "@id": "https://collections-test.curationexperts.com/iiif/2/1053445/full/250,/0/default.jpg",
+                "@id": "http://127.0.0.1/iiif/2/1053445/full/250,/0/default.jpg",
                 "@type": "dctypes:Image",
                 "format": "image/jpeg",
                 "height": 4069,
                 "width": 2592,
                 "service": {
                   "@context": "http://iiif.io/api/image/2/context.json",
-                  "@id": "https://collections-test.curationexperts.com/iiif/2/1053445",
+                  "@id": "http://127.0.0.1/iiif/2/1053445",
                   "profile": "http://iiif.io/api/image/2/level1.json"
                 }
               }
@@ -161,26 +161,26 @@
           ]
         },
         {
-          "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1100020",
+          "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1100020",
           "@type": "sc:Canvas",
           "label": "12r",
           "height": 3454,
           "width": 4557,
           "images": [
             {
-              "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1100020/image/1",
+              "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1100020/image/1",
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
-              "on": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1100020",
+              "on": "http://127.0.0.1/manifests/oid/2012315/canvas/1100020",
               "resource": {
-                "@id": "https://collections-test.curationexperts.com/iiif/2/1100020/full/250,/0/default.jpg",
+                "@id": "http://127.0.0.1/iiif/2/1100020/full/250,/0/default.jpg",
                 "@type": "dctypes:Image",
                 "format": "image/jpeg",
                 "height": 3454,
                 "width": 4557,
                 "service": {
                   "@context": "http://iiif.io/api/image/2/context.json",
-                  "@id": "https://collections-test.curationexperts.com/iiif/2/1100020",
+                  "@id": "http://127.0.0.1/iiif/2/1100020",
                   "profile": "http://iiif.io/api/image/2/level1.json"
                 }
               }
@@ -188,26 +188,26 @@
           ]
         },
         {
-          "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053446",
+          "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053446",
           "@type": "sc:Canvas",
           "label": "12v",
           "height": 4069,
           "width": 2624,
           "images": [
             {
-              "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053446/image/1",
+              "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053446/image/1",
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
-              "on": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053446",
+              "on": "http://127.0.0.1/manifests/oid/2012315/canvas/1053446",
               "resource": {
-                "@id": "https://collections-test.curationexperts.com/iiif/2/1053446/full/250,/0/default.jpg",
+                "@id": "http://127.0.0.1/iiif/2/1053446/full/250,/0/default.jpg",
                 "@type": "dctypes:Image",
                 "format": "image/jpeg",
                 "height": 4069,
                 "width": 2624,
                 "service": {
                   "@context": "http://iiif.io/api/image/2/context.json",
-                  "@id": "https://collections-test.curationexperts.com/iiif/2/1053446",
+                  "@id": "http://127.0.0.1/iiif/2/1053446",
                   "profile": "http://iiif.io/api/image/2/level1.json"
                 }
               }
@@ -215,26 +215,26 @@
           ]
         },
         {
-          "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053447",
+          "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053447",
           "@type": "sc:Canvas",
           "label": "13r",
           "height": 4043,
           "width": 2521,
           "images": [
             {
-              "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053447/image/1",
+              "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053447/image/1",
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
-              "on": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053447",
+              "on": "http://127.0.0.1/manifests/oid/2012315/canvas/1053447",
               "resource": {
-                "@id": "https://collections-test.curationexperts.com/iiif/2/1053447/full/250,/0/default.jpg",
+                "@id": "http://127.0.0.1/iiif/2/1053447/full/250,/0/default.jpg",
                 "@type": "dctypes:Image",
                 "format": "image/jpeg",
                 "height": 4043,
                 "width": 2521,
                 "service": {
                   "@context": "http://iiif.io/api/image/2/context.json",
-                  "@id": "https://collections-test.curationexperts.com/iiif/2/1053447",
+                  "@id": "http://127.0.0.1/iiif/2/1053447",
                   "profile": "http://iiif.io/api/image/2/level1.json"
                 }
               }
@@ -242,26 +242,26 @@
           ]
         },
         {
-          "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053448",
+          "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053448",
           "@type": "sc:Canvas",
           "label": "13v",
           "height": 4075,
           "width": 2630,
           "images": [
             {
-              "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053448/image/1",
+              "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053448/image/1",
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
-              "on": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053448",
+              "on": "http://127.0.0.1/manifests/oid/2012315/canvas/1053448",
               "resource": {
-                "@id": "https://collections-test.curationexperts.com/iiif/2/1053448/full/250,/0/default.jpg",
+                "@id": "http://127.0.0.1/iiif/2/1053448/full/250,/0/default.jpg",
                 "@type": "dctypes:Image",
                 "format": "image/jpeg",
                 "height": 4075,
                 "width": 2630,
                 "service": {
                   "@context": "http://iiif.io/api/image/2/context.json",
-                  "@id": "https://collections-test.curationexperts.com/iiif/2/1053448",
+                  "@id": "http://127.0.0.1/iiif/2/1053448",
                   "profile": "http://iiif.io/api/image/2/level1.json"
                 }
               }
@@ -269,26 +269,26 @@
           ]
         },
         {
-          "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053449",
+          "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053449",
           "@type": "sc:Canvas",
           "label": "14r",
           "height": 4040,
           "width": 2479,
           "images": [
             {
-              "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053449/image/1",
+              "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1053449/image/1",
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
-              "on": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1053449",
+              "on": "http://127.0.0.1/manifests/oid/2012315/canvas/1053449",
               "resource": {
-                "@id": "https://collections-test.curationexperts.com/iiif/2/1053449/full/250,/0/default.jpg",
+                "@id": "http://127.0.0.1/iiif/2/1053449/full/250,/0/default.jpg",
                 "@type": "dctypes:Image",
                 "format": "image/jpeg",
                 "height": 4040,
                 "width": 2479,
                 "service": {
                   "@context": "http://iiif.io/api/image/2/context.json",
-                  "@id": "https://collections-test.curationexperts.com/iiif/2/1053449",
+                  "@id": "http://127.0.0.1/iiif/2/1053449",
                   "profile": "http://iiif.io/api/image/2/level1.json"
                 }
               }
@@ -296,26 +296,26 @@
           ]
         },
         {
-          "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1102081",
+          "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1102081",
           "@type": "sc:Canvas",
           "label": "41v-42r",
           "height": 3049,
           "width": 3968,
           "images": [
             {
-              "@id": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1102081/image/1",
+              "@id": "http://127.0.0.1/manifests/oid/2012315/canvas/1102081/image/1",
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
-              "on": "https://collections-test.curationexperts.com/manifests/oid/2012315/canvas/1102081",
+              "on": "http://127.0.0.1/manifests/oid/2012315/canvas/1102081",
               "resource": {
-                "@id": "https://collections-test.curationexperts.com/iiif/2/1102081/full/250,/0/default.jpg",
+                "@id": "http://127.0.0.1/iiif/2/1102081/full/250,/0/default.jpg",
                 "@type": "dctypes:Image",
                 "format": "image/jpeg",
                 "height": 3049,
                 "width": 3968,
                 "service": {
                   "@context": "http://iiif.io/api/image/2/context.json",
-                  "@id": "https://collections-test.curationexperts.com/iiif/2/1102081",
+                  "@id": "http://127.0.0.1/iiif/2/1102081",
                   "profile": "http://iiif.io/api/image/2/level1.json"
                 }
               }

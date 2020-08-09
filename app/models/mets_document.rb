@@ -55,7 +55,8 @@ class MetsDocument
     {
       phys_id: physical_div.xpath('@ID').to_s,
       file_id: physical_div.xpath('mets:fptr/@FILEID').to_s,
-      order_label: physical_div.xpath("@ORDERLABEL").to_s
+      order_label: physical_div.xpath("@ORDERLABEL").to_s,
+      order: physical_div.xpath("@ORDER").to_s
     }
   end
 
