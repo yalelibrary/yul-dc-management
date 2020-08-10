@@ -45,10 +45,6 @@ jobs:
           POSTGRES_DB: management_yul_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
-      - image: yalelibraryit/dc-iiif-cantaloupe:v1.0.1
-        environment:
-          S3CACHE_BUCKET_NAME: yale-image-samples/cantaloupe/cache #NO TRAILING SLASH!
-          S3_SOURCE_BUCKET_NAME: yale-image-samples
     executor: docker/docker
     steps:
       - setup_remote_docker

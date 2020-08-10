@@ -18,9 +18,17 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
       .to_return(status: 200)
     stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012315.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012315.json")).read)
-
+    stub_info
     parent_object
     xml_import
+  end
+
+  def stub_info
+    file_id_array = ["1053442", "1053443", "1053444", "1053445", "1100020", "1053446", "1053447", "1053448", "1053449", "1102081"]
+    file_id_array.map do |file_id|
+      stub_request(:get, "#{ENV['IIIF_IMAGE_BASE_URL']}/2/#{file_id}/info.json")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, file_id, "info.json")))
+    end
   end
 
   it "has a mets document" do
