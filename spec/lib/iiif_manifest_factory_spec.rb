@@ -78,8 +78,8 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   end
 
   it "has a canvas with width and height" do
-    expect(first_canvas["height"]).to eq 4075
-    expect(first_canvas["width"]).to eq 2630
+    expect(first_canvas["height"]).to eq 4056
+    expect(first_canvas["width"]).to eq 2591
   end
 
   it "has canvases with images" do
@@ -99,7 +99,10 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
     expect(first_canvas.images.first["resource"]["@id"]).to eq "http://iiif_image:8182/iiif/2/1053442/full/!200,200/0/default.jpg"
     expect(third_to_last_canvas.images.first["resource"]["@id"]).to eq "http://iiif_image:8182/iiif/2/1053448/full/!200,200/0/default.jpg"
     expect(first_canvas.images.first["resource"]["@type"]).to eq "dctypes:Image"
+    expect(first_canvas.images.first["resource"]["height"]).to eq 4056
     expect(first_canvas.images.first["resource"]["width"]).to eq 2591
+    expect(third_to_last_canvas.images.first["resource"]["height"]).to eq 4075
+    expect(third_to_last_canvas.images.first["resource"]["width"]).to eq 2630
   end
 
   it "has an image resource with a service" do

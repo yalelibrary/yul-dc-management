@@ -36,7 +36,7 @@ class IiifManifestFactory
     image["motivation"] = "sc:painting"
     image["on"] = "http://127.0.0.1/manifests/oid/#{@oid}/canvas/#{file[:image_id]}"
 
-    base_url = ENV["IIIF_IMAGE_BASE_URL"]
+    base_url = ENV["IIIF_IMAGE_BASE_URL"] || "http://localhost:8182/iiif"
     image_resource = IIIF::Presentation::ImageResource.create_image_api_image_resource(
       service_id: "#{base_url}/2/#{file[:image_id]}"
     )
@@ -52,9 +52,9 @@ class IiifManifestFactory
       canvas = IIIF::Presentation::Canvas.new
       canvas['@id'] = "http://127.0.0.1/manifests/oid/#{@oid}/canvas/#{file[:image_id]}"
       canvas['label'] = file[:order_label]
-      canvas['height'] = 4075
-      canvas['width'] = 2630
       add_image_to_canvas(file, canvas)
+      canvas['height'] = canvas.images.first["resource"]["height"]
+      canvas['width'] = canvas.images.first["resource"]["width"]
       canvases << canvas
     end
   end
