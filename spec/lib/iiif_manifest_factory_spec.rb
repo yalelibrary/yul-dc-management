@@ -104,7 +104,7 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   end
 
   it "has an image with a resource" do
-    expect(first_canvas.images.first["resource"]["@id"]).to eq "http://iiif_image:8182/iiif/2/1053442/full/!200,200/0/default.jpg"
+    expect(first_canvas.images.first["resource"]["@id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/1053442/full/!200,200/0/default.jpg"
     expect(third_to_last_canvas.images.first["resource"]["@id"]).to eq "http://iiif_image:8182/iiif/2/1053448/full/!200,200/0/default.jpg"
     expect(first_canvas.images.first["resource"]["@type"]).to eq "dctypes:Image"
     expect(first_canvas.images.first["resource"]["height"]).to eq 4056
