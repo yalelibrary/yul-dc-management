@@ -16,10 +16,8 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
       .to_return(status: 200, body: File.open(File.join(fixture_path, "manifests", "2012315.json")).read)
     stub_request(:put, "https://yul-development-samples.s3.amazonaws.com/manifests/2012315.json")
       .to_return(status: 200)
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012315.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012315.json")).read)
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2107188.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2107188.json")).read)
+    stub_metadata_cloud("2012315")
+    stub_metadata_cloud("2107188")
     stub_info
     parent_object
     xml_import

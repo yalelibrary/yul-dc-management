@@ -4,11 +4,9 @@ require 'rails_helper'
 
 RSpec.describe GoobiXmlImport, type: :model, prep_metadata_sources: true do
   let(:goobi_import) { described_class.new }
-  let(:metadata_cloud_response_body_1) { File.open(File.join(fixture_path, "ladybird", "2012315.json")).read }
 
   before do
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012315.json")
-      .to_return(status: 200, body: metadata_cloud_response_body_1)
+    stub_metadata_cloud("2012315")
   end
 
   it "has an oid associated with it" do

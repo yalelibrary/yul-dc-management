@@ -5,8 +5,7 @@ RSpec.describe JsonFile, prep_metadata_sources: true do
   let(:parent_object) { FactoryBot.create(:parent_object, oid: '100001') }
   let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "100001.json") }
   before do
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/100001.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "100001.json")).read)
+    stub_metadata_cloud("100001")
   end
 
   it "can save a ParentObject to json" do
