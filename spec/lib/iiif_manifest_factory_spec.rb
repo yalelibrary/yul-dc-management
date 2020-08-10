@@ -114,8 +114,8 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   end
 
   it "has an image resource with a service" do
-    expect(first_canvas.images.first["resource"]["service"]["@id"]).to eq "http://iiif_image:8182/iiif/2/1053442"
-    expect(third_to_last_canvas.images.first["resource"]["service"]["@id"]).to eq "http://iiif_image:8182/iiif/2/1053448"
+    expect(first_canvas.images.first["resource"]["service"]["@id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/1053442"
+    expect(third_to_last_canvas.images.first["resource"]["service"]["@id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/1053448"
     expect(first_canvas.images.first["resource"]["service"]["@context"]).to eq "http://iiif.io/api/image/2/context.json"
   end
 
