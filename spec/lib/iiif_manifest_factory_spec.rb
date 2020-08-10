@@ -33,6 +33,16 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
     end
   end
 
+  around do |example|
+    original_manifests_base_url = ENV['IIIF_MANIFESTS_BASE_URL']
+    original_image_base_url = ENV["IIIF_IMAGE_BASE_URL"]
+    ENV['IIIF_MANIFESTS_BASE_URL'] = "http://localhost/manifests/"
+    ENV['IIIF_IMAGE_BASE_URL'] = "http://localhost:8182/iiif"
+    example.run
+    ENV['IIIF_MANIFESTS_BASE_URL'] = original_manifests_base_url
+    ENV['IIIF_IMAGE_BASE_URL'] = original_image_base_url
+  end
+
   it "has a mets document" do
     expect(manifest_factory.mets_doc.class).to eq MetsDocument
   end
@@ -55,7 +65,7 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
 
   # see also https://github.com/yalelibrary/yul-dc-iiif-manifest/blob/3f96a09d9d5a7b6a49c051d663b5cc2aa5fd8475/templates/webapp.conf.template#L56
   it "has 127.0.0.1 as the host in the identifier so that hostname substitution works" do
-    expect(manifest_factory.manifest["@id"]).to eq "http://127.0.0.1/manifests/2012315.json"
+    expect(manifest_factory.manifest["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/2012315.json"
   end
 
   it "has a label with the title of the ParentObject" do
@@ -72,7 +82,7 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   end
 
   it "has a sequence with an id" do
-    expect(manifest_factory.manifest.sequences.first["@id"]).to eq "http://127.0.0.1/manifests/sequence/2012315"
+    expect(manifest_factory.manifest.sequences.first["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/sequence/2012315"
   end
 
   it "creates a canvas for each file" do
@@ -81,8 +91,8 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   end
 
   it "has a canvases with an ids and labels" do
-    expect(first_canvas["@id"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053442"
-    expect(third_to_last_canvas["@id"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053448"
+    expect(first_canvas["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/2012315/canvas/1053442"
+    expect(third_to_last_canvas["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/2012315/canvas/1053448"
     expect(first_canvas["label"]).to eq "7v"
     expect(third_to_last_canvas["label"]).to eq "13v"
   end
@@ -95,14 +105,14 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   it "has canvases with images" do
     expect(first_canvas.images).to be_instance_of Array
     expect(first_canvas.images.count).to eq 1
-    expect(first_canvas.images.first["@id"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053442/image/1"
+    expect(first_canvas.images.first["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/2012315/canvas/1053442/image/1"
     expect(first_canvas.images.first["@type"]).to eq "oa:Annotation"
     expect(first_canvas.images.first["motivation"]).to eq "sc:painting"
-    expect(first_canvas.images.first["on"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053442"
-    expect(third_to_last_canvas.images.first["@id"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053448/image/1"
+    expect(first_canvas.images.first["on"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/2012315/canvas/1053442"
+    expect(third_to_last_canvas.images.first["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/2012315/canvas/1053448/image/1"
     expect(third_to_last_canvas.images.first["@type"]).to eq "oa:Annotation"
     expect(third_to_last_canvas.images.first["motivation"]).to eq "sc:painting"
-    expect(third_to_last_canvas.images.first["on"]).to eq "http://127.0.0.1/manifests/oid/2012315/canvas/1053448"
+    expect(third_to_last_canvas.images.first["on"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/2012315/canvas/1053448"
   end
 
   it "has an image with a resource" do
@@ -131,6 +141,7 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
     expect(Rails.logger).to have_received(:info)
       .with("IIIF Manifest Saved: {\"oid\":\"#{oid}\"}")
   end
+
   context "with an object without METs xml available" do
     let(:oid) { "2107188" }
     it "raises an error if no METs xml is available" do
