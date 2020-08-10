@@ -8,10 +8,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   let(:aspace) { 3 }
   let(:unexpected_metadata_source) { 4 }
   before do
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2004628.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-2004628.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2004628.json")).read)
+    stub_metadata_cloud("2004628", "ladybird")
+    stub_metadata_cloud("V-2004628", "ils")
   end
 
   context "a newly created ParentObject with an unexpected authoritative_metadata_source" do
@@ -53,10 +51,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   context "a newly created ParentObject with ArchiveSpace as authoritative_metadata_source" do
     let(:parent_object) { described_class.create(oid: "2012036", authoritative_metadata_source_id: aspace) }
     before do
-      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012036.json")
-        .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012036.json")).read)
-      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/aspace/AS-2012036.json")
-        .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-2012036.json")).read)
+      stub_metadata_cloud("2012036", "ladybird")
+      stub_metadata_cloud("AS-2012036", "aspace")
     end
 
     it "pulls from the MetadataCloud for Ladybird and ArchiveSpace and not Voyager" do

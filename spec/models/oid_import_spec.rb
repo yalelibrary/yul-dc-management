@@ -4,23 +4,13 @@ require 'rails_helper'
 
 RSpec.describe OidImport, type: :model, prep_metadata_sources: true do
   subject(:oid_import) { described_class.new }
-  let(:metadata_cloud_response_body_1) { File.open(File.join(fixture_path, "ladybird", "2034600.json")).read }
-  let(:metadata_cloud_response_body_2) { File.open(File.join(fixture_path, "ladybird", "2046567.json")).read }
-  let(:metadata_cloud_response_body_3) { File.open(File.join(fixture_path, "ladybird", "16414889.json")).read }
-  let(:metadata_cloud_response_body_4) { File.open(File.join(fixture_path, "ladybird", "14716192.json")).read }
-  let(:metadata_cloud_response_body_5) { File.open(File.join(fixture_path, "ladybird", "16854285.json")).read }
 
   before do
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2034600.json")
-      .to_return(status: 200, body: metadata_cloud_response_body_1)
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2046567.json")
-      .to_return(status: 200, body: metadata_cloud_response_body_2)
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16414889.json")
-      .to_return(status: 200, body: metadata_cloud_response_body_3)
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/14716192.json")
-      .to_return(status: 200, body: metadata_cloud_response_body_4)
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16854285.json")
-      .to_return(status: 200, body: metadata_cloud_response_body_5)
+    stub_metadata_cloud("2034600")
+    stub_metadata_cloud("2046567")
+    stub_metadata_cloud("16414889")
+    stub_metadata_cloud("14716192")
+    stub_metadata_cloud("16854285")
   end
 
   describe "csv file import" do

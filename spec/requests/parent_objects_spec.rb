@@ -17,8 +17,7 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
   # ParentObject. As you add validations to ParentObject, be sure to
   # adjust the attributes here as well.
   before do
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2004628.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
+    stub_metadata_cloud("2004628")
   end
 
   let(:valid_attributes) do

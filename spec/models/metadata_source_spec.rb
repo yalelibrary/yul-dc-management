@@ -63,12 +63,9 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
     before do
       stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/000000.json")
         .to_return(status: 404)
-      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16797069.json")
-        .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16797069.json")).read)
-      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-16797069.json")
-        .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16797069.json")).read)
-      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/aspace/AS-16797069.json")
-        .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-16797069.json")).read)
+      stub_metadata_cloud("16797069", 'ladybird')
+      stub_metadata_cloud("V-16797069", 'ils')
+      stub_metadata_cloud("AS-16797069", 'aspace')
     end
 
     around do |example|

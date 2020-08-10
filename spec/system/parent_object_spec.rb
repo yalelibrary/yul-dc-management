@@ -10,8 +10,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
     context "with a ParentObject whose authoritative_metadata_source is Ladybird" do
       before do
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012036.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012036.json")).read)
+        stub_metadata_cloud("2012036")
         fill_in('Oid', with: "2012036")
         click_on("Create Parent object")
       end
@@ -37,11 +36,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
     context "with a ParentObject whose authoritative_metadata_source is Voyager" do
       before do
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012036.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012036.json")).read)
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-2012036.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2012036.json")).read)
-
+        stub_metadata_cloud("2012036", "ladybird")
+        stub_metadata_cloud("V-2012036", "ils")
         fill_in('Oid', with: "2012036")
         select('Voyager')
         click_on("Create Parent object")
@@ -67,10 +63,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
     context "with a ParentObject whose authoritative_metadata_source is ArchiveSpace" do
       before do
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012036.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012036.json")).read)
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/aspace/AS-2012036.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-2012036.json")).read)
+        stub_metadata_cloud("2012036", "ladybird")
+        stub_metadata_cloud("AS-2012036", "aspace")
         fill_in('Oid', with: "2012036")
         select('ArchiveSpace')
         click_on("Create Parent object")
@@ -89,10 +83,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
     context "with a ParentObject with only some relevant identifiers" do
       before do
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2004628.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-2004628.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2004628.json")).read)
+        stub_metadata_cloud("2004628", "ladybird")
+        stub_metadata_cloud("V-2004628", "ils")
         fill_in('Oid', with: "2004628")
         click_on("Create Parent object")
       end
@@ -113,10 +105,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
     context "with a Private fixture object" do
       before do
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16189097-priv.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16189097-priv.json")).read)
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-16189097-priv.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16189097-priv.json")).read)
+        stub_metadata_cloud("16189097-priv", "ladybird")
+        stub_metadata_cloud("V-16189097-priv", "ils")
         fill_in('Oid', with: "16189097-priv")
         click_on("Create Parent object")
       end
@@ -127,10 +117,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
     context "with a Yale only fixture object" do
       before do
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16189097-yale.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16189097-yale.json")).read)
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-16189097-yale.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16189097-yale.json")).read)
+        stub_metadata_cloud("16189097-yale", "ladybird")
+        stub_metadata_cloud("V-16189097-yale", "ils")
         fill_in('Oid', with: "16189097-yale")
         click_on("Create Parent object")
       end
