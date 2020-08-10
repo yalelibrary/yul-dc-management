@@ -133,11 +133,8 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   end
   context "with an object without METs xml available" do
     let(:oid) { "2107188" }
-    it "logs an error if no METs xml is available" do
-      allow(Rails.logger).to receive(:error) { :logger_mock }
-      IiifManifestFactory.new("2107188")
-      expect(Rails.logger).to have_received(:error)
-        .with("Unable to create iiif manifest for: {\"oid\":\"2107188\",\"reason\":\"No METs xml available for 2107188\"}")
+    it "raises an error if no METs xml is available" do
+      expect { IiifManifestFactory.new("2107188") }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
