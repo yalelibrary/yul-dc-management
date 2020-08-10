@@ -31,6 +31,7 @@ jobs:
       # Image pulled from registry
       - image: yalelibraryit/dc-management:$CIRCLE_SHA1
         environment:
+          IIIF_IMAGE_BASE_URL: http://localhost:8182/iiif
           POSTGRES_HOST: localhost
           POSTGRES_DB: management_yul_test
           POSTGRES_USER: postgres

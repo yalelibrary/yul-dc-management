@@ -11,6 +11,16 @@ RSpec.describe GoobiXmlImport, type: :model, prep_metadata_sources: true do
       .to_return(status: 200, body: metadata_cloud_response_body_1)
   end
 
+  it "has an oid associated with it" do
+    goobi_import.file = File.new(fixture_path + '/goobi/metadata/2012315/meta.xml')
+    expect(goobi_import.oid).to eq "2012315"
+  end
+
+  it "has a mets document associated with it that is not saved to the database" do
+    goobi_import.file = File.new(fixture_path + '/goobi/metadata/2012315/meta.xml')
+    expect(goobi_import.mets_doc.valid_mets?).to eq true
+  end
+
   it "evaluates a valid Goobi METs file as valid" do
     goobi_import.file = File.new(fixture_path + '/goobi/metadata/2012315/meta.xml')
     expect(goobi_import.goobi_xml).to be_present
