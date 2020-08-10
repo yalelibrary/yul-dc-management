@@ -1,34 +1,16 @@
 {
-  "recordType": "oid",
-  "source": "ladybird",
-  "uri": "/ladybird/oid/16854285",
-  "identifierShelfMark": "YCAL MSS 1000",
   "box": "1",
-  "sourceTitle": "Fowler & Wells Portrait Posters for Physiognomy Lectures",
-  "sourceDate": "circa 1860",
-  "creator": [
-    "Fowler & Wells"
+  "oid": 16854285,
+  "uri": "/ladybird/oid/16854285",
+  "genre": [
+    "Portraits",
+    "Posters--United States--19th century"
   ],
   "title": [
     "Poster 1: Destructiveness small, Destructiveness large, Hydrocephalus James Cardinal, Thomas Sewall, Red Jacket, Language large"
   ],
-  "extentOfDigitization": [
-    "Complete work digitized."
-  ],
   "extent": [
     "1 scroll ; approx. 164 x 83.8 cm."
-  ],
-  "subjectName": [
-    "Red Jacket, Seneca chief, approximately 1756-1830",
-    "Sewall, Thomas, 1786 or 1787-1845"
-  ],
-  "subjectTopic": [
-    "Phrenology--United States",
-    "Physiognomy--United States"
-  ],
-  "genre": [
-    "Portraits",
-    "Posters--United States--19th century"
   ],
   "format": [
     "still image"
@@ -37,44 +19,62 @@
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "orbisRecord": "12307100",
-  "orbisBarcode": "39002102340669",
+  "source": "ladybird",
+  "creator": [
+    "Fowler & Wells"
+  ],
+  "children": [
+
+  ],
+  "indexedBy": [
+    "Fowler & Wells, Portrait Posters for Physiognomy Lectures. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
+  ],
   "findingAid": [
     "http://hdl.handle.net/10079/fa/beinecke.phrenology"
   ],
+  "recordType": "oid",
   "references": [
     "Fowler & Wells, Portrait Posters for Physiognomy Lectures. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
-  "itemPermission": "Public",
-  "resourceType": "Paintings & Drawings",
+  "repository": "Beinecke Library",
+  "sourceDate": "circa 1860",
   "subjectEra": "Physiognomy--United States",
   "contributor": [
     "Red Jacket, Seneca chief, approximately 1756-1830",
     "Sewall, Thomas, 1786 or 1787-1845"
   ],
-  "repository": "Beinecke Library",
-  "subjectTitle": "Physiognomy--United States",
-  "indexedBy": [
-    "Fowler & Wells, Portrait Posters for Physiognomy Lectures. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
+  "orbisRecord": "12307100",
+  "sourceTitle": "Fowler & Wells Portrait Posters for Physiognomy Lectures",
+  "subjectName": [
+    "Red Jacket, Seneca chief, approximately 1756-1830",
+    "Sewall, Thomas, 1786 or 1787-1845"
   ],
-  "subjectTitleDisplay": [
+  "collectionId": 1,
+  "orbisBarcode": "39002102340669",
+  "resourceType": "Paintings & Drawings",
+  "subjectTitle": "Physiognomy--United States",
+  "subjectTopic": [
     "Phrenology--United States",
     "Physiognomy--United States"
+  ],
+  "dependentUris": [
+    "/ladybird/oid/16854285"
   ],
   "creatorDisplay": [
     "Fowler & Wells"
   ],
+  "itemPermission": "Public",
+  "archiveSpaceUri": "/repositories/11/archival_objects/515305",
   "contributorDisplay": [
     "Red Jacket, Seneca chief, approximately 1756-1830",
     "Sewall, Thomas, 1786 or 1787-1845"
   ],
-  "archiveSpaceUri": "/repositories/11/archival_objects/515305",
-  "dependentUris": [
-    "/ladybird/oid/16854285"
+  "identifierShelfMark": "YCAL MSS 1000",
+  "subjectTitleDisplay": [
+    "Phrenology--United States",
+    "Physiognomy--United States"
   ],
-  "oid": 16854285,
-  "collectionId": 1,
-  "children": [
-
+  "extentOfDigitization": [
+    "Complete work digitized."
   ]
 }

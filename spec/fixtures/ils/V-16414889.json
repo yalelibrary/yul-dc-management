@@ -1,59 +1,59 @@
 {
-  "recordType": "bib",
-  "source": "ils",
   "uri": "/ils/barcode/39002113596465?bib=3577942",
-  "identifierShelfMark": "1351 1978",
-  "creator": [
-    "Cruikshank, George, 1792-1878"
-  ],
-  "title": [
-    "A comic alphabet"
-  ],
-  "publicationPlace": [
-    ""
-  ],
-  "publisher": [
-    ""
-  ],
   "date": [
     "1836."
+  ],
+  "bibId": 3577942,
+  "title": [
+    "A comic alphabet"
   ],
   "extent": [
     "24 plates. 13 cm."
   ],
+  "itemId": 11873270,
+  "source": "ils",
+  "creator": [
+    "Cruikshank, George, 1792-1878"
+  ],
+  "children": [
+
+  ],
   "language": [
     "eng"
   ],
+  "holdingId": 3917998,
+  "publisher": [
+    ""
+  ],
+  "createDate": "2002-06-01T04:00:00.000+0000",
+  "recordType": "bib",
+  "repository": "beingen",
+  "updateDate": "2011-03-30T18:19:01.000+0000",
   "description": [
     "Cover-title.",
     "Plates printed on a continuous strip of paper, folded in Japanese fashion; portrait of the publisher Tilt on back cover. cf. A. M. Cohn, George Cruikshank, no. 189."
   ],
   "orbisRecord": "3577942",
   "orbisBarcode": "39002113596465",
-  "dateStructured": [
-    "1836    "
-  ],
-  "illustrativeMatter": "    ",
-  "titleStatement": [
-    "A comic alphabet, designed, etched & published by George Cruikshank, No. 23 Myddelton Terrace, Pentonville"
-  ],
-  "repository": "beingen",
-  "creatorDisplay": [
-    "Cruikshank, George, 1792-1878"
-  ],
   "dependentUris": [
     "/ils/holding/3917998",
     "/ils/item/11873270",
     "/ils/bib/3577942",
     "/ils/barcode/39002113596465"
   ],
-  "bibId": 3577942,
+  "creatorDisplay": [
+    "Cruikshank, George, 1792-1878"
+  ],
+  "dateStructured": [
+    "1836    "
+  ],
   "suppressInOpac": false,
-  "createDate": "2002-06-01T04:00:00.000+0000",
-  "updateDate": "2011-03-30T18:19:01.000+0000",
-  "holdingId": 3917998,
-  "itemId": 11873270,
-  "children": [
-
-  ]
+  "titleStatement": [
+    "A comic alphabet, designed, etched & published by George Cruikshank, No. 23 Myddelton Terrace, Pentonville"
+  ],
+  "publicationPlace": [
+    ""
+  ],
+  "illustrativeMatter": "    ",
+  "identifierShelfMark": "1351 1978"
 }

@@ -96,6 +96,14 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     end
   end
 
+  context 'with ladybird_json but no orbisBarcode' do
+    let(:parent_object) { FactoryBot.build(:parent_object, oid: '16712419', ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16712419.json")))) }
+
+    it 'returns a voyager url using the bib' do
+      expect(parent_object.voyager_cloud_url).to eq "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/bib/1289001"
+    end
+  end
+
   context 'without ladybird_json' do
     let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
 

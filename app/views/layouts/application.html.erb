@@ -11,6 +11,11 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="d-flex" id="wrapper">
+
+      <%= render 'layouts/sidebar' %>
+      <div id="page-content-wrapper">
+        <%= yield %>
+      </div>
   </body>
 </html>
