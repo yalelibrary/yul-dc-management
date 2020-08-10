@@ -18,6 +18,8 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
       .to_return(status: 200)
     stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012315.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012315.json")).read)
+    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2107188.json")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2107188.json")).read)
     stub_info
     parent_object
     xml_import
@@ -128,5 +130,14 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
     manifest_factory.save_manifest
     expect(Rails.logger).to have_received(:info)
       .with("IIIF Manifest Saved: {\"oid\":\"#{oid}\"}")
+  end
+  context "with an object without METs xml available" do
+    let(:oid) { "2107188" }
+    it "logs an error if no METs xml is available" do
+      allow(Rails.logger).to receive(:error) { :logger_mock }
+      IiifManifestFactory.new("2107188")
+      expect(Rails.logger).to have_received(:error)
+        .with("Unable to create iiif manifest for: {\"oid\":\"2107188\",\"reason\":\"No METs xml available for 2107188\"}")
+    end
   end
 end

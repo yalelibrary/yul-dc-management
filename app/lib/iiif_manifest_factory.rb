@@ -9,7 +9,8 @@ class IiifManifestFactory
     @oid = oid
     @parent_object = ParentObject.find_by(oid: oid)
     goobi_object = GoobiXmlImport.find_by(oid: oid)
-    return unless goobi_object
+    iiif_info = { oid: oid, reason: "No METs xml available for #{oid}" }
+    return Rails.logger.error("Unable to create iiif manifest for: #{iiif_info.to_json}") unless goobi_object
     @mets_doc = MetsDocument.new(goobi_object.goobi_xml)
     @manifest = construct_manifest
   end
