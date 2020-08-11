@@ -10,10 +10,10 @@ class IiifManifestFactory
     @image_base_url = ENV["IIIF_IMAGE_BASE_URL"] || "http://localhost:8182/iiif"
     @oid = oid
     @parent_object = ParentObject.find_by(oid: oid)
-    goobi_object = GoobiXmlImport.find_by(oid: oid)
+    mets_object = MetsXmlImport.find_by(oid: oid)
     iiif_info = { oid: oid, reason: "No METs xml available for #{oid}" }
-    raise ActiveRecord::RecordNotFound, "Unable to create iiif manifest for: #{iiif_info.to_json}" unless goobi_object
-    @mets_doc = MetsDocument.new(goobi_object.goobi_xml)
+    raise ActiveRecord::RecordNotFound, "Unable to create iiif manifest for: #{iiif_info.to_json}" unless mets_object
+    @mets_doc = MetsDocument.new(mets_object.mets_xml)
     @manifest = construct_manifest
   end
 

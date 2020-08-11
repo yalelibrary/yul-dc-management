@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   let(:oid) { "2012315" }
   let(:path_to_xml) { File.join("spec", "fixtures", "goobi", "metadata", "2012315", "meta.xml") }
-  let(:xml_import) { FactoryBot.create(:goobi_xml_import, file: File.open(path_to_xml)) }
+  let(:xml_import) { FactoryBot.create(:mets_xml_import, file: File.open(path_to_xml)) }
   let(:manifest_factory) { IiifManifestFactory.new(oid) }
   let(:logger_mock) { instance_double("Rails.logger").as_null_object }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: oid) }

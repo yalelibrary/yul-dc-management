@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe MetsDocument, type: :model do
   let(:goobi_path) { File.join(fixture_path, "goobi", "metadata", "2012315", "meta.xml") }
   let(:valid_goobi_xml) { File.open(File.join(fixture_path, "goobi", "metadata", "2012315", "meta.xml")).read }
-  let(:xml_import) { FactoryBot.create(:goobi_xml_import, file: File.open(goobi_path)) }
+  let(:xml_import) { FactoryBot.create(:mets_xml_import, file: File.open(goobi_path)) }
   let(:valid_xml_file) { File.open(File.join(fixture_path, "goobi", "metadata", "2012315", "valid_xml.xml")).read }
   let(:no_image_files_path) { File.join(fixture_path, "goobi", "metadata", "2012315", "meta_no_image_files.xml") }
   let(:no_oid_file) { File.open(File.join(fixture_path, "goobi", "metadata", "2012315", "meta_no_oid.xml")).read }
@@ -13,7 +13,7 @@ RSpec.describe MetsDocument, type: :model do
   let(:image_missing_file) { File.open(File.join(fixture_path, "goobi", "metadata", "2012315", "meta_image_missing.xml")).read }
 
   it "can be instantiated with xml from the DB instead of a file" do
-    described_class.new(xml_import.goobi_xml)
+    described_class.new(xml_import.mets_xml)
   end
 
   it "can return the oid" do
