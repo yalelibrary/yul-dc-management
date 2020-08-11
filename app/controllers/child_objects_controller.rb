@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChildObjectsController < ApplicationController
   before_action :set_child_object, only: [:show, :edit, :update, :destroy]
 
@@ -9,8 +11,7 @@ class ChildObjectsController < ApplicationController
 
   # GET /child_objects/1
   # GET /child_objects/1.json
-  def show
-  end
+  def show; end
 
   # GET /child_objects/new
   def new
@@ -18,8 +19,7 @@ class ChildObjectsController < ApplicationController
   end
 
   # GET /child_objects/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /child_objects
   # POST /child_objects.json
@@ -62,6 +62,7 @@ class ChildObjectsController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_child_object
       @child_object = ChildObject.find(params[:id])

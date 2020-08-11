@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe ChildObjectsController, type: :routing do
@@ -17,7 +19,6 @@ RSpec.describe ChildObjectsController, type: :routing do
     it "routes to #edit" do
       expect(get: "/child_objects/1/edit").to route_to("child_objects#edit", id: "1")
     end
-
 
     it "routes to #create" do
       expect(post: "/child_objects").to route_to("child_objects#create")

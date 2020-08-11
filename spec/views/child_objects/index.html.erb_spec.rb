@@ -1,25 +1,27 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe "child_objects/index", type: :view do
-  before(:each) do
+  before do
     assign(:child_objects, [
-      ChildObject.create!(
-        child_oid: "Child Oid",
-        caption: "Caption",
-        width: 2,
-        height: 3,
-        order: 4,
-        parent_object: nil
-      ),
-      ChildObject.create!(
-        child_oid: "Child Oid",
-        caption: "Caption",
-        width: 2,
-        height: 3,
-        order: 4,
-        parent_object: nil
-      )
-    ])
+             ChildObject.create!(
+               child_oid: "Child Oid",
+               caption: "Caption",
+               width: 2,
+               height: 3,
+               order: 4,
+               parent_object: nil
+             ),
+             ChildObject.create!(
+               child_oid: "Child Oid",
+               caption: "Caption",
+               width: 2,
+               height: 3,
+               order: 4,
+               parent_object: nil
+             )
+           ])
   end
 
   it "renders a list of child_objects" do
