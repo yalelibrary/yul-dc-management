@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_06_120353) do
+ActiveRecord::Schema.define(version: 2020_08_11_170311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,14 +33,6 @@ ActiveRecord::Schema.define(version: 2020_08_06_120353) do
     t.index ["parent_object_id"], name: "index_dependent_objects_on_parent_object_id"
   end
 
-  create_table "goobi_xml_imports", force: :cascade do |t|
-    t.xml "goobi_xml"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "oid"
-    t.index ["oid"], name: "index_goobi_xml_imports_on_oid"
-  end
-
   create_table "metadata_samples", force: :cascade do |t|
     t.string "metadata_source"
     t.integer "number_of_samples"
@@ -55,6 +47,14 @@ ActiveRecord::Schema.define(version: 2020_08_06_120353) do
     t.string "file_prefix"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "mets_xml_imports", force: :cascade do |t|
+    t.xml "mets_xml"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "oid"
+    t.index ["oid"], name: "index_mets_xml_imports_on_oid"
   end
 
   create_table "oid_imports", force: :cascade do |t|

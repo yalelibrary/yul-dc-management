@@ -1,10 +1,10 @@
-<%= form_with(model: goobi_xml_import, local: true) do |form| %>
-  <% if goobi_xml_import.errors.any? %>
+<%= form_with(model: mets_xml_import, local: true) do |form| %>
+  <% if mets_xml_import.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(goobi_xml_import.errors.count, "error") %> prohibited this goobi_xml_import from being saved:</h2>
+      <h2><%= pluralize(mets_xml_import.errors.count, "error") %> prohibited this mets_xml_import from being saved:</h2>
 
       <ul>
-        <% goobi_xml_import.errors.full_messages.each do |message| %>
+        <% mets_xml_import.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>

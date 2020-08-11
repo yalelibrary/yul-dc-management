@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-class GoobiXmlImport < ApplicationRecord
+class MetsXmlImport < ApplicationRecord
   attr_reader :file
   validate :validate_upload
   after_create :refresh_metadata_cloud
 
   def file=(value)
     @file = value
-    self[:goobi_xml] = value.read
+    self[:mets_xml] = value.read
   end
 
   def oid
@@ -15,14 +15,14 @@ class GoobiXmlImport < ApplicationRecord
   end
 
   def mets_doc
-    @mets_doc ||= MetsDocument.new(goobi_xml)
+    @mets_doc ||= MetsDocument.new(mets_xml)
   end
 
   def validate_upload
     # The includes_goobi? method is likely to be deprecated once we have a more final METS document
     return errors.add(:file, 'must contain a xmlns:goobi namespace') unless mets_doc.includes_goobi?
     return errors.add(:file, 'must contain an oid') if mets_doc.oid.nil? || mets_doc.oid.empty?
-    return errors.add(:file, 'must be a valid Goobi METs file') unless mets_doc.valid_mets?
+    return errors.add(:file, 'must be a valid METs file') unless mets_doc.valid_mets?
     return errors.add(:file, 'all image files must be available to the application') unless mets_doc.all_images_present?
   end
 
