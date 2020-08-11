@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_11_170311) do
+ActiveRecord::Schema.define(version: 2020_08_11_205232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,19 @@ ActiveRecord::Schema.define(version: 2020_08_11_170311) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "retrieved_records"
+  end
+
+  create_table "child_objects", force: :cascade do |t|
+    t.string "child_oid"
+    t.string "caption"
+    t.integer "width"
+    t.integer "height"
+    t.integer "order"
+    t.bigint "parent_object_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["child_oid"], name: "index_child_objects_on_child_oid", unique: true
+    t.index ["parent_object_id"], name: "index_child_objects_on_parent_object_id"
   end
 
   create_table "dependent_objects", force: :cascade do |t|
@@ -109,5 +122,6 @@ ActiveRecord::Schema.define(version: 2020_08_11_170311) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "child_objects", "parent_objects"
   add_foreign_key "sample_fields", "metadata_samples", on_delete: :cascade
 end

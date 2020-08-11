@@ -1,0 +1,47 @@
+<%= form_with(model: child_object, local: true) do |form| %>
+  <% if child_object.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(child_object.errors.count, "error") %> prohibited this child_object from being saved:</h2>
+
+      <ul>
+        <% child_object.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :child_oid %>
+    <%= form.text_field :child_oid %>
+  </div>
+
+  <div class="field">
+    <%= form.label :caption %>
+    <%= form.text_field :caption %>
+  </div>
+
+  <div class="field">
+    <%= form.label :width %>
+    <%= form.number_field :width %>
+  </div>
+
+  <div class="field">
+    <%= form.label :height %>
+    <%= form.number_field :height %>
+  </div>
+
+  <div class="field">
+    <%= form.label :order %>
+    <%= form.number_field :order %>
+  </div>
+
+  <div class="field">
+    <%= form.label :parent_object_id %>
+    <%= form.text_field :parent_object_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
