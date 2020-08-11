@@ -207,6 +207,7 @@ you stop your running containers you need to rebuild.
 5. Commit and merge the changes you just made with a message like "Prep for vX.Y.Z release"
 6. Once those changes are merged to the `master` branch, in the github web UI go to `Releases` and tag a new release with the right version number. Paste in the release notes for this release from the top of `CHANGELOG.md`
 7. Update `yul-dc-camerata` with the new version of management and submit a PR. (alternatively, see the [camerata README on Releasing a New Dependency Version](https://github.com/yalelibrary/yul-dc-camerata#releasing-a-new-dependency-version))
+8. Move any tickets that were included in this release from `For Release` to `Ready for Acceptance`
 
 ## Test coverage
 
