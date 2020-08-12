@@ -6,7 +6,7 @@ class CreateChildObjects < ActiveRecord::Migration[6.0]
       t.integer :width
       t.integer :height
       t.integer :order
-      t.references :parent_object, null: false, foreign_key: true
+      t.references :parent_object
 
       t.timestamps
     end
