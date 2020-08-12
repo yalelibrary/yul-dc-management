@@ -57,7 +57,12 @@
 
 <p>
   <strong>Authoritative Metadata source:</strong>
-  <%= @parent_object.authoritative_metadata_source_id %>
+  <%= @parent_object.authoritative_metadata_source.display_name %>
+</p>
+
+<p>
+  <strong>Authoritative JSON:</strong>
+  <%= render 'authoritative_json', parent_object: @parent_object %>
 </p>
 
 <%= link_to 'Edit', edit_parent_object_path(@parent_object) %> |

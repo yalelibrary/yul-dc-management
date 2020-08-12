@@ -17,6 +17,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
       it "can create a new parent object" do
         expect(page.body).to include "Parent object was successfully created"
+        expect(page.body).to include "Ladybird"
+        expect(page.body).to include "Authoritative JSON"
       end
 
       it "saves the Ladybird record from the MC to the DB" do
@@ -45,6 +47,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
       it "can create a new parent object" do
         expect(page.body).to include "Parent object was successfully created"
+        expect(page.body).to include "Voyager"
       end
 
       it "has the correct authoritative_metadata_source in the database" do
@@ -72,6 +75,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
       it "can create a new parent object" do
         expect(page.body).to include "Parent object was successfully created"
+        expect(page.body).to include "ArchiveSpace"
       end
 
       it "fetches the ArchiveSpace record when applicable" do
