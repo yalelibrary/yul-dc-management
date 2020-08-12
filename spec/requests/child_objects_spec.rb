@@ -13,15 +13,28 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/child_objects", type: :request do
+RSpec.describe "/child_objects", type: :request, prep_metadata_sources: true do
   # ChildObject. As you add validations to ChildObject, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    skip("Add a hash of attributes valid for your model")
+    {
+      child_oid: "12345",
+      parent_object_id: "2004628"
+    }
   end
 
   let(:invalid_attributes) do
-    skip("Add a hash of attributes invalid for your model")
+    {
+      child_oid: "12345",
+      parent_object_id: "6789"
+    }
+  end
+
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: "2004628") }
+
+  before do
+    stub_metadata_cloud("2004628")
+    parent_object
   end
 
   describe "GET /index" do
@@ -86,14 +99,16 @@ RSpec.describe "/child_objects", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) do
-        skip("Add a hash of attributes valid for your model")
+        {
+          order: 15
+        }
       end
 
       it "updates the requested child_object" do
         child_object = ChildObject.create! valid_attributes
         patch child_object_url(child_object), params: { child_object: new_attributes }
         child_object.reload
-        skip("Add assertions for updated state")
+        expect(child_object.order).to eq 15
       end
 
       it "redirects to the child_object" do
