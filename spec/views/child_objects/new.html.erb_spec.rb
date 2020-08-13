@@ -28,7 +28,7 @@ RSpec.describe "child_objects/new", type: :view do
 
       assert_select "input[name=?]", "child_object[order]"
 
-      assert_select "input[name=?]", "child_object[parent_object_id]"
+      assert_select "input[name=?]", "child_object[parent_object_oid]"
     end
   end
 end

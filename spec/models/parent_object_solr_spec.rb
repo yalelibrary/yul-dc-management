@@ -55,7 +55,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     end
 
     context "with an item without visibility" do
-      let(:no_vis_oid) { "16189097-no_vis" }
+      let(:no_vis_oid) { "30000016189097" }
       let(:parent_object_without_visibility) { FactoryBot.create(:parent_object, oid: no_vis_oid, source_name: 'ils') }
 
       before do
@@ -71,7 +71,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     end
 
     context "with a private item" do
-      let(:priv_oid) { "16189097-priv" }
+      let(:priv_oid) { "10000016189097" }
       let(:parent_object_with_private_visibility) { FactoryBot.create(:parent_object, oid: priv_oid, visibility: "Private", source_name: 'ils') }
 
       before do

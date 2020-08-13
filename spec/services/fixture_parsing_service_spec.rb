@@ -29,15 +29,15 @@ RSpec.describe FixtureParsingService, prep_metadata_sources: true do
       let(:holding) { "12484205" }
       let(:item) { "10996370" }
       let(:parent_object) { FactoryBot.create(:parent_object, oid: oid) }
-      let(:private_oid) { "16189097-priv" }
+      let(:private_oid) { "10000016189097" }
       let(:private_object) { FactoryBot.create(:parent_object, oid: private_oid) }
-      let(:yale_only_oid) { "16189097-yale" }
+      let(:yale_only_oid) { "20000016189097" }
       let(:yale_only_object) { FactoryBot.create(:parent_object, oid: yale_only_oid) }
       before do
-        stub_metadata_cloud("16189097-priv", "ladybird")
-        stub_metadata_cloud("V-16189097-priv", "ils")
-        stub_metadata_cloud("16189097-yale", "ladybird")
-        stub_metadata_cloud("V-16189097-yale", "ils")
+        stub_metadata_cloud("10000016189097", "ladybird")
+        stub_metadata_cloud("V-10000016189097", "ils")
+        stub_metadata_cloud("20000016189097", "ladybird")
+        stub_metadata_cloud("V-20000016189097", "ils")
       end
 
       it "finds the dependent uris for a ladybird object" do
@@ -53,8 +53,8 @@ RSpec.describe FixtureParsingService, prep_metadata_sources: true do
         yale_only_object
         described_class.find_dependent_uris(metadata_source)
         expect(DependentObject.find_by(parent_object_id: oid).dependent_uri).to include "/ladybird/oid/16854285"
-        expect(DependentObject.find_by(parent_object_id: private_oid).dependent_uri).to include "/ladybird/oid/16189097-priv"
-        expect(DependentObject.find_by(parent_object_id: yale_only_oid).dependent_uri).to include "/ladybird/oid/16189097-yale"
+        expect(DependentObject.find_by(parent_object_id: private_oid).dependent_uri).to include "/ladybird/oid/10000016189097"
+        expect(DependentObject.find_by(parent_object_id: yale_only_oid).dependent_uri).to include "/ladybird/oid/20000016189097"
       end
     end
   end

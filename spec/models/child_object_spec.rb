@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: "2004628") }
-  let(:child_object) { described_class.create(child_oid: "456789", parent_object_id: "2004628") }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628) }
+  let(:child_object) { described_class.create(child_oid: "456789", parent_object: parent_object) }
 
   before do
     stub_metadata_cloud("2004628")

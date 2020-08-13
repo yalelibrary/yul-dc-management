@@ -14,13 +14,13 @@ RSpec.describe "child_objects/show", type: :view, prep_metadata_sources: true do
                                             width: 2,
                                             height: 3,
                                             order: 4,
-                                            parent_object_id: "2004628"
+                                            parent_object_oid: "2004628"
                                           ))
   end
 
   it "renders attributes in <p>" do
     render
-    expect(rendered).to match(/Child Oid/)
+    expect(rendered).to match(/Child oid/)
     expect(rendered).to match(/Caption/)
     expect(rendered).to match(/2/)
     expect(rendered).to match(/3/)

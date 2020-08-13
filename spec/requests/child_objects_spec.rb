@@ -19,14 +19,14 @@ RSpec.describe "/child_objects", type: :request, prep_metadata_sources: true do
   let(:valid_attributes) do
     {
       child_oid: "12345",
-      parent_object_id: "2004628"
+      parent_object_oid: "2004628"
     }
   end
 
   let(:invalid_attributes) do
     {
       child_oid: "12345",
-      parent_object_id: "6789"
+      parent_object_oid: "6789"
     }
   end
 
