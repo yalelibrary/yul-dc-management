@@ -122,6 +122,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_193045) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "child_objects", "parent_objects", column: "parent_object_oid", primary_key: "oid", on_delete: :cascade
+  add_foreign_key "child_objects", "parent_objects", column: "parent_object_oid", primary_key: "oid"
   add_foreign_key "sample_fields", "metadata_samples", on_delete: :cascade
 end

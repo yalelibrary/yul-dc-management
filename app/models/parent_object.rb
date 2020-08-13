@@ -6,7 +6,7 @@ class ParentObject < ApplicationRecord
   include JsonFile
   include SolrIndexable
   has_many :dependent_objects
-  has_many :child_objects, primary_key: 'oid', foreign_key: 'parent_object_oid'
+  has_many :child_objects, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
 
   self.primary_key = 'oid'

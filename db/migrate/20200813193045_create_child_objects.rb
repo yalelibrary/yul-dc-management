@@ -12,6 +12,6 @@ class CreateChildObjects < ActiveRecord::Migration[6.0]
     end
 
     rename_column :child_objects, :parent_object_oid_id, :parent_object_oid
-    add_foreign_key :child_objects, :parent_objects, column: 'parent_object_oid', primary_key: 'oid', on_delete: :cascade
+    add_foreign_key :child_objects, :parent_objects, column: 'parent_object_oid', primary_key: 'oid'
   end
 end
