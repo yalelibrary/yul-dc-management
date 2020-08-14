@@ -12,9 +12,9 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   let(:first_canvas) { manifest_factory.manifest.sequences.first.canvases.first }
   let(:third_to_last_canvas) { manifest_factory.manifest.sequences.first.canvases.third_to_last }
   before do
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/manifests/2012315.json")
+    stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/2012315.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "manifests", "2012315.json")).read)
-    stub_request(:put, "https://yul-development-samples.s3.amazonaws.com/manifests/2012315.json")
+    stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/2012315.json")
       .to_return(status: 200)
     stub_metadata_cloud("2012315")
     stub_metadata_cloud("2107188")

@@ -21,7 +21,7 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
       before do
         stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16797069")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16797069.json")).read)
-        stub_request(:put, "https://yul-development-samples.s3.amazonaws.com/ladybird/16797069.json").to_return(status: 200)
+        stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/16797069.json").to_return(status: 200)
       end
 
       around do |example|
@@ -61,7 +61,7 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
     let(:aspace_source) { FactoryBot.build(:metadata_source_aspace) }
 
     before do
-      stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/000000.json")
+      stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/000000.json")
         .to_return(status: 404)
       stub_metadata_cloud("16797069", 'ladybird')
       stub_metadata_cloud("V-16797069", 'ils')
