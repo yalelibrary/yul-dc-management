@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: true do
-  context "indexing to Solr from the database with Ladybird ParentObjects" do
+RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
+  context "indexing to Solr from the database with Ladybird ParentObjects", solr: true do
     it "can index the 5 parent objects in the database to Solr" do
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 0
