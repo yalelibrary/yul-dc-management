@@ -105,25 +105,25 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
     context "with a Private fixture object" do
       before do
-        stub_metadata_cloud("16189097-priv", "ladybird")
-        stub_metadata_cloud("V-16189097-priv", "ils")
-        fill_in('Oid', with: "16189097-priv")
+        stub_metadata_cloud("10000016189097", "ladybird")
+        stub_metadata_cloud("V-10000016189097", "ils")
+        fill_in('Oid', with: "10000016189097")
         click_on("Create Parent object")
       end
       it "adds the visibility for private objects" do
-        expect(ParentObject.find_by(oid: "16189097-priv")["visibility"]).to eq "Private"
+        expect(ParentObject.find_by(oid: "10000016189097")["visibility"]).to eq "Private"
       end
     end
 
     context "with a Yale only fixture object" do
       before do
-        stub_metadata_cloud("16189097-yale", "ladybird")
-        stub_metadata_cloud("V-16189097-yale", "ils")
-        fill_in('Oid', with: "16189097-yale")
+        stub_metadata_cloud("20000016189097", "ladybird")
+        stub_metadata_cloud("V-20000016189097", "ils")
+        fill_in('Oid', with: "20000016189097")
         click_on("Create Parent object")
       end
       it "adds the visibility for non-public objects" do
-        expect(ParentObject.find_by(oid: "16189097-yale")["visibility"]).to eq "Yale Community Only"
+        expect(ParentObject.find_by(oid: "20000016189097")["visibility"]).to eq "Yale Community Only"
       end
     end
   end

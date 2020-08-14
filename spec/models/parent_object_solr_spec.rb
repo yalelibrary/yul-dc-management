@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: true do
-  context "indexing to Solr from the database with Ladybird ParentObjects" do
+RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
+  context "indexing to Solr from the database with Ladybird ParentObjects", solr: true do
     it "can index the 5 parent objects in the database to Solr" do
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 0
@@ -55,7 +55,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     end
 
     context "with an item without visibility" do
-      let(:no_vis_oid) { "16189097-no_vis" }
+      let(:no_vis_oid) { "30000016189097" }
       let(:parent_object_without_visibility) { FactoryBot.create(:parent_object, oid: no_vis_oid, source_name: 'ils') }
 
       before do
@@ -71,7 +71,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     end
 
     context "with a private item" do
-      let(:priv_oid) { "16189097-priv" }
+      let(:priv_oid) { "10000016189097" }
       let(:parent_object_with_private_visibility) { FactoryBot.create(:parent_object, oid: priv_oid, visibility: "Private", source_name: 'ils') }
 
       before do

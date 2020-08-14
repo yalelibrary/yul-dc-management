@@ -5,7 +5,7 @@ RSpec.describe "METS Xml Imports", type: :system, prep_metadata_sources: true do
   let(:metadata_cloud_response_body_1) { File.open(File.join(fixture_path, "ladybird", "2012315.json")).read }
 
   before do
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012315.json")
+    stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/2012315.json")
       .to_return(status: 200, body: metadata_cloud_response_body_1)
   end
 
