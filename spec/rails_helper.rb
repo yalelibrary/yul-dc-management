@@ -34,7 +34,7 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   config.include(AuthHelper, type: :request)
-  config.include(MetdataCallHelper)
+  config.include(MetdataSourcesHelper)
   config.include(SolrHelper)
   config.include(StubRequestHelper)
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

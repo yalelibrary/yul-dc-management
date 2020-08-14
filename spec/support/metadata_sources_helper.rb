@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module MetdataCallHelper
+module MetdataSourcesHelper
   # Setup rspec
   RSpec.configure do |config|
     config.before(prep_metadata_sources: true) do
