@@ -6,6 +6,9 @@ COPY ops/env.conf /etc/nginx/main.d/env.conf
 COPY ops/nginx.sh /etc/service/nginx/run
 RUN chmod +x /etc/service/nginx/run
 RUN rm -f /etc/service/nginx/down
+RUN apt-get update && apt-get install -y libtiff-tools libvips-tools imagemagick \
+  &&  apt-get clean && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 
 ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
 BUNDLE_JOBS=4
