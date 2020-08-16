@@ -54,7 +54,6 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
       it "can connect to the metadata cloud using basic auth" do
         expect(ladybird_source.mc_get(oid_url).to_str).to include "Manuscript, on parchment"
         expect(ladybird_source.mc_get(oid_url).to_str).to include "/ladybird/oid/16565592"
-
       end
     end
   end

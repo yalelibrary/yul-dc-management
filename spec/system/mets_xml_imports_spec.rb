@@ -2,7 +2,6 @@
 require 'rails_helper'
 
 RSpec.describe "METS Xml Imports", type: :system, prep_metadata_sources: true do
-
   before do
     stub_metadata_cloud("2012315")
   end

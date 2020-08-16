@@ -61,7 +61,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         example.run
         ENV['VPN'] = original_vpn
       end
-      
+
       context "with an item without visibility" do
         let(:no_vis_oid) { "30000016189097" }
         let(:parent_object_without_visibility) { FactoryBot.create(:parent_object, oid: no_vis_oid, source_name: 'ils') }
