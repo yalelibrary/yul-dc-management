@@ -26,7 +26,120 @@
     "Manuscript leaves from a Sarum missal, containing text from Masses for the third and eighth Sundays after Pentecost and for the dedication of a church."
   ],
   "children": [
+    {
+      "oid": 16394803,
+      "uri": "/ladybird/oid/16394803",
+      "title": [
+        "Missal, use of Sarum (fragment)"
+      ],
+      "width": 5632,
+      "height": 7910,
+      "source": "ladybird",
+      "caption": "1r",
+      "children": [
 
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16394803"
+      ],
+      "identifierShelfMark": "Takamiya MS 81"
+    },
+    {
+      "oid": 16394804,
+      "uri": "/ladybird/oid/16394804",
+      "title": [
+        "Missal, use of Sarum (fragment)"
+      ],
+      "width": 5330,
+      "height": 7931,
+      "source": "ladybird",
+      "caption": "1v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16394804"
+      ],
+      "identifierShelfMark": "Takamiya MS 81"
+    },
+    {
+      "oid": 16394805,
+      "uri": "/ladybird/oid/16394805",
+      "title": [
+        "Missal, use of Sarum (fragment)"
+      ],
+      "width": 5586,
+      "height": 8016,
+      "source": "ladybird",
+      "caption": "2r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16394805"
+      ],
+      "identifierShelfMark": "Takamiya MS 81"
+    },
+    {
+      "oid": 16394806,
+      "uri": "/ladybird/oid/16394806",
+      "title": [
+        "Missal, use of Sarum (fragment)"
+      ],
+      "width": 5515,
+      "height": 7860,
+      "source": "ladybird",
+      "caption": "2v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16394806"
+      ],
+      "identifierShelfMark": "Takamiya MS 81"
+    },
+    {
+      "oid": 16394807,
+      "uri": "/ladybird/oid/16394807",
+      "title": [
+        "Missal, use of Sarum (fragment)"
+      ],
+      "width": 5550,
+      "height": 7812,
+      "source": "ladybird",
+      "caption": "3r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16394807"
+      ],
+      "identifierShelfMark": "Takamiya MS 81"
+    },
+    {
+      "oid": 16394808,
+      "uri": "/ladybird/oid/16394808",
+      "title": [
+        "Missal, use of Sarum (fragment)"
+      ],
+      "width": 5417,
+      "height": 7716,
+      "source": "ladybird",
+      "caption": "3v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16394808"
+      ],
+      "identifierShelfMark": "Takamiya MS 81"
+    }
   ],
   "contents": [
     "Decoration: numerous initials in burnished gold or blue; extensive penwork.",

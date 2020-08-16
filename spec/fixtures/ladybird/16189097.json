@@ -23,7 +23,44 @@
   ],
   "source": "ladybird",
   "children": [
+    {
+      "oid": 16189150,
+      "uri": "/ladybird/oid/16189150",
+      "title": [
+        "[Map of China]."
+      ],
+      "width": 1532,
+      "height": 1536,
+      "source": "ladybird",
+      "caption": "recto",
+      "children": [
 
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16189150"
+      ],
+      "identifierShelfMark": "Lanman Covers 56 189x"
+    },
+    {
+      "oid": 16189151,
+      "uri": "/ladybird/oid/16189151",
+      "title": [
+        "[Map of China]."
+      ],
+      "width": 2568,
+      "height": 3966,
+      "source": "ladybird",
+      "caption": "[Front cover]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16189151"
+      ],
+      "identifierShelfMark": "Lanman Covers 56 189x"
+    }
   ],
   "contents": [
     "In Japanese.",

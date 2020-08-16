@@ -25,7 +25,120 @@
     "Manuscript, on vellum, in a single hand, containing the first section of an Old Testament chronicle and genealogy of Christ in Middle English prose."
   ],
   "children": [
+    {
+      "oid": 16162989,
+      "uri": "/ladybird/oid/16162989",
+      "title": [
+        "Old testament chronicle and genealogy of Christ (Part 1)."
+      ],
+      "width": 5810,
+      "height": 25984,
+      "source": "ladybird",
+      "caption": "[Scroll recto]",
+      "children": [
 
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16162989"
+      ],
+      "identifierShelfMark": "Takamiya MS 36"
+    },
+    {
+      "oid": 16162985,
+      "uri": "/ladybird/oid/16162985",
+      "title": [
+        "Old testament chronicle and genealogy of Christ (Part 1)."
+      ],
+      "width": 5435,
+      "height": 14473,
+      "source": "ladybird",
+      "caption": "[Panel 1 recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16162985"
+      ],
+      "identifierShelfMark": "Takamiya MS 36"
+    },
+    {
+      "oid": 16162986,
+      "uri": "/ladybird/oid/16162986",
+      "title": [
+        "Old testament chronicle and genealogy of Christ (Part 1)."
+      ],
+      "width": 5594,
+      "height": 13703,
+      "source": "ladybird",
+      "caption": "[Panel 2 recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16162986"
+      ],
+      "identifierShelfMark": "Takamiya MS 36"
+    },
+    {
+      "oid": 16162987,
+      "uri": "/ladybird/oid/16162987",
+      "title": [
+        "Old testament chronicle and genealogy of Christ (Part 1)."
+      ],
+      "width": 5056,
+      "height": 13581,
+      "source": "ladybird",
+      "caption": "[Panel 1 verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16162987"
+      ],
+      "identifierShelfMark": "Takamiya MS 36"
+    },
+    {
+      "oid": 16162988,
+      "uri": "/ladybird/oid/16162988",
+      "title": [
+        "Old testament chronicle and genealogy of Christ (Part 1)."
+      ],
+      "width": 5208,
+      "height": 13589,
+      "source": "ladybird",
+      "caption": "[Panel 2 verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16162988"
+      ],
+      "identifierShelfMark": "Takamiya MS 36"
+    },
+    {
+      "oid": 16233054,
+      "uri": "/ladybird/oid/16233054",
+      "title": [
+        "Old testament chronicle and genealogy of Christ (Part 1)."
+      ],
+      "width": 5258,
+      "height": 25055,
+      "source": "ladybird",
+      "caption": "[Scroll verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16233054"
+      ],
+      "identifierShelfMark": "Takamiya MS 36"
+    }
   ],
   "contents": [
     "Annotation at top of roll in late 18th century hand attributing ownership in 1485 to Richard Kidderminster, Abbot of Winchecombe.",

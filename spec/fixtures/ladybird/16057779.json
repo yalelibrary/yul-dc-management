@@ -27,7 +27,82 @@
     "Nathan Salsbury (1846-1902), Civil War veteran, actor, and theatrical entrepreneur; after 1884 co-owner, producer and manager of \"Buffalo Bill's Wild West Show.\""
   ],
   "children": [
+    {
+      "oid": 16057781,
+      "uri": "/ladybird/oid/16057781",
+      "title": [
+        "Rawhide bolas"
+      ],
+      "width": 6004,
+      "height": 4523,
+      "source": "ladybird",
+      "caption": "Bolas-001",
+      "children": [
 
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16057781"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16057782,
+      "uri": "/ladybird/oid/16057782",
+      "title": [
+        "Rawhide bolas"
+      ],
+      "width": 5729,
+      "height": 4209,
+      "source": "ladybird",
+      "caption": "Bolas-002",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16057782"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16057783,
+      "uri": "/ladybird/oid/16057783",
+      "title": [
+        "Rawhide bolas"
+      ],
+      "width": 5210,
+      "height": 3941,
+      "source": "ladybird",
+      "caption": "Bolas-003",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16057783"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16057784,
+      "uri": "/ladybird/oid/16057784",
+      "title": [
+        "Rawhide bolas"
+      ],
+      "width": 4912,
+      "height": 6247,
+      "source": "ladybird",
+      "caption": "Bolas-004",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16057784"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    }
   ],
   "contents": [
     "One twisted rawhide bolas with three rawhide-covered weights, and measuring 121 cm in length. Used to capture running game during a hunt, the bolas is unmarked and its original owner is unidentified."

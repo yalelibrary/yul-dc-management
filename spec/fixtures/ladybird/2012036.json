@@ -26,7 +26,111 @@
   "source": "ladybird",
   "digital": "Walt Whitman Collection",
   "children": [
+    {
+      "oid": 1052760,
+      "uri": "/ladybird/oid/1052760",
+      "title": [
+        "[Gold?] coin"
+      ],
+      "width": 2411,
+      "height": 2135,
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "source": "ladybird",
+      "children": [
 
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/1052760"
+      ],
+      "identifierShelfMark": "YCAL MSS 202"
+    },
+    {
+      "oid": 1052761,
+      "uri": "/ladybird/oid/1052761",
+      "title": [
+        "[Gold?] coin"
+      ],
+      "width": 2435,
+      "height": 2129,
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "source": "ladybird",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/1052761"
+      ],
+      "identifierShelfMark": "YCAL MSS 202"
+    },
+    {
+      "oid": 1052762,
+      "uri": "/ladybird/oid/1052762",
+      "title": [
+        "[Gold?] coin"
+      ],
+      "width": 1536,
+      "height": 532,
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "source": "ladybird",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/1052762"
+      ],
+      "identifierShelfMark": "YCAL MSS 202"
+    },
+    {
+      "oid": 1052763,
+      "uri": "/ladybird/oid/1052763",
+      "title": [
+        "[Gold?] coin"
+      ],
+      "width": 1536,
+      "height": 664,
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "source": "ladybird",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/1052763"
+      ],
+      "identifierShelfMark": "YCAL MSS 202"
+    },
+    {
+      "oid": 1052764,
+      "uri": "/ladybird/oid/1052764",
+      "title": [
+        "[Gold?] coin"
+      ],
+      "width": 1536,
+      "height": 520,
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "source": "ladybird",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/1052764"
+      ],
+      "identifierShelfMark": "YCAL MSS 202"
+    }
   ],
   "contents": [
     "Inscribed: Walt Whitman to Mary Davis Xmas 1891."

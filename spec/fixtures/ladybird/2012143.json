@@ -23,7 +23,74 @@
   ],
   "source": "ladybird",
   "children": [
+    {
+      "oid": 1052971,
+      "uri": "/ladybird/oid/1052971",
+      "width": 1945,
+      "height": 7342,
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "source": "ladybird",
+      "children": [
 
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/1052971"
+      ]
+    },
+    {
+      "oid": 1052972,
+      "uri": "/ladybird/oid/1052972",
+      "width": 1966,
+      "height": 7458,
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "source": "ladybird",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/1052972"
+      ]
+    },
+    {
+      "oid": 1052973,
+      "uri": "/ladybird/oid/1052973",
+      "width": 1985,
+      "height": 7493,
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "source": "ladybird",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/1052973"
+      ]
+    },
+    {
+      "oid": 1052974,
+      "uri": "/ladybird/oid/1052974",
+      "width": 2061,
+      "height": 7098,
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "source": "ladybird",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/1052974"
+      ]
+    }
   ],
   "contents": [
     "Leaves are sewn vertically, end to end."

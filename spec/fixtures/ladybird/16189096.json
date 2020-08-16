@@ -25,7 +25,44 @@
     "董醇 (Cartographer), cartographer."
   ],
   "children": [
+    {
+      "oid": 16189148,
+      "uri": "/ladybird/oid/16189148",
+      "title": [
+        "Zhi li Da Qing He yuan liu zong tu / Qing he dao Dong Chun."
+      ],
+      "width": 32058,
+      "height": 3767,
+      "source": "ladybird",
+      "caption": "recto",
+      "children": [
 
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16189148"
+      ],
+      "identifierShelfMark": "Covers 5615 +1857"
+    },
+    {
+      "oid": 16189149,
+      "uri": "/ladybird/oid/16189149",
+      "title": [
+        "Zhi li Da Qing He yuan liu zong tu / Qing he dao Dong Chun."
+      ],
+      "width": 2130,
+      "height": 4250,
+      "source": "ladybird",
+      "caption": "[Front cover]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16189149"
+      ],
+      "identifierShelfMark": "Covers 5615 +1857"
+    }
   ],
   "contents": [
     "Jing zhe zhuang.",

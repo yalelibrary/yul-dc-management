@@ -25,7 +25,44 @@
     "Lower half of a single manuscript leaf, on parchment, containing five lines of text and marginal decoration. From the \"Ghistelles Hours.\""
   ],
   "children": [
+    {
+      "oid": 16700284,
+      "uri": "/ladybird/oid/16700284",
+      "title": [
+        "Book of hours (fragment)"
+      ],
+      "width": 1536,
+      "height": 1298,
+      "source": "ladybird",
+      "caption": "recto",
+      "children": [
 
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16700284"
+      ],
+      "identifierShelfMark": "Takamiya MS 142"
+    },
+    {
+      "oid": 16700285,
+      "uri": "/ladybird/oid/16700285",
+      "title": [
+        "Book of hours (fragment)"
+      ],
+      "width": 1536,
+      "height": 1295,
+      "source": "ladybird",
+      "caption": "verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16700285"
+      ],
+      "identifierShelfMark": "Takamiya MS 142"
+    }
   ],
   "contents": [
     "Byname: Ghistelles Hours.",

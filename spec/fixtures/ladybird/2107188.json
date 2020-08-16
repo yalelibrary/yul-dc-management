@@ -30,7 +30,42 @@
     "An apparently unrecorded eighteenth century American verse broadside. The poem recounts the tragic tale of a young merchant who falls in love with Lucretia, becomes engaged to her, then sails away to make his fortune. The text is surrounded by printer’s ornaments of four-petaled flowers, suns, and rosettes, including those used by Samuel and Thomas Green who were printing in partnership in New Haven, 1769-97."
   ],
   "children": [
+    {
+      "oid": 1329643,
+      "uri": "/ladybird/oid/1329643",
+      "width": 3744,
+      "height": 5715,
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "source": "ladybird",
+      "caption": "Recto",
+      "children": [
 
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/1329643"
+      ]
+    },
+    {
+      "oid": 1329644,
+      "uri": "/ladybird/oid/1329644",
+      "width": 3738,
+      "height": 5708,
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "source": "ladybird",
+      "caption": "Verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/1329644"
+      ]
+    }
   ],
   "language": [
     "English"

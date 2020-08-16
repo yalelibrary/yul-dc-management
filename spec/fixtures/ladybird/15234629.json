@@ -26,7 +26,24 @@
   ],
   "source": "ladybird",
   "children": [
+    {
+      "oid": 16595618,
+      "uri": "/ladybird/oid/16595618",
+      "title": [
+        "[World map in Chinese, 1860.] "
+      ],
+      "width": 1536,
+      "height": 864,
+      "source": "ladybird",
+      "children": [
 
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595618"
+      ],
+      "identifierShelfMark": "11 1860A"
+    }
   ],
   "contents": [
     "Title supplied by cataloger."

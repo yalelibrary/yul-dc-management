@@ -37,11 +37,11 @@
       "children": [
 
       ],
-      "callNumber": "YCAL MSS 1000",
       "recordType": "oid",
       "dependentUris": [
         "/ladybird/oid/16854300"
-      ]
+      ],
+      "identifierShelfMark": "YCAL MSS 1000"
     },
     {
       "oid": 16854301,
@@ -56,11 +56,11 @@
       "children": [
 
       ],
-      "callNumber": "YCAL MSS 1000",
       "recordType": "oid",
       "dependentUris": [
         "/ladybird/oid/16854301"
-      ]
+      ],
+      "identifierShelfMark": "YCAL MSS 1000"
     },
     {
       "oid": 16854302,
@@ -75,11 +75,11 @@
       "children": [
 
       ],
-      "callNumber": "YCAL MSS 1000",
       "recordType": "oid",
       "dependentUris": [
         "/ladybird/oid/16854302"
-      ]
+      ],
+      "identifierShelfMark": "YCAL MSS 1000"
     },
     {
       "oid": 16854303,
@@ -94,19 +94,23 @@
       "children": [
 
       ],
-      "callNumber": "YCAL MSS 1000",
       "recordType": "oid",
       "dependentUris": [
         "/ladybird/oid/16854303"
-      ]
+      ],
+      "identifierShelfMark": "YCAL MSS 1000"
     }
   ],
-  "callNumber": "YCAL MSS 1000",
+  "indexedBy": [
+    "Fowler & Wells, Portrait Posters for Physiognomy Lectures. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
+  ],
   "findingAid": [
     "http://hdl.handle.net/10079/fa/beinecke.phrenology"
   ],
-  "orbisBibId": "12307100",
   "recordType": "oid",
+  "references": [
+    "Fowler & Wells, Portrait Posters for Physiognomy Lectures. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
+  ],
   "repository": "Beinecke Library",
   "sourceDate": "circa 1860",
   "subjectEra": "Physiognomy--United States",
@@ -114,6 +118,7 @@
     "Red Jacket, Seneca chief, approximately 1756-1830",
     "Sewall, Thomas, 1786 or 1787-1845"
   ],
+  "orbisRecord": "12307100",
   "sourceTitle": "Fowler & Wells Portrait Posters for Physiognomy Lectures",
   "subjectName": [
     "Red Jacket, Seneca chief, approximately 1756-1830",
@@ -135,13 +140,11 @@
   ],
   "itemPermission": "Public",
   "archiveSpaceUri": "/repositories/11/archival_objects/515305",
-  "preferredCitation": [
-    "Fowler & Wells, Portrait Posters for Physiognomy Lectures. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
-  ],
   "contributorDisplay": [
     "Red Jacket, Seneca chief, approximately 1756-1830",
     "Sewall, Thomas, 1786 or 1787-1845"
   ],
+  "identifierShelfMark": "YCAL MSS 1000",
   "subjectTitleDisplay": [
     "Phrenology--United States",
     "Physiognomy--United States"

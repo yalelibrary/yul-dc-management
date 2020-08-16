@@ -27,7 +27,42 @@
     "Bracebridge, Charles Holte, 1799-1872 "
   ],
   "children": [
+    {
+      "oid": 1376556,
+      "uri": "/ladybird/oid/1376556",
+      "width": 2709,
+      "height": 4371,
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "source": "ladybird",
+      "caption": "p. [1]",
+      "children": [
 
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/1376556"
+      ]
+    },
+    {
+      "oid": 1376557,
+      "uri": "/ladybird/oid/1376557",
+      "width": 4281,
+      "height": 3538,
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "source": "ladybird",
+      "caption": "p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/1376557"
+      ]
+    }
   ],
   "contents": [
     "Holograph letter, signed."

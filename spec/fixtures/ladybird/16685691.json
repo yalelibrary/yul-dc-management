@@ -29,7 +29,24 @@
     "16th edition, I '16."
   ],
   "children": [
+    {
+      "oid": 16686253,
+      "uri": "/ladybird/oid/16686253",
+      "title": [
+        "Tracks for full powered steam vessels with the shortest navigable distances in nautical miles from anchorage to anchorage, New York distances are measures to and from the Battery achorage."
+      ],
+      "width": 15104,
+      "height": 9880,
+      "source": "ladybird",
+      "children": [
 
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16686253"
+      ],
+      "identifierShelfMark": "BrSides Elephant Folio 2018 22"
+    }
   ],
   "contents": [
     "\"No. 1262.\"",

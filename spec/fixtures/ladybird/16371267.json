@@ -25,7 +25,120 @@
     "Three miniatures, on vellum, from the copy of the Livre du Lancelot du Lac illustrated by the Dunois Master. They depict: 1) the Duke of Clarence and esquire, meeting a knight cutting off a woman's hair; 2) King Baudemagnus leading the battle against the Romans; 3) Lancelot's arrival at the city of Gorre."
   ],
   "children": [
+    {
+      "oid": 16394251,
+      "uri": "/ladybird/oid/16394251",
+      "title": [
+        "Livre du Lancelot du Lac: three miniatures."
+      ],
+      "width": 2196,
+      "height": 2172,
+      "source": "ladybird",
+      "caption": "1r",
+      "children": [
 
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16394251"
+      ],
+      "identifierShelfMark": "Takamiya MS 99"
+    },
+    {
+      "oid": 16394252,
+      "uri": "/ladybird/oid/16394252",
+      "title": [
+        "Livre du Lancelot du Lac: three miniatures."
+      ],
+      "width": 2197,
+      "height": 2162,
+      "source": "ladybird",
+      "caption": "1v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16394252"
+      ],
+      "identifierShelfMark": "Takamiya MS 99"
+    },
+    {
+      "oid": 16394253,
+      "uri": "/ladybird/oid/16394253",
+      "title": [
+        "Livre du Lancelot du Lac: three miniatures."
+      ],
+      "width": 3977,
+      "height": 4755,
+      "source": "ladybird",
+      "caption": "2r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16394253"
+      ],
+      "identifierShelfMark": "Takamiya MS 99"
+    },
+    {
+      "oid": 16394254,
+      "uri": "/ladybird/oid/16394254",
+      "title": [
+        "Livre du Lancelot du Lac: three miniatures."
+      ],
+      "width": 3959,
+      "height": 4758,
+      "source": "ladybird",
+      "caption": "2v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16394254"
+      ],
+      "identifierShelfMark": "Takamiya MS 99"
+    },
+    {
+      "oid": 16394255,
+      "uri": "/ladybird/oid/16394255",
+      "title": [
+        "Livre du Lancelot du Lac: three miniatures."
+      ],
+      "width": 2188,
+      "height": 2217,
+      "source": "ladybird",
+      "caption": "3r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16394255"
+      ],
+      "identifierShelfMark": "Takamiya MS 99"
+    },
+    {
+      "oid": 16394256,
+      "uri": "/ladybird/oid/16394256",
+      "title": [
+        "Livre du Lancelot du Lac: three miniatures."
+      ],
+      "width": 2193,
+      "height": 2203,
+      "source": "ladybird",
+      "caption": "3v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16394256"
+      ],
+      "identifierShelfMark": "Takamiya MS 99"
+    }
   ],
   "contents": [
     "Binding: individually mounted.",
