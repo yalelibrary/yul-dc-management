@@ -19,7 +19,7 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
       let(:ladybird_source) { FactoryBot.build(:metadata_source) }
 
       before do
-        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16797069")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16797069?include-children=1")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16797069.json")).read)
         stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/16797069.json").to_return(status: 200)
       end
