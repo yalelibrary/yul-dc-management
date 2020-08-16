@@ -1,41 +1,17 @@
 {
-  "recordType": "oid",
-  "source": "ladybird",
+  "oid": 2111169,
   "uri": "/ladybird/oid/2111169",
-  "identifierShelfMark": "Beinecke MS 1121",
-  "creator": [
-    "Galen"
+  "date": [
+    "ca. 1300"
+  ],
+  "genre": [
+    "Manuscripts"
   ],
   "title": [
     "Opera varia"
   ],
-  "alternativeTitle": [
-    "[ad Glauconem de medendi methodo]",
-    "[On the therapeutic method. Greek]"
-  ],
-  "extentOfDigitization": [
-    "Complete work digitized."
-  ],
-  "publicationPlace": [
-    "[Constantinople or southern Italy]"
-  ],
-  "date": [
-    "ca. 1300"
-  ],
   "extent": [
     "1 vol."
-  ],
-  "language": [
-    "Greek, Ancient (to 1453)"
-  ],
-  "description": [
-    "Brown ink on paper."
-  ],
-  "subjectTopic": [
-    "Medicine --Early works to 1800"
-  ],
-  "genre": [
-    "Manuscripts"
   ],
   "format": [
     "text"
@@ -44,38 +20,62 @@
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "orbisRecord": "9896328",
-  "orbisBarcode": "39002099258734",
-  "relatedUrl": [
-    "https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms1121.htm"
-  ],
-  "itemPermission": "Public",
-  "dateStructured": [
-    "1300-00-00T00:00:00Z"
-  ],
-  "resourceType": "Archives or Manuscripts",
-  "subjectEra": "Medicine --Early works to 1800",
-  "repository": "Beinecke Library",
-  "contents": [
-    "Brown ink on paper."
-  ],
-  "subjectTitle": "Medicine --Early works to 1800",
-  "subjectTitleDisplay": [
-    "Medicine --Early works to 1800"
-  ],
-  "creatorDisplay": [
+  "source": "ladybird",
+  "creator": [
     "Galen"
-  ],
-  "dependentUris": [
-    "/ladybird/oid/2111169"
-  ],
-  "oid": 2111169,
-  "collectionId": 1,
-  "children": [
-
   ],
   "abstract": [
     "Imperfect: wanting ff.53, many fragments at end with old repairs.",
     "MS of 8 works by Galen in Greek: 1. ff.1-15v Galen, de temperamentis. 2. ff.15v-54r Galen, de naturalibus facultatibus 3. ff.54r-54v short fragment of unknown provenance. 4. ff.54v-57v Galen, de inaequali intemperie. 5. ff.57v-60 Galen, de optima corporis nostri constitutione. 6. ff.60-61 Galen, de bono habitu 7. ff.62-106 Galen, de difficultate respirationis 8. ff.107-140 Galen ad Glauconem de medendi methodo 9.141-154 Galen de alimentorum facultatibus."
+  ],
+  "children": [
+
+  ],
+  "contents": [
+    "Brown ink on paper."
+  ],
+  "language": [
+    "Greek, Ancient (to 1453)"
+  ],
+  "recordType": "oid",
+  "relatedUrl": [
+    "https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms1121.htm"
+  ],
+  "repository": "Beinecke Library",
+  "subjectEra": "Medicine --Early works to 1800",
+  "description": [
+    "Brown ink on paper."
+  ],
+  "orbisRecord": "9896328",
+  "collectionId": 1,
+  "orbisBarcode": "39002099258734",
+  "resourceType": "Archives or Manuscripts",
+  "subjectTitle": "Medicine --Early works to 1800",
+  "subjectTopic": [
+    "Medicine --Early works to 1800"
+  ],
+  "dependentUris": [
+    "/ladybird/oid/2111169"
+  ],
+  "creatorDisplay": [
+    "Galen"
+  ],
+  "dateStructured": [
+    "1300-00-00T00:00:00Z"
+  ],
+  "itemPermission": "Public",
+  "alternativeTitle": [
+    "[ad Glauconem de medendi methodo]",
+    "[On the therapeutic method. Greek]"
+  ],
+  "publicationPlace": [
+    "[Constantinople or southern Italy]"
+  ],
+  "identifierShelfMark": "Beinecke MS 1121",
+  "subjectTitleDisplay": [
+    "Medicine --Early works to 1800"
+  ],
+  "extentOfDigitization": [
+    "Complete work digitized."
   ]
 }

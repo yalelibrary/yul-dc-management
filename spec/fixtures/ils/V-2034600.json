@@ -42,6 +42,7 @@
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=JWJ_A_+Eb74"
   ],
+  "orbisBibId": "752400",
   "recordType": "bib",
   "updateDate": "2020-02-27T14:43:04.000+0000",
   "description": [
@@ -53,7 +54,6 @@
     "BEIN JWJ A +Eb74 9:6 copy 2: Reprint of article, Men's ware advertising, p. [93]-100 only.",
     "DIV :  Library has current issues only"
   ],
-  "orbisRecord": "752400",
   "subjectTopic": [
     "African Americans"
   ],
@@ -75,12 +75,11 @@
   "publicationPlace": [
     "Chicago"
   ],
-  "subjectGeographic": [
-    "n-us---"
-  ],
   "illustrativeMatter": "mr p",
   "provenanceControlled": "Van Vechten, Carl, 1880-1964 Bookplate. Van Vechten, Carl, 1880-1964 Ownership. Johnson, John H. (John Harold), 1918- Autograph. Johnson, Eunice Walker Autograph. Johnson, Grace Nail, 1885-1976 Presentation inscription to Yale University Library.",
+  "subjectGeographicCode": "n-us---",
   "alternativeTitleDisplay": [
     "Ebony magazine"
-  ]
+  ],
+  "libraryOfCongressClassificationNumber": "AP2 .E165"
 }

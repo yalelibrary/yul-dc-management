@@ -1,25 +1,61 @@
 {
-  "recordType": "oid",
-  "source": "ladybird",
+  "oid": 16371272,
   "uri": "/ladybird/oid/16371272",
-  "identifierShelfMark": "Takamiya MS 104",
-  "title": [
-    "Bible (Proverbs to Apocalypse)."
-  ],
-  "extentOfDigitization": [
-    "Complete work digitized."
-  ],
-  "publicationPlace": [
-    "England,"
-  ],
   "date": [
     "[between 1200 and 1299]"
+  ],
+  "genre": [
+    "Decorated initials",
+    "Manuscripts, Medieval--England--13th century."
+  ],
+  "title": [
+    "Bible (Proverbs to Apocalypse)."
   ],
   "extent": [
     "218 l. : parchment ; 212 x 145 mm."
   ],
+  "format": [
+    "text"
+  ],
+  "partOf": "Beinecke Library",
+  "rights": [
+    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+  ],
+  "source": "ladybird",
+  "abstract": [
+    "Manuscript, on parchment, of the books of the Bible from Proverbs through the Apocalypse."
+  ],
+  "children": [
+
+  ],
+  "contents": [
+    "Binding: modern goatskin.",
+    "Decoration: red and blue penwork initials.",
+    "Ex libris Ronald A. Coates; Eric Millar; Brian S. Cron. From the collection of Toshiyuki Takamiya, 2013-.",
+    "Layout: double columns of 49 lines.",
+    "Script: small gothic script.",
+    "With an Oxford pledge note for the Selton Loan Chest dated 1469 and the mark of the stationer John More. There is also a note by M. Paris, possibly Master Thomas Paris of Oriel College."
+  ],
   "language": [
     "Latin"
+  ],
+  "indexedBy": [
+    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437.",
+    "Bible (Proverbs to Apocalypse). Takamiya MS 104."
+  ],
+  "recordType": "oid",
+  "references": [
+    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437.",
+    "Bible (Proverbs to Apocalypse). Takamiya MS 104."
+  ],
+  "repository": "Beinecke Library",
+  "subjectEra": "Universities and colleges--Great Britain.",
+  "contributor": [
+    "Coates, Ronald A.--Autograph.",
+    "Cron, Brian S.--Ownership.",
+    "Millar, Eric George--Bookplate.",
+    "Oriel College.",
+    "University of Oxford."
   ],
   "description": [
     "Binding: modern goatskin.",
@@ -29,6 +65,7 @@
     "Script: small gothic script.",
     "With an Oxford pledge note for the Selton Loan Chest dated 1469 and the mark of the stationer John More. There is also a note by M. Paris, possibly Master Thomas Paris of Oriel College."
   ],
+  "orbisRecord": "12329381",
   "subjectName": [
     "Coates, Ronald A.--Autograph.",
     "Cron, Brian S.--Ownership.",
@@ -36,6 +73,10 @@
     "Oriel College.",
     "University of Oxford."
   ],
+  "collectionId": 1,
+  "orbisBarcode": "39002104624045",
+  "resourceType": "Archives or Manuscripts",
+  "subjectTitle": "Universities and colleges--Great Britain.",
   "subjectTopic": [
     "Bible.--Latin.",
     "Bible.--Latin--Versions--Vulgate.",
@@ -43,57 +84,15 @@
     "Medieval and Renaissance Manuscripts in Beinecke Library.",
     "Universities and colleges--Great Britain."
   ],
-  "genre": [
-    "Decorated initials",
-    "Manuscripts, Medieval--England--13th century."
+  "dependentUris": [
+    "/ladybird/oid/16371272"
   ],
-  "format": [
-    "text"
-  ],
-  "partOf": "Beinecke Library",
-  "rights": [
-    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-  ],
-  "orbisRecord": "12329381",
-  "orbisBarcode": "39002104624045",
-  "references": [
-    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437.",
-    "Bible (Proverbs to Apocalypse). Takamiya MS 104."
-  ],
-  "itemPermission": "Public",
   "dateStructured": [
     "1200-00-00T00:00:00Z"
   ],
-  "resourceType": "Archives or Manuscripts",
-  "illustrativeMatter": "141215i12001299ctu                 lat d",
-  "subjectEra": "Universities and colleges--Great Britain.",
-  "contributor": [
-    "Coates, Ronald A.--Autograph.",
-    "Cron, Brian S.--Ownership.",
-    "Millar, Eric George--Bookplate.",
-    "Oriel College.",
-    "University of Oxford."
-  ],
-  "repository": "Beinecke Library",
-  "contents": [
-    "Binding: modern goatskin.",
-    "Decoration: red and blue penwork initials.",
-    "Ex libris Ronald A. Coates; Eric Millar; Brian S. Cron. From the collection of Toshiyuki Takamiya, 2013-.",
-    "Layout: double columns of 49 lines.",
-    "Script: small gothic script.",
-    "With an Oxford pledge note for the Selton Loan Chest dated 1469 and the mark of the stationer John More. There is also a note by M. Paris, possibly Master Thomas Paris of Oriel College."
-  ],
-  "subjectTitle": "Universities and colleges--Great Britain.",
-  "indexedBy": [
-    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437.",
-    "Bible (Proverbs to Apocalypse). Takamiya MS 104."
-  ],
-  "subjectTitleDisplay": [
-    "Bible.--Latin.",
-    "Bible.--Latin--Versions--Vulgate.",
-    "Manuscripts, Medieval--Connecticut--New Haven.",
-    "Medieval and Renaissance Manuscripts in Beinecke Library.",
-    "Universities and colleges--Great Britain."
+  "itemPermission": "Public",
+  "publicationPlace": [
+    "England,"
   ],
   "contributorDisplay": [
     "Coates, Ronald A.--Autograph.",
@@ -102,15 +101,16 @@
     "Oriel College.",
     "University of Oxford."
   ],
-  "dependentUris": [
-    "/ladybird/oid/16371272"
+  "illustrativeMatter": "141215i12001299ctu                 lat d",
+  "identifierShelfMark": "Takamiya MS 104",
+  "subjectTitleDisplay": [
+    "Bible.--Latin.",
+    "Bible.--Latin--Versions--Vulgate.",
+    "Manuscripts, Medieval--Connecticut--New Haven.",
+    "Medieval and Renaissance Manuscripts in Beinecke Library.",
+    "Universities and colleges--Great Britain."
   ],
-  "oid": 16371272,
-  "collectionId": 1,
-  "children": [
-
-  ],
-  "abstract": [
-    "Manuscript, on parchment, of the books of the Bible from Proverbs through the Apocalypse."
+  "extentOfDigitization": [
+    "Complete work digitized."
   ]
 }

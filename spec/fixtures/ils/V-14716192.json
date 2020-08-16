@@ -34,17 +34,18 @@
     "Brockelmann, I, 193; S I, p. 340.",
     "Berlin catalog, 440."
   ],
+  "callNumber": "Landberg MSS 75",
   "createDate": "2002-06-01T04:00:00.000+0000",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=14716294"
   ],
+  "orbisBibId": "3798665",
   "recordType": "bib",
   "repository": "lsfbeir",
   "updateDate": "2018-10-01T18:58:04.000+0000",
   "description": [
     "Fair naskhī."
   ],
-  "orbisRecord": "3798665",
   "subjectName": [
     "Marīsī, Bishr ibn Ghayāth, d. 833.",
     "Maʾmūn, Caliph, 786-833."
@@ -71,7 +72,6 @@
   ],
   "volumeEnumeration": "Box",
   "illustrativeMatter": "||  ",
-  "identifierShelfMark": "75 Landberg MSS",
   "subjectTitleDisplay": [
     "Marīsī, Bishr ibn Ghayāth, d. 833.",
     "Maʾmūn, Caliph, 786-833."

@@ -54,35 +54,44 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       end
     end
 
-    context "with an item without visibility" do
-      let(:no_vis_oid) { "30000016189097" }
-      let(:parent_object_without_visibility) { FactoryBot.create(:parent_object, oid: no_vis_oid, source_name: 'ils') }
+    context "with mocked items without a metadatacloud equivalent" do
+      around do |example|
+        original_vpn = ENV['VPN']
+        ENV['VPN'] = 'false'
+        example.run
+        ENV['VPN'] = original_vpn
+      end
+      
+      context "with an item without visibility" do
+        let(:no_vis_oid) { "30000016189097" }
+        let(:parent_object_without_visibility) { FactoryBot.create(:parent_object, oid: no_vis_oid, source_name: 'ils') }
 
-      before do
-        stub_metadata_cloud(no_vis_oid.to_s)
-        stub_metadata_cloud("V-#{no_vis_oid}", 'ils')
+        before do
+          stub_metadata_cloud(no_vis_oid.to_s)
+          stub_metadata_cloud("V-#{no_vis_oid}", 'ils')
+        end
+
+        it "does not assign a visibility if one does not exist" do
+          solr_document = parent_object_without_visibility.to_solr
+          expect(solr_document[:title_tsim].first).to include "Dai Min kyūhen bankoku jinseki rotei zenzu"
+          expect(solr_document[:visibility_ssi]).to be nil
+        end
       end
 
-      it "does not assign a visibility if one does not exist" do
-        solr_document = parent_object_without_visibility.to_solr
-        expect(solr_document[:title_tsim].first).to include "Dai Min kyūhen bankoku jinseki rotei zenzu"
-        expect(solr_document[:visibility_ssi]).to be nil
-      end
-    end
+      context "with a private item" do
+        let(:priv_oid) { "10000016189097" }
+        let(:parent_object_with_private_visibility) { FactoryBot.create(:parent_object, oid: priv_oid, visibility: "Private", source_name: 'ils') }
 
-    context "with a private item" do
-      let(:priv_oid) { "10000016189097" }
-      let(:parent_object_with_private_visibility) { FactoryBot.create(:parent_object, oid: priv_oid, visibility: "Private", source_name: 'ils') }
+        before do
+          stub_metadata_cloud(priv_oid)
+          stub_metadata_cloud("V-#{priv_oid}", 'ils')
+        end
 
-      before do
-        stub_metadata_cloud(priv_oid)
-        stub_metadata_cloud("V-#{priv_oid}", 'ils')
-      end
-
-      it "assigns private visibility from Ladybird data" do
-        solr_document = parent_object_with_private_visibility.to_solr
-        expect(solr_document[:title_tsim].first).to include "Dai Min kyūhen bankoku jinseki rotei zenzu"
-        expect(solr_document[:visibility_ssi]).to include "Private"
+        it "assigns private visibility from Ladybird data" do
+          solr_document = parent_object_with_private_visibility.to_solr
+          expect(solr_document[:title_tsim].first).to include "Dai Min kyūhen bankoku jinseki rotei zenzu"
+          expect(solr_document[:visibility_ssi]).to include "Private"
+        end
       end
     end
   end

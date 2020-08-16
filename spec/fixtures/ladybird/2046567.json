@@ -40,12 +40,13 @@
   "publisher": [
     "Printed by W. Strahan, for J. and P. Knapton [etc.]"
   ],
+  "callNumber": "GEN MSS VOL 728 (Oversize)",
+  "orbisBibId": "1169354",
   "recordType": "oid",
   "repository": "Beinecke Library",
   "description": [
     "Four volume printer's proof with manuscript notes throughout."
   ],
-  "orbisRecord": "1169354",
   "collectionId": 1,
   "orbisBarcode": "39002094045136",
   "resourceType": "Books, Journals & Pamphlets",
@@ -63,7 +64,6 @@
   "publicationPlace": [
     "London"
   ],
-  "identifierShelfMark": "GEN MSS VOL 728 (Oversize)",
   "extentOfDigitization": [
     "Complete work digitized."
   ]

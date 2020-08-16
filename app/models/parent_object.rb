@@ -55,7 +55,7 @@ class ParentObject < ApplicationRecord
   def ladybird_json=(lb_record)
     super(lb_record)
     return lb_record if lb_record.blank?
-    self.bib = lb_record["orbisRecord"]
+    self.bib = lb_record["orbisBibId"]
     self.barcode = lb_record["orbisBarcode"]
     self.aspace_uri = lb_record["archiveSpaceUri"]
     self.visibility = lb_record["itemPermission"]
@@ -82,10 +82,11 @@ class ParentObject < ApplicationRecord
 
   def voyager_cloud_url
     return nil unless ladybird_json.present?
+    orbis_bib = ladybird_json['orbisRecord'] || ladybird_json['orbisBibId']
     identifier_block = if ladybird_json["orbisBarcode"].nil?
-                         "/bib/#{ladybird_json['orbisRecord']}"
+                         "/bib/#{orbis_bib}"
                        else
-                         "/barcode/#{ladybird_json['orbisBarcode']}?bib=#{ladybird_json['orbisRecord']}"
+                         "/barcode/#{ladybird_json['orbisBarcode']}?bib=#{orbis_bib}"
                        end
     "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils#{identifier_block}"
   end

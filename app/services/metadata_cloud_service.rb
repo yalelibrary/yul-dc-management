@@ -71,7 +71,7 @@ class MetadataCloudService
   # how we want to save them. Like, should refreshing the relationship between the Ladybird IDs and the bib ids be done on a chron job?
   def self.get_bib(oid)
     ladybird_hash = FixtureParsingService.fixture_file_to_hash(oid, "ladybird")
-    ladybird_hash["orbisRecord"]
+    ladybird_hash["orbisBibId"] || ladybird_hash["orbisRecord"]
   end
 
   def self.get_barcode(oid)

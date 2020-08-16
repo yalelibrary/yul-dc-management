@@ -36,12 +36,13 @@
   "language": [
     "English"
   ],
+  "callNumber": "JWJ A +Eb74",
+  "orbisBibId": "752400",
   "recordType": "oid",
   "repository": "Beinecke Library",
   "contributor": [
     "Price, Leontyne"
   ],
-  "orbisRecord": "752400",
   "sourceTitle": "Ebony magazine",
   "subjectName": [
     "Price, Leontyne"
@@ -62,7 +63,6 @@
   "contributorDisplay": [
     "Price, Leontyne"
   ],
-  "identifierShelfMark": "JWJ A +Eb74",
   "extentOfDigitization": [
     "Partial work digitized."
   ]

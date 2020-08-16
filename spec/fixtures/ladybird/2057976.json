@@ -1,23 +1,50 @@
 {
-  "recordType": "oid",
-  "source": "ladybird",
+  "oid": 2057976,
   "uri": "/ladybird/oid/2057976",
-  "identifierShelfMark": "Osborn Music MS 7",
-  "title": [
-    "Vaudevilles et chansons"
-  ],
-  "extentOfDigitization": [
-    "Complete work digitized."
-  ],
   "date": [
     "[18th Century]"
+  ],
+  "genre": [
+    "Musical works"
+  ],
+  "title": [
+    "Vaudevilles et chansons"
   ],
   "extent": [
     "1 v., [2], 316 p., [2]",
     "25 x 18 cm."
   ],
+  "format": [
+    "notated music"
+  ],
+  "partOf": "Beinecke Library",
+  "rights": [
+    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+  ],
+  "source": "ladybird",
+  "abstract": [
+    "A collection of 87 anonymous French love songs and vaudevilles, with an alphabetical index at the back."
+  ],
+  "children": [
+
+  ],
+  "contents": [
+    "Anonymous MS.",
+    "Binder's blanks unscanned.",
+    "Binder's title: Recueil de Vaudevill",
+    "Binding: Contemporary French blue morocco, gilt with the arms of Michel Begon on front and back.",
+    "Bookplate of E. Valdruche.",
+    "Index starts at p. 305 but is discreetly paginated.",
+    "Pages 292-304 blank (but with printed floral borders) and unscanned."
+  ],
   "language": [
     "French"
+  ],
+  "recordType": "oid",
+  "repository": "Beinecke Library",
+  "subjectEra": "Vaudevilles--Librettos",
+  "contributor": [
+    "Valdruche, Eugene, d. 1913?, provenance"
   ],
   "description": [
     "Anonymous MS.",
@@ -28,9 +55,14 @@
     "Index starts at p. 305 but is discreetly paginated.",
     "Pages 292-304 blank (but with printed floral borders) and unscanned."
   ],
+  "orbisRecord": "7039963",
   "subjectName": [
     "Valdruche, Eugene, d. 1913?, provenance"
   ],
+  "collectionId": 1,
+  "orbisBarcode": "39002094210060",
+  "resourceType": "Music (Printed & Manuscript)",
+  "subjectTitle": "Vaudevilles--Librettos",
   "subjectTopic": [
     "Chansons--18th Century",
     "Songs, French--18th century--Texts",
@@ -38,35 +70,14 @@
     "Vaudeville--France--Early works to 1800",
     "Vaudevilles--Librettos"
   ],
-  "genre": [
-    "Musical works"
+  "dependentUris": [
+    "/ladybird/oid/2057976"
   ],
-  "format": [
-    "notated music"
-  ],
-  "partOf": "Beinecke Library",
-  "rights": [
-    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-  ],
-  "orbisRecord": "7039963",
-  "orbisBarcode": "39002094210060",
   "itemPermission": "Public",
-  "resourceType": "Music (Printed & Manuscript)",
-  "subjectEra": "Vaudevilles--Librettos",
-  "contributor": [
+  "contributorDisplay": [
     "Valdruche, Eugene, d. 1913?, provenance"
   ],
-  "repository": "Beinecke Library",
-  "contents": [
-    "Anonymous MS.",
-    "Binder's blanks unscanned.",
-    "Binder's title: Recueil de Vaudevill",
-    "Binding: Contemporary French blue morocco, gilt with the arms of Michel Begon on front and back.",
-    "Bookplate of E. Valdruche.",
-    "Index starts at p. 305 but is discreetly paginated.",
-    "Pages 292-304 blank (but with printed floral borders) and unscanned."
-  ],
-  "subjectTitle": "Vaudevilles--Librettos",
+  "identifierShelfMark": "Osborn Music MS 7",
   "subjectTitleDisplay": [
     "Chansons--18th Century",
     "Songs, French--18th century--Texts",
@@ -74,18 +85,7 @@
     "Vaudeville--France--Early works to 1800",
     "Vaudevilles--Librettos"
   ],
-  "contributorDisplay": [
-    "Valdruche, Eugene, d. 1913?, provenance"
-  ],
-  "dependentUris": [
-    "/ladybird/oid/2057976"
-  ],
-  "oid": 2057976,
-  "collectionId": 1,
-  "children": [
-
-  ],
-  "abstract": [
-    "A collection of 87 anonymous French love songs and vaudevilles, with an alphabetical index at the back."
+  "extentOfDigitization": [
+    "Complete work digitized."
   ]
 }

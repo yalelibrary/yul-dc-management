@@ -1,43 +1,16 @@
 {
-  "recordType": "oid",
-  "source": "ladybird",
+  "oid": 16189096,
   "uri": "/ladybird/oid/16189096",
-  "identifierShelfMark": "Covers 5615 +1857",
-  "creator": [
-    "Dong, Chun (Cartographer), cartographer.",
-    "董醇 (Cartographer), cartographer."
-  ],
-  "title": [
-    "Zhi li Da Qing He yuan liu zong tu / Qing he dao Dong Chun."
-  ],
-  "alternativeTitle": [
-    "Map of Ta Ch'ing River",
-    "直隷大清河源流總圖 / 清河道董醇."
-  ],
-  "extentOfDigitization": [
-    "Complete work digitized."
-  ],
-  "extent": [
-    "1 map : color ; 27 x 150 cm, folded to 27 x 13 cm"
-  ],
-  "language": [
-    "Chinese"
-  ],
-  "description": [
-    "Jing zhe zhuang.",
-    "經折裝."
-  ],
-  "subjectTopic": [
-    "Chinese rare maps."
-  ],
-  "geoSubject": "a-cc---",
-  "scale": "Scale not given.",
-  "coordinate": [
-    "a"
-  ],
   "genre": [
     "Maps.--(OCoLC)fst01423704",
     "Pictorial maps."
+  ],
+  "scale": "Scale not given.",
+  "title": [
+    "Zhi li Da Qing He yuan liu zong tu / Qing he dao Dong Chun."
+  ],
+  "extent": [
+    "1 map : color ; 27 x 150 cm, folded to 27 x 13 cm"
   ],
   "format": [
     "cartographic"
@@ -46,41 +19,68 @@
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "orbisRecord": "8317945",
-  "orbisBarcode": "39002113593827",
-  "itemPermission": "Public",
-  "dateStructured": [
-    "1857-00-00T00:00:00Z"
+  "source": "ladybird",
+  "creator": [
+    "Dong, Chun (Cartographer), cartographer.",
+    "董醇 (Cartographer), cartographer."
   ],
-  "resourceType": "Maps, Atlases & Globes",
-  "illustrativeMatter": "080805s1857    cc        a     0   chi d",
-  "copyrightDate": [
-    "Xianfeng 7 [1857]",
-    "咸豐7 [1857]"
+  "children": [
+
   ],
-  "subjectEra": "Chinese rare maps.",
-  "repository": "Beinecke Library",
   "contents": [
     "Jing zhe zhuang.",
     "經折裝."
   ],
-  "subjectTitle": "Chinese rare maps.",
-  "subjectGeographic": [
-    "Hai River (China)--Maps."
+  "language": [
+    "Chinese"
   ],
-  "subjectTitleDisplay": [
+  "coordinate": [
+    "a"
+  ],
+  "geoSubject": "a-cc---",
+  "recordType": "oid",
+  "repository": "Beinecke Library",
+  "subjectEra": "Chinese rare maps.",
+  "description": [
+    "Jing zhe zhuang.",
+    "經折裝."
+  ],
+  "orbisRecord": "8317945",
+  "collectionId": 1,
+  "orbisBarcode": "39002113593827",
+  "resourceType": "Maps, Atlases & Globes",
+  "subjectTitle": "Chinese rare maps.",
+  "subjectTopic": [
     "Chinese rare maps."
+  ],
+  "copyrightDate": [
+    "Xianfeng 7 [1857]",
+    "咸豐7 [1857]"
+  ],
+  "dependentUris": [
+    "/ladybird/oid/16189096"
   ],
   "creatorDisplay": [
     "Dong, Chun (Cartographer), cartographer.",
     "董醇 (Cartographer), cartographer."
   ],
-  "dependentUris": [
-    "/ladybird/oid/16189096"
+  "dateStructured": [
+    "1857-00-00T00:00:00Z"
   ],
-  "oid": 16189096,
-  "collectionId": 1,
-  "children": [
-
+  "itemPermission": "Public",
+  "alternativeTitle": [
+    "Map of Ta Ch'ing River",
+    "直隷大清河源流總圖 / 清河道董醇."
+  ],
+  "subjectGeographic": [
+    "Hai River (China)--Maps."
+  ],
+  "illustrativeMatter": "080805s1857    cc        a     0   chi d",
+  "identifierShelfMark": "Covers 5615 +1857",
+  "subjectTitleDisplay": [
+    "Chinese rare maps."
+  ],
+  "extentOfDigitization": [
+    "Complete work digitized."
   ]
 }

@@ -35,19 +35,9 @@
   "language": [
     "Arabic"
   ],
-  "indexedBy": [
-    "440.",
-    "Berlin catalog,",
-    "Brockelmann,",
-    "I, 193; S I, p. 340."
-  ],
+  "callNumber": "Landberg MSS 75",
+  "orbisBibId": "3798665",
   "recordType": "oid",
-  "references": [
-    "440.",
-    "Berlin catalog,",
-    "Brockelmann,",
-    "I, 193; S I, p. 340."
-  ],
   "repository": "Beinecke Library",
   "subjectEra": "Theology--Dogmatics",
   "contributor": [
@@ -57,7 +47,6 @@
   "description": [
     "Fair naskhī."
   ],
-  "orbisRecord": "3798665",
   "subjectName": [
     "Maʾmūn,--Caliph,--786-833",
     "Marīsī, Bishr ibn Ghayāth,--d. 833"
@@ -81,12 +70,17 @@
   "alternativeTitle": [
     "Ḥaydah wa-al-iʻtidhār fī al-radd ʾalá man qāla bi-khalq al-Qurʾān"
   ],
+  "preferredCitation": [
+    "440.",
+    "Berlin catalog,",
+    "Brockelmann,",
+    "I, 193; S I, p. 340."
+  ],
   "contributorDisplay": [
     "Maʾmūn,--Caliph,--786-833",
     "Marīsī, Bishr ibn Ghayāth,--d. 833"
   ],
   "illustrativeMatter": "ara d",
-  "identifierShelfMark": "Landberg MSS 75",
   "subjectTitleDisplay": [
     "Theology--Dogmatics"
   ],

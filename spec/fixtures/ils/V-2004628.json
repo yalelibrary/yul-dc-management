@@ -38,16 +38,17 @@
     "American bison hunting",
     "American bison"
   ],
+  "subjectGeographicCode": "n-usw--",
   "genre": [
     "Pictorial works",
     "Pictorial works",
     "Pictorial works"
   ],
-  "orbisRecord": "3163155",
+  "orbisBibId": "3163155",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=WA_MSS_278"
   ],
-  "references": [
+  "preferredCitation": [
     "Paul Kane Paintings. Yale Collection of Western Americana, Beinecke Rare Book and Manuscript Library."
   ],
   "dateStructured": [
@@ -62,7 +63,6 @@
     "Withington, M. C. 278."
   ],
   "subjectGeographic": [
-    "n-usw--",
     "Northwest, Pacific"
   ],
   "subjectOccupation": [

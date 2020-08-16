@@ -39,13 +39,14 @@
   "language": [
     "English"
   ],
+  "callNumber": "1978 1351",
+  "orbisBibId": "3577942",
   "recordType": "oid",
   "repository": "Beinecke Library",
   "description": [
     "Cover-title.",
     "Plates printed on a continuous strip of paper, folded in Japanese fashion ; linen backed ; portrait of the publisher Tilt on back cover. cf. A. M. Cohn, George Cruikshank, no. 189."
   ],
-  "orbisRecord": "3577942",
   "collectionId": 1,
   "orbisBarcode": "39002113596465",
   "resourceType": "Books, Journals & Pamphlets",
@@ -60,7 +61,6 @@
   ],
   "itemPermission": "Public",
   "illustrativeMatter": "931103s1836    enk           00010 eng d",
-  "identifierShelfMark": "1978 1351",
   "extentOfDigitization": [
     "Complete work digitized."
   ]

@@ -2,7 +2,7 @@
   "recordType": "oid",
   "source": "ladybird",
   "uri": "/ladybird/oid/2003431",
-  "identifierShelfMark": "Beinecke MS 407",
+  "callNumber": "Beinecke MS 407",
   "title": [
     "Albergati Bible"
   ],
@@ -53,12 +53,12 @@
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "orbisRecord": "9734763",
+  "orbisBibId": "9734763",
   "orbisBarcode": "39002091549668",
   "relatedUrl": [
     "https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms407.htm"
   ],
-  "references": [
+  "preferredCitation": [
     "Albergati Bible. General Collection, Beinecke Rare Book and Manuscript Library, Yale University.",
     "Shailor, B. Catalogue of Medieval and Renaissance Manuscripts in the Beinecke Rare Book and Manuscript Library, MS 407."
   ],
@@ -81,10 +81,6 @@
     "The Bible is a splendid example of the Italian late gothic illuminated manuscript. The decoration consists of two very richly illuminated pages (f. 5r, Genesis; f. 272r, Psalms), thirteen small miniatures (ff. 1r, 570v-576v), and 79 historiated initials, 7 to 10-line (not including ascenders or descenders) at the beginning of every book of the Bible, the sections of the Psalter, and a few prologues. The miniatures are in thin gold or yellow frames. The historiated initials are composed of acanthus, mauve, blue, pink, orange, and/or green. At least four artists collaborated in the illustration and decoration of the codex. On virtually every folio, recto and verso, are elaborate bar borders, in margins and/or between text columns, full or half-length, gold, blue, green, pink, and/or orange with white filigree, some with curling acanthus, leafy midpoints and terminals with acanthus and hair-spray extension. On folios with miniatures or initials, more elaborate borders (full borders on ff. 1r, 5r): curling hair-spray with gold dots and trefoil leaves, spikey ivy, pink, blue, orange and green flowers, putti, insects, birds, grotesques and, on f. 348v, a marginal scene, lower left corner, a fowler chasing rabbits."
   ],
   "subjectTitle": "Medieval and Renaissance Manuscripts in Beinecke Library",
-  "indexedBy": [
-    "Albergati Bible. General Collection, Beinecke Rare Book and Manuscript Library, Yale University.",
-    "Shailor, B. Catalogue of Medieval and Renaissance Manuscripts in the Beinecke Rare Book and Manuscript Library, MS 407."
-  ],
   "subjectTitleDisplay": [
     "Bible.--Latin--Versions--Vulgate",
     "Illumination of books and manuscripts, Medieval",
