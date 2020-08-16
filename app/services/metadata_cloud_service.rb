@@ -24,7 +24,7 @@ class MetadataCloudService
   # the appropriate URL to pull the metadata from the Yale Metadata Cloud
   def self.build_metadata_cloud_url(oid, metadata_source)
     if metadata_source == "ladybird"
-      identifier_block = "/oid/#{oid}"
+      identifier_block = "/oid/#{oid}?include-children=1"
     elsif metadata_source == "ils"
       bib = MetadataCloudService.get_bib(oid)
       barcode = MetadataCloudService.get_barcode(oid)

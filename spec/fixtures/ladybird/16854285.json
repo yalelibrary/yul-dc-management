@@ -24,7 +24,82 @@
     "Fowler & Wells"
   ],
   "children": [
+    {
+      "oid": 16854300,
+      "uri": "/ladybird/oid/16854300",
+      "title": [
+        "Poster 1: Destructiveness small, Destructiveness large, Hydrocephalus James Cardinal, Thomas Sewall, Red Jacket, Language large"
+      ],
+      "width": 10328,
+      "height": 7760,
+      "source": "ladybird",
+      "caption": "[Panels 1 - 2]",
+      "children": [
 
+      ],
+      "callNumber": "YCAL MSS 1000",
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16854300"
+      ]
+    },
+    {
+      "oid": 16854301,
+      "uri": "/ladybird/oid/16854301",
+      "title": [
+        "Poster 1: Destructiveness small, Destructiveness large, Hydrocephalus James Cardinal, Thomas Sewall, Red Jacket, Language large"
+      ],
+      "width": 10328,
+      "height": 7487,
+      "source": "ladybird",
+      "caption": "[Panels 3 - 4]",
+      "children": [
+
+      ],
+      "callNumber": "YCAL MSS 1000",
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16854301"
+      ]
+    },
+    {
+      "oid": 16854302,
+      "uri": "/ladybird/oid/16854302",
+      "title": [
+        "Poster 1: Destructiveness small, Destructiveness large, Hydrocephalus James Cardinal, Thomas Sewall, Red Jacket, Language large"
+      ],
+      "width": 10328,
+      "height": 7398,
+      "source": "ladybird",
+      "caption": "[Panels 5 - 6]",
+      "children": [
+
+      ],
+      "callNumber": "YCAL MSS 1000",
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16854302"
+      ]
+    },
+    {
+      "oid": 16854303,
+      "uri": "/ladybird/oid/16854303",
+      "title": [
+        "Poster 1: Destructiveness small, Destructiveness large, Hydrocephalus James Cardinal, Thomas Sewall, Red Jacket, Language large"
+      ],
+      "width": 771,
+      "height": 1536,
+      "source": "ladybird",
+      "caption": "[Entire scroll]",
+      "children": [
+
+      ],
+      "callNumber": "YCAL MSS 1000",
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16854303"
+      ]
+    }
   ],
   "callNumber": "YCAL MSS 1000",
   "findingAid": [

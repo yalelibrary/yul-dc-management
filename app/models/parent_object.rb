@@ -77,7 +77,7 @@ class ParentObject < ApplicationRecord
   end
 
   def ladybird_cloud_url
-    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}"
+    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?include-children=1"
   end
 
   def voyager_cloud_url

@@ -31,7 +31,28 @@
     "Reproduced photographs accompanying article about Leontyne Price's visit to hometown of Laurel, Miss."
   ],
   "children": [
+    {
+      "oid": 1126257,
+      "uri": "/ladybird/oid/1126257",
+      "title": [
+        "[Magazine page with various photographs of Leontyne Price]"
+      ],
+      "width": 4143,
+      "height": 5420,
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "source": "ladybird",
+      "caption": "p. 100",
+      "children": [
 
+      ],
+      "callNumber": "JWJ A +Eb74",
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/1126257"
+      ]
+    }
   ],
   "language": [
     "English"
