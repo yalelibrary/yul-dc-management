@@ -11,7 +11,21 @@ class ParentObject < ApplicationRecord
 
   self.primary_key = 'oid'
   before_create :default_fetch, unless: proc { ladybird_json.present? }
-  after_save :solr_index
+  after_save :solr_index, :create_child_records
+
+  def create_child_records
+    self.child_object_count = 0
+    ladybird_json["children"].map do |child_record|
+      ChildObject.where(child_oid: child_record["oid"]).first_or_create do |child_object|
+        child_object.child_oid = child_record["oid"]
+        child_object.caption = child_record["caption"]
+        child_object.width = child_record["width"]
+        child_object.height = child_record["height"]
+        child_object.parent_object_oid = oid
+        self.child_object_count += 1
+      end
+    end
+  end
 
   # Fetches the record from the authoritative_metadata_source
   def default_fetch
