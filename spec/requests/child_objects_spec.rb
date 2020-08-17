@@ -78,7 +78,7 @@ RSpec.describe "/child_objects", type: :request, prep_metadata_sources: true do
 
       it "redirects to the created child_object" do
         post child_objects_url, params: { child_object: valid_attributes }
-        expect(response).to redirect_to(child_object_url(ChildObject.last))
+        expect(response).to redirect_to(child_object_url(ChildObject.order("created_at ASC").last))
       end
     end
 

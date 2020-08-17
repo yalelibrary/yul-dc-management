@@ -14,6 +14,7 @@ class ParentObject < ApplicationRecord
   after_save :solr_index, :create_child_records
 
   def create_child_records
+    return unless ladybird_json
     self.child_object_count = 0
     ladybird_json["children"].map do |child_record|
       ChildObject.where(child_oid: child_record["oid"]).first_or_create do |child_object|
