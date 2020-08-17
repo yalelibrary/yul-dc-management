@@ -17,20 +17,20 @@ class ParentObject < ApplicationRecord
   def create_child_records
     return unless ladybird_json
     ladybird_json["children"].map do |child_record|
-      next if self.child_object_ids.include?(child_record["oid"])
-      self.child_objects.build(
+      next if child_object_ids.include?(child_record["oid"])
+      child_objects.build(
         child_oid: child_record["oid"],
         caption: child_record["caption"],
         width: child_record["width"],
         height: child_record["height"]
-        )
+      )
     end
-    self.child_object_count = self.child_objects.size
+    self.child_object_count = child_objects.size
   end
 
   # Fetches the record from the authoritative_metadata_source
   def default_fetch
-    case authoritative_metadata_source.metadata_cloud_name
+    case authoritative_metadata_source&.metadata_cloud_name
     when "ladybird"
       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
     when "ils"
@@ -39,6 +39,8 @@ class ParentObject < ApplicationRecord
     when "aspace"
       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
       self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
+    else
+      raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
   end
 
