@@ -1,5 +1,5 @@
 unreleased=true
-future-release=v2.9.0
+future-release=v2.10.0
 enhancement-labels=Features
 bug-labels=Bugs
 pr-label=**Technical Enhancements:**
