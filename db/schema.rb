@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_20_201747) do
+ActiveRecord::Schema.define(version: 2020_08_16_184926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,19 @@ ActiveRecord::Schema.define(version: 2020_07_20_201747) do
     t.integer "retrieved_records"
   end
 
+  create_table "child_objects", id: false, force: :cascade do |t|
+    t.integer "child_oid"
+    t.string "caption"
+    t.integer "width"
+    t.integer "height"
+    t.integer "order"
+    t.bigint "parent_object_oid", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["child_oid"], name: "index_child_objects_on_child_oid", unique: true
+    t.index ["parent_object_oid"], name: "index_child_objects_on_parent_object_oid"
+  end
+
   create_table "dependent_objects", force: :cascade do |t|
     t.string "dependent_uri"
     t.string "parent_object_id"
@@ -31,12 +44,6 @@ ActiveRecord::Schema.define(version: 2020_07_20_201747) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "metadata_source"
     t.index ["parent_object_id"], name: "index_dependent_objects_on_parent_object_id"
-  end
-
-  create_table "goobi_xml_imports", force: :cascade do |t|
-    t.xml "goobi_xml"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "metadata_samples", force: :cascade do |t|
@@ -55,14 +62,22 @@ ActiveRecord::Schema.define(version: 2020_07_20_201747) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "mets_xml_imports", force: :cascade do |t|
+    t.xml "mets_xml"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "oid"
+    t.index ["oid"], name: "index_mets_xml_imports_on_oid"
+  end
+
   create_table "oid_imports", force: :cascade do |t|
     t.text "csv"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "parent_objects", force: :cascade do |t|
-    t.string "oid"
+  create_table "parent_objects", id: false, force: :cascade do |t|
+    t.bigint "oid", null: false
     t.string "bib"
     t.string "holding"
     t.string "item"
@@ -81,6 +96,7 @@ ActiveRecord::Schema.define(version: 2020_07_20_201747) do
     t.jsonb "aspace_json"
     t.string "reading_direction", default: "ltr"
     t.string "pagination", default: "individuals"
+    t.integer "child_object_count"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end
@@ -107,5 +123,6 @@ ActiveRecord::Schema.define(version: 2020_07_20_201747) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "child_objects", "parent_objects", column: "parent_object_oid", primary_key: "oid"
   add_foreign_key "sample_fields", "metadata_samples", on_delete: :cascade
 end

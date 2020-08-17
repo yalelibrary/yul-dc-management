@@ -6,12 +6,9 @@ RSpec.describe FixtureParsingService, prep_metadata_sources: true do
   let(:metadata_source) { "ladybird" }
   let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
   before do
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16854285.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16854285.json")).read)
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-16854285.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16854285.json")).read)
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/aspace/AS-16854285.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-16854285.json")).read)
+    stub_metadata_cloud("16854285", "ladybird")
+    stub_metadata_cloud("V-16854285", "ils")
+    stub_metadata_cloud("AS-16854285", "aspace")
   end
 
   it "can return a hash from a fixture file" do
@@ -32,19 +29,15 @@ RSpec.describe FixtureParsingService, prep_metadata_sources: true do
       let(:holding) { "12484205" }
       let(:item) { "10996370" }
       let(:parent_object) { FactoryBot.create(:parent_object, oid: oid) }
-      let(:private_oid) { "16189097-priv" }
+      let(:private_oid) { "10000016189097" }
       let(:private_object) { FactoryBot.create(:parent_object, oid: private_oid) }
-      let(:yale_only_oid) { "16189097-yale" }
+      let(:yale_only_oid) { "20000016189097" }
       let(:yale_only_object) { FactoryBot.create(:parent_object, oid: yale_only_oid) }
       before do
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16189097-priv.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16189097-priv.json")).read)
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-16189097-priv.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16189097-priv.json")).read)
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16189097-yale.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16189097-yale.json")).read)
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-16189097-yale.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16189097-yale.json")).read)
+        stub_metadata_cloud("10000016189097", "ladybird")
+        stub_metadata_cloud("V-10000016189097", "ils")
+        stub_metadata_cloud("20000016189097", "ladybird")
+        stub_metadata_cloud("V-20000016189097", "ils")
       end
 
       it "finds the dependent uris for a ladybird object" do
@@ -60,8 +53,8 @@ RSpec.describe FixtureParsingService, prep_metadata_sources: true do
         yale_only_object
         described_class.find_dependent_uris(metadata_source)
         expect(DependentObject.find_by(parent_object_id: oid).dependent_uri).to include "/ladybird/oid/16854285"
-        expect(DependentObject.find_by(parent_object_id: private_oid).dependent_uri).to include "/ladybird/oid/16189097-priv"
-        expect(DependentObject.find_by(parent_object_id: yale_only_oid).dependent_uri).to include "/ladybird/oid/16189097-yale"
+        expect(DependentObject.find_by(parent_object_id: private_oid).dependent_uri).to include "/ladybird/oid/10000016189097"
+        expect(DependentObject.find_by(parent_object_id: yale_only_oid).dependent_uri).to include "/ladybird/oid/20000016189097"
       end
     end
   end

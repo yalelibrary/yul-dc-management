@@ -24,18 +24,18 @@
 
   ],
   "identifier": "/aspace/repositories/11/archival_objects/515305",
+  "orbisBibId": "12307100",
   "recordType": "archival_object",
   "description": [
     "A set of nineteen posters with 112 bust portraits depicting identified men and women, primarily authors, artists, scientists, monarchs, and religious and political leaders from the eighteenth and nineteenth centuries, with a group of idealized heads illustrating characteristics identified by phrenologists, such as inhabitiveness and philoprogenitivenes. The portraits, or plates, were rendered in sepia ink and wash on paper, and were mounted on linen or canvas in groups of six; each set has wooden rods at each end to aid in hanging for display, and rolling for compact storage and travel. Each portrait or head is captioned with name of the sitter or the prominent character type portrayed. The posters were likely intended as exhibits supporting phrenology lectures."
   ],
-  "orbisRecord": "12307100",
   "orbisBarcode": "39002102340669",
   "resourceType": "mixed_materials",
   "dependentUris": [
+    "/aspace/repositories/11/top_containers/66093",
     "/aspace/repositories/11/archival_objects/515305",
-    "/aspace/repositories/11/resources/1394",
     "/aspace/agents/corporate_entities/12845",
-    "/aspace/repositories/11/top_containers/66093"
+    "/aspace/repositories/11/resources/1394"
   ],
   "ancestorTitles": [
     "Fowler & Wells Portrait Posters for Physiognomy Lectures"

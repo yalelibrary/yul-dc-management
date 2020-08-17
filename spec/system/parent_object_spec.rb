@@ -10,14 +10,15 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
     context "with a ParentObject whose authoritative_metadata_source is Ladybird" do
       before do
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012036.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012036.json")).read)
+        stub_metadata_cloud("2012036")
         fill_in('Oid', with: "2012036")
         click_on("Create Parent object")
       end
 
       it "can create a new parent object" do
         expect(page.body).to include "Parent object was successfully created"
+        expect(page.body).to include "Ladybird"
+        expect(page.body).to include "Authoritative JSON"
       end
 
       it "saves the Ladybird record from the MC to the DB" do
@@ -37,11 +38,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
     context "with a ParentObject whose authoritative_metadata_source is Voyager" do
       before do
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012036.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012036.json")).read)
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-2012036.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2012036.json")).read)
-
+        stub_metadata_cloud("2012036", "ladybird")
+        stub_metadata_cloud("V-2012036", "ils")
         fill_in('Oid', with: "2012036")
         select('Voyager')
         click_on("Create Parent object")
@@ -49,6 +47,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
       it "can create a new parent object" do
         expect(page.body).to include "Parent object was successfully created"
+        expect(page.body).to include "Voyager"
       end
 
       it "has the correct authoritative_metadata_source in the database" do
@@ -67,10 +66,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
     context "with a ParentObject whose authoritative_metadata_source is ArchiveSpace" do
       before do
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2012036.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2012036.json")).read)
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/aspace/AS-2012036.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-2012036.json")).read)
+        stub_metadata_cloud("2012036", "ladybird")
+        stub_metadata_cloud("AS-2012036", "aspace")
         fill_in('Oid', with: "2012036")
         select('ArchiveSpace')
         click_on("Create Parent object")
@@ -78,6 +75,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
       it "can create a new parent object" do
         expect(page.body).to include "Parent object was successfully created"
+        expect(page.body).to include "ArchiveSpace"
       end
 
       it "fetches the ArchiveSpace record when applicable" do
@@ -89,10 +87,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
     context "with a ParentObject with only some relevant identifiers" do
       before do
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2004628.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-2004628.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2004628.json")).read)
+        stub_metadata_cloud("2004628", "ladybird")
+        stub_metadata_cloud("V-2004628", "ils")
         fill_in('Oid', with: "2004628")
         click_on("Create Parent object")
       end
@@ -110,32 +106,35 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         expect(ParentObject.find_by(oid: "2004628")["bib"]).to eq "3163155"
       end
     end
+    context "with mocked out non-public objects" do
+      around do |example|
+        original_vpn = ENV['VPN']
+        ENV['VPN'] = 'false'
+        example.run
+        ENV['VPN'] = original_vpn
+      end
+      context "with a Private fixture object" do
+        before do
+          stub_metadata_cloud("10000016189097", "ladybird")
+          stub_metadata_cloud("V-10000016189097", "ils")
+          fill_in('Oid', with: "10000016189097")
+          click_on("Create Parent object")
+        end
+        it "adds the visibility for private objects" do
+          expect(ParentObject.find_by(oid: "10000016189097")["visibility"]).to eq "Private"
+        end
+      end
 
-    context "with a Private fixture object" do
-      before do
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16189097-priv.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16189097-priv.json")).read)
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-16189097-priv.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16189097-priv.json")).read)
-        fill_in('Oid', with: "16189097-priv")
-        click_on("Create Parent object")
-      end
-      it "adds the visibility for private objects" do
-        expect(ParentObject.find_by(oid: "16189097-priv")["visibility"]).to eq "Private"
-      end
-    end
-
-    context "with a Yale only fixture object" do
-      before do
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16189097-yale.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16189097-yale.json")).read)
-        stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-16189097-yale.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16189097-yale.json")).read)
-        fill_in('Oid', with: "16189097-yale")
-        click_on("Create Parent object")
-      end
-      it "adds the visibility for non-public objects" do
-        expect(ParentObject.find_by(oid: "16189097-yale")["visibility"]).to eq "Yale Community Only"
+      context "with a Yale only fixture object" do
+        before do
+          stub_metadata_cloud("20000016189097", "ladybird")
+          stub_metadata_cloud("V-20000016189097", "ils")
+          fill_in('Oid', with: "20000016189097")
+          click_on("Create Parent object")
+        end
+        it "adds the visibility for non-public objects" do
+          expect(ParentObject.find_by(oid: "20000016189097")["visibility"]).to eq "Yale Community Only"
+        end
       end
     end
   end

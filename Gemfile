@@ -8,6 +8,7 @@ gem 'activerecord-nulldb-adapter'
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap', '~> 4.5'
+gem 'coderay', '~> 1.1', '>= 1.1.3'
 gem 'devise'
 gem 'github_changelog_generator'
 gem 'honeybadger', '~> 4.0'

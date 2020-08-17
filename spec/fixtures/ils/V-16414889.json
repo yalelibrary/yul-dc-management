@@ -25,7 +25,9 @@
   "publisher": [
     ""
   ],
+  "callNumber": "1978 1351",
   "createDate": "2002-06-01T04:00:00.000+0000",
+  "orbisBibId": "3577942",
   "recordType": "bib",
   "repository": "beingen",
   "updateDate": "2011-03-30T18:19:01.000+0000",
@@ -33,7 +35,6 @@
     "Cover-title.",
     "Plates printed on a continuous strip of paper, folded in Japanese fashion; portrait of the publisher Tilt on back cover. cf. A. M. Cohn, George Cruikshank, no. 189."
   ],
-  "orbisRecord": "3577942",
   "orbisBarcode": "39002113596465",
   "dependentUris": [
     "/ils/holding/3917998",
@@ -54,6 +55,5 @@
   "publicationPlace": [
     ""
   ],
-  "illustrativeMatter": "    ",
-  "identifierShelfMark": "1351 1978"
+  "illustrativeMatter": "    "
 }

@@ -114,15 +114,14 @@
     "sepia ink and wash on paper mounted on linen, with wooden rods ;"
   ],
   "holdingId": 12484205,
+  "callNumber": "YCAL MSS 1000",
   "createDate": "2014-11-25T15:46:12.000+0000",
   "findingAid": [
     "http://hdl.handle.net/10079/fa/beinecke.phrenology",
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=YCAL_MSS_1000"
   ],
+  "orbisBibId": "12307100",
   "recordType": "bib",
-  "references": [
-    "Fowler & Wells, Portrait Posters for Physiognomy Lectures. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
-  ],
   "repository": "beinycal",
   "updateDate": "2019-12-10T15:48:49.000+0000",
   "description": [
@@ -133,7 +132,6 @@
     "Captions in English.",
     "Finding aid available."
   ],
-  "orbisRecord": "12307100",
   "subjectName": [
     "Abdülmecit, Sultan of the Turks, 1823-1861",
     "Adams, John, 1735-1826",
@@ -237,8 +235,14 @@
   "titleStatement": [
     "[Portrait posters for physiognomy lectures]."
   ],
+  "accessCondition": [
+    "This material is open for research"
+  ],
   "publicationPlace": [
     "New York, New York"
+  ],
+  "preferredCitation": [
+    "Fowler & Wells, Portrait Posters for Physiognomy Lectures. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
   "subjectGeographic": [
     "United States.",
@@ -246,7 +250,6 @@
   ],
   "volumeEnumeration": "Box 1",
   "illustrativeMatter": "nnn ",
-  "identifierShelfMark": "1000 YCAL MSS",
   "subjectTitleDisplay": [
     "Abdülmecit, Sultan of the Turks, 1823-1861",
     "Adams, John, 1735-1826",

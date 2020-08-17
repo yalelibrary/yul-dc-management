@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :goobi_xml_imports
+  resources :child_objects
+  resources :mets_xml_imports
 
   resources :parent_objects do
     collection do

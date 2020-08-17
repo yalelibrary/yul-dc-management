@@ -20,6 +20,10 @@ Metrics/MethodLength:
     Exclude:
       - 'app/models/concerns/solr_indexable.rb'
 
+Rails/OutputSafety:
+  Exclude:
+    - 'app/helpers/json_helper.rb'
+
 RSpec/ExampleLength:
   Exclude:
     - 'spec/**/*.rb'

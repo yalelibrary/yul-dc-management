@@ -14,12 +14,6 @@
 git clone git@github.com:yalelibrary/yul-dc-management.git
 ```
 
-## Change to the application directory
-
-```bash
-cd ./yul-dc-management
-```
-
 ## Install Camerata
 
 Clone the yul-dc-camerata repo and install the gem.
@@ -34,7 +28,7 @@ rake install
 
 ## Update Camerata
 
-You can get the latest version at any point by updating the code and reinstalling
+You can get the latest camerata version at any point by updating the code and reinstalling
 
 ```bash
 cd yul-dc-camerata
@@ -48,23 +42,28 @@ rake install
 Once camerata is installed on your system, interactions happen through the
 camerata command-line tool or through its alias `cam`.  The camerata tool can be
 used to bring the development stack up and down locally, interact with the
-docker containers, deploy, run the smoke tests and otherwise do development
+docker containers, deploy, run the smoke tests, and otherwise do development
 tasks common to the various applications in the yul-dc application stack.
 
-All built in commands can be listed with `cam help` and individual usage 
-information is available with `cam help COMMAND`.  Please note that deployment 
-commands (found in the `./bin` directory) are passed through and are therefore not 
-listed by the help command.  See the usage for those below. 
+All built in commands can be listed with `cam help` and individual usage
+information is available with `cam help COMMAND`.  Please note that deployment
+commands (found in the `./bin` directory) are passed through and are therefore not
+listed by the help command.  See the usage for those in the [camerata README](https://github.com/yalelibrary/yul-dc-camerata#yul-dc-camerata).
 
-To start the application stack, run `cam up` in the management directory. This starts all of the applications as they are 
-all dependencies of yul-blacklight. Camerata is smart. If you start `cam up` from 
-a management code check out it will mount that code for local development 
-(changes to the outside code will affect the inside container). If you start the 
-`cam up` from the management application you will get the management code mounted
-for local development and the management code will run as it is in the downloaded 
-image. You can also start the two applications both mounted for development by 
-starting the management application with `--without blacklight` and the 
-blacklight application `--without solr --withouth db` each from their respective 
+To start the application stack, run `cam up` in the management directory
+```bash
+cd ./yul-dc-management
+cam up
+```
+This starts all of the applications, as they are
+all dependencies of yul-blacklight. Camerata is smart. If you start `cam up` from
+a management code check out it will mount that code for local development
+(changes to the outside code will affect the inside container). If you start the
+`cam up` from the blacklight application you will get the blacklight code mounted
+for local development and the management code will run as it is in the downloaded
+image. You can also start the two applications both mounted for development by
+starting the management application with `--without blacklight` and the
+blacklight application `--without solr --withouth db` each from their respective
 code checkouts.
 
 
@@ -116,8 +115,7 @@ to the Yale services.
 
 - You will need to be inside the container to:
 
-  - Run migrations
-  - Seed the database with a pre-defined list of oids from Ladybird
+  - Run new migrations or seeds (existing migrations and seeds will automatically be run when you bring up the container in development mode)
 
   ```bash
   RAILS_ENV=development rails db:seed
@@ -130,7 +128,8 @@ to the Yale services.
     rails c
     ```
 
-  - Run the tests. Note: You will need to be on the VPN.
+  - Run the tests. (in order to run the VPN-only tests, bring up camerata using `VPN=true cam up` or `VPN=true cam up
+  management`)
 
     ```bash
     rspec
@@ -142,9 +141,9 @@ to the Yale services.
     rubocop -a
     ```
 
-    - If Rubocop is still flagging something that you've checked and want to keep as-is, add it to the `.rubocop_todo.yml` manually.
+    - If Rubocop is still flagging something that you've checked and want to keep as-is long term, add it to the `.rubocop.yml` manually. If it needs to remain short term, but will need to be fixed, you can automatically re-generate the `rubocop_todo.yml` file by running `rubocop --auto-gen-config`.
 
-  - If you are doing development that requires access to the Yale Metadata Cloud, get on the Yale VPN, and add your credentials to your `.secrets` file. These should never be added to version control.
+  - If you are doing development that requires access to the Yale Metadata Cloud, get on the Yale VPN, and add your credentials to your `.secrets` file. These should never be added to version control.<!-- This needs to be updated based on the camerata gem updates, but not sure what the current practice should be - they're not in the AWS parameter store -->
 
     ```
     # Metadata Cloud
@@ -158,7 +157,7 @@ to the Yale services.
 
   - _NOTE:_ you must be on the Yale VPN
   - If you have trouble connecting to the MetadataCloud, see the DCE doc on [connecting to VPN from within a container](https://curationexperts.github.io/playbook/tools/docker/containers.html)
-  - Add your credentials to your `.secrets` file.
+  - Add your credentials to your `.secrets` file.<!-- This needs to be updated based on the camerata gem updates, but not sure what the current practice should be - they're not in the AWS parameter store -->
 
     ```
     # Metadata Cloud
@@ -172,16 +171,16 @@ to the Yale services.
     METADATA_SOURCE=YOUR_SOURCE_HERE rake yale:refresh_fixture_data
     ```
 
-- Index sample data (if you go to solr and hit "execute query" and don't have data, run this command)
+- Index sample data (if you go to solr and hit "execute query" and don't have data, run this command). This should also occur automatically when you seed the database or otherwise create ParentObjects
 
   ```bash
-      METADATA_SOURCE=YOUR_SOURCE_HERE rake yale:index_fixture_data
+      rake solr:index
   ```
 
 - Clean out Solr index
 
   ```bash
-      rake yale:clean_solr
+      rake solr:delete_all
   ```
 
 ## Pulling or Building Docker Images
@@ -207,7 +206,8 @@ you stop your running containers you need to rebuild.
 4. Run this command: `github_changelog_generator --token $YOUR_GITHUB_TOKEN`. This will re-generate `CHANGELOG.md`.
 5. Commit and merge the changes you just made with a message like "Prep for vX.Y.Z release"
 6. Once those changes are merged to the `master` branch, in the github web UI go to `Releases` and tag a new release with the right version number. Paste in the release notes for this release from the top of `CHANGELOG.md`
-7. Update `yul-dc-camerata` with the new version of management and submit a PR.
+7. Update `yul-dc-camerata` with the new version of management and submit a PR. (alternatively, see the [camerata README on Releasing a New Dependency Version](https://github.com/yalelibrary/yul-dc-camerata#releasing-a-new-dependency-version))
+8. Move any tickets that were included in this release from `For Release` to `Ready for Acceptance`
 
 ## Test coverage
 

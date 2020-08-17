@@ -69,7 +69,7 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
   end
 
   it "can take an oid and build a metadata cloud Ladybird url" do
-    expect(described_class.build_metadata_cloud_url("2034600", "ladybird").to_s).to eq "https://#{described_class.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2034600"
+    expect(described_class.build_metadata_cloud_url("2034600", "ladybird").to_s).to eq "https://#{described_class.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2034600?include-children=1"
   end
 
   it "can take an oid and build a metadata cloud bib-based Voyager url" do
@@ -103,9 +103,9 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
     let(:unfindable_oid_array) { ["17063396", "17029210"] }
     let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "17063396.json") }
     before do
-      stub_request(:get, "https://#{described_class.metadata_cloud_host}/metadatacloud/api/ladybird/oid/17063396")
+      stub_request(:get, "https://#{described_class.metadata_cloud_host}/metadatacloud/api/ladybird/oid/17063396?include-children=1")
         .to_return(status: 400, body: "ex: can't connect to ladybird")
-      stub_request(:get, "https://#{described_class.metadata_cloud_host}/metadatacloud/api/ladybird/oid/17029210")
+      stub_request(:get, "https://#{described_class.metadata_cloud_host}/metadatacloud/api/ladybird/oid/17029210?include-children=1")
         .to_return(status: 400, body: "ex: can't connect to ladybird")
     end
 

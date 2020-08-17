@@ -1,12 +1,48 @@
 # Changelog
 
+## [v2.10.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.10.0) (2020-08-17)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/V2.9.0...v2.10.0)
+
+**New Features:**
+
+- ParentObjects create their ChildObjects [\#214](https://github.com/yalelibrary/yul-dc-management/pull/214) ([maxkadel](https://github.com/maxkadel))
+- Fetch Ladybird children from MetadataCloud [\#213](https://github.com/yalelibrary/yul-dc-management/pull/213) ([maxkadel](https://github.com/maxkadel))
+
+## [V2.9.0](https://github.com/yalelibrary/yul-dc-management/tree/V2.9.0) (2020-08-14)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.9.0...V2.9.0)
+
+## [v2.9.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.9.0) (2020-08-14)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.8.1...v2.9.0)
+
+**New Features:**
+
+- Add authoritative JSON to ParentObject show page [\#210](https://github.com/yalelibrary/yul-dc-management/pull/210) ([maxkadel](https://github.com/maxkadel))
+- Child objects [\#209](https://github.com/yalelibrary/yul-dc-management/pull/209) ([maxkadel](https://github.com/maxkadel))
+- Create manifest from mets [\#200](https://github.com/yalelibrary/yul-dc-management/pull/200) ([maxkadel](https://github.com/maxkadel))
+
+**Technical Enhancements:**
+
+- Prep for v2.9.0 release [\#212](https://github.com/yalelibrary/yul-dc-management/pull/212) ([maxkadel](https://github.com/maxkadel))
+- Rename Goobi xml import to METS xml import [\#208](https://github.com/yalelibrary/yul-dc-management/pull/208) ([maxkadel](https://github.com/maxkadel))
+- Add moving tickets to release process [\#207](https://github.com/yalelibrary/yul-dc-management/pull/207) ([maxkadel](https://github.com/maxkadel))
+- Refactor tests to make more readable [\#206](https://github.com/yalelibrary/yul-dc-management/pull/206) ([maxkadel](https://github.com/maxkadel))
+- Update readme to reflect recent changes to Camerata and rake tasks [\#205](https://github.com/yalelibrary/yul-dc-management/pull/205) ([maxkadel](https://github.com/maxkadel))
+- Change versions in the .env file [\#204](https://github.com/yalelibrary/yul-dc-management/pull/204) ([FCRodriguez7](https://github.com/FCRodriguez7))
+
 ## [v2.8.1](https://github.com/yalelibrary/yul-dc-management/tree/v2.8.1) (2020-08-07)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.8.0...v2.8.1)
 
-**Technical Enhancements:**
+**New Features:**
 
 - Parent object search indexing [\#202](https://github.com/yalelibrary/yul-dc-management/pull/202) ([orangewolf](https://github.com/orangewolf))
+
+**Technical Enhancements:**
+
+- Prep for v2.8.1 release [\#203](https://github.com/yalelibrary/yul-dc-management/pull/203) ([FCRodriguez7](https://github.com/FCRodriguez7))
 - Parent object model spec [\#201](https://github.com/yalelibrary/yul-dc-management/pull/201) ([dylansalay](https://github.com/dylansalay))
 - Create iiif manifest [\#199](https://github.com/yalelibrary/yul-dc-management/pull/199) ([maxkadel](https://github.com/maxkadel))
 

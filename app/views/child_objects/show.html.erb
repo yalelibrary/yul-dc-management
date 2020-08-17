@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Child oid:</strong>
+  <%= @child_object.child_oid %>
+</p>
+
+<p>
+  <strong>Caption:</strong>
+  <%= @child_object.caption %>
+</p>
+
+<p>
+  <strong>Width:</strong>
+  <%= @child_object.width %>
+</p>
+
+<p>
+  <strong>Height:</strong>
+  <%= @child_object.height %>
+</p>
+
+<p>
+  <strong>Order:</strong>
+  <%= @child_object.order %>
+</p>
+
+<p>
+  <strong>Parent object:</strong>
+  <%= @child_object.parent_object_oid %>
+</p>
+
+<%= link_to 'Edit', edit_child_object_path(@child_object) %> |
+<%= link_to 'Back', child_objects_path %>

@@ -205,22 +205,15 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
     # Part of ActiveSupport, see support/time_helpers.rb, behaves similarly to old TimeCop gem
     freeze_time
     # OID 2004628
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2004628.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2004628.json")).read)
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-2004628.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2004628.json")).read)
+    stub_metadata_cloud("2004628", "ladybird")
+    stub_metadata_cloud("V-2004628", "ils")
     # OID 2003431
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/2003431.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2003431.json")).read)
-    stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002091549668?bib=9734763")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-2003431.json")).read)
+    stub_metadata_cloud("2003431", "ladybird")
+    stub_metadata_cloud("V-2003431", "ils")
     # OID 16854285
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ladybird/16854285.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16854285.json")).read)
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/ils/V-16854285.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "ils", "V-16854285.json")).read)
-    stub_request(:get, "https://yul-development-samples.s3.amazonaws.com/aspace/AS-16854285.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "aspace", "AS-16854285.json")).read)
+    stub_metadata_cloud("16854285", "ladybird")
+    stub_metadata_cloud("V-16854285", "ils")
+    stub_metadata_cloud("AS-16854285", "aspace")
     # Activity Stream - stub requests to MetadataCloud activity stream with fixture objects that represent single activity_stream json pages
     stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/streams/activity")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read)

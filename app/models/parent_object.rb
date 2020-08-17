@@ -6,11 +6,27 @@ class ParentObject < ApplicationRecord
   include JsonFile
   include SolrIndexable
   has_many :dependent_objects
+  has_many :child_objects, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
 
   self.primary_key = 'oid'
   before_create :default_fetch, unless: proc { ladybird_json.present? }
-  after_save :solr_index
+  after_save :solr_index, :create_child_records
+
+  def create_child_records
+    return unless ladybird_json
+    self.child_object_count = 0
+    ladybird_json["children"].map do |child_record|
+      ChildObject.where(child_oid: child_record["oid"]).first_or_create do |child_object|
+        child_object.child_oid = child_record["oid"]
+        child_object.caption = child_record["caption"]
+        child_object.width = child_record["width"]
+        child_object.height = child_record["height"]
+        child_object.parent_object_oid = oid
+        self.child_object_count += 1
+      end
+    end
+  end
 
   # Fetches the record from the authoritative_metadata_source
   def default_fetch
@@ -54,7 +70,7 @@ class ParentObject < ApplicationRecord
   def ladybird_json=(lb_record)
     super(lb_record)
     return lb_record if lb_record.blank?
-    self.bib = lb_record["orbisRecord"]
+    self.bib = lb_record["orbisBibId"] || lb_record["orbisRecord"]
     self.barcode = lb_record["orbisBarcode"]
     self.aspace_uri = lb_record["archiveSpaceUri"]
     self.visibility = lb_record["itemPermission"]
@@ -76,15 +92,16 @@ class ParentObject < ApplicationRecord
   end
 
   def ladybird_cloud_url
-    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}"
+    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?include-children=1"
   end
 
   def voyager_cloud_url
     return nil unless ladybird_json.present?
+    orbis_bib = ladybird_json['orbisRecord'] || ladybird_json['orbisBibId']
     identifier_block = if ladybird_json["orbisBarcode"].nil?
-                         "/bib/#{ladybird_json['orbisRecord']}"
+                         "/bib/#{orbis_bib}"
                        else
-                         "/barcode/#{ladybird_json['orbisBarcode']}?bib=#{ladybird_json['orbisRecord']}"
+                         "/barcode/#{ladybird_json['orbisBarcode']}?bib=#{orbis_bib}"
                        end
     "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils#{identifier_block}"
   end

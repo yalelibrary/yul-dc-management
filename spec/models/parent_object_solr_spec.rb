@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: true do
-  context "indexing to Solr from the database with Ladybird ParentObjects" do
+RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
+  context "indexing to Solr from the database with Ladybird ParentObjects", solr: true do
     it "can index the 5 parent objects in the database to Solr" do
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 0
@@ -54,35 +54,44 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       end
     end
 
-    context "with an item without visibility" do
-      let(:no_vis_oid) { "16189097-no_vis" }
-      let(:parent_object_without_visibility) { FactoryBot.create(:parent_object, oid: no_vis_oid, source_name: 'ils') }
-
-      before do
-        stub_metadata_cloud(no_vis_oid.to_s)
-        stub_metadata_cloud("V-#{no_vis_oid}", 'ils')
+    context "with mocked items without a metadatacloud equivalent" do
+      around do |example|
+        original_vpn = ENV['VPN']
+        ENV['VPN'] = 'false'
+        example.run
+        ENV['VPN'] = original_vpn
       end
 
-      it "does not assign a visibility if one does not exist" do
-        solr_document = parent_object_without_visibility.to_solr
-        expect(solr_document[:title_tsim].first).to include "Dai Min kyūhen bankoku jinseki rotei zenzu"
-        expect(solr_document[:visibility_ssi]).to be nil
+      context "with an item without visibility" do
+        let(:no_vis_oid) { "30000016189097" }
+        let(:parent_object_without_visibility) { FactoryBot.create(:parent_object, oid: no_vis_oid, source_name: 'ils') }
+
+        before do
+          stub_metadata_cloud(no_vis_oid.to_s)
+          stub_metadata_cloud("V-#{no_vis_oid}", 'ils')
+        end
+
+        it "does not assign a visibility if one does not exist" do
+          solr_document = parent_object_without_visibility.to_solr
+          expect(solr_document[:title_tsim].first).to include "Dai Min kyūhen bankoku jinseki rotei zenzu"
+          expect(solr_document[:visibility_ssi]).to be nil
+        end
       end
-    end
 
-    context "with a private item" do
-      let(:priv_oid) { "16189097-priv" }
-      let(:parent_object_with_private_visibility) { FactoryBot.create(:parent_object, oid: priv_oid, visibility: "Private", source_name: 'ils') }
+      context "with a private item" do
+        let(:priv_oid) { "10000016189097" }
+        let(:parent_object_with_private_visibility) { FactoryBot.create(:parent_object, oid: priv_oid, visibility: "Private", source_name: 'ils') }
 
-      before do
-        stub_metadata_cloud(priv_oid)
-        stub_metadata_cloud("V-#{priv_oid}", 'ils')
-      end
+        before do
+          stub_metadata_cloud(priv_oid)
+          stub_metadata_cloud("V-#{priv_oid}", 'ils')
+        end
 
-      it "assigns private visibility from Ladybird data" do
-        solr_document = parent_object_with_private_visibility.to_solr
-        expect(solr_document[:title_tsim].first).to include "Dai Min kyūhen bankoku jinseki rotei zenzu"
-        expect(solr_document[:visibility_ssi]).to include "Private"
+        it "assigns private visibility from Ladybird data" do
+          solr_document = parent_object_with_private_visibility.to_solr
+          expect(solr_document[:title_tsim].first).to include "Dai Min kyūhen bankoku jinseki rotei zenzu"
+          expect(solr_document[:visibility_ssi]).to include "Private"
+        end
       end
     end
   end

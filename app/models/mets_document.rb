@@ -2,11 +2,11 @@
 
 class MetsDocument
   include MetsStructure
-  attr_reader :source_file
+  attr_reader :source_xml
   # Takes a path to the mets file
-  def initialize(mets_file)
-    @source_file = mets_file
-    @mets = File.open(@source_file) { |f| Nokogiri::XML(f) }
+  def initialize(mets_xml)
+    @source_xml = mets_xml
+    @mets = Nokogiri::XML(@source_xml)
   end
 
   def oid
@@ -38,6 +38,28 @@ class MetsDocument
   #        .to_s.start_with? 'RTL'
   # end
 
+  # Combines the physical info and file info for a given image, used for iiif manifest creation
+  def combined
+    zipped = files.zip(physical_divs)
+    zipped.map { |file, physical_div| file.merge(physical_div) }
+  end
+
+  def physical_divs
+    @mets.xpath("/mets:mets/mets:structMap[@TYPE='PHYSICAL']/mets:div" \
+                "/mets:div").map do |p|
+      physical_info(p)
+    end
+  end
+
+  def physical_info(physical_div)
+    {
+      phys_id: physical_div.xpath('@ID').to_s,
+      file_id: physical_div.xpath('mets:fptr/@FILEID').to_s,
+      order_label: physical_div.xpath("@ORDERLABEL").to_s,
+      order: physical_div.xpath("@ORDER").to_s
+    }
+  end
+
   def files
     @mets.xpath("/mets:mets/mets:fileSec/mets:fileGrp" \
                 "/mets:file").map do |f|
@@ -50,7 +72,8 @@ class MetsDocument
       id: file.xpath('@ID').to_s,
       checksum: file.xpath('@CHECKSUM').to_s,
       mime_type: file.xpath('@MIMETYPE').to_s,
-      url: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, '')
+      url: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, ''),
+      image_id: file.xpath('mets:FLocat/@xlink:href').to_s.match(/#{oid}\/images\/\w*\/(\d*)/)[1]
     }
   end
 

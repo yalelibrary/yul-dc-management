@@ -1,41 +1,18 @@
 {
-  "recordType": "oid",
-  "source": "ladybird",
-  "uri": "/ladybird/oid/16057780",
-  "identifierShelfMark": "WA MSS S-3019",
   "box": "Box 5",
-  "sourceTitle": "[Objects associated with Buffalo Bill]",
-  "sourceDate": "[circa 1870-1895]",
-  "creator": [
-    "Colt's Patent Fire Arms Manufacturing Co"
+  "oid": 16057780,
+  "uri": "/ladybird/oid/16057780",
+  "date": [
+    "ca. 1895"
+  ],
+  "genre": [
+    "Revolvers (firearms)--United States--19th century."
   ],
   "title": [
     "Colt revolver"
   ],
-  "date": [
-    "ca. 1895"
-  ],
   "extent": [
     "1 revolver + case : 29 cm."
-  ],
-  "description": [
-    "One revolver made by Colt's Patent Fire-Arms Manufacturing Company and owned by Nathan Salsbury. The gun is 29 cm in length and was stamped in several places: \"Colt's PT. F. A. Mfg. Co. Hartford CT. U.S.A. / Patented Aug.5.1884 Nov.6.88. Mar.5.95.\" along the top of the barrel, \"Colt. D. A. 38\" along the side of the barrel, and a rampant colt in a circle at the top of the ivory grip. It is stamped \"411\" on the cylinder release, and with serial number \"15 / 936\" on the buttstrap. The monogram \"NS\" is inlaid in gold on the side between the grip and the cylinder, and is surrounded by engraved flourishes. The revolver is housed in a fitted velvet-lined box."
-  ],
-  "subjectName": [
-    "Buffalo Bill,--1846-1917.",
-    "Buffalo Bill's Wild West Company.",
-    "Buffalo Bill's Wild West Show.",
-    "Colt's Patent Fire Arms Manufacturing Co",
-    "Colt's Patent Fire Arms Manufacturing Co.",
-    "Salsbury, Nathan,--1846-1902.",
-    "Sitting Bull,--1831-1890."
-  ],
-  "subjectTopic": [
-    "Theatrical managers--United States.",
-    "Wild west shows."
-  ],
-  "genre": [
-    "Revolvers (firearms)--United States--19th century."
   ],
   "format": [
     "three dimensional object"
@@ -44,22 +21,354 @@
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement"
   ],
-  "orbisRecord": "12442385",
-  "relatedUrl": [
-    "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?&amp;CN=WA_MSS_S-3019"
+  "source": "ladybird",
+  "creator": [
+    "Colt's Patent Fire Arms Manufacturing Co"
   ],
+  "abstract": [
+    "A collection of weapons and costume accessories owned by Nathan Salsbury and associated with colleagues of William F. \"Buffalo Bill\" Cody, including John Burwell \"Texas Jack\" Omohundro and Sitting Bull. Included are a shotgun, a bolas, a pair of moccasins, and a quiver containing a bow and arrows, as well as a revolver owned by Salsbury.",
+    "Nathan Salsbury (1846-1902), Civil War veteran, actor, and theatrical entrepreneur; after 1884 co-owner, producer and manager of \"Buffalo Bill's Wild West Show.\""
+  ],
+  "children": [
+    {
+      "oid": 16190131,
+      "uri": "/ladybird/oid/16190131",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 5418,
+      "height": 3605,
+      "source": "ladybird",
+      "caption": "Colt-001",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190131"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190132,
+      "uri": "/ladybird/oid/16190132",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 5390,
+      "height": 4199,
+      "source": "ladybird",
+      "caption": "Colt-002",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190132"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190133,
+      "uri": "/ladybird/oid/16190133",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 5474,
+      "height": 4190,
+      "source": "ladybird",
+      "caption": "Colt-003",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190133"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190134,
+      "uri": "/ladybird/oid/16190134",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 6312,
+      "height": 4200,
+      "source": "ladybird",
+      "caption": "Colt-004",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190134"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190135,
+      "uri": "/ladybird/oid/16190135",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 6014,
+      "height": 3911,
+      "source": "ladybird",
+      "caption": "Colt-005",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190135"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190136,
+      "uri": "/ladybird/oid/16190136",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 6420,
+      "height": 3739,
+      "source": "ladybird",
+      "caption": "Colt-006",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190136"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190137,
+      "uri": "/ladybird/oid/16190137",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 6668,
+      "height": 4765,
+      "source": "ladybird",
+      "caption": "Colt-007",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190137"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190138,
+      "uri": "/ladybird/oid/16190138",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 7360,
+      "height": 4912,
+      "source": "ladybird",
+      "caption": "Colt-008",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190138"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190139,
+      "uri": "/ladybird/oid/16190139",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 7360,
+      "height": 4912,
+      "source": "ladybird",
+      "caption": "Colt-009",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190139"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190140,
+      "uri": "/ladybird/oid/16190140",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 7110,
+      "height": 4762,
+      "source": "ladybird",
+      "caption": "Colt-010",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190140"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190141,
+      "uri": "/ladybird/oid/16190141",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 6807,
+      "height": 3631,
+      "source": "ladybird",
+      "caption": "Colt-011",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190141"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190142,
+      "uri": "/ladybird/oid/16190142",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 6740,
+      "height": 4485,
+      "source": "ladybird",
+      "caption": "Colt-012",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190142"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190143,
+      "uri": "/ladybird/oid/16190143",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 7128,
+      "height": 2163,
+      "source": "ladybird",
+      "caption": "Colt-013",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190143"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190144,
+      "uri": "/ladybird/oid/16190144",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 1785,
+      "height": 6636,
+      "source": "ladybird",
+      "caption": "Colt-014",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190144"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190145,
+      "uri": "/ladybird/oid/16190145",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 2246,
+      "height": 6721,
+      "source": "ladybird",
+      "caption": "Colt-015",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190145"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190146,
+      "uri": "/ladybird/oid/16190146",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 1944,
+      "height": 4364,
+      "source": "ladybird",
+      "caption": "Colt-016",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190146"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    },
+    {
+      "oid": 16190147,
+      "uri": "/ladybird/oid/16190147",
+      "title": [
+        "Colt revolver"
+      ],
+      "width": 3243,
+      "height": 4203,
+      "source": "ladybird",
+      "caption": "Colt-017",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16190147"
+      ],
+      "identifierShelfMark": "WA MSS S-3019"
+    }
+  ],
+  "contents": [
+    "One revolver made by Colt's Patent Fire-Arms Manufacturing Company and owned by Nathan Salsbury. The gun is 29 cm in length and was stamped in several places: \"Colt's PT. F. A. Mfg. Co. Hartford CT. U.S.A. / Patented Aug.5.1884 Nov.6.88. Mar.5.95.\" along the top of the barrel, \"Colt. D. A. 38\" along the side of the barrel, and a rampant colt in a circle at the top of the ivory grip. It is stamped \"411\" on the cylinder release, and with serial number \"15 / 936\" on the buttstrap. The monogram \"NS\" is inlaid in gold on the side between the grip and the cylinder, and is surrounded by engraved flourishes. The revolver is housed in a fitted velvet-lined box."
+  ],
+  "indexedBy": [
+    "Nathan Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western Americana, Beinecke Rare Book and Manuscript Library."
+  ],
+  "recordType": "oid",
   "references": [
     "Nathan Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western Americana, Beinecke Rare Book and Manuscript Library."
   ],
-  "itemPermission": "Public",
-  "dateStructured": [
-    "1870-00-00T00:00:00Z"
+  "relatedUrl": [
+    "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?&amp;CN=WA_MSS_S-3019"
   ],
-  "resourceType": "Tools, Equipment & Instruments",
-  "illustrativeMatter": "150424i18701895vp nnn            rneng d",
-  "copyrightDate": [
-    "[circa 1870-1895]"
-  ],
+  "repository": "Beinecke Library",
+  "sourceDate": "[circa 1870-1895]",
   "subjectEra": "Wild west shows.",
   "contributor": [
     "Buffalo Bill,--1846-1917.",
@@ -70,21 +379,40 @@
     "Salsbury, Nathan,--1846-1902.",
     "Sitting Bull,--1831-1890."
   ],
-  "repository": "Beinecke Library",
-  "contents": [
+  "description": [
     "One revolver made by Colt's Patent Fire-Arms Manufacturing Company and owned by Nathan Salsbury. The gun is 29 cm in length and was stamped in several places: \"Colt's PT. F. A. Mfg. Co. Hartford CT. U.S.A. / Patented Aug.5.1884 Nov.6.88. Mar.5.95.\" along the top of the barrel, \"Colt. D. A. 38\" along the side of the barrel, and a rampant colt in a circle at the top of the ivory grip. It is stamped \"411\" on the cylinder release, and with serial number \"15 / 936\" on the buttstrap. The monogram \"NS\" is inlaid in gold on the side between the grip and the cylinder, and is surrounded by engraved flourishes. The revolver is housed in a fitted velvet-lined box."
   ],
-  "subjectTitle": "Wild west shows.",
-  "indexedBy": [
-    "Nathan Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western Americana, Beinecke Rare Book and Manuscript Library."
+  "orbisRecord": "12442385",
+  "sourceTitle": "[Objects associated with Buffalo Bill]",
+  "subjectName": [
+    "Buffalo Bill,--1846-1917.",
+    "Buffalo Bill's Wild West Company.",
+    "Buffalo Bill's Wild West Show.",
+    "Colt's Patent Fire Arms Manufacturing Co",
+    "Colt's Patent Fire Arms Manufacturing Co.",
+    "Salsbury, Nathan,--1846-1902.",
+    "Sitting Bull,--1831-1890."
   ],
-  "subjectTitleDisplay": [
+  "collectionId": 1,
+  "resourceType": "Tools, Equipment & Instruments",
+  "subjectTitle": "Wild west shows.",
+  "subjectTopic": [
     "Theatrical managers--United States.",
     "Wild west shows."
+  ],
+  "copyrightDate": [
+    "[circa 1870-1895]"
+  ],
+  "dependentUris": [
+    "/ladybird/oid/16057780"
   ],
   "creatorDisplay": [
     "Colt's Patent Fire Arms Manufacturing Co"
   ],
+  "dateStructured": [
+    "1870-00-00T00:00:00Z"
+  ],
+  "itemPermission": "Public",
   "contributorDisplay": [
     "Buffalo Bill,--1846-1917.",
     "Buffalo Bill's Wild West Company.",
@@ -94,16 +422,10 @@
     "Salsbury, Nathan,--1846-1902.",
     "Sitting Bull,--1831-1890."
   ],
-  "dependentUris": [
-    "/ladybird/oid/16057780"
-  ],
-  "oid": 16057780,
-  "collectionId": 1,
-  "children": [
-
-  ],
-  "abstract": [
-    "A collection of weapons and costume accessories owned by Nathan Salsbury and associated with colleagues of William F. \"Buffalo Bill\" Cody, including John Burwell \"Texas Jack\" Omohundro and Sitting Bull. Included are a shotgun, a bolas, a pair of moccasins, and a quiver containing a bow and arrows, as well as a revolver owned by Salsbury.",
-    "Nathan Salsbury (1846-1902), Civil War veteran, actor, and theatrical entrepreneur; after 1884 co-owner, producer and manager of \"Buffalo Bill's Wild West Show.\""
+  "illustrativeMatter": "150424i18701895vp nnn            rneng d",
+  "identifierShelfMark": "WA MSS S-3019",
+  "subjectTitleDisplay": [
+    "Theatrical managers--United States.",
+    "Wild west shows."
   ]
 }
