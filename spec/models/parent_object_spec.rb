@@ -20,14 +20,21 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     end
   end
   context "a newly created ParentObject with just the oid and default authoritative_metadata_source (Ladybird for now)" do
-    let(:parent_object) { described_class.create(oid: "2004628") }
-
+    let(:parent_object) { described_class.create(oid: "2005512") }
+    before do
+      stub_metadata_cloud("2005512", "ladybird")
+    end
     it "pulls from the MetadataCloud for Ladybird and not Voyager or ArchiveSpace" do
       expect(parent_object.authoritative_metadata_source_id).to eq ladybird
       expect(parent_object.ladybird_json).not_to be nil
       expect(parent_object.ladybird_json).not_to be_empty
       expect(parent_object.voyager_json).to be nil
       expect(parent_object.aspace_json).to be nil
+    end
+
+    it " creates and has a count of ChildObjects" do
+      expect(parent_object.child_object_count).to eq 2
+      expect(ChildObject.where(parent_object_oid: "2005512").count).to eq 2
     end
   end
 
