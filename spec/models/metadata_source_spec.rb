@@ -19,7 +19,7 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
       let(:ladybird_source) { FactoryBot.build(:metadata_source) }
 
       before do
-        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16797069")
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16797069?include-children=1")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16797069.json")).read)
         stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/16797069.json").to_return(status: 200)
       end
@@ -45,12 +45,15 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
     # spec file once that file gets created
     context "it can talk to the metadata cloud", vpn_only: true do
       let(:oid) { "16371272" }
-      let(:oid_url) { "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?mediaType=json" }
+      let(:oid_url) { "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?include-children=1" }
       let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "2034600.json") }
       let(:ladybird_source) { FactoryBot.build(:metadata_source) }
-
+      before do
+        WebMock.allow_net_connect!
+      end
       it "can connect to the metadata cloud using basic auth" do
         expect(ladybird_source.mc_get(oid_url).to_str).to include "Manuscript, on parchment"
+        expect(ladybird_source.mc_get(oid_url).to_str).to include "/ladybird/oid/16565592"
       end
     end
   end
@@ -61,7 +64,7 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
     let(:aspace_source) { FactoryBot.build(:metadata_source_aspace) }
 
     before do
-      stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/000000.json")
+      stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/0.json")
         .to_return(status: 404)
       stub_metadata_cloud("16797069", 'ladybird')
       stub_metadata_cloud("V-16797069", 'ils')
@@ -106,7 +109,7 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
     end
 
     context "with file missing" do
-      let(:parent_object) { FactoryBot.build(:parent_object, oid: '000000') }
+      let(:parent_object) { FactoryBot.build(:parent_object, oid: '0') }
 
       it "returns nil if the cached json does not exist" do
         ladybird_result = ladybird_source.fetch_record(parent_object)

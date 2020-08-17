@@ -24,7 +24,7 @@ class MetadataCloudService
   # the appropriate URL to pull the metadata from the Yale Metadata Cloud
   def self.build_metadata_cloud_url(oid, metadata_source)
     if metadata_source == "ladybird"
-      identifier_block = "/oid/#{oid}"
+      identifier_block = "/oid/#{oid}?include-children=1"
     elsif metadata_source == "ils"
       bib = MetadataCloudService.get_bib(oid)
       barcode = MetadataCloudService.get_barcode(oid)
@@ -71,7 +71,7 @@ class MetadataCloudService
   # how we want to save them. Like, should refreshing the relationship between the Ladybird IDs and the bib ids be done on a chron job?
   def self.get_bib(oid)
     ladybird_hash = FixtureParsingService.fixture_file_to_hash(oid, "ladybird")
-    ladybird_hash["orbisRecord"]
+    ladybird_hash["orbisBibId"] || ladybird_hash["orbisRecord"]
   end
 
   def self.get_barcode(oid)

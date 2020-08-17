@@ -1,39 +1,20 @@
 {
-  "recordType": "oid",
-  "source": "ladybird",
-  "uri": "/ladybird/oid/16854582",
-  "identifierShelfMark": "YCAL MSS 702",
   "box": "8",
-  "sourceTitle": "Robert Giard papers",
-  "sourceDate": "1972-2002",
-  "sourceNote": "February 2005 Acquisition. Professional papers",
-  "creator": [
-    "Giard, Robert, 1939-2002"
-  ],
-  "title": [
-    "Desk files, weekly calendars, grant proposals, resumes, professional correspondence, exhibition announcements and brochures, obituaries, awards, articles, plans for future projects"
-  ],
-  "extentOfDigitization": [
-    "Partial work digitized."
-  ],
+  "oid": 16854582,
+  "uri": "/ladybird/oid/16854582",
   "date": [
     "1994-2002"
-  ],
-  "extent": [
-    "16 Folders ; 27.8 x 21.1 cm."
-  ],
-  "language": [
-    "English"
-  ],
-  "subjectTopic": [
-    "LGBTQ resource",
-    "Photographers--United States--20th Century",
-    "Photographers--United States--Archives"
   ],
   "genre": [
     "Manuscript maps",
     "Manuscripts",
     "Typescripts"
+  ],
+  "title": [
+    "Desk files, weekly calendars, grant proposals, resumes, professional correspondence, exhibition announcements and brochures, obituaries, awards, articles, plans for future projects"
+  ],
+  "extent": [
+    "16 Folders ; 27.8 x 21.1 cm."
   ],
   "format": [
     "text"
@@ -42,43 +23,232 @@
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "orbisRecord": "7151233",
-  "orbisBarcode": "39002104850970",
-  "findingAid": [
-    "http://hdl.handle.net/10079/fa/beinecke.giard"
+  "source": "ladybird",
+  "creator": [
+    "Giard, Robert, 1939-2002"
   ],
-  "references": [
-    "Robert Giard Papers. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
+  "children": [
+    {
+      "oid": 16854589,
+      "uri": "/ladybird/oid/16854589",
+      "title": [
+        "Desk files, weekly calendars, grant proposals, resumes, professional correspondence, exhibition announcements and brochures, obituaries, awards, articles, plans for future projects"
+      ],
+      "width": 3421,
+      "height": 4375,
+      "source": "ladybird",
+      "caption": "[Career files unnumbered folder 9] The Thanks Be To Grandmother Winifred Foundation Grantees to be photographed, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16854589"
+      ],
+      "identifierShelfMark": "YCAL MSS 702"
+    },
+    {
+      "oid": 16854590,
+      "uri": "/ladybird/oid/16854590",
+      "title": [
+        "Desk files, weekly calendars, grant proposals, resumes, professional correspondence, exhibition announcements and brochures, obituaries, awards, articles, plans for future projects"
+      ],
+      "width": 3432,
+      "height": 4375,
+      "source": "ladybird",
+      "caption": "[Career files unnumbered folder 9] The Thanks Be To Grandmother Winifred Foundation Grantees to be photographed, p. 2",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16854590"
+      ],
+      "identifierShelfMark": "YCAL MSS 702"
+    },
+    {
+      "oid": 16854591,
+      "uri": "/ladybird/oid/16854591",
+      "title": [
+        "Desk files, weekly calendars, grant proposals, resumes, professional correspondence, exhibition announcements and brochures, obituaries, awards, articles, plans for future projects"
+      ],
+      "width": 3420,
+      "height": 4370,
+      "source": "ladybird",
+      "caption": "[Career files unnumbered folder 9] The Thanks Be To Grandmother Winifred Foundation Grantees to be photographed, p. 3",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16854591"
+      ],
+      "identifierShelfMark": "YCAL MSS 702"
+    },
+    {
+      "oid": 16854592,
+      "uri": "/ladybird/oid/16854592",
+      "title": [
+        "Desk files, weekly calendars, grant proposals, resumes, professional correspondence, exhibition announcements and brochures, obituaries, awards, articles, plans for future projects"
+      ],
+      "width": 3439,
+      "height": 4379,
+      "source": "ladybird",
+      "caption": "[Career files unnumbered folder 9] The Thanks Be To Grandmother Winifred Foundation Grantees to be photographed, p. 4",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16854592"
+      ],
+      "identifierShelfMark": "YCAL MSS 702"
+    },
+    {
+      "oid": 16854624,
+      "uri": "/ladybird/oid/16854624",
+      "title": [
+        "Desk files, weekly calendars, grant proposals, resumes, professional correspondence, exhibition announcements and brochures, obituaries, awards, articles, plans for future projects"
+      ],
+      "width": 3435,
+      "height": 4384,
+      "source": "ladybird",
+      "caption": "[Career files unnumbered folder 9] The Thanks Be To Grandmother Winifred Foundation Grantees to be photographed, p. 4[verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16854624"
+      ],
+      "identifierShelfMark": "YCAL MSS 702"
+    },
+    {
+      "oid": 16854593,
+      "uri": "/ladybird/oid/16854593",
+      "title": [
+        "Desk files, weekly calendars, grant proposals, resumes, professional correspondence, exhibition announcements and brochures, obituaries, awards, articles, plans for future projects"
+      ],
+      "width": 3432,
+      "height": 4378,
+      "source": "ladybird",
+      "caption": "[Career files unnumbered folder 9] The Thanks Be To Grandmother Winifred Foundation Grantees to be photographed, p. 5",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16854593"
+      ],
+      "identifierShelfMark": "YCAL MSS 702"
+    },
+    {
+      "oid": 16854594,
+      "uri": "/ladybird/oid/16854594",
+      "title": [
+        "Desk files, weekly calendars, grant proposals, resumes, professional correspondence, exhibition announcements and brochures, obituaries, awards, articles, plans for future projects"
+      ],
+      "width": 3427,
+      "height": 4372,
+      "source": "ladybird",
+      "caption": "[Career files unnumbered folder 9] The Thanks Be To Grandmother Winifred Foundation Grantees to be photographed, p. [6]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16854594"
+      ],
+      "identifierShelfMark": "YCAL MSS 702"
+    },
+    {
+      "oid": 16854625,
+      "uri": "/ladybird/oid/16854625",
+      "title": [
+        "Desk files, weekly calendars, grant proposals, resumes, professional correspondence, exhibition announcements and brochures, obituaries, awards, articles, plans for future projects"
+      ],
+      "width": 3459,
+      "height": 4507,
+      "source": "ladybird",
+      "caption": "[Career files unnumbered folder 9] The Thanks Be To Grandmother Winifred Foundation Grantees to be photographed, p. [6 verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16854625"
+      ],
+      "identifierShelfMark": "YCAL MSS 702"
+    },
+    {
+      "oid": 16854595,
+      "uri": "/ladybird/oid/16854595",
+      "title": [
+        "Desk files, weekly calendars, grant proposals, resumes, professional correspondence, exhibition announcements and brochures, obituaries, awards, articles, plans for future projects"
+      ],
+      "width": 3416,
+      "height": 4367,
+      "source": "ladybird",
+      "caption": "[Career files unnumbered folder 9] The Thanks Be To Grandmother Winifred Foundation Grantees to be photographed, p. [7]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16854595"
+      ],
+      "identifierShelfMark": "YCAL MSS 702"
+    }
   ],
-  "itemPermission": "Public",
-  "dateStructured": [
-    "1994-00-00T00:00:00Z"
+  "language": [
+    "English"
   ],
-  "resourceType": "Archives or Manuscripts",
-  "subjectEra": "Photographers--United States--Archives",
-  "repository": "Beinecke Library",
-  "subjectTitle": "Photographers--United States--Archives",
   "indexedBy": [
     "Robert Giard Papers. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
+  "findingAid": [
+    "http://hdl.handle.net/10079/fa/beinecke.giard"
+  ],
+  "recordType": "oid",
+  "references": [
+    "Robert Giard Papers. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
+  ],
+  "repository": "Beinecke Library",
+  "sourceDate": "1972-2002",
+  "sourceNote": "February 2005 Acquisition. Professional papers",
+  "subjectEra": "Photographers--United States--Archives",
+  "orbisRecord": "7151233",
+  "sourceTitle": "Robert Giard papers",
+  "collectionId": 1,
+  "orbisBarcode": "39002104850970",
+  "resourceType": "Archives or Manuscripts",
+  "subjectTitle": "Photographers--United States--Archives",
+  "subjectTopic": [
+    "LGBTQ resource",
+    "Photographers--United States--20th Century",
+    "Photographers--United States--Archives"
+  ],
+  "dependentUris": [
+    "/ladybird/oid/16854582"
+  ],
+  "creatorDisplay": [
+    "Giard, Robert, 1939-2002"
+  ],
+  "dateStructured": [
+    "1994-00-00T00:00:00Z"
+  ],
+  "itemPermission": "Public",
+  "archiveSpaceUri": "/repositories/11/archival_objects/699963",
   "subjectGeographic": [
     "United States--Maps, Manuscript"
   ],
+  "identifierShelfMark": "YCAL MSS 702",
   "subjectTitleDisplay": [
     "LGBTQ resource",
     "Photographers--United States--20th Century",
     "Photographers--United States--Archives"
   ],
-  "creatorDisplay": [
-    "Giard, Robert, 1939-2002"
-  ],
-  "archiveSpaceUri": "/repositories/11/archival_objects/699963",
-  "dependentUris": [
-    "/ladybird/oid/16854582"
-  ],
-  "oid": 16854582,
-  "collectionId": 1,
-  "children": [
-
+  "extentOfDigitization": [
+    "Partial work digitized."
   ]
 }

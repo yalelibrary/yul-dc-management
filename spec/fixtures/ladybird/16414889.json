@@ -30,7 +30,538 @@
     "Cruikshank, George, 1792-1878."
   ],
   "children": [
+    {
+      "oid": 16424346,
+      "uri": "/ladybird/oid/16424346",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1562,
+      "height": 2114,
+      "source": "ladybird",
+      "caption": "[Front cover]",
+      "children": [
 
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424346"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424347,
+      "uri": "/ladybird/oid/16424347",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1526,
+      "height": 2126,
+      "source": "ladybird",
+      "caption": "[Front pastedown]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424347"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424348,
+      "uri": "/ladybird/oid/16424348",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1580,
+      "height": 2124,
+      "source": "ladybird",
+      "caption": "[A Alamode]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424348"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424349,
+      "uri": "/ladybird/oid/16424349",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1527,
+      "height": 2058,
+      "source": "ladybird",
+      "caption": "[B Boots]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424349"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424350,
+      "uri": "/ladybird/oid/16424350",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1527,
+      "height": 2058,
+      "source": "ladybird",
+      "caption": "[C Chimpanzee]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424350"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424351,
+      "uri": "/ladybird/oid/16424351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1527,
+      "height": 2058,
+      "source": "ladybird",
+      "caption": "[D Dining Out]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424351"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424352,
+      "uri": "/ladybird/oid/16424352",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1527,
+      "height": 2058,
+      "source": "ladybird",
+      "caption": "[E Equality]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424352"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424353,
+      "uri": "/ladybird/oid/16424353",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1527,
+      "height": 2058,
+      "source": "ladybird",
+      "caption": "[F Fashion]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424353"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424354,
+      "uri": "/ladybird/oid/16424354",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1527,
+      "height": 2058,
+      "source": "ladybird",
+      "caption": "[G Going]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424354"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424355,
+      "uri": "/ladybird/oid/16424355",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1527,
+      "height": 2058,
+      "source": "ladybird",
+      "caption": "[H Holidays]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424355"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424356,
+      "uri": "/ladybird/oid/16424356",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1527,
+      "height": 2058,
+      "source": "ladybird",
+      "caption": "[I J Isac & John]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424356"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424357,
+      "uri": "/ladybird/oid/16424357",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1580,
+      "height": 2090,
+      "source": "ladybird",
+      "caption": "[K Kitchen Stuff]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424357"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424358,
+      "uri": "/ladybird/oid/16424358",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1486,
+      "height": 2051,
+      "source": "ladybird",
+      "caption": "[L Latitude & Longitude]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424358"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424359,
+      "uri": "/ladybird/oid/16424359",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1486,
+      "height": 2051,
+      "source": "ladybird",
+      "caption": "[M Monkies]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424359"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424360,
+      "uri": "/ladybird/oid/16424360",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1486,
+      "height": 2051,
+      "source": "ladybird",
+      "caption": "[N Nightmare]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424360"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424361,
+      "uri": "/ladybird/oid/16424361",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1486,
+      "height": 2051,
+      "source": "ladybird",
+      "caption": "[O Orpheus]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424361"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424362,
+      "uri": "/ladybird/oid/16424362",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1486,
+      "height": 2051,
+      "source": "ladybird",
+      "caption": "[P Pretty-Poll]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424362"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424363,
+      "uri": "/ladybird/oid/16424363",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1486,
+      "height": 2051,
+      "source": "ladybird",
+      "caption": "[Q Quadrille]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424363"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424364,
+      "uri": "/ladybird/oid/16424364",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1486,
+      "height": 2051,
+      "source": "ladybird",
+      "caption": "[R Racing]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424364"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424365,
+      "uri": "/ladybird/oid/16424365",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1486,
+      "height": 2051,
+      "source": "ladybird",
+      "caption": "[S Singing]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424365"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424366,
+      "uri": "/ladybird/oid/16424366",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1486,
+      "height": 2051,
+      "source": "ladybird",
+      "caption": "[T Tantalizing]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424366"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424367,
+      "uri": "/ladybird/oid/16424367",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1486,
+      "height": 2051,
+      "source": "ladybird",
+      "caption": "[V U Very Unpleasant]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424367"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424368,
+      "uri": "/ladybird/oid/16424368",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1486,
+      "height": 2051,
+      "source": "ladybird",
+      "caption": "[W Waistcoat]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424368"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424369,
+      "uri": "/ladybird/oid/16424369",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1486,
+      "height": 2051,
+      "source": "ladybird",
+      "caption": "[X Xantippe]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424369"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424370,
+      "uri": "/ladybird/oid/16424370",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1486,
+      "height": 2051,
+      "source": "ladybird",
+      "caption": "[Y Yawning]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424370"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424371,
+      "uri": "/ladybird/oid/16424371",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1486,
+      "height": 2051,
+      "source": "ladybird",
+      "caption": "[Z Zoophyte]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424371"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424372,
+      "uri": "/ladybird/oid/16424372",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1568,
+      "height": 2130,
+      "source": "ladybird",
+      "caption": "[Back pastedown]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424372"
+      ],
+      "identifierShelfMark": "1978 1351"
+    },
+    {
+      "oid": 16424373,
+      "uri": "/ladybird/oid/16424373",
+      "title": [
+        "A comic alphabet"
+      ],
+      "width": 1552,
+      "height": 2124,
+      "source": "ladybird",
+      "caption": "[Back cover]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16424373"
+      ],
+      "identifierShelfMark": "1978 1351"
+    }
   ],
   "contents": [
     "Cover-title.",

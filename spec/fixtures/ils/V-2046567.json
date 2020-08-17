@@ -28,17 +28,18 @@
   "publisher": [
     "Printed by W. Strahan, for J. and P. Knapton [etc.]"
   ],
+  "callNumber": "GEN MSS VOL 728 (Oversize) Bound with 1 other title. To view full description, search by call number: GEN MSS VOL 728 (Oversize) Former call number: MS Vault Johnson",
   "createDate": "2002-06-01T04:00:00.000+0000",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=GEN_MSS_VOL_728_(Oversize)"
   ],
+  "orbisBibId": "1169354",
   "recordType": "bib",
   "repository": "beingen",
   "updateDate": "2020-03-03T13:49:15.000+0000",
   "description": [
     "BEIN GEN MSS VOL 728 (Oversize):  Incomplete copy of mixed sheets and proofs of the first edition, with corrections by Johnson and his amanuenses, which first appeared in the 4th edition, 1773. Without t.p.'s and preliminary matter; with some omissions, text runs from A-Pum. Armorial binding of Ralph Sneyd."
   ],
-  "orbisRecord": "1169354",
   "orbisBarcode": "39002094045136",
   "subjectTopic": [
     "English language"
@@ -64,6 +65,6 @@
   ],
   "volumeEnumeration": "2",
   "illustrativeMatter": "    ",
-  "identifierShelfMark": "728 (Oversize) GEN MSS VOL Bound with 1 other title. To view full description, search by call number: GEN MSS VOL 728 (Oversize) Former call number: MS Vault Johnson",
-  "provenanceControlled": "Johnson, Samuel, 1709-1784 Ms. notes. Sneyd, Ralph Binding."
+  "provenanceControlled": "Johnson, Samuel, 1709-1784 Ms. notes. Sneyd, Ralph Binding.",
+  "libraryOfCongressClassificationNumber": "PE1620 .J6 1755"
 }

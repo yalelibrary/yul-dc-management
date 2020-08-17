@@ -1,49 +1,8 @@
 {
-  "recordType": "oid",
-  "source": "ladybird",
+  "oid": 16301942,
   "uri": "/ladybird/oid/16301942",
-  "identifierShelfMark": "YCAL MSS 229",
-  "sourceDate": "1958-1967",
-  "sourceNote": "Three scrapbooks, compiled by Jane Wodening, containing correspondence, photographs, manuscripts, printed material, artwork, cut film, and objects documenting the work and family life of Wodening (ne?e Collom) and Stan Brakhage from 1958 to 1967.",
-  "creator": [
-    "Brakhage, Stan"
-  ],
-  "title": [
-    "Jane Wodening and Stan Brakhage scrapbook"
-  ],
-  "numberOfPages": "Vol. 3",
-  "extentOfDigitization": [
-    "Complete work digitized."
-  ],
   "date": [
     "1958-1967"
-  ],
-  "extent": [
-    "1 vol. ; 36 cm."
-  ],
-  "language": [
-    "English"
-  ],
-  "subjectName": [
-    "Beck, Julian, 1925-1985",
-    "Branaman, Robert R",
-    "Coleridge, Samuel Taylor, 1772-1834",
-    "Creeley, Robert, 1926-2005",
-    "Duncan, Robert, 1919-1988.",
-    "Flaming creatures (Motion picture)",
-    "Gamow, George, 1904-1968",
-    "Ginsberg, Allen, 1926-1997",
-    "Goodyear, John, 1930-",
-    "Highet, Gilbert, 1906-1978",
-    "Kelly, Robert, 1935-",
-    "Lytton, Edward Robert Bulwer Lytton,--Earl of,--1831-1891",
-    "Malina, Judith, 1926-",
-    "McClure, Michael",
-    "Mekas, Jonas, 1922-",
-    "Munsell, Joel, 1808-1880",
-    "Olson, Charles, 1910-1970",
-    "Stein, Gertrude, 1874-1946",
-    "Steinbeck, John, 1902-1968"
   ],
   "genre": [
     "Artifacts",
@@ -57,6 +16,12 @@
     "Poems",
     "Scrapbooks"
   ],
+  "title": [
+    "Jane Wodening and Stan Brakhage scrapbook"
+  ],
+  "extent": [
+    "1 vol. ; 36 cm."
+  ],
   "format": [
     "still image"
   ],
@@ -64,16 +29,5500 @@
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "orbisRecord": "7748458",
-  "orbisBarcode": "39002098971766",
+  "source": "ladybird",
+  "creator": [
+    "Brakhage, Stan"
+  ],
+  "abstract": [
+    "Binding: ivory with gold embossing."
+  ],
+  "children": [
+    {
+      "oid": 16595940,
+      "uri": "/ladybird/oid/16595940",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4848,
+      "height": 5880,
+      "source": "ladybird",
+      "caption": "[Front cover]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595940"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595941,
+      "uri": "/ladybird/oid/16595941",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 5050,
+      "height": 6012,
+      "source": "ladybird",
+      "caption": "[Front pastedown]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595941"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595942,
+      "uri": "/ladybird/oid/16595942",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4663,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "1r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595942"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595943,
+      "uri": "/ladybird/oid/16595943",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "1v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595943"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595944,
+      "uri": "/ladybird/oid/16595944",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "2r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595944"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595945,
+      "uri": "/ladybird/oid/16595945",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "2v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595945"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595946,
+      "uri": "/ladybird/oid/16595946",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "3r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595946"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595947,
+      "uri": "/ladybird/oid/16595947",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4718,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "3v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595947"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595948,
+      "uri": "/ladybird/oid/16595948",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "4r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595948"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595949,
+      "uri": "/ladybird/oid/16595949",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "4v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595949"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595950,
+      "uri": "/ladybird/oid/16595950",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "5r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595950"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595951,
+      "uri": "/ladybird/oid/16595951",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "5r [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595951"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595952,
+      "uri": "/ladybird/oid/16595952",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "5v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595952"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595953,
+      "uri": "/ladybird/oid/16595953",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4663,
+      "height": 5807,
+      "source": "ladybird",
+      "caption": "5v [with flaps open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595953"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595954,
+      "uri": "/ladybird/oid/16595954",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "6r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595954"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595955,
+      "uri": "/ladybird/oid/16595955",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "6v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595955"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595956,
+      "uri": "/ladybird/oid/16595956",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "7r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595956"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595957,
+      "uri": "/ladybird/oid/16595957",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4652,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "7r [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595957"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595958,
+      "uri": "/ladybird/oid/16595958",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "7v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595958"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595959,
+      "uri": "/ladybird/oid/16595959",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "8r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595959"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595960,
+      "uri": "/ladybird/oid/16595960",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5763,
+      "source": "ladybird",
+      "caption": "8v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595960"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595961,
+      "uri": "/ladybird/oid/16595961",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5759,
+      "source": "ladybird",
+      "caption": "8v [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595961"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595962,
+      "uri": "/ladybird/oid/16595962",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5708,
+      "source": "ladybird",
+      "caption": "9r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595962"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595963,
+      "uri": "/ladybird/oid/16595963",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "9v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595963"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595964,
+      "uri": "/ladybird/oid/16595964",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4652,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "10r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595964"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595965,
+      "uri": "/ladybird/oid/16595965",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "10v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595965"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595966,
+      "uri": "/ladybird/oid/16595966",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 5114,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "10v [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595966"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595967,
+      "uri": "/ladybird/oid/16595967",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "11r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595967"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595968,
+      "uri": "/ladybird/oid/16595968",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "11r [Three inserted postcards from Robert Kelly recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595968"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595969,
+      "uri": "/ladybird/oid/16595969",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "11r [Three inserted postcards from Robert Kelly verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595969"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595970,
+      "uri": "/ladybird/oid/16595970",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "11v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595970"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595971,
+      "uri": "/ladybird/oid/16595971",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "12r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595971"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595972,
+      "uri": "/ladybird/oid/16595972",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "12v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595972"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595973,
+      "uri": "/ladybird/oid/16595973",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 7543,
+      "height": 5697,
+      "source": "ladybird",
+      "caption": "12v [pamphlet p. 1 - 2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595973"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595974,
+      "uri": "/ladybird/oid/16595974",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 7556,
+      "height": 5697,
+      "source": "ladybird",
+      "caption": "12v [pamphlet p. 3 - 4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595974"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595975,
+      "uri": "/ladybird/oid/16595975",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 7543,
+      "height": 5710,
+      "source": "ladybird",
+      "caption": "12v [pamphlet p. 5 - 6]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595975"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595976,
+      "uri": "/ladybird/oid/16595976",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 7543,
+      "height": 5710,
+      "source": "ladybird",
+      "caption": "12v [pamphlet p. 7 - 8]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595976"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595977,
+      "uri": "/ladybird/oid/16595977",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4718,
+      "height": 5708,
+      "source": "ladybird",
+      "caption": "13r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595977"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595978,
+      "uri": "/ladybird/oid/16595978",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5708,
+      "source": "ladybird",
+      "caption": "13v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595978"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595979,
+      "uri": "/ladybird/oid/16595979",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "14r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595979"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595980,
+      "uri": "/ladybird/oid/16595980",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "14v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595980"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595981,
+      "uri": "/ladybird/oid/16595981",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 6511,
+      "height": 5787,
+      "source": "ladybird",
+      "caption": "14v [with flaps open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595981"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595982,
+      "uri": "/ladybird/oid/16595982",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "15r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595982"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595983,
+      "uri": "/ladybird/oid/16595983",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4707,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "15r [with flaps open 1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595983"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595984,
+      "uri": "/ladybird/oid/16595984",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4754,
+      "height": 7948,
+      "source": "ladybird",
+      "caption": "15r [with flaps open 2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595984"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595985,
+      "uri": "/ladybird/oid/16595985",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "15v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595985"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595986,
+      "uri": "/ladybird/oid/16595986",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 5565,
+      "height": 5708,
+      "source": "ladybird",
+      "caption": "15v Robert Duncan p. 56 - 57",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595986"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595987,
+      "uri": "/ladybird/oid/16595987",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 5554,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "15v Robert Duncan p. 58 - 59",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595987"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595988,
+      "uri": "/ladybird/oid/16595988",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 5554,
+      "height": 5776,
+      "source": "ladybird",
+      "caption": "15v Robert Duncan p. 60 - 61",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595988"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595989,
+      "uri": "/ladybird/oid/16595989",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 5543,
+      "height": 5796,
+      "source": "ladybird",
+      "caption": "15v Robert Duncan p. 62 -63",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595989"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595990,
+      "uri": "/ladybird/oid/16595990",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 5543,
+      "height": 5763,
+      "source": "ladybird",
+      "caption": "15v Robert Duncan p. 64 - 65",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595990"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595991,
+      "uri": "/ladybird/oid/16595991",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 5554,
+      "height": 5777,
+      "source": "ladybird",
+      "caption": "15v Robert Duncan p. 66 - 67",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595991"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595992,
+      "uri": "/ladybird/oid/16595992",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4718,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "16r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595992"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595993,
+      "uri": "/ladybird/oid/16595993",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "16v A Snarling Garland [Cover]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595993"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595994,
+      "uri": "/ladybird/oid/16595994",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4707,
+      "height": 5753,
+      "source": "ladybird",
+      "caption": "16v A Snarling Garland p. [i - ii]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595994"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595995,
+      "uri": "/ladybird/oid/16595995",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5760,
+      "source": "ladybird",
+      "caption": "16v A Snarling Garland [title page]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595995"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595996,
+      "uri": "/ladybird/oid/16595996",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 10235,
+      "height": 5713,
+      "source": "ladybird",
+      "caption": "16v A Snarling Garland [Poems: Chanson; Hi There!; Don't Sign Anything; Sopa]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595996"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595997,
+      "uri": "/ladybird/oid/16595997",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 6132,
+      "height": 5724,
+      "source": "ladybird",
+      "caption": "16v A Snarling Garland [Poem: The Conspiracy] - [Imprint]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595997"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595998,
+      "uri": "/ladybird/oid/16595998",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5708,
+      "source": "ladybird",
+      "caption": "16v [Inserted TLS dated 30 May 1962 recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595998"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16595999,
+      "uri": "/ladybird/oid/16595999",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "16v [Inserted TLS dated 30 May 1962 verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16595999"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596000,
+      "uri": "/ladybird/oid/16596000",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "17r ",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596000"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596001,
+      "uri": "/ladybird/oid/16596001",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5697,
+      "source": "ladybird",
+      "caption": "17r A Poem Too New to Have a Name p. 1",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596001"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596002,
+      "uri": "/ladybird/oid/16596002",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4740,
+      "height": 5783,
+      "source": "ladybird",
+      "caption": "17r A Poem Too New to Have a Name p. 2",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596002"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596003,
+      "uri": "/ladybird/oid/16596003",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4773,
+      "height": 5750,
+      "source": "ladybird",
+      "caption": "17r A Poem Too New to Have a Name p. 3",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596003"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596004,
+      "uri": "/ladybird/oid/16596004",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4740,
+      "height": 5781,
+      "source": "ladybird",
+      "caption": "17r A Poem Too New to Have a Name p. 4",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596004"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596005,
+      "uri": "/ladybird/oid/16596005",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5715,
+      "source": "ladybird",
+      "caption": "17r A Poem Too New to Have a Name p. 5",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596005"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596006,
+      "uri": "/ladybird/oid/16596006",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4718,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "17r A Poem Too New to Have a Name p. 6",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596006"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596007,
+      "uri": "/ladybird/oid/16596007",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5728,
+      "source": "ladybird",
+      "caption": "17r A Poem Too New to Have a Name p. 7",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596007"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596008,
+      "uri": "/ladybird/oid/16596008",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5749,
+      "source": "ladybird",
+      "caption": "17r A Poem Too New to Have a Name p. 8",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596008"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596009,
+      "uri": "/ladybird/oid/16596009",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4707,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "17v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596009"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596010,
+      "uri": "/ladybird/oid/16596010",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4718,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "18r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596010"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596011,
+      "uri": "/ladybird/oid/16596011",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4700,
+      "height": 5797,
+      "source": "ladybird",
+      "caption": "18r [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596011"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596012,
+      "uri": "/ladybird/oid/16596012",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4718,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "18v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596012"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596013,
+      "uri": "/ladybird/oid/16596013",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "19r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596013"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596014,
+      "uri": "/ladybird/oid/16596014",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "19v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596014"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596015,
+      "uri": "/ladybird/oid/16596015",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "20r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596015"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596016,
+      "uri": "/ladybird/oid/16596016",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5708,
+      "source": "ladybird",
+      "caption": "20v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596016"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596017,
+      "uri": "/ladybird/oid/16596017",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4668,
+      "height": 6624,
+      "source": "ladybird",
+      "caption": "20v [with flaps open 1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596017"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596018,
+      "uri": "/ladybird/oid/16596018",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4668,
+      "height": 6664,
+      "source": "ladybird",
+      "caption": "20v [with flaps open 2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596018"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596019,
+      "uri": "/ladybird/oid/16596019",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 6624,
+      "source": "ladybird",
+      "caption": "20v [with flaps open 3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596019"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596020,
+      "uri": "/ladybird/oid/16596020",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "21r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596020"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596021,
+      "uri": "/ladybird/oid/16596021",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "21v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596021"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596022,
+      "uri": "/ladybird/oid/16596022",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "22r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596022"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596023,
+      "uri": "/ladybird/oid/16596023",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "22v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596023"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596024,
+      "uri": "/ladybird/oid/16596024",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4707,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "23r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596024"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596025,
+      "uri": "/ladybird/oid/16596025",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "23v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596025"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596026,
+      "uri": "/ladybird/oid/16596026",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5708,
+      "source": "ladybird",
+      "caption": "24r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596026"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596027,
+      "uri": "/ladybird/oid/16596027",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "24r [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596027"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596028,
+      "uri": "/ladybird/oid/16596028",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5708,
+      "source": "ladybird",
+      "caption": "24v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596028"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596029,
+      "uri": "/ladybird/oid/16596029",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "25r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596029"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596030,
+      "uri": "/ladybird/oid/16596030",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5708,
+      "source": "ladybird",
+      "caption": "25v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596030"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596031,
+      "uri": "/ladybird/oid/16596031",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5708,
+      "source": "ladybird",
+      "caption": "25v [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596031"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596032,
+      "uri": "/ladybird/oid/16596032",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4773,
+      "height": 5763,
+      "source": "ladybird",
+      "caption": "26r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596032"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596033,
+      "uri": "/ladybird/oid/16596033",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4784,
+      "height": 5763,
+      "source": "ladybird",
+      "caption": "26r [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596033"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596034,
+      "uri": "/ladybird/oid/16596034",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4750,
+      "height": 5770,
+      "source": "ladybird",
+      "caption": "26v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596034"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596035,
+      "uri": "/ladybird/oid/16596035",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4712,
+      "height": 8100,
+      "source": "ladybird",
+      "caption": "26v [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596035"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596036,
+      "uri": "/ladybird/oid/16596036",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4718,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "27r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596036"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596037,
+      "uri": "/ladybird/oid/16596037",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4729,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "27v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596037"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596038,
+      "uri": "/ladybird/oid/16596038",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "28r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596038"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596039,
+      "uri": "/ladybird/oid/16596039",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "28v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596039"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596040,
+      "uri": "/ladybird/oid/16596040",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4718,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "29r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596040"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596041,
+      "uri": "/ladybird/oid/16596041",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4730,
+      "height": 5783,
+      "source": "ladybird",
+      "caption": "29r [with flaps open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596041"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596042,
+      "uri": "/ladybird/oid/16596042",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5697,
+      "source": "ladybird",
+      "caption": "29v [The Surge p. 1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596042"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596043,
+      "uri": "/ladybird/oid/16596043",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5726,
+      "source": "ladybird",
+      "caption": "29v [The Surge p. 2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596043"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596044,
+      "uri": "/ladybird/oid/16596044",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5731,
+      "source": "ladybird",
+      "caption": "29v [The Surge p. 3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596044"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596045,
+      "uri": "/ladybird/oid/16596045",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5722,
+      "source": "ladybird",
+      "caption": "29v [The Surge p. 4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596045"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596046,
+      "uri": "/ladybird/oid/16596046",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5712,
+      "source": "ladybird",
+      "caption": "29v [The Surge p. 5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596046"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596047,
+      "uri": "/ladybird/oid/16596047",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5726,
+      "source": "ladybird",
+      "caption": "29v [The Surge p. 6]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596047"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596048,
+      "uri": "/ladybird/oid/16596048",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5723,
+      "source": "ladybird",
+      "caption": "29v [The Surge p. 7]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596048"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596049,
+      "uri": "/ladybird/oid/16596049",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5728,
+      "source": "ladybird",
+      "caption": "29v [The Surge p. 8]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596049"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596050,
+      "uri": "/ladybird/oid/16596050",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "30r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596050"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596051,
+      "uri": "/ladybird/oid/16596051",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 7439,
+      "height": 5736,
+      "source": "ladybird",
+      "caption": "30r [with flaps open 1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596051"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596052,
+      "uri": "/ladybird/oid/16596052",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 7563,
+      "height": 6347,
+      "source": "ladybird",
+      "caption": "30r [with flaps open 2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596052"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596053,
+      "uri": "/ladybird/oid/16596053",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 7501,
+      "height": 6360,
+      "source": "ladybird",
+      "caption": "30r [with flaps open 3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596053"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596054,
+      "uri": "/ladybird/oid/16596054",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4680,
+      "height": 5724,
+      "source": "ladybird",
+      "caption": "30v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596054"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596055,
+      "uri": "/ladybird/oid/16596055",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4692,
+      "height": 5772,
+      "source": "ladybird",
+      "caption": "31r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596055"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596056,
+      "uri": "/ladybird/oid/16596056",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4668,
+      "height": 5736,
+      "source": "ladybird",
+      "caption": "31v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596056"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596057,
+      "uri": "/ladybird/oid/16596057",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4728,
+      "height": 5784,
+      "source": "ladybird",
+      "caption": "32r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596057"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596058,
+      "uri": "/ladybird/oid/16596058",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 7335,
+      "height": 5775,
+      "source": "ladybird",
+      "caption": "32r [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596058"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596059,
+      "uri": "/ladybird/oid/16596059",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4692,
+      "height": 5724,
+      "source": "ladybird",
+      "caption": "32v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596059"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596060,
+      "uri": "/ladybird/oid/16596060",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5904,
+      "source": "ladybird",
+      "caption": "33r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596060"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596061,
+      "uri": "/ladybird/oid/16596061",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4680,
+      "height": 5868,
+      "source": "ladybird",
+      "caption": "33v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596061"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596062,
+      "uri": "/ladybird/oid/16596062",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4692,
+      "height": 5772,
+      "source": "ladybird",
+      "caption": "34r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596062"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596063,
+      "uri": "/ladybird/oid/16596063",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4668,
+      "height": 5748,
+      "source": "ladybird",
+      "caption": "34v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596063"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596064,
+      "uri": "/ladybird/oid/16596064",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4740,
+      "height": 5784,
+      "source": "ladybird",
+      "caption": "35r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596064"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596065,
+      "uri": "/ladybird/oid/16596065",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4704,
+      "height": 5736,
+      "source": "ladybird",
+      "caption": "35v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596065"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596066,
+      "uri": "/ladybird/oid/16596066",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5772,
+      "source": "ladybird",
+      "caption": "36r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596066"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596067,
+      "uri": "/ladybird/oid/16596067",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4704,
+      "height": 5748,
+      "source": "ladybird",
+      "caption": "36v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596067"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596068,
+      "uri": "/ladybird/oid/16596068",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4740,
+      "height": 5808,
+      "source": "ladybird",
+      "caption": "37r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596068"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596069,
+      "uri": "/ladybird/oid/16596069",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4704,
+      "height": 5724,
+      "source": "ladybird",
+      "caption": "37v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596069"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596070,
+      "uri": "/ladybird/oid/16596070",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5796,
+      "source": "ladybird",
+      "caption": "38r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596070"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596071,
+      "uri": "/ladybird/oid/16596071",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4704,
+      "height": 5760,
+      "source": "ladybird",
+      "caption": "38v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596071"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596072,
+      "uri": "/ladybird/oid/16596072",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5796,
+      "source": "ladybird",
+      "caption": "39r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596072"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596073,
+      "uri": "/ladybird/oid/16596073",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4692,
+      "height": 5772,
+      "source": "ladybird",
+      "caption": "39v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596073"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596074,
+      "uri": "/ladybird/oid/16596074",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4704,
+      "height": 5760,
+      "source": "ladybird",
+      "caption": "40r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596074"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596075,
+      "uri": "/ladybird/oid/16596075",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4692,
+      "height": 5736,
+      "source": "ladybird",
+      "caption": "40v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596075"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596076,
+      "uri": "/ladybird/oid/16596076",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5748,
+      "source": "ladybird",
+      "caption": "41r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596076"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596077,
+      "uri": "/ladybird/oid/16596077",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4692,
+      "height": 5724,
+      "source": "ladybird",
+      "caption": "41v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596077"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596078,
+      "uri": "/ladybird/oid/16596078",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "42r [Notebook p. 1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596078"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596079,
+      "uri": "/ladybird/oid/16596079",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4890,
+      "height": 5789,
+      "source": "ladybird",
+      "caption": "42r [Notebook p. 2 - 3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596079"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596080,
+      "uri": "/ladybird/oid/16596080",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4936,
+      "height": 5825,
+      "source": "ladybird",
+      "caption": "42r [Notebook p. 4 - 5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596080"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596081,
+      "uri": "/ladybird/oid/16596081",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4916,
+      "height": 5766,
+      "source": "ladybird",
+      "caption": "42r [Notebook p. 6 - 7]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596081"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596082,
+      "uri": "/ladybird/oid/16596082",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4916,
+      "height": 5795,
+      "source": "ladybird",
+      "caption": "42r [Notebook p. 8 - 9]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596082"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596083,
+      "uri": "/ladybird/oid/16596083",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "42v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596083"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596084,
+      "uri": "/ladybird/oid/16596084",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4704,
+      "height": 6096,
+      "source": "ladybird",
+      "caption": "42v [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596084"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596085,
+      "uri": "/ladybird/oid/16596085",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5736,
+      "source": "ladybird",
+      "caption": "43r The Child's Book of Ritual Magic p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596085"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596086,
+      "uri": "/ladybird/oid/16596086",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 6060,
+      "height": 5760,
+      "source": "ladybird",
+      "caption": "43r The Child's Book of Ritual Magic p. 2",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596086"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596087,
+      "uri": "/ladybird/oid/16596087",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4692,
+      "height": 5736,
+      "source": "ladybird",
+      "caption": "43v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596087"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596088,
+      "uri": "/ladybird/oid/16596088",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5748,
+      "source": "ladybird",
+      "caption": "44r A Gift of Sheepsilver p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596088"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596089,
+      "uri": "/ladybird/oid/16596089",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 6792,
+      "height": 5784,
+      "source": "ladybird",
+      "caption": "44r A Gift of Sheepsilver p. [2 - 3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596089"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596090,
+      "uri": "/ladybird/oid/16596090",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 6792,
+      "height": 5772,
+      "source": "ladybird",
+      "caption": "44r A Gift of Sheepsilver p. [4 - 5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596090"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596091,
+      "uri": "/ladybird/oid/16596091",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5760,
+      "source": "ladybird",
+      "caption": "44v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596091"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596092,
+      "uri": "/ladybird/oid/16596092",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 6456,
+      "height": 5760,
+      "source": "ladybird",
+      "caption": "44v [with flap opened]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596092"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596093,
+      "uri": "/ladybird/oid/16596093",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5736,
+      "source": "ladybird",
+      "caption": "45r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596093"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596094,
+      "uri": "/ladybird/oid/16596094",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5748,
+      "source": "ladybird",
+      "caption": "45v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596094"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596095,
+      "uri": "/ladybird/oid/16596095",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4704,
+      "height": 5736,
+      "source": "ladybird",
+      "caption": "46r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596095"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596096,
+      "uri": "/ladybird/oid/16596096",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4704,
+      "height": 5748,
+      "source": "ladybird",
+      "caption": "46v Dog Star Man p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596096"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596097,
+      "uri": "/ladybird/oid/16596097",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4692,
+      "height": 5759,
+      "source": "ladybird",
+      "caption": "46v Dog Star Man p. 2",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596097"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596098,
+      "uri": "/ladybird/oid/16596098",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4692,
+      "height": 5763,
+      "source": "ladybird",
+      "caption": "46v Dog Star Man p. 3",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596098"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596099,
+      "uri": "/ladybird/oid/16596099",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4692,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "46v Dog Star Man p. 4",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596099"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596100,
+      "uri": "/ladybird/oid/16596100",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4704,
+      "height": 5754,
+      "source": "ladybird",
+      "caption": "46v Dog Star Man p. 5",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596100"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596101,
+      "uri": "/ladybird/oid/16596101",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4692,
+      "height": 5754,
+      "source": "ladybird",
+      "caption": "46v Dog Star Man p. [6]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596101"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596102,
+      "uri": "/ladybird/oid/16596102",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4740,
+      "height": 5784,
+      "source": "ladybird",
+      "caption": "47r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596102"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596103,
+      "uri": "/ladybird/oid/16596103",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4704,
+      "height": 5748,
+      "source": "ladybird",
+      "caption": "47v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596103"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596104,
+      "uri": "/ladybird/oid/16596104",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4740,
+      "height": 5760,
+      "source": "ladybird",
+      "caption": "48r A Narrative p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596104"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596105,
+      "uri": "/ladybird/oid/16596105",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 6264,
+      "height": 5784,
+      "source": "ladybird",
+      "caption": "48r A Narrative p. [2 - 3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596105"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596106,
+      "uri": "/ladybird/oid/16596106",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 6276,
+      "height": 5772,
+      "source": "ladybird",
+      "caption": "48r A Narrative p. [4 - 5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596106"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596107,
+      "uri": "/ladybird/oid/16596107",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5712,
+      "source": "ladybird",
+      "caption": "48v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596107"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596108,
+      "uri": "/ladybird/oid/16596108",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5748,
+      "source": "ladybird",
+      "caption": "49r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596108"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596109,
+      "uri": "/ladybird/oid/16596109",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4728,
+      "height": 5748,
+      "source": "ladybird",
+      "caption": "49v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596109"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596110,
+      "uri": "/ladybird/oid/16596110",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5748,
+      "source": "ladybird",
+      "caption": "50r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596110"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596111,
+      "uri": "/ladybird/oid/16596111",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4692,
+      "height": 5724,
+      "source": "ladybird",
+      "caption": "50v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596111"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596112,
+      "uri": "/ladybird/oid/16596112",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4704,
+      "height": 5748,
+      "source": "ladybird",
+      "caption": "51r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596112"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596113,
+      "uri": "/ladybird/oid/16596113",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4692,
+      "height": 5736,
+      "source": "ladybird",
+      "caption": "51v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596113"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596114,
+      "uri": "/ladybird/oid/16596114",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5760,
+      "source": "ladybird",
+      "caption": "52r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596114"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596115,
+      "uri": "/ladybird/oid/16596115",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4704,
+      "height": 5748,
+      "source": "ladybird",
+      "caption": "52v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596115"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596116,
+      "uri": "/ladybird/oid/16596116",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4704,
+      "height": 5760,
+      "source": "ladybird",
+      "caption": "53r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596116"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596117,
+      "uri": "/ladybird/oid/16596117",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5712,
+      "source": "ladybird",
+      "caption": "53v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596117"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596118,
+      "uri": "/ladybird/oid/16596118",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4716,
+      "height": 5784,
+      "source": "ladybird",
+      "caption": "54r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596118"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596119,
+      "uri": "/ladybird/oid/16596119",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4992,
+      "height": 5784,
+      "source": "ladybird",
+      "caption": "54v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596119"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596120,
+      "uri": "/ladybird/oid/16596120",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4650,
+      "height": 5690,
+      "source": "ladybird",
+      "caption": "54v [Postcard recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596120"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596121,
+      "uri": "/ladybird/oid/16596121",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4650,
+      "height": 5740,
+      "source": "ladybird",
+      "caption": "54v [Postcard verso - Farmer's Calendar p. 11]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596121"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596122,
+      "uri": "/ladybird/oid/16596122",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4640,
+      "height": 5713,
+      "source": "ladybird",
+      "caption": "54v [p. 12 - 13]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596122"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596123,
+      "uri": "/ladybird/oid/16596123",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4620,
+      "height": 5704,
+      "source": "ladybird",
+      "caption": "54v [p. 14 - 15]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596123"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596124,
+      "uri": "/ladybird/oid/16596124",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4640,
+      "height": 5716,
+      "source": "ladybird",
+      "caption": "54v [p. 16 - 17]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596124"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596125,
+      "uri": "/ladybird/oid/16596125",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4640,
+      "height": 5720,
+      "source": "ladybird",
+      "caption": "54v [p. 18 - 19]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596125"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596127,
+      "uri": "/ladybird/oid/16596127",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4660,
+      "height": 5745,
+      "source": "ladybird",
+      "caption": "54v [p. 20 - 21]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596127"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596128,
+      "uri": "/ladybird/oid/16596128",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4660,
+      "height": 5731,
+      "source": "ladybird",
+      "caption": "54v [p. 22 - 23]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596128"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596129,
+      "uri": "/ladybird/oid/16596129",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4660,
+      "height": 5709,
+      "source": "ladybird",
+      "caption": "54v [p. 24 - 25]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596129"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596130,
+      "uri": "/ladybird/oid/16596130",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4660,
+      "height": 5737,
+      "source": "ladybird",
+      "caption": "54v [p. 26 - 29]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596130"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596131,
+      "uri": "/ladybird/oid/16596131",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4640,
+      "height": 5693,
+      "source": "ladybird",
+      "caption": "54v [p. 30 -31]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596131"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596132,
+      "uri": "/ladybird/oid/16596132",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4660,
+      "height": 5718,
+      "source": "ladybird",
+      "caption": "54v [p. 32 - 33]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596132"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596133,
+      "uri": "/ladybird/oid/16596133",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4660,
+      "height": 5690,
+      "source": "ladybird",
+      "caption": "54v [p. 33] [with illustration]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596133"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596134,
+      "uri": "/ladybird/oid/16596134",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4660,
+      "height": 5735,
+      "source": "ladybird",
+      "caption": "54v [p. 33]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596134"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596135,
+      "uri": "/ladybird/oid/16596135",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 6517,
+      "height": 10252,
+      "source": "ladybird",
+      "caption": "55r [with flap open 1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596135"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596136,
+      "uri": "/ladybird/oid/16596136",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 5543,
+      "height": 9946,
+      "source": "ladybird",
+      "caption": "55r [with flap open 2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596136"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596137,
+      "uri": "/ladybird/oid/16596137",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4663,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "55v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596137"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596138,
+      "uri": "/ladybird/oid/16596138",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "56r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596138"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596139,
+      "uri": "/ladybird/oid/16596139",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5756,
+      "source": "ladybird",
+      "caption": "56r [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596139"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596140,
+      "uri": "/ladybird/oid/16596140",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4663,
+      "height": 5675,
+      "source": "ladybird",
+      "caption": "56v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596140"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596141,
+      "uri": "/ladybird/oid/16596141",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 6247,
+      "height": 5697,
+      "source": "ladybird",
+      "caption": "56v [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596141"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596142,
+      "uri": "/ladybird/oid/16596142",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 1746,
+      "height": 1194,
+      "source": "ladybird",
+      "caption": "57r [Small photo book describing the construction of Crazy Horse memorial] [Front cover]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596142"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596143,
+      "uri": "/ladybird/oid/16596143",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 3243,
+      "height": 1203,
+      "source": "ladybird",
+      "caption": "57r [Small photo book describing the construction of Crazy Horse memorial] [p. 1 - 2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596143"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596144,
+      "uri": "/ladybird/oid/16596144",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 3252,
+      "height": 1178,
+      "source": "ladybird",
+      "caption": "57r [Small photo book describing the construction of Crazy Horse memorial] [p. 3 - 4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596144"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596145,
+      "uri": "/ladybird/oid/16596145",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 3218,
+      "height": 1196,
+      "source": "ladybird",
+      "caption": "57r [Small photo book describing the construction of Crazy Horse memorial] [p. 5 - 6]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596145"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596146,
+      "uri": "/ladybird/oid/16596146",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 3226,
+      "height": 1211,
+      "source": "ladybird",
+      "caption": "57r [Small photo book describing the construction of Crazy Horse memorial] [p. 7 - 8]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596146"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596147,
+      "uri": "/ladybird/oid/16596147",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 3213,
+      "height": 1210,
+      "source": "ladybird",
+      "caption": "57r [Small photo book describing the construction of Crazy Horse memorial] [p. 9 - 10]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596147"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596148,
+      "uri": "/ladybird/oid/16596148",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 3234,
+      "height": 1209,
+      "source": "ladybird",
+      "caption": "57r [Small photo book describing the construction of Crazy Horse memorial] [p. 11 -12]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596148"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596149,
+      "uri": "/ladybird/oid/16596149",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 3243,
+      "height": 1211,
+      "source": "ladybird",
+      "caption": "57r [Small photo book describing the construction of Crazy Horse memorial] [p. 13 - 14]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596149"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596150,
+      "uri": "/ladybird/oid/16596150",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 1740,
+      "height": 1209,
+      "source": "ladybird",
+      "caption": "57r [Small photo book describing the construction of Crazy Horse memorial] [Back cover]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596150"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596151,
+      "uri": "/ladybird/oid/16596151",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5763,
+      "source": "ladybird",
+      "caption": "57r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596151"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596152,
+      "uri": "/ladybird/oid/16596152",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "57v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596152"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601275,
+      "uri": "/ladybird/oid/16601275",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 5246,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "57v [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601275"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596153,
+      "uri": "/ladybird/oid/16596153",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "58r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596153"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596154,
+      "uri": "/ladybird/oid/16596154",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5708,
+      "source": "ladybird",
+      "caption": "58v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596154"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596155,
+      "uri": "/ladybird/oid/16596155",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4707,
+      "height": 5763,
+      "source": "ladybird",
+      "caption": "59r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596155"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596156,
+      "uri": "/ladybird/oid/16596156",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5708,
+      "source": "ladybird",
+      "caption": "59v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596156"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596157,
+      "uri": "/ladybird/oid/16596157",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4707,
+      "height": 5763,
+      "source": "ladybird",
+      "caption": "60r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596157"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596158,
+      "uri": "/ladybird/oid/16596158",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4707,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "60v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596158"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596159,
+      "uri": "/ladybird/oid/16596159",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "61r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596159"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601276,
+      "uri": "/ladybird/oid/16601276",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4718,
+      "height": 5763,
+      "source": "ladybird",
+      "caption": "61r [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601276"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596160,
+      "uri": "/ladybird/oid/16596160",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "61v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596160"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596161,
+      "uri": "/ladybird/oid/16596161",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "62r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596161"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596162,
+      "uri": "/ladybird/oid/16596162",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5697,
+      "source": "ladybird",
+      "caption": "62v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596162"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596163,
+      "uri": "/ladybird/oid/16596163",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4652,
+      "height": 5697,
+      "source": "ladybird",
+      "caption": "62v [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596163"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596164,
+      "uri": "/ladybird/oid/16596164",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "63r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596164"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596165,
+      "uri": "/ladybird/oid/16596165",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "63v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596165"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596166,
+      "uri": "/ladybird/oid/16596166",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 5499,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "63v [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596166"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596167,
+      "uri": "/ladybird/oid/16596167",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "64r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596167"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596168,
+      "uri": "/ladybird/oid/16596168",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5708,
+      "source": "ladybird",
+      "caption": "64v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596168"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596169,
+      "uri": "/ladybird/oid/16596169",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4718,
+      "height": 5763,
+      "source": "ladybird",
+      "caption": "65r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596169"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596170,
+      "uri": "/ladybird/oid/16596170",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4663,
+      "height": 5697,
+      "source": "ladybird",
+      "caption": "65v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596170"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596171,
+      "uri": "/ladybird/oid/16596171",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "66r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596171"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596172,
+      "uri": "/ladybird/oid/16596172",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "66v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596172"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596173,
+      "uri": "/ladybird/oid/16596173",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "67r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596173"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596174,
+      "uri": "/ladybird/oid/16596174",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5708,
+      "source": "ladybird",
+      "caption": "67v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596174"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596175,
+      "uri": "/ladybird/oid/16596175",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5708,
+      "source": "ladybird",
+      "caption": "67v [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596175"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596176,
+      "uri": "/ladybird/oid/16596176",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "68r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596176"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596177,
+      "uri": "/ladybird/oid/16596177",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5804,
+      "source": "ladybird",
+      "caption": "68r [Handwritten poem p. 1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596177"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596178,
+      "uri": "/ladybird/oid/16596178",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5803,
+      "source": "ladybird",
+      "caption": "68r [Handwritten poem p. 2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596178"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596179,
+      "uri": "/ladybird/oid/16596179",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5797,
+      "source": "ladybird",
+      "caption": "68r [Handwritten poem p. 3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596179"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596180,
+      "uri": "/ladybird/oid/16596180",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "68v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596180"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596181,
+      "uri": "/ladybird/oid/16596181",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "69r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596181"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596182,
+      "uri": "/ladybird/oid/16596182",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "69v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596182"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596183,
+      "uri": "/ladybird/oid/16596183",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 5334,
+      "height": 5820,
+      "source": "ladybird",
+      "caption": "69v [with flaps open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596183"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596184,
+      "uri": "/ladybird/oid/16596184",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "70r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596184"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596185,
+      "uri": "/ladybird/oid/16596185",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "70v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596185"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596186,
+      "uri": "/ladybird/oid/16596186",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5763,
+      "source": "ladybird",
+      "caption": "71r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596186"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596187,
+      "uri": "/ladybird/oid/16596187",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4707,
+      "height": 5774,
+      "source": "ladybird",
+      "caption": "71v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596187"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596188,
+      "uri": "/ladybird/oid/16596188",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "72r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596188"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596189,
+      "uri": "/ladybird/oid/16596189",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "72v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596189"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596190,
+      "uri": "/ladybird/oid/16596190",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4652,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "73r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596190"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596191,
+      "uri": "/ladybird/oid/16596191",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4652,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "73v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596191"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596192,
+      "uri": "/ladybird/oid/16596192",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "74r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596192"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596193,
+      "uri": "/ladybird/oid/16596193",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "74v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596193"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596194,
+      "uri": "/ladybird/oid/16596194",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "75r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596194"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596195,
+      "uri": "/ladybird/oid/16596195",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4663,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "75v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596195"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596196,
+      "uri": "/ladybird/oid/16596196",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5774,
+      "source": "ladybird",
+      "caption": "76r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596196"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596197,
+      "uri": "/ladybird/oid/16596197",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4663,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "76v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596197"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596198,
+      "uri": "/ladybird/oid/16596198",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "77r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596198"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596199,
+      "uri": "/ladybird/oid/16596199",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "77v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596199"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596200,
+      "uri": "/ladybird/oid/16596200",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5763,
+      "source": "ladybird",
+      "caption": "78r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596200"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596201,
+      "uri": "/ladybird/oid/16596201",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4663,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "78v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596201"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596202,
+      "uri": "/ladybird/oid/16596202",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4696,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "79r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596202"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596203,
+      "uri": "/ladybird/oid/16596203",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "79v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596203"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596204,
+      "uri": "/ladybird/oid/16596204",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "80r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596204"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596205,
+      "uri": "/ladybird/oid/16596205",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4652,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "80v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596205"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596206,
+      "uri": "/ladybird/oid/16596206",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "81r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596206"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596207,
+      "uri": "/ladybird/oid/16596207",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "81v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596207"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596208,
+      "uri": "/ladybird/oid/16596208",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "82r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596208"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596209,
+      "uri": "/ladybird/oid/16596209",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4663,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "82v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596209"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16596210,
+      "uri": "/ladybird/oid/16596210",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "83r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16596210"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601174,
+      "uri": "/ladybird/oid/16601174",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5719,
+      "source": "ladybird",
+      "caption": "83v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601174"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601176,
+      "uri": "/ladybird/oid/16601176",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4707,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "84r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601176"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601177,
+      "uri": "/ladybird/oid/16601177",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "84v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601177"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601178,
+      "uri": "/ladybird/oid/16601178",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4735,
+      "height": 5828,
+      "source": "ladybird",
+      "caption": "84v [with flaps open 1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601178"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601179,
+      "uri": "/ladybird/oid/16601179",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4680,
+      "height": 5790,
+      "source": "ladybird",
+      "caption": "84v [with flaps open 2 ]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601179"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601180,
+      "uri": "/ladybird/oid/16601180",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "85r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601180"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601181,
+      "uri": "/ladybird/oid/16601181",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4663,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "85v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601181"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601182,
+      "uri": "/ladybird/oid/16601182",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "86r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601182"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601183,
+      "uri": "/ladybird/oid/16601183",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5730,
+      "source": "ladybird",
+      "caption": "86v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601183"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601184,
+      "uri": "/ladybird/oid/16601184",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4685,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "87r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601184"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601185,
+      "uri": "/ladybird/oid/16601185",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4663,
+      "height": 5741,
+      "source": "ladybird",
+      "caption": "87v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601185"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601186,
+      "uri": "/ladybird/oid/16601186",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4660,
+      "height": 5806,
+      "source": "ladybird",
+      "caption": "87v [with flap open]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601186"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601187,
+      "uri": "/ladybird/oid/16601187",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5785,
+      "source": "ladybird",
+      "caption": "88r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601187"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601188,
+      "uri": "/ladybird/oid/16601188",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4674,
+      "height": 5752,
+      "source": "ladybird",
+      "caption": "88v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601188"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601189,
+      "uri": "/ladybird/oid/16601189",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 5026,
+      "height": 5961,
+      "source": "ladybird",
+      "caption": "[Back pastedown]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601189"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    },
+    {
+      "oid": 16601190,
+      "uri": "/ladybird/oid/16601190",
+      "title": [
+        "Jane Wodening and Stan Brakhage scrapbook"
+      ],
+      "width": 4884,
+      "height": 5892,
+      "source": "ladybird",
+      "caption": "[Back cover]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16601190"
+      ],
+      "identifierShelfMark": "YCAL MSS 229"
+    }
+  ],
+  "language": [
+    "English"
+  ],
+  "indexedBy": [
+    "Jane Wodening and Stan Brakhage Scrapbooks. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
+  ],
+  "recordType": "oid",
   "references": [
     "Jane Wodening and Stan Brakhage Scrapbooks. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
-  "itemPermission": "Public",
-  "dateStructured": [
-    "1958-00-00T00:00:00Z"
-  ],
-  "resourceType": "Archives or Manuscripts",
+  "repository": "Beinecke Library",
+  "sourceDate": "1958-1967",
+  "sourceNote": "Three scrapbooks, compiled by Jane Wodening, containing correspondence, photographs, manuscripts, printed material, artwork, cut film, and objects documenting the work and family life of Wodening (ne?e Collom) and Stan Brakhage from 1958 to 1967.",
   "contributor": [
     "Beck, Julian, 1925-1985",
     "Branaman, Robert R",
@@ -95,15 +5544,44 @@
     "Stein, Gertrude, 1874-1946",
     "Steinbeck, John, 1902-1968"
   ],
-  "repository": "Beinecke Library",
-  "indexedBy": [
-    "Jane Wodening and Stan Brakhage Scrapbooks. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
+  "orbisRecord": "7748458",
+  "subjectName": [
+    "Beck, Julian, 1925-1985",
+    "Branaman, Robert R",
+    "Coleridge, Samuel Taylor, 1772-1834",
+    "Creeley, Robert, 1926-2005",
+    "Duncan, Robert, 1919-1988.",
+    "Flaming creatures (Motion picture)",
+    "Gamow, George, 1904-1968",
+    "Ginsberg, Allen, 1926-1997",
+    "Goodyear, John, 1930-",
+    "Highet, Gilbert, 1906-1978",
+    "Kelly, Robert, 1935-",
+    "Lytton, Edward Robert Bulwer Lytton,--Earl of,--1831-1891",
+    "Malina, Judith, 1926-",
+    "McClure, Michael",
+    "Mekas, Jonas, 1922-",
+    "Munsell, Joel, 1808-1880",
+    "Olson, Charles, 1910-1970",
+    "Stein, Gertrude, 1874-1946",
+    "Steinbeck, John, 1902-1968"
   ],
-  "subjectGeographic": [
-    "Crazy Horse Mountain (S.D.)"
+  "collectionId": 1,
+  "orbisBarcode": "39002098971766",
+  "resourceType": "Archives or Manuscripts",
+  "dependentUris": [
+    "/ladybird/oid/16301942"
   ],
+  "numberOfPages": "Vol. 3",
   "creatorDisplay": [
     "Brakhage, Stan"
+  ],
+  "dateStructured": [
+    "1958-00-00T00:00:00Z"
+  ],
+  "itemPermission": "Public",
+  "subjectGeographic": [
+    "Crazy Horse Mountain (S.D.)"
   ],
   "contributorDisplay": [
     "Beck, Julian, 1925-1985",
@@ -126,15 +5604,8 @@
     "Stein, Gertrude, 1874-1946",
     "Steinbeck, John, 1902-1968"
   ],
-  "dependentUris": [
-    "/ladybird/oid/16301942"
-  ],
-  "oid": 16301942,
-  "collectionId": 1,
-  "children": [
-
-  ],
-  "abstract": [
-    "Binding: ivory with gold embossing."
+  "identifierShelfMark": "YCAL MSS 229",
+  "extentOfDigitization": [
+    "Complete work digitized."
   ]
 }

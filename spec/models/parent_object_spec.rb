@@ -80,7 +80,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069', ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16797069.json")))) }
 
     it 'returns a ladybird url' do
-      expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16797069"
+      expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16797069?include-children=1"
     end
 
     it 'returns a voyager url' do

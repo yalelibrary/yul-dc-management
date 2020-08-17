@@ -1,46 +1,20 @@
 {
-  "recordType": "oid",
-  "source": "ladybird",
+  "oid": 16712419,
   "uri": "/ladybird/oid/16712419",
-  "identifierShelfMark": "Speck Ck99 R3 +830b",
-  "creator": [
-    "Retzsch, Moritz, 1779-1857"
-  ],
-  "title": [
-    "Faust; esquisses dessinées par Retsch."
-  ],
-  "numberOfPages": "Copy 1",
-  "extentOfDigitization": [
-    "Complete work digitized."
-  ],
-  "publicationPlace": [
-    "Paris :"
-  ],
-  "publisher": [
-    "Giard,Editeur,"
-  ],
   "date": [
     "[1830]"
-  ],
-  "extent": [
-    "1 p.l., 8 pp. : [66] plates. 22 x 28 cm."
-  ],
-  "language": [
-    "French"
-  ],
-  "description": [
-    "Contains 26 numbered etches plates before letters; lithographs of plates 1-21, 23-26 after letters; proof of border of t.p.; 15 plates without numbers or letters.",
-    "Etched t.p.; title within ornamental border."
-  ],
-  "subjectName": [
-    "Goethe, Johann Wolfgang von,--1749-1832.--Faust--Illustrations.",
-    "Miltitz, Carl Borromäus von, 1781-1845"
   ],
   "genre": [
     "Engravings",
     "Etchings",
     "Lithographs",
     "Marbled papers (Paper)"
+  ],
+  "title": [
+    "Faust; esquisses dessinées par Retsch."
+  ],
+  "extent": [
+    "1 p.l., 8 pp. : [66] plates. 22 x 28 cm."
   ],
   "format": [
     "text"
@@ -49,38 +23,3084 @@
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "orbisRecord": "1289001",
-  "itemPermission": "Public",
-  "dateStructured": [
-    "1830-00-00T00:00:00Z"
+  "source": "ladybird",
+  "creator": [
+    "Retzsch, Moritz, 1779-1857"
   ],
-  "resourceType": "Books, Journals & Pamphlets",
-  "illustrativeMatter": "850813s1830    fr f          00000 fre d",
-  "contributor": [
-    "Goethe, Johann Wolfgang von,--1749-1832.--Faust--Illustrations.",
-    "Miltitz, Carl Borromäus von, 1781-1845"
+  "abstract": [
+    "Wanting lithograph of pl. 22."
   ],
-  "repository": "Beinecke Library",
+  "children": [
+    {
+      "oid": 16712919,
+      "uri": "/ladybird/oid/16712919",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4716,
+      "height": 3644,
+      "source": "ladybird",
+      "caption": "[Front cover]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712919"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712920,
+      "uri": "/ladybird/oid/16712920",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4692,
+      "height": 3612,
+      "source": "ladybird",
+      "caption": "[Front pastedown]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712920"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712921,
+      "uri": "/ladybird/oid/16712921",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4735,
+      "height": 3736,
+      "source": "ladybird",
+      "caption": "[Front free endpaper recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712921"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712922,
+      "uri": "/ladybird/oid/16712922",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4684,
+      "height": 3628,
+      "source": "ladybird",
+      "caption": "[Front free endpaper verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712922"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712923,
+      "uri": "/ladybird/oid/16712923",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4620,
+      "height": 3636,
+      "source": "ladybird",
+      "caption": "[i]r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712923"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712924,
+      "uri": "/ladybird/oid/16712924",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4684,
+      "height": 3628,
+      "source": "ladybird",
+      "caption": "[i]v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712924"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712925,
+      "uri": "/ladybird/oid/16712925",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4644,
+      "height": 3580,
+      "source": "ladybird",
+      "caption": "[ii]r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712925"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712926,
+      "uri": "/ladybird/oid/16712926",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4700,
+      "height": 3660,
+      "source": "ladybird",
+      "caption": "[ii]v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712926"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712927,
+      "uri": "/ladybird/oid/16712927",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4572,
+      "height": 3612,
+      "source": "ladybird",
+      "caption": "[Title page recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712927"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712928,
+      "uri": "/ladybird/oid/16712928",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4724,
+      "height": 3628,
+      "source": "ladybird",
+      "caption": "[Title page verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712928"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712929,
+      "uri": "/ladybird/oid/16712929",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4580,
+      "height": 3596,
+      "source": "ladybird",
+      "caption": "p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712929"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712930,
+      "uri": "/ladybird/oid/16712930",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4724,
+      "height": 3628,
+      "source": "ladybird",
+      "caption": "p. 2",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712930"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712931,
+      "uri": "/ladybird/oid/16712931",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4588,
+      "height": 3644,
+      "source": "ladybird",
+      "caption": "p. 3",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712931"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712932,
+      "uri": "/ladybird/oid/16712932",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4724,
+      "height": 3636,
+      "source": "ladybird",
+      "caption": "p. 4",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712932"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712933,
+      "uri": "/ladybird/oid/16712933",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4588,
+      "height": 3628,
+      "source": "ladybird",
+      "caption": "p. 5",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712933"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712934,
+      "uri": "/ladybird/oid/16712934",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4762,
+      "height": 3646,
+      "source": "ladybird",
+      "caption": "p. 6",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712934"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712935,
+      "uri": "/ladybird/oid/16712935",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4580,
+      "height": 3588,
+      "source": "ladybird",
+      "caption": "p. 7",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712935"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712936,
+      "uri": "/ladybird/oid/16712936",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4732,
+      "height": 3636,
+      "source": "ladybird",
+      "caption": "p. 8",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712936"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712937,
+      "uri": "/ladybird/oid/16712937",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4588,
+      "height": 3620,
+      "source": "ladybird",
+      "caption": "pl. 1 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712937"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712938,
+      "uri": "/ladybird/oid/16712938",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4732,
+      "height": 3620,
+      "source": "ladybird",
+      "caption": "pl. 1 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712938"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712939,
+      "uri": "/ladybird/oid/16712939",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4596,
+      "height": 3620,
+      "source": "ladybird",
+      "caption": "pl. 2 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712939"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712940,
+      "uri": "/ladybird/oid/16712940",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4724,
+      "height": 3612,
+      "source": "ladybird",
+      "caption": "pl. 2 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712940"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712941,
+      "uri": "/ladybird/oid/16712941",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4572,
+      "height": 3596,
+      "source": "ladybird",
+      "caption": "pl. 3 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712941"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712942,
+      "uri": "/ladybird/oid/16712942",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4726,
+      "height": 3628,
+      "source": "ladybird",
+      "caption": "pl. 3 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712942"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712943,
+      "uri": "/ladybird/oid/16712943",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4580,
+      "height": 3596,
+      "source": "ladybird",
+      "caption": "pl. 4 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712943"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712944,
+      "uri": "/ladybird/oid/16712944",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4699,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "pl. 4 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712944"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712945,
+      "uri": "/ladybird/oid/16712945",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4580,
+      "height": 3596,
+      "source": "ladybird",
+      "caption": "pl. 5 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712945"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712946,
+      "uri": "/ladybird/oid/16712946",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4708,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "pl. 5 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712946"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712947,
+      "uri": "/ladybird/oid/16712947",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4572,
+      "height": 3596,
+      "source": "ladybird",
+      "caption": "pl. 6 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712947"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712948,
+      "uri": "/ladybird/oid/16712948",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4735,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "pl. 6 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712948"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712949,
+      "uri": "/ladybird/oid/16712949",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4556,
+      "height": 3596,
+      "source": "ladybird",
+      "caption": "pl. 7 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712949"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712950,
+      "uri": "/ladybird/oid/16712950",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4726,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "pl. 7 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712950"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712951,
+      "uri": "/ladybird/oid/16712951",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4556,
+      "height": 3604,
+      "source": "ladybird",
+      "caption": "pl. 8 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712951"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712952,
+      "uri": "/ladybird/oid/16712952",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4660,
+      "height": 3628,
+      "source": "ladybird",
+      "caption": "pl. 8 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712952"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712953,
+      "uri": "/ladybird/oid/16712953",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4548,
+      "height": 3588,
+      "source": "ladybird",
+      "caption": "pl. 9 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712953"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712954,
+      "uri": "/ladybird/oid/16712954",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4684,
+      "height": 3596,
+      "source": "ladybird",
+      "caption": "pl. 9 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712954"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712955,
+      "uri": "/ladybird/oid/16712955",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4548,
+      "height": 3588,
+      "source": "ladybird",
+      "caption": "pl. 10 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712955"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712956,
+      "uri": "/ladybird/oid/16712956",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4732,
+      "height": 3628,
+      "source": "ladybird",
+      "caption": "pl. 10 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712956"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712957,
+      "uri": "/ladybird/oid/16712957",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4540,
+      "height": 3588,
+      "source": "ladybird",
+      "caption": "pl. 11 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712957"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712958,
+      "uri": "/ladybird/oid/16712958",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4724,
+      "height": 3620,
+      "source": "ladybird",
+      "caption": "pl. 11 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712958"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712959,
+      "uri": "/ladybird/oid/16712959",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4588,
+      "height": 3596,
+      "source": "ladybird",
+      "caption": "pl. 12 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712959"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712960,
+      "uri": "/ladybird/oid/16712960",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4740,
+      "height": 3612,
+      "source": "ladybird",
+      "caption": "pl. 12 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712960"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712961,
+      "uri": "/ladybird/oid/16712961",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4636,
+      "height": 3604,
+      "source": "ladybird",
+      "caption": "pl. 13 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712961"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712962,
+      "uri": "/ladybird/oid/16712962",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4740,
+      "height": 3620,
+      "source": "ladybird",
+      "caption": "pl. 13 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712962"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712963,
+      "uri": "/ladybird/oid/16712963",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4596,
+      "height": 3588,
+      "source": "ladybird",
+      "caption": "pl. 14 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712963"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712964,
+      "uri": "/ladybird/oid/16712964",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4732,
+      "height": 3612,
+      "source": "ladybird",
+      "caption": "pl. 14 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712964"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712965,
+      "uri": "/ladybird/oid/16712965",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4588,
+      "height": 3572,
+      "source": "ladybird",
+      "caption": "pl. 15 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712965"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712966,
+      "uri": "/ladybird/oid/16712966",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4744,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "pl. 15 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712966"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712967,
+      "uri": "/ladybird/oid/16712967",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4596,
+      "height": 3580,
+      "source": "ladybird",
+      "caption": "pl. 16 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712967"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712968,
+      "uri": "/ladybird/oid/16712968",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4726,
+      "height": 3592,
+      "source": "ladybird",
+      "caption": "pl. 16 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712968"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712969,
+      "uri": "/ladybird/oid/16712969",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4596,
+      "height": 3572,
+      "source": "ladybird",
+      "caption": "pl. 17 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712969"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712970,
+      "uri": "/ladybird/oid/16712970",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4726,
+      "height": 3592,
+      "source": "ladybird",
+      "caption": "pl. 17 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712970"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712971,
+      "uri": "/ladybird/oid/16712971",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4612,
+      "height": 3588,
+      "source": "ladybird",
+      "caption": "pl. 18 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712971"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712972,
+      "uri": "/ladybird/oid/16712972",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4735,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "pl. 18 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712972"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712973,
+      "uri": "/ladybird/oid/16712973",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4596,
+      "height": 3596,
+      "source": "ladybird",
+      "caption": "pl. 19 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712973"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712974,
+      "uri": "/ladybird/oid/16712974",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4696,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "pl. 19 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712974"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712975,
+      "uri": "/ladybird/oid/16712975",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4596,
+      "height": 3604,
+      "source": "ladybird",
+      "caption": "pl. 20 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712975"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712976,
+      "uri": "/ladybird/oid/16712976",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4697,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "pl. 20 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712976"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712977,
+      "uri": "/ladybird/oid/16712977",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4596,
+      "height": 3620,
+      "source": "ladybird",
+      "caption": "pl. 21 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712977"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712978,
+      "uri": "/ladybird/oid/16712978",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4711,
+      "height": 3628,
+      "source": "ladybird",
+      "caption": "pl. 21 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712978"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712979,
+      "uri": "/ladybird/oid/16712979",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4596,
+      "height": 3604,
+      "source": "ladybird",
+      "caption": "pl. 22 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712979"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712980,
+      "uri": "/ladybird/oid/16712980",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4735,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "pl. 22 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712980"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712981,
+      "uri": "/ladybird/oid/16712981",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4596,
+      "height": 3596,
+      "source": "ladybird",
+      "caption": "pl. 23 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712981"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712982,
+      "uri": "/ladybird/oid/16712982",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4744,
+      "height": 3592,
+      "source": "ladybird",
+      "caption": "pl. 23 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712982"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712983,
+      "uri": "/ladybird/oid/16712983",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4645,
+      "height": 3583,
+      "source": "ladybird",
+      "caption": "pl. 24 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712983"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712984,
+      "uri": "/ladybird/oid/16712984",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4735,
+      "height": 3592,
+      "source": "ladybird",
+      "caption": "pl. 24 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712984"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712985,
+      "uri": "/ladybird/oid/16712985",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4663,
+      "height": 3574,
+      "source": "ladybird",
+      "caption": "pl. 25 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712985"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712986,
+      "uri": "/ladybird/oid/16712986",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4735,
+      "height": 3592,
+      "source": "ladybird",
+      "caption": "pl. 25 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712986"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712987,
+      "uri": "/ladybird/oid/16712987",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4672,
+      "height": 3583,
+      "source": "ladybird",
+      "caption": "pl. 26 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712987"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712988,
+      "uri": "/ladybird/oid/16712988",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4735,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "pl. 26 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712988"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712989,
+      "uri": "/ladybird/oid/16712989",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4681,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "pl. [1] [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712989"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712990,
+      "uri": "/ladybird/oid/16712990",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4744,
+      "height": 3619,
+      "source": "ladybird",
+      "caption": "pl. [1] [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712990"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712991,
+      "uri": "/ladybird/oid/16712991",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4690,
+      "height": 3574,
+      "source": "ladybird",
+      "caption": "pl. 2 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712991"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712992,
+      "uri": "/ladybird/oid/16712992",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4735,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "pl. 2 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712992"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712993,
+      "uri": "/ladybird/oid/16712993",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4690,
+      "height": 3583,
+      "source": "ladybird",
+      "caption": "pl. 3 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712993"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712994,
+      "uri": "/ladybird/oid/16712994",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4744,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "pl. 3 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712994"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712995,
+      "uri": "/ladybird/oid/16712995",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4699,
+      "height": 3592,
+      "source": "ladybird",
+      "caption": "pl. 4 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712995"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712996,
+      "uri": "/ladybird/oid/16712996",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4744,
+      "height": 3583,
+      "source": "ladybird",
+      "caption": "pl. 4 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712996"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712997,
+      "uri": "/ladybird/oid/16712997",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4753,
+      "height": 3592,
+      "source": "ladybird",
+      "caption": "pl. 5 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712997"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712998,
+      "uri": "/ladybird/oid/16712998",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4744,
+      "height": 3592,
+      "source": "ladybird",
+      "caption": "pl. 5 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712998"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16712999,
+      "uri": "/ladybird/oid/16712999",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4780,
+      "height": 3583,
+      "source": "ladybird",
+      "caption": "pl. 6 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16712999"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713000,
+      "uri": "/ladybird/oid/16713000",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4762,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "pl. 6 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713000"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713001,
+      "uri": "/ladybird/oid/16713001",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4789,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "pl. 7 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713001"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713002,
+      "uri": "/ladybird/oid/16713002",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4762,
+      "height": 3628,
+      "source": "ladybird",
+      "caption": "pl. 7 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713002"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713003,
+      "uri": "/ladybird/oid/16713003",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4789,
+      "height": 3574,
+      "source": "ladybird",
+      "caption": "pl. 8 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713003"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713004,
+      "uri": "/ladybird/oid/16713004",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4771,
+      "height": 3646,
+      "source": "ladybird",
+      "caption": "pl. 8 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713004"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713005,
+      "uri": "/ladybird/oid/16713005",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4825,
+      "height": 3583,
+      "source": "ladybird",
+      "caption": "pl. 9 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713005"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713006,
+      "uri": "/ladybird/oid/16713006",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4728,
+      "height": 3619,
+      "source": "ladybird",
+      "caption": "pl. 9 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713006"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713007,
+      "uri": "/ladybird/oid/16713007",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4762,
+      "height": 3592,
+      "source": "ladybird",
+      "caption": "pl. 10 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713007"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713008,
+      "uri": "/ladybird/oid/16713008",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4750,
+      "height": 3646,
+      "source": "ladybird",
+      "caption": "pl. 10 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713008"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713009,
+      "uri": "/ladybird/oid/16713009",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4843,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "pl. 11 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713009"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713010,
+      "uri": "/ladybird/oid/16713010",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4726,
+      "height": 3629,
+      "source": "ladybird",
+      "caption": "pl. 11 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713010"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713011,
+      "uri": "/ladybird/oid/16713011",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4843,
+      "height": 3619,
+      "source": "ladybird",
+      "caption": "pl. 12 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713011"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713012,
+      "uri": "/ladybird/oid/16713012",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4753,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "pl. 12 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713012"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713013,
+      "uri": "/ladybird/oid/16713013",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4879,
+      "height": 3637,
+      "source": "ladybird",
+      "caption": "pl. 13 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713013"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713014,
+      "uri": "/ladybird/oid/16713014",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4697,
+      "height": 3635,
+      "source": "ladybird",
+      "caption": "pl. 13 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713014"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713015,
+      "uri": "/ladybird/oid/16713015",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4822,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "pl. 14 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713015"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713016,
+      "uri": "/ladybird/oid/16713016",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4723,
+      "height": 3637,
+      "source": "ladybird",
+      "caption": "pl. 14 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713016"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713017,
+      "uri": "/ladybird/oid/16713017",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4825,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "pl. 15 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713017"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713018,
+      "uri": "/ladybird/oid/16713018",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4771,
+      "height": 3583,
+      "source": "ladybird",
+      "caption": "pl. 15 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713018"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713019,
+      "uri": "/ladybird/oid/16713019",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4825,
+      "height": 3592,
+      "source": "ladybird",
+      "caption": "pl. 16 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713019"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713020,
+      "uri": "/ladybird/oid/16713020",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4780,
+      "height": 3619,
+      "source": "ladybird",
+      "caption": "pl. 16 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713020"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713021,
+      "uri": "/ladybird/oid/16713021",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4789,
+      "height": 3583,
+      "source": "ladybird",
+      "caption": "pl. 17 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713021"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713022,
+      "uri": "/ladybird/oid/16713022",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4771,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "pl. 17 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713022"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713023,
+      "uri": "/ladybird/oid/16713023",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4816,
+      "height": 3583,
+      "source": "ladybird",
+      "caption": "pl. 18 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713023"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713024,
+      "uri": "/ladybird/oid/16713024",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4780,
+      "height": 3619,
+      "source": "ladybird",
+      "caption": "pl. 18 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713024"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713025,
+      "uri": "/ladybird/oid/16713025",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4825,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "pl. 19 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713025"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713026,
+      "uri": "/ladybird/oid/16713026",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4771,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "pl. 19 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713026"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713027,
+      "uri": "/ladybird/oid/16713027",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4834,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "pl. 20 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713027"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713028,
+      "uri": "/ladybird/oid/16713028",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4771,
+      "height": 3619,
+      "source": "ladybird",
+      "caption": "pl. 20 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713028"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713029,
+      "uri": "/ladybird/oid/16713029",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4801,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "pl. 21 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713029"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713030,
+      "uri": "/ladybird/oid/16713030",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4771,
+      "height": 3637,
+      "source": "ladybird",
+      "caption": "pl. 21 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713030"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713033,
+      "uri": "/ladybird/oid/16713033",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4795,
+      "height": 3583,
+      "source": "ladybird",
+      "caption": "pl. 23 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713033"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713034,
+      "uri": "/ladybird/oid/16713034",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4712,
+      "height": 3637,
+      "source": "ladybird",
+      "caption": "pl. 23 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713034"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713035,
+      "uri": "/ladybird/oid/16713035",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4825,
+      "height": 3583,
+      "source": "ladybird",
+      "caption": "pl. 24 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713035"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713036,
+      "uri": "/ladybird/oid/16713036",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4722,
+      "height": 3612,
+      "source": "ladybird",
+      "caption": "pl. 24 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713036"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713037,
+      "uri": "/ladybird/oid/16713037",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4757,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "pl. 25 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713037"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713038,
+      "uri": "/ladybird/oid/16713038",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4716,
+      "height": 3591,
+      "source": "ladybird",
+      "caption": "pl. 25 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713038"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713039,
+      "uri": "/ladybird/oid/16713039",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4773,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "pl. 26 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713039"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713040,
+      "uri": "/ladybird/oid/16713040",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4718,
+      "height": 3611,
+      "source": "ladybird",
+      "caption": "pl. 26 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713040"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713041,
+      "uri": "/ladybird/oid/16713041",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4818,
+      "height": 3637,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 1 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713041"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713042,
+      "uri": "/ladybird/oid/16713042",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4722,
+      "height": 3604,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 1 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713042"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713043,
+      "uri": "/ladybird/oid/16713043",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4833,
+      "height": 3628,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 2 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713043"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713044,
+      "uri": "/ladybird/oid/16713044",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4771,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 2 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713044"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713045,
+      "uri": "/ladybird/oid/16713045",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4798,
+      "height": 3619,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 3 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713045"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713046,
+      "uri": "/ladybird/oid/16713046",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4771,
+      "height": 3655,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 3 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713046"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713047,
+      "uri": "/ladybird/oid/16713047",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4797,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 4 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713047"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713048,
+      "uri": "/ladybird/oid/16713048",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4741,
+      "height": 3612,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 4 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713048"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713049,
+      "uri": "/ladybird/oid/16713049",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4810,
+      "height": 3619,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 5 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713049"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713050,
+      "uri": "/ladybird/oid/16713050",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4762,
+      "height": 3646,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 5 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713050"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713051,
+      "uri": "/ladybird/oid/16713051",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4826,
+      "height": 3655,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 6 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713051"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713052,
+      "uri": "/ladybird/oid/16713052",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4738,
+      "height": 3621,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 6 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713052"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713053,
+      "uri": "/ladybird/oid/16713053",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4795,
+      "height": 3628,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 7 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713053"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713054,
+      "uri": "/ladybird/oid/16713054",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4720,
+      "height": 3616,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 7 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713054"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713055,
+      "uri": "/ladybird/oid/16713055",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4763,
+      "height": 3619,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 8 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713055"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713056,
+      "uri": "/ladybird/oid/16713056",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4708,
+      "height": 3600,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 8 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713056"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713057,
+      "uri": "/ladybird/oid/16713057",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4785,
+      "height": 3619,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 9 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713057"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713058,
+      "uri": "/ladybird/oid/16713058",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4687,
+      "height": 3606,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 9 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713058"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713059,
+      "uri": "/ladybird/oid/16713059",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4771,
+      "height": 3619,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 10 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713059"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713060,
+      "uri": "/ladybird/oid/16713060",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4711,
+      "height": 3622,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 10 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713060"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713061,
+      "uri": "/ladybird/oid/16713061",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4742,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 11 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713061"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713062,
+      "uri": "/ladybird/oid/16713062",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4716,
+      "height": 3627,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 11 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713062"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713063,
+      "uri": "/ladybird/oid/16713063",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4774,
+      "height": 3628,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 12 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713063"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713064,
+      "uri": "/ladybird/oid/16713064",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4716,
+      "height": 3606,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 12 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713064"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713065,
+      "uri": "/ladybird/oid/16713065",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4761,
+      "height": 3610,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 13 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713065"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713066,
+      "uri": "/ladybird/oid/16713066",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4696,
+      "height": 3639,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 13 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713066"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713067,
+      "uri": "/ladybird/oid/16713067",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4699,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 14 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713067"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713068,
+      "uri": "/ladybird/oid/16713068",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4704,
+      "height": 3622,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 14 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713068"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713069,
+      "uri": "/ladybird/oid/16713069",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4684,
+      "height": 3574,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 15 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713069"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713070,
+      "uri": "/ladybird/oid/16713070",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4689,
+      "height": 3626,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 15 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713070"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713071,
+      "uri": "/ladybird/oid/16713071",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4689,
+      "height": 3591,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 16 [recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713071"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713072,
+      "uri": "/ladybird/oid/16713072",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4671,
+      "height": 3646,
+      "source": "ladybird",
+      "caption": "[Unnumbered pl.] 16 [verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713072"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713073,
+      "uri": "/ladybird/oid/16713073",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4687,
+      "height": 3592,
+      "source": "ladybird",
+      "caption": "[iii]r",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713073"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713074,
+      "uri": "/ladybird/oid/16713074",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4684,
+      "height": 3634,
+      "source": "ladybird",
+      "caption": "[iii]v",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713074"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713075,
+      "uri": "/ladybird/oid/16713075",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4734,
+      "height": 3637,
+      "source": "ladybird",
+      "caption": "[Back free endpaper recto]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713075"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713076,
+      "uri": "/ladybird/oid/16713076",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4753,
+      "height": 3637,
+      "source": "ladybird",
+      "caption": "[Back free endpaper verso]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713076"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713077,
+      "uri": "/ladybird/oid/16713077",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4780,
+      "height": 3601,
+      "source": "ladybird",
+      "caption": "[Back pastedown]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713077"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713078,
+      "uri": "/ladybird/oid/16713078",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 514,
+      "height": 3628,
+      "source": "ladybird",
+      "caption": "[Spine]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713078"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    },
+    {
+      "oid": 16713079,
+      "uri": "/ladybird/oid/16713079",
+      "title": [
+        "Faust; esquisses dessinées par Retsch."
+      ],
+      "width": 4690,
+      "height": 3619,
+      "source": "ladybird",
+      "caption": "[Back cover]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16713079"
+      ],
+      "identifierShelfMark": "Speck Ck99 R3 +830b"
+    }
+  ],
   "contents": [
     "Contains 26 numbered etches plates before letters; lithographs of plates 1-21, 23-26 after letters; proof of border of t.p.; 15 plates without numbers or letters.",
     "Etched t.p.; title within ornamental border."
   ],
+  "language": [
+    "French"
+  ],
+  "publisher": [
+    "Giard,Editeur,"
+  ],
+  "recordType": "oid",
+  "repository": "Beinecke Library",
+  "contributor": [
+    "Goethe, Johann Wolfgang von,--1749-1832.--Faust--Illustrations.",
+    "Miltitz, Carl Borromäus von, 1781-1845"
+  ],
+  "description": [
+    "Contains 26 numbered etches plates before letters; lithographs of plates 1-21, 23-26 after letters; proof of border of t.p.; 15 plates without numbers or letters.",
+    "Etched t.p.; title within ornamental border."
+  ],
+  "orbisRecord": "1289001",
+  "subjectName": [
+    "Goethe, Johann Wolfgang von,--1749-1832.--Faust--Illustrations.",
+    "Miltitz, Carl Borromäus von, 1781-1845"
+  ],
+  "collectionId": 1,
+  "resourceType": "Books, Journals & Pamphlets",
+  "dependentUris": [
+    "/ladybird/oid/16712419"
+  ],
+  "numberOfPages": "Copy 1",
   "creatorDisplay": [
     "Retzsch, Moritz, 1779-1857"
+  ],
+  "dateStructured": [
+    "1830-00-00T00:00:00Z"
+  ],
+  "itemPermission": "Public",
+  "publicationPlace": [
+    "Paris :"
   ],
   "contributorDisplay": [
     "Goethe, Johann Wolfgang von,--1749-1832.--Faust--Illustrations.",
     "Miltitz, Carl Borromäus von, 1781-1845"
   ],
-  "dependentUris": [
-    "/ladybird/oid/16712419"
-  ],
-  "oid": 16712419,
-  "collectionId": 1,
-  "children": [
-
-  ],
-  "abstract": [
-    "Wanting lithograph of pl. 22."
+  "illustrativeMatter": "850813s1830    fr f          00000 fre d",
+  "identifierShelfMark": "Speck Ck99 R3 +830b",
+  "extentOfDigitization": [
+    "Complete work digitized."
   ]
 }

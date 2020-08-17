@@ -1,42 +1,20 @@
 {
-  "recordType": "oid",
-  "source": "ladybird",
-  "uri": "/ladybird/oid/16797069",
-  "identifierShelfMark": "YCAL MSS 42",
   "box": "25",
-  "folder": "787-93",
-  "sourceTitle": "Edith Wharton collection",
-  "sourceDate": "1868-1981 (inclusive)",
-  "sourceNote": "Series II:. Personal Correspondence",
-  "creator": [
-    "Wharton, Edith, 1862-1937"
-  ],
-  "title": [
-    "Grant, Robert\n\n"
-  ],
-  "extentOfDigitization": [
-    "Complete folder digitized."
-  ],
+  "oid": 16797069,
+  "uri": "/ladybird/oid/16797069",
   "date": [
     "1905-39"
-  ],
-  "extent": [
-    "7 folders"
-  ],
-  "language": [
-    "English"
-  ],
-  "description": [
-    "Folder 790 includes an undated letter from \"L.J.G.\", Jamestown, N.Y."
-  ],
-  "subjectName": [
-    "Grant, Robert, 1852-1940--Correspondence",
-    "Lapsley, Gaillard Thomas--Correspondence",
-    "Wharton, Edith, 1862-1937 --Correspondence"
   ],
   "genre": [
     "correspondence (AAT)"
   ],
+  "title": [
+    "Grant, Robert\n\n"
+  ],
+  "extent": [
+    "7 folders"
+  ],
+  "folder": "787-93",
   "format": [
     "text"
   ],
@@ -44,46 +22,6451 @@
   "rights": [
     "Copyright to material created by Edith Wharton may be held by her estate. To learn more, consult the WATCH file (http://norman.hrc.utexas.edu/watch/)."
   ],
-  "orbisRecord": "3435140",
-  "orbisBarcode": "39002075038423",
+  "source": "ladybird",
+  "creator": [
+    "Wharton, Edith, 1862-1937"
+  ],
+  "children": [
+    {
+      "oid": 16800405,
+      "uri": "/ladybird/oid/16800405",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1861,
+      "height": 2864,
+      "source": "ladybird",
+      "caption": "1900 July 25, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800405"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800406,
+      "uri": "/ladybird/oid/16800406",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3640,
+      "height": 2848,
+      "source": "ladybird",
+      "caption": "1900 July 25, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800406"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800407,
+      "uri": "/ladybird/oid/16800407",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1880,
+      "height": 2856,
+      "source": "ladybird",
+      "caption": "1900 July 25, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800407"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800408,
+      "uri": "/ladybird/oid/16800408",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1686,
+      "height": 2544,
+      "source": "ladybird",
+      "caption": "1905 September 23, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800408"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800409,
+      "uri": "/ladybird/oid/16800409",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3264,
+      "height": 2544,
+      "source": "ladybird",
+      "caption": "1905 September 23, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800409"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800410,
+      "uri": "/ladybird/oid/16800410",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1668,
+      "height": 2544,
+      "source": "ladybird",
+      "caption": "1905 September 23, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800410"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800411,
+      "uri": "/ladybird/oid/16800411",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1731,
+      "height": 1374,
+      "source": "ladybird",
+      "caption": "1905 September 23, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800411"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800412,
+      "uri": "/ladybird/oid/16800412",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1746,
+      "height": 1374,
+      "source": "ladybird",
+      "caption": "1905 September 23, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800412"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800413,
+      "uri": "/ladybird/oid/16800413",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2235,
+      "height": 2809,
+      "source": "ladybird",
+      "caption": "1906 February 26, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800413"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800414,
+      "uri": "/ladybird/oid/16800414",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4408,
+      "height": 2824,
+      "source": "ladybird",
+      "caption": "1906 February 26, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800414"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800415,
+      "uri": "/ladybird/oid/16800415",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2256,
+      "height": 2808,
+      "source": "ladybird",
+      "caption": "1906 February 26, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800415"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800416,
+      "uri": "/ladybird/oid/16800416",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2384,
+      "height": 1504,
+      "source": "ladybird",
+      "caption": "1906 February 26, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800416"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800417,
+      "uri": "/ladybird/oid/16800417",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2366,
+      "height": 1504,
+      "source": "ladybird",
+      "caption": "1906 February 26, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800417"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800418,
+      "uri": "/ladybird/oid/16800418",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1880,
+      "height": 2840,
+      "source": "ladybird",
+      "caption": "1907 January 4, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800418"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800419,
+      "uri": "/ladybird/oid/16800419",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3640,
+      "height": 2840,
+      "source": "ladybird",
+      "caption": "1907 January 4, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800419"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800420,
+      "uri": "/ladybird/oid/16800420",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1849,
+      "height": 2846,
+      "source": "ladybird",
+      "caption": "1907 January 4, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800420"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800421,
+      "uri": "/ladybird/oid/16800421",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1878,
+      "height": 2832,
+      "source": "ladybird",
+      "caption": "1907 January 4, Edith Wharton to Robert Grant, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800421"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800422,
+      "uri": "/ladybird/oid/16800422",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3656,
+      "height": 2856,
+      "source": "ladybird",
+      "caption": "1907 January 4, Edith Wharton to Robert Grant, p. [6-7]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800422"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800423,
+      "uri": "/ladybird/oid/16800423",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1868,
+      "height": 2832,
+      "source": "ladybird",
+      "caption": "1907 January 4, Edith Wharton to Robert Grant, p. [8]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800423"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800424,
+      "uri": "/ladybird/oid/16800424",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1971,
+      "height": 1475,
+      "source": "ladybird",
+      "caption": "1907 January 4, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800424"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800425,
+      "uri": "/ladybird/oid/16800425",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1966,
+      "height": 1481,
+      "source": "ladybird",
+      "caption": "1907 January 4, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800425"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800426,
+      "uri": "/ladybird/oid/16800426",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1634,
+      "height": 2527,
+      "source": "ladybird",
+      "caption": "1907 October 20, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800426"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800427,
+      "uri": "/ladybird/oid/16800427",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3208,
+      "height": 2544,
+      "source": "ladybird",
+      "caption": "1907 October 20, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800427"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800428,
+      "uri": "/ladybird/oid/16800428",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1651,
+      "height": 2536,
+      "source": "ladybird",
+      "caption": "1907 October 20, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800428"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800429,
+      "uri": "/ladybird/oid/16800429",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1859,
+      "height": 1352,
+      "source": "ladybird",
+      "caption": "1907 October 20, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800429"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800430,
+      "uri": "/ladybird/oid/16800430",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1849,
+      "height": 1337,
+      "source": "ladybird",
+      "caption": "1907 October 20, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800430"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800431,
+      "uri": "/ladybird/oid/16800431",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1844,
+      "height": 2838,
+      "source": "ladybird",
+      "caption": "1907 November 17, Robert Grant to Edith Wharton, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800431"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800432,
+      "uri": "/ladybird/oid/16800432",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3594,
+      "height": 2858,
+      "source": "ladybird",
+      "caption": "1907 November 17, Robert Grant to Edith Wharton, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800432"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800433,
+      "uri": "/ladybird/oid/16800433",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1839,
+      "height": 2837,
+      "source": "ladybird",
+      "caption": "1907 November 17, Robert Grant to Edith Wharton, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800433"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800434,
+      "uri": "/ladybird/oid/16800434",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1825,
+      "height": 2856,
+      "source": "ladybird",
+      "caption": "1907 November 17, Robert Grant to Edith Wharton, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800434"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800435,
+      "uri": "/ladybird/oid/16800435",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3584,
+      "height": 2856,
+      "source": "ladybird",
+      "caption": "1907 November 17, Robert Grant to Edith Wharton, p. [6-7]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800435"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800436,
+      "uri": "/ladybird/oid/16800436",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1839,
+      "height": 2848,
+      "source": "ladybird",
+      "caption": "1907 November 17, Robert Grant to Edith Wharton, p. [8]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800436"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800437,
+      "uri": "/ladybird/oid/16800437",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1947,
+      "height": 1576,
+      "source": "ladybird",
+      "caption": "1907 November 17, Robert Grant to Edith Wharton, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800437"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800438,
+      "uri": "/ladybird/oid/16800438",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1959,
+      "height": 1576,
+      "source": "ladybird",
+      "caption": "1907 November 17, Robert Grant to Edith Wharton, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800438"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800439,
+      "uri": "/ladybird/oid/16800439",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2239,
+      "height": 2825,
+      "source": "ladybird",
+      "caption": "1907 November 19, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800439"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800440,
+      "uri": "/ladybird/oid/16800440",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4399,
+      "height": 2824,
+      "source": "ladybird",
+      "caption": "1907 November 19, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800440"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800441,
+      "uri": "/ladybird/oid/16800441",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2240,
+      "height": 2808,
+      "source": "ladybird",
+      "caption": "1907 November 19, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800441"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800442,
+      "uri": "/ladybird/oid/16800442",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2256,
+      "height": 2832,
+      "source": "ladybird",
+      "caption": "1907 November 19, Edith Wharton to Robert Grant, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800442"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800443,
+      "uri": "/ladybird/oid/16800443",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2263,
+      "height": 2824,
+      "source": "ladybird",
+      "caption": "1907 November 19, Edith Wharton to Robert Grant, p. [6]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800443"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800444,
+      "uri": "/ladybird/oid/16800444",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2370,
+      "height": 1544,
+      "source": "ladybird",
+      "caption": "1907 November 19, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800444"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800445,
+      "uri": "/ladybird/oid/16800445",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2376,
+      "height": 1516,
+      "source": "ladybird",
+      "caption": "1907 November 19, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800445"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800446,
+      "uri": "/ladybird/oid/16800446",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1904,
+      "height": 2872,
+      "source": "ladybird",
+      "caption": "1908 October 22, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800446"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800447,
+      "uri": "/ladybird/oid/16800447",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3696,
+      "height": 2880,
+      "source": "ladybird",
+      "caption": "1908 October 22, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800447"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800448,
+      "uri": "/ladybird/oid/16800448",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1904,
+      "height": 2872,
+      "source": "ladybird",
+      "caption": "1908 October 22, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800448"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800449,
+      "uri": "/ladybird/oid/16800449",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1899,
+      "height": 2872,
+      "source": "ladybird",
+      "caption": "1908 October 22, Edith Wharton to Robert Grant, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800449"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800450,
+      "uri": "/ladybird/oid/16800450",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3683,
+      "height": 2887,
+      "source": "ladybird",
+      "caption": "1908 October 22, Edith Wharton to Robert Grant, p. [6-7]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800450"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800451,
+      "uri": "/ladybird/oid/16800451",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1889,
+      "height": 2880,
+      "source": "ladybird",
+      "caption": "1908 October 22, Edith Wharton to Robert Grant, p. [8]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800451"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800452,
+      "uri": "/ladybird/oid/16800452",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1984,
+      "height": 1549,
+      "source": "ladybird",
+      "caption": "1908 October 22, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800452"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800453,
+      "uri": "/ladybird/oid/16800453",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1640,
+      "height": 2528,
+      "source": "ladybird",
+      "caption": "November 13, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800453"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800454,
+      "uri": "/ladybird/oid/16800454",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3198,
+      "height": 2544,
+      "source": "ladybird",
+      "caption": "November 13, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800454"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800455,
+      "uri": "/ladybird/oid/16800455",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1643,
+      "height": 2536,
+      "source": "ladybird",
+      "caption": "November 13, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800455"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800456,
+      "uri": "/ladybird/oid/16800456",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1822,
+      "height": 2880,
+      "source": "ladybird",
+      "caption": "1909 February 6, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800456"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800457,
+      "uri": "/ladybird/oid/16800457",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3584,
+      "height": 2872,
+      "source": "ladybird",
+      "caption": "1909 February 6, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800457"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800458,
+      "uri": "/ladybird/oid/16800458",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1840,
+      "height": 2872,
+      "source": "ladybird",
+      "caption": "1909 February 6, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800458"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800459,
+      "uri": "/ladybird/oid/16800459",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1864,
+      "height": 2896,
+      "source": "ladybird",
+      "caption": "1909 February 6, Edith Wharton to Robert Grant, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800459"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800460,
+      "uri": "/ladybird/oid/16800460",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3623,
+      "height": 2904,
+      "source": "ladybird",
+      "caption": "1909 February 6, Edith Wharton to Robert Grant, p. [6-7]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800460"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800461,
+      "uri": "/ladybird/oid/16800461",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1866,
+      "height": 2904,
+      "source": "ladybird",
+      "caption": "1909 February 6, Edith Wharton to Robert Grant, p. [8]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800461"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800462,
+      "uri": "/ladybird/oid/16800462",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1992,
+      "height": 1536,
+      "source": "ladybird",
+      "caption": "1909 February 6, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800462"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800463,
+      "uri": "/ladybird/oid/16800463",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1992,
+      "height": 1544,
+      "source": "ladybird",
+      "caption": "1909 February 6, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800463"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800464,
+      "uri": "/ladybird/oid/16800464",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2208,
+      "height": 3368,
+      "source": "ladybird",
+      "caption": "1910 April 4, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800464"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800465,
+      "uri": "/ladybird/oid/16800465",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4283,
+      "height": 3368,
+      "source": "ladybird",
+      "caption": "1910 April 4, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800465"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800466,
+      "uri": "/ladybird/oid/16800466",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2080,
+      "height": 3256,
+      "source": "ladybird",
+      "caption": "1910 April 4, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800466"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800467,
+      "uri": "/ladybird/oid/16800467",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2216,
+      "height": 3376,
+      "source": "ladybird",
+      "caption": "1910 April 4, Edith Wharton to Robert Grant, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800467"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800468,
+      "uri": "/ladybird/oid/16800468",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4307,
+      "height": 3391,
+      "source": "ladybird",
+      "caption": "1910 April 4, Edith Wharton to Robert Grant, p. [6-7]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800468"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800469,
+      "uri": "/ladybird/oid/16800469",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2216,
+      "height": 3377,
+      "source": "ladybird",
+      "caption": "1910 April 4, Edith Wharton to Robert Grant, p. [8]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800469"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800470,
+      "uri": "/ladybird/oid/16800470",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2208,
+      "height": 3368,
+      "source": "ladybird",
+      "caption": "1910 April 4, Edith Wharton to Robert Grant, p. [9]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800470"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800471,
+      "uri": "/ladybird/oid/16800471",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2222,
+      "height": 3379,
+      "source": "ladybird",
+      "caption": "1910 April 4, Edith Wharton to Robert Grant, p. [10]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800471"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800472,
+      "uri": "/ladybird/oid/16800472",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2320,
+      "height": 1752,
+      "source": "ladybird",
+      "caption": "1910 April 4, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800472"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800473,
+      "uri": "/ladybird/oid/16800473",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2315,
+      "height": 1768,
+      "source": "ladybird",
+      "caption": "1910 April 4, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800473"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800474,
+      "uri": "/ladybird/oid/16800474",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2200,
+      "height": 3400,
+      "source": "ladybird",
+      "caption": "1911 March 17, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800474"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800475,
+      "uri": "/ladybird/oid/16800475",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4288,
+      "height": 3416,
+      "source": "ladybird",
+      "caption": "1911 March 17, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800475"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800476,
+      "uri": "/ladybird/oid/16800476",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2208,
+      "height": 3416,
+      "source": "ladybird",
+      "caption": "1911 March 17, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800476"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800477,
+      "uri": "/ladybird/oid/16800477",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2184,
+      "height": 3400,
+      "source": "ladybird",
+      "caption": "1911 March 17, Edith Wharton to Robert Grant, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800477"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800478,
+      "uri": "/ladybird/oid/16800478",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2192,
+      "height": 3408,
+      "source": "ladybird",
+      "caption": "1911 March 17, Edith Wharton to Robert Grant, p. [6]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800478"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800479,
+      "uri": "/ladybird/oid/16800479",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3120,
+      "height": 1728,
+      "source": "ladybird",
+      "caption": "1911 March 17, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800479"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800480,
+      "uri": "/ladybird/oid/16800480",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3120,
+      "height": 1720,
+      "source": "ladybird",
+      "caption": "1911 March 17, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800480"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800481,
+      "uri": "/ladybird/oid/16800481",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1896,
+      "height": 2872,
+      "source": "ladybird",
+      "caption": "1911 November 27, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800481"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800482,
+      "uri": "/ladybird/oid/16800482",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3688,
+      "height": 2872,
+      "source": "ladybird",
+      "caption": "1911 November 27, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800482"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800483,
+      "uri": "/ladybird/oid/16800483",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1904,
+      "height": 2856,
+      "source": "ladybird",
+      "caption": "1911 November 27, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800483"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800484,
+      "uri": "/ladybird/oid/16800484",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1880,
+      "height": 2864,
+      "source": "ladybird",
+      "caption": "1911 November 27, Edith Wharton to Robert Grant, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800484"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800485,
+      "uri": "/ladybird/oid/16800485",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1888,
+      "height": 2864,
+      "source": "ladybird",
+      "caption": "1911 November 27, Edith Wharton to Robert Grant, p. [6]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800485"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800486,
+      "uri": "/ladybird/oid/16800486",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2016,
+      "height": 1592,
+      "source": "ladybird",
+      "caption": "1911 November 27, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800486"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800487,
+      "uri": "/ladybird/oid/16800487",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2016,
+      "height": 1600,
+      "source": "ladybird",
+      "caption": "1911 November 27, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800487"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800488,
+      "uri": "/ladybird/oid/16800488",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2072,
+      "height": 3248,
+      "source": "ladybird",
+      "caption": "1912 October 18, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800488"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800489,
+      "uri": "/ladybird/oid/16800489",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4032,
+      "height": 3248,
+      "source": "ladybird",
+      "caption": "1912 October 18, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800489"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800490,
+      "uri": "/ladybird/oid/16800490",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2065,
+      "height": 3256,
+      "source": "ladybird",
+      "caption": "1912 October 18, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800490"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800491,
+      "uri": "/ladybird/oid/16800491",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2256,
+      "height": 1712,
+      "source": "ladybird",
+      "caption": "1912 October 18, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800491"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800492,
+      "uri": "/ladybird/oid/16800492",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2248,
+      "height": 1696,
+      "source": "ladybird",
+      "caption": "1912 October 18, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800492"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800493,
+      "uri": "/ladybird/oid/16800493",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1864,
+      "height": 2848,
+      "source": "ladybird",
+      "caption": "1913 March 2, Robert Grant to Edith Wharton, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800493"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800494,
+      "uri": "/ladybird/oid/16800494",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3632,
+      "height": 2848,
+      "source": "ladybird",
+      "caption": "1913 March 2, Robert Grant to Edith Wharton, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800494"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800495,
+      "uri": "/ladybird/oid/16800495",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1888,
+      "height": 2856,
+      "source": "ladybird",
+      "caption": "1913 March 2, Robert Grant to Edith Wharton, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800495"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800496,
+      "uri": "/ladybird/oid/16800496",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1872,
+      "height": 2856,
+      "source": "ladybird",
+      "caption": "1913 March 2, Robert Grant to Edith Wharton, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800496"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800497,
+      "uri": "/ladybird/oid/16800497",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3664,
+      "height": 2856,
+      "source": "ladybird",
+      "caption": "1913 March 2, Robert Grant to Edith Wharton, p. [6-7]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800497"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800498,
+      "uri": "/ladybird/oid/16800498",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1888,
+      "height": 2856,
+      "source": "ladybird",
+      "caption": "1913 March 2, Robert Grant to Edith Wharton, p. [8]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800498"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800499,
+      "uri": "/ladybird/oid/16800499",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2008,
+      "height": 1600,
+      "source": "ladybird",
+      "caption": "1913 March 2, Robert Grant to Edith Wharton, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800499"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800500,
+      "uri": "/ladybird/oid/16800500",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2008,
+      "height": 1608,
+      "source": "ladybird",
+      "caption": "1913 March 2, Robert Grant to Edith Wharton, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800500"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800501,
+      "uri": "/ladybird/oid/16800501",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1880,
+      "height": 2840,
+      "source": "ladybird",
+      "caption": "1913 November 18, Robert Grant to Edith Wharton, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800501"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800502,
+      "uri": "/ladybird/oid/16800502",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3648,
+      "height": 2848,
+      "source": "ladybird",
+      "caption": "1913 November 18, Robert Grant to Edith Wharton, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800502"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800503,
+      "uri": "/ladybird/oid/16800503",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1864,
+      "height": 2840,
+      "source": "ladybird",
+      "caption": "1913 November 18, Robert Grant to Edith Wharton, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800503"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800504,
+      "uri": "/ladybird/oid/16800504",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1894,
+      "height": 2856,
+      "source": "ladybird",
+      "caption": "1913 November 18, Robert Grant to Edith Wharton, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800504"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800505,
+      "uri": "/ladybird/oid/16800505",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3672,
+      "height": 2840,
+      "source": "ladybird",
+      "caption": "1913 November 18, Robert Grant to Edith Wharton, p. [6-7]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800505"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800506,
+      "uri": "/ladybird/oid/16800506",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1888,
+      "height": 2840,
+      "source": "ladybird",
+      "caption": "1913 November 18, Robert Grant to Edith Wharton, p. [8]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800506"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800507,
+      "uri": "/ladybird/oid/16800507",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2016,
+      "height": 1616,
+      "source": "ladybird",
+      "caption": "1913 November 18, Robert Grant to Edith Wharton, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800507"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800508,
+      "uri": "/ladybird/oid/16800508",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2016,
+      "height": 1616,
+      "source": "ladybird",
+      "caption": "1913 November 18, Robert Grant to Edith Wharton, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800508"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800509,
+      "uri": "/ladybird/oid/16800509",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1920,
+      "height": 2864,
+      "source": "ladybird",
+      "caption": "1913 December 10, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800509"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800510,
+      "uri": "/ladybird/oid/16800510",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3704,
+      "height": 2880,
+      "source": "ladybird",
+      "caption": "1913 December 10, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800510"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800511,
+      "uri": "/ladybird/oid/16800511",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1912,
+      "height": 2856,
+      "source": "ladybird",
+      "caption": "1913 December 10, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800511"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800512,
+      "uri": "/ladybird/oid/16800512",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2008,
+      "height": 1592,
+      "source": "ladybird",
+      "caption": "1913 December 10, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800512"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800513,
+      "uri": "/ladybird/oid/16800513",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2024,
+      "height": 1600,
+      "source": "ladybird",
+      "caption": "1913 December 10, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800513"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800514,
+      "uri": "/ladybird/oid/16800514",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2240,
+      "height": 2968,
+      "source": "ladybird",
+      "caption": "1914 January 1, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800514"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800515,
+      "uri": "/ladybird/oid/16800515",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4400,
+      "height": 2976,
+      "source": "ladybird",
+      "caption": "1914 January 1, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800515"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800516,
+      "uri": "/ladybird/oid/16800516",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2240,
+      "height": 2968,
+      "source": "ladybird",
+      "caption": "1914 January 1, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800516"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800517,
+      "uri": "/ladybird/oid/16800517",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2408,
+      "height": 1544,
+      "source": "ladybird",
+      "caption": "1914 January 1, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800517"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800518,
+      "uri": "/ladybird/oid/16800518",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2380,
+      "height": 1560,
+      "source": "ladybird",
+      "caption": "1914 January 1, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800518"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800519,
+      "uri": "/ladybird/oid/16800519",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2256,
+      "height": 2976,
+      "source": "ladybird",
+      "caption": "1914 January 4, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800519"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800520,
+      "uri": "/ladybird/oid/16800520",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4408,
+      "height": 2968,
+      "source": "ladybird",
+      "caption": "1914 January 4, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800520"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800521,
+      "uri": "/ladybird/oid/16800521",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2264,
+      "height": 2952,
+      "source": "ladybird",
+      "caption": "1914 January 4, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800521"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800522,
+      "uri": "/ladybird/oid/16800522",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2376,
+      "height": 1552,
+      "source": "ladybird",
+      "caption": "1914 January 4, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800522"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800523,
+      "uri": "/ladybird/oid/16800523",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2376,
+      "height": 1560,
+      "source": "ladybird",
+      "caption": "1914 January 4, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800523"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800524,
+      "uri": "/ladybird/oid/16800524",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4312,
+      "height": 3392,
+      "source": "ladybird",
+      "caption": "1914 April 29, Edith Wharton to Robert Grant, p. [1-2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800524"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800525,
+      "uri": "/ladybird/oid/16800525",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4320,
+      "height": 3384,
+      "source": "ladybird",
+      "caption": "1914 April 29, Edith Wharton to Robert Grant, p. [3-4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800525"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800526,
+      "uri": "/ladybird/oid/16800526",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2224,
+      "height": 3384,
+      "source": "ladybird",
+      "caption": "1914 April 29, Edith Wharton to Robert Grant, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800526"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800527,
+      "uri": "/ladybird/oid/16800527",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4328,
+      "height": 3392,
+      "source": "ladybird",
+      "caption": "1914 April 29, Edith Wharton to Robert Grant, p. [6-7]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800527"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800528,
+      "uri": "/ladybird/oid/16800528",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2204,
+      "height": 3392,
+      "source": "ladybird",
+      "caption": "1914 April 29, Edith Wharton to Robert Grant, p. [8]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800528"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800529,
+      "uri": "/ladybird/oid/16800529",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2568,
+      "height": 1800,
+      "source": "ladybird",
+      "caption": "1914 April 29, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800529"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800530,
+      "uri": "/ladybird/oid/16800530",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2564,
+      "height": 1808,
+      "source": "ladybird",
+      "caption": "1914 April 29, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800530"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800531,
+      "uri": "/ladybird/oid/16800531",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1880,
+      "height": 2944,
+      "source": "ladybird",
+      "caption": "1914 August 31, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800531"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800532,
+      "uri": "/ladybird/oid/16800532",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3664,
+      "height": 2944,
+      "source": "ladybird",
+      "caption": "1914 August 31, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800532"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800533,
+      "uri": "/ladybird/oid/16800533",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1888,
+      "height": 2936,
+      "source": "ladybird",
+      "caption": "1914 August 31, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800533"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800534,
+      "uri": "/ladybird/oid/16800534",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2024,
+      "height": 1552,
+      "source": "ladybird",
+      "caption": "1914 August 31, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800534"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800535,
+      "uri": "/ladybird/oid/16800535",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2032,
+      "height": 1552,
+      "source": "ladybird",
+      "caption": "1914 August 31, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800535"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800536,
+      "uri": "/ladybird/oid/16800536",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4142,
+      "height": 2891,
+      "source": "ladybird",
+      "caption": "[Photostat] 1915 April 8, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800536"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800537,
+      "uri": "/ladybird/oid/16800537",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4128,
+      "height": 2904,
+      "source": "ladybird",
+      "caption": "[Photostat] 1915 April 8, Edith Wharton to Robert Grant, p. [1] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800537"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800538,
+      "uri": "/ladybird/oid/16800538",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4168,
+      "height": 2896,
+      "source": "ladybird",
+      "caption": "[Photostat] 1915 April 8, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800538"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800539,
+      "uri": "/ladybird/oid/16800539",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4136,
+      "height": 2904,
+      "source": "ladybird",
+      "caption": "[Photostat] 1915 April 8, Edith Wharton to Robert Grant, p. [2-3] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800539"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800540,
+      "uri": "/ladybird/oid/16800540",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2320,
+      "height": 1616,
+      "source": "ladybird",
+      "caption": "[Photostat] 1915 April 8, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800540"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800541,
+      "uri": "/ladybird/oid/16800541",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2312,
+      "height": 1600,
+      "source": "ladybird",
+      "caption": "[Photostat] 1915 April 8, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800541"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800542,
+      "uri": "/ladybird/oid/16800542",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2784,
+      "height": 1808,
+      "source": "ladybird",
+      "caption": "[Photostat] 1915 April 8, Edith Wharton to Robert Grant, [receipt] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800542"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800543,
+      "uri": "/ladybird/oid/16800543",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2768,
+      "height": 1824,
+      "source": "ladybird",
+      "caption": "[Photostat] 1915 April 8, Edith Wharton to Robert Grant, [receipt] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800543"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800544,
+      "uri": "/ladybird/oid/16800544",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2056,
+      "height": 2784,
+      "source": "ladybird",
+      "caption": "1915 February 13, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800544"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800545,
+      "uri": "/ladybird/oid/16800545",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3984,
+      "height": 2792,
+      "source": "ladybird",
+      "caption": "1915 February 13, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800545"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800546,
+      "uri": "/ladybird/oid/16800546",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2040,
+      "height": 2776,
+      "source": "ladybird",
+      "caption": "1915 February 13, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800546"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800547,
+      "uri": "/ladybird/oid/16800547",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2049,
+      "height": 2768,
+      "source": "ladybird",
+      "caption": "1915 February 13, Edith Wharton to Robert Grant, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800547"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800548,
+      "uri": "/ladybird/oid/16800548",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2032,
+      "height": 2784,
+      "source": "ladybird",
+      "caption": "1915 February 13, Edith Wharton to Robert Grant, p. [6]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800548"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800549,
+      "uri": "/ladybird/oid/16800549",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2158,
+      "height": 1512,
+      "source": "ladybird",
+      "caption": "1915 February 13, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800549"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800550,
+      "uri": "/ladybird/oid/16800550",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2192,
+      "height": 1512,
+      "source": "ladybird",
+      "caption": "1915 February 13, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800550"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800551,
+      "uri": "/ladybird/oid/16800551",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2024,
+      "height": 2744,
+      "source": "ladybird",
+      "caption": "1915 July 22, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800551"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800552,
+      "uri": "/ladybird/oid/16800552",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3952,
+      "height": 2752,
+      "source": "ladybird",
+      "caption": "1915 July 22, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800552"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800553,
+      "uri": "/ladybird/oid/16800553",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2032,
+      "height": 2744,
+      "source": "ladybird",
+      "caption": "1915 July 22, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800553"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800554,
+      "uri": "/ladybird/oid/16800554",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2296,
+      "height": 1576,
+      "source": "ladybird",
+      "caption": "1915 July 22, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800554"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800555,
+      "uri": "/ladybird/oid/16800555",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2296,
+      "height": 1576,
+      "source": "ladybird",
+      "caption": "1915 July 22, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800555"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800556,
+      "uri": "/ladybird/oid/16800556",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3410,
+      "height": 4607,
+      "source": "ladybird",
+      "caption": "1915 August 8, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800556"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800557,
+      "uri": "/ladybird/oid/16800557",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3404,
+      "height": 4598,
+      "source": "ladybird",
+      "caption": "1915 August 8, Edith Wharton to Robert Grant, p. [2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800557"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800558,
+      "uri": "/ladybird/oid/16800558",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2591,
+      "height": 1718,
+      "source": "ladybird",
+      "caption": "1915 August 8, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800558"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800559,
+      "uri": "/ladybird/oid/16800559",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2600,
+      "height": 1718,
+      "source": "ladybird",
+      "caption": "1915 August 8, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800559"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800560,
+      "uri": "/ladybird/oid/16800560",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3437,
+      "height": 4517,
+      "source": "ladybird",
+      "caption": "1915 August, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800560"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800561,
+      "uri": "/ladybird/oid/16800561",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3446,
+      "height": 4526,
+      "source": "ladybird",
+      "caption": "1915 August, Edith Wharton to Robert Grant, p. [1] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800561"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800562,
+      "uri": "/ladybird/oid/16800562",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3455,
+      "height": 4562,
+      "source": "ladybird",
+      "caption": "1915 August, Edith Wharton to Robert Grant, p. 2",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800562"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800563,
+      "uri": "/ladybird/oid/16800563",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3437,
+      "height": 4517,
+      "source": "ladybird",
+      "caption": "1915 August, Edith Wharton to Robert Grant, p. 2 verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800563"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800564,
+      "uri": "/ladybird/oid/16800564",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3428,
+      "height": 4562,
+      "source": "ladybird",
+      "caption": "1915 August, Edith Wharton to Robert Grant, p. 3",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800564"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800565,
+      "uri": "/ladybird/oid/16800565",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3437,
+      "height": 4508,
+      "source": "ladybird",
+      "caption": "1915 August, Edith Wharton to Robert Grant, p. 3 verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800565"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800566,
+      "uri": "/ladybird/oid/16800566",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3437,
+      "height": 4526,
+      "source": "ladybird",
+      "caption": "1915 August, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800566"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800567,
+      "uri": "/ladybird/oid/16800567",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3401,
+      "height": 4526,
+      "source": "ladybird",
+      "caption": "1915 August, Edith Wharton to Robert Grant, p. [1] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800567"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800568,
+      "uri": "/ladybird/oid/16800568",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3428,
+      "height": 4535,
+      "source": "ladybird",
+      "caption": "1915 August, Edith Wharton to Robert Grant, p. 2",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800568"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800569,
+      "uri": "/ladybird/oid/16800569",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3419,
+      "height": 4517,
+      "source": "ladybird",
+      "caption": "1915 August, Edith Wharton to Robert Grant, p. 2 verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800569"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16808299,
+      "uri": "/ladybird/oid/16808299",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2852,
+      "height": 1808,
+      "source": "ladybird",
+      "caption": "1915 August, Edith Wharton to Robert Grant, p. 2",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16808299"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16808300,
+      "uri": "/ladybird/oid/16808300",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2852,
+      "height": 1817,
+      "source": "ladybird",
+      "caption": "1915 August, Edith Wharton to Robert Grant, p. 2 verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16808300"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800570,
+      "uri": "/ladybird/oid/16800570",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2465,
+      "height": 3176,
+      "source": "ladybird",
+      "caption": "1915 September 7, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800570"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800571,
+      "uri": "/ladybird/oid/16800571",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4820,
+      "height": 3180,
+      "source": "ladybird",
+      "caption": "1915 September 7, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800571"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800572,
+      "uri": "/ladybird/oid/16800572",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2471,
+      "height": 3176,
+      "source": "ladybird",
+      "caption": "1915 September 7, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800572"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800573,
+      "uri": "/ladybird/oid/16800573",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2474,
+      "height": 3176,
+      "source": "ladybird",
+      "caption": "1915 September 7, Edith Wharton to Robert Grant, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800573"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800574,
+      "uri": "/ladybird/oid/16800574",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4830,
+      "height": 3180,
+      "source": "ladybird",
+      "caption": "1915 September 7, Edith Wharton to Robert Grant, p. [6-7]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800574"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800575,
+      "uri": "/ladybird/oid/16800575",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2474,
+      "height": 3167,
+      "source": "ladybird",
+      "caption": "1915 September 7, Edith Wharton to Robert Grant, p. [8]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800575"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800576,
+      "uri": "/ladybird/oid/16800576",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4427,
+      "height": 3023,
+      "source": "ladybird",
+      "caption": "1916 April 17, Edith Wharton to Robert Grant, p. [1-2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800576"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800577,
+      "uri": "/ladybird/oid/16800577",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4427,
+      "height": 3023,
+      "source": "ladybird",
+      "caption": "1916 April 17, Edith Wharton to Robert Grant, p. [3-4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800577"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800578,
+      "uri": "/ladybird/oid/16800578",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4400,
+      "height": 3041,
+      "source": "ladybird",
+      "caption": "1916 April 17, Edith Wharton to Robert Grant, p. [5-6]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800578"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800579,
+      "uri": "/ladybird/oid/16800579",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4418,
+      "height": 3032,
+      "source": "ladybird",
+      "caption": "1916 April 17, Edith Wharton to Robert Grant, p. [7-8]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800579"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800580,
+      "uri": "/ladybird/oid/16800580",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2366,
+      "height": 1628,
+      "source": "ladybird",
+      "caption": "1916 April 17, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800580"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800581,
+      "uri": "/ladybird/oid/16800581",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2366,
+      "height": 1628,
+      "source": "ladybird",
+      "caption": "1916 April 17, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800581"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800582,
+      "uri": "/ladybird/oid/16800582",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2393,
+      "height": 3725,
+      "source": "ladybird",
+      "caption": "1916 August 12, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800582"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800583,
+      "uri": "/ladybird/oid/16800583",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2384,
+      "height": 3725,
+      "source": "ladybird",
+      "caption": "1916 August 12, Edith Wharton to Robert Grant, p. [1] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800583"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800584,
+      "uri": "/ladybird/oid/16800584",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2393,
+      "height": 3725,
+      "source": "ladybird",
+      "caption": "1916 August 12, Edith Wharton to Robert Grant, p. 2",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800584"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800585,
+      "uri": "/ladybird/oid/16800585",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2393,
+      "height": 3734,
+      "source": "ladybird",
+      "caption": "1916 August 12, Edith Wharton to Robert Grant, p. 2 verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800585"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800586,
+      "uri": "/ladybird/oid/16800586",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2546,
+      "height": 1916,
+      "source": "ladybird",
+      "caption": "1916 August 12, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800586"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800587,
+      "uri": "/ladybird/oid/16800587",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2537,
+      "height": 1916,
+      "source": "ladybird",
+      "caption": "1916 August 12, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800587"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800588,
+      "uri": "/ladybird/oid/16800588",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2051,
+      "height": 2753,
+      "source": "ladybird",
+      "caption": "1916 August 13, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800588"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800589,
+      "uri": "/ladybird/oid/16800589",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3995,
+      "height": 2762,
+      "source": "ladybird",
+      "caption": "1916 August 13, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800589"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800590,
+      "uri": "/ladybird/oid/16800590",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2060,
+      "height": 2744,
+      "source": "ladybird",
+      "caption": "1916 August 13, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800590"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800591,
+      "uri": "/ladybird/oid/16800591",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2150,
+      "height": 1529,
+      "source": "ladybird",
+      "caption": "1916 August 13, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800591"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800592,
+      "uri": "/ladybird/oid/16800592",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2168,
+      "height": 1520,
+      "source": "ladybird",
+      "caption": "1916 August 13, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800592"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800593,
+      "uri": "/ladybird/oid/16800593",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2051,
+      "height": 2753,
+      "source": "ladybird",
+      "caption": "1916 August 25, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800593"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800594,
+      "uri": "/ladybird/oid/16800594",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3986,
+      "height": 2762,
+      "source": "ladybird",
+      "caption": "1916 August 25, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800594"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800595,
+      "uri": "/ladybird/oid/16800595",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2060,
+      "height": 2753,
+      "source": "ladybird",
+      "caption": "1916 August 25, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800595"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800596,
+      "uri": "/ladybird/oid/16800596",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2051,
+      "height": 2744,
+      "source": "ladybird",
+      "caption": "1916 August 25, Edith Wharton to Robert Grant, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800596"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800597,
+      "uri": "/ladybird/oid/16800597",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2060,
+      "height": 2744,
+      "source": "ladybird",
+      "caption": "1916 August 25, Edith Wharton to Robert Grant, p. [6]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800597"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800598,
+      "uri": "/ladybird/oid/16800598",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2393,
+      "height": 1484,
+      "source": "ladybird",
+      "caption": "1916 August 25, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800598"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800599,
+      "uri": "/ladybird/oid/16800599",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2384,
+      "height": 1484,
+      "source": "ladybird",
+      "caption": "1916 August 25, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800599"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800600,
+      "uri": "/ladybird/oid/16800600",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2051,
+      "height": 2753,
+      "source": "ladybird",
+      "caption": "1916 September 27, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800600"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800601,
+      "uri": "/ladybird/oid/16800601",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4004,
+      "height": 2744,
+      "source": "ladybird",
+      "caption": "1916 September 27, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800601"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800602,
+      "uri": "/ladybird/oid/16800602",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2069,
+      "height": 2753,
+      "source": "ladybird",
+      "caption": "1916 September 27, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800602"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800603,
+      "uri": "/ladybird/oid/16800603",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2033,
+      "height": 2744,
+      "source": "ladybird",
+      "caption": "1916 September 27, Edith Wharton to Robert Grant, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800603"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800604,
+      "uri": "/ladybird/oid/16800604",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2051,
+      "height": 2753,
+      "source": "ladybird",
+      "caption": "1916 September 27, Edith Wharton to Robert Grant, p. [6]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800604"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800605,
+      "uri": "/ladybird/oid/16800605",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2024,
+      "height": 2753,
+      "source": "ladybird",
+      "caption": "1916 October 21, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800605"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800606,
+      "uri": "/ladybird/oid/16800606",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3941,
+      "height": 2771,
+      "source": "ladybird",
+      "caption": "1916 October 21, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800606"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800607,
+      "uri": "/ladybird/oid/16800607",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2006,
+      "height": 2744,
+      "source": "ladybird",
+      "caption": "1916 October 21, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800607"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800608,
+      "uri": "/ladybird/oid/16800608",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2177,
+      "height": 1511,
+      "source": "ladybird",
+      "caption": "1916 October 21, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800608"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800609,
+      "uri": "/ladybird/oid/16800609",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2195,
+      "height": 1502,
+      "source": "ladybird",
+      "caption": "1916 October 21, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800609"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800610,
+      "uri": "/ladybird/oid/16800610",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2483,
+      "height": 3176,
+      "source": "ladybird",
+      "caption": "1916 November 10, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800610"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800611,
+      "uri": "/ladybird/oid/16800611",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4850,
+      "height": 3167,
+      "source": "ladybird",
+      "caption": "1916 November 10, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800611"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800612,
+      "uri": "/ladybird/oid/16800612",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2492,
+      "height": 3176,
+      "source": "ladybird",
+      "caption": "1916 November 10, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800612"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800613,
+      "uri": "/ladybird/oid/16800613",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2609,
+      "height": 1727,
+      "source": "ladybird",
+      "caption": "1916 November 10, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800613"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800614,
+      "uri": "/ladybird/oid/16800614",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2618,
+      "height": 1735,
+      "source": "ladybird",
+      "caption": "1916 November 10, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800614"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800615,
+      "uri": "/ladybird/oid/16800615",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2041,
+      "height": 2744,
+      "source": "ladybird",
+      "caption": "1916 December 10, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800615"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800616,
+      "uri": "/ladybird/oid/16800616",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3977,
+      "height": 2726,
+      "source": "ladybird",
+      "caption": "1916 December 10, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800616"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800617,
+      "uri": "/ladybird/oid/16800617",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2042,
+      "height": 2735,
+      "source": "ladybird",
+      "caption": "1916 December 10, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800617"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16808508,
+      "uri": "/ladybird/oid/16808508",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2051,
+      "height": 2735,
+      "source": "ladybird",
+      "caption": "1916 December 10, Edith Wharton to Robert Grant, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16808508"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16808509,
+      "uri": "/ladybird/oid/16808509",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2069,
+      "height": 2744,
+      "source": "ladybird",
+      "caption": "1916 December 10, Edith Wharton to Robert Grant, p. [6]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16808509"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800618,
+      "uri": "/ladybird/oid/16800618",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2168,
+      "height": 1484,
+      "source": "ladybird",
+      "caption": "1916 December 10, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800618"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800619,
+      "uri": "/ladybird/oid/16800619",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2168,
+      "height": 1493,
+      "source": "ladybird",
+      "caption": "1916 December 10, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800619"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800620,
+      "uri": "/ladybird/oid/16800620",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2033,
+      "height": 2735,
+      "source": "ladybird",
+      "caption": "1917 July 22, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800620"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800621,
+      "uri": "/ladybird/oid/16800621",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3977,
+      "height": 2744,
+      "source": "ladybird",
+      "caption": "1917 July 22, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800621"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800622,
+      "uri": "/ladybird/oid/16800622",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2024,
+      "height": 2717,
+      "source": "ladybird",
+      "caption": "1917 July 22, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800622"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800623,
+      "uri": "/ladybird/oid/16800623",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2177,
+      "height": 1466,
+      "source": "ladybird",
+      "caption": "1917 July 22, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800623"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800624,
+      "uri": "/ladybird/oid/16800624",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2168,
+      "height": 1466,
+      "source": "ladybird",
+      "caption": "1917 July 22, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800624"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800625,
+      "uri": "/ladybird/oid/16800625",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2438,
+      "height": 3158,
+      "source": "ladybird",
+      "caption": "1917 August 27, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800625"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800626,
+      "uri": "/ladybird/oid/16800626",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4805,
+      "height": 3167,
+      "source": "ladybird",
+      "caption": "1917 August 27, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800626"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800627,
+      "uri": "/ladybird/oid/16800627",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2438,
+      "height": 3158,
+      "source": "ladybird",
+      "caption": "1917 August 27, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800627"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800628,
+      "uri": "/ladybird/oid/16800628",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2591,
+      "height": 1700,
+      "source": "ladybird",
+      "caption": "1917 August 27, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800628"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800629,
+      "uri": "/ladybird/oid/16800629",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2582,
+      "height": 1700,
+      "source": "ladybird",
+      "caption": "1917 August 27, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800629"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800630,
+      "uri": "/ladybird/oid/16800630",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2447,
+      "height": 3140,
+      "source": "ladybird",
+      "caption": "1917 September 2, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800630"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800631,
+      "uri": "/ladybird/oid/16800631",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2447,
+      "height": 3158,
+      "source": "ladybird",
+      "caption": "1917 September 2, Edith Wharton to Robert Grant, p. [2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800631"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800632,
+      "uri": "/ladybird/oid/16800632",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2582,
+      "height": 1691,
+      "source": "ladybird",
+      "caption": "1917 September 2, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800632"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800633,
+      "uri": "/ladybird/oid/16800633",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2591,
+      "height": 1709,
+      "source": "ladybird",
+      "caption": "1917 September 2, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800633"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800634,
+      "uri": "/ladybird/oid/16800634",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2194,
+      "height": 3347,
+      "source": "ladybird",
+      "caption": "1918 October 2, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800634"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800635,
+      "uri": "/ladybird/oid/16800635",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4292,
+      "height": 3397,
+      "source": "ladybird",
+      "caption": "1918 October 2, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800635"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800636,
+      "uri": "/ladybird/oid/16800636",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2204,
+      "height": 3356,
+      "source": "ladybird",
+      "caption": "1918 October 2, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800636"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800637,
+      "uri": "/ladybird/oid/16800637",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2208,
+      "height": 3362,
+      "source": "ladybird",
+      "caption": "1918 October 2, Edith Wharton to Robert Grant, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800637"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800638,
+      "uri": "/ladybird/oid/16800638",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2240,
+      "height": 3389,
+      "source": "ladybird",
+      "caption": "1918 October 2, Edith Wharton to Robert Grant, p. [6]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800638"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800639,
+      "uri": "/ladybird/oid/16800639",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2303,
+      "height": 1727,
+      "source": "ladybird",
+      "caption": "1918 October 2, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800639"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800640,
+      "uri": "/ladybird/oid/16800640",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2312,
+      "height": 1727,
+      "source": "ladybird",
+      "caption": "1918 October 2, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800640"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800641,
+      "uri": "/ladybird/oid/16800641",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2054,
+      "height": 2649,
+      "source": "ladybird",
+      "caption": "1923 June 18, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800641"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800642,
+      "uri": "/ladybird/oid/16800642",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3959,
+      "height": 2669,
+      "source": "ladybird",
+      "caption": "1923 June 18, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800642"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800643,
+      "uri": "/ladybird/oid/16800643",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2042,
+      "height": 2636,
+      "source": "ladybird",
+      "caption": "1923 June 18, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800643"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800644,
+      "uri": "/ladybird/oid/16800644",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2150,
+      "height": 1457,
+      "source": "ladybird",
+      "caption": "1923 June 18, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800644"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800645,
+      "uri": "/ladybird/oid/16800645",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2159,
+      "height": 1466,
+      "source": "ladybird",
+      "caption": "1923 June 18, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800645"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800646,
+      "uri": "/ladybird/oid/16800646",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2924,
+      "height": 3509,
+      "source": "ladybird",
+      "caption": "1923 July 18, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800646"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800647,
+      "uri": "/ladybird/oid/16800647",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2933,
+      "height": 3491,
+      "source": "ladybird",
+      "caption": "1923 July 18, Edith Wharton to Robert Grant, p. [2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800647"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800648,
+      "uri": "/ladybird/oid/16800648",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2024,
+      "height": 1619,
+      "source": "ladybird",
+      "caption": "1923 July 18, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800648"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800649,
+      "uri": "/ladybird/oid/16800649",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2015,
+      "height": 1610,
+      "source": "ladybird",
+      "caption": "1923 July 18, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800649"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800650,
+      "uri": "/ladybird/oid/16800650",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2246,
+      "height": 3428,
+      "source": "ladybird",
+      "caption": "1923 November 23, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800650"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800651,
+      "uri": "/ladybird/oid/16800651",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 4346,
+      "height": 3428,
+      "source": "ladybird",
+      "caption": "1923 November 23, Edith Wharton to Robert Grant, p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800651"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800652,
+      "uri": "/ladybird/oid/16800652",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2222,
+      "height": 3428,
+      "source": "ladybird",
+      "caption": "1923 November 23, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800652"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800653,
+      "uri": "/ladybird/oid/16800653",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2663,
+      "height": 1628,
+      "source": "ladybird",
+      "caption": "1923 November 23, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800653"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800654,
+      "uri": "/ladybird/oid/16800654",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2654,
+      "height": 1628,
+      "source": "ladybird",
+      "caption": "1923 November 23, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800654"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800655,
+      "uri": "/ladybird/oid/16800655",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2852,
+      "height": 3419,
+      "source": "ladybird",
+      "caption": "1925 December 24, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800655"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800656,
+      "uri": "/ladybird/oid/16800656",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2861,
+      "height": 3419,
+      "source": "ladybird",
+      "caption": "1925 December 24, Edith Wharton to Robert Grant, p. [2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800656"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800657,
+      "uri": "/ladybird/oid/16800657",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2101,
+      "height": 1565,
+      "source": "ladybird",
+      "caption": "1925 December 24, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800657"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800658,
+      "uri": "/ladybird/oid/16800658",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2132,
+      "height": 1565,
+      "source": "ladybird",
+      "caption": "1925 December 24, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800658"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800659,
+      "uri": "/ladybird/oid/16800659",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2870,
+      "height": 3418,
+      "source": "ladybird",
+      "caption": "1926 December 2, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800659"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800660,
+      "uri": "/ladybird/oid/16800660",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2856,
+      "height": 3419,
+      "source": "ladybird",
+      "caption": "1926 December 2, Edith Wharton to Robert Grant, p. [2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800660"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800661,
+      "uri": "/ladybird/oid/16800661",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2006,
+      "height": 1637,
+      "source": "ladybird",
+      "caption": "1926 December 2, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800661"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800662,
+      "uri": "/ladybird/oid/16800662",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1988,
+      "height": 1637,
+      "source": "ladybird",
+      "caption": "1926 December 2, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800662"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800663,
+      "uri": "/ladybird/oid/16800663",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2861,
+      "height": 3401,
+      "source": "ladybird",
+      "caption": "1927 February 5, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800663"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800664,
+      "uri": "/ladybird/oid/16800664",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2852,
+      "height": 3419,
+      "source": "ladybird",
+      "caption": "1927 February 5, Edith Wharton to Robert Grant, p. [2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800664"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800665,
+      "uri": "/ladybird/oid/16800665",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1988,
+      "height": 1628,
+      "source": "ladybird",
+      "caption": "1927 February 5, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800665"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800666,
+      "uri": "/ladybird/oid/16800666",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1997,
+      "height": 1619,
+      "source": "ladybird",
+      "caption": "1927 February 5, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800666"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800667,
+      "uri": "/ladybird/oid/16800667",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2870,
+      "height": 3464,
+      "source": "ladybird",
+      "caption": "1928 February 10, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800667"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800668,
+      "uri": "/ladybird/oid/16800668",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2861,
+      "height": 3464,
+      "source": "ladybird",
+      "caption": "1928 February 10, Edith Wharton to Robert Grant, p. [2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800668"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800669,
+      "uri": "/ladybird/oid/16800669",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1997,
+      "height": 1583,
+      "source": "ladybird",
+      "caption": "1928 February 10, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800669"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800670,
+      "uri": "/ladybird/oid/16800670",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1979,
+      "height": 1583,
+      "source": "ladybird",
+      "caption": "1928 February 10, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800670"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800671,
+      "uri": "/ladybird/oid/16800671",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3320,
+      "height": 4139,
+      "source": "ladybird",
+      "caption": "1929 April 29, Edith Wharton to Robert Grant, recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800671"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800672,
+      "uri": "/ladybird/oid/16800672",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3320,
+      "height": 4130,
+      "source": "ladybird",
+      "caption": "1929 April 29, Edith Wharton to Robert Grant, verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800672"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800673,
+      "uri": "/ladybird/oid/16800673",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1791,
+      "height": 2179,
+      "source": "ladybird",
+      "caption": "Letter from \"L.J.G.\", Jamestown, N.Y., p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800673"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800674,
+      "uri": "/ladybird/oid/16800674",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3497,
+      "height": 2186,
+      "source": "ladybird",
+      "caption": "Letter from \"L.J.G.\", Jamestown, N.Y., p. [2-3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800674"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800675,
+      "uri": "/ladybird/oid/16800675",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3392,
+      "height": 4337,
+      "source": "ladybird",
+      "caption": "1932 January 28, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800675"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800676,
+      "uri": "/ladybird/oid/16800676",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3401,
+      "height": 4346,
+      "source": "ladybird",
+      "caption": "1932 January 28, Edith Wharton to Robert Grant, p. [1] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800676"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800677,
+      "uri": "/ladybird/oid/16800677",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3392,
+      "height": 4337,
+      "source": "ladybird",
+      "caption": "1932 January 28, Edith Wharton to Robert Grant, p. 2",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800677"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800678,
+      "uri": "/ladybird/oid/16800678",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3392,
+      "height": 4346,
+      "source": "ladybird",
+      "caption": "1932 January 28, Edith Wharton to Robert Grant, p. 2 verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800678"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800679,
+      "uri": "/ladybird/oid/16800679",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2393,
+      "height": 1889,
+      "source": "ladybird",
+      "caption": "1932 January 28, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800679"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800680,
+      "uri": "/ladybird/oid/16800680",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2393,
+      "height": 1898,
+      "source": "ladybird",
+      "caption": "1932 January 28, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800680"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800681,
+      "uri": "/ladybird/oid/16800681",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2861,
+      "height": 3437,
+      "source": "ladybird",
+      "caption": "1932 November 6, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800681"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800682,
+      "uri": "/ladybird/oid/16800682",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2843,
+      "height": 3437,
+      "source": "ladybird",
+      "caption": "1932 November 6, Edith Wharton to Robert Grant, p. [2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800682"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800683,
+      "uri": "/ladybird/oid/16800683",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2861,
+      "height": 3428,
+      "source": "ladybird",
+      "caption": "1932 November 6, Edith Wharton to Robert Grant, p. [3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800683"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800684,
+      "uri": "/ladybird/oid/16800684",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2861,
+      "height": 3437,
+      "source": "ladybird",
+      "caption": "1932 November 6, Edith Wharton to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800684"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800685,
+      "uri": "/ladybird/oid/16800685",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1997,
+      "height": 1628,
+      "source": "ladybird",
+      "caption": "1932 November 6, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800685"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800686,
+      "uri": "/ladybird/oid/16800686",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 1988,
+      "height": 1619,
+      "source": "ladybird",
+      "caption": "1932 November 6, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800686"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800687,
+      "uri": "/ladybird/oid/16800687",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3383,
+      "height": 4328,
+      "source": "ladybird",
+      "caption": "1933 January 6, Edith Wharton to Robert Grant, recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800687"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800688,
+      "uri": "/ladybird/oid/16800688",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3383,
+      "height": 4346,
+      "source": "ladybird",
+      "caption": "1933 January 6, Edith Wharton to Robert Grant, verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800688"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800689,
+      "uri": "/ladybird/oid/16800689",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3410,
+      "height": 4355,
+      "source": "ladybird",
+      "caption": "1935 August 3, Edith Wharton to Robert Grant, recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800689"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800690,
+      "uri": "/ladybird/oid/16800690",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3392,
+      "height": 4328,
+      "source": "ladybird",
+      "caption": "1935 August 3, Edith Wharton to Robert Grant, verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800690"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800691,
+      "uri": "/ladybird/oid/16800691",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2420,
+      "height": 1916,
+      "source": "ladybird",
+      "caption": "1935 August 3, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800691"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800692,
+      "uri": "/ladybird/oid/16800692",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2402,
+      "height": 1925,
+      "source": "ladybird",
+      "caption": "1935 August 3, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800692"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800693,
+      "uri": "/ladybird/oid/16800693",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2978,
+      "height": 3518,
+      "source": "ladybird",
+      "caption": "1936 July 28, Edith Wharton to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800693"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800694,
+      "uri": "/ladybird/oid/16800694",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2996,
+      "height": 3509,
+      "source": "ladybird",
+      "caption": "1936 July 28, Edith Wharton to Robert Grant, p. [2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800694"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800695,
+      "uri": "/ladybird/oid/16800695",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2294,
+      "height": 1547,
+      "source": "ladybird",
+      "caption": "1936 July 28, Edith Wharton to Robert Grant, [enclosure] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800695"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800696,
+      "uri": "/ladybird/oid/16800696",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2267,
+      "height": 1514,
+      "source": "ladybird",
+      "caption": "1936 July 28, Edith Wharton to Robert Grant, [enclosure] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800696"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800697,
+      "uri": "/ladybird/oid/16800697",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2457,
+      "height": 1916,
+      "source": "ladybird",
+      "caption": "1936 July 28, Edith Wharton to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800697"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800698,
+      "uri": "/ladybird/oid/16800698",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2466,
+      "height": 1925,
+      "source": "ladybird",
+      "caption": "1936 July 28, Edith Wharton to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800698"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800699,
+      "uri": "/ladybird/oid/16800699",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3221,
+      "height": 4013,
+      "source": "ladybird",
+      "caption": "1929 April 19, Elisina Royall Tyler to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800699"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800700,
+      "uri": "/ladybird/oid/16800700",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3239,
+      "height": 4031,
+      "source": "ladybird",
+      "caption": "1929 April 19, Elisina Royall Tyler to Robert Grant, p. [1] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800700"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800701,
+      "uri": "/ladybird/oid/16800701",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3230,
+      "height": 4013,
+      "source": "ladybird",
+      "caption": "1929 April 19, Elisina Royall Tyler to Robert Grant, p. 2",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800701"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800702,
+      "uri": "/ladybird/oid/16800702",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3230,
+      "height": 4013,
+      "source": "ladybird",
+      "caption": "1929 April 19, Elisina Royall Tyler to Robert Grant, p. 2 verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800702"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800703,
+      "uri": "/ladybird/oid/16800703",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3023,
+      "height": 3698,
+      "source": "ladybird",
+      "caption": "1938 February 6, Elisina Royall Tyler to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800703"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800704,
+      "uri": "/ladybird/oid/16800704",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3023,
+      "height": 3689,
+      "source": "ladybird",
+      "caption": "1938 February 6, Elisina Royall Tyler to Robert Grant, p. [2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800704"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800705,
+      "uri": "/ladybird/oid/16800705",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3014,
+      "height": 3689,
+      "source": "ladybird",
+      "caption": "1938 February 6, Elisina Royall Tyler to Robert Grant, p. [3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800705"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800706,
+      "uri": "/ladybird/oid/16800706",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3014,
+      "height": 3698,
+      "source": "ladybird",
+      "caption": "1938 February 6, Elisina Royall Tyler to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800706"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800707,
+      "uri": "/ladybird/oid/16800707",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3014,
+      "height": 3689,
+      "source": "ladybird",
+      "caption": "1938 February 6, Elisina Royall Tyler to Robert Grant, p. [5]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800707"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800708,
+      "uri": "/ladybird/oid/16800708",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3014,
+      "height": 3698,
+      "source": "ladybird",
+      "caption": "1938 February 6, Elisina Royall Tyler to Robert Grant, p. [6]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800708"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800709,
+      "uri": "/ladybird/oid/16800709",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2969,
+      "height": 3554,
+      "source": "ladybird",
+      "caption": "1938 February 6, Elisina Royall Tyler to Robert Grant, p. [7]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800709"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800710,
+      "uri": "/ladybird/oid/16800710",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2960,
+      "height": 3536,
+      "source": "ladybird",
+      "caption": "1938 February 6, Elisina Royall Tyler to Robert Grant, p. [8]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800710"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800711,
+      "uri": "/ladybird/oid/16800711",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3473,
+      "height": 4499,
+      "source": "ladybird",
+      "caption": "[Typescript excerpt from letter of 1938 February 6, Elisina Royall Tyler to Robert Grant] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800711"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800712,
+      "uri": "/ladybird/oid/16800712",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3473,
+      "height": 4499,
+      "source": "ladybird",
+      "caption": "[Typescript excerpt from letter of 1938 February 6, Elisina Royall Tyler to Robert Grant] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800712"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800713,
+      "uri": "/ladybird/oid/16800713",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3599,
+      "height": 4616,
+      "source": "ladybird",
+      "caption": "1938 March 27, Elisina Royall Tyler to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800713"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800714,
+      "uri": "/ladybird/oid/16800714",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3599,
+      "height": 4607,
+      "source": "ladybird",
+      "caption": "1938 March 27, Elisina Royall Tyler to Robert Grant, p. [2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800714"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800715,
+      "uri": "/ladybird/oid/16800715",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3581,
+      "height": 4607,
+      "source": "ladybird",
+      "caption": "1938 March 27, Elisina Royall Tyler to Robert Grant, p. [3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800715"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800716,
+      "uri": "/ladybird/oid/16800716",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 3617,
+      "height": 4607,
+      "source": "ladybird",
+      "caption": "1938 March 27, Elisina Royall Tyler to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800716"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800717,
+      "uri": "/ladybird/oid/16800717",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2541,
+      "height": 3105,
+      "source": "ladybird",
+      "caption": "1938 March 27, Elisina Royall Tyler to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800717"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800718,
+      "uri": "/ladybird/oid/16800718",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2546,
+      "height": 2024,
+      "source": "ladybird",
+      "caption": "1938 March 27, Elisina Royall Tyler to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800718"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800719,
+      "uri": "/ladybird/oid/16800719",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2240,
+      "height": 3383,
+      "source": "ladybird",
+      "caption": "1939 January 27, Elisina Royall Tyler to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800719"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800720,
+      "uri": "/ladybird/oid/16800720",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2204,
+      "height": 3374,
+      "source": "ladybird",
+      "caption": "1939 January 27, Elisina Royall Tyler to Robert Grant, p. [2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800720"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800721,
+      "uri": "/ladybird/oid/16800721",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2215,
+      "height": 3392,
+      "source": "ladybird",
+      "caption": "1939 January 27, Elisina Royall Tyler to Robert Grant, p. [3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800721"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800722,
+      "uri": "/ladybird/oid/16800722",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2213,
+      "height": 3365,
+      "source": "ladybird",
+      "caption": "1939 January 27, Elisina Royall Tyler to Robert Grant, p. [3] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800722"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800723,
+      "uri": "/ladybird/oid/16800723",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2411,
+      "height": 1904,
+      "source": "ladybird",
+      "caption": "1939 January 27, Elisina Royall Tyler to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800723"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800724,
+      "uri": "/ladybird/oid/16800724",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2402,
+      "height": 1925,
+      "source": "ladybird",
+      "caption": "1939 January 27, Elisina Royall Tyler to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800724"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800725,
+      "uri": "/ladybird/oid/16800725",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2501,
+      "height": 2870,
+      "source": "ladybird",
+      "caption": "1938 August 22, Gaillard Lapsley to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800725"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800726,
+      "uri": "/ladybird/oid/16800726",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2492,
+      "height": 2870,
+      "source": "ladybird",
+      "caption": "1938 August 22, Gaillard Lapsley to Robert Grant, p. [2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800726"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800727,
+      "uri": "/ladybird/oid/16800727",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2483,
+      "height": 2861,
+      "source": "ladybird",
+      "caption": "1938 August 22, Gaillard Lapsley to Robert Grant, p. [3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800727"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800728,
+      "uri": "/ladybird/oid/16800728",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2501,
+      "height": 2870,
+      "source": "ladybird",
+      "caption": "1938 August 22, Gaillard Lapsley to Robert Grant, p. [3] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800728"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800729,
+      "uri": "/ladybird/oid/16800729",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2627,
+      "height": 1574,
+      "source": "ladybird",
+      "caption": "1938 August 22, Gaillard Lapsley to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800729"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800730,
+      "uri": "/ladybird/oid/16800730",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2627,
+      "height": 1565,
+      "source": "ladybird",
+      "caption": "1938 August 22, Gaillard Lapsley to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800730"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800731,
+      "uri": "/ladybird/oid/16800731",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2438,
+      "height": 3014,
+      "source": "ladybird",
+      "caption": "1938 December 13, Gaillard Lapsley to Robert Grant, p. [1]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800731"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800732,
+      "uri": "/ladybird/oid/16800732",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2456,
+      "height": 3035,
+      "source": "ladybird",
+      "caption": "1938 December 13, Gaillard Lapsley to Robert Grant, p. [2]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800732"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800733,
+      "uri": "/ladybird/oid/16800733",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2438,
+      "height": 3014,
+      "source": "ladybird",
+      "caption": "1938 December 13, Gaillard Lapsley to Robert Grant, p. [3]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800733"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800734,
+      "uri": "/ladybird/oid/16800734",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2429,
+      "height": 3014,
+      "source": "ladybird",
+      "caption": "1938 December 13, Gaillard Lapsley to Robert Grant, p. [4]",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800734"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800735,
+      "uri": "/ladybird/oid/16800735",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2321,
+      "height": 1934,
+      "source": "ladybird",
+      "caption": "1938 December 13, Gaillard Lapsley to Robert Grant, [envelope] recto",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800735"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    },
+    {
+      "oid": 16800736,
+      "uri": "/ladybird/oid/16800736",
+      "title": [
+        "Grant, Robert"
+      ],
+      "width": 2330,
+      "height": 1934,
+      "source": "ladybird",
+      "caption": "1938 December 13, Gaillard Lapsley to Robert Grant, [envelope] verso",
+      "children": [
+
+      ],
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16800736"
+      ],
+      "identifierShelfMark": "YCAL MSS 42"
+    }
+  ],
+  "contents": [
+    "Folder 790 includes an undated letter from \"L.J.G.\", Jamestown, N.Y."
+  ],
+  "language": [
+    "English"
+  ],
+  "indexedBy": [
+    "Edith Wharton Collection. Yale Collection of American Literature. Beinecke Rare Book and Manuscript Library."
+  ],
   "findingAid": [
     "http://hdl.handle.net/10079/fa/beinecke.wharton"
   ],
+  "recordType": "oid",
   "references": [
     "Edith Wharton Collection. Yale Collection of American Literature. Beinecke Rare Book and Manuscript Library."
   ],
-  "itemPermission": "Public",
-  "dateStructured": [
-    "1902-00-00T00:00:00Z"
-  ],
-  "resourceType": "Archives or Manuscripts",
+  "repository": "Beinecke Library",
+  "sourceDate": "1868-1981 (inclusive)",
+  "sourceNote": "Series II:. Personal Correspondence",
   "contributor": [
     "Grant, Robert, 1852-1940--Correspondence",
     "Lapsley, Gaillard Thomas--Correspondence",
     "Wharton, Edith, 1862-1937 --Correspondence"
   ],
-  "repository": "Beinecke Library",
-  "contents": [
+  "description": [
     "Folder 790 includes an undated letter from \"L.J.G.\", Jamestown, N.Y."
   ],
-  "indexedBy": [
-    "Edith Wharton Collection. Yale Collection of American Literature. Beinecke Rare Book and Manuscript Library."
+  "orbisRecord": "3435140",
+  "sourceTitle": "Edith Wharton collection",
+  "subjectName": [
+    "Grant, Robert, 1852-1940--Correspondence",
+    "Lapsley, Gaillard Thomas--Correspondence",
+    "Wharton, Edith, 1862-1937 --Correspondence"
+  ],
+  "collectionId": 1,
+  "orbisBarcode": "39002075038423",
+  "resourceType": "Archives or Manuscripts",
+  "dependentUris": [
+    "/ladybird/oid/16797069"
   ],
   "creatorDisplay": [
     "Wharton, Edith, 1862-1937"
   ],
+  "dateStructured": [
+    "1902-00-00T00:00:00Z"
+  ],
+  "itemPermission": "Public",
+  "archiveSpaceUri": "/repositories/11/archival_objects/608223",
   "contributorDisplay": [
     "Grant, Robert, 1852-1940--Correspondence",
     "Lapsley, Gaillard Thomas--Correspondence",
     "Wharton, Edith, 1862-1937 --Correspondence"
   ],
-  "archiveSpaceUri": "/repositories/11/archival_objects/608223",
-  "dependentUris": [
-    "/ladybird/oid/16797069"
-  ],
-  "oid": 16797069,
-  "collectionId": 1,
-  "children": [
-
+  "identifierShelfMark": "YCAL MSS 42",
+  "extentOfDigitization": [
+    "Complete folder digitized."
   ]
 }
