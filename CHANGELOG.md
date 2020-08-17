@@ -1,5 +1,18 @@
 # Changelog
 
+## [v2.10.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.10.0) (2020-08-17)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/V2.9.0...v2.10.0)
+
+**New Features:**
+
+- ParentObjects create their ChildObjects [\#214](https://github.com/yalelibrary/yul-dc-management/pull/214) ([maxkadel](https://github.com/maxkadel))
+- Fetch Ladybird children from MetadataCloud [\#213](https://github.com/yalelibrary/yul-dc-management/pull/213) ([maxkadel](https://github.com/maxkadel))
+
+## [V2.9.0](https://github.com/yalelibrary/yul-dc-management/tree/V2.9.0) (2020-08-14)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.9.0...V2.9.0)
+
 ## [v2.9.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.9.0) (2020-08-14)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.8.1...v2.9.0)
@@ -12,6 +25,7 @@
 
 **Technical Enhancements:**
 
+- Prep for v2.9.0 release [\#212](https://github.com/yalelibrary/yul-dc-management/pull/212) ([maxkadel](https://github.com/maxkadel))
 - Rename Goobi xml import to METS xml import [\#208](https://github.com/yalelibrary/yul-dc-management/pull/208) ([maxkadel](https://github.com/maxkadel))
 - Add moving tickets to release process [\#207](https://github.com/yalelibrary/yul-dc-management/pull/207) ([maxkadel](https://github.com/maxkadel))
 - Refactor tests to make more readable [\#206](https://github.com/yalelibrary/yul-dc-management/pull/206) ([maxkadel](https://github.com/maxkadel))
@@ -236,7 +250,6 @@
 **Technical Enhancements:**
 
 - Prep for 2.0.0 release [\#127](https://github.com/yalelibrary/yul-dc-management/pull/127) ([maxkadel](https://github.com/maxkadel))
-- Refactor Metadata cloud service - put parsing tasks in own class [\#114](https://github.com/yalelibrary/yul-dc-management/pull/114) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.8.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.8.0) (2020-06-26)
 
@@ -249,6 +262,7 @@
 **Technical Enhancements:**
 
 - prep for release 1.8.0 [\#116](https://github.com/yalelibrary/yul-dc-management/pull/116) ([maxkadel](https://github.com/maxkadel))
+- Refactor Metadata cloud service - put parsing tasks in own class [\#114](https://github.com/yalelibrary/yul-dc-management/pull/114) ([maxkadel](https://github.com/maxkadel))
 - update actionpack [\#113](https://github.com/yalelibrary/yul-dc-management/pull/113) ([maxkadel](https://github.com/maxkadel))
 - Refactor, return hash so file doesn't have to be parsed subsequently [\#112](https://github.com/yalelibrary/yul-dc-management/pull/112) ([maxkadel](https://github.com/maxkadel))
 - Upgrade webpacker due to failing local tests & peer dependency [\#111](https://github.com/yalelibrary/yul-dc-management/pull/111) ([maxkadel](https://github.com/maxkadel))
