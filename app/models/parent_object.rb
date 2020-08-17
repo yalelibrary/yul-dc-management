@@ -10,22 +10,22 @@ class ParentObject < ApplicationRecord
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
 
   self.primary_key = 'oid'
-  before_create :default_fetch, unless: proc { ladybird_json.present? }
-  after_save :solr_index, :create_child_records
+  before_validation :default_fetch, on: :create, unless: proc { ladybird_json.present? }
+  after_save :solr_index
+  before_save :create_child_records
 
   def create_child_records
     return unless ladybird_json
-    self.child_object_count = 0
     ladybird_json["children"].map do |child_record|
-      ChildObject.where(child_oid: child_record["oid"]).first_or_create do |child_object|
-        child_object.child_oid = child_record["oid"]
-        child_object.caption = child_record["caption"]
-        child_object.width = child_record["width"]
-        child_object.height = child_record["height"]
-        child_object.parent_object_oid = oid
-        self.child_object_count += 1
-      end
+      next if self.child_object_ids.include?(child_record["oid"])
+      self.child_objects.build(
+        child_oid: child_record["oid"],
+        caption: child_record["caption"],
+        width: child_record["width"],
+        height: child_record["height"]
+        )
     end
+    self.child_object_count = self.child_objects.size
   end
 
   # Fetches the record from the authoritative_metadata_source
