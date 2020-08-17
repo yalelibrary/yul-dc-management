@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe MetsDocument, type: :model do
+RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
   let(:goobi_path) { File.join(fixture_path, "goobi", "metadata", "2012315", "meta.xml") }
   let(:valid_goobi_xml) { File.open(File.join(fixture_path, "goobi", "metadata", "2012315", "meta.xml")).read }
   let(:xml_import) { FactoryBot.create(:mets_xml_import, file: File.open(goobi_path)) }
@@ -11,6 +11,10 @@ RSpec.describe MetsDocument, type: :model do
   let(:no_oid_file) { File.open(File.join(fixture_path, "goobi", "metadata", "2012315", "meta_no_oid.xml")).read }
   let(:blank_oid_file) { File.open(File.join(fixture_path, "goobi", "metadata", "2012315", "meta_blank_oid.xml")).read }
   let(:image_missing_file) { File.open(File.join(fixture_path, "goobi", "metadata", "2012315", "meta_image_missing.xml")).read }
+
+  before do
+    stub_metadata_cloud("2012315")
+  end
 
   it "can be instantiated with xml from the DB instead of a file" do
     described_class.new(xml_import.mets_xml)

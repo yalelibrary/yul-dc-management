@@ -83,12 +83,7 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
       it "does not create a new ParentObject" do
         expect do
           post parent_objects_url, params: { parent_object: invalid_attributes }
-        end.to change(ParentObject, :count).by(0)
-      end
-
-      it "renders a successful response (i.e. to display the 'new' template)" do
-        post parent_objects_url, params: { parent_object: invalid_attributes }
-        expect(response).to be_successful
+        end.to raise_error(StandardError)
       end
     end
   end
