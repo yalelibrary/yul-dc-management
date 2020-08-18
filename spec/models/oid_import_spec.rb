@@ -7,7 +7,7 @@ RSpec.describe OidImport, type: :model, prep_metadata_sources: true do
 
   before do
     stub_metadata_cloud("2034600")
-    stub_metadata_cloud("2046567")
+    stub_metadata_cloud("2005512")
     stub_metadata_cloud("16414889")
     stub_metadata_cloud("14716192")
     stub_metadata_cloud("16854285")

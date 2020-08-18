@@ -14,7 +14,7 @@ class S3Service
   def self.download(file_path)
     resp = @client.get_object(bucket: ENV['SAMPLE_BUCKET'], key: file_path)
     resp.body&.read
-  rescue Aws::S3::Errors::NoSuchKey, Aws::S3::Errors::NotFound
+  rescue Aws::S3::Errors::NoSuchKey, Aws::S3::Errors::NotFound, Aws::S3::Errors::BadRequest
     nil
   end
 end

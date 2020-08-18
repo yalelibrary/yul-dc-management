@@ -2,10 +2,10 @@
 require "rails_helper"
 
 RSpec.describe JsonFile, prep_metadata_sources: true do
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: '2003431') }
-  let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "2003431.json") }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: '16685691') }
+  let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "16685691.json") }
   before do
-    stub_metadata_cloud("2003431")
+    stub_metadata_cloud("16685691")
   end
 
   it "can save a ParentObject to json" do
