@@ -54,7 +54,7 @@ puts "Initial users verified"
 if Rails.env.development?
   require 'csv'
 
-  oid_path = Rails.root.join("db", "parent_oids.csv")
+  oid_path = Rails.root.join("db", "parent_oids_short.csv")
   fixture_ids_table = CSV.read(oid_path, headers: true)
   oids = fixture_ids_table.by_col[0]
 
@@ -62,6 +62,17 @@ if Rails.env.development?
     ParentObject.where(oid: row).first_or_create do |po|
       po.oid = row
       puts "Parent Object created #{po.oid}"
+    end
+  end
+  if ENV["VPN"] != "true"
+    # These are mocked out non-standard visibility fixture objects that are not represented on the MetadataCloud,
+    #  but are in our S3 bucket.
+    mocked_samples = ["2000002107188", "10000016189097", "30000016189097"]
+    mocked_samples.each do |sample|
+    ParentObject.where(oid: sample).first_or_create do |po|
+        po.oid = sample
+        puts "Parent Object created #{po.oid}"
+      end
     end
   end
   puts "There are now #{ParentObject.count} rows in the parent object table"
