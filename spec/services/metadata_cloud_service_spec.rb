@@ -2,8 +2,6 @@
 require "rails_helper"
 require "webmock"
 
-WebMock.allow_net_connect!
-
 RSpec.describe MetadataCloudService, prep_metadata_sources: true do
   let(:mcs) { described_class.new }
   let(:oid) { "16371253" }
@@ -18,7 +16,7 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
   end
   context "creating a ParentObject from an import" do
     before do
-      stub_metadata_cloud(16_371_253)
+      stub_metadata_cloud("16371253")
     end
     it "can create a parent_object from an array of oids" do
       expect(ParentObject.count).to eq 0
@@ -68,7 +66,14 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
     let(:metadata_source) { "aspace" }
     before do
       stub_metadata_cloud("AS-16854285", "aspace")
-      # stub_metadata_cloud("AS-2034600", "aspace")
+      stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/aspace/AS-2034600.json")
+        .to_return(status: 400, body: "")
+      stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/aspace/AS-2005512.json")
+        .to_return(status: 400, body: "")
+      stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/aspace/AS-16414889.json")
+        .to_return(status: 400, body: "")
+      stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/aspace/AS-14716192.json")
+        .to_return(status: 400, body: "")
     end
     it "can pull ArchiveSpace records" do
       time_stamp_before = File.mtime(path_to_example_file.to_s)
