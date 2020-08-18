@@ -54,7 +54,7 @@ puts "Initial users verified"
 if Rails.env.development?
   require 'csv'
 
-  oid_path = Rails.root.join("db", "parent_oids.csv")
+  oid_path = Rails.root.join("db", "parent_oids_short.csv")
   fixture_ids_table = CSV.read(oid_path, headers: true)
   oids = fixture_ids_table.by_col[0]
 
@@ -63,6 +63,14 @@ if Rails.env.development?
       po.oid = row
       puts "Parent Object created #{po.oid}"
     end
+  end
+  if ENV["VPN"] != "true"
+    # This is a mocked out Yale-only fixture object that is not represented on the MetadataCloud, so we should not request it
+    # from the MetadataCloud, but it is in our S3 bucket.
+    ParentObject.where(oid: "2000002107188").first_or_create do |po|
+        po.oid = "2000002107188"
+        puts "Parent Object created #{po.oid}"
+      end
   end
   puts "There are now #{ParentObject.count} rows in the parent object table"
 end
