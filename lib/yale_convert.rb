@@ -1,7 +1,9 @@
+# frozen_string_literal: true
 require 'aws-sdk-s3'
 require 'digest'
-class YaleConvert
+require 'English'
 
+class YaleConvert
   S3 = Aws::S3::Client.new(region: ENV['AWS_DEFAULT_REGION'])
 
   def self.convert(cksum, bucket, input)
@@ -14,17 +16,15 @@ class YaleConvert
     raise "Checksum failed. Should be: #{check}" unless check == cksum
 
     temp_out = Tempfile.new
-    puts `lib/nga.sh #{Dir.mktmpdir} #{temp_in.path} #{temp_out.path}`
+    STDOUT.puts `lib/nga.sh #{Dir.mktmpdir} #{temp_in.path} #{temp_out.path}`
 
+    raise "Conversion script exited with error code #{$CHILD_STATUS.exitstatus}" if $CHILD_STATUS.exitstatus != 0
 
-    raise RuntimeError, "Conversion script exited with error code #{$?.exitstatus}" if $?.exitstatus != 0
-
-    out_key = "ptiffs/#{input.split("/").last}"
+    out_key = "ptiffs/#{input.split('/').last}"
 
     File.open(temp_out, 'r') do |f|
       S3.put_object(bucket: bucket, key: out_key, body: f)
     end
     "s3://#{bucket}/#{out_key}"
-
   end
 end
