@@ -11,7 +11,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       expect do
         [
           '2034600',
-          '2046567',
+          '2005512',
           '16414889',
           '14716192',
           '16854285'
