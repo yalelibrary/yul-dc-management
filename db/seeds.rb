@@ -65,12 +65,15 @@ if Rails.env.development?
     end
   end
   if ENV["VPN"] != "true"
-    # This is a mocked out Yale-only fixture object that is not represented on the MetadataCloud, so we should not request it
-    # from the MetadataCloud, but it is in our S3 bucket.
-    ParentObject.where(oid: "2000002107188").first_or_create do |po|
-        po.oid = "2000002107188"
+    # These are mocked out non-standard visibility fixture objects that are not represented on the MetadataCloud,
+    #  but are in our S3 bucket.
+    mocked_samples = ["2000002107188", "10000016189097", "30000016189097"]
+    mocked_samples.each do |sample|
+    ParentObject.where(oid: sample).first_or_create do |po|
+        po.oid = sample
         puts "Parent Object created #{po.oid}"
       end
+    end
   end
   puts "There are now #{ParentObject.count} rows in the parent object table"
 end
