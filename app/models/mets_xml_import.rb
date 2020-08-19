@@ -11,7 +11,7 @@ class MetsXmlImport < ApplicationRecord
   end
 
   def oid
-    self[:oid] = mets_doc.oid
+    self[:oid] = mets_doc.oid.to_i
   end
 
   def mets_doc
@@ -19,8 +19,6 @@ class MetsXmlImport < ApplicationRecord
   end
 
   def validate_upload
-    # The includes_goobi? method is likely to be deprecated once we have a more final METS document
-    return errors.add(:file, 'must contain a xmlns:goobi namespace') unless mets_doc.includes_goobi?
     return errors.add(:file, 'must contain an oid') if mets_doc.oid.nil? || mets_doc.oid.empty?
     return errors.add(:file, 'must be a valid METs file') unless mets_doc.valid_mets?
     return errors.add(:file, 'all image files must be available to the application') unless mets_doc.all_images_present?

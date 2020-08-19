@@ -40,11 +40,11 @@
       "children": [
 
       ],
+      "callNumber": "GEN MSS 257",
       "recordType": "oid",
       "dependentUris": [
         "/ladybird/oid/1030368"
-      ],
-      "identifierShelfMark": "GEN MSS 257"
+      ]
     },
     {
       "oid": 1032318,
@@ -61,27 +61,22 @@
       "children": [
 
       ],
+      "callNumber": "GEN MSS 257",
       "recordType": "oid",
       "dependentUris": [
         "/ladybird/oid/1032318"
-      ],
-      "identifierShelfMark": "GEN MSS 257"
+      ]
     }
   ],
-  "indexedBy": [
-    "Abraham Lincoln Collection. General Collection, Beinecke Rare Book and Manuscript Library."
-  ],
+  "callNumber": "GEN MSS 257",
   "findingAid": [
     "http://hdl.handle.net/10079/fa/beinecke.lincoln"
   ],
+  "orbisBibId": "4113177",
   "recordType": "oid",
-  "references": [
-    "Abraham Lincoln Collection. General Collection, Beinecke Rare Book and Manuscript Library."
-  ],
   "repository": "Beinecke Library",
   "sourceDate": "1824-1865",
   "sourceNote": "Oversize",
-  "orbisRecord": "4113177",
   "sourceTitle": "Abraham Lincoln collection",
   "collectionId": 1,
   "orbisBarcode": "39002093768050",
@@ -91,7 +86,9 @@
   ],
   "itemPermission": "Public",
   "archiveSpaceUri": "/repositories/11/archival_objects/214638",
-  "identifierShelfMark": "GEN MSS 257",
+  "preferredCitation": [
+    "Abraham Lincoln Collection. General Collection, Beinecke Rare Book and Manuscript Library."
+  ],
   "extentOfDigitization": [
     "Complete work digitized."
   ]

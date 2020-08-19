@@ -1,9 +1,9 @@
 {
   "@context": "http://iiif.io/api/image/2/context.json",
-  "@id": "http://null/iiif/2/1053442",
+  "@id": "http://null/iiif/2/16188702",
   "protocol": "http://iiif.io/api/image",
-  "width": 2591,
-  "height": 4056,
+  "width": 2592,
+  "height": 4069,
   "sizes": [
     {
       "width": 81,
@@ -15,19 +15,19 @@
     },
     {
       "width": 324,
-      "height": 507
+      "height": 509
     },
     {
       "width": 648,
-      "height": 1014
+      "height": 1017
     },
     {
       "width": 1296,
-      "height": 2028
+      "height": 2035
     },
     {
-      "width": 2591,
-      "height": 4056
+      "width": 2592,
+      "height": 4069
     }
   ],
   "tiles": [
@@ -53,7 +53,7 @@
         "gif",
         "png"
       ],
-      "maxArea": 10509096,
+      "maxArea": 10546848,
       "qualities": [
         "bitonal",
         "default",
