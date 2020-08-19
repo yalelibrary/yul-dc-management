@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_16_184926) do
+ActiveRecord::Schema.define(version: 2020_08_19_214438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 2020_08_16_184926) do
     t.xml "mets_xml"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "oid"
+    t.bigint "oid"
     t.index ["oid"], name: "index_mets_xml_imports_on_oid"
   end
 
