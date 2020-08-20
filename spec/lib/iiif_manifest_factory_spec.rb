@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
   around do |example|
-    original_path = ENV["ACCESS_MASTER_MOUNT"]
     original_manifests_base_url = ENV['IIIF_MANIFESTS_BASE_URL']
     original_image_base_url = ENV["IIIF_IMAGE_BASE_URL"]
     ENV['IIIF_MANIFESTS_BASE_URL'] = "http://localhost/manifests"
@@ -13,12 +12,9 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
     example.run
     ENV['IIIF_MANIFESTS_BASE_URL'] = original_manifests_base_url
     ENV['IIIF_IMAGE_BASE_URL'] = original_image_base_url
-    ENV["ACCESS_MASTER_MOUNT"] = original_path
   end
   describe "creating a manifest with a valid mets xml import" do
     let(:oid) { "16172421" }
-    let(:path_to_xml) { File.join("spec", "fixtures", "goobi", "metadata", "16172421", "meta.xml") }
-    let(:xml_import) { FactoryBot.create(:mets_xml_import, oid: oid, file: File.open(path_to_xml)) }
     let(:manifest_factory) { IiifManifestFactory.new(oid) }
     let(:logger_mock) { instance_double("Rails.logger").as_null_object }
     let(:parent_object) { FactoryBot.create(:parent_object, oid: oid) }
@@ -32,7 +28,6 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
       stub_metadata_cloud("16172421")
       stub_info
       parent_object
-      xml_import
     end
 
     def stub_info
@@ -41,9 +36,6 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
         stub_request(:get, "#{ENV['IIIF_IMAGE_BASE_URL']}/2/#{file_id}/info.json")
           .to_return(status: 200, body: File.open(File.join(fixture_path, file_id, "info.json")))
       end
-    end
-    it "has a mets document" do
-      expect(manifest_factory.mets_doc.class).to eq MetsDocument
     end
 
     it "can be instantiated" do
@@ -99,8 +91,8 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
     it "has canvases with ids and labels" do
       expect(first_canvas["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188699"
       expect(third_to_last_canvas["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188700"
-      expect(first_canvas["label"]).to eq "7r"
-      expect(third_to_last_canvas["label"]).to eq " - "
+      expect(first_canvas["label"]).to eq "Swatch 1"
+      expect(third_to_last_canvas["label"]).to eq "swatch 2"
     end
 
     it "has a canvas with width and height" do
@@ -139,15 +131,6 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
 
     it "can output a manifest as json" do
       expect(manifest_factory.manifest.to_json(pretty: true)).to include "Strawberry Thief fabric, made by Morris and Company "
-    end
-  end
-  context "with an object without METs xml available" do
-    let(:oid) { "2107188" }
-    before do
-      stub_metadata_cloud("2107188")
-    end
-    it "raises an error if no METs xml is available" do
-      expect { IiifManifestFactory.new("2107188") }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end

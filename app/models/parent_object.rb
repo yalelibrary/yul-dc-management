@@ -16,13 +16,16 @@ class ParentObject < ApplicationRecord
 
   def create_child_records
     return unless ladybird_json
-    ladybird_json["children"].map do |child_record|
+    ladybird_json["children"].map.with_index(1) do |child_record, index|
       next if child_object_ids.include?(child_record["oid"])
       child_objects.build(
         child_oid: child_record["oid"],
-        caption: child_record["caption"],
+        # Ladybird has only one field for both order label (7v, etc.), and descriptive captions ("Mozart at the Keyboard")
+        # For the first iteration we will map this field to label
+        label: child_record["caption"],
         width: child_record["width"],
-        height: child_record["height"]
+        height: child_record["height"],
+        order: index
       )
     end
     self.child_object_count = child_objects.size
