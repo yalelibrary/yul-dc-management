@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets OBJID="68" xsi:schemaLocation="http://www.loc.gov/standards/premis/ http://www.loc.gov/standards/premis/v2/premis-v2-0.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/standards/mix/ http://www.loc.gov/standards/mix/mix.xsd" xmlns:mets="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:intranda="http://intranda.com/MODS/" xmlns:dv="http://dfg-viewer.de/" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <mets:metsHdr CREATEDATE="2020-08-16T18:02:10Z">
+      <mets:agent OTHERTYPE="SOFTWARE" ROLE="CREATOR" TYPE="OTHER">
+         <mets:name>Goobi - 5cfaf - 2020-06-25 04:07:26+0000</mets:name>
+         <mets:note>Goobi</mets:note>
+      </mets:agent>
+   </mets:metsHdr>
+   <mets:dmdSec ID="DMDLOG_0000">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:titleInfo>
+                  <mods:title>&quot;Strawberry Thief&quot; fabric, made by Morris and Company</mods:title>
+               </mods:titleInfo>
+               <mods:identifier type="PPNanalog">/aspace/repositories/11/archival_objects/2224240</mods:identifier>
+               <mods:recordInfo>
+                  <mods:recordIdentifier source="gbv-ppn">1597600754705</mods:recordIdentifier>
+                  <mods:recordIdentifier source="local">16172421</mods:recordIdentifier>
+               </mods:recordInfo>
+               <mods:classification authority="ivdcc">Catharine T. Patterson Collection of Walter Crane</mods:classification>
+               <mods:classification authority="ivdcc">DefaultCollection</mods:classification>
+               <mods:originInfo>
+                  <mods:dateIssued keyDate="no">circa 1883</mods:dateIssued>
+               </mods:originInfo>
+               <mods:part>
+                  <mods>
+                     <detail>
+                        <mods:number>Box 12, folder 116-118</mods:number>
+                     </detail>
+                  </mods>
+               </mods:part>
+               <mods:accessCondition type="use and reproduction">This is a Yale copyright information statement with information on how you're allowed to use these images.</mods:accessCondition>
+               <mods:accessCondition type="restriction on access">yale_only</mods:accessCondition>
+               <mods:location>
+                  <mods:shelfLocator>GEN MSS 1386</mods:shelfLocator>
+               </mods:location>
+               <mods:extension>
+                  <intranda:intranda>
+                     <intranda:directionRTL>false</intranda:directionRTL>
+                  </intranda:intranda>
+                  <intranda:intranda>
+                     <intranda:ViewingDirection>left-to-right</intranda:ViewingDirection>
+                  </intranda:intranda>
+                  <intranda:intranda>
+                     <intranda:DisplayLayout>individual</intranda:DisplayLayout>
+                  </intranda:intranda>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDLOG_0001">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:titleInfo>
+                  <mods:title>Swatch 1</mods:title>
+               </mods:titleInfo>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDLOG_0002">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:titleInfo>
+                  <mods:title>Swatch 2</mods:title>
+               </mods:titleInfo>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDLOG_0003">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:titleInfo>
+                  <mods:title>Swatch 3</mods:title>
+               </mods:titleInfo>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDLOG_0004">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:subject>
+                  <mods:topic>Indigo Tie</mods:topic>
+               </mods:subject>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:amdSec ID="AMD">
+      <mets:rightsMD ID="RIGHTS">
+         <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVRIGHTS">
+            <mets:xmlData>
+               <dv:rights>
+                  <dv:owner>Beinecke Rare Book &amp; Manuscript Library</dv:owner>
+                  <dv:ownerLogo/>
+                  <dv:ownerSiteURL>https://beinecke.library.yale.edu/</dv:ownerSiteURL>
+                  <dv:ownerContact/>
+                  <dv:sponsorSiteURL>info@intranda.com</dv:sponsorSiteURL>
+               </dv:rights>
+            </mets:xmlData>
+         </mets:mdWrap>
+      </mets:rightsMD>
+      <mets:digiprovMD ID="DIGIPROV">
+         <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVLINKS">
+            <mets:xmlData>
+               <dv:links>
+                  <dv:reference/>
+                  <dv:presentation/>
+               </dv:links>
+            </mets:xmlData>
+         </mets:mdWrap>
+      </mets:digiprovMD>
+   </mets:amdSec>
+   <mets:fileSec>
+      <mets:fileGrp USE="PRESENTATION">
+      </mets:fileGrp>
+   </mets:fileSec>
+   <mets:structMap TYPE="LOGICAL">
+      <mets:div ADMID="AMD" DMDID="DMDLOG_0000" ID="LOG_0000" LABEL="&quot;Strawberry Thief&quot; fabric, made by Morris and Company" TYPE="ArchivalObject">
+         <mets:div DMDID="DMDLOG_0001" ID="LOG_0001" LABEL="Swatch 1" TYPE="caption"/>
+         <mets:div DMDID="DMDLOG_0002" ID="LOG_0002" LABEL="Swatch 2" TYPE="other"/>
+         <mets:div DMDID="DMDLOG_0003" ID="LOG_0003" LABEL="Swatch 3" TYPE="caption"/>
+         <mets:div DMDID="DMDLOG_0004" ID="LOG_0004" TYPE="cover"/>
+      </mets:div>
+   </mets:structMap>
+   <mets:structMap TYPE="PHYSICAL">
+      <mets:div ID="PHYS_0000" TYPE="physSequence">
+         <mets:div CONTENTIDS="1003311" ID="PHYS_0001" ORDER="1" ORDERLABEL="7r" TYPE="page">
+            <mets:fptr FILEID="FILE_0001_PRESENTATION"/>
+         </mets:div>
+         <mets:div CONTENTIDS="1003312" ID="PHYS_0002" ORDER="2" ORDERLABEL=" - " TYPE="page">
+            <mets:fptr FILEID="FILE_0002_PRESENTATION"/>
+         </mets:div>
+         <mets:div CONTENTIDS="1003313" ID="PHYS_0003" ORDER="3" ORDERLABEL="10" TYPE="page">
+            <mets:fptr FILEID="FILE_0003_PRESENTATION"/>
+         </mets:div>
+         <mets:div CONTENTIDS="15512394" ID="PHYS_0004" ORDER="4" ORDERLABEL="III" TYPE="page">
+            <mets:fptr FILEID="FILE_0004_PRESENTATION"/>
+         </mets:div>
+      </mets:div>
+   </mets:structMap>
+   <mets:structLink>
+      <mets:smLink xlink:to="PHYS_0001" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0002" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0003" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0004" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0002" xlink:from="LOG_0002"/>
+      <mets:smLink xlink:to="PHYS_0003" xlink:from="LOG_0003"/>
+      <mets:smLink xlink:to="PHYS_0004" xlink:from="LOG_0004"/>
+   </mets:structLink>
+</mets:mets>

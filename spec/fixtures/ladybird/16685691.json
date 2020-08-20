@@ -1,65 +1,46 @@
 {
-  "oid": 16685691,
+  "recordType": "oid",
+  "source": "ladybird",
   "uri": "/ladybird/oid/16685691",
-  "date": [
-    "Sep., 1914 [that is, 1916]"
+  "callNumber": "BrSides Elephant Folio 2018 22",
+  "creator": [
+    "United States. Hydrographic Office"
   ],
-  "genre": [
-    "World maps"
-  ],
-  "scale": "Scale approximately 1:50,000,000",
   "title": [
     "Tracks for full powered steam vessels with the shortest navigable distances in nautical miles from anchorage to anchorage, New York distances are measures to and from the Battery achorage."
   ],
-  "extent": [
-    "1 map : color ; 67 x 112 cm"
-  ],
-  "format": [
-    "cartographic"
-  ],
-  "partOf": "Beinecke Library",
-  "rights": [
-    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement"
-  ],
-  "source": "ladybird",
-  "creator": [
-    "United States. Hydrographic Office"
+  "extentOfDigitization": [
+    "Complete work digitized."
   ],
   "edition": [
     "16th edition, I '16."
   ],
-  "children": [
-    {
-      "oid": 16686253,
-      "uri": "/ladybird/oid/16686253",
-      "title": [
-        "Tracks for full powered steam vessels with the shortest navigable distances in nautical miles from anchorage to anchorage, New York distances are measures to and from the Battery achorage."
-      ],
-      "width": 15104,
-      "height": 9880,
-      "source": "ladybird",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16686253"
-      ],
-      "identifierShelfMark": "BrSides Elephant Folio 2018 22"
-    }
+  "publicationPlace": [
+    "Washington, D.C. :"
   ],
-  "contents": [
+  "publisher": [
+    "Published ... at the Hydrographic Office, "
+  ],
+  "date": [
+    "Sep., 1914 [that is, 1916]"
+  ],
+  "extent": [
+    "1 map : color ; 67 x 112 cm"
+  ],
+  "language": [
+    "English"
+  ],
+  "description": [
     "\"No. 1262.\"",
     "\"Small corrections from notices to mariners ('15-2, 18, 30, from other sources I '16.\"",
     "Includes charts: \"Speeds per hour with daily and weekly distances in nautical miles\" and \"Reduction knots on nautical miles to statute miles.\" Also includes 4 distance charts.",
     "Relief shown by hachures and spot heights."
   ],
-  "language": [
-    "English"
+  "subjectTopic": [
+    "Steam-navigation--Maps."
   ],
-  "publisher": [
-    "Published ... at the Hydrographic Office, "
-  ],
+  "subjectGeographicCode": "x------",
+  "scale": "Scale approximately 1:50,000,000",
   "coordinate": [
     "(W 180°--E 180°/N 90°--S 90°).",
     "090.000000",
@@ -69,46 +50,65 @@
     "50000000",
     "a"
   ],
-  "geoSubject": "x------",
-  "recordType": "oid",
-  "repository": "Beinecke Library",
+  "genre": [
+    "World maps"
+  ],
+  "format": [
+    "cartographic"
+  ],
+  "partOf": "Beinecke Library",
+  "rights": [
+    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement"
+  ],
+  "orbisBibId": "13881242",
+  "orbisBarcode": "39002131329220",
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1916-00-00T00:00:00Z"
+  ],
+  "resourceType": "Maps, Atlases & Globes",
+  "illustrativeMatter": "181211s1916    dcudg     a     0   eng d",
+  "copyrightDate": [
+    "Sep., 1914 [that is, 1916]"
+  ],
   "subjectEra": "Steam-navigation--Maps.",
-  "description": [
+  "repository": "Beinecke Library",
+  "contents": [
     "\"No. 1262.\"",
     "\"Small corrections from notices to mariners ('15-2, 18, 30, from other sources I '16.\"",
     "Includes charts: \"Speeds per hour with daily and weekly distances in nautical miles\" and \"Reduction knots on nautical miles to statute miles.\" Also includes 4 distance charts.",
     "Relief shown by hachures and spot heights."
   ],
-  "orbisRecord": "13881242",
-  "collectionId": 1,
-  "orbisBarcode": "39002131329220",
-  "resourceType": "Maps, Atlases & Globes",
   "subjectTitle": "Steam-navigation--Maps.",
-  "subjectTopic": [
+  "subjectTitleDisplay": [
     "Steam-navigation--Maps."
-  ],
-  "copyrightDate": [
-    "Sep., 1914 [that is, 1916]"
-  ],
-  "dependentUris": [
-    "/ladybird/oid/16685691"
   ],
   "creatorDisplay": [
     "United States. Hydrographic Office"
   ],
-  "dateStructured": [
-    "1916-00-00T00:00:00Z"
+  "dependentUris": [
+    "/ladybird/oid/16685691"
   ],
-  "itemPermission": "Public",
-  "publicationPlace": [
-    "Washington, D.C. :"
-  ],
-  "illustrativeMatter": "181211s1916    dcudg     a     0   eng d",
-  "identifierShelfMark": "BrSides Elephant Folio 2018 22",
-  "subjectTitleDisplay": [
-    "Steam-navigation--Maps."
-  ],
-  "extentOfDigitization": [
-    "Complete work digitized."
+  "oid": 16685691,
+  "collectionId": 1,
+  "children": [
+    {
+      "recordType": "oid",
+      "source": "ladybird",
+      "uri": "/ladybird/oid/16686253",
+      "callNumber": "BrSides Elephant Folio 2018 22",
+      "title": [
+        "Tracks for full powered steam vessels with the shortest navigable distances in nautical miles from anchorage to anchorage, New York distances are measures to and from the Battery achorage."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/16686253"
+      ],
+      "oid": 16686253,
+      "width": 15104,
+      "height": 9880,
+      "children": [
+
+      ]
+    }
   ]
 }
