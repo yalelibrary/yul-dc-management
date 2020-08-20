@@ -10,9 +10,8 @@ class ParentObject < ApplicationRecord
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
 
   self.primary_key = 'oid'
-  before_validation :default_fetch, on: :create, unless: proc { ladybird_json.present? }
-  after_save :solr_index
-  before_save :create_child_records
+  after_create :setup_metadata_job, unless: proc { ladybird_json.present? }
+  after_update :solr_index_job # we index from the fetch job on create
 
   def create_child_records
     return unless ladybird_json
@@ -42,9 +41,11 @@ class ParentObject < ApplicationRecord
     when "aspace"
       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
       self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
-    else
-      raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
+  end
+
+  def setup_metadata_job
+    SetupMetadataJob.perform_later(self)
   end
 
   def authoritative_json

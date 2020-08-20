@@ -20,4 +20,10 @@ Rails.application.routes.draw do
   end
 
   get 'api/oid/new(/:number)', to: 'oid_minter#generate_oids', as: :new_oid
+
+  authenticated :user do
+    mount DelayedJobWeb, at: "/delayed_job"
+  end
+  # fall back if not authenticated
+  get '/delayed_job', to: redirect('/management/users/sign_in')
 end

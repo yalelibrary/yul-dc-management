@@ -7,6 +7,13 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
   let(:oid) { "16371253" }
   let(:oid_url) { "https://#{described_class.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?mediaType=json" }
   let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
+
+  around do |example|
+    perform_enqueued_jobs do
+      example.run
+    end
+  end
+
   before do
     stub_metadata_cloud("2034600")
     stub_metadata_cloud("2005512")
@@ -14,6 +21,7 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
     stub_metadata_cloud("14716192")
     stub_metadata_cloud("16854285")
   end
+
   context "creating a ParentObject from an import" do
     before do
       stub_metadata_cloud("16371253")
@@ -42,6 +50,7 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
   context "saving a Voyager record" do
     let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ils", "V-2034600.json") }
     let(:metadata_source) { "ils" }
+
     before do
       stub_metadata_cloud("V-2034600", "ils")
       stub_metadata_cloud("V-2005512", "ils")
@@ -49,6 +58,7 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
       stub_metadata_cloud("V-14716192", "ils")
       stub_metadata_cloud("V-16854285", "ils")
     end
+
     it "can pull voyager records" do
       time_stamp_before = File.mtime(path_to_example_file.to_s)
       described_class.refresh_fixture_data(short_oid_path, metadata_source)
@@ -64,6 +74,7 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
 
     let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "aspace", "AS-16854285.json") }
     let(:metadata_source) { "aspace" }
+
     before do
       stub_metadata_cloud("AS-16854285", "aspace")
       stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/aspace/AS-2034600.json")
@@ -75,6 +86,7 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
       stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/aspace/AS-14716192.json")
         .to_return(status: 400, body: "")
     end
+
     it "can pull ArchiveSpace records" do
       time_stamp_before = File.mtime(path_to_example_file.to_s)
       described_class.refresh_fixture_data(short_oid_path, metadata_source)
@@ -121,12 +133,14 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
   context "if the MetadataCloud cannot find an object" do
     let(:unfindable_oid_array) { ["17063396", "17029210"] }
     let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "17063396.json") }
+
     around do |example|
       original_vpn = ENV['VPN']
       ENV['VPN'] = 'true'
       example.run
       ENV['VPN'] = original_vpn
     end
+
     before do
       stub_request(:get, "https://#{described_class.metadata_cloud_host}/metadatacloud/api/ladybird/oid/17063396?include-children=1")
         .to_return(status: 400, body: "ex: can't connect to ladybird")

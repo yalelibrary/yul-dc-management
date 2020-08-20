@@ -6,8 +6,8 @@ then
 fi
 
 rm -rf /home/app/webapp/.ruby*
-/bin/bash -l -c 'chown -R app:app /home/app/webapp/tmp/cache' # mounted volume may have wrong permissions
-/bin/bash -l -c 'chown -R app:app /home/app/webapp/public' # mounted volume may have wrong permissions
+/bin/bash -l -c 'chown -fR app:app /home/app/webapp/tmp/cache' # mounted volume may have wrong permissions
+/bin/bash -l -c 'chown -fR app:app /home/app/webapp/public' # mounted volume may have wrong permissions
 /bin/bash -l -c 'chown app:app /home/app/webapp/node_modules' # mounted volume may have wrong permissions
 
 declare -p | grep -Ev 'BASHOPTS|PWD|BASH_VERSINFO|EUID|PPID|SHELLOPTS|UID' > /container.env

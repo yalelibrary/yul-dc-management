@@ -3,6 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
+  # this doesn't seem to run from a helper, not clear why
+  around do |example|
+    perform_enqueued_jobs do
+      example.run
+    end
+  end
+
   context "indexing to Solr from the database with Ladybird ParentObjects", solr: true do
     it "can index the 5 parent objects in the database to Solr" do
       response = solr.get 'select', params: { q: '*:*' }
@@ -42,14 +49,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       end
 
       it "can create a Solr document for a record, including visibility from Ladybird" do
-        parent_object_with_public_visibility
-        solr_document = parent_object_with_public_visibility.to_solr
+        solr_document = parent_object_with_public_visibility.reload.to_solr
         expect(solr_document[:title_tsim]).to eq ["Walt Whitman collection, 1842-1949"]
         expect(solr_document[:visibility_ssi]).to include "Public"
       end
 
       it "can index an item's image count to Solr" do
-        solr_document = parent_object_with_public_visibility.to_solr
+        solr_document = parent_object_with_public_visibility.reload.to_solr
         expect(solr_document[:imageCount_isi]).to eq 5
       end
     end
@@ -72,7 +78,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         end
 
         it "does not assign a visibility if one does not exist" do
-          solr_document = parent_object_without_visibility.to_solr
+          solr_document = parent_object_without_visibility.reload.to_solr
           expect(solr_document[:title_tsim].first).to include "Dai Min kyūhen bankoku jinseki rotei zenzu"
           expect(solr_document[:visibility_ssi]).to be nil
         end
@@ -88,7 +94,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         end
 
         it "assigns private visibility from Ladybird data" do
-          solr_document = parent_object_with_private_visibility.to_solr
+          solr_document = parent_object_with_private_visibility.reload.to_solr
           expect(solr_document[:title_tsim].first).to include "Dai Min kyūhen bankoku jinseki rotei zenzu"
           expect(solr_document[:visibility_ssi]).to include "Private"
         end

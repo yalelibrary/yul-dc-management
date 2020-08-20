@@ -83,7 +83,8 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
       it "does not create a new ParentObject" do
         expect do
           post parent_objects_url, params: { parent_object: invalid_attributes }
-        end.to raise_error(StandardError)
+          expect(response).to be_successful
+        end
       end
     end
   end

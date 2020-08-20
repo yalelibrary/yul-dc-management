@@ -33,6 +33,7 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
+  config.include(ActiveJob::TestHelper)
   config.include(AuthHelper, type: :request)
   config.include(MetdataSourcesHelper)
   config.include(SolrHelper)
@@ -67,4 +68,26 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+end
+
+class ActiveJob::QueueAdapters::DelayedJobAdapter
+  class EnqueuedJobs
+    def clear
+      Delayed::Job.where(failed_at: nil).map(&:destroy)
+    end
+  end
+
+  class PerformedJobs
+    def clear
+      Delayed::Job.where.not(failed_at: nil).map(&:destroy)
+    end
+  end
+
+  def enqueued_jobs
+    EnqueuedJobs.new
+  end
+
+  def performed_jobs
+    PerformedJobs.new
+  end
 end
