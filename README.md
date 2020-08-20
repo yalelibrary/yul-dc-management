@@ -2,6 +2,26 @@
 
 [![CircleCI](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/master.svg?style=svg)](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/master) ![Docker Image CI](https://github.com/yalelibrary/yul-dc-management/workflows/Docker%20Image%20CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/yalelibrary/yul-dc-management/badge.svg?branch=master)](https://coveralls.io/github/yalelibrary/yul-dc-management?branch=master)
 
+# Table of contents
+
+- [README](#readme)
+- [Table of contents](#table-of-contents)
+- [Prerequisites](#prerequisites)
+- [Docker Development Setup](#docker-development-setup)
+  * [Clone application](#clone-application)
+  * [Camerata](#camerata)
+    + [Install Camerata](#install-camerata)
+    + [Update Camerata](#update-camerata)
+    + [General Use](#general-use)
+    + [Troubleshooting](#troubleshooting)
+    + [Running on the VPN](#running-on-the-vpn)
+    + [Accessing the web container](#accessing-the-web-container)
+  * [Running the rake tasks](#running-the-rake-tasks)
+  * [Data Loading](#data-loading)
+  * [Pulling or Building Docker Images](#pulling-or-building-docker-images)
+  * [Releasing a new version](#releasing-a-new-version)
+  * [Test coverage](#test-coverage)
+
 # Prerequisites
 
 - Download [Docker Desktop](https://www.docker.com/products/docker-desktop) and log in
@@ -14,9 +34,14 @@
 git clone git@github.com:yalelibrary/yul-dc-management.git
 ```
 
-## Install Camerata
+## Camerata
 
-Clone the yul-dc-camerata repo and install the gem.
+Camerata is a gem which is used to orchestrate and deploy the Yale DC suite of applications.
+
+### Install Camerata
+
+Clone the yul-dc-camerata repo and install the gem. If you are using an application for gem and ruby management, such as rvm or rbenv, be sure to use the same gemset when installing the Camerata gem as you use to bring up the management application (or the blacklight application, etc.).
+
 Note: Clone Camerata in your project directory (not inside your management repo)
 
 ```bash
@@ -26,7 +51,7 @@ bundle install
 rake install
 ```
 
-## Update Camerata
+### Update Camerata
 
 You can get the latest camerata version at any point by updating the code and reinstalling
 
@@ -37,7 +62,7 @@ bundle install
 rake install
 ```
 
-## General Use
+### General Use
 
 Once camerata is installed on your system, interactions happen through the
 camerata command-line tool or through its alias `cam`.  The camerata tool can be
@@ -77,7 +102,7 @@ code checkouts.
 
 - Access the management app at `http://localhost:3001/management`
 
-## Troubleshooting
+### Troubleshooting
 
 If you receive an `please set your AWS_PROFILE and AWS_DEFAULT_REGION (RuntimeError)`
 error when you `cam up`, you will need to set your AWS credentials. Credentials
@@ -98,7 +123,7 @@ If you use rbenv, you must run the following command after installing camerata:
 `rbenv rehash`
 
 
-## Running on the VPN
+### Running on the VPN
 
 If you'd like to hit the Metadata cloud endpoint and are running on the VPN,
 then start the application with `VPN=true cam up` or `VPN=true cam up
@@ -182,6 +207,10 @@ to the Yale services.
   ```bash
       rake solr:delete_all
   ```
+## Data Loading
+In development mode, the database and solr are seeded / loaded with information from 7 sample objects, with an additional 3 objects with mocked visibility if you do not set VPN=true. You can see the oids for these objects in `db/parent_oids_short.csv` and `db/seeds.rb`.
+
+In production and development mode, you can add objects either individually, either by creating a new parent_object at `https://[hostname]/parent_objects/new` or using the CSV import of a sheet of oids (this file should be structured the same as `db/parent_oids_short.csv`). If you have access to DCE or Yale AWS S3 buckets, you can add any of the oids in the `db/parent_oids.csv` file, and the parent and child objects should be created correctly. If you are on the VPN, you should be able to add any pre-existing valid oid from Ladybird, and it will bring in the correct data from the MetadataCloud.
 
 ## Pulling or Building Docker Images
 
@@ -189,14 +218,6 @@ Any time you pull a branch with a Gemfile change you need to pull or build a new
 Docker image. If you change the Dockerfile, you need to build a new Docker image.
 If you change a file in ./ops you need to build a new Docker image. These are
 the primary times in which you need to pull or build.
-
-## When Installing a New Gem
-
-For the most part images are created and maintained by the CI process. However,
-if you change the Gemfile you need to take a few extra steps. Make sure the
-application is running before you make your Gemfile change. Once you've updated
-the Gemfile, inside the container, run `bundle && nginx -s reload`. The next time
-you stop your running containers you need to rebuild.
 
 ## Releasing a new version
 
