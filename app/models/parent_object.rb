@@ -130,8 +130,6 @@ class ParentObject < ApplicationRecord
 
   def iiif_manifest
     return @iiif_manifest if @iiif_manifest
-    if iiif_presentation.valid?
-      @iiif_manifest = @iiif_presentation.manifest
-    end
+    @iiif_manifest = @iiif_presentation.manifest if iiif_presentation.valid?
   end
 end
