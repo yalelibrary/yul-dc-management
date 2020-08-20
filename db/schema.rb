@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_16_184926) do
+ActiveRecord::Schema.define(version: 2020_08_20_125838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,9 @@ ActiveRecord::Schema.define(version: 2020_08_16_184926) do
     t.bigint "parent_object_oid", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "label"
+    t.string "checksum"
+    t.string "viewing_hint"
     t.index ["child_oid"], name: "index_child_objects_on_child_oid", unique: true
     t.index ["parent_object_oid"], name: "index_child_objects_on_parent_object_oid"
   end
@@ -66,7 +69,7 @@ ActiveRecord::Schema.define(version: 2020_08_16_184926) do
     t.xml "mets_xml"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "oid"
+    t.bigint "oid"
     t.index ["oid"], name: "index_mets_xml_imports_on_oid"
   end
 

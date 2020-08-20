@@ -10,7 +10,11 @@ class MetsDocument
   end
 
   def oid
-    @mets.xpath("//goobi:metadata[@name='CatalogIDDigital']").first&.content&.to_s
+    @mets.xpath("//mods:recordIdentifier[@source='local']").inner_text
+  end
+
+  def uuid
+    @mets.xpath("//mods:recordIdentifier[@source='gbv-ppn']").inner_text
   end
 
   def valid_mets?
@@ -20,13 +24,9 @@ class MetsDocument
     true
   end
 
-  def includes_goobi?
-    return false unless @mets.collect_namespaces.include?("xmlns:goobi")
-    true
-  end
-
   def all_images_present?
-    files.all? { |file| File.exist?(Rails.root.join(file[:url])) }
+    mount_path = ENV["ACCESS_MASTER_MOUNT"] || "brbl-dsu"
+    files.all? { |file| File.exist?(Rails.root.join(mount_path, file[:url])) }
   end
 
   # def viewing_direction
@@ -61,19 +61,19 @@ class MetsDocument
   end
 
   def files
-    @mets.xpath("/mets:mets/mets:fileSec/mets:fileGrp" \
-                "/mets:file").map do |f|
+    @mets.xpath("/mets:mets/mets:fileSec/mets:fileGrp/mets:file").map do |f|
       file_info(f)
     end
   end
 
   def file_info(file)
+    mount_path = ENV["ACCESS_MASTER_MOUNT"] || "brbl-dsu"
     {
       id: file.xpath('@ID').to_s,
       checksum: file.xpath('@CHECKSUM').to_s,
       mime_type: file.xpath('@MIMETYPE').to_s,
-      url: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, ''),
-      image_id: file.xpath('mets:FLocat/@xlink:href').to_s.match(/#{oid}\/images\/\w*\/(\d*)/)[1]
+      url: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\/\/#{mount_path}\//, ''),
+      image_id: file.xpath('mets:FLocat/@xlink:href').to_s.match(/#{oid}\/media\/(\d*)/)[1]
     }
   end
 

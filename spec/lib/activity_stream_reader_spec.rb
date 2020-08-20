@@ -32,27 +32,27 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
   let(:dependent_object_voyager_holding) do
     FactoryBot.create(
       :dependent_object,
-      parent_object_id: "2003431",
+      parent_object_id: "16685691",
       metadata_source: "ils",
-      dependent_uri: "/ils/holding/10050400"
+      dependent_uri: "/ils/holding/13895201"
     )
   end
   let(:dependent_object_voyager_item) do
     FactoryBot.create(
       :dependent_object,
-      parent_object_id: "2003431",
+      parent_object_id: "16685691",
       metadata_source: "ils",
-      dependent_uri: "/ils/item/10763785"
+      dependent_uri: "/ils/item/12140816"
     )
   end
   let(:relevant_parent_object_two) do
     FactoryBot.create(
       :parent_object_with_bib,
-      oid: "2003431",
-      bib: "9734763",
-      holding: "10050400",
-      item: "10763785",
-      barcode: "39002091549668",
+      oid: "16685691",
+      bib: "13881242",
+      holding: "13895201",
+      item: "12140816",
+      barcode: "39002131329220",
       last_ladybird_update: "2020-06-10 17:38:27".to_datetime,
       last_voyager_update: "2020-06-10 17:38:27".to_datetime
     )
@@ -60,9 +60,9 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
   let(:dependent_object_ladybird_two) do
     FactoryBot.create(
       :dependent_object,
-      parent_object_id: "2003431",
+      parent_object_id: "16685691",
       metadata_source: "ladybird",
-      dependent_uri: "/ladybird/oid/2003431"
+      dependent_uri: "/ladybird/oid/16685691"
     )
   end
   let(:parent_object_with_aspace_uri) do
@@ -112,7 +112,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/2003431",
+        "id" => "http://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16685691",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -207,9 +207,9 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
     # OID 2004628
     stub_metadata_cloud("2004628", "ladybird")
     stub_metadata_cloud("V-2004628", "ils")
-    # OID 2003431
-    stub_metadata_cloud("2003431", "ladybird")
-    stub_metadata_cloud("V-2003431", "ils")
+    # OID 16685691
+    stub_metadata_cloud("16685691", "ladybird")
+    stub_metadata_cloud("V-16685691", "ils")
     # OID 16854285
     stub_metadata_cloud("16854285", "ladybird")
     stub_metadata_cloud("V-16854285", "ils")

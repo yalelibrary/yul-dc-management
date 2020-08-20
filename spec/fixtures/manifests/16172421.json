@@ -1,0 +1,122 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://localhost/manifests/16172421.json",
+  "@type": "sc:Manifest",
+  "label": "Strawberry Thief fabric, made by Morris and Company ",
+  "sequences": [
+    {
+      "@id": "http://localhost/manifests/sequence/16172421",
+      "@type": "sc:Sequence",
+      "canvases": [
+        {
+          "@id": "http://localhost/manifests/oid/16172421/canvas/16188699",
+          "@type": "sc:Canvas",
+          "label": "7r",
+          "images": [
+            {
+              "@id": "http://localhost/manifests/oid/16172421/canvas/16188699/image/1",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "on": "http://localhost/manifests/oid/16172421/canvas/16188699",
+              "resource": {
+                "@id": "http://localhost:8182/iiif/2/16188699/full/!200,200/0/default.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "width": 2591,
+                "height": 4056,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://localhost:8182/iiif/2/16188699",
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                }
+              }
+            }
+          ],
+          "height": 4056,
+          "width": 2591
+        },
+        {
+          "@id": "http://localhost/manifests/oid/16172421/canvas/16188700",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "images": [
+            {
+              "@id": "http://localhost/manifests/oid/16172421/canvas/16188700/image/1",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "on": "http://localhost/manifests/oid/16172421/canvas/16188700",
+              "resource": {
+                "@id": "http://localhost:8182/iiif/2/16188700/full/!200,200/0/default.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "width": 2541,
+                "height": 4056,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://localhost:8182/iiif/2/16188700",
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                }
+              }
+            }
+          ],
+          "height": 4056,
+          "width": 2541
+        },
+        {
+          "@id": "http://localhost/manifests/oid/16172421/canvas/16188701",
+          "@type": "sc:Canvas",
+          "label": "10",
+          "images": [
+            {
+              "@id": "http://localhost/manifests/oid/16172421/canvas/16188701/image/1",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "on": "http://localhost/manifests/oid/16172421/canvas/16188701",
+              "resource": {
+                "@id": "http://localhost:8182/iiif/2/16188701/full/!200,200/0/default.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "width": 2592,
+                "height": 4056,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://localhost:8182/iiif/2/16188701",
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                }
+              }
+            }
+          ],
+          "height": 4056,
+          "width": 2592
+        },
+        {
+          "@id": "http://localhost/manifests/oid/16172421/canvas/16188702",
+          "@type": "sc:Canvas",
+          "label": "III",
+          "images": [
+            {
+              "@id": "http://localhost/manifests/oid/16172421/canvas/16188702/image/1",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "on": "http://localhost/manifests/oid/16172421/canvas/16188702",
+              "resource": {
+                "@id": "http://localhost:8182/iiif/2/16188702/full/!200,200/0/default.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "width": 2592,
+                "height": 4069,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "http://localhost:8182/iiif/2/16188702",
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                }
+              }
+            }
+          ],
+          "height": 4069,
+          "width": 2592
+        }
+      ]
+    }
+  ]
+}

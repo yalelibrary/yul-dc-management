@@ -1,5 +1,16 @@
 # Changelog
 
+## [v2.10.1](https://github.com/yalelibrary/yul-dc-management/tree/v2.10.1) (2020-08-18)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.10.0...v2.10.1)
+
+**Technical Enhancements:**
+
+- Fewer fixtures for seed [\#220](https://github.com/yalelibrary/yul-dc-management/pull/220) ([maxkadel](https://github.com/maxkadel))
+- Use smaller fixture objects \(fewer children\) to speed up tests [\#218](https://github.com/yalelibrary/yul-dc-management/pull/218) ([maxkadel](https://github.com/maxkadel))
+- Index child object count to Solr from parent object [\#217](https://github.com/yalelibrary/yul-dc-management/pull/217) ([maxkadel](https://github.com/maxkadel))
+- Refactor method for creating a child record [\#216](https://github.com/yalelibrary/yul-dc-management/pull/216) ([K8Sewell](https://github.com/K8Sewell))
+
 ## [v2.10.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.10.0) (2020-08-17)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/V2.9.0...v2.10.0)
@@ -8,6 +19,10 @@
 
 - ParentObjects create their ChildObjects [\#214](https://github.com/yalelibrary/yul-dc-management/pull/214) ([maxkadel](https://github.com/maxkadel))
 - Fetch Ladybird children from MetadataCloud [\#213](https://github.com/yalelibrary/yul-dc-management/pull/213) ([maxkadel](https://github.com/maxkadel))
+
+**Technical Enhancements:**
+
+- Prep for v2.10.0 release [\#215](https://github.com/yalelibrary/yul-dc-management/pull/215) ([maxkadel](https://github.com/maxkadel))
 
 ## [V2.9.0](https://github.com/yalelibrary/yul-dc-management/tree/V2.9.0) (2020-08-14)
 
@@ -215,7 +230,6 @@
 
 - Version bump for 2.2.0 [\#136](https://github.com/yalelibrary/yul-dc-management/pull/136) ([orangewolf](https://github.com/orangewolf))
 - Parallel naming for app and spec directories [\#132](https://github.com/yalelibrary/yul-dc-management/pull/132) ([maxkadel](https://github.com/maxkadel))
-- Update version in .env and update readme to include in release process [\#131](https://github.com/yalelibrary/yul-dc-management/pull/131) ([maxkadel](https://github.com/maxkadel))
 
 ## [v2.1.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.1.0) (2020-07-06)
 
@@ -249,6 +263,7 @@
 
 **Technical Enhancements:**
 
+- Update version in .env and update readme to include in release process [\#131](https://github.com/yalelibrary/yul-dc-management/pull/131) ([maxkadel](https://github.com/maxkadel))
 - Prep for 2.0.0 release [\#127](https://github.com/yalelibrary/yul-dc-management/pull/127) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.8.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.8.0) (2020-06-26)

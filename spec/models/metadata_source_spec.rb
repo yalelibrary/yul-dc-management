@@ -46,7 +46,6 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
     context "it can talk to the metadata cloud", vpn_only: true do
       let(:oid) { "16371272" }
       let(:oid_url) { "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?include-children=1" }
-      let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "2034600.json") }
       let(:ladybird_source) { FactoryBot.build(:metadata_source) }
       before do
         WebMock.allow_net_connect!

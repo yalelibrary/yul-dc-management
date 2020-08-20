@@ -2,7 +2,7 @@
 require "rails_helper"
 
 RSpec.describe FixtureParsingService, prep_metadata_sources: true do
-  let(:oid) { "2003431" }
+  let(:oid) { "2004628" }
   let(:metadata_source) { "ladybird" }
   let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
   before do
@@ -13,7 +13,7 @@ RSpec.describe FixtureParsingService, prep_metadata_sources: true do
 
   it "can return a hash from a fixture file" do
     data_hash = described_class.fixture_file_to_hash(oid, metadata_source)
-    expect(data_hash["title"]).to include "Albergati Bible"
+    expect(data_hash["title"]).to include "Fort Vancouver"
   end
 
   context "a crosswalk maintained in the database" do
