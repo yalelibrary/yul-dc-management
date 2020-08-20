@@ -7,6 +7,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   let(:voyager) { 2 }
   let(:aspace) { 3 }
   let(:unexpected_metadata_source) { 4 }
+  let(:logger_mock) { instance_double("Rails.logger").as_null_object }
+
   before do
     stub_metadata_cloud("2004628", "ladybird")
     stub_metadata_cloud("V-2004628", "ils")
@@ -35,6 +37,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     it " creates and has a count of ChildObjects" do
       expect(parent_object.child_object_count).to eq 2
       expect(ChildObject.where(parent_object_oid: "2005512").count).to eq 2
+      expect(ChildObject.where(parent_object_oid: "2005512").first.order).to eq 1
     end
   end
 
