@@ -16,7 +16,7 @@ class YaleConvert
     raise "Checksum failed. Should be: #{check}" unless check == cksum
 
     temp_out = Tempfile.new
-    STDOUT.puts `lib/nga.sh #{Dir.mktmpdir} #{temp_in.path} #{temp_out.path}`
+    STDOUT.puts `lib/tiff_to_pyramid.bash #{Dir.mktmpdir} #{temp_in.path} #{temp_out.path}`
 
     raise "Conversion script exited with error code #{$CHILD_STATUS.exitstatus}" if $CHILD_STATUS.exitstatus != 0
 
