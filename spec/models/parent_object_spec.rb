@@ -11,6 +11,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
   before do
     stub_metadata_cloud("2004628", "ladybird")
+    stub_metadata_cloud("2005512", "ladybird")
     stub_metadata_cloud("V-2004628", "ils")
   end
 
@@ -23,12 +24,15 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   end
 
   context "a newly created ParentObject with an expected (ladybird, voyager, or aspace) authoritative_metadata_source" do
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: "2005512", authoritative_metadata_source_id: ladybird) }
+
     around do |example|
       perform_enqueued_jobs do
         example.run
       end
+    end
 
-    it " creates and has a count of ChildObjects" do
+    it "creates and has a count of ChildObjects" do
       expect(parent_object.child_object_count).to eq 2
       expect(ChildObject.where(parent_object_oid: "2005512").count).to eq 2
       expect(ChildObject.where(parent_object_oid: "2005512").first.order).to eq 1
