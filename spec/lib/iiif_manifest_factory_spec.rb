@@ -9,7 +9,9 @@ RSpec.describe IiifManifestFactory, prep_metadata_sources: true do
     ENV['IIIF_MANIFESTS_BASE_URL'] = "http://localhost/manifests"
     ENV['IIIF_IMAGE_BASE_URL'] = "http://localhost:8182/iiif"
     ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "goobi", "metadata")
-    example.run
+    perform_enqueued_jobs do
+      example.run
+    end
     ENV['IIIF_MANIFESTS_BASE_URL'] = original_manifests_base_url
     ENV['IIIF_IMAGE_BASE_URL'] = original_image_base_url
   end

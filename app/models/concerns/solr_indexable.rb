@@ -19,6 +19,10 @@ module SolrIndexable
     solr.commit
   end
 
+  def solr_index_job
+    SolrIndexJob.perform_later(self)
+  end
+
   def to_solr(json_to_index = nil)
     json_to_index ||= authoritative_json
     return { id: "#{id_prefix}#{oid}" } if json_to_index.blank?

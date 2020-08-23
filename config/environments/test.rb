@@ -57,4 +57,6 @@ Rails.application.configure do
 
   # Metadata Cloud Host
   config.metadata_cloud_host = "metadata-api-test.library.yale.edu"
+
+  config.active_job.queue_adapter = :test
 end

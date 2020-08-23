@@ -2,6 +2,11 @@
 require 'rails_helper'
 
 RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
+  around do |example|
+    perform_enqueued_jobs do
+      example.run
+    end
+  end
   context "creating a new ParentObject based on oid" do
     before do
       visit parent_objects_path
