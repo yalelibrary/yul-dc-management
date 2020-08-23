@@ -1,11 +1,26 @@
 # Changelog
 
+## [v2.11.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.11.0) (2020-08-23)
+
+[Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.10.1...v2.11.0)
+
+**New Features:**
+
+- 438 implement delayed job [\#211](https://github.com/yalelibrary/yul-dc-management/pull/211) ([dylansalay](https://github.com/dylansalay))
+
+**Technical Enhancements:**
+
+- Refactor manifest creation to be from DB rather than from METS document [\#223](https://github.com/yalelibrary/yul-dc-management/pull/223) ([maxkadel](https://github.com/maxkadel))
+- Create manifests from METS closer to final form [\#222](https://github.com/yalelibrary/yul-dc-management/pull/222) ([maxkadel](https://github.com/maxkadel))
+- Image conversion lib & test [\#219](https://github.com/yalelibrary/yul-dc-management/pull/219) ([maxkadel](https://github.com/maxkadel))
+
 ## [v2.10.1](https://github.com/yalelibrary/yul-dc-management/tree/v2.10.1) (2020-08-18)
 
 [Full Changelog](https://github.com/yalelibrary/yul-dc-management/compare/v2.10.0...v2.10.1)
 
 **Technical Enhancements:**
 
+- Prep for v2.10.1 release [\#221](https://github.com/yalelibrary/yul-dc-management/pull/221) ([maxkadel](https://github.com/maxkadel))
 - Fewer fixtures for seed [\#220](https://github.com/yalelibrary/yul-dc-management/pull/220) ([maxkadel](https://github.com/maxkadel))
 - Use smaller fixture objects \(fewer children\) to speed up tests [\#218](https://github.com/yalelibrary/yul-dc-management/pull/218) ([maxkadel](https://github.com/maxkadel))
 - Index child object count to Solr from parent object [\#217](https://github.com/yalelibrary/yul-dc-management/pull/217) ([maxkadel](https://github.com/maxkadel))
@@ -230,6 +245,7 @@
 
 - Version bump for 2.2.0 [\#136](https://github.com/yalelibrary/yul-dc-management/pull/136) ([orangewolf](https://github.com/orangewolf))
 - Parallel naming for app and spec directories [\#132](https://github.com/yalelibrary/yul-dc-management/pull/132) ([maxkadel](https://github.com/maxkadel))
+- Update version in .env and update readme to include in release process [\#131](https://github.com/yalelibrary/yul-dc-management/pull/131) ([maxkadel](https://github.com/maxkadel))
 
 ## [v2.1.0](https://github.com/yalelibrary/yul-dc-management/tree/v2.1.0) (2020-07-06)
 
@@ -263,7 +279,6 @@
 
 **Technical Enhancements:**
 
-- Update version in .env and update readme to include in release process [\#131](https://github.com/yalelibrary/yul-dc-management/pull/131) ([maxkadel](https://github.com/maxkadel))
 - Prep for 2.0.0 release [\#127](https://github.com/yalelibrary/yul-dc-management/pull/127) ([maxkadel](https://github.com/maxkadel))
 
 ## [v1.8.0](https://github.com/yalelibrary/yul-dc-management/tree/v1.8.0) (2020-06-26)
