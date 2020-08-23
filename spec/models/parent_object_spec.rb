@@ -33,7 +33,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     end
 
     it "creates and has a count of ChildObjects" do
-      expect(parent_object.child_object_count).to eq 2
+      expect(parent_object.reload.child_object_count).to eq 2
       expect(ChildObject.where(parent_object_oid: "2005512").count).to eq 2
       expect(ChildObject.where(parent_object_oid: "2005512").first.order).to eq 1
     end
