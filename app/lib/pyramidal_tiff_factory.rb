@@ -7,9 +7,9 @@ require 'English'
 # 1. Copy access_master to local workspace
 # 2. Create ptiff from local file using tiff_to_pyramid.bash
 # 3. Save ptiff to S3
-# 4. Remove local copy 
+# 4. Remove local copy
 
-class YaleConvert
+class PyramidalTiffFactory
   S3 = Aws::S3::Client.new(region: ENV['AWS_DEFAULT_REGION'])
 
 
