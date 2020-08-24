@@ -17,9 +17,11 @@ RSpec.describe PyramidalTiffFactory do
     ENV['TEMP_IMAGE_WORKSPACE'] = original_temp_image_workspace
   end
 
-  xit "takes a path to a file and makes a copy of it in TEMP_IMAGE_WORKSPACE" do
+  it "takes a path to a file and makes a copy of it in TEMP_IMAGE_WORKSPACE" do
     described_class.make_tempfile('spec/fixtures/images/sample.tiff')
-    expect(File.exist?("spec/fixtures/temp_images/sample.tiff")).to eq true
+    expected_file = "spec/fixtures/temp_images/sample.tiff"
+    expect(File.exist?(expected_file)).to eq true
+    File.delete(expected_file)
   end
 
   it "checks for file checksum and fails if it doesn't match" do
