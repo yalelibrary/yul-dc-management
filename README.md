@@ -8,19 +8,26 @@
 - [Table of contents](#table-of-contents)
 - [Prerequisites](#prerequisites)
 - [Docker Development Setup](#docker-development-setup)
-  * [Clone application](#clone-application)
-  * [Camerata](#camerata)
-    + [Install Camerata](#install-camerata)
-    + [Update Camerata](#update-camerata)
-    + [General Use](#general-use)
-    + [Troubleshooting](#troubleshooting)
-    + [Running on the VPN](#running-on-the-vpn)
-    + [Accessing the web container](#accessing-the-web-container)
-  * [Running the rake tasks](#running-the-rake-tasks)
-  * [Data Loading](#data-loading)
-  * [Pulling or Building Docker Images](#pulling-or-building-docker-images)
-  * [Releasing a new version](#releasing-a-new-version)
-  * [Test coverage](#test-coverage)
+
+  - [Clone application](#clone-application)
+  - [Camerata](#camerata)
+
+    - [Install Camerata](#install-camerata)
+    - [Update Camerata](#update-camerata)
+    - [General Use](#general-use)
+    - [Troubleshooting](#troubleshooting)
+    - [Running on the VPN](#running-on-the-vpn)
+    - [Accessing the web container](#accessing-the-web-container)
+
+  - [Running the rake tasks](#running-the-rake-tasks)
+
+  - [Data Loading](#data-loading)
+
+  - [Pulling or Building Docker Images](#pulling-or-building-docker-images)
+
+  - [Releasing a new version](#releasing-a-new-version)
+
+  - [Test coverage](#test-coverage)
 
 # Prerequisites
 
@@ -64,33 +71,18 @@ rake install
 
 ### General Use
 
-Once camerata is installed on your system, interactions happen through the
-camerata command-line tool or through its alias `cam`.  The camerata tool can be
-used to bring the development stack up and down locally, interact with the
-docker containers, deploy, run the smoke tests, and otherwise do development
-tasks common to the various applications in the yul-dc application stack.
+Once camerata is installed on your system, interactions happen through the camerata command-line tool or through its alias `cam`. The camerata tool can be used to bring the development stack up and down locally, interact with the docker containers, deploy, run the smoke tests, and otherwise do development tasks common to the various applications in the yul-dc application stack.
 
-All built in commands can be listed with `cam help` and individual usage
-information is available with `cam help COMMAND`.  Please note that deployment
-commands (found in the `./bin` directory) are passed through and are therefore not
-listed by the help command.  See the usage for those in the [camerata README](https://github.com/yalelibrary/yul-dc-camerata#yul-dc-camerata).
+All built in commands can be listed with `cam help` and individual usage information is available with `cam help COMMAND`. Please note that deployment commands (found in the `./bin` directory) are passed through and are therefore not listed by the help command. See the usage for those in the [camerata README](https://github.com/yalelibrary/yul-dc-camerata#yul-dc-camerata).
 
 To start the application stack, run `cam up` in the management directory
+
 ```bash
 cd ./yul-dc-management
 cam up
 ```
-This starts all of the applications, as they are
-all dependencies of yul-blacklight. Camerata is smart. If you start `cam up` from
-a management code check out it will mount that code for local development
-(changes to the outside code will affect the inside container). If you start the
-`cam up` from the blacklight application you will get the blacklight code mounted
-for local development and the management code will run as it is in the downloaded
-image. You can also start the two applications both mounted for development by
-starting the management application with `--without blacklight` and the
-blacklight application `--without solr --withouth db` each from their respective
-code checkouts.
 
+This starts all of the applications, as they are all dependencies of yul-blacklight. Camerata is smart. If you start `cam up` from a management code check out it will mount that code for local development (changes to the outside code will affect the inside container). If you start the `cam up` from the blacklight application you will get the blacklight code mounted for local development and the management code will run as it is in the downloaded image. You can also start the two applications both mounted for development by starting the management application with `--without blacklight` and the blacklight application `--without solr --withouth db` each from their respective code checkouts.
 
 - Access the blacklight app at `http://localhost:3000`
 
@@ -104,31 +96,27 @@ code checkouts.
 
 ### Troubleshooting
 
-If you receive an `please set your AWS_PROFILE and AWS_DEFAULT_REGION (RuntimeError)`
-error when you `cam up`, you will need to set your AWS credentials. Credentials
-can be set in the `~/.aws/credentials` file in the following format:
+If you receive an `please set your AWS_PROFILE and AWS_DEFAULT_REGION (RuntimeError)` error when you `cam up`, you will need to set your AWS credentials. Credentials can be set in the `~/.aws/credentials` file in the following format:
 
 ```bash
 [dce-hosting]
 aws_access_key_id=YOUR_ACCESS_KEY
 aws_secret_access_key=YOUR_SECRET_ACCESS_KEY
 ```
+
 After the credentials have been set, you will need to export the following settings via the command line:
+
 ```bash
 export AWS_PROFILE=dce-hosting && export AWS_DEFAULT_REGION=us-east-1
 ```
+
 Note: AWS_PROFILE name needs to match the credentials profile name (`[dce-hosting]`). After you set the credentials, you will need to re-install camerata: `rake install`
 
-If you use rbenv, you must run the following command after installing camerata:
-`rbenv rehash`
-
+If you use rbenv, you must run the following command after installing camerata: `rbenv rehash`
 
 ### Running on the VPN
 
-If you'd like to hit the Metadata cloud endpoint and are running on the VPN,
-then start the application with `VPN=true cam up` or `VPN=true cam up
-management`. Setting this variable will enable VPN specs and make full requests
-to the Yale services.
+If you'd like to hit the Metadata cloud endpoint and are running on the VPN, then start the application with `VPN=true cam up` or `VPN=true cam up management`. Setting this variable will enable VPN specs and make full requests to the Yale services.
 
 ### Accessing the web container
 
@@ -153,8 +141,7 @@ to the Yale services.
     rails c
     ```
 
-  - Run the tests. (in order to run the VPN-only tests, bring up camerata using `VPN=true cam up` or `VPN=true cam up
-  management`)
+  - Run the tests. (in order to run the VPN-only tests, bring up camerata using `VPN=true cam up` or `VPN=true cam up management`)
 
     ```bash
     rspec
@@ -168,7 +155,7 @@ to the Yale services.
 
     - If Rubocop is still flagging something that you've checked and want to keep as-is long term, add it to the `.rubocop.yml` manually. If it needs to remain short term, but will need to be fixed, you can automatically re-generate the `rubocop_todo.yml` file by running `rubocop --auto-gen-config`.
 
-  - If you are doing development that requires access to the Yale Metadata Cloud, get on the Yale VPN, and add your credentials to your `.secrets` file. These should never be added to version control.<!-- This needs to be updated based on the camerata gem updates, but not sure what the current practice should be - they're not in the AWS parameter store -->
+  - If you are doing development that requires access to the Yale Metadata Cloud, get on the Yale VPN, and add your credentials to your `.secrets` file. These should never be added to version control. <!-- This needs to be updated based on the camerata gem updates, but not sure what the current practice should be - they're not in the AWS parameter store -->
 
     ```
     # Metadata Cloud
@@ -182,7 +169,7 @@ to the Yale services.
 
   - _NOTE:_ you must be on the Yale VPN
   - If you have trouble connecting to the MetadataCloud, see the DCE doc on [connecting to VPN from within a container](https://curationexperts.github.io/playbook/tools/docker/containers.html)
-  - Add your credentials to your `.secrets` file.<!-- This needs to be updated based on the camerata gem updates, but not sure what the current practice should be - they're not in the AWS parameter store -->
+  - Add your credentials to your `.secrets` file. <!-- This needs to be updated based on the camerata gem updates, but not sure what the current practice should be - they're not in the AWS parameter store -->
 
     ```
     # Metadata Cloud
@@ -207,28 +194,38 @@ to the Yale services.
   ```bash
       rake solr:delete_all
   ```
-## Data Loading
-In development mode, the database and solr are seeded / loaded with information from 7 sample objects, with an additional 3 objects with mocked visibility if you do not set VPN=true. You can see the oids for these objects in `db/parent_oids_short.csv` and `db/seeds.rb`.
+
+  ## Data Loading
+
+  In development mode, the database and solr are seeded / loaded with information from 7 sample objects, with an additional 3 objects with mocked visibility if you do not set VPN=true. You can see the oids for these objects in `db/parent_oids_short.csv` and `db/seeds.rb`.
 
 In production and development mode, you can add objects either individually, either by creating a new parent_object at `https://[hostname]/parent_objects/new` or using the CSV import of a sheet of oids (this file should be structured the same as `db/parent_oids_short.csv`). If you have access to DCE or Yale AWS S3 buckets, you can add any of the oids in the `db/parent_oids.csv` file, and the parent and child objects should be created correctly. If you are on the VPN, you should be able to add any pre-existing valid oid from Ladybird, and it will bring in the correct data from the MetadataCloud.
 
 ## Pulling or Building Docker Images
 
-Any time you pull a branch with a Gemfile change you need to pull or build a new
-Docker image. If you change the Dockerfile, you need to build a new Docker image.
-If you change a file in ./ops you need to build a new Docker image. These are
-the primary times in which you need to pull or build.
+Any time you pull a branch with a Gemfile change you need to pull or build a new Docker image. If you change the Dockerfile, you need to build a new Docker image. If you change a file in ./ops you need to build a new Docker image. These are the primary times in which you need to pull or build.
 
 ## Releasing a new version
 
-1. Decide on a new version number. We use [semantic versioning](https://semver.org/).
-2. Update the version number in `.github_changelog_generator` && `.env`
-3. Go through all PRs since the last release and ensure that any **features** and **bug fixes** have been tagged with the appropriate label. No need to label it unless it is a feature or a bug fix.
-4. Run this command: `github_changelog_generator --token $YOUR_GITHUB_TOKEN`. This will re-generate `CHANGELOG.md`.
-5. Commit and merge the changes you just made with a message like "Prep for vX.Y.Z release"
-6. Once those changes are merged to the `master` branch, in the github web UI go to `Releases` and tag a new release with the right version number. Paste in the release notes for this release from the top of `CHANGELOG.md`
-7. Update `yul-dc-camerata` with the new version of management and submit a PR. (alternatively, see the [camerata README on Releasing a New Dependency Version](https://github.com/yalelibrary/yul-dc-camerata#releasing-a-new-dependency-version))
-8. Move any tickets that were included in this release from `For Release` to `Ready for Acceptance`
+1. Ensure you have a github personal access token.
+
+  Instructions here: <https://github.com/github-changelog-generator/github-changelog-generator#github-token> You will need to make your token available via an environment variable called `CHANGELOG_GITHUB_TOKEN`, e.g.:
+
+  ```
+  export CHANGELOG_GITHUB_TOKEN=YOUR_TOKEN_HERE
+  ```
+
+2. Use the camerata gem to increment the management version and deploy:
+
+  See [the camerata readme](https://github.com/yalelibrary/yul-dc-camerata) for more details on setting this up.
+
+  ```
+  cam release management
+  cam push_version management NEW_MANAGEMENT_VERSION_NUMBER
+  cam deploy-main CLUSTER_NAME (e.g., yul-test)
+  ```
+
+3. Move any tickets that were included in this release from `For Release` to `Ready for Acceptance`
 
 ## Test coverage
 
