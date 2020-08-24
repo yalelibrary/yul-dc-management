@@ -13,9 +13,12 @@ class PyramidalTiffFactory
   S3 = Aws::S3::Client.new(region: ENV['AWS_DEFAULT_REGION'])
 
 
+  ##
+  # Create a local copy of the input file in TEMP_IMAGE_WORKSPACE
   def self.make_tempfile(input)
-    tfile = Tempfile.new(binmode: true)
-
+    raise "Expected directory #{ENV['TEMP_IMAGE_WORKSPACE']} does not exist." unless File.directory?(ENV["TEMP_IMAGE_WORKSPACE"])
+    raise "Expected file #{input} does not exist." unless File.exists?(input)
+    FileUtils.cp(input, ENV["TEMP_IMAGE_WORKSPACE"])
   end
 
   def self.convert(cksum, bucket, input)
