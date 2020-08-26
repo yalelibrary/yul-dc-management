@@ -49,5 +49,8 @@ RSpec.describe "Management", type: :feature do
       expect(page).to have_content("v6.lambda.phi")
       expect(page).to have_content("yalelibrary/yul-dc-camerata")
     end
+    it 'has a css selector for the postgres version' do
+      expect(page).to have_selector("#postgres_version", text: "v7.delta.omicron")
+    end
   end
 end
