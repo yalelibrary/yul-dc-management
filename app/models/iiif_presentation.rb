@@ -12,14 +12,14 @@ class IiifPresentation
     @oid = oid
   end
 
-  def valid?
-    true
-    # TODO: this needs logic
+  def validate_images
+    raise "There are no child objects for #{@oid}" if ChildObject.where(parent_object: parent_object).order(:order).empty?
   end
 
   # Build the actual manifest object
   def manifest
     return @manifest if @manifest
+    return if validate_images
     @manifest = IIIF::Presentation::Manifest.new(seed)
     @manifest.sequences << sequence
     add_canvases_to_sequence(@manifest.sequences.first)

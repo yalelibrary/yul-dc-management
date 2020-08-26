@@ -13,31 +13,33 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     ENV['IIIF_MANIFESTS_BASE_URL'] = original_manifests_base_url
     ENV['IIIF_IMAGE_BASE_URL'] = original_image_base_url
   end
+
+  let(:oid) { "16172421" }
+  let(:iiif_presentation) { IiifPresentation.new(oid) }
+  let(:logger_mock) { instance_double("Rails.logger").as_null_object }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: oid) }
+  let(:first_canvas) { iiif_presentation.manifest.sequences.first.canvases.first }
+  let(:third_to_last_canvas) { iiif_presentation.manifest.sequences.first.canvases.third_to_last }
+
+  before do
+    stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/16172421.json")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "manifests", "16172421.json")).read)
+    stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/16172421.json")
+      .to_return(status: 200)
+    stub_metadata_cloud("16172421")
+    stub_info
+    parent_object
+  end
+
+  def stub_info
+    file_id_array = ["16188699", "16188700", "16188701", "16188702"]
+    file_id_array.map do |file_id|
+      stub_request(:get, "#{ENV['IIIF_IMAGE_BASE_URL']}/2/#{file_id}/info.json")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, file_id, "info.json")))
+    end
+  end
+
   describe "creating a manifest with a valid mets xml import" do
-    let(:oid) { "16172421" }
-    let(:iiif_presentation) { IiifPresentation.new(oid) }
-    let(:logger_mock) { instance_double("Rails.logger").as_null_object }
-    let(:parent_object) { FactoryBot.create(:parent_object, oid: oid) }
-    let(:first_canvas) { iiif_presentation.manifest.sequences.first.canvases.first }
-    let(:third_to_last_canvas) { iiif_presentation.manifest.sequences.first.canvases.third_to_last }
-    before do
-      stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/16172421.json")
-        .to_return(status: 200, body: File.open(File.join(fixture_path, "manifests", "16172421.json")).read)
-      stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/16172421.json")
-        .to_return(status: 200)
-      stub_metadata_cloud("16172421")
-      stub_info
-      parent_object
-    end
-
-    def stub_info
-      file_id_array = ["16188699", "16188700", "16188701", "16188702"]
-      file_id_array.map do |file_id|
-        stub_request(:get, "#{ENV['IIIF_IMAGE_BASE_URL']}/2/#{file_id}/info.json")
-          .to_return(status: 200, body: File.open(File.join(fixture_path, file_id, "info.json")))
-      end
-    end
-
     it "can be instantiated" do
       expect(iiif_presentation.oid).to eq oid
     end
@@ -131,6 +133,73 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
 
     it "can output a manifest as json" do
       expect(iiif_presentation.manifest.to_json(pretty: true)).to include "Strawberry Thief fabric, made by Morris and Company "
+    end
+  end
+
+  describe 'iiif presentation validations' do
+    context 'manifests' do
+      manifest = IIIF::Presentation::Manifest.new
+
+      it 'raises an exception if the manifest does not have an id' do
+        manifest.label = 'Book 1'
+        expect { manifest.validate }.to raise_error IIIF::Presentation::MissingRequiredKeyError
+      end
+
+      it 'raises an exception if the manifest does not have an label' do
+        manifest['id'] = 'http://www.example.org/iiif/book1/manifest'
+        expect { manifest.validate }.to raise_error IIIF::Presentation::MissingRequiredKeyError
+      end
+
+      it 'raises an exception if the manifest does not have a type' do
+        manifest.delete('@type')
+        manifest.label = 'Book 1'
+        manifest['id'] = 'http://www.example.org/iiif/book1/manifest'
+        expect { manifest.validate }.to raise_error IIIF::Presentation::MissingRequiredKeyError
+      end
+    end
+
+    it 'raises an exception if the sequence is not an array' do
+      expect { (iiif_presentation.manifest.sequences = 'quux') }.to raise_error('sequences must be an Array.')
+    end
+
+    it 'raises an exception if the canvas dimensions are not present' do
+      canvas = IIIF::Presentation::Canvas.new('@id' => 'http://example.com/canvas')
+      expect { canvas.to_json }.to raise_error('A(n) width is required for each IIIF::Presentation::Canvas')
+      canvas.width = 191
+      expect { canvas.to_json }.to raise_error('A(n) height is required for each IIIF::Presentation::Canvas')
+    end
+
+    it 'raises an exception if the images service_id is not included' do
+      expect { IIIF::Presentation::ImageResource.create_image_api_image_resource }.to raise_error('key not found: :service_id')
+    end
+
+    # #TODO: Fix this test. Not currently working as at should since we are stubbing requests
+    xit 'raises an exception if the images service_id is not valid' do
+      invalid_service_id = "#{ENV['IIIF_IMAGE_BASE_URL']}/2/16188691"
+      expect { IIIF::Presentation::ImageResource.create_image_api_image_resource(service_id: invalid_service_id) }.to raise_error
+    end
+
+    context 'with no images in the canvas' do
+      let(:no_child_oid) { "100001" }
+      let(:no_child_parent_object) { FactoryBot.create(:parent_object, oid: no_child_oid) }
+      let(:no_child_iiif_presentation) { IiifPresentation.new(no_child_oid) }
+
+      before do
+        stub_metadata_cloud("100001")
+        no_child_parent_object
+      end
+
+      it 'raises an exception if the parent object does not have any child objects (images)' do
+        expect { no_child_iiif_presentation.validate_images }.to raise_error("There are no child objects for #{no_child_oid}")
+      end
+
+      it 'does not raise an exception if the parent object has child objects (images)' do
+        expect { iiif_presentation.validate_images }.not_to raise_error("There are no child objects for #{oid}")
+      end
+
+      it 'raises an exception when creating a manifest if the parent object has no child objects (images)' do
+        expect { no_child_iiif_presentation.manifest }.to raise_error("There are no child objects for #{no_child_oid}")
+      end
     end
   end
 end
