@@ -1,19 +1,4 @@
 # frozen_string_literal: true
-require 'aws-sdk-s3'
-require 'digest'
-require 'English'
-
-# 0. Locate access_master
-# 1. Copy access_master to local workspace
-# 2. Create ptiff from local file using tiff_to_pyramid.bash
-# 3. Save ptiff to S3
-# 4. Remove local copy
-
-# child_object = ChildObject.something
-# child_object.oid
-# ptf = PyramidalTiffFactory.new(child_object.oid)
-# ptf.ptiff_already_exists?
-# ptf.make_ptiff
 
 # This class takes a child_object's oid, retrieves the access_master for that child object, creates a pyramidal tiff from the access master,
 # and saves that pyramidal tiff to an S3 bucket.
@@ -26,7 +11,12 @@ class PyramidalTiffFactory
     @oid = oid
   end
 
-  def self.generate_ptiff(oid); end
+  def self.generate_ptiff_from(oid)
+    ptf = PyramidalTiffFactory.new(oid)
+    tiff_input_path = ptf.copy_access_master_to_working_directory
+    ptf.convert_to_ptiff(tiff_input_path)
+    ptf.save_to_s3(File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(ptf.access_master_path)))
+  end
 
   def access_master_path
     "#{ENV['ACCESS_MASTER_MOUNT']}/#{oid}.tif"
@@ -39,38 +29,24 @@ class PyramidalTiffFactory
     raise "Expected file #{access_master_path} does not exist." unless File.exist?(access_master_path)
     FileUtils.cp(access_master_path, ENV["TEMP_IMAGE_WORKSPACE"])
     temp_file_path = File.join(ENV["TEMP_IMAGE_WORKSPACE"], File.basename(access_master_path))
-    temp_file_path
+    return temp_file_path unless compare_checksums(access_master_path, temp_file_path)
   end
 
-  def convert_to_ptiff
-    tiff_input_file = copy_access_master_to_working_directory
-    ptiff_output_file = File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(access_master_path))
-    STDOUT.puts `app/lib/tiff_to_pyramid.bash #{Dir.mktmpdir} #{tiff_input_file} #{ptiff_output_file}`
-  end
-
-  def save_to_s3
-    File.open(temp_out, 'rb') do |f|
-      S3.put_object(bucket: bucket, key: out_key, body: f)
-    end
-    "s3://#{bucket}/#{out_key}"
-  end
-
-  def self.convert(cksum, bucket, input)
-    temp_in = copy_access_master_to_working_directory
-
-    check = Digest::SHA256.file(temp_in)
-    raise "Checksum failed. Should be: #{check}" unless check == cksum
-
-    temp_out = Tempfile.new
-    STDOUT.puts `lib/tiff_to_pyramid.bash #{Dir.mktmpdir} #{temp_in.path} #{temp_out.path}`
+  def convert_to_ptiff(tiff_input_path)
+    ptiff_output_path = File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(access_master_path))
+    STDOUT.puts `app/lib/tiff_to_pyramid.bash #{Dir.mktmpdir} #{tiff_input_path} #{ptiff_output_path}`
 
     raise "Conversion script exited with error code #{$CHILD_STATUS.exitstatus}" if $CHILD_STATUS.exitstatus != 0
+  end
 
-    out_key = "ptiffs/#{input.split('/').last}"
+  def save_to_s3(ptiff_output_path)
+    remote_path = File.join("ptiffs", File.basename(access_master_path))
+    S3Service.upload_image(ptiff_output_path, remote_path)
+  end
 
-    File.open(temp_out, 'rb') do |f|
-      S3.put_object(bucket: bucket, key: out_key, body: f)
-    end
-    "s3://#{bucket}/#{out_key}"
+  def compare_checksums(access_master_path, temp_file_path)
+    access_master_checksum = Digest::SHA256.file(access_master_path)
+    temp_file_checksum = Digest::SHA256.file(temp_file_path)
+    raise "Checksum failed. Should be: #{access_master_checksum}" unless access_master_checksum == temp_file_checksum
   end
 end
