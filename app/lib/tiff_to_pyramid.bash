@@ -71,7 +71,7 @@ if [[ ${CHANNELS} == "gray" ]]; then
     if [ -z "${ICCPROFILE}" ] || [ "${ICCPROFILE}" == "sRGB Profile" ]; then
         W2=$(vipsheader -f width ${input}[0] 2>/dev/null)
         H2=$(vipsheader -f height ${input}[0] 2>/dev/null)
-        vipsthumbnail $input[0] --eprofile=app/lib/sRGB.icc --size ${W2}x${H2} -o ${tmpprefix}.tif[compression=none,strip] 2>&1
+        vipsthumbnail $input[0] --eprofile=app/lib/sRGB.icc --size ${W2}x${H2} --intent perceptual -o ${tmpprefix}.tif[compression=none,strip] 2>&1
         # note that in the above operation, vipsthumbnail doesn't embed the profile by default, so there won't be one in the result since we didn't start with one
     fi
 fi
