@@ -17,4 +17,11 @@ class S3Service
   rescue Aws::S3::Errors::NoSuchKey, Aws::S3::Errors::NotFound, Aws::S3::Errors::BadRequest
     nil
   end
+
+  def self.download_image(remote_path, local_path)
+    @client.get_object(bucket: ENV["S3_SOURCE_BUCKET_NAME"], key: remote_path) do |chunk|
+      path = Pathname.new(local_path)
+      path.binwrite chunk
+    end
+  end
 end
