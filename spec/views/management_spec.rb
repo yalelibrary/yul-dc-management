@@ -33,7 +33,8 @@ RSpec.describe "Management", type: :feature do
 
     it 'dynamically displays deployed services' do
       expect(page).to have_content("Containers")
-      expect(page).to have_content("v1.beta.gamma")
+      expect(page).to have_selector("#management_version", text: "v1.beta.gamma"),
+                      "has a css id for the management version"
       expect(page).to have_content("yalelibraryit/dc-management")
       expect(page).to have_content("v7.delta.omicron")
       expect(page).to have_content("yalelibraryit/dc-postgres")
@@ -47,9 +48,6 @@ RSpec.describe "Management", type: :feature do
       expect(page).to have_content("yalelibraryit/dc-management")
       expect(page).to have_content("v6.lambda.phi")
       expect(page).to have_content("yalelibrary/yul-dc-camerata")
-    end
-    it 'Has a css id for the management version' do
-      expect(page).to have_selector("#management_version")
     end
   end
 end
