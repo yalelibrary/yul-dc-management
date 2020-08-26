@@ -19,6 +19,7 @@ class S3Service
     nil
   end
 
+
   # Takes a remote S3 bucket path and writes the retrieved image to a local path.
   # It downloads it in chunks because images are very large.
   def self.download_image(remote_path, local_path)
