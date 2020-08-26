@@ -200,6 +200,11 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       it 'raises an exception when creating a manifest if the parent object has no child objects (images)' do
         expect { no_child_iiif_presentation.manifest }.to raise_error("There are no child objects for #{no_child_oid}")
       end
+
+      it 'creates a parent object if the parent object has no child objects (images)' do
+        expect { no_child_parent_object }.not_to raise_error("There are no child objects for #{no_child_oid}")
+        expect(no_child_parent_object).to be_valid
+      end
     end
   end
 end
