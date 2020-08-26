@@ -11,6 +11,7 @@ class S3Service
     )
   end
 
+  # Returns the response body text
   def self.download(file_path)
     resp = @client.get_object(bucket: ENV['SAMPLE_BUCKET'], key: file_path)
     resp.body&.read
@@ -18,10 +19,23 @@ class S3Service
     nil
   end
 
+
+  # Takes a remote S3 bucket path and writes the retrieved image to a local path.
+  # It downloads it in chunks because images are very large.
   def self.download_image(remote_path, local_path)
     @client.get_object(bucket: ENV["S3_SOURCE_BUCKET_NAME"], key: remote_path) do |chunk|
       path = Pathname.new(local_path)
       path.binwrite chunk
+    end
+  end
+
+  def self.upload_image(local_path, remote_path)
+    File.open(local_path, 'r') do |f|
+      @client.put_object(
+        bucket: ENV['S3_SOURCE_BUCKET_NAME'],
+        key: remote_path,
+        body: f
+      )
     end
   end
 end

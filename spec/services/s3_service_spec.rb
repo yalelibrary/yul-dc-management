@@ -11,6 +11,8 @@ RSpec.describe S3Service do
       .to_return(status: 200, body: "these are some test words")
     stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
       .to_return(status: 200, body: File.open("spec/fixtures/access_masters/test_image.tif"))
+    stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
+      .to_return(status: 200, body: "")
   end
 
   around do |example|
@@ -43,7 +45,7 @@ RSpec.describe S3Service do
 
   it "can upload an image to a given image bucket" do
     child_oid = "1014543"
-    local_path = "spec/fixtures/ptiff_images/valid_ptiff_#{child_oid}.tif"
+    local_path = "spec/fixtures/ptiff_images/fake_ptiff.tif"
     remote_path = "originals/#{child_oid}.tif"
     expect(File.exist?(local_path)).to eq true
     expect(described_class.upload_image(local_path, remote_path).successful?).to eq true
