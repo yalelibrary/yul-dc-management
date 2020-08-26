@@ -37,6 +37,7 @@ module SolrIndexable
       archiveSpaceUri_ssi: json_to_index["archiveSpaceUri"],
       author_ssim: json_to_index["creator"],
       author_tsim: json_to_index["creator"],
+      author_tesim: json_to_index["creator"],
       box_ssim: extract_box_ssim(json_to_index),
       caption_tesim: json_to_index["caption"],
       collectionId_ssim: json_to_index["collectionId"],
@@ -129,6 +130,7 @@ module SolrIndexable
       sourceNote_ssim: json_to_index["sourceNote"], # replaced by sourceNote_tesim
       sourceTitle_ssim: json_to_index["sourceTitle"], # repleaced by sourceTitle_tesim
       subject_topic_tsim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
+      subject_topic_tesim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
       title_tsim: json_to_index["title"] # replaced by title_tesim
     }
   end
