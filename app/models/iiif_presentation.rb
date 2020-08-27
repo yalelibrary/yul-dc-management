@@ -64,7 +64,7 @@ class IiifPresentation
 
   def seed
     {
-      '@id' => "#{ENV['IIIF_MANIFESTS_BASE_URL']}/#{oid}.json",
+      '@id' => "#{ENV['IIIF_MANIFESTS_BASE_URL']}/#{@oid}.json",
       'label' => @parent_object.authoritative_json["title"].first
     }
   end
