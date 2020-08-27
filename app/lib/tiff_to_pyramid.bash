@@ -65,28 +65,28 @@ fi
 if [[ ${CHANNELS} == "gray" ]]; then
     ICCPROFILE=$(identify -format "%[profile:icc]\n" ${input}[0] 2>/dev/null)
     echo "icc profile description: ${ICCPROFILE}"
-    # in the case of gray with no embedded color profile or with an embedded sRGB profile that was probably erroneously applied to the image, 
+    # in the case of gray with no embedded color profile or with an embedded sRGB profile that was probably erroneously applied to the image,
     # we can't just apply sRGB with the icc_transform because sRGB isn't an appropriate profile for the icc_transform command
     # so we have to call vipsthumbnail instead which does some magick behind the scenes to properly convert between the profiles
     if [ -z "${ICCPROFILE}" ] || [ "${ICCPROFILE}" == "sRGB Profile" ]; then
         W2=$(vipsheader -f width ${input}[0] 2>/dev/null)
         H2=$(vipsheader -f height ${input}[0] 2>/dev/null)
-        vipsthumbnail $input[0] --eprofile=lib/sRGB.icc --size ${W2}x${H2} -o ${tmpprefix}.tif[compression=none,strip] 2>&1
+        vipsthumbnail $input[0] --eprofile=app/lib/sRGB.icc --size ${W2}x${H2} --intent perceptual -o ${tmpprefix}.tif[compression=none,strip] 2>&1
         # note that in the above operation, vipsthumbnail doesn't embed the profile by default, so there won't be one in the result since we didn't start with one
     fi
 fi
 
 # if we haven't already transformed color profile to sRGB like in above operation for a missing or incompatible image then do it now
 if [ -z "${W2}" ]; then
-    # next, run an icc_transform to convert the original to sRGB (assume sRGB if no profile and otherwise use the embedded one) 
-    # and strip all metadata from the file; --embedded intructs vips to use embedded and --input-profile is only used as a fallback 
+    # next, run an icc_transform to convert the original to sRGB (assume sRGB if no profile and otherwise use the embedded one)
+    # and strip all metadata from the file; --embedded intructs vips to use embedded and --input-profile is only used as a fallback
     # if a profile isn't embedded
-    vips icc_transform $input ${tmpprefix}.tif[compression=none,strip] lib/sRGB.icc --embedded --input-profile lib/sRGB.icc --intent perceptual 2>&1 
+    vips icc_transform $input ${tmpprefix}.tif[compression=none,strip] app/lib/sRGB.icc --embedded --input-profile app/lib/sRGB.icc --intent perceptual 2>&1
 fi
 
 # now, embed an sRGB ICC profile in the resulting uncompressed tiff since we stripped out the profile above using the strip metadata directive
 # it would be nice if there was a way to do this during the icc_transform step, but there doesn't seem to be
-vips tiffsave ${tmpprefix}.tif ${outprefix}_0.tif --compression none --profile lib/sRGB.icc 2>&1
+vips tiffsave ${tmpprefix}.tif ${outprefix}_0.tif --compression none --profile app/lib/sRGB.icc 2>&1
 
 # read the width and height of the transformed file
 W=$(vipsheader -f width ${outprefix}_0.tif)
@@ -97,9 +97,9 @@ while [ 1 ]; do
     H=$(( H / 2 ));
     #echo ${c} ${W} ${H}
 
-    # since we already have a stripped and color transformed tiff that 
-    # is twice the resolution as the one are about to create, use that 
-    # one instead of the original when resizing which will save quite 
+    # since we already have a stripped and color transformed tiff that
+    # is twice the resolution as the one are about to create, use that
+    # one instead of the original when resizing which will save quite
     # a bit of processing time
     vipsthumbnail ${outprefix}_$c.tif --size ${W}x${H}\! -o srgb_${pid}_$(( c + 1 )).tif[compression=none]
 
@@ -110,14 +110,14 @@ while [ 1 ]; do
     c=$(( c + 1 ));
 done
 
-# once we have all sizes created, then we use tiffcp to perform the pyramid 
+# once we have all sizes created, then we use tiffcp to perform the pyramid
 # assembly and jpeg compression at 90 quality
 
-# note: tiffcp defaults to ycbcr photometric interpretation and presumably therefore 
-# chroma subsampling so by default it produces JPEGs about 3x smaller with ycbcr 
+# note: tiffcp defaults to ycbcr photometric interpretation and presumably therefore
+# chroma subsampling so by default it produces JPEGs about 3x smaller with ycbcr
 # vs. when photometric interpretation is set to rgb
-# e.g. -c jpeg:r:90 vs. -c jpeg:90 
-tiffcp -a -c jpeg:90 -t -w 256 -l 256 ${outprefix}_*.tif ${outfile} 
+# e.g. -c jpeg:r:90 vs. -c jpeg:90
+tiffcp -a -c jpeg:90 -t -w 256 -l 256 ${outprefix}_*.tif ${outfile}
 
 # cleanup temp files but leave the outputput file in place
 if [ -z "${savefiles}" ]; then rm -f $tmpprefix*; fi
