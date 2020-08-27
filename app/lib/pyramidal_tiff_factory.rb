@@ -3,12 +3,13 @@
 # This class takes a child_object's oid, retrieves the access_master for that child object, creates a pyramidal tiff from the access master,
 # and saves that pyramidal tiff to an S3 bucket.
 class PyramidalTiffFactory
-  attr_reader :oid
+  attr_reader :oid, :access_master_path
   S3 = Aws::S3::Client.new(region: ENV['AWS_DEFAULT_REGION'])
 
   # This method takes the oid of a child_object and creates a new PyramidalTiffFactory
   def initialize(oid)
     @oid = oid
+    @access_master_path = PyramidalTiffFactory.access_master_path(oid)
   end
 
   def self.generate_ptiff_from(oid)
@@ -18,17 +19,19 @@ class PyramidalTiffFactory
     ptf.save_to_s3(File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(ptf.access_master_path)))
   end
 
-  def access_master_path
-    "#{ENV['ACCESS_MASTER_MOUNT']}/#{oid}.tif"
+  def self.access_master_path(oid)
+    image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
+    "#{image_mount}/#{oid}.tif"
   end
 
   ##
   # Create a local copy of the input file in TEMP_IMAGE_WORKSPACE
   def copy_access_master_to_working_directory
-    raise "Expected directory #{ENV['TEMP_IMAGE_WORKSPACE']} does not exist." unless File.directory?(ENV["TEMP_IMAGE_WORKSPACE"])
+    temp_workspace = ENV['TEMP_IMAGE_WORKSPACE'] || "/tmp"
+    raise "Expected directory #{temp_workspace} does not exist." unless File.directory?(temp_workspace)
     raise "Expected file #{access_master_path} does not exist." unless File.exist?(access_master_path)
-    FileUtils.cp(access_master_path, ENV["TEMP_IMAGE_WORKSPACE"])
-    temp_file_path = File.join(ENV["TEMP_IMAGE_WORKSPACE"], File.basename(access_master_path))
+    FileUtils.cp(access_master_path, temp_workspace)
+    temp_file_path = File.join(temp_workspace, File.basename(access_master_path))
     return temp_file_path unless compare_checksums(access_master_path, temp_file_path)
   end
 
