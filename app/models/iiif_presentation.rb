@@ -9,12 +9,12 @@ class IiifPresentation
     @manifest_base_url = ENV["IIIF_MANIFESTS_BASE_URL"] || "http://localhost/manifests/"
     @image_base_url = ENV["IIIF_IMAGE_BASE_URL"] || "http://localhost:8182/iiif"
     @parent_object = parent_object
-    oid = parent_object.oid
+    @oid = parent_object.oid
   end
 
   def valid?
     true
-    #TODO this needs logic
+    # TODO: this needs logic
   end
 
   # Build the actual manifest object
