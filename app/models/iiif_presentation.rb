@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class IiifPresentation
-  attr_reader :parent_object, :mets_doc, :oid
+  attr_reader :parent_object, :mets_doc, :oid, :errors
 
   require 'iiif/presentation'
 
@@ -10,11 +10,15 @@ class IiifPresentation
     @image_base_url = ENV["IIIF_IMAGE_BASE_URL"] || "http://localhost:8182/iiif"
     @parent_object = parent_object
     @oid = parent_object.oid
+    @errors = ActiveModel::Errors.new(self)
   end
 
   def valid?
+    if ChildObject.where(parent_object: parent_object).order(:order).empty?
+      errors.add(:manifest, "There are no child objects for #{@oid}")
+      return false
+    end
     true
-    # TODO: this needs logic
   end
 
   # Build the actual manifest object
