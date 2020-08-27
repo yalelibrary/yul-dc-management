@@ -34,9 +34,10 @@ class PyramidalTiffFactory
 
   def convert_to_ptiff(tiff_input_path)
     ptiff_output_path = File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(access_master_path))
-    STDOUT.puts `app/lib/tiff_to_pyramid.bash #{Dir.mktmpdir} #{tiff_input_path} #{ptiff_output_path}`
-
-    raise "Conversion script exited with error code #{$CHILD_STATUS.exitstatus}" if $CHILD_STATUS.exitstatus != 0
+    stdout, stderr, status = Open3.capture3("app/lib/tiff_to_pyramid.bash #{Dir.mktmpdir} #{tiff_input_path} #{ptiff_output_path}")
+    raise "Conversion script exited with error code #{status.exitstatus}" if status.exitstatus != 0
+    # width = stdout.match(/Pyramid width: (\d*)/).captures[0]
+    # height = stdout.match(/Pyramid height: (\d*)/).captures[0]
   end
 
   def save_to_s3(ptiff_output_path)

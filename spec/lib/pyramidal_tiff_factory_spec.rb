@@ -19,9 +19,9 @@ RSpec.describe PyramidalTiffFactory do
     original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
     original_temp_image_workspace = ENV['TEMP_IMAGE_WORKSPACE']
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
-    ENV["PTIFF_OUTPUT_DIRECTORY"] = 'spec/fixtures/ptiff_images'
-    ENV["ACCESS_MASTER_MOUNT"] = 'spec/fixtures/access_masters'
-    ENV['TEMP_IMAGE_WORKSPACE'] = 'spec/fixtures/temp_images'
+    ENV["PTIFF_OUTPUT_DIRECTORY"] = 'spec/fixtures/images/ptiff_images'
+    ENV["ACCESS_MASTER_MOUNT"] = 'spec/fixtures/images/access_masters'
+    ENV['TEMP_IMAGE_WORKSPACE'] = 'spec/fixtures/images/temp_images'
     example.run
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
     ENV["PTIFF_OUTPUT_DIRECTORY"] = original_ptiff_output_directory
@@ -30,9 +30,9 @@ RSpec.describe PyramidalTiffFactory do
   end
 
   it "can call a wrapper method" do
-    expected_file_one = "spec/fixtures/temp_images/1002533.tif"
+    expected_file_one = "spec/fixtures/images/temp_images/1002533.tif"
     expect(File.exist?(expected_file_one)).to eq false
-    expected_file_two = "spec/fixtures/ptiff_images/1002533.tif"
+    expected_file_two = "spec/fixtures/images/ptiff_images/1002533.tif"
     expect(File.exist?(expected_file_two)).to eq false
     expect(described_class.generate_ptiff_from(oid))
     expect(File.exist?(expected_file_one)).to eq true
@@ -47,11 +47,11 @@ RSpec.describe PyramidalTiffFactory do
   end
 
   it "can find the access master, given an oid" do
-    expect(ptf.access_master_path).to eq "spec/fixtures/access_masters/1002533.tif"
+    expect(ptf.access_master_path).to eq "spec/fixtures/images/access_masters/1002533.tif"
   end
 
   it "copies the access master to a swing directory" do
-    expected_file = "spec/fixtures/temp_images/1002533.tif"
+    expected_file = "spec/fixtures/images/temp_images/1002533.tif"
     expect(File.exist?(expected_file)).to eq false
     expect(ptf.copy_access_master_to_working_directory).to eq expected_file
     expect(File.exist?(expected_file)).to eq true
@@ -59,17 +59,17 @@ RSpec.describe PyramidalTiffFactory do
   end
 
   it "converts the file in the swing directory to a ptiff" do
-    expected_file = "spec/fixtures/ptiff_images/1002533.tif"
+    expected_file = "spec/fixtures/images/ptiff_images/1002533.tif"
     expect(File.exist?(expected_file)).to eq false
     tiff_input_path = ptf.copy_access_master_to_working_directory
     ptf.convert_to_ptiff(tiff_input_path)
     expect(File.exist?(expected_file)).to eq true
-    File.delete("spec/fixtures/temp_images/1002533.tif")
+    File.delete("spec/fixtures/images/temp_images/1002533.tif")
     File.delete(expected_file)
   end
 
   it "saves the PTIFF to an S3 bucket" do
-    ptiff_output_path = "spec/fixtures/ptiff_images/fake_ptiff.tif"
+    ptiff_output_path = "spec/fixtures/images/ptiff_images/fake_ptiff.tif"
     expect(ptf.save_to_s3(ptiff_output_path).successful?).to eq true
   end
 
@@ -82,7 +82,7 @@ RSpec.describe PyramidalTiffFactory do
 
   it "checks for file checksum and fails if it doesn't match" do
     expect do
-      ptf.compare_checksums("spec/fixtures/access_masters/test_image.tif", "spec/fixtures/temp_images/autumn_test.tif")
+      ptf.compare_checksums("spec/fixtures/images/access_masters/test_image.tif", "spec/fixtures/images/temp_images/autumn_test.tif")
     end.to(
       raise_error(RuntimeError, /\AChecksum failed. Should be: .*\z/)
     )
