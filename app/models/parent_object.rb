@@ -124,4 +124,13 @@ class ParentObject < ApplicationRecord
   def source_name
     authoritative_metadata_source&.metadata_cloud_name
   end
+
+  def iiif_presentation
+    @iiif_presentation ||= IiifPresentation.new(self)
+  end
+
+  def iiif_manifest
+    return @iiif_manifest if @iiif_manifest
+    @iiif_manifest = @iiif_presentation.manifest if iiif_presentation.valid?
+  end
 end
