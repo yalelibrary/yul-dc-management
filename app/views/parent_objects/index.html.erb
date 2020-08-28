@@ -11,52 +11,51 @@
 </div>
 <div class='row'>
   <div class='col'>
+    <table class="table table-responsive table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Oid</th>
+          <th scope="col">Authoritative Source</th>
+          <th scope="col">Bib</th>
+          <th scope="col">Holding</th>
+          <th scope="col">Item</th>
+          <th scope="col">Barcode</th>
+          <th scope="col">Aspace uri</th>
+          <th scope="col">Last ladybird update</th>
+          <th scope="col">Last voyager update</th>
+          <th scope="col">Last aspace update</th>
+          <th scope="col">Visibility</th>
+          <th scope="col">Last id update</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
 
-<table class="table table-bordered table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Oid</th>
-      <th scope="col">Authoritative Source</th>
-      <th scope="col">Bib</th>
-      <th scope="col">Holding</th>
-      <th scope="col">Item</th>
-      <th scope="col">Barcode</th>
-      <th scope="col">Aspace uri</th>
-      <th scope="col">Last ladybird update</th>
-      <th scope="col">Last voyager update</th>
-      <th scope="col">Last aspace update</th>
-      <th scope="col">Visibility</th>
-      <th scope="col">Last id update</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @parent_objects.each do |parent_object| %>
-      <tr>
-        <td><%= parent_object.oid %></td>
-        <td><%= parent_object.source_name %></td>
-        <td><%= parent_object.bib %></td>
-        <td><%= parent_object.holding %></td>
-        <td><%= parent_object.item %></td>
-        <td><%= parent_object.barcode %></td>
-        <td><%= parent_object.aspace_uri %></td>
-        <td><%= parent_object.last_ladybird_update %></td>
-        <td><%= parent_object.last_voyager_update %></td>
-        <td><%= parent_object.last_aspace_update %></td>
-        <td><%= parent_object.visibility %></td>
-        <td><%= parent_object.last_id_update %></td>
-        <td>
-          <%= link_to 'Show', parent_object %>
-          |
-          <%= link_to 'Edit', edit_parent_object_path(parent_object) %>
-          |
-          <%= link_to 'Destroy', parent_object, method: :delete, data: { confirm: 'Are you sure?' } %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-</div>
+      <tbody>
+        <% @parent_objects.each do |parent_object| %>
+          <tr>
+            <td><%= parent_object.oid %></td>
+            <td><%= parent_object.source_name %></td>
+            <td><%= parent_object.bib %></td>
+            <td><%= parent_object.holding %></td>
+            <td><%= parent_object.item %></td>
+            <td><%= parent_object.barcode %></td>
+            <td><%= parent_object.aspace_uri %></td>
+            <td><%= parent_object.last_ladybird_update %></td>
+            <td><%= parent_object.last_voyager_update %></td>
+            <td><%= parent_object.last_aspace_update %></td>
+            <td><%= parent_object.visibility %></td>
+            <td><%= parent_object.last_id_update %></td>
+            <td>
+              <%= link_to 'Show', parent_object %>
+              |
+              <%= link_to 'Edit', edit_parent_object_path(parent_object) %>
+              |
+              <%= link_to 'Destroy', parent_object, method: :delete, data: { confirm: 'Are you sure?' } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 <%= link_to 'New Parent Object', new_parent_object_path %>

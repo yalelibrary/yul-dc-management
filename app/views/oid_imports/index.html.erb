@@ -5,7 +5,7 @@
     <div class="notice"><%= flash[:notice] %></div>
   <% end %>
 <br />
-  <table class="table table-bordered table-striped">
+<table class="table table-bordered table-responsive table-striped">
     <thead class="thead-dark">
       <tr>
         <th scope="col"> ID </th>
@@ -15,7 +15,7 @@
     <% @oid_imports.each do |object| %>
     <tr>
       <td><%= object.id %></td>
-      <td><%= object.created_at %></td>    
+      <td><%= object.created_at %></td>
     </tr>
     <% end %>
   </table>
