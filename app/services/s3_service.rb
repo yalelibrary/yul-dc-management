@@ -37,4 +37,9 @@ class S3Service
       )
     end
   end
+
+  def self.image_exists?(remote_path)
+    object = Aws::S3::Object.new(bucket_name: ENV['S3_SOURCE_BUCKET_NAME'], key: remote_path)
+    object.exists?
+  end
 end

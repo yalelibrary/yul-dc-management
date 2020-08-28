@@ -7,5 +7,8 @@ class SetupMetadataJob < ApplicationJob
     parent_object.default_fetch
     parent_object.create_child_records
     parent_object.save!
+    # parent_object.child_objects.each do |c|
+    #   GeneratePtiffJob.perform_later(c.oid)
+    # end
   end
 end
