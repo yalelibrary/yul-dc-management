@@ -9,6 +9,10 @@ class ChildObject < ApplicationRecord
     false
   end
 
+  def remote_ptiff_path
+    
+  end
+
   def access_master_path
     PyramidalTiffFactory.access_master_path(child_oid)
   end
