@@ -20,6 +20,8 @@ class PyramidalTiffFactory
     ptf.save_to_s3(File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(ptf.access_master_path)))
   end
 
+  ##
+  # We don't know for sure where the access master mount will be, this is a default for local development for now
   def self.access_master_path(oid)
     image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
     "#{image_mount}/#{oid}.tif"
@@ -40,6 +42,7 @@ class PyramidalTiffFactory
     ptiff_output_path = File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(access_master_path))
     _stdout, _stderr, status = Open3.capture3("app/lib/tiff_to_pyramid.bash #{Dir.mktmpdir} #{tiff_input_path} #{ptiff_output_path}")
     raise "Conversion script exited with error code #{status.exitstatus}" if status.exitstatus != 0
+    # Preparation for being able to save the width and height to the ChildObject, just not quite ready to implement yet
     # width = stdout.match(/Pyramid width: (\d*)/).captures[0]
     # height = stdout.match(/Pyramid height: (\d*)/).captures[0]
   end
