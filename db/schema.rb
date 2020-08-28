@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_20_125838) do
+ActiveRecord::Schema.define(version: 2020_08_28_132403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_125838) do
   end
 
   create_table "child_objects", id: false, force: :cascade do |t|
-    t.integer "child_oid"
+    t.integer "oid"
     t.string "caption"
     t.integer "width"
     t.integer "height"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2020_08_20_125838) do
     t.string "label"
     t.string "checksum"
     t.string "viewing_hint"
-    t.index ["child_oid"], name: "index_child_objects_on_child_oid", unique: true
+    t.index ["oid"], name: "index_child_objects_on_oid", unique: true
     t.index ["parent_object_oid"], name: "index_child_objects_on_parent_object_oid"
   end
 

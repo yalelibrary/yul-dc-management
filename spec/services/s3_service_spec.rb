@@ -34,9 +34,9 @@ RSpec.describe S3Service do
   end
 
   it "can download an image from a given image bucket" do
-    child_oid = "1014543"
-    remote_path = "originals/#{child_oid}.tif"
-    local_path = "spec/fixtures/access_masters/#{child_oid}.tif"
+    child_object_oid = "1014543"
+    remote_path = "originals/#{child_object_oid}.tif"
+    local_path = "spec/fixtures/access_masters/#{child_object_oid}.tif"
     expect(File.exist?(local_path)).to eq false
     described_class.download_image(remote_path, local_path)
     expect(File.exist?(local_path)).to eq true
@@ -44,9 +44,9 @@ RSpec.describe S3Service do
   end
 
   it "can upload an image to a given image bucket" do
-    child_oid = "1014543"
+    child_object_oid = "1014543"
     local_path = "spec/fixtures/ptiff_images/fake_ptiff.tif"
-    remote_path = "originals/#{child_oid}.tif"
+    remote_path = "originals/#{child_object_oid}.tif"
     expect(File.exist?(local_path)).to eq true
     expect(described_class.upload_image(local_path, remote_path).successful?).to eq true
   end

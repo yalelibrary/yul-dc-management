@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe "child_objects/new", type: :view do
   before do
     assign(:child_object, ChildObject.new(
-                            child_oid: "MyString",
+                            oid: 1,
                             caption: "MyString",
                             width: 1,
                             height: 1,
@@ -18,7 +18,7 @@ RSpec.describe "child_objects/new", type: :view do
     render
 
     assert_select "form[action=?][method=?]", child_objects_path, "post" do
-      assert_select "input[name=?]", "child_object[child_oid]"
+      assert_select "input[name=?]", "child_object[oid]"
 
       assert_select "input[name=?]", "child_object[caption]"
 

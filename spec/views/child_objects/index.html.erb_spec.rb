@@ -10,7 +10,7 @@ RSpec.describe "child_objects/index", type: :view, prep_metadata_sources: true d
     parent_object
     assign(:child_objects, [
              ChildObject.create!(
-               child_oid: 111,
+               oid: 111,
                caption: "Caption",
                width: 2,
                height: 3,
@@ -18,7 +18,7 @@ RSpec.describe "child_objects/index", type: :view, prep_metadata_sources: true d
                parent_object_oid: "2004628"
              ),
              ChildObject.create!(
-               child_oid: 222,
+               oid: 222,
                caption: "Caption",
                width: 2,
                height: 3,

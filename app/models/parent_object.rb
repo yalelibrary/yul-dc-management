@@ -18,7 +18,7 @@ class ParentObject < ApplicationRecord
     ladybird_json["children"].map.with_index(1) do |child_record, index|
       next if child_object_ids.include?(child_record["oid"])
       child_objects.build(
-        child_oid: child_record["oid"],
+        oid: child_record["oid"],
         # Ladybird has only one field for both order label (7v, etc.), and descriptive captions ("Mozart at the Keyboard")
         # For the first iteration we will map this field to label
         label: child_record["caption"],
