@@ -10,7 +10,7 @@ class ChildObject < ApplicationRecord
   end
 
   def remote_ptiff_path
-    
+
   end
 
   def access_master_path
