@@ -10,6 +10,7 @@ class PyramidalTiffFactory
   def initialize(oid)
     @oid = oid
     @access_master_path = PyramidalTiffFactory.access_master_path(oid)
+    @remote_ptiff_path = PyramidalTiffFactory.remote_ptiff_path(oid)
   end
 
   def self.generate_ptiff_from(oid)
@@ -37,15 +38,18 @@ class PyramidalTiffFactory
 
   def convert_to_ptiff(tiff_input_path)
     ptiff_output_path = File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(access_master_path))
-    stdout, stderr, status = Open3.capture3("app/lib/tiff_to_pyramid.bash #{Dir.mktmpdir} #{tiff_input_path} #{ptiff_output_path}")
+    _stdout, _stderr, status = Open3.capture3("app/lib/tiff_to_pyramid.bash #{Dir.mktmpdir} #{tiff_input_path} #{ptiff_output_path}")
     raise "Conversion script exited with error code #{status.exitstatus}" if status.exitstatus != 0
     # width = stdout.match(/Pyramid width: (\d*)/).captures[0]
     # height = stdout.match(/Pyramid height: (\d*)/).captures[0]
   end
 
+  def self.remote_ptiff_path(oid)
+    File.join("ptiffs", File.basename(access_master_path(oid)))
+  end
+
   def save_to_s3(ptiff_output_path)
-    remote_path = File.join("ptiffs", File.basename(access_master_path))
-    S3Service.upload_image(ptiff_output_path, remote_path)
+    S3Service.upload_image(ptiff_output_path, @remote_ptiff_path)
   end
 
   def compare_checksums(access_master_path, temp_file_path)
