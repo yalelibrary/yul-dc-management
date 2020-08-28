@@ -40,13 +40,13 @@ class IiifPresentation
   def add_image_to_canvas(child, canvas)
     images = canvas.images
     image = IIIF::Presentation::Resource.new
-    image['@id'] = "#{@manifest_base_url}/oid/#{oid}/canvas/#{child.child_oid}/image/1"
+    image['@id'] = "#{@manifest_base_url}/oid/#{oid}/canvas/#{child.oid}/image/1"
     image['@type'] = "oa:Annotation"
     image["motivation"] = "sc:painting"
-    image["on"] = "#{@manifest_base_url}/oid/#{oid}/canvas/#{child.child_oid}"
+    image["on"] = "#{@manifest_base_url}/oid/#{oid}/canvas/#{child.oid}"
 
     image_resource = IIIF::Presentation::ImageResource.create_image_api_image_resource(
-      service_id: "#{@image_base_url}/2/#{child.child_oid}"
+      service_id: "#{@image_base_url}/2/#{child.oid}"
     )
     image["resource"] = image_resource
     images << image
@@ -57,7 +57,7 @@ class IiifPresentation
     child_objects = ChildObject.where(parent_object: parent_object).order(:order)
     child_objects.map do |child|
       canvas = IIIF::Presentation::Canvas.new
-      canvas['@id'] = "#{@manifest_base_url}/oid/#{oid}/canvas/#{child.child_oid}"
+      canvas['@id'] = "#{@manifest_base_url}/oid/#{oid}/canvas/#{child.oid}"
       canvas['label'] = child.label
       add_image_to_canvas(child, canvas)
       canvas['height'] = canvas.images.first["resource"]["height"]

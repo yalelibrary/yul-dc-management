@@ -6,7 +6,7 @@ RSpec.describe "child_objects/edit", type: :view, prep_metadata_sources: true do
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2004628") }
   let(:child_object)  do
     assign(:child_object, ChildObject.create!(
-                            child_oid: 1,
+                            oid: 1,
                             caption: "10v",
                             width: 1,
                             height: 1,
@@ -24,7 +24,7 @@ RSpec.describe "child_objects/edit", type: :view, prep_metadata_sources: true do
     render
 
     assert_select "form[action=?][method=?]", child_object_path(child_object), "post" do
-      assert_select "input[name=?]", "child_object[child_oid]"
+      assert_select "input[name=?]", "child_object[oid]"
 
       assert_select "input[name=?]", "child_object[caption]"
 
