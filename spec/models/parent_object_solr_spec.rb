@@ -10,6 +10,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     end
   end
 
+  before do
+    allow(PyramidalTiffFactory).to receive(:generate_ptiff_from).and_return(true)
+  end
+
   context "indexing to Solr from the database with Ladybird ParentObjects", solr: true do
     it "can index the 5 parent objects in the database to Solr" do
       response = solr.get 'select', params: { q: '*:*' }

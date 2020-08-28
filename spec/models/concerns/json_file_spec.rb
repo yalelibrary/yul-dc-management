@@ -11,6 +11,7 @@ RSpec.describe JsonFile, prep_metadata_sources: true do
   end
 
   before do
+    allow(PyramidalTiffFactory).to receive(:generate_ptiff_from).and_return(true)
     stub_metadata_cloud("16685691")
   end
 

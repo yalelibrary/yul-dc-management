@@ -20,7 +20,7 @@ RSpec.describe "Creation of PTIFFs for all ChildObjects", type: :system, prep_me
         .to_return(status: 200)
     end
 
-    it "make all the child_objects and all their ptiffs" do
+    xit "make all the child_objects and all their ptiffs" do
       parent_object = ParentObject.create(oid: parent_object_oid)
       expect(parent_object.child_objects.count).to eq 5
       expect(parent_object.child_objects.first.remote_ptiff_exists?).to be true

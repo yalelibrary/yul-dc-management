@@ -14,8 +14,23 @@ class PyramidalTiffFactory
   end
 
   def self.generate_ptiff_from(oid)
+    if ENV['ACCESS_MASTER_SOURCE'] == "S3"
+      PyramidalTiffFactory.generate_ptiff_from_s3(oid)
+    else
+      PyramidalTiffFactory.generate_ptiff_from_local_mount(oid)
+    end
+  end
+
+  def self.generate_ptiff_from_local_mount(oid)
     ptf = PyramidalTiffFactory.new(oid)
-    tiff_input_path = ptf.copy_access_master_to_working_directory
+    tiff_input_path = ptf.copy_local_access_master_to_working_directory
+    ptf.convert_to_ptiff(tiff_input_path)
+    ptf.save_to_s3(File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(ptf.access_master_path)))
+  end
+
+  def self.generate_ptiff_from_s3(oid)
+    ptf = PyramidalTiffFactory.new(oid)
+    tiff_input_path = ptf.copy_remote_access_master_to_working_directory
     ptf.convert_to_ptiff(tiff_input_path)
     ptf.save_to_s3(File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(ptf.access_master_path)))
   end
@@ -27,9 +42,24 @@ class PyramidalTiffFactory
     "#{image_mount}/#{oid}.tif"
   end
 
+  def self.remote_access_master_path(oid)
+    image_bucket = "originals"
+    "#{image_bucket}/#{oid}.tif"
+  end
+
+  def copy_remote_access_master_to_working_directory
+    temp_workspace = ENV['TEMP_IMAGE_WORKSPACE'] || "/tmp"
+    raise "Expected directory #{temp_workspace} does not exist." unless File.directory?(temp_workspace)
+    remote_access_master_path = PyramidalTiffFactory.remote_access_master_path(oid)
+    raise "Expected file #{remote_access_master_path} does not exist." unless S3Service.image_exists?(remote_access_master_path)
+    temp_file_path = File.join(temp_workspace, File.basename(access_master_path))
+    S3Service.download_image(remote_access_master_path, temp_file_path)
+    temp_file_path
+  end
+
   ##
-  # Create a local copy of the input file in TEMP_IMAGE_WORKSPACE
-  def copy_access_master_to_working_directory
+  # Create a temp copy of the input file in TEMP_IMAGE_WORKSPACE
+  def copy_local_access_master_to_working_directory
     temp_workspace = ENV['TEMP_IMAGE_WORKSPACE'] || "/tmp"
     raise "Expected directory #{temp_workspace} does not exist." unless File.directory?(temp_workspace)
     raise "Expected file #{access_master_path} does not exist." unless File.exist?(access_master_path)

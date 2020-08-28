@@ -50,18 +50,10 @@ RSpec.describe PyramidalTiffFactory do
     expect(ptf.access_master_path).to eq "spec/fixtures/images/access_masters/1002533.tif"
   end
 
-  it "copies the access master to a swing directory" do
-    expected_file = "spec/fixtures/images/temp_images/1002533.tif"
-    expect(File.exist?(expected_file)).to eq false
-    expect(ptf.copy_access_master_to_working_directory).to eq expected_file
-    expect(File.exist?(expected_file)).to eq true
-    File.delete(expected_file)
-  end
-
   it "converts the file in the swing directory to a ptiff" do
     expected_file = "spec/fixtures/images/ptiff_images/1002533.tif"
     expect(File.exist?(expected_file)).to eq false
-    tiff_input_path = ptf.copy_access_master_to_working_directory
+    tiff_input_path = ptf.copy_local_access_master_to_working_directory
     ptf.convert_to_ptiff(tiff_input_path)
     expect(File.exist?(expected_file)).to eq true
     File.delete("spec/fixtures/images/temp_images/1002533.tif")
@@ -86,5 +78,54 @@ RSpec.describe PyramidalTiffFactory do
     end.to(
       raise_error(RuntimeError, /\AChecksum failed. Should be: .*\z/)
     )
+  end
+
+  it "copies the local access master to a swing directory" do
+    expected_file = "spec/fixtures/images/temp_images/1002533.tif"
+    expect(File.exist?(expected_file)).to eq false
+    expect(ptf.copy_local_access_master_to_working_directory).to eq expected_file
+    expect(File.exist?(expected_file)).to eq true
+    File.delete(expected_file)
+  end
+
+  context "when pulling access masters from S3" do
+    let(:oid) { "1014543" }
+    let(:ptf) { described_class.new(oid) }
+
+    around do |example|
+      original_access_master_source = ENV["ACCESS_MASTER_SOURCE"]
+      ENV["ACCESS_MASTER_SOURCE"] = "S3"
+      example.run
+      ENV["ACCESS_MASTER_SOURCE"] = original_access_master_source
+    end
+
+    before do
+      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
+        .to_return(status: 200, body: "", headers: {})
+      stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
+        .to_return(status: 200, body: File.open('spec/fixtures/images/access_masters/1002533.tif', 'rb'))
+      stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/1014543.tif")
+        .to_return(status: 200, body: "", headers: {})
+    end
+
+    it "copies the remote access master to a swing directory" do
+      expected_path = "spec/fixtures/images/temp_images/1014543.tif"
+      expect(File.exist?(expected_path)).to eq false
+      expect(ptf.copy_remote_access_master_to_working_directory).to eq expected_path
+      expect(File.exist?(expected_path)).to eq true
+      File.delete(expected_path)
+    end
+
+    it "can call a wrapper method" do
+      expected_file_one = "spec/fixtures/images/temp_images/1014543.tif"
+      expect(File.exist?(expected_file_one)).to eq false
+      expected_file_two = "spec/fixtures/images/ptiff_images/1014543.tif"
+      expect(File.exist?(expected_file_two)).to eq false
+      expect(described_class.generate_ptiff_from(oid))
+      expect(File.exist?(expected_file_one)).to eq true
+      File.delete(expected_file_one)
+      expect(File.exist?(expected_file_two)).to eq true
+      File.delete(expected_file_two)
+    end
   end
 end
