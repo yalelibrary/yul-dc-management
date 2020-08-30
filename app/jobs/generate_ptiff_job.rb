@@ -3,7 +3,7 @@
 class GeneratePtiffJob < ApplicationJob
   queue_as :default
 
-  def perform(oid)
-    PyramidalTiffFactory.generate_ptiff_from(oid)
+  def perform(child_object)
+    PyramidalTiffFactory.generate_ptiff_from(child_object)
   end
 end

@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 require "rails_helper"
 
+# Intentionally leaving Webmock allow net connect here for ease of testing against live S3 service.
+# When testing a new S3 service, verify that you are running only against test buckets, then
+# test new service against live S3 service and get tests passing, then comment out
+# the following line and stub connections to S3 for the test, so we can run it in CI.
+#
 # WebMock.allow_net_connect!
 
 RSpec.describe S3Service do

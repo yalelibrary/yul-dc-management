@@ -12,6 +12,8 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+/data/*
+!/data/.keep
 
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
@@ -22,6 +24,8 @@
 /storage/*
 !/storage/.keep
 /data_samples/*
+/data/*
+!/data/.keep
 
 /public/assets
 .byebug_history
