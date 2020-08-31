@@ -76,8 +76,8 @@ class PyramidalTiffFactory
   def convert_to_ptiff(tiff_input_path)
     ptiff_output_path = File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(access_master_path))
     _stdout, _stderr, status = Open3.capture3("app/lib/tiff_to_pyramid.bash #{Dir.mktmpdir} #{tiff_input_path} #{ptiff_output_path}")
-    errors.add("Conversion script exited with error code #{status.exitstatus}") if status.exitstatus != 0
-    # raise "Conversion script exited with error code #{status.exitstatus}" if status.exitstatus != 0
+    # errors.add("Conversion script exited with error code #{status.exitstatus}") if status.exitstatus != 0
+    raise "Conversion script exited with error code #{status.exitstatus}" if status.exitstatus != 0
     # Preparation for being able to save the width and height to the ChildObject, just not quite ready to implement yet
     # width = stdout.match(/Pyramid width: (\d*)/).captures[0]
     # height = stdout.match(/Pyramid height: (\d*)/).captures[0]
