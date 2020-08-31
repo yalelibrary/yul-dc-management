@@ -2,7 +2,7 @@
 require 'aws-sdk-s3'
 require 'rails_helper'
 
-RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true do
+RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr do
   let(:oid) { 1_002_533 }
   let(:child_object) { FactoryBot.build_stubbed(:child_object, oid: oid) }
   let(:ptf) { described_class.new(child_object) }

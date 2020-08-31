@@ -16,12 +16,12 @@ http_interactions:
       Host:
       - yale-test-image-samples.s3.amazonaws.com
       X-Amz-Date:
-      - 20200831T105237Z
+      - 20200831T160501Z
       X-Amz-Content-Sha256:
       - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=AKIATLAFMMWSTY2FR4P6/20200831/us-east-1/s3/aws4_request,
-        SignedHeaders=host;user-agent;x-amz-content-sha256;x-amz-date, Signature=f3c218dd367e19c2ab00251670a239435f488b0736cfa9df767a6cb084a4427a
+      - AWS4-HMAC-SHA256 Credential=xxxxx/20200831/us-east-1/s3/aws4_request,
+        SignedHeaders=host;user-agent;x-amz-content-sha256;x-amz-date, Signature=1e08935a16981c8412cb9858a021afb57bcfa76285d7a4dc833e36d4f4c4f533
       Content-Length:
       - '0'
       Accept:
@@ -32,11 +32,11 @@ http_interactions:
       message: Partial Content
     headers:
       X-Amz-Id-2:
-      - pLJPcxJJaQzOh2fiyAiI7pMhx8N4bE4gRmGhwGwDkieT0a7DajTZWaon3X9bbNI9JMiFXp8jdDI=
+      - qQHaqiwMxDDnA3B20LzMAA/yOhCxTehNExTokDnjkxq+Fl0gN/MsB+B9ErazK0QWAMvL+/yZhek=
       X-Amz-Request-Id:
-      - 48239EEFCADCA6D8
+      - B50C8BC493263203
       Date:
-      - Mon, 31 Aug 2020 10:52:38 GMT
+      - Mon, 31 Aug 2020 16:05:02 GMT
       Last-Modified:
       - Mon, 31 Aug 2020 10:41:35 GMT
       Etag:
@@ -54,5 +54,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: ''
-  recorded_at: Mon, 31 Aug 2020 10:52:37 GMT
+  recorded_at: Mon, 31 Aug 2020 16:05:01 GMT
 recorded_with: VCR 6.0.0

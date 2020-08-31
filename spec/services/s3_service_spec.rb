@@ -8,7 +8,7 @@ require "rails_helper"
 #
 # WebMock.allow_net_connect!
 
-RSpec.describe S3Service do
+RSpec.describe S3Service, type: :has_vcr do
   before do
     stub_request(:put, "https://yul-test-samples.s3.amazonaws.com/testing_test/test.txt")
       .to_return(status: 200, body: "")
