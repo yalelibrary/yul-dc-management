@@ -2,6 +2,9 @@
 require 'rails_helper'
 
 RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
+  before do
+    allow(PyramidalTiffFactory).to receive(:generate_ptiff_from).and_return(true)
+  end
   around do |example|
     perform_enqueued_jobs do
       example.run

@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 require "rails_helper"
 
+# Intentionally leaving Webmock allow net connect here for ease of testing against live S3 service.
+# When testing a new S3 service, verify that you are running only against test buckets, then
+# test new service against live S3 service and get tests passing, then comment out
+# the following line and stub connections to S3 for the test, so we can run it in CI.
+#
 # WebMock.allow_net_connect!
 
-RSpec.describe S3Service do
+RSpec.describe S3Service, type: :has_vcr do
   before do
     stub_request(:put, "https://yul-test-samples.s3.amazonaws.com/testing_test/test.txt")
       .to_return(status: 200, body: "")
@@ -41,9 +46,11 @@ RSpec.describe S3Service do
     child_object_oid = "1014543"
     remote_path = "originals/#{child_object_oid}.tif"
     local_path = "spec/fixtures/images/access_masters/#{child_object_oid}.tif"
-    expect(File.exist?(local_path)).to eq false
-    described_class.download_image(remote_path, local_path)
-    expect(File.exist?(local_path)).to eq true
+    VCR.use_cassette("download image 1014543") do
+      expect(File.exist?(local_path)).to eq false
+      described_class.download_image(remote_path, local_path)
+      expect(File.exist?(local_path)).to eq true
+    end
     File.delete(local_path)
   end
 

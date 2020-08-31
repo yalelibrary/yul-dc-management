@@ -22,10 +22,8 @@ class S3Service
   # Takes a remote S3 bucket path and writes the retrieved image to a local path.
   # It downloads it in chunks because images are very large.
   def self.download_image(remote_path, local_path)
-    @client.get_object(bucket: ENV["S3_SOURCE_BUCKET_NAME"], key: remote_path) do |chunk|
-      path = Pathname.new(local_path)
-      path.binwrite chunk
-    end
+    object = Aws::S3::Object.new(bucket_name: ENV['S3_SOURCE_BUCKET_NAME'], key: remote_path)
+    object.download_file(local_path, destination: local_path)
   end
 
   def self.upload_image(local_path, remote_path)

@@ -2,31 +2,53 @@
 require 'aws-sdk-s3'
 require 'rails_helper'
 
-RSpec.describe PyramidalTiffFactory do
-  let(:oid) { "1002533" }
-  let(:ptf) { described_class.new(oid) }
+RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr do
+  let(:oid) { 1_002_533 }
+  let(:child_object) { FactoryBot.build_stubbed(:child_object, oid: oid) }
+  let(:ptf) { described_class.new(child_object) }
 
   before do
-    stub_request(:get, "https://yale-image-samples.s3.amazonaws.com/originals/1002533.tif")
+    stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/1002533.tif")
       .to_return(status: 200, body: File.open('spec/fixtures/images/sample.tiff', 'rb'))
+    stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/1002533.tif")
+      .to_return(status: 200)
     stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/1002533.tif")
       .to_return(status: 200)
+    stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/1002533.tif")
+      .to_return(status: 404)
   end
 
   around do |example|
-    original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
-    original_ptiff_output_directory = ENV["PTIFF_OUTPUT_DIRECTORY"]
     original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
-    original_temp_image_workspace = ENV['TEMP_IMAGE_WORKSPACE']
-    ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
-    ENV["PTIFF_OUTPUT_DIRECTORY"] = 'spec/fixtures/images/ptiff_images'
     ENV["ACCESS_MASTER_MOUNT"] = 'spec/fixtures/images/access_masters'
+    original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
+    ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
+    original_ptiff_output_directory = ENV["PTIFF_OUTPUT_DIRECTORY"]
+    ENV["PTIFF_OUTPUT_DIRECTORY"] = 'spec/fixtures/images/ptiff_images'
+    original_temp_image_workspace = ENV['TEMP_IMAGE_WORKSPACE']
     ENV['TEMP_IMAGE_WORKSPACE'] = 'spec/fixtures/images/temp_images'
     example.run
+    ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
     ENV["PTIFF_OUTPUT_DIRECTORY"] = original_ptiff_output_directory
-    ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
     ENV['TEMP_IMAGE_WORKSPACE'] = original_temp_image_workspace
+  end
+
+  describe "validating ptiff generation" do
+    let(:has_ptiff_oid) { 1001 }
+    let(:child_object_has_ptiff) { FactoryBot.build_stubbed(:child_object, oid: has_ptiff_oid) }
+    let(:invalid_ptf) { described_class.new(child_object_has_ptiff) }
+
+    before do
+      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/1001.tif")
+        .to_return(status: 200)
+    end
+    it "logs errors if the job is not valid" do
+      expected_file_one = "spec/fixtures/images/temp_images/1001.tif"
+      expect(File.exist?(expected_file_one)).to eq false
+      expect(ptf.valid?(child_object)).to eq true
+      expect(invalid_ptf.valid?(child_object_has_ptiff)).to eq false
+    end
   end
 
   it "can call a wrapper method" do
@@ -34,7 +56,7 @@ RSpec.describe PyramidalTiffFactory do
     expect(File.exist?(expected_file_one)).to eq false
     expected_file_two = "spec/fixtures/images/ptiff_images/1002533.tif"
     expect(File.exist?(expected_file_two)).to eq false
-    expect(described_class.generate_ptiff_from(oid))
+    expect(described_class.generate_ptiff_from(child_object))
     expect(File.exist?(expected_file_one)).to eq true
     File.delete(expected_file_one)
     expect(File.exist?(expected_file_two)).to eq true
@@ -43,19 +65,11 @@ RSpec.describe PyramidalTiffFactory do
 
   it "can be instantiated" do
     expect(ptf).to be_instance_of described_class
-    expect(ptf.oid).to eq oid
+    expect(ptf.oid).to eq oid.to_s
   end
 
   it "can find the access master, given an oid" do
     expect(ptf.access_master_path).to eq "spec/fixtures/images/access_masters/1002533.tif"
-  end
-
-  it "copies the access master to a swing directory" do
-    expected_file = "spec/fixtures/images/temp_images/1002533.tif"
-    expect(File.exist?(expected_file)).to eq false
-    expect(ptf.copy_access_master_to_working_directory).to eq expected_file
-    expect(File.exist?(expected_file)).to eq true
-    File.delete(expected_file)
   end
 
   it "converts the file in the swing directory to a ptiff" do
@@ -84,7 +98,79 @@ RSpec.describe PyramidalTiffFactory do
     expect do
       ptf.compare_checksums("spec/fixtures/images/access_masters/test_image.tif", "spec/fixtures/images/temp_images/autumn_test.tif")
     end.to(
-      raise_error(RuntimeError, /\AChecksum failed. Should be: .*\z/)
+      raise_error(RuntimeError,
+                  "File copy unsuccessful, checksums do not match: {\"oid\":\"1002533\",\"access_master_path\":" \
+                  "\"spec/fixtures/images/access_masters/test_image.tif\",\"temp_file_path\":\"spec/fixtures/images/temp_images/autumn_test.tif\"}")
     )
+  end
+
+  it "copies the local access master to a swing directory" do
+    expected_file = "spec/fixtures/images/temp_images/1002533.tif"
+    expect(File.exist?(expected_file)).to eq false
+    expect(ptf.copy_access_master_to_working_directory).to eq expected_file
+    expect(File.exist?(expected_file)).to eq true
+    File.delete(expected_file)
+  end
+
+  context "when pulling access masters from S3" do
+    let(:oid) { 1_014_543 }
+    let(:oid_with_remote_ptiff) { 111_111 }
+    let(:child_with_remote_ptiff) { FactoryBot.build_stubbed(:child_object, oid: oid_with_remote_ptiff) }
+    let(:child_object) { FactoryBot.build_stubbed(:child_object, oid: oid) }
+    let(:ptf) { described_class.new(child_object) }
+    let(:logger_mock) { instance_double("Rails.logger").as_null_object }
+
+    around do |example|
+      original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
+      ENV["ACCESS_MASTER_MOUNT"] = "s3"
+      example.run
+      ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
+    end
+
+    before do
+      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
+        .to_return(status: 200, body: "", headers: {})
+      stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
+        .to_return(status: 200, body: File.open('spec/fixtures/images/access_masters/1002533.tif', 'rb'))
+      stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/1014543.tif")
+        .to_return(status: 200, body: "", headers: {})
+      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/1014543.tif")
+        .to_return(status: 404, body: "")
+      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/111111.tif")
+        .to_return(status: 200, body: "")
+      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/111111.tif")
+        .to_return(status: 200, body: "")
+    end
+
+    it "does not perform conversion if remote PTIFF exists" do
+      allow(Rails.logger).to receive(:info) { :logger_mock }
+      described_class.generate_ptiff_from(child_with_remote_ptiff)
+      expect(Rails.logger).to have_received(:info)
+        .with("PTIFF exists on S3, not converting: {\"oid\":\"111111\"}")
+    end
+
+    it "copies the remote access master to a swing directory" do
+      expected_path = "spec/fixtures/images/temp_images/1014543.tif"
+      expect(File.exist?(expected_path)).to eq false
+      VCR.use_cassette("download image 1014543") do
+        expect(ptf.copy_access_master_to_working_directory).to eq expected_path
+      end
+      expect(File.exist?(expected_path)).to eq true
+      File.delete(expected_path)
+    end
+
+    it "can call a wrapper method" do
+      expected_file_one = "spec/fixtures/images/temp_images/1014543.tif"
+      expect(File.exist?(expected_file_one)).to eq false
+      expected_file_two = "spec/fixtures/images/ptiff_images/1014543.tif"
+      expect(File.exist?(expected_file_two)).to eq false
+      VCR.use_cassette("download image 1014543") do
+        expect(described_class.generate_ptiff_from(child_object))
+      end
+      expect(File.exist?(expected_file_one)).to eq true
+      File.delete(expected_file_one)
+      expect(File.exist?(expected_file_two)).to eq true
+      File.delete(expected_file_two)
+    end
   end
 end

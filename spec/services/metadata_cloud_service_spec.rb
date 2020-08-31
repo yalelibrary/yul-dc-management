@@ -15,6 +15,7 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
   end
 
   before do
+    allow(PyramidalTiffFactory).to receive(:generate_ptiff_from).and_return(true)
     stub_metadata_cloud("2034600")
     stub_metadata_cloud("2005512")
     stub_metadata_cloud("16414889")

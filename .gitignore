@@ -22,6 +22,8 @@
 /storage/*
 !/storage/.keep
 /data_samples/*
+/data/*
+!/data/.keep
 
 /public/assets
 .byebug_history

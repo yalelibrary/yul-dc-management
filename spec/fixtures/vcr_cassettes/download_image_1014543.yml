@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: head
+    uri: https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif?partNumber=1
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Content-Type:
+      - ''
+      Accept-Encoding:
+      - ''
+      User-Agent:
+      - aws-sdk-ruby3/3.104.3 ruby/2.6.6 x86_64-linux aws-sdk-s3/1.75.0
+      Host:
+      - yale-test-image-samples.s3.amazonaws.com
+      X-Amz-Date:
+      - 20200831T160501Z
+      X-Amz-Content-Sha256:
+      - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=xxxxx/20200831/us-east-1/s3/aws4_request,
+        SignedHeaders=host;user-agent;x-amz-content-sha256;x-amz-date, Signature=1e08935a16981c8412cb9858a021afb57bcfa76285d7a4dc833e36d4f4c4f533
+      Content-Length:
+      - '0'
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 206
+      message: Partial Content
+    headers:
+      X-Amz-Id-2:
+      - qQHaqiwMxDDnA3B20LzMAA/yOhCxTehNExTokDnjkxq+Fl0gN/MsB+B9ErazK0QWAMvL+/yZhek=
+      X-Amz-Request-Id:
+      - B50C8BC493263203
+      Date:
+      - Mon, 31 Aug 2020 16:05:02 GMT
+      Last-Modified:
+      - Mon, 31 Aug 2020 10:41:35 GMT
+      Etag:
+      - '"1c7ebd11e1060b4e2c9476950086556b"'
+      Accept-Ranges:
+      - bytes
+      Content-Range:
+      - bytes 0-1131965/1131966
+      Content-Type:
+      - ''
+      Content-Length:
+      - '1131966'
+      Server:
+      - AmazonS3
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Mon, 31 Aug 2020 16:05:01 GMT
+recorded_with: VCR 6.0.0
