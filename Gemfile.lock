@@ -359,6 +359,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.7)
     unicode-display_width (1.4.1)
+    vcr (6.0.0)
     warden (1.2.8)
       rack (>= 2.0.6)
     web-console (4.0.2)
@@ -423,6 +424,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
   tzinfo-data
+  vcr (~> 6.0)
   web-console (>= 3.3.0)
   webdrivers
   webmock (~> 3.8, >= 3.8.3)

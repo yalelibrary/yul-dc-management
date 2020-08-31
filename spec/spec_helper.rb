@@ -1,6 +1,13 @@
 # frozen_string_literal: true
-require 'simplecov'
+
+ENV["RAILS_ENV"] ||= 'test'
+ENV["RAILS_RELATIVE_URL_ROOT"] = "/"
+
+require 'capybara/rspec'
 require 'coveralls'
+require 'simplecov'
+require 'vcr'
+require 'webmock/rspec'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
                                                                  SimpleCov::Formatter::HTMLFormatter,
@@ -25,11 +32,6 @@ end
 # the additional setup, and require it from the spec files that actually need
 # it.
 #
-
-ENV["RAILS_ENV"] ||= 'test'
-ENV["RAILS_RELATIVE_URL_ROOT"] = "/"
-require 'capybara/rspec'
-require 'webmock/rspec'
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
@@ -115,4 +117,10 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   Kernel.srand config.seed
+end
+
+VCR.configure do |config|
+  config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
+  config.hook_into :webmock
+  config.allow_http_connections_when_no_cassette = true
 end

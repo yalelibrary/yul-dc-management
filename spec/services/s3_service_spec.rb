@@ -46,9 +46,11 @@ RSpec.describe S3Service do
     child_object_oid = "1014543"
     remote_path = "originals/#{child_object_oid}.tif"
     local_path = "spec/fixtures/images/access_masters/#{child_object_oid}.tif"
-    expect(File.exist?(local_path)).to eq false
-    described_class.download_image(remote_path, local_path)
-    expect(File.exist?(local_path)).to eq true
+    VCR.use_cassette("download image 1014543") do
+      expect(File.exist?(local_path)).to eq false
+      described_class.download_image(remote_path, local_path)
+      expect(File.exist?(local_path)).to eq true
+    end
     File.delete(local_path)
   end
 

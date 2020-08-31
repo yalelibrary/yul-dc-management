@@ -23,7 +23,7 @@ class S3Service
   # It downloads it in chunks because images are very large.
   def self.download_image(remote_path, local_path)
     object = Aws::S3::Object.new(bucket_name: ENV['S3_SOURCE_BUCKET_NAME'], key: remote_path)
-    object.download_file(local_path, destination: local_path)
+    object.download_file(local_path)
   end
 
   def self.upload_image(local_path, remote_path)

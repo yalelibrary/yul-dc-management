@@ -152,7 +152,9 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true do
     it "copies the remote access master to a swing directory" do
       expected_path = "spec/fixtures/images/temp_images/1014543.tif"
       expect(File.exist?(expected_path)).to eq false
-      expect(ptf.copy_access_master_to_working_directory).to eq expected_path
+      VCR.use_cassette("download image 1014543") do
+        expect(ptf.copy_access_master_to_working_directory).to eq expected_path
+      end
       expect(File.exist?(expected_path)).to eq true
       File.delete(expected_path)
     end
@@ -162,7 +164,9 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true do
       expect(File.exist?(expected_file_one)).to eq false
       expected_file_two = "spec/fixtures/images/ptiff_images/1014543.tif"
       expect(File.exist?(expected_file_two)).to eq false
-      expect(described_class.generate_ptiff_from(child_object))
+      VCR.use_cassette("download image 1014543") do
+        expect(described_class.generate_ptiff_from(child_object))
+      end
       expect(File.exist?(expected_file_one)).to eq true
       File.delete(expected_file_one)
       expect(File.exist?(expected_file_two)).to eq true
