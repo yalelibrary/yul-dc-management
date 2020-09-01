@@ -11,7 +11,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   end
 
   before do
-    allow(PyramidalTiffFactory).to receive(:generate_ptiff_from).and_return(true)
+    allow(PyramidalTiffFactory).to receive(:generate_ptiff_from).and_return(width: 2591, height: 4056)
   end
 
   context "indexing to Solr from the database with Ladybird ParentObjects", solr: true do

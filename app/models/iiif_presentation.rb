@@ -46,7 +46,10 @@ class IiifPresentation
     image["on"] = "#{@manifest_base_url}/oid/#{oid}/canvas/#{child.oid}"
 
     image_resource = IIIF::Presentation::ImageResource.create_image_api_image_resource(
-      service_id: "#{@image_base_url}/2/#{child.oid}"
+      service_id: "#{@image_base_url}/2/#{child.oid}",
+      height: child.height,
+      width: child.width,
+      profile: 'http://iiif.io/api/image/2/profiles/level2.json'
     )
     image["resource"] = image_resource
     images << image
