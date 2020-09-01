@@ -18,7 +18,7 @@ gem 'iiif-presentation', '~> 1.0'
 gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails', '~> 4.4'
 # Yale-specific pairtree gem
-gem 'partridge', '~> 0.1.0'
+gem 'partridge', '~> 0.1.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
