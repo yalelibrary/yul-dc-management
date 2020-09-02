@@ -49,9 +49,9 @@ class ParentObject < ApplicationRecord
   # OR if the authoritative metaadata source changes
   # OR if the metadata_update accessor is set
   def setup_metadata_job
-    if((self.created_at_previously_changed? && self.ladybird_json.blank?) ||
-        self.previous_changes["authoritative_metadata_source_id"].present? ||
-        self.metadata_update.present?)
+    if (created_at_previously_changed? && ladybird_json.blank?) ||
+       previous_changes["authoritative_metadata_source_id"].present? ||
+       metadata_update.present?
       SetupMetadataJob.perform_later(self)
     end
   end

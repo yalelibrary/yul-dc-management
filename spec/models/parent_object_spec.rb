@@ -52,6 +52,14 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         expect(parent_object.aspace_json).to be nil
       end
 
+      it "pulls Voyager record from the MetadataCloud when the authoritative_metadata_source is changed to Voyager" do
+        expect(parent_object.reload.authoritative_metadata_source_id).to eq ladybird
+        parent_object.authoritative_metadata_source_id = voyager
+        parent_object.save!
+        expect(parent_object.reload.authoritative_metadata_source_id).to eq voyager
+        expect(parent_object.voyager_json).not_to be nil
+      end
+
       it " creates and has a count of ChildObjects" do
         expect(parent_object.reload.child_object_count).to eq 2
         expect(ChildObject.where(parent_object_oid: "2005512").count).to eq 2
