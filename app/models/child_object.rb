@@ -15,4 +15,12 @@ class ChildObject < ApplicationRecord
   def access_master_path
     PyramidalTiffFactory.access_master_path(oid)
   end
+
+  def convert_to_ptiff
+    conversion_information = PyramidalTiffFactory.generate_ptiff_from(self)
+    return unless conversion_information
+    self.width = conversion_information[:width]
+    self.height = conversion_information[:height]
+    save
+  end
 end

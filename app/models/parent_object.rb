@@ -23,8 +23,6 @@ class ParentObject < ApplicationRecord
         # Ladybird has only one field for both order label (7v, etc.), and descriptive captions ("Mozart at the Keyboard")
         # For the first iteration we will map this field to label
         label: child_record["caption"],
-        width: child_record["width"],
-        height: child_record["height"],
         order: index
       )
     end

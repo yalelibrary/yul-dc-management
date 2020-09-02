@@ -4,6 +4,6 @@ class GeneratePtiffJob < ApplicationJob
   queue_as :default
 
   def perform(child_object)
-    PyramidalTiffFactory.generate_ptiff_from(child_object)
+    child_object.convert_to_ptiff
   end
 end
