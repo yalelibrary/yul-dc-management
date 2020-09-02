@@ -45,10 +45,12 @@
             <td><%= parent_object.last_aspace_update %></td>
             <td><%= parent_object.visibility %></td>
             <td><%= parent_object.last_id_update %></td>
-            <td>
+            <td class='actions'>
               <%= link_to 'Show', parent_object %>
               |
               <%= link_to 'Edit', edit_parent_object_path(parent_object) %>
+              |
+              <%= link_to 'Update Metadata', update_metadata_parent_object_path(parent_object), method: :post %>
               |
               <%= link_to 'Destroy', parent_object, method: :delete, data: { confirm: 'Are you sure?' } %>
             </td>

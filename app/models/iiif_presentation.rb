@@ -44,7 +44,6 @@ class IiifPresentation
     image['@type'] = "oa:Annotation"
     image["motivation"] = "sc:painting"
     image["on"] = "#{@manifest_base_url}/oid/#{oid}/canvas/#{child.oid}"
-
     image_resource = IIIF::Presentation::ImageResource.create_image_api_image_resource(
       service_id: "#{@image_base_url}/2/#{child.oid}"
     )

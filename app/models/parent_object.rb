@@ -8,9 +8,10 @@ class ParentObject < ApplicationRecord
   has_many :dependent_objects
   has_many :child_objects, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
+  attr_accessor :metadata_update
 
   self.primary_key = 'oid'
-  after_create :setup_metadata_job, unless: proc { ladybird_json.present? }
+  after_save :setup_metadata_job
   after_update :solr_index_job # we index from the fetch job on create
 
   def create_child_records
@@ -44,8 +45,15 @@ class ParentObject < ApplicationRecord
     end
   end
 
+  # Currently we run this job if the record is new and ladybird json wasn't passed in from create
+  # OR if the authoritative metaadata source changes
+  # OR if the metadata_update accessor is set
   def setup_metadata_job
-    SetupMetadataJob.perform_later(self)
+    if (created_at_previously_changed? && ladybird_json.blank?) ||
+       previous_changes["authoritative_metadata_source_id"].present? ||
+       metadata_update.present?
+      SetupMetadataJob.perform_later(self)
+    end
   end
 
   def authoritative_json
