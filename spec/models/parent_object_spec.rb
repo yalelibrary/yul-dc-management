@@ -146,5 +146,41 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         expect(parent_object.aspace_cloud_url).to eq nil
       end
     end
+
+    context 'no children and it has no caption' do
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: '100001', authoritative_metadata_source_id: ladybird) }
+
+      it 'returns an empty array' do
+        expect(parent_object.reload.child_captions).to be_empty
+      end     
+    end
+
+    context 'has children and it has no caption' do
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: '2012143', authoritative_metadata_source_id: ladybird) }
+
+      it 'counts the parent objects children' do
+        expect(parent_object.reload.child_objects.count).to eq 4
+      end
+
+      it 'returns an empty array if the child object has no captions' do
+        expect(parent_object.reload.child_captions).to be_empty
+        expect(parent_object.reload.child_captions).to be_an(Array)
+      end 
+        
+    end
+
+    context 'has children and has caption' do
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: '2012143', authoritative_metadata_source_id: ladybird) }
+    
+      before do
+        parent_object.child_objects.first.update(caption: "This is a caption")
+      end
+
+      it 'returns an array of child object captions' do
+        expect(parent_object.reload.child_captions).to eq ["This is a caption"]
+      end
+
+    end
+
   end
 end

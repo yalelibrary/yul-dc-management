@@ -139,4 +139,15 @@ class ParentObject < ApplicationRecord
     return @iiif_manifest if @iiif_manifest
     @iiif_manifest = @iiif_presentation.manifest if iiif_presentation.valid?
   end
+
+  def child_captions
+    captions = []
+    self.child_objects.map { |ca| 
+      captions << ca.caption
+    }
+    return captions.reject {
+      |x| x.nil?
+    }
+  end
+
 end
