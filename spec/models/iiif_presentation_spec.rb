@@ -28,19 +28,10 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       .to_return(status: 200)
     stub_metadata_cloud("16172421")
     allow(PyramidalTiffFactory).to receive(:generate_ptiff_from).and_return(width: 2591, height: 4056)
-    stub_info
     parent_object
     # The parent object gets its metadata populated via a background job, and we can't assume that has run,
     # so stub the part of the metadata we need for the iiif_presentation
     allow(parent_object).to receive(:authoritative_json).and_return("title" => ["Strawberry Thief fabric, made by Morris and Company "])
-  end
-
-  def stub_info
-    file_id_array = ["16188699", "16188700", "16188701", "16188702"]
-    file_id_array.map do |file_id|
-      stub_request(:get, "#{ENV['IIIF_IMAGE_BASE_URL']}/2/#{file_id}/info.json")
-        .to_return(status: 200, body: File.open(File.join(fixture_path, file_id, "info.json")))
-    end
   end
 
   describe "creating a manifest with a valid mets xml import" do
