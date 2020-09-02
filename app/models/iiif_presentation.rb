@@ -49,7 +49,7 @@ class IiifPresentation
       service_id: "#{@image_base_url}/2/#{child.oid}",
       height: child.height,
       width: child.width,
-      profile: 'http://iiif.io/api/image/2/profiles/level2.json'
+      profile: 'http://iiif.io/api/image/2/level2.json'
     )
     image["resource"] = image_resource
     images << image
