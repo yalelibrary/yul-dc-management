@@ -8,6 +8,9 @@ Rails.application.routes.draw do
     collection do
       post :reindex
     end
+    member do
+      post :update_metadata
+    end
   end
 
   devise_for :users

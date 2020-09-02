@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ParentObjectsController < ApplicationController
-  before_action :set_parent_object, only: [:show, :edit, :update, :destroy]
+  before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata]
 
   # GET /parent_objects
   # GET /parent_objects.json
@@ -65,6 +65,15 @@ class ParentObjectsController < ApplicationController
     ParentObject.solr_index
     respond_to do |format|
       format.html { redirect_to parent_objects_url, notice: 'Parent objects have been reindexed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def update_metadata
+    @parent_object.metadata_update = true
+    @parent_object.setup_metadata_job
+    respond_to do |format|
+      format.html { redirect_to parent_objects_url, notice: 'Parent object metadata update was queued.' }
       format.json { head :no_content }
     end
   end

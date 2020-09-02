@@ -80,4 +80,6 @@ Rails.application.configure do
   # Metadata Cloud Host
   config.metadata_cloud_host = "metadata-api-uat.library.yale.edu"
   config.active_job.queue_adapter = :delayed_job
+
+  config.web_console.whitelisted_ips = ["172.0.0.0/8", '192.168.0.0/16', '127.0.0.1']
 end
