@@ -16,6 +16,10 @@ class ChildObject < ApplicationRecord
     PyramidalTiffFactory.access_master_path(oid)
   end
 
+  def remote_access_master_path
+    PyramidalTiffFactory.remote_access_master_path(oid)
+  end
+
   def convert_to_ptiff
     conversion_information = PyramidalTiffFactory.generate_ptiff_from(self)
     return unless conversion_information

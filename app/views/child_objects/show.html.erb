@@ -11,6 +11,11 @@
 </p>
 
 <p>
+  <strong>Label:</strong>
+  <%= @child_object.label %>
+</p>
+
+<p>
   <strong>Width:</strong>
   <%= @child_object.width %>
 </p>
@@ -27,7 +32,22 @@
 
 <p>
   <strong>Parent object:</strong>
-  <%= @child_object.parent_object_oid %>
+  <%= link_to "#{@child_object.parent_object_oid}", "#{parent_object_path(@child_object.parent_object_oid)}" %>
+</p>
+
+<p>
+  <strong>Access Master Download:</strong>
+  <%= link_to 'Click to Download', S3Service.presigned_url(@child_object.remote_access_master_path) %>
+</p>
+
+<p>
+  <strong>PTiff Download:</strong>
+  <%= link_to 'Click to Download', S3Service.presigned_url(@child_object.remote_ptiff_path) %>
+</p>
+
+<p>
+  <strong>Image:</strong><br />
+  <%= image_tag "http://localhost:8182/iiif/2/#{@child_object.oid}/full/200,/0/default.jpg" %>
 </p>
 
 <%= link_to 'Edit', edit_child_object_path(@child_object) %> |
