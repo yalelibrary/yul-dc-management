@@ -142,12 +142,17 @@ class ParentObject < ApplicationRecord
 
   def child_captions
     captions = []
-    self.child_objects.map { |ca| 
+    child_objects.map do |ca|
       captions << ca.caption
-    }
-    return captions.reject {
-      |x| x.nil?
-    }
+    end
+    captions.reject(&:nil?)
   end
 
+  def child_labels
+    label = []
+    child_objects.map do |ca|
+      label << ca.label
+    end
+    label.reject(&:nil?)
+  end
 end

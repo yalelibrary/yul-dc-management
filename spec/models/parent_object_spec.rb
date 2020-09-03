@@ -147,40 +147,52 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       end
     end
 
-    context 'no children and it has no caption' do
+    context 'with no children, therefore no child captions or labels' do
       let(:parent_object) { FactoryBot.create(:parent_object, oid: '100001', authoritative_metadata_source_id: ladybird) }
 
       it 'returns an empty array' do
         expect(parent_object.reload.child_captions).to be_empty
-      end     
+        expect(parent_object.reload.child_labels).to be_empty
+      end
     end
 
-    context 'has children and it has no caption' do
+    context 'with children but no child captions or labels' do
       let(:parent_object) { FactoryBot.create(:parent_object, oid: '2012143', authoritative_metadata_source_id: ladybird) }
 
       it 'counts the parent objects children' do
         expect(parent_object.reload.child_objects.count).to eq 4
       end
 
-      it 'returns an empty array if the child object has no captions' do
+      it 'returns an empty array if the child object has no captions or labels' do
         expect(parent_object.reload.child_captions).to be_empty
         expect(parent_object.reload.child_captions).to be_an(Array)
-      end 
-        
+        expect(parent_object.reload.child_labels).to be_empty
+        expect(parent_object.reload.child_labels).to be_an(Array)
+      end
     end
 
-    context 'has children and has caption' do
+    context 'with children that have captions and labels' do
       let(:parent_object) { FactoryBot.create(:parent_object, oid: '2012143', authoritative_metadata_source_id: ladybird) }
-    
+
       before do
         parent_object.child_objects.first.update(caption: "This is a caption")
+        parent_object.child_objects.first.update(label: "This is a label")
       end
 
-      it 'returns an array of child object captions' do
+      it "returns an array of the child object's caption and label" do
         expect(parent_object.reload.child_captions).to eq ["This is a caption"]
+        expect(parent_object.reload.child_labels).to eq ["This is a label"]
       end
 
-    end
+      it "returns an array of the child object's captions and labels" do
+        parent_object.child_objects.second.update(caption: "This is another caption")
+        parent_object.child_objects.second.update(label: "This is another label")
 
+        expect(parent_object.reload.child_captions.size).to eq 2
+        expect(parent_object.reload.child_captions).to eq ["This is a caption", "This is another caption"]
+        expect(parent_object.reload.child_labels.size).to eq 2
+        expect(parent_object.reload.child_labels).to eq ["This is a label", "This is another label"]
+      end
+    end
   end
 end
