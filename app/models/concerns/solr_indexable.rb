@@ -38,7 +38,7 @@ module SolrIndexable
       author_ssim: json_to_index["creator"],
       author_tesim: json_to_index["creator"],
       box_ssim: extract_box_ssim(json_to_index),
-      caption_tesim: self.child_captions,
+      caption_tesim: child_captions,
       collectionId_ssim: json_to_index["collectionId"],
       collectionId_tesim: json_to_index["collectionId"],
       contents_tesim: json_to_index["contents"],
@@ -67,7 +67,7 @@ module SolrIndexable
       illustrativeMatter_tesim: json_to_index["illustrativeMatter"],
       imageCount_isi: child_object_count,
       indexedBy_tsim: json_to_index["indexedBy"],
-      label_tesim: self.child_labels,
+      label_tesim: child_labels,
       language_ssim: json_to_index["language"],
       localRecordNumber_ssim: json_to_index["localRecordNumber"],
       material_tesim: json_to_index["material"],
@@ -114,7 +114,6 @@ module SolrIndexable
       alternativeTitle_ssim: json_to_index["alternativeTitle"], # replaced by alternativeTitle_tesim
       alternative_title_tsm: json_to_index["alternativeTitleDisplay"], # replaced by alternativeTitleDisplay_tesim
       author_tsim: json_to_index["creator"], # replaced by author_tesim
-      caption_tesim: json_to_index["caption"], # replaced by caption_tesim with child_captions method
       date_tsim: json_to_index["date"], # replaced by date_ssim
       geo_subject_ssim: json_to_index["geoSubject"], # replaced by geoSubject_ssim
       illustrative_matter_tsi: json_to_index["illustrativeMatter"], # replaced by illustrativeMatter_tesim
