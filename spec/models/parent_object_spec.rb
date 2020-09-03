@@ -147,12 +147,16 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       end
     end
 
-    context 'with no children, therefore no child captions or labels' do
+    context 'with no children, therefore no child captions, labels or oids' do
       let(:parent_object) { FactoryBot.create(:parent_object, oid: '100001', authoritative_metadata_source_id: ladybird) }
 
       it 'returns an empty array' do
         expect(parent_object.reload.child_captions).to be_empty
+        expect(parent_object.reload.child_captions).to be_an(Array)
         expect(parent_object.reload.child_labels).to be_empty
+        expect(parent_object.reload.child_labels).to be_an(Array)
+        expect(parent_object.reload.child_oids).to be_empty
+        expect(parent_object.reload.child_oids).to be_an(Array)
       end
     end
 
@@ -164,10 +168,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       end
 
       it 'returns an empty array if the child object has no captions or labels' do
-        expect(parent_object.reload.child_captions).to be_empty
         expect(parent_object.reload.child_captions).to be_an(Array)
-        expect(parent_object.reload.child_labels).to be_empty
+        expect(parent_object.reload.child_captions).to be_empty
         expect(parent_object.reload.child_labels).to be_an(Array)
+        expect(parent_object.reload.child_labels).to be_empty
+        expect(parent_object.reload.child_oids).to be_an(Array)
+        expect(parent_object.reload.child_oids).to eq [1_052_971, 1_052_972, 1_052_973, 1_052_974]
+        expect(parent_object.reload.child_oids.size).to eq 4
       end
     end
 
@@ -182,6 +189,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       it "returns an array of the child object's caption and label" do
         expect(parent_object.reload.child_captions).to eq ["This is a caption"]
         expect(parent_object.reload.child_labels).to eq ["This is a label"]
+        expect(parent_object.reload.child_oids).to eq [1_052_971, 1_052_972, 1_052_973, 1_052_974]
       end
 
       it "returns an array of the child object's captions and labels" do
@@ -192,6 +200,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         expect(parent_object.reload.child_captions).to eq ["This is a caption", "This is another caption"]
         expect(parent_object.reload.child_labels.size).to eq 2
         expect(parent_object.reload.child_labels).to eq ["This is a label", "This is another label"]
+        expect(parent_object.reload.child_oids).to eq [1_052_971, 1_052_972, 1_052_973, 1_052_974]
       end
     end
   end

@@ -39,6 +39,7 @@ module SolrIndexable
       author_tesim: json_to_index["creator"],
       box_ssim: extract_box_ssim(json_to_index),
       caption_tesim: child_captions,
+      child_oids_tesim: child_oids,
       collectionId_ssim: json_to_index["collectionId"],
       collectionId_tesim: json_to_index["collectionId"],
       contents_tesim: json_to_index["contents"],

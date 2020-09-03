@@ -142,17 +142,25 @@ class ParentObject < ApplicationRecord
 
   def child_captions
     captions = []
-    child_objects.map do |ca|
-      captions << ca.caption
+    child_objects.map do |child_object|
+      captions << child_object.caption
     end
     captions.reject(&:nil?)
   end
 
   def child_labels
     label = []
-    child_objects.map do |ca|
-      label << ca.label
+    child_objects.map do |child_object|
+      label << child_object.label
     end
     label.reject(&:nil?)
+  end
+
+  def child_oids
+    oids = []
+    child_objects.map do |child_object|
+      oids << child_object.oid
+    end
+    oids
   end
 end
