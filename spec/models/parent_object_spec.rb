@@ -152,7 +152,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
       it 'returns an empty array' do
         expect(parent_object.reload.child_captions).to be_empty
+        expect(parent_object.reload.child_captions).to be_an(Array)
         expect(parent_object.reload.child_labels).to be_empty
+        expect(parent_object.reload.child_labels).to be_an(Array)
       end
     end
 
