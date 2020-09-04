@@ -7,4 +7,18 @@ namespace :manifests do
       S3Service.upload("manifests/#{pairtree_path}/#{oid}.json", File.read(file))
     end
   end
+
+  desc "Remove .json from manifest ids in fixture files"
+  task remove_dot_json: :environment do
+    Dir.glob(Rails.root.join("data", "yul-dc-fixture-manifests", "*.json")).each do |file|
+      tfile = Tempfile.new(File.basename(file))
+      File.open(file, 'r') do |json_file|
+        json = JSON.parse(json_file.read)
+        json["@id"] = json["@id"].gsub(".json", "")
+        tfile.write(JSON.pretty_generate(json))
+      end
+      tfile.close
+      FileUtils.mv(tfile.path, file)
+    end
+  end
 end
