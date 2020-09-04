@@ -43,6 +43,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       let(:parent_object) { described_class.create(oid: "2005512") }
       before do
         stub_metadata_cloud("2005512", "ladybird")
+        stub_metadata_cloud("V-2005512", "ils")
       end
       it "pulls from the MetadataCloud for Ladybird and not Voyager or ArchiveSpace" do
         expect(parent_object.reload.authoritative_metadata_source_id).to eq ladybird
@@ -148,6 +149,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     end
 
     context 'with no children, therefore no child captions, labels or oids' do
+      before do
+        stub_metadata_cloud("100001", "ladybird")
+      end
       let(:parent_object) { FactoryBot.create(:parent_object, oid: '100001', authoritative_metadata_source_id: ladybird) }
 
       it 'returns an empty array' do
@@ -161,6 +165,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     end
 
     context 'with children but no child captions or labels' do
+      before do
+        stub_metadata_cloud("2012143", "ladybird")
+      end
       let(:parent_object) { FactoryBot.create(:parent_object, oid: '2012143', authoritative_metadata_source_id: ladybird) }
 
       it 'counts the parent objects children' do
@@ -179,12 +186,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     end
 
     context 'with children that have captions and labels' do
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: '2012143', authoritative_metadata_source_id: ladybird) }
-
       before do
+        stub_metadata_cloud("2012143", "ladybird")
         parent_object.child_objects.first.update(caption: "This is a caption")
         parent_object.child_objects.first.update(label: "This is a label")
       end
+
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: '2012143', authoritative_metadata_source_id: ladybird) }
 
       it "returns an array of the child object's caption and label" do
         expect(parent_object.reload.child_captions).to eq ["This is a caption"]
