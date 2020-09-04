@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :manifests do
   desc "Copy fixtures to S3"
   task copy_fixtures_to_s3: :environment do
