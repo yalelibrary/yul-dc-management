@@ -36,21 +36,23 @@ RSpec.describe "Management", type: :feature do
       expect(page).to have_selector("#management_version", text: "v1.beta.gamma"),
                       "has a css id for the management version"
       expect(page).to have_content("yalelibraryit/dc-management")
-      expect(page).to have_content("v7.delta.omicron")
+      expect(page).to have_selector("#postgres_version", text: "v7.delta.omicron"),
+                      "has a css id for the postgres version"
       expect(page).to have_content("yalelibraryit/dc-postgres")
-      expect(page).to have_content("v2.alpha.sigma")
+      expect(page).to have_selector("#blacklight_version", text: "v2.alpha.sigma"),
+                      "has a css id for the blacklight version"
       expect(page).to have_content("yalelibraryit/dc-blacklight")
-      expect(page).to have_content("v3.alpha.omega")
+      expect(page).to have_selector("#solr_version", text: "v3.alpha.omega"),
+                      "has a css id for the solr version"
       expect(page).to have_content("yalelibraryit/dc-solr")
-      expect(page).to have_content("v4.delta.chi")
+      expect(page).to have_selector("#iiif_image_version", text: "v4.delta.chi"),
+                      "has a css id for the iiif image version"
       expect(page).to have_content("yalelibraryit/dc-iiif-cantaloupe")
-      expect(page).to have_content("v5.lambda.phi")
-      expect(page).to have_content("yalelibraryit/dc-management")
-      expect(page).to have_content("v6.lambda.phi")
+      expect(page).to have_selector("#iiif_manifest_version", text: "v5.lambda.phi")
+      expect(page).to have_content("yalelibraryit/dc-iiif-manifest")
+      expect(page).to have_selector("#camerata_version", text: "v6.lambda.phi"),
+                      "has a css id for the camerata version"
       expect(page).to have_content("yalelibrary/yul-dc-camerata")
-    end
-    it 'has a css selector for the postgres version' do
-      expect(page).to have_selector("#postgres_version", text: "v7.delta.omicron")
     end
   end
 end
