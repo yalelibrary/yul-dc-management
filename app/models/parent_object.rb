@@ -141,26 +141,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def child_captions
-    captions = []
-    child_objects.map do |child_object|
-      captions << child_object.caption
-    end
-    captions.reject(&:nil?)
+    child_objects.map(&:caption).compact
   end
 
   def child_labels
-    label = []
-    child_objects.map do |child_object|
-      label << child_object.label
-    end
-    label.reject(&:nil?)
+    child_objects.map(&:label).compact
   end
 
   def child_oids
-    oids = []
-    child_objects.map do |child_object|
-      oids << child_object.oid
-    end
-    oids
+    child_objects.map(&:oid)
   end
 end
