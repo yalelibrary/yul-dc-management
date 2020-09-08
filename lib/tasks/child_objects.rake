@@ -5,10 +5,9 @@ namespace :child_objects do
   task save_child_oids_to_csv: :environment do
     all_child_oids = []
     ParentObject.all.map do |p|
-      all_child_oids << p.child_objects.map { |co| co.oid }
+      all_child_oids << p.child_objects.map(&:oid)
     end
     csv_child_oids = all_child_oids.flatten.to_csv
     File.write(File.join("data", "child_oids.csv"), csv_child_oids)
   end
-
 end
