@@ -21,6 +21,7 @@ class ChildObject < ApplicationRecord
     return unless conversion_information
     self.width = conversion_information[:width]
     self.height = conversion_information[:height]
-    save
+    self.ptiff_conversion_at = Time.now
+    conversion_information
   end
 end

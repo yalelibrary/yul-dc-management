@@ -140,6 +140,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @iiif_manifest = @iiif_presentation.manifest if iiif_presentation.valid?
   end
 
+  def ready_for_manifest?
+    !child_objects.pluck(:ptiff_conversion_at).include?(nil)
+  end
+
   def child_captions
     child_objects.map(&:caption).compact
   end

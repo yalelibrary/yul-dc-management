@@ -7,15 +7,17 @@ module SolrIndexable
       solr = SolrService.connection
       # Groups of 500
       find_in_batches do |group|
-        solr.add(group.map(&:to_solr))
+        solr.add(group.map(&:to_solr).compact)
         solr.commit
       end
     end
   end
 
   def solr_index
+    indexable = to_solr
+    return unless indexable.present?
     solr = SolrService.connection
-    solr.add([to_solr])
+    solr.add([indexable])
     solr.commit
   end
 
@@ -25,7 +27,7 @@ module SolrIndexable
 
   def to_solr(json_to_index = nil)
     json_to_index ||= authoritative_json
-    return { id: "#{id_prefix}#{oid}" } if json_to_index.blank?
+    return nil if json_to_index.blank? || !ready_for_manifest? || iiif_manifest.blank?
     {
       # example_suffix: json_to_index[""],
       id: "#{id_prefix}#{oid}",
