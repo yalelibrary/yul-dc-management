@@ -21,7 +21,7 @@ class OidImport < ApplicationRecord
 
   def refresh_metadata_cloud
     oids = parsed_csv.entries.map { |r| r['oid'] }
-    metadata_source = parsed_csv.entries.map { |r| r['Source'] }
-    MetadataCloudService.create_parent_objects_from_oids(oids, metadata_source)
+    metadata_sources = parsed_csv.entries.map { |r| r['Source'] }
+    MetadataCloudService.create_parent_objects_from_oids(oids, metadata_sources)
   end
 end

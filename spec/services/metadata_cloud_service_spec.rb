@@ -70,11 +70,10 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
 
   context "saving an ArchiveSpace record" do
     let(:oid_with_aspace) { "16854285" }
-    let(:metadata_source) { ["aspace"] }
+    let(:metadata_source) { ["aspace", "aspace", "aspace", "aspace", "aspace"] }
     let(:oid_without_aspace) { "2034600" }
 
     let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "aspace", "AS-16854285.json") }
-    let(:metadata_source) { ["aspace"] }
 
     before do
       stub_metadata_cloud("AS-16854285", "aspace")
@@ -92,7 +91,7 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
       time_stamp_before = File.mtime(path_to_example_file.to_s)
       described_class.refresh_fixture_data(short_oid_path, metadata_source)
       time_stamp_after = File.mtime(path_to_example_file.to_s)
-      expect(time_stamp_before).to be <= time_stamp_after
+      expect(time_stamp_before).to be < time_stamp_after
     end
   end
 
