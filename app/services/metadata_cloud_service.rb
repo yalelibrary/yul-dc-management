@@ -15,6 +15,7 @@ class MetadataCloudService
     oids.each do |oid|
       ParentObject.where(oid: oid).first_or_create do |parent_object|
         parent_object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: metadata_source)
+        byebug
       end
     end
   end
