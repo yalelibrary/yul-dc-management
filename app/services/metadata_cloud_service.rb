@@ -12,10 +12,13 @@ class MetadataCloudService
   end
 
   def self.create_parent_objects_from_oids(oids, metadata_source)
-    oids.each do |oid|
+    oids.zip(metadata_source).each do |oid, source|
       ParentObject.where(oid: oid).first_or_create do |parent_object|
-        parent_object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: metadata_source)
-        byebug
+        parent_object.authoritative_metadata_source = if source.present?
+                                                        MetadataSource.find_by(metadata_cloud_name: source)
+                                                      else
+                                                        MetadataSource.find_by(metadata_cloud_name: 'ladybird')
+                                                      end
       end
     end
   end

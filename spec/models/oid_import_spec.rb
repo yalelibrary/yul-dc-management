@@ -40,11 +40,17 @@ RSpec.describe OidImport, type: :model, prep_metadata_sources: true do
     it "can identify the metadata source" do
       oid_import.file = File.new(fixture_path + '/short_fixture_ids_with_source.csv')
       oid_import.refresh_metadata_cloud
-      byebug
       expect(ParentObject.first.authoritative_metadata_source_id).to eq 1
       expect(ParentObject.second.authoritative_metadata_source_id).to eq 2
       expect(ParentObject.third.authoritative_metadata_source_id).to eq 3
+      expect(ParentObject.fourth.authoritative_metadata_source_id).to eq 2
+      expect(ParentObject.fifth.authoritative_metadata_source_id).to eq 1
     end
 
+    it 'defaults to ladybird if no metadata source is provided' do
+      oid_import.file = File.new(fixture_path + '/short_fixture_ids_with_source.csv')
+      oid_import.refresh_metadata_cloud
+      expect(ParentObject.last.authoritative_metadata_source_id).to eq 1
+    end
   end
 end

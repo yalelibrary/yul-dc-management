@@ -29,7 +29,7 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
     end
     it "can create a parent_object from an array of oids" do
       expect(ParentObject.count).to eq 0
-      described_class.create_parent_objects_from_oids(["16371253"], "ladybird")
+      described_class.create_parent_objects_from_oids(["16371253"], ["ladybird"])
       expect(ParentObject.count).to eq 1
       expect(ParentObject.where(oid: "16371253").first.ladybird_json).not_to be nil
       expect(ParentObject.where(oid: "16371253").first.ladybird_json).not_to be_empty
@@ -38,7 +38,7 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
 
   context "it gets called from a rake task" do
     let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "2034600.json") }
-    let(:metadata_source) { "ladybird" }
+    let(:metadata_source) { ["ladybird"] }
 
     it "is easy to invoke" do
       time_stamp_before = File.mtime(path_to_example_file.to_s)
@@ -50,7 +50,7 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
 
   context "saving a Voyager record" do
     let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ils", "V-2034600.json") }
-    let(:metadata_source) { "ils" }
+    let(:metadata_source) { ["ils"] }
 
     before do
       stub_metadata_cloud("V-2034600", "ils")
@@ -70,11 +70,11 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
 
   context "saving an ArchiveSpace record" do
     let(:oid_with_aspace) { "16854285" }
-    let(:metadata_source) { "aspace" }
+    let(:metadata_source) { ["aspace"] }
     let(:oid_without_aspace) { "2034600" }
 
     let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "aspace", "AS-16854285.json") }
-    let(:metadata_source) { "aspace" }
+    let(:metadata_source) { ["aspace"] }
 
     before do
       stub_metadata_cloud("AS-16854285", "aspace")
@@ -92,7 +92,7 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
       time_stamp_before = File.mtime(path_to_example_file.to_s)
       described_class.refresh_fixture_data(short_oid_path, metadata_source)
       time_stamp_after = File.mtime(path_to_example_file.to_s)
-      expect(time_stamp_before).to be < time_stamp_after
+      expect(time_stamp_before).to be <= time_stamp_after
     end
   end
 
