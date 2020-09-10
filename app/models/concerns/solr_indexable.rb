@@ -27,7 +27,7 @@ module SolrIndexable
 
   def to_solr(json_to_index = nil)
     json_to_index ||= authoritative_json
-    return nil if json_to_index.blank? || !ready_for_manifest? || iiif_manifest.blank?
+    return nil if json_to_index.blank? || !manifest_completed?
     {
       # example_suffix: json_to_index[""],
       id: "#{id_prefix}#{oid}",

@@ -65,12 +65,12 @@ RSpec.describe S3Service, type: :has_vcr do
   it "can tell that an image exists" do
     child_object_oid = "1014543"
     remote_path = "originals/#{child_object_oid}.tif"
-    expect(described_class.image_exists?(remote_path)).to eq true
+    expect(described_class.s3_exists?(remote_path)).to eq true
   end
 
   it "can tell that an image doesn't exist" do
     child_object_oid = "fake"
     remote_path = "originals/#{child_object_oid}.tif"
-    expect(described_class.image_exists?(remote_path)).to eq false
+    expect(described_class.s3_exists?(remote_path)).to eq false
   end
 end

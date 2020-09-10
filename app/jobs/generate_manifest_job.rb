@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GenerateManifestJob < ApplicationJob
   queue_as :default
 
