@@ -7,7 +7,7 @@ RSpec.describe OidImport, type: :model, prep_metadata_sources: true do
 
   before do
     stub_metadata_cloud("2034600")
-    stub_metadata_cloud("2005512")
+    stub_metadata_cloud("2046567")
     stub_metadata_cloud("16414889")
     stub_metadata_cloud("14716192")
     stub_metadata_cloud("16854285")
@@ -35,6 +35,22 @@ RSpec.describe OidImport, type: :model, prep_metadata_sources: true do
       oid_import.file = File.new(fixture_path + '/short_fixture_ids.csv')
       oid_import.refresh_metadata_cloud
       expect(ParentObject.count).to eq 5
+    end
+
+    it "can identify the metadata source" do
+      oid_import.file = File.new(fixture_path + '/short_fixture_ids_with_source.csv')
+      oid_import.refresh_metadata_cloud
+      expect(ParentObject.first.authoritative_metadata_source_id).to eq 1
+      expect(ParentObject.second.authoritative_metadata_source_id).to eq 2
+      expect(ParentObject.third.authoritative_metadata_source_id).to eq 3
+      expect(ParentObject.fourth.authoritative_metadata_source_id).to eq 2
+      expect(ParentObject.fifth.authoritative_metadata_source_id).to eq 1
+    end
+
+    it 'defaults to ladybird if no metadata source is provided' do
+      oid_import.file = File.new(fixture_path + '/short_fixture_ids_with_source.csv')
+      oid_import.refresh_metadata_cloud
+      expect(ParentObject.last.authoritative_metadata_source_id).to eq 1
     end
   end
 end

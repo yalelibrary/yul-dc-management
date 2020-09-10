@@ -3,18 +3,22 @@
 class MetadataCloudService
   ##
   # This is the method that is called from the yale:refresh_fixture_data rake task
-  def self.refresh_fixture_data(oid_path, metadata_source)
+  def self.refresh_fixture_data(oid_path, metadata_sources)
     oids = MetadataCloudService.list_of_oids(oid_path)
-    create_parent_objects_from_oids(oids, metadata_source)
+    create_parent_objects_from_oids(oids, metadata_sources)
     oids.each do |oid|
       ParentObject.where(oid: oid).first.to_json_file
     end
   end
 
-  def self.create_parent_objects_from_oids(oids, metadata_source)
-    oids.each do |oid|
+  def self.create_parent_objects_from_oids(oids, metadata_sources)
+    oids.zip(metadata_sources).each do |oid, metadata_source|
       ParentObject.where(oid: oid).first_or_create do |parent_object|
-        parent_object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: metadata_source)
+        parent_object.authoritative_metadata_source = if metadata_source.present?
+                                                        MetadataSource.find_by(metadata_cloud_name: metadata_source)
+                                                      else
+                                                        MetadataSource.find_by(metadata_cloud_name: 'ladybird')
+                                                      end
       end
     end
   end
