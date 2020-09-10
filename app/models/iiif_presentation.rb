@@ -70,17 +70,21 @@ class IiifPresentation
 
   def seed
     {
-      '@id' => "#{ENV['IIIF_MANIFESTS_BASE_URL']}/#{@oid}.json",
+      '@id' => "#{ENV['IIIF_MANIFESTS_BASE_URL']}/#{@oid}",
       'label' => @parent_object&.authoritative_json&.[]("title")&.first
     }
   end
 
+  def pairtree_path
+    Partridge::Pairtree.oid_to_pairtree(oid)
+  end
+
   def fetch
-    S3Service.download("manifests/#{oid}.json")
+    S3Service.download("manifests/#{pairtree_path}/#{oid}.json")
   end
 
   def save
-    S3Service.upload("manifests/#{oid}.json", manifest.to_json(pretty: true))
+    S3Service.upload("manifests/#{pairtree_path}/#{oid}.json", manifest.to_json(pretty: true))
     iiif_info = { oid: oid }
     Rails.logger.info("IIIF Manifest Saved: #{iiif_info.to_json}")
   end

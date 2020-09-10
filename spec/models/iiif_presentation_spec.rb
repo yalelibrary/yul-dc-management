@@ -8,7 +8,6 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     original_image_base_url = ENV["IIIF_IMAGE_BASE_URL"]
     ENV['IIIF_MANIFESTS_BASE_URL'] = "http://localhost/manifests"
     ENV['IIIF_IMAGE_BASE_URL'] = "http://localhost:8182/iiif"
-    ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "goobi", "metadata")
     perform_enqueued_jobs do
       example.run
     end
@@ -22,9 +21,9 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
   let(:first_canvas) { iiif_presentation.manifest.sequences.first.canvases.first }
   let(:third_to_last_canvas) { iiif_presentation.manifest.sequences.first.canvases.third_to_last }
   before do
-    stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/16172421.json")
+    stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/21/16/17/24/21/16172421.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "manifests", "16172421.json")).read)
-    stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/16172421.json")
+    stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/21/16/17/24/21/16172421.json")
       .to_return(status: 200)
     stub_metadata_cloud("16172421")
     allow(PyramidalTiffFactory).to receive(:generate_ptiff_from).and_return(width: 2591, height: 4056)
@@ -52,8 +51,8 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     end
 
     # see also https://github.com/yalelibrary/yul-dc-iiif-manifest/blob/3f96a09d9d5a7b6a49c051d663b5cc2aa5fd8475/templates/webapp.conf.template#L56
-    it "has 127.0.0.1 as the host in the identifier so that hostname substitution works" do
-      expect(iiif_presentation.manifest["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/16172421.json"
+    it "saves the manifest with the environment variable IIIF_MANIFESTS_BASE_URL" do
+      expect(iiif_presentation.manifest["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/16172421"
     end
 
     it "has a label with the title of the ParentObject" do
