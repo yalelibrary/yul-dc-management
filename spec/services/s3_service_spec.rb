@@ -44,9 +44,9 @@ RSpec.describe S3Service, type: :has_vcr do
 
   it "can download an image from a given image bucket" do
     child_object_oid = "1014543"
-    remote_path = "originals/#{child_object_oid}.tif"
+    remote_path = "originals/43/10/14/54/#{child_object_oid}.tif"
     local_path = "spec/fixtures/images/access_masters/#{child_object_oid}.tif"
-    VCR.use_cassette("download image 1014543") do
+    VCR.use_cassette("download image 1014543 small") do
       expect(File.exist?(local_path)).to eq false
       described_class.download_image(remote_path, local_path)
       expect(File.exist?(local_path)).to eq true
