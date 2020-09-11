@@ -21,7 +21,7 @@ class PyramidalTiffFactory
     # cannot convert to PTIFF if we can't find the original
     return false unless original_file_exists?
     # do not do the image conversion if there is already a PTIFF on S3
-    if S3Service.image_exists?(child_object.remote_ptiff_path)
+    if child_object.height && child_object.width && S3Service.s3_exists?(child_object.remote_ptiff_path)
       Rails.logger.info("PTIFF exists on S3, not converting: #{ptiff_info.to_json}")
       false
     else
@@ -31,7 +31,7 @@ class PyramidalTiffFactory
 
   def original_file_exists?
     if ENV['ACCESS_MASTER_MOUNT'] == "s3"
-      image_exists = S3Service.image_exists?(remote_access_master_path)
+      image_exists = S3Service.s3_exists?(remote_access_master_path)
       errors.add(:access_master_not_found, "Expected file #{remote_access_master_path} not found.") unless image_exists
     else
       image_exists = File.exist?(access_master_path)

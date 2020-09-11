@@ -140,6 +140,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @iiif_manifest = @iiif_presentation.manifest if iiif_presentation.valid?
   end
 
+  def manifest_completed?
+    ready_for_manifest? && iiif_presentation.valid? && S3Service.s3_exists?(iiif_presentation.manifest_path, ENV['SAMPLE_BUCKET'])
+  end
+
+  def ready_for_manifest?
+    !child_objects.pluck(:ptiff_conversion_at).include?(nil)
+  end
+
   def child_captions
     child_objects.map(&:caption).compact
   end
