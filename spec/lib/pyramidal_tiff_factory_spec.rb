@@ -128,15 +128,15 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
     end
 
     before do
-      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
+      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/43/10/14/54/1014543.tif")
         .to_return(status: 200, body: "", headers: {})
-      stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
+      stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/43/10/14/54/1014543.tif")
         .to_return(status: 200, body: File.open('spec/fixtures/images/access_masters/1002533.tif', 'rb'))
       stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/43/10/14/54/1014543.tif")
         .to_return(status: 200, body: "", headers: {})
       stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/43/10/14/54/1014543.tif")
         .to_return(status: 404, body: "")
-      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/111111.tif")
+      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/11/11/11/11/111111.tif")
         .to_return(status: 200, body: "")
       stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/11/11/11/11/111111.tif")
         .to_return(status: 200, body: "")
@@ -144,6 +144,10 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
 
     it "uses the Yale pairtree algorithm to generate the path to save the ptiff" do
       expect(ptf.remote_ptiff_path).to eq "ptiffs/43/10/14/54/1014543.tif"
+    end
+
+    it "uses the Yale pairtree algorithm to fetch access masters from S3" do
+      expect(ptf.remote_access_master_path).to eq "originals/43/10/14/54/1014543.tif"
     end
 
     it "does not perform conversion if remote PTIFF exists" do

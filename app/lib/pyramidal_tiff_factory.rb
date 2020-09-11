@@ -59,7 +59,8 @@ class PyramidalTiffFactory
 
   def self.remote_access_master_path(oid)
     image_bucket = "originals"
-    "#{image_bucket}/#{oid}.tif"
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    File.join(image_bucket, pairtree_path, "#{oid}.tif")
   end
 
   ##
