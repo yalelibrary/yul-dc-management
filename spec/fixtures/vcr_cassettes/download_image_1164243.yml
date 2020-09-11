@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: head
+    uri: https://yale-test-image-samples.s3.amazonaws.com/originals/43/11/64/24/1164243.tif?partNumber=1
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Content-Type:
+      - ''
+      Accept-Encoding:
+      - ''
+      User-Agent:
+      - aws-sdk-ruby3/3.104.3 ruby/2.6.6 x86_64-linux aws-sdk-s3/1.75.0
+      Host:
+      - yale-test-image-samples.s3.amazonaws.com
+      X-Amz-Date:
+      - 20200911T193617Z
+      X-Amz-Content-Sha256:
+      - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=xxxxx/20200911/us-east-1/s3/aws4_request,
+        SignedHeaders=host;user-agent;x-amz-content-sha256;x-amz-date, Signature=ad38e6ca7889d7c0eaaf43dea3618dea48e03c84046096bb2ddaf426eea60b5f
+      Content-Length:
+      - '0'
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      X-Amz-Request-Id:
+      - 44F56D07A5A4C3A4
+      X-Amz-Id-2:
+      - t+TwQqVEil2gf6HzZVNKUifX10yLyzabtHsBfx2kPvjmD4NqtIqE3EpAfe4MCjhgz4WYGAaumE8=
+      Content-Type:
+      - application/xml
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Fri, 11 Sep 2020 19:36:16 GMT
+      Server:
+      - AmazonS3
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Fri, 11 Sep 2020 19:36:17 GMT
+recorded_with: VCR 6.0.0
