@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :parent_objects do
     collection do
       post :reindex
+      post :all_metadata
     end
     member do
       post :update_metadata
