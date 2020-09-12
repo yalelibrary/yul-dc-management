@@ -3,6 +3,7 @@
 class OidImportsController < ApplicationController
   def index
     @oid_imports = OidImport.all
+    @oid_import = OidImport.new
   end
 
   def new
@@ -13,7 +14,7 @@ class OidImportsController < ApplicationController
     @oid_import = OidImport.new(oid_import_params)
     respond_to do |format|
       if @oid_import.save
-        format.html { redirect_to oid_imports_path, notice: "Your records have been retrieved from the MetadataCloud and are ready to be indexed to Solr." }
+        format.html { redirect_to oid_imports_path, notice: "Your records have been retrieved from the MetadataCloud. PTIFF generation, manifest generation and indexing happen in the background." }
       else
         format.html { render :new }
       end

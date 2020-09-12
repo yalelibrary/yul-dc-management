@@ -17,7 +17,7 @@ RSpec.describe "Oid CSV Import", type: :system, prep_metadata_sources: true do
       page.attach_file("oid_import_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
       click_button("Import")
       expect(OidImport.count).to eq 1
-      expect(page).to have_content("Your records have been retrieved from the MetadataCloud and are ready to be indexed to Solr.")
+      expect(page).to have_content("Your records have been retrieved from the MetadataCloud. PTIFF generation, manifest generation and indexing happen in the background.")
     end
   end
 end
