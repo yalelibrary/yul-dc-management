@@ -46,10 +46,12 @@ class PyramidalTiffFactory
     ptf = PyramidalTiffFactory.new(child_object)
     return false unless ptf.valid?(child_object)
     conversion_information = {}
-    Dir.mktmpdir do |tmpdir|
-      tiff_input_path = ptf.copy_access_master_to_working_directory(tmpdir)
-      conversion_information = ptf.convert_to_ptiff(tiff_input_path)
-      ptf.save_to_s3(File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(ptf.access_master_path)))
+    Dir.mktmpdir do |swing_tmpdir|
+      tiff_input_path = ptf.copy_access_master_to_working_directory(swing_tmpdir)
+      Dir.mktmpdir do |ptiff_tmpdir|
+        conversion_information = ptf.convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
+        ptf.save_to_s3(File.join(ptiff_tmpdir, File.basename(ptf.access_master_path)))
+      end
     end
     conversion_information
   rescue
@@ -87,8 +89,8 @@ class PyramidalTiffFactory
     File.join(image_bucket, pairtree_path, "#{oid}.tif")
   end
 
-  def convert_to_ptiff(tiff_input_path)
-    ptiff_output_path = File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(access_master_path))
+  def convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
+    ptiff_output_path = File.join(ptiff_tmpdir, File.basename(access_master_path))
     stdout, _stderr, status = Open3.capture3("app/lib/tiff_to_pyramid.bash #{Dir.mktmpdir} #{tiff_input_path} #{ptiff_output_path}")
     # errors.add("Conversion script exited with error code #{status.exitstatus}") if status.exitstatus != 0
     raise "Conversion script exited with error code #{status.exitstatus}" if status.exitstatus != 0

@@ -172,12 +172,17 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
 
     it "can call a wrapper method" do
       expected_path = "spec/fixtures/images/ptiff_images/1014543.tif"
-      expect(File.exist?(expected_path)).to eq false
+      ptf_class = class_double("PyramidalTiffFactory").as_stubbed_const
+      ptf_double = instance_double("PyramidalTiffFactory")
+      allow(ptf_double).to receive(:valid?).and_return(true)
+      allow(ptf_double).to receive(:copy_access_master_to_working_directory).and_return(true)
+      allow(ptf_double).to receive(:convert_to_ptiff).and_return(true)
+      allow(ptf_double).to receive(:access_master_path).and_return("foo")
+      allow(ptf_class).to receive(:new).and_return(ptf_double)
+      expect(ptf_double).to receive(:save_to_s3)
       VCR.use_cassette("download image 1014543") do
         expect(described_class.generate_ptiff_from(child_object))
       end
-      expect(File.exist?(expected_path)).to eq true
-      File.delete(expected_path)
     end
   end
 end
