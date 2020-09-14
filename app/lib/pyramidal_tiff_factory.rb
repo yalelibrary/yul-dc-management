@@ -40,18 +40,37 @@ class PyramidalTiffFactory
     image_exists
   end
 
+  ##
+  # @return [Hash] conversion_information - a hash containing the height and width
   def self.generate_ptiff_from(child_object)
     ptf = PyramidalTiffFactory.new(child_object)
     return false unless ptf.valid?(child_object)
-    tiff_input_path = ptf.copy_access_master_to_working_directory
-    conversion_information = ptf.convert_to_ptiff(tiff_input_path)
-    ptf.save_to_s3(File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(ptf.access_master_path)))
-    ptf.delete_working_file(tiff_input_path)
+    conversion_information = {}
+    Dir.mktmpdir do |tmpdir|
+      tiff_input_path = ptf.copy_access_master_to_working_directory(tmpdir)
+      conversion_information = ptf.convert_to_ptiff(tiff_input_path)
+      ptf.save_to_s3(File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(ptf.access_master_path)))
+    end
     conversion_information
   rescue
     df = `df -h`
     Rails.logger.error(df.to_s)
     raise
+  end
+
+  ##
+  # Create a temp copy of the input file in TEMP_IMAGE_WORKSPACE
+  # @param [String] tmpdir - the tmpdir location where the file should be written
+  # @return [String] the full path where the file was downloaded
+  def copy_access_master_to_working_directory(tmpdir)
+    temp_file_path = File.join(tmpdir, File.basename(access_master_path))
+    if ENV['ACCESS_MASTER_MOUNT'] == "s3"
+      download = S3Service.download_image(remote_access_master_path, temp_file_path)
+      temp_file_path if download
+    else
+      FileUtils.cp(access_master_path, tmpdir)
+      return temp_file_path if checksums_match?(access_master_path, temp_file_path)
+    end
   end
 
   ##
@@ -66,19 +85,6 @@ class PyramidalTiffFactory
     image_bucket = "originals"
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
     File.join(image_bucket, pairtree_path, "#{oid}.tif")
-  end
-
-  ##
-  # Create a temp copy of the input file in TEMP_IMAGE_WORKSPACE
-  def copy_access_master_to_working_directory
-    temp_file_path = File.join(temp_workspace, File.basename(access_master_path))
-    if ENV['ACCESS_MASTER_MOUNT'] == "s3"
-      download = S3Service.download_image(remote_access_master_path, temp_file_path)
-      temp_file_path if download
-    else
-      FileUtils.cp(access_master_path, temp_workspace)
-      return temp_file_path unless compare_checksums(access_master_path, temp_file_path)
-    end
   end
 
   def convert_to_ptiff(tiff_input_path)
@@ -100,14 +106,13 @@ class PyramidalTiffFactory
     S3Service.upload_image(ptiff_output_path, @remote_ptiff_path)
   end
 
-  def delete_working_file(ptiff_output_path)
-    File.delete(ptiff_output_path)
-  end
-
-  def compare_checksums(access_master_path, temp_file_path)
+  ##
+  # @return [Boolean] true if checksums match
+  def checksums_match?(access_master_path, temp_file_path)
     access_master_checksum = Digest::SHA256.file(access_master_path)
     temp_file_checksum = Digest::SHA256.file(temp_file_path)
+    return true if access_master_checksum == temp_file_checksum
     checksum_info = { oid: oid.to_s, access_master_path: access_master_path.to_s, temp_file_path: temp_file_path.to_s }
-    raise "File copy unsuccessful, checksums do not match: #{checksum_info.to_json}" unless access_master_checksum == temp_file_checksum
+    raise "File copy unsuccessful, checksums do not match: #{checksum_info.to_json}"
   end
 end
