@@ -72,12 +72,14 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
   end
 
   it "converts the file in the swing directory to a ptiff" do
-    expected_file = "spec/fixtures/images/ptiff_images/1002533.tif"
+    swing_temp_dir = "spec/fixtures/images/temp_images/"
+    ptiff_tmpdir = "spec/fixtures/images/ptiff_images/"
+    expected_file = "#{ptiff_tmpdir}1002533.tif"
     expect(File.exist?(expected_file)).to eq false
-    tiff_input_path = ptf.copy_access_master_to_working_directory
+    tiff_input_path = ptf.copy_access_master_to_working_directory(swing_temp_dir)
     ptf.convert_to_ptiff(tiff_input_path)
     expect(File.exist?(expected_file)).to eq true
-    File.delete("spec/fixtures/images/temp_images/1002533.tif")
+    File.delete(tiff_input_path)
     File.delete(expected_file)
   end
 
@@ -95,7 +97,7 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
 
   it "checks for file checksum and fails if it doesn't match" do
     expect do
-      ptf.compare_checksums("spec/fixtures/images/access_masters/test_image.tif", "spec/fixtures/images/temp_images/autumn_test.tif")
+      ptf.checksums_match?("spec/fixtures/images/access_masters/test_image.tif", "spec/fixtures/images/temp_images/autumn_test.tif")
     end.to(
       raise_error(RuntimeError,
                   "File copy unsuccessful, checksums do not match: {\"oid\":\"1002533\",\"access_master_path\":" \
@@ -104,9 +106,10 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
   end
 
   it "copies the local access master to a swing directory" do
-    expected_file = "spec/fixtures/images/temp_images/1002533.tif"
+    tmpdir = "spec/fixtures/images/temp_images/"
+    expected_file = "#{tmpdir}1002533.tif"
     expect(File.exist?(expected_file)).to eq false
-    expect(ptf.copy_access_master_to_working_directory).to eq expected_file
+    expect(ptf.copy_access_master_to_working_directory(tmpdir)).to eq expected_file
     expect(File.exist?(expected_file)).to eq true
     File.delete(expected_file)
   end
@@ -157,37 +160,24 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
     end
 
     it "copies the remote access master to a swing directory" do
-      expected_path = "spec/fixtures/images/temp_images/1014543.tif"
+      tmpdir = "spec/fixtures/images/temp_images/"
+      expected_path = "#{tmpdir}1014543.tif"
       expect(File.exist?(expected_path)).to eq false
       VCR.use_cassette("download image 1014543") do
-        expect(ptf.copy_access_master_to_working_directory).to eq expected_path
+        expect(ptf.copy_access_master_to_working_directory(tmpdir)).to eq expected_path
       end
       expect(File.exist?(expected_path)).to eq true
       File.delete(expected_path)
     end
 
-    it "deletes the temp file after it's done trying to convert it" do
-      expected_path = "spec/fixtures/images/temp_images/1014543.tif"
-      expect(File.exist?(expected_path)).to eq false
-      VCR.use_cassette("download image 1014543") do
-        expect(ptf.copy_access_master_to_working_directory).to eq expected_path
-      end
-      expect(File.exist?(expected_path)).to eq true
-      ptf.delete_working_file(expected_path)
-      expect(File.exist?(expected_path)).to eq false
-    end
-
     it "can call a wrapper method" do
-      expected_file_one = "spec/fixtures/images/temp_images/1014543.tif"
-      expect(File.exist?(expected_file_one)).to eq false
-      expected_file_two = "spec/fixtures/images/ptiff_images/1014543.tif"
-      expect(File.exist?(expected_file_two)).to eq false
+      expected_path = "spec/fixtures/images/ptiff_images/1014543.tif"
+      expect(File.exist?(expected_path)).to eq false
       VCR.use_cassette("download image 1014543") do
         expect(described_class.generate_ptiff_from(child_object))
       end
-      expect(File.exist?(expected_file_one)).to eq false
-      expect(File.exist?(expected_file_two)).to eq true
-      File.delete(expected_file_two)
+      expect(File.exist?(expected_path)).to eq true
+      File.delete(expected_path)
     end
   end
 end
