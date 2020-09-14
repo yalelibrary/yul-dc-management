@@ -46,7 +46,12 @@ class PyramidalTiffFactory
     tiff_input_path = ptf.copy_access_master_to_working_directory
     conversion_information = ptf.convert_to_ptiff(tiff_input_path)
     ptf.save_to_s3(File.join(ENV["PTIFF_OUTPUT_DIRECTORY"], File.basename(ptf.access_master_path)))
+    ptf.delete_working_file(tiff_input_path)
     conversion_information
+  rescue
+    df = `df -h`
+    Rails.logger.error(df.to_s)
+    raise
   end
 
   ##
@@ -93,6 +98,10 @@ class PyramidalTiffFactory
 
   def save_to_s3(ptiff_output_path)
     S3Service.upload_image(ptiff_output_path, @remote_ptiff_path)
+  end
+
+  def delete_working_file(ptiff_output_path)
+    File.delete(ptiff_output_path)
   end
 
   def compare_checksums(access_master_path, temp_file_path)
