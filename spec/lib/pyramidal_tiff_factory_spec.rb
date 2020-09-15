@@ -23,15 +23,9 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
     ENV["ACCESS_MASTER_MOUNT"] = 'spec/fixtures/images/access_masters'
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
-    original_ptiff_output_directory = ENV["PTIFF_OUTPUT_DIRECTORY"]
-    ENV["PTIFF_OUTPUT_DIRECTORY"] = 'spec/fixtures/images/ptiff_images'
-    original_temp_image_workspace = ENV['TEMP_IMAGE_WORKSPACE']
-    ENV['TEMP_IMAGE_WORKSPACE'] = 'spec/fixtures/images/temp_images'
     example.run
     ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
-    ENV["PTIFF_OUTPUT_DIRECTORY"] = original_ptiff_output_directory
-    ENV['TEMP_IMAGE_WORKSPACE'] = original_temp_image_workspace
   end
 
   describe "validating ptiff generation" do
@@ -52,14 +46,9 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
   end
 
   it "can call a wrapper method" do
-    expected_file_one = "spec/fixtures/images/temp_images/1002533.tif"
-    expect(File.exist?(expected_file_one)).to eq false
-    expected_file_two = "spec/fixtures/images/ptiff_images/1002533.tif"
-    expect(File.exist?(expected_file_two)).to eq false
+    allow(described_class).to receive(:new).and_return(ptf)
+    expect(ptf).to receive(:save_to_s3)
     expect(described_class.generate_ptiff_from(child_object))
-    expect(File.exist?(expected_file_one)).to eq false
-    expect(File.exist?(expected_file_two)).to eq true
-    File.delete(expected_file_two)
   end
 
   it "can be instantiated" do
@@ -77,7 +66,7 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
     expected_file = "#{ptiff_tmpdir}1002533.tif"
     expect(File.exist?(expected_file)).to eq false
     tiff_input_path = ptf.copy_access_master_to_working_directory(swing_temp_dir)
-    ptf.convert_to_ptiff(tiff_input_path)
+    ptf.convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
     expect(File.exist?(expected_file)).to eq true
     File.delete(tiff_input_path)
     File.delete(expected_file)
@@ -91,7 +80,8 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
   it "bails if the shell script fails" do
     stub_request(:get, "https://yale-image-samples.s3.amazonaws.com/originals/1002533.tif")
       .to_return(status: 200, body: File.open('spec/fixtures/images/sample_cmyk.tiff', 'rb'))
-    expect { ptf.convert_to_ptiff("spec/fixtures/images/sample_cmyk.tiff") }
+    ptiff_tmpdir = "spec/fixtures/images/ptiff_images/"
+    expect { ptf.convert_to_ptiff("spec/fixtures/images/sample_cmyk.tiff", ptiff_tmpdir) }
       .to(raise_error(RuntimeError, /Conversion script exited with error code .*/))
   end
 
@@ -171,13 +161,11 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
     end
 
     it "can call a wrapper method" do
-      expected_path = "spec/fixtures/images/ptiff_images/1014543.tif"
-      expect(File.exist?(expected_path)).to eq false
+      allow(described_class).to receive(:new).and_return(ptf)
+      expect(ptf).to receive(:save_to_s3)
       VCR.use_cassette("download image 1014543") do
         expect(described_class.generate_ptiff_from(child_object))
       end
-      expect(File.exist?(expected_path)).to eq true
-      File.delete(expected_path)
     end
   end
 end
