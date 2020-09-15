@@ -37,18 +37,19 @@
 
 <p>
   <strong>Access Master Download:</strong>
-  <%= link_to 'Click to Download', S3Service.presigned_url(@child_object.remote_access_master_path) %>
+  <%= link_to 'Click to Download', S3Service.presigned_url(@child_object.remote_access_master_path, 600) %>
 </p>
 
 <p>
   <strong>PTiff Download:</strong>
-  <%= link_to 'Click to Download', S3Service.presigned_url(@child_object.remote_ptiff_path) %>
+  <%= link_to 'Click to Download', S3Service.presigned_url(@child_object.remote_ptiff_path, 600) %>
 </p>
 
 <p>
   <strong>Image:</strong><br />
-  <%= image_tag "http://localhost:8182/iiif/2/#{@child_object.oid}/full/200,/0/default.jpg" %>
+  <%= image_tag @child_object.thumbnail_url %>
 </p>
 
 <%= link_to 'Edit', edit_child_object_path(@child_object) %> |
-<%= link_to 'Back', child_objects_path %>
+<%= link_to 'All Child Objects', child_objects_path %> |
+<%= link_to "Parent: #{@child_object.parent_object_oid}", "#{parent_object_path(@child_object.parent_object_oid)}" %>

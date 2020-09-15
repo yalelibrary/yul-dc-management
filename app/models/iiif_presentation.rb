@@ -5,9 +5,19 @@ class IiifPresentation
 
   require 'iiif/presentation'
 
+  def self.image_base_url
+    @image_base_url ||= (ENV["IIIF_IMAGE_BASE_URL"] || "http://localhost:8182/iiif")
+  end
+
+  def self.manifest_base_url
+    @manifest_base_url ||= (ENV["IIIF_MANIFESTS_BASE_URL"] || "http://localhost/manifests/")
+  end
+
+  def self.image_url(oid)
+    "#{image_base_url}/2/#{oid}"
+  end
+
   def initialize(parent_object)
-    @manifest_base_url = ENV["IIIF_MANIFESTS_BASE_URL"] || "http://localhost/manifests/"
-    @image_base_url = ENV["IIIF_IMAGE_BASE_URL"] || "http://localhost:8182/iiif"
     @parent_object = parent_object
     @oid = parent_object.oid
     @errors = ActiveModel::Errors.new(self)
@@ -40,12 +50,12 @@ class IiifPresentation
   def add_image_to_canvas(child, canvas)
     images = canvas.images
     image = IIIF::Presentation::Resource.new
-    image['@id'] = "#{@manifest_base_url}/oid/#{oid}/canvas/#{child.oid}/image/1"
+    image['@id'] = "#{IiifPresentation.manifest_base_url}/oid/#{oid}/canvas/#{child.oid}/image/1"
     image['@type'] = "oa:Annotation"
     image["motivation"] = "sc:painting"
-    image["on"] = "#{@manifest_base_url}/oid/#{oid}/canvas/#{child.oid}"
+    image["on"] = "#{IiifPresentation.manifest_base_url}/oid/#{oid}/canvas/#{child.oid}"
     image_resource = IIIF::Presentation::ImageResource.create_image_api_image_resource(
-      service_id: "#{@image_base_url}/2/#{child.oid}",
+      service_id: IiifPresentation.image_url(child.oid),
       height: child.height,
       width: child.width,
       profile: 'http://iiif.io/api/image/2/level2.json'
@@ -59,7 +69,7 @@ class IiifPresentation
     child_objects = ChildObject.where(parent_object: parent_object).order(:order)
     child_objects.map do |child|
       canvas = IIIF::Presentation::Canvas.new
-      canvas['@id'] = "#{@manifest_base_url}/oid/#{oid}/canvas/#{child.oid}"
+      canvas['@id'] = "#{IiifPresentation.manifest_base_url}/oid/#{oid}/canvas/#{child.oid}"
       canvas['label'] = child.label
       add_image_to_canvas(child, canvas)
       canvas['height'] = canvas.images.first["resource"]["height"]

@@ -77,13 +77,13 @@ class PyramidalTiffFactory
   # We don't know for sure where the access master mount will be, this is a default for local development for now
   def self.access_master_path(oid)
     image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
-    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid) || ''
     File.join(image_mount, pairtree_path, "#{oid}.tif")
   end
 
   def self.remote_access_master_path(oid)
     image_bucket = "originals"
-    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid) || ''
     File.join(image_bucket, pairtree_path, "#{oid}.tif")
   end
 
@@ -98,7 +98,7 @@ class PyramidalTiffFactory
   end
 
   def self.remote_ptiff_path(oid)
-    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid) || ''
     File.join("ptiffs", pairtree_path, File.basename(access_master_path(oid)))
   end
 
