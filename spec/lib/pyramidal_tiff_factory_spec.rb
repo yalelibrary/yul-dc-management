@@ -23,15 +23,9 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
     ENV["ACCESS_MASTER_MOUNT"] = 'spec/fixtures/images/access_masters'
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
-    original_ptiff_output_directory = ENV["PTIFF_OUTPUT_DIRECTORY"]
-    ENV["PTIFF_OUTPUT_DIRECTORY"] = 'spec/fixtures/images/ptiff_images'
-    original_temp_image_workspace = ENV['TEMP_IMAGE_WORKSPACE']
-    ENV['TEMP_IMAGE_WORKSPACE'] = 'spec/fixtures/images/temp_images'
     example.run
     ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
-    ENV["PTIFF_OUTPUT_DIRECTORY"] = original_ptiff_output_directory
-    ENV['TEMP_IMAGE_WORKSPACE'] = original_temp_image_workspace
   end
 
   describe "validating ptiff generation" do
