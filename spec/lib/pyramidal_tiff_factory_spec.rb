@@ -52,14 +52,9 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
   end
 
   it "can call a wrapper method" do
-    expected_file_one = "spec/fixtures/images/temp_images/1002533.tif"
-    expect(File.exist?(expected_file_one)).to eq false
-    expected_file_two = "spec/fixtures/images/ptiff_images/1002533.tif"
-    expect(File.exist?(expected_file_two)).to eq false
+    allow(described_class).to receive(:new).and_return(ptf)
+    expect(ptf).to receive(:save_to_s3)
     expect(described_class.generate_ptiff_from(child_object))
-    expect(File.exist?(expected_file_one)).to eq false
-    expect(File.exist?(expected_file_two)).to eq true
-    File.delete(expected_file_two)
   end
 
   it "can be instantiated" do
@@ -77,7 +72,7 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
     expected_file = "#{ptiff_tmpdir}1002533.tif"
     expect(File.exist?(expected_file)).to eq false
     tiff_input_path = ptf.copy_access_master_to_working_directory(swing_temp_dir)
-    ptf.convert_to_ptiff(tiff_input_path)
+    ptf.convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
     expect(File.exist?(expected_file)).to eq true
     File.delete(tiff_input_path)
     File.delete(expected_file)
@@ -91,7 +86,8 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
   it "bails if the shell script fails" do
     stub_request(:get, "https://yale-image-samples.s3.amazonaws.com/originals/1002533.tif")
       .to_return(status: 200, body: File.open('spec/fixtures/images/sample_cmyk.tiff', 'rb'))
-    expect { ptf.convert_to_ptiff("spec/fixtures/images/sample_cmyk.tiff") }
+    ptiff_tmpdir = "spec/fixtures/images/ptiff_images/"
+    expect { ptf.convert_to_ptiff("spec/fixtures/images/sample_cmyk.tiff", ptiff_tmpdir) }
       .to(raise_error(RuntimeError, /Conversion script exited with error code .*/))
   end
 
@@ -171,15 +167,8 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
     end
 
     it "can call a wrapper method" do
-      expected_path = "spec/fixtures/images/ptiff_images/1014543.tif"
-      ptf_class = class_double("PyramidalTiffFactory").as_stubbed_const
-      ptf_double = instance_double("PyramidalTiffFactory")
-      allow(ptf_double).to receive(:valid?).and_return(true)
-      allow(ptf_double).to receive(:copy_access_master_to_working_directory).and_return(true)
-      allow(ptf_double).to receive(:convert_to_ptiff).and_return(true)
-      allow(ptf_double).to receive(:access_master_path).and_return("foo")
-      allow(ptf_class).to receive(:new).and_return(ptf_double)
-      expect(ptf_double).to receive(:save_to_s3)
+      allow(described_class).to receive(:new).and_return(ptf)
+      expect(ptf).to receive(:save_to_s3)
       VCR.use_cassette("download image 1014543") do
         expect(described_class.generate_ptiff_from(child_object))
       end
