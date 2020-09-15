@@ -150,7 +150,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def representative_thumbnail
     oid = child_objects.where(order: 1)&.first&.oid
-    "#{ENV['IIIF_IMAGE_BASE_URL']}/2/#{oid}/full/!200,200/0/default.jpg"
+    image_host = ENV['THUMBNAIL_BASE_URL'] || ENV['IIIF_IMAGE_BASE_URL']
+    "#{image_host}/2/#{oid}/full/!200,200/0/default.jpg"
   end
 
   def child_captions
