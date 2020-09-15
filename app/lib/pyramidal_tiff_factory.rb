@@ -3,12 +3,11 @@
 # This class takes a child_object's oid, retrieves the access_master for that child object, creates a pyramidal tiff from the access master,
 # and saves that pyramidal tiff to an S3 bucket.
 class PyramidalTiffFactory
-  attr_reader :child_object, :access_master_path, :remote_ptiff_path, :errors, :oid, :temp_workspace, :remote_access_master_path
+  attr_reader :child_object, :access_master_path, :remote_ptiff_path, :errors, :oid, :remote_access_master_path
 
   # This method takes the oid of a child_object and creates a new PyramidalTiffFactory
   def initialize(child_object)
     @oid = child_object.oid.to_s
-    @temp_workspace = ENV['TEMP_IMAGE_WORKSPACE'] || "/tmp"
     @remote_access_master_path = PyramidalTiffFactory.remote_access_master_path(oid)
     @access_master_path = PyramidalTiffFactory.access_master_path(oid)
     @remote_ptiff_path = PyramidalTiffFactory.remote_ptiff_path(oid)
@@ -16,7 +15,6 @@ class PyramidalTiffFactory
   end
 
   def valid?(child_object)
-    raise "Expected directory #{temp_workspace} does not exist." unless File.directory?(temp_workspace)
     ptiff_info = { oid: oid.to_s }
     # cannot convert to PTIFF if we can't find the original
     return false unless original_file_exists?
