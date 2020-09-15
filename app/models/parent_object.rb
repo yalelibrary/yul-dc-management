@@ -148,6 +148,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     !child_objects.pluck(:ptiff_conversion_at).include?(nil)
   end
 
+  def representative_thumbnail
+    oid = child_objects.where(order: 1)&.first&.oid
+    "#{ENV['IIIF_IMAGE_BASE_URL']}/2/#{oid}/full/!200,200/0/default.jpg"
+  end
+
   def child_captions
     child_objects.map(&:caption).compact
   end

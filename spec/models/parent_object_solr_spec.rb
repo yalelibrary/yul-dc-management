@@ -65,6 +65,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         solr_document = parent_object_with_public_visibility.reload.to_solr
         expect(solr_document[:imageCount_isi]).to eq 5
       end
+
+      it "can index a thumbnail path to Solr" do
+        solr_document = parent_object_with_public_visibility.reload.to_solr
+        expect(solr_document[:thumbnail_path_ss]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/1052760/full/!200,200/0/default.jpg"
+      end
     end
 
     context "with mocked items without a metadatacloud equivalent" do
