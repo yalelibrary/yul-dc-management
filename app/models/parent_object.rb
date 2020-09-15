@@ -2,7 +2,7 @@
 # A parent object is the unit of discovery (what is represented as a single record in Blacklight).
 # It is synonymous with a parent oid in Ladybird.
 
-class ParentObject < ApplicationRecord
+class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include JsonFile
   include SolrIndexable
   has_many :dependent_objects
@@ -138,5 +138,31 @@ class ParentObject < ApplicationRecord
   def iiif_manifest
     return @iiif_manifest if @iiif_manifest
     @iiif_manifest = @iiif_presentation.manifest if iiif_presentation.valid?
+  end
+
+  def manifest_completed?
+    ready_for_manifest? && iiif_presentation.valid? && S3Service.s3_exists?(iiif_presentation.manifest_path, ENV['SAMPLE_BUCKET'])
+  end
+
+  def ready_for_manifest?
+    !child_objects.pluck(:ptiff_conversion_at).include?(nil)
+  end
+
+  def representative_thumbnail
+    oid = child_objects.where(order: 1)&.first&.oid
+    image_host = ENV['THUMBNAIL_BASE_URL'] || ENV['IIIF_IMAGE_BASE_URL']
+    "#{image_host}/2/#{oid}/full/!200,200/0/default.jpg"
+  end
+
+  def child_captions
+    child_objects.map(&:caption).compact
+  end
+
+  def child_labels
+    child_objects.map(&:label).compact
+  end
+
+  def child_oids
+    child_objects.map(&:oid)
   end
 end

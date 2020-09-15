@@ -7,15 +7,17 @@ module SolrIndexable
       solr = SolrService.connection
       # Groups of 500
       find_in_batches do |group|
-        solr.add(group.map(&:to_solr))
+        solr.add(group.map(&:to_solr).compact)
         solr.commit
       end
     end
   end
 
   def solr_index
+    indexable = to_solr
+    return unless indexable.present?
     solr = SolrService.connection
-    solr.add([to_solr])
+    solr.add([indexable])
     solr.commit
   end
 
@@ -25,7 +27,7 @@ module SolrIndexable
 
   def to_solr(json_to_index = nil)
     json_to_index ||= authoritative_json
-    return { id: "#{id_prefix}#{oid}" } if json_to_index.blank?
+    return nil if json_to_index.blank? || !manifest_completed?
     {
       # example_suffix: json_to_index[""],
       id: "#{id_prefix}#{oid}",
@@ -38,7 +40,8 @@ module SolrIndexable
       author_ssim: json_to_index["creator"],
       author_tesim: json_to_index["creator"],
       box_ssim: extract_box_ssim(json_to_index),
-      caption_tesim: json_to_index["caption"],
+      caption_tesim: child_captions,
+      child_oids_ssim: child_oids,
       collectionId_ssim: json_to_index["collectionId"],
       collectionId_tesim: json_to_index["collectionId"],
       contents_tesim: json_to_index["contents"],
@@ -67,6 +70,7 @@ module SolrIndexable
       illustrativeMatter_tesim: json_to_index["illustrativeMatter"],
       imageCount_isi: child_object_count,
       indexedBy_tsim: json_to_index["indexedBy"],
+      label_tesim: child_labels,
       language_ssim: json_to_index["language"],
       localRecordNumber_ssim: json_to_index["localRecordNumber"],
       material_tesim: json_to_index["material"],
@@ -104,6 +108,7 @@ module SolrIndexable
       subjectName_tesim: json_to_index["subjectName"],
       subjectTopic_tesim: json_to_index["subjectTopic"],
       subjectTopic_ssim: json_to_index["subjectTopic"],
+      thumbnail_path_ss: representative_thumbnail,
       title_tesim: json_to_index["title"],
       uri_ssim: json_to_index["uri"],
       url_suppl_ssim: json_to_index["relatedUrl"],

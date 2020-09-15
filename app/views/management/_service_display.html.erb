@@ -14,43 +14,43 @@
         <td> Management </td>
         <td>  <a href="https://hub.docker.com/repository/docker/yalelibraryit/dc-management">yalelibraryit/dc-management</a>   </td>
         <td>  <a href="https://github.com/yalelibrary/yul-dc-management">yalelibrary/yul-dc-management</a>   </td>
-        <td> <%= ENV['MANAGEMENT_VERSION'].present? ? "#{ENV['MANAGEMENT_VERSION']}" : "" %> </td>
+        <td id="management_version"> <%= ENV['MANAGEMENT_VERSION'].present? ? "#{ENV['MANAGEMENT_VERSION']}" : "" %> </td>
       </tr>
       <tr>
         <td> Database </td>
         <td> <a href="https://hub.docker.com/repository/docker/yalelibraryit/dc-postgres">yalelibraryit/dc-postgres</a> </td>
         <td> <a href="https://github.com/yalelibrary/yul-dc-postgres">yalelibrary/yul-dc-postgres</a> </td>
-        <td> <%= ENV['POSTGRES_VERSION'].present? ? "#{ENV['POSTGRES_VERSION']}" : "" %> </td>
+        <td id="postgres_version"> <%= ENV['POSTGRES_VERSION'].present? ? "#{ENV['POSTGRES_VERSION']}" : "" %> </td>
       </tr>
       <tr>
         <td> Blacklight </td>
         <td> <a href="https://hub.docker.com/repository/docker/yalelibraryit/dc-blacklight">yalelibraryit/dc-blacklight</a> </td>
         <td> <a href="https://github.com/yalelibrary/yul-dc-blacklight">yalelibrary/yul-dc-blacklight</a> </td>
-        <td> <%= ENV['BLACKLIGHT_VERSION'].present? ? "#{ENV['BLACKLIGHT_VERSION']}" : "" %> </td>
+        <td id="blacklight_version"> <%= ENV['BLACKLIGHT_VERSION'].present? ? "#{ENV['BLACKLIGHT_VERSION']}" : "" %> </td>
       </tr>
       <tr>
         <td> Solr </td>
         <td> <a href="https://hub.docker.com/repository/docker/yalelibraryit/dc-solr">yalelibraryit/dc-solr</a> </td>
         <td> <a href="https://github.com/yalelibrary/yul-dc-solr">yalelibrary/yul-dc-solr</a> </td>
-        <td> <%= ENV['SOLR_VERSION'].present? ? "#{ENV['SOLR_VERSION']}" : "" %> </td>
+        <td id="solr_version"> <%= ENV['SOLR_VERSION'].present? ? "#{ENV['SOLR_VERSION']}" : "" %> </td>
       </tr>
       <tr>
         <td> IIIF Image Server </td>
         <td> <a href="https://hub.docker.com/repository/docker/yalelibraryit/dc-iiif-cantaloupe">yalelibraryit/dc-iiif-cantaloupe</a> </td>
         <td> <a href="https://github.com/yalelibrary/yul-dc-iiif-imageserver">yalelibrary/yul-dc-iiif-imageserver</a></td>
-        <td> <%= ENV['IIIF_IMAGE_VERSION'].present? ? "#{ENV['IIIF_IMAGE_VERSION']}" : "" %> </td>
+        <td id="iiif_image_version"> <%= ENV['IIIF_IMAGE_VERSION'].present? ? "#{ENV['IIIF_IMAGE_VERSION']}" : "" %> </td>
       </tr>
       <tr>
         <td> IIIF Manifest Server </td>
         <td> <a href="https://hub.docker.com/repository/docker/yalelibraryit/dc-iiif-manifest">yalelibraryit/dc-iiif-manifest</a> </td>
         <td> <a href="https://github.com/yalelibrary/yul-dc-iiif-manifest">yalelibrary/yul-dc-iiif-manifest</a> </td>
-        <td> <%= ENV['IIIF_MANIFEST_VERSION'].present? ? "#{ENV['IIIF_MANIFEST_VERSION']}" : "" %> </td>
+        <td id="iiif_manifest_version"> <%= ENV['IIIF_MANIFEST_VERSION'].present? ? "#{ENV['IIIF_MANIFEST_VERSION']}" : "" %> </td>
       </tr>
       <tr>
         <td> Camerata </td>
         <td>  n/a </td>
         <td>  <a href="https://github.com/yalelibrary/yul-dc-camerata">yalelibrary/yul-dc-camerata</a>   </td>
-        <td> <%= ENV['CAMERATA_VERSION'].present? ? "#{ENV['CAMERATA_VERSION']}" : "" %> </td>
+        <td id="camerata_version"> <%= ENV['CAMERATA_VERSION'].present? ? "#{ENV['CAMERATA_VERSION']}" : "" %> </td>
       </tr>
   </table>
 </div>

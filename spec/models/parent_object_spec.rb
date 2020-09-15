@@ -43,6 +43,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       let(:parent_object) { described_class.create(oid: "2005512") }
       before do
         stub_metadata_cloud("2005512", "ladybird")
+        stub_metadata_cloud("V-2005512", "ils")
       end
       it "pulls from the MetadataCloud for Ladybird and not Voyager or ArchiveSpace" do
         expect(parent_object.reload.authoritative_metadata_source_id).to eq ladybird
@@ -144,6 +145,68 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
       it 'returns an aspace url' do
         expect(parent_object.aspace_cloud_url).to eq nil
+      end
+    end
+
+    context 'with no children, therefore no child captions, labels or oids' do
+      before do
+        stub_metadata_cloud("100001", "ladybird")
+      end
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: '100001', authoritative_metadata_source_id: ladybird) }
+
+      it 'returns an empty array' do
+        expect(parent_object.reload.child_captions).to be_empty
+        expect(parent_object.reload.child_captions).to be_an(Array)
+        expect(parent_object.reload.child_labels).to be_empty
+        expect(parent_object.reload.child_labels).to be_an(Array)
+        expect(parent_object.reload.child_oids).to be_empty
+        expect(parent_object.reload.child_oids).to be_an(Array)
+      end
+    end
+
+    context 'with children but no child captions or labels' do
+      before do
+        stub_metadata_cloud("2012143", "ladybird")
+      end
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: '2012143', authoritative_metadata_source_id: ladybird) }
+
+      it 'counts the parent objects children' do
+        expect(parent_object.reload.child_objects.count).to eq 4
+      end
+
+      it 'returns an empty array if the child object has no captions or labels' do
+        expect(parent_object.reload.child_captions).to be_an(Array)
+        expect(parent_object.reload.child_captions).to be_empty
+        expect(parent_object.reload.child_labels).to be_an(Array)
+        expect(parent_object.reload.child_labels).to be_empty
+        expect(parent_object.reload.child_oids).to be_an(Array)
+        expect(parent_object.reload.child_oids).to eq [1_052_971, 1_052_972, 1_052_973, 1_052_974]
+        expect(parent_object.reload.child_oids.size).to eq 4
+      end
+    end
+
+    context 'with children that have captions and labels' do
+      before do
+        stub_metadata_cloud("2012143", "ladybird")
+        parent_object.child_objects.first.update(caption: "This is a caption")
+        parent_object.child_objects.first.update(label: "This is a label")
+      end
+
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: '2012143', authoritative_metadata_source_id: ladybird) }
+      it "returns an array of the child object's caption and label" do
+        expect(parent_object.reload.child_captions).to eq ["This is a caption"]
+        expect(parent_object.reload.child_labels).to eq ["This is a label"]
+        expect(parent_object.reload.child_oids).to contain_exactly(1_052_971, 1_052_972, 1_052_973, 1_052_974)
+      end
+      it "returns an array of the child object's captions and labels" do
+        parent_object.child_objects.second.update(caption: "This is another caption")
+        parent_object.child_objects.second.update(label: "This is another label")
+
+        expect(parent_object.reload.child_captions.size).to eq 2
+        expect(parent_object.reload.child_captions).to contain_exactly("This is a caption", "This is another caption")
+        expect(parent_object.reload.child_labels.size).to eq 2
+        expect(parent_object.reload.child_labels).to contain_exactly("This is a label", "This is another label")
+        expect(parent_object.reload.child_oids).to contain_exactly(1_052_971, 1_052_972, 1_052_973, 1_052_974)
       end
     end
   end

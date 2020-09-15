@@ -52,7 +52,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
 
     # see also https://github.com/yalelibrary/yul-dc-iiif-manifest/blob/3f96a09d9d5a7b6a49c051d663b5cc2aa5fd8475/templates/webapp.conf.template#L56
     it "saves the manifest with the environment variable IIIF_MANIFESTS_BASE_URL" do
-      expect(iiif_presentation.manifest["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/16172421.json"
+      expect(iiif_presentation.manifest["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/16172421"
     end
 
     it "has a label with the title of the ParentObject" do

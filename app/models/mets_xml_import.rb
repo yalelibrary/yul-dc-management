@@ -25,6 +25,6 @@ class MetsXmlImport < ApplicationRecord
   end
 
   def refresh_metadata_cloud
-    MetadataCloudService.create_parent_objects_from_oids([mets_doc.oid], 'ladybird') # TODO: make 'ladybird' a metadata source attribute on this object
+    MetadataCloudService.create_parent_objects_from_oids([mets_doc.oid], ['ladybird']) # TODO: make 'ladybird' a metadata source attribute on this object
   end
 end

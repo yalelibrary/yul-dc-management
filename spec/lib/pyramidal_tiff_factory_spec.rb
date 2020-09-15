@@ -23,15 +23,9 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
     ENV["ACCESS_MASTER_MOUNT"] = 'spec/fixtures/images/access_masters'
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
-    original_ptiff_output_directory = ENV["PTIFF_OUTPUT_DIRECTORY"]
-    ENV["PTIFF_OUTPUT_DIRECTORY"] = 'spec/fixtures/images/ptiff_images'
-    original_temp_image_workspace = ENV['TEMP_IMAGE_WORKSPACE']
-    ENV['TEMP_IMAGE_WORKSPACE'] = 'spec/fixtures/images/temp_images'
     example.run
     ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
-    ENV["PTIFF_OUTPUT_DIRECTORY"] = original_ptiff_output_directory
-    ENV['TEMP_IMAGE_WORKSPACE'] = original_temp_image_workspace
   end
 
   describe "validating ptiff generation" do
@@ -52,15 +46,9 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
   end
 
   it "can call a wrapper method" do
-    expected_file_one = "spec/fixtures/images/temp_images/1002533.tif"
-    expect(File.exist?(expected_file_one)).to eq false
-    expected_file_two = "spec/fixtures/images/ptiff_images/1002533.tif"
-    expect(File.exist?(expected_file_two)).to eq false
+    allow(described_class).to receive(:new).and_return(ptf)
+    expect(ptf).to receive(:save_to_s3)
     expect(described_class.generate_ptiff_from(child_object))
-    expect(File.exist?(expected_file_one)).to eq true
-    File.delete(expected_file_one)
-    expect(File.exist?(expected_file_two)).to eq true
-    File.delete(expected_file_two)
   end
 
   it "can be instantiated" do
@@ -73,12 +61,14 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
   end
 
   it "converts the file in the swing directory to a ptiff" do
-    expected_file = "spec/fixtures/images/ptiff_images/1002533.tif"
+    swing_temp_dir = "spec/fixtures/images/temp_images/"
+    ptiff_tmpdir = "spec/fixtures/images/ptiff_images/"
+    expected_file = "#{ptiff_tmpdir}1002533.tif"
     expect(File.exist?(expected_file)).to eq false
-    tiff_input_path = ptf.copy_access_master_to_working_directory
-    ptf.convert_to_ptiff(tiff_input_path)
+    tiff_input_path = ptf.copy_access_master_to_working_directory(swing_temp_dir)
+    ptf.convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
     expect(File.exist?(expected_file)).to eq true
-    File.delete("spec/fixtures/images/temp_images/1002533.tif")
+    File.delete(tiff_input_path)
     File.delete(expected_file)
   end
 
@@ -90,13 +80,14 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
   it "bails if the shell script fails" do
     stub_request(:get, "https://yale-image-samples.s3.amazonaws.com/originals/1002533.tif")
       .to_return(status: 200, body: File.open('spec/fixtures/images/sample_cmyk.tiff', 'rb'))
-    expect { ptf.convert_to_ptiff("spec/fixtures/images/sample_cmyk.tiff") }
+    ptiff_tmpdir = "spec/fixtures/images/ptiff_images/"
+    expect { ptf.convert_to_ptiff("spec/fixtures/images/sample_cmyk.tiff", ptiff_tmpdir) }
       .to(raise_error(RuntimeError, /Conversion script exited with error code .*/))
   end
 
   it "checks for file checksum and fails if it doesn't match" do
     expect do
-      ptf.compare_checksums("spec/fixtures/images/access_masters/test_image.tif", "spec/fixtures/images/temp_images/autumn_test.tif")
+      ptf.checksums_match?("spec/fixtures/images/access_masters/test_image.tif", "spec/fixtures/images/temp_images/autumn_test.tif")
     end.to(
       raise_error(RuntimeError,
                   "File copy unsuccessful, checksums do not match: {\"oid\":\"1002533\",\"access_master_path\":" \
@@ -105,9 +96,10 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
   end
 
   it "copies the local access master to a swing directory" do
-    expected_file = "spec/fixtures/images/temp_images/1002533.tif"
+    tmpdir = "spec/fixtures/images/temp_images/"
+    expected_file = "#{tmpdir}1002533.tif"
     expect(File.exist?(expected_file)).to eq false
-    expect(ptf.copy_access_master_to_working_directory).to eq expected_file
+    expect(ptf.copy_access_master_to_working_directory(tmpdir)).to eq expected_file
     expect(File.exist?(expected_file)).to eq true
     File.delete(expected_file)
   end
@@ -128,15 +120,15 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
     end
 
     before do
-      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
+      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/43/10/14/54/1014543.tif")
         .to_return(status: 200, body: "", headers: {})
-      stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
+      stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/43/10/14/54/1014543.tif")
         .to_return(status: 200, body: File.open('spec/fixtures/images/access_masters/1002533.tif', 'rb'))
       stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/43/10/14/54/1014543.tif")
         .to_return(status: 200, body: "", headers: {})
       stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/43/10/14/54/1014543.tif")
         .to_return(status: 404, body: "")
-      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/111111.tif")
+      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/11/11/11/11/111111.tif")
         .to_return(status: 200, body: "")
       stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/11/11/11/11/111111.tif")
         .to_return(status: 200, body: "")
@@ -144,6 +136,10 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
 
     it "uses the Yale pairtree algorithm to generate the path to save the ptiff" do
       expect(ptf.remote_ptiff_path).to eq "ptiffs/43/10/14/54/1014543.tif"
+    end
+
+    it "uses the Yale pairtree algorithm to fetch access masters from S3" do
+      expect(ptf.remote_access_master_path).to eq "originals/43/10/14/54/1014543.tif"
     end
 
     it "does not perform conversion if remote PTIFF exists" do
@@ -154,27 +150,22 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
     end
 
     it "copies the remote access master to a swing directory" do
-      expected_path = "spec/fixtures/images/temp_images/1014543.tif"
+      tmpdir = "spec/fixtures/images/temp_images/"
+      expected_path = "#{tmpdir}1014543.tif"
       expect(File.exist?(expected_path)).to eq false
       VCR.use_cassette("download image 1014543") do
-        expect(ptf.copy_access_master_to_working_directory).to eq expected_path
+        expect(ptf.copy_access_master_to_working_directory(tmpdir)).to eq expected_path
       end
       expect(File.exist?(expected_path)).to eq true
       File.delete(expected_path)
     end
 
     it "can call a wrapper method" do
-      expected_file_one = "spec/fixtures/images/temp_images/1014543.tif"
-      expect(File.exist?(expected_file_one)).to eq false
-      expected_file_two = "spec/fixtures/images/ptiff_images/1014543.tif"
-      expect(File.exist?(expected_file_two)).to eq false
+      allow(described_class).to receive(:new).and_return(ptf)
+      expect(ptf).to receive(:save_to_s3)
       VCR.use_cassette("download image 1014543") do
         expect(described_class.generate_ptiff_from(child_object))
       end
-      expect(File.exist?(expected_file_one)).to eq true
-      File.delete(expected_file_one)
-      expect(File.exist?(expected_file_two)).to eq true
-      File.delete(expected_file_two)
     end
   end
 end

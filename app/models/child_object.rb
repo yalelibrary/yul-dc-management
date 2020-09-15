@@ -5,7 +5,7 @@ class ChildObject < ApplicationRecord
   self.primary_key = 'oid'
 
   def remote_ptiff_exists?
-    S3Service.image_exists?(remote_ptiff_path)
+    S3Service.s3_exists?(remote_ptiff_path)
   end
 
   def remote_ptiff_path
@@ -25,6 +25,7 @@ class ChildObject < ApplicationRecord
     return unless conversion_information
     self.width = conversion_information[:width]
     self.height = conversion_information[:height]
-    save
+    self.ptiff_conversion_at = Time.current
+    conversion_information
   end
 end

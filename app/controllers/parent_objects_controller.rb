@@ -69,6 +69,17 @@ class ParentObjectsController < ApplicationController
     end
   end
 
+  def all_metadata
+    ParentObject.find_each do |po|
+      po.metadata_update = true
+      po.setup_metadata_job
+    end
+    respond_to do |format|
+      format.html { redirect_to parent_objects_url, notice: 'Parent objects have been queued for metadata update.' }
+      format.json { head :no_content }
+    end
+  end
+
   def update_metadata
     @parent_object.metadata_update = true
     @parent_object.setup_metadata_job

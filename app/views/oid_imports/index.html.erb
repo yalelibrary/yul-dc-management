@@ -1,11 +1,12 @@
 <div class="container">
-<h1>Oid Imports</h1>
-<%= link_to "Management Index", root_path, class: 'btn btn-primary mb-2' %>
+  <h1>Oid Imports</h1>
+  <%= render partial: "oid_imports/form" %>
+
   <% if flash[:notice] %>
     <div class="notice"><%= flash[:notice] %></div>
   <% end %>
-<br />
-<table class="table table-bordered table-responsive table-striped">
+  <br />
+  <table class="table table-bordered table-striped">
     <thead class="thead-dark">
       <tr>
         <th scope="col"> ID </th>

@@ -12,6 +12,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
   before do
     allow(PyramidalTiffFactory).to receive(:generate_ptiff_from).and_return(width: 2591, height: 4056)
+    # rubocop:disable RSpec/AnyInstance
+    allow_any_instance_of(ParentObject).to receive(:manifest_completed?).and_return(true)
+    # rubocop:enable RSpec/AnyInstance
   end
 
   context "indexing to Solr from the database with Ladybird ParentObjects", solr: true do
@@ -45,7 +48,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
     context "with a public item" do
       let(:parent_object_with_public_visibility) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ils', visibility: "Public") }
-
+      around do |example|
+        original_thumbnail_url = ENV['THUMBNAIL_BASE_URL']
+        ENV['THUMBNAIL_BASE_URL'] = "http://iiif_image:8182/iiif"
+        example.run
+        ENV['THUMBNAIL_BASE_URL'] = original_thumbnail_url
+      end
       before do
         stub_metadata_cloud(oid.to_s)
         stub_metadata_cloud("V-#{oid}", "ils")
@@ -61,6 +69,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       it "can index an item's image count to Solr" do
         solr_document = parent_object_with_public_visibility.reload.to_solr
         expect(solr_document[:imageCount_isi]).to eq 5
+      end
+
+      it "can index a thumbnail path to Solr" do
+        solr_document = parent_object_with_public_visibility.reload.to_solr
+        expect(solr_document[:thumbnail_path_ss]).to eq "http://iiif_image:8182/iiif/2/1052760/full/!200,200/0/default.jpg"
       end
     end
 

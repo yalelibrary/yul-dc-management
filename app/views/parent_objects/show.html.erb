@@ -81,5 +81,10 @@
   <%= render 'authoritative_json', parent_object: @parent_object %>
 </p>
 
+<p>
+    <strong>Solr Record:</strong>
+    <%= render 'solr_document', parent_object: @parent_object %>
+</p>
+
 <%= link_to 'Edit', edit_parent_object_path(@parent_object) %> |
 <%= link_to 'Back', parent_objects_path %>
