@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+<div class='row'>
+  <div class='col'>
+    <h1>Notifications</h1>
+  </div>
+  <div class='col'>
+    <div class='float-right'>
+      <%#= link_to 'Reindex', reindex_parent_objects_path, method: 'post', class: 'btn btn-primary' %>
+      <%#= link_to 'Update Metadata', all_metadata_parent_objects_path, method: 'post', class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>
+<div class='row'>
+  <div class='col'>
+    <table class="table table-responsive table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Status</th>
+          <th scope="col">Parent Object</th>
+          <th scope="col">Reason</th>
+          <th scope="col">Read</th>
+          <th scope="col">Created at</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @notifications.each do |notification| %>
+          <% notice = notification.to_notification %>
+          <tr>
+            <td><%= notice.params[:status] %></td>
+            <td><%= link_to notice.params[:parent_object].id, notice.params[:parent_object] %></td>
+            <td><%= notice.params[:reason] %></td>
+            <td><%= notification.read? ? 'Read' : 'Unread' %></td>
+            <td><%= notification.created_at %></td>
+            <td class='actions'>
+              <%= link_to 'Resolve', notification, method: :delete %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

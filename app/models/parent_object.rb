@@ -40,7 +40,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     when "aspace"
       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
       self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
+    else
+      processing_failure('Metadata source not found, should be one of [ladybird, ils, aspace]')
     end
+  end
+
+  def processing_failure(message)
+    IngestNotification.with(parent_object: self, status: 'failed', reason: message).deliver_all
   end
 
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create

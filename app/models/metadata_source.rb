@@ -8,7 +8,10 @@ class MetadataSource < ApplicationRecord
     raw_metadata = if ENV["VPN"] == "true"
                      fetch_record_on_vpn(parent_object)
                    else
-                     S3Service.download("#{metadata_cloud_name}/#{file_name(parent_object)}")
+                     s3_path = "#{metadata_cloud_name}/#{file_name(parent_object)}"
+                     r = S3Service.download(s3_path)
+                     parent_object.processing_failure("S3 did not return json for #{s3_path}") unless r.present?
+                     r
                    end
     JSON.parse(raw_metadata) if raw_metadata
   end
@@ -16,7 +19,10 @@ class MetadataSource < ApplicationRecord
   def fetch_record_on_vpn(parent_object)
     mc_url = parent_object.send(url_type)
     full_response = mc_get(mc_url)
-    return unless full_response.status == 200
+    unless full_response.status == 200
+      parent_object.processing_failure("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}")
+      return
+    end
     response_text = full_response.body.to_str
     S3Service.upload("#{metadata_cloud_name}/#{file_name(parent_object)}", response_text)
     response_text
