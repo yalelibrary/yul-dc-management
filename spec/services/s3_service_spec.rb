@@ -77,6 +77,10 @@ RSpec.describe S3Service, type: :has_vcr do
   it "can generate signed URL" do
     child_object_oid = "1014543"
     remote_path = "originals/#{child_object_oid}.tif"
-    expect(described_class.presigned_url(remote_path, 600)).to start_with "https://#{ENV['S3_SOURCE_BUCKET_NAME']}"
+    presigned_url = described_class.presigned_url(remote_path, 600)
+    expect(presigned_url).to be_a String
+    expect(presigned_url).to start_with "https://#{ENV['S3_SOURCE_BUCKET_NAME']}"
+    expect(presigned_url).to include 'X-Amz-Expires=600'
+    expect(presigned_url).to include remote_path
   end
 end

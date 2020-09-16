@@ -36,6 +36,8 @@ class S3Service
     end
   end
 
+  # Returns String which is a pre-signed URL that a client can use to access the
+  # object from S3 without needing other credentials.
   def self.presigned_url(remote_path, seconds, bucket = ENV['S3_SOURCE_BUCKET_NAME'])
     return remote_path unless bucket
     object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
