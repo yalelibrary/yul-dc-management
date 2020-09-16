@@ -43,6 +43,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  def processing_failure(message)
+    IngestNotification.with(parent_object: self, status: 'failed', reason: message).deliver_all
+  end
+
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
   # OR if the authoritative metaadata source changes
   # OR if the metadata_update accessor is set

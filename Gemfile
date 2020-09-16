@@ -17,6 +17,7 @@ gem 'iiif-presentation', '~> 1.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails', '~> 4.4'
+gem 'noticed', '~> 1.2', '>= 1.2.15'
 # Yale-specific pairtree gem
 gem 'partridge', '~> 0.1.1'
 # Use postgresql as the database for Active Record

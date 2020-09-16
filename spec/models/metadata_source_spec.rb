@@ -16,11 +16,15 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
 
     context "with vpn mocked" do
       let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
+      let(:unknown_parent_object) { FactoryBot.build(:parent_object, oid: '99999999') }
       let(:ladybird_source) { FactoryBot.build(:metadata_source) }
 
       before do
         stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16797069?include-children=1")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16797069.json")).read)
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/99999999?include-children=1")
+          .to_return(status: 404, body: 'Not Found')
+
         stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/16797069.json").to_return(status: 200)
       end
 
@@ -37,6 +41,12 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
         ladybird_result = ladybird_source.fetch_record(parent_object)
         expect(ladybird_result).to be
         expect(ladybird_result['uri']).to eq('/ladybird/oid/16797069')
+      end
+
+      it 'adds a notificaiton if record is not found in metadata cloud' do
+        expect(unknown_parent_object).to receive(:processing_failure)
+        ladybird_result = ladybird_source.fetch_record(unknown_parent_object)
+        expect(ladybird_result).not_to be
       end
     end
 
@@ -111,6 +121,7 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
       let(:parent_object) { FactoryBot.build(:parent_object, oid: '0') }
 
       it "returns nil if the cached json does not exist" do
+        expect(parent_object).to receive(:processing_failure)
         ladybird_result = ladybird_source.fetch_record(parent_object)
         expect(ladybird_result).not_to be
       end

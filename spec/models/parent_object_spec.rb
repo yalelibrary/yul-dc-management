@@ -148,6 +148,27 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       end
     end
 
+    context 'with an incorrect authoritative_metadata_source' do
+      before do
+        3.times do |user|
+          User.create!(
+            id: user.to_s,
+            email: "user#{user}@email.com",
+            password: "testing#{user}23"
+          )
+        end
+      end
+
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: '100001') }
+
+      it 'returns a processing_failure message' do
+        msg = 'Metadata source not found, should be one of [ladybird, ils, aspace]'
+        expect(Notification.count).to eq(0)
+        parent_object.processing_failure(msg)
+        expect(Notification.count).to eq(3)
+      end
+    end
+
     context 'with no children, therefore no child captions, labels or oids' do
       before do
         stub_metadata_cloud("100001", "ladybird")
