@@ -37,8 +37,4 @@ class IngestNotification < Noticed::Base
   def message
     t(".message", oid: params[:parent_object].id, status: params[:status], reason: params[:reason])
   end
-
-  def url
-    parent_object_path(params[:parent_object])
-  end
 end

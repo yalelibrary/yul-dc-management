@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :notification do
-    recipient { nil }
+    recipient { FactoryBot.create(:user) }
     type { "" }
     params { "" }
     read_at { "2020-09-15 16:36:30" }
