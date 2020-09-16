@@ -40,8 +40,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     when "aspace"
       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
       self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
-    else
-      processing_failure('Metadata source not found, should be one of [ladybird, ils, aspace]')
     end
   end
 
