@@ -49,10 +49,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     context "with a public item" do
       let(:parent_object_with_public_visibility) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ils', visibility: "Public") }
       around do |example|
-        original_thumbnail_url = ENV['THUMBNAIL_BASE_URL']
-        ENV['THUMBNAIL_BASE_URL'] = "http://iiif_image:8182/iiif"
+        original_image_url = ENV['IIIF_IMAGE_BASE_URL']
+        ENV['IIIF_IMAGE_BASE_URL'] = "http://localhost:8182/iiif"
         example.run
-        ENV['THUMBNAIL_BASE_URL'] = original_thumbnail_url
+        ENV['IIIF_IMAGE_BASE_URL'] = original_image_url
       end
       before do
         stub_metadata_cloud(oid.to_s)
@@ -73,7 +73,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
       it "can index a thumbnail path to Solr" do
         solr_document = parent_object_with_public_visibility.reload.to_solr
-        expect(solr_document[:thumbnail_path_ss]).to eq "http://iiif_image:8182/iiif/2/1052760/full/!200,200/0/default.jpg"
+        expect(solr_document[:thumbnail_path_ss]).to eq "http://localhost:8182/iiif/2/1052760/full/!200,200/0/default.jpg"
       end
     end
 
