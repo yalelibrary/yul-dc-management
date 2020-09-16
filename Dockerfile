@@ -1,4 +1,4 @@
-FROM yalelibraryit/dc-base:v1.0.0
+FROM yalelibraryit/dc-base:v1.0.1
 
 COPY ops/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 COPY ops/env.conf /etc/nginx/main.d/env.conf
@@ -8,7 +8,7 @@ RUN chmod +x /etc/service/nginx/run
 RUN rm -f /etc/service/nginx/down
 RUN apt-get update && apt-get install -y libtiff-tools libvips-tools imagemagick \
   &&  apt-get clean && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
 BUNDLE_JOBS=4
