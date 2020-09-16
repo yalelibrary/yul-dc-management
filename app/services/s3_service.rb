@@ -36,8 +36,9 @@ class S3Service
     end
   end
 
-  def self.presigned_url(remote_path, seconds)
-    object = Aws::S3::Object.new(bucket_name: ENV['S3_SOURCE_BUCKET_NAME'], key: remote_path)
+  def self.presigned_url(remote_path, seconds, bucket = ENV['S3_SOURCE_BUCKET_NAME'])
+    return remote_path unless bucket
+    object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
     object.presigned_url('get', expires_in: seconds)
   end
 

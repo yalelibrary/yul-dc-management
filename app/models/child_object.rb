@@ -21,7 +21,7 @@ class ChildObject < ApplicationRecord
   end
 
   def thumbnail_url
-    "#{IiifPresentation.image_url(oid)}/full/200,/0/default.jpg"
+    "#{IiifPresentation.new(parent_object).image_url(oid)}/full/200,/0/default.jpg"
   end
 
   def convert_to_ptiff
