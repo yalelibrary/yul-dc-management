@@ -352,7 +352,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
     let(:latest_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read }
 
     it "can get the uri for the previous page" do
-      expect(asr.previous_page_link(json_parsed_page)).to eq "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/streams/activity/page-2"
+      expect(asr.previous_page_link(json_parsed_page)).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-2"
     end
   end
 

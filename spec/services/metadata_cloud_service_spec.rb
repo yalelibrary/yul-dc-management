@@ -154,4 +154,11 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
       expect(path_to_example_file).not_to exist
     end
   end
+
+  it "gets the metadatacloud endpoint from an environment variable" do
+    original_metadata_cloud_host = ENV['METADATA_CLOUD_HOST']
+    ENV['METADATA_CLOUD_HOST'] = 'metadata-api-uat.library.yale.edu'
+    expect(described_class.metadata_cloud_host).to eq 'metadata-api-uat.library.yale.edu'
+    ENV['METADATA_CLOUD_HOST'] = original_metadata_cloud_host
+  end
 end
