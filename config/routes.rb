@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       post :update_metadata
     end
   end
+  resources :notifications, only: [:index, :destroy]
 
   devise_for :users
   resources :metadata_samples
