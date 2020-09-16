@@ -3,6 +3,13 @@ require "rails_helper"
 require "support/time_helpers"
 
 RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
+  around do |example|
+    original_metadata_cloud_host = ENV['METADATA_CLOUD_HOST']
+    ENV['METADATA_CLOUD_HOST'] = 'metadata-api-test.library.yale.edu'
+    example.run
+    ENV['METADATA_CLOUD_HOST'] = original_metadata_cloud_host
+  end
+
   let(:asr) { described_class.new }
   let(:relevant_parent_object) do
     FactoryBot.create(
