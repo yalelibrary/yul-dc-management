@@ -8,20 +8,38 @@ class ChildObject < ApplicationRecord
     S3Service.s3_exists?(remote_ptiff_path)
   end
 
-  def remote_ptiff_path
-    PyramidalTiffFactory.remote_ptiff_path(oid)
+  def access_master_path
+    return @access_master_path if @access_master_path
+    image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    @access_master_path = File.join(image_mount, pairtree_path, "#{oid}.tif")
   end
 
-  def access_master_path
-    PyramidalTiffFactory.access_master_path(oid)
+  def remote_access_master_path
+    return @remote_access_master_path if @remote_access_master_path
+    image_bucket = "originals"
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    @remote_access_master_path = File.join(image_bucket, pairtree_path, "#{oid}.tif")
+  end
+
+  def remote_ptiff_path
+    return @remote_ptiff_path if @remote_ptiff_path
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    @remote_ptiff_path = File.join("ptiffs", pairtree_path, File.basename(access_master_path))
+  end
+
+  def pyramidal_tiff
+    @pyramidal_tiff ||= PyramidalTiff.new(self)
   end
 
   def convert_to_ptiff
-    conversion_information = PyramidalTiffFactory.generate_ptiff_from(self)
-    return unless conversion_information
-    self.width = conversion_information[:width]
-    self.height = conversion_information[:height]
-    self.ptiff_conversion_at = Time.current
-    conversion_information
+    if pyramidal_tiff.valid?
+      self.width = pyramidal_tiff.conversion_information[:width]
+      self.height = pyramidal_tiff.conversion_information[:height]
+      self.ptiff_conversion_at = Time.current
+      pyramidal_tiff.conversion_information
+    else
+      parent_object.processing_failure("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}")
+    end
   end
 end

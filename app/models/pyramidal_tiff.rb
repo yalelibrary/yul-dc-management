@@ -1,0 +1,90 @@
+# frozen_string_literal: true
+
+# This class takes a child_object's oid, retrieves the access_master for that child object, creates a pyramidal tiff from the access master,
+# and saves that pyramidal tiff to an S3 bucket.
+class PyramidalTiff
+  include ActiveModel::Validations
+
+  attr_accessor :child_object, :conversion_information
+  validate :verify_and_generate
+  delegate :access_master_path, :remote_access_master_path, :remote_ptiff_path, :oid, to: :child_object
+
+  # This method takes the oid of a child_object and creates a new PyramidalTiff
+  def initialize(child_object)
+    @child_object = child_object
+    @conversion_information = {}
+  end
+
+  def generate_ptiff
+    Dir.mktmpdir do |swing_tmpdir|
+      tiff_input_path = copy_access_master_to_working_directory(swing_tmpdir)
+      Dir.mktmpdir do |ptiff_tmpdir|
+        self.conversion_information = convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
+        save_to_s3(File.join(ptiff_tmpdir, File.basename(access_master_path)))
+      end
+    end
+    conversion_information
+  end
+
+  def verify_and_generate
+    ptiff_info = { oid: oid.to_s }
+    # cannot convert to PTIFF if we can't find the original
+    return false unless original_file_exists?
+    # do not do the image conversion if there is already a PTIFF on S3
+    if child_object.height && child_object.width && S3Service.s3_exists?(child_object.remote_ptiff_path)
+      errors.add(:base, "PTIFF exists on S3, not converting: #{ptiff_info.to_json}")
+      false
+    else
+      generate_ptiff
+    end
+  end
+
+  def original_file_exists?
+    if ENV['ACCESS_MASTER_MOUNT'] == "s3"
+      image_exists = S3Service.s3_exists?(remote_access_master_path)
+      errors.add(:base, "Expected file #{remote_access_master_path} not found.") unless image_exists
+    else
+      image_exists = File.exist?(access_master_path)
+      errors.add(:base, "Expected file #{access_master_path} not found.") unless image_exists
+    end
+    image_exists
+  end
+
+  ##
+  # Create a temp copy of the input file in TEMP_IMAGE_WORKSPACE
+  # @param [String] tmpdir - the tmpdir location where the file should be written
+  # @return [String] the full path where the file was downloaded
+  def copy_access_master_to_working_directory(tmpdir)
+    temp_file_path = File.join(tmpdir, File.basename(access_master_path))
+    if ENV['ACCESS_MASTER_MOUNT'] == "s3"
+      download = S3Service.download_image(remote_access_master_path, temp_file_path)
+      temp_file_path if download
+    else
+      FileUtils.cp(access_master_path, tmpdir)
+      return temp_file_path if checksums_match?(access_master_path, temp_file_path)
+    end
+  end
+
+  def convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
+    ptiff_output_path = File.join(ptiff_tmpdir, File.basename(access_master_path))
+    stdout, _stderr, status = Open3.capture3("app/lib/tiff_to_pyramid.bash #{Dir.mktmpdir} #{tiff_input_path} #{ptiff_output_path}")
+    errors.add(:base, "Conversion script exited with error code #{status.exitstatus}") if status.exitstatus != 0
+    width = stdout.match(/Pyramid width: (\d*)/)&.captures&.[](0)
+    height = stdout.match(/Pyramid height: (\d*)/)&.captures&.[](0)
+    { width: width, height: height }
+  end
+
+  def save_to_s3(ptiff_output_path)
+    S3Service.upload_image(ptiff_output_path, remote_ptiff_path)
+  end
+
+  ##
+  # @return [Boolean] true if checksums match
+  def checksums_match?(access_master_path, temp_file_path)
+    access_master_checksum = Digest::SHA256.file(access_master_path)
+    temp_file_checksum = Digest::SHA256.file(temp_file_path)
+    return true if access_master_checksum == temp_file_checksum
+    checksum_info = { oid: oid.to_s, access_master_path: access_master_path.to_s, temp_file_path: temp_file_path.to_s }
+    errors.add(:base, "File copy unsuccessful, checksums do not match: #{checksum_info.to_json}")
+  end
+end

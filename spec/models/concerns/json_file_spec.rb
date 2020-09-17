@@ -11,8 +11,8 @@ RSpec.describe JsonFile, prep_metadata_sources: true do
   end
 
   before do
-    allow(PyramidalTiffFactory).to receive(:generate_ptiff_from).and_return(width: 2591, height: 4056)
     stub_metadata_cloud("16685691")
+    stub_ptiffs_and_manifests
   end
 
   it "can save a ParentObject to json" do
