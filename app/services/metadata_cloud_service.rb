@@ -90,6 +90,6 @@ class MetadataCloudService
   end
 
   def self.metadata_cloud_host
-    Rails.application.config.metadata_cloud_host
+    ENV['METADATA_CLOUD_HOST'] || 'metadata-api-uat.library.yale.edu'
   end
 end

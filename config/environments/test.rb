@@ -55,8 +55,5 @@ Rails.application.configure do
   # The dev and test environments have very high starting values to distinguish from prod
   config.oid_sequence_initial_value = 200_000_000
 
-  # Metadata Cloud Host
-  config.metadata_cloud_host = "metadata-api-test.library.yale.edu"
-
   config.active_job.queue_adapter = :test
 end
