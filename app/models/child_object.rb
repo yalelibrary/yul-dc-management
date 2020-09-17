@@ -32,10 +32,6 @@ class ChildObject < ApplicationRecord
     @pyramidal_tiff ||= PyramidalTiff.new(self)
   end
 
-  def remote_access_master_path
-    PyramidalTiffFactory.remote_access_master_path(oid)
-  end
-
   def thumbnail_url
     "#{IiifPresentation.new(parent_object).image_url(oid)}/full/200,/0/default.jpg"
   end

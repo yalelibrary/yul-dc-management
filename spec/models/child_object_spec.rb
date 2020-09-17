@@ -27,25 +27,9 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     expect(child_object.width).to be_nil
   end
 
-  context "a child object with an image that has been converted" do
-    around do |example|
-      perform_enqueued_jobs do
-        example.run
-      end
-    end
-    it "has valid height and width after jobs complete" do
-      parent_object.reload
-      first_child_object = parent_object.child_objects.first
-      expect(first_child_object.height).not_to be_nil
-      expect(first_child_object.width).not_to be_nil
-      expect(first_child_object.height).to be 4056
-      expect(first_child_object.width).to be 2591
-    end
-    it "has a valid thumbnail url" do
-      parent_object.reload
-      first_child_object = parent_object.child_objects.first
-      expect(first_child_object.thumbnail_url).to eq "#{(ENV['IIIF_IMAGE_BASE_URL'])}/2/1042003/full/200,/0/default.jpg"
-    end
+  it "has a valid thumbnail url" do
+    first_child_object = parent_object.child_objects.first
+    expect(first_child_object.thumbnail_url).to eq "#{(ENV['IIIF_IMAGE_BASE_URL'])}/2/456789/full/200,/0/default.jpg"
   end
 
   it "has a valid height and width after conversion" do
