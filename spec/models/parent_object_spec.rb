@@ -13,7 +13,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     stub_metadata_cloud("2004628", "ladybird")
     stub_metadata_cloud("2005512", "ladybird")
     stub_metadata_cloud("V-2004628", "ils")
-    allow(PyramidalTiffFactory).to receive(:generate_ptiff_from).and_return(width: 2591, height: 4056)
+    stub_ptiffs_and_manifests
   end
 
   context "a newly created ParentObject with an unexpected authoritative_metadata_source" do

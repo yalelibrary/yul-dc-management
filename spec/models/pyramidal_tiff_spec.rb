@@ -2,7 +2,7 @@
 require 'aws-sdk-s3'
 require 'rails_helper'
 
-RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr do
+RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
   let(:oid) { 1_002_533 }
   let(:child_object) { FactoryBot.build_stubbed(:child_object, oid: oid) }
   let(:ptf) { described_class.new(child_object) }
@@ -33,27 +33,24 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
     let(:child_object_has_ptiff) { FactoryBot.build_stubbed(:child_object, oid: has_ptiff_oid) }
     let(:invalid_ptf) { described_class.new(child_object_has_ptiff) }
 
-    before do
-      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/1001.tif")
-        .to_return(status: 200)
-    end
     it "logs errors if the job is not valid" do
+      expect(ptf).to receive(:generate_ptiff).and_return(height: 100, width: 100)
       expected_file_one = "spec/fixtures/images/temp_images/1001.tif"
       expect(File.exist?(expected_file_one)).to eq false
-      expect(ptf.valid?(child_object)).to eq true
-      expect(invalid_ptf.valid?(child_object_has_ptiff)).to eq false
+      expect(ptf.valid?).to eq true
+      expect(invalid_ptf.valid?).to eq false
     end
   end
 
   it "can call a wrapper method" do
     allow(described_class).to receive(:new).and_return(ptf)
     expect(ptf).to receive(:save_to_s3)
-    expect(described_class.generate_ptiff_from(child_object))
+    expect(described_class.new(child_object).generate_ptiff)
   end
 
   it "can be instantiated" do
     expect(ptf).to be_instance_of described_class
-    expect(ptf.oid).to eq oid.to_s
+    expect(ptf.oid).to eq oid
   end
 
   it "can find the access master, given an oid" do
@@ -81,18 +78,14 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
     stub_request(:get, "https://yale-image-samples.s3.amazonaws.com/originals/1002533.tif")
       .to_return(status: 200, body: File.open('spec/fixtures/images/sample_cmyk.tiff', 'rb'))
     ptiff_tmpdir = "spec/fixtures/images/ptiff_images/"
-    expect { ptf.convert_to_ptiff("spec/fixtures/images/sample_cmyk.tiff", ptiff_tmpdir) }
-      .to(raise_error(RuntimeError, /Conversion script exited with error code .*/))
+    ptf.convert_to_ptiff("spec/fixtures/images/sample_cmyk.tiff", ptiff_tmpdir)
+    expect(ptf.errors.full_messages.first).to match(/Conversion script exited with error code .*/)
   end
 
   it "checks for file checksum and fails if it doesn't match" do
-    expect do
-      ptf.checksums_match?("spec/fixtures/images/access_masters/test_image.tif", "spec/fixtures/images/temp_images/autumn_test.tif")
-    end.to(
-      raise_error(RuntimeError,
-                  "File copy unsuccessful, checksums do not match: {\"oid\":\"1002533\",\"access_master_path\":" \
+    ptf.checksums_match?("spec/fixtures/images/access_masters/test_image.tif", "spec/fixtures/images/temp_images/autumn_test.tif")
+    expect(ptf.errors.full_messages.first).to eq("File copy unsuccessful, checksums do not match: {\"oid\":\"1002533\",\"access_master_path\":" \
                   "\"spec/fixtures/images/access_masters/test_image.tif\",\"temp_file_path\":\"spec/fixtures/images/temp_images/autumn_test.tif\"}")
-    )
   end
 
   it "copies the local access master to a swing directory" do
@@ -143,10 +136,9 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
     end
 
     it "does not perform conversion if remote PTIFF exists" do
-      allow(Rails.logger).to receive(:info) { :logger_mock }
-      described_class.generate_ptiff_from(child_with_remote_ptiff)
-      expect(Rails.logger).to have_received(:info)
-        .with("PTIFF exists on S3, not converting: {\"oid\":\"111111\"}")
+      ptiff = described_class.new(child_with_remote_ptiff)
+      expect(ptiff.valid?).to be(false)
+      expect(ptiff.errors.full_messages.first).to eq("PTIFF exists on S3, not converting: {\"oid\":\"111111\"}")
     end
 
     it "copies the remote access master to a swing directory" do
@@ -164,7 +156,7 @@ RSpec.describe PyramidalTiffFactory, prep_metadata_sources: true, type: :has_vcr
       allow(described_class).to receive(:new).and_return(ptf)
       expect(ptf).to receive(:save_to_s3)
       VCR.use_cassette("download image 1014543") do
-        expect(described_class.generate_ptiff_from(child_object))
+        expect(described_class.new(child_object).generate_ptiff)
       end
     end
   end
