@@ -9,7 +9,7 @@ RSpec.describe "child_objects/show", type: :view, prep_metadata_sources: true do
     stub_metadata_cloud("2004628")
     parent_object
     @child_object = assign(:child_object, ChildObject.create!(
-                                            oid: 1,
+                                            oid: 10,
                                             caption: "Caption",
                                             width: 2,
                                             height: 3,

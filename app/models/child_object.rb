@@ -32,6 +32,10 @@ class ChildObject < ApplicationRecord
     @pyramidal_tiff ||= PyramidalTiff.new(self)
   end
 
+  def thumbnail_url
+    "#{IiifPresentation.new(parent_object).image_url(oid)}/full/200,/0/default.jpg"
+  end
+
   def convert_to_ptiff
     if pyramidal_tiff.valid?
       self.width = pyramidal_tiff.conversion_information[:width]

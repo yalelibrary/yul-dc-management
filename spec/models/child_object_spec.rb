@@ -27,6 +27,11 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     expect(child_object.width).to be_nil
   end
 
+  it "has a valid thumbnail url" do
+    first_child_object = parent_object.child_objects.first
+    expect(first_child_object.thumbnail_url).to eq "#{(ENV['IIIF_IMAGE_BASE_URL'])}/2/456789/full/200,/0/default.jpg"
+  end
+
   it "has a valid height and width after conversion" do
     expect(child_object.height).to be_nil
     expect(child_object.width).to be_nil
@@ -39,7 +44,11 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     expect(child_object.parent_object).to be_instance_of ParentObject
   end
 
-  it "can tell whether its remote ptiff exists" do
-    expect(child_object.remote_ptiff_exists?).to eq true
+  it "can return a the remote access master path" do
+    expect(child_object.remote_access_master_path).to eq "originals/89/45/67/89/456789.tif"
+  end
+
+  it "can return a the remote ptiff path" do
+    expect(child_object.remote_ptiff_path).to eq "ptiffs/89/45/67/89/456789.tif"
   end
 end
