@@ -17,6 +17,25 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     # rubocop:enable RSpec/AnyInstance
   end
 
+  describe "changing the authoritative metadata source", solr: true do
+    let(:oid) { "2034600" }
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
+    before do
+      stub_metadata_cloud(oid)
+      parent_object
+    end
+    it "indexes the ladybird_json then overwrites with the Voyager json" do
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document[:title_tesim]).to eq ["[Magazine page with various photographs of Leontyne Price]"]
+      parent_object.source_name = "ils"
+      parent_object.save!
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document[:title_tesim]).to eq ["Ebony"]
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to eq 1
+    end
+  end
+
   context "indexing to Solr from the database with Ladybird ParentObjects", solr: true do
     it "can index the 5 parent objects in the database to Solr" do
       response = solr.get 'select', params: { q: '*:*' }
@@ -41,7 +60,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   end
 
   context "with Voyager fixture data" do
-    let(:metadata_fixture_path) { File.join(fixture_path, metadata_source) }
     let(:oid) { "2012036" }
     let(:metadata_source) { "ils" }
     let(:id_prefix) { "V-" }

@@ -30,7 +30,7 @@ module SolrIndexable
     return nil if json_to_index.blank? || !manifest_completed?
     {
       # example_suffix: json_to_index[""],
-      id: "#{id_prefix}#{oid}",
+      id: oid.to_s,
       abstract_tesim: json_to_index["abstract"],
       accessionNumber_ssi: json_to_index["accessionNumber"],
       accessRestrictions_tesim: json_to_index["accessRestrictions"],
@@ -137,10 +137,6 @@ module SolrIndexable
       subject_topic_tsim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
       title_tsim: json_to_index["title"] # replaced by title_tesim
     }
-  end
-
-  def id_prefix
-    @id_prefix ||= authoritative_metadata_source&.file_prefix
   end
 
   def extract_visibility(json_to_index)
