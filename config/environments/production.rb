@@ -102,7 +102,5 @@ Rails.application.configure do
   # Set the initial value for the OID sequence
   config.oid_sequence_initial_value = 30_000_000
 
-  # Metadata Cloud Host
-  config.metadata_cloud_host = "metadata-api-uat.library.yale.edu"
   config.active_job.queue_adapter = :delayed_job
 end
