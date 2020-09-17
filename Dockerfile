@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y libtiff-tools libvips-tools imagemagick
   &&  apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+COPY ops/policy.xml /etc/ImageMagick-6/policy.xml 
+
 ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
 BUNDLE_JOBS=4
 RUN gem install bundler -v 2.1.4
