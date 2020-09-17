@@ -15,7 +15,7 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
   end
 
   before do
-    allow(PyramidalTiffFactory).to receive(:generate_ptiff_from).and_return(width: 2591, height: 4056)
+    stub_ptiffs_and_manifests
     stub_metadata_cloud("2034600")
     stub_metadata_cloud("2005512")
     stub_metadata_cloud("16414889")
@@ -153,5 +153,12 @@ RSpec.describe MetadataCloudService, prep_metadata_sources: true do
       described_class.save_json_from_oids(unfindable_oid_array, "ladybird")
       expect(path_to_example_file).not_to exist
     end
+  end
+
+  it "gets the metadatacloud endpoint from an environment variable" do
+    original_metadata_cloud_host = ENV['METADATA_CLOUD_HOST']
+    ENV['METADATA_CLOUD_HOST'] = 'metadata-api-uat.library.yale.edu'
+    expect(described_class.metadata_cloud_host).to eq 'metadata-api-uat.library.yale.edu'
+    ENV['METADATA_CLOUD_HOST'] = original_metadata_cloud_host
   end
 end

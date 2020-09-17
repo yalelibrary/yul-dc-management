@@ -12,4 +12,21 @@ module StubRequestHelper
         .to_return(status: 200, body: File.open(File.join(fixture_path, source_name, "#{oid}.json")))
     end
   end
+
+  def stub_ptiffs_and_manifests
+    stub_ptiffs
+    stub_manifests
+  end
+
+  # rubocop:disable RSpec/AnyInstance
+  def stub_ptiffs
+    allow_any_instance_of(PyramidalTiff).to receive(:generate_ptiff).and_return(width: 2591, height: 4056)
+    allow_any_instance_of(PyramidalTiff).to receive(:valid?).and_return(true)
+    allow_any_instance_of(PyramidalTiff).to receive(:conversion_information).and_return(width: 2591, height: 4056)
+  end
+
+  def stub_manifests
+    allow_any_instance_of(IiifPresentation).to receive(:save).and_return(true)
+  end
+  # rubocop:enable RSpec/AnyInstance
 end

@@ -26,7 +26,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/21/16/17/24/21/16172421.json")
       .to_return(status: 200)
     stub_metadata_cloud("16172421")
-    allow(PyramidalTiffFactory).to receive(:generate_ptiff_from).and_return(width: 2591, height: 4056)
+    stub_ptiffs
     parent_object
     # The parent object gets its metadata populated via a background job, and we can't assume that has run,
     # so stub the part of the metadata we need for the iiif_presentation

@@ -11,7 +11,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   end
 
   before do
-    allow(PyramidalTiffFactory).to receive(:generate_ptiff_from).and_return(width: 2591, height: 4056)
+    stub_ptiffs_and_manifests
     # rubocop:disable RSpec/AnyInstance
     allow_any_instance_of(ParentObject).to receive(:manifest_completed?).and_return(true)
     # rubocop:enable RSpec/AnyInstance
