@@ -11,6 +11,10 @@ module SolrIndexable
         solr.commit
       end
     end
+
+    def solr_delete_all
+      SolrService.delete_all
+    end
   end
 
   def solr_index
@@ -18,6 +22,12 @@ module SolrIndexable
     return unless indexable.present?
     solr = SolrService.connection
     solr.add([indexable])
+    solr.commit
+  end
+
+  def solr_delete
+    solr = SolrService.connection
+    solr.delete_by_id("#{id_prefix}#{oid}")
     solr.commit
   end
 

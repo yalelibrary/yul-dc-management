@@ -18,7 +18,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   end
 
   context "indexing to Solr from the database with Ladybird ParentObjects", solr: true do
-    it "can index the 5 parent objects in the database to Solr" do
+    it "can index the 5 parent objects in the database to Solr and can remove those items" do
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 0
 
@@ -37,6 +37,37 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 5
+
+      expect(ParentObject.solr_delete_all).to be
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to eq 0
+    end
+
+    it 'can remove an item from Solr' do
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to eq 0
+
+      expect do
+        [
+          '2034600'
+        ].each do |oid|
+          stub_metadata_cloud(oid)
+          FactoryBot.create(:parent_object, oid: oid)
+        end
+      end.to change { ParentObject.count }.by(1)
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to eq 1
+
+      expect do
+        [
+          '2034600'
+        ].each do |oid|
+          ParentObject.find(oid).destroy
+        end
+      end.to change { ParentObject.count }.by(-1)
+
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to eq 0
     end
   end
 
