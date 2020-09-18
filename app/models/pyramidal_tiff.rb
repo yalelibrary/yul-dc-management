@@ -32,8 +32,8 @@ class PyramidalTiff
     return false unless original_file_exists?
     # do not do the image conversion if there is already a PTIFF on S3
     if child_object.height && child_object.width && S3Service.s3_exists?(child_object.remote_ptiff_path)
-      errors.add(:base, "PTIFF exists on S3, not converting: #{ptiff_info.to_json}")
-      false
+      child_object.parent_object.process_failure("PTIFF exists on S3, not converting: #{ptiff_info.to_json}", 'info')
+      true
     else
       generate_ptiff
     end
