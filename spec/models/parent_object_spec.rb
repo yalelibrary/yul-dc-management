@@ -159,7 +159,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         end
       end
 
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: '100001') }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: '16173726') }
 
       it 'returns a processing_failure message' do
         msg = 'Metadata source not found, should be one of [ladybird, ils, aspace]'
