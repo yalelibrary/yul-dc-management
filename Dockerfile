@@ -1,4 +1,4 @@
-FROM yalelibraryit/dc-base:v1.0.1
+FROM yalelibraryit/dc-base:gem_test
 
 COPY ops/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 COPY ops/env.conf /etc/nginx/main.d/env.conf
@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y libtiff-tools libvips-tools imagemagick
   &&  apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY ops/policy.xml /etc/ImageMagick-6/policy.xml 
+COPY ops/policy.xml /etc/ImageMagick-6/policy.xml
 
 ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
 BUNDLE_JOBS=4

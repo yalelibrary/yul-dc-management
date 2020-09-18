@@ -9,8 +9,10 @@ gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap', '~> 4.5'
 gem 'coderay', '~> 1.1', '>= 1.1.3'
+gem 'daemons'
+gem 'delayed_job_active_record'
+gem 'delayed_job_web'
 gem 'devise'
-gem 'github_changelog_generator'
 gem 'honeybadger', '~> 4.0'
 gem 'http', '~> 4.4', '>= 4.4.1'
 gem 'iiif-presentation', '~> 1.0'
@@ -26,7 +28,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3'
-gem "rails_semantic_logger", ">=4.4.4"
+gem 'rails_semantic_logger', '>=4.4.4'
 # Use rsolr to connect to Solr
 gem 'rsolr', '~> 2.3'
 # Use SCSS for stylesheets
@@ -38,10 +40,6 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 4.0'
 
-gem 'daemons'
-gem 'delayed_job_active_record'
-gem "delayed_job_web"
-
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
@@ -51,15 +49,12 @@ gem "delayed_job_web"
 # gem 'image_processing', '~> 1.2'
 
 group :development, :test do
-  gem "amazing_print", ">=1.2.1" # colorized logging
+  gem 'amazing_print', '>=1.2.1' # colorized logging
   # Using Bixby for style for consistency with Blacklight application(s)
   gem 'bixby'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 4.0.0'
-  gem 'vcr', '~> 6.0'
-  gem 'webmock', '~> 3.8', '>= 3.8.3'
 end
 
 group :development do
@@ -74,6 +69,9 @@ end
 group :test do
   gem 'capybara', '>= 2.15'
   gem 'coveralls', require: false
+  gem 'factory_bot_rails'
   gem 'selenium-webdriver'
+  gem 'vcr', '~> 6.0'
   gem 'webdrivers'
+  gem 'webmock', '~> 3.8', '>= 3.8.3'
 end
