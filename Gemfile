@@ -74,6 +74,8 @@ end
 group :test do
   gem 'capybara', '>= 2.15'
   gem 'coveralls', require: false
+  # Reports for CI
+  gem 'rspec_junit_formatter'
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
