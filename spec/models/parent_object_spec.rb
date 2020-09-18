@@ -150,7 +150,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
     context 'with an incorrect authoritative_metadata_source' do
       before do
-        User.destroy_all
         3.times do |user|
           User.create!(
             id: user.to_s,
