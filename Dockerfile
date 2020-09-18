@@ -1,7 +1,4 @@
 FROM yalelibraryit/dc-base:gem_test
-RUN apt-get update && apt-get install -y libtiff-tools libvips-tools imagemagick \
-  &&  apt-get clean && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY ops/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 COPY ops/env.conf /etc/nginx/main.d/env.conf
