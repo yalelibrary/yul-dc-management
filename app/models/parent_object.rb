@@ -44,7 +44,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def processing_failure(message, status='failed')
+  def processing_failure(message, status = 'failed')
     IngestNotification.with(parent_object: self, status: status, reason: message).deliver_all
   end
 
