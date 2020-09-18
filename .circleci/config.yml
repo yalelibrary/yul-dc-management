@@ -23,7 +23,7 @@ jobs:
       - docker/check
       - docker/build:
           image: yalelibraryit/dc-management
-          cache_from: yalelibraryit/dc-management:master
+          cache_from: yalelibraryit/dc-management:faster_ci_take_2
       - docker/push:
           image: yalelibraryit/dc-management
   run-tests:
