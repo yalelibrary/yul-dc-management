@@ -1,41 +1,14 @@
-commands:
-  docker-tag:
-    description: "Add a new tag to a docker image that has already been pulled"
-    parameters:
-      from_tag:
-        type: string
-        default: $CIRCLE_SHA1
-      to_tag:
-        type: string
-        default: "master"
-      image:
-        type: string
-    steps:
-      - run: >
-          docker tag <<parameters.image>>:<<parameters.from_tag>> <<parameters.image>>:<<parameters.to_tag>>
-
-jobs:
-  build-and-push:
-    executor: docker/docker
-    steps:
-      - setup_remote_docker
-      - checkout
-      - docker/check
-      - docker/build:
-          image: yalelibraryit/dc-management
-          cache_from: yalelibraryit/dc-management:faster_ci_take_2
-      - run: >
-          gem install camerata |
-          cam up management --detach |
-          cam sh management |
-          rubocop --parallel
-      - docker/push:
-          image: yalelibraryit/dc-management
-  run-tests:
-    docker:
-      # Image pulled from registry
-      - image: yalelibraryit/dc-management:$CIRCLE_SHA1
-        environment:
+version: 2 # use CircleCI 2.0
+jobs: # a collection of steps
+  build: # runs not using Workflows must have a `build` job as entry point
+    parallelism: 3 # run three instances of this job in parallel
+    docker: # run the steps with Docker
+      - image: circleci/ruby:2.6.5-buster-node-browsers # ...with this image as the primary container; this is where all `steps` will run
+        environment: # environment variables for primary container
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          RAILS_ENV: test
           IIIF_IMAGE_BASE_URL: http://localhost:8182/iiif
           POSTGRES_HOST: localhost
           POSTGRES_DB: management_yul_test
@@ -43,87 +16,72 @@ jobs:
           POSTGRES_PASSWORD: password
           SOLR_CORE: blacklight-test
           SOLR_BASE_URL: http://localhost:8983/solr
+      - image: circleci/postgres:9.5-alpine # database image
+        environment: # environment variables for database
+          POSTGRES_USER: circleci-demo-ruby
+          POSTGRES_DB: management_yul_test
+          POSTGRES_PASSWORD: ""
       - image: yalelibraryit/dc-solr:v1.0.1
         command: bash -c 'precreate-core blacklight-test /opt/config; exec solr -f'
-      - image: circleci/postgres:9.5-alpine-ram
-        environment:
-          POSTGRES_DB: management_yul_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-    executor: docker/docker
-    steps:
-      - setup_remote_docker
-      - run:
-          name: Rubocop
-          command: |
-            cd /home/app/webapp && bundle exec rubocop --parallel
-      - run:
-          name: rspec
-          # Excludes tests that require Yale VPN access
-          command: |
-            mkdir /tmp/test-results
-            cd /home/app/webapp && bundle exec rspec --tag ~vpn_only:true $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-      - run:
-          name: Upload code coverage stats
-          command: curl -k https://coveralls.io/webhook?repo_token=${COVERALLS_REPO_TOKEN} -d "payload[build_num]=${CIRCLE_BUILD_NUM}&payload[status]=done"
+    steps: # a collection of executable commands
+      - checkout # special step to check out source code to working directory
 
-  publish-latest:
-    executor: docker/docker
-    steps:
-      - setup_remote_docker
-      - docker/check
-      - docker/pull:
-          images: yalelibraryit/dc-management:$CIRCLE_SHA1
-      # Dockerhub tags allow alphanumeric characters, periods, underscores, and hyphens.
-      # This run step makes CLEAN_BRANCH, the branch name with all forbidden characters removed,
-      # available to subsequent steps.
-      - run: |
-          echo "export CLEAN_BRANCH=`echo $CIRCLE_BRANCH |sed 's#[^[:alnum:]._-]##g'`" >> $BASH_ENV
-      - docker-tag:
-          image: yalelibraryit/dc-management
-          from_tag: $CIRCLE_SHA1
-          to_tag: $CLEAN_BRANCH
-      - docker/push:
-          image: yalelibraryit/dc-management
-          tag: $CLEAN_BRANCH
-  publish-github-release:
-    executor: docker/docker
-    steps:
-      - setup_remote_docker
-      - checkout
-      - docker/check
-      - run: |
-          ./bin/wait-for-docker-image yalelibraryit/dc-management $CIRCLE_SHA1
-      - docker/pull:
-          images: yalelibraryit/dc-management:$CIRCLE_SHA1
-      - docker-tag:
-          image: yalelibraryit/dc-management
-          from_tag: $CIRCLE_SHA1
-          to_tag: $CIRCLE_TAG
-      - docker/push:
-          image: yalelibraryit/dc-management
-          tag: $CIRCLE_TAG
+      # Which version of bundler?
+      - run:
+          name: Install latest bundler
+          command: gem install bundler
 
-orbs:
-  docker: circleci/docker@1.0.1
-version: 2.1
-workflows:
-  commit:
-    jobs:
-      - build-and-push:
-          context: yul-dc
-      - run-tests:
-          requires:
-            - build-and-push
-      - publish-latest:
-          context: yul-dc
-          requires:
-            - build-and-push
-            - run-tests
-      - publish-github-release:
-          context: yul-dc
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v\d+\.\d+\.\d+$/
+      # Restore bundle cache
+      # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+      - restore_cache:
+          keys:
+            - rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
+            - rails-demo-bundle-v2-
+
+      - run: # Install Ruby dependencies
+          name: Bundle Install
+          command: bundle check --path vendor/bundle || bundle install --deployment
+
+      # Store bundle cache for Ruby dependencies
+      - save_cache:
+          key: rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      # Only necessary if app uses webpacker or yarn in some other way
+      - restore_cache:
+          keys:
+            - rails-demo-yarn-{{ checksum "yarn.lock" }}
+            - rails-demo-yarn-
+
+      - run:
+          name: Yarn Install
+          command: yarn install --cache-folder ~/.cache/yarn
+
+      # Store yarn / webpacker cache
+      - save_cache:
+          key: rails-demo-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run:
+          name: Database setup
+          command: bin/rails db:schema:load --trace
+
+      - run:
+          name: Run rspec in parallel
+          command: |
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out test_results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+
+      # Save test results for timing analysis
+      - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: test_results
+      # See https://circleci.com/docs/2.0/deployment-integrations/ for example deploy configs
