@@ -13,7 +13,11 @@ Rails.application.routes.draw do
       post :update_metadata
     end
   end
-  resources :notifications, only: [:index, :destroy]
+  resources :notifications, only: [:index, :destroy] do
+    collection do
+      delete :resolve_all
+    end
+  end
 
   devise_for :users
   resources :metadata_samples
