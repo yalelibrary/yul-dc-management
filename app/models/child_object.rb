@@ -3,6 +3,7 @@
 class ChildObject < ApplicationRecord
   belongs_to :parent_object, foreign_key: 'parent_object_oid', class_name: "ParentObject"
   self.primary_key = 'oid'
+  paginates_per 5
 
   def remote_ptiff_exists?
     S3Service.s3_exists?(remote_ptiff_path)

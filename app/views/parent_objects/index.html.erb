@@ -59,6 +59,7 @@
         <% end %>
       </tbody>
     </table>
+    <%= paginate @parent_objects %>
   </div>
 </div>
 <%= link_to 'New Parent Object', new_parent_object_path %>
