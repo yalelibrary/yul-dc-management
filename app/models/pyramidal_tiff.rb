@@ -68,7 +68,8 @@ class PyramidalTiff
   def convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
     ptiff_output_path = File.join(ptiff_tmpdir, File.basename(access_master_path))
     stdout, _stderr, status = Open3.capture3("app/lib/tiff_to_pyramid.bash #{Dir.mktmpdir} #{tiff_input_path} #{ptiff_output_path}")
-    errors.add(:base, "Conversion script exited with error code #{status.exitstatus}") if status.exitstatus != 0
+    errors.add(:base, "Conversion script exited with error code #{status.exitstatus}. #{stdout}") if status.exitstatus != 0
+    return if status.exitstatus != 0
     width = stdout.match(/Pyramid width: (\d*)/)&.captures&.[](0)
     height = stdout.match(/Pyramid height: (\d*)/)&.captures&.[](0)
     { width: width, height: height }
