@@ -19,8 +19,8 @@ class PyramidalTiff
     Dir.mktmpdir do |swing_tmpdir|
       tiff_input_path = copy_access_master_to_working_directory(swing_tmpdir)
       Dir.mktmpdir do |ptiff_tmpdir|
-        self.conversion_information = convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
-        save_to_s3(File.join(ptiff_tmpdir, File.basename(access_master_path)))
+        @conversion_information = convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
+        save_to_s3(File.join(ptiff_tmpdir, File.basename(access_master_path))) unless @conversion_information.empty?
       end
     end
     conversion_information
@@ -69,7 +69,7 @@ class PyramidalTiff
     ptiff_output_path = File.join(ptiff_tmpdir, File.basename(access_master_path))
     stdout, stderr, status = Open3.capture3("app/lib/tiff_to_pyramid.bash #{Dir.mktmpdir} #{tiff_input_path} #{ptiff_output_path}")
     errors.add(:base, "Conversion script exited with error code #{status.exitstatus}. ---\n#{stdout}---\n#{stderr}") if status.exitstatus != 0
-    return if status.exitstatus != 0
+    return {} if status.exitstatus != 0
     width = stdout.match(/Pyramid width: (\d*)/)&.captures&.[](0)
     height = stdout.match(/Pyramid height: (\d*)/)&.captures&.[](0)
     { width: width, height: height }
