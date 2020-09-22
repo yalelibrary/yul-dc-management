@@ -14,6 +14,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_save :setup_metadata_job
   after_update :solr_index_job # we index from the fetch job on create
   after_destroy :solr_delete
+  paginates_per 50
 
   def create_child_records
     return unless ladybird_json

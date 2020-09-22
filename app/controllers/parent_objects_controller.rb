@@ -6,7 +6,7 @@ class ParentObjectsController < ApplicationController
   # GET /parent_objects
   # GET /parent_objects.json
   def index
-    @parent_objects = ParentObject.all
+    @parent_objects = ParentObject.page params[:page]
   end
 
   # GET /parent_objects/1
