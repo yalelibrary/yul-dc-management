@@ -7,13 +7,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def cas
-    @user = User.where(provider: auth.provider, uid: auth.uid).first
-    if @user.nil?
-      @user = User.create(
-        provider: auth.provider,
-        uid: auth.uid
-      )
-    end
+    @user = User.from_cas(auth)
 
     if @user
       sign_in @user, event: :authentication # this will throw if @user is not activated
