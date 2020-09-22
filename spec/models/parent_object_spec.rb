@@ -61,7 +61,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         expect(parent_object.voyager_json).not_to be nil
       end
 
-      it " creates and has a count of ChildObjects" do
+      it "creates and has a count of ChildObjects" do
         expect(parent_object.reload.child_object_count).to eq 2
         expect(ChildObject.where(parent_object_oid: "2005512").count).to eq 2
       end
@@ -182,6 +182,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         expect(parent_object.reload.child_labels).to be_an(Array)
         expect(parent_object.reload.child_oids).to be_empty
         expect(parent_object.reload.child_oids).to be_an(Array)
+      end
+
+      it 'is marked as ready for manifest' do
+        expect(parent_object.reload.ready_for_manifest?).to eq true
       end
     end
 
