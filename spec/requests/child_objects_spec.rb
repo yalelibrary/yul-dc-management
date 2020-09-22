@@ -14,6 +14,7 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/child_objects", type: :request, prep_metadata_sources: true do
+  let(:user) { FactoryBot.create(:user) }
   # ChildObject. As you add validations to ChildObject, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
@@ -35,6 +36,7 @@ RSpec.describe "/child_objects", type: :request, prep_metadata_sources: true do
   before do
     stub_metadata_cloud("2004628")
     parent_object
+    login_as(user)
   end
 
   describe "GET /index" do

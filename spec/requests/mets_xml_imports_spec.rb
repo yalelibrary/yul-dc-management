@@ -14,6 +14,7 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/mets_xml_imports", type: :request do
+  let(:user) { FactoryBot.create(:user) }
   # MetsXmlImport. As you add validations to MetsXmlImport, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
@@ -22,6 +23,10 @@ RSpec.describe "/mets_xml_imports", type: :request do
 
   let(:invalid_attributes) do
     skip("Add a hash of attributes invalid for your model")
+  end
+
+  before do
+    login_as(user)
   end
 
   describe "GET /index" do

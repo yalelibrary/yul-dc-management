@@ -14,10 +14,12 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
+  let(:user) { FactoryBot.create(:user) }
   # ParentObject. As you add validations to ParentObject, be sure to
   # adjust the attributes here as well.
   before do
     stub_metadata_cloud("2004628")
+    login_as(user)
   end
 
   let(:valid_attributes) do

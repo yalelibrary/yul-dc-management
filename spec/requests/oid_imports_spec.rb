@@ -2,6 +2,10 @@
 require 'rails_helper'
 
 RSpec.describe "OID Imports", type: :request do
+  let(:user) { FactoryBot.create(:user) }
+  before do
+    login_as(user)
+  end
   describe "GET /new" do
     it "renders a successful response" do
       get new_oid_import_url

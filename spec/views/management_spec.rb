@@ -2,6 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe "Management", type: :feature do
+  let(:user) { FactoryBot.create(:user) }
   describe 'index page' do
     around do |example|
       original_management_version = ENV['MANAGEMENT_VERSION']
@@ -28,6 +29,7 @@ RSpec.describe "Management", type: :feature do
       ENV['CAMERATA_VERSION'] = original_camerata_version
     end
     before do
+      login_as(user)
       visit root_path
     end
 

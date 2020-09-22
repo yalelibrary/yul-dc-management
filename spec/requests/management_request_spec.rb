@@ -13,9 +13,9 @@ RSpec.describe "Managements", type: :request do
       end
     end
     context "as an unauthenticated user" do
-      it "returns http failure" do
+      it "redirects to CAS authentication" do
         get "/"
-        expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(:redirect)
       end
     end
   end
