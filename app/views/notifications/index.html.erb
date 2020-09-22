@@ -4,6 +4,11 @@
     <h1>Notifications</h1>
   </div>
 </div>
+<div class='col'>
+  <div class='float-right'>
+    <%= link_to 'Resolve All', resolve_all_notifications_path, method: 'delete', class: 'btn btn-primary' %>
+  </div>
+</div>
 <div class='row'>
   <div class='col'>
     <table class="table table-responsive table-bordered table-striped">
@@ -34,5 +39,6 @@
         <% end %>
       </tbody>
     </table>
+    <%= paginate @notifications %>
   </div>
 </div>

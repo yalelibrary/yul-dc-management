@@ -55,6 +55,7 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
     # spec file once that file gets created
     context "it can talk to the metadata cloud", vpn_only: true do
       let(:oid) { "16371272" }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: '16371272') }
       let(:oid_url) { "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?include-children=1" }
       let(:ladybird_source) { FactoryBot.build(:metadata_source) }
       before do
@@ -63,6 +64,9 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
       it "can connect to the metadata cloud using basic auth" do
         expect(ladybird_source.mc_get(oid_url).to_str).to include "Manuscript, on parchment"
         expect(ladybird_source.mc_get(oid_url).to_str).to include "/ladybird/oid/16565592"
+      end
+      it "gets a successful response from the Metadata Cloud" do
+        expect(ladybird_source.fetch_record_on_vpn(parent_object)).to include "Manuscript, on parchment, of the books of the Bible from Proverbs through"
       end
     end
   end
