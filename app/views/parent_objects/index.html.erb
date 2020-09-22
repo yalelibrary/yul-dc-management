@@ -5,15 +5,16 @@
   </div>
   <div class='col'>
     <div class='float-right'>
-      <%= link_to 'Reindex', reindex_parent_objects_path, method: 'post', class: 'btn btn-primary' %>
-      <%= link_to 'Update Metadata', all_metadata_parent_objects_path, method: 'post', class: 'btn btn-primary' %>
+      <%= link_to 'New Parent Object', new_parent_object_path, class: 'btn btn-primary' %>
+      <%= link_to 'Reindex', reindex_parent_objects_path, method: 'post', class: 'btn btn-secondary' %>
+      <%= link_to 'Update Metadata', all_metadata_parent_objects_path, method: 'post', class: 'btn btn-secondary' %>
     </div>
   </div>
 </div>
 <div class='row'>
   <div class='col'>
-    <table class="table table-responsive table-bordered table-striped">
-      <thead class="thead-dark">
+    <table id="parent-objects-datatable" class="table table-responsive table-bordered table-striped" data-source="<%= parent_objects_path(format: :json) %>">
+      <thead  class="thead-dark">
         <tr>
           <th scope="col">Oid</th>
           <th scope="col">Authoritative Source</th>
@@ -25,40 +26,16 @@
           <th scope="col">Last ladybird update</th>
           <th scope="col">Last voyager update</th>
           <th scope="col">Last aspace update</th>
-          <th scope="col">Visibility</th>
           <th scope="col">Last id update</th>
-          <th scope="col"></th>
+          <th scope="col">Visibility</th>
         </tr>
       </thead>
-
       <tbody>
-        <% @parent_objects.each do |parent_object| %>
-          <tr>
-            <td><%= parent_object.oid %></td>
-            <td><%= parent_object.source_name %></td>
-            <td><%= parent_object.bib %></td>
-            <td><%= parent_object.holding %></td>
-            <td><%= parent_object.item %></td>
-            <td><%= parent_object.barcode %></td>
-            <td><%= parent_object.aspace_uri %></td>
-            <td><%= parent_object.last_ladybird_update %></td>
-            <td><%= parent_object.last_voyager_update %></td>
-            <td><%= parent_object.last_aspace_update %></td>
-            <td><%= parent_object.visibility %></td>
-            <td><%= parent_object.last_id_update %></td>
-            <td class='actions'>
-              <%= link_to 'Show', parent_object %>
-              |
-              <%= link_to 'Edit', edit_parent_object_path(parent_object) %>
-              |
-              <%= link_to 'Update Metadata', update_metadata_parent_object_path(parent_object), method: :post %>
-              |
-              <%= link_to 'Destroy', parent_object, method: :delete, data: { confirm: 'Are you sure?' } %>
-            </td>
-          </tr>
-        <% end %>
       </tbody>
     </table>
   </div>
 </div>
-<%= link_to 'New Parent Object', new_parent_object_path %>
+
+<div id="parent-objects-data" class='d-none'>
+  <%= ParentObjectDatatable.new(nil).view_columns.keys.map {|key| {data: key} }.to_json %>
+</div>
