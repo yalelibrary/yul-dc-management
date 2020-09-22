@@ -77,6 +77,7 @@ end
 group :test do
   gem 'capybara', '>= 2.15'
   gem 'coveralls', require: false
+  gem 'ffaker'
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end

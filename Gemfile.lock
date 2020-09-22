@@ -145,6 +145,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday-http-cache (2.2.0)
       faraday (>= 0.8)
+    ffaker (2.17.0)
     ffi (1.12.2)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
@@ -429,6 +430,7 @@ DEPENDENCIES
   delayed_job_web
   devise
   factory_bot_rails
+  ffaker
   github_changelog_generator
   honeybadger (~> 4.0)
   http (~> 4.4, >= 4.4.1)
