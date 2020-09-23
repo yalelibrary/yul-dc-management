@@ -38,22 +38,6 @@ puts "Oid Minter Initialized, initialization was #{sequence}, current value is #
 end
 puts "MetadataSources verified"
 
-[{
-  email: "goobi@yale.edu",
-  password: ENV["GOOBI_USER_PASSWORD"] || "testing123"
-  },
-{
-  email: "admin@yale.edu",
-  password: ENV["ADMIN_USER_PASSWORD"] || "testing123"
-}].each do |obj|
-  User.where(email: obj[:email]).first_or_create do |u|
-    u.password = obj[:password]
-
-    puts "User created #{u.email}"
-  end
-end
-puts "Initial users verified"
-
 if Rails.env.development?
   require 'csv'
 

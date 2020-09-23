@@ -20,6 +20,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails', '~> 4.4'
 gem 'kaminari'
 gem 'noticed', '~> 1.2', '>= 1.2.15'
+gem 'omniauth'
+gem 'omniauth-cas'
 # Yale-specific pairtree gem
 gem 'partridge', '~> 0.1.1'
 # Use postgresql as the database for Active Record
@@ -76,6 +78,7 @@ end
 group :test do
   gem 'capybara', '>= 2.15'
   gem 'coveralls', require: false
+  gem 'ffaker'
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end

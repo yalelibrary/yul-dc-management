@@ -8,24 +8,25 @@ RSpec.describe "child_objects/index", type: :view, prep_metadata_sources: true d
   before do
     stub_metadata_cloud("2004628")
     parent_object
-    assign(:child_objects, [
-             ChildObject.create!(
-               oid: 111,
-               caption: "Caption",
-               width: 2,
-               height: 3,
-               order: 4,
-               parent_object_oid: "2004628"
-             ),
-             ChildObject.create!(
-               oid: 222,
-               caption: "Caption",
-               width: 2,
-               height: 3,
-               order: 4,
-               parent_object_oid: "2004628"
-             )
-           ])
+    # assign(:child_objects, [
+    assign(:child_objects, Kaminari.paginate_array([
+                                                     ChildObject.create!(
+                                                       oid: 111,
+                                                       caption: "Caption",
+                                                       width: 2,
+                                                       height: 3,
+                                                       order: 4,
+                                                       parent_object_oid: "2004628"
+                                                     ),
+                                                     ChildObject.create!(
+                                                       oid: 222,
+                                                       caption: "Caption",
+                                                       width: 2,
+                                                       height: 3,
+                                                       order: 4,
+                                                       parent_object_oid: "2004628"
+                                                     )
+                                                   ]).page(1))
   end
 
   it "renders a list of child_objects" do

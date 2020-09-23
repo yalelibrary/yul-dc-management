@@ -5,9 +5,11 @@ RSpec.describe "Request new OIDs", type: :request do
   let(:user) { FactoryBot.create(:user) }
   describe "when authenticated" do
     context "Requesting a single OID" do
+      before do
+        login_as(user)
+      end
       it "returns a successful JSON response" do
-        headers = login_header(user).merge('ACCEPT' => "application/json")
-        get new_oid_path, headers: headers
+        get new_oid_path, headers: { 'ACCEPT' => "application/json" }
         expect(response).to be_successful
         expect(response.content_type).to eq "application/json; charset=utf-8"
         json_response = JSON.parse(response.body)
@@ -19,8 +21,7 @@ RSpec.describe "Request new OIDs", type: :request do
       end
 
       it "returns a successful text response" do
-        headers = login_header(user).merge('ACCEPT' => "text/plain")
-        get new_oid_path, headers: headers
+        get new_oid_path, headers: { 'ACCEPT' => "text/plain" }
         expect(response).to be_successful
         expect(response.content_type).to eq "text/plain; charset=utf-8"
         expect(response.body.to_i).to be_a Integer
@@ -28,10 +29,12 @@ RSpec.describe "Request new OIDs", type: :request do
     end
 
     context "Requesting multiple OIDs" do
+      before do
+        login_as(user)
+      end
       it "returns a successful JSON response" do
-        headers = login_header(user).merge('ACCEPT' => "application/json")
         number = 5
-        get new_oid_path(number), headers: headers
+        get new_oid_path(number), headers: { 'ACCEPT' => "application/json" }
         expect(response).to be_successful
         expect(response.content_type).to eq "application/json; charset=utf-8"
         json_response = JSON.parse(response.body)
@@ -43,9 +46,8 @@ RSpec.describe "Request new OIDs", type: :request do
       end
 
       it "returns a successful text response" do
-        headers = login_header(user).merge('ACCEPT' => "text/plain")
         number = 6
-        get new_oid_path(number), headers: headers
+        get new_oid_path(number), headers: { 'ACCEPT' => "text/plain" }
         expect(response).to be_successful
         expect(response.content_type).to eq "text/plain; charset=utf-8"
         expect(response.body).not_to be_nil
@@ -56,29 +58,29 @@ RSpec.describe "Request new OIDs", type: :request do
       end
 
       it "returns an error when a non-integer is supplied" do
-        headers = login_header(user).merge('ACCEPT' => "application/json")
         number = "5%2E25"
-        get new_oid_path(number), headers: headers
+        get new_oid_path(number), headers: { 'ACCEPT' => "application/json" }
         expect(response).to have_http_status(400)
         expect(response.content_type).to eq "text/plain; charset=utf-8"
       end
 
       it "returns an appropriate HTTP status for a non-JSON or text request" do
-        headers = login_header(user).merge('ACCEPT' => "text/html")
-        get new_oid_path, headers: headers
+        get new_oid_path, headers: { 'ACCEPT' => "text/html" }
         expect(response).to have_http_status(406)
       end
     end
 
     context "logging an oid request" do
+      before do
+        login_as(user)
+      end
       let(:logger_mock) { instance_double("Rails.logger").as_null_object }
 
       it 'logs the user email, ip address and OIDs' do
         allow(Rails.logger).to receive(:info) { :logger_mock }
-        headers = login_header(user).merge('ACCEPT' => "application/json")
         number = 5
 
-        get new_oid_path(number), headers: headers
+        get new_oid_path(number), headers: { 'ACCEPT' => "application/json" }
         json_response = JSON.parse(response.body)
         oids = json_response['oids']
         request_ip = "127.0.0.1"
@@ -96,16 +98,6 @@ RSpec.describe "Request new OIDs", type: :request do
         get new_oid_path, headers: headers
 
         expect(response.status).to be(401)
-      end
-    end
-
-    context "entering an incorrect password" do
-      it "prevents access" do
-        user.password = 'badpassword'
-        headers = login_header(user).merge('ACCEPT' => "application/json")
-        get new_oid_path, headers: headers
-
-        expect(response).not_to be_successful
       end
     end
   end
