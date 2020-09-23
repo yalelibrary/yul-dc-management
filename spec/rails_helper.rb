@@ -34,7 +34,6 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   config.include(ActiveJob::TestHelper)
-  config.include(AuthHelper, type: :request)
   config.include(MetdataSourcesHelper)
   config.include(SolrHelper)
   config.include(StubRequestHelper)

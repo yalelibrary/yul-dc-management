@@ -90,7 +90,7 @@ This starts all of the applications, as they are all dependencies of yul-blackli
 
 - Access the image instance at `http://localhost:8182`
 
-- Access the manifests instance at `http://localhost`
+- Access the manifests instance at `http://localhost/manifests`
 
 - Access the management app at `http://localhost:3001/management`
 
@@ -99,7 +99,7 @@ This starts all of the applications, as they are all dependencies of yul-blackli
 If you receive an `please set your AWS_PROFILE and AWS_DEFAULT_REGION (RuntimeError)` error when you `cam up`, you will need to set your AWS credentials. Credentials can be set in the `~/.aws/credentials` file in the following format:
 
 ```bash
-[dce-hosting]
+[your-profile-name]
 aws_access_key_id=YOUR_ACCESS_KEY
 aws_secret_access_key=YOUR_SECRET_ACCESS_KEY
 ```

@@ -148,6 +148,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday-http-cache (2.2.0)
       faraday (>= 0.8)
+    ffaker (2.17.0)
     ffi (1.12.2)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
@@ -163,6 +164,7 @@ GEM
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashdiff (1.0.1)
+    hashie (4.1.0)
     honeybadger (4.7.0)
     http (4.4.1)
       addressable (~> 2.3)
@@ -230,6 +232,13 @@ GEM
     octokit (4.18.0)
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
+    omniauth (1.9.1)
+      hashie (>= 3.4.6)
+      rack (>= 1.6.2, < 3)
+    omniauth-cas (1.1.1)
+      addressable (~> 2.3)
+      nokogiri (~> 1.5)
+      omniauth (~> 1.2)
     orm_adapter (0.5.0)
     parallel (1.19.1)
     parser (2.7.1.2)
@@ -425,6 +434,7 @@ DEPENDENCIES
   delayed_job_web
   devise
   factory_bot_rails
+  ffaker
   github_changelog_generator
   honeybadger (~> 4.0)
   http (~> 4.4, >= 4.4.1)
@@ -434,6 +444,8 @@ DEPENDENCIES
   kaminari
   listen (~> 3.2)
   noticed (~> 1.2, >= 1.2.15)
+  omniauth
+  omniauth-cas
   partridge (~> 0.1.1)
   pg (>= 0.18, < 2.0)
   puma (~> 4.3)
