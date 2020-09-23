@@ -8,7 +8,7 @@ class ParentObjectsController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json { render json: ParentObjectDatatable.new(params) }
+      format.json { render json: ParentObjectDatatable.new(params, view_context: view_context) }
     end
   end
 
