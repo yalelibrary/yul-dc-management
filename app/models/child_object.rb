@@ -46,4 +46,8 @@ class ChildObject < ApplicationRecord
       parent_object.processing_failure("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}")
     end
   end
+
+  def convert_to_ptiff!
+    convert_to_ptiff && save!
+  end
 end
