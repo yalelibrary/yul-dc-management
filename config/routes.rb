@@ -37,6 +37,4 @@ Rails.application.routes.draw do
   authenticated :user do
     mount DelayedJobWeb, at: "/delayed_job"
   end
-  # fall back if not authenticated
-  # get '/delayed_job', to: redirect(user_cas_omniauth_authorize_path)
 end
