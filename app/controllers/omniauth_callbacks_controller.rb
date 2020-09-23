@@ -28,6 +28,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   protected
 
     def after_omniauth_failure_path_for(_resource)
-      root_path
+      raise 'CAS Authentication is not working'
     end
 end
