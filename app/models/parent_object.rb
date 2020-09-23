@@ -9,6 +9,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :child_objects, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   attr_accessor :metadata_update
+  validates :visibility, inclusion: { in: ['Private', 'Public', 'Yale Community Only'],
+                                message: "%{value} is not a valid value" }
 
   self.primary_key = 'oid'
   after_save :setup_metadata_job
