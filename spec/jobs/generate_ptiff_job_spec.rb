@@ -30,5 +30,12 @@ RSpec.describe GeneratePtiffJob, type: :job do
       end.to change { Delayed::Job.count }.by(1)
       expect(Delayed::Job.last.handler).to match(/GenerateManifestJob/)
     end
+
+    it 'does not increment the job queue if ready_for_manifest is false' do
+      allow(child_object.parent_object).to receive(:ready_for_manifest?).and_return(false)
+      expect do
+        generate_ptiff_job.perform(child_object)
+      end.to change { Delayed::Job.count }.by(0)
+    end
   end
 end
