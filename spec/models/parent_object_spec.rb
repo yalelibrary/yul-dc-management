@@ -150,12 +150,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
     context 'with an incorrect authoritative_metadata_source' do
       before do
-        3.times do |user|
-          User.create!(
-            id: user.to_s,
-            email: "user#{user}@email.com",
-            password: "testing#{user}23"
-          )
+        3.times do |_user|
+          FactoryBot.create(:user)
         end
       end
 

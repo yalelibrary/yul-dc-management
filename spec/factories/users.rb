@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  # User objects are created from data passed from CAS.
+  # The only field we get is uid. All user objects are given the
+  # provider "cas"
   factory :user do
-    sequence(:email) { |e| "user#{e}@email.com" }
-    password { 'testing123' }
+    uid { FFaker::Internet.user_name }
+    provider { "cas" }
+    email { FFaker::Internet.email }
   end
 end
