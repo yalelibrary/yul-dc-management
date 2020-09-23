@@ -96,8 +96,7 @@ RSpec.describe "Request new OIDs", type: :request do
       it "prevents access" do
         headers = { 'ACCEPT' => "application/json" }
         get new_oid_path, headers: headers
-
-        expect(response.status).to be(401)
+        expect(response).to have_http_status(:redirect)
       end
     end
   end

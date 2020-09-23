@@ -2,8 +2,10 @@
 require 'rails_helper'
 
 RSpec.describe "METS Xml Imports", type: :system, prep_metadata_sources: true do
+  let(:user) { FactoryBot.create(:user) }
   before do
     stub_metadata_cloud("16172421")
+    login_as user
   end
 
   around do |example|
