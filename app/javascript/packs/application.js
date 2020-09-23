@@ -40,7 +40,8 @@ jQuery(document).ready(function() {
             "url": $('#parent-objects-datatable').data('source')
         },
         "pagingType": "full_numbers",
-        "columns": JSON.parse($("#parent-objects-data").text())
+        "columns": JSON.parse($("#parent-objects-data").text()),
+        "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]]
         // pagingType is optional, if you want full pagination controls.
         // Check dataTables documentation to learn more about
         // available options.
