@@ -10,7 +10,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   attr_accessor :metadata_update
   validates :visibility, inclusion: { in: ['Private', 'Public', 'Yale Community Only'],
-                                message: "%{value} is not a valid value" }
+                                      message: "%{value} is not a valid value" }
 
   self.primary_key = 'oid'
   after_save :setup_metadata_job
