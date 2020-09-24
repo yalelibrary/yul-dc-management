@@ -60,6 +60,9 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    ajax-datatables-rails (1.2.0)
+      railties (>= 5.0)
+      zeitwerk
     amazing_print (1.2.1)
     ast (2.4.0)
     autoprefixer-rails (9.7.6)
@@ -416,6 +419,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-nulldb-adapter
+  ajax-datatables-rails
   amazing_print (>= 1.2.1)
   aws-sdk-s3
   bixby
