@@ -114,6 +114,22 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         expect(ParentObject.find_by(oid: "2004628")["bib"]).to eq "3163155"
       end
     end
+
+    context "with a ParentObject whose authoritative_metadata_source is Voyager" do
+      before do
+        stub_metadata_cloud("2012036", "ladybird")
+        stub_metadata_cloud("V-2012036", "ils")
+        fill_in('Oid', with: "2012036")
+        select('Public')
+        click_on("Create Parent object")
+      end
+
+      it "can create a new parent object" do
+        expect(page.body).to include "Parent object was successfully created"
+        expect(page.body).to include "Public"
+      end
+    end
+
     context "with mocked out non-public objects" do
       around do |example|
         original_vpn = ENV['VPN']

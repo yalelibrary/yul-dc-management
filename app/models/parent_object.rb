@@ -9,14 +9,18 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :child_objects, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   attr_accessor :metadata_update
-  validates :visibility, inclusion: { in: ['Private', 'Public', 'Yale Community Only'],
-                                      message: "%{value} is not a valid value" }
-
   self.primary_key = 'oid'
   after_save :setup_metadata_job
   after_update :solr_index_job # we index from the fetch job on create
   after_destroy :solr_delete
   paginates_per 50
+
+  def self.visibilities
+    ['Private', 'Public', 'Yale Community Only']
+  end
+
+  validates :visibility, inclusion: { in: visibilities,
+                                      message: "%{value} is not a valid value" }
 
   def create_child_records
     return unless ladybird_json

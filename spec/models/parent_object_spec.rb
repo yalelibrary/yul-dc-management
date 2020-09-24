@@ -205,7 +205,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         expect(parent_object.reload.child_labels).to be_an(Array)
         expect(parent_object.reload.child_labels).to be_empty
         expect(parent_object.reload.child_oids).to be_an(Array)
-        expect(parent_object.reload.child_oids).to eq [1_052_971, 1_052_972, 1_052_973, 1_052_974]
+        expect(parent_object.reload.child_oids).to contain_exactly(1_052_971, 1_052_972, 1_052_973, 1_052_974)
         expect(parent_object.reload.child_oids.size).to eq 4
       end
     end
@@ -233,6 +233,17 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         expect(parent_object.reload.child_labels).to contain_exactly("This is a label", "This is another label")
         expect(parent_object.reload.child_oids).to contain_exactly(1_052_971, 1_052_972, 1_052_973, 1_052_974)
       end
+    end
+  end
+
+  context "with correct visibility value" do
+    let(:parent_object) { described_class.create(oid: "2004628", visibility: 'Public') }
+    it 'returns visibility' do
+      expect(parent_object.visibility).to eq 'Public'
+    end
+
+    it 'returns nil when authoritative source is not set' do
+      expect(ParentObject.new(authoritative_metadata_source_id: nil).source_name).to eq nil
     end
   end
 end

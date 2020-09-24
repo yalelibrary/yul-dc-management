@@ -63,7 +63,7 @@
 
   <div class="field">
     <%= form.label :visibility %>
-    <%= form. select(:visibility,[['Private','Private'],['Public','Public'],['Yale Community Only','Yale Community Only']] ) %>
+    <%= form.select(:visibility, ParentObject.visibilities) %>
   </div>
 
   <div class="field">
