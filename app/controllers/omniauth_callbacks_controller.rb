@@ -16,10 +16,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       )
     end
 
-    raise 'CAS Authentication is not working' unless @user
-    sign_in @user, event: :authentication # this will throw if @user is not activated
-    redirect_to request.env['omniauth.origin'] || root_path
-    set_flash_message(:notice, :success, kind: "CAS") if is_navigational_format?
+    if @user
+      sign_in @user, event: :authentication # this will throw if @user is not activated
+      redirect_to request.env['omniauth.origin'] || root_path
+      set_flash_message(:notice, :success, kind: "CAS") if is_navigational_format?
+    else
+      redirect_to root_path
+    end
   end
 
   protected
