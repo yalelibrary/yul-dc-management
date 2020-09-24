@@ -1,14 +1,18 @@
-<div class="container">
-  <h1>Management Dashboard</h1>
-  <br />
+<% if user_signed_in? %>
+  <div class="container">
+    <h1>Management Dashboard</h1>
+    <br />
 
+    <br />
+    <br />
+    <%= render partial: "oid_imports/form" %>
+    <br />
+    <% if flash[:notice] %>
+      <div class="notice"><%= flash[:notice] %></div>
+    <% end %>
+  </div>
   <br />
-  <br />
-  <%= render partial: "oid_imports/form" %>
-  <br />
-  <% if flash[:notice] %>
-    <div class="notice"><%= flash[:notice] %></div>
-  <% end %>
-</div>
-<br />
-<%= render partial: "service_display" %>
+  <%= render partial: "service_display" %>
+<% else %>
+  <%= link_to 'You must sign in', user_cas_omniauth_authorize_path, class: 'list-group-item list-group-item-action bg-light' %>
+<% end %>
