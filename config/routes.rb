@@ -38,5 +38,5 @@ Rails.application.routes.draw do
     mount DelayedJobWeb, at: "/delayed_job"
   end
   # fall back if not authenticated
-  get '/delayed_job', to: redirect('/management/users/sign_in')
+  get '/delayed_job', to: redirect('/management/users/auth/cas')
 end

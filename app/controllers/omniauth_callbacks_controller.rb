@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   prepend_before_action { request.env["devise.skip_timeout"] = true }
+  skip_before_action :authenticate_user!
 
   def auth
     request.env['omniauth.auth']

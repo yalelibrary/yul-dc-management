@@ -2,8 +2,10 @@
 require 'rails_helper'
 
 RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
+  let(:user) { FactoryBot.create(:user) }
   before do
     stub_ptiffs_and_manifests
+    login_as user
   end
   around do |example|
     perform_enqueued_jobs do

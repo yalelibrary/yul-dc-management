@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe "Managements", type: :request do
+RSpec.describe "Management root path", type: :request do
   let(:user) { FactoryBot.create(:user) }
   describe "GET /" do
     context "as a logged in user" do
@@ -10,13 +10,14 @@ RSpec.describe "Managements", type: :request do
         login_as(user)
         get "/"
         expect(response).to have_http_status(:success)
+        expect(response.body).to match(/Management Dashboard/)
       end
     end
     context "as an unauthenticated user" do
-      # Currently auth is not in front of entire application, so this would fail
-      xit "returns http redirect" do
+      it "returns http redirect" do
         get "/"
-        expect(response).to have_http_status(:redirect)
+        expect(response).to have_http_status(:success)
+        expect(response.body).to match(/You must sign in/)
       end
     end
   end

@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe "Notifications", prep_metadata_sources: true, type: :request do
   before do
-    sign_in user
     stub_metadata_cloud("2012143", "ladybird")
   end
 
@@ -25,25 +24,39 @@ RSpec.describe "Notifications", prep_metadata_sources: true, type: :request do
     }
   end
 
-  describe "GET /index" do
-    it "returns http success" do
-      get '/notifications'
-      expect(response).to be_successful
+  context "as an unauthenticated user" do
+    describe "GET /index" do
+      it "returns http redirect" do
+        get '/notifications'
+        expect(response).to redirect_to(user_cas_omniauth_authorize_path)
+      end
     end
   end
 
-  describe "DELETE /destroy" do
-    it "destroys the requested notification" do
-      notification = Notification.create!(valid_attributes)
-      expect do
-        delete notification_url(notification)
-      end.to change(Notification, :count).by(-1)
+  context "as an authenticated user" do
+    before do
+      sign_in user
+    end
+    describe "GET /index" do
+      it "returns http success" do
+        get '/notifications'
+        expect(response).to be_successful
+      end
     end
 
-    it "redirects to the parent_objects list" do
-      notification = Notification.create!(valid_attributes)
-      delete notification_url(notification)
-      expect(response).to redirect_to(notifications_url)
+    describe "DELETE /destroy" do
+      it "destroys the requested notification" do
+        notification = Notification.create!(valid_attributes)
+        expect do
+          delete notification_url(notification)
+        end.to change(Notification, :count).by(-1)
+      end
+
+      it "redirects to the parent_objects list" do
+        notification = Notification.create!(valid_attributes)
+        delete notification_url(notification)
+        expect(response).to redirect_to(notifications_url)
+      end
     end
   end
 end
