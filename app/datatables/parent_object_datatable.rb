@@ -43,5 +43,4 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
     ParentObject.joins(:authoritative_metadata_source)
   end
-
 end
