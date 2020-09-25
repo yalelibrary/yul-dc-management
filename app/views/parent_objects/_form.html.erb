@@ -63,7 +63,7 @@
 
   <div class="field">
     <%= form.label :visibility %>
-    <%= form.text_field :visibility %>
+    <%= form.select(:visibility, ParentObject.visibilities) %>
   </div>
 
   <div class="field">
