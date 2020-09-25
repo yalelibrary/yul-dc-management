@@ -1,12 +1,10 @@
-require 'forwardable'
-
 class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   extend Forwardable
 
   # def_delegator :@view, :link_to
   # def_delegator :@view, :parent_objects_path
 
-  def_delegators :@view, :link_to, :parent_objects_path
+  def_delegators :@view, :link_to, :parent_object_path
 
   def initialize(params, opts = {})
     @view = opts[:view_context]
@@ -35,7 +33,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   def data
     records.map do |parent_object|
       {
-        oid: link_to(parent_object.oid, parent_objects_path(parent_object)), remote: :true,
+        oid: link_to(parent_object.oid, parent_object_path(parent_object)), remote: :true,
         authoritative_source: parent_object.source_name,
         bib: parent_object.bib,
         holding: parent_object.holding,
