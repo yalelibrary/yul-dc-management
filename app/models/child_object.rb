@@ -3,6 +3,7 @@
 class ChildObject < ApplicationRecord
   belongs_to :parent_object, foreign_key: 'parent_object_oid', class_name: "ParentObject"
   self.primary_key = 'oid'
+  paginates_per 50
 
   def remote_ptiff_exists?
     S3Service.s3_exists?(remote_ptiff_path)
@@ -45,5 +46,9 @@ class ChildObject < ApplicationRecord
     else
       parent_object.processing_failure("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}")
     end
+  end
+
+  def convert_to_ptiff!
+    convert_to_ptiff && save!
   end
 end

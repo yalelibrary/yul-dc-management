@@ -19,7 +19,11 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users
+  devise_for :users, skip: [:sessions, :registrations, :passwords], controllers: { omniauth_callbacks: "omniauth_callbacks" }
+  devise_scope :user do
+    delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
+  end
+
   resources :metadata_samples
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: 'management#index'
@@ -34,5 +38,5 @@ Rails.application.routes.draw do
     mount DelayedJobWeb, at: "/delayed_job"
   end
   # fall back if not authenticated
-  get '/delayed_job', to: redirect('/management/users/sign_in')
+  get '/delayed_job', to: redirect('/management/users/auth/cas')
 end

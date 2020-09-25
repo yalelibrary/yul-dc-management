@@ -3,5 +3,39 @@
 require 'rails_helper'
 
 RSpec.describe GeneratePtiffJob, type: :job do
-  pending "add some examples to (or delete) #{__FILE__}"
+  def queue_adapter_for_test
+    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+  end
+
+  let(:metadata_source) { FactoryBot.create(:metadata_source) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source) }
+  let(:child_object) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object) }
+  let(:generate_ptiff_job) { GeneratePtiffJob.new }
+
+  before do
+    child_object
+  end
+
+  describe 'generate ptiff job' do
+    it 'increments the job queue by one' do
+      expect do
+        GeneratePtiffJob.perform_later(child_object)
+      end.to change { Delayed::Job.count }.by(1)
+    end
+
+    it 'increments the job queue by one if ready_for_manifest is true' do
+      allow(child_object.parent_object).to receive(:ready_for_manifest?).and_return(true)
+      expect do
+        generate_ptiff_job.perform(child_object)
+      end.to change { Delayed::Job.count }.by(1)
+      expect(Delayed::Job.last.handler).to match(/GenerateManifestJob/)
+    end
+
+    it 'does not increment the job queue if ready_for_manifest is false' do
+      allow(child_object.parent_object).to receive(:ready_for_manifest?).and_return(false)
+      expect do
+        generate_ptiff_job.perform(child_object)
+      end.to change { Delayed::Job.count }.by(0)
+    end
+  end
 end
