@@ -64,18 +64,8 @@ if Rails.env.development?
   oids.each do |row|
     ParentObject.where(oid: row).first_or_create do |po|
       po.oid = row
+      po.visibility = "Public"
       puts "Parent Object created #{po.oid}"
-    end
-  end
-  if ENV["VPN"] != "true"
-    # These are mocked out non-standard visibility fixture objects that are not represented on the MetadataCloud,
-    #  but are in our S3 bucket.
-    mocked_samples = ["2000002107188", "10000016189097", "30000016189097"]
-    mocked_samples.each do |sample|
-    ParentObject.where(oid: sample).first_or_create do |po|
-        po.oid = sample
-        puts "Parent Object created #{po.oid}"
-      end
     end
   end
   puts "There are now #{ParentObject.count} rows in the parent object table"
