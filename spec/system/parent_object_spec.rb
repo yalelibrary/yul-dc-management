@@ -128,6 +128,10 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         expect(page.body).to include "Parent object was successfully created"
         expect(page.body).to include "Public"
       end
+
+      it "adds the visibility for public objects" do
+        expect(ParentObject.find_by(oid: "2012036")["visibility"]).to eq "Public"
+      end
     end
 
     context "with mocked out non-public objects" do
