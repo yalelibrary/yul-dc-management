@@ -2,9 +2,6 @@
 class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   extend Forwardable
 
-  # def_delegator :@view, :link_to
-  # def_delegator :@view, :parent_objects_path
-
   def_delegators :@view, :link_to, :parent_object_path
 
   def initialize(params, opts = {})
