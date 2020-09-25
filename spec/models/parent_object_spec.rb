@@ -16,6 +16,30 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     stub_ptiffs_and_manifests
   end
 
+  context "a new ParentObject with no info" do
+    it "has the expected defaults" do
+      po = described_class.new
+      expect(po.oid).to be nil
+      expect(po.bib).to be nil
+      expect(po.holding).to be nil
+      expect(po.item).to be nil
+      expect(po.barcode).to be nil
+      expect(po.aspace_uri).to be nil
+      expect(po.last_ladybird_update).to be nil
+      expect(po.last_id_update).to be nil
+      expect(po.last_voyager_update).to be nil
+      expect(po.last_aspace_update).to be nil
+      expect(po.visibility).to be nil
+      expect(po.ladybird_json).to be nil
+      expect(po.voyager_json).to be nil
+      expect(po.aspace_json).to be nil
+      expect(po.reading_direction).to be nil
+      expect(po.pagination).to be nil
+      expect(po.child_object_count).to be nil
+      expect(po.authoritative_metadata_source_id).to eq ladybird
+    end
+  end
+
   context "a newly created ParentObject with an unexpected authoritative_metadata_source" do
     let(:unexpected_metadata_source) { FactoryBot.create(:metadata_source, id: 4, metadata_cloud_name: "foo", display_name: "Foo", file_prefix: "F-") }
     let(:parent_object) { FactoryBot.create(:parent_object, oid: "2004628", authoritative_metadata_source: unexpected_metadata_source) }

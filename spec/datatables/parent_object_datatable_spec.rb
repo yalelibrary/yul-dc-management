@@ -33,7 +33,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       last_ladybird_update: Time.zone.parse('2020-06-10 17:38:27.000000000 +0000'),
       last_voyager_update: nil,
       oid: 16_854_285,
-      visibility: "Private"
+      visibility: nil
     )
   end
 end
