@@ -13,7 +13,8 @@ class ChildObject < ApplicationRecord
     return @access_master_path if @access_master_path
     image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
-    @access_master_path = File.join(image_mount, pairtree_path, "#{oid}.tif")
+    directory = format("%02d", pairtree_path.first)
+    @access_master_path = File.join(image_mount, directory, pairtree_path, "#{oid}.tif")
   end
 
   def remote_access_master_path

@@ -54,7 +54,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
   end
 
   it "can find the access master, given an oid" do
-    expect(ptf.access_master_path).to eq "spec/fixtures/images/access_masters/33/10/02/53/1002533.tif"
+    expect(ptf.access_master_path).to eq "spec/fixtures/images/access_masters/03/33/10/02/53/1002533.tif"
   end
 
   it "converts the file in the swing directory to a ptiff" do
