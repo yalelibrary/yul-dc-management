@@ -31,7 +31,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   def data
     records.map do |parent_object|
       {
-        oid: link_to(parent_object.oid, parent_object_path(parent_object)), remote: :true,
+        oid: link_to(parent_object.oid, parent_object_path(parent_object)),
         authoritative_source: parent_object.source_name,
         bib: parent_object.bib,
         holding: parent_object.holding,
