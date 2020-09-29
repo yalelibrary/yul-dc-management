@@ -32,7 +32,8 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
   let(:invalid_attributes) do
     {
       oid: "2004628",
-      authoritative_metadata_source_id: 4
+      authoritative_metadata_source_id: 4,
+      visibility: nil
     }
   end
 
@@ -85,8 +86,12 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
       it "does not create a new ParentObject" do
         expect do
           post parent_objects_url, params: { parent_object: invalid_attributes }
-          expect(response).to be_successful
-        end
+        end.to change(ParentObject, :count).by(0)
+      end
+
+      it "renders a successful response (i.e. to display the 'new' template)" do
+        post parent_objects_url, params: { parent_object: invalid_attributes }
+        expect(response).to be_successful
       end
     end
   end
@@ -135,6 +140,32 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
       parent_object = ParentObject.create! valid_attributes
       delete parent_object_url(parent_object)
       expect(response).to redirect_to(parent_objects_url)
+    end
+  end
+
+  describe "#reindex" do
+    it 'redirects to the parent_objects list' do
+      post reindex_parent_objects_url
+      expect(response).to redirect_to(parent_objects_url)
+      expect(flash[:notice]).to eq('Parent objects have been reindexed.')
+    end
+  end
+
+  describe "#all_metadata" do
+    it 'redirects to the parent_objects list' do
+      ParentObject.create! valid_attributes
+      post all_metadata_parent_objects_url
+      expect(response).to redirect_to(parent_objects_url)
+      expect(flash[:notice]).to eq('Parent objects have been queued for metadata update.')
+    end
+  end
+
+  describe '#update_metadata' do
+    it 'redirects to the parent_objects list' do
+      parent_object = ParentObject.create! valid_attributes
+      post update_metadata_parent_object_url(parent_object)
+      expect(response).to redirect_to(parent_objects_url)
+      expect(flash[:notice]).to eq('Parent object metadata update was queued.')
     end
   end
 end
