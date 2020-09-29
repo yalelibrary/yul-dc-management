@@ -13,6 +13,24 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
   end
 
+  describe "with a mounted directory for access masters" do
+    around do |example|
+      access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
+      ENV["ACCESS_MASTER_MOUNT"] = "/data"
+      example.run
+      ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
+    end
+    it "can return the access_master_path" do
+      co_two = described_class.create(oid: "1080001", parent_object: parent_object)
+      co_three = described_class.create(oid: "15239530", parent_object: parent_object)
+      co_four = described_class.create(oid: "15239590", parent_object: parent_object)
+      expect(child_object.access_master_path).to eq "/data/08/89/45/67/89/456789.tif"
+      expect(co_two.access_master_path).to eq "/data/00/01/10/80/00/1080001.tif"
+      expect(co_three.access_master_path).to eq "/data/03/30/15/23/95/30/15239530.tif"
+      expect(co_four.access_master_path).to eq "/data/09/90/15/23/95/90/15239590.tif"
+    end
+  end
+
   describe "a child object that already has a remote ptiff" do
     let(:child_object) { described_class.create(oid: "456789", parent_object: parent_object, width: 200, height: 200) }
     before do
