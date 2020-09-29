@@ -34,7 +34,10 @@
       <tbody>
         <% @parent_objects.each do |parent_object| %>
           <tr>
-            <td><%= parent_object.oid %></td>
+            <td>
+              <%= parent_object.oid %><br>
+              <a class="btn btn-info btn-sm" href="<%=blacklight_url(parent_object.oid)%>" target="_blank" > Discover</a>
+            </td>
             <td><%= parent_object.source_name %></td>
             <td><%= parent_object.bib %></td>
             <td><%= parent_object.holding %></td>

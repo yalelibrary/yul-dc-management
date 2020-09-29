@@ -90,6 +90,11 @@ class ParentObjectsController < ApplicationController
     end
   end
 
+  def blacklight_url(path)
+    base = ENV['BLACKLIGHT_BASE_URL'] || 'localhost:3000'
+    "#{base}/catalog/#{path}"
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
@@ -102,4 +107,5 @@ class ParentObjectsController < ApplicationController
       params.require(:parent_object).permit(:oid, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
                                             :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id)
     end
+    helper_method :blacklight_url
 end
