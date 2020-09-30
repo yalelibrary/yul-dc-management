@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y libtiff-tools libvips-tools imagemagick
   &&  apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY ops/policy.xml /etc/ImageMagick-6/policy.xml 
+COPY ops/policy.xml /etc/ImageMagick-6/policy.xml
 
 ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
 BUNDLE_JOBS=4
@@ -26,7 +26,7 @@ COPY  --chown=app . $APP_HOME
 # cached pages / assets to be kept and cleaned the way Rails expects them to be while keeping deployment very fast.
 # The assets/packs get copied back by rsync on app load (see ops/nginx.sh)
 RUN /sbin/setuser app bash -l -c " \
-    RAILS_RELATIVE_URL_ROOT=/management DB_ADAPTER=nulldb bundle exec rake assets:precompile && \
+    SECRET_KEY_BASE=thisisfakesoassetscompile RAILS_ENV=production RAILS_RELATIVE_URL_ROOT=/management DB_ADAPTER=nulldb bundle exec rake assets:precompile && \
     mv ./public/assets ./public/assets-new && \
     mv ./public/packs ./public/packs-new"
 

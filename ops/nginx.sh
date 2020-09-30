@@ -1,5 +1,7 @@
 #!/bin/bash
 set -e
+set -x
+
 if [ -z $PASSENGER_APP_ENV ]
 then
     export PASSENGER_APP_ENV=development
@@ -21,11 +23,12 @@ if [[ $PASSENGER_APP_ENV == "production" ]] || [[ $PASSENGER_APP_ENV == "staging
 then
     /sbin/setuser app /bin/bash -l -c 'cd /home/app/webapp && bundle exec rake db:migrate db:seed'
     if [ -d /home/app/webapp/public/assets-new ]; then
-        /sbin/setuser app /bin/bash -l -c 'cd /home/app/webapp && rsync -a public/assets-new/ public/assets/'
+        /sbin/setuser app /bin/bash -l -c 'cd /home/app/webapp && rsync -aP public/assets-new/ public/assets/'
     fi
     if [ -d /home/app/webapp/public/packs-new ]; then
-        /sbin/setuser app /bin/bash -l -c 'cd /home/app/webapp && rsync -a public/packs-new/ public/packs/'
+        /sbin/setuser app /bin/bash -l -c 'cd /home/app/webapp && rsync -aP public/packs-new/ public/packs/'
     fi
+    ls -l /home/app/webapp/public/packs
 fi
 
 exec /usr/sbin/nginx

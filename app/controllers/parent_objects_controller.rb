@@ -6,7 +6,10 @@ class ParentObjectsController < ApplicationController
   # GET /parent_objects
   # GET /parent_objects.json
   def index
-    @parent_objects = ParentObject.page params[:page]
+    respond_to do |format|
+      format.html
+      format.json { render json: ParentObjectDatatable.new(params) }
+    end
   end
 
   # GET /parent_objects/1
