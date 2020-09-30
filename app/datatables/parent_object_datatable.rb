@@ -2,7 +2,7 @@
 class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   extend Forwardable
 
-  def_delegators :@view, :link_to, :parent_object_path
+  def_delegators :@view, :link_to, :parent_object_path, :edit_parent_object_path, :update_metadata_parent_object_path
 
   def initialize(params, opts = {})
     @view = opts[:view_context]
@@ -24,7 +24,8 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
       last_voyager_update: { source: "ParentObject.last_voyager_update", cond: :like },
       last_aspace_update: { source: "ParentObject.last_aspace_update", cond: :like },
       last_id_update: { source: "ParentObject.last_id_update", cond: :like },
-      visibility: { source: "ParentObject.visibility", cond: :like, searchable: true }
+      visibility: { source: "ParentObject.visibility", cond: :like, searchable: true },
+      actions: { source: "ParentObject.oid", cond: :null_value, searchable: false, orderable: false }
     }
   end
 
@@ -43,9 +44,18 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
         last_aspace_update: parent_object.last_aspace_update,
         last_id_update: parent_object.last_id_update,
         visibility: parent_object.visibility,
+        actions: actions(parent_object),
         DT_RowId: parent_object.oid
       }
     end
+  end
+
+  def actions(parent_object)
+    # rubocop:disable Rails/OutputSafety
+    "#{link_to('Edit', edit_parent_object_path(parent_object))}" \
+      " | #{link_to('Update Metadata', update_metadata_parent_object_path(parent_object))}" +
+      " | #{link_to('Destroy', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' })}".html_safe
+    # rubocop:enable Rails/OutputSafety
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
