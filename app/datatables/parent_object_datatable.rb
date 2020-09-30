@@ -1,6 +1,14 @@
 # frozen_string_literal: true
-
 class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
+  extend Forwardable
+
+  def_delegators :@view, :link_to, :parent_object_path
+
+  def initialize(params, opts = {})
+    @view = opts[:view_context]
+    super
+  end
+
   def view_columns
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
@@ -23,7 +31,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   def data
     records.map do |parent_object|
       {
-        oid: parent_object.oid,
+        oid: link_to(parent_object.oid, parent_object_path(parent_object)),
         authoritative_source: parent_object.source_name,
         bib: parent_object.bib,
         holding: parent_object.holding,
