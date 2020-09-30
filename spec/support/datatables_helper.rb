@@ -35,9 +35,18 @@ def datatable_sample_params
 end
 # rubocop:enable Metrics/MethodLength
 
-def datatable_view_mock
+def datatable_view_mock # rubocop:disable Metrics/AbcSize
   @datatable_view_mock ||= double
   allow(@datatable_view_mock).to receive(:parent_object_path).and_return("/parent_objects/1")
-  allow(@datatable_view_mock).to receive(:link_to).and_return("<a href='/parent_objects/1'>1</a>")
+  allow(@datatable_view_mock).to receive(:edit_parent_object_path).and_return("/parent_objects/1/edit")
+  allow(@datatable_view_mock).to receive(:update_metadata_parent_object_path).and_return("/parent_objects/1/update_metadata")
+  allow(@datatable_view_mock).to receive(:link_to).with(anything, "/parent_objects/1")
+                                                  .and_return("<a href='/parent_objects/1'>1</a>")
+  allow(@datatable_view_mock).to receive(:link_to).with("Edit", "/parent_objects/1/edit")
+                                                  .and_return('<a href="/management/parent_objects/2034601/edit">Edit</a>')
+  allow(@datatable_view_mock).to receive(:link_to).with("Update Metadata", "/parent_objects/1/update_metadata")
+                                                  .and_return('<a href="/management/parent_objects/2034601/update_metadata">Update Metadata</a>')
+  allow(@datatable_view_mock).to receive(:link_to).with("Destroy", "/parent_objects/1", anything)
+                                                  .and_return('<a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/management/parent_objects/2034601">Destroy</a>')
   @datatable_view_mock
 end
