@@ -30,6 +30,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def data
+    # rubocop:disable Rails/OutputSafety
     records.map do |parent_object|
       {
         oid: link_to(parent_object.oid, parent_object_path(parent_object)),
@@ -44,18 +45,17 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
         last_aspace_update: parent_object.last_aspace_update,
         last_id_update: parent_object.last_id_update,
         visibility: parent_object.visibility,
-        actions: actions(parent_object),
+        actions: actions(parent_object).html_safe,
         DT_RowId: parent_object.oid
       }
     end
+    # rubocop:enable Rails/OutputSafety
   end
 
   def actions(parent_object)
-    # rubocop:disable Rails/OutputSafety
     "#{link_to('Edit', edit_parent_object_path(parent_object))}" \
-      " | #{link_to('Update Metadata', update_metadata_parent_object_path(parent_object))}" +
-      " | #{link_to('Destroy', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' })}".html_safe
-    # rubocop:enable Rails/OutputSafety
+      " | #{link_to('Update Metadata', update_metadata_parent_object_path(parent_object))}" \
+      " | #{link_to('Destroy', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' })}"
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
