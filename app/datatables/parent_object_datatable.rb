@@ -55,7 +55,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
 
   def actions(parent_object)
     "#{link_to('Edit', edit_parent_object_path(parent_object))}" \
-      " | #{link_to('Update Metadata', update_metadata_parent_object_path(parent_object))}" \
+      " | #{link_to('Update Metadata', update_metadata_parent_object_path(parent_object), method: :post)}" \
       " | #{link_to('Destroy', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' })}"
   end
 

@@ -35,7 +35,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       oid: "<a href='/parent_objects/1'>1</a>",
       visibility: "Private",
       actions: '<a href="/management/parent_objects/2034601/edit">Edit</a>' \
-      ' | <a href="/management/parent_objects/2034601/update_metadata">Update Metadata</a>' \
+      ' | <a data-method="post" href="/management/parent_objects/2034601/update_metadata">Update Metadata</a>' \
       ' | <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/management/parent_objects/2034601">Destroy</a>'
     )
   end
