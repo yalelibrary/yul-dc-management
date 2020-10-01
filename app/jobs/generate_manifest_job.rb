@@ -3,6 +3,10 @@
 class GenerateManifestJob < ApplicationJob
   queue_as :default
 
+  def default_priority
+    -30
+  end
+
   def perform(parent_object)
     # generate iiif manifest and save it to s3
     parent_object.iiif_presentation.save

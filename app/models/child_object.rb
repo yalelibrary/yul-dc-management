@@ -5,6 +5,16 @@ class ChildObject < ApplicationRecord
   self.primary_key = 'oid'
   paginates_per 50
 
+  before_create :check_for_size_and_file
+
+  def check_for_size_and_file
+    size = StaticChildInfo.size_for(oid)
+    return unless size.present?
+    self.width = size[:width]
+    self.height = size[:height]
+    self.ptiff_conversion_at = Time.zone.now if remote_ptiff_exists?
+  end
+
   def remote_ptiff_exists?
     S3Service.s3_exists?(remote_ptiff_path)
   end
