@@ -32,7 +32,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   def data
     records.map do |parent_object|
       {
-        oid: link_to(parent_object.oid, parent_object_path(parent_object)),
+        oid: link_to(parent_object.oid, parent_object_path(parent_object)) + get_blacklight_parent_url(parent_object.oid).html_safe,
         authoritative_source: parent_object.source_name,
         bib: parent_object.bib,
         holding: parent_object.holding,
@@ -44,7 +44,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
         last_aspace_update: parent_object.last_aspace_update,
         last_id_update: parent_object.last_id_update,
         visibility: parent_object.visibility,
-        actions: actions(parent_object),
+        actions: actions(parent_object).html_safe,
         DT_RowId: parent_object.oid
       }
     end
@@ -53,9 +53,18 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   def actions(parent_object)
     # rubocop:disable Rails/OutputSafety
     "#{link_to('Edit', edit_parent_object_path(parent_object))}" \
-      " | #{link_to('Update Metadata', update_metadata_parent_object_path(parent_object))}" +
-      " | #{link_to('Destroy', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' })}".html_safe
+      " | #{link_to('Update Metadata', update_metadata_parent_object_path(parent_object))}" \
+      " | #{link_to('Destroy', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' })}"
     # rubocop:enable Rails/OutputSafety
+  end
+
+  def get_blacklight_parent_url(path)
+    "<br> <a class='btn btn-info btn-sm' href='#{blacklight_url(path)}' target='_blank' > Discover</a>"
+  end
+
+  def blacklight_url(path)
+    base = ENV['BLACKLIGHT_BASE_URL'] || 'localhost:3000'
+    "#{base}/catalog/#{path}"
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
