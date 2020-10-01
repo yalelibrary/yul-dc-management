@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   extend Forwardable
 
@@ -30,6 +31,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def data
+    # rubocop:disable Rails/OutputSafety
     records.map do |parent_object|
       {
         oid: link_to(parent_object.oid, parent_object_path(parent_object)) + get_blacklight_parent_url(parent_object.oid).html_safe,
@@ -48,14 +50,13 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
         DT_RowId: parent_object.oid
       }
     end
+    # rubocop:enable Rails/OutputSafety
   end
 
   def actions(parent_object)
-    # rubocop:disable Rails/OutputSafety
     "#{link_to('Edit', edit_parent_object_path(parent_object))}" \
       " | #{link_to('Update Metadata', update_metadata_parent_object_path(parent_object))}" \
       " | #{link_to('Destroy', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' })}"
-    # rubocop:enable Rails/OutputSafety
   end
 
   def get_blacklight_parent_url(path)

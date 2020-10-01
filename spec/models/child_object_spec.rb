@@ -85,5 +85,13 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     it "can return a the remote ptiff path" do
       expect(child_object.remote_ptiff_path).to eq "ptiffs/89/45/67/89/456789.tif"
     end
+
+    it "can receive width and height if they are cached" do
+      expect(StaticChildInfo).to receive(:size_for).and_return(width: 50, height: 60)
+      expect(child_object).to receive(:remote_ptiff_exists?).and_return true
+      expect(child_object.check_for_size_and_file).to be_a(Time)
+      expect(child_object.width).to eq(50)
+      expect(child_object.height).to eq(60)
+    end
   end
 end
