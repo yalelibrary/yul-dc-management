@@ -3,6 +3,10 @@
 class GeneratePtiffJob < ApplicationJob
   queue_as :default
 
+  def default_priority
+    10
+  end
+
   def perform(child_object)
     child_object.convert_to_ptiff!
     # Only generate manifest if all children are ready
