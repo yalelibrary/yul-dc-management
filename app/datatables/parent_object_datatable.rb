@@ -55,7 +55,6 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
     "#{link_to('Edit', edit_parent_object_path(parent_object))}" \
       " | #{link_to('Update Metadata', update_metadata_parent_object_path(parent_object))}" \
       " | #{link_to('Destroy', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' })}"
-    # rubocop:enable Rails/OutputSafety
   end
 
   def get_blacklight_parent_url(path)
