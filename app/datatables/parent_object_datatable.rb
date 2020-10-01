@@ -60,7 +60,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_blacklight_parent_url(path)
-    "<br> <a class='btn btn-info btn-sm' href='#{blacklight_url(path)}' target='_blank' > Discover</a>"
+    "<br> <a class='btn btn-info btn-sm' href='#{blacklight_url(path)}' target='_blank' > Public View</a>"
   end
 
   def blacklight_url(path)
