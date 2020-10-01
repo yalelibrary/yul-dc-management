@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :batch_processes do
+    collection { post :import }
+  end
   resources :child_objects
   resources :mets_xml_imports
 

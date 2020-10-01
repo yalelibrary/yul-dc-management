@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_22_185416) do
+ActiveRecord::Schema.define(version: 2020_10_01_163745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(version: 2020_09_22_185416) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "retrieved_records"
+  end
+
+  create_table "batch_processes", force: :cascade do |t|
+    t.text "csv"
+    t.xml "mets_xml"
+    t.string "created_by"
+    t.bigint "oid"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["oid"], name: "index_batch_processes_on_oid"
   end
 
   create_table "child_objects", id: false, force: :cascade do |t|
