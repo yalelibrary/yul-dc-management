@@ -1,12 +1,31 @@
-<%= current_user.uid %>
-<%= current_user.valid? %>	<%= current_user.valid? %>
-
-
 <div class="container">
   <h1>Batch Processes</h1>
-  <%= render partial: "batch_processes/form" %>
+  <%= render "form" %>
 
-<p>Find me in app/views/batch_process/index.html.erb</p>	<p>Find me in app/views/batch_process/index.html.erb</p>
-
-
-<div class="container">	<div class="container">
+<h1>BatchProcess#index</h1>
+<%= current_user.uid %>
+<%= current_user.valid? %>
+<p>Find me in app/views/batch_process/index.html.erb</p>
+<div class="container">
+  <h3> Batch Process </h3>
+  <table class="table table-bordered table-responsive table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col"> Process Id </th>
+        <th scope="col"> User </th>
+        <th scope="col"> Time </th>
+        <th scope="col"> Items </th>
+        <th scope="col"> Status </th>
+      </tr>
+    </thead>
+      <% counter = 0 %>
+      <% @batch_processes.each do |batch_process| %>
+        <% counter += 1 %>
+        <tr>
+          <td><%= batch_process.class == OidImport ? "c#{counter}" : "x#{counter}"%>
+          <td><%= batch_process.created_by %>
+          <td><%= batch_process.created_at %>
+      </tr>
+      <% end %>
+  </table>
+</div>
