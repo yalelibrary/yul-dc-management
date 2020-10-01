@@ -13,6 +13,6 @@ class StaticChildInfo
     ChildObject.find_each do |child|
       result[child.oid] = { width: child.width, height: child.height } if child.width && child.height
     end
-    File.write(FILE_PATH, JSON.pretty_generate(result))
+    File.write(SIZE_FILE_PATH, JSON.pretty_generate(result))
   end
 end
