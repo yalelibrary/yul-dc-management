@@ -11,7 +11,7 @@
     </div>
   <% end %>
   <div class="field" >
-    <%= f.file_field :file, accept: '.csv', required: true %>
+    <%= f.file_field :file, accept: '.csv, .xml', required: true %>
     <%= f.submit "Import", class: "btn btn-primary" %>
   </div>
 <% end %> 

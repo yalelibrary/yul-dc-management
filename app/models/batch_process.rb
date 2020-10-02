@@ -7,10 +7,10 @@ class BatchProcess < ApplicationRecord
 
   def validate_import
     return if file.blank?
-    if csv.present?
+    if File.extname(file) == '.csv'
       errors.add(:file, 'must be a csv') if CSV.read(file).blank?
-    elsif mets_xml.present?
-      return errors.add(:file, 'must contain an oid') if mets_doc.oid.nil? || mets_doc.oid.empty?
+    elsif File.extname(file) == '.xml'
+      # return errors.add(:file, 'must contain an oid') if mets_doc.oid.nil? || mets_doc.oid.empty?
       return errors.add(:file, 'must be a valid METs file') unless mets_doc.valid_mets?
       return errors.add(:file, 'all image files must be available to the application') unless mets_doc.all_images_present?
     else
@@ -30,10 +30,17 @@ class BatchProcess < ApplicationRecord
 
   def file=(value)
     @file = value
-    self[:csv] = value.read
+    if File.extname(file) == '.csv'
+      self[:csv] = value.read
+    elsif File.extname(file) == '.xml'
+      self[:mets_xml] = value.read
+    end
   end
 
-  # stay
+  def oid
+    self[:oid] = mets_doc.oid.to_i
+  end
+
   def parsed_csv
     @parsed_csv ||= CSV.parse(csv, headers: true) if csv.present?
   end
