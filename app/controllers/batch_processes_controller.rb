@@ -11,7 +11,7 @@ class BatchProcessesController < ApplicationController
   end
 
   def create
-    @batch_process = BatchProcess.new(batch_process_params.merge(user_id: current_user.id))
+    @batch_process = BatchProcess.new(batch_process_params.merge(user: current_user))
     respond_to do |format|
       if @batch_process.save
         format.html do

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BatchProcess < ApplicationRecord
-  attr_reader :file, :created_by_id
+  attr_reader :file
   after_create :refresh_metadata_cloud
   validate :validate_import
   belongs_to :user, class_name: "User"
@@ -27,15 +27,6 @@ class BatchProcess < ApplicationRecord
     else
       'Unknown'
     end
-  end
-
-  def user
-    @user ||= User.find(user_id)
-  end
-
-  def user_id=(current_user_id)
-    @user_id = current_user_id
-    self[:user_id] = current_user_id
   end
 
   def file=(value)

@@ -20,10 +20,9 @@
     </thead>
       <% counter = 0 %>
       <% @batch_processes.each do |batch_process| %>
-        <% counter += 1 %>
         <tr>
-          <td><%= batch_process.class == OidImport ? "c#{counter}" : "x#{counter}"%>
-          <td><%= batch_process.user %>
+          <td><%= batch_process.id %>
+          <td><%= batch_process.user.uid %>
           <td><%= batch_process.created_at %>
       </tr>
       <% end %>
