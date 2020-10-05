@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   subject(:batch_process) { described_class.new }
+  let(:user) { FactoryBot.create(:user, uid: "mk2525") }
 
   around do |example|
     original_path = ENV["ACCESS_MASTER_MOUNT"]
@@ -11,6 +14,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   end
 
   before do
+    login_as(:user)
+    batch_process.user_id = user.id
     stub_metadata_cloud("2034600")
     stub_metadata_cloud("2046567")
     stub_metadata_cloud("16414889")
@@ -19,13 +24,17 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     stub_metadata_cloud("16172421")
   end
 
-  describe "csv file import" do
-    it "requires no attributes" do
-      expect(BatchProcess.new).to be_valid
+  describe "batch import" do
+    it "includes the originating user NETid" do
+      batch_process.user_id = user.id
+      expect(batch_process.user.uid).to eq "mk2525"
     end
+  end
 
+  describe "csv file import" do
     it "accepts a csv file as a virtual attribute and read the csv into the csv property" do
       batch_process.file = File.new(fixture_path + '/short_fixture_ids.csv')
+      batch_process.user_id = user.id
       expect(batch_process.csv).to be_present
       expect(batch_process).to be_valid
     end
@@ -89,6 +98,4 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       expect(ParentObject.count).to eq 1
     end
   end
-
-
 end
