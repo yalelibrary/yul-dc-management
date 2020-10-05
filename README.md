@@ -96,6 +96,25 @@ This starts all of the applications, as they are all dependencies of yul-blackli
 
 ### Troubleshooting
 
+Check your Docker Engine setting:
+```cam down```
+Go to your Docker Desktop -> Preference -> Docker Engine, replace the content of the box to:
+```{
+  "debug": true,
+  "default-address-pools": [
+    {
+      "base": "10.160.0.0/16",
+      "size": 24
+    }
+  ],
+  "experimental": false
+}
+```
+Reference link: `https://curationexperts.github.io/playbook/tools/docker/containers.html`
+Restart your Docker Desktop
+```docker network prune```
+
+
 If you receive an `please set your AWS_PROFILE and AWS_DEFAULT_REGION (RuntimeError)` error when you `cam up`, you will need to set your AWS credentials. Credentials can be set in the `~/.aws/credentials` file in the following format:
 
 ```bash
@@ -107,10 +126,10 @@ aws_secret_access_key=YOUR_SECRET_ACCESS_KEY
 After the credentials have been set, you will need to export the following settings via the command line:
 
 ```bash
-export AWS_PROFILE=dce-hosting && export AWS_DEFAULT_REGION=us-east-1
+export AWS_PROFILE=your-profile-name && export AWS_DEFAULT_REGION=us-east-1
 ```
 
-Note: AWS_PROFILE name needs to match the credentials profile name (`[dce-hosting]`). After you set the credentials, you will need to re-install camerata: `rake install`
+Note: AWS_PROFILE name needs to match the credentials profile name (`[your-profile-name]`). After you set the credentials, you will need to re-install camerata: `rake install`
 
 If you use rbenv, you must run the following command after installing camerata: `rbenv rehash`
 
