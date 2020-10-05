@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BatchProcessesController < ApplicationController
   def index
     @batch_processes = BatchProcess.all
@@ -9,10 +11,13 @@ class BatchProcessesController < ApplicationController
   end
 
   def create
-    @batch_process = BatchProcess.new(batch_process_params.merge(created_by: current_user.uid))
+    @batch_process = BatchProcess.new(batch_process_params.merge(user_id: current_user.id))
     respond_to do |format|
       if @batch_process.save
-        format.html { redirect_to batch_processes_path, notice: "Your records have been retrieved from the MetadataCloud. PTIFF generation, manifest generation and indexing happen in the background." }
+        format.html do
+          redirect_to batch_processes_path,
+                      notice: "Your records have been retrieved from the MetadataCloud. PTIFF generation, manifest generation and indexing happen in the background."
+        end
       else
         format.html { render :new }
       end

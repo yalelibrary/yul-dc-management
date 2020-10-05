@@ -1,11 +1,11 @@
 <div class="container">
+  <% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
   <h1>Batch Processes</h1>
   <%= render "form" %>
 
 <h1>BatchProcess#index</h1>
-<%= current_user.uid %>
-<%= current_user.valid? %>
-<p>Find me in app/views/batch_process/index.html.erb</p>
 <div class="container">
   <h3> Batch Process </h3>
   <table class="table table-bordered table-responsive table-striped">
@@ -23,7 +23,7 @@
         <% counter += 1 %>
         <tr>
           <td><%= batch_process.class == OidImport ? "c#{counter}" : "x#{counter}"%>
-          <td><%= batch_process.created_by %>
+          <td><%= batch_process.user %>
           <td><%= batch_process.created_at %>
       </tr>
       <% end %>
