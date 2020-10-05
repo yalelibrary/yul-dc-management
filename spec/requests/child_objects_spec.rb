@@ -40,7 +40,7 @@ RSpec.describe "/child_objects", type: :request, prep_metadata_sources: true do
   end
 
   describe "GET /index" do
-    it "renders a successful response" do
+    xit "renders a successful response" do
       ChildObject.create! valid_attributes
       get child_objects_url
       expect(response).to be_successful

@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 class BatchProcess < ApplicationRecord
-  attr_reader :file
+  attr_reader :file, :created_by_id
   after_create :refresh_metadata_cloud
   validate :validate_import
-  has_many :users
-
+  belongs_to :user, class_name: "User"
 
   def validate_import
     return if file.blank?
@@ -20,12 +21,21 @@ class BatchProcess < ApplicationRecord
 
   def kind
     if csv.present?
-      return 'CSV'
-    elsif  mets_xml.present?
-      return 'METS'
-    else 
-      return 'Unknown'
+      'CSV'
+    elsif mets_xml.present?
+      'METS'
+    else
+      'Unknown'
     end
+  end
+
+  def user
+    @user ||= User.find(user_id)
+  end
+
+  def user_id=(current_user_id)
+    @user_id = current_user_id
+    self[:user_id] = current_user_id
   end
 
   def file=(value)
