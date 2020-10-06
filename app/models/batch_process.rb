@@ -31,6 +31,7 @@ class BatchProcess < ApplicationRecord
 
   def file=(value)
     @file = value
+    self[:file_name] = file.original_filename
     if File.extname(file) == '.csv'
       self[:csv] = value.read
     elsif File.extname(file) == '.xml'

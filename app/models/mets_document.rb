@@ -25,7 +25,7 @@ class MetsDocument
   end
 
   def all_images_present?
-    mount_path = ENV["ACCESS_MASTER_MOUNT"] || "brbl-dsu"
+    mount_path = ENV["GOOBI_MOUNT"] || "data"
     files.all? { |file| File.exist?(Rails.root.join(mount_path, file[:url])) }
   end
 
@@ -67,7 +67,7 @@ class MetsDocument
   end
 
   def file_info(file)
-    mount_path = ENV["ACCESS_MASTER_MOUNT"] || "brbl-dsu"
+    mount_path = ENV["GOOBI_MOUNT"] || "data"
     {
       id: file.xpath('@ID').to_s,
       checksum: file.xpath('@CHECKSUM').to_s,

@@ -21,6 +21,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true do
       click_button("Import")
       expect(BatchProcess.count).to eq 1
       expect(page).to have_content("Your records have been retrieved from the MetadataCloud. PTIFF generation, manifest generation and indexing happen in the background.")
+      expect(BatchProcess.last.file_name).to eq "short_fixture_ids.csv"
     end
   end
 end
