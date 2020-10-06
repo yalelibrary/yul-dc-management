@@ -14,7 +14,6 @@ class MetsXmlImport < ApplicationRecord
     self[:oid] = mets_doc.oid.to_i
   end
 
-  
   def mets_doc
     @mets_doc ||= MetsDocument.new(mets_xml)
   end

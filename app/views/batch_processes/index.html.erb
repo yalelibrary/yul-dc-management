@@ -1,6 +1,12 @@
 <div class="container">
+  <% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
+  <h1>Batch Processes</h1>
   <%= render "form" %>
 
+<h1>BatchProcess#index</h1>
+<div class="container">
   <h3> Batch Process </h3>
   <table class="table table-bordered table-striped">
     <thead class="thead-dark">
@@ -15,11 +21,11 @@
       <% @batch_processes.each do |batch_process| %>
         <tr>
           <td><%= batch_process.csv.present? ? "csv: #{batch_process.id}" : "xml: #{batch_process.id}"%></td>
-          <td><%= batch_process.created_by %></td>
-          <td><%= batch_process.created_at %></td>
-          <td>TODO: Items</td>
-          <td>TODO: Status</td>
+          <td><%= batch_process.id %>
+          <td><%= batch_process.user.uid %>
+          <td><%= batch_process.created_at %>
         </tr>
+      </tr>
       <% end %>
   </table>
 </div>

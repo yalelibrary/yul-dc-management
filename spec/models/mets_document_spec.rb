@@ -8,10 +8,10 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
   let(:min_valid_xml_file) { File.open(File.join(fixture_path, "goobi", "min_valid_xml.xml")).read }
 
   around do |example|
-    original_path = ENV["ACCESS_MASTER_MOUNT"]
-    ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "goobi", "metadata")
+    original_path = ENV["GOOBI_MOUNT"]
+    ENV["GOOBI_MOUNT"] = File.join("spec", "fixtures", "goobi", "metadata")
     example.run
-    ENV["ACCESS_MASTER_MOUNT"] = original_path
+    ENV["GOOBI_MOUNT"] = original_path
   end
 
   let(:goobi_path) { File.join(fixture_path, "goobi", "metadata", "16172421", "meta.xml") }
