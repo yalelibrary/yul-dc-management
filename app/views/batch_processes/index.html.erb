@@ -20,10 +20,11 @@
     </thead>
       <% @batch_processes.each do |batch_process| %>
         <tr>
-          <td><%= batch_process.csv.present? ? "csv: #{batch_process.id}" : "xml: #{batch_process.id}"%></td>
-          <td><%= batch_process.id %>
-          <td><%= batch_process.user.uid %>
-          <td><%= batch_process.created_at %>
+          <td><%= batch_process.id %></td>
+          <td><%= batch_process.user.uid %></td>
+          <td><%= batch_process.created_at %></td>
+          <td>TODO: Items</td>
+          <td>TODO: Status</td>
         </tr>
       </tr>
       <% end %>
