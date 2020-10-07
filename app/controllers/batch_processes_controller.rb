@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BatchProcessesController < ApplicationController
-  before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download_csv, :download_xml]
+  before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml]
 
   def index
     @batch_processes = BatchProcess.all
@@ -26,6 +26,10 @@ class BatchProcessesController < ApplicationController
         format.html { render :new }
       end
     end
+  end
+
+  def download
+    @batch_process.csv.nil? ? download_xml : download_csv
   end
 
   def download_csv
