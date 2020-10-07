@@ -15,24 +15,24 @@ RSpec.describe "BatchProcesses", type: :request do
     end
   end
 
-  describe "GET /download_xml" do
-    let(:batch_process) do
+  describe "GET /download with XML" do
+    let(:batch_process_xml) do
       FactoryBot.create(
         :batch_process,
         user: user,
-        mets_xml: File.open(fixture_path + '/goobi/min_valid_xml.xml').read,
-        file_name: "min_valid_xml.xml"
+        mets_xml: File.open(fixture_path + '/goobi/metadata/16172421/meta.xml').read,
+        file_name: "meta.xml"
       )
     end
     it "returns http success" do
-      get "/batch_processes/#{batch_process.id}/download_xml"
+      get "/batch_processes/#{batch_process_xml.id}/download"
       expect(response).to have_http_status(:success)
       expect(response.content_type).to eq("application/xml")
     end
   end
 
-  describe "GET /download_csv" do
-    let(:batch_process) do
+  describe "GET /download with CSV" do
+    let(:batch_process_csv) do
       FactoryBot.create(
         :batch_process,
         user: user,
@@ -41,8 +41,9 @@ RSpec.describe "BatchProcesses", type: :request do
       )
     end
     it "returns http success" do
-      get "/batch_processes/#{batch_process.id}/download_csv"
+      get "/batch_processes/#{batch_process_csv.id}/download"
       expect(response).to have_http_status(:success)
+      expect(response.content_type).to eq("text/csv; charset=utf-8")
     end
   end
 

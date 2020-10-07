@@ -18,7 +18,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
     it "can see the details of the import" do
       expect(page.body).to include batch_process.id.to_s
       expect(page.body).to include "johnsmith2530"
-      expect(page.body).to have_link("short_fixture_ids.csv", href: "/batch_processes/#{batch_process.id}/download_csv")
+      expect(page.body).to have_link("short_fixture_ids.csv", href: "/batch_processes/#{batch_process.id}/download")
     end
   end
   context "when uploading an xml doc" do
@@ -26,14 +26,14 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       FactoryBot.create(
         :batch_process,
         user: user,
-        mets_xml: File.open(fixture_path + '/goobi/min_valid_xml.xml').read,
-        file_name: "min_valid_xml.xml"
+        mets_xml: File.open(fixture_path + '/goobi/metadata/16172421/meta.xml').read,
+        file_name: "meta.xml"
       )
     end
     it "can see the details of the import" do
       expect(page.body).to include batch_process.id.to_s
       expect(page.body).to include "johnsmith2530"
-      expect(page.body).to have_link("min_valid_xml.xml", href: "/batch_processes/#{batch_process.id}/download_xml")
+      expect(page.body).to have_link("meta.xml", href: "/batch_processes/#{batch_process.id}/download")
     end
   end
 end
