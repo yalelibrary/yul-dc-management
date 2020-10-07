@@ -51,8 +51,12 @@ class BatchProcess < ApplicationRecord
     @mets_doc ||= MetsDocument.new(mets_xml) if mets_xml.present?
   end
 
+  def oids
+    return @oids ||= parsed_csv.entries.map { |r| r['oid'] } unless csv.nil?
+    @oids ||= [oid] unless mets_xml.nil?
+  end
+
   def refresh_metadata_cloud_csv
-    oids = parsed_csv.entries.map { |r| r['oid'] }
     metadata_sources = parsed_csv.entries.map { |r| r['Source'] }
     MetadataCloudService.create_parent_objects_from_oids(oids, metadata_sources)
   end
