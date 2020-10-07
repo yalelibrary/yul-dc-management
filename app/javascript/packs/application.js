@@ -31,17 +31,19 @@ require("datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 $( document ).on('turbolinks:load', function() {
-  $('#parent-objects-datatable').dataTable({
-    "processing": true,
-    "serverSide": true,
-    "ajax": {
-      "url": $('#parent-objects-datatable').data('source')
-    },
-    "pagingType": "full_numbers",
-    "columns": JSON.parse($("#parent-objects-data").text()),
-    "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]]
-    // pagingType is optional, if you want full pagination controls.
-    // Check dataTables documentation to learn more about
-    // available options.
-  });
+  if(!$('#parent-objects-datatable').hasClass('dataTable')){
+    $('#parent-objects-datatable').dataTable({
+      "processing": true,
+      "serverSide": true,
+      "ajax": {
+        "url": $('#parent-objects-datatable').data('source')
+      },
+      "pagingType": "full_numbers",
+      "columns": JSON.parse($("#parent-objects-data").text()),
+      "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]]
+      // pagingType is optional, if you want full pagination controls.
+      // Check dataTables documentation to learn more about
+      // available options.
+    })
+  }
 });

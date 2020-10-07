@@ -136,8 +136,8 @@ ActiveRecord::Schema.define(version: 2020_10_06_124515) do
     t.jsonb "ladybird_json"
     t.jsonb "voyager_json"
     t.jsonb "aspace_json"
-    t.string "reading_direction", default: "ltr"
-    t.string "pagination", default: "individuals"
+    t.string "reading_direction"
+    t.string "pagination"
     t.integer "child_object_count"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
