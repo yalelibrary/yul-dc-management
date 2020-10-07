@@ -6,10 +6,10 @@ RSpec.describe MetsXmlImport, type: :model, prep_metadata_sources: true do
   let(:mets_import) { described_class.new }
 
   around do |example|
-    original_path = ENV["ACCESS_MASTER_MOUNT"]
-    ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "goobi", "metadata")
+    original_path = ENV["GOOBI_MOUNT"]
+    ENV["GOOBI_MOUNT"] = File.join("spec", "fixtures", "goobi", "metadata")
     example.run
-    ENV["ACCESS_MASTER_MOUNT"] = original_path
+    ENV["GOOBI_MOUNT"] = original_path
   end
 
   before do

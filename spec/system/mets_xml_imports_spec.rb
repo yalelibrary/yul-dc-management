@@ -9,10 +9,10 @@ RSpec.describe "METS Xml Imports", type: :system, prep_metadata_sources: true do
   end
 
   around do |example|
-    original_path = ENV["ACCESS_MASTER_MOUNT"]
-    ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "goobi", "metadata")
+    original_path = ENV["GOOBI_MOUNT"]
+    ENV["GOOBI_MOUNT"] = File.join("spec", "fixtures", "goobi", "metadata")
     example.run
-    ENV["ACCESS_MASTER_MOUNT"] = original_path
+    ENV["GOOBI_MOUNT"] = original_path
   end
 
   context "when uploading a METS xml" do

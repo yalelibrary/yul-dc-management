@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Batch Process ID</strong>
+  <%= @batch_process.id %>
+</p>
+<p>
+  <strong>User ID</strong>
+  <%= @batch_process.user.uid %>
+</p>
+<p>
+  <strong>File</strong>
+  <%= link_to @batch_process.file_name, download_batch_process_path %>
+</p>

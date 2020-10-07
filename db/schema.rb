@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_01_165523) do
+ActiveRecord::Schema.define(version: 2020_10_06_124515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,18 @@ ActiveRecord::Schema.define(version: 2020_10_01_165523) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "retrieved_records"
+  end
+
+  create_table "batch_processes", force: :cascade do |t|
+    t.text "csv"
+    t.xml "mets_xml"
+    t.bigint "oid"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.string "file_name"
+    t.index ["oid"], name: "index_batch_processes_on_oid"
+    t.index ["user_id"], name: "index_batch_processes_on_user_id"
   end
 
   create_table "child_objects", id: false, force: :cascade do |t|
@@ -154,6 +166,7 @@ ActiveRecord::Schema.define(version: 2020_10_01_165523) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "batch_processes", "users"
   add_foreign_key "child_objects", "parent_objects", column: "parent_object_oid", primary_key: "oid"
   add_foreign_key "sample_fields", "metadata_samples", on_delete: :cascade
 end

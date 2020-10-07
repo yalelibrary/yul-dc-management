@@ -1,0 +1,17 @@
+<h3>Batch Import</h3>
+<%= form_for(@batch_process, multipart: true, html: { class: 'btn form form-inline' }) do |f| %>
+  <% if @batch_process.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@batch_process.errors.count, "error") %> prohibited this event from being saved:</h2>
+      <ul>
+      <% @batch_process.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field" >
+    <%= f.file_field :file, accept: '.csv, .xml', required: true %>
+    <%= f.submit "Import", class: "btn btn-primary" %>
+  </div>
+<% end %> 
