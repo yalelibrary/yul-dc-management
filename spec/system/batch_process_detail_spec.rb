@@ -19,6 +19,9 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       expect(page.body).to include batch_process.id.to_s
       expect(page.body).to include "johnsmith2530"
       expect(page.body).to have_link("short_fixture_ids.csv", href: "/batch_processes/#{batch_process.id}/download")
+      within all("td.parent_oid")[3] do
+        expect(page).to have_content('14716192')
+      end
     end
   end
   context "when uploading an xml doc" do
