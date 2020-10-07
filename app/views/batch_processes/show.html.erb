@@ -11,3 +11,15 @@
   <strong>File</strong>
   <%= link_to @batch_process.file_name, download_batch_process_path %>
 </p>
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col"> Parent Oid </th>
+    </tr>
+  </thead>
+    <% @batch_process.oids.each do |parent_oid| %>
+      <tr>
+        <td class="parent_oid"><%= parent_oid %></td>
+      </tr>
+    <% end %>
+</table>
