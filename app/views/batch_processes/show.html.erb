@@ -11,15 +11,21 @@
   <strong>File</strong>
   <%= link_to @batch_process.file_name, download_batch_process_path %>
 </p>
+<p>
+  <strong>Submission Time</strong>
+  <%= @batch_process.created_at %>
+</p>
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
     <tr>
       <th scope="col"> Parent Oid </th>
+      <th scope="col"> Children </th>
     </tr>
   </thead>
     <% @batch_process.oids.each do |parent_oid| %>
       <tr>
-        <td class="parent_oid"><%= parent_oid %></td>
+        <td class="parent_oid"><%= link_to parent_oid, parent_object_path(parent_oid) %></td>
+        <td class="child_count"><%= ParentObject.find(parent_oid).child_object_count.to_s %></td>
       </tr>
     <% end %>
 </table>
