@@ -21,7 +21,7 @@
     <% @batch_process_events.each do |batch_process_event| %>
       <tr>
         <td><%= batch_process_event.batch_process_id %></td>
-        <td><%= batch_process_event.parent_object_id %></td>
+        <td><%= batch_process_event.parent_object_oid %></td>
         <td><%= batch_process_event.queued %></td>
         <td><%= batch_process_event.metadata_fetched %></td>
         <td><%= batch_process_event.child_records_created %></td>

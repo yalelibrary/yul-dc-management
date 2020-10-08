@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :batch_process_event do
     batch_process { FactoryBot.create(:batch_process) }

@@ -22,7 +22,7 @@ class BatchProcess < ApplicationRecord
   end
 
   def create_batch_process_events
-    oids.each do |oid|
+    oids&.each do |oid|
       batch_process_events.build(
         parent_object_oid: oid,
         batch_process_id: self[:id]
