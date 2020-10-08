@@ -41,6 +41,17 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       expect(batch_process).to be_valid
       expect(batch_process.file_name).to eq "short_fixture_ids.csv"
     end
+
+    it "creates a batch_process_event for each parent_object" do
+      expect(BatchProcessEvent.count).to eq 0
+      expect(BatchProcess.count).to eq 0
+      batch_process.file = csv_upload
+      batch_process.user_id = user.id
+      batch_process.save!
+      batch_process.run_callbacks :save
+      expect(BatchProcess.count).to eq 1
+      expect(BatchProcessEvent.count).to eq 5
+    end
     #
     # it "does not accept non csv files" do
     #   batch_process.file = File.new(Rails.root.join('public', 'favicon.ico'))
@@ -51,7 +62,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     it "can refresh the ParentObjects from the MetadataCloud" do
       expect(ParentObject.count).to eq 0
       batch_process.file = csv_upload
-      batch_process.refresh_metadata_cloud
+      batch_process.reload
       expect(ParentObject.count).to eq 5
     end
 

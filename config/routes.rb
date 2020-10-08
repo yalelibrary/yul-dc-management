@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :batch_process_events
   resources :batch_processes do
     collection { post :import }
     member do

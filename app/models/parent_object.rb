@@ -7,6 +7,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include SolrIndexable
   has_many :dependent_objects
   has_many :child_objects, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
+  has_many :batch_process_events, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   attr_accessor :metadata_update
   self.primary_key = 'oid'

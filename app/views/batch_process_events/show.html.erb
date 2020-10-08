@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Batch process:</strong>
+  <%= @batch_process_event.batch_process_id %>
+</p>
+
+<p>
+  <strong>Parent object:</strong>
+  <%= @batch_process_event.parent_object_id %>
+</p>
+
+<p>
+  <strong>Queued:</strong>
+  <%= @batch_process_event.queued %>
+</p>
+
+<p>
+  <strong>Metadata fetched:</strong>
+  <%= @batch_process_event.metadata_fetched %>
+</p>
+
+<p>
+  <strong>Child records created:</strong>
+  <%= @batch_process_event.child_records_created %>
+</p>
+
+<p>
+  <strong>Ptiff jobs created:</strong>
+  <%= @batch_process_event.ptiff_jobs_created %>
+</p>
+
+<p>
+  <strong>Iiif manifest saved:</strong>
+  <%= @batch_process_event.iiif_manifest_saved %>
+</p>
+
+<p>
+  <strong>Indexed to solr:</strong>
+  <%= @batch_process_event.indexed_to_solr %>
+</p>
+
+<%= link_to 'Edit', edit_batch_process_event_path(@batch_process_event) %> |
+<%= link_to 'Back', batch_process_events_path %>

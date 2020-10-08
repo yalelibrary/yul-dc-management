@@ -1,0 +1,57 @@
+<%= form_with(model: batch_process_event, local: true) do |form| %>
+  <% if batch_process_event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(batch_process_event.errors.count, "error") %> prohibited this batch_process_event from being saved:</h2>
+
+      <ul>
+        <% batch_process_event.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :batch_process_id %>
+    <%= form.text_field :batch_process_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :parent_object_id %>
+    <%= form.text_field :parent_object_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :queued %>
+    <%= form.date_select :queued %>
+  </div>
+
+  <div class="field">
+    <%= form.label :metadata_fetched %>
+    <%= form.date_select :metadata_fetched %>
+  </div>
+
+  <div class="field">
+    <%= form.label :child_records_created %>
+    <%= form.date_select :child_records_created %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ptiff_jobs_created %>
+    <%= form.date_select :ptiff_jobs_created %>
+  </div>
+
+  <div class="field">
+    <%= form.label :iiif_manifest_saved %>
+    <%= form.date_select :iiif_manifest_saved %>
+  </div>
+
+  <div class="field">
+    <%= form.label :indexed_to_solr %>
+    <%= form.date_select :indexed_to_solr %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

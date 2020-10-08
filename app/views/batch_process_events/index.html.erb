@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Batch Process Events</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Batch process</th>
+      <th>Parent object</th>
+      <th>Queued</th>
+      <th>Metadata fetched</th>
+      <th>Child records created</th>
+      <th>Ptiff jobs created</th>
+      <th>Iiif manifest saved</th>
+      <th>Indexed to solr</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @batch_process_events.each do |batch_process_event| %>
+      <tr>
+        <td><%= batch_process_event.batch_process_id %></td>
+        <td><%= batch_process_event.parent_object_id %></td>
+        <td><%= batch_process_event.queued %></td>
+        <td><%= batch_process_event.metadata_fetched %></td>
+        <td><%= batch_process_event.child_records_created %></td>
+        <td><%= batch_process_event.ptiff_jobs_created %></td>
+        <td><%= batch_process_event.iiif_manifest_saved %></td>
+        <td><%= batch_process_event.indexed_to_solr %></td>
+        <td><%= link_to 'Show', batch_process_event %></td>
+        <td><%= link_to 'Edit', edit_batch_process_event_path(batch_process_event) %></td>
+        <td><%= link_to 'Destroy', batch_process_event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Batch Process Event', new_batch_process_event_path %>

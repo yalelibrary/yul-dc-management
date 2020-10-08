@@ -3,8 +3,10 @@
 class BatchProcess < ApplicationRecord
   attr_reader :file
   after_create :refresh_metadata_cloud
+  after_save :create_batch_process_events
   validate :validate_import
   belongs_to :user, class_name: "User"
+  has_many :batch_process_events
 
   def validate_import
     return if file.blank?
@@ -16,6 +18,15 @@ class BatchProcess < ApplicationRecord
       return errors.add(:file, 'all image files must be available to the application') unless mets_doc.all_images_present?
     else
       return errors.add(:file, 'not a valid file type. Must be a CSV or XML.')
+    end
+  end
+
+  def create_batch_process_events
+    oids.each do |oid|
+      batch_process_events.build(
+        parent_object_oid: oid,
+        batch_process_id: self[:id]
+      )
     end
   end
 
