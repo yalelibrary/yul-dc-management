@@ -13,9 +13,10 @@
       <tr>
         <th scope="col"> Process Id </th>
         <th scope="col"> User </th>
-        <th scope="col"> Time </th>
         <th scope="col"> Items </th>
         <th scope="col"> Status </th>
+        <th scope="col"> Start </th>
+        <th scope="col"> Duration </th>
         <th scope="col"> Object Details </th>
       </tr>
     </thead>
@@ -23,9 +24,10 @@
         <tr>
           <td class="process_id"><%= link_to batch_process.id, batch_process_path(batch_process) %></td>
           <td><%= batch_process.user.uid %></td>
-          <td><%= batch_process.created_at %></td>
           <td class="count"><%= batch_process.oids.count %></td>
           <td>TODO: Status</td>
+          <td><%= batch_process.created_at %></td>
+          <td>TODO: Duration</td>
           <td class="view"><%= link_to "View", batch_process_path(batch_process) %></td>
         </tr>
       <% end %>
