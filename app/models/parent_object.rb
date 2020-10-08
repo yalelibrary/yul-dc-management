@@ -22,6 +22,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :visibility, inclusion: { in: visibilities,
                                       message: "%{value} is not a valid value" }
 
+  def self.digi_extents
+    ['Complete folder digitized.', 'Complete work digitized.', 'Completely digitized.', 'Partial work digitized.', 'Partial folder digitized.', 'Partial collection digitized.', 'Partially digitized.']
+  end
+
+  validates :extent_digitization, inclusion: { in: digi_extents,
+                                      message: "%{value} is not a valid value" }
+
   def create_child_records
     return unless ladybird_json
     ladybird_json["children"].map.with_index(1) do |child_record, index|
@@ -98,6 +105,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.barcode = lb_record["orbisBarcode"]
     self.aspace_uri = lb_record["archiveSpaceUri"]
     self.visibility = lb_record["itemPermission"]
+    self.extent_digitization = lb_record["extentOfDigitization"][0]
+    self.rights_statement = lb_record["rights"][0]
     self.last_ladybird_update = DateTime.current
   end
 

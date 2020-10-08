@@ -67,6 +67,16 @@
   </div>
 
   <div class="field">
+    <%= form.label :extent_digitization %>
+    <%= form.select(:extent_digitization, ParentObject.digi_extents) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rights_statement %>
+    <%= form.text_field :rights_statement %>
+  </div>
+
+  <div class="field">
     <%= form.label :last_id_update %>
     <%= form.text_field :last_id_update %>
   </div>
