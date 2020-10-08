@@ -216,11 +216,11 @@ Any time you pull a branch with a Gemfile change you need to pull or build a new
     export CHANGELOG_GITHUB_TOKEN=YOUR_TOKEN_HERE
     ```
 
-3. Use the camerata gem to increment the blacklight version and deploy:
+3. Use the camerata gem to increment the management version and deploy:
   Note: See [the camerata readme](https://github.com/yalelibrary/yul-dc-camerata) for details on installing camerata.
 
     ```
-    cam release blacklight
+    cam release management
     ```
 
 4. Proceed with the steps for the Yale infrastructure or the DCE infrastructure
