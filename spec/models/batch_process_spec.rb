@@ -50,8 +50,11 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
 
     it "can refresh the ParentObjects from the MetadataCloud" do
       expect(ParentObject.count).to eq 0
-      batch_process.file = csv_upload
-      batch_process.refresh_metadata_cloud
+      expect do
+        batch_process.file = csv_upload
+        batch_process.refresh_metadata_cloud
+      end.to change { batch_process.batch_connections.size }.from(0).to(5)
+
       expect(ParentObject.count).to eq 5
     end
 

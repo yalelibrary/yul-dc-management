@@ -5,6 +5,8 @@ class BatchProcess < ApplicationRecord
   after_create :refresh_metadata_cloud
   validate :validate_import
   belongs_to :user, class_name: "User"
+  has_many :batch_connections
+  has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connection
 
   def validate_import
     return if file.blank?
@@ -56,13 +58,26 @@ class BatchProcess < ApplicationRecord
     @oids ||= [oid] unless mets_xml.nil?
   end
 
+  def create_parent_objects_from_oids(oids, metadata_sources)
+    oids.zip(metadata_sources).each do |oid, metadata_source|
+      po = ParentObject.where(oid: oid).first_or_create do |parent_object|
+        parent_object.authoritative_metadata_source = if metadata_source.present?
+                                                        MetadataSource.find_by(metadata_cloud_name: metadata_source)
+                                                      else
+                                                        MetadataSource.find_by(metadata_cloud_name: 'ladybird')
+                                                      end
+      end
+      parent_objects << po
+    end
+  end
+
   def refresh_metadata_cloud_csv
     metadata_sources = parsed_csv.entries.map { |r| r['Source'] }
-    MetadataCloudService.create_parent_objects_from_oids(oids, metadata_sources)
+    create_parent_objects_from_oids(oids, metadata_sources)
   end
 
   def refresh_metadata_cloud_mets
-    MetadataCloudService.create_parent_objects_from_oids([mets_doc.oid], ['ladybird']) # TODO: make 'ladybird' a metadata source attribute on this object
+    create_parent_objects_from_oids([mets_doc.oid], ['ladybird']) # TODO: make 'ladybird' a metadata source attribute on this object
   end
 
   def refresh_metadata_cloud

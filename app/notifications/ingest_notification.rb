@@ -21,7 +21,7 @@ class IngestNotification < Noticed::Base
   end
 
   # Add required params
-
+  param :batch_process
   param :parent_object
   param :reason
   param :status

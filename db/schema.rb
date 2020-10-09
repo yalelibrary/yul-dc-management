@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_06_124515) do
+ActiveRecord::Schema.define(version: 2020_10_09_162830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,31 @@ ActiveRecord::Schema.define(version: 2020_10_06_124515) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "retrieved_records"
+  end
+
+  create_table "batch_connections", force: :cascade do |t|
+    t.bigint "batch_process_id", null: false
+    t.string "connection_type", null: false
+    t.bigint "connection_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["batch_process_id"], name: "index_batch_connections_on_batch_process_id"
+    t.index ["connection_type", "connection_id"], name: "index_batch_connections_on_connection_type_and_connection_id"
+  end
+
+  create_table "batch_process_events", force: :cascade do |t|
+    t.bigint "batch_process_id", null: false
+    t.bigint "parent_object_oid", null: false
+    t.datetime "queued", precision: 6
+    t.datetime "metadata_fetched", precision: 6
+    t.datetime "child_records_created", precision: 6
+    t.datetime "ptiff_jobs_created", precision: 6
+    t.datetime "iiif_manifest_saved", precision: 6
+    t.datetime "indexed_to_solr", precision: 6
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["batch_process_id"], name: "index_batch_process_events_on_batch_process_id"
+    t.index ["parent_object_oid"], name: "index_batch_process_events_on_parent_object_oid"
   end
 
   create_table "batch_processes", force: :cascade do |t|
@@ -166,6 +191,9 @@ ActiveRecord::Schema.define(version: 2020_10_06_124515) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "batch_connections", "batch_processes"
+  add_foreign_key "batch_process_events", "batch_processes"
+  add_foreign_key "batch_process_events", "parent_objects", column: "parent_object_oid", primary_key: "oid"
   add_foreign_key "batch_processes", "users"
   add_foreign_key "child_objects", "parent_objects", column: "parent_object_oid", primary_key: "oid"
   add_foreign_key "sample_fields", "metadata_samples", on_delete: :cascade
