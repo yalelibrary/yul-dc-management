@@ -6,7 +6,7 @@ class BatchProcess < ApplicationRecord
   after_save :create_batch_process_events
   validate :validate_import
   belongs_to :user, class_name: "User"
-  has_many :batch_process_events
+  has_many :batch_process_events, dependent: :destroy
 
   def validate_import
     return if file.blank?
