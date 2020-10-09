@@ -3,7 +3,7 @@
 module StubRequestHelper
   def stub_metadata_cloud(oid, source_name = 'ladybird')
     vpn = ENV["VPN"]
-    allowed_sites = ["solr", MetadataCloudService.metadata_cloud_host, "localhost"]
+    allowed_sites = ["solr", MetadataSource.metadata_cloud_host, "localhost"]
     if vpn == "true"
       WebMock.disable_net_connect!(allow: allowed_sites)
       stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/#{source_name}/#{oid}.json").to_return(status: 200)

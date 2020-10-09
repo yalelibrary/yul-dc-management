@@ -33,6 +33,17 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     end
   end
 
+  context "creating a ParentObject from an import" do
+    before do
+      stub_metadata_cloud("16371253")
+    end
+    it "can create a parent_object from an array of oids" do
+      expect(ParentObject.count).to eq 0
+      batch_process.create_parent_objects_from_oids(["16371253"], ["ladybird"])
+      expect(ParentObject.count).to eq 1
+    end
+  end
+
   describe "csv file import" do
     it "accepts a csv file as a virtual attribute and read the csv into the csv property" do
       batch_process.file = csv_upload

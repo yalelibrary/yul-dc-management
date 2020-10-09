@@ -5,6 +5,5 @@ class ManagementController < ApplicationController
 
   def index
     @batch_process = BatchProcess.new
-    @oid_import = OidImport.new
   end
 end

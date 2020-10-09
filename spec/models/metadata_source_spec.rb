@@ -20,9 +20,9 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
       let(:ladybird_source) { FactoryBot.build(:metadata_source) }
 
       before do
-        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16797069?include-children=1")
+        stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16797069?include-children=1")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16797069.json")).read)
-        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/99999999?include-children=1")
+        stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ladybird/oid/99999999?include-children=1")
           .to_return(status: 404, body: 'Not Found')
 
         stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/16797069.json").to_return(status: 200)
@@ -56,7 +56,7 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
     context "it can talk to the metadata cloud", vpn_only: true do
       let(:oid) { "16371272" }
       let(:parent_object) { FactoryBot.create(:parent_object, oid: '16371272') }
-      let(:oid_url) { "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?include-children=1" }
+      let(:oid_url) { "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?include-children=1" }
       let(:ladybird_source) { FactoryBot.build(:metadata_source) }
       before do
         WebMock.allow_net_connect!
