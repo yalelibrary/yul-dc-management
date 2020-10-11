@@ -34,21 +34,6 @@ ActiveRecord::Schema.define(version: 2020_10_09_162830) do
     t.index ["connection_type", "connection_id"], name: "index_batch_connections_on_connection_type_and_connection_id"
   end
 
-  create_table "batch_process_events", force: :cascade do |t|
-    t.bigint "batch_process_id", null: false
-    t.bigint "parent_object_oid", null: false
-    t.datetime "queued", precision: 6
-    t.datetime "metadata_fetched", precision: 6
-    t.datetime "child_records_created", precision: 6
-    t.datetime "ptiff_jobs_created", precision: 6
-    t.datetime "iiif_manifest_saved", precision: 6
-    t.datetime "indexed_to_solr", precision: 6
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["batch_process_id"], name: "index_batch_process_events_on_batch_process_id"
-    t.index ["parent_object_oid"], name: "index_batch_process_events_on_parent_object_oid"
-  end
-
   create_table "batch_processes", force: :cascade do |t|
     t.text "csv"
     t.xml "mets_xml"
@@ -102,14 +87,6 @@ ActiveRecord::Schema.define(version: 2020_10_09_162830) do
     t.index ["parent_object_id"], name: "index_dependent_objects_on_parent_object_id"
   end
 
-  create_table "metadata_samples", force: :cascade do |t|
-    t.string "metadata_source"
-    t.integer "number_of_samples"
-    t.decimal "seconds_elapsed"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "metadata_sources", force: :cascade do |t|
     t.string "metadata_cloud_name"
     t.string "display_name"
@@ -137,12 +114,6 @@ ActiveRecord::Schema.define(version: 2020_10_09_162830) do
     t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient_type_and_recipient_id"
   end
 
-  create_table "oid_imports", force: :cascade do |t|
-    t.text "csv"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "parent_objects", id: false, force: :cascade do |t|
     t.bigint "oid", null: false
     t.string "bib"
@@ -168,16 +139,6 @@ ActiveRecord::Schema.define(version: 2020_10_09_162830) do
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end
 
-  create_table "sample_fields", force: :cascade do |t|
-    t.string "field_name"
-    t.integer "field_count"
-    t.decimal "field_percent_of_total"
-    t.bigint "metadata_sample_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["metadata_sample_id"], name: "index_sample_fields_on_metadata_sample_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -192,9 +153,6 @@ ActiveRecord::Schema.define(version: 2020_10_09_162830) do
   end
 
   add_foreign_key "batch_connections", "batch_processes"
-  add_foreign_key "batch_process_events", "batch_processes"
-  add_foreign_key "batch_process_events", "parent_objects", column: "parent_object_oid", primary_key: "oid"
   add_foreign_key "batch_processes", "users"
   add_foreign_key "child_objects", "parent_objects", column: "parent_object_oid", primary_key: "oid"
-  add_foreign_key "sample_fields", "metadata_samples", on_delete: :cascade
 end
