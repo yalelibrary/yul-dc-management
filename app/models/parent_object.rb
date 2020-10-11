@@ -118,7 +118,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def ladybird_cloud_url
-    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?include-children=1"
+    "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?include-children=1"
   end
 
   def voyager_cloud_url
@@ -129,12 +129,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                        else
                          "/barcode/#{ladybird_json['orbisBarcode']}?bib=#{orbis_bib}"
                        end
-    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils#{identifier_block}"
+    "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ils#{identifier_block}"
   end
 
   def aspace_cloud_url
     return nil unless ladybird_json.present?
-    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace#{ladybird_json['archiveSpaceUri']}"
+    "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/aspace#{ladybird_json['archiveSpaceUri']}"
   end
 
   def source_name=(metadata_source)

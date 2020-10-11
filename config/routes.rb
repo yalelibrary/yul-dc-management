@@ -8,7 +8,6 @@ Rails.application.routes.draw do
     end
   end
   resources :child_objects
-  resources :mets_xml_imports
 
   resources :parent_objects do
     collection do
@@ -30,13 +29,8 @@ Rails.application.routes.draw do
     delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
   end
 
-  resources :metadata_samples
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: 'management#index'
-
-  resources :oid_imports do
-    collection { post :import }
-  end
 
   get 'api/oid/new(/:number)', to: 'oid_minter#generate_oids', as: :new_oid
 
