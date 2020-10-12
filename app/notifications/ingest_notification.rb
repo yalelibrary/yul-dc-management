@@ -35,6 +35,6 @@ class IngestNotification < Noticed::Base
   end
 
   def message
-    t(".message", oid: params[:parent_object].id, status: params[:status], reason: params[:reason])
+    t(".message", oid: params[:parent_object].id, status: params[:status], reason: params[:reason], batch_process: params[:batch_process])
   end
 end

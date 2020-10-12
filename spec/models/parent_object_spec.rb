@@ -16,6 +16,29 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     stub_ptiffs_and_manifests
   end
 
+  context 'with a random notification' do
+    before do
+      3.times do
+        FactoryBot.create(:user)
+      end
+    end
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600) }
+    let(:batch_process) { FactoryBot.create(:batch_process, user: User.last) }
+    let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
+
+    it 'returns a processing_failure message' do
+      parent_object
+      expect do
+        batch_process.file = csv_upload
+        batch_process.run_callbacks :create
+      end.to change { batch_process.batch_connections.size }.from(0).to(5)
+      msg = "I'm a new notification"
+      expect(Notification.count).to eq(0)
+      parent_object.processing_failure(msg)
+      expect(Notification.count).to eq(3)
+    end
+  end
+
   context "a newly created ParentObject with different visibilities" do
     let(:parent_object_nil) { described_class.create(visibility: nil) }
     it "nil does not validate" do
@@ -164,24 +187,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
       it 'returns an aspace url' do
         expect(parent_object.aspace_cloud_url).to eq nil
-      end
-    end
-
-    context 'with an incorrect authoritative_metadata_source' do
-      before do
-        3.times do |_user|
-          FactoryBot.create(:user)
-        end
-      end
-
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: '16173726') }
-
-      # extra error on Yale Infrastracture, need to fix
-      xit 'returns a processing_failure message' do
-        msg = 'Metadata source not found, should be one of [ladybird, ils, aspace]'
-        expect(Notification.count).to eq(0)
-        parent_object.processing_failure(msg)
-        expect(Notification.count).to eq(3)
       end
     end
 

@@ -4,7 +4,8 @@ require 'rails_helper'
 
 RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
   let(:valid_goobi_xml) { File.open(goobi_path).read }
-  let(:batch_process) { FactoryBot.create(:batch_process) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
   let(:min_valid_xml_file) { File.open(File.join(fixture_path, "goobi", "min_valid_xml.xml")).read }
 
   around do |example|

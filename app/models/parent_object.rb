@@ -54,7 +54,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def processing_failure(message, status = 'failed')
-    IngestNotification.with(parent_object: self, status: status, reason: message).deliver_all
+    IngestNotification.with(parent_object: self, status: status, reason: message, batch_process: batch_processes.last).deliver_all
   end
 
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
