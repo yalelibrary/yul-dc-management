@@ -52,6 +52,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
       self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
     end
+    processing_event("Metadata has been fetched", "successful")
   end
 
   def processing_event(message, status = 'info')
@@ -65,6 +66,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     if (created_at_previously_changed? && ladybird_json.blank?) ||
        previous_changes["authoritative_metadata_source_id"].present? ||
        metadata_update.present?
+      processing_event("Processing has been queued", "successful")
       SetupMetadataJob.perform_later(self, current_batch_process)
     end
   end
