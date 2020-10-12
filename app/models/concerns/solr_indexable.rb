@@ -79,7 +79,6 @@ module SolrIndexable
       identifierMfhd_ssim: json_to_index["identifierMfhd"],
       identifierShelfMark_ssim: json_to_index["identifierShelfMark"],
       identifierShelfMark_tesim: json_to_index["identifierShelfMark"],
-      illustrativeMatter_tesim: json_to_index["illustrativeMatter"],
       imageCount_isi: child_object_count,
       indexedBy_tsim: json_to_index["indexedBy"],
       label_tesim: child_labels,
@@ -132,7 +131,6 @@ module SolrIndexable
       author_tsim: json_to_index["creator"], # replaced by author_tesim
       date_tsim: json_to_index["date"], # replaced by date_ssim
       geo_subject_ssim: json_to_index["geoSubject"], # replaced by geoSubject_ssim
-      illustrative_matter_tsi: json_to_index["illustrativeMatter"], # replaced by illustrativeMatter_tesim
       material_ssim: json_to_index["material"], # replaced by material_tesim
       oid_ssim: json_to_index["oid"] || oid, # replaced by oid_ssi
       orbisBarcode_ssim: json_to_index["orbisBarcode"] || json_to_index["barcode"], # replaced by orbisBarcode_ssi
