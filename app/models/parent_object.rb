@@ -11,6 +11,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :batch_processes, through: :batch_connections
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   attr_accessor :metadata_update
+  attr_accessor :current_batch_process
   self.primary_key = 'oid'
   after_save :setup_metadata_job
   after_update :solr_index_job # we index from the fetch job on create
@@ -54,7 +55,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def processing_failure(message, status = 'failed')
-    IngestNotification.with(parent_object: self, status: status, reason: message, batch_process: batch_processes.last).deliver_all
+    IngestNotification.with(parent_object: self, status: status, reason: message, batch_process: current_batch_process).deliver_all
   end
 
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
@@ -64,7 +65,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     if (created_at_previously_changed? && ladybird_json.blank?) ||
        previous_changes["authoritative_metadata_source_id"].present? ||
        metadata_update.present?
-      SetupMetadataJob.perform_later(self)
+      SetupMetadataJob.perform_later(self, current_batch_process)
     end
   end
 

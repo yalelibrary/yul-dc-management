@@ -27,7 +27,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
 
     it 'returns a processing_failure message' do
-      parent_object
+      parent_object.current_batch_process = batch_process
       expect do
         batch_process.file = csv_upload
         batch_process.run_callbacks :create

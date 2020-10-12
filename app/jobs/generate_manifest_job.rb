@@ -7,7 +7,8 @@ class GenerateManifestJob < ApplicationJob
     -30
   end
 
-  def perform(parent_object)
+  def perform(parent_object, current_batch_process)
+    parent_object.current_batch_process = current_batch_process
     # generate iiif manifest and save it to s3
     begin
       parent_object.iiif_presentation.save

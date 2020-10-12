@@ -66,6 +66,7 @@ class BatchProcess < ApplicationRecord
                                                       else
                                                         MetadataSource.find_by(metadata_cloud_name: 'ladybird')
                                                       end
+        parent_object.current_batch_process = self
       end
       parent_objects << po
     end
