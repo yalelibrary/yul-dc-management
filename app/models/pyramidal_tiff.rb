@@ -27,7 +27,6 @@ class PyramidalTiff
   end
 
   def verify_and_generate
-    ptiff_info = { oid: oid.to_s }
     # cannot convert to PTIFF if we can't find the original
     return false unless original_file_exists?
     # do not do the image conversion if there is already a PTIFF on S3
