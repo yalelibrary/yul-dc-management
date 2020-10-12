@@ -12,7 +12,7 @@ class SetupMetadataJob < ApplicationJob
       GeneratePtiffJob.perform_later(c, current_batch_process)
     end
   rescue => e
-    parent_object.processing_failure("Setup job failed to save: #{e.message}")
+    parent_object.processing_event("Setup job failed to save: #{e.message}", "failed")
     raise # this reraises the error after we document it
   end
 end

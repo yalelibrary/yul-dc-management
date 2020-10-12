@@ -6,7 +6,8 @@ RSpec.describe GeneratePtiffJob, type: :job do
   def queue_adapter_for_test
     ActiveJob::QueueAdapters::DelayedJobAdapter.new
   end
-
+  let(:user) { FactoryBot.create(:user) }
+  let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
   let(:metadata_source) { FactoryBot.create(:metadata_source) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source) }
   let(:child_object) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object) }
@@ -26,7 +27,7 @@ RSpec.describe GeneratePtiffJob, type: :job do
     it 'increments the job queue by one if ready_for_manifest is true' do
       allow(child_object.parent_object).to receive(:ready_for_manifest?).and_return(true)
       expect do
-        generate_ptiff_job.perform(child_object)
+        generate_ptiff_job.perform(child_object, batch_process)
       end.to change { Delayed::Job.count }.by(1)
       expect(Delayed::Job.last.handler).to match(/GenerateManifestJob/)
     end
@@ -34,7 +35,7 @@ RSpec.describe GeneratePtiffJob, type: :job do
     it 'does not increment the job queue if ready_for_manifest is false' do
       allow(child_object.parent_object).to receive(:ready_for_manifest?).and_return(false)
       expect do
-        generate_ptiff_job.perform(child_object)
+        generate_ptiff_job.perform(child_object, batch_process)
       end.to change { Delayed::Job.count }.by(0)
     end
   end

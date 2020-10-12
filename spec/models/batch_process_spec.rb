@@ -39,6 +39,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     end
     it "can create a parent_object from an array of oids" do
       expect(ParentObject.count).to eq 0
+      batch_process.save
       batch_process.create_parent_objects_from_oids(["16371253"], ["ladybird"])
       expect(ParentObject.count).to eq 1
     end
@@ -63,7 +64,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       expect(ParentObject.count).to eq 0
       expect do
         batch_process.file = csv_upload
-        batch_process.refresh_metadata_cloud
+        batch_process.save
       end.to change { batch_process.batch_connections.size }.from(0).to(5)
 
       expect(ParentObject.count).to eq 5
@@ -71,7 +72,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
 
     it "can identify the metadata source" do
       batch_process.file = csv_upload_with_source
-      batch_process.refresh_metadata_cloud
+      batch_process.save
       expect(ParentObject.first.authoritative_metadata_source_id).to eq 1
       expect(ParentObject.second.authoritative_metadata_source_id).to eq 2
       expect(ParentObject.third.authoritative_metadata_source_id).to eq 3
@@ -81,7 +82,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
 
     it 'defaults to ladybird if no metadata source is provided' do
       batch_process.file = csv_upload_with_source
-      batch_process.refresh_metadata_cloud
+      batch_process.save
       expect(ParentObject.last.authoritative_metadata_source_id).to eq 1
     end
   end
@@ -111,7 +112,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     it "can refresh the ParentObjects from the MetadataCloud" do
       expect(ParentObject.count).to eq 0
       batch_process.file = xml_upload
-      batch_process.refresh_metadata_cloud
+      batch_process.save
       expect(ParentObject.count).to eq 1
     end
   end

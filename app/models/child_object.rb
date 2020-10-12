@@ -55,7 +55,7 @@ class ChildObject < ApplicationRecord
       self.ptiff_conversion_at = Time.current
       pyramidal_tiff.conversion_information
     else
-      parent_object.processing_failure("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}")
+      parent_object.processing_event("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
     end
   end
 

@@ -26,7 +26,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     let(:batch_process) { FactoryBot.create(:batch_process, user: User.last) }
     let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
 
-    it 'returns a processing_failure message' do
+    it 'returns a processing_event message' do
       parent_object.current_batch_process = batch_process
       expect do
         batch_process.file = csv_upload
@@ -34,7 +34,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       end.to change { batch_process.batch_connections.size }.from(0).to(5)
       msg = "I'm a new notification"
       expect(Notification.count).to eq(0)
-      parent_object.processing_failure(msg)
+      parent_object.processing_event(msg)
       expect(Notification.count).to eq(3)
     end
   end

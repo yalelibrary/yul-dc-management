@@ -68,7 +68,7 @@ class BatchProcess < ApplicationRecord
                                                       end
         parent_object.current_batch_process = self
       end
-      parent_objects << po
+      batch_connections.build(connection: po)
     end
   end
 

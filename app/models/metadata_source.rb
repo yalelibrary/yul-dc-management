@@ -10,7 +10,7 @@ class MetadataSource < ApplicationRecord
                    else
                      s3_path = "#{metadata_cloud_name}/#{file_name(parent_object)}"
                      r = S3Service.download(s3_path)
-                     parent_object.processing_failure("S3 did not return json for #{s3_path}") unless r.present?
+                     parent_object.processing_event("S3 did not return json for #{s3_path}", "failed") unless r.present?
                      r
                    end
     JSON.parse(raw_metadata) if raw_metadata
@@ -20,7 +20,7 @@ class MetadataSource < ApplicationRecord
     mc_url = parent_object.send(url_type)
     full_response = mc_get(mc_url)
     unless full_response.status == 200
-      parent_object.processing_failure("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}")
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failed")
       return
     end
     response_text = full_response.body.to_str

@@ -18,15 +18,17 @@ RSpec.describe GenerateManifestJob, type: :job do
     end
 
     context 'job failes' do
+      let(:user) { FactoryBot.create(:user) }
       let(:metadata_source) { FactoryBot.create(:metadata_source) }
       let(:parent_object) { FactoryBot.create(:parent_object, authoritative_metadata_source: metadata_source) }
+      let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
       before do
         allow(parent_object).to receive(:solr_index).and_raise('boom!')
       end
 
       it 'notifies on Solr index failure' do
-        expect(parent_object).to receive(:processing_failure)
-        expect { generate_manifest_job.perform(parent_object) }.to raise_error('boom!')
+        expect(parent_object).to receive(:processing_event)
+        expect { generate_manifest_job.perform(parent_object, batch_process) }.to raise_error('boom!')
       end
     end
   end
