@@ -146,7 +146,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
       expect(ptf.remote_access_master_path).to eq "originals/43/10/14/54/1014543.tif"
     end
 
-    it "does not perform conversion if remote PTIFF exists, but does not record it as an error" do
+    it "does not perform conversion if remote PTIFF exists" do
       ptiff = described_class.new(child_with_remote_ptiff)
       expect(ptiff.valid?).to be(false)
       expect(ptiff.errors.full_messages.first).to include "PTIFF exists on S3, not converting: {\"oid\":\"111111\"}"
