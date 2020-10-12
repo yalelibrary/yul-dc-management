@@ -2,6 +2,11 @@
 
 class MetadataSource < ApplicationRecord
   has_many :parent_objects, foreign_key: "authoritative_metadata_source_id"
+  class MetadataCloudServerError < StandardError
+    def message
+      "MetadataCloud is responding with 5XX error"
+    end
+  end
 
   def fetch_record(parent_object)
     # The environment value has to be set as a string, real booleans do not work
@@ -19,13 +24,19 @@ class MetadataSource < ApplicationRecord
   def fetch_record_on_vpn(parent_object)
     mc_url = parent_object.send(url_type)
     full_response = mc_get(mc_url)
-    unless full_response.status == 200
+    case full_response.status
+    when 200
+      response_text = full_response.body.to_str
+      S3Service.upload("#{metadata_cloud_name}/#{file_name(parent_object)}", response_text)
+      response_text
+    when 400...500
       parent_object.processing_failure("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}")
-      return
+    when 500...600
+      parent_object.processing_failure("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}")
+      raise MetadataSource::MetadataCloudServerError
+    else
+      parent_object.processing_failure("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}")
     end
-    response_text = full_response.body.to_str
-    S3Service.upload("#{metadata_cloud_name}/#{file_name(parent_object)}", response_text)
-    response_text
   end
 
   def file_name(parent_object)
