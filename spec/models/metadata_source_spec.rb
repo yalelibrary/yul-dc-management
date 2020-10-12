@@ -18,12 +18,15 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
       let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
       let(:unknown_parent_object) { FactoryBot.build(:parent_object, oid: '99999999') }
       let(:ladybird_source) { FactoryBot.build(:metadata_source) }
+      let(:server_error_parent) { FactoryBot.build(:parent_object, oid: '7') }
 
       before do
         stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16797069?include-children=1")
           .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "16797069.json")).read)
         stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/99999999?include-children=1")
-          .to_return(status: 404, body: 'Not Found')
+          .to_return(status: 400, body: 'Unable to communicate with ladybird')
+        stub_request(:get, "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/7?include-children=1")
+          .to_return(status: 500, body: 'MetadataCloud server error')
 
         stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/16797069.json").to_return(status: 200)
       end
@@ -43,30 +46,14 @@ RSpec.describe MetadataSource, type: :model, prep_metadata_sources: true do
         expect(ladybird_result['uri']).to eq('/ladybird/oid/16797069')
       end
 
-      it 'adds a notificaiton if record is not found in metadata cloud' do
+      it "adds a notification if record is not found in metadata cloud" do
         expect(unknown_parent_object).to receive(:processing_failure)
         ladybird_result = ladybird_source.fetch_record(unknown_parent_object)
         expect(ladybird_result).not_to be
       end
-    end
 
-    # TODO: The goal of this spec is for it to be the one section that really talks to
-    # the metadata cloud for now. This should be moved to the metadata cloud validation
-    # spec file once that file gets created
-    context "it can talk to the metadata cloud", vpn_only: true do
-      let(:oid) { "16371272" }
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: '16371272') }
-      let(:oid_url) { "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?include-children=1" }
-      let(:ladybird_source) { FactoryBot.build(:metadata_source) }
-      before do
-        WebMock.allow_net_connect!
-      end
-      it "can connect to the metadata cloud using basic auth" do
-        expect(ladybird_source.mc_get(oid_url).to_str).to include "Manuscript, on parchment"
-        expect(ladybird_source.mc_get(oid_url).to_str).to include "/ladybird/oid/16565592"
-      end
-      it "gets a successful response from the Metadata Cloud" do
-        expect(ladybird_source.fetch_record_on_vpn(parent_object)).to include "Manuscript, on parchment, of the books of the Bible from Proverbs through"
+      it 'adds an error if it receives a 5XX response' do
+        expect { ladybird_source.fetch_record(server_error_parent) }.to raise_error(described_class::MetadataCloudServerError)
       end
     end
   end
