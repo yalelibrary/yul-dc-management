@@ -157,7 +157,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def ready_for_manifest?
-    !child_objects.pluck(:ptiff_conversion_at).include?(nil)
+    !child_objects.pluck(:width).include?(nil)
   end
 
   def representative_thumbnail
