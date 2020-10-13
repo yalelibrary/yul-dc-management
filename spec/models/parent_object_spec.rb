@@ -13,6 +13,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     stub_metadata_cloud("2004628", "ladybird")
     stub_metadata_cloud("2005512", "ladybird")
     stub_metadata_cloud("V-2004628", "ils")
+    stub_metadata_cloud("2034600", "ladybird")
+    stub_metadata_cloud("16414889")
+    stub_metadata_cloud("14716192")
+    stub_metadata_cloud("16854285")
     stub_ptiffs_and_manifests
   end
 
@@ -24,6 +28,16 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       user_one
       user_two
       user_three
+      stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/00/20/34/60/2034600.json")
+        .to_return(status: 200)
+      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/12/20/05/51/2005512.json")
+        .to_return(status: 200)
+      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/89/16/41/48/89/16414889.json")
+        .to_return(status: 200)
+      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/92/14/71/61/92/14716192.json")
+        .to_return(status: 200)
+      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/85/16/85/42/85/16854285.json")
+        .to_return(status: 200)
     end
     around do |example|
       perform_enqueued_jobs do
