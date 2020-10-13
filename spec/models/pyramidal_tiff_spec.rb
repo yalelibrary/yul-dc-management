@@ -149,7 +149,8 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     it "does not perform conversion if remote PTIFF exists" do
       ptiff = described_class.new(child_with_remote_ptiff)
       expect(ptiff.valid?).to be(false)
-      expect(ptiff.errors.full_messages.first).to eq("PTIFF exists on S3, not converting: {\"oid\":\"111111\"}")
+      expect(ptiff.errors.full_messages.first).to include "PTIFF exists on S3, not converting: {\"oid\":\"111111\"}"
+      expect(ptiff).not_to receive(:convert_to_ptiff)
     end
 
     it "copies the remote access master to a swing directory" do
