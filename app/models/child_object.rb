@@ -54,10 +54,14 @@ class ChildObject < ApplicationRecord
 
   def convert_to_ptiff
     if pyramidal_tiff.valid?
-      self.width = pyramidal_tiff.conversion_information[:width]
-      self.height = pyramidal_tiff.conversion_information[:height]
-      self.ptiff_conversion_at = Time.current
-      pyramidal_tiff.conversion_information
+      if pyramidal_tiff.conversion_information&.[](:width)
+        self.width = pyramidal_tiff.conversion_information[:width]
+        self.height = pyramidal_tiff.conversion_information[:height]
+        self.ptiff_conversion_at = Time.current
+        parent_object.processing_event("PTIFF created for #{oid}", 'ptiff-ready')
+        pyramidal_tiff.conversion_information
+      end
+      # Conversion info is blank if the ptiff was skipped as already present
     else
       parent_object.processing_event("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
     end
