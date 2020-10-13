@@ -32,6 +32,12 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
   end
 
   describe "a child object that already has a remote ptiff" do
+    around do |example|
+      access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
+      ENV["ACCESS_MASTER_MOUNT"] = "s3"
+      example.run
+      ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
+    end
     let(:child_object) { described_class.create(oid: "456789", parent_object: parent_object, width: 200, height: 200) }
     before do
       stub_metadata_cloud("2004628")

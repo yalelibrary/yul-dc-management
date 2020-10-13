@@ -17,10 +17,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   end
 
   context 'with a random notification' do
+    let(:user_one) { FactoryBot.create(:user, uid: "human the first") }
+    let(:user_two) { FactoryBot.create(:user, uid: "human the second") }
+    let(:user_three) { FactoryBot.create(:user, uid: "human the third") }
     before do
-      3.times do
-        FactoryBot.create(:user)
-      end
+      user_one
+      user_two
+      user_three
     end
     around do |example|
       perform_enqueued_jobs do
@@ -28,7 +31,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       end
     end
     let(:parent_object) { FactoryBot.build(:parent_object, oid: 2_034_600) }
-    let(:batch_process) { FactoryBot.create(:batch_process, user: User.last) }
+    let(:batch_process) { FactoryBot.create(:batch_process, user: user_one) }
     let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
 
     it 'returns a processing_event message' do
@@ -37,7 +40,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         batch_process.file = csv_upload
         batch_process.run_callbacks :create
       end.to change { batch_process.batch_connections.size }.from(0).to(5)
-      expect(User.last.notifications.count).to eq(223)
+      expect(user_one.notifications.count).to eq(223)
       expect(Notification.all.map { |note| note.params[:status] }).to include "processing-queued"
       expect(Notification.all.map { |note| note.params[:reason] }).to include "Metadata has been fetched"
       expect(Notification.all.map { |note| note.params[:reason] }).to include "Processing has been queued"
