@@ -16,17 +16,17 @@ RSpec.describe SetupMetadataJob, type: :job do
     end.to change { Delayed::Job.count }.by(1)
   end
 
-  context 'job failes' do
+  context 'job fails' do
     let(:user) { FactoryBot.create(:user) }
     let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
     let(:metadata_source) { FactoryBot.create(:metadata_source) }
-    let(:parent_object) { FactoryBot.create(:parent_object, authoritative_metadata_source: metadata_source) }
+    let(:parent_object) { FactoryBot.build(:parent_object, authoritative_metadata_source: metadata_source) }
     before do
       allow(parent_object).to receive(:save!).and_raise('boom!')
     end
 
     it 'notifies on save failure' do
-      expect(parent_object).to receive(:processing_event)
+      expect(parent_object).to receive(:processing_event).twice
       expect { metadata_job.perform(parent_object, batch_process) }.to raise_error('boom!')
     end
   end

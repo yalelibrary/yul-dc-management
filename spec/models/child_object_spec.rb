@@ -42,7 +42,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       parent_object
     end
     it "does not try to generate the ptiff if it already has height & width and remote ptiff already exists" do
-      expect(child_object.pyramidal_tiff.valid?).to eq false
+      expect(child_object.pyramidal_tiff.valid?).to eq true
     end
   end
 

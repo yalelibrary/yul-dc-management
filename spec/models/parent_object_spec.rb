@@ -22,7 +22,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         FactoryBot.create(:user)
       end
     end
-    let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600) }
+    around do |example|
+      perform_enqueued_jobs do
+        example.run
+      end
+    end
+    let(:parent_object) { FactoryBot.build(:parent_object, oid: 2_034_600) }
     let(:batch_process) { FactoryBot.create(:batch_process, user: User.last) }
     let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
 
@@ -32,10 +37,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         batch_process.file = csv_upload
         batch_process.run_callbacks :create
       end.to change { batch_process.batch_connections.size }.from(0).to(5)
-      msg = "I'm a new notification"
-      expect(Notification.count).to eq(0)
-      parent_object.processing_event(msg)
-      expect(Notification.count).to eq(3)
+      expect(User.last.notifications.count).to eq(223)
+      expect(Notification.all.map { |note| note.params[:status] }).to include "processing-queued"
+      expect(Notification.all.map { |note| note.params[:reason] }).to include "Metadata has been fetched"
+      expect(Notification.all.map { |note| note.params[:reason] }).to include "Processing has been queued"
+      expect(Notification.count).to eq(669)
     end
   end
 
