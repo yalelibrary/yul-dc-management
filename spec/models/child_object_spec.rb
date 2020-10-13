@@ -32,6 +32,12 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
   end
 
   describe "a child object that already has a remote ptiff" do
+    around do |example|
+      access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
+      ENV["ACCESS_MASTER_MOUNT"] = "s3"
+      example.run
+      ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
+    end
     let(:child_object) { described_class.create(oid: "456789", parent_object: parent_object, width: 200, height: 200) }
     before do
       stub_metadata_cloud("2004628")
@@ -42,7 +48,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       parent_object
     end
     it "does not try to generate the ptiff if it already has height & width and remote ptiff already exists" do
-      expect(child_object.pyramidal_tiff.valid?).to eq false
+      expect(child_object.pyramidal_tiff.valid?).to eq true
     end
   end
 

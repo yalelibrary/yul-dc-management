@@ -13,17 +13,39 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     stub_metadata_cloud("2004628", "ladybird")
     stub_metadata_cloud("2005512", "ladybird")
     stub_metadata_cloud("V-2004628", "ils")
+    stub_metadata_cloud("2034600", "ladybird")
+    stub_metadata_cloud("16414889")
+    stub_metadata_cloud("14716192")
+    stub_metadata_cloud("16854285")
     stub_ptiffs_and_manifests
   end
 
   context 'with a random notification' do
+    let(:user_one) { FactoryBot.create(:user, uid: "human the first") }
+    let(:user_two) { FactoryBot.create(:user, uid: "human the second") }
+    let(:user_three) { FactoryBot.create(:user, uid: "human the third") }
     before do
-      3.times do
-        FactoryBot.create(:user)
+      user_one
+      user_two
+      user_three
+      stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/00/20/34/60/2034600.json")
+        .to_return(status: 200)
+      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/12/20/05/51/2005512.json")
+        .to_return(status: 200)
+      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/89/16/41/48/89/16414889.json")
+        .to_return(status: 200)
+      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/92/14/71/61/92/14716192.json")
+        .to_return(status: 200)
+      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/85/16/85/42/85/16854285.json")
+        .to_return(status: 200)
+    end
+    around do |example|
+      perform_enqueued_jobs do
+        example.run
       end
     end
-    let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600) }
-    let(:batch_process) { FactoryBot.create(:batch_process, user: User.last) }
+    let(:parent_object) { FactoryBot.build(:parent_object, oid: 2_034_600) }
+    let(:batch_process) { FactoryBot.create(:batch_process, user: user_one) }
     let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
 
     it 'returns a processing_event message' do
@@ -32,10 +54,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         batch_process.file = csv_upload
         batch_process.run_callbacks :create
       end.to change { batch_process.batch_connections.size }.from(0).to(5)
-      msg = "I'm a new notification"
-      expect(Notification.count).to eq(0)
-      parent_object.processing_event(msg)
-      expect(Notification.count).to eq(3)
+      expect(user_one.notifications.count).to eq(223)
+      expect(Notification.all.map { |note| note.params[:status] }).to include "processing-queued"
+      expect(Notification.all.map { |note| note.params[:reason] }).to include "Metadata has been fetched"
+      expect(Notification.all.map { |note| note.params[:reason] }).to include "Processing has been queued"
+      expect(Notification.count).to eq(669)
     end
   end
 

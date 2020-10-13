@@ -28,6 +28,9 @@ class ParentObjectsController < ApplicationController
   # POST /parent_objects.json
   def create
     @parent_object = ParentObject.new(parent_object_params)
+    @batch_process = BatchProcess.new(user: current_user)
+    @batch_process.save!
+    @parent_object.current_batch_process = @batch_process
     respond_to do |format|
       if @parent_object.save
         format.html { redirect_to @parent_object, notice: 'Parent object was successfully created.' }

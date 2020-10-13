@@ -15,6 +15,10 @@ class ChildObject < ApplicationRecord
     self.ptiff_conversion_at = Time.zone.now if remote_ptiff_exists?
   end
 
+  def processing_event(message, status = 'info')
+    IngestNotification.with(parent_object: parent_object, child_object: self, status: status, reason: message, batch_process: parent_object.current_batch_process).deliver_all
+  end
+
   def remote_ptiff_exists?
     S3Service.s3_exists?(remote_ptiff_path)
   end
@@ -50,10 +54,14 @@ class ChildObject < ApplicationRecord
 
   def convert_to_ptiff
     if pyramidal_tiff.valid?
-      self.width = pyramidal_tiff.conversion_information[:width]
-      self.height = pyramidal_tiff.conversion_information[:height]
-      self.ptiff_conversion_at = Time.current
-      pyramidal_tiff.conversion_information
+      if pyramidal_tiff.conversion_information&.[](:width)
+        self.width = pyramidal_tiff.conversion_information[:width]
+        self.height = pyramidal_tiff.conversion_information[:height]
+        self.ptiff_conversion_at = Time.current
+        parent_object.processing_event("PTIFF created for #{oid}", 'ptiff-ready')
+        pyramidal_tiff.conversion_information
+      end
+      # Conversion info is blank if the ptiff was skipped as already present
     else
       parent_object.processing_event("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
     end
