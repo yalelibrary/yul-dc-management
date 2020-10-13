@@ -185,7 +185,7 @@ If you'd like to hit the Metadata cloud endpoint and are running on the VPN, the
   ### Dynatrace
 
   - We've integrated Dynatrace OneAgent for monitoring our Docker container environments. 
-    - More information on OneAgent integration can be found [here](https://github.com/yalelibrary/yul-dc-camerata/tree/master/base)
+    - Instructions on configuring OneAgent can be found [here](https://github.com/yalelibrary/yul-dc-camerata/tree/master/base)
 
 
 ## Running the rake tasks
