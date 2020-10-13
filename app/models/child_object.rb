@@ -15,6 +15,10 @@ class ChildObject < ApplicationRecord
     self.ptiff_conversion_at = Time.zone.now if remote_ptiff_exists?
   end
 
+  def processing_event(message, status = 'info')
+    IngestNotification.with(parent_object: parent_object, child_object: self, status: status, reason: message, batch_process: parent_object.current_batch_process).deliver_all
+  end
+
   def remote_ptiff_exists?
     S3Service.s3_exists?(remote_ptiff_path)
   end
