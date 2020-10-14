@@ -59,7 +59,7 @@ RSpec.describe S3Service, type: :has_vcr do
     local_path = "spec/fixtures/images/ptiff_images/fake_ptiff.tif"
     remote_path = "originals/#{child_object_oid}.tif"
     expect(File.exist?(local_path)).to eq true
-    expect(described_class.upload_image(local_path, remote_path).successful?).to eq true
+    expect(described_class.upload_image(local_path, remote_path, 'image/tiff', 'width' => '100', 'height' => '200').successful?).to eq true
   end
 
   it "can tell that an image exists" do
