@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :batch_process do
     csv { nil }
     mets_xml { nil }
-    user { FactoryBot.create(:user) }
+    user { nil }
     oid { "" }
   end
 end
