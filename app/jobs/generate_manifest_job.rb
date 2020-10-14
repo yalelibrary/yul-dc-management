@@ -16,6 +16,7 @@ class GenerateManifestJob < ApplicationJob
       parent_object.processing_event("IIIF Manifest generation failed due to #{e.message}", "failed")
       raise # this reraises the error after we document it
     end
+    parent_object.processing_event("IIIF Manifest saved to S3", "manifest-saved")
     begin
       result = parent_object.solr_index
       parent_object.processing_event("Solr index after manifest generation failed", "failed") unless result
@@ -23,5 +24,6 @@ class GenerateManifestJob < ApplicationJob
       parent_object.processing_event("Solr indexing failed due to #{e.message}", "failed")
       raise # this reraises the error after we document it
     end
+    parent_object.processing_event("Solr index updated", "solr-indexed")
   end
 end
