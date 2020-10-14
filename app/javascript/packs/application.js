@@ -32,6 +32,10 @@ require("datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css")
 // const imagePath = (name) => images(name, true)
 $( document ).on('turbolinks:load', function() {
   if(!$('#parent-objects-datatable').hasClass('dataTable')){
+    console.log('PO entered')
+    console.log('PO data...', $("#parent-objects-data").data())
+    console.log('PO columns::', JSON.parse($("#parent-objects-data").text()))
+
     $('#parent-objects-datatable').dataTable({
       "processing": true,
       "serverSide": true,
@@ -40,6 +44,26 @@ $( document ).on('turbolinks:load', function() {
       },
       "pagingType": "full_numbers",
       "columns": JSON.parse($("#parent-objects-data").text()),
+      "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]]
+      // pagingType is optional, if you want full pagination controls.
+      // Check dataTables documentation to learn more about
+      // available options.
+    })
+  }
+
+  if(!$('#batch-processes-datatable').hasClass('dataTable')){
+    console.log('BP entered')
+    console.log('BP data...', $("#batch-processes-data").data())
+    console.log('BP columns::', JSON.parse($("#batch-processes-data").text()))
+
+    $('#batch-processes-datatable').dataTable({
+      "processing": true,
+      "serverSide": true,
+      "ajax": {
+        "url": $('#batch-processes-datatable').data('source')
+      },
+      "pagingType": "full_numbers",
+      "columns": JSON.parse($("#batch-processes-data").text()),
       "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]]
       // pagingType is optional, if you want full pagination controls.
       // Check dataTables documentation to learn more about
