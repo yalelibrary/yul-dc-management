@@ -7,10 +7,13 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
   let(:child_object) { described_class.create(oid: "456789", parent_object: parent_object) }
 
   around do |example|
+    access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
+    ENV["ACCESS_MASTER_MOUNT"] = "s3"
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
     example.run
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
+    ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
   end
 
   describe "with a mounted directory for access masters" do
@@ -49,6 +52,8 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     end
     it "does not try to generate the ptiff if it already has height & width and remote ptiff already exists" do
       expect(child_object.pyramidal_tiff.valid?).to eq true
+      expect(child_object.pyramidal_tiff).not_to receive(:convert_to_ptiff)
+      expect(child_object.parent_object.ready_for_manifest?).to be true
     end
   end
 
