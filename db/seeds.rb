@@ -7,6 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Do all background jobs inline during seeds
+
+Rails.logger.error("~~~~~~~~ #{`curl http://169.254.169.254/latest/meta-data/iam/info`}")
+Rails.logger.error("========= #{Aws::STS::Client.new.get_caller_identity}")
+
 ActiveJob::Base.queue_adapter = :inline
 sequence = OidMinterService.initialize_sequence!
 current = ActiveRecord::Base.connection.execute("SELECT last_value from OID_SEQUENCE").first['last_value']
