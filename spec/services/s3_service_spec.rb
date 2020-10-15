@@ -17,6 +17,11 @@ RSpec.describe S3Service, type: :has_vcr do
     stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
       .to_return(status: 200, body: File.open("spec/fixtures/images/access_masters/test_image.tif"))
     stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
+      .with do |request|
+        expect(request.headers).to include('X-Amz-Meta-Width' => '100',
+                                           'X-Amz-Meta-Height' => '200',
+                                           'Content-Type' => 'image/tiff')
+      end
       .to_return(status: 200, body: "")
     stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
       .to_return(status: 200, body: "")
