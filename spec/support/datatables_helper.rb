@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/MethodLength
-def datatable_sample_params
+def parent_object_datatable_sample_params
   ActionController::Parameters.new(
     'draw' => '1',
     'columns' => {
@@ -19,6 +19,39 @@ def datatable_sample_params
       },
       '2' => {
         'data' => 'bib', 'name' => '', 'searchable' => 'true', 'orderable' => 'false',
+        'search' => {
+          'value' => '', 'regex' => 'false'
+        }
+      }
+    },
+    'order' => {
+      '0' => { 'column' => '0', 'dir' => 'asc' }
+    },
+    'start' => '0', 'length' => '10', 'search' => {
+      'value' => '', 'regex' => 'false'
+    },
+    '_' => '1423364387185'
+  )
+end
+
+def batch_process_datatable_sample_params
+  ActionController::Parameters.new(
+    'draw' => '1',
+    'columns' => {
+      '0' => {
+        'data' => 'process_id', 'name' => 'process_id', 'searchable' => 'true', 'orderable' => 'true',
+        'search' => {
+          'value' => '', 'regex' => 'false'
+        }
+      },
+      '1' => {
+        'data' => 'user', 'name' => '', 'searchable' => 'true', 'orderable' => 'true',
+        'search' => {
+          'value' => '', 'regex' => 'false'
+        }
+      },
+      '2' => {
+        'data' => 'items', 'name' => '', 'searchable' => 'true', 'orderable' => 'false',
         'search' => {
           'value' => '', 'regex' => 'false'
         }

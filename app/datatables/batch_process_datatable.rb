@@ -18,9 +18,10 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def data
+    # rubocop:disable Rails/OutputSafety
     records.map do |batch_process|
       {
-        process_id: batch_process.id,
+        process_id: batch_process.id
         # user: batch_process.user.uid,
         # items: batch_process.oids.count,
         # status: batch_process.holding,
@@ -30,9 +31,10 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
         # DT_RowId: batch_process.id
       }
     end
+    # rubocop:enable Rails/OutputSafety
   end
 
-  def get_raw_records
+  def get_raw_records # rubocop:disable Naming/AccessorMethodName
     # insert query here
     # BatchProcess.all
     BatchProcess.joins(:user)
