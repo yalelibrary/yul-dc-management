@@ -7,13 +7,14 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      process_id: { source: "BatchProcess.id" }
-      # user: { source: "BatchProcess.user_id" },
-      # items: { source: "BatchProcess.oid" },
+      process_id: { source: "BatchProcess.id" },
+      user: { source: "BatchProcess.user_id" },
       # status: { source: "" },
-      # start: { source: "BatchProcess.created_at" },
+      time: { source: "BatchProcess.created_at" },
+      items: { source: "BatchProcess.oid" },
+      status: {  },
       # duration: { source: "" },
-      # object_details: { source: "" }
+      object_details: { }
     }
   end
 
@@ -21,13 +22,13 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
     # rubocop:disable Rails/OutputSafety
     records.map do |batch_process|
       {
-        process_id: batch_process.id
-        # user: batch_process.user.uid,
-        # items: batch_process.oids.count,
+        process_id: batch_process.id,
+        user: batch_process.user.uid,
         # status: batch_process.holding,
-        # start: batch_process.created_at,
-        # duration: batch_process.barcode,
-        # object_details: batch_process.aspace_uri
+        time: batch_process.created_at,
+        items: batch_process.oids.count,
+        status: "TODO",
+        object_details: "View(add link)"
         # DT_RowId: batch_process.id
       }
     end
