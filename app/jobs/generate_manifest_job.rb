@@ -7,20 +7,23 @@ class GenerateManifestJob < ApplicationJob
     -30
   end
 
-  def perform(parent_object)
+  def perform(parent_object, current_batch_process)
+    parent_object.current_batch_process = current_batch_process
     # generate iiif manifest and save it to s3
     begin
       parent_object.iiif_presentation.save
     rescue => e
-      parent_object.processing_failure("IIIF Manifest generation failed due to #{e.message}")
+      parent_object.processing_event("IIIF Manifest generation failed due to #{e.message}", "failed")
       raise # this reraises the error after we document it
     end
+    parent_object.processing_event("IIIF Manifest saved to S3", "manifest-saved")
     begin
       result = parent_object.solr_index
-      parent_object.processing_failure("Solr index after manifest generation failed") unless result
+      parent_object.processing_event("Solr index after manifest generation failed", "failed") unless result
     rescue => e
-      parent_object.processing_failure("Solr indexing failed due to #{e.message}")
+      parent_object.processing_event("Solr indexing failed due to #{e.message}", "failed")
       raise # this reraises the error after we document it
     end
+    parent_object.processing_event("Solr index updated", "solr-indexed")
   end
 end

@@ -182,25 +182,13 @@ If you'd like to hit the Metadata cloud endpoint and are running on the VPN, the
     MC_PW=YOUR_INFO_HERE
     ```
 
+  ### Dynatrace
+
+  - We've integrated Dynatrace OneAgent for monitoring our Docker container environments. 
+    - Instructions on configuring OneAgent can be found [here](https://github.com/yalelibrary/yul-dc-camerata/tree/master/base)
+
+
 ## Running the rake tasks
-
-- Update fixture data from the MetadataCloud
-
-  - _NOTE:_ you must be on the Yale VPN
-  - If you have trouble connecting to the MetadataCloud, see the DCE doc on [connecting to VPN from within a container](https://curationexperts.github.io/playbook/tools/docker/containers.html)
-  - Add your credentials to your `.secrets` file. <!-- This needs to be updated based on the camerata gem updates, but not sure what the current practice should be - they're not in the AWS parameter store -->
-
-    ```
-    # Metadata Cloud
-    MC_USER=YOUR_INFO_HERE
-    MC_PW=YOUR_INFO_HERE
-    ```
-
-    Valid metadata sources: ils [aka Voyager], aspace, or ladybird.
-
-    ```bash
-    METADATA_SOURCE=YOUR_SOURCE_HERE rake yale:refresh_fixture_data
-    ```
 
 - Index sample data (if you go to solr and hit "execute query" and don't have data, run this command). This should also occur automatically when you seed the database or otherwise create ParentObjects
 
@@ -225,26 +213,46 @@ In production and development mode, you can add objects either individually, eit
 Any time you pull a branch with a Gemfile change you need to pull or build a new Docker image. If you change the Dockerfile, you need to build a new Docker image. If you change a file in ./ops you need to build a new Docker image. These are the primary times in which you need to pull or build.
 
 ## Releasing a new version
+1. Checkout to the `master` branch and run `git pull`
 
-1. Ensure you have a github personal access token.
+2. Ensure you have a github personal access token.
 
-  Instructions here: <https://github.com/github-changelog-generator/github-changelog-generator#github-token> You will need to make your token available via an environment variable called `CHANGELOG_GITHUB_TOKEN`, e.g.:
+    Instructions here: <https://github.com/github-changelog-generator/github-changelog-generator#github-token> You will need to make your token available via an environment variable called `CHANGELOG_GITHUB_TOKEN`, e.g.:
 
-  ```
-  export CHANGELOG_GITHUB_TOKEN=YOUR_TOKEN_HERE
-  ```
+    ```
+    export CHANGELOG_GITHUB_TOKEN=YOUR_TOKEN_HERE
+    ```
 
-2. Use the camerata gem to increment the management version and deploy:
+3. Use the camerata gem to increment the management version and deploy:
+  Note: See [the camerata readme](https://github.com/yalelibrary/yul-dc-camerata) for details on installing camerata.
 
-  See [the camerata readme](https://github.com/yalelibrary/yul-dc-camerata) for more details on setting this up.
+    ```
+    cam release management
+    ```
 
-  ```
-  cam release management
+4. Proceed with the steps for the Yale infrastructure or the DCE infrastructure
+##### Using the Yale infrastructure
+  - Log on to VPN
+  - Go to Jenkins website in your browser (request it from a member of the team if you don't have it)
+  - Click on "YUL-DC-Test-Deploy" on the dashboard
+  - Click on "Build with Parameters" in the left side navigation panel
+  - In the "MANAGEMENT_VERSION" input box, type in the version you released with the command in step 3 (e.g.: v1.30.0)
+  - Check the UPDATE_SSM box
+  - Press "Build"
+  - You will see your build in the "Build History" section in the left side navigation panel with a blinking blue circle, indicating it's in progress
+    - If you press the number associated with the build, you can see the details
+    - The build typically takes 10-15 minutes
+    - A successful build will show a solid blue circle when finished
+    - An unsuccessful build will show a solid red circle when finished
+
+
+##### Using the DCE infrastructure
+```
   cam push_version management NEW_MANAGEMENT_VERSION_NUMBER
   cam deploy-main CLUSTER_NAME (e.g., yul-test)
-  ```
+```
 
-3. Move any tickets that were included in this release from `For Release` to `Ready for Acceptance`
+5. Move any tickets that were included in this release from `For Release` to `Ready for Acceptance`
 
 ## Test coverage
 

@@ -33,6 +33,18 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     end
   end
 
+  context "creating a ParentObject from an import" do
+    before do
+      stub_metadata_cloud("16371253")
+    end
+    it "can create a parent_object from an array of oids" do
+      expect(ParentObject.count).to eq 0
+      batch_process.save
+      batch_process.create_parent_objects_from_oids(["16371253"], ["ladybird"])
+      expect(ParentObject.count).to eq 1
+    end
+  end
+
   describe "csv file import" do
     it "accepts a csv file as a virtual attribute and read the csv into the csv property" do
       batch_process.file = csv_upload
@@ -50,14 +62,17 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
 
     it "can refresh the ParentObjects from the MetadataCloud" do
       expect(ParentObject.count).to eq 0
-      batch_process.file = csv_upload
-      batch_process.refresh_metadata_cloud
+      expect do
+        batch_process.file = csv_upload
+        batch_process.save
+      end.to change { batch_process.batch_connections.size }.from(0).to(5)
+
       expect(ParentObject.count).to eq 5
     end
 
     it "can identify the metadata source" do
       batch_process.file = csv_upload_with_source
-      batch_process.refresh_metadata_cloud
+      batch_process.save
       expect(ParentObject.first.authoritative_metadata_source_id).to eq 1
       expect(ParentObject.second.authoritative_metadata_source_id).to eq 2
       expect(ParentObject.third.authoritative_metadata_source_id).to eq 3
@@ -67,7 +82,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
 
     it 'defaults to ladybird if no metadata source is provided' do
       batch_process.file = csv_upload_with_source
-      batch_process.refresh_metadata_cloud
+      batch_process.save
       expect(ParentObject.last.authoritative_metadata_source_id).to eq 1
     end
   end
@@ -97,7 +112,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     it "can refresh the ParentObjects from the MetadataCloud" do
       expect(ParentObject.count).to eq 0
       batch_process.file = xml_upload
-      batch_process.refresh_metadata_cloud
+      batch_process.save
       expect(ParentObject.count).to eq 1
     end
   end

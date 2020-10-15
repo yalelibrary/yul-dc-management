@@ -80,5 +80,6 @@ group :test do
   gem 'coveralls', require: false
   gem 'ffaker'
   gem 'selenium-webdriver'
+  gem 'shoulda-matchers', '~> 4.0'
   gem 'webdrivers'
 end

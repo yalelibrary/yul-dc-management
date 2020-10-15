@@ -13,7 +13,58 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     stub_metadata_cloud("2004628", "ladybird")
     stub_metadata_cloud("2005512", "ladybird")
     stub_metadata_cloud("V-2004628", "ils")
+    stub_metadata_cloud("2034600", "ladybird")
+    stub_metadata_cloud("16414889")
+    stub_metadata_cloud("14716192")
+    stub_metadata_cloud("16854285")
     stub_ptiffs_and_manifests
+  end
+
+  context 'with a random notification' do
+    let(:user_one) { FactoryBot.create(:user, uid: "human the first") }
+    let(:user_two) { FactoryBot.create(:user, uid: "human the second") }
+    let(:user_three) { FactoryBot.create(:user, uid: "human the third") }
+    before do
+      user_one
+      user_two
+      user_three
+      stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/00/20/34/60/2034600.json")
+        .to_return(status: 200)
+      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/12/20/05/51/2005512.json")
+        .to_return(status: 200)
+      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/89/16/41/48/89/16414889.json")
+        .to_return(status: 200)
+      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/92/14/71/61/92/14716192.json")
+        .to_return(status: 200)
+      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/85/16/85/42/85/16854285.json")
+        .to_return(status: 200)
+    end
+    around do |example|
+      perform_enqueued_jobs do
+        example.run
+      end
+    end
+    let(:parent_object) { FactoryBot.build(:parent_object, oid: 2_034_600) }
+    let(:batch_process) { FactoryBot.create(:batch_process, user: user_one) }
+    let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
+
+    it 'returns a processing_event message' do
+      parent_object.current_batch_process = batch_process
+      expect do
+        batch_process.file = csv_upload
+        batch_process.run_callbacks :create
+      end.to change { batch_process.batch_connections.size }.from(0).to(5)
+      expect(user_one.notifications.count).to eq(238)
+      statuses = Notification.all.map { |note| note.params[:status] }
+      expect(statuses).to include "processing-queued"
+      expect(statuses).to include "metadata-fetched"
+      expect(statuses).to include "child-records-created"
+      expect(statuses).to include "ptiff-ready"
+      expect(statuses).to include "manifest-saved"
+      expect(statuses).to include "solr-indexed"
+      expect(Notification.all.map { |note| note.params[:reason] }).to include "Processing has been queued"
+      expect(Notification.count).to eq(714)
+    end
   end
 
   context "a newly created ParentObject with different visibilities" do
@@ -135,15 +186,15 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069', ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16797069.json")))) }
 
       it 'returns a ladybird url' do
-        expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16797069?include-children=1"
+        expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ladybird/oid/16797069?include-children=1"
       end
 
       it 'returns a voyager url' do
-        expect(parent_object.voyager_cloud_url).to eq "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002075038423?bib=3435140"
+        expect(parent_object.voyager_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ils/barcode/39002075038423?bib=3435140"
       end
 
       it 'returns an aspace url' do
-        expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace/repositories/11/archival_objects/608223"
+        expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/aspace/repositories/11/archival_objects/608223"
       end
     end
 
@@ -151,7 +202,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       let(:parent_object) { FactoryBot.build(:parent_object, oid: '16712419', ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16712419.json")))) }
 
       it 'returns a voyager url using the bib' do
-        expect(parent_object.voyager_cloud_url).to eq "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils/bib/1289001"
+        expect(parent_object.voyager_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ils/bib/1289001"
       end
     end
 
@@ -164,24 +215,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
       it 'returns an aspace url' do
         expect(parent_object.aspace_cloud_url).to eq nil
-      end
-    end
-
-    context 'with an incorrect authoritative_metadata_source' do
-      before do
-        3.times do |_user|
-          FactoryBot.create(:user)
-        end
-      end
-
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: '16173726') }
-
-      # extra error on Yale Infrastracture, need to fix
-      xit 'returns a processing_failure message' do
-        msg = 'Metadata source not found, should be one of [ladybird, ils, aspace]'
-        expect(Notification.count).to eq(0)
-        parent_object.processing_failure(msg)
-        expect(Notification.count).to eq(3)
       end
     end
 
