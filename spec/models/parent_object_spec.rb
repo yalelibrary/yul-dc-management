@@ -11,12 +11,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
   around do |example|
     original_metadata_sample_bucket = ENV['SAMPLE_BUCKET']
-    original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
     ENV['SAMPLE_BUCKET'] = "yul-dc-development-samples"
-    ENV["S3_SOURCE_BUCKET_NAME"] = "yale-development-image-samples"
     example.run
     ENV['SAMPLE_BUCKET'] = original_metadata_sample_bucket
-    ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
   end
 
   before do
@@ -28,7 +25,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     stub_metadata_cloud("14716192")
     stub_metadata_cloud("16854285")
     stub_metadata_cloud("16057779")
-    stub_ptiffs
+    stub_ptiffs_and_manifests
   end
 
   context "with four child objects", :has_vcr do
