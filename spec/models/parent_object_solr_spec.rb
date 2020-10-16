@@ -150,5 +150,25 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         end
       end
     end
+
+    describe "changing the visibilty" do
+      let(:oid) { "2034600" }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird') }
+      it "commits data to solr if it is changed on the object" do
+        expect do
+          parent_object.setup_metadata_job
+          perform_enqueued_jobs
+          parent_object.reload
+        end.to change(parent_object, :visibility).from("Private").to("Public")
+                                                 .and change(parent_object, :use_ladybird).from(true).to(false)
+        expect do
+          parent_object.visibility = "Yale Community Only"
+          parent_object.save!
+          parent_object.reload
+        end.to change(parent_object, :visibility).from("Public").to("Yale Community Only")
+        response = solr.get 'select', params: { q: 'oid_ssi:2034600' }
+        expect(response["response"]["docs"].first["visibility_ssi"]).to eq "Yale Community Only"
+      end
+    end
   end
 end

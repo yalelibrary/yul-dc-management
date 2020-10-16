@@ -153,7 +153,7 @@ module SolrIndexable
   end
 
   def extract_visibility(json_to_index)
-    json_to_index["itemPermission"] || visibility
+    visibility || json_to_index["itemPermission"]
   end
 
   # I do not think the current box_ssim is how we want to continue to do deal with differences in field names
