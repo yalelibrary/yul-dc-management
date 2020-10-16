@@ -22,7 +22,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   end
 
   context "with four child objects", :has_vcr do
-
     let(:user) { FactoryBot.create(:user) }
     let(:parent_of_four) { FactoryBot.create(:parent_object, oid: 16_057_779) }
     let(:child_of_four) { FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_of_four) }
