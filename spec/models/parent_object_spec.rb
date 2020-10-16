@@ -34,7 +34,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     it "receives a check for whether it's ready for manifests 4 times, one for each child" do
       allow_any_instance_of(ChildObject).to receive(:parent_object).and_return(parent_of_four)
       parent_of_four.current_batch_process = batch_process
-      expect(parent_of_four).to receive(:ready_for_manifest?).exactly(4).times
+      expect(parent_of_four).to receive(:needs_a_manifest?).exactly(4).times
       parent_of_four.setup_metadata_job
     end
     # rubocop:enable RSpec/AnyInstance
