@@ -50,7 +50,7 @@ class ChildObject < ApplicationRecord
   end
 
   def width_and_height(size)
-    return unless size.present? && size[:width].positive? && size[:height].positive?
+    return unless size.present? && size[:width].to_i.positive? && size[:height].to_i.positive?
     self.width = size[:width]
     self.height = size[:height]
     self.ptiff_conversion_at = Time.zone.now if remote_ptiff_exists?
