@@ -17,10 +17,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     stub_metadata_cloud("16414889")
     stub_metadata_cloud("14716192")
     stub_metadata_cloud("16854285")
+    stub_metadata_cloud("16057779")
     stub_ptiffs
   end
 
-  context "with four child objects" do
+  context "with four child objects", :has_vcr do
+
     let(:user) { FactoryBot.create(:user) }
     let(:parent_of_four) { FactoryBot.create(:parent_object, oid: 16_057_779) }
     let(:child_of_four) { FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_of_four) }
@@ -33,9 +35,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     # rubocop:disable RSpec/AnyInstance
     it "receives a check for whether it's ready for manifests 4 times, one for each child" do
       allow_any_instance_of(ChildObject).to receive(:parent_object).and_return(parent_of_four)
-      parent_of_four.current_batch_process = batch_process
-      expect(parent_of_four).to receive(:needs_a_manifest?).exactly(4).times
-      parent_of_four.setup_metadata_job
+      VCR.use_cassette("process csv") do
+        parent_of_four.current_batch_process = batch_process
+        expect(parent_of_four).to receive(:needs_a_manifest?).exactly(4).times
+        parent_of_four.setup_metadata_job
+      end
     end
     # rubocop:enable RSpec/AnyInstance
   end

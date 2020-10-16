@@ -1,0 +1,198 @@
+---
+http_interactions:
+- request:
+    method: head
+    uri: https://yul-dc-development-samples.s3.amazonaws.com/manifests/79/16/05/77/79/16057779.json
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Content-Type:
+      - ''
+      Accept-Encoding:
+      - ''
+      User-Agent:
+      - aws-sdk-ruby3/3.104.3 ruby/2.6.6 x86_64-linux aws-sdk-s3/1.75.0
+      Host:
+      - yul-dc-development-samples.s3.amazonaws.com
+      X-Amz-Date:
+      - 20201016T192217Z
+      X-Amz-Content-Sha256:
+      - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=AKIARRPWY4OHRIGLPRMU/20201016/us-east-1/s3/aws4_request,
+        SignedHeaders=host;user-agent;x-amz-content-sha256;x-amz-date, Signature=62afbe730f1cdb6c3d501c9ea9b290c028f7ab9c9ec317c8ba0f32771a73f52d
+      Content-Length:
+      - '0'
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Amz-Id-2:
+      - rG9ohtQAWZwz6V/PJlH4BFbv+57/FDZuCL0ORVv9D/kbORdVtblnUwKB1cZrSSQSn62Cz6t+VYo=
+      X-Amz-Request-Id:
+      - F5C52693D2600D80
+      Date:
+      - Fri, 16 Oct 2020 19:22:18 GMT
+      Last-Modified:
+      - Fri, 16 Oct 2020 19:22:17 GMT
+      Etag:
+      - '"649ac8eae0195949a315442be958c266"'
+      Accept-Ranges:
+      - bytes
+      Content-Type:
+      - ''
+      Content-Length:
+      - '4578'
+      Server:
+      - AmazonS3
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Fri, 16 Oct 2020 19:22:17 GMT
+- request:
+    method: post
+    uri: http://solr:8983/solr/blacklight-test/update?wt=json
+    body:
+      encoding: UTF-8
+      string: '[{"id":"16057779","abstract_tesim":["A collection of weapons and costume
+        accessories owned by Nathan Salsbury and associated with colleagues of William
+        F. \"Buffalo Bill\" Cody, including John Burwell \"Texas Jack\" Omohundro
+        and Sitting Bull. Included are a shotgun, a bolas, a pair of moccasins, and
+        a quiver containing a bow and arrows, as well as a revolver owned by Salsbury.","Nathan
+        Salsbury (1846-1902), Civil War veteran, actor, and theatrical entrepreneur;
+        after 1884 co-owner, producer and manager of \"Buffalo Bill''s Wild West Show.\""],"accessionNumber_ssi":null,"accessRestrictions_tesim":null,"alternativeTitle_tesim":null,"alternativeTitleDisplay_tesim":null,"archiveSpaceUri_ssi":null,"creator_ssim":null,"creator_tesim":null,"box_ssim":"Box
+        2","child_oids_ssim":[16057781,16057782,16057783,16057784],"collectionId_ssim":1,"collectionId_tesim":1,"contents_tesim":"One
+        twisted rawhide bolas with three rawhide-covered weights, and measuring 121
+        cm in length. Used to capture running game during a hunt, the bolas is unmarked
+        and its original owner is unidentified.","contributor_tsim":["Buffalo Bill,--1846-1917.","Buffalo
+        Bill''s Wild West Company.","Buffalo Bill''s Wild West Show.","Salsbury, Nathan,--1846-1902.","Sitting
+        Bull,--1831-1890."],"contributorDisplay_tsim":["Buffalo Bill,--1846-1917.","Buffalo
+        Bill''s Wild West Company.","Buffalo Bill''s Wild West Show.","Salsbury, Nathan,--1846-1902.","Sitting
+        Bull,--1831-1890."],"coordinates_ssim":null,"copyrightDate_ssim":"[circa 1870-1895]","creatorDisplay_tsim":null,"date_ssim":"[1870]","dateDepicted_ssim":null,"dateStructured_ssim":"1870-00-00T00:00:00Z","dependentUris_ssim":"/ladybird/oid/16057779","description_tesim":"One
+        twisted rawhide bolas with three rawhide-covered weights, and measuring 121
+        cm in length. Used to capture running game during a hunt, the bolas is unmarked
+        and its original owner is unidentified.","digital_ssim":null,"edition_ssim":null,"extent_ssim":"1
+        bolas : 121 cm.","extentOfDigitization_ssim":null,"findingAid_ssim":null,"folder_ssim":null,"format":"three
+        dimensional object","format_tesim":"three dimensional object","genre_ssim":"Bolas
+        (projectile weapons)--United States--19th century.","genre_tesim":"Bolas (projectile
+        weapons)--United States--19th century.","geoSubject_ssim":null,"identifierMfhd_ssim":null,"identifierShelfMark_ssim":"WA
+        MSS S-3019","identifierShelfMark_tesim":"WA MSS S-3019","imageCount_isi":4,"indexedBy_tsim":"Nathan
+        Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western
+        Americana, Beinecke Rare Book and Manuscript Library.","label_tesim":["Bolas-001","Bolas-002","Bolas-003","Bolas-004"],"language_ssim":null,"localRecordNumber_ssim":null,"material_tesim":null,"number_of_pages_ss":null,"oid_ssi":16057779,"orbisBarcode_ssi":null,"orbisBibId_ssi":"12442385","partOf_tesim":"Beinecke
+        Library","partOf_ssim":"Beinecke Library","projection_tesim":null,"public_bsi":true,"publicationPlace_ssim":null,"publicationPlace_tesim":null,"publisher_tesim":null,"publisher_ssim":null,"recordType_ssi":"oid","references_tesim":"Nathan
+        Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western
+        Americana, Beinecke Rare Book and Manuscript Library.","repository_ssim":"Beinecke
+        Library","resourceType_ssim":"Tools, Equipment \u0026 Instruments","resourceType_tesim":"Tools,
+        Equipment \u0026 Instruments","rights_ssim":"The use of this image may be
+        subject to the copyright law of the United States (Title 17, United States
+        Code) or to site license or other rights management terms and conditions.
+        The person using the image is liable for any infringement","rights_tesim":"The
+        use of this image may be subject to the copyright law of the United States
+        (Title 17, United States Code) or to site license or other rights management
+        terms and conditions. The person using the image is liable for any infringement","scale_tesim":null,"source_ssim":"ladybird","sourceCreated_tesim":null,"sourceDate_tesim":"[circa
+        1870-1895]","sourceEdition_tesim":null,"sourceNote_tesim":null,"sourceTitle_tesim":"[Objects
+        associated with Buffalo Bill]","subjectEra_ssim":"Wild west shows.","subjectGeographic_tesim":null,"subjectTitle_tsim":"Wild
+        west shows.","subjectTitleDisplay_tsim":["Theatrical managers--United States.","Wild
+        west shows."],"subjectName_ssim":["Buffalo Bill,--1846-1917.","Buffalo Bill''s
+        Wild West Company.","Buffalo Bill''s Wild West Show.","Salsbury, Nathan,--1846-1902.","Sitting
+        Bull,--1831-1890."],"subjectName_tesim":["Buffalo Bill,--1846-1917.","Buffalo
+        Bill''s Wild West Company.","Buffalo Bill''s Wild West Show.","Salsbury, Nathan,--1846-1902.","Sitting
+        Bull,--1831-1890."],"subjectTopic_tesim":["Theatrical managers--United States.","Wild
+        west shows."],"subjectTopic_ssim":["Theatrical managers--United States.","Wild
+        west shows."],"thumbnail_path_ss":"http://localhost:8182/iiif/2/16057781/full/!200,200/0/default.jpg","title_tesim":"Rawhide
+        bolas","title_ssim":"Rawhide bolas","uri_ssim":"/ladybird/oid/16057779","url_suppl_ssim":"http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?\u0026amp;CN=WA_MSS_S-3019","visibility_ssi":"Public","abstract_ssim":["A
+        collection of weapons and costume accessories owned by Nathan Salsbury and
+        associated with colleagues of William F. \"Buffalo Bill\" Cody, including
+        John Burwell \"Texas Jack\" Omohundro and Sitting Bull. Included are a shotgun,
+        a bolas, a pair of moccasins, and a quiver containing a bow and arrows, as
+        well as a revolver owned by Salsbury.","Nathan Salsbury (1846-1902), Civil
+        War veteran, actor, and theatrical entrepreneur; after 1884 co-owner, producer
+        and manager of \"Buffalo Bill''s Wild West Show.\""],"alternativeTitle_ssim":null,"alternative_title_tsm":null,"author_ssim":null,"author_tesim":null,"author_tsim":null,"date_tsim":"[1870]","geo_subject_ssim":null,"material_ssim":null,"oid_ssim":16057779,"orbisBarcode_ssim":null,"orbisBibId_ssim":"12442385","projection_ssim":null,"recordType_ssim":"oid","references_ssim":"Nathan
+        Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western
+        Americana, Beinecke Rare Book and Manuscript Library.","scale_ssim":null,"sourceCreated_ssim":null,"sourceDate_ssim":"[circa
+        1870-1895]","sourceEdition_ssim":null,"sourceNote_ssim":null,"sourceTitle_ssim":"[Objects
+        associated with Buffalo Bill]","subject_topic_tsim":["Theatrical managers--United
+        States.","Wild west shows."],"title_tsim":"Rawhide bolas"}]'
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; base-uri 'none'; connect-src 'self'; form-action 'self';
+        font-src 'self'; frame-ancestors 'none'; img-src 'self'; media-src 'self';
+        style-src 'self' 'unsafe-inline'; script-src 'self'; worker-src 'self';
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '55'
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "responseHeader":{
+            "status":0,
+            "QTime":9}}
+  recorded_at: Fri, 16 Oct 2020 19:22:17 GMT
+- request:
+    method: post
+    uri: http://solr:8983/solr/blacklight-test/update?wt=json
+    body:
+      encoding: UTF-8
+      string: '{"commit":{}}'
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; base-uri 'none'; connect-src 'self'; form-action 'self';
+        font-src 'self'; frame-ancestors 'none'; img-src 'self'; media-src 'self';
+        style-src 'self' 'unsafe-inline'; script-src 'self'; worker-src 'self';
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '57'
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "responseHeader":{
+            "status":0,
+            "QTime":111}}
+  recorded_at: Fri, 16 Oct 2020 19:22:17 GMT
+recorded_with: VCR 6.0.0
