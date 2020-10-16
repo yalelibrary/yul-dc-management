@@ -16,12 +16,12 @@ http_interactions:
       Host:
       - yul-dc-development-samples.s3.amazonaws.com
       X-Amz-Date:
-      - 20201016T192217Z
+      - 20201016T203111Z
       X-Amz-Content-Sha256:
       - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
       Authorization:
       - AWS4-HMAC-SHA256 Credential=AKIARRPWY4OHRIGLPRMU/20201016/us-east-1/s3/aws4_request,
-        SignedHeaders=host;user-agent;x-amz-content-sha256;x-amz-date, Signature=62afbe730f1cdb6c3d501c9ea9b290c028f7ab9c9ec317c8ba0f32771a73f52d
+        SignedHeaders=host;user-agent;x-amz-content-sha256;x-amz-date, Signature=ca79060ef110ee3ec9dc3903b19b94a688e8783d3336d15eb21d2aa3a2281439
       Content-Length:
       - '0'
       Accept:
@@ -32,13 +32,13 @@ http_interactions:
       message: OK
     headers:
       X-Amz-Id-2:
-      - rG9ohtQAWZwz6V/PJlH4BFbv+57/FDZuCL0ORVv9D/kbORdVtblnUwKB1cZrSSQSn62Cz6t+VYo=
+      - J4Ikg2W2H7oU9WXI45ioD5FWNNdwR+ek6pyVIanRIZ6UkZDt10Jwjv4oLKmaMuXYvlTXQ3qHu+8=
       X-Amz-Request-Id:
-      - F5C52693D2600D80
+      - 1932DC87A7C82F3F
       Date:
-      - Fri, 16 Oct 2020 19:22:18 GMT
+      - Fri, 16 Oct 2020 20:31:12 GMT
       Last-Modified:
-      - Fri, 16 Oct 2020 19:22:17 GMT
+      - Fri, 16 Oct 2020 20:31:11 GMT
       Etag:
       - '"649ac8eae0195949a315442be958c266"'
       Accept-Ranges:
@@ -52,7 +52,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: ''
-  recorded_at: Fri, 16 Oct 2020 19:22:17 GMT
+  recorded_at: Fri, 16 Oct 2020 20:31:11 GMT
 - request:
     method: post
     uri: http://solr:8983/solr/blacklight-test/update?wt=json
@@ -151,8 +151,8 @@ http_interactions:
         {
           "responseHeader":{
             "status":0,
-            "QTime":9}}
-  recorded_at: Fri, 16 Oct 2020 19:22:17 GMT
+            "QTime":4}}
+  recorded_at: Fri, 16 Oct 2020 20:31:11 GMT
 - request:
     method: post
     uri: http://solr:8983/solr/blacklight-test/update?wt=json
@@ -186,13 +186,13 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
-      - '57'
+      - '56'
     body:
       encoding: UTF-8
       string: |
         {
           "responseHeader":{
             "status":0,
-            "QTime":111}}
-  recorded_at: Fri, 16 Oct 2020 19:22:17 GMT
+            "QTime":96}}
+  recorded_at: Fri, 16 Oct 2020 20:31:11 GMT
 recorded_with: VCR 6.0.0

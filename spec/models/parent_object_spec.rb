@@ -9,6 +9,16 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   let(:unexpected_metadata_source) { 4 }
   let(:logger_mock) { instance_double("Rails.logger").as_null_object }
 
+  around do |example|
+    original_metadata_sample_bucket = ENV['SAMPLE_BUCKET']
+    original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
+    ENV['SAMPLE_BUCKET'] = "yul-dc-development-samples"
+    ENV["S3_SOURCE_BUCKET_NAME"] = "yale-development-image-samples"
+    example.run
+    ENV['SAMPLE_BUCKET'] = original_metadata_sample_bucket
+    ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
+  end
+
   before do
     stub_metadata_cloud("2004628", "ladybird")
     stub_metadata_cloud("2005512", "ladybird")
@@ -53,13 +63,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       user_three
       stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/00/20/34/60/2034600.json")
         .to_return(status: 200)
-      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/12/20/05/51/2005512.json")
+      stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/12/20/05/51/2005512.json")
         .to_return(status: 200)
-      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/89/16/41/48/89/16414889.json")
+      stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/89/16/41/48/89/16414889.json")
         .to_return(status: 200)
-      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/92/14/71/61/92/14716192.json")
+      stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/92/14/71/61/92/14716192.json")
         .to_return(status: 200)
-      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/85/16/85/42/85/16854285.json")
+      stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/85/16/85/42/85/16854285.json")
         .to_return(status: 200)
     end
     around do |example|
