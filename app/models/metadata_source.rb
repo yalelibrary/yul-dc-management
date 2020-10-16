@@ -30,12 +30,12 @@ class MetadataSource < ApplicationRecord
       S3Service.upload("#{metadata_cloud_name}/#{file_name(parent_object)}", response_text)
       response_text
     when 400...500
-      parent_object.processing_failure("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}")
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failure")
     when 500...600
-      parent_object.processing_failure("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}")
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failure")
       raise MetadataSource::MetadataCloudServerError
     else
-      parent_object.processing_failure("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}")
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failure")
     end
   end
 
