@@ -24,8 +24,8 @@ RSpec.describe GeneratePtiffJob, type: :job do
       end.to change { Delayed::Job.count }.by(1)
     end
 
-    it 'increments the job queue by one if ready_for_manifest is true' do
-      allow(child_object.parent_object).to receive(:ready_for_manifest?).and_return(true)
+    it 'increments the job queue by one if needs_a_manifest is true' do
+      allow(child_object.parent_object).to receive(:needs_a_manifest?).and_return(true)
       expect do
         generate_ptiff_job.perform(child_object, batch_process)
       end.to change { Delayed::Job.count }.by(1)

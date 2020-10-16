@@ -15,10 +15,11 @@ class GenerateManifestJob < ApplicationJob
 
   def generate_manifest(parent_object)
     # generate iiif manifest and save it to s3
-
     upload = parent_object.iiif_presentation.save
     if upload
       parent_object.processing_event("IIIF Manifest saved to S3", "manifest-saved")
+      parent_object.generate_manifest = false
+      parent_object.save!
     else
       parent_object.processing_event("IIIF Manifest not saved to S3", "failed")
     end

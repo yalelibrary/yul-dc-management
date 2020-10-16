@@ -245,12 +245,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       let(:parent_object) { FactoryBot.create(:parent_object, oid: '100001', authoritative_metadata_source_id: ladybird) }
 
       it 'returns an empty array' do
-        expect(parent_object.reload.child_captions).to be_empty
-        expect(parent_object.reload.child_captions).to be_an(Array)
-        expect(parent_object.reload.child_labels).to be_empty
-        expect(parent_object.reload.child_labels).to be_an(Array)
-        expect(parent_object.reload.child_oids).to be_empty
-        expect(parent_object.reload.child_oids).to be_an(Array)
+        parent_object.reload
+        expect(parent_object.child_captions).to be_empty
+        expect(parent_object.child_captions).to be_an(Array)
+        expect(parent_object.child_labels).to be_empty
+        expect(parent_object.child_labels).to be_an(Array)
+        expect(parent_object.child_oids).to be_empty
+        expect(parent_object.child_oids).to be_an(Array)
       end
 
       it 'is marked as ready for manifest' do
@@ -269,13 +270,14 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       end
 
       it 'returns an empty array if the child object has no captions or labels' do
-        expect(parent_object.reload.child_captions).to be_an(Array)
-        expect(parent_object.reload.child_captions).to be_empty
-        expect(parent_object.reload.child_labels).to be_an(Array)
-        expect(parent_object.reload.child_labels).to be_empty
-        expect(parent_object.reload.child_oids).to be_an(Array)
-        expect(parent_object.reload.child_oids).to contain_exactly(1_052_971, 1_052_972, 1_052_973, 1_052_974)
-        expect(parent_object.reload.child_oids.size).to eq 4
+        parent_object.reload
+        expect(parent_object.child_captions).to be_an(Array)
+        expect(parent_object.child_captions).to be_empty
+        expect(parent_object.child_labels).to be_an(Array)
+        expect(parent_object.child_labels).to be_empty
+        expect(parent_object.child_oids).to be_an(Array)
+        expect(parent_object.child_oids).to contain_exactly(1_052_971, 1_052_972, 1_052_973, 1_052_974)
+        expect(parent_object.child_oids.size).to eq 4
       end
     end
 
@@ -301,6 +303,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         expect(parent_object.reload.child_labels.size).to eq 2
         expect(parent_object.reload.child_labels).to contain_exactly("This is a label", "This is another label")
         expect(parent_object.reload.child_oids).to contain_exactly(1_052_971, 1_052_972, 1_052_973, 1_052_974)
+      end
+
+      it 'is marked as not ready for manifest unless explicitly told to create one' do
+        expect(parent_object.reload.generate_manifest).to eq false
+        expect(parent_object.reload.needs_a_manifest?).to eq false
       end
     end
   end

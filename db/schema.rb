@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_09_162830) do
+ActiveRecord::Schema.define(version: 2020_10_16_184712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(version: 2020_10_09_162830) do
     t.string "reading_direction"
     t.string "pagination"
     t.integer "child_object_count"
+    t.boolean "generate_manifest", default: false
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end
