@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/MethodLength
+# TODO(alishaevn): refactor the 4 methods below into 2
+# that take the correct parent_object and batch_process params
 def parent_object_datatable_sample_params
   ActionController::Parameters.new(
     'draw' => '1',
@@ -51,7 +53,7 @@ def batch_process_datatable_sample_params
         }
       },
       '2' => {
-        'data' => 'items', 'name' => '', 'searchable' => 'true', 'orderable' => 'false',
+        'data' => 'size', 'name' => '', 'searchable' => 'true', 'orderable' => 'false',
         'search' => {
           'value' => '', 'regex' => 'false'
         }
@@ -68,7 +70,7 @@ def batch_process_datatable_sample_params
 end
 # rubocop:enable Metrics/MethodLength
 
-def datatable_view_mock # rubocop:disable Metrics/AbcSize
+def parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
   @datatable_view_mock ||= double
   allow(@datatable_view_mock).to receive(:parent_object_path).and_return("/parent_objects/1")
   allow(@datatable_view_mock).to receive(:edit_parent_object_path).and_return("/parent_objects/1/edit")
@@ -81,5 +83,13 @@ def datatable_view_mock # rubocop:disable Metrics/AbcSize
                                                   .and_return('<a data-method="post" href="/management/parent_objects/2034601/update_metadata">Update Metadata</a>')
   allow(@datatable_view_mock).to receive(:link_to).with("Destroy", "/parent_objects/1", anything)
                                                   .and_return('<a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/management/parent_objects/2034601">Destroy</a>')
+  @datatable_view_mock
+end
+
+def batch_process_datatable_view_mock # rubocop:disable Metrics/AbcSize
+  @datatable_view_mock ||= double
+  allow(@datatable_view_mock).to receive(:batch_process_path).and_return("/batch_processs/1")
+  allow(@datatable_view_mock).to receive(:edit_batch_process_path).and_return("/batch_processs/1/edit")
+  allow(@datatable_view_mock).to receive(:update_metadata_batch_process_path).and_return("/batch_processs/1/update_metadata")
   @datatable_view_mock
 end
