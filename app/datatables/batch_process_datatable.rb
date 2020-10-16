@@ -9,11 +9,9 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
     @view_columns ||= {
       process_id: { source: "BatchProcess.id" },
       user: { source: "BatchProcess.user_id" },
-      # status: { source: "" },
       time: { source: "BatchProcess.created_at" },
-      items: { source: "BatchProcess.oid" },
-      status: {  },
-      # duration: { source: "" },
+      size: { source: "BatchProcess.oid" },
+      status: { },
       object_details: { }
     }
   end
@@ -24,12 +22,11 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
       {
         process_id: batch_process.id,
         user: batch_process.user.uid,
-        # status: batch_process.holding,
         time: batch_process.created_at,
-        items: batch_process.oids.count,
+        size: batch_process.oids.count,
         status: "TODO",
-        object_details: "View(add link)"
-        # DT_RowId: batch_process.id
+        object_details: "View(add link)",
+        DT_RowId: batch_process.id
       }
     end
     # rubocop:enable Rails/OutputSafety
