@@ -23,6 +23,7 @@ module StubRequestHelper
     allow_any_instance_of(PyramidalTiff).to receive(:generate_ptiff).and_return(width: 2591, height: 4056)
     allow_any_instance_of(PyramidalTiff).to receive(:valid?).and_return(true)
     allow_any_instance_of(PyramidalTiff).to receive(:conversion_information).and_return(width: 2591, height: 4056)
+    allow_any_instance_of(ChildObject).to receive(:remote_ptiff_exists?).and_return(true)
   end
 
   def stub_manifests
