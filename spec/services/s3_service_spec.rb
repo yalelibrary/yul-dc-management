@@ -17,6 +17,11 @@ RSpec.describe S3Service, type: :has_vcr do
     stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
       .to_return(status: 200, body: File.open("spec/fixtures/images/access_masters/test_image.tif"))
     stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
+      .with do |request|
+        expect(request.headers).to include('X-Amz-Meta-Width' => '100',
+                                           'X-Amz-Meta-Height' => '200',
+                                           'Content-Type' => 'image/tiff')
+      end
       .to_return(status: 200, body: "")
     stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
       .to_return(status: 200, body: "")
@@ -59,7 +64,7 @@ RSpec.describe S3Service, type: :has_vcr do
     local_path = "spec/fixtures/images/ptiff_images/fake_ptiff.tif"
     remote_path = "originals/#{child_object_oid}.tif"
     expect(File.exist?(local_path)).to eq true
-    expect(described_class.upload_image(local_path, remote_path).successful?).to eq true
+    expect(described_class.upload_image(local_path, remote_path, 'image/tiff', 'width' => '100', 'height' => '200').successful?).to eq true
   end
 
   it "can tell that an image exists" do
