@@ -38,6 +38,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         example.run
       end
     end
+    before do
+      stub_request(:post, "#{ENV["SOLR_BASE_URL"]}/blacklight-test/update?wt=json")
+        .to_return(status: 200)
+    end
     # rubocop:disable RSpec/AnyInstance
     it "receives a check for whether it's ready for manifests 4 times, one for each child" do
       allow_any_instance_of(ChildObject).to receive(:parent_object).and_return(parent_of_four)
