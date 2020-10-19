@@ -48,6 +48,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
         expect(page.body).to include batch_process.id.to_s
         within all("td.parent_oid")[3] do
           expect(page.body).to include('16057779')
+          expect(page.body).not_to have_link('16057779', href: "/parent_objects/16057779")
         end
         within all("td.child_count")[3] do
           expect(page.body).to include('(deleted)')
