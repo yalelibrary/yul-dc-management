@@ -11,8 +11,8 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
       user: { source: "BatchProcess.user_id" },
       time: { source: "BatchProcess.created_at" },
       size: { source: "BatchProcess.oid" },
-      status: { },
-      object_details: { }
+      status: {},
+      object_details: {}
     }
   end
 
