@@ -16,7 +16,7 @@ class ChildObject < ApplicationRecord
   end
 
   def processing_event(message, status = 'info')
-    IngestNotification.with(parent_object: parent_object, child_object: self, status: status, reason: message, batch_process: parent_object.current_batch_process).deliver_all
+    IngestNotification.with(parent_object_id: parent_object.id, child_object_id: id, status: status, reason: message, batch_process_id: parent_object.current_batch_process&.id).deliver_all
   end
 
   def remote_ptiff_exists?

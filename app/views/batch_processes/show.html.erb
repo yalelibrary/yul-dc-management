@@ -25,7 +25,7 @@
     <% @batch_process.oids.each do |parent_oid| %>
       <tr>
         <td class="parent_oid"><%= link_to parent_oid, parent_object_path(parent_oid) %></td>
-        <td class="child_count"><%= ParentObject.find(parent_oid).child_object_count.to_s %></td>
+        <td class="child_count"><%= ParentObject.find_by_oid(parent_oid)&.child_object_count || "(deleted)" %></td>
       </tr>
     <% end %>
 </table>
