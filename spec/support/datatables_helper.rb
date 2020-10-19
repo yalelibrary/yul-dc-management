@@ -8,7 +8,7 @@ def datatable_sample_params(columns)
     'draw' => '1',
     'columns' => {
       '0' => {
-        'data' => columns[0], 'name' => 'process_id', 'searchable' => 'true', 'orderable' => 'true',
+        'data' => columns[0], 'name' => columns[0], 'searchable' => 'true', 'orderable' => 'true',
         'search' => {
           'value' => '', 'regex' => 'false'
         }
