@@ -53,7 +53,7 @@ def batch_process_datatable_sample_params
         }
       },
       '2' => {
-        'data' => 'size', 'name' => '', 'searchable' => 'true', 'orderable' => 'false',
+        'data' => 'time', 'name' => '', 'searchable' => 'true', 'orderable' => 'false',
         'search' => {
           'value' => '', 'regex' => 'false'
         }
