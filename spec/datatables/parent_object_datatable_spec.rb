@@ -3,8 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: true do
+  columns = ['oid', 'authoritative_source', 'bib']
+
   it 'can handle an empty model set' do
-    expect(ParentObjectDatatable.new(parent_object_datatable_sample_params).data).to eq([])
+    expect(ParentObjectDatatable.new(datatable_sample_params(columns)).data).to eq([])
   end
 
   it 'can handle a set of parent objects' do
@@ -18,7 +20,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       stub_metadata_cloud(oid)
       FactoryBot.create(:parent_object, oid: oid)
     end
-    output = ParentObjectDatatable.new(parent_object_datatable_sample_params, view_context: parent_object_datatable_view_mock).data
+    output = ParentObjectDatatable.new(datatable_sample_params(columns), view_context: parent_object_datatable_view_mock).data
     expect(output.size).to eq(5)
     expect(output).to include(
       DT_RowId: 16_854_285,

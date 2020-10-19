@@ -3,57 +3,25 @@
 # rubocop:disable Metrics/MethodLength
 # TODO(alishaevn): refactor the 4 methods below into 2
 # that take the correct parent_object and batch_process params
-def parent_object_datatable_sample_params
-  ActionController::Parameters.new(
-    'draw' => '1',
-    'columns' => {
-      '0' => {
-        'data' => 'oid', 'name' => 'oid', 'searchable' => 'true', 'orderable' => 'true',
-        'search' => {
-          'value' => '', 'regex' => 'false'
-        }
-      },
-      '1' => {
-        'data' => 'authoritative_source', 'name' => '', 'searchable' => 'true', 'orderable' => 'true',
-        'search' => {
-          'value' => '', 'regex' => 'false'
-        }
-      },
-      '2' => {
-        'data' => 'bib', 'name' => '', 'searchable' => 'true', 'orderable' => 'false',
-        'search' => {
-          'value' => '', 'regex' => 'false'
-        }
-      }
-    },
-    'order' => {
-      '0' => { 'column' => '0', 'dir' => 'asc' }
-    },
-    'start' => '0', 'length' => '10', 'search' => {
-      'value' => '', 'regex' => 'false'
-    },
-    '_' => '1423364387185'
-  )
-end
 
-def batch_process_datatable_sample_params
+def datatable_sample_params(columns)
   ActionController::Parameters.new(
     'draw' => '1',
     'columns' => {
       '0' => {
-        'data' => 'process_id', 'name' => 'process_id', 'searchable' => 'true', 'orderable' => 'true',
+        'data' => columns[0], 'name' => 'process_id', 'searchable' => 'true', 'orderable' => 'true',
         'search' => {
           'value' => '', 'regex' => 'false'
         }
       },
       '1' => {
-        'data' => 'user', 'name' => '', 'searchable' => 'true', 'orderable' => 'true',
+        'data' => columns[1], 'name' => '', 'searchable' => 'true', 'orderable' => 'true',
         'search' => {
           'value' => '', 'regex' => 'false'
         }
       },
       '2' => {
-        'data' => 'time', 'name' => '', 'searchable' => 'true', 'orderable' => 'false',
+        'data' => columns[2], 'name' => '', 'searchable' => 'true', 'orderable' => 'false',
         'search' => {
           'value' => '', 'regex' => 'false'
         }

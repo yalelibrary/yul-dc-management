@@ -3,8 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe BatchProcessDatatable, type: :datatable, prep_metadata_sources: true do
+  columns = ['process_id', 'user', 'time']
+
   it 'can handle an empty model set' do
-    output = BatchProcessDatatable.new(batch_process_datatable_sample_params).data
+    output = BatchProcessDatatable.new(datatable_sample_params(columns)).data
 
     expect(output).to eq([])
   end
@@ -16,7 +18,7 @@ RSpec.describe BatchProcessDatatable, type: :datatable, prep_metadata_sources: t
       user = FactoryBot.create(:user, uid: 'mk2525')
       batch_process = FactoryBot.create(:batch_process, user: user, csv: csv_upload)
 
-      output = BatchProcessDatatable.new(batch_process_datatable_sample_params).data
+      output = BatchProcessDatatable.new(datatable_sample_params(columns)).data
 
       expect(output.size).to eq(1)
       expect(output).to include(
