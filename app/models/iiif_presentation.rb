@@ -94,9 +94,8 @@ class IiifPresentation
   end
 
   def save
-    S3Service.upload(manifest_path, manifest.to_json(pretty: true))
-    iiif_info = { oid: oid }
-    Rails.logger.info("IIIF Manifest Saved: #{iiif_info.to_json}")
+    upload = S3Service.upload(manifest_path, manifest.to_json(pretty: true))
+    upload.successful?
   end
 
   def manifest_path

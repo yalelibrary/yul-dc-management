@@ -5,6 +5,7 @@ class SetupMetadataJob < ApplicationJob
 
   def perform(parent_object, current_batch_process)
     parent_object.current_batch_process = current_batch_process
+    parent_object.generate_manifest = true
     parent_object.default_fetch
     parent_object.create_child_records
     parent_object.save!

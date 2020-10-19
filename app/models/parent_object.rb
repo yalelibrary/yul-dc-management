@@ -161,6 +161,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     ready_for_manifest? && iiif_presentation.valid? && S3Service.s3_exists?(iiif_presentation.manifest_path, ENV['SAMPLE_BUCKET'])
   end
 
+  def needs_a_manifest?
+    ready_for_manifest? && generate_manifest
+  end
+
   def ready_for_manifest?
     !child_objects.pluck(:width).include?(nil)
   end
