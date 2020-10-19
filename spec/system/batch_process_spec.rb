@@ -39,18 +39,17 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true do
         expect(page).to have_link('View', href: "/batch_processes/#{BatchProcess.last.id}")
       end
     end
-
-    context "when uploading an xml" do
-      it "uploads and increases xml count and gives a success message" do
-        expect(BatchProcess.count).to eq 0
-        page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/16172421/meta.xml')
-        click_button("Import")
-        expect(BatchProcess.count).to eq 1
-        expect(page).to have_content("Your records have been retrieved from the MetadataCloud. PTIFF generation, manifest generation and indexing happen in the background.")
-        expect(BatchProcess.last.file_name).to eq "meta.xml"
-        within "td.count" do
-          expect(page).to have_content('1')
-        end
+  end
+  context "when uploading an xml" do
+    it "uploads and increases xml count and gives a success message" do
+      expect(BatchProcess.count).to eq 0
+      page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/16172421/meta.xml')
+      click_button("Import")
+      expect(BatchProcess.count).to eq 1
+      expect(page).to have_content("Your records have been retrieved from the MetadataCloud. PTIFF generation, manifest generation and indexing happen in the background.")
+      expect(BatchProcess.last.file_name).to eq "meta.xml"
+      within "td.count" do
+        expect(page).to have_content('1')
       end
     end
   end

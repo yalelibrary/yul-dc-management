@@ -35,7 +35,27 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       end
       expect(page.body).to include "2020-10-08 14:17:01"
     end
+    context "deleting a parent object" do
+      before do
+        batch_process
+        visit batch_process_path(batch_process)
+        po = ParentObject.find(16_057_779)
+        po.delete
+        page.refresh
+      end
+
+      it "can still see the details of the import" do
+        expect(page.body).to include batch_process.id.to_s
+        within all("td.parent_oid")[3] do
+          expect(page.body).to include('16057779')
+        end
+        within all("td.child_count")[3] do
+          expect(page.body).to include('(deleted)')
+        end
+      end
+    end
   end
+
   context "when uploading an xml doc" do
     let(:batch_process) do
       FactoryBot.create(
