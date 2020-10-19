@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/MethodLength
-# TODO(alishaevn): refactor the 4 methods below into 2
-# that take the correct parent_object and batch_process params
+# TODO(alishaevn): refactor the parent_object_datatable_view_mock method
 
 def datatable_sample_params(columns)
   ActionController::Parameters.new(
