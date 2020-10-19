@@ -55,8 +55,6 @@ end
 
 def batch_process_datatable_view_mock # rubocop:disable Metrics/AbcSize
   @datatable_view_mock ||= double
-  allow(@datatable_view_mock).to receive(:batch_process_path).and_return("/batch_processs/1")
-  allow(@datatable_view_mock).to receive(:edit_batch_process_path).and_return("/batch_processs/1/edit")
-  allow(@datatable_view_mock).to receive(:update_metadata_batch_process_path).and_return("/batch_processs/1/update_metadata")
+  allow(@datatable_view_mock).to receive(:batch_process_path).and_return("/batch_process/1")
   @datatable_view_mock
 end
