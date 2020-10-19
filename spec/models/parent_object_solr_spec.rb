@@ -151,7 +151,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       end
     end
 
-    describe "changing the visibilty" do
+    describe "changing the visibility" do
       let(:oid) { "2034600" }
       let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird') }
       it "commits data to solr if it is changed on the object" do
@@ -163,11 +163,27 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
                                                  .and change(parent_object, :use_ladybird).from(true).to(false)
         expect do
           parent_object.visibility = "Yale Community Only"
+          parent_object.bib = "123321xx"
+          parent_object.child_object_count = 985_555
+          parent_object.barcode = "3200000000000"
+          parent_object.aspace_uri = "/repository/12345/archiveobject/566666"
+          parent_object.holding = "555555555"
+          parent_object.item = "33333333333"
+          parent_object.viewing_direction = "left to right"
+          parent_object.display_layout = "book"
           parent_object.save!
           parent_object.reload
         end.to change(parent_object, :visibility).from("Public").to("Yale Community Only")
+                                                 .and change(parent_object, :holding).from(nil).to("555555555")
+                                                                                     .and change(parent_object, :item).from(nil).to("33333333333")
+                                                                                                                      .and change(parent_object, :viewing_direction).from(nil).to("left to right")
+                                                                                                                                                                    .and change(parent_object, :display_layout).from(nil).to("book")
         response = solr.get 'select', params: { q: 'oid_ssi:2034600' }
         expect(response["response"]["docs"].first["visibility_ssi"]).to eq "Yale Community Only"
+        expect(response["response"]["docs"].first["orbisBibId_ssi"]).to eq "123321xx"
+        expect(response["response"]["docs"].first["imageCount_isi"]).to eq 985_555
+        expect(response["response"]["docs"].first["orbisBarcode_ssi"]).to eq "3200000000000"
+        expect(response["response"]["docs"].first["archiveSpaceUri_ssi"]).to eq "/repository/12345/archiveobject/566666"
       end
     end
   end

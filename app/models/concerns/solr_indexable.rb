@@ -46,7 +46,7 @@ module SolrIndexable
       accessRestrictions_tesim: json_to_index["accessRestrictions"],
       alternativeTitle_tesim: json_to_index["alternativeTitle"],
       alternativeTitleDisplay_tesim: json_to_index["alternativeTitleDisplay"],
-      archiveSpaceUri_ssi: json_to_index["archiveSpaceUri"],
+      archiveSpaceUri_ssi: aspace_uri || json_to_index["archiveSpaceUri"],
       creator_ssim: json_to_index["creator"],
       creator_tesim: json_to_index["creator"],
       box_ssim: extract_box_ssim(json_to_index),
@@ -87,8 +87,8 @@ module SolrIndexable
       material_tesim: json_to_index["material"],
       number_of_pages_ss: json_to_index["numberOfPages"],
       oid_ssi: json_to_index["oid"] || oid,
-      orbisBarcode_ssi: json_to_index["orbisBarcode"] || json_to_index["barcode"],
-      orbisBibId_ssi: json_to_index["orbisRecord"], # may change to orbisBibId
+      orbisBarcode_ssi: barcode || json_to_index["orbisBarcode"] || json_to_index["barcode"],
+      orbisBibId_ssi: bib || json_to_index["orbisRecord"], # may change to orbisBibId
       partOf_tesim: json_to_index["partOf"],
       partOf_ssim: json_to_index["partOf"],
       projection_tesim: json_to_index["projection"],
