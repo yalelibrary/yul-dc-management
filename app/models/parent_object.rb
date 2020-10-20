@@ -61,7 +61,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def processing_event(message, status = 'info')
-    IngestNotification.with(parent_object: self, status: status, reason: message, batch_process: current_batch_process).deliver_all
+    IngestNotification.with(parent_object_id: id, status: status, reason: message, batch_process_id: current_batch_process&.id).deliver_all
   end
 
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
@@ -166,6 +166,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def manifest_completed?
     ready_for_manifest? && iiif_presentation.valid? && S3Service.s3_exists?(iiif_presentation.manifest_path, ENV['SAMPLE_BUCKET'])
+  end
+
+  def needs_a_manifest?
+    ready_for_manifest? && generate_manifest
   end
 
   def ready_for_manifest?

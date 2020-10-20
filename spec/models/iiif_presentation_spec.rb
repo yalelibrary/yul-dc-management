@@ -60,10 +60,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     end
 
     it "can save a manifest to S3" do
-      allow(Rails.logger).to receive(:info) { :logger_mock }
-      iiif_presentation.save
-      expect(Rails.logger).to have_received(:info)
-        .with("IIIF Manifest Saved: {\"oid\":#{oid}}")
+      expect(iiif_presentation.save).to eq true
     end
 
     it "can download a manifest from S3" do

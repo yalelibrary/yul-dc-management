@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(version: 2020_10_16_192716) do
     t.string "display_layout"
     t.integer "child_object_count"
     t.boolean "use_ladybird", default: false
+    t.boolean "generate_manifest", default: false
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end

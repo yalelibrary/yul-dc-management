@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+RSpec::Matchers.define_negated_matcher :not_change, :change
 
 RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628) }
@@ -83,6 +84,24 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     end
   end
 
+  describe "a child object that has generated a ptiff but has zero width and height" do
+    before do
+      stub_metadata_cloud("2004628")
+      stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/89/45/67/89/456789.tif")
+        .to_return(status: 200)
+      allow(child_object.pyramidal_tiff).to receive(:valid?).and_return(true)
+      allow(child_object.pyramidal_tiff).to receive(:conversion_information).and_return(width: 0, height: 0)
+      parent_object
+    end
+
+    it "does not save a width and height of 0" do
+      expect do
+        child_object.convert_to_ptiff
+      end.to not_change(child_object, :height)
+        .and not_change(child_object, :width)
+    end
+  end
+
   describe "a child object that has successfully generated a ptiff" do
     before do
       stub_metadata_cloud("2004628")
@@ -126,9 +145,16 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     it "can receive width and height if they are cached" do
       expect(StaticChildInfo).to receive(:size_for).and_return(width: 50, height: 60)
       expect(child_object).to receive(:remote_ptiff_exists?).and_return true
-      expect(child_object.check_for_size_and_file).to be_a(Time)
+      expect(child_object.check_for_size_and_file).to be_a(Hash)
       expect(child_object.width).to eq(50)
       expect(child_object.height).to eq(60)
+    end
+
+    it "does not save a width and height of zero if they are cached" do
+      expect(StaticChildInfo).to receive(:size_for).and_return(width: 0, height: 0)
+      expect(child_object.check_for_size_and_file).to eq(nil)
+      expect(child_object.width).to eq(nil)
+      expect(child_object.height).to eq(nil)
     end
   end
 end
