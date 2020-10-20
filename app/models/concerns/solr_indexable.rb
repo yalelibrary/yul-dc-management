@@ -46,7 +46,7 @@ module SolrIndexable
       accessRestrictions_tesim: json_to_index["accessRestrictions"],
       alternativeTitle_tesim: json_to_index["alternativeTitle"],
       alternativeTitleDisplay_tesim: json_to_index["alternativeTitleDisplay"],
-      archiveSpaceUri_ssi: aspace_uri || json_to_index["archiveSpaceUri"],
+      archiveSpaceUri_ssi: aspace_uri,
       creator_ssim: json_to_index["creator"],
       creator_tesim: json_to_index["creator"],
       box_ssim: extract_box_ssim(json_to_index),
@@ -86,9 +86,9 @@ module SolrIndexable
       localRecordNumber_ssim: json_to_index["localRecordNumber"],
       material_tesim: json_to_index["material"],
       number_of_pages_ss: json_to_index["numberOfPages"],
-      oid_ssi: json_to_index["oid"] || oid,
-      orbisBarcode_ssi: barcode || json_to_index["orbisBarcode"] || json_to_index["barcode"],
-      orbisBibId_ssi: bib || json_to_index["orbisRecord"], # may change to orbisBibId
+      oid_ssi: oid,
+      orbisBarcode_ssi: barcode,
+      orbisBibId_ssi: bib, # may change to orbisBibId
       partOf_tesim: json_to_index["partOf"],
       partOf_ssim: json_to_index["partOf"],
       projection_tesim: json_to_index["projection"],
@@ -124,7 +124,7 @@ module SolrIndexable
       title_ssim: json_to_index["title"],
       uri_ssim: json_to_index["uri"],
       url_suppl_ssim: json_to_index["relatedUrl"],
-      visibility_ssi: extract_visibility(json_to_index),
+      visibility_ssi: visibility,
       # fields below this point will be deprecated in a future release
       abstract_ssim: json_to_index["abstract"], # replaced by abstract_tesim
       alternativeTitle_ssim: json_to_index["alternativeTitle"], # replaced by alternativeTitle_tesim
@@ -135,7 +135,7 @@ module SolrIndexable
       date_tsim: json_to_index["date"], # replaced by date_ssim
       geo_subject_ssim: json_to_index["geoSubject"], # replaced by geoSubject_ssim
       material_ssim: json_to_index["material"], # replaced by material_tesim
-      oid_ssim: json_to_index["oid"] || oid, # replaced by oid_ssi
+      oid_ssim: oid, # replaced by oid_ssi
       orbisBarcode_ssim: json_to_index["orbisBarcode"] || json_to_index["barcode"], # replaced by orbisBarcode_ssi
       orbisBibId_ssim: json_to_index["orbisRecord"], # replaced by orbisBibId_ssi
       projection_ssim: json_to_index["projection"], # replaced by projection_tesim
@@ -150,10 +150,6 @@ module SolrIndexable
       subject_topic_tsim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
       title_tsim: json_to_index["title"] # replaced by title_tesim
     }
-  end
-
-  def extract_visibility(json_to_index)
-    visibility || json_to_index["itemPermission"]
   end
 
   # I do not think the current box_ssim is how we want to continue to do deal with differences in field names
