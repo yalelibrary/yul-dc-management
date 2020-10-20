@@ -24,7 +24,7 @@
           <td class="process_id"><%= link_to batch_process.id, batch_process_path(batch_process) %></td>
           <td><%= batch_process.user.uid %></td>
           <td><%= batch_process.created_at %></td>
-          <td class="count"><%= batch_process.oids.count %></td>
+          <td class="count"><%= batch_process.oids&.count %></td>
           <td>TODO: Status</td>
           <td class="view"><%= link_to "View", batch_process_path(batch_process) %></td>
         </tr>

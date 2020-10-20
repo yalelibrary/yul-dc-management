@@ -21,6 +21,19 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true do
     visit batch_processes_path
   end
 
+  context "having created a parent_object via the UI" do
+    before do
+      stub_metadata_cloud("16057779")
+      visit parent_objects_path
+      click_on("New Parent Object")
+      fill_in('Oid', with: "16057779")
+      click_on("Create Parent object")
+    end
+    it "can still successfully see the batch_process page" do
+      visit batch_processes_path
+    end
+  end
+
   context "when uploading a csv" do
     it "uploads and increases csv count and gives a success message" do
       expect(BatchProcess.count).to eq 0
@@ -37,6 +50,27 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true do
       end
       within "td.view" do
         expect(page).to have_link('View', href: "/batch_processes/#{BatchProcess.last.id}")
+      end
+    end
+    context "deleting a parent object" do
+      before do
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
+        click_button("Import")
+        po = ParentObject.find(16_854_285)
+        po.delete
+        page.refresh
+      end
+
+      it "can still see the details of the import" do
+        within "td.process_id" do
+          expect(page).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
+        end
+        within "td.count" do
+          expect(page).to have_content('5')
+        end
+        within "td.view" do
+          expect(page).to have_link('View', href: "/batch_processes/#{BatchProcess.last.id}")
+        end
       end
     end
   end
