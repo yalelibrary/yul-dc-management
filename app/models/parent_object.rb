@@ -104,12 +104,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def ladybird_json=(lb_record)
     super(lb_record)
     return lb_record if lb_record.blank?
+    self.last_ladybird_update = DateTime.current
     return unless use_ladybird
     self.bib = lb_record["orbisBibId"] || lb_record["orbisRecord"]
     self.barcode = lb_record["orbisBarcode"]
     self.aspace_uri = lb_record["archiveSpaceUri"]
     self.visibility = lb_record["itemPermission"]
-    self.last_ladybird_update = DateTime.current
     self.use_ladybird = false
   end
 
