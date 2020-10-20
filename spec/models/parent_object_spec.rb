@@ -336,6 +336,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       expect(ParentObject.new(authoritative_metadata_source_id: nil).source_name).to eq nil
     end
   end
+
   context "a new ParentObject with no info" do
     it "has the expected defaults" do
       po = described_class.new
@@ -353,8 +354,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       expect(po.ladybird_json).to be nil
       expect(po.voyager_json).to be nil
       expect(po.aspace_json).to be nil
-      expect(po.reading_direction).to be nil
-      expect(po.pagination).to be nil
+      expect(po.viewing_direction).to be nil
+      expect(po.display_layout).to be nil
       expect(po.child_object_count).to be nil
       expect(po.authoritative_metadata_source_id).to eq ladybird
     end
