@@ -71,7 +71,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
 
   it "saves the PTIFF to an S3 bucket" do
     ptiff_output_path = "spec/fixtures/images/ptiff_images/fake_ptiff.tif"
-    expect(ptf.save_to_s3(ptiff_output_path).successful?).to eq true
+    expect(ptf.save_to_s3(ptiff_output_path, "width" => 500, "height" => 600).successful?).to eq true
   end
 
   it "bails if the shell script fails" do

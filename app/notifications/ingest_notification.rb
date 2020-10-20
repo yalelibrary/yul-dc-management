@@ -21,8 +21,8 @@ class IngestNotification < Noticed::Base
   end
 
   # Add required params
-  # param :batch_process
-  param :parent_object
+  # param :batch_process_id
+  param :parent_object_id
   param :reason
   param :status
 
@@ -34,7 +34,15 @@ class IngestNotification < Noticed::Base
     end
   end
 
+  def batch_process
+    BatchProcess.find_by_id(params[:batch_process_id]) if params[:batch_process_id]
+  end
+
+  def parent_object
+    ParentObject.find_by_oid(params[:parent_object_id]) if params[:parent_object_id]
+  end
+
   def message
-    t(".message", oid: params[:parent_object].id, status: params[:status], reason: params[:reason], batch_process: params[:batch_process])
+    t(".message", oid: params[:parent_object_id], status: params[:status], reason: params[:reason], batch_process: batch_process)
   end
 end

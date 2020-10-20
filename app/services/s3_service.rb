@@ -26,12 +26,14 @@ class S3Service
     object.download_file(local_path, destination: local_path)
   end
 
-  def self.upload_image(local_path, remote_path)
+  def self.upload_image(local_path, remote_path, content_type, metadata)
     File.open(local_path, 'r') do |f|
       @client.put_object(
         bucket: ENV['S3_SOURCE_BUCKET_NAME'],
         key: remote_path,
-        body: f
+        body: f,
+        content_type: content_type,
+        metadata: metadata
       )
     end
   end

@@ -9,6 +9,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   let(:unexpected_metadata_source) { 4 }
   let(:logger_mock) { instance_double("Rails.logger").as_null_object }
 
+  around do |example|
+    original_metadata_sample_bucket = ENV['SAMPLE_BUCKET']
+    ENV['SAMPLE_BUCKET'] = "yul-dc-development-samples"
+    example.run
+    ENV['SAMPLE_BUCKET'] = original_metadata_sample_bucket
+  end
+
   before do
     stub_metadata_cloud("2004628", "ladybird")
     stub_metadata_cloud("2005512", "ladybird")
@@ -17,7 +24,34 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     stub_metadata_cloud("16414889")
     stub_metadata_cloud("14716192")
     stub_metadata_cloud("16854285")
+    stub_metadata_cloud("16057779")
     stub_ptiffs_and_manifests
+  end
+
+  context "with four child objects", :has_vcr do
+    let(:user) { FactoryBot.create(:user) }
+    let(:parent_of_four) { FactoryBot.create(:parent_object, oid: 16_057_779) }
+    let(:child_of_four) { FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_of_four) }
+    let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
+    around do |example|
+      perform_enqueued_jobs do
+        example.run
+      end
+    end
+    before do
+      stub_request(:post, "#{ENV['SOLR_BASE_URL']}/blacklight-test/update?wt=json")
+        .to_return(status: 200)
+    end
+    # rubocop:disable RSpec/AnyInstance
+    it "receives a check for whether it's ready for manifests 4 times, one for each child" do
+      allow_any_instance_of(ChildObject).to receive(:parent_object).and_return(parent_of_four)
+      VCR.use_cassette("process csv") do
+        parent_of_four.current_batch_process = batch_process
+        expect(parent_of_four).to receive(:needs_a_manifest?).exactly(4).times
+        parent_of_four.setup_metadata_job
+      end
+    end
+    # rubocop:enable RSpec/AnyInstance
   end
 
   context 'with a random notification' do
@@ -30,13 +64,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       user_three
       stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/00/20/34/60/2034600.json")
         .to_return(status: 200)
-      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/12/20/05/51/2005512.json")
+      stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/12/20/05/51/2005512.json")
         .to_return(status: 200)
-      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/89/16/41/48/89/16414889.json")
+      stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/89/16/41/48/89/16414889.json")
         .to_return(status: 200)
-      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/92/14/71/61/92/14716192.json")
+      stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/92/14/71/61/92/14716192.json")
         .to_return(status: 200)
-      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/85/16/85/42/85/16854285.json")
+      stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/85/16/85/42/85/16854285.json")
         .to_return(status: 200)
     end
     around do |example|
@@ -225,12 +259,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       let(:parent_object) { FactoryBot.create(:parent_object, oid: '100001', authoritative_metadata_source_id: ladybird) }
 
       it 'returns an empty array' do
-        expect(parent_object.reload.child_captions).to be_empty
-        expect(parent_object.reload.child_captions).to be_an(Array)
-        expect(parent_object.reload.child_labels).to be_empty
-        expect(parent_object.reload.child_labels).to be_an(Array)
-        expect(parent_object.reload.child_oids).to be_empty
-        expect(parent_object.reload.child_oids).to be_an(Array)
+        parent_object.reload
+        expect(parent_object.child_captions).to be_empty
+        expect(parent_object.child_captions).to be_an(Array)
+        expect(parent_object.child_labels).to be_empty
+        expect(parent_object.child_labels).to be_an(Array)
+        expect(parent_object.child_oids).to be_empty
+        expect(parent_object.child_oids).to be_an(Array)
       end
 
       it 'is marked as ready for manifest' do
@@ -249,13 +284,14 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       end
 
       it 'returns an empty array if the child object has no captions or labels' do
-        expect(parent_object.reload.child_captions).to be_an(Array)
-        expect(parent_object.reload.child_captions).to be_empty
-        expect(parent_object.reload.child_labels).to be_an(Array)
-        expect(parent_object.reload.child_labels).to be_empty
-        expect(parent_object.reload.child_oids).to be_an(Array)
-        expect(parent_object.reload.child_oids).to contain_exactly(1_052_971, 1_052_972, 1_052_973, 1_052_974)
-        expect(parent_object.reload.child_oids.size).to eq 4
+        parent_object.reload
+        expect(parent_object.child_captions).to be_an(Array)
+        expect(parent_object.child_captions).to be_empty
+        expect(parent_object.child_labels).to be_an(Array)
+        expect(parent_object.child_labels).to be_empty
+        expect(parent_object.child_oids).to be_an(Array)
+        expect(parent_object.child_oids).to contain_exactly(1_052_971, 1_052_972, 1_052_973, 1_052_974)
+        expect(parent_object.child_oids.size).to eq 4
       end
     end
 
@@ -282,6 +318,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         expect(parent_object.reload.child_labels).to contain_exactly("This is a label", "This is another label")
         expect(parent_object.reload.child_oids).to contain_exactly(1_052_971, 1_052_972, 1_052_973, 1_052_974)
       end
+
+      it 'is marked as not ready for manifest unless explicitly told to create one' do
+        expect(parent_object.reload.generate_manifest).to eq false
+        expect(parent_object.reload.needs_a_manifest?).to eq false
+      end
     end
   end
 
@@ -295,6 +336,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       expect(ParentObject.new(authoritative_metadata_source_id: nil).source_name).to eq nil
     end
   end
+
   context "a new ParentObject with no info" do
     it "has the expected defaults" do
       po = described_class.new
@@ -312,8 +354,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       expect(po.ladybird_json).to be nil
       expect(po.voyager_json).to be nil
       expect(po.aspace_json).to be nil
-      expect(po.reading_direction).to be nil
-      expect(po.pagination).to be nil
+      expect(po.viewing_direction).to be nil
+      expect(po.display_layout).to be nil
       expect(po.child_object_count).to be nil
       expect(po.authoritative_metadata_source_id).to eq ladybird
     end

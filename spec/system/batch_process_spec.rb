@@ -21,6 +21,19 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true do
     visit batch_processes_path
   end
 
+  context "having created a parent_object via the UI" do
+    before do
+      stub_metadata_cloud("16057779")
+      visit parent_objects_path
+      click_on("New Parent Object")
+      fill_in('Oid', with: "16057779")
+      click_on("Create Parent object")
+    end
+    it "can still successfully see the batch_process page" do
+      visit batch_processes_path
+    end
+  end
+
   context "when uploading a csv" do
     it "uploads and increases csv count and gives a success message" do
       expect(BatchProcess.count).to eq 0
@@ -31,15 +44,37 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true do
       expect(BatchProcess.last.file_name).to eq "short_fixture_ids.csv"
     end
 
-    context "when uploading an xml" do
-      it "uploads and increases xml count and gives a success message" do
-        expect(BatchProcess.count).to eq 0
-        page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/16172421/meta.xml')
+    context "deleting a parent object" do
+      before do
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
         click_button("Import")
-        expect(BatchProcess.count).to eq 1
-        expect(page).to have_content("Your records have been retrieved from the MetadataCloud. PTIFF generation, manifest generation and indexing happen in the background.")
-        expect(BatchProcess.last.file_name).to eq "meta.xml"
+        po = ParentObject.find(16_854_285)
+        po.delete
+        page.refresh
       end
+
+      it "can still see the details of the import" do
+        within "td.process_id" do
+          expect(page).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
+        end
+        within "td.count" do
+          expect(page).to have_content('5')
+        end
+        within "td.view" do
+          expect(page).to have_link('View', href: "/batch_processes/#{BatchProcess.last.id}")
+        end
+      end
+    end
+  end
+
+  context "when uploading an xml" do
+    it "uploads and increases xml count and gives a success message" do
+      expect(BatchProcess.count).to eq 0
+      page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/16172421/meta.xml')
+      click_button("Import")
+      expect(BatchProcess.count).to eq 1
+      expect(page).to have_content("Your records have been retrieved from the MetadataCloud. PTIFF generation, manifest generation and indexing happen in the background.")
+      expect(BatchProcess.last.file_name).to eq "meta.xml"
     end
   end
 end
