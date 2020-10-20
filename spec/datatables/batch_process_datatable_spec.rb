@@ -23,7 +23,7 @@ RSpec.describe BatchProcessDatatable, type: :datatable, prep_metadata_sources: t
       expect(output.size).to eq(1)
       expect(output).to include(
         DT_RowId: batch_process.id,
-        object_details: 'View',
+        object_details: "<a href='/batch_processes/#{batch_process.id}'>View</a>",
         process_id: "<a href='/batch_processes/#{batch_process.id}'>#{batch_process.id}</a>",
         size: batch_process.oids.count,
         status: 'TODO: Status',

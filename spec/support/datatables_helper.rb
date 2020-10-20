@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/MethodLength
-# TODO(alishaevn): refactor the parent_object_datatable_view_mock method
-
 def datatable_sample_params(columns)
   ActionController::Parameters.new(
     'draw' => '1',
@@ -56,5 +54,9 @@ end
 def batch_process_datatable_view_mock(id) # rubocop:disable Metrics/AbcSize
   @datatable_view_mock ||= double
   allow(@datatable_view_mock).to receive(:batch_process_path).and_return("/batch_processes/#{id}")
+  allow(@datatable_view_mock).to receive(:link_to).with(anything, "/batch_processes/#{id}")
+                                                  .and_return("<a href='/batch_processes/#{id}'>#{id}</a>")
+  allow(@datatable_view_mock).to receive(:link_to).with('View', "/batch_processes/#{id}")
+                                                  .and_return("<a href='/batch_processes/#{id}'>View</a>")
   @datatable_view_mock
 end
