@@ -75,8 +75,8 @@ class PyramidalTiff
     { width: width, height: height }
   end
 
-  def save_to_s3(ptiff_output_path, image_information)
-    metadata = { 'width': image_information['width'].to_s, 'height': image_information['height'].to_s }
+  def save_to_s3(ptiff_output_path, conversion_information)
+    metadata = { 'width': conversion_information[:width].to_s, 'height': conversion_information[:height].to_s }
     S3Service.upload_image(ptiff_output_path, remote_ptiff_path, "image/tiff", metadata)
   end
 
