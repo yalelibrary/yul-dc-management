@@ -17,10 +17,10 @@ RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources
 
   let(:oid) { "16371272" }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: '16371272') }
-  let(:oid_url) { "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?include-children=1" }
+  let(:oid_url) { "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?include-children=1" }
   let(:ladybird_source) { FactoryBot.build(:metadata_source) }
   let(:response) { ladybird_source.mc_get(oid_url) }
-  let(:no_parent_object_url) { "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/1?include-children=1" }
+  let(:no_parent_object_url) { "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ladybird/oid/1?include-children=1" }
   let(:bad_request_response) { ladybird_source.mc_get(no_parent_object_url) }
 
   it "can connect to the metadata cloud using basic auth" do
