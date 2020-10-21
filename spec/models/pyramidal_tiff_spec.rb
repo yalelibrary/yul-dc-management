@@ -63,7 +63,8 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     expected_file = "#{ptiff_tmpdir}1002533.tif"
     expect(File.exist?(expected_file)).to eq false
     tiff_input_path = ptf.copy_access_master_to_working_directory(swing_temp_dir)
-    ptf.convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
+    conversion_information = ptf.convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
+    expect(conversion_information).to eq(height: "434", width: "650")
     expect(File.exist?(expected_file)).to eq true
     File.delete(tiff_input_path)
     File.delete(expected_file)
@@ -171,7 +172,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
 
     it "can call a wrapper method" do
       allow(described_class).to receive(:new).and_return(ptf)
-      expect(ptf).to receive(:save_to_s3)
+      expect(ptf).to receive(:save_to_s3).with(anything, height: "434", width: "650")
       VCR.use_cassette("download image 1014543") do
         expect(described_class.new(child_object).generate_ptiff)
       end
