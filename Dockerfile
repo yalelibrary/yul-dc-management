@@ -16,10 +16,9 @@ ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
 BUNDLE_JOBS=4
 RUN gem install bundler -v 2.1.4
 
-COPY libvips.8.10.precomp.tgz $APP_HOME
-RUN tar -xzf $APP_HOME/libvips.8.10.precomp.tgz && cd vips-8.10.2 && make install
-RUN ldconfig /usr/local/lib
-RUN rm -rf  libvips.8.10.precomp.tgz  vips-8.10.2
+COPY vips_8.10.2-1_amd64.deb $APP_HOME
+RUN dpkg -i ./vips_8.10.2-1_amd64.deb
+RUN vips --version
 
 COPY --chown=app Gemfile* $APP_HOME/
 RUN /sbin/setuser app bash -l -c "bundle check || bundle install"
