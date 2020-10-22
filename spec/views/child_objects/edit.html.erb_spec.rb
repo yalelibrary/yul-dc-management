@@ -16,6 +16,7 @@ RSpec.describe "child_objects/edit", type: :view, prep_metadata_sources: true do
   end
   before do
     stub_metadata_cloud("2004628")
+    stub_ptiffs
     parent_object
     child_object
   end
