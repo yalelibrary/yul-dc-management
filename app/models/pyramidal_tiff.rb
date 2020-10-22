@@ -20,7 +20,7 @@ class PyramidalTiff
       tiff_input_path = copy_access_master_to_working_directory(swing_tmpdir)
       Dir.mktmpdir do |ptiff_tmpdir|
         @conversion_information = convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
-        save_to_s3(File.join(ptiff_tmpdir, File.basename(access_master_path))) unless @conversion_information.empty?
+        save_to_s3(File.join(ptiff_tmpdir, File.basename(access_master_path)), @conversion_information) unless @conversion_information.empty?
       end
     end
     conversion_information
@@ -32,8 +32,8 @@ class PyramidalTiff
     ptiff_info = { oid: oid.to_s }
     # do not do the image conversion if there is already a PTIFF on S3
     if child_object.height && child_object.width && S3Service.s3_exists?(child_object.remote_ptiff_path)
-      errors.add(:base, "PTIFF exists on S3, not converting: #{ptiff_info.to_json}")
-      false
+      child_object.processing_event("PTIFF exists on S3, not converting: #{ptiff_info.to_json}", 'ptiff-ready')
+      true
     else
       generate_ptiff
     end
@@ -75,8 +75,9 @@ class PyramidalTiff
     { width: width, height: height }
   end
 
-  def save_to_s3(ptiff_output_path)
-    S3Service.upload_image(ptiff_output_path, remote_ptiff_path)
+  def save_to_s3(ptiff_output_path, conversion_information)
+    metadata = { 'width': conversion_information[:width].to_s, 'height': conversion_information[:height].to_s }
+    S3Service.upload_image(ptiff_output_path, remote_ptiff_path, "image/tiff", metadata)
   end
 
   ##

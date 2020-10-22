@@ -15,7 +15,7 @@ class MetadataSource < ApplicationRecord
                    else
                      s3_path = "#{metadata_cloud_name}/#{file_name(parent_object)}"
                      r = S3Service.download(s3_path)
-                     parent_object.processing_failure("S3 did not return json for #{s3_path}") unless r.present?
+                     parent_object.processing_event("S3 did not return json for #{s3_path}", "failed") unless r.present?
                      r
                    end
     JSON.parse(raw_metadata) if raw_metadata
@@ -30,12 +30,12 @@ class MetadataSource < ApplicationRecord
       S3Service.upload("#{metadata_cloud_name}/#{file_name(parent_object)}", response_text)
       response_text
     when 400...500
-      parent_object.processing_failure("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}")
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failure")
     when 500...600
-      parent_object.processing_failure("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}")
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failure")
       raise MetadataSource::MetadataCloudServerError
     else
-      parent_object.processing_failure("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}")
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failure")
     end
   end
 
@@ -58,12 +58,16 @@ class MetadataSource < ApplicationRecord
     Honeybadger.context(
       metadata_cloud_username: ENV["MC_USER"],
       metadata_cloud_password: ENV["MC_PW"],
-      mc_host: MetadataCloudService.metadata_cloud_host,
+      mc_host: MetadataSource.metadata_cloud_host,
       mc_host_env: ENV['METADATA_CLOUD_HOST'],
       mc_url: mc_url
     )
     metadata_cloud_username = ENV["MC_USER"]
     metadata_cloud_password = ENV["MC_PW"]
     HTTP.basic_auth(user: metadata_cloud_username, pass: metadata_cloud_password).get(mc_url)
+  end
+
+  def self.metadata_cloud_host
+    ENV['METADATA_CLOUD_HOST'].present? ? ENV['METADATA_CLOUD_HOST'] : 'metadata-api-uat.library.yale.edu'
   end
 end

@@ -63,7 +63,8 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     expected_file = "#{ptiff_tmpdir}1002533.tif"
     expect(File.exist?(expected_file)).to eq false
     tiff_input_path = ptf.copy_access_master_to_working_directory(swing_temp_dir)
-    ptf.convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
+    conversion_information = ptf.convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
+    expect(conversion_information).to eq(height: "434", width: "650")
     expect(File.exist?(expected_file)).to eq true
     File.delete(tiff_input_path)
     File.delete(expected_file)
@@ -71,7 +72,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
 
   it "saves the PTIFF to an S3 bucket" do
     ptiff_output_path = "spec/fixtures/images/ptiff_images/fake_ptiff.tif"
-    expect(ptf.save_to_s3(ptiff_output_path).successful?).to eq true
+    expect(ptf.save_to_s3(ptiff_output_path, "width" => 500, "height" => 600).successful?).to eq true
   end
 
   it "bails if the shell script fails" do
@@ -111,10 +112,13 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
   context "when pulling access masters from S3" do
     let(:oid) { 1_014_543 }
     let(:oid_with_remote_ptiff) { 111_111 }
-    let(:child_with_remote_ptiff) { FactoryBot.build_stubbed(:child_object, oid: oid_with_remote_ptiff) }
+    let(:parent_object_with_remote_ptiff) { FactoryBot.create(:parent_object, oid: 111_000) }
+    let(:child_with_remote_ptiff) { FactoryBot.create(:child_object, oid: oid_with_remote_ptiff, parent_object_oid: 111_000) }
     let(:child_object) { FactoryBot.build_stubbed(:child_object, oid: oid) }
     let(:ptf) { described_class.new(child_object) }
     let(:logger_mock) { instance_double("Rails.logger").as_null_object }
+    let(:user) { FactoryBot.create(:user) }
+    let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
 
     around do |example|
       original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
@@ -147,10 +151,12 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     end
 
     it "does not perform conversion if remote PTIFF exists" do
+      allow(child_object).to receive(:parent_object).and_return(parent_object_with_remote_ptiff)
+      parent_object_with_remote_ptiff.current_batch_process = batch_process
+      parent_object_with_remote_ptiff.save!
       ptiff = described_class.new(child_with_remote_ptiff)
-      expect(ptiff.valid?).to be(false)
-      expect(ptiff.errors.full_messages.first).to include "PTIFF exists on S3, not converting: {\"oid\":\"111111\"}"
-      expect(ptiff).not_to receive(:convert_to_ptiff)
+      expect(ptiff.valid?).to be(true)
+      expect(Notification.count).to eq(1)
     end
 
     it "copies the remote access master to a swing directory" do
@@ -166,7 +172,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
 
     it "can call a wrapper method" do
       allow(described_class).to receive(:new).and_return(ptf)
-      expect(ptf).to receive(:save_to_s3)
+      expect(ptf).to receive(:save_to_s3).with(anything, height: "434", width: "650")
       VCR.use_cassette("download image 1014543") do
         expect(described_class.new(child_object).generate_ptiff)
       end

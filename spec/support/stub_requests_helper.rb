@@ -3,7 +3,7 @@
 module StubRequestHelper
   def stub_metadata_cloud(oid, source_name = 'ladybird')
     vpn = ENV["VPN"]
-    allowed_sites = ["solr", MetadataCloudService.metadata_cloud_host, "localhost"]
+    allowed_sites = ["solr", MetadataSource.metadata_cloud_host, "localhost"]
     if vpn == "true"
       WebMock.disable_net_connect!(allow: allowed_sites)
       stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/#{source_name}/#{oid}.json").to_return(status: 200)
@@ -23,10 +23,14 @@ module StubRequestHelper
     allow_any_instance_of(PyramidalTiff).to receive(:generate_ptiff).and_return(width: 2591, height: 4056)
     allow_any_instance_of(PyramidalTiff).to receive(:valid?).and_return(true)
     allow_any_instance_of(PyramidalTiff).to receive(:conversion_information).and_return(width: 2591, height: 4056)
+    allow_any_instance_of(ChildObject).to receive(:remote_ptiff_exists?).and_return(true)
+    allow_any_instance_of(ChildObject).to receive(:remote_metadata).and_return(width: 2591, height: 4056)
   end
 
   def stub_manifests
     allow_any_instance_of(IiifPresentation).to receive(:save).and_return(true)
+    allow_any_instance_of(IiifPresentation).to receive(:save).and_return(true)
+    allow_any_instance_of(ParentObject).to receive(:manifest_completed?).and_return(true)
   end
   # rubocop:enable RSpec/AnyInstance
 end

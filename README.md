@@ -182,25 +182,13 @@ If you'd like to hit the Metadata cloud endpoint and are running on the VPN, the
     MC_PW=YOUR_INFO_HERE
     ```
 
+  ### Dynatrace
+
+  - We've integrated Dynatrace OneAgent for monitoring our Docker container environments. 
+    - Instructions on configuring OneAgent can be found [here](https://github.com/yalelibrary/yul-dc-camerata/tree/master/base)
+
+
 ## Running the rake tasks
-
-- Update fixture data from the MetadataCloud
-
-  - _NOTE:_ you must be on the Yale VPN
-  - If you have trouble connecting to the MetadataCloud, see the DCE doc on [connecting to VPN from within a container](https://curationexperts.github.io/playbook/tools/docker/containers.html)
-  - Add your credentials to your `.secrets` file. <!-- This needs to be updated based on the camerata gem updates, but not sure what the current practice should be - they're not in the AWS parameter store -->
-
-    ```
-    # Metadata Cloud
-    MC_USER=YOUR_INFO_HERE
-    MC_PW=YOUR_INFO_HERE
-    ```
-
-    Valid metadata sources: ils [aka Voyager], aspace, or ladybird.
-
-    ```bash
-    METADATA_SOURCE=YOUR_SOURCE_HERE rake yale:refresh_fixture_data
-    ```
 
 - Index sample data (if you go to solr and hit "execute query" and don't have data, run this command). This should also occur automatically when you seed the database or otherwise create ParentObjects
 

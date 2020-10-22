@@ -5,9 +5,6 @@ RSpec.describe "Request new OIDs", type: :request do
   let(:user) { FactoryBot.create(:user) }
   describe "when authenticated" do
     context "Requesting a single OID" do
-      before do
-        login_as(user)
-      end
       it "returns a successful JSON response" do
         get new_oid_path, headers: { 'ACCEPT' => "application/json" }
         expect(response).to be_successful
@@ -29,9 +26,6 @@ RSpec.describe "Request new OIDs", type: :request do
     end
 
     context "Requesting multiple OIDs" do
-      before do
-        login_as(user)
-      end
       it "returns a successful JSON response" do
         number = 5
         get new_oid_path(number), headers: { 'ACCEPT' => "application/json" }
@@ -71,9 +65,6 @@ RSpec.describe "Request new OIDs", type: :request do
     end
 
     context "logging an oid request" do
-      before do
-        login_as(user)
-      end
       let(:logger_mock) { instance_double("Rails.logger").as_null_object }
 
       it 'logs the user email, ip address and OIDs' do
@@ -86,17 +77,7 @@ RSpec.describe "Request new OIDs", type: :request do
         request_ip = "127.0.0.1"
 
         expect(Rails.logger).to have_received(:info)
-          .with("OIDs Created: {\"email\":\"#{user.email}\",\"ip_address\":\"#{request_ip}\",\"oids\":\"#{oids}\"}")
-      end
-    end
-  end
-
-  describe "when not authenticated" do
-    context "requesting generate oids" do
-      it "prevents access" do
-        headers = { 'ACCEPT' => "application/json" }
-        get new_oid_path, headers: headers
-        expect(response).to have_http_status(:redirect)
+          .with("OIDs Created: {\"ip_address\":\"#{request_ip}\",\"oids\":\"#{oids}\"}")
       end
     end
   end

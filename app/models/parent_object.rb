@@ -7,8 +7,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include SolrIndexable
   has_many :dependent_objects
   has_many :child_objects, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
+  has_many :batch_connections, as: :connection
+  has_many :batch_processes, through: :batch_connections
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   attr_accessor :metadata_update
+  attr_accessor :current_batch_process
   self.primary_key = 'oid'
   after_save :setup_metadata_job
   after_update :solr_index_job # we index from the fetch job on create
@@ -21,6 +24,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   validates :visibility, inclusion: { in: visibilities,
                                       message: "%{value} is not a valid value" }
+
+  def initialize(attributes = nil)
+    super
+    self.use_ladybird = true
+  end
 
   def create_child_records
     return unless ladybird_json
@@ -49,10 +57,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
       self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
     end
+    processing_event("Metadata has been fetched", "metadata-fetched") if current_batch_process
   end
 
-  def processing_failure(message, status = 'failed')
-    IngestNotification.with(parent_object: self, status: status, reason: message).deliver_all
+  def processing_event(message, status = 'info')
+    IngestNotification.with(parent_object_id: id, status: status, reason: message, batch_process_id: current_batch_process&.id).deliver_all
   end
 
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
@@ -62,7 +71,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     if (created_at_previously_changed? && ladybird_json.blank?) ||
        previous_changes["authoritative_metadata_source_id"].present? ||
        metadata_update.present?
-      SetupMetadataJob.perform_later(self)
+      SetupMetadataJob.perform_later(self, current_batch_process)
+      processing_event("Processing has been queued", "processing-queued") if current_batch_process
     end
   end
 
@@ -94,11 +104,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def ladybird_json=(lb_record)
     super(lb_record)
     return lb_record if lb_record.blank?
+    self.last_ladybird_update = DateTime.current
+    return unless use_ladybird
     self.bib = lb_record["orbisBibId"] || lb_record["orbisRecord"]
     self.barcode = lb_record["orbisBarcode"]
     self.aspace_uri = lb_record["archiveSpaceUri"]
     self.visibility = lb_record["itemPermission"]
-    self.last_ladybird_update = DateTime.current
+    self.use_ladybird = false
   end
 
   def voyager_json=(v_record)
@@ -116,7 +128,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def ladybird_cloud_url
-    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?include-children=1"
+    "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?include-children=1"
   end
 
   def voyager_cloud_url
@@ -127,12 +139,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                        else
                          "/barcode/#{ladybird_json['orbisBarcode']}?bib=#{orbis_bib}"
                        end
-    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/ils#{identifier_block}"
+    "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ils#{identifier_block}"
   end
 
   def aspace_cloud_url
     return nil unless ladybird_json.present?
-    "https://#{MetadataCloudService.metadata_cloud_host}/metadatacloud/api/aspace#{ladybird_json['archiveSpaceUri']}"
+    "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/aspace#{ladybird_json['archiveSpaceUri']}"
   end
 
   def source_name=(metadata_source)
@@ -154,6 +166,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def manifest_completed?
     ready_for_manifest? && iiif_presentation.valid? && S3Service.s3_exists?(iiif_presentation.manifest_path, ENV['SAMPLE_BUCKET'])
+  end
+
+  def needs_a_manifest?
+    ready_for_manifest? && generate_manifest
   end
 
   def ready_for_manifest?

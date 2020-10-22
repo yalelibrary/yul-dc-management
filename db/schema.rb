@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_06_124515) do
+ActiveRecord::Schema.define(version: 2020_10_16_192716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(version: 2020_10_06_124515) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "retrieved_records"
+  end
+
+  create_table "batch_connections", force: :cascade do |t|
+    t.bigint "batch_process_id", null: false
+    t.string "connection_type", null: false
+    t.bigint "connection_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["batch_process_id"], name: "index_batch_connections_on_batch_process_id"
+    t.index ["connection_type", "connection_id"], name: "index_batch_connections_on_connection_type_and_connection_id"
   end
 
   create_table "batch_processes", force: :cascade do |t|
@@ -77,14 +87,6 @@ ActiveRecord::Schema.define(version: 2020_10_06_124515) do
     t.index ["parent_object_id"], name: "index_dependent_objects_on_parent_object_id"
   end
 
-  create_table "metadata_samples", force: :cascade do |t|
-    t.string "metadata_source"
-    t.integer "number_of_samples"
-    t.decimal "seconds_elapsed"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "metadata_sources", force: :cascade do |t|
     t.string "metadata_cloud_name"
     t.string "display_name"
@@ -112,12 +114,6 @@ ActiveRecord::Schema.define(version: 2020_10_06_124515) do
     t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient_type_and_recipient_id"
   end
 
-  create_table "oid_imports", force: :cascade do |t|
-    t.text "csv"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "parent_objects", id: false, force: :cascade do |t|
     t.bigint "oid", null: false
     t.string "bib"
@@ -136,21 +132,13 @@ ActiveRecord::Schema.define(version: 2020_10_06_124515) do
     t.jsonb "ladybird_json"
     t.jsonb "voyager_json"
     t.jsonb "aspace_json"
-    t.string "reading_direction"
-    t.string "pagination"
+    t.string "viewing_direction"
+    t.string "display_layout"
     t.integer "child_object_count"
+    t.boolean "use_ladybird", default: false
+    t.boolean "generate_manifest", default: false
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
-  end
-
-  create_table "sample_fields", force: :cascade do |t|
-    t.string "field_name"
-    t.integer "field_count"
-    t.decimal "field_percent_of_total"
-    t.bigint "metadata_sample_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["metadata_sample_id"], name: "index_sample_fields_on_metadata_sample_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -166,7 +154,7 @@ ActiveRecord::Schema.define(version: 2020_10_06_124515) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "batch_connections", "batch_processes"
   add_foreign_key "batch_processes", "users"
   add_foreign_key "child_objects", "parent_objects", column: "parent_object_oid", primary_key: "oid"
-  add_foreign_key "sample_fields", "metadata_samples", on_delete: :cascade
 end

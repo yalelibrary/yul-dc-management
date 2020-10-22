@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe "BatchProcesses", type: :request do
+RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:user) }
   before do
     login_as user

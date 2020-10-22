@@ -35,3 +35,7 @@ RSpec/MessageChain:
 RSpec/MessageSpies:
   Exclude:
     - 'spec/**/*.rb'
+
+Layout/MultilineMethodCallIndentation:
+  Exclude:
+    - 'spec/**/*.rb'

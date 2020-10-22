@@ -8,15 +8,19 @@ class ChildObject < ApplicationRecord
   before_create :check_for_size_and_file
 
   def check_for_size_and_file
-    size = StaticChildInfo.size_for(oid)
-    return unless size.present?
-    self.width = size[:width]
-    self.height = size[:height]
-    self.ptiff_conversion_at = Time.zone.now if remote_ptiff_exists?
+    width_and_height(remote_metadata)
+  end
+
+  def processing_event(message, status = 'info')
+    IngestNotification.with(parent_object_id: parent_object.id, child_object_id: id, status: status, reason: message, batch_process_id: parent_object.current_batch_process&.id).deliver_all
   end
 
   def remote_ptiff_exists?
-    S3Service.s3_exists?(remote_ptiff_path)
+    remote_metadata
+  end
+
+  def remote_metadata
+    S3Service.remote_metadata(remote_ptiff_path)
   end
 
   def access_master_path
@@ -48,14 +52,24 @@ class ChildObject < ApplicationRecord
     "#{IiifPresentation.new(parent_object).image_url(oid)}/full/200,/0/default.jpg"
   end
 
+  def width_and_height(size)
+    return unless size.present? && size[:width].to_i.positive? && size[:height].to_i.positive?
+    self.width = size[:width].to_i
+    self.height = size[:height].to_i
+    self.ptiff_conversion_at = Time.zone.now if remote_ptiff_exists?
+    size
+  end
+
   def convert_to_ptiff
     if pyramidal_tiff.valid?
-      self.width = pyramidal_tiff.conversion_information[:width]
-      self.height = pyramidal_tiff.conversion_information[:height]
-      self.ptiff_conversion_at = Time.current
-      pyramidal_tiff.conversion_information
+      width_and_height(pyramidal_tiff.conversion_information)
+      if pyramidal_tiff.conversion_information&.[](:width)
+        parent_object.processing_event("PTIFF ready for #{oid}", 'ptiff-ready')
+        width_and_height(pyramidal_tiff.conversion_information)
+      end
+      # Conversion info is blank if the ptiff was skipped as already present
     else
-      parent_object.processing_failure("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}")
+      parent_object.processing_event("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
     end
   end
 
