@@ -16,7 +16,7 @@ class ChildObject < ApplicationRecord
   end
 
   def remote_ptiff_exists?
-    S3Service.s3_exists?(remote_ptiff_path)
+    remote_metadata
   end
 
   def remote_metadata
