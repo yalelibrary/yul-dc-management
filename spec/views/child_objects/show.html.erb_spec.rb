@@ -6,6 +6,7 @@ RSpec.describe "child_objects/show", type: :view, prep_metadata_sources: true do
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2004628") }
 
   before do
+    stub_ptiffs
     stub_metadata_cloud("2004628")
     parent_object
     @child_object = assign(:child_object, ChildObject.create!(
