@@ -6,7 +6,7 @@ COPY ops/env.conf /etc/nginx/main.d/env.conf
 COPY ops/nginx.sh /etc/service/nginx/run
 RUN chmod +x /etc/service/nginx/run
 RUN rm -f /etc/service/nginx/down
-RUN apt-get update && apt-get install -y libtiff-tools libvips-tools imagemagick \
+RUN apt-get update && apt-get install -y libtiff-tools liblcms2-dev libexif-dev libmagickcore-dev imagemagick libexpat-dev libtiff5-dev libgsf-1-dev libjpeg-turbo8-dev \
   &&  apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -15,6 +15,11 @@ COPY ops/policy.xml /etc/ImageMagick-6/policy.xml
 ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
 BUNDLE_JOBS=4
 RUN gem install bundler -v 2.1.4
+
+COPY libvips.8.10.precomp.tgz $APP_HOME
+RUN tar -xzf $APP_HOME/libvips.8.10.precomp.tgz && cd vips-8.10.2 && make install
+RUN ldconfig /usr/local/lib
+RUN rm -rf  libvips.8.10.precomp.tgz  vips-8.10.2
 
 COPY --chown=app Gemfile* $APP_HOME/
 RUN /sbin/setuser app bash -l -c "bundle check || bundle install"

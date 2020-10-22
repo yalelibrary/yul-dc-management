@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#NOTE: This script requires libvips > 8.10.* to support --intent flags etc
 function handle_error() {
     echo "Script exited with status ${2} at line ${1}"
     if [ -z "${savefiles}" ] && [ -d $tmpprefix ]; then rm -f $tmpprefix*; fi
@@ -68,10 +69,10 @@ if [[ ${CHANNELS} == "gray" ]]; then
     # in the case of gray with no embedded color profile or with an embedded sRGB profile that was probably erroneously applied to the image,
     # we can't just apply sRGB with the icc_transform because sRGB isn't an appropriate profile for the icc_transform command
     # so we have to call vipsthumbnail instead which does some magick behind the scenes to properly convert between the profiles
-    if [ -z "${ICCPROFILE}" ] || [ "${ICCPROFILE}" == "sRGB Profile" ]; then
+    if [ -z "${ICCPROFILE}" ] || [ "${ICCPROFILE}" == "sRGB "* ]; then #handle fancy sRGB profiles like 'sRGB IEC61966-2.1'
         W2=$(vipsheader -f width ${input}[0] 2>/dev/null)
         H2=$(vipsheader -f height ${input}[0] 2>/dev/null)
-        vipsthumbnail $input[0] --eprofile=app/lib/sRGB.icc --size ${W2}x${H2} -o ${tmpprefix}.tif[compression=none,strip] 2>&1
+        vipsthumbnail $input[0] --eprofile=app/lib/sRGB.icc --size ${W2}x${H2} --intent perceptual -o ${tmpprefix}.tif[compression=none,strip] 2>&1
         # note that in the above operation, vipsthumbnail doesn't embed the profile by default, so there won't be one in the result since we didn't start with one
     fi
 fi
@@ -81,7 +82,7 @@ if [ -z "${W2}" ]; then
     # next, run an icc_transform to convert the original to sRGB (assume sRGB if no profile and otherwise use the embedded one)
     # and strip all metadata from the file; --embedded intructs vips to use embedded and --input-profile is only used as a fallback
     # if a profile isn't embedded
-    vips icc_transform $input ${tmpprefix}.tif[compression=none,strip] app/lib/sRGB.icc --embedded --input-profile app/lib/sRGB.icc --intent perceptual 2>&1
+    vips icc_transform $input ${tmpprefix}.tif[compression=none,strip] app/lib/sRGB.icc --embedded --input-profile app/lib/sRGB.icc --intent perceptual 2>&1 || echo "icc_transform failed, continuing..." && cp $input ${tmpprefix}.tif
 fi
 
 # now, embed an sRGB ICC profile in the resulting uncompressed tiff since we stripped out the profile above using the strip metadata directive
