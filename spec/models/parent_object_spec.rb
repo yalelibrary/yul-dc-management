@@ -55,7 +55,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   end
 
   context 'with a random notification' do
-    let(:user_one) { FactoryBot.create(:user, uid: "human the first") }
+    let(:user_one) { User.first || FactoryBot.create(:user, uid: "human the first") }
     let(:user_two) { FactoryBot.create(:user, uid: "human the second") }
     let(:user_three) { FactoryBot.create(:user, uid: "human the third") }
     before do
@@ -97,7 +97,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       expect(statuses).to include "manifest-saved"
       expect(statuses).to include "solr-indexed"
       expect(Notification.all.map { |note| note.params[:reason] }).to include "Processing has been queued"
-      expect(Notification.count).to eq(714)
+      expect(Notification.count).to eq(238)
     end
   end
 

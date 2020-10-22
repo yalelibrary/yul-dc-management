@@ -5,6 +5,6 @@ FactoryBot.define do
     csv { nil }
     mets_xml { nil }
     user { nil }
-    oid { "" }
+    oid { '2034600' }
   end
 end

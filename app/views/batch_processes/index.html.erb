@@ -1,33 +1,31 @@
-<div class="container">
+<div class='container'>
   <% if flash[:notice] %>
-    <div class="notice"><%= flash[:notice] %></div>
+    <div class='notice'><%= flash[:notice] %></div>
   <% end %>
   <h1>Batch Processes</h1>
-  <%= render "form" %>
+  <%= render 'form' %>
 
-<h1>BatchProcess#index</h1>
-<div class="container">
-  <h3> Batch Process </h3>
-  <table class="table table-bordered table-striped">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col"> Process Id </th>
-        <th scope="col"> User </th>
-        <th scope="col"> Time </th>
-        <th scope="col"> Items </th>
-        <th scope="col"> Status </th>
-        <th scope="col"> Object Details </th>
-      </tr>
-    </thead>
-      <% @batch_processes.each do |batch_process| %>
-        <tr>
-          <td class="process_id"><%= link_to batch_process.id, batch_process_path(batch_process) %></td>
-          <td><%= batch_process.user.uid %></td>
-          <td><%= batch_process.created_at %></td>
-          <td class="count"><%= batch_process.oids&.count %></td>
-          <td>TODO: Status</td>
-          <td class="view"><%= link_to "View", batch_process_path(batch_process) %></td>
-        </tr>
-      <% end %>
-  </table>
+  <div class='row'>
+    <div class='col overflow-auto'>
+      <table id='batch-processes-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= batch_processes_path(format: :json) %>'>
+        <thead class='thead-dark'>
+          <tr>
+            <th scope='col'> Process Id </th>
+            <th scope='col'> User </th>
+            <th scope='col'> Time </th>
+            <th scope='col'> Size </th>
+            <th scope='col'> Status </th>
+            <th scope='col'> Object Details </th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<div id='batch-processes-data' class='d-none datatable-data'>
+  <%= BatchProcessDatatable.new(nil).view_columns.keys.map {|key| {data: key} }.to_json %>
 </div>

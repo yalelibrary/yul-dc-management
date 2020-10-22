@@ -13,7 +13,7 @@
 </div>
 <div class='row'>
   <div class='col overflow-auto'>
-    <table id="parent-objects-datatable" class="table table-responsive table-bordered table-striped" data-source="<%= parent_objects_path(format: :json) %>">
+    <table id="parent-objects-datatable" class="is-datatable table table-responsive table-bordered table-striped" data-source="<%= parent_objects_path(format: :json) %>">
       <thead  class="thead-dark">
         <tr>
           <th scope="col">Oid</th>
@@ -37,6 +37,6 @@
   </div>
 </div>
 
-<div id="parent-objects-data" class='d-none'>
+<div id="parent-objects-data" class='d-none datatable-data'>
   <%= ParentObjectDatatable.new(nil).view_columns.keys.map {|key| {data: key} }.to_json %>
 </div>

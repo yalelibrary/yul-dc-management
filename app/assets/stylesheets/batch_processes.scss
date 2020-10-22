@@ -1,3 +1,13 @@
 // Place all the styles related to the BatchProcesses controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+
+.batch-import {
+  display: flex;
+  justify-content: space-between;
+
+  .form-inline {
+    padding-top: 0;
+  }
+}
