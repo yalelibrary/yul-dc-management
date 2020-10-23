@@ -75,20 +75,20 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     expect(ptf.save_to_s3(ptiff_output_path, "width" => 500, "height" => 600).successful?).to eq true
   end
 
-  xit "bails if the shell script fails" do
+  it "bails if the shell script fails" do
     stub_request(:get, "https://yale-image-samples.s3.amazonaws.com/originals/1002533.tif")
       .to_return(status: 200, body: File.open('spec/fixtures/images/sample_cmyk.tiff', 'rb'))
     ptiff_tmpdir = "spec/fixtures/images/ptiff_images/"
-    ptf.convert_to_ptiff("spec/fixtures/images/sample_cmyk.tiff", ptiff_tmpdir)
+    ptf.convert_to_ptiff(__FILE__, ptiff_tmpdir)
     expect(ptf.errors.full_messages.first).to match(/Conversion script exited with error code .*/)
   end
 
-  xit "doesn't try to save to S3 if the shell script fails" do
+  it "doesn't try to save to S3 if the shell script fails" do
     stub_request(:get, "https://yale-image-samples.s3.amazonaws.com/originals/1002533.tif")
       .to_return(status: 200, body: File.open('spec/fixtures/images/sample_cmyk.tiff', 'rb'))
     ptiff_tmpdir = "spec/fixtures/images/ptiff_images/"
     allow(described_class).to receive(:new).and_return(ptf)
-    allow(ptf).to receive(:convert_to_ptiff).and_return(ptf.convert_to_ptiff("spec/fixtures/images/sample_cmyk.tiff", ptiff_tmpdir))
+    allow(ptf).to receive(:convert_to_ptiff).and_return(ptf.convert_to_ptiff(__FILE__, ptiff_tmpdir))
     expect(ptf).not_to receive(:save_to_s3)
     expect(described_class.new(child_object).generate_ptiff)
     expect(ptf.errors.full_messages.first).to match(/Conversion script exited with error code .*/)
