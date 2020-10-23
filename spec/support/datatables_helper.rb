@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/MethodLength
-def datatable_sample_params
+def datatable_sample_params(columns)
   ActionController::Parameters.new(
     'draw' => '1',
     'columns' => {
       '0' => {
-        'data' => 'oid', 'name' => 'oid', 'searchable' => 'true', 'orderable' => 'true',
+        'data' => columns[0], 'name' => columns[0], 'searchable' => 'true', 'orderable' => 'true',
         'search' => {
           'value' => '', 'regex' => 'false'
         }
       },
       '1' => {
-        'data' => 'authoritative_source', 'name' => '', 'searchable' => 'true', 'orderable' => 'true',
+        'data' => columns[1], 'name' => '', 'searchable' => 'true', 'orderable' => 'true',
         'search' => {
           'value' => '', 'regex' => 'false'
         }
       },
       '2' => {
-        'data' => 'bib', 'name' => '', 'searchable' => 'true', 'orderable' => 'false',
+        'data' => columns[2], 'name' => '', 'searchable' => 'true', 'orderable' => 'false',
         'search' => {
           'value' => '', 'regex' => 'false'
         }
@@ -35,7 +35,7 @@ def datatable_sample_params
 end
 # rubocop:enable Metrics/MethodLength
 
-def datatable_view_mock # rubocop:disable Metrics/AbcSize
+def parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
   @datatable_view_mock ||= double
   allow(@datatable_view_mock).to receive(:parent_object_path).and_return("/parent_objects/1")
   allow(@datatable_view_mock).to receive(:edit_parent_object_path).and_return("/parent_objects/1/edit")
@@ -48,5 +48,15 @@ def datatable_view_mock # rubocop:disable Metrics/AbcSize
                                                   .and_return('<a data-method="post" href="/management/parent_objects/2034601/update_metadata">Update Metadata</a>')
   allow(@datatable_view_mock).to receive(:link_to).with("Destroy", "/parent_objects/1", anything)
                                                   .and_return('<a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/management/parent_objects/2034601">Destroy</a>')
+  @datatable_view_mock
+end
+
+def batch_process_datatable_view_mock(id) # rubocop:disable Metrics/AbcSize
+  @datatable_view_mock ||= double
+  allow(@datatable_view_mock).to receive(:batch_process_path).and_return("/batch_processes/#{id}")
+  allow(@datatable_view_mock).to receive(:link_to).with(anything, "/batch_processes/#{id}")
+                                                  .and_return("<a href='/batch_processes/#{id}'>#{id}</a>")
+  allow(@datatable_view_mock).to receive(:link_to).with('View', "/batch_processes/#{id}")
+                                                  .and_return("<a href='/batch_processes/#{id}'>View</a>")
   @datatable_view_mock
 end

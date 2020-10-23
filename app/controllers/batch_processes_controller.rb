@@ -4,8 +4,12 @@ class BatchProcessesController < ApplicationController
   before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml]
 
   def index
-    @batch_processes = BatchProcess.all
     @batch_process = BatchProcess.new
+
+    respond_to do |format|
+      format.html
+      format.json { render json: BatchProcessDatatable.new(params, view_context: view_context) }
+    end
   end
 
   def show; end
