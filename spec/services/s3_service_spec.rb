@@ -16,8 +16,17 @@ RSpec.describe S3Service, type: :has_vcr do
       .to_return(status: 200, body: "these are some test words")
     stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
       .to_return(status: 200, body: File.open("spec/fixtures/images/access_masters/test_image.tif"))
-    stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
+    stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/1014543.tif")
+      .with do |request|
+        expect(request.headers).to include('X-Amz-Meta-Width' => '100',
+                                           'X-Amz-Meta-Height' => '200',
+                                           'Content-Type' => 'image/tiff')
+      end
       .to_return(status: 200, body: "")
+    stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/tests/fake_ptiff.tif")
+      .to_return(status: 200, headers: { 'X-Amz-Meta-Width' => '100',
+                                         'X-Amz-Meta-Height' => '200',
+                                         'Content-Type' => 'image/tiff' })
     stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
       .to_return(status: 200, body: "")
     stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/fake.tif")
@@ -57,15 +66,15 @@ RSpec.describe S3Service, type: :has_vcr do
   it "can upload an image to a given image bucket" do
     child_object_oid = "1014543"
     local_path = "spec/fixtures/images/ptiff_images/fake_ptiff.tif"
-    remote_path = "originals/#{child_object_oid}.tif"
+    remote_path = "ptiffs/#{child_object_oid}.tif"
     expect(File.exist?(local_path)).to eq true
-    expect(described_class.upload_image(local_path, remote_path).successful?).to eq true
+    expect(described_class.upload_image(local_path, remote_path, 'image/tiff', 'width' => '100', 'height' => '200').successful?).to eq true
   end
 
   it "can tell that an image exists" do
     child_object_oid = "1014543"
     remote_path = "originals/#{child_object_oid}.tif"
-    expect(described_class.s3_exists?(remote_path)).to eq true
+    expect(described_class.s3_exists?(remote_path)).to be_truthy
   end
 
   it "can tell that an image doesn't exist" do
@@ -82,5 +91,10 @@ RSpec.describe S3Service, type: :has_vcr do
     expect(presigned_url).to start_with "https://#{ENV['S3_SOURCE_BUCKET_NAME']}"
     expect(presigned_url).to include 'X-Amz-Expires=600'
     expect(presigned_url).to include remote_path
+  end
+
+  it "can retrieve the metadata from S3" do
+    remote_path = "tests/fake_ptiff.tif"
+    expect(described_class.remote_metadata(remote_path)).to include(width: "100", height: "200")
   end
 end

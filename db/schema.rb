@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_09_162830) do
+ActiveRecord::Schema.define(version: 2020_10_16_192716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,9 +146,11 @@ ActiveRecord::Schema.define(version: 2020_10_09_162830) do
     t.jsonb "ladybird_json"
     t.jsonb "voyager_json"
     t.jsonb "aspace_json"
-    t.string "reading_direction"
-    t.string "pagination"
+    t.string "viewing_direction"
+    t.string "display_layout"
     t.integer "child_object_count"
+    t.boolean "use_ladybird", default: false
+    t.boolean "generate_manifest", default: false
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end

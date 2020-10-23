@@ -35,6 +35,7 @@ RSpec.describe "/child_objects", type: :request, prep_metadata_sources: true do
 
   before do
     stub_metadata_cloud("2004628")
+    stub_ptiffs
     parent_object
     login_as user
   end

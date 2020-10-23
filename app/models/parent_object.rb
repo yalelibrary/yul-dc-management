@@ -25,6 +25,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :visibility, inclusion: { in: visibilities,
                                       message: "%{value} is not a valid value" }
 
+  def initialize(attributes = nil)
+    super
+    self.use_ladybird = true
+  end
+
   def create_child_records
     return unless ladybird_json
     ladybird_json["children"].map.with_index(1) do |child_record, index|
@@ -56,7 +61,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def processing_event(message, status = 'info')
-    IngestNotification.with(parent_object: self, status: status, reason: message, batch_process: current_batch_process).deliver_all
+    IngestNotification.with(parent_object_id: id, status: status, reason: message, batch_process_id: current_batch_process&.id).deliver_all
   end
 
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
@@ -99,11 +104,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def ladybird_json=(lb_record)
     super(lb_record)
     return lb_record if lb_record.blank?
+    self.last_ladybird_update = DateTime.current
+    return unless use_ladybird
     self.bib = lb_record["orbisBibId"] || lb_record["orbisRecord"]
     self.barcode = lb_record["orbisBarcode"]
     self.aspace_uri = lb_record["archiveSpaceUri"]
     self.visibility = lb_record["itemPermission"]
-    self.last_ladybird_update = DateTime.current
+    self.use_ladybird = false
   end
 
   def voyager_json=(v_record)
@@ -159,6 +166,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def manifest_completed?
     ready_for_manifest? && iiif_presentation.valid? && S3Service.s3_exists?(iiif_presentation.manifest_path, ENV['SAMPLE_BUCKET'])
+  end
+
+  def needs_a_manifest?
+    ready_for_manifest? && generate_manifest
   end
 
   def ready_for_manifest?

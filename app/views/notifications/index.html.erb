@@ -28,7 +28,13 @@
           <% notice = notification.to_notification %>
           <tr>
             <td><%= notice.params[:status] %></td>
-            <td><%= link_to notice.params[:parent_object].id, notice.params[:parent_object] %></td>
+            <td>
+              <%  if notice.parent_object %>
+                <%= link_to(notice.parent_object.id, notice.parent_object) %>
+              <% else %>
+                <%= notice.params[:parent_object_id] %> (deleted)
+              <% end %>
+            </td>
             <td><%= notice.params[:reason] %></td>
             <td><%= notification.read? ? 'Read' : 'Unread' %></td>
             <td><%= notification.created_at %></td>

@@ -13,7 +13,18 @@ RSpec.describe GeneratePtiffJob, type: :job do
   let(:child_object) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object) }
   let(:generate_ptiff_job) { GeneratePtiffJob.new }
 
+  around do |example|
+    original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
+    ENV["S3_SOURCE_BUCKET_NAME"] = "not-a-real-bucket"
+    example.run
+    ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
+  end
+
   before do
+    stub_request(:head, "https://not-a-real-bucket.s3.amazonaws.com/originals/89/45/67/89/456789.tif")
+      .to_return(status: 200, body: "", headers: {})
+    stub_request(:head, "https://not-a-real-bucket.s3.amazonaws.com/ptiffs/89/45/67/89/456789.tif")
+      .to_return(status: 200, body: "", headers: {})
     child_object
   end
 
@@ -24,8 +35,8 @@ RSpec.describe GeneratePtiffJob, type: :job do
       end.to change { Delayed::Job.count }.by(1)
     end
 
-    it 'increments the job queue by one if ready_for_manifest is true' do
-      allow(child_object.parent_object).to receive(:ready_for_manifest?).and_return(true)
+    it 'increments the job queue by one if needs_a_manifest is true' do
+      allow(child_object.parent_object).to receive(:needs_a_manifest?).and_return(true)
       expect do
         generate_ptiff_job.perform(child_object, batch_process)
       end.to change { Delayed::Job.count }.by(1)
