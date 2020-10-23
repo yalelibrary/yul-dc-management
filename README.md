@@ -126,7 +126,7 @@ aws_secret_access_key=YOUR_SECRET_ACCESS_KEY
 After the credentials have been set, you will need to export the following settings via the command line:
 
 ```bash
-export AWS_PROFILE=your-profile-name && export AWS_DEFAULT_REGION=us-east-1
+export AWS_PROFILE=your-profile-name AWS_DEFAULT_REGION=us-east-1
 ```
 
 Note: AWS_PROFILE name needs to match the credentials profile name (`[your-profile-name]`). After you set the credentials, you will need to re-install camerata: `rake install`

@@ -11,5 +11,12 @@ RSpec.describe Class do
         expect($CHILD_STATUS).to eq 0
       end
     end
+
+    it "do not fail with this other weird image" do
+      Dir.mktmpdir do |d|
+        expect(`app/lib/tiff_to_pyramid.bash #{d} spec/fixtures/images/bad_icc.tiff #{d}/output.tiff`).to match(/Pyramid width: 2014\nPyramid height: 3072/)
+        expect($CHILD_STATUS).to eq 0
+      end
+    end
   end
 end
