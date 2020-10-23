@@ -30,7 +30,7 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
         process_id: link_to(batch_process.id, batch_process_path(batch_process)),
         user: batch_process.user.uid,
         time: batch_process.created_at,
-        size: batch_process.oids.count,
+        size: batch_process.oids&.count,
         status: "TODO: Status",
         object_details: link_to("View", batch_process_path(batch_process)),
         DT_RowId: batch_process.id

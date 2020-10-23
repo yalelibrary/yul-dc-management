@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true do
+RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: true do
   let(:user) { FactoryBot.create(:user) }
 
   around do |example|
@@ -47,9 +47,15 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true do
       before do
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
         click_button("Import")
-        expect(BatchProcess.count).to eq 1
-        expect(page).to have_content("Your records have been retrieved from the MetadataCloud. PTIFF generation, manifest generation and indexing happen in the background.")
-        expect(BatchProcess.last.file_name).to eq "meta.xml"
+        po = ParentObject.find(16_854_285)
+        po.delete
+        page.refresh
+      end
+
+      it "can still see the details of the import" do
+        expect(page).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
+        expect(page).to have_content('5')
+        expect(page).to have_link('View', href: "/batch_processes/#{BatchProcess.last.id}")
       end
     end
   end
