@@ -2,5 +2,5 @@
 
 class BatchConnection < ApplicationRecord
   belongs_to :batch_process
-  belongs_to :connection, polymorphic: true
+  belongs_to :connectable, polymorphic: true
 end
