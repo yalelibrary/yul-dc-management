@@ -95,14 +95,6 @@ ActiveRecord::Schema.define(version: 2020_10_24_170510) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "mets_xml_imports", force: :cascade do |t|
-    t.xml "mets_xml"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "oid"
-    t.index ["oid"], name: "index_mets_xml_imports_on_oid"
-  end
-
   create_table "notifications", force: :cascade do |t|
     t.string "recipient_type", null: false
     t.bigint "recipient_id", null: false
