@@ -57,7 +57,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 5
 
-      expect(ParentObject.solr_delete_all).to be
+      expect(SolrService.delete_all).to be
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 0
     end

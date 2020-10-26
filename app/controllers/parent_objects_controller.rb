@@ -68,7 +68,6 @@ class ParentObjectsController < ApplicationController
   end
 
   def reindex
-    ParentObject.solr_delete_all
     ParentObject.solr_index
     respond_to do |format|
       format.html { redirect_to parent_objects_url, notice: 'Parent objects have been reindexed.' }
