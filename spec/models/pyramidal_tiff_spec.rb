@@ -58,7 +58,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
   end
 
   it "builds a command with args" do
-    expect(ptf.build_command("tempdir", "b", "c")).to match /tempdir/ 
+    expect(ptf.build_command("tempdir", "b", "c")).to match(/tempdir/)
   end
 
   it "converts the file in the swing directory to a ptiff" do
@@ -112,7 +112,6 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     expect(File.exist?(expected_file)).to eq true
     File.delete(expected_file)
   end
-
 
   context "when pulling access masters from S3" do
     let(:oid) { 1_014_543 }
