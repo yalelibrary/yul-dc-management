@@ -6,7 +6,7 @@ class SolrReindexAllJob < ApplicationJob
   def perform
     solr = SolrService.connection
     # Groups of 500
-    find_in_batches do |group|
+    ParentObject.find_in_batches do |group|
       solr.add(group.map(&:to_solr).compact)
       solr.commit
     end
