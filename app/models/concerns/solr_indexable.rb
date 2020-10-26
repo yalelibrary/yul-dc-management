@@ -4,16 +4,7 @@ module SolrIndexable
   extend ActiveSupport::Concern
   class_methods do
     def solr_index
-      solr = SolrService.connection
-      # Groups of 500
-      find_in_batches do |group|
-        solr.add(group.map(&:to_solr).compact)
-        solr.commit
-      end
-    end
-
-    def solr_delete_all
-      SolrService.delete_all
+      SolrReindexAllJob.perform_later
     end
   end
 

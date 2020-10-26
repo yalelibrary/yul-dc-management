@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
+RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: true do
   # this doesn't seem to run from a helper, not clear why
   around do |example|
     perform_enqueued_jobs do
@@ -57,9 +57,30 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 5
 
-      expect(ParentObject.solr_delete_all).to be
+      expect(SolrService.delete_all).to be
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 0
+    end
+
+    it "can reindex all the parent objects in a background job" do
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to eq 0
+
+      expect do
+        [
+          '2034600',
+          '2005512',
+          '16414889',
+          '14716192',
+          '16854285'
+        ].each do |oid|
+          stub_metadata_cloud(oid)
+          FactoryBot.create(:parent_object, oid: oid)
+        end
+      end.to change { ParentObject.count }.by(5)
+      expect(SolrReindexAllJob.perform_now).to be
+      response = solr.get 'select', params: { q: '*:*' }
+      expect(response["response"]["numFound"]).to eq 5
     end
 
     it 'can remove an item from Solr' do
