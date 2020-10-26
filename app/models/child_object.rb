@@ -8,8 +8,7 @@ class ChildObject < ApplicationRecord
   before_create :check_for_size_and_file
 
   def check_for_size_and_file
-    size = StaticChildInfo.size_for(oid)
-    width_and_height(size)
+    width_and_height(remote_metadata)
   end
 
   def processing_event(message, status = 'info')
@@ -17,7 +16,11 @@ class ChildObject < ApplicationRecord
   end
 
   def remote_ptiff_exists?
-    S3Service.s3_exists?(remote_ptiff_path)
+    remote_metadata
+  end
+
+  def remote_metadata
+    S3Service.remote_metadata(remote_ptiff_path)
   end
 
   def access_master_path

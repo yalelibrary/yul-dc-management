@@ -1,0 +1,9 @@
+vips for Debian
+--------------
+
+follow this recipe here, but don't forget to install bc first!
+
+https://packaging.ubuntu.com/html/packaging-new-software.html
+
+put the source tarball (not included) above the "vips" directory
+
