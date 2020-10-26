@@ -28,9 +28,7 @@ class ParentObjectsController < ApplicationController
   # POST /parent_objects.json
   def create
     @parent_object = ParentObject.new(parent_object_params)
-    @batch_process = BatchProcess.new(user: current_user)
-    @batch_process.save!
-    @parent_object.current_batch_process = @batch_process
+    batch_process_of_one
     respond_to do |format|
       if @parent_object.save
         format.html { redirect_to @parent_object, notice: 'Parent object was successfully created.' }
@@ -100,6 +98,13 @@ class ParentObjectsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_parent_object
       @parent_object = ParentObject.find(params[:id])
+    end
+
+    def batch_process_of_one
+      @batch_process = BatchProcess.new(user: current_user, oid: @parent_object.oid)
+      @batch_process.batch_connections.build(connectable: @parent_object)
+      @batch_process.save!
+      @parent_object.current_batch_process = @batch_process
     end
 
     # Only allow a list of trusted parameters through.

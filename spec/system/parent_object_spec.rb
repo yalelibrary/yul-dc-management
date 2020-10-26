@@ -44,6 +44,11 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         expect(po.aspace_uri).to eq "/repositories/11/archival_objects/555049"
         expect(po.visibility).to eq "Public"
       end
+
+      it "has a batch process (of one)" do
+        po = ParentObject.find_by(oid: "2012036")
+        expect(po.batch_connections.count).to eq 1
+      end
     end
 
     context "with a ParentObject whose authoritative_metadata_source is Voyager" do

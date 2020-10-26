@@ -42,7 +42,8 @@ class BatchProcess < ApplicationRecord
   end
 
   def oid
-    self[:oid] = mets_doc.oid.to_i
+    return self[:oid] = mets_doc.oid.to_i unless self[:oid]
+    self[:oid]
   end
 
   def parsed_csv
@@ -55,7 +56,7 @@ class BatchProcess < ApplicationRecord
 
   def oids
     return @oids ||= parsed_csv.entries.map { |r| r['oid'] } unless csv.nil?
-    @oids ||= [oid] unless mets_xml.nil?
+    @oids ||= [oid]
   end
 
   def create_parent_objects_from_oids(oids, metadata_sources)
