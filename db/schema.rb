@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_24_162006) do
+ActiveRecord::Schema.define(version: 2020_10_24_170510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,12 +26,12 @@ ActiveRecord::Schema.define(version: 2020_10_24_162006) do
 
   create_table "batch_connections", force: :cascade do |t|
     t.bigint "batch_process_id", null: false
-    t.string "connection_type", null: false
-    t.bigint "connection_id", null: false
+    t.string "connectable_type", null: false
+    t.bigint "connectable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["batch_process_id"], name: "index_batch_connections_on_batch_process_id"
-    t.index ["connection_type", "connection_id"], name: "index_batch_connections_on_connection_type_and_connection_id"
+    t.index ["connectable_type", "connectable_id"], name: "index_batch_connections_on_connectable_type_and_connectable_id"
   end
 
   create_table "batch_processes", force: :cascade do |t|
@@ -127,8 +127,8 @@ ActiveRecord::Schema.define(version: 2020_10_24_162006) do
     t.string "viewing_direction"
     t.string "display_layout"
     t.integer "child_object_count"
-    t.boolean "use_ladybird", default: false
     t.boolean "generate_manifest", default: false
+    t.boolean "use_ladybird", default: false
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end

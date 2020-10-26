@@ -8,9 +8,9 @@ RSpec.describe BatchConnection, type: :model, prep_metadata_sources: true do
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
 
-  it { is_expected.to have_db_column(:connection_id).of_type(:integer) }
-  it { is_expected.to have_db_column(:connection_type).of_type(:string) }
-  it { is_expected.to belong_to(:connection) }
+  it { is_expected.to have_db_column(:connectable_id).of_type(:integer) }
+  it { is_expected.to have_db_column(:connectable_type).of_type(:string) }
+  it { is_expected.to belong_to(:connectable) }
 
   it "can see a batch process and parent objects" do
     parent_object
