@@ -6,7 +6,7 @@ class BatchProcess < ApplicationRecord
   validate :validate_import
   belongs_to :user, class_name: "User"
   has_many :batch_connections
-  has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connection
+  has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connectable
 
   def validate_import
     return if file.blank?
@@ -68,7 +68,7 @@ class BatchProcess < ApplicationRecord
                                                       end
         parent_object.current_batch_process = self
       end
-      batch_connections.build(connection: po)
+      batch_connections.build(connectable: po)
     end
   end
 

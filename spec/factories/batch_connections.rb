@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :batch_connection do
     batch_process { nil }
-    connection { nil }
+    connectable { nil }
   end
 end

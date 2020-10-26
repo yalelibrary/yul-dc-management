@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_16_192716) do
+ActiveRecord::Schema.define(version: 2020_10_24_170510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,12 +26,12 @@ ActiveRecord::Schema.define(version: 2020_10_16_192716) do
 
   create_table "batch_connections", force: :cascade do |t|
     t.bigint "batch_process_id", null: false
-    t.string "connection_type", null: false
-    t.bigint "connection_id", null: false
+    t.string "connectable_type", null: false
+    t.bigint "connectable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["batch_process_id"], name: "index_batch_connections_on_batch_process_id"
-    t.index ["connection_type", "connection_id"], name: "index_batch_connections_on_connection_type_and_connection_id"
+    t.index ["connectable_type", "connectable_id"], name: "index_batch_connections_on_connectable_type_and_connectable_id"
   end
 
   create_table "batch_processes", force: :cascade do |t|
