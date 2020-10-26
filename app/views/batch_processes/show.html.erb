@@ -25,7 +25,7 @@
 
 <div class='row'>
   <div class='col overflow-auto'>
-    <table id='batch-processes-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= batch_process_path(format: :json) %>'>
+    <table id='batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= batch_process_path(format: :json) %>'>
       <thead class='thead-dark'>
         <tr>
           <th scope='col'> ID </th>
@@ -41,7 +41,7 @@
   </div>
 </div>
 
-<div id='batch-processes-data' class='d-none datatable-data'>
+<div id='batch-process-data' class='d-none datatable-data'>
   <%= BatchProcessDetailDatatable.new(nil).view_columns.keys.map {|key| {data: key} }.to_json %>
 </div>
     

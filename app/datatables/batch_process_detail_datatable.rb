@@ -3,12 +3,12 @@
 class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
   extend Forwardable
 
-  def_delegators :@view, :link_to, :batch_process_path
+  # def_delegators :@view, :link_to, :batch_process_path
 
-  def initialize(params, opts = {})
-    @view = opts[:view_context]
-    super
-  end
+  # def initialize(params, opts = {})
+  #   @view = opts[:view_context]
+  #   super
+  # end
 
   def view_columns
     # Declare strings in this format: ModelName.column_name
@@ -24,6 +24,7 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
 
   def data
     # rubocop:disable Rails/OutputSafety
+    puts ">>>>>> records:: #{records}"
       records.map do |parent_object|
         {
           id: "ID",
@@ -37,9 +38,8 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    # insert query here
-    puts ">>>>>>>>> BatchProcess.joins(:user):: #{BatchProcess.joins(:user)}"
-      BatchProcess.joins(:user).oids
+    puts ">>>>>>>>> BatchProcessDetailDatatable"
+      BatchProcess.find(params[:id])
   end
 end
 
