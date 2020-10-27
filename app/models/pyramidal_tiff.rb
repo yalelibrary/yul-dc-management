@@ -65,9 +65,13 @@ class PyramidalTiff
     end
   end
 
+  def build_command(ptiff_tmpdir, tiff_input_path, ptiff_output_path)
+    "app/lib/tiff_to_pyramid.bash #{ptiff_tmpdir} #{tiff_input_path} #{ptiff_output_path}"
+  end
+
   def convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
     ptiff_output_path = File.join(ptiff_tmpdir, File.basename(access_master_path))
-    stdout, stderr, status = Open3.capture3("app/lib/tiff_to_pyramid.bash #{Dir.mktmpdir} #{tiff_input_path} #{ptiff_output_path}")
+    stdout, stderr, status = Open3.capture3(build_command(ptiff_tmpdir, tiff_input_path, ptiff_output_path))
     errors.add(:base, "Conversion script exited with error code #{status.exitstatus}. ---\n#{stdout}---\n#{stderr}") if status.exitstatus != 0
     return {} if status.exitstatus != 0
     width = stdout.match(/Pyramid width: (\d*)/)&.captures&.[](0)
