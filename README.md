@@ -214,6 +214,8 @@ e.g., to get a list of 50 random public parent oids:
 rake parent_oids:random[50]
 ```
 
+The resulting file can be found at `data/random_parent_oids.csv`
+
 ## Data Loading
 
 In development mode, the database and solr are seeded / loaded with information from 1 sample object. You can see the oids for this object in `db/parent_oids_short.csv` and `db/seeds.rb`.
