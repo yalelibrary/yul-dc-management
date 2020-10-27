@@ -31,6 +31,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
     end
     it "can still successfully see the batch_process page" do
       visit batch_processes_path
+      click_on("View")
     end
   end
 
