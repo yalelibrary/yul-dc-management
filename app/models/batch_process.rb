@@ -42,7 +42,7 @@ class BatchProcess < ApplicationRecord
   end
 
   def oid
-    return self[:oid] = mets_doc.oid.to_i unless self[:oid]
+    return self[:oid] = mets_doc&.oid&.to_i unless self[:oid]
     self[:oid]
   end
 

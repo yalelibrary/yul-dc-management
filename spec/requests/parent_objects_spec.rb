@@ -74,6 +74,7 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
         expect do
           post parent_objects_url, params: { parent_object: valid_attributes }
         end.to change(ParentObject, :count).by(1)
+          .and change(BatchProcess, :count).by(1)
       end
 
       it "redirects to the created parent_object" do
@@ -134,6 +135,13 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
       expect do
         delete parent_object_url(parent_object)
       end.to change(ParentObject, :count).by(-1)
+        .and change(BatchProcess, :count).by(0)
+    end
+
+    it "can still access the BatchProcess page" do
+      parent_object = ParentObject.create! valid_attributes
+      delete parent_object_url(parent_object)
+      expect(get(batch_processes_url)).to eq 200
     end
 
     it "redirects to the parent_objects list" do
