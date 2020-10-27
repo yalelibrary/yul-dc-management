@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     collection { post :import }
     member do
       get :download
+      get :parent_objects
     end
   end
   resources :child_objects
