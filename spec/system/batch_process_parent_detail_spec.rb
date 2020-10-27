@@ -25,10 +25,8 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
     end
 
     it "can go to a parent batch process page" do
-      visit parent_objects_batch_process_path(batch_process)
-      expect(page.body).to have_link('16057779', href: "/batch_process/#{batch_process.id}/parent_objects/16057779")
-      click_on('16057779')
-      expect(page.body).to include "Parent Job Detail Page"
+      visit "/batch_processes/#{batch_process.id}/parent_objects/16057779"
+      expect(page.body).to have_link('16057779', href: "/parent_objects/16057779")
     end
 
     it "can go to a parent batch process detail page" do

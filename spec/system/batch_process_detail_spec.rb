@@ -27,9 +27,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       expect(page.body).to include batch_process.id.to_s
       expect(page.body).to include "johnsmith2530"
       expect(page.body).to have_link("small_short_fixture_ids.csv", href: "/batch_processes/#{batch_process.id}/download")
-      within all("td.parent_oid")[3] do
-        expect(page).to have_link('16057779', href: "/parent_objects/16057779")
-      end
+      expect(page.body).to have_link('16057779', href: "/batch_processes/#{batch_process.id}/parent_objects/16057779")
       within all("td.child_count")[3] do
         expect(page.body).to include "4"
       end
@@ -47,8 +45,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       it "can still see the details of the import" do
         expect(page.body).to include batch_process.id.to_s
         within all("td.parent_oid")[3] do
-          expect(page.body).to include('16057779')
-          expect(page.body).not_to have_link('16057779', href: "/parent_objects/16057779")
+          expect(page.body).to have_link('16057779', href: "/batch_processes/#{batch_process.id}/parent_objects/16057779")
         end
         within all("td.child_count")[3] do
           expect(page.body).to include('(deleted)')
@@ -72,7 +69,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       expect(page.body).to include "johnsmith2530"
       expect(page.body).to have_link("meta.xml", href: "/batch_processes/#{batch_process.id}/download")
       within "td.parent_oid" do
-        expect(page).to have_link('16172421', href: "/parent_objects/16172421")
+        expect(page.body).to have_link('16172421', href: "/batch_processes/#{batch_process.id}/parent_objects/16172421")
       end
       expect(page.body).to include "2020-10-08 16:17:01"
     end

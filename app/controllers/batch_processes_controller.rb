@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class BatchProcessesController < ApplicationController
-  before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml, :parent_objects]
-  before_action :set_parent_object_oids, only: [:parent_objects]
+  before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml, :show_parent]
+  before_action :set_parent_object_oids, only: [:show_parent]
 
   def index
     @batch_process = BatchProcess.new
@@ -49,7 +49,7 @@ class BatchProcessesController < ApplicationController
               disposition: "attachment; filename=#{@batch_process.file_name}"
   end
 
-  def parent_objects
+  def show_parent
   end
 
 
@@ -61,8 +61,7 @@ class BatchProcessesController < ApplicationController
     end
 
     def set_parent_object_oids
-      @parent_object_connections = BatchConnection.where(batch_process_id: @batch_process.id, connectable_type: "ParentObject")
-      @parent_object_oids = @parent_object_connections.map { |pc| pc.connectable_id }
+      @parent_object = ParentObject.find(params[:oid])
     end
 
     def batch_process_params

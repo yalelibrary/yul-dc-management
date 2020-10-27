@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Batch Process ID</strong>
+  <%= link_to @batch_process.id, batch_process_path(@batch_process) %>
+</p>
+<p>
+  <strong>Parent Object</strong>
+  <%= link_to @parent_object.id, parent_object_path(@parent_object) %>
+</p>
+<p>
+  <strong>Status</strong>
+  <%= "TODO: status" %>
+</p>
+<p>
+  <strong>Submitted</strong>
+  <%= @batch_process.created_at %>
+</p>
+<p>
+  <strong>Metadata Fetch</strong>
+  <%= "TODO: metadata_fetch" %>
+</p>
+<p>
+  <strong>IIIF Manifest</strong>
+  <%= "TODO: manifest" %>
+</p>
+<p>
+  <strong>Metadata Index (Solr)</strong>
+  <%= "TODO: solr" %>
+</p>
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col"> Child object oid</th>
+      <th scope="col"> Ptiff converted </th>
+    </tr>
+  </thead>
+  <% @parent_object.child_objects.each do |child| %>
+  <tr>
+    <td class="child_oid" ><%= link_to_unless(child.nil?, child.oid, child_object_path(child)) || "(pending or deleted)" %></td>
+    <td class="child_oid"><%= child.ptiff_conversion_at %></td>
+  </tr>
+  <% end %>
+</table>
