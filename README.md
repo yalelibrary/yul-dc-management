@@ -96,10 +96,16 @@ This starts all of the applications, as they are all dependencies of yul-blackli
 
 ### Troubleshooting
 
+#### If on VPN and cannot connect to network
 Check your Docker Engine setting:
-```cam down```
+
+Reference link: https://curationexperts.github.io/playbook/tools/docker/containers.html
+```bash
+cam down
+```
 Go to your Docker Desktop -> Preference -> Docker Engine, replace the content of the box to:
-```{
+```json
+{
   "debug": true,
   "default-address-pools": [
     {
@@ -110,11 +116,12 @@ Go to your Docker Desktop -> Preference -> Docker Engine, replace the content of
   "experimental": false
 }
 ```
-Reference link: `https://curationexperts.github.io/playbook/tools/docker/containers.html`
+
 Restart your Docker Desktop
-```docker network prune```
-
-
+```bash
+docker network prune
+```
+#### AWS Profile
 If you receive an `please set your AWS_PROFILE and AWS_DEFAULT_REGION (RuntimeError)` error when you `cam up`, you will need to set your AWS credentials. Credentials can be set in the `~/.aws/credentials` file in the following format:
 
 ```bash
@@ -174,17 +181,11 @@ If you'd like to hit the Metadata cloud endpoint and are running on the VPN, the
 
     - If Rubocop is still flagging something that you've checked and want to keep as-is long term, add it to the `.rubocop.yml` manually. If it needs to remain short term, but will need to be fixed, you can automatically re-generate the `rubocop_todo.yml` file by running `rubocop --auto-gen-config`.
 
-  - If you are doing development that requires access to the Yale Metadata Cloud, get on the Yale VPN, and add your credentials to your `.secrets` file. These should never be added to version control. <!-- This needs to be updated based on the camerata gem updates, but not sure what the current practice should be - they're not in the AWS parameter store -->
-
-    ```
-    # Metadata Cloud
-    MC_USER=YOUR_INFO_HERE
-    MC_PW=YOUR_INFO_HERE
-    ```
+  - If you are doing development that requires access to the Yale Metadata Cloud, you will need to be connected to the Yale VPN and have active Yale AWS credentials.
 
   ### Dynatrace
 
-  - We've integrated Dynatrace OneAgent for monitoring our Docker container environments. 
+  - We've integrated Dynatrace OneAgent for monitoring our Docker container environments.
     - Instructions on configuring OneAgent can be found [here](https://github.com/yalelibrary/yul-dc-camerata/tree/master/base)
 
 
@@ -192,19 +193,30 @@ If you'd like to hit the Metadata cloud endpoint and are running on the VPN, the
 
 - Index sample data (if you go to solr and hit "execute query" and don't have data, run this command). This should also occur automatically when you seed the database or otherwise create ParentObjects
 
-  ```bash
-      rake solr:index
-  ```
+```bash
+rake solr:index
+```
 
 - Clean out Solr index
 
-  ```bash
-      rake solr:delete_all
-  ```
+```bash
+rake solr:delete_all
+```
 
-  ## Data Loading
+- Create a CSV of random public visibility parent oids, formatted for import into the application:
 
-  In development mode, the database and solr are seeded / loaded with information from 7 sample objects, with an additional 3 objects with mocked visibility if you do not set VPN=true. You can see the oids for these objects in `db/parent_oids_short.csv` and `db/seeds.rb`.
+```bash
+rake parent_oids:random[NUMBER_OF_PARENT_OIDS_YOU_WANT]
+```
+
+e.g., to get a list of 50 random public parent oids:
+```bash
+rake parent_oids:random[50]
+```
+
+## Data Loading
+
+In development mode, the database and solr are seeded / loaded with information from 1 sample object. You can see the oids for this object in `db/parent_oids_short.csv` and `db/seeds.rb`.
 
 In production and development mode, you can add objects either individually, either by creating a new parent_object at `https://[hostname]/parent_objects/new` or using the CSV import of a sheet of oids (this file should be structured the same as `db/parent_oids_short.csv`). If you have access to DCE or Yale AWS S3 buckets, you can add any of the oids in the `db/parent_oids.csv` file, and the parent and child objects should be created correctly. If you are on the VPN, you should be able to add any pre-existing valid oid from Ladybird, and it will bring in the correct data from the MetadataCloud.
 
