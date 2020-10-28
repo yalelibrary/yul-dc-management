@@ -15,7 +15,15 @@
 
       <%= render 'layouts/sidebar' %>
       <div id="page-content-wrapper">
-        <%= yield %>
+        <div class="main-content d-flex flex-column">
+          <div class="flex-grow-1">
+          <%= yield %>
+          </div>
+          <div>
+          <%= render 'layouts/footer' %>
+          </div>
+        </div>
       </div>
+    </div>
   </body>
 </html>
