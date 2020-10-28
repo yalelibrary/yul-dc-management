@@ -1,32 +1,48 @@
-<p id="notice"><%= notice %></p>
+<p id='notice'><%= notice %></p>
+<div class='batch-process-show-details'>
+  <p>
+    <strong>BatchID:</strong>
+    <%= @batch_process.id %>
+  </p>
+  <p>
+    <strong>User:</strong>
+    <%= @batch_process.user.uid %>
+  </p>
+  <p>
+    <strong>Status:</strong>
+    TODO: Status
+  </p>
+  <p>
+    <strong>Submitted:</strong>
+    <%= @batch_process.created_at %>
+  </p>
+</div>
+
 <p>
-  <strong>Batch Process ID</strong>
-  <%= @batch_process.id %>
-</p>
-<p>
-  <strong>User ID</strong>
-  <%= @batch_process.user.uid %>
-</p>
-<p>
-  <strong>File</strong>
+  <strong>Manifest:</strong>
   <%= link_to @batch_process.file_name, download_batch_process_path %>
 </p>
-<p>
-  <strong>Submission Time</strong>
-  <%= @batch_process.created_at %>
-</p>
-<table class="table table-bordered table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col"> Parent Oid </th>
-      <th scope="col"> Children </th>
-    </tr>
-  </thead>
-    <% @batch_process.oids.each do |parent_oid| %>
-      <% parent_object = ParentObject.find_by_oid(parent_oid) %>
-      <tr>
-        <td class="parent_oid" ><%= link_to_unless(parent_object.nil?, parent_oid, parent_object_path(parent_oid)) %></td>
-        <td class="child_count"><%= parent_object&.child_object_count || "(deleted)" %></td>
-      </tr>
-    <% end %>
-</table>
+
+<div class='row'>
+  <div class='col overflow-auto'>
+    <table id='batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= batch_process_path(format: :json) %>'>
+      <thead class='thead-dark'>
+        <tr>
+          <th scope='col'> ID </th>
+          <th scope='col'> Parent OID </th>
+          <th scope='col'> Time </th>
+          <th scope='col'> Children </th>
+          <th scope='col'> Status </th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id='batch-process-data' class='d-none datatable-data'>
+  <%= BatchProcessDetailDatatable.new(nil).view_columns.keys.map {|key| {data: key} }.to_json %>
+</div>
+
+<%= link_to 'Back', batch_processes_path %>
