@@ -14,32 +14,30 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      id: {},
-      parent_oid: { source: "ParentObject.parent_id" },
-      time: {},
-      children: { source: "ParentObject.child_object_count" },
-      status: {}
+      # id: {},
+      parent_oid: { source: "ParentObject.oid" },
+      # time: {},
+      children: { source: "ParentObject.child_object_count" }
+      # status: {}
     }
   end
 
   def data
     # rubocop:disable Rails/OutputSafety
-    puts ">>>>>> records:: #{records}"
-      records.map do |parent_object|
-        {
-          id: "ID",
-          parent_oid: parent_object,
-          time: "Time",
-          children: parent_object.child_object_count,
-          status: "TODO: Status"
-        }
-      end
+    records.map do |parent_object|
+      {
+        # id: "ID",
+        parent_oid: parent_object.oid,
+        # time: "Time",
+        children: parent_object.child_object_count
+        # status: "TODO: Status"
+      }
+    end
     # rubocop:enable Rails/OutputSafety
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    puts ">>>>>>>>> BatchProcessDetailDatatable"
-      BatchProcess.find(params[:id])
+    BatchProcess.find(params[:id]).parent_objects
   end
 end
 

@@ -28,11 +28,23 @@
     <table id='batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= batch_process_path(format: :json) %>'>
       <thead class='thead-dark'>
         <tr>
-          <th scope='col'> ID </th>
+          <%
+=begin%>
+ <th scope='col'> ID </th>
+<%
+=end%>
           <th scope='col'> Parent Oid </th>
-          <th scope='col'> Time </th>
+          <%
+=begin%>
+ <th scope='col'> Time </th>
+<%
+=end%>
           <th scope='col'> Children </th>
-          <th scope='col'> Status </th>
+          <%
+=begin%>
+ <th scope='col'> Status </th>
+<%
+=end%>
         </tr>
       </thead>
       <tbody>
@@ -44,8 +56,8 @@
 <div id='batch-process-data' class='d-none datatable-data'>
   <%= BatchProcessDetailDatatable.new(nil).view_columns.keys.map {|key| {data: key} }.to_json %>
 </div>
-    
-    
+
+
     <%# <% @batch_process.oids.each do |parent_oid| %>
       <%# <% parent_object = ParentObject.find_by_oid(parent_oid) %>
       <%# <tr> %>
