@@ -14,16 +14,7 @@
 </p>
 <p>
   <strong>Status</strong>
-  <%
-    status = if @parent_object.class == Integer
-      "Parent object deleted"
-    elsif @notes["solr-indexed"]
-      "Complete"
-    else
-      "In progress or failed, who's to say?"
-    end
-   %>
-  <%= "#{status}" %>
+  <%= "#{@status}" %>
 </p>
 <p>
   <strong>Duration</strong>

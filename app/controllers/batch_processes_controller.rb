@@ -2,7 +2,7 @@
 
 class BatchProcessesController < ApplicationController
   before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml, :show_parent]
-  before_action :set_parent_object, :find_notes, only: [:show_parent]
+  before_action :set_parent_object, :find_notes, :status, only: [:show_parent]
 
   def index
     @batch_process = BatchProcess.new
@@ -64,13 +64,11 @@ class BatchProcessesController < ApplicationController
     end
 
     def find_notes
-      return unless @parent_object.class == ParentObject
-      note_records = Notification.where(["params->>'batch_process_id' = :id and
-      params->>'parent_object_id' = :oid", { id: @batch_process.id.to_s, oid:
-      params[:oid] }])
-      @notes = {}
-      note_records.all.map { |note| @notes[note.params[:status]] = note.created_at }
-      @notes
+      @notes = @parent_object.notes_for_batch_process(@batch_process.id)
+    end
+
+    def status
+      @status = @parent_object.status_for_batch_process(@batch_process.id)
     end
 
     def batch_process_params
