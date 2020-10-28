@@ -40,8 +40,6 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    # insert query here
-    # BatchProcess.all
     BatchProcess.joins(:user)
   end
 end
