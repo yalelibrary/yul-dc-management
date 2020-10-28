@@ -15,10 +15,10 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
     # or in aliased_join_table.column_name format
     @view_columns ||= {
       # id: {},
-      parent_oid: { source: "ParentObject.oid" },
-      # time: {},
-      children: { source: "ParentObject.child_object_count" }
-      # status: {}
+      parent_oid: { source: 'ParentObject.oid' },
+      time: { source: 'ParentObject.created_at' },
+      children: { source: 'ParentObject.child_object_count' },
+      status: {}
     }
   end
 
@@ -26,11 +26,11 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
     # rubocop:disable Rails/OutputSafety
     records.map do |parent_object|
       {
-        # id: "ID",
-        parent_oid: parent_object.oid,
-        # time: "Time",
-        children: parent_object.child_object_count
-        # status: "TODO: Status"
+        # id: 'ID',
+        parent_oid: parent_object&.oid,
+        time: parent_object&.created_at,
+        children: parent_object&.child_object_count || '(deleted)',
+        status: 'TODO: Status'
       }
     end
     # rubocop:enable Rails/OutputSafety
@@ -40,4 +40,3 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
     BatchProcess.find(params[:id]).parent_objects
   end
 end
-
