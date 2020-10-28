@@ -1,3 +1,4 @@
+<h1>Parent Batch Process Detail</h1>
 <p id="notice"><%= notice %></p>
 <p>
   <strong>Batch Process ID</strong>
@@ -6,7 +7,7 @@
 <p>
   <strong>Parent Object</strong>
   <%= if @parent_object.class == ParentObject
-                  link_to @parent_object.id, parent_object_path(@parent_object)
+                  link_to "#{@parent_object.id} (current record)", parent_object_path(@parent_object)
       else
         "#{@parent_object} (pending or deleted)"
       end
