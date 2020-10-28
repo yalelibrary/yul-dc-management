@@ -22,4 +22,15 @@ module Statable
       "In progress or failed, who's to say?"
     end
   end
+
+  def duration_for_batch_process(batch_process_id)
+    notes = notes_for_batch_process(batch_process_id)
+    if notes
+      start = notes["processing-queued"]
+      finish = notes["solr-indexed"]
+      finish - start if finish && start
+    else
+      "n/a"
+    end
+  end
 end

@@ -14,20 +14,11 @@
 </p>
 <p>
   <strong>Status</strong>
-  <%= "#{@status}" %>
+  <%= "#{@parent_object.status_for_batch_process(@batch_process.id)}" %>
 </p>
 <p>
   <strong>Duration</strong>
-  <%
-    if @notes
-      start = @batch_process&.created_at
-      finish = @notes["solr-indexed"]
-      duration = finish - start if (finish && start)
-    else
-      duration = "n/a"
-    end
-  %>
-  <%=  "#{duration} seconds" %>
+  <%=  "#{@parent_object.duration_for_batch_process(@batch_process.id)}" %>
 </p>
 
 <table class="table table-bordered table-striped">
@@ -66,7 +57,7 @@
   <thead class="thead-dark">
     <tr>
       <th scope="col"> Child object oid </th>
-      <th scope="col"> Ptiff converted </th>
+      <th scope="col"> Last ptiff conversion </th>
     </tr>
   </thead>
   <% if @parent_object&.class == ParentObject %>

@@ -2,7 +2,7 @@
 
 class BatchProcessesController < ApplicationController
   before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml, :show_parent]
-  before_action :set_parent_object, :find_notes, :status, only: [:show_parent]
+  before_action :set_parent_object, :find_notes, only: [:show_parent]
 
   def index
     @batch_process = BatchProcess.new
@@ -65,10 +65,6 @@ class BatchProcessesController < ApplicationController
 
     def find_notes
       @notes = @parent_object.notes_for_batch_process(@batch_process.id)
-    end
-
-    def status
-      @status = @parent_object.status_for_batch_process(@batch_process.id)
     end
 
     def batch_process_params
