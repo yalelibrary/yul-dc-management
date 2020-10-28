@@ -11,10 +11,14 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
     stub_metadata_cloud("15234629")
     stub_ptiffs_and_manifests
     login_as user
-    visit show_parent_batch_process_path(batch_process, 16_057_779)
   end
 
   describe "with a csv import" do
+    around do |example|
+      perform_enqueued_jobs do
+        example.run
+      end
+    end
     let(:batch_process) do
       FactoryBot.create(
         :batch_process,
@@ -26,28 +30,30 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
     end
 
     it "has a link to the parent object page" do
+      visit show_parent_batch_process_path(batch_process, 16_057_779)
       expect(page.body).to have_link('16057779', href: "/parent_objects/16057779")
     end
 
     it "has a link to the batch process detail page" do
-      expect(page.body).to have_link(batch_process.id.to_s, href: "/batch_processes/#{batch_process.id}")
-    end
-
-    it "includes the notifications connected to this parent import" do
-      expect(page.body).to include("Processing Queued")
-      expect(page).to have_css("td.submission_time")
-      st = page.find("td.submission_time").text
-      expect(st.to_datetime).to be_an_instance_of DateTime
+      visit show_parent_batch_process_path(batch_process, 16_057_779)
+      expect(page.body).to have_link(batch_process&.id&.to_s, href: "/batch_processes/#{batch_process.id}")
     end
 
     describe "after running the background jobs" do
-      around do |example|
-        perform_enqueued_jobs do
-          example.run
-        end
+      it "includes the notifications connected to this parent import" do
+        visit show_parent_batch_process_path(batch_process, 16_057_779)
+        expect(page.body).to include("Processing Queued")
+        expect(page).to have_css("td.submission_time")
+        st = page.find("td.submission_time").text
+        expect(st.to_datetime).to be_an_instance_of DateTime
+        expect(page).to have_css("td.processing_queued_time")
+        pqt = page.find("td.processing_queued_time").text
+        expect(pqt.to_datetime).to be_an_instance_of DateTime
+        expect(page).to have_css("td.metadata_fetched")
       end
 
       it "includes the child oids" do
+        visit show_parent_batch_process_path(batch_process, 16_057_779)
         expect(page).to have_css("td.child_oid", text: "16057781")
       end
     end
