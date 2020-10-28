@@ -49,10 +49,7 @@ class BatchProcessesController < ApplicationController
               disposition: "attachment; filename=#{@batch_process.file_name}"
   end
 
-  def show_parent
-  end
-
-
+  def show_parent; end
 
   private
 

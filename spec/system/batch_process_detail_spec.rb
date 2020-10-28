@@ -45,7 +45,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       it "can still see the details of the import" do
         expect(page.body).to include batch_process.id.to_s
         within all("td.parent_oid")[3] do
-          expect(page.body).to have_link('16057779', href: "/batch_processes/#{batch_process.id}/parent_objects/16057779")
+          expect(page.body).to include('16057779')
         end
         within all("td.child_count")[3] do
           expect(page.body).to include('(deleted)')

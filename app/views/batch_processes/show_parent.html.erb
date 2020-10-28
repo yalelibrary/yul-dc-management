@@ -12,10 +12,6 @@
   <%= "TODO: status" %>
 </p>
 <p>
-  <strong>Submitted</strong>
-  <%= @batch_process.created_at %>
-</p>
-<p>
   <strong>Metadata Fetch</strong>
   <%= "TODO: metadata_fetch" %>
 </p>
@@ -30,14 +26,30 @@
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
     <tr>
-      <th scope="col"> Child object oid</th>
+      <th scope="col"> Ingest step </th>
+      <th scope="col"> Time </th>
+    </tr>
+  </thead>
+  <tr>
+    <td>Submitted</td>
+    <td class="submission_time"><%= @batch_process.created_at %></td>
+  </tr>
+  <tr>
+    <td>Processing Queued</td>
+    <td class="processing_queued_time"><%= "TODO: Processing queued time" %></td>
+  </tr>
+</table>
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col"> Child object oid </th>
       <th scope="col"> Ptiff converted </th>
     </tr>
   </thead>
   <% @parent_object.child_objects.each do |child| %>
   <tr>
-    <td class="child_oid" ><%= link_to_unless(child.nil?, child.oid, child_object_path(child)) || "(pending or deleted)" %></td>
-    <td class="child_oid"><%= child.ptiff_conversion_at %></td>
+    <td class="child_oid"><%= link_to_unless(child.nil?, child.oid, child_object_path(child)) || "(pending or deleted)" %></td>
+    <td class="ptiff_conversion_time"><%= child.ptiff_conversion_at %></td>
   </tr>
   <% end %>
 </table>
