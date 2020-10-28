@@ -14,11 +14,11 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      # id: {},
+      id: { orderable: false }, # remove "orderable: false" once this column has a value
       parent_oid: { source: 'ParentObject.oid' },
       time: { source: 'ParentObject.created_at' },
       children: { source: 'ParentObject.child_object_count' },
-      status: {}
+      status: { orderable: false } # remove "orderable: false" once this column has a value
     }
   end
 
@@ -26,11 +26,12 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
     # rubocop:disable Rails/OutputSafety
     records.map do |parent_object|
       {
-        # id: 'ID',
+        id: 'TODO: ID',
         parent_oid: parent_object&.oid,
         time: parent_object&.created_at,
         children: parent_object&.child_object_count || '(deleted)',
-        status: 'TODO: Status'
+        status: 'TODO: Status',
+        DT_RowId: parent_object&.oid
       }
     end
     # rubocop:enable Rails/OutputSafety
