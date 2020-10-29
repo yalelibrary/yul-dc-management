@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     collection { post :import }
     member do
       get :download
+      get '/parent_objects/:oid', to: 'batch_processes#show_parent', as: :show_parent
     end
   end
   resources :child_objects

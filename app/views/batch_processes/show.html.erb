@@ -46,3 +46,13 @@
 </div>
 
 <%= link_to 'Back', batch_processes_path %>
+
+<%
+=begin%>
+ <% @batch_process.oids.each do |parent_oid| %>
+  <% parent_object = ParentObject.find_by_oid(parent_oid) %>
+  <tr>
+    <td class="parent_oid" ><%= link_to_unless(parent_object.nil?, parent_oid, show_parent_batch_process_path(id: @batch_process.id.to_s, oid: parent_oid.to_s)) %></td>
+<% end %>
+<%
+=end%>

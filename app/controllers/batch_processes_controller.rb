@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class BatchProcessesController < ApplicationController
-  before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml]
+  before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml, :show_parent]
+  before_action :set_parent_object, :find_notes, :find_failures, only: [:show_parent]
 
   def index
     @batch_process = BatchProcess.new
@@ -53,10 +54,26 @@ class BatchProcessesController < ApplicationController
               disposition: "attachment; filename=#{@batch_process.file_name}"
   end
 
+  def show_parent; end
+
   private
 
     def set_batch_process
       @batch_process = BatchProcess.find(params[:id])
+    end
+
+    def set_parent_object
+      @parent_object = ParentObject.find(params[:oid])
+    rescue ActiveRecord::RecordNotFound
+      @requested_object = params[:oid].to_i
+    end
+
+    def find_notes
+      @notes = @parent_object.notes_for_batch_process(@batch_process.id) if @parent_object
+    end
+
+    def find_failures
+      @failures = @parent_object.failures_for_batch_process(@batch_process.id) if @parent_object
     end
 
     def batch_process_params
