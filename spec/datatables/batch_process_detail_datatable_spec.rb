@@ -5,18 +5,16 @@ require 'rails_helper'
 RSpec.describe BatchProcessDetailDatatable, type: :datatable, prep_metadata_sources: true do
   columns = ['parent_oid', 'time', 'children']
 
-  it 'can handle an empty model set' do
-    # output = BatchProcessDetailDatatable.new(datatable_sample_params(columns)).data
+  describe 'batch process import' do
+    let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
 
-    # expect(output).to eq([])
-  end
+    it 'can handle a csv import' do
+      user = FactoryBot.create(:user, uid: 'mk2525')
+      batch_process = FactoryBot.create(:batch_process, user: user, csv: csv_upload, oid: "2034600")
 
-  # describe 'batch process import' do
-  #   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
+      parent_object = FactoryBot.create(:parent_object, oid: batch_process.oid)
 
-  #   it 'can handle a csv import' do
-  #     user = FactoryBot.create(:user, uid: 'mk2525')
-  #     batch_process = FactoryBot.create(:batch_process, user: user, csv: csv_upload)
+      output = BatchProcessDetailDatatable.new(datatable_sample_params(columns, batch_process.id)).data
 
   #     output = BatchProcessDetailDatatable.new(datatable_sample_params(columns), view_context: batch_process_datatable_view_mock(batch_process.id)).data
 

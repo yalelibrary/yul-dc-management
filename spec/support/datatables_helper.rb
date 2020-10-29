@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/MethodLength
-def datatable_sample_params(columns)
+def datatable_sample_params(columns, id)
   ActionController::Parameters.new(
+    'id' => id,
     'draw' => '1',
     'columns' => {
       '0' => {
