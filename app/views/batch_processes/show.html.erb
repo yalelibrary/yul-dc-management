@@ -28,7 +28,6 @@
     <table id='batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= batch_process_path(format: :json) %>'>
       <thead class='thead-dark'>
         <tr>
-          <th scope='col'> ID </th>
           <th scope='col'> Parent OID </th>
           <th scope='col'> Time </th>
           <th scope='col'> Children </th>
@@ -47,12 +46,4 @@
 
 <%= link_to 'Back', batch_processes_path %>
 
-<%
-=begin%>
- <% @batch_process.oids.each do |parent_oid| %>
-  <% parent_object = ParentObject.find_by_oid(parent_oid) %>
-  <tr>
-    <td class="parent_oid" ><%= link_to_unless(parent_object.nil?, parent_oid, show_parent_batch_process_path(id: @batch_process.id.to_s, oid: parent_oid.to_s)) %></td>
-<% end %>
-<%
-=end%>
+
