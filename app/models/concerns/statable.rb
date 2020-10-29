@@ -7,7 +7,7 @@ module Statable
     note_records = Notification.where(["params->>'batch_process_id' = :id and
     params->>'parent_object_id' = :oid", { id: batch_process_id.to_s, oid:
     oid.to_s }])
-    notes = {}
+    note_records.inject({}) { |i, n| i[n.params[:status]] = n.created_at; i }
     note_records.all.map { |note| notes[note.params[:status]] = note.created_at }
     notes
   end
