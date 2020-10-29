@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_24_170510) do
+ActiveRecord::Schema.define(version: 2020_10_29_191359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,7 +75,13 @@ ActiveRecord::Schema.define(version: 2020_10_24_170510) do
     t.string "queue"
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
+    t.index ["failed_at"], name: "index_delayed_jobs_on_failed_at"
+    t.index ["last_error"], name: "index_delayed_jobs_on_last_error"
+    t.index ["locked_at", "failed_at"], name: "index_delayed_jobs_on_locked_at_and_failed_at"
+    t.index ["locked_at"], name: "index_delayed_jobs_on_locked_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+    t.index ["priority"], name: "index_delayed_jobs_on_priority"
+    t.index ["queue"], name: "index_delayed_jobs_on_queue"
   end
 
   create_table "dependent_objects", force: :cascade do |t|
