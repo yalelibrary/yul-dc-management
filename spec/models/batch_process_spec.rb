@@ -95,6 +95,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
 
     it "has an oid associated with it" do
       batch_process.file = xml_upload
+      batch_process.save!
       expect(batch_process.oid).to eq 16_172_421
     end
 

@@ -3,6 +3,7 @@
 class BatchProcess < ApplicationRecord
   attr_reader :file
   after_create :refresh_metadata_cloud
+  before_create :mets_oid
   validate :validate_import
   belongs_to :user, class_name: "User"
   has_many :batch_connections
@@ -41,17 +42,16 @@ class BatchProcess < ApplicationRecord
     end
   end
 
-  def oid
-    return self[:oid] = mets_doc&.oid&.to_i unless self[:oid]
-    self[:oid]
-  end
-
   def parsed_csv
     @parsed_csv ||= CSV.parse(csv, headers: true) if csv.present?
   end
 
   def mets_doc
     @mets_doc ||= MetsDocument.new(mets_xml) if mets_xml.present?
+  end
+
+  def mets_oid
+    self[:oid] = mets_doc&.oid&.to_i unless self[:oid]
   end
 
   def oids
