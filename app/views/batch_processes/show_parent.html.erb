@@ -6,20 +6,15 @@
 </p>
 <p>
   <strong>Parent Object</strong>
-  <%= if @parent_object.class == ParentObject
-                  link_to "#{@parent_object.id} (current record)", parent_object_path(@parent_object)
-      else
-        "#{@parent_object} (pending or deleted)"
-      end
-  %>
+  <%= @parent_object.present? ? link_to("#{@parent_object.id} (current record)", parent_object_path(@parent_object)) : "#{@requested_object} (pending or deleted)" %>
 </p>
 <p>
   <strong>Status</strong>
-  <%= "#{@parent_object.status_for_batch_process(@batch_process.id)}" %>
+  <%= @parent_object.present? ? "#{@parent_object.status_for_batch_process(@batch_process.id)}" : "#{@requested_object} deleted" %>
 </p>
 <p>
   <strong>Duration</strong>
-  <%=  "#{@parent_object.duration_for_batch_process(@batch_process.id)}" %>
+  <%= @parent_object.present? ? "#{@parent_object.duration_for_batch_process(@batch_process.id)} seconds" : "#{@requested_object} deleted" %>
 </p>
 
 <table class="table table-bordered table-striped">
@@ -61,7 +56,7 @@
       <th scope="col"> Last ptiff conversion </th>
     </tr>
   </thead>
-  <% if @parent_object&.class == ParentObject %>
+  <% if @parent_object %>
     <% @parent_object&.child_objects.each do |child| %>
       <tr>
         <td class="child_oid"><%= child ? link_to(child.oid, child) : "(pending or deleted)" %></td>

@@ -60,15 +60,15 @@ class BatchProcessesController < ApplicationController
     def set_parent_object
       @parent_object = ParentObject.find(params[:oid])
     rescue ActiveRecord::RecordNotFound
-      @parent_object = params[:oid].to_i
+      @requested_object = params[:oid].to_i
     end
 
     def find_notes
-      @notes = @parent_object.notes_for_batch_process(@batch_process.id)
+      @notes = @parent_object.notes_for_batch_process(@batch_process.id) if @parent_object
     end
 
     def find_failures
-      @failures = @parent_object.failures_for_batch_process(@batch_process.id)
+      @failures = @parent_object.failures_for_batch_process(@batch_process.id) if @parent_object
     end
 
     def batch_process_params
