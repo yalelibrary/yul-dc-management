@@ -64,7 +64,7 @@
   <% if @parent_object&.class == ParentObject %>
     <% @parent_object&.child_objects.each do |child| %>
       <tr>
-        <td class="child_oid"><%= link_to_unless(child&.nil?, child&.oid, child_object_path(child)) || "(pending or deleted)" %></td>
+        <td class="child_oid"><%= child ? link_to(child.oid, child) : "(pending or deleted)" %></td>
         <td class="ptiff_conversion_time"><%= child&.ptiff_conversion_at %></td>
       </tr>
     <% end %>
