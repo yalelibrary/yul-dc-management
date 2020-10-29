@@ -47,14 +47,28 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
     end
   end
 
+  describe "GET /parent_object/[oid]" do
+    let(:batch_process_csv) do
+      FactoryBot.create(
+        :batch_process,
+        user: user,
+        csv: File.open(fixture_path + '/short_fixture_ids.csv').read,
+        file_name: "short_fixture_ids.csv"
+      )
+    end
+
+    it "returns http success" do
+      get "/batch_processes/#{batch_process_csv.id}/parent_objects/2034600"
+      expect(response).to have_http_status(:success)
+    end
+  end
+
   describe "POST /create" do
     context "with invalid parameters" do
       let(:file) { fixture_file_upload('short_fixture_ids.csv', 'text/csv') }
-      before do
-        allow_any_instance_of(BatchProcess).to receive(:save).and_return(false) # rubocop:disable RSpec/AnyInstance
-      end
-
-      it "does not create a new BatchProcess" do
+      # This was previously stubbed in such a way that it would pass no matter what, which is not a
+      # meaningful test. Marking pending until we can create a meaningful test
+      xit "does not create a new BatchProcess" do
         expect do
           post batch_processes_url, params: {
             batch_process: {

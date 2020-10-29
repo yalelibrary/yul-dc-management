@@ -1,0 +1,86 @@
+<h1>Parent Batch Process Detail</h1>
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Batch Process ID</strong>
+  <%= link_to @batch_process.id, batch_process_path(@batch_process) %>
+</p>
+<p>
+  <strong>Parent Object</strong>
+  <%= @parent_object.present? ? link_to("#{@parent_object.id} (current record)", parent_object_path(@parent_object)) : "#{@requested_object} (pending or deleted)" %>
+</p>
+<p>
+  <strong>Status</strong>
+  <%= @parent_object.present? ? "#{@parent_object.status_for_batch_process(@batch_process.id)}" : "#{@requested_object} deleted" %>
+</p>
+<p>
+  <strong>Duration</strong>
+  <%= @parent_object.present? ? "#{@parent_object.duration_for_batch_process(@batch_process.id)} seconds" : "#{@requested_object} deleted" %>
+</p>
+
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col"> Ingest step </th>
+      <th scope="col"> Time </th>
+    </tr>
+  </thead>
+  <tr>
+    <td>Submitted</td>
+    <td class="submission_time"><%= @batch_process&.created_at %></td>
+  </tr>
+  <tr>
+    <td>Processing Queued</td>
+    <td class="processing_queued_time"><%= @notes["processing-queued"] if @notes %></td>
+  </tr>
+  <tr>
+    <td>Metadata Fetched</td>
+    <td class="metadata_fetched"><%= @notes["metadata-fetched"] if @notes %></td>
+  </tr>
+  <tr>
+    <td>Child Records Created</td>
+    <td class="children_created"><%= @notes["child-records-created"] if @notes %></td>
+  </tr>
+  <tr>
+    <td>Manifest Saved</td>
+    <td class="manifest_saved"><%= @notes["manifest-saved"] if @notes %></td>
+  </tr>
+  <tr>
+    <td>Solr Indexed</td>
+    <td class="solr_indexed"><%= @notes["solr-indexed"] if @notes %></td>
+  </tr>
+</table>
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col"> Child object oid </th>
+      <th scope="col"> Last ptiff conversion </th>
+    </tr>
+  </thead>
+  <% if @parent_object %>
+    <% @parent_object&.child_objects.each do |child| %>
+      <tr>
+        <td class="child_oid"><%= child ? link_to(child.oid, child) : "(pending or deleted)" %></td>
+        <td class="ptiff_conversion_time"><%= child&.ptiff_conversion_at %></td>
+      </tr>
+    <% end %>
+  <% else %>
+    <tr>
+      <td colspan="2">Parent object deleted, child objects cascade deleted</td>
+    </tr>
+  <% end %>
+  <% if @failures %>
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col"> Message </th>
+        <th scope="col"> Time </th>
+      </tr>
+    </thead>
+    <% @failures.each do |failure| %>
+    <tr>
+      <td class="reason"><%= failure["reason"] %></td>
+      <td class="time"><%= failure["time"] %></td>
+    </tr>
+    <% end %>
+  <% end %>
+</table>

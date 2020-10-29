@@ -1,3 +1,4 @@
+<h1>Batch Process Detail</h1>
 <p id="notice"><%= notice %></p>
 <p>
   <strong>Batch Process ID</strong>
@@ -25,7 +26,7 @@
     <% @batch_process.oids.each do |parent_oid| %>
       <% parent_object = ParentObject.find_by_oid(parent_oid) %>
       <tr>
-        <td class="parent_oid" ><%= link_to_unless(parent_object.nil?, parent_oid, parent_object_path(parent_oid)) %></td>
+        <td class="parent_oid" ><%= link_to_unless(parent_object.nil?, parent_oid, show_parent_batch_process_path(id: @batch_process.id.to_s, oid: parent_oid.to_s)) %></td>
         <td class="child_count"><%= parent_object&.child_object_count || "(deleted)" %></td>
       </tr>
     <% end %>

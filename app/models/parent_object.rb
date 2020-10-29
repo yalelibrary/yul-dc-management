@@ -5,6 +5,7 @@
 class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include JsonFile
   include SolrIndexable
+  include Statable
   has_many :dependent_objects
   has_many :child_objects, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
   has_many :batch_connections, as: :connectable
@@ -30,7 +31,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.use_ladybird = true
   end
 
-  def create_child_records
+  def create_child_records(_current_batch_process)
     return unless ladybird_json
     ladybird_json["children"].map.with_index(1) do |child_record, index|
       next if child_object_ids.include?(child_record["oid"])
@@ -46,7 +47,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   # Fetches the record from the authoritative_metadata_source
-  def default_fetch
+  def default_fetch(current_batch_process = self.current_batch_process)
     case authoritative_metadata_source&.metadata_cloud_name
     when "ladybird"
       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
@@ -60,7 +61,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     processing_event("Metadata has been fetched", "metadata-fetched") if current_batch_process
   end
 
-  def processing_event(message, status = 'info')
+  def processing_event(message, status = 'info', current_batch_process = self.current_batch_process)
     IngestNotification.with(parent_object_id: id, status: status, reason: message, batch_process_id: current_batch_process&.id).deliver_all
   end
 
