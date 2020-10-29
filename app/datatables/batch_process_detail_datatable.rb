@@ -3,18 +3,17 @@
 class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
   extend Forwardable
 
-  # def_delegators :@view, :link_to, :batch_process_path
+  def_delegators :@view, :link_to, :show_parent_batch_process_path
 
-  # def initialize(params, opts = {})
-  #   @view = opts[:view_context]
-  #   super
-  # end
+  def initialize(params, opts = {})
+    @view = opts[:view_context]
+    super
+  end
 
   def view_columns
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      id: { orderable: false }, # remove "orderable: false" once this column has a value
       parent_oid: { source: 'ParentObject.oid' },
       time: { source: 'ParentObject.created_at' },
       children: { source: 'ParentObject.child_object_count' },
@@ -26,8 +25,7 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
     # rubocop:disable Rails/OutputSafety
     records.map do |parent_object|
       {
-        id: 'TODO: ID',
-        parent_oid: parent_object&.oid,
+        parent_oid: link_to(parent_object&.oid, show_parent_batch_process_path(oid: parent_object.oid.to_s)),
         time: parent_object&.created_at,
         children: parent_object&.child_object_count || '(deleted)',
         status: 'TODO: Status',
