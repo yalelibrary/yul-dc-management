@@ -38,7 +38,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       parent_object
       batch_process.file = csv_upload
       batch_process.run_callbacks :create
-      expect(parent_object.batch_connections.first.status).to eq "Failed"
+      expect(parent_object.status_for_batch_process(batch_process.id)).to eq "Failed"
     end
   end
 end
