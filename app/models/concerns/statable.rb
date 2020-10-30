@@ -3,11 +3,7 @@
 module Statable
   extend ActiveSupport::Concern
   def notes_for_batch_process(batch_process_id)
-    # The parameters passed in must be strings, or Postgres will get very angry
-    note_records = Notification.where(["params->>'batch_process_id' = :id and
-    params->>'parent_object_id' = :oid", { id: batch_process_id.to_s, oid:
-    oid.to_s }])
-    note_records.each_with_object({}) { |n, i| i[n.params[:status]] = n.created_at; }
+    note_records(batch_process_id).each_with_object({}) { |n, i| i[n.params[:status]] = n.created_at; }
   end
 
   def status_for_batch_process(batch_process_id)
@@ -37,7 +33,7 @@ module Statable
 
   def note_records(batch_process_id)
     Notification.where(["params->>'batch_process_id' = :id and
-    params->>'parent_object_id' = :oid", { id: batch_process_id.to_s, oid:
+    params->>'#{self.class.to_s.underscore}_id' = :oid", { id: batch_process_id.to_s, oid:
     oid.to_s }])
   end
 
