@@ -16,7 +16,7 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
     @view_columns ||= {
       parent_oid: { source: 'BatchConnection.connectable_id', cond: :like, searchable: true },
       time: { source: 'BatchConnection.created_at', cond: :like, searchable: true },
-      children: { source: 'BatchConnection.child_object_count', cond: :like, searchable: true },
+      children: { source: 'BatchConnection.connectable&.child_object_count', cond: :like, searchable: true },
       status: { orderable: false, cond: :like, searchable: true } # remove "orderable: false" once this column has a value
     }
   end
@@ -27,8 +27,8 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
       {
         parent_oid: link_to(batch_connection&.connectable_id, show_parent_batch_process_path(oid: batch_connection&.connectable_id.to_s)),
         time: batch_connection&.created_at,
-        children: batch_connection&.child_object_count || 'pending, or parent deleted',
-        status: batch_connection&.status,
+        children: batch_connection.connectable&.child_object_count || 'pending, or parent deleted',
+        status: batch_connection.connectable&.status_for_batch_process(batch_connection.batch_process_id) || "Parent object deleted",
         DT_RowId: batch_connection&.connectable_id
       }
     end
