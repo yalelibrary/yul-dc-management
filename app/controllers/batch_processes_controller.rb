@@ -13,12 +13,7 @@ class BatchProcessesController < ApplicationController
     end
   end
 
-  def show
-    respond_to do |format|
-      format.html
-      format.json { render json: BatchProcessDetailDatatable.new(params, view_context: view_context) }
-    end
-  end
+  def show; end
 
   def new
     @batch_process = BatchProcess.new
