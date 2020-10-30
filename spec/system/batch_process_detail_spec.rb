@@ -43,7 +43,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       it "can still see the details of the import" do
         expect(page).to have_content(batch_process.id.to_s)
         expect(page).to have_content('16057779')
-        expect(page).to have_content('(deleted)')
+        expect(page).to have_content('pending, or parent deleted')
       end
     end
   end
@@ -59,11 +59,11 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       )
     end
     it "can see the details of the import" do
-      expect(page.body).to include batch_process.id.to_s
-      expect(page.body).to include "johnsmith2530"
-      expect(page.body).to have_link("meta.xml", href: "/batch_processes/#{batch_process.id}/download")
-      expect(page.body).to have_link('16172421', href: "/batch_processes/#{batch_process.id}/parent_objects/16172421")
-      expect(page.body).to include "2020-10-08 16:17:01"
+      expect(page).to have_content(batch_process.id.to_s)
+      expect(page).to have_content("johnsmith2530")
+      expect(page).to have_link("meta.xml", href: "/batch_processes/#{batch_process.id}/download")
+      expect(page).to have_link('16172421', href: "/batch_processes/#{batch_process.id}/parent_objects/16172421")
+      expect(page).to have_content("2020-10-08 16:17:01")
     end
   end
 end
