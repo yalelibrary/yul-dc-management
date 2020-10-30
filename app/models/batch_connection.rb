@@ -10,4 +10,10 @@ class BatchConnection < ApplicationRecord
   rescue ActiveRecord::RecordNotFound
     nil
   end
+
+  def status
+    ParentObject.find(connectable_id).status_for_batch_process(batch_process_id)
+  rescue ActiveRecord::RecordNotFound
+    "Parent object deleted"
+  end
 end

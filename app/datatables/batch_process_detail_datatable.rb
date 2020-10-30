@@ -28,7 +28,7 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
         parent_oid: link_to(batch_connection&.connectable_id, show_parent_batch_process_path(oid: batch_connection&.connectable_id.to_s)),
         time: batch_connection&.created_at,
         children: batch_connection&.child_object_count || 'pending, or parent deleted',
-        status: 'TODO: Status',
+        status: batch_connection&.status,
         DT_RowId: batch_connection&.connectable_id
       }
     end
