@@ -1,11 +1,20 @@
 # frozen_string_literal: true
 
 class ChildObject < ApplicationRecord
+  include Statable
   belongs_to :parent_object, foreign_key: 'parent_object_oid', class_name: "ParentObject"
   self.primary_key = 'oid'
   paginates_per 50
 
   before_create :check_for_size_and_file
+
+  def start_states
+    ["ptiff-queued"]
+  end
+
+  def finished_states
+    ['ptiff-ready', 'ptiff-ready-skipped']
+  end
 
   def check_for_size_and_file
     width_and_height(remote_metadata)
@@ -64,7 +73,7 @@ class ChildObject < ApplicationRecord
     if pyramidal_tiff.valid?
       width_and_height(pyramidal_tiff.conversion_information)
       if pyramidal_tiff.conversion_information&.[](:width)
-        parent_object.processing_event("PTIFF ready for #{oid}", 'ptiff-ready')
+        processing_event("PTIFF ready for #{oid}", 'ptiff-ready')
         width_and_height(pyramidal_tiff.conversion_information)
       end
       # Conversion info is blank if the ptiff was skipped as already present

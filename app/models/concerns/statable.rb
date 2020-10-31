@@ -6,9 +6,17 @@ module Statable
     note_records(batch_process_id).each_with_object({}) { |n, i| i[n.params[:status]] = n.created_at; }
   end
 
+  def start_note(notes)
+    start_states.map { |state| notes[state] }.first
+  end
+
+  def finished_note(notes)
+    finished_states.map { |state| notes[state] }.first
+  end
+
   def status_for_batch_process(batch_process_id)
     notes = notes_for_batch_process(batch_process_id)
-    if notes["solr-indexed"]
+    if finished_note(notes)
       "Complete"
     elsif failures_for_batch_process(batch_process_id).nil?
       # TODO: build out more of this logic. Should probably look at failures and processing time
@@ -23,8 +31,8 @@ module Statable
   def duration_for_batch_process(batch_process_id)
     notes = notes_for_batch_process(batch_process_id)
     if notes
-      start = notes["processing-queued"]
-      finish = notes["solr-indexed"]
+      start = start_note(notes)
+      finish = finished_note(notes)
       finish - start if finish && start
     else
       "n/a"

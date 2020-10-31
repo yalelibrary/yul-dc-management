@@ -31,6 +31,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.use_ladybird = true
   end
 
+  def start_states
+    ["processing-queued"]
+  end
+
+  def finished_states
+    ['solr-indexed']
+  end
+
   def create_child_records(_current_batch_process)
     return unless ladybird_json
     ladybird_json["children"].map.with_index(1) do |child_record, index|

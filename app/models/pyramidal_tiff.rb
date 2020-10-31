@@ -32,7 +32,7 @@ class PyramidalTiff
     ptiff_info = { oid: oid.to_s }
     # do not do the image conversion if there is already a PTIFF on S3
     if child_object.height && child_object.width && S3Service.s3_exists?(child_object.remote_ptiff_path)
-      child_object.processing_event("PTIFF exists on S3, not converting: #{ptiff_info.to_json}", 'ptiff-ready')
+      child_object.processing_event("PTIFF exists on S3, not converting: #{ptiff_info.to_json}", 'ptiff-ready-skipped')
       true
     else
       generate_ptiff
@@ -58,10 +58,16 @@ class PyramidalTiff
     temp_file_path = File.join(tmpdir, File.basename(access_master_path))
     if ENV['ACCESS_MASTER_MOUNT'] == "s3"
       download = S3Service.download_image(remote_access_master_path, temp_file_path)
-      temp_file_path if download
+      if download
+        child_object.processing_event("Access master retrieved from S3", 'access-master')
+        temp_file_path
+      end
     else
       FileUtils.cp(access_master_path, tmpdir)
-      return temp_file_path if checksums_match?(access_master_path, temp_file_path)
+      if checksums_match?(access_master_path, temp_file_path)
+        child_object.processing_event("Access master retrieved from file system", 'access-master')
+        temp_file_path
+      end
     end
   end
 
@@ -76,6 +82,7 @@ class PyramidalTiff
     return {} if status.exitstatus != 0
     width = stdout.match(/Pyramid width: (\d*)/)&.captures&.[](0)
     height = stdout.match(/Pyramid height: (\d*)/)&.captures&.[](0)
+    child_object.processing_event("PTIFF created #{width} x #{height}", 'ptiff-generated')
     { width: width, height: height }
   end
 
