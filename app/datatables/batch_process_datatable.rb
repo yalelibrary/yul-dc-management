@@ -18,8 +18,8 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
       user: { source: "BatchProcess.user_id", cond: :like, searchable: true },
       time: { source: "BatchProcess.created_at", cond: :like, searchable: true },
       size: { source: "BatchProcess.oid", cond: :like, searchable: true },
-      status: {},
-      object_details: {}
+      status: { cond: :null_value, searchable: false, orderable: false },
+      object_details: { cond: :null_value, searchable: false, orderable: false }
     }
   end
 
@@ -40,8 +40,6 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    # insert query here
-    # BatchProcess.all
     BatchProcess.joins(:user)
   end
 end
