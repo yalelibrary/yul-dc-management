@@ -89,4 +89,38 @@ class BatchProcess < ApplicationRecord
       refresh_metadata_cloud_mets
     end
   end
+
+  def batch_status
+    if single_status
+      single_status
+    elsif statuses[:failed] != 0
+      percent = ((statuses[:failed] / statuses[:total]) * 100).round
+      "#{percent}% of parent objects have a failure."
+    else
+      "Batch status unknown"
+    end
+  end
+
+  def single_status
+    if statuses[:in_progress] / statuses[:total] == 1
+      "Batch in progress - no failures"
+    elsif statuses[:complete] / statuses[:total] == 1
+      "Batch complete"
+    elsif statuses[:failed] / statuses[:total] == 1
+      "Batch failed"
+    end
+  end
+
+  def statuses
+    connected_statuses = batch_connections.map do |batch_connection|
+      batch_connection.connectable&.status_for_batch_process(batch_connection.batch_process_id)
+    end
+    {
+      complete: connected_statuses.count("Complete"),
+      in_progress: connected_statuses.count("In progress - no failures"),
+      failed: connected_statuses.count("Failed"),
+      unknown: connected_statuses.count("Unknown"),
+      total: connected_statuses.count.to_f
+    }
+  end
 end

@@ -26,7 +26,7 @@ RSpec.describe BatchProcessDatatable, type: :datatable, prep_metadata_sources: t
         object_details: "<a href='/batch_processes/#{batch_process.id}'>View</a>",
         process_id: "<a href='/batch_processes/#{batch_process.id}'>#{batch_process.id}</a>",
         size: batch_process.oids.count,
-        status: 'TODO: Status',
+        status: 'Batch status unknown',
         time: batch_process.created_at,
         user: 'mk2525'
       )

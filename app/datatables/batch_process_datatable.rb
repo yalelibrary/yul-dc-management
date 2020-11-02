@@ -18,7 +18,7 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
       user: { source: "BatchProcess.user_id", cond: :like, searchable: true },
       time: { source: "BatchProcess.created_at", cond: :like, searchable: true },
       size: { source: "BatchProcess.oid", cond: :like, searchable: true },
-      status: { cond: :null_value, searchable: false, orderable: false },
+      status: { source: "BatchProcess.batch_status", cond: :null_value, searchable: false, orderable: false },
       object_details: { cond: :null_value, searchable: false, orderable: false }
     }
   end
@@ -31,7 +31,7 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
         user: batch_process.user.uid,
         time: batch_process.created_at,
         size: batch_process.oids&.count,
-        status: "TODO: Status",
+        status: batch_process.batch_status,
         object_details: link_to("View", batch_process_path(batch_process)),
         DT_RowId: batch_process.id
       }
