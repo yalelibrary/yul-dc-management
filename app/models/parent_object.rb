@@ -6,6 +6,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include JsonFile
   include SolrIndexable
   include Statable
+  include PdfRepresentable
   has_many :dependent_objects
   has_many :child_objects, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
   has_many :batch_connections, as: :connectable
@@ -133,19 +134,22 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def voyager_cloud_url
-    return nil unless ladybird_json.present?
-    orbis_bib = ladybird_json['orbisRecord'] || ladybird_json['orbisBibId']
-    identifier_block = if ladybird_json["orbisBarcode"].nil?
-                         "/bib/#{orbis_bib}"
+    return nil unless bib.present?
+    identifier_block = if barcode.present?
+                         "/barcode/#{barcode}?bib=#{bib}"
+                       elsif item.present?
+                         "/item/#{item}?bib=#{bib}"
+                       elsif holding.present?
+                         "/holding/#{holding}?bib=#{bib}"
                        else
-                         "/barcode/#{ladybird_json['orbisBarcode']}?bib=#{orbis_bib}"
+                         "/bib/#{bib}"
                        end
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ils#{identifier_block}"
   end
 
   def aspace_cloud_url
-    return nil unless ladybird_json.present?
-    "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/aspace#{ladybird_json['archiveSpaceUri']}"
+    return nil unless aspace_uri.present?
+    "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/aspace#{aspace_uri}"
   end
 
   def source_name=(metadata_source)
