@@ -91,22 +91,23 @@ class BatchProcess < ApplicationRecord
   end
 
   def batch_status
-    if single_status
-      single_status
-    elsif statuses[:failed] != 0
-      percent = ((statuses[:failed] / statuses[:total]) * 100).round
+    current_status = statuses
+    if single_status(current_status)
+      single_status(current_status)
+    elsif current_status[:failed] != 0
+      percent = ((current_status[:failed] / current_status[:total]) * 100).round
       "#{percent}% of parent objects have a failure."
     else
       "Batch status unknown"
     end
   end
 
-  def single_status
-    if statuses[:in_progress] / statuses[:total] == 1
+  def single_status(current_status)
+    if current_status[:in_progress] / current_status[:total] == 1
       "Batch in progress - no failures"
-    elsif statuses[:complete] / statuses[:total] == 1
+    elsif current_status[:complete] / current_status[:total] == 1
       "Batch complete"
-    elsif statuses[:failed] / statuses[:total] == 1
+    elsif current_status[:failed] / current_status[:total] == 1
       "Batch failed"
     end
   end
