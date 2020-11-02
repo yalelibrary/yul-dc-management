@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 class BatchProcessesController < ApplicationController
-  before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml, :show_parent]
-  before_action :set_parent_object, :find_notes, :find_failures, only: [:show_parent]
+  before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml, :show_parent, :show_child]
+  before_action :set_parent_object, only: [:show_parent, :show_child]
+  before_action :find_notes, only: [:show_parent]
+  before_action :find_failures, only: [:show_parent]
+  before_action :set_child_object, only: [:show_child]
 
   def index
     @batch_process = BatchProcess.new
@@ -56,6 +59,8 @@ class BatchProcessesController < ApplicationController
 
   def show_parent; end
 
+  def show_child; end
+
   private
 
     def set_batch_process
@@ -63,9 +68,13 @@ class BatchProcessesController < ApplicationController
     end
 
     def set_parent_object
-      @parent_object = ParentObject.find(params[:oid])
-    rescue ActiveRecord::RecordNotFound
-      @requested_object = params[:oid].to_i
+      @parent_object = ParentObject.find_by(oid: params[:oid])
+    end
+
+    def set_child_object
+      @child_object = ChildObject.find(params[:child_oid])
+      @notes = @child_object.notes_for_batch_process(@batch_process.id)
+      @failures = @child_object.failures_for_batch_process(@batch_process.id)
     end
 
     def find_notes
