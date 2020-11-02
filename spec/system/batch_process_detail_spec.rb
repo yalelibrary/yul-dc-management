@@ -32,8 +32,13 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       expect(page).to have_content("2020-10-08 14:17:01")
     end
 
-    it "can see the status of the import" do
+    it "can see the status of the parent object imports" do
       expect(page).to have_content("In progress - no failures")
+    end
+
+    it "can see the overall status of the batch process" do
+      expect(batch_process.batch_status).to eq "Batch in progress - no failures"
+      expect(page).to have_content("Batch in progress - no failures")
     end
 
     context "deleting a parent object" do
