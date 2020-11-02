@@ -1,23 +1,63 @@
 <h1>Parent Batch Process Detail</h1>
 <p id="notice"><%= notice %></p>
-<p>
-  <strong>Batch Process ID</strong>
-  <%= link_to @batch_process.id, batch_process_path(@batch_process) %>
-</p>
-<p>
-  <strong>Parent Object</strong>
-  <%= @parent_object.present? ? link_to("#{@parent_object.id} (current record)", parent_object_path(@parent_object)) : "#{params[:oid]} (pending or deleted)" %>
-</p>
-<p>
-  <strong>Status</strong>
-  <%= @parent_object.present? ? "#{@parent_object.status_for_batch_process(@batch_process.id)}" : "#{params[:oid]} deleted" %>
-</p>
-<p>
-  <strong>Duration</strong>
-  <%= @parent_object.present? ? "#{@parent_object.duration_for_batch_process(@batch_process.id)} seconds" : "#{params[:oid]} deleted" %>
-</p>
+<div class='batch-process-show-details'>
+  <p>
+    <strong>Batch Process ID</strong>
+    <%= link_to @batch_process.id, batch_process_path(@batch_process) %>
+  </p>
+  <p>
+    <strong>Parent Object</strong>
+    <%= @parent_object.present? ? link_to("#{@parent_object.id} (current record)", parent_object_path(@parent_object)) : "#{params[:oid]} (pending or deleted)" %>
+  </p>
+  <p>
+    <strong>Status</strong>
+    <%= @parent_object.present? ? "#{@parent_object.status_for_batch_process(@batch_process.id)}" : "#{params[:oid]} deleted" %>
+  </p>
+  <p>
+    <strong>Submitted</strong>
+    <%= @batch_process&.created_at %>
+  </p>
+</div>
+<div class='batch-process-show-details'>
+  <p>
+    <strong>Metadata Fetch</strong>
+    <%= @notes["metadata-fetched"] if @notes %>
+  </p>
+  <p>
+    <strong>Manifest Build</strong>
+    <%= %>
+  </p>
+  <p>
+    <strong>Metadata Index</strong>
+    <%= %>
+  </p>
+</div>
 
-<table class="table table-bordered table-striped">
+<div class='row'>
+  <div class='col overflow-auto'>
+    <table id='parent-batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= parent_objects_path(format: :json) %>'>
+      <thead class='thead-dark'>
+        <tr>
+          <th scope='col'> Child OID </th>
+          <th scope='col'> Time </th>
+          <th scope='col'> Status </th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id='parent-batch-process-data' class='d-none datatable-data'>
+  <%= BatchProcessParentDatatable.new(nil).view_columns.keys.map {|key| {data: key} }.to_json %>
+</div>
+
+<%= link_to 'Back', batch_process_path %>
+
+<%
+=begin%>
+ <table class="table table-bordered table-striped">
   <thead class="thead-dark">
     <tr>
       <th scope="col"> Ingest step </th>
@@ -49,7 +89,11 @@
     <td class="solr_indexed"><%= @notes["solr-indexed"] if @notes %></td>
   </tr>
 </table>
-<table class="table table-bordered table-striped">
+<%
+=end%>
+<%
+=begin%>
+ <table class="table table-bordered table-striped">
   <thead class="thead-dark">
     <tr>
       <th scope="col"> Child object oid </th>
@@ -84,3 +128,5 @@
     <% end %>
   <% end %>
 </table>
+<%
+=end%>
