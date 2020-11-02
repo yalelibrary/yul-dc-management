@@ -71,6 +71,7 @@ class ChildObject < ApplicationRecord
 
   def convert_to_ptiff
     if pyramidal_tiff.valid?
+# TODO why do we call this twice?
       width_and_height(pyramidal_tiff.conversion_information)
       if pyramidal_tiff.conversion_information&.[](:width)
         processing_event("PTIFF ready for #{oid}", 'ptiff-ready')

@@ -27,14 +27,15 @@ class PyramidalTiff
   end
 
   def verify_and_generate
-    # cannot convert to PTIFF if we can't find the original
-    return false unless original_file_exists?
     ptiff_info = { oid: oid.to_s }
     # do not do the image conversion if there is already a PTIFF on S3
+    # TODO read heigh and width from s3
     if child_object.height && child_object.width && S3Service.s3_exists?(child_object.remote_ptiff_path)
       child_object.processing_event("PTIFF exists on S3, not converting: #{ptiff_info.to_json}", 'ptiff-ready-skipped')
       true
     else
+      # cannot convert to PTIFF if we can't find the original
+      return false unless original_file_exists?
       generate_ptiff
     end
   end
