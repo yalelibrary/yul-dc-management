@@ -95,7 +95,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       expect(statuses).to include "manifest-saved"
       expect(statuses).to include "solr-indexed"
       expect(Notification.all.map { |note| note.params[:reason] }).to include "Processing has been queued"
-      expect(Notification.count).to eq(1353)
+      expect(Notification.count).to eq(501)
     end
   end
 
