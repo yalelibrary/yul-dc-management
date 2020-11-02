@@ -57,7 +57,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
         parent_object
       end.to change(ParentObject, :count).by(1)
                                          .and change(ChildObject, :count).by(1)
-                                                                         .and change(Notification, :count).by(4)
+                                                                         .and change(Notification, :count).by(5)
       statuses = Notification.all.map { |note| note.params[:status] }
       expect(statuses).to include "ptiff-ready"
       expect(statuses).to include "child-records-created"

@@ -63,7 +63,7 @@ class BatchProcessesController < ApplicationController
     end
 
     def set_parent_object
-      @parent_object = ParentObject.find(params[:oid])
+      @parent_object = ParentObject.find_by(oid: params[:oid])
     end
 
     def set_child_object
