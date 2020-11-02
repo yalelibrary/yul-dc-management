@@ -20,5 +20,6 @@ RSpec.describe BatchConnection, type: :model, prep_metadata_sources: true do
     end.to change { batch_process.batch_connections.size }.from(0).to(5)
     expect(parent_object.batch_connections).not_to eq nil
     expect(parent_object.batch_connections.first).to eq batch_process.batch_connections.first
+    expect(parent_object.batch_connections.first.connectable.child_object_count).to eq parent_object.child_object_count
   end
 end
