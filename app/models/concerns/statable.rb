@@ -15,7 +15,6 @@ module Statable
     if notes["solr-indexed"]
       "Complete"
     elsif failures_for_batch_process(batch_process_id).nil?
-      # TODO: build out more of this logic. Should probably look at failures and processing time
       "In progress - no failures"
     elsif failures_for_batch_process(batch_process_id)
       "Failed"
