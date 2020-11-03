@@ -27,14 +27,16 @@ module PdfRepresentable
     generated = Time.now.utc.to_s
     title = extract_flat_field_value(authoritative_json, "title", "No Title")
     properties = pdf_properties title, generated
+    children = child_pages
+    return nil if children.empty?
     json_hash = {
       "displayCoverPage" => true,
       "title" => title,
       "header" => "Yale University Library Digital Collections",
       "properties" => properties,
-      "pages" => child_pages
+      "pages" => children
     }
-    json_hash.as_json
+    json_hash.to_json
   end
 
   private
@@ -78,7 +80,7 @@ module PdfRepresentable
     end
 
     def extract_flat_field_value(json, field_name, default)
-      return default unless json[field_name].present?
+      return default unless json && json[field_name].present?
       Array(json[field_name]).join(", ")
     end
 
@@ -88,6 +90,7 @@ module PdfRepresentable
     end
 
     def extract_container_information(json)
+      return nil unless json
       return [(json["box"] && "Box #{json['box']}"), (json["folder"] && "Folder #{json['folder']}")].join(", ") if json["box"] || json["folder"]
       json["volumeEnumeration"] || json["containerGrouping"]
     end
