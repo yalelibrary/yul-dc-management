@@ -51,6 +51,7 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
     describe "with a csv import" do
       it "has a link to the batch process detail page" do
         visit show_parent_batch_process_path(batch_process, 16_057_779)
+        # print page.html
         expect(page).to have_link(batch_process&.id&.to_s, href: "/batch_processes/#{batch_process.id}")
       end
 
