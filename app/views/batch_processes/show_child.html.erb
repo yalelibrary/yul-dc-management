@@ -1,0 +1,74 @@
+<h1>Child Batch Process Detail</h1>
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Batch Process ID</strong>
+  <%= link_to @batch_process.id, batch_process_path(@batch_process) %>
+</p>
+<p>
+  <strong>Parent Object</strong>
+  <%= link_to("#{params[:oid]}", show_parent_batch_process_path(@batch_process, oid: params["oid"])) %>
+</p>
+<p>
+    <strong>Child Object</strong>
+    <%= @child_object.present? ? link_to("#{@child_object.id} (current record)", child_object_path(@child_object)) : "#{params[:child_oid]} (pending or deleted)" %>
+</p>
+<p>
+  <strong>Status</strong>
+  <%= @child_object.present? ? "#{@child_object.status_for_batch_process(@batch_process.id)}" : "#{params[:oid]} deleted" %>
+</p>
+<p>
+  <strong>Duration</strong>
+  <%= @child_object.present? ? "#{@child_object.duration_for_batch_process(@batch_process.id)} seconds" : "#{params[:oid]} deleted" %>
+</p>
+<p>
+    <strong>Access Master</strong>
+    <%= link_to @child_object.access_master_path, @child_object.access_master_url %>
+</p>
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col"> Ingest step </th>
+      <th scope="col"> Time </th>
+    </tr>
+  </thead>
+  <tr>
+    <td>Submitted</td>
+    <td class="submitted"><%= @notes["ptiff-queued"] if @notes %></td>
+  </tr>
+  <% if @notes&.[]('ptiff-ready-skipped') %>
+    <tr>
+      <td>Read from S3</td>
+      <td class="ptiff-ready"><%= @notes["ptiff-ready-skipped"] if @notes %></td>
+    </tr>
+  <% else %>
+    <tr>
+      <td>Fetch Master</td>
+      <td class="access_master"><%= @notes["access-master"] if @notes %></td>
+    </tr>
+    <tr>
+      <td>Generate PTIFF</td>
+      <td class="generate_ptiff"><%= @notes["ptiff-generated"] if @notes %></td>
+    </tr>
+    <tr>
+      <td>Store to S3</td>
+      <td class="ptiff_ready"><%= @notes["ptiff-ready"] if @notes %></td>
+    </tr>
+  <% end %>
+</table>
+
+<% if @failures %>
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col"> Message </th>
+        <th scope="col"> Time </th>
+      </tr>
+    </thead>
+    <% @failures.each do |failure| %>
+    <tr>
+      <td class="reason"><%= failure["reason"] %></td>
+      <td class="time"><%= failure["time"] %></td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>

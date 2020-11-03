@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     member do
       get :download
       get '/parent_objects/:oid', to: 'batch_processes#show_parent', as: :show_parent
+      get '/parent_objects/:oid/child_objects/:child_oid', to: 'batch_processes#show_child', as: :show_child
     end
   end
   resources :child_objects

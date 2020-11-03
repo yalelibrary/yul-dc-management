@@ -3,16 +3,20 @@
 module Statable
   extend ActiveSupport::Concern
   def notes_for_batch_process(batch_process_id)
-    # The parameters passed in must be strings, or Postgres will get very angry
-    note_records = Notification.where(["params->>'batch_process_id' = :id and
-    params->>'parent_object_id' = :oid", { id: batch_process_id.to_s, oid:
-    oid.to_s }])
-    note_records.each_with_object({}) { |n, i| i[n.params[:status]] = n.created_at; }
+    note_records(batch_process_id).each_with_object({}) { |n, i| i[n.params[:status]] = n.created_at; }
+  end
+
+  def start_note(notes)
+    start_states.map { |state| notes[state] }.first
+  end
+
+  def finished_note(notes)
+    finished_states.map { |state| notes[state] }.first
   end
 
   def status_for_batch_process(batch_process_id)
     notes = notes_for_batch_process(batch_process_id)
-    if notes["solr-indexed"]
+    if finished_note(notes)
       "Complete"
     elsif failures_for_batch_process(batch_process_id).nil?
       "In progress - no failures"
@@ -26,8 +30,8 @@ module Statable
   def duration_for_batch_process(batch_process_id)
     notes = notes_for_batch_process(batch_process_id)
     if notes
-      start = notes["processing-queued"]
-      finish = notes["solr-indexed"]
+      start = start_note(notes)
+      finish = finished_note(notes)
       finish - start if finish && start
     else
       "n/a"
@@ -36,7 +40,7 @@ module Statable
 
   def note_records(batch_process_id)
     Notification.where(["params->>'batch_process_id' = :id and
-    params->>'parent_object_id' = :oid", { id: batch_process_id.to_s, oid:
+    params->>'#{self.class.to_s.underscore}_id' = :oid", { id: batch_process_id.to_s, oid:
     oid.to_s }])
   end
 
