@@ -13,6 +13,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   attr_accessor :metadata_update
   attr_accessor :current_batch_process
+  attr_accessor :current_batch_connection
   self.primary_key = 'oid'
   after_save :setup_metadata_job
   after_update :solr_index_job # we index from the fetch job on create
@@ -70,7 +71,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def processing_event(message, status = 'info', current_batch_process = self.current_batch_process)
-    IngestNotification.with(parent_object_id: id, status: status, reason: message, batch_process_id: current_batch_process&.id).deliver_all
+    IngestNotification.with(parent_object_id: id, status: status, reason: message, batch_process_id: current_batch_process&.id).deliver(User.first)
+    # TODO pass batch_conneciton insteado of batch_process all the way to here everywhere
+    current_batch_connection&.update_status!
   end
 
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
