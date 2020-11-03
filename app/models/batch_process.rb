@@ -124,4 +124,12 @@ class BatchProcess < ApplicationRecord
       total: connected_statuses.count.to_f
     }
   end
+
+  def notifications
+    Notification.where(["params->>'batch_process_id' = :id", { id: self.id.to_s }])
+  end
+
+  def last_notification_by_parent_object
+    notifications.select("DISTINCT ON (params->>'parent_object_id') params").select("notifications.*").order("params->>'parent_object_id', created_at DESC")
+  end
 end
