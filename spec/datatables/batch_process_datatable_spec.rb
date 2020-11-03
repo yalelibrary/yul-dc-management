@@ -14,7 +14,7 @@ RSpec.describe BatchProcessDatatable, type: :datatable, prep_metadata_sources: t
   describe 'batch process import' do
     let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
 
-    xit 'can handle a csv import' do
+    it 'can handle a csv import' do
       user = FactoryBot.create(:user, uid: 'mk2525')
       batch_process = FactoryBot.create(:batch_process, user: user, csv: csv_upload)
 
