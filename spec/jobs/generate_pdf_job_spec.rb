@@ -32,10 +32,10 @@ RSpec.describe GeneratePdfJob, type: :job do
     it 'does not increment the job queue' do
       expect do
         generate_pdf_job.perform(parent_object, batch_process)
-      end.to raise_error
+      end.to raise_error("No authoritative_json to create PDF for #{parent_object.oid}")
     end
     it "has correct priority" do
-      expect(generate_pdf_job.default_priority).to eq(-10)
+      expect(generate_pdf_job.default_priority).to eq(50)
     end
   end
 end

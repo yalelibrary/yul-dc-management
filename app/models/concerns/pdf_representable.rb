@@ -92,15 +92,4 @@ module PdfRepresentable
       value = extract_flat_field_value(json, field_name, nil)
       hash[hash_field] = value if value
     end
-
-    def extract_container_information(json)
-      return nil unless json
-      return [(json["box"] && "Box #{json['box']}"), (json["folder"] && "Folder #{json['folder']}")].join(", ") if json["box"] || json["folder"]
-      json["volumeEnumeration"] || json["containerGrouping"]
-    end
-
-    def dl_show_url
-      base = ENV['BLACKLIGHT_BASE_URL'] || 'localhost:3000'
-      "#{base}/catalog/#{oid}"
-    end
 end

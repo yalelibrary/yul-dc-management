@@ -4,7 +4,7 @@ class GeneratePdfJob < ApplicationJob
   queue_as :default
 
   def default_priority
-    -10
+    50
   end
 
   def perform(parent_object, current_batch_process)
