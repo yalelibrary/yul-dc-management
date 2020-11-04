@@ -19,7 +19,7 @@ class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
     }
   end
 
-  # TODO(alishaevn): determine the method for status
+  # TODO(alishaevn): determine the method for time
   def data
     # rubocop:disable Rails/OutputSafety
     records.map do |child_object|
