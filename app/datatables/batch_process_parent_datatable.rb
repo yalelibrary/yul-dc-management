@@ -10,20 +10,22 @@ class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
   # super
   # end
 
+  # TODO(alishaevn): determine the source for time and status
   def view_columns
     @view_columns ||= {
       child_oid: { source: 'ChildObject.oid' },
-      time: { source: '', cond: :like, searchable: true, orderable: false },
-      status: { cond: :null_value, searchable: false, orderable: false }
+      time: { source: '' },
+      status: { source: '' }
     }
   end
 
+  # TODO(alishaevn): determine the method for status
   def data
     # rubocop:disable Rails/OutputSafety
     records.map do |child_object|
       {
         child_oid: child_object.oid,
-        time: 'TODO',
+        time: child_object.notes_for_batch_process(params[:id]),
         status: child_object.present? ? child_object.status_for_batch_process(params[:id]).to_s : "#{params[:oid]} deleted",
         DT_RowId: child_object.oid
       }
