@@ -66,7 +66,7 @@ module PdfRepresentable
       container_information = extract_container_information(authoritative_json)
       properties["Container information"] = container_information if container_information
       properties["Generated"] = generated
-      properties["Terms of Use"] = "https://guides.library.yale.edu/about/policies/use-of-materials"
+      properties["Terms of Use"] = "https://guides.library.yale.edu/about/policies/access"
       properties["View in DL"] = dl_show_url.to_s
       reshape_properties properties
     end
