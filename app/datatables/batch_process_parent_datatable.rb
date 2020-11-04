@@ -24,8 +24,8 @@ class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
       {
         child_oid: child_object.oid,
         time: 'TODO',
-        status: 'TODO',
-        DT_RowId: 'TODO'
+        status: child_object.present? ? child_object.status_for_batch_process(params[:id]).to_s : "#{params[:oid]} deleted",
+        DT_RowId: child_object.oid
       }
     end
     # rubocop:enable Rails/OutputSafety

@@ -9,8 +9,8 @@
   <%= @parent_object.present? ? link_to("#{@parent_object.id} (current record)", parent_object_path(@parent_object)) : "#{params[:oid]} (pending or deleted)" %>
 </p>
 <p>
-    <strong>Child Object</strong>
-    <%= @child_object.present? ? link_to("#{@child_object.id} (current record)", child_object_path(@child_object)) : "#{params[:child_oid]} (pending or deleted)" %>
+  <strong>Child Object</strong>
+  <%= @child_object.present? ? link_to("#{@child_object.id} (current record)", child_object_path(@child_object)) : "#{params[:child_oid]} (pending or deleted)" %>
 </p>
 <p>
   <strong>Status</strong>
