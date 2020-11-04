@@ -15,12 +15,16 @@ module PdfRepresentable
     if success
       raise "Java app did not create PDF file for #{oid}" unless File.exist? temp_pdf_file
       metadata = { 'generated': generated }
-      S3Service.upload_image(temp_pdf_file.to_s, "#{Partridge::Pairtree.oid_to_pairtree(oid)}/#{oid}.pdf", "application/pdf", metadata)
+      S3Service.upload_image(temp_pdf_file.to_s, remote_pdf_path, "application/pdf", metadata)
       File.delete temp_pdf_file
     else
       File.delete temp_pdf_file if File.exist?(temp_pdf_file)
       raise "PDF Java app returned non zero response code for #{oid}"
     end
+  end
+
+  def remote_pdf_path
+    "#{Partridge::Pairtree.oid_to_pairtree(oid)}/#{oid}.pdf"
   end
 
   def pdf_generator_json
@@ -47,7 +51,7 @@ module PdfRepresentable
       child_objects.map do |child|
         pages << {
           "caption" => child['label'] || "",
-          "file" => S3Service.presigned_url(child.remote_ptiff_path, 6000) # "https://collections-test.library.yale.edu/iiif/2/#{child['oid']}/full/!700,1000/0/default.jpg"
+          "file" => S3Service.presigned_url(child.remote_ptiff_path, 24_000) # "https://collections-test.library.yale.edu/iiif/2/#{child['oid']}/full/!700,1000/0/default.jpg"
         }
       end
       pages
