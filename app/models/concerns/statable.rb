@@ -3,7 +3,7 @@
 module Statable
   extend ActiveSupport::Concern
   def notes_for_batch_process(batch_process_id)
-    note_records(batch_process_id).each_with_object({}) { |n, i| i[n.params[:status]] = n.created_at; }
+    @notes_for_batch_process ||= note_records(batch_process_id).each_with_object({}) { |n, i| i[n.params[:status]] = n.created_at; }
   end
 
   def start_note(notes)
@@ -59,8 +59,12 @@ module Statable
   end
 
   def failures_for_batch_process(batch_process_id)
+    @failures_for_batch_process ||= failures_to_hash(batch_process_id)
+  end
+
+  def failures_to_hash(batch_process_id)
     failures = []
-    note_records(batch_process_id).each do |failure|
+    note_records(batch_process_id).map do |failure|
       next unless failure.params[:status] == "failed"
       failure_note = {}
       failure_note["reason"] = failure.params[:reason]
