@@ -7,7 +7,7 @@ class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
 
   # def initialize(params, opts = {})
   #   @view = opts[:view_context]
-  #   super
+  # super
   # end
 
   def view_columns
@@ -32,6 +32,7 @@ class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    # ParentObject.where(oid: params[:id])
+    puts '>>>>> BatchProcessParentDatatable'
+    ParentObject.where(oid: params[:id])
   end
 end
