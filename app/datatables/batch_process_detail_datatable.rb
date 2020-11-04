@@ -17,7 +17,7 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
       parent_oid: { source: 'BatchConnection.connectable_id', cond: :like, searchable: true },
       time: { source: 'BatchConnection.created_at', cond: :like, searchable: true },
       children: { source: 'BatchConnection.connectable&.child_object_count', cond: :like, searchable: true },
-      status: { cond: :null_value, searchable: false, orderable: false } # remove "orderable: false" once this column has a value
+      status: { source: 'BatchConnection.status', cond: :like, searchable: true }
     }
   end
 
