@@ -72,18 +72,19 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def processing_event(message, status = 'info', current_batch_process = self.current_batch_process, current_batch_connection = self.current_batch_connection)
     IngestNotification.with(parent_object_id: id, status: status, reason: message, batch_process_id: current_batch_process&.id).deliver_all
-    current_batch_connection.update_status!
+    current_batch_connection&.update_status!
   end
 
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
   # OR if the authoritative metaadata source changes
   # OR if the metadata_update accessor is set
-  def setup_metadata_job
+  def setup_metadata_job(current_batch_connection = self.current_batch_connection)
     if (created_at_previously_changed? && ladybird_json.blank?) ||
        previous_changes["authoritative_metadata_source_id"].present? ||
        metadata_update.present?
-      SetupMetadataJob.perform_later(self, current_batch_process)
-      processing_event("Processing has been queued", "processing-queued")
+      current_batch_connection&.save! unless current_batch_connection&.persisted?
+      SetupMetadataJob.perform_later(self, current_batch_process, current_batch_connection)
+      processing_event("Processing has been queued", "processing-queued", current_batch_process, current_batch_connection)
     end
   end
 

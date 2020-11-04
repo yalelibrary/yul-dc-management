@@ -7,8 +7,9 @@ class GenerateManifestJob < ApplicationJob
     -30
   end
 
-  def perform(parent_object, current_batch_process)
+  def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     parent_object.current_batch_process = current_batch_process
+    parent_object.current_batch_connection = current_batch_connection
     generate_manifest(parent_object)
     index_to_solr(parent_object)
   end
