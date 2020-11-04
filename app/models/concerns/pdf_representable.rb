@@ -24,7 +24,7 @@ module PdfRepresentable
   end
 
   def remote_pdf_path
-    "#{Partridge::Pairtree.oid_to_pairtree(oid)}/#{oid}.pdf"
+    "pdfs/#{Partridge::Pairtree.oid_to_pairtree(oid)}/#{oid}.pdf"
   end
 
   def pdf_generator_json
