@@ -22,16 +22,6 @@ class BatchProcess < ApplicationRecord
     end
   end
 
-  def kind
-    if csv.present?
-      'CSV'
-    elsif mets_xml.present?
-      'METS'
-    else
-      'Unknown'
-    end
-  end
-
   def file=(value)
     @file = value
     self[:file_name] = file.original_filename
@@ -68,8 +58,9 @@ class BatchProcess < ApplicationRecord
                                                         MetadataSource.find_by(metadata_cloud_name: 'ladybird')
                                                       end
         parent_object.current_batch_process = self
+        parent_object.current_batch_connection = batch_connections.create(connectable: parent_object)
       end
-      batch_connections.build(connectable: po)
+      po.current_batch_connection ||= batch_connections.build(connectable: po)
     end
   end
 

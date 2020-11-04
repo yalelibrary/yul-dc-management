@@ -22,4 +22,29 @@ RSpec.describe BatchConnection, type: :model, prep_metadata_sources: true do
     expect(parent_object.batch_connections.first).to eq batch_process.batch_connections.first
     expect(parent_object.batch_connections.first.connectable.child_object_count).to eq parent_object.child_object_count
   end
+
+  describe "running the background job" do
+    around do |example|
+      perform_enqueued_jobs do
+        example.run
+      end
+    end
+
+    before do
+      stub_ptiffs_and_manifests
+      stub_metadata_cloud("2004628")
+      stub_metadata_cloud("16414889")
+      stub_metadata_cloud("14716192")
+      stub_metadata_cloud("16854285")
+      stub_metadata_cloud("16057779")
+    end
+    it "gets a complete status when a complete notification is emitted" do
+      batch_process.file = csv_upload
+      batch_process.run_callbacks :create
+      po = ParentObject.find(2_034_600)
+      # expect(po.status_for_batch_process(batch_process.id)).to eq "Complete"
+      batch_connection = batch_process.batch_connections.detect { |b| b.connectable == po }
+      expect(batch_connection.status).to eq "Complete"
+    end
+  end
 end
