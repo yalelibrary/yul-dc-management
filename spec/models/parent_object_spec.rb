@@ -167,6 +167,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         expect(parent_object.reload.child_object_count).to eq 2
         expect(ChildObject.where(parent_object_oid: "2005512").count).to eq 2
       end
+      
+      it "generated pdf json correctly" do 
+        expect(parent_object.pdf_generator_json).not_to be_nil
+      end
     end
 
     context "a newly created ParentObject with Voyager as authoritative_metadata_source" do
