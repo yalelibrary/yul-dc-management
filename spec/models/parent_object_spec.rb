@@ -171,6 +171,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       it "generated pdf json correctly" do
         expect(parent_object.pdf_generator_json).not_to be_nil
       end
+
+      it "pdf path on S3" do
+        expect(parent_object.remote_pdf_path).not_to be_nil
+      end
     end
 
     context "a newly created ParentObject with Voyager as authoritative_metadata_source" do
