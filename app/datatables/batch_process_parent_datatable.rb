@@ -12,17 +12,17 @@ class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
 
   def view_columns
     @view_columns ||= {
-      child_oid: { source: '', cond: :like, searchable: true },
-      time: { source: '', cond: :like, searchable: true },
+      child_oid: { source: 'ChildObject.oid' },
+      time: { source: '', cond: :like, searchable: true, orderable: false },
       status: { cond: :null_value, searchable: false, orderable: false }
     }
   end
 
   def data
     # rubocop:disable Rails/OutputSafety
-    records.map do |parent_object|
+    records.map do |child_object|
       {
-        child_oid: 'TODO',
+        child_oid: child_object.oid,
         time: 'TODO',
         status: 'TODO',
         DT_RowId: 'TODO'
@@ -32,7 +32,6 @@ class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    puts '>>>>> BatchProcessParentDatatable'
-    ParentObject.where(oid: params[:id])
+    ChildObject.where(parent_object_oid: params[:oid])
   end
 end
