@@ -16,7 +16,9 @@ module Statable
 
   def status_for_batch_process(batch_process_id)
     notes = notes_for_batch_process(batch_process_id)
-    if finished_note(notes)
+    if notes.empty?
+      "Pending"
+    elsif finished_note(notes)
       "Complete"
     elsif failures_for_batch_process(batch_process_id).nil?
       "In progress - no failures"
