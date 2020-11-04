@@ -5,22 +5,22 @@ module PdfRepresentable
 
   def generate_pdf
     raise "No authoritative_json to create PDF for #{oid}" unless authoritative_json
-    temp_json_file = Tempfile.new("#{oid}_pdf_json")
-    temp_json_file.write(pdf_generator_json)
-    temp_json_file.close
-    temp_pdf_file = "#{temp_json_file.path}.pdf"
-    cmd = "java -jar jpegs2pdf-1.0.jar #{temp_json_file.path} #{temp_pdf_file}"
-    success = system(cmd)
-    temp_json_file.delete
-    if success
-      raise "Java app did not create PDF file for #{oid}" unless File.exist? temp_pdf_file
-      metadata = { 'generated': generated }
-      S3Service.upload_image(temp_pdf_file.to_s, remote_pdf_path, "application/pdf", metadata)
-      File.delete temp_pdf_file
-    else
-      File.delete temp_pdf_file if File.exist?(temp_pdf_file)
-      raise "PDF Java app returned non zero response code for #{oid}"
-    end
+    # temp_json_file = Tempfile.new("#{oid}_pdf_json")
+    # temp_json_file.write(pdf_generator_json)
+    # temp_json_file.close
+    # temp_pdf_file = "#{temp_json_file.path}.pdf"
+    # cmd = "java -jar jpegs2pdf-1.0.jar #{temp_json_file.path} #{temp_pdf_file}"
+    # success = system(cmd)
+    # temp_json_file.delete
+    # if success
+    #   raise "Java app did not create PDF file for #{oid}" unless File.exist? temp_pdf_file
+    #   metadata = { 'generated': generated }
+    #   S3Service.upload_image(temp_pdf_file.to_s, remote_pdf_path, "application/pdf", metadata)
+    #   File.delete temp_pdf_file
+    # else
+    #   File.delete temp_pdf_file if File.exist?(temp_pdf_file)
+    #   raise "PDF Java app returned non zero response code for #{oid}"
+    # end
   end
 
   def remote_pdf_path

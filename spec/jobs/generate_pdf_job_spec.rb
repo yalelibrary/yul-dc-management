@@ -34,5 +34,8 @@ RSpec.describe GeneratePdfJob, type: :job do
         generate_pdf_job.perform(parent_object, batch_process)
       end.to raise_error
     end
+    it "has correct priority" do
+      expect(generate_pdf_job.default_priority).to eq(-10)
+    end
   end
 end
