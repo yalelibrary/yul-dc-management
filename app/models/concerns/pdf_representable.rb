@@ -49,7 +49,7 @@ module PdfRepresentable
       child_objects.map do |child|
         pages << {
           "caption" => child['label'] || "",
-          "file" => S3Service.presigned_url(child.remote_ptiff_path, 24_000) # "https://collections-test.library.yale.edu/iiif/2/#{child['oid']}/full/!700,1000/0/default.jpg"
+          "file" => S3Service.presigned_url(child.remote_ptiff_path, 24_000)
         }
       end
       pages
