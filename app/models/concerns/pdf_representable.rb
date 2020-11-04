@@ -31,7 +31,6 @@ module PdfRepresentable
     title = extract_flat_field_value(authoritative_json, "title", "No Title")
     properties = pdf_properties title, generated
     children = child_pages
-    return nil if children.empty?
     json_hash = {
       "displayCoverPage" => true,
       "title" => title,
