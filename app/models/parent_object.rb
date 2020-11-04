@@ -18,6 +18,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_save :setup_metadata_job
   after_update :solr_index_job # we index from the fetch job on create
   after_destroy :solr_delete
+  after_destroy :note_deletion
   paginates_per 50
 
   def self.visibilities
@@ -70,9 +71,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     processing_event("Metadata has been fetched", "metadata-fetched") if current_batch_process
   end
 
-  def processing_event(message, status = 'info', current_batch_process = self.current_batch_process)
+  def processing_event(message, status = 'info', current_batch_process = self.current_batch_process, current_batch_connection = self.current_batch_connection)
     IngestNotification.with(parent_object_id: id, status: status, reason: message, batch_process_id: current_batch_process&.id).deliver(User.first)
-    # TODO pass batch_conneciton insteado of batch_process all the way to here everywhere
+    # TODO: pass batch_conneciton insteado of batch_process all the way to here everywhere
     current_batch_connection&.update_status!
   end
 

@@ -14,16 +14,29 @@ module Statable
     finished_states.map { |state| notes[state] }.first
   end
 
+  def deleted_note(notes)
+    notes["parent-deleted"]
+  end
+
   def status_for_batch_process(batch_process_id)
     notes = notes_for_batch_process(batch_process_id)
+    return "Unknown" if notes.empty?
     if finished_note(notes)
       "Complete"
+    elsif deleted_note(notes)
+      "Parent object deleted"
     elsif failures_for_batch_process(batch_process_id).nil?
       "In progress - no failures"
     elsif failures_for_batch_process(batch_process_id)
       "Failed"
     else
       "Unknown status"
+    end
+  end
+
+  def note_deletion
+    batch_connections.each do |batch_connection|
+      processing_event("The parent object was deleted", 'parent-deleted', batch_connection.batch_process, batch_connection)
     end
   end
 

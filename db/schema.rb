@@ -110,7 +110,6 @@ ActiveRecord::Schema.define(version: 2020_11_03_201402) do
     t.datetime "read_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index "((params ->> 'parent_object_id'::text))", name: "notifications_expr_idx"
     t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient_type_and_recipient_id"
   end
 

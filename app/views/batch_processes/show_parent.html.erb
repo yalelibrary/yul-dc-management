@@ -57,6 +57,7 @@
     </tr>
   </thead>
   <% if @parent_object %>
+    <% byebug %>
     <% @parent_object&.child_objects.each do |child| %>
       <tr>
         <td class="child_oid"><%= child ? link_to(child.oid, show_child_batch_process_path(oid: child.parent_object_oid, child_oid: child.oid)) : "(pending or deleted)" %></td>

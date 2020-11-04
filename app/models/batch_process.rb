@@ -22,16 +22,6 @@ class BatchProcess < ApplicationRecord
     end
   end
 
-  def kind
-    if csv.present?
-      'CSV'
-    elsif mets_xml.present?
-      'METS'
-    else
-      'Unknown'
-    end
-  end
-
   def file=(value)
     @file = value
     self[:file_name] = file.original_filename
@@ -127,7 +117,7 @@ class BatchProcess < ApplicationRecord
   end
 
   def notifications
-    Notification.where(["params->>'batch_process_id' = :id", { id: self.id.to_s }])
+    Notification.where(["params->>'batch_process_id' = :id", { id: id.to_s }])
   end
 
   def last_notification_by_parent_object
