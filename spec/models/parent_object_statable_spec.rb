@@ -67,9 +67,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
           batch_process_id: batch_process.id
         ).deliver_all
       )
-      parent_object
+
       batch_process.file = csv_upload
       batch_process.run_callbacks :create
+      parent_object.batch_connections.first.update_status!
       expect(parent_object.status_for_batch_process(batch_process.id)).to eq "Failed"
       expect(parent_object.latest_failure(batch_process.id)).to be_an_instance_of Hash
       expect(parent_object.latest_failure(batch_process.id)[:reason]).to eq "Fake failure 2"

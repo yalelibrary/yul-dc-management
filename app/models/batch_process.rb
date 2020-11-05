@@ -82,12 +82,11 @@ class BatchProcess < ApplicationRecord
   end
 
   def batch_status
-    current_status = statuses
+    current_status = status_hash
     if single_status(current_status)
       single_status(current_status)
     elsif current_status[:failed] != 0
-      percent = ((current_status[:failed] / current_status[:total]) * 100).round
-      "#{percent}% of parent objects have a failure."
+      "#{current_status[:failed]} out of #{current_status[:total].to_i} parent objects have a failure."
     else
       "Batch status unknown"
     end
@@ -103,11 +102,12 @@ class BatchProcess < ApplicationRecord
     end
   end
 
-  def statuses
-    connected_statuses = batch_connections.map do |batch_connection|
-      batch_connection.connectable&.status_for_batch_process(batch_connection.batch_process_id)
-    end
-    {
+  def connected_statuses
+    @connected_statuses ||= batch_connections.map(&:status)
+  end
+
+  def status_hash
+    @status_hash ||= {
       complete: connected_statuses.count("Complete"),
       in_progress: connected_statuses.count("In progress - no failures"),
       failed: connected_statuses.count("Failed"),

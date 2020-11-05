@@ -67,21 +67,4 @@ module Statable
         { reason: failures.last.params[:reason], time: failures.last[:created_at] }
       end
   end
-
-  def failures_for_batch_process(batch_process_id)
-    @failures_for_batch_process ||= failures_to_hash(batch_process_id)
-  end
-
-  def failures_to_hash(batch_process_id)
-    failures = []
-    note_records(batch_process_id).map do |failure|
-      next unless failure.params[:status] == "failed"
-      failure_note = {}
-      failure_note["reason"] = failure.params[:reason]
-      failure_note["time"] = failure.created_at
-      failures << failure_note
-    end
-    return nil if failures.empty?
-    failures
-  end
 end
