@@ -69,20 +69,21 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
         expect(page).to have_content("2020-10-08 14:17:01 UTC")
       end
 
-      xit "shows when the metadata was fetched for the parent object" do
-        visit show_parent_batch_process_path(batch_process, 16_057_779)
-        expect(page).to have_content("")
-      end
+      # TODO(alishaevn): determine how to mock "@notes" so the 3 specs below have data
+      # it "shows when the metadata was fetched for the parent object" do
+      #   visit show_parent_batch_process_path(batch_process, 16_057_779)
+      #   expect(page).to have_content("")
+      # end
 
-      xit "shows when the manifest was built for the parent object" do
-        visit show_parent_batch_process_path(batch_process, 16_057_779)
-        expect(page).to have_content("")
-      end
+      # it "shows when the manifest was built for the parent object" do
+      #   visit show_parent_batch_process_path(batch_process, 16_057_779)
+      #   expect(page).to have_content("")
+      # end
 
-      xit "shows when the metadata was indexed for the parent object" do
-        visit show_parent_batch_process_path(batch_process, 16_057_779)
-        expect(page).to have_content("")
-      end
+      # it "shows when the metadata was indexed for the parent object" do
+      #   visit show_parent_batch_process_path(batch_process, 16_057_779)
+      #   expect(page).to have_content("")
+      # end
 
       describe "after deleting a parent object" do
         before do
