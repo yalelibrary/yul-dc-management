@@ -3,7 +3,7 @@
 module Statable
   extend ActiveSupport::Concern
   def notes_for_batch_process(batch_process_id)
-    @notes_for_batch_process ||= note_records(batch_process_id).each_with_object({}) { |n, i| i[n.params[:status]] = n.created_at; }
+    note_records(batch_process_id).each_with_object({}) { |n, i| i[n.params[:status]] = n.created_at; }
   end
 
   def start_note(notes)
@@ -60,7 +60,6 @@ module Statable
 
   def latest_failure(batch_process_id)
     failures = note_records(batch_process_id).where("params->>'status' = 'failed'")
-    @latest_failure ||=
       if failures.empty?
         nil
       else
