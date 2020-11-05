@@ -26,4 +26,3 @@ RSpec.describe BatchProcessParentDatatable, type: :datatable, prep_metadata_sour
     end
   end
 end
-

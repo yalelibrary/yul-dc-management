@@ -51,7 +51,6 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
     describe "with a csv import" do
       it "has a link to the batch process detail page" do
         visit show_parent_batch_process_path(batch_process, 16_057_779)
-        # print page.html
         expect(page).to have_link(batch_process&.id&.to_s, href: "/batch_processes/#{batch_process.id}")
       end
 
@@ -70,46 +69,19 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
         expect(page).to have_content("2020-10-08 14:17:01 UTC")
       end
 
-      it "shows when the metadata was fetched for the parent object" do
+      xit "shows when the metadata was fetched for the parent object" do
         visit show_parent_batch_process_path(batch_process, 16_057_779)
-        # expect(page).to have_content("")
+        expect(page).to have_content("")
       end
 
-      it "shows when the manifest was built for the parent object" do
+      xit "shows when the manifest was built for the parent object" do
         visit show_parent_batch_process_path(batch_process, 16_057_779)
-        # expect(page).to have_content("")
+        expect(page).to have_content("")
       end
 
-      it "shows when the metadata was fetched for the parent object" do
+      xit "shows when the metadata was indexed for the parent object" do
         visit show_parent_batch_process_path(batch_process, 16_057_779)
-        # expect(page).to have_content("")
-      end
-
-      describe "after running the background jobs" do
-        around do |example|
-          perform_enqueued_jobs do
-            example.run
-          end
-        end
-
-        it "includes the notifications connected to this parent import" do
-          visit show_parent_batch_process_path(batch_process, 16_057_779)
-          # byebug
-          # expect(page).to have_content("Processing Queued")
-          # expect(page).to have_css("td.submission_time")
-          # st = page.find("td.submission_time").text
-          # expect(st.to_datetime).to be_an_instance_of DateTime
-          # expect(page).to have_css("td.processing_queued_time")
-          # pqt = page.find("td.processing_queued_time").text
-          # expect(pqt.to_datetime).to be_an_instance_of DateTime
-          # expect(page).to have_css("td.metadata_fetched")
-        end
-
-        it "includes the child oids" do
-          visit show_parent_batch_process_path(batch_process, 16_057_779)
-          # expect(page).to have_content("16057781")
-          # expect(page).to have_css("td.child_oid", text: "16057781")
-        end
+        expect(page).to have_content("")
       end
 
       describe "after deleting a parent object" do
