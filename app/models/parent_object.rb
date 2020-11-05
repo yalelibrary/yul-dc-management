@@ -6,6 +6,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include JsonFile
   include SolrIndexable
   include Statable
+  include PdfRepresentable
   has_many :dependent_objects
   has_many :child_objects, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
   has_many :batch_connections, as: :connectable
@@ -200,5 +201,16 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def child_oids
     child_objects.map(&:oid)
+  end
+
+  def extract_container_information(json)
+    return nil unless json
+    return [(json["box"] && "Box #{json['box']}"), (json["folder"] && "Folder #{json['folder']}")].join(", ") if json["box"] || json["folder"]
+    json["volumeEnumeration"] || json["containerGrouping"]
+  end
+
+  def dl_show_url
+    base = ENV['BLACKLIGHT_BASE_URL'] || 'localhost:3000'
+    "#{base}/catalog/#{oid}"
   end
 end
