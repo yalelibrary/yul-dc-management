@@ -25,11 +25,11 @@
   </p>
   <p>
     <strong>Manifest Build</strong>
-    <%= %>
+    <%= @notes["manifest-saved"] if @notes %>
   </p>
   <p>
     <strong>Metadata Index</strong>
-    <%= %>
+    <%= @notes["solr-indexed"] if @notes  %>
   </p>
 </div>
 
@@ -55,8 +55,7 @@
 
 <%= link_to 'Back', batch_process_path %>
 
-<%
-=begin%>
+
  <table class="table table-bordered table-striped">
   <thead class="thead-dark">
     <tr>
@@ -89,8 +88,7 @@
     <td class="solr_indexed"><%= @notes["solr-indexed"] if @notes %></td>
   </tr>
 </table>
-<%
-=end%>
+
 
  <table class="table table-bordered table-striped">
   <thead class="thead-dark">
