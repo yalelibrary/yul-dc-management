@@ -10,19 +10,19 @@ class GenerateManifestJob < ApplicationJob
   def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
-    generate_manifest(parent_object)
-    index_to_solr(parent_object)
+    generate_manifest(parent_object, current_batch_process, current_batch_connection)
+    index_to_solr(parent_object, current_batch_process, current_batch_connection)
   end
 
-  def generate_manifest(parent_object, _current_batch_process = parent_object.current_batch_process, _current_batch_connection = parent_object.current_batch_connection)
+  def generate_manifest(parent_object, current_batch_process = parent_object.current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     # generate iiif manifest and save it to s3
     upload = parent_object.iiif_presentation.save
     if upload
-      parent_object.processing_event("IIIF Manifest saved to S3", "manifest-saved")
+      parent_object.processing_event("IIIF Manifest saved to S3", "manifest-saved", current_batch_process, current_batch_connection)
       parent_object.generate_manifest = false
       parent_object.save!
     else
-      parent_object.processing_event("IIIF Manifest not saved to S3", "failed")
+      parent_object.processing_event("IIIF Manifest not saved to S3", "failed", current_batch_process, current_batch_connection)
     end
   rescue => e
     parent_object.processing_event("IIIF Manifest generation failed due to #{e.message}", "failed")
