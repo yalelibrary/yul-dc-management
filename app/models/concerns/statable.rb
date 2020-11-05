@@ -60,10 +60,10 @@ module Statable
 
   def latest_failure(batch_process_id)
     failures = note_records(batch_process_id).where("params->>'status' = 'failed'")
-      if failures.empty?
-        nil
-      else
-        { reason: failures.last.params[:reason], time: failures.last[:created_at] }
-      end
+    if failures.empty?
+      nil
+    else
+      { reason: failures.last.params[:reason], time: failures.last[:created_at] }
+    end
   end
 end
