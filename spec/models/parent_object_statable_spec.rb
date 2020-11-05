@@ -51,7 +51,19 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         IngestNotification.with(
           parent_object_id: parent_object.id,
           status: "failed",
-          reason: "Fake failure",
+          reason: "Fake failure 1",
+          batch_process_id: batch_process.id
+        ).deliver_all,
+        IngestNotification.with(
+          parent_object_id: parent_object.id,
+          status: "failed",
+          reason: "Fake failure 2",
+          batch_process_id: batch_process.id
+        ).deliver_all,
+        IngestNotification.with(
+          parent_object_id: parent_object.id,
+          status: "processing-queued",
+          reason: "Fake success",
           batch_process_id: batch_process.id
         ).deliver_all
       )
@@ -59,6 +71,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       batch_process.file = csv_upload
       batch_process.run_callbacks :create
       expect(parent_object.status_for_batch_process(batch_process.id)).to eq "Failed"
+      expect(parent_object.latest_failure(batch_process.id)).to be_an_instance_of Hash
+      expect(parent_object.latest_failure(batch_process.id)[:reason]).to eq "Fake failure 2"
+      expect(parent_object.latest_failure(batch_process.id)[:time]).to be
     end
   end
 end

@@ -68,19 +68,17 @@
       <td colspan="2">Parent object deleted, child objects cascade deleted</td>
     </tr>
   <% end %>
-  <% if @failures %>
+  <% if @latest_failure %>
   <table class="table table-bordered table-striped">
     <thead class="thead-dark">
       <tr>
-        <th scope="col"> Message </th>
+        <th scope="col"> Last Failure Message </th>
         <th scope="col"> Time </th>
       </tr>
     </thead>
-    <% @failures.each do |failure| %>
     <tr>
-      <td class="reason"><%= failure["reason"] %></td>
-      <td class="time"><%= failure["time"] %></td>
+      <td class="reason"><%= @latest_failure[:reason] %></td>
+      <td class="time"><%= @latest_failure[:time] %></td>
     </tr>
-    <% end %>
   <% end %>
 </table>
