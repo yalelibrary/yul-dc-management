@@ -172,6 +172,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         expect(parent_object.pdf_generator_json).not_to be_nil
       end
 
+      it "generated pdf json with correct link to production DL" do
+        expect(parent_object.pdf_generator_json).to include("https://collections.library.yale.edu/catalog/#{parent_object.oid}")
+      end
+
       it "pdf path on S3" do
         expect(parent_object.remote_pdf_path).not_to be_nil
       end
