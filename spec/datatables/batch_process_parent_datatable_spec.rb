@@ -5,10 +5,17 @@ require 'rails_helper'
 RSpec.describe BatchProcessParentDatatable, type: :datatable, prep_metadata_sources: true do
   columns = ['child_oid', 'time', 'status']
 
+  around do |example|
+    vpn = ENV['VPN']
+    ENV['VPN'] = 'false'
+    example.run
+    ENV['VPN'] = vpn
+  end
+
   describe 'batch process parent details' do
     let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'short_fixture_ids.csv')) }
 
-    it 'can render the correct details' do
+    it 'renders a complete data table' do
       user = FactoryBot.create(:user)
       parent_object = FactoryBot.create(:parent_object, oid: 16_057_779)
       child_object = FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_object)
