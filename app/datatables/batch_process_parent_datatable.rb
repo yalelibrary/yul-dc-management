@@ -22,10 +22,10 @@ class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
     # rubocop:disable Rails/OutputSafety
     records.map do |child_object|
       {
-        child_oid: child_object ? link_to(child_object&.oid, show_child_batch_process_path(oid: child_object.parent_object_oid, child_oid: child_object.oid)) : "(pending or deleted)",
+        child_oid: link_to(child_object&.oid, show_child_batch_process_path(oid: child_object&.parent_object_oid, child_oid: child_object&.oid)),
         time: child_object&.created_at,
-        status: child_object ? child_object.status_for_batch_process(params[:id]).to_s : "#{params[:oid]} deleted",
-        DT_RowId: child_object.oid
+        status: child_object&.status_for_batch_process(params[:id]).to_s,
+        DT_RowId: child_object&.oid
       }
     end
     # rubocop:enable Rails/OutputSafety
