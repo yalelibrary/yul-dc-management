@@ -87,6 +87,8 @@ class BatchProcess < ApplicationRecord
       single_status(current_status)
     elsif current_status[:failed] != 0
       "#{current_status[:failed]} out of #{current_status[:total].to_i} parent objects have a failure."
+    elsif current_status[:in_progress] != 0
+      "#{current_status[:in_progress]} out of #{current_status[:total].to_i} parent objects are in progress."
     else
       "Batch status unknown"
     end
