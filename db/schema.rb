@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_29_191359) do
+ActiveRecord::Schema.define(version: 2020_11_06_134716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2020_10_29_191359) do
     t.bigint "connectable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "status"
     t.index ["batch_process_id"], name: "index_batch_connections_on_batch_process_id"
     t.index ["connectable_type", "connectable_id"], name: "index_batch_connections_on_connectable_type_and_connectable_id"
   end
@@ -42,6 +43,7 @@ ActiveRecord::Schema.define(version: 2020_10_29_191359) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.string "file_name"
+    t.string "batch_status"
     t.index ["oid"], name: "index_batch_processes_on_oid"
     t.index ["user_id"], name: "index_batch_processes_on_user_id"
   end

@@ -7,10 +7,11 @@ class GeneratePtiffJob < ApplicationJob
     10
   end
 
-  def perform(child_object, current_batch_process)
+  def perform(child_object, current_batch_process, current_batch_connection = child_object.parent_object.current_batch_connection)
     child_object.parent_object.current_batch_process = current_batch_process
+    child_object.parent_object.current_batch_connection = current_batch_connection
     child_object.convert_to_ptiff!
     # Only generate manifest if all children are ready
-    GenerateManifestJob.perform_later(child_object.parent_object, current_batch_process) if child_object.parent_object.needs_a_manifest?
+    GenerateManifestJob.perform_later(child_object.parent_object, current_batch_process, current_batch_connection) if child_object.parent_object.needs_a_manifest?
   end
 end

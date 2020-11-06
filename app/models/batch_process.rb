@@ -22,16 +22,6 @@ class BatchProcess < ApplicationRecord
     end
   end
 
-  def kind
-    if csv.present?
-      'CSV'
-    elsif mets_xml.present?
-      'METS'
-    else
-      'Unknown'
-    end
-  end
-
   def file=(value)
     @file = value
     self[:file_name] = file.original_filename
@@ -68,8 +58,9 @@ class BatchProcess < ApplicationRecord
                                                         MetadataSource.find_by(metadata_cloud_name: 'ladybird')
                                                       end
         parent_object.current_batch_process = self
+        parent_object.current_batch_connection = batch_connections.build(connectable: parent_object)
       end
-      batch_connections.build(connectable: po)
+      po.current_batch_connection ||= batch_connections.build(connectable: po)
     end
   end
 
@@ -91,12 +82,13 @@ class BatchProcess < ApplicationRecord
   end
 
   def batch_status
-    current_status = statuses
+    current_status = status_hash
     if single_status(current_status)
       single_status(current_status)
     elsif current_status[:failed] != 0
-      percent = ((current_status[:failed] / current_status[:total]) * 100).round
-      "#{percent}% of parent objects have a failure."
+      "#{current_status[:failed]} out of #{current_status[:total].to_i} parent objects have a failure."
+    elsif current_status[:in_progress] != 0
+      "#{current_status[:in_progress]} out of #{current_status[:total].to_i} parent objects are in progress."
     else
       "Batch status unknown"
     end
@@ -112,11 +104,12 @@ class BatchProcess < ApplicationRecord
     end
   end
 
-  def statuses
-    connected_statuses = batch_connections.map do |batch_connection|
-      batch_connection.connectable&.status_for_batch_process(batch_connection.batch_process_id)
-    end
-    {
+  def connected_statuses
+    @connected_statuses ||= batch_connections.map(&:status)
+  end
+
+  def status_hash
+    @status_hash ||= {
       complete: connected_statuses.count("Complete"),
       in_progress: connected_statuses.count("In progress - no failures"),
       failed: connected_statuses.count("Failed"),
