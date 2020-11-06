@@ -24,7 +24,7 @@ class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
       {
         child_oid: child_object ? link_to(child_object&.oid, show_child_batch_process_path(oid: child_object.parent_object_oid, child_oid: child_object.oid)) : "(pending or deleted)",
         time: child_object&.created_at,
-        status: child_object&.present? ? child_object.status_for_batch_process(params[:id]).to_s : "#{params[:oid]} deleted",
+        status: child_object ? child_object.status_for_batch_process(params[:id]).to_s : "#{params[:oid]} deleted",
         DT_RowId: child_object.oid
       }
     end
