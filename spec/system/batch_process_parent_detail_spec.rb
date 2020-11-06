@@ -73,17 +73,17 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
       # it should list the value like the 3 specs above, instead of the titles
       it "shows when the metadata was fetched for the parent object" do
         visit show_parent_batch_process_path(batch_process, 16_057_779)
-        expect(page).to have_content("Metadata Fetched")
+        expect(page).to have_content("Metadata Fetch")
       end
 
       it "shows when the manifest was built for the parent object" do
         visit show_parent_batch_process_path(batch_process, 16_057_779)
-        expect(page).to have_content("Manifest Built")
+        expect(page).to have_content("Manifest Build")
       end
 
       it "shows when the metadata was indexed for the parent object" do
         visit show_parent_batch_process_path(batch_process, 16_057_779)
-        expect(page).to have_content("Metadata Indexed")
+        expect(page).to have_content("Metadata Index")
       end
 
       describe "after deleting a parent object" do
