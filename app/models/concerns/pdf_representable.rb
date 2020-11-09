@@ -67,7 +67,7 @@ module PdfRepresentable
       properties["Container information"] = container_information if container_information
       properties["Generated"] = generated
       properties["Terms of Use"] = "https://guides.library.yale.edu/about/policies/access"
-      properties["View in DL"] = dl_show_url.to_s
+      properties["View in DL"] = "https://collections.library.yale.edu/catalog/#{oid}"
       reshape_properties properties
     end
 

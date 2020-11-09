@@ -7,20 +7,28 @@ module Statable
   end
 
   def start_note(notes)
-    start_states.map { |state| notes[state] }.first
+    @start_note ||= start_states.map { |state| notes[state] }.first
   end
 
   def finished_note(notes)
-    finished_states.map { |state| notes[state] }.first
+    @finished_note ||= finished_states.map { |state| notes[state] }.first
+  end
+
+  def deleted_note(notes)
+    notes["parent-deleted"]
   end
 
   def status_for_batch_process(batch_process_id)
     notes = notes_for_batch_process(batch_process_id)
-    if finished_note(notes)
+    if notes.empty?
+      "Pending"
+    elsif finished_note(notes)
       "Complete"
-    elsif failures_for_batch_process(batch_process_id).nil?
+    elsif deleted_note(notes)
+      "Parent object deleted"
+    elsif latest_failure(batch_process_id).nil?
       "In progress - no failures"
-    elsif failures_for_batch_process(batch_process_id)
+    elsif latest_failure(batch_process_id)
       "Failed"
     else
       "Unknown status"
@@ -44,16 +52,18 @@ module Statable
     oid.to_s }])
   end
 
-  def failures_for_batch_process(batch_process_id)
-    failures = []
-    note_records(batch_process_id).each do |failure|
-      next unless failure.params[:status] == "failed"
-      failure_note = {}
-      failure_note["reason"] = failure.params[:reason]
-      failure_note["time"] = failure.created_at
-      failures << failure_note
+  def note_deletion
+    batch_connections.each do |batch_connection|
+      processing_event("The parent object was deleted", 'parent-deleted', batch_connection.batch_process, batch_connection)
     end
-    return nil if failures.empty?
-    failures
+  end
+
+  def latest_failure(batch_process_id)
+    failures = note_records(batch_process_id).where("params->>'status' = 'failed'")
+    if failures.empty?
+      nil
+    else
+      { reason: failures.last.params[:reason], time: failures.last[:created_at] }
+    end
   end
 end

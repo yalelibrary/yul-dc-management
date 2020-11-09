@@ -95,7 +95,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       expect(statuses).to include "manifest-saved"
       expect(statuses).to include "solr-indexed"
       expect(Notification.all.map { |note| note.params[:reason] }).to include "Processing has been queued"
-      expect(Notification.count).to eq(501)
+      expect(Notification.count).to eq(451)
     end
   end
 
@@ -170,6 +170,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
       it "generated pdf json correctly" do
         expect(parent_object.pdf_generator_json).not_to be_nil
+      end
+
+      it "generated pdf json with correct link to production DL" do
+        expect(parent_object.pdf_generator_json).to include("https://collections.library.yale.edu/catalog/#{parent_object.oid}")
       end
 
       it "pdf path on S3" do
