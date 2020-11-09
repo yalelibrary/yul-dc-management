@@ -30,6 +30,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       .to_return(status: 200)
     stub_metadata_cloud("16172421")
     stub_ptiffs
+    stub_pdfs
     parent_object
     # The parent object gets its metadata populated via a background job, and we can't assume that has run,
     # so stub the part of the metadata we need for the iiif_presentation

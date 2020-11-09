@@ -16,6 +16,7 @@ module StubRequestHelper
   def stub_ptiffs_and_manifests
     stub_ptiffs
     stub_manifests
+    stub_pdfs
   end
 
   # rubocop:disable RSpec/AnyInstance
@@ -31,6 +32,10 @@ module StubRequestHelper
     allow_any_instance_of(IiifPresentation).to receive(:save).and_return(true)
     allow_any_instance_of(IiifPresentation).to receive(:save).and_return(true)
     allow_any_instance_of(ParentObject).to receive(:manifest_completed?).and_return(true)
+  end
+
+  def stub_pdfs
+    allow_any_instance_of(PdfRepresentable).to receive(:generate_pdf).and_return(true)
   end
   # rubocop:enable RSpec/AnyInstance
 end
