@@ -10,7 +10,8 @@ module PdfRepresentable
     temp_json_file.close
     temp_pdf_file = "#{temp_json_file.path}.pdf"
     cmd = "java -jar jpegs2pdf-1.0.jar #{temp_json_file.path} #{temp_pdf_file}"
-    success = system(cmd)
+    _, stderr, status = Open3.capture3(cmd)
+    success = status.exitstatus.zero?
     temp_json_file.delete
     if success
       raise "Java app did not create PDF file for #{oid}" unless File.exist? temp_pdf_file
@@ -18,7 +19,7 @@ module PdfRepresentable
       File.delete temp_pdf_file
     else
       File.delete temp_pdf_file if File.exist?(temp_pdf_file)
-      raise "PDF Java app returned non zero response code for #{oid}"
+      raise "PDF Java app returned non zero response code for #{oid}: #{stderr}"
     end
   end
 
