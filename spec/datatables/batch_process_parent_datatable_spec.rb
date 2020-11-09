@@ -5,6 +5,10 @@ require 'rails_helper'
 RSpec.describe BatchProcessParentDatatable, type: :datatable, prep_metadata_sources: true do
   columns = ['child_oid', 'time', 'status']
 
+  before do
+    login_as user
+  end
+
   around do |example|
     vpn = ENV['VPN']
     ENV['VPN'] = 'false'
