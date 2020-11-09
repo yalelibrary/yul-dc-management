@@ -12,59 +12,33 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       created_at: '2020-10-08 14:17:01'
     )
   end
-  # let(:parent_object) do
-  #   FactoryBot.create(
-  #     :parent_object,
-  #     oid: '16057779'
-  #   )
-  # end
-  let(:child_object) do
-    FactoryBot.create(
-      :child_object,
-      parent_object: :parent_object
-    )
-  end
-
-  before do
-    login_as user
-  end
-
-  around do |example|
-    vpn = ENV['VPN']
-    ENV['VPN'] = 'false'
-    example.run
-    ENV['VPN'] = vpn
-  end
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: 16_057_779) }
+  let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_object) }
 
   describe 'with expected success' do
     before do
-      # stub_metadata_cloud('2004628')
-      # stub_metadata_cloud('2030006')
-      # stub_metadata_cloud('2034600')
-      # stub_metadata_cloud('16057779')
-      # stub_metadata_cloud('15234629')
-      # stub_ptiffs_and_manifests
+      stub_metadata_cloud("16057779")
+      stub_ptiffs_and_manifests
+      login_as user
+      byebug
+      # TODO(alishaevn): determine what values to give to the path below instead of "...."
+      visit show_child_batch_process_path(....)
     end
 
     describe 'with a csv import' do
       it 'has a link to the batch process detail page' do
-        byebug
-        visit show_child_batch_process_path(child_object, batch_process, batch_process.parent_objects.first.oid)
         expect(page).to have_link(batch_process&.id&.to_s, href: "/batch_processes/#{batch_process.id}")
       end
 
       it 'has a link to the parent object page' do
-        visit show_child_batch_process_path(batch_process, 16_057_779)
         expect(page).to have_link('16057779 (current record)', href: '/parent_objects/16057779')
       end
 
       it 'shows the status of the child object' do
-        visit show_child_batch_process_path(batch_process, 16_057_779)
         expect(page).to have_content('In progress - no failures')
       end
 
       it 'shows the duration of the batch process' do
-        visit show_child_batch_process_path(batch_process, 16_057_779)
         expect(page).to have_content('2020-10-08 14:17:01 UTC')
       end
     end
