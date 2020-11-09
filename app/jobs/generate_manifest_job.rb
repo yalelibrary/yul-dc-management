@@ -12,7 +12,7 @@ class GenerateManifestJob < ApplicationJob
     parent_object.current_batch_connection = current_batch_connection
     generate_manifest(parent_object, current_batch_process, current_batch_connection)
     index_to_solr(parent_object, current_batch_process, current_batch_connection)
-    GeneratePdfJob.perform_later(parent_object, current_batch_process)
+    GeneratePdfJob.perform_later(parent_object, current_batch_process, current_batch_connection)
   end
 
   def generate_manifest(parent_object, current_batch_process = parent_object.current_batch_process, current_batch_connection = parent_object.current_batch_connection)
