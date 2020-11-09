@@ -9,7 +9,7 @@ module PdfRepresentable
     temp_json_file.write(pdf_generator_json)
     temp_json_file.close
     temp_pdf_file = "#{temp_json_file.path}.pdf"
-    output = `java -jar jpegs2pdf-1.0.jar "#{temp_json_file.path}" "#{temp_pdf_file}"`
+    output = `java -jar jpegs2pdf-1.0.jar "#{temp_json_file.path}" "#{temp_pdf_file}" 2>&1`
     success = $CHILD_STATUS.success?
     temp_json_file.delete
     if success
