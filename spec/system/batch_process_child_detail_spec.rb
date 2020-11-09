@@ -20,9 +20,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       stub_metadata_cloud("16057779")
       stub_ptiffs_and_manifests
       login_as user
-      byebug
-      # TODO(alishaevn): determine what values to give to the path below instead of "...."
-      visit show_child_batch_process_path(....)
+      visit show_child_batch_process_path(child_oid: child_object.oid, id: batch_process.id, oid: child_object.parent_object_oid)
     end
 
     describe 'with a csv import' do
@@ -34,12 +32,16 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
         expect(page).to have_link('16057779 (current record)', href: '/parent_objects/16057779')
       end
 
+      it 'has a link to the child object page' do
+        expect(page).to have_link('1 (current record)', href: '/child_objects/1')
+      end
+
       it 'shows the status of the child object' do
         expect(page).to have_content('In progress - no failures')
       end
 
       it 'shows the duration of the batch process' do
-        expect(page).to have_content('2020-10-08 14:17:01 UTC')
+        expect(page).to have_content('seconds')
       end
     end
   end
