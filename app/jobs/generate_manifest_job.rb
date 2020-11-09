@@ -11,6 +11,7 @@ class GenerateManifestJob < ApplicationJob
     parent_object.current_batch_process = current_batch_process
     generate_manifest(parent_object)
     index_to_solr(parent_object)
+    GeneratePdfJob.perform_later(parent_object, current_batch_process)
   end
 
   def generate_manifest(parent_object)
