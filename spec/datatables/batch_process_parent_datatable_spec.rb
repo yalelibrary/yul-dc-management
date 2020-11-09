@@ -10,10 +10,10 @@ RSpec.describe BatchProcessParentDatatable, type: :datatable, prep_metadata_sour
   end
 
   around do |example|
-    vpn = ENV['VPN']
-    ENV['VPN'] = 'false'
+    original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
+    ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
     example.run
-    ENV['VPN'] = vpn
+    ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
   end
 
   describe 'batch process parent details' do
