@@ -13,6 +13,10 @@ class IiifPresentation
     @manifest_base_url ||= (ENV["IIIF_MANIFESTS_BASE_URL"] || "http://localhost/manifests")
   end
 
+  def pdf_base_url
+    @pdf_base_url ||= (ENV["PDF_BASE_URL"] || "http://localhost/pdfs")
+  end
+
   def image_url(oid)
     "#{image_base_url}/2/#{oid}"
   end
@@ -44,7 +48,18 @@ class IiifPresentation
     return @sequence if @sequence
     @sequence = IIIF::Presentation::Sequence.new
     @sequence["@id"] = "#{ENV['IIIF_MANIFESTS_BASE_URL']}/sequence/#{oid}"
+    @sequence["rendering"] = rendering
     @sequence
+  end
+
+  def rendering
+    [
+      {
+        "@id" => "#{pdf_base_url}/#{@oid}.pdf",
+        "format" => "application/pdf",
+        "label" => "Download as PDF"
+      }
+    ]
   end
 
   def add_image_to_canvas(child, canvas)
