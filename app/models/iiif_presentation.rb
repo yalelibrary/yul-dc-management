@@ -39,6 +39,7 @@ class IiifPresentation
   def manifest
     return @manifest if @manifest
     @manifest = IIIF::Presentation::Manifest.new(seed)
+    @manifest["rendering"] = rendering
     @manifest.sequences << sequence
     add_canvases_to_sequence(@manifest.sequences.first)
     @manifest

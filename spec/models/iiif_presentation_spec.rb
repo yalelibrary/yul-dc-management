@@ -76,6 +76,14 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       expect(iiif_presentation.manifest.sequences.class).to eq Array
     end
 
+    it "has a rendering in the manifest" do
+      expect(iiif_presentation.manifest["rendering"].class).to eq Array
+      expect(iiif_presentation.manifest["rendering"].first.class).to eq Hash
+      expect(iiif_presentation.manifest["rendering"].first["@id"]).to eq "#{ENV['PDF_BASE_URL']}/#{oid}.pdf"
+      expect(iiif_presentation.manifest["rendering"].first["format"]).to eq "application/pdf"
+      expect(iiif_presentation.manifest["rendering"].first["label"]).to eq "Download as PDF"
+    end
+
     it "has a rendering in the sequence" do
       expect(iiif_presentation.manifest.sequences.first["rendering"].class).to eq Array
       expect(iiif_presentation.manifest.sequences.first["rendering"].first.class).to eq Hash
