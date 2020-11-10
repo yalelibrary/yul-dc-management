@@ -17,7 +17,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
 
   describe 'with expected success' do
     before do
-      stub_metadata_cloud("16057779")
+      stub_metadata_cloud('16057779')
       stub_ptiffs_and_manifests
       login_as user
       visit show_child_batch_process_path(child_oid: child_object.oid, id: batch_process.id, oid: child_object.parent_object_oid)
@@ -29,7 +29,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       end
 
       it 'has a link to the parent object page' do
-        expect(page).to have_link('16057779 (current record)', href: '/parent_objects/16057779')
+        expect(page).to have_link('16057779', href: "/batch_processes/#{batch_process.id}/parent_objects/16057779")
       end
 
       it 'has a link to the child object page' do
@@ -37,7 +37,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       end
 
       it 'shows the status of the child object' do
-        expect(page).to have_content('In progress - no failures')
+        expect(page).to have_content('Pending')
       end
 
       it 'shows the duration of the batch process' do
