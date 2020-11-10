@@ -347,6 +347,19 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     end
   end
 
+  context "chooses correct values for container information" do
+    let(:parent_object) { described_class.create(oid: "2004628", visibility: 'Public') }
+    it 'returns container grouping if present' do
+      expect(parent_object.extract_container_information("containerGrouping" => "container info", "box" => "box 1", "folder" => "folder 1", "volumeEnumeration" => "VE 101")).to eq 'container info'
+    end
+    it 'returns box, folder if containerGrouping not present' do
+      expect(parent_object.extract_container_information("box" => "box 1", "folder" => "folder 1", "volumeEnumeration" => "VE 101")).to eq 'box 1, folder 1'
+    end
+    it 'returns volumeEnumeration if other fields not present' do
+      expect(parent_object.extract_container_information("volumeEnumeration" => "VE 101")).to eq 'VE 101'
+    end
+  end
+
   context "a new ParentObject with no info" do
     it "has the expected defaults" do
       po = described_class.new

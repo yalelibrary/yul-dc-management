@@ -210,8 +210,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def extract_container_information(json)
     return nil unless json
-    return [(json["box"] && "Box #{json['box']}"), (json["folder"] && "Folder #{json['folder']}")].join(", ") if json["box"] || json["folder"]
-    json["volumeEnumeration"] || json["containerGrouping"]
+    return json["containerGrouping"] unless json["containerGrouping"].nil? || json["containerGrouping"].empty?
+    return [(json["box"] && (json['box']).to_s), (json["folder"] && (json['folder']).to_s)].join(", ") if json["box"] || json["folder"]
+    json["volumeEnumeration"]
   end
 
   def dl_show_url
