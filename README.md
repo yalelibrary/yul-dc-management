@@ -271,3 +271,15 @@ Any time you pull a branch with a Gemfile change you need to pull or build a new
 ## Test coverage
 
 We use [coveralls](https://coveralls.io/github/yalelibrary/yul-dc-management) to measure test coverage. More details [here](https://github.com/yalelibrary/yul-dc-management/wiki/code-coverage).
+
+
+## Authorization
+
+We use Omniauth with cas to authenticate users.
+
+The uids of authorized cas users are read from a CSV at `ENV['SAMPLE_BUCKET']/authorization/cas_users.csv`.
+That list of uids is used to seed the database when the app starts.  Uids not found in that file will be deleted.
+
+To override the CSV on S3, place a csv in `config/cas_users.csv`.
+
+To upload a new CSV to S3, place the new csv in `config/cas_users.csv` and run the rake task from management shell with `rake authorized_users:upload`.
