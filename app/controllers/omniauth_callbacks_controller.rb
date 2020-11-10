@@ -9,13 +9,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def cas
     @user = User.where(provider: auth.provider, uid: auth.uid).first
-    if @user.nil?
-      @user = User.create(
-        provider: auth.provider,
-        uid: auth.uid
-      )
-    end
-
     if @user
       sign_in @user, event: :authentication # this will throw if @user is not activated
       redirect_to request.env['omniauth.origin'] || root_path
