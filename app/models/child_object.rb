@@ -20,7 +20,7 @@ class ChildObject < ApplicationRecord
     width_and_height(remote_metadata)
   end
 
-  def processing_event(message, status = 'info')
+  def processing_event(message, status = 'info', _current_batch_process = parent_object&.current_batch_process, _current_batch_connection = parent_object&.current_batch_connection)
     IngestNotification.with(parent_object_id: parent_object&.id, child_object_id: id, status: status, reason: message, batch_process_id: parent_object&.current_batch_process&.id).deliver(User.first)
   end
 
@@ -30,6 +30,14 @@ class ChildObject < ApplicationRecord
 
   def remote_metadata
     S3Service.remote_metadata(remote_ptiff_path)
+  end
+
+  def access_master_url
+    if ENV['ACCESS_MASTER_MOUNT'] == "s3"
+      S3Service.presigned_url(remote_access_master_path, 120)
+    else
+      "/#{access_master_path}"
+    end
   end
 
   def access_master_path

@@ -6,13 +6,16 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
   around do |example|
     original_manifests_base_url = ENV['IIIF_MANIFESTS_BASE_URL']
     original_image_base_url = ENV["IIIF_IMAGE_BASE_URL"]
+    original_pdf_url = ENV["PDF_BASE_URL"]
     ENV['IIIF_MANIFESTS_BASE_URL'] = "http://localhost/manifests"
     ENV['IIIF_IMAGE_BASE_URL'] = "http://localhost:8182/iiif"
+    ENV["PDF_BASE_URL"] = "http://localhost/pdfs"
     perform_enqueued_jobs do
       example.run
     end
     ENV['IIIF_MANIFESTS_BASE_URL'] = original_manifests_base_url
     ENV['IIIF_IMAGE_BASE_URL'] = original_image_base_url
+    ENV["PDF_BASE_URL"] = original_pdf_url
   end
   let(:oid) { 16_172_421 }
   let(:iiif_presentation) { described_class.new(parent_object) }
@@ -27,6 +30,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       .to_return(status: 200)
     stub_metadata_cloud("16172421")
     stub_ptiffs
+    stub_pdfs
     parent_object
     # The parent object gets its metadata populated via a background job, and we can't assume that has run,
     # so stub the part of the metadata we need for the iiif_presentation
@@ -70,6 +74,22 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
 
     it "has a manifest with one or more sequences" do
       expect(iiif_presentation.manifest.sequences.class).to eq Array
+    end
+
+    it "has a rendering in the manifest" do
+      expect(iiif_presentation.manifest["rendering"].class).to eq Array
+      expect(iiif_presentation.manifest["rendering"].first.class).to eq Hash
+      expect(iiif_presentation.manifest["rendering"].first["@id"]).to eq "#{ENV['PDF_BASE_URL']}/#{oid}.pdf"
+      expect(iiif_presentation.manifest["rendering"].first["format"]).to eq "application/pdf"
+      expect(iiif_presentation.manifest["rendering"].first["label"]).to eq "Download as PDF"
+    end
+
+    it "has a rendering in the sequence" do
+      expect(iiif_presentation.manifest.sequences.first["rendering"].class).to eq Array
+      expect(iiif_presentation.manifest.sequences.first["rendering"].first.class).to eq Hash
+      expect(iiif_presentation.manifest.sequences.first["rendering"].first["@id"]).to eq "#{ENV['PDF_BASE_URL']}/#{oid}.pdf"
+      expect(iiif_presentation.manifest.sequences.first["rendering"].first["format"]).to eq "application/pdf"
+      expect(iiif_presentation.manifest.sequences.first["rendering"].first["label"]).to eq "Download as PDF"
     end
 
     it "has a sequence with an id" do

@@ -34,7 +34,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
     # rubocop:disable Rails/OutputSafety
     records.map do |parent_object|
       {
-        oid: link_to(parent_object.oid, parent_object_path(parent_object)) + get_blacklight_parent_url(parent_object.oid).html_safe,
+        oid: link_to(parent_object.oid, parent_object_path(parent_object)) + get_blacklight_parent_url(parent_object).html_safe,
         authoritative_source: parent_object.source_name,
         bib: parent_object.bib,
         holding: parent_object.holding,
@@ -59,13 +59,8 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
       " | #{link_to('Destroy', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' })}"
   end
 
-  def get_blacklight_parent_url(path)
-    "<br> <a class='btn btn-info btn-sm' href='#{blacklight_url(path)}' target='_blank' > Public View</a>"
-  end
-
-  def blacklight_url(path)
-    base = ENV['BLACKLIGHT_BASE_URL'] || 'localhost:3000'
-    "#{base}/catalog/#{path}"
+  def get_blacklight_parent_url(parent_object)
+    "<br> <a class='btn btn-info btn-sm' href='#{parent_object.dl_show_url}' target='_blank' > Public View</a>"
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName

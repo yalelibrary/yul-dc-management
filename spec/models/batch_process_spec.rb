@@ -29,15 +29,31 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         IngestNotification.with(
           parent_object_id: parent_object.id,
           status: "failed",
-          reason: "Fake failure",
+          reason: "Fake failure 1",
+          batch_process_id: batch_process_with_failure.id
+        ).deliver_all,
+        IngestNotification.with(
+          parent_object_id: parent_object.id,
+          status: "failed",
+          reason: "Fake failure 2",
+          batch_process_id: batch_process_with_failure.id
+        ).deliver_all,
+        IngestNotification.with(
+          parent_object_id: parent_object.id,
+          status: "processing-queued",
+          reason: "Fake success",
           batch_process_id: batch_process_with_failure.id
         ).deliver_all
       )
       parent_object
       batch_process_with_failure.file = csv_upload
       batch_process_with_failure.run_callbacks :create
+      parent_object.batch_connections.first.update_status!
       expect(parent_object.status_for_batch_process(batch_process_with_failure.id)).to eq "Failed"
-      expect(batch_process_with_failure.batch_status).to eq "20% of parent objects have a failure."
+      expect(parent_object.latest_failure(batch_process_with_failure.id)).to be_an_instance_of Hash
+      expect(parent_object.latest_failure(batch_process_with_failure.id)[:reason]).to eq "Fake failure 2"
+      expect(parent_object.latest_failure(batch_process_with_failure.id)[:time]).to be
+      expect(batch_process_with_failure.batch_status).to eq "1 out of 5 parent objects have a failure."
     end
   end
 

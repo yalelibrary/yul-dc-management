@@ -6,7 +6,7 @@
 </p>
 <p>
   <strong>Parent Object</strong>
-  <%= @parent_object.present? ? link_to("#{@parent_object.id} (current record)", parent_object_path(@parent_object)) : "#{params[:oid]} (pending or deleted)" %>
+  <%= link_to("#{params[:oid]}", show_parent_batch_process_path(@batch_process, oid: params["oid"])) %>
 </p>
 <p>
   <strong>Child Object</strong>
@@ -20,7 +20,10 @@
   <strong>Duration</strong>
   <%= @child_object.present? ? "#{@child_object.duration_for_batch_process(@batch_process.id)} seconds" : "#{params[:oid]} deleted" %>
 </p>
-
+<p>
+  <strong>Access Master</strong>
+  <%= link_to @child_object.access_master_path, @child_object.access_master_url %>
+</p>
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
     <tr>

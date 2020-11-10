@@ -40,7 +40,7 @@ module SolrIndexable
       archiveSpaceUri_ssi: aspace_uri,
       creator_ssim: json_to_index["creator"],
       creator_tesim: json_to_index["creator"],
-      box_ssim: extract_box_ssim(json_to_index),
+      box_ssim: extract_container_information(json_to_index),
       caption_tesim: child_captions,
       child_oids_ssim: child_oids,
       collectionId_ssim: json_to_index["collectionId"],
@@ -141,12 +141,5 @@ module SolrIndexable
       subject_topic_tsim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
       title_tsim: json_to_index["title"] # replaced by title_tesim
     }
-  end
-
-  # I do not think the current box_ssim is how we want to continue to do deal with differences in field names
-  # However I do not think we currently have enough information to create the alternative (Max)
-  # Ladybird json_to_index["box"] || Voyager json_to_index["volumeEnumeration"] || ArchiveSpace json_to_index["containerGrouping"]
-  def extract_box_ssim(json_to_index)
-    json_to_index["box"] || json_to_index["volumeEnumeration"] || json_to_index["containerGrouping"]
   end
 end

@@ -32,7 +32,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       expect(page).to have_content("2020-10-08 14:17:01")
     end
 
-    xit "can see the status of the parent object imports" do
+    it "can see the status of the parent object imports" do
       expect(page).to have_content("In progress - no failures")
     end
 
@@ -46,11 +46,12 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
         batch_process
         visit batch_process_path(batch_process)
         po = ParentObject.find(16_057_779)
-        po.delete
+        po.run_callbacks :destroy
+        po.destroy
         page.refresh
       end
 
-      xit "can still see the details of the import" do
+      it "can still see the details of the import" do
         expect(page).to have_content(batch_process.id.to_s)
         expect(page).to have_content('16057779')
         expect(page).to have_content('pending, or parent deleted')

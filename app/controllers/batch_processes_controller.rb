@@ -4,7 +4,7 @@ class BatchProcessesController < ApplicationController
   before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml, :show_parent, :show_child]
   before_action :set_parent_object, only: [:show_parent, :show_child]
   before_action :find_notes, only: [:show_parent]
-  before_action :find_failures, only: [:show_parent]
+  before_action :latest_failure, only: [:show_parent]
   before_action :set_child_object, only: [:show_child]
 
   def index
@@ -79,15 +79,15 @@ class BatchProcessesController < ApplicationController
     def set_child_object
       @child_object = ChildObject.find(params[:child_oid])
       @notes = @child_object.notes_for_batch_process(@batch_process.id)
-      @failures = @child_object.failures_for_batch_process(@batch_process.id)
+      @failures = @child_object.latest_failure(@batch_process.id)
     end
 
     def find_notes
       @notes = @parent_object.notes_for_batch_process(@batch_process.id) if @parent_object
     end
 
-    def find_failures
-      @failures = @parent_object.failures_for_batch_process(@batch_process.id) if @parent_object
+    def latest_failure
+      @latest_failure = @parent_object.latest_failure(@batch_process.id) if @parent_object
     end
 
     def batch_process_params

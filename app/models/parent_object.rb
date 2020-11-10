@@ -6,6 +6,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include JsonFile
   include SolrIndexable
   include Statable
+  include PdfRepresentable
   has_many :dependent_objects
   has_many :child_objects, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
   has_many :batch_connections, as: :connectable
@@ -13,10 +14,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   attr_accessor :metadata_update
   attr_accessor :current_batch_process
+  attr_accessor :current_batch_connection
   self.primary_key = 'oid'
   after_save :setup_metadata_job
   after_update :solr_index_job # we index from the fetch job on create
   after_destroy :solr_delete
+  after_destroy :note_deletion
   paginates_per 50
 
   def self.visibilities
@@ -39,7 +42,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     ['solr-indexed']
   end
 
-  def create_child_records(_current_batch_process)
+  def create_child_records(_current_batch_process, _current_batch_connection = current_batch_connection)
     return unless ladybird_json
     ladybird_json["children"].map.with_index(1) do |child_record, index|
       next if child_object_ids.include?(child_record["oid"])
@@ -55,7 +58,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   # Fetches the record from the authoritative_metadata_source
-  def default_fetch(current_batch_process = self.current_batch_process)
+  def default_fetch(current_batch_process = self.current_batch_process, _current_batch_connection = current_batch_connection)
     case authoritative_metadata_source&.metadata_cloud_name
     when "ladybird"
       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
@@ -69,19 +72,22 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     processing_event("Metadata has been fetched", "metadata-fetched") if current_batch_process
   end
 
-  def processing_event(message, status = 'info', current_batch_process = self.current_batch_process)
-    IngestNotification.with(parent_object_id: id, status: status, reason: message, batch_process_id: current_batch_process&.id).deliver_all
+  def processing_event(message, status = 'info', current_batch_process = self.current_batch_process, current_batch_connection = self.current_batch_connection)
+    IngestNotification.with(parent_object_id: id, status: status, reason: message, batch_process_id: current_batch_process&.id).deliver(User.first)
+    current_batch_connection&.save! unless current_batch_connection&.persisted?
+    current_batch_connection&.update_status!
   end
 
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
   # OR if the authoritative metaadata source changes
   # OR if the metadata_update accessor is set
-  def setup_metadata_job
+  def setup_metadata_job(current_batch_connection = self.current_batch_connection)
     if (created_at_previously_changed? && ladybird_json.blank?) ||
        previous_changes["authoritative_metadata_source_id"].present? ||
        metadata_update.present?
-      SetupMetadataJob.perform_later(self, current_batch_process)
-      processing_event("Processing has been queued", "processing-queued") if current_batch_process
+      current_batch_connection&.save! unless current_batch_connection&.persisted?
+      SetupMetadataJob.perform_later(self, current_batch_process, current_batch_connection)
+      processing_event("Processing has been queued", "processing-queued", current_batch_process, current_batch_connection)
     end
   end
 
@@ -200,5 +206,16 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def child_oids
     child_objects.map(&:oid)
+  end
+
+  def extract_container_information(json)
+    return nil unless json
+    return [(json["box"] && "Box #{json['box']}"), (json["folder"] && "Folder #{json['folder']}")].join(", ") if json["box"] || json["folder"]
+    json["volumeEnumeration"] || json["containerGrouping"]
+  end
+
+  def dl_show_url
+    base = ENV['BLACKLIGHT_BASE_URL'] || 'localhost:3000'
+    "#{base}/catalog/#{oid}"
   end
 end
