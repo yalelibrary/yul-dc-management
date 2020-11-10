@@ -33,7 +33,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       end
 
       it 'has a link to the child object page' do
-        expect(page).to have_link('1 (current record)', href: '/child_objects/1')
+        expect(page).to have_link('10736292 (current record)', href: '/child_objects/10736292')
       end
 
       it 'shows the status of the child object' do

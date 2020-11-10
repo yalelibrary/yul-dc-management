@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :child_object do
-    oid { 1 }
+    oid { 10736292 }
     caption { "MyString" }
     width { 1 }
     height { 1 }
