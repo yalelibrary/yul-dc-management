@@ -3,6 +3,8 @@ require 'rails_helper'
 
 RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_sources: true, js: true do
   let(:user) { FactoryBot.create(:user, uid: 'johnsmith2530') }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: 16_057_779) }
+  let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_object) }
   let(:batch_process) do
     FactoryBot.create(
       :batch_process,
@@ -12,10 +14,14 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       created_at: '2020-10-08 14:17:01'
     )
   end
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: 16_057_779) }
-  let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_object) }
 
   describe 'with expected success' do
+    around do |example|
+      access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
+      ENV["ACCESS_MASTER_MOUNT"] = "/data"
+      example.run
+      ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
+    end
     before do
       stub_metadata_cloud('16057779')
       stub_ptiffs_and_manifests
