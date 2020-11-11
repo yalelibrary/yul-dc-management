@@ -75,5 +75,7 @@ CSV.parse(user_csv, headers: false) do |row|
 end
 all_uids.each do |old_uid|
   Rails.logger.info("Removing user with uid #{old_uid}")
-  User.delete_by(uid: old_uid)
+  User.where(uid: old_uid).each do |user|
+    user.deactivate!
+  end
 end

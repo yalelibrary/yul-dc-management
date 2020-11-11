@@ -24,13 +24,6 @@
 /data_samples/*
 /data/*
 !/data/.keep
-
-/public/assets
-.byebug_history
-
-# Ignore master key for decrypting credentials and more.
-/config/master.key
-
 /public/packs
 /public/packs-test
 /node_modules
@@ -38,8 +31,12 @@
 yarn-debug.log*
 .yarn-integrity
 /.idea
+/public/assets
+.byebug_history
 
-# Ignore secrets
+# Ignore files containing security related information
+/config/master.key
+/config/cas_users.csv
 .secrets
 
 # Ignore coverage report
