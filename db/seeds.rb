@@ -61,7 +61,8 @@ if File.exist? Rails.root.join("config", "cas_users.csv")
 else
   user_csv = S3Service.download("authorization/cas_users.csv")
 end
-all_uids = User.pluck(:uid)
+authorized_uids = []
+prior_uids = User.pluck(:uid)
 CSV.parse(user_csv, headers: false) do |row|
   uid = row[0]
   @user = User.where(provider: "cas", uid: uid).first
@@ -70,11 +71,14 @@ CSV.parse(user_csv, headers: false) do |row|
         provider: "cas",
         uid: uid
     )
+  else
+    @user.deactivated = false
+    @user.save!
   end
-  all_uids.delete uid
+  authorized_uids.push uid
 end
-all_uids.each do |old_uid|
-  Rails.logger.info("Removing user with uid #{old_uid}")
+(prior_uids - authorized_uids).each do |old_uid|
+  Rails.logger.info("Deactivating user with uid #{old_uid}")
   User.where(uid: old_uid).each do |user|
     user.deactivate!
   end
