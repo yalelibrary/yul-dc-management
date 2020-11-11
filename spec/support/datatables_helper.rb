@@ -33,6 +33,40 @@ def datatable_sample_params(columns)
     '_' => '1423364387185'
   )
 end
+
+def batch_parent_datatable_sample_params(columns, oid)
+  ActionController::Parameters.new(
+    'oid' => oid,
+    'draw' => '1',
+    'columns' => {
+      '0' => {
+        'data' => columns[0], 'name' => columns[0], 'searchable' => 'true', 'orderable' => 'true',
+        'search' => {
+          'value' => '', 'regex' => 'false'
+        }
+      },
+      '1' => {
+        'data' => columns[1], 'name' => '', 'searchable' => 'true', 'orderable' => 'true',
+        'search' => {
+          'value' => '', 'regex' => 'false'
+        }
+      },
+      '2' => {
+        'data' => columns[2], 'name' => '', 'searchable' => 'true', 'orderable' => 'false',
+        'search' => {
+          'value' => '', 'regex' => 'false'
+        }
+      }
+    },
+    'order' => {
+      '0' => { 'column' => '0', 'dir' => 'asc' }
+    },
+    'start' => '0', 'length' => '10', 'search' => {
+      'value' => '', 'regex' => 'false'
+    },
+    '_' => '1423364387185'
+  )
+end
 # rubocop:enable Metrics/MethodLength
 
 def parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
@@ -58,5 +92,14 @@ def batch_process_datatable_view_mock(id) # rubocop:disable Metrics/AbcSize
                                                   .and_return("<a href='/batch_processes/#{id}'>#{id}</a>")
   allow(@datatable_view_mock).to receive(:link_to).with('View', "/batch_processes/#{id}")
                                                   .and_return("<a href='/batch_processes/#{id}'>View</a>")
+  @datatable_view_mock
+end
+
+def batch_process_parent_datatable_view_mock(id, parent_oid, child_oid) # rubocop:disable Metrics/AbcSize
+  @datatable_view_mock ||= double
+  allow(@datatable_view_mock).to receive(:show_parent_batch_process_path).and_return("/batch_processes/#{id}/parent_objects/#{parent_oid}")
+  allow(@datatable_view_mock).to receive(:show_child_batch_process_path).and_return("/batch_processes/#{id}/parent_objects/#{parent_oid}/child_objects/#{child_oid}")
+  allow(@datatable_view_mock).to receive(:link_to).with(anything, "/batch_processes/#{id}/parent_objects/#{parent_oid}/child_objects/#{child_oid}")
+                                                  .and_return("<a href='/batch_processes/#{id}/parent_objects/#{parent_oid}/child_objects/#{child_oid}'>#{child_oid}</a>")
   @datatable_view_mock
 end

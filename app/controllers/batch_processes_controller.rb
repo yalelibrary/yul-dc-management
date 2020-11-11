@@ -57,7 +57,12 @@ class BatchProcessesController < ApplicationController
               disposition: "attachment; filename=#{@batch_process.file_name}"
   end
 
-  def show_parent; end
+  def show_parent
+    respond_to do |format|
+      format.html
+      format.json { render json: BatchProcessParentDatatable.new(params, view_context: view_context) }
+    end
+  end
 
   def show_child; end
 

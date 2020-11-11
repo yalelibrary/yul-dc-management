@@ -9,8 +9,8 @@
   <%= link_to("#{params[:oid]}", show_parent_batch_process_path(@batch_process, oid: params["oid"])) %>
 </p>
 <p>
-    <strong>Child Object</strong>
-    <%= @child_object.present? ? link_to("#{@child_object.id} (current record)", child_object_path(@child_object)) : "#{params[:child_oid]} (pending or deleted)" %>
+  <strong>Child Object</strong>
+  <%= @child_object.present? ? link_to("#{@child_object.id} (current record)", child_object_path(@child_object)) : "#{params[:child_oid]} (pending or deleted)" %>
 </p>
 <p>
   <strong>Status</strong>
@@ -21,8 +21,8 @@
   <%= @child_object.present? ? "#{@child_object.duration_for_batch_process(@batch_process.id)} seconds" : "#{params[:oid]} deleted" %>
 </p>
 <p>
-    <strong>Access Master</strong>
-    <%= link_to @child_object.access_master_path, @child_object.access_master_url %>
+  <strong>Access Master</strong>
+  <%= link_to @child_object.access_master_path, @child_object.access_master_url %>
 </p>
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
@@ -72,3 +72,5 @@
     <% end %>
   </table>
 <% end %>
+
+<%= link_to 'Back', show_parent_batch_process_path %>
