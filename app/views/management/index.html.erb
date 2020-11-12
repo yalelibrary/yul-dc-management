@@ -3,12 +3,11 @@
     <h1>Management Dashboard</h1>
 
     <br />
-    <% if flash[:notice] %>
-      <div class="notice"><%= flash[:notice] %></div>
-    <% end %>
+    <%= render partial: "flash_messages" %>
   </div>
   <br />
   <%= render partial: "service_display" %>
 <% else %>
+  <%= render partial: "flash_messages" %>
   <%= link_to 'You must sign in', user_cas_omniauth_authorize_path, class: 'list-group-item list-group-item-action bg-light' %>
 <% end %>

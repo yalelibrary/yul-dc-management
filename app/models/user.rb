@@ -4,5 +4,18 @@ class User < ApplicationRecord
   devise :timeoutable, :omniauthable, omniauth_providers: [:cas]
 
   has_many :notifications, as: :recipient
-  has_many :batch_processes, dependent: :destroy
+  has_many :batch_processes
+
+  def active_for_authentication?
+    super && !deactivated
+  end
+
+  def deactivate
+    self.deactivated = true
+  end
+
+  def deactivate!
+    deactivate
+    save!
+  end
 end

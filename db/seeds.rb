@@ -54,3 +54,32 @@ if Rails.env.development?
   end
   puts "There are now #{ParentObject.count} rows in the parent object table"
 end
+
+# create users and delete old ones based on file or S3
+if File.exist? Rails.root.join("config", "cas_users.csv")
+  user_csv = File.read(Rails.root.join("config", "cas_users.csv"))
+else
+  user_csv = S3Service.download("authorization/cas_users.csv")
+end
+authorized_uids = []
+prior_uids = User.pluck(:uid)
+CSV.parse(user_csv, headers: false) do |row|
+  uid = row[0]
+  @user = User.where(provider: "cas", uid: uid).first
+  if @user.nil?
+    @user = User.create(
+        provider: "cas",
+        uid: uid
+    )
+  else
+    @user.deactivated = false
+    @user.save!
+  end
+  authorized_uids.push uid
+end
+(prior_uids - authorized_uids).each do |old_uid|
+  Rails.logger.info("Deactivating user with uid #{old_uid}")
+  User.where(uid: old_uid).each do |user|
+    user.deactivate!
+  end
+end
