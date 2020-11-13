@@ -176,6 +176,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         expect(parent_object.pdf_generator_json).to include("https://collections.library.yale.edu/catalog/#{parent_object.oid}")
       end
 
+      it "generates pdf json with the correct preprocessing command" do
+        expect(parent_object.pdf_generator_json).to include('"imageProcessingCommand":"convert -resize 2000x2000 %s[0] %s"')
+      end
+
       it "pdf path on S3" do
         expect(parent_object.remote_pdf_path).not_to be_nil
       end

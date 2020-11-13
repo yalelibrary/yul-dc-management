@@ -37,7 +37,8 @@ module PdfRepresentable
       "title" => title,
       "header" => "Yale University Library Digital Collections",
       "properties" => properties,
-      "pages" => children
+      "pages" => children,
+      "imageProcessingCommand" => "convert -resize 2000x2000 %s[0] %s"
     }
     json_hash.to_json
   end
