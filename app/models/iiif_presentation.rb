@@ -54,42 +54,9 @@ class IiifPresentation
     @sequence
   end
 
-  def metadata_fields
-    [
-        {
-          label: 'Abstract',
-          field: 'abstract'
-        },
-        {
-          label: 'Alternative Title',
-          field: 'alternativeTitle'
-        },
-        {
-          label: 'Description',
-          field: 'description'
-        },
-        {
-          label: 'Extent',
-          field: 'extent'
-        },
-        {
-          label: 'Extent of Digitization',
-          field: 'extentOfDigitization'
-        },
-        {
-          label: 'Number of Pages',
-          field: 'numberOfPages'
-        },
-        {
-          label: 'Call Number',
-          field: 'callNumber'
-        }
-    ]
-  end
-
   def metadata
     values = []
-    metadata_fields.each do |m_field|
+    METADATA_FIELDS.each do |m_field|
       value = @parent_object&.authoritative_json&.[](m_field[:field])
       values <<  metadata_pair(m_field[:label], value) if value
     end

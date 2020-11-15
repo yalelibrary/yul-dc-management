@@ -89,10 +89,9 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["metadata"].first.class).to eq Hash
       expect(iiif_presentation.manifest["metadata"].first["label"]).to eq "Abstract"
       expect(iiif_presentation.manifest["metadata"].first["value"].first).to include 'indigo'
-
       expect(iiif_presentation.manifest["metadata"].last.class).to eq Hash
-      expect(iiif_presentation.manifest["metadata"].last["label"]).to eq "Call Number"
-      expect(iiif_presentation.manifest["metadata"].last["value"].first).to include 'GEN MSS 1386'
+      expect(iiif_presentation.manifest["metadata"].last["label"]).to eq "Source"
+      expect(iiif_presentation.manifest["metadata"].last["value"].first).to include 'ladybird'
     end
 
     it "has a rendering in the sequence" do
