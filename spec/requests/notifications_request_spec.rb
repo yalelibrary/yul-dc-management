@@ -12,7 +12,6 @@ RSpec.describe "Notifications", prep_metadata_sources: true, type: :request do
   let(:parent_object) { FactoryBot.create(:parent_object, oid: '2012143', authoritative_metadata_source_id: ladybird) }
   let(:valid_attributes) do
     {
-      id: 4,
       recipient_type: "User",
       recipient_id: user.id,
       type: "IngestNotification",
