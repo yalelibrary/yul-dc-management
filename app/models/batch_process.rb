@@ -8,6 +8,7 @@ class BatchProcess < ApplicationRecord
   belongs_to :user, class_name: "User"
   has_many :batch_connections
   has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connectable
+  has_many :ingest_events
 
   def validate_import
     return if file.blank?

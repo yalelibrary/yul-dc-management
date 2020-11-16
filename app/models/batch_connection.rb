@@ -4,6 +4,7 @@ class BatchConnection < ApplicationRecord
   include Statable
   belongs_to :batch_process
   belongs_to :connectable, polymorphic: true
+  has_many :ingest_events
 
   def note_records(batch_process_id)
     Notification.where(["params->>'batch_process_id' = :id and
