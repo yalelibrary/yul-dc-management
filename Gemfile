@@ -23,7 +23,7 @@ gem 'noticed', '~> 1.2', '>= 1.2.15'
 gem 'omniauth'
 gem 'omniauth-cas'
 # Yale-specific pairtree gem
-gem 'partridge', '~> 0.1.1'
+gem 'partridge', '~> 0.1.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
