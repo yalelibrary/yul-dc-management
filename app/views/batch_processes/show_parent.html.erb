@@ -21,15 +21,16 @@
 <div class='batch-process-show-details'>
   <p>
     <strong>Metadata Fetched</strong>
-    <%= @notes['metadata-fetched'] if @notes %>
+    <%= @notes['metadata-fetched'] ? @notes['metadata-fetched'] : 'Pending' %>
   </p>
   <p>
     <strong>Manifest Built</strong>
-    <%= @notes['manifest-saved'] if @notes %>
+    <%= @notes['manifest-saved'] ? @notes['manifest-saved'] : 'Pending' %>
   </p>
   <p>
     <strong>Metadata Indexed</strong>
-    <%= @notes['solr-indexed'] if @notes %>
+    <%= @notes['solr-indexed'] ? @notes['solr-indexed'] : 'Pending' %>
+
   </p>
 </div>
 
