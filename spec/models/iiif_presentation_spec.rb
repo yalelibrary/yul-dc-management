@@ -34,7 +34,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     parent_object
     # The parent object gets its metadata populated via a background job, and we can't assume that has run,
     # so stub the part of the metadata we need for the iiif_presentation
-    allow(parent_object).to receive(:authoritative_json).and_return("title" => ["Strawberry Thief fabric, made by Morris and Company "])
+    allow(parent_object).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{oid}.json"))))
   end
 
   describe "creating a manifest with a valid mets xml import" do
@@ -82,6 +82,16 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["rendering"].first["@id"]).to eq "#{ENV['PDF_BASE_URL']}/#{oid}.pdf"
       expect(iiif_presentation.manifest["rendering"].first["format"]).to eq "application/pdf"
       expect(iiif_presentation.manifest["rendering"].first["label"]).to eq "Download as PDF"
+    end
+
+    it "has metadata in the manifest" do
+      expect(iiif_presentation.manifest["metadata"].class).to eq Array
+      expect(iiif_presentation.manifest["metadata"].first.class).to eq Hash
+      expect(iiif_presentation.manifest["metadata"].first["label"]).to eq "Abstract"
+      expect(iiif_presentation.manifest["metadata"].first["value"].first).to include 'indigo'
+      expect(iiif_presentation.manifest["metadata"].last.class).to eq Hash
+      expect(iiif_presentation.manifest["metadata"].last["label"]).to eq "Source"
+      expect(iiif_presentation.manifest["metadata"].last["value"].first).to include 'ladybird'
     end
 
     it "has a rendering in the sequence" do

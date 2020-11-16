@@ -40,6 +40,7 @@ class IiifPresentation
     return @manifest if @manifest
     @manifest = IIIF::Presentation::Manifest.new(seed)
     @manifest["rendering"] = rendering
+    @manifest['metadata'] = metadata
     @manifest.sequences << sequence
     add_canvases_to_sequence(@manifest.sequences.first)
     @manifest
@@ -51,6 +52,23 @@ class IiifPresentation
     @sequence["@id"] = "#{ENV['IIIF_MANIFESTS_BASE_URL']}/sequence/#{oid}"
     @sequence["rendering"] = rendering
     @sequence
+  end
+
+  def metadata
+    values = []
+    METADATA_FIELDS.each do |m_field|
+      value = @parent_object&.authoritative_json&.[](m_field[:field])
+      values <<  metadata_pair(m_field[:label], value) if value
+    end
+    values
+  end
+
+  def metadata_pair(label, value)
+    value = [value] if value.is_a? String
+    {
+      'label' => label,
+      'value' => value
+    }
   end
 
   def rendering
