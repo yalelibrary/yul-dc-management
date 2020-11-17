@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GeneratePdfJob < ApplicationJob
-  queue_as :default
+  queue_as :pdf
 
   def default_priority
     50

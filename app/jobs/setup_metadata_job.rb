@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SetupMetadataJob < ApplicationJob
-  queue_as :default
+  queue_as :metadata
 
   def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     parent_object.current_batch_process = current_batch_process
