@@ -5,21 +5,22 @@ module PdfRepresentable
 
   def generate_pdf
     raise "No authoritative_json to create PDF for #{oid}" unless authoritative_json
-    temp_json_file = Tempfile.new("#{oid}_pdf_json")
-    temp_json_file.write(pdf_generator_json)
-    temp_json_file.close
-    temp_pdf_file = "#{temp_json_file.path}.pdf"
-    cmd = "java -jar jpegs2pdf-1.0.jar #{temp_json_file.path} #{temp_pdf_file}"
-    stdout, stderr, status = Open3.capture3(cmd)
-    success = status.success?
-    temp_json_file.delete
-    if success
-      raise "Java app did not create PDF file for #{oid}" unless File.exist? temp_pdf_file
-      S3Service.upload_image(temp_pdf_file.to_s, remote_pdf_path, "application/pdf", nil)
-      File.delete temp_pdf_file
-    else
-      File.delete temp_pdf_file if File.exist?(temp_pdf_file)
-      raise "PDF Java app returned non zero response code for #{oid}: #{stderr} #{stdout}"
+    Dir.mktmpdir do |pdf_tmpdir|
+      temp_json_file = File.new("#{pdf_tmpdir}/#{oid}_pdf_json", "w")
+      temp_json_file.write(pdf_generator_json)
+      temp_json_file.close
+      temp_pdf_file = "#{temp_json_file.path}.pdf"
+      cmd = "java -Djava.io.tmpdir=#{pdf_tmpdir} -jar jpegs2pdf-1.0.jar #{temp_json_file.path} #{temp_pdf_file}"
+      stdout, stderr, status = Open3.capture3({ "MAGICK_TMPDIR" => pdf_tmpdir }, cmd)
+      success = status.success?
+      if success
+        raise "Java app did not create PDF file for #{oid}" unless File.exist? temp_pdf_file
+        S3Service.upload_image(temp_pdf_file.to_s, remote_pdf_path, "application/pdf", nil)
+        File.delete temp_pdf_file
+      else
+        File.delete temp_pdf_file if File.exist?(temp_pdf_file)
+        raise "PDF Java app returned non zero response code for #{oid}: #{stderr} #{stdout}"
+      end
     end
   end
 
