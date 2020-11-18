@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SolrIndexJob < ApplicationJob
-  queue_as :default
+  queue_as :solr_index
 
   def default_priority
     -50
