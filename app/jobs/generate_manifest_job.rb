@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GenerateManifestJob < ApplicationJob
-  queue_as :default
+  queue_as :manifest
 
   def default_priority
     -30

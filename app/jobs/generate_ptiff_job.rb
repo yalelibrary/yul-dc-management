@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GeneratePtiffJob < ApplicationJob
-  queue_as :default
+  queue_as :ptiff
 
   def default_priority
     10
