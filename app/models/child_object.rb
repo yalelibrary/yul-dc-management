@@ -43,7 +43,6 @@ class ChildObject < ApplicationRecord
   def access_master_path
     return @access_master_path if @access_master_path
     image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
-    # TODO(alishaevn): the "pairtree_path" variable is coming back as "nil" in the batch process child detail spec
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
     directory = format("%02d", pairtree_path.first)
     @access_master_path = File.join(image_mount, directory, pairtree_path, "#{oid}.tif")
