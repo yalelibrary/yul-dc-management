@@ -54,18 +54,20 @@ class BatchProcess < ApplicationRecord
       fresh = false
       po = ParentObject.where(oid: oid).first_or_create do |parent_object|
         # Only runs on newly created parent objects
-        parent_object.authoritative_metadata_source = metadata_source(parent_object, metadata_source)
-        parent_object.current_batch_process = self
-        parent_object.current_batch_connection = batch_connections.build(connectable: parent_object)
+        setup_for_background_jobs(parent_object, metadata_source)
         fresh = true
       end
       next if fresh
       po.metadata_update = true
-      po.authoritative_metadata_source = metadata_source(po, metadata_source)
-      po.current_batch_process = self
-      po.current_batch_connection = batch_connections.create(connectable: po)
+      setup_for_background_jobs(po, metadata_source)
       po.save!
     end
+  end
+
+  def setup_for_background_jobs(parent_object, metadata_source)
+    parent_object.authoritative_metadata_source = metadata_source(parent_object, metadata_source)
+    parent_object.current_batch_process = self
+    parent_object.current_batch_connection = batch_connections.build(connectable: parent_object)
   end
 
   def metadata_source(parent_object, metadata_source_name)
