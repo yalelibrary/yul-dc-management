@@ -213,14 +213,14 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     let(:oid) { "2034600" }
     let(:parent_object) { described_class.new }
     it "expands dates with explicit ranges" do
-      expect(parent_object.expand_date_structured(["2000/2005"])).to eq ["2000", "2001", "2002", "2003", "2004", "2005"]
+      expect(parent_object.expand_date_structured(["2000/2005"])).to eq [2000, 2001, 2002, 2003, 2004, 2005]
     end
     it "expands dates with open ended ranges" do
-      expected_result = (2000..Time.now.utc.year + 20).to_a.map(&:to_s)
+      expected_result = (2000..Time.now.utc.year).to_a
       expect(parent_object.expand_date_structured(["2000/9999"])).to eq expected_result
     end
     it "expands dates without ranges" do
-      expect(parent_object.expand_date_structured(["2000", "2010"])).to eq ["2000", "2010"]
+      expect(parent_object.expand_date_structured(["2000", "2010"])).to eq [2000, 2010]
     end
     it "expands empty array to empty array" do
       expect(parent_object.expand_date_structured([])).to eq []
@@ -228,24 +228,25 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     it "expands nil to nil" do
       expect(parent_object.expand_date_structured(nil)).to eq nil
     end
-    it "returns value if not an array" do
-      expect(parent_object.expand_date_structured("non-array")).to eq "non-array"
-      expect(parent_object.expand_date_structured("1995")).to eq "1995"
+    it "returns nil if not an array" do
+      expect(parent_object.expand_date_structured("non-array")).to eq nil
+      expect(parent_object.expand_date_structured("1995")).to eq nil
+      expect(parent_object.expand_date_structured(parent_object)).to eq nil
     end
     it "expands range and non-ranges combined" do
-      expect(parent_object.expand_date_structured(["2000/2004", "1945"])).to eq ["2000", "2001", "2002", "2003", "2004", "1945"]
+      expect(parent_object.expand_date_structured(["2000/2004", "1945"])).to eq [2000, 2001, 2002, 2003, 2004, 1945]
     end
     it "expands overlapping ranges with dedup" do
-      expect(parent_object.expand_date_structured(["2000/2004", "1945", "2002/2006"])).to eq ["2000", "2001", "2002", "2003", "2004", "1945", "2005", "2006"]
+      expect(parent_object.expand_date_structured(["2000/2004", "1945", "2002/2006"])).to eq [2000, 2001, 2002, 2003, 2004, 1945, 2005, 2006]
     end
     it "dedups non-range values" do
-      expect(parent_object.expand_date_structured(["1945", "2002", "1945"])).to eq ["1945", "2002"]
+      expect(parent_object.expand_date_structured(["1945", "2002", "1945"])).to eq [1945, 2002]
     end
     it "responds correctly with invalid ranges" do
       expect(parent_object.expand_date_structured(["1945/1935"])).to eq []
       expect(parent_object.expand_date_structured(["9999/1935"])).to eq []
-      expect(parent_object.expand_date_structured(["9999/1935", "1955"])).to eq ["1955"]
-      expect(parent_object.expand_date_structured(["1935/2021/1953", "1975"])).to eq ["1975"]
+      expect(parent_object.expand_date_structured(["9999/1935", "1955"])).to eq [1955]
+      expect(parent_object.expand_date_structured(["1935/2021/1953", "1975"])).to eq [1975]
     end
   end
 end

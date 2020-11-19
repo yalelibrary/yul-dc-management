@@ -53,7 +53,8 @@ module SolrIndexable
       creatorDisplay_tsim: json_to_index["creatorDisplay"],
       date_ssim: json_to_index["date"],
       dateDepicted_ssim: json_to_index["dateDepicted"],
-      dateStructured_ssim: expand_date_structured(json_to_index["dateStructured"]), # keeping as ssim for now, dtsi suffix errors out, have invalid values from MC
+      year_isim: expand_date_structured(json_to_index["dateStructured"]),
+      dateStructured_ssim: json_to_index["dateStructured"],
       dependentUris_ssim: json_to_index["dependentUris"],
       description_tesim: json_to_index["description"],
       digital_ssim: json_to_index["digital"],
@@ -144,20 +145,20 @@ module SolrIndexable
   end
 
   def expand_date_structured(date_structured)
-    return date_structured unless date_structured&.is_a?(Array)
+    return nil unless date_structured&.is_a?(Array)
     date_structured.reduce([]) do |accumulator, date|
       if date.include? '/'
         dates = date.split('/')
         if dates.count == 2
           date1 = dates[0].to_i
           date2 = dates[1].to_i
-          date2 = Time.now.utc.year + 20 if date2 == 9999
+          date2 = Time.now.utc.year if date2 == 9999
           (date1..date2).each { |range_date| accumulator << range_date }
         end
       else
         accumulator << date
       end
-      accumulator.map(&:to_s).uniq
+      accumulator.map(&:to_i).uniq
     end
   end
 end
