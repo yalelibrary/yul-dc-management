@@ -51,17 +51,29 @@ class BatchProcess < ApplicationRecord
 
   def create_parent_objects_from_oids(oids, metadata_sources)
     oids.zip(metadata_sources).each do |oid, metadata_source|
+      fresh = false
       po = ParentObject.where(oid: oid).first_or_create do |parent_object|
-        parent_object.authoritative_metadata_source = if metadata_source.present?
-                                                        MetadataSource.find_by(metadata_cloud_name: metadata_source)
-                                                      else
-                                                        MetadataSource.find_by(metadata_cloud_name: 'ladybird')
-                                                      end
+        # Only runs on newly created parent objects
+        parent_object.authoritative_metadata_source = metadata_source(parent_object, metadata_source)
         parent_object.current_batch_process = self
         parent_object.current_batch_connection = batch_connections.build(connectable: parent_object)
+        fresh = true
       end
-      po.current_batch_connection ||= batch_connections.build(connectable: po)
+      next if fresh
+      po.metadata_update = true
+      po.authoritative_metadata_source = metadata_source(po, metadata_source)
+      po.current_batch_process = self
+      po.current_batch_connection = batch_connections.create(connectable: po)
+      po.save!
     end
+  end
+
+  def metadata_source(parent_object, metadata_source_name)
+    parent_object.authoritative_metadata_source = if metadata_source_name.present?
+                                                    MetadataSource.find_by(metadata_cloud_name: metadata_source_name)
+                                                  else
+                                                    MetadataSource.find_by(metadata_cloud_name: 'ladybird')
+                                                  end
   end
 
   def refresh_metadata_cloud_csv
