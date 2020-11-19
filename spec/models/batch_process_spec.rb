@@ -152,7 +152,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
           batch_process.file = csv_upload
           batch_process.save
           expect(po.status_for_batch_process(batch_process.id)).to eq "Complete"
-          expect(batch_process.batch_status).to eq "Batch complete"
           expect(po.batch_processes.first.id).to eq batch_process.id
           expect(po.visibility).to eq "Public"
           po_two = ParentObject.find(2_005_512)
