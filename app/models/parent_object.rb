@@ -73,7 +73,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def processing_event(message, status = 'info', current_batch_process = self.current_batch_process, current_batch_connection = self.current_batch_connection)
-    byebug
     IngestNotification.with(parent_object_id: id, status: status, reason: message, batch_process_id: current_batch_process&.id).deliver(User.first)
     current_batch_connection&.save! unless current_batch_connection&.persisted?
     current_batch_connection&.update_status!
