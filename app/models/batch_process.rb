@@ -65,17 +65,9 @@ class BatchProcess < ApplicationRecord
   end
 
   def setup_for_background_jobs(parent_object, metadata_source)
-    parent_object.authoritative_metadata_source = metadata_source(parent_object, metadata_source)
+    parent_object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird'))
     parent_object.current_batch_process = self
     parent_object.current_batch_connection = batch_connections.build(connectable: parent_object)
-  end
-
-  def metadata_source(parent_object, metadata_source_name)
-    parent_object.authoritative_metadata_source = if metadata_source_name.present?
-                                                    MetadataSource.find_by(metadata_cloud_name: metadata_source_name)
-                                                  else
-                                                    MetadataSource.find_by(metadata_cloud_name: 'ladybird')
-                                                  end
   end
 
   def refresh_metadata_cloud_csv
