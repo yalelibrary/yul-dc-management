@@ -132,6 +132,32 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         batch_process.save
         expect(batch_process.batch_status).to eq "Batch in progress - no failures"
       end
+
+      describe "with a parent object that had been previously created" do
+        let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600) }
+        before do
+          stub_ptiffs_and_manifests
+        end
+
+        around do |example|
+          perform_enqueued_jobs do
+            example.run
+          end
+        end
+
+        it "assigns the batch_process to an already-existing parent object" do
+          parent_object
+          po = ParentObject.find(2_034_600)
+          expect(po.visibility).to eq "Public"
+          batch_process.file = csv_upload
+          batch_process.save
+          expect(po.status_for_batch_process(batch_process.id)).to eq "Complete"
+          expect(po.batch_processes.first.id).to eq batch_process.id
+          expect(po.visibility).to eq "Public"
+          po_two = ParentObject.find(2_005_512)
+          expect(po_two.visibility).to eq "Public"
+        end
+      end
     end
 
     describe 'xml file import' do
