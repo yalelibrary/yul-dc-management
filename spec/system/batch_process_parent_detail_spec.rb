@@ -65,16 +65,11 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
 
       # TODO(alishaevn): determine how to mock "@notes" so the 3 specs below have content
       # it should list the value like the 3 specs above, instead of the titles
-      it "shows when the metadata was fetched for the parent object" do
+      it "has labels for the ingest steps for the parent object" do
         expect(page).to have_content("Metadata Fetched")
-      end
-
-      it "shows when the manifest was built for the parent object" do
-        expect(page).to have_content("Manifest Built")
-      end
-
-      it "shows when the metadata was indexed for the parent object" do
-        expect(page).to have_content("Metadata Indexed")
+        expect(page).to have_content("Manifest Saved")
+        expect(page).to have_content("Solr Indexed")
+        expect(page).to have_content("PDF Generated")
       end
 
       describe "after deleting a parent object" do
