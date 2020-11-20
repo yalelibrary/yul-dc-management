@@ -5,6 +5,8 @@ class ChildObject < ApplicationRecord
   belongs_to :parent_object, foreign_key: 'parent_object_oid', class_name: "ParentObject"
   self.primary_key = 'oid'
   paginates_per 50
+  attr_accessor :current_batch_process
+  attr_accessor :current_batch_connection
 
   before_create :check_for_size_and_file
 
@@ -13,15 +15,15 @@ class ChildObject < ApplicationRecord
   end
 
   def finished_states
-    ['ptiff-ready', 'ptiff-ready-skipped']
+    ['ptiff-ready-skipped', 'ptiff-ready']
   end
 
   def check_for_size_and_file
     width_and_height(remote_metadata)
   end
 
-  def processing_event(message, status = 'info', _current_batch_process = parent_object&.current_batch_process, _current_batch_connection = parent_object&.current_batch_connection)
-    IngestNotification.with(parent_object_id: parent_object&.id, child_object_id: id, status: status, reason: message, batch_process_id: parent_object&.current_batch_process&.id).deliver(User.first)
+  def processing_event(message, status = 'info', current_batch_process = parent_object&.current_batch_process, _current_batch_connection = parent_object&.current_batch_connection)
+    IngestNotification.with(parent_object_id: parent_object&.id, child_object_id: id, status: status, reason: message, batch_process_id: current_batch_process&.id).deliver(User.first)
   end
 
   def remote_ptiff_exists?
