@@ -58,6 +58,22 @@
     </table>
   </div>
 </div>
+
+<% if @latest_failure %>
+<table class="table  w-auto table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col"> Last Failure Message </th>
+      <th scope="col"> Time </th>
+    </tr>
+  </thead>
+  <tr>
+    <td class="reason"><%= @latest_failure[:reason] %></td>
+    <td class="time"><%= @latest_failure[:time] %></td>
+  </tr>
+</table>
+<% end %>
+
 <div class='row'>
   <div class='col overflow-auto'>
     <table id='parent-batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= show_parent_batch_process_path(format: :json) %>'>
@@ -77,5 +93,6 @@
 <div id='parent-batch-process-data' class='d-none datatable-data'>
   <%= BatchProcessParentDatatable.new(nil).view_columns.keys.map {|key| {data: key} }.to_json %>
 </div>
+
 
 <%= link_to 'Back', batch_process_path %>
