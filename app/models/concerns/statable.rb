@@ -7,11 +7,11 @@ module Statable
   end
 
   def start_note(notes)
-    @start_note ||= start_states.map { |state| notes[state] }.first
+    @start_note ||= start_states.map { |state| notes[state] }.compact.first
   end
 
   def finished_note(notes)
-    @finished_note ||= finished_states.map { |state| notes[state] }.first
+    @finished_note ||= finished_states.map { |state| notes[state] }.compact.first
   end
 
   def deleted_note(notes)

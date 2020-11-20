@@ -155,6 +155,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
           notes = child.notes_for_batch_process(batch_process.id)
           expect(notes).to include("ptiff-ready")
           expect(notes).to include("ptiff-queued")
+          expect(child.status_for_batch_process(batch_process.id)).to eq "Complete"
           expect(po.status_for_batch_process(batch_process.id)).to eq "Complete"
           expect(po.batch_processes.first.id).to eq batch_process.id
           expect(po.visibility).to eq "Public"
