@@ -86,7 +86,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         batch_process.file = csv_upload
         batch_process.run_callbacks :create
       end.to change { batch_process.batch_connections.size }.from(0).to(5)
-      expect(user_one.notifications.count).to eq(451)
+      expect(user_one.notifications.count).to eq(456)
       statuses = Notification.all.map { |note| note.params[:status] }
       expect(statuses).to include "processing-queued"
       expect(statuses).to include "metadata-fetched"
@@ -94,8 +94,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       expect(statuses).to include "ptiff-ready"
       expect(statuses).to include "manifest-saved"
       expect(statuses).to include "solr-indexed"
+      expect(statuses).to include "pdf-generated"
       expect(Notification.all.map { |note| note.params[:reason] }).to include "Processing has been queued"
-      expect(Notification.count).to eq(451)
+      expect(Notification.count).to eq(456)
     end
   end
 

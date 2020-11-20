@@ -35,11 +35,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def start_states
-    ["processing-queued"]
+    ['processing-queued']
   end
 
   def finished_states
-    ['solr-indexed']
+    ['solr-indexed', 'pdf-generated']
   end
 
   def create_child_records(_current_batch_process, _current_batch_connection = current_batch_connection)

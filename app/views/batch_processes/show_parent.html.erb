@@ -48,8 +48,12 @@
         <td class="manifest_saved"><%= @notes && @notes["manifest-saved"] ? @notes["manifest-saved"] : 'Pending' %></td>
       </tr>
       <tr>
-        <td>Metadata Indexed</td>
+        <td>Solr Indexed</td>
         <td class="solr_indexed"><%= @notes && @notes["solr-indexed"] ? @notes["solr-indexed"] : 'Pending' %></td>
+      </tr>
+      <tr>
+        <td>PDF Generated</td>
+        <td class="pdf-generated"><%= @notes && @notes["pdf-generated"] ? @notes["pdf-generated"] : 'Pending' %></td>
       </tr>
     </table>
   </div>
