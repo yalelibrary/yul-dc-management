@@ -53,7 +53,8 @@ module SolrIndexable
       creatorDisplay_tsim: json_to_index["creatorDisplay"],
       date_ssim: json_to_index["date"],
       dateDepicted_ssim: json_to_index["dateDepicted"],
-      dateStructured_ssim: json_to_index["dateStructured"], # keeping as ssim for now, dtsi suffix errors out, have invalid values from MC
+      year_isim: expand_date_structured(json_to_index["dateStructured"]),
+      dateStructured_ssim: json_to_index["dateStructured"],
       dependentUris_ssim: json_to_index["dependentUris"],
       description_tesim: json_to_index["description"],
       digital_ssim: json_to_index["digital"],
@@ -141,5 +142,22 @@ module SolrIndexable
       subject_topic_tsim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
       title_tsim: json_to_index["title"] # replaced by title_tesim
     }
+  end
+
+  def expand_date_structured(date_structured)
+    return nil unless date_structured&.is_a?(Array)
+    date_structured.each_with_object(SortedSet.new) do |date, set|
+      if date.include? '/'
+        dates = date.split('/')
+        if dates.count == 2
+          date1 = dates[0].to_i
+          date2 = dates[1].to_i
+          date2 = Time.now.utc.year if date2 == 9999
+          (date1..date2).each { |range_date| set << range_date }
+        end
+      else
+        set << date.to_i
+      end
+    end.to_a
   end
 end
