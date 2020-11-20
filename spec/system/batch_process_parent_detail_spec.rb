@@ -70,7 +70,7 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
       end
 
       it "shows when the manifest was built for the parent object" do
-        expect(page).to have_content("Manifest Built")
+        expect(page).to have_content("Manifest Saved")
       end
 
       it "shows when the metadata was indexed for the parent object" do
