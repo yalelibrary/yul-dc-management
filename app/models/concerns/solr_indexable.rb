@@ -146,19 +146,18 @@ module SolrIndexable
 
   def expand_date_structured(date_structured)
     return nil unless date_structured&.is_a?(Array)
-    date_structured.reduce([]) do |accumulator, date|
+    date_structured.each_with_object(SortedSet.new) do |date, set|
       if date.include? '/'
         dates = date.split('/')
         if dates.count == 2
           date1 = dates[0].to_i
           date2 = dates[1].to_i
           date2 = Time.now.utc.year if date2 == 9999
-          (date1..date2).each { |range_date| accumulator << range_date }
+          (date1..date2).each { |range_date| set << range_date }
         end
       else
-        accumulator << date
+        set << date.to_i
       end
-      accumulator.map(&:to_i).uniq
-    end
+    end.to_a
   end
 end

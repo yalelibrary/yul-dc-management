@@ -234,10 +234,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       expect(parent_object.expand_date_structured(parent_object)).to eq nil
     end
     it "expands range and non-ranges combined" do
-      expect(parent_object.expand_date_structured(["2000/2004", "1945"])).to eq [2000, 2001, 2002, 2003, 2004, 1945]
+      expect(parent_object.expand_date_structured(["2000/2004", "1945"])).to eq [1945, 2000, 2001, 2002, 2003, 2004]
     end
     it "expands overlapping ranges with dedup" do
-      expect(parent_object.expand_date_structured(["2000/2004", "1945", "2002/2006"])).to eq [2000, 2001, 2002, 2003, 2004, 1945, 2005, 2006]
+      expect(parent_object.expand_date_structured(["2000/2004", "1945", "2002/2006"])).to eq [1945, 2000, 2001, 2002, 2003, 2004, 2005, 2006]
     end
     it "dedups non-range values" do
       expect(parent_object.expand_date_structured(["1945", "2002", "1945"])).to eq [1945, 2002]
