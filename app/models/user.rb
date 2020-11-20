@@ -5,7 +5,6 @@ class User < ApplicationRecord
 
   has_many :notifications, as: :recipient
   has_many :batch_processes
-  has_many :ingest_events
 
   def active_for_authentication?
     super && !deactivated

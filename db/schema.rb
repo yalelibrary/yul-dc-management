@@ -98,14 +98,10 @@ ActiveRecord::Schema.define(version: 2020_11_16_211544) do
   create_table "ingest_events", force: :cascade do |t|
     t.string "reason"
     t.string "status"
-    t.bigint "batch_process_id", null: false
     t.bigint "batch_connection_id", null: false
-    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["batch_connection_id"], name: "index_ingest_events_on_batch_connection_id"
-    t.index ["batch_process_id"], name: "index_ingest_events_on_batch_process_id"
-    t.index ["user_id"], name: "index_ingest_events_on_user_id"
   end
 
   create_table "metadata_sources", force: :cascade do |t|
@@ -172,6 +168,4 @@ ActiveRecord::Schema.define(version: 2020_11_16_211544) do
   add_foreign_key "batch_processes", "users"
   add_foreign_key "child_objects", "parent_objects", column: "parent_object_oid", primary_key: "oid"
   add_foreign_key "ingest_events", "batch_connections"
-  add_foreign_key "ingest_events", "batch_processes"
-  add_foreign_key "ingest_events", "users"
 end

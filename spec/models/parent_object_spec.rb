@@ -87,6 +87,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         batch_process.run_callbacks :create
       end.to change { batch_process.batch_connections.size }.from(0).to(5)
       expect(user_one.notifications.count).to eq(456)
+      expect(IngestEvent.count).to eq(456)
       statuses = Notification.all.map { |note| note.params[:status] }
       expect(statuses).to include "processing-queued"
       expect(statuses).to include "metadata-fetched"
