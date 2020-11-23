@@ -23,36 +23,37 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   describe "with a parent object with a failure" do
     let(:batch_process_with_failure) { FactoryBot.create(:batch_process, user: user) }
     let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600) }
+    let(:batch_connection) do
+      FactoryBot.create(:batch_connection,
+                        connectable: parent_object, batch_process: batch_process_with_failure)
+    end
 
     it "can reflect a failure" do
-      allow(parent_object).to receive(:processing_event).and_return(
-        IngestNotification.with(
-          parent_object_id: parent_object.id,
-          status: "failed",
-          reason: "Fake failure 1",
-          batch_process_id: batch_process_with_failure.id
-        ).deliver_all,
-        IngestNotification.with(
-          parent_object_id: parent_object.id,
-          status: "failed",
-          reason: "Fake failure 2",
-          batch_process_id: batch_process_with_failure.id
-        ).deliver_all,
-        IngestNotification.with(
-          parent_object_id: parent_object.id,
-          status: "processing-queued",
-          reason: "Fake success",
-          batch_process_id: batch_process_with_failure.id
-        ).deliver_all
-      )
       parent_object
       batch_process_with_failure.file = csv_upload
       batch_process_with_failure.run_callbacks :create
+      allow(parent_object).to receive(:processing_event).and_return(
+        IngestEvent.create(
+          status: "failed",
+          reason: "Fake failure 1",
+          batch_connection: parent_object.batch_connections.first
+        ),
+        IngestEvent.create(
+          status: "failed",
+          reason: "Fake failure 2",
+          batch_connection: parent_object.batch_connections.first
+        ),
+        IngestEvent.create(
+          status: "processing-queued",
+          reason: "Fake success",
+          batch_connection: parent_object.batch_connections.first
+        )
+      )
       parent_object.batch_connections.first.update_status!
-      expect(parent_object.status_for_batch_process(batch_process_with_failure.id)).to eq "Failed"
-      expect(parent_object.latest_failure(batch_process_with_failure.id)).to be_an_instance_of Hash
-      expect(parent_object.latest_failure(batch_process_with_failure.id)[:reason]).to eq "Fake failure 2"
-      expect(parent_object.latest_failure(batch_process_with_failure.id)[:time]).to be
+      expect(parent_object.status_for_batch_process(batch_process_with_failure)).to eq "Failed"
+      expect(parent_object.latest_failure(batch_process_with_failure)).to be_an_instance_of Hash
+      expect(parent_object.latest_failure(batch_process_with_failure)[:reason]).to eq "Fake failure 2"
+      expect(parent_object.latest_failure(batch_process_with_failure)[:time]).to be
       expect(batch_process_with_failure.batch_status).to eq "1 out of 5 parent objects have a failure."
     end
   end
@@ -152,12 +153,12 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
           batch_process.file = csv_upload
           batch_process.save
           child = po.child_objects.first
-          notes = child.notes_for_batch_process(batch_process.id)
+          notes = child.notes_for_batch_process(batch_process)
           expect(notes).to include("ptiff-ready")
           expect(notes).to include("ptiff-queued")
-          expect(child.status_for_batch_process(batch_process.id)).to eq "Complete"
-          expect(po.status_for_batch_process(batch_process.id)).to eq "Complete"
-          expect(po.batch_processes.first.id).to eq batch_process.id
+          expect(child.status_for_batch_process(batch_process)).to eq "Complete"
+          expect(po.status_for_batch_process(batch_process)).to eq "Complete"
+          expect(po.batch_processes.first).to eq batch_process
           expect(po.visibility).to eq "Public"
           po_two = ParentObject.find(2_005_512)
           expect(po_two.visibility).to eq "Public"

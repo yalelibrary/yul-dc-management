@@ -14,11 +14,11 @@
 </p>
 <p>
   <strong>Status</strong>
-  <%= @child_object.present? ? "#{@child_object.status_for_batch_process(@batch_process.id)}" : "#{params[:oid]} deleted" %>
+  <%= @child_object.present? ? "#{@child_object.status_for_batch_process(@batch_process)}" : "#{params[:oid]} deleted" %>
 </p>
 <p>
   <strong>Duration</strong>
-  <%= @child_object.present? ? "#{@child_object.duration_for_batch_process(@batch_process.id)} seconds" : "#{params[:oid]} deleted" %>
+  <%= @child_object.present? ? "#{@child_object.duration_for_batch_process(@batch_process)} seconds" : "#{params[:oid]} deleted" %>
 </p>
 <p>
   <strong>Access Master</strong>

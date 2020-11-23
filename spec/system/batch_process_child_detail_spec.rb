@@ -43,7 +43,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       end
 
       it 'shows the status of the child object' do
-        expect(page).to have_content('Pending')
+        expect(page).to have_content('In progress - no failures')
       end
 
       it 'shows the duration of the batch process' do

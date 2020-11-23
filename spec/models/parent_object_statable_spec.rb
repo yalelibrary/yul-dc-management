@@ -20,8 +20,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     end
 
     it "has an a pending status" do
-      expect(parent_object.notes_for_batch_process(batch_process.id).empty?).to be true
-      expect(parent_object.status_for_batch_process(batch_process.id)).to eq "Pending"
+      expect(parent_object.notes_for_batch_process(batch_process).empty?).to be true
+      expect(parent_object.status_for_batch_process(batch_process)).to eq "Pending"
     end
 
     describe "after running the background jobs" do
@@ -40,41 +40,45 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         batch_process.save
         batch_process.run_callbacks :create
         po = ParentObject.find(14_716_192)
-        expect(po.status_for_batch_process(batch_process.id)).to eq "Complete"
+        expect(po.status_for_batch_process(batch_process)).to eq "Complete"
       end
     end
   end
 
   describe "with a parent object with a failure" do
+    let(:batch_process_with_failure) { FactoryBot.create(:batch_process, user: user) }
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600) }
+    let(:batch_connection) do
+      FactoryBot.create(:batch_connection,
+                        connectable: parent_object, batch_process: batch_process_with_failure)
+    end
+
     it "can reflect a failure" do
+      parent_object
+      batch_process_with_failure.file = csv_upload
+      batch_process_with_failure.run_callbacks :create
       allow(parent_object).to receive(:processing_event).and_return(
-        IngestNotification.with(
-          parent_object_id: parent_object.id,
+        IngestEvent.create(
           status: "failed",
           reason: "Fake failure 1",
-          batch_process_id: batch_process.id
-        ).deliver_all,
-        IngestNotification.with(
-          parent_object_id: parent_object.id,
+          batch_connection: parent_object.batch_connections.first
+        ),
+        IngestEvent.create(
           status: "failed",
           reason: "Fake failure 2",
-          batch_process_id: batch_process.id
-        ).deliver_all,
-        IngestNotification.with(
-          parent_object_id: parent_object.id,
+          batch_connection: parent_object.batch_connections.first
+        ),
+        IngestEvent.create(
           status: "processing-queued",
           reason: "Fake success",
-          batch_process_id: batch_process.id
-        ).deliver_all
+          batch_connection: parent_object.batch_connections.first
+        )
       )
-
-      batch_process.file = csv_upload
-      batch_process.run_callbacks :create
-      parent_object.batch_connections.first.update_status!
-      expect(parent_object.status_for_batch_process(batch_process.id)).to eq "Failed"
-      expect(parent_object.latest_failure(batch_process.id)).to be_an_instance_of Hash
-      expect(parent_object.latest_failure(batch_process.id)[:reason]).to eq "Fake failure 2"
-      expect(parent_object.latest_failure(batch_process.id)[:time]).to be
+      batch_process_with_failure.batch_connections.first.update_status!
+      expect(parent_object.status_for_batch_process(batch_process_with_failure)).to eq "Failed"
+      expect(parent_object.latest_failure(batch_process_with_failure)).to be_an_instance_of Hash
+      expect(parent_object.latest_failure(batch_process_with_failure)[:reason]).to eq "Fake failure 2"
+      expect(parent_object.latest_failure(batch_process_with_failure)[:time]).to be
     end
   end
 end

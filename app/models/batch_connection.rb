@@ -13,7 +13,7 @@ class BatchConnection < ApplicationRecord
   end
 
   def update_status
-    self.status = connectable.status_for_batch_process(batch_process.id)
+    self.status = connectable.status_for_batch_process(batch_process)
   end
 
   def update_status!

@@ -11,11 +11,11 @@
   </p>
   <p>
     <strong>Status</strong>
-    <%= @parent_object.present? ? "#{@parent_object.status_for_batch_process(@batch_process.id)}" : "#{params[:oid]} deleted" %>
+    <%= @parent_object.present? ? "#{@parent_object.status_for_batch_process(@batch_process)}" : "#{params[:oid]} deleted" %>
   </p>
   <p>
     <strong>Duration</strong>
-    <%= @parent_object.present? ? "#{@parent_object.duration_for_batch_process(@batch_process.id)}" : 'Pending' %>
+    <%= @parent_object.present? ? "#{@parent_object.duration_for_batch_process(@batch_process)}" : 'Pending' %>
   </p>
 </div>
 <div class='row'>

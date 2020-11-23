@@ -2,8 +2,12 @@
 
 module Statable
   extend ActiveSupport::Concern
-  def notes_for_batch_process(batch_process_id)
-    note_records(batch_process_id).each_with_object({}) { |n, i| i[n.params[:status]] = n.created_at; }
+  def notes_for_batch_process(batch_process)
+    events_for_batch_process(batch_process).each_with_object({}) { |e, i| i[e.status] = e.created_at }
+  end
+
+  def events_for_batch_process(batch_process)
+    IngestEvent.where(batch_connection: batch_process.batch_connections)
   end
 
   def start_note(notes)
@@ -18,25 +22,25 @@ module Statable
     notes["parent-deleted"]
   end
 
-  def status_for_batch_process(batch_process_id)
-    notes = notes_for_batch_process(batch_process_id)
+  def status_for_batch_process(batch_process)
+    notes = notes_for_batch_process(batch_process)
     if notes.empty?
       "Pending"
     elsif finished_note(notes)
       "Complete"
     elsif deleted_note(notes)
       "Parent object deleted"
-    elsif latest_failure(batch_process_id).nil?
+    elsif latest_failure(batch_process).nil?
       "In progress - no failures"
-    elsif latest_failure(batch_process_id)
+    elsif latest_failure(batch_process)
       "Failed"
     else
       "Unknown status"
     end
   end
 
-  def duration_for_batch_process(batch_process_id)
-    notes = notes_for_batch_process(batch_process_id)
+  def duration_for_batch_process(batch_process)
+    notes = notes_for_batch_process(batch_process)
     if notes
       start = start_note(notes)
       finish = finished_note(notes)
@@ -46,10 +50,12 @@ module Statable
     end
   end
 
-  def note_records(batch_process_id)
-    Notification.where(["params->>'batch_process_id' = :id and
-    params->>'#{self.class.to_s.underscore}_id' = :oid", { id: batch_process_id.to_s, oid:
-    oid.to_s }])
+  def note_records(batch_process)
+    if self.class == ParentObject
+      IngestEvent.where(batch_connection: batch_connections.where(batch_process: batch_process))
+    elsif self.class == ChildObject
+      IngestEvent.where(batch_connection: parent_object.batch_connections.where(batch_process: batch_process))
+    end
   end
 
   def note_deletion
@@ -58,12 +64,12 @@ module Statable
     end
   end
 
-  def latest_failure(batch_process_id)
-    failures = note_records(batch_process_id).where("params->>'status' = 'failed'")
+  def latest_failure(batch_process)
+    failures = note_records(batch_process).where(status: 'failed')
     if failures.empty?
       nil
     else
-      { reason: failures.last.params[:reason], time: failures.last[:created_at] }
+      { reason: failures.last[:reason], time: failures.last[:created_at] }
     end
   end
 end
