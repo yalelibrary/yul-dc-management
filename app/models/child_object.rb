@@ -24,12 +24,11 @@ class ChildObject < ApplicationRecord
 
   def processing_event(message, status = 'info', _current_batch_process = parent_object&.current_batch_process, current_batch_connection = parent_object&.current_batch_connection)
     return unless current_batch_connection
-    ie = IngestEvent.new(
+    IngestEvent.create!(
       status: status,
       reason: message,
       batch_connection: current_batch_connection
     )
-    ie.save!
   end
 
   def remote_ptiff_exists?

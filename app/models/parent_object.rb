@@ -74,12 +74,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def processing_event(message, status = 'info', _current_batch_process = current_batch_process, current_batch_connection = self.current_batch_connection)
     return unless current_batch_connection
-    ie = IngestEvent.new(
+    IngestEvent.create!(
       status: status,
       reason: message,
       batch_connection: current_batch_connection
     )
-    ie.save!
     current_batch_connection&.save! unless current_batch_connection&.persisted?
     current_batch_connection&.update_status!
   end
