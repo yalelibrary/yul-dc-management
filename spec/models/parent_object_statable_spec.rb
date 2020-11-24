@@ -7,6 +7,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
+  let(:bad_oid_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "bad_oid.csv")) }
 
   describe "with stubbed metadata cloud" do
     before do
@@ -17,6 +18,36 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       stub_metadata_cloud("16414889")
       stub_metadata_cloud("14716192")
       stub_metadata_cloud("16854285")
+    end
+
+    context "with no metadatacloud record" do
+      let(:batch_process_with_failure) { FactoryBot.create(:batch_process, user: user) }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 16_609_818) }
+      let(:batch_connection) do
+        FactoryBot.create(:batch_connection,
+                          connectable: parent_object, batch_process: batch_process_with_failure)
+      end
+
+      before do
+        stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/#{parent_object.oid}.json")
+          .to_return(status: 400, body: File.open(File.join(fixture_path, "metadata_cloud_failure.json")))
+      end
+
+      around do |example|
+        perform_enqueued_jobs do
+          example.run
+        end
+      end
+
+      xit "does not continue with the background jobs if it does not get metadatacloud record" do
+        parent_object
+        batch_process_with_failure.file = bad_oid_upload
+        batch_process_with_failure.save
+        batch_process_with_failure.run_callbacks :create
+        batch_process_with_failure.batch_connections.first.update_status!
+        expect(parent_object.status_for_batch_process(batch_process_with_failure)).to eq "Failed"
+        expect(parent_object.notes_for_batch_process(batch_process_with_failure)).not_to include "metadata-fetched"
+      end
     end
 
     it "has an a pending status" do
