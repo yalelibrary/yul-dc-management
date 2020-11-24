@@ -29,7 +29,8 @@ RSpec.describe BatchProcessParentDatatable, type: :datatable, prep_metadata_sour
 
       output = BatchProcessParentDatatable.new(
         batch_parent_datatable_sample_params(columns, parent_object.oid),
-        view_context: batch_process_parent_datatable_view_mock(batch_process.id, parent_object.oid, child_object.oid)
+        view_context: batch_process_parent_datatable_view_mock(batch_process.id, parent_object.oid, child_object.oid),
+        batch_process: batch_process
       ).data
 
       expect(output.size).to eq(1)

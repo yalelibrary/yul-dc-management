@@ -60,7 +60,7 @@ class BatchProcessesController < ApplicationController
   def show_parent
     respond_to do |format|
       format.html
-      format.json { render json: BatchProcessParentDatatable.new(params, view_context: view_context) }
+      format.json { render json: BatchProcessParentDatatable.new(params, view_context: view_context, batch_process: @batch_process) }
     end
   end
 
