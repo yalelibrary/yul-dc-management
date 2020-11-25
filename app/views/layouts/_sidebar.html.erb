@@ -9,7 +9,11 @@
     <% if current_user %>
       <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'list-group-item list-group-item-action bg-light' %>
     <% else %>
+      <!-- In order to address CVE-2015-9284 https://github.com/advisories/GHSA-ww4x-rwq6-qpgf the
+          Sign In link *must* use post method, not get -->
       <%= button_to 'Sign In', user_cas_omniauth_authorize_path, class: 'list-group-item list-group-item-action bg-light' %>
     <% end %>
+
   </div>
+
 </div>
