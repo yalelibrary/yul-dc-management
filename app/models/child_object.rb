@@ -22,8 +22,13 @@ class ChildObject < ApplicationRecord
     width_and_height(remote_metadata)
   end
 
-  def processing_event(message, status = 'info', current_batch_process = parent_object&.current_batch_process, _current_batch_connection = parent_object&.current_batch_connection)
-    IngestNotification.with(parent_object_id: parent_object&.id, child_object_id: id, status: status, reason: message, batch_process_id: current_batch_process&.id).deliver(User.first)
+  def processing_event(message, status = 'info', _current_batch_process = parent_object&.current_batch_process, current_batch_connection = parent_object&.current_batch_connection)
+    return unless current_batch_connection
+    IngestEvent.create!(
+      status: status,
+      reason: message,
+      batch_connection: current_batch_connection
+    )
   end
 
   def remote_ptiff_exists?

@@ -7,6 +7,7 @@ class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
 
   def initialize(params, opts = {})
     @view = opts[:view_context]
+    @batch_process = opts[:batch_process]
     super
   end
 
@@ -14,7 +15,7 @@ class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
     @view_columns ||= {
       child_oid: { source: 'ChildObject.oid' },
       time: { source: 'ChildObject.created_at' },
-      status: { source: '' }
+      status: { source: '', cond: :null_value, searchable: false, orderable: false }
     }
   end
 
@@ -24,7 +25,7 @@ class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
       {
         child_oid: link_to(child_object&.oid, show_child_batch_process_path(oid: child_object&.parent_object_oid, child_oid: child_object&.oid)),
         time: child_object&.created_at,
-        status: child_object&.status_for_batch_process(params[:id]).to_s,
+        status: child_object&.status_for_batch_process(@batch_process).to_s,
         DT_RowId: child_object&.oid
       }
     end

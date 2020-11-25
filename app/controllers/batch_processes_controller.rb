@@ -60,7 +60,7 @@ class BatchProcessesController < ApplicationController
   def show_parent
     respond_to do |format|
       format.html
-      format.json { render json: BatchProcessParentDatatable.new(params, view_context: view_context) }
+      format.json { render json: BatchProcessParentDatatable.new(params, view_context: view_context, batch_process: @batch_process) }
     end
   end
 
@@ -78,16 +78,16 @@ class BatchProcessesController < ApplicationController
 
     def set_child_object
       @child_object = ChildObject.find(params[:child_oid])
-      @notes = @child_object.notes_for_batch_process(@batch_process.id)
-      @failures = @child_object.latest_failure(@batch_process.id)
+      @notes = @child_object.notes_for_batch_process(@batch_process)
+      @failures = @child_object.latest_failure(@batch_process)
     end
 
     def find_notes
-      @notes = @parent_object.notes_for_batch_process(@batch_process.id) if @parent_object
+      @notes = @parent_object.notes_for_batch_process(@batch_process) if @parent_object
     end
 
     def latest_failure
-      @latest_failure = @parent_object.latest_failure(@batch_process.id) if @parent_object
+      @latest_failure = @parent_object.latest_failure(@batch_process) if @parent_object
     end
 
     def batch_process_params

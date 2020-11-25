@@ -72,8 +72,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     processing_event("Metadata has been fetched", "metadata-fetched") if current_batch_process
   end
 
-  def processing_event(message, status = 'info', current_batch_process = self.current_batch_process, current_batch_connection = self.current_batch_connection)
-    IngestNotification.with(parent_object_id: id, status: status, reason: message, batch_process_id: current_batch_process&.id).deliver(User.first)
+  def processing_event(message, status = 'info', _current_batch_process = current_batch_process, current_batch_connection = self.current_batch_connection)
+    return unless current_batch_connection
+    IngestEvent.create!(
+      status: status,
+      reason: message,
+      batch_connection: current_batch_connection
+    )
     current_batch_connection&.save! unless current_batch_connection&.persisted?
     current_batch_connection&.update_status!
   end

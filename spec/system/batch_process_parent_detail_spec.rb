@@ -47,6 +47,16 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
     end
 
     describe "with a csv import" do
+      describe "running the background jobs" do
+        around do |example|
+          perform_enqueued_jobs do
+            example.run
+          end
+        end
+        it "has a child object id" do
+          expect(page).to have_content("16057781")
+        end
+      end
       it "has a link to the batch process detail page" do
         expect(page).to have_link(batch_process&.id&.to_s, href: "/batch_processes/#{batch_process.id}")
       end
