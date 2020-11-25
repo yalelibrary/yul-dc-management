@@ -1,6 +1,7 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/bib/3163155",
   "creator": [
     "Kane, Paul, 1810-1871"
@@ -8,7 +9,7 @@
   "title": [
     "Paintings"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     ""
   ],
   "publisher": [
@@ -24,6 +25,9 @@
     "oil on canvas."
   ],
   "language": [
+    "English"
+  ],
+  "languageCode": [
     "eng"
   ],
   "description": [
@@ -52,7 +56,7 @@
     "Paul Kane Paintings. Yale Collection of Western Americana, Beinecke Rare Book and Manuscript Library."
   ],
   "dateStructured": [
-    "18461848"
+    "1846"
   ],
   "illustrativeMatter": "nnn ",
   "titleStatement": [

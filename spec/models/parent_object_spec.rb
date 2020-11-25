@@ -34,9 +34,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     let(:child_of_four) { FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_of_four) }
     let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
     around do |example|
+      original_vpn = ENV['VPN']
+      ENV['VPN'] = 'false'
       perform_enqueued_jobs do
         example.run
       end
+      ENV['VPN'] = original_vpn
     end
     before do
       stub_request(:post, "#{ENV['SOLR_BASE_URL']}/blacklight-test/update?wt=json")
