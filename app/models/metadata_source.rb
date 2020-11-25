@@ -18,7 +18,8 @@ class MetadataSource < ApplicationRecord
                      parent_object.processing_event("S3 did not return json for #{s3_path}", "failed") unless r.present?
                      r
                    end
-    JSON.parse(raw_metadata) if raw_metadata
+    return unless raw_metadata
+    JSON.parse(raw_metadata)
   end
 
   def fetch_record_on_vpn(parent_object)
@@ -31,11 +32,13 @@ class MetadataSource < ApplicationRecord
       response_text
     when 400...500
       parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failed")
+      false
     when 500...600
       parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failed")
       raise MetadataSource::MetadataCloudServerError
     else
       parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failure")
+      false
     end
   end
 
