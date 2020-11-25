@@ -9,7 +9,7 @@ RSpec.describe 'User Authentication', type: :system, js: false, clean: true do
   context 'an unauthenticated user' do
     it 'gets the link for Yale CAS authentication' do
       visit root_path
-      expect(page).to have_link('You must sign in', href: '/users/auth/cas')
+      expect(page).to have_button('You must sign in')
     end
   end
 
@@ -25,7 +25,7 @@ RSpec.describe 'User Authentication', type: :system, js: false, clean: true do
       visit root_path
       travel(16.minutes)
       visit root_path
-      expect(page).to have_link('You must sign in', href: '/users/auth/cas')
+      expect(page).to have_button('You must sign in')
       travel_back
     end
   end

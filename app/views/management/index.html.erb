@@ -9,5 +9,5 @@
   <%= render partial: "service_display" %>
 <% else %>
   <%= render partial: "flash_messages" %>
-  <%= link_to 'You must sign in', user_cas_omniauth_authorize_path, class: 'list-group-item list-group-item-action bg-light' %>
+  <%= button_to 'You must sign in', user_cas_omniauth_authorize_path, class: 'list-group-item list-group-item-action bg-light' %>
 <% end %>
