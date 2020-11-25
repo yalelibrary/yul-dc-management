@@ -22,7 +22,7 @@ gem 'kaminari'
 gem 'noticed', '~> 1.2', '>= 1.2.15'
 gem 'omniauth'
 gem 'omniauth-cas'
-gem 'omniauth-rails_csrf_protection', '~> 0.1'
+gem 'omniauth-rails_csrf_protection', '~> 0.1' # for CVE-2015-9284
 # Yale-specific pairtree gem
 gem 'partridge', '~> 0.1.2'
 # Use postgresql as the database for Active Record
