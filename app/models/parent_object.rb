@@ -58,7 +58,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   # Fetches the record from the authoritative_metadata_source
-  def default_fetch(current_batch_process = self.current_batch_process, _current_batch_connection = current_batch_connection)
+  def default_fetch(_current_batch_process = current_batch_process, _current_batch_connection = current_batch_connection)
     fetch_results = case authoritative_metadata_source&.metadata_cloud_name
                     when "ladybird"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
