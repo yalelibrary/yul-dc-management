@@ -229,6 +229,7 @@ Any time you pull a branch with a Gemfile change you need to pull or build a new
 
 ## Releasing a new version of Management
 Refer to the steps in the [Camerata repo](https://github.com/yalelibrary/yul-dc-camerata#releasing-a-new-app-version)
+
 ## Deploy an individual branch
 Refer to the steps in the [Camerata repo](https://github.com/yalelibrary/yul-dc-camerata#deploy-a-branch)
 
