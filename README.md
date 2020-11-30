@@ -25,7 +25,8 @@
 
   - [Pulling or Building Docker Images](#pulling-or-building-docker-images)
 
-  - [Releasing a new version](#releasing-a-new-version)
+  - [Releasing a new version of Management](#releasing-a-new-version-of-management)
+    - [Deploy an individual branch](#deploy-an-individual-branch)
 
   - [Test coverage](#test-coverage)
 
@@ -226,47 +227,10 @@ In production and development mode, you can add objects either individually, eit
 
 Any time you pull a branch with a Gemfile change you need to pull or build a new Docker image. If you change the Dockerfile, you need to build a new Docker image. If you change a file in ./ops you need to build a new Docker image. These are the primary times in which you need to pull or build.
 
-## Releasing a new version
-1. Checkout to the `master` branch and run `git pull`
-
-2. Ensure you have a github personal access token.
-
-    Instructions here: <https://github.com/github-changelog-generator/github-changelog-generator#github-token> You will need to make your token available via an environment variable called `CHANGELOG_GITHUB_TOKEN`, e.g.:
-
-    ```
-    export CHANGELOG_GITHUB_TOKEN=YOUR_TOKEN_HERE
-    ```
-
-3. Use the camerata gem to increment the management version and deploy:
-  Note: See [the camerata readme](https://github.com/yalelibrary/yul-dc-camerata) for details on installing camerata.
-
-    ```
-    cam release management
-    ```
-
-4. Proceed with the steps for the Yale infrastructure or the DCE infrastructure
-##### Using the Yale infrastructure
-  - Log on to VPN
-  - Go to Jenkins website in your browser (request it from a member of the team if you don't have it)
-  - Click on "YUL-DC-Test-Deploy" on the dashboard
-  - Click on "Build with Parameters" in the left side navigation panel
-  - In the "MANAGEMENT_VERSION" input box, type in the version you released with the command in step 3 (e.g.: v1.30.0)
-  - Check the UPDATE_SSM box
-  - Press "Build"
-  - You will see your build in the "Build History" section in the left side navigation panel with a blinking blue circle, indicating it's in progress
-    - If you press the number associated with the build, you can see the details
-    - The build typically takes 10-15 minutes
-    - A successful build will show a solid blue circle when finished
-    - An unsuccessful build will show a solid red circle when finished
-
-
-##### Using the DCE infrastructure
-```
-  cam push_version management NEW_MANAGEMENT_VERSION_NUMBER
-  cam deploy-main CLUSTER_NAME (e.g., yul-test)
-```
-
-5. Move any tickets that were included in this release from `For Release` to `Ready for Acceptance`
+## Releasing a new version of Management
+Refer to the steps in the [Camerata repo](https://github.com/yalelibrary/yul-dc-camerata#releasing-a-new-app-version)
+## Deploy an individual branch
+Refer to the steps in the [Camerata repo](https://github.com/yalelibrary/yul-dc-camerata#deploy-a-branch)
 
 ## Test coverage
 
