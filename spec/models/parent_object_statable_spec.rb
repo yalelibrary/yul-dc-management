@@ -39,7 +39,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         end
       end
 
-      xit "does not continue with the background jobs if it does not get metadatacloud record" do
+      it "does not continue with the background jobs if it does not get metadatacloud record" do
         parent_object
         batch_process_with_failure.file = bad_oid_upload
         batch_process_with_failure.save

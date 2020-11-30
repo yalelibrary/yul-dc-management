@@ -58,22 +58,23 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   # Fetches the record from the authoritative_metadata_source
-  def default_fetch(current_batch_process = self.current_batch_process, _current_batch_connection = current_batch_connection)
-    case authoritative_metadata_source&.metadata_cloud_name
-    when "ladybird"
-      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
-    when "ils"
-      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
-      self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
-    when "aspace"
-      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
-      self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
-    end
-    processing_event("Metadata has been fetched", "metadata-fetched") if current_batch_process
+  def default_fetch(_current_batch_process = current_batch_process, _current_batch_connection = current_batch_connection)
+    fetch_results = case authoritative_metadata_source&.metadata_cloud_name
+                    when "ladybird"
+                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
+                    when "ils"
+                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
+                      self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
+                    when "aspace"
+                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
+                      self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
+                    end
+    processing_event("Metadata has been fetched", "metadata-fetched") if fetch_results
+    fetch_results
   end
 
   def processing_event(message, status = 'info', _current_batch_process = current_batch_process, current_batch_connection = self.current_batch_connection)
-    return unless current_batch_connection
+    return "no batch connection" unless current_batch_connection
     IngestEvent.create!(
       status: status,
       reason: message,
