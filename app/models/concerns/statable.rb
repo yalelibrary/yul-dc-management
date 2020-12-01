@@ -41,7 +41,7 @@ module Statable
 
   def duration_for_batch_process(batch_process)
     notes = notes_for_batch_process(batch_process)
-    if notes
+    if notes.present?
       start = start_note(notes)
       finish = finished_note(notes)
       finish - start if finish && start

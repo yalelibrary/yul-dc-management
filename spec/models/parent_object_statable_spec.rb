@@ -53,6 +53,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     it "has an a pending status" do
       expect(parent_object.notes_for_batch_process(batch_process).empty?).to be true
       expect(parent_object.status_for_batch_process(batch_process)).to eq "Pending"
+      expect(parent_object.duration_for_batch_process(batch_process)).to eq "n/a"
     end
 
     describe "after running the background jobs" do
@@ -72,6 +73,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         batch_process.run_callbacks :create
         po = ParentObject.find(14_716_192)
         expect(po.status_for_batch_process(batch_process)).to eq "Complete"
+        expect(po.duration_for_batch_process(batch_process)).not_to eq "n/a"
+        expect(po.duration_for_batch_process(batch_process)).to be_an_instance_of Float
       end
     end
   end
