@@ -127,7 +127,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return lb_record if lb_record.blank?
     self.last_ladybird_update = DateTime.current
     return unless use_ladybird
-    self.bib = lb_record["orbisBibId"] || lb_record["orbisRecord"]
+    self.bib = lb_record["orbisBibId"]
     self.barcode = lb_record["orbisBarcode"]
     self.aspace_uri = lb_record["archiveSpaceUri"]
     self.visibility = lb_record["itemPermission"]
@@ -154,7 +154,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def voyager_cloud_url
     return nil unless ladybird_json.present?
-    orbis_bib = ladybird_json['orbisRecord'] || ladybird_json['orbisBibId']
+    orbis_bib = ladybird_json['orbisBibId']
     identifier_block = if ladybird_json["orbisBarcode"].nil?
                          "/bib/#{orbis_bib}"
                        else

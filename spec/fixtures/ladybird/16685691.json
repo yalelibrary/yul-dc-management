@@ -71,6 +71,7 @@
     "a"
   ],
   "geoSubject": "x------",
+  "orbisBibId": "13881242",
   "recordType": "oid",
   "repository": "Beinecke Library",
   "subjectEra": "Steam-navigation--Maps.",
@@ -80,7 +81,6 @@
     "Includes charts: \"Speeds per hour with daily and weekly distances in nautical miles\" and \"Reduction knots on nautical miles to statute miles.\" Also includes 4 distance charts.",
     "Relief shown by hachures and spot heights."
   ],
-  "orbisRecord": "13881242",
   "collectionId": 1,
   "orbisBarcode": "39002131329220",
   "resourceType": "Maps, Atlases & Globes",
