@@ -37,16 +37,14 @@ class MetadataSource < ApplicationRecord
       S3Service.upload("#{metadata_cloud_name}/#{file_name(parent_object)}", response_text)
       response_text
     when 400...500
-      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body.to_s}", "failed")
-      if JSON.parse(full_response.body)["ex"].include?("Unable to find retriever")
-        raise MetadataSource::MetadataCloudVersionError
-      end
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body}", "failed")
+      raise MetadataSource::MetadataCloudVersionError if JSON.parse(full_response.body)["ex"].include?("Unable to find retriever")
       false
     when 500...600
-      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body.to_s}", "failed")
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body}", "failed")
       raise MetadataSource::MetadataCloudServerError
     else
-      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body.to_s}", "failed")
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body}", "failed")
       false
     end
   end

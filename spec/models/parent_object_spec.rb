@@ -257,7 +257,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
             ladybird_source.fetch_record_on_vpn(parent_object)
           end.to raise_error(MetadataSource::MetadataCloudVersionError, "MetadataCloud is not responding to requests for version: clearly_fake_version")
         end
-
       end
     end
 
