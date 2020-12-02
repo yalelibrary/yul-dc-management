@@ -8,6 +8,12 @@ class MetadataSource < ApplicationRecord
     end
   end
 
+  class MetadataCloudVersionError < StandardError
+    def message
+      "MetadataCloud is not responding to requests for version: #{MetadataSource.metadata_cloud_version}"
+    end
+  end
+
   def fetch_record(parent_object)
     # The environment value has to be set as a string, real booleans do not work
     raw_metadata = if ENV["VPN"] == "true"
@@ -31,13 +37,16 @@ class MetadataSource < ApplicationRecord
       S3Service.upload("#{metadata_cloud_name}/#{file_name(parent_object)}", response_text)
       response_text
     when 400...500
-      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failed")
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body.to_s}", "failed")
+      if JSON.parse(full_response.body)["ex"].include?("Unable to find retriever")
+        raise MetadataSource::MetadataCloudVersionError
+      end
       false
     when 500...600
-      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failed")
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body.to_s}", "failed")
       raise MetadataSource::MetadataCloudServerError
     else
-      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failure")
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body.to_s}", "failed")
       false
     end
   end
