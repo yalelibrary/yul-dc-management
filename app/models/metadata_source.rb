@@ -58,6 +58,7 @@ class MetadataSource < ApplicationRecord
   end
 
   def mc_get(mc_url)
+    # TODO: Do we still need the Honeybadger context part of this?
     Honeybadger.context(
       metadata_cloud_username: ENV["MC_USER"],
       metadata_cloud_password: ENV["MC_PW"],
@@ -68,6 +69,11 @@ class MetadataSource < ApplicationRecord
     metadata_cloud_username = ENV["MC_USER"]
     metadata_cloud_password = ENV["MC_PW"]
     HTTP.basic_auth(user: metadata_cloud_username, pass: metadata_cloud_password).get(mc_url)
+  end
+
+  # Hard coding the metadata cloud version because it is directly correlated with the solr indexing code
+  def self.metadata_cloud_version
+    "1.0.2"
   end
 
   def self.metadata_cloud_host
