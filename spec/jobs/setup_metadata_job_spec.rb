@@ -20,7 +20,7 @@ RSpec.describe SetupMetadataJob, type: :job do
     let(:user) { FactoryBot.create(:user) }
     let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
     let(:metadata_source) { FactoryBot.create(:metadata_source) }
-    let(:parent_object) { FactoryBot.build(:parent_object, authoritative_metadata_source: metadata_source) }
+    let(:parent_object) { FactoryBot.create(:parent_object, authoritative_metadata_source: metadata_source) }
     before do
       allow(parent_object).to receive(:save!).and_raise('boom!')
     end
