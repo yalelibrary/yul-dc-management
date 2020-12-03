@@ -1,105 +1,108 @@
 {
-  "oid": 16189097,
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/16189097",
-  "date": [
-    "[189x?]"
-  ],
-  "genre": [
-    "Maps."
-  ],
-  "scale": "Scale not given.",
+  "callNumber": "Lanman Covers 56 189x",
   "title": [
     "[Map of China]."
   ],
-  "extent": [
-    "1 map ; folded in covers 25 x 16 cm."
+  "extentOfDigitization": [
+    "Complete work digitized."
   ],
-  "format": [
-    "cartographic"
-  ],
-  "partOf": "Beinecke Library",
-  "rights": [
-    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-  ],
-  "source": "ladybird",
-  "children": [
-    {
-      "oid": 16189150,
-      "uri": "/ladybird/oid/16189150",
-      "title": [
-        "[Map of China]."
-      ],
-      "width": 1532,
-      "height": 1536,
-      "source": "ladybird",
-      "caption": "recto",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16189150"
-      ],
-      "identifierShelfMark": "Lanman Covers 56 189x"
-    },
-    {
-      "oid": 16189151,
-      "uri": "/ladybird/oid/16189151",
-      "title": [
-        "[Map of China]."
-      ],
-      "width": 2568,
-      "height": 3966,
-      "source": "ladybird",
-      "caption": "[Front cover]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16189151"
-      ],
-      "identifierShelfMark": "Lanman Covers 56 189x"
-    }
-  ],
-  "contents": [
-    "In Japanese.",
-    "Japanese reprint of a Chinese map published in 1663.",
-    "Transliteration supplied by cataloger."
-  ],
-  "language": [
-    "Japanese"
+  "creationPlace": [
+    "Kyoto [Japan] :"
   ],
   "publisher": [
     "Umemura Yahaku,"
   ],
-  "coordinate": [
-    "a"
+  "date": [
+    "[189x?]"
   ],
-  "recordType": "oid",
-  "repository": "Beinecke Library",
+  "extent": [
+    "1 map ; folded in covers 25 x 16 cm."
+  ],
+  "language": [
+    "Japanese"
+  ],
   "description": [
     "In Japanese.",
     "Japanese reprint of a Chinese map published in 1663.",
     "Transliteration supplied by cataloger."
   ],
-  "orbisRecord": "8330740",
-  "collectionId": 1,
+  "scale": "Scale not given.",
+  "coordinate": [
+    "a"
+  ],
+  "genre": [
+    "Maps."
+  ],
+  "format": [
+    "cartographic"
+  ],
+  "itemType": [
+    "Maps, Atlases & Globes"
+  ],
+  "partOf": "Beinecke Library",
+  "rights": [
+    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+  ],
+  "orbisBibId": "8330740",
   "orbisBarcode": "39002113593819",
-  "resourceType": "Maps, Atlases & Globes",
-  "dependentUris": [
-    "/ladybird/oid/16189097"
-  ],
   "itemPermission": "Public",
-  "publicationPlace": [
-    "Kyoto [Japan] :"
+  "dateStructured": [
+    "1890/1899"
   ],
+  "illustrativeMatter": "080815s189u    ja ",
+  "repository": "Beinecke Library",
   "subjectGeographic": [
     "China--Maps."
   ],
-  "illustrativeMatter": "080815s189u    ja ",
-  "identifierShelfMark": "Lanman Covers 56 189x",
-  "extentOfDigitization": [
-    "Complete work digitized."
+  "dependentUris": [
+    "/ladybird/oid/16189097"
+  ],
+  "oid": 16189097,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16189150",
+      "callNumber": "Lanman Covers 56 189x",
+      "title": [
+        "[Map of China]."
+      ],
+      "caption": "recto",
+      "dependentUris": [
+        "/ladybird/oid/16189150"
+      ],
+      "oid": 16189150,
+      "width": 1532,
+      "height": 1536,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16189151",
+      "callNumber": "Lanman Covers 56 189x",
+      "title": [
+        "[Map of China]."
+      ],
+      "caption": "[Front cover]",
+      "dependentUris": [
+        "/ladybird/oid/16189151"
+      ],
+      "oid": 16189151,
+      "width": 2568,
+      "height": 3966,
+      "children": [
+
+      ]
+    }
   ]
 }

@@ -1,15 +1,16 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002091549304?bib=11756910",
-  "identifierShelfMark": "97 Takamiya MS",
+  "callNumber": "Takamiya MS 97",
   "title": [
     "Mirour of mans salvacioune"
   ],
   "alternativeTitle": [
     "Speculum humanae salvationis. English, Middle (ca. 1100-1500)"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "England"
   ],
   "publisher": [
@@ -25,6 +26,9 @@
     "paper ;"
   ],
   "language": [
+    "English, Middle (1100-1500)"
+  ],
+  "languageCode": [
     "enm"
   ],
   "description": [
@@ -50,19 +54,19 @@
     "Early works to 1800",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
-  "format": [
+  "itemType": [
     "unspecified"
   ],
-  "orbisRecord": "11756910",
+  "orbisBibId": "11756910",
   "orbisBarcode": "39002091549304",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16157343"
   ],
-  "references": [
+  "preferredCitation": [
     "Mirour of mans salvacioune (Takamiya MS 97). General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1450    "
+    "1450"
   ],
   "illustrativeMatter": "    ",
   "subjectEra": "Middle English, 1100-1500. Middle English, 1100-1500.",
@@ -80,6 +84,9 @@
     "New Haven."
   ],
   "volumeEnumeration": "Box",
+  "accessCondition": [
+    "This material is open for research"
+  ],
   "dependentUris": [
     "/ils/holding/11876007",
     "/ils/item/10697900",

@@ -1,8 +1,9 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002091459793?bib=6805375",
-  "identifierShelfMark": "202 YCAL MSS",
+  "callNumber": "YCAL MSS 202",
   "creator": [
     "Whitman, Walt, 1819-1892"
   ],
@@ -16,6 +17,9 @@
     "11.65 linear ft. (18 boxes) + 1 broadside folder + 7 art."
   ],
   "language": [
+    "English"
+  ],
+  "languageCode": [
     "eng"
   ],
   "description": [
@@ -64,17 +68,17 @@
     "Photographic prints",
     "Archives"
   ],
-  "orbisRecord": "6805375",
+  "orbisBibId": "6805375",
   "orbisBarcode": "39002091459793",
   "findingAid": [
     "http://hdl.handle.net/10079/fa/beinecke.whitman",
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=YCAL_MSS_202"
   ],
-  "references": [
+  "preferredCitation": [
     "Walt Whitman Collection. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
   "dateStructured": [
-    "18421949"
+    "1842"
   ],
   "illustrativeMatter": "    ",
   "subjectEra": "19th century. 19th century Civil War, 1861-1865.",
@@ -125,6 +129,9 @@
     "Whitman, Walt, 1819-1892"
   ],
   "volumeEnumeration": "Box 4",
+  "accessCondition": [
+    "Boxes 16-18: Restricted fragile material.  Reference surrogates have been substituted in the main files.  For further information consult the appropriate curator"
+  ],
   "dependentUris": [
     "/ils/holding/7397126",
     "/ils/item/8200460",

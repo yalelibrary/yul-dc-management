@@ -1,15 +1,16 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002002294065?bib=5404463",
-  "identifierShelfMark": "794b EEa",
+  "callNumber": "EEa 794b",
   "creator": [
     "Baldwyn, George Augustus"
   ],
   "title": [
     "A new, royal, authentic, complete, and universal system of geography: or, A modern history and description of the whole world. Containing ... accounts and descriptions of Europe, Asia, Africa, and America ... including the substance and essence of the most remarkable voyages and travels ... particularly the late discoveries in the South seas, and towards the North pole ... Comprising every interesting discovery and circumstance in the narratives of Captain Cook's voyages round the world. Together with all the recent discoveries ... carefully written and compiled from the late journals of ... Captains Phillips, King, Ball, Hunter, White, Dixon, Portlock, Mears, Patterson, Bruce, Anbury, Rochon, Morse, Blyth, Ross, Imlay, Keate, Brissot, Hodges, &c. &c. Also compendious histories of every empire, kingdom, state, &c. ... The whole embellished and enriched with upwards of an hundred most elegant and superb copperplates ..."
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "London"
   ],
   "publisher": [
@@ -25,6 +26,9 @@
     "front., 71 pl., 17 maps."
   ],
   "language": [
+    "English"
+  ],
+  "languageCode": [
     "eng"
   ],
   "description": [
@@ -35,13 +39,13 @@
   "subjectTopic": [
     "Geography"
   ],
-  "orbisRecord": "5404463",
+  "orbisBibId": "5404463",
   "orbisBarcode": "39002002294065",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16570777"
   ],
   "dateStructured": [
-    "1794    "
+    "1794"
   ],
   "illustrativeMatter": "bf  ",
   "titleStatement": [
@@ -72,6 +76,7 @@
     "Outlon, Clement Walley.",
     "Robertson, Charles Andrew."
   ],
+  "libraryOfCongressClassificationNumber": "G114 .B19",
   "dependentUris": [
     "/ils/holding/5879227",
     "/ils/item/4267559",

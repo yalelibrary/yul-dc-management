@@ -1,8 +1,30 @@
 {
-  "oid": 16414889,
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/16414889",
+  "callNumber": "1978 1351",
+  "creator": [
+    "Cruikshank, George, 1792-1878."
+  ],
+  "title": [
+    "A comic alphabet, designed, etched & published by George Cruikshank, No. 23 Myddelton Terrace, Pentonville."
+  ],
+  "extentOfDigitization": [
+    "Complete work digitized."
+  ],
   "date": [
     "1836."
+  ],
+  "extent": [
+    "24 plates. 13 cm."
+  ],
+  "language": [
+    "English"
+  ],
+  "description": [
+    "Cover-title.",
+    "Plates printed on a continuous strip of paper, folded in Japanese fashion ; linen backed ; portrait of the publisher Tilt on back cover. cf. A. M. Cohn, George Cruikshank, no. 189."
   ],
   "genre": [
     "Accordion fold format (Binding).",
@@ -12,587 +34,592 @@
     "Etchings",
     "Intaglio prints"
   ],
-  "title": [
-    "A comic alphabet, designed, etched & published by George Cruikshank, No. 23 Myddelton Terrace, Pentonville."
-  ],
-  "extent": [
-    "24 plates. 13 cm."
-  ],
   "format": [
     "mixed material"
+  ],
+  "itemType": [
+    "Books, Journals & Pamphlets"
   ],
   "partOf": "Beinecke Library",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "source": "ladybird",
-  "creator": [
-    "Cruikshank, George, 1792-1878."
-  ],
-  "children": [
-    {
-      "oid": 16424346,
-      "uri": "/ladybird/oid/16424346",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1562,
-      "height": 2114,
-      "source": "ladybird",
-      "caption": "[Front cover]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424346"
-      ]
-    },
-    {
-      "oid": 16424347,
-      "uri": "/ladybird/oid/16424347",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1526,
-      "height": 2126,
-      "source": "ladybird",
-      "caption": "[Front pastedown]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424347"
-      ]
-    },
-    {
-      "oid": 16424348,
-      "uri": "/ladybird/oid/16424348",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1580,
-      "height": 2124,
-      "source": "ladybird",
-      "caption": "[A Alamode]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424348"
-      ]
-    },
-    {
-      "oid": 16424349,
-      "uri": "/ladybird/oid/16424349",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1527,
-      "height": 2058,
-      "source": "ladybird",
-      "caption": "[B Boots]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424349"
-      ]
-    },
-    {
-      "oid": 16424350,
-      "uri": "/ladybird/oid/16424350",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1527,
-      "height": 2058,
-      "source": "ladybird",
-      "caption": "[C Chimpanzee]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424350"
-      ]
-    },
-    {
-      "oid": 16424351,
-      "uri": "/ladybird/oid/16424351",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1527,
-      "height": 2058,
-      "source": "ladybird",
-      "caption": "[D Dining Out]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424351"
-      ]
-    },
-    {
-      "oid": 16424352,
-      "uri": "/ladybird/oid/16424352",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1527,
-      "height": 2058,
-      "source": "ladybird",
-      "caption": "[E Equality]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424352"
-      ]
-    },
-    {
-      "oid": 16424353,
-      "uri": "/ladybird/oid/16424353",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1527,
-      "height": 2058,
-      "source": "ladybird",
-      "caption": "[F Fashion]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424353"
-      ]
-    },
-    {
-      "oid": 16424354,
-      "uri": "/ladybird/oid/16424354",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1527,
-      "height": 2058,
-      "source": "ladybird",
-      "caption": "[G Going]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424354"
-      ]
-    },
-    {
-      "oid": 16424355,
-      "uri": "/ladybird/oid/16424355",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1527,
-      "height": 2058,
-      "source": "ladybird",
-      "caption": "[H Holidays]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424355"
-      ]
-    },
-    {
-      "oid": 16424356,
-      "uri": "/ladybird/oid/16424356",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1527,
-      "height": 2058,
-      "source": "ladybird",
-      "caption": "[I J Isac & John]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424356"
-      ]
-    },
-    {
-      "oid": 16424357,
-      "uri": "/ladybird/oid/16424357",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1580,
-      "height": 2090,
-      "source": "ladybird",
-      "caption": "[K Kitchen Stuff]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424357"
-      ]
-    },
-    {
-      "oid": 16424358,
-      "uri": "/ladybird/oid/16424358",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1486,
-      "height": 2051,
-      "source": "ladybird",
-      "caption": "[L Latitude & Longitude]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424358"
-      ]
-    },
-    {
-      "oid": 16424359,
-      "uri": "/ladybird/oid/16424359",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1486,
-      "height": 2051,
-      "source": "ladybird",
-      "caption": "[M Monkies]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424359"
-      ]
-    },
-    {
-      "oid": 16424360,
-      "uri": "/ladybird/oid/16424360",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1486,
-      "height": 2051,
-      "source": "ladybird",
-      "caption": "[N Nightmare]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424360"
-      ]
-    },
-    {
-      "oid": 16424361,
-      "uri": "/ladybird/oid/16424361",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1486,
-      "height": 2051,
-      "source": "ladybird",
-      "caption": "[O Orpheus]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424361"
-      ]
-    },
-    {
-      "oid": 16424362,
-      "uri": "/ladybird/oid/16424362",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1486,
-      "height": 2051,
-      "source": "ladybird",
-      "caption": "[P Pretty-Poll]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424362"
-      ]
-    },
-    {
-      "oid": 16424363,
-      "uri": "/ladybird/oid/16424363",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1486,
-      "height": 2051,
-      "source": "ladybird",
-      "caption": "[Q Quadrille]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424363"
-      ]
-    },
-    {
-      "oid": 16424364,
-      "uri": "/ladybird/oid/16424364",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1486,
-      "height": 2051,
-      "source": "ladybird",
-      "caption": "[R Racing]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424364"
-      ]
-    },
-    {
-      "oid": 16424365,
-      "uri": "/ladybird/oid/16424365",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1486,
-      "height": 2051,
-      "source": "ladybird",
-      "caption": "[S Singing]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424365"
-      ]
-    },
-    {
-      "oid": 16424366,
-      "uri": "/ladybird/oid/16424366",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1486,
-      "height": 2051,
-      "source": "ladybird",
-      "caption": "[T Tantalizing]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424366"
-      ]
-    },
-    {
-      "oid": 16424367,
-      "uri": "/ladybird/oid/16424367",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1486,
-      "height": 2051,
-      "source": "ladybird",
-      "caption": "[V U Very Unpleasant]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424367"
-      ]
-    },
-    {
-      "oid": 16424368,
-      "uri": "/ladybird/oid/16424368",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1486,
-      "height": 2051,
-      "source": "ladybird",
-      "caption": "[W Waistcoat]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424368"
-      ]
-    },
-    {
-      "oid": 16424369,
-      "uri": "/ladybird/oid/16424369",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1486,
-      "height": 2051,
-      "source": "ladybird",
-      "caption": "[X Xantippe]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424369"
-      ]
-    },
-    {
-      "oid": 16424370,
-      "uri": "/ladybird/oid/16424370",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1486,
-      "height": 2051,
-      "source": "ladybird",
-      "caption": "[Y Yawning]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424370"
-      ]
-    },
-    {
-      "oid": 16424371,
-      "uri": "/ladybird/oid/16424371",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1486,
-      "height": 2051,
-      "source": "ladybird",
-      "caption": "[Z Zoophyte]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424371"
-      ]
-    },
-    {
-      "oid": 16424372,
-      "uri": "/ladybird/oid/16424372",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1568,
-      "height": 2130,
-      "source": "ladybird",
-      "caption": "[Back pastedown]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424372"
-      ]
-    },
-    {
-      "oid": 16424373,
-      "uri": "/ladybird/oid/16424373",
-      "title": [
-        "A comic alphabet"
-      ],
-      "width": 1552,
-      "height": 2124,
-      "source": "ladybird",
-      "caption": "[Back cover]",
-      "children": [
-
-      ],
-      "callNumber": "1978 1351",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16424373"
-      ]
-    }
-  ],
-  "contents": [
-    "Cover-title.",
-    "Plates printed on a continuous strip of paper, folded in Japanese fashion ; linen backed ; portrait of the publisher Tilt on back cover. cf. A. M. Cohn, George Cruikshank, no. 189."
-  ],
-  "language": [
-    "English"
-  ],
-  "callNumber": "1978 1351",
   "orbisBibId": "3577942",
-  "recordType": "oid",
-  "repository": "Beinecke Library",
-  "description": [
-    "Cover-title.",
-    "Plates printed on a continuous strip of paper, folded in Japanese fashion ; linen backed ; portrait of the publisher Tilt on back cover. cf. A. M. Cohn, George Cruikshank, no. 189."
-  ],
-  "collectionId": 1,
   "orbisBarcode": "39002113596465",
-  "resourceType": "Books, Journals & Pamphlets",
-  "dependentUris": [
-    "/ladybird/oid/16414889"
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1836"
   ],
+  "illustrativeMatter": "931103s1836    enk           00010 eng d",
+  "repository": "Beinecke Library",
   "creatorDisplay": [
     "Cruikshank, George, 1792-1878."
   ],
-  "dateStructured": [
-    "1836-00-00T00:00:00Z"
+  "dependentUris": [
+    "/ladybird/oid/16414889"
   ],
-  "itemPermission": "Public",
-  "illustrativeMatter": "931103s1836    enk           00010 eng d",
-  "extentOfDigitization": [
-    "Complete work digitized."
+  "oid": 16414889,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424346",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[Front cover]",
+      "dependentUris": [
+        "/ladybird/oid/16424346"
+      ],
+      "oid": 16424346,
+      "width": 1562,
+      "height": 2114,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424347",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[Front pastedown]",
+      "dependentUris": [
+        "/ladybird/oid/16424347"
+      ],
+      "oid": 16424347,
+      "width": 1526,
+      "height": 2126,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424348",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[A Alamode]",
+      "dependentUris": [
+        "/ladybird/oid/16424348"
+      ],
+      "oid": 16424348,
+      "width": 1580,
+      "height": 2124,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424349",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[B Boots]",
+      "dependentUris": [
+        "/ladybird/oid/16424349"
+      ],
+      "oid": 16424349,
+      "width": 1527,
+      "height": 2058,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424350",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[C Chimpanzee]",
+      "dependentUris": [
+        "/ladybird/oid/16424350"
+      ],
+      "oid": 16424350,
+      "width": 1527,
+      "height": 2058,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424351",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[D Dining Out]",
+      "dependentUris": [
+        "/ladybird/oid/16424351"
+      ],
+      "oid": 16424351,
+      "width": 1527,
+      "height": 2058,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424352",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[E Equality]",
+      "dependentUris": [
+        "/ladybird/oid/16424352"
+      ],
+      "oid": 16424352,
+      "width": 1527,
+      "height": 2058,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424353",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[F Fashion]",
+      "dependentUris": [
+        "/ladybird/oid/16424353"
+      ],
+      "oid": 16424353,
+      "width": 1527,
+      "height": 2058,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424354",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[G Going]",
+      "dependentUris": [
+        "/ladybird/oid/16424354"
+      ],
+      "oid": 16424354,
+      "width": 1527,
+      "height": 2058,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424355",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[H Holidays]",
+      "dependentUris": [
+        "/ladybird/oid/16424355"
+      ],
+      "oid": 16424355,
+      "width": 1527,
+      "height": 2058,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424356",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[I J Isac & John]",
+      "dependentUris": [
+        "/ladybird/oid/16424356"
+      ],
+      "oid": 16424356,
+      "width": 1527,
+      "height": 2058,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424357",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[K Kitchen Stuff]",
+      "dependentUris": [
+        "/ladybird/oid/16424357"
+      ],
+      "oid": 16424357,
+      "width": 1580,
+      "height": 2090,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424358",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[L Latitude & Longitude]",
+      "dependentUris": [
+        "/ladybird/oid/16424358"
+      ],
+      "oid": 16424358,
+      "width": 1486,
+      "height": 2051,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424359",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[M Monkies]",
+      "dependentUris": [
+        "/ladybird/oid/16424359"
+      ],
+      "oid": 16424359,
+      "width": 1486,
+      "height": 2051,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424360",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[N Nightmare]",
+      "dependentUris": [
+        "/ladybird/oid/16424360"
+      ],
+      "oid": 16424360,
+      "width": 1486,
+      "height": 2051,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424361",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[O Orpheus]",
+      "dependentUris": [
+        "/ladybird/oid/16424361"
+      ],
+      "oid": 16424361,
+      "width": 1486,
+      "height": 2051,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424362",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[P Pretty-Poll]",
+      "dependentUris": [
+        "/ladybird/oid/16424362"
+      ],
+      "oid": 16424362,
+      "width": 1486,
+      "height": 2051,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424363",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[Q Quadrille]",
+      "dependentUris": [
+        "/ladybird/oid/16424363"
+      ],
+      "oid": 16424363,
+      "width": 1486,
+      "height": 2051,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424364",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[R Racing]",
+      "dependentUris": [
+        "/ladybird/oid/16424364"
+      ],
+      "oid": 16424364,
+      "width": 1486,
+      "height": 2051,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424365",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[S Singing]",
+      "dependentUris": [
+        "/ladybird/oid/16424365"
+      ],
+      "oid": 16424365,
+      "width": 1486,
+      "height": 2051,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424366",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[T Tantalizing]",
+      "dependentUris": [
+        "/ladybird/oid/16424366"
+      ],
+      "oid": 16424366,
+      "width": 1486,
+      "height": 2051,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424367",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[V U Very Unpleasant]",
+      "dependentUris": [
+        "/ladybird/oid/16424367"
+      ],
+      "oid": 16424367,
+      "width": 1486,
+      "height": 2051,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424368",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[W Waistcoat]",
+      "dependentUris": [
+        "/ladybird/oid/16424368"
+      ],
+      "oid": 16424368,
+      "width": 1486,
+      "height": 2051,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424369",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[X Xantippe]",
+      "dependentUris": [
+        "/ladybird/oid/16424369"
+      ],
+      "oid": 16424369,
+      "width": 1486,
+      "height": 2051,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424370",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[Y Yawning]",
+      "dependentUris": [
+        "/ladybird/oid/16424370"
+      ],
+      "oid": 16424370,
+      "width": 1486,
+      "height": 2051,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424371",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[Z Zoophyte]",
+      "dependentUris": [
+        "/ladybird/oid/16424371"
+      ],
+      "oid": 16424371,
+      "width": 1486,
+      "height": 2051,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424372",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[Back pastedown]",
+      "dependentUris": [
+        "/ladybird/oid/16424372"
+      ],
+      "oid": 16424372,
+      "width": 1568,
+      "height": 2130,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16424373",
+      "callNumber": "1978 1351",
+      "title": [
+        "A comic alphabet"
+      ],
+      "caption": "[Back cover]",
+      "dependentUris": [
+        "/ladybird/oid/16424373"
+      ],
+      "oid": 16424373,
+      "width": 1552,
+      "height": 2124,
+      "children": [
+
+      ]
+    }
   ]
 }

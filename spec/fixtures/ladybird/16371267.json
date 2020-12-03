@@ -1,205 +1,206 @@
 {
-  "oid": 16371267,
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/16371267",
-  "date": [
-    "[ca. 1440]"
-  ],
-  "genre": [
-    "Manuscripts, Medieval--France--14th century."
-  ],
+  "callNumber": "Takamiya MS 99",
   "title": [
     "Livre du Lancelot du Lac: three miniatures."
+  ],
+  "extentOfDigitization": [
+    "Complete work digitized."
+  ],
+  "creationPlace": [
+    "Paris,"
+  ],
+  "date": [
+    "[ca. 1440]"
   ],
   "extent": [
     "3 items : parchment ; 100 x100 mm (largest)"
   ],
-  "format": [
-    "text"
-  ],
-  "partOf": "Beinecke Library",
-  "rights": [
-    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-  ],
-  "source": "ladybird",
-  "abstract": [
-    "Three miniatures, on vellum, from the copy of the Livre du Lancelot du Lac illustrated by the Dunois Master. They depict: 1) the Duke of Clarence and esquire, meeting a knight cutting off a woman's hair; 2) King Baudemagnus leading the battle against the Romans; 3) Lancelot's arrival at the city of Gorre."
-  ],
-  "children": [
-    {
-      "oid": 16394251,
-      "uri": "/ladybird/oid/16394251",
-      "title": [
-        "Livre du Lancelot du Lac: three miniatures."
-      ],
-      "width": 2196,
-      "height": 2172,
-      "source": "ladybird",
-      "caption": "1r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16394251"
-      ],
-      "identifierShelfMark": "Takamiya MS 99"
-    },
-    {
-      "oid": 16394252,
-      "uri": "/ladybird/oid/16394252",
-      "title": [
-        "Livre du Lancelot du Lac: three miniatures."
-      ],
-      "width": 2197,
-      "height": 2162,
-      "source": "ladybird",
-      "caption": "1v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16394252"
-      ],
-      "identifierShelfMark": "Takamiya MS 99"
-    },
-    {
-      "oid": 16394253,
-      "uri": "/ladybird/oid/16394253",
-      "title": [
-        "Livre du Lancelot du Lac: three miniatures."
-      ],
-      "width": 3977,
-      "height": 4755,
-      "source": "ladybird",
-      "caption": "2r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16394253"
-      ],
-      "identifierShelfMark": "Takamiya MS 99"
-    },
-    {
-      "oid": 16394254,
-      "uri": "/ladybird/oid/16394254",
-      "title": [
-        "Livre du Lancelot du Lac: three miniatures."
-      ],
-      "width": 3959,
-      "height": 4758,
-      "source": "ladybird",
-      "caption": "2v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16394254"
-      ],
-      "identifierShelfMark": "Takamiya MS 99"
-    },
-    {
-      "oid": 16394255,
-      "uri": "/ladybird/oid/16394255",
-      "title": [
-        "Livre du Lancelot du Lac: three miniatures."
-      ],
-      "width": 2188,
-      "height": 2217,
-      "source": "ladybird",
-      "caption": "3r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16394255"
-      ],
-      "identifierShelfMark": "Takamiya MS 99"
-    },
-    {
-      "oid": 16394256,
-      "uri": "/ladybird/oid/16394256",
-      "title": [
-        "Livre du Lancelot du Lac: three miniatures."
-      ],
-      "width": 2193,
-      "height": 2203,
-      "source": "ladybird",
-      "caption": "3v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16394256"
-      ],
-      "identifierShelfMark": "Takamiya MS 99"
-    }
-  ],
-  "contents": [
-    "Binding: individually mounted.",
-    "From the collection of Toshiyuki Takamiya, 2013-."
-  ],
   "language": [
     "French, Middle (ca.1400-1600)"
-  ],
-  "indexedBy": [
-    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437.",
-    "Livre du Lancelot du Lac: three miniatures.. Takamiya MS 99."
-  ],
-  "recordType": "oid",
-  "references": [
-    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437.",
-    "Livre du Lancelot du Lac: three miniatures.. Takamiya MS 99."
-  ],
-  "repository": "Beinecke Library",
-  "subjectEra": "Medieval and Renaissance Manuscripts in Beinecke Library.",
-  "contributor": [
-    "Lancelot--(Legendary character)"
   ],
   "description": [
     "Binding: individually mounted.",
     "From the collection of Toshiyuki Takamiya, 2013-."
   ],
-  "orbisRecord": "13006050",
   "subjectName": [
     "Lancelot--(Legendary character)"
   ],
-  "collectionId": 1,
-  "resourceType": "Archives or Manuscripts",
-  "subjectTitle": "Medieval and Renaissance Manuscripts in Beinecke Library.",
   "subjectTopic": [
     "Arthurian romances in art.",
     "Arthurian romances in art--Early works to 1800.",
     "Manuscripts, Medieval--Connecticut--New Haven.",
     "Medieval and Renaissance Manuscripts in Beinecke Library."
   ],
-  "dependentUris": [
-    "/ladybird/oid/16371267"
+  "genre": [
+    "Manuscripts, Medieval--France--14th century."
   ],
-  "dateStructured": [
-    "1440-00-00T00:00:00Z"
+  "format": [
+    "text"
+  ],
+  "itemType": [
+    "Archives or Manuscripts"
+  ],
+  "partOf": "Beinecke Library",
+  "rights": [
+    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+  ],
+  "orbisBibId": "13006050",
+  "preferredCitation": [
+    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437.",
+    "Livre du Lancelot du Lac: three miniatures.. Takamiya MS 99."
   ],
   "itemPermission": "Public",
-  "publicationPlace": [
-    "Paris,"
-  ],
-  "contributorDisplay": [
-    "Lancelot--(Legendary character)"
+  "dateStructured": [
+    "1440"
   ],
   "illustrativeMatter": "161219s1440    ctu                 frm d",
-  "identifierShelfMark": "Takamiya MS 99",
+  "subjectEra": "Medieval and Renaissance Manuscripts in Beinecke Library.",
+  "contributor": [
+    "Lancelot--(Legendary character)"
+  ],
+  "repository": "Beinecke Library",
+  "subjectTitle": "Medieval and Renaissance Manuscripts in Beinecke Library.",
   "subjectTitleDisplay": [
     "Arthurian romances in art.",
     "Arthurian romances in art--Early works to 1800.",
     "Manuscripts, Medieval--Connecticut--New Haven.",
     "Medieval and Renaissance Manuscripts in Beinecke Library."
   ],
-  "extentOfDigitization": [
-    "Complete work digitized."
+  "contributorDisplay": [
+    "Lancelot--(Legendary character)"
+  ],
+  "dependentUris": [
+    "/ladybird/oid/16371267"
+  ],
+  "oid": 16371267,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16394251",
+      "callNumber": "Takamiya MS 99",
+      "title": [
+        "Livre du Lancelot du Lac: three miniatures."
+      ],
+      "caption": "1r",
+      "dependentUris": [
+        "/ladybird/oid/16394251"
+      ],
+      "oid": 16394251,
+      "width": 2196,
+      "height": 2172,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16394252",
+      "callNumber": "Takamiya MS 99",
+      "title": [
+        "Livre du Lancelot du Lac: three miniatures."
+      ],
+      "caption": "1v",
+      "dependentUris": [
+        "/ladybird/oid/16394252"
+      ],
+      "oid": 16394252,
+      "width": 2197,
+      "height": 2162,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16394253",
+      "callNumber": "Takamiya MS 99",
+      "title": [
+        "Livre du Lancelot du Lac: three miniatures."
+      ],
+      "caption": "2r",
+      "dependentUris": [
+        "/ladybird/oid/16394253"
+      ],
+      "oid": 16394253,
+      "width": 3977,
+      "height": 4755,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16394254",
+      "callNumber": "Takamiya MS 99",
+      "title": [
+        "Livre du Lancelot du Lac: three miniatures."
+      ],
+      "caption": "2v",
+      "dependentUris": [
+        "/ladybird/oid/16394254"
+      ],
+      "oid": 16394254,
+      "width": 3959,
+      "height": 4758,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16394255",
+      "callNumber": "Takamiya MS 99",
+      "title": [
+        "Livre du Lancelot du Lac: three miniatures."
+      ],
+      "caption": "3r",
+      "dependentUris": [
+        "/ladybird/oid/16394255"
+      ],
+      "oid": 16394255,
+      "width": 2188,
+      "height": 2217,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16394256",
+      "callNumber": "Takamiya MS 99",
+      "title": [
+        "Livre du Lancelot du Lac: three miniatures."
+      ],
+      "caption": "3v",
+      "dependentUris": [
+        "/ladybird/oid/16394256"
+      ],
+      "oid": 16394256,
+      "width": 2193,
+      "height": 2203,
+      "children": [
+
+      ]
+    }
+  ],
+  "abstract": [
+    "Three miniatures, on vellum, from the copy of the Livre du Lancelot du Lac illustrated by the Dunois Master. They depict: 1) the Duke of Clarence and esquire, meeting a knight cutting off a woman's hair; 2) King Baudemagnus leading the battle against the Romans; 3) Lancelot's arrival at the city of Gorre."
   ]
 }

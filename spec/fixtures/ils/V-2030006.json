@@ -1,11 +1,12 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/bib/1264367",
   "title": [
     "The glory of old England ..."
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "White-Hall"
   ],
   "publisher": [
@@ -21,6 +22,9 @@
     "illus. ;"
   ],
   "language": [
+    "English"
+  ],
+  "languageCode": [
     "eng"
   ],
   "description": [
@@ -33,12 +37,12 @@
   "genre": [
     "Brit Tracts"
   ],
-  "orbisRecord": "1264367",
+  "orbisBibId": "1264367",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=1112693"
   ],
   "dateStructured": [
-    "17391740"
+    "1739"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [

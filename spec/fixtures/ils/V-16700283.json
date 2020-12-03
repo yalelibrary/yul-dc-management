@@ -1,12 +1,13 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002094365690?bib=13640726",
-  "identifierShelfMark": "142 Takamiya MS",
+  "callNumber": "Takamiya MS 142",
   "title": [
     "Book of hours (fragment)"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "Flanders"
   ],
   "publisher": [
@@ -22,6 +23,9 @@
     "parchment ;"
   ],
   "language": [
+    "Latin"
+  ],
+  "languageCode": [
     "lat"
   ],
   "description": [
@@ -39,19 +43,19 @@
     "Early works to 1800",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
-  "format": [
+  "itemType": [
     "unspecified"
   ],
-  "orbisRecord": "13640726",
+  "orbisBibId": "13640726",
   "orbisBarcode": "39002094365690",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16700284"
   ],
-  "references": [
+  "preferredCitation": [
     "Book of Hours (Fragment). Takamiya MS 142."
   ],
   "dateStructured": [
-    "1400    "
+    "1400"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [
@@ -68,6 +72,9 @@
     "New Haven."
   ],
   "volumeEnumeration": "File",
+  "accessCondition": [
+    "This material is open for research"
+  ],
   "dependentUris": [
     "/ils/holding/13669853",
     "/ils/item/11982215",

@@ -1,8 +1,9 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002091548348?bib=3659107",
-  "identifierShelfMark": "963 GEN MSS Former call number: MS Vault Eliot",
+  "callNumber": "GEN MSS 963 Former call number: MS Vault Eliot",
   "creator": [
     "Eliot, George, 1819-1880"
   ],
@@ -16,6 +17,9 @@
     "14.5 linear ft. (64 boxes)"
   ],
   "language": [
+    "English"
+  ],
+  "languageCode": [
     "eng"
   ],
   "description": [
@@ -56,17 +60,17 @@
     "Archives",
     "Archives"
   ],
-  "orbisRecord": "3659107",
+  "orbisBibId": "3659107",
   "orbisBarcode": "39002091548348",
   "findingAid": [
     "http://hdl.handle.net/10079/fa/beinecke.eliot",
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=GEN_MSS_963"
   ],
-  "references": [
+  "preferredCitation": [
     "George Eliot and George Henry Lewes Collection. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "18341981"
+    "1834"
   ],
   "illustrativeMatter": "    ",
   "subjectEra": "19th century 19th century",

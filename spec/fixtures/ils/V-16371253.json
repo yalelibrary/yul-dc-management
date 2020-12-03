@@ -1,12 +1,13 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002104623971?bib=12297336",
-  "identifierShelfMark": "81 Takamiya MS",
+  "callNumber": "Takamiya MS 81",
   "title": [
     "Missal, use of Sarum (fragment)"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "England"
   ],
   "publisher": [
@@ -22,6 +23,9 @@
     "parchment ;"
   ],
   "language": [
+    "Latin"
+  ],
+  "languageCode": [
     "lat"
   ],
   "description": [
@@ -44,19 +48,19 @@
     "Medieval and Renaissance Manuscript Fragments in Beinecke Library",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
-  "format": [
+  "itemType": [
     "unspecified"
   ],
-  "orbisRecord": "12297336",
+  "orbisBibId": "12297336",
   "orbisBarcode": "39002104623971",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16394803"
   ],
-  "references": [
+  "preferredCitation": [
     "Missal, Use of Sarum (Fragment) (Takamiya MS 81). General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "14001450"
+    "1400"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [
@@ -76,6 +80,9 @@
     "Catholic Church. Sarum manual."
   ],
   "volumeEnumeration": "File (Oversize)",
+  "accessCondition": [
+    "This material is open for research"
+  ],
   "dependentUris": [
     "/ils/holding/12462455",
     "/ils/item/10982675",

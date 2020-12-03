@@ -1,347 +1,359 @@
 {
-  "oid": 16173726,
-  "uri": "/ladybird/oid/16173726",
-  "genre": [
-    "Maps.--(OCoLC)fst01423704",
-    "Military maps.",
-    "Pictorial maps."
-  ],
-  "scale": "Scale not given.",
-  "title": [
-    "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
-  ],
-  "extent": [
-    "1 map on 6 volumes : color ; 124 x 159 cm, folded to 27 x 9 cm"
-  ],
-  "format": [
-    "cartographic"
-  ],
-  "partOf": "Beinecke Library",
-  "rights": [
-    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-  ],
+  "jsonModelType": "LadybirdSolrRecord",
   "source": "ladybird",
+  "recordType": "oid",
+  "uri": "/ladybird/oid/16173726",
+  "callNumber": "Covers 5626 +1880",
   "creator": [
     "Li, Mengquan (Cartographer), cartographer.",
     "李蒙泉 (Cartographer), cartographer."
   ],
-  "children": [
-    {
-      "oid": 16173880,
-      "uri": "/ladybird/oid/16173880",
-      "title": [
-        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
-      ],
-      "width": 1536,
-      "height": 1235,
-      "source": "ladybird",
-      "caption": "Recto",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16173880"
-      ],
-      "identifierShelfMark": "Covers 5626 +1880"
-    },
-    {
-      "oid": 16173881,
-      "uri": "/ladybird/oid/16173881",
-      "title": [
-        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
-      ],
-      "width": 4370,
-      "height": 20485,
-      "source": "ladybird",
-      "caption": "Section 1 recto",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16173881"
-      ],
-      "identifierShelfMark": "Covers 5626 +1880"
-    },
-    {
-      "oid": 16173882,
-      "uri": "/ladybird/oid/16173882",
-      "title": [
-        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
-      ],
-      "width": 20695,
-      "height": 4411,
-      "source": "ladybird",
-      "caption": "Section 1 verso",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16173882"
-      ],
-      "identifierShelfMark": "Covers 5626 +1880"
-    },
-    {
-      "oid": 16173883,
-      "uri": "/ladybird/oid/16173883",
-      "title": [
-        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
-      ],
-      "width": 4398,
-      "height": 20491,
-      "source": "ladybird",
-      "caption": "Section 2 recto",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16173883"
-      ],
-      "identifierShelfMark": "Covers 5626 +1880"
-    },
-    {
-      "oid": 16173884,
-      "uri": "/ladybird/oid/16173884",
-      "title": [
-        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
-      ],
-      "width": 20573,
-      "height": 4500,
-      "source": "ladybird",
-      "caption": "Section 2 verso",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16173884"
-      ],
-      "identifierShelfMark": "Covers 5626 +1880"
-    },
-    {
-      "oid": 16173885,
-      "uri": "/ladybird/oid/16173885",
-      "title": [
-        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
-      ],
-      "width": 4393,
-      "height": 20525,
-      "source": "ladybird",
-      "caption": "Section 3 recto",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16173885"
-      ],
-      "identifierShelfMark": "Covers 5626 +1880"
-    },
-    {
-      "oid": 16173886,
-      "uri": "/ladybird/oid/16173886",
-      "title": [
-        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
-      ],
-      "width": 20640,
-      "height": 4580,
-      "source": "ladybird",
-      "caption": "Section 3 verso",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16173886"
-      ],
-      "identifierShelfMark": "Covers 5626 +1880"
-    },
-    {
-      "oid": 16173887,
-      "uri": "/ladybird/oid/16173887",
-      "title": [
-        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
-      ],
-      "width": 4431,
-      "height": 20605,
-      "source": "ladybird",
-      "caption": "Section 4 recto",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16173887"
-      ],
-      "identifierShelfMark": "Covers 5626 +1880"
-    },
-    {
-      "oid": 16173888,
-      "uri": "/ladybird/oid/16173888",
-      "title": [
-        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
-      ],
-      "width": 20517,
-      "height": 4398,
-      "source": "ladybird",
-      "caption": "Section 4 verso",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16173888"
-      ],
-      "identifierShelfMark": "Covers 5626 +1880"
-    },
-    {
-      "oid": 16173889,
-      "uri": "/ladybird/oid/16173889",
-      "title": [
-        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
-      ],
-      "width": 4405,
-      "height": 20463,
-      "source": "ladybird",
-      "caption": "Section 5 recto",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16173889"
-      ],
-      "identifierShelfMark": "Covers 5626 +1880"
-    },
-    {
-      "oid": 16173890,
-      "uri": "/ladybird/oid/16173890",
-      "title": [
-        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
-      ],
-      "width": 20524,
-      "height": 4444,
-      "source": "ladybird",
-      "caption": "Section 5 verso",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16173890"
-      ],
-      "identifierShelfMark": "Covers 5626 +1880"
-    },
-    {
-      "oid": 16173891,
-      "uri": "/ladybird/oid/16173891",
-      "title": [
-        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
-      ],
-      "width": 4409,
-      "height": 20542,
-      "source": "ladybird",
-      "caption": "Section 6 recto",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16173891"
-      ],
-      "identifierShelfMark": "Covers 5626 +1880"
-    },
-    {
-      "oid": 16173892,
-      "uri": "/ladybird/oid/16173892",
-      "title": [
-        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
-      ],
-      "width": 20520,
-      "height": 4404,
-      "source": "ladybird",
-      "caption": "Section 6 verso",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16173892"
-      ],
-      "identifierShelfMark": "Covers 5626 +1880"
-    }
+  "title": [
+    "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
   ],
-  "contents": [
-    "\"Mei fang er shi li\"--Volume 6.",
-    "\"每方二十里\"--Volume 6."
+  "alternativeTitle": [
+    "蘇省輿地營伍全圖 / 即用知縣李蒙泉, 陳嘉勲仝監畫."
+  ],
+  "extentOfDigitization": [
+    "Complete work digitized."
+  ],
+  "extent": [
+    "1 map on 6 volumes : color ; 124 x 159 cm, folded to 27 x 9 cm"
   ],
   "language": [
     "Chinese"
-  ],
-  "coordinate": [
-    "a"
-  ],
-  "geoSubject": "a-cc-ku",
-  "recordType": "oid",
-  "repository": "Beinecke Library",
-  "subjectEra": "Military camps--China--Jiangsu Sheng--Maps.",
-  "contributor": [
-    "Chen, Jiaxun (Cartographer), cartographer.",
-    "陳嘉勲 (Cartographer), cartographer."
   ],
   "description": [
     "\"Mei fang er shi li\"--Volume 6.",
     "\"每方二十里\"--Volume 6."
   ],
-  "orbisRecord": "12286028",
   "subjectName": [
     "Chen, Jiaxun (Cartographer), cartographer.",
     "陳嘉勲 (Cartographer), cartographer."
   ],
-  "collectionId": 1,
-  "orbisBarcode": "39002113593728",
-  "resourceType": "Maps, Atlases & Globes",
-  "subjectTitle": "Military camps--China--Jiangsu Sheng--Maps.",
   "subjectTopic": [
     "Chinese rare maps.",
     "Military camps.--(OCoLC)fst01021054",
     "Military camps--China--Jiangsu Sheng--Maps."
   ],
+  "subjectGeographicCode": "a-cc-ku",
+  "scale": "Scale not given.",
+  "coordinate": [
+    "a"
+  ],
+  "genre": [
+    "Maps.--(OCoLC)fst01423704",
+    "Military maps.",
+    "Pictorial maps."
+  ],
+  "format": [
+    "cartographic"
+  ],
+  "itemType": [
+    "Maps, Atlases & Globes"
+  ],
+  "partOf": "Beinecke Library",
+  "rights": [
+    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+  ],
+  "orbisBibId": "12286028",
+  "orbisBarcode": "39002113593728",
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1880"
+  ],
+  "illustrativeMatter": "141028s1880    cc        a     0   chi d",
   "copyrightDate": [
     "[1880?]"
   ],
-  "dependentUris": [
-    "/ladybird/oid/16173726"
-  ],
-  "creatorDisplay": [
-    "Li, Mengquan (Cartographer), cartographer.",
-    "李蒙泉 (Cartographer), cartographer."
-  ],
-  "dateStructured": [
-    "1880-00-00T00:00:00Z"
-  ],
-  "itemPermission": "Public",
-  "alternativeTitle": [
-    "蘇省輿地營伍全圖 / 即用知縣李蒙泉, 陳嘉勲仝監畫."
-  ],
-  "subjectGeographic": [
-    "China--Jiangsu Sheng.--(OCoLC)fst01212175"
-  ],
-  "contributorDisplay": [
+  "subjectEra": "Military camps--China--Jiangsu Sheng--Maps.",
+  "contributor": [
     "Chen, Jiaxun (Cartographer), cartographer.",
     "陳嘉勲 (Cartographer), cartographer."
   ],
-  "illustrativeMatter": "141028s1880    cc        a     0   chi d",
-  "identifierShelfMark": "Covers 5626 +1880",
+  "repository": "Beinecke Library",
+  "subjectTitle": "Military camps--China--Jiangsu Sheng--Maps.",
+  "subjectGeographic": [
+    "China--Jiangsu Sheng.--(OCoLC)fst01212175"
+  ],
   "subjectTitleDisplay": [
     "Chinese rare maps.",
     "Military camps.--(OCoLC)fst01021054",
     "Military camps--China--Jiangsu Sheng--Maps."
   ],
-  "extentOfDigitization": [
-    "Complete work digitized."
+  "creatorDisplay": [
+    "Li, Mengquan (Cartographer), cartographer.",
+    "李蒙泉 (Cartographer), cartographer."
+  ],
+  "contributorDisplay": [
+    "Chen, Jiaxun (Cartographer), cartographer.",
+    "陳嘉勲 (Cartographer), cartographer."
+  ],
+  "dependentUris": [
+    "/ladybird/oid/16173726"
+  ],
+  "oid": 16173726,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16173880",
+      "callNumber": "Covers 5626 +1880",
+      "title": [
+        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
+      ],
+      "caption": "Recto",
+      "dependentUris": [
+        "/ladybird/oid/16173880"
+      ],
+      "oid": 16173880,
+      "width": 1536,
+      "height": 1235,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16173881",
+      "callNumber": "Covers 5626 +1880",
+      "title": [
+        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
+      ],
+      "caption": "Section 1 recto",
+      "dependentUris": [
+        "/ladybird/oid/16173881"
+      ],
+      "oid": 16173881,
+      "width": 4370,
+      "height": 20485,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16173882",
+      "callNumber": "Covers 5626 +1880",
+      "title": [
+        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
+      ],
+      "caption": "Section 1 verso",
+      "dependentUris": [
+        "/ladybird/oid/16173882"
+      ],
+      "oid": 16173882,
+      "width": 20695,
+      "height": 4411,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16173883",
+      "callNumber": "Covers 5626 +1880",
+      "title": [
+        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
+      ],
+      "caption": "Section 2 recto",
+      "dependentUris": [
+        "/ladybird/oid/16173883"
+      ],
+      "oid": 16173883,
+      "width": 4398,
+      "height": 20491,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16173884",
+      "callNumber": "Covers 5626 +1880",
+      "title": [
+        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
+      ],
+      "caption": "Section 2 verso",
+      "dependentUris": [
+        "/ladybird/oid/16173884"
+      ],
+      "oid": 16173884,
+      "width": 20573,
+      "height": 4500,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16173885",
+      "callNumber": "Covers 5626 +1880",
+      "title": [
+        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
+      ],
+      "caption": "Section 3 recto",
+      "dependentUris": [
+        "/ladybird/oid/16173885"
+      ],
+      "oid": 16173885,
+      "width": 4393,
+      "height": 20525,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16173886",
+      "callNumber": "Covers 5626 +1880",
+      "title": [
+        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
+      ],
+      "caption": "Section 3 verso",
+      "dependentUris": [
+        "/ladybird/oid/16173886"
+      ],
+      "oid": 16173886,
+      "width": 20640,
+      "height": 4580,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16173887",
+      "callNumber": "Covers 5626 +1880",
+      "title": [
+        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
+      ],
+      "caption": "Section 4 recto",
+      "dependentUris": [
+        "/ladybird/oid/16173887"
+      ],
+      "oid": 16173887,
+      "width": 4431,
+      "height": 20605,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16173888",
+      "callNumber": "Covers 5626 +1880",
+      "title": [
+        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
+      ],
+      "caption": "Section 4 verso",
+      "dependentUris": [
+        "/ladybird/oid/16173888"
+      ],
+      "oid": 16173888,
+      "width": 20517,
+      "height": 4398,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16173889",
+      "callNumber": "Covers 5626 +1880",
+      "title": [
+        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
+      ],
+      "caption": "Section 5 recto",
+      "dependentUris": [
+        "/ladybird/oid/16173889"
+      ],
+      "oid": 16173889,
+      "width": 4405,
+      "height": 20463,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16173890",
+      "callNumber": "Covers 5626 +1880",
+      "title": [
+        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
+      ],
+      "caption": "Section 5 verso",
+      "dependentUris": [
+        "/ladybird/oid/16173890"
+      ],
+      "oid": 16173890,
+      "width": 20524,
+      "height": 4444,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16173891",
+      "callNumber": "Covers 5626 +1880",
+      "title": [
+        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
+      ],
+      "caption": "Section 6 recto",
+      "dependentUris": [
+        "/ladybird/oid/16173891"
+      ],
+      "oid": 16173891,
+      "width": 4409,
+      "height": 20542,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16173892",
+      "callNumber": "Covers 5626 +1880",
+      "title": [
+        "Su Sheng yu di ying wu quan tu / ji yong zhi xian Li Mengquan, Chen Jiaxun tong jian hua."
+      ],
+      "caption": "Section 6 verso",
+      "dependentUris": [
+        "/ladybird/oid/16173892"
+      ],
+      "oid": 16173892,
+      "width": 20520,
+      "height": 4404,
+      "children": [
+
+      ]
+    }
   ]
 }

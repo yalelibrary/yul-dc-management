@@ -1,11 +1,12 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/bib/13888969",
   "title": [
     "[Ethiopian scroll of spiritual healing]."
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "Ethiopia"
   ],
   "date": [
@@ -18,6 +19,9 @@
     "on parchment ;"
   ],
   "language": [
+    "Ethiopic"
+  ],
+  "languageCode": [
     "gez"
   ],
   "description": [
@@ -33,22 +37,25 @@
     "Manuscripts, Ethiopic Ethiopia 19th century",
     "Ethiopic manuscripts"
   ],
-  "format": [
+  "itemType": [
     "text"
   ],
-  "orbisRecord": "13888969",
+  "orbisBibId": "13888969",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=Ethiopic_MSS_28"
   ],
-  "references": [
+  "preferredCitation": [
     "Ethiopian Scroll of Spiritual Healing.  General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "18001899"
+    "1800"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [
     "[Ethiopian scroll of spiritual healing]."
+  ],
+  "accessCondition": [
+    "This material is open for research"
   ],
   "dependentUris": [
     "/ils/bib/13888969"

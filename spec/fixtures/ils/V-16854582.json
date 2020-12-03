@@ -1,8 +1,9 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002104850970?bib=7151233",
-  "identifierShelfMark": "702 YCAL MSS Former call numbers: Uncat MSS 765, Uncat MSS 1274",
+  "callNumber": "YCAL MSS 702 Former call numbers: Uncat MSS 765, Uncat MSS 1274",
   "creator": [
     "Giard, Robert"
   ],
@@ -16,6 +17,9 @@
     "50.34 linear feet (271 boxes)"
   ],
   "language": [
+    "English"
+  ],
+  "languageCode": [
     "eng"
   ],
   "description": [
@@ -41,17 +45,17 @@
     "Portraits",
     "LGBTQ resource"
   ],
-  "orbisRecord": "7151233",
+  "orbisBibId": "7151233",
   "orbisBarcode": "39002104850970",
   "findingAid": [
     "http://hdl.handle.net/10079/fa/beinecke.giard",
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?CN=YCAL_MSS_702"
   ],
-  "references": [
+  "preferredCitation": [
     "Robert Giard Papers. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
   "dateStructured": [
-    "19722002"
+    "1972"
   ],
   "illustrativeMatter": "    ",
   "subjectEra": "20th century.",
@@ -77,6 +81,9 @@
     "Giard, Robert"
   ],
   "volumeEnumeration": "Box 8",
+  "accessCondition": [
+    "This material is open for research"
+  ],
   "dependentUris": [
     "/ils/holding/7686921",
     "/ils/item/10378652",
