@@ -1,15 +1,16 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002099258734?bib=9896328",
-  "identifierShelfMark": "1121 Beinecke MS",
+  "callNumber": "Beinecke MS 1121",
   "creator": [
     "Galen"
   ],
   "title": [
     "Opera varia"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "Constantinople or southern Italy"
   ],
   "publisher": [
@@ -19,6 +20,9 @@
     "[ca. 1300]"
   ],
   "language": [
+    "Greek, Ancient (to 1453)"
+  ],
+  "languageCode": [
     "grc"
   ],
   "description": [
@@ -36,20 +40,20 @@
     "Manuscripts, Medieval Italy 14th century",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
-  "format": [
+  "itemType": [
     "unspecified"
   ],
-  "orbisRecord": "9896328",
+  "orbisBibId": "9896328",
   "orbisBarcode": "39002099258734",
   "findingAid": [
     "https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms1121.htm",
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=Beinecke_MS_1121"
   ],
-  "references": [
+  "preferredCitation": [
     "Galen, Opera Varia. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1300    "
+    "1300"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [
@@ -65,6 +69,9 @@
   ],
   "creatorDisplay": [
     "Galen"
+  ],
+  "accessCondition": [
+    "Material is open for research"
   ],
   "dependentUris": [
     "/ils/holding/10191430",

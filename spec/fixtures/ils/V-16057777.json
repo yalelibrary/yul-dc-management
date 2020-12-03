@@ -1,6 +1,7 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/bib/12442385",
   "creator": [
     "Salsbury, Nathan, 1846-1902, collector"
@@ -8,7 +9,7 @@
   "title": [
     "[Objects associated with Buffalo Bill]."
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "United States and England"
   ],
   "date": [
@@ -21,6 +22,9 @@
     "steel, copper, wood, deerskin, beads, quillwork, feathers, rawhide, ivory, and gold ;"
   ],
   "language": [
+    "English"
+  ],
+  "languageCode": [
     "eng"
   ],
   "description": [
@@ -55,18 +59,18 @@
     "Revolvers (firearms) United States 19th century",
     "Shotguns England 19th century"
   ],
-  "format": [
+  "itemType": [
     "three-dimensional form"
   ],
-  "orbisRecord": "12442385",
+  "orbisBibId": "12442385",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?&CN=WA_MSS_S-3019"
   ],
-  "references": [
+  "preferredCitation": [
     "Nathan Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western Americana, Beinecke Rare Book and Manuscript Library."
   ],
   "dateStructured": [
-    "18701895"
+    "1870"
   ],
   "illustrativeMatter": "nnn ",
   "subjectEra": "19th century.",
@@ -110,6 +114,9 @@
   "contributorDisplay": [
     "Colt's Patent Fire Arms Manufacturing Co.,",
     "James Dalziel Dougall & Sons,"
+  ],
+  "accessCondition": [
+    "This material is open for research"
   ],
   "dependentUris": [
     "/ils/bib/12442385"

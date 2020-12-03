@@ -1,92 +1,26 @@
 {
-  "oid": 16700283,
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/16700283",
-  "date": [
-    "[ca. 1300]"
-  ],
-  "genre": [
-    "Manuscripts, Medieval--Flanders--14th century"
-  ],
+  "callNumber": "Takamiya MS 142",
   "title": [
     "Book of hours (fragment)"
+  ],
+  "extentOfDigitization": [
+    "Complete work digitized."
+  ],
+  "creationPlace": [
+    "Flanders,"
+  ],
+  "date": [
+    "[ca. 1300]"
   ],
   "extent": [
     "1 l. : parchment ; 65 x 85 mm"
   ],
-  "format": [
-    "text"
-  ],
-  "partOf": "Beinecke Library",
-  "rights": [
-    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-  ],
-  "source": "ladybird",
-  "abstract": [
-    "Lower half of a single manuscript leaf, on parchment, containing five lines of text and marginal decoration. From the \"Ghistelles Hours.\""
-  ],
-  "children": [
-    {
-      "oid": 16700284,
-      "uri": "/ladybird/oid/16700284",
-      "title": [
-        "Book of hours (fragment)"
-      ],
-      "width": 1536,
-      "height": 1298,
-      "source": "ladybird",
-      "caption": "recto",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16700284"
-      ],
-      "identifierShelfMark": "Takamiya MS 142"
-    },
-    {
-      "oid": 16700285,
-      "uri": "/ladybird/oid/16700285",
-      "title": [
-        "Book of hours (fragment)"
-      ],
-      "width": 1536,
-      "height": 1295,
-      "source": "ladybird",
-      "caption": "verso",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16700285"
-      ],
-      "identifierShelfMark": "Takamiya MS 142"
-    }
-  ],
-  "contents": [
-    "Byname: Ghistelles Hours.",
-    "Decoration: decorated border showing two hounds chasing a stag.",
-    "Previously owned by Sir Sydney Cockerell? Previously owned by Alan G. Thomas. From the collection of Toshiyuki Takamiya, 2013-.",
-    "Script: Gothic."
-  ],
   "language": [
     "Latin"
-  ],
-  "indexedBy": [
-    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437.",
-    "Book of Hours (Fragment). Takamiya MS 142."
-  ],
-  "recordType": "oid",
-  "references": [
-    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437.",
-    "Book of Hours (Fragment). Takamiya MS 142."
-  ],
-  "repository": "Beinecke Library",
-  "subjectEra": "Medieval and Renaissance Manuscripts in Beinecke Library",
-  "contributor": [
-    "Cockerell, Sydney Carlyle,--Sir,--1867-1962--Ownership.",
-    "Thomas, Alan G.--Ownership."
   ],
   "description": [
     "Byname: Ghistelles Hours.",
@@ -94,42 +28,103 @@
     "Previously owned by Sir Sydney Cockerell? Previously owned by Alan G. Thomas. From the collection of Toshiyuki Takamiya, 2013-.",
     "Script: Gothic."
   ],
-  "orbisRecord": "13640726",
   "subjectName": [
     "Cockerell, Sydney Carlyle,--Sir,--1867-1962--Ownership.",
     "Thomas, Alan G.--Ownership."
   ],
-  "collectionId": 1,
-  "orbisBarcode": "39002094365690",
-  "resourceType": "Archives or Manuscripts",
-  "subjectTitle": "Medieval and Renaissance Manuscripts in Beinecke Library",
   "subjectTopic": [
     "Books of hours--Early works to 1800",
     "Manuscripts, Medieval--Connecticut--New Haven",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
-  "dependentUris": [
-    "/ladybird/oid/16700283"
+  "genre": [
+    "Manuscripts, Medieval--Flanders--14th century"
   ],
-  "dateStructured": [
-    "1300-00-00T00:00:00Z"
+  "format": [
+    "text"
+  ],
+  "itemType": [
+    "Archives or Manuscripts"
+  ],
+  "partOf": "Beinecke Library",
+  "rights": [
+    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+  ],
+  "orbisBibId": "13640726",
+  "orbisBarcode": "39002094365690",
+  "preferredCitation": [
+    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437.",
+    "Book of Hours (Fragment). Takamiya MS 142."
   ],
   "itemPermission": "Public",
-  "publicationPlace": [
-    "Flanders,"
+  "dateStructured": [
+    "1300"
   ],
-  "contributorDisplay": [
+  "illustrativeMatter": "180618s1400    ctu                 lat d",
+  "subjectEra": "Medieval and Renaissance Manuscripts in Beinecke Library",
+  "contributor": [
     "Cockerell, Sydney Carlyle,--Sir,--1867-1962--Ownership.",
     "Thomas, Alan G.--Ownership."
   ],
-  "illustrativeMatter": "180618s1400    ctu                 lat d",
-  "identifierShelfMark": "Takamiya MS 142",
+  "repository": "Beinecke Library",
+  "subjectTitle": "Medieval and Renaissance Manuscripts in Beinecke Library",
   "subjectTitleDisplay": [
     "Books of hours--Early works to 1800",
     "Manuscripts, Medieval--Connecticut--New Haven",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
-  "extentOfDigitization": [
-    "Complete work digitized."
+  "contributorDisplay": [
+    "Cockerell, Sydney Carlyle,--Sir,--1867-1962--Ownership.",
+    "Thomas, Alan G.--Ownership."
+  ],
+  "dependentUris": [
+    "/ladybird/oid/16700283"
+  ],
+  "oid": 16700283,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16700284",
+      "callNumber": "Takamiya MS 142",
+      "title": [
+        "Book of hours (fragment)"
+      ],
+      "caption": "recto",
+      "dependentUris": [
+        "/ladybird/oid/16700284"
+      ],
+      "oid": 16700284,
+      "width": 1536,
+      "height": 1298,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16700285",
+      "callNumber": "Takamiya MS 142",
+      "title": [
+        "Book of hours (fragment)"
+      ],
+      "caption": "verso",
+      "dependentUris": [
+        "/ladybird/oid/16700285"
+      ],
+      "oid": 16700285,
+      "width": 1536,
+      "height": 1295,
+      "children": [
+
+      ]
+    }
+  ],
+  "abstract": [
+    "Lower half of a single manuscript leaf, on parchment, containing five lines of text and marginal decoration. From the \"Ghistelles Hours.\""
   ]
 }

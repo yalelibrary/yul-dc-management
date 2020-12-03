@@ -1,79 +1,84 @@
 {
+  "jsonModelType": "BibSolrRecord",
+  "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002094341147?bib=3798665",
-  "bibId": 3798665,
-  "genre": [
-    "Theology"
+  "callNumber": "Landberg MSS 75",
+  "creator": [
+    "Kinānī, ʻAbd al-ʻAzīz ibn Yaḥyá, d. 854 or 5."
   ],
   "title": [
     "Kitāb al-ḥaydah / 1116"
   ],
+  "alternativeTitle": [
+    "Ḥaydah wa-al-iʻtidhār fī al-radd ʾalá man qāla bi-khalq al-Qurʾān"
+  ],
   "extent": [
     "82 21.5 x 15 cm. leaves ;"
   ],
-  "format": [
-    "unspecified"
-  ],
-  "itemId": 10900008,
-  "source": "ils",
-  "creator": [
-    "Kinānī, ʻAbd al-ʻAzīz ibn Yaḥyá, d. 854 or 5."
-  ],
-  "abstract": [
-    "Account of a disputation with Bishr ibn Ghayāth al-Marīsī, before the caliph al-Maʾmūn, on the question whether the Koran was created",
-    "Followed by 1 leaf of notes",
-    "Copied in A.H. 509 (A.D. 1116)."
-  ],
-  "children": [
-
-  ],
   "language": [
+    "Arabic"
+  ],
+  "languageCode": [
     "ara"
   ],
-  "holdingId": 4154518,
-  "indexedBy": [
-    "Brockelmann, I, 193; S I, p. 340.",
-    "Berlin catalog, 440."
-  ],
-  "callNumber": "Landberg MSS 75",
-  "createDate": "2002-06-01T04:00:00.000+0000",
-  "findingAid": [
-    "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=14716294"
-  ],
-  "orbisBibId": "3798665",
-  "recordType": "bib",
-  "repository": "lsfbeir",
-  "updateDate": "2018-10-01T18:58:04.000+0000",
   "description": [
-    "Fair naskhī."
+    "Fair naskhī.",
+    "Available on microfilm"
   ],
   "subjectName": [
     "Marīsī, Bishr ibn Ghayāth, d. 833.",
     "Maʾmūn, Caliph, 786-833."
   ],
+  "genre": [
+    "Theology"
+  ],
+  "itemType": [
+    "unspecified"
+  ],
+  "orbisBibId": "3798665",
   "orbisBarcode": "39002094341147",
+  "findingAid": [
+    "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=14716294"
+  ],
+  "dateStructured": [
+    "1116"
+  ],
+  "illustrativeMatter": "||  ",
+  "titleStatement": [
+    "Kitāb al-ḥaydah / li-ʻAbd al-ʻAzīz al-Kinānī al-Makkī. -- 1116"
+  ],
+  "repository": "lsfbeir",
+  "indexedBy": [
+    "Brockelmann, I, 193; S I, p. 340.",
+    "Berlin catalog, 440."
+  ],
+  "subjectTitleDisplay": [
+    "Marīsī, Bishr ibn Ghayāth, d. 833.",
+    "Maʾmūn, Caliph, 786-833."
+  ],
+  "creatorDisplay": [
+    "Kinānī, ʻAbd al-ʻAzīz ibn Yaḥyá, d. 854 or 5."
+  ],
+  "volumeEnumeration": "Box",
   "dependentUris": [
     "/ils/holding/4154518",
     "/ils/item/10900008",
     "/ils/bib/3798665",
     "/ils/barcode/39002094341147"
   ],
-  "creatorDisplay": [
-    "Kinānī, ʻAbd al-ʻAzīz ibn Yaḥyá, d. 854 or 5."
-  ],
-  "dateStructured": [
-    "1116    "
-  ],
+  "bibId": 3798665,
   "suppressInOpac": false,
-  "titleStatement": [
-    "Kitāb al-ḥaydah / li-ʻAbd al-ʻAzīz al-Kinānī al-Makkī. -- 1116"
+  "createDate": "2002-06-01T04:00:00.000+0000",
+  "updateDate": "2018-10-01T18:58:04.000+0000",
+  "holdingId": 4154518,
+  "itemId": 10900008,
+  "children": [
+
   ],
-  "alternativeTitle": [
-    "Ḥaydah wa-al-iʻtidhār fī al-radd ʾalá man qāla bi-khalq al-Qurʾān"
-  ],
-  "volumeEnumeration": "Box",
-  "illustrativeMatter": "||  ",
-  "subjectTitleDisplay": [
-    "Marīsī, Bishr ibn Ghayāth, d. 833.",
-    "Maʾmūn, Caliph, 786-833."
+  "abstract": [
+    "Account of a disputation with Bishr ibn Ghayāth al-Marīsī, before the caliph al-Maʾmūn, on the question whether the Koran was created",
+    "Followed by 1 leaf of notes",
+    "Copied in A.H. 509 (A.D. 1116)."
   ]
 }

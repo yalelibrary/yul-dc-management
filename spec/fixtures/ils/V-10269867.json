@@ -1,12 +1,13 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002091597519?bib=9734851",
-  "identifierShelfMark": "410 Beinecke MS",
+  "callNumber": "Beinecke MS 410",
   "title": [
     "Indulgence scroll"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "England"
   ],
   "publisher": [
@@ -22,6 +23,9 @@
     "parchment ;"
   ],
   "language": [
+    "Latin"
+  ],
+  "languageCode": [
     "lat"
   ],
   "description": [
@@ -46,20 +50,20 @@
     "Prayers and devotions",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
-  "format": [
+  "itemType": [
     "unspecified"
   ],
-  "orbisRecord": "9734851",
+  "orbisBibId": "9734851",
   "orbisBarcode": "39002091597519",
   "findingAid": [
     "https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms410.htm",
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=1003311"
   ],
-  "references": [
+  "preferredCitation": [
     "Indulgence Scroll. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "14751500"
+    "1475"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [
@@ -78,6 +82,9 @@
     "Catholic Church"
   ],
   "volumeEnumeration": "Box",
+  "accessCondition": [
+    "Restricted material. May not be seen without the permission of the appropriate curator"
+  ],
   "dependentUris": [
     "/ils/holding/10050461",
     "/ils/item/9280988",

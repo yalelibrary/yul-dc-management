@@ -11,6 +11,7 @@ Metrics/BlockLength:
   Max: 38
   Exclude:
     - 'spec/**/*.rb'
+    - 'lib/tasks/parent_oids.rake'
 
 Metrics/ModuleLength:
   Exclude:

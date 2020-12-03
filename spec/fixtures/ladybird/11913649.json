@@ -1,19 +1,37 @@
 {
-  "oid": 11913649,
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/11913649",
-  "date": [
-    "[18--?]"
-  ],
-  "genre": [
-    "Manuscripts"
+  "callNumber": "Landberg MSS 492",
+  "creator": [
+    "Maqrīzī, Aḥmad ibn ʻAlī, 1364-1442"
   ],
   "title": [
     "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+  ],
+  "extentOfDigitization": [
+    "Complete work digitized."
+  ],
+  "date": [
+    "[18--?]"
   ],
   "extent": [
     "15",
     "33 x 22 cm.",
     "leaves ;"
+  ],
+  "language": [
+    "Arabic"
+  ],
+  "description": [
+    "Modern (19th century) naskhī."
+  ],
+  "subjectTopic": [
+    "History--Egypt"
+  ],
+  "genre": [
+    "Manuscripts"
   ],
   "format": [
     "text"
@@ -22,938 +40,954 @@
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "source": "ladybird",
-  "creator": [
-    "Maqrīzī, Aḥmad ibn ʻAlī, 1364-1442"
-  ],
-  "abstract": [
-    "Treatise on the Arab tribes which settled in Egypt."
-  ],
-  "children": [
-    {
-      "oid": 11977426,
-      "uri": "/ladybird/oid/11977426",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Front cover]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977426"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977427,
-      "uri": "/ladybird/oid/11977427",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Front pastedown]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977427"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977428,
-      "uri": "/ladybird/oid/11977428",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Front free endpaper]a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977428"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977429,
-      "uri": "/ladybird/oid/11977429",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Front free endpaper]b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977429"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977430,
-      "uri": "/ladybird/oid/11977430",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "1a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977430"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977431,
-      "uri": "/ladybird/oid/11977431",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "1b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977431"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977432,
-      "uri": "/ladybird/oid/11977432",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "2a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977432"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977433,
-      "uri": "/ladybird/oid/11977433",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "2b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977433"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977434,
-      "uri": "/ladybird/oid/11977434",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "3a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977434"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977435,
-      "uri": "/ladybird/oid/11977435",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "3b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977435"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977436,
-      "uri": "/ladybird/oid/11977436",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "4a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977436"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977437,
-      "uri": "/ladybird/oid/11977437",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "4b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977437"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977438,
-      "uri": "/ladybird/oid/11977438",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "5a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977438"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977439,
-      "uri": "/ladybird/oid/11977439",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "5b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977439"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977440,
-      "uri": "/ladybird/oid/11977440",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "6a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977440"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977441,
-      "uri": "/ladybird/oid/11977441",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "6b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977441"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977442,
-      "uri": "/ladybird/oid/11977442",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "7a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977442"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977443,
-      "uri": "/ladybird/oid/11977443",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "7b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977443"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977444,
-      "uri": "/ladybird/oid/11977444",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "8a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977444"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977445,
-      "uri": "/ladybird/oid/11977445",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "8b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977445"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977446,
-      "uri": "/ladybird/oid/11977446",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "9a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977446"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977447,
-      "uri": "/ladybird/oid/11977447",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "9b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977447"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977448,
-      "uri": "/ladybird/oid/11977448",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "10a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977448"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977449,
-      "uri": "/ladybird/oid/11977449",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "10b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977449"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977450,
-      "uri": "/ladybird/oid/11977450",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "11a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977450"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977451,
-      "uri": "/ladybird/oid/11977451",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "11b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977451"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977452,
-      "uri": "/ladybird/oid/11977452",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "12a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977452"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977453,
-      "uri": "/ladybird/oid/11977453",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "12b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977453"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977454,
-      "uri": "/ladybird/oid/11977454",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "13a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977454"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977455,
-      "uri": "/ladybird/oid/11977455",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "13b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977455"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977456,
-      "uri": "/ladybird/oid/11977456",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "14a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977456"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977457,
-      "uri": "/ladybird/oid/11977457",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "14b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977457"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977458,
-      "uri": "/ladybird/oid/11977458",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "15a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977458"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977459,
-      "uri": "/ladybird/oid/11977459",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "15b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977459"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977460,
-      "uri": "/ladybird/oid/11977460",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[16]a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977460"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977461,
-      "uri": "/ladybird/oid/11977461",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[16]b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977461"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977462,
-      "uri": "/ladybird/oid/11977462",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Back free endpaper]a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977462"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977463,
-      "uri": "/ladybird/oid/11977463",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4656,
-      "height": 6008,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Back free endpaper]b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977463"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977464,
-      "uri": "/ladybird/oid/11977464",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 1706,
-      "height": 5721,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Spine]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977464"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    },
-    {
-      "oid": 11977465,
-      "uri": "/ladybird/oid/11977465",
-      "title": [
-        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
-      ],
-      "width": 4749,
-      "height": 6228,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Back cover]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11977465"
-      ],
-      "identifierShelfMark": "Landberg MSS 492"
-    }
-  ],
-  "contents": [
-    "Modern (19th century) naskhī."
-  ],
-  "language": [
-    "Arabic"
-  ],
-  "indexedBy": [
-    "Brockelmann,",
-    "II, 40; S II, p. 37."
-  ],
-  "recordType": "oid",
-  "references": [
-    "Brockelmann,",
-    "II, 40; S II, p. 37."
-  ],
-  "repository": "Beinecke Library",
-  "subjectEra": "History--Egypt",
-  "description": [
-    "Modern (19th century) naskhī."
-  ],
-  "orbisRecord": "3827095",
-  "collectionId": 1,
+  "orbisBibId": "3827095",
   "orbisBarcode": "39002097273412",
-  "subjectTitle": "History--Egypt",
-  "subjectTopic": [
-    "History--Egypt"
+  "preferredCitation": [
+    "Brockelmann,",
+    "II, 40; S II, p. 37."
   ],
-  "dependentUris": [
-    "/ladybird/oid/11913649"
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1800"
+  ],
+  "illustrativeMatter": "ara d",
+  "subjectEra": "History--Egypt",
+  "repository": "Beinecke Library",
+  "subjectTitle": "History--Egypt",
+  "subjectTitleDisplay": [
+    "History--Egypt"
   ],
   "creatorDisplay": [
     "Maqrīzī, Aḥmad ibn ʻAlī, 1364-1442"
   ],
-  "dateStructured": [
-    "1800-00-00T00:00:00Z"
+  "dependentUris": [
+    "/ladybird/oid/11913649"
   ],
-  "itemPermission": "Public",
-  "illustrativeMatter": "ara d",
-  "identifierShelfMark": "Landberg MSS 492",
-  "subjectTitleDisplay": [
-    "History--Egypt"
+  "oid": 11913649,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977426",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "[Front cover]",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977426"
+      ],
+      "oid": 11977426,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977427",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "[Front pastedown]",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977427"
+      ],
+      "oid": 11977427,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977428",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "[Front free endpaper]a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977428"
+      ],
+      "oid": 11977428,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977429",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "[Front free endpaper]b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977429"
+      ],
+      "oid": 11977429,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977430",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "1a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977430"
+      ],
+      "oid": 11977430,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977431",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "1b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977431"
+      ],
+      "oid": 11977431,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977432",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "2a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977432"
+      ],
+      "oid": 11977432,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977433",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "2b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977433"
+      ],
+      "oid": 11977433,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977434",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "3a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977434"
+      ],
+      "oid": 11977434,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977435",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "3b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977435"
+      ],
+      "oid": 11977435,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977436",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "4a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977436"
+      ],
+      "oid": 11977436,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977437",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "4b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977437"
+      ],
+      "oid": 11977437,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977438",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "5a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977438"
+      ],
+      "oid": 11977438,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977439",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "5b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977439"
+      ],
+      "oid": 11977439,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977440",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "6a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977440"
+      ],
+      "oid": 11977440,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977441",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "6b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977441"
+      ],
+      "oid": 11977441,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977442",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "7a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977442"
+      ],
+      "oid": 11977442,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977443",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "7b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977443"
+      ],
+      "oid": 11977443,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977444",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "8a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977444"
+      ],
+      "oid": 11977444,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977445",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "8b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977445"
+      ],
+      "oid": 11977445,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977446",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "9a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977446"
+      ],
+      "oid": 11977446,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977447",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "9b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977447"
+      ],
+      "oid": 11977447,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977448",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "10a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977448"
+      ],
+      "oid": 11977448,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977449",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "10b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977449"
+      ],
+      "oid": 11977449,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977450",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "11a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977450"
+      ],
+      "oid": 11977450,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977451",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "11b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977451"
+      ],
+      "oid": 11977451,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977452",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "12a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977452"
+      ],
+      "oid": 11977452,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977453",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "12b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977453"
+      ],
+      "oid": 11977453,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977454",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "13a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977454"
+      ],
+      "oid": 11977454,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977455",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "13b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977455"
+      ],
+      "oid": 11977455,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977456",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "14a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977456"
+      ],
+      "oid": 11977456,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977457",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "14b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977457"
+      ],
+      "oid": 11977457,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977458",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "15a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977458"
+      ],
+      "oid": 11977458,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977459",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "15b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977459"
+      ],
+      "oid": 11977459,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977460",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "[16]a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977460"
+      ],
+      "oid": 11977460,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977461",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "[16]b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977461"
+      ],
+      "oid": 11977461,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977462",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "[Back free endpaper]a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977462"
+      ],
+      "oid": 11977462,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977463",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "[Back free endpaper]b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977463"
+      ],
+      "oid": 11977463,
+      "width": 4656,
+      "height": 6008,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977464",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "[Spine]",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977464"
+      ],
+      "oid": 11977464,
+      "width": 1706,
+      "height": 5721,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11977465",
+      "callNumber": "Landberg MSS 492",
+      "title": [
+        "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī"
+      ],
+      "caption": "[Back cover]",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11977465"
+      ],
+      "oid": 11977465,
+      "width": 4749,
+      "height": 6228,
+      "children": [
+
+      ]
+    }
   ],
-  "extentOfDigitization": [
-    "Complete work digitized."
+  "abstract": [
+    "Treatise on the Arab tribes which settled in Egypt."
   ]
 }

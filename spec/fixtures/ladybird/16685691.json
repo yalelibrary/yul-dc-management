@@ -41,19 +41,16 @@
       "children": [
 
       ],
+      "callNumber": "BrSides Elephant Folio 2018 22",
       "recordType": "oid",
       "dependentUris": [
         "/ladybird/oid/16686253"
       ],
-      "jsonModelType": "LadybirdSolrRecord",
-      "identifierShelfMark": "BrSides Elephant Folio 2018 22"
+      "jsonModelType": "LadybirdSolrRecord"
     }
   ],
-  "contents": [
-    "\"No. 1262.\"",
-    "\"Small corrections from notices to mariners ('15-2, 18, 30, from other sources I '16.\"",
-    "Includes charts: \"Speeds per hour with daily and weekly distances in nautical miles\" and \"Reduction knots on nautical miles to statute miles.\" Also includes 4 distance charts.",
-    "Relief shown by hachures and spot heights."
+  "itemType": [
+    "Maps, Atlases & Globes"
   ],
   "language": [
     "English"
@@ -61,6 +58,7 @@
   "publisher": [
     "Published ... at the Hydrographic Office, "
   ],
+  "callNumber": "BrSides Elephant Folio 2018 22",
   "coordinate": [
     "(W 180°--E 180°/N 90°--S 90°).",
     "090.000000",
@@ -70,7 +68,7 @@
     "50000000",
     "a"
   ],
-  "geoSubject": "x------",
+  "orbisBibId": "13881242",
   "recordType": "oid",
   "repository": "Beinecke Library",
   "subjectEra": "Steam-navigation--Maps.",
@@ -80,10 +78,8 @@
     "Includes charts: \"Speeds per hour with daily and weekly distances in nautical miles\" and \"Reduction knots on nautical miles to statute miles.\" Also includes 4 distance charts.",
     "Relief shown by hachures and spot heights."
   ],
-  "orbisRecord": "13881242",
   "collectionId": 1,
   "orbisBarcode": "39002131329220",
-  "resourceType": "Maps, Atlases & Globes",
   "subjectTitle": "Steam-navigation--Maps.",
   "subjectTopic": [
     "Steam-navigation--Maps."
@@ -91,28 +87,30 @@
   "copyrightDate": [
     "Sep., 1914 [that is, 1916]"
   ],
+  "creationPlace": [
+    "Washington, D.C. :"
+  ],
   "dependentUris": [
     "/ladybird/oid/16685691"
   ],
   "jsonModelType": "LadybirdSolrRecord",
+  "coordinateEast": "180.000000",
+  "coordinateWest": "-180.000000",
   "creatorDisplay": [
     "United States. Hydrographic Office"
   ],
   "dateStructured": [
-    "1914",
-    "1915",
-    "1916"
+    "1914/1916"
   ],
   "itemPermission": "Public",
-  "publicationPlace": [
-    "Washington, D.C. :"
-  ],
+  "coordinateNorth": "090.000000",
+  "coordinateSouth": "-090.000000",
   "illustrativeMatter": "181211s1916    dcudg     a     0   eng d",
-  "identifierShelfMark": "BrSides Elephant Folio 2018 22",
   "subjectTitleDisplay": [
     "Steam-navigation--Maps."
   ],
   "extentOfDigitization": [
     "Complete work digitized."
-  ]
+  ],
+  "subjectGeographicCode": "x------"
 }

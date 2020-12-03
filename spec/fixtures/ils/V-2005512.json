@@ -1,39 +1,28 @@
 {
+  "jsonModelType": "BibSolrRecord",
+  "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002093768050?bib=4113177",
-  "bibId": 4113177,
+  "callNumber": "GEN MSS 257",
+  "creator": [
+    "Lincoln, Abraham, 1809-1865"
+  ],
   "title": [
     "Abraham Lincoln collection, 1824-1865"
+  ],
+  "alternativeTitle": [
+    "http://id.loc.gov/authorities/names/n79006779"
   ],
   "extent": [
     "1.8 linear ft. (4 boxes) +3 broadside folders",
     "Organized into two series: I. Gift of A. Conger Goodyear; II. Additional Materials."
   ],
-  "itemId": 8090926,
-  "source": "ils",
-  "creator": [
-    "Lincoln, Abraham, 1809-1865"
-  ],
-  "abstract": [
-    "Correspondence and writings by and about Abraham Lincoln, and a gold pen used by Lincoln. 4 ALS from Lincoln to Benjamin F. James, William M. Dickson, and to an unidentified recipient. Writings by Lincoln include an autograph praecipe issued by Lincoln for writ in his first law case, \"David Woolridge vs. Hawthorne\", and a fragment of a speech on slavery. Also present is a letter by Edwin Booth to Colonel A. Badeau concerning Lincoln's assassination by his brother, John Wilkes Booth, two days earlier; two volumes containing letters and writings by and about members of Lincoln's cabinet, including Andrew Johnson, Edwin M. Stanton, a letter to W. P. Fessenden regarding the attack on Petersburg, and Gideon Welles' autographed manuscript recollections on the formation of Lincoln's cabinet. Accompanied by the gold pen used by Lincoln to sign the Emancipation Proclamation, with accompanying documentation"
-  ],
-  "children": [
-
-  ],
   "language": [
+    "English"
+  ],
+  "languageCode": [
     "eng"
   ],
-  "holdingId": 4482860,
-  "callNumber": "GEN MSS 257",
-  "createDate": "2002-06-01T04:00:00.000+0000",
-  "findingAid": [
-    "http://hdl.handle.net/10079/fa/beinecke.lincoln",
-    "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=GEN_MSS_257"
-  ],
-  "orbisBibId": "4113177",
-  "recordType": "bib",
-  "repository": "beingen",
-  "subjectEra": "Civil War, 1861-1865",
-  "updateDate": "2019-04-23T19:21:33.000+0000",
   "description": [
     "Finding aid available."
   ],
@@ -49,43 +38,34 @@
     "Stanton, Edwin M. 1814-1869. (Edwin McMasters),",
     "United States. President (1861-1865 : Lincoln)."
   ],
-  "orbisBarcode": "39002093768050",
-  "subjectTitle": "Emancipation Proclamation.",
   "subjectTopic": [
     "Petersburg Crater, Battle of, Va., 1864",
     "History",
     "Campaigns"
   ],
-  "dependentUris": [
-    "/ils/holding/4482860",
-    "/ils/item/8090926",
-    "/ils/bib/4113177",
-    "/ils/barcode/39002093768050"
-  ],
-  "creatorDisplay": [
-    "Lincoln, Abraham, 1809-1865"
-  ],
-  "dateStructured": [
-    "18241865"
-  ],
-  "suppressInOpac": false,
-  "titleStatement": [
-    "Abraham Lincoln collection, 1824-1865"
-  ],
-  "accessCondition": [
-    "Box 4 and broadside folder 28: Restricted fragile material.  Reference surrogates have been substituted in the main files.  For further information consult the appropriate curator"
-  ],
-  "alternativeTitle": [
-    "http://id.loc.gov/authorities/names/n79006779"
+  "orbisBibId": "4113177",
+  "orbisBarcode": "39002093768050",
+  "findingAid": [
+    "http://hdl.handle.net/10079/fa/beinecke.lincoln",
+    "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=GEN_MSS_257"
   ],
   "preferredCitation": [
     "Abraham Lincoln Collection. General Collection, Beinecke Rare Book and Manuscript Library, Yale University"
   ],
+  "dateStructured": [
+    "1824"
+  ],
+  "illustrativeMatter": "    ",
+  "subjectEra": "Civil War, 1861-1865",
+  "titleStatement": [
+    "Abraham Lincoln collection, 1824-1865"
+  ],
+  "provenanceUncontrolled": "Material acquired by gift and purchase from various sources.",
+  "repository": "beingen",
+  "subjectTitle": "Emancipation Proclamation.",
   "subjectGeographic": [
     "United States"
   ],
-  "volumeEnumeration": "Oversize box 3",
-  "illustrativeMatter": "    ",
   "subjectTitleDisplay": [
     "Badeau, Adam, 1831-1895.",
     "Booth, Edwin, 1833-1893.",
@@ -98,5 +78,29 @@
     "Stanton, Edwin M. 1814-1869. (Edwin McMasters),",
     "United States. President (1861-1865 : Lincoln). Emancipation Proclamation."
   ],
-  "provenanceUncontrolled": "Material acquired by gift and purchase from various sources."
+  "creatorDisplay": [
+    "Lincoln, Abraham, 1809-1865"
+  ],
+  "volumeEnumeration": "Oversize box 3",
+  "accessCondition": [
+    "Box 4 and broadside folder 28: Restricted fragile material.  Reference surrogates have been substituted in the main files.  For further information consult the appropriate curator"
+  ],
+  "dependentUris": [
+    "/ils/holding/4482860",
+    "/ils/item/8090926",
+    "/ils/bib/4113177",
+    "/ils/barcode/39002093768050"
+  ],
+  "bibId": 4113177,
+  "suppressInOpac": false,
+  "createDate": "2002-06-01T04:00:00.000+0000",
+  "updateDate": "2019-04-23T19:21:33.000+0000",
+  "holdingId": 4482860,
+  "itemId": 8090926,
+  "children": [
+
+  ],
+  "abstract": [
+    "Correspondence and writings by and about Abraham Lincoln, and a gold pen used by Lincoln. 4 ALS from Lincoln to Benjamin F. James, William M. Dickson, and to an unidentified recipient. Writings by Lincoln include an autograph praecipe issued by Lincoln for writ in his first law case, \"David Woolridge vs. Hawthorne\", and a fragment of a speech on slavery. Also present is a letter by Edwin Booth to Colonel A. Badeau concerning Lincoln's assassination by his brother, John Wilkes Booth, two days earlier; two volumes containing letters and writings by and about members of Lincoln's cabinet, including Andrew Johnson, Edwin M. Stanton, a letter to W. P. Fessenden regarding the attack on Petersburg, and Gideon Welles' autographed manuscript recollections on the formation of Lincoln's cabinet. Accompanied by the gold pen used by Lincoln to sign the Emancipation Proclamation, with accompanying documentation"
+  ]
 }

@@ -1,243 +1,29 @@
 {
-  "oid": 16425155,
-  "uri": "/ladybird/oid/16425155",
-  "date": [
-    "1699]"
-  ],
-  "genre": [
-    "Celestial globes."
-  ],
-  "scale": "Scale not given ;",
-  "title": [
-    "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numer"
-  ],
-  "extent": [
-    "1 globe : hand col., paper gores over papier-mâché and plaster, mounted on a carved baroque walnut stand . Brass meridian with wooden horizon (5 cm wide) with mounted hand col. zodiacal paper 47 cm. in diam."
-  ],
-  "format": [
-    "three dimensional object"
-  ],
-  "partOf": "Beinecke Library",
-  "rights": [
-    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-  ],
+  "jsonModelType": "LadybirdSolrRecord",
   "source": "ladybird",
+  "recordType": "oid",
+  "uri": "/ladybird/oid/16425155",
+  "callNumber": "Globe 21",
   "creator": [
     "Coronelli, Vincenzo, 1650-1718."
   ],
-  "children": [
-    {
-      "oid": 16425166,
-      "uri": "/ladybird/oid/16425166",
-      "title": [
-        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
-      ],
-      "width": 6241,
-      "height": 7801,
-      "source": "ladybird",
-      "caption": "[View 1]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16425166"
-      ],
-      "identifierShelfMark": "Globe 21"
-    },
-    {
-      "oid": 16425167,
-      "uri": "/ladybird/oid/16425167",
-      "title": [
-        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
-      ],
-      "width": 6241,
-      "height": 7801,
-      "source": "ladybird",
-      "caption": "[View 2]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16425167"
-      ],
-      "identifierShelfMark": "Globe 21"
-    },
-    {
-      "oid": 16425168,
-      "uri": "/ladybird/oid/16425168",
-      "title": [
-        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
-      ],
-      "width": 6241,
-      "height": 7801,
-      "source": "ladybird",
-      "caption": "[View 3]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16425168"
-      ],
-      "identifierShelfMark": "Globe 21"
-    },
-    {
-      "oid": 16425169,
-      "uri": "/ladybird/oid/16425169",
-      "title": [
-        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
-      ],
-      "width": 6209,
-      "height": 7761,
-      "source": "ladybird",
-      "caption": "[View 4]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16425169"
-      ],
-      "identifierShelfMark": "Globe 21"
-    },
-    {
-      "oid": 16425170,
-      "uri": "/ladybird/oid/16425170",
-      "title": [
-        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
-      ],
-      "width": 6024,
-      "height": 7530,
-      "source": "ladybird",
-      "caption": "[View 5]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16425170"
-      ],
-      "identifierShelfMark": "Globe 21"
-    },
-    {
-      "oid": 16425171,
-      "uri": "/ladybird/oid/16425171",
-      "title": [
-        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
-      ],
-      "width": 6024,
-      "height": 7530,
-      "source": "ladybird",
-      "caption": "[View 6]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16425171"
-      ],
-      "identifierShelfMark": "Globe 21"
-    },
-    {
-      "oid": 16425172,
-      "uri": "/ladybird/oid/16425172",
-      "title": [
-        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
-      ],
-      "width": 6024,
-      "height": 7530,
-      "source": "ladybird",
-      "caption": "[View 7]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16425172"
-      ],
-      "identifierShelfMark": "Globe 21"
-    },
-    {
-      "oid": 16425173,
-      "uri": "/ladybird/oid/16425173",
-      "title": [
-        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
-      ],
-      "width": 6930,
-      "height": 5544,
-      "source": "ladybird",
-      "caption": "[Detail 1]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16425173"
-      ],
-      "identifierShelfMark": "Globe 21"
-    },
-    {
-      "oid": 16425174,
-      "uri": "/ladybird/oid/16425174",
-      "title": [
-        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
-      ],
-      "width": 6399,
-      "height": 5119,
-      "source": "ladybird",
-      "caption": "[Detail 2]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16425174"
-      ],
-      "identifierShelfMark": "Globe 21"
-    },
-    {
-      "oid": 16425175,
-      "uri": "/ladybird/oid/16425175",
-      "title": [
-        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
-      ],
-      "width": 6766,
-      "height": 5413,
-      "source": "ladybird",
-      "caption": "[Detail 3]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16425175"
-      ],
-      "identifierShelfMark": "Globe 21"
-    }
+  "title": [
+    "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numer"
   ],
-  "contents": [
-    "From the library of Jonathan T. Lanman.",
-    "Image of globe with further description is listed online under \"Lanman Globe Collection\"",
-    "Not in Younge's \"Catalogue of early globes\".",
-    "The globe shows three cartouches, one includes title the other two are left blank.",
-    "This celestial globe corresponds to Coronelli's terrestrial globe of 1699."
+  "extentOfDigitization": [
+    "Complete work digitized."
+  ],
+  "creationPlace": [
+    "[Venice :"
   ],
   "publisher": [
     "Accademia Cosmografica degli Argonauti,"
   ],
-  "coordinate": [
-    "a"
+  "date": [
+    "1699]"
   ],
-  "projection": [
-    "Convex proj."
-  ],
-  "recordType": "oid",
-  "repository": "Beinecke Library",
-  "subjectEra": "Celestial globes--Early works to 1800.",
-  "contributor": [
-    "Lanman, Jonathan T"
+  "extent": [
+    "1 globe : hand col., paper gores over papier-mâché and plaster, mounted on a carved baroque walnut stand . Brass meridian with wooden horizon (5 cm wide) with mounted hand col. zodiacal paper 47 cm. in diam."
   ],
   "description": [
     "From the library of Jonathan T. Lanman.",
@@ -246,38 +32,258 @@
     "The globe shows three cartouches, one includes title the other two are left blank.",
     "This celestial globe corresponds to Coronelli's terrestrial globe of 1699."
   ],
-  "orbisRecord": "9884809",
   "subjectName": [
     "Lanman, Jonathan T"
   ],
-  "collectionId": 1,
-  "resourceType": "Maps, Atlases & Globes",
-  "subjectTitle": "Celestial globes--Early works to 1800.",
   "subjectTopic": [
     "Celestial globes--Early works to 1800."
   ],
-  "dependentUris": [
-    "/ladybird/oid/16425155"
+  "scale": "Scale not given ;",
+  "projection": [
+    "Convex proj."
+  ],
+  "coordinate": [
+    "a"
+  ],
+  "genre": [
+    "Celestial globes."
+  ],
+  "format": [
+    "three dimensional object"
+  ],
+  "itemType": [
+    "Maps, Atlases & Globes"
+  ],
+  "partOf": "Beinecke Library",
+  "rights": [
+    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+  ],
+  "orbisBibId": "9884809",
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1699"
+  ],
+  "illustrativeMatter": "850124q1699    it     zz d     0   ita",
+  "subjectEra": "Celestial globes--Early works to 1800.",
+  "contributor": [
+    "Lanman, Jonathan T"
+  ],
+  "repository": "Beinecke Library",
+  "subjectTitle": "Celestial globes--Early works to 1800.",
+  "subjectTitleDisplay": [
+    "Celestial globes--Early works to 1800."
   ],
   "creatorDisplay": [
     "Coronelli, Vincenzo, 1650-1718."
   ],
-  "dateStructured": [
-    "1699-00-00T00:00:00Z"
-  ],
-  "itemPermission": "Public",
-  "publicationPlace": [
-    "[Venice :"
-  ],
   "contributorDisplay": [
     "Lanman, Jonathan T"
   ],
-  "illustrativeMatter": "850124q1699    it     zz d     0   ita",
-  "identifierShelfMark": "Globe 21",
-  "subjectTitleDisplay": [
-    "Celestial globes--Early works to 1800."
+  "dependentUris": [
+    "/ladybird/oid/16425155"
   ],
-  "extentOfDigitization": [
-    "Complete work digitized."
+  "oid": 16425155,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16425166",
+      "callNumber": "Globe 21",
+      "title": [
+        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
+      ],
+      "caption": "[View 1]",
+      "dependentUris": [
+        "/ladybird/oid/16425166"
+      ],
+      "oid": 16425166,
+      "width": 6241,
+      "height": 7801,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16425167",
+      "callNumber": "Globe 21",
+      "title": [
+        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
+      ],
+      "caption": "[View 2]",
+      "dependentUris": [
+        "/ladybird/oid/16425167"
+      ],
+      "oid": 16425167,
+      "width": 6241,
+      "height": 7801,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16425168",
+      "callNumber": "Globe 21",
+      "title": [
+        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
+      ],
+      "caption": "[View 3]",
+      "dependentUris": [
+        "/ladybird/oid/16425168"
+      ],
+      "oid": 16425168,
+      "width": 6241,
+      "height": 7801,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16425169",
+      "callNumber": "Globe 21",
+      "title": [
+        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
+      ],
+      "caption": "[View 4]",
+      "dependentUris": [
+        "/ladybird/oid/16425169"
+      ],
+      "oid": 16425169,
+      "width": 6209,
+      "height": 7761,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16425170",
+      "callNumber": "Globe 21",
+      "title": [
+        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
+      ],
+      "caption": "[View 5]",
+      "dependentUris": [
+        "/ladybird/oid/16425170"
+      ],
+      "oid": 16425170,
+      "width": 6024,
+      "height": 7530,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16425171",
+      "callNumber": "Globe 21",
+      "title": [
+        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
+      ],
+      "caption": "[View 6]",
+      "dependentUris": [
+        "/ladybird/oid/16425171"
+      ],
+      "oid": 16425171,
+      "width": 6024,
+      "height": 7530,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16425172",
+      "callNumber": "Globe 21",
+      "title": [
+        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
+      ],
+      "caption": "[View 7]",
+      "dependentUris": [
+        "/ladybird/oid/16425172"
+      ],
+      "oid": 16425172,
+      "width": 6024,
+      "height": 7530,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16425173",
+      "callNumber": "Globe 21",
+      "title": [
+        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
+      ],
+      "caption": "[Detail 1]",
+      "dependentUris": [
+        "/ladybird/oid/16425173"
+      ],
+      "oid": 16425173,
+      "width": 6930,
+      "height": 5544,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16425174",
+      "callNumber": "Globe 21",
+      "title": [
+        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
+      ],
+      "caption": "[Detail 2]",
+      "dependentUris": [
+        "/ladybird/oid/16425174"
+      ],
+      "oid": 16425174,
+      "width": 6399,
+      "height": 5119,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16425175",
+      "callNumber": "Globe 21",
+      "title": [
+        "Amico Lettore / Oltre al molti Globi delineati dal P. Cosmografo Coronelli per Sourani diuersi di uarie e uaste misure ne ha ultimamente composti e stampi di cinque grandezze a publica beneficio, fra quali i piu commodi, ed exalti sono i presenti. I Numeri, che accompagnano le Stelle calcolate all'Epoca dell 1700; cosi l'altre notitie, ed uso de medesimi Globi, uengono nel sio Epitome Cosmografico diffusamente spiegate."
+      ],
+      "caption": "[Detail 3]",
+      "dependentUris": [
+        "/ladybird/oid/16425175"
+      ],
+      "oid": 16425175,
+      "width": 6766,
+      "height": 5413,
+      "children": [
+
+      ]
+    }
   ]
 }

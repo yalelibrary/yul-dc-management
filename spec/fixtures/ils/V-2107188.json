@@ -1,6 +1,7 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/bib/7972227",
   "creator": [
     "Viets, Dan, 1751-"
@@ -8,7 +9,7 @@
   "title": [
     "Fair Lucretia's garland"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "New Haven?"
   ],
   "publisher": [
@@ -21,6 +22,9 @@
     "1 sheet ([1] p.) ; 36 x 24 cm."
   ],
   "language": [
+    "English"
+  ],
+  "languageCode": [
     "eng"
   ],
   "description": [
@@ -31,12 +35,12 @@
   "genre": [
     "Broadside poems Connecticut New Haven 1779"
   ],
-  "orbisRecord": "7972227",
+  "orbisBibId": "7972227",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=1329643"
   ],
   "dateStructured": [
-    "1779    "
+    "1779"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [

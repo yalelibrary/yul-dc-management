@@ -1,129 +1,33 @@
 {
+  "jsonModelType": "BibSolrRecord",
+  "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002102340669?bib=12307100",
-  "date": [
-    "[circa 1860]"
-  ],
-  "bibId": 12307100,
-  "genre": [
-    "Drawings (visual works) United States 19th century",
-    "Posters United States 19th century",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits",
-    "Portraits"
+  "callNumber": "YCAL MSS 1000",
+  "creator": [
+    "Fowler & Wells, attributed name"
   ],
   "title": [
     "[Portrait posters for physiognomy lectures]."
   ],
+  "creationPlace": [
+    "New York, New York"
+  ],
+  "date": [
+    "[circa 1860]"
+  ],
   "extent": [
     "111 drawings on 19 posters : 165 x 84 cm"
-  ],
-  "format": [
-    "still image"
-  ],
-  "itemId": 10996370,
-  "source": "ils",
-  "creator": [
-    "Fowler & Wells, attributed name"
-  ],
-  "abstract": [
-    "A set of nineteen posters with 112 bust portraits depicting identified men and women, primarily authors, artists, scientists, monarchs, and religious and political leaders from the eighteenth and nineteenth centuries, with a group of idealized heads illustrating characteristics identified by phrenologists, such as inhabitiveness and philoprogenitivenes. The portraits, or plates, were rendered in sepia ink and wash on paper, and were mounted on linen or canvas in groups of six; each set has wooden rods at each end to aid in hanging for display, and rolling for compact storage and travel. Each portrait or head is captioned with name of the sitter or the prominent character type portrayed. The posters were likely intended as exhibits supporting phrenology lectures"
-  ],
-  "children": [
-
-  ],
-  "language": [
-    "eng"
   ],
   "material": [
     "sepia ink and wash on paper mounted on linen, with wooden rods ;"
   ],
-  "holdingId": 12484205,
-  "callNumber": "YCAL MSS 1000",
-  "createDate": "2014-11-25T15:46:12.000+0000",
-  "findingAid": [
-    "http://hdl.handle.net/10079/fa/beinecke.phrenology",
-    "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=YCAL_MSS_1000"
+  "language": [
+    "English"
   ],
-  "orbisBibId": "12307100",
-  "recordType": "bib",
-  "repository": "beinycal",
-  "updateDate": "2019-12-10T15:48:49.000+0000",
+  "languageCode": [
+    "eng"
+  ],
   "description": [
     "Title devised by cataloger.",
     "The portraits are unsigned but attributed to Fowler & Wells through advertisements published in the American Phrenological Journal (1858) for similar suites of portrait posters sold by the firm.",
@@ -214,42 +118,118 @@
     "Wordsworth, William, 1770-1850",
     "Fowler & Wells."
   ],
-  "orbisBarcode": "39002102340669",
   "subjectTopic": [
     "Phrenology",
     "Physiognomy"
   ],
-  "dependentUris": [
-    "/ils/holding/12484205",
-    "/ils/item/10996370",
-    "/ils/bib/12307100",
-    "/ils/barcode/39002102340669"
+  "genre": [
+    "Drawings (visual works) United States 19th century",
+    "Posters United States 19th century",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits",
+    "Portraits"
   ],
-  "creatorDisplay": [
-    "Fowler & Wells, attributed name"
+  "itemType": [
+    "still image"
   ],
-  "dateStructured": [
-    "18601860"
-  ],
-  "suppressInOpac": false,
-  "titleStatement": [
-    "[Portrait posters for physiognomy lectures]."
-  ],
-  "accessCondition": [
-    "This material is open for research"
-  ],
-  "publicationPlace": [
-    "New York, New York"
+  "orbisBibId": "12307100",
+  "orbisBarcode": "39002102340669",
+  "findingAid": [
+    "http://hdl.handle.net/10079/fa/beinecke.phrenology",
+    "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=YCAL_MSS_1000"
   ],
   "preferredCitation": [
     "Fowler & Wells, Portrait Posters for Physiognomy Lectures. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
+  "dateStructured": [
+    "1860"
+  ],
+  "illustrativeMatter": "nnn ",
+  "titleStatement": [
+    "[Portrait posters for physiognomy lectures]."
+  ],
+  "provenanceUncontrolled": "Purchased from Ian Brabner, Bookseller, on the Edwin J. Beinecke Book Fund, 2011.",
+  "repository": "beinycal",
   "subjectGeographic": [
     "United States.",
     "United States."
   ],
-  "volumeEnumeration": "Box 1",
-  "illustrativeMatter": "nnn ",
   "subjectTitleDisplay": [
     "Abdülmecit, Sultan of the Turks, 1823-1861",
     "Adams, John, 1735-1826",
@@ -332,5 +312,29 @@
     "Wordsworth, William, 1770-1850",
     "Fowler & Wells."
   ],
-  "provenanceUncontrolled": "Purchased from Ian Brabner, Bookseller, on the Edwin J. Beinecke Book Fund, 2011."
+  "creatorDisplay": [
+    "Fowler & Wells, attributed name"
+  ],
+  "volumeEnumeration": "Box 1",
+  "accessCondition": [
+    "This material is open for research"
+  ],
+  "dependentUris": [
+    "/ils/holding/12484205",
+    "/ils/item/10996370",
+    "/ils/bib/12307100",
+    "/ils/barcode/39002102340669"
+  ],
+  "bibId": 12307100,
+  "suppressInOpac": false,
+  "createDate": "2014-11-25T15:46:12.000+0000",
+  "updateDate": "2019-12-10T15:48:49.000+0000",
+  "holdingId": 12484205,
+  "itemId": 10996370,
+  "children": [
+
+  ],
+  "abstract": [
+    "A set of nineteen posters with 112 bust portraits depicting identified men and women, primarily authors, artists, scientists, monarchs, and religious and political leaders from the eighteenth and nineteenth centuries, with a group of idealized heads illustrating characteristics identified by phrenologists, such as inhabitiveness and philoprogenitivenes. The portraits, or plates, were rendered in sepia ink and wash on paper, and were mounted on linen or canvas in groups of six; each set has wooden rods at each end to aid in hanging for display, and rolling for compact storage and travel. Each portrait or head is captioned with name of the sitter or the prominent character type portrayed. The posters were likely intended as exhibits supporting phrenology lectures"
+  ]
 }

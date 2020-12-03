@@ -1,168 +1,26 @@
 {
-  "oid": 16371253,
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/16371253",
-  "date": [
-    "[between 1400 and 1450]"
-  ],
-  "genre": [
-    "Manuscripts, Medieval--England--15th century.",
-    "Missals--England--15th century."
-  ],
+  "callNumber": "Takamiya MS 81",
   "title": [
     "Missal, use of Sarum (fragment)"
+  ],
+  "extentOfDigitization": [
+    "Complete work digitized."
+  ],
+  "creationPlace": [
+    "England,"
+  ],
+  "date": [
+    "[between 1400 and 1450]"
   ],
   "extent": [
     "3 l. : parchment ; 491 x 340 mm."
   ],
-  "format": [
-    "text"
-  ],
-  "partOf": "Beinecke Library",
-  "rights": [
-    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-  ],
-  "source": "ladybird",
-  "abstract": [
-    "Manuscript leaves from a Sarum missal, containing text from Masses for the third and eighth Sundays after Pentecost and for the dedication of a church."
-  ],
-  "children": [
-    {
-      "oid": 16394803,
-      "uri": "/ladybird/oid/16394803",
-      "title": [
-        "Missal, use of Sarum (fragment)"
-      ],
-      "width": 5632,
-      "height": 7910,
-      "source": "ladybird",
-      "caption": "1r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16394803"
-      ],
-      "identifierShelfMark": "Takamiya MS 81"
-    },
-    {
-      "oid": 16394804,
-      "uri": "/ladybird/oid/16394804",
-      "title": [
-        "Missal, use of Sarum (fragment)"
-      ],
-      "width": 5330,
-      "height": 7931,
-      "source": "ladybird",
-      "caption": "1v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16394804"
-      ],
-      "identifierShelfMark": "Takamiya MS 81"
-    },
-    {
-      "oid": 16394805,
-      "uri": "/ladybird/oid/16394805",
-      "title": [
-        "Missal, use of Sarum (fragment)"
-      ],
-      "width": 5586,
-      "height": 8016,
-      "source": "ladybird",
-      "caption": "2r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16394805"
-      ],
-      "identifierShelfMark": "Takamiya MS 81"
-    },
-    {
-      "oid": 16394806,
-      "uri": "/ladybird/oid/16394806",
-      "title": [
-        "Missal, use of Sarum (fragment)"
-      ],
-      "width": 5515,
-      "height": 7860,
-      "source": "ladybird",
-      "caption": "2v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16394806"
-      ],
-      "identifierShelfMark": "Takamiya MS 81"
-    },
-    {
-      "oid": 16394807,
-      "uri": "/ladybird/oid/16394807",
-      "title": [
-        "Missal, use of Sarum (fragment)"
-      ],
-      "width": 5550,
-      "height": 7812,
-      "source": "ladybird",
-      "caption": "3r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16394807"
-      ],
-      "identifierShelfMark": "Takamiya MS 81"
-    },
-    {
-      "oid": 16394808,
-      "uri": "/ladybird/oid/16394808",
-      "title": [
-        "Missal, use of Sarum (fragment)"
-      ],
-      "width": 5417,
-      "height": 7716,
-      "source": "ladybird",
-      "caption": "3v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16394808"
-      ],
-      "identifierShelfMark": "Takamiya MS 81"
-    }
-  ],
-  "contents": [
-    "Decoration: numerous initials in burnished gold or blue; extensive penwork.",
-    "From the collection of Toshiyuki Takamiya, 2013-.",
-    "Layout: double columns of 39 lines.",
-    "Script: gothic liturgical script."
-  ],
   "language": [
     "Latin"
-  ],
-  "indexedBy": [
-    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437.",
-    "Missal, Use of Sarum (Fragment). Takamiya MS 81."
-  ],
-  "recordType": "oid",
-  "references": [
-    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437.",
-    "Missal, Use of Sarum (Fragment). Takamiya MS 81."
-  ],
-  "repository": "Beinecke Library",
-  "subjectEra": "Missals--Early works to 1800.",
-  "contributor": [
-    "Catholic Church.--Sarum manual."
   ],
   "description": [
     "Decoration: numerous initials in burnished gold or blue; extensive penwork.",
@@ -170,42 +28,183 @@
     "Layout: double columns of 39 lines.",
     "Script: gothic liturgical script."
   ],
-  "orbisRecord": "12297336",
   "subjectName": [
     "Catholic Church.--Sarum manual."
   ],
-  "collectionId": 1,
-  "orbisBarcode": "39002104623971",
-  "resourceType": "Archives or Manuscripts",
-  "subjectTitle": "Missals--Early works to 1800.",
   "subjectTopic": [
     "Manuscripts, Medieval--Connecticut--New Haven.",
     "Medieval and Renaissance Manuscript Fragments in Beinecke Library.",
     "Medieval and Renaissance Manuscripts in Beinecke Library.",
     "Missals--Early works to 1800."
   ],
-  "dependentUris": [
-    "/ladybird/oid/16371253"
+  "genre": [
+    "Manuscripts, Medieval--England--15th century.",
+    "Missals--England--15th century."
   ],
-  "dateStructured": [
-    "1400-00-00T00:00:00Z"
+  "format": [
+    "text"
+  ],
+  "itemType": [
+    "Archives or Manuscripts"
+  ],
+  "partOf": "Beinecke Library",
+  "rights": [
+    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+  ],
+  "orbisBibId": "12297336",
+  "orbisBarcode": "39002104623971",
+  "preferredCitation": [
+    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437.",
+    "Missal, Use of Sarum (Fragment). Takamiya MS 81."
   ],
   "itemPermission": "Public",
-  "publicationPlace": [
-    "England,"
-  ],
-  "contributorDisplay": [
-    "Catholic Church.--Sarum manual."
+  "dateStructured": [
+    "1400/1450"
   ],
   "illustrativeMatter": "141112i14001450ctu                 lat d",
-  "identifierShelfMark": "Takamiya MS 81",
+  "subjectEra": "Missals--Early works to 1800.",
+  "contributor": [
+    "Catholic Church.--Sarum manual."
+  ],
+  "repository": "Beinecke Library",
+  "subjectTitle": "Missals--Early works to 1800.",
   "subjectTitleDisplay": [
     "Manuscripts, Medieval--Connecticut--New Haven.",
     "Medieval and Renaissance Manuscript Fragments in Beinecke Library.",
     "Medieval and Renaissance Manuscripts in Beinecke Library.",
     "Missals--Early works to 1800."
   ],
-  "extentOfDigitization": [
-    "Complete work digitized."
+  "contributorDisplay": [
+    "Catholic Church.--Sarum manual."
+  ],
+  "dependentUris": [
+    "/ladybird/oid/16371253"
+  ],
+  "oid": 16371253,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16394803",
+      "callNumber": "Takamiya MS 81",
+      "title": [
+        "Missal, use of Sarum (fragment)"
+      ],
+      "caption": "1r",
+      "dependentUris": [
+        "/ladybird/oid/16394803"
+      ],
+      "oid": 16394803,
+      "width": 5632,
+      "height": 7910,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16394804",
+      "callNumber": "Takamiya MS 81",
+      "title": [
+        "Missal, use of Sarum (fragment)"
+      ],
+      "caption": "1v",
+      "dependentUris": [
+        "/ladybird/oid/16394804"
+      ],
+      "oid": 16394804,
+      "width": 5330,
+      "height": 7931,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16394805",
+      "callNumber": "Takamiya MS 81",
+      "title": [
+        "Missal, use of Sarum (fragment)"
+      ],
+      "caption": "2r",
+      "dependentUris": [
+        "/ladybird/oid/16394805"
+      ],
+      "oid": 16394805,
+      "width": 5586,
+      "height": 8016,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16394806",
+      "callNumber": "Takamiya MS 81",
+      "title": [
+        "Missal, use of Sarum (fragment)"
+      ],
+      "caption": "2v",
+      "dependentUris": [
+        "/ladybird/oid/16394806"
+      ],
+      "oid": 16394806,
+      "width": 5515,
+      "height": 7860,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16394807",
+      "callNumber": "Takamiya MS 81",
+      "title": [
+        "Missal, use of Sarum (fragment)"
+      ],
+      "caption": "3r",
+      "dependentUris": [
+        "/ladybird/oid/16394807"
+      ],
+      "oid": 16394807,
+      "width": 5550,
+      "height": 7812,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16394808",
+      "callNumber": "Takamiya MS 81",
+      "title": [
+        "Missal, use of Sarum (fragment)"
+      ],
+      "caption": "3v",
+      "dependentUris": [
+        "/ladybird/oid/16394808"
+      ],
+      "oid": 16394808,
+      "width": 5417,
+      "height": 7716,
+      "children": [
+
+      ]
+    }
+  ],
+  "abstract": [
+    "Manuscript leaves from a Sarum missal, containing text from Masses for the third and eighth Sundays after Pentecost and for the dedication of a church."
   ]
 }

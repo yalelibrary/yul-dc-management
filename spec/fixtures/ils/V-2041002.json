@@ -1,15 +1,16 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002094045128?bib=1169354",
-  "identifierShelfMark": "728 (Oversize) GEN MSS VOL Bound with 1 other title. To view full description, search by call number: GEN MSS VOL 728 (Oversize) Former call number: MS Vault Johnson",
+  "callNumber": "GEN MSS VOL 728 (Oversize) Bound with 1 other title. To view full description, search by call number: GEN MSS VOL 728 (Oversize) Former call number: MS Vault Johnson",
   "creator": [
     "Johnson, Samuel, 1709-1784"
   ],
   "title": [
     "A dictionary of the English language ..."
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "London"
   ],
   "publisher": [
@@ -22,6 +23,9 @@
     "3 v. ; 43 cm."
   ],
   "language": [
+    "English"
+  ],
+  "languageCode": [
     "eng"
   ],
   "description": [
@@ -33,13 +37,13 @@
   "genre": [
     "Dictionaries"
   ],
-  "orbisRecord": "1169354",
+  "orbisBibId": "1169354",
   "orbisBarcode": "39002094045128",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=GEN_MSS_VOL_728_(Oversize)"
   ],
   "dateStructured": [
-    "1755    "
+    "1755"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [
@@ -51,6 +55,7 @@
     "Johnson, Samuel, 1709-1784"
   ],
   "volumeEnumeration": "1",
+  "libraryOfCongressClassificationNumber": "PE1620 .J6 1755",
   "dependentUris": [
     "/ils/holding/1303025",
     "/ils/item/9136055",
