@@ -8,6 +8,12 @@ class MetadataSource < ApplicationRecord
     end
   end
 
+  class MetadataCloudVersionError < StandardError
+    def message
+      "MetadataCloud is not responding to requests for version: #{MetadataSource.metadata_cloud_version}"
+    end
+  end
+
   def fetch_record(parent_object)
     # The environment value has to be set as a string, real booleans do not work
     raw_metadata = if ENV["VPN"] == "true"
@@ -31,13 +37,14 @@ class MetadataSource < ApplicationRecord
       S3Service.upload("#{metadata_cloud_name}/#{file_name(parent_object)}", response_text)
       response_text
     when 400...500
-      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failed")
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body}", "failed")
+      raise MetadataSource::MetadataCloudVersionError if JSON.parse(full_response.body)["ex"].include?("Unable to find retriever")
       false
     when 500...600
-      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failed")
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body}", "failed")
       raise MetadataSource::MetadataCloudServerError
     else
-      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.status.reason}", "failure")
+      parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body}", "failed")
       false
     end
   end
@@ -58,6 +65,7 @@ class MetadataSource < ApplicationRecord
   end
 
   def mc_get(mc_url)
+    # TODO: Do we still need the Honeybadger context part of this?
     Honeybadger.context(
       metadata_cloud_username: ENV["MC_USER"],
       metadata_cloud_password: ENV["MC_PW"],
@@ -68,6 +76,11 @@ class MetadataSource < ApplicationRecord
     metadata_cloud_username = ENV["MC_USER"]
     metadata_cloud_password = ENV["MC_PW"]
     HTTP.basic_auth(user: metadata_cloud_username, pass: metadata_cloud_password).get(mc_url)
+  end
+
+  # Hard coding the metadata cloud version because it is directly correlated with the solr indexing code
+  def self.metadata_cloud_version
+    "1.0.2"
   end
 
   def self.metadata_cloud_host

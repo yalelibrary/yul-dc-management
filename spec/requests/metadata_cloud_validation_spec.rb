@@ -17,11 +17,13 @@ RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources
 
   let(:oid) { "16371272" }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: '16371272') }
-  let(:oid_url) { "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{oid}?include-children=1" }
+  let(:oid_url) { "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/ladybird/oid/#{oid}?include-children=1" }
+  let(:wrong_version_url) { "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/ladybird/oid/#{oid}?include-children=1" }
   let(:ladybird_source) { FactoryBot.build(:metadata_source) }
   let(:response) { ladybird_source.mc_get(oid_url) }
-  let(:no_parent_object_url) { "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ladybird/oid/1?include-children=1" }
+  let(:no_parent_object_url) { "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/ladybird/oid/1?include-children=1" }
   let(:bad_request_response) { ladybird_source.mc_get(no_parent_object_url) }
+  let(:wrong_version_response) { ladybird_source.mc_get(wrong_version_url) }
 
   it "can connect to the metadata cloud using basic auth" do
     expect(response.status.success?).to be true
@@ -32,12 +34,12 @@ RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources
 
   it "has the expected fields" do
     data = JSON.parse(response.body.to_s)
-    expect(data.keys).to eq ["jsonModelType", "source", "recordType", "uri", "identifierShelfMark", "title",
-                             "extentOfDigitization", "publicationPlace", "date", "extent", "language",
-                             "description", "subjectName", "subjectTopic", "genre", "format", "partOf",
-                             "rights", "orbisRecord", "orbisBarcode", "references", "itemPermission",
-                             "dateStructured", "resourceType", "illustrativeMatter", "subjectEra", "contributor",
-                             "repository", "contents", "subjectTitle", "indexedBy", "subjectTitleDisplay",
+    expect(data.keys).to eq ["jsonModelType", "source", "recordType", "uri", "callNumber", "title",
+                             "extentOfDigitization", "creationPlace", "date", "extent", "language",
+                             "description", "subjectName", "subjectTopic", "genre", "format", "itemType", "partOf",
+                             "rights", "orbisBibId", "orbisBarcode", "preferredCitation", "itemPermission",
+                             "dateStructured", "illustrativeMatter", "subjectEra", "contributor",
+                             "repository", "subjectTitle", "subjectTitleDisplay",
                              "contributorDisplay", "dependentUris", "oid", "collectionId", "children", "abstract"]
   end
 
@@ -48,5 +50,12 @@ RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources
   it "gets a 'bad request' when asking for a non-existent parent_object oid" do
     expect(bad_request_response.status.success?).to be false
     expect(bad_request_response.status).to eq 400
+    expect(JSON.parse(bad_request_response.body)["ex"]).to include "Record not found"
+  end
+
+  it "gets a 'Unable to find retriever for source' when the wrong version is set" do
+    expect(wrong_version_response.status.success?).to be false
+    expect(wrong_version_response.status).to eq 400
+    expect(JSON.parse(wrong_version_response.body)["ex"]).to include "Unable to find retriever for source"
   end
 end

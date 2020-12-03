@@ -30,7 +30,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
       before do
         stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/#{parent_object.oid}.json")
-          .to_return(status: 400, body: File.open(File.join(fixture_path, "metadata_cloud_failure.json")))
+          .to_return(status: 400, body: File.open(File.join(fixture_path, "metadata_cloud_no_record.json")))
       end
 
       around do |example|
@@ -39,7 +39,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         end
       end
 
-      it "does not continue with the background jobs if it does not get metadatacloud record" do
+      it "does not continue with the background jobs if that particular oid does not have a record" do
         parent_object
         batch_process_with_failure.file = bad_oid_upload
         batch_process_with_failure.save
