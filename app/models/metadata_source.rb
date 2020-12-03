@@ -80,7 +80,7 @@ class MetadataSource < ApplicationRecord
 
   # Hard coding the metadata cloud version because it is directly correlated with the solr indexing code
   def self.metadata_cloud_version
-    "1.0.2"
+    "1.0.1"
   end
 
   def self.metadata_cloud_host
