@@ -1,9 +1,38 @@
 {
-  "oid": 10269867,
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/10269867",
+  "callNumber": "Beinecke MS 410",
+  "title": [
+    "Indulgence Scroll"
+  ],
+  "extentOfDigitization": [
+    "Complete work digitized."
+  ],
+  "creationPlace": [
+    "England"
+  ],
   "date": [
     "4 [late 15th century]",
     "s. XV^^4"
+  ],
+  "extent": [
+    "f. 1 : parchment ; 1515 x 165 (1391 x 141) mm."
+  ],
+  "language": [
+    "English",
+    "Latin"
+  ],
+  "description": [
+    "Note of a 16th-century owner at the end of the roll: An Indulgence of Innocent VI ca. 1352.",
+    "Parchment roll, unevenly trimmed at top and bottom, composed of three membranes segments glued together, the third an addition of the late fifteenth century."
+  ],
+  "subjectName": [
+    "Innocent VI, Pope, d. 1362"
+  ],
+  "subjectTopic": [
+    "Indulgences--England--Early works to 1800"
   ],
   "genre": [
     "Illuminated manuscripts",
@@ -12,241 +41,215 @@
     "Miniatures (Illuminations)",
     "Scrolls (information artifacts)"
   ],
-  "title": [
-    "Indulgence Scroll"
-  ],
-  "extent": [
-    "f. 1 : parchment ; 1515 x 165 (1391 x 141) mm."
-  ],
   "format": [
     "mixed material"
   ],
-  "partOf": "Teaching resource: Barbara A. Shailor, Medieval Studies",
+  "itemType": [
+    "Archives or Manuscripts"
+  ],
+  "partOf": "Beinecke Library",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "source": "ladybird",
-  "abstract": [
-    "Manuscript on parchment roll, unevenly trimmed at top and bottom, composed of three membranes segments glued together, the third an addition of the late 15th century. Includes Prayers to be said for a pardon of 32,055 years; and Prayer based on the measurement of the length of the body of Christ. The texts are written on one side of a roll (dorse is blank)."
-  ],
-  "children": [
-    {
-      "oid": 1003311,
-      "uri": "/ladybird/oid/1003311",
-      "title": [
-        "Indulgence Scroll"
-      ],
-      "width": 3007,
-      "height": 10157,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Panel 1]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/1003311"
-      ],
-      "identifierShelfMark": "Beinecke MS 410"
-    },
-    {
-      "oid": 1003312,
-      "uri": "/ladybird/oid/1003312",
-      "title": [
-        "Indulgence Scroll"
-      ],
-      "width": 3007,
-      "height": 10157,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Panel 2]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/1003312"
-      ],
-      "identifierShelfMark": "Beinecke MS 410"
-    },
-    {
-      "oid": 1003313,
-      "uri": "/ladybird/oid/1003313",
-      "title": [
-        "Indulgence Scroll"
-      ],
-      "width": 3007,
-      "height": 8093,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Panel 3]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/1003313"
-      ],
-      "identifierShelfMark": "Beinecke MS 410"
-    },
-    {
-      "oid": 15512394,
-      "uri": "/ladybird/oid/15512394",
-      "title": [
-        "Indulgence Scroll"
-      ],
-      "width": 3070,
-      "height": 24502,
-      "source": "ladybird",
-      "caption": "Recto Stitched",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/15512394"
-      ],
-      "identifierShelfMark": "Beinecke MS 410"
-    },
-    {
-      "oid": 15512395,
-      "uri": "/ladybird/oid/15512395",
-      "title": [
-        "Indulgence Scroll"
-      ],
-      "width": 3080,
-      "height": 9948,
-      "source": "ladybird",
-      "caption": "Verso Panel 1",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/15512395"
-      ],
-      "identifierShelfMark": "Beinecke MS 410"
-    },
-    {
-      "oid": 15512396,
-      "uri": "/ladybird/oid/15512396",
-      "title": [
-        "Indulgence Scroll"
-      ],
-      "width": 3080,
-      "height": 10302,
-      "source": "ladybird",
-      "caption": "Verso Panel 2",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/15512396"
-      ],
-      "identifierShelfMark": "Beinecke MS 410"
-    },
-    {
-      "oid": 15512397,
-      "uri": "/ladybird/oid/15512397",
-      "title": [
-        "Indulgence Scroll"
-      ],
-      "width": 3080,
-      "height": 8359,
-      "source": "ladybird",
-      "caption": "Verso Panel 3",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/15512397"
-      ],
-      "identifierShelfMark": "Beinecke MS 410"
-    },
-    {
-      "oid": 15512398,
-      "uri": "/ladybird/oid/15512398",
-      "title": [
-        "Indulgence Scroll"
-      ],
-      "width": 3320,
-      "height": 24517,
-      "source": "ladybird",
-      "caption": "Verso Stitched",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/15512398"
-      ],
-      "identifierShelfMark": "Beinecke MS 410"
-    }
-  ],
-  "contents": [
-    "Note of a 16th-century owner at the end of the roll: An Indulgence of Innocent VI ca. 1352.",
-    "Parchment roll, unevenly trimmed at top and bottom, composed of three membranes segments glued together, the third an addition of the late fifteenth century."
-  ],
-  "language": [
-    "English",
-    "Latin"
-  ],
-  "indexedBy": [
-    "Indulgence Scroll. General Collection, Beinecke Rare Book and Manuscript Library, Yale University.",
-    "Shailor, B. Catalogue of Medieval and Renaissance Manuscripts in the Beinecke Rare Book and Manuscript Library, MS 410."
-  ],
-  "recordType": "oid",
-  "references": [
-    "Indulgence Scroll. General Collection, Beinecke Rare Book and Manuscript Library, Yale University.",
-    "Shailor, B. Catalogue of Medieval and Renaissance Manuscripts in the Beinecke Rare Book and Manuscript Library, MS 410."
-  ],
+  "orbisBibId": "9734851",
+  "orbisBarcode": "39002091597519",
   "relatedUrl": [
     "https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms410.htm"
   ],
-  "repository": "Beinecke Library",
+  "preferredCitation": [
+    "Indulgence Scroll. General Collection, Beinecke Rare Book and Manuscript Library, Yale University.",
+    "Shailor, B. Catalogue of Medieval and Renaissance Manuscripts in the Beinecke Rare Book and Manuscript Library, MS 410."
+  ],
+  "itemPermission": "Public",
   "subjectEra": "Indulgences--England--Early works to 1800",
   "contributor": [
     "Innocent VI, Pope, d. 1362"
   ],
-  "description": [
-    "Note of a 16th-century owner at the end of the roll: An Indulgence of Innocent VI ca. 1352.",
-    "Parchment roll, unevenly trimmed at top and bottom, composed of three membranes segments glued together, the third an addition of the late fifteenth century."
-  ],
-  "orbisBibId": "9734851",
-  "subjectName": [
-    "Innocent VI, Pope, d. 1362"
-  ],
-  "collectionId": 1,
-  "orbisBarcode": "39002091597519",
-  "resourceType": "Archives or Manuscripts",
+  "repository": "Beinecke Library",
   "subjectTitle": "Indulgences--England--Early works to 1800",
-  "subjectTopic": [
+  "subjectTitleDisplay": [
     "Indulgences--England--Early works to 1800"
-  ],
-  "dependentUris": [
-    "/ladybird/oid/10269867"
-  ],
-  "itemPermission": "Public",
-  "publicationPlace": [
-    "England"
   ],
   "contributorDisplay": [
     "Innocent VI, Pope, d. 1362"
   ],
-  "identifierShelfMark": "Beinecke MS 410",
-  "subjectTitleDisplay": [
-    "Indulgences--England--Early works to 1800"
+  "dependentUris": [
+    "/ladybird/oid/10269867"
   ],
-  "extentOfDigitization": [
-    "Complete work digitized."
+  "oid": 10269867,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1003311",
+      "callNumber": "Beinecke MS 410",
+      "title": [
+        "Indulgence Scroll"
+      ],
+      "caption": "[Panel 1]",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1003311"
+      ],
+      "oid": 1003311,
+      "width": 3007,
+      "height": 10157,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1003312",
+      "callNumber": "Beinecke MS 410",
+      "title": [
+        "Indulgence Scroll"
+      ],
+      "caption": "[Panel 2]",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1003312"
+      ],
+      "oid": 1003312,
+      "width": 3007,
+      "height": 10157,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1003313",
+      "callNumber": "Beinecke MS 410",
+      "title": [
+        "Indulgence Scroll"
+      ],
+      "caption": "[Panel 3]",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1003313"
+      ],
+      "oid": 1003313,
+      "width": 3007,
+      "height": 8093,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/15512394",
+      "callNumber": "Beinecke MS 410",
+      "title": [
+        "Indulgence Scroll"
+      ],
+      "caption": "Recto Stitched",
+      "dependentUris": [
+        "/ladybird/oid/15512394"
+      ],
+      "oid": 15512394,
+      "width": 3070,
+      "height": 24502,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/15512395",
+      "callNumber": "Beinecke MS 410",
+      "title": [
+        "Indulgence Scroll"
+      ],
+      "caption": "Verso Panel 1",
+      "dependentUris": [
+        "/ladybird/oid/15512395"
+      ],
+      "oid": 15512395,
+      "width": 3080,
+      "height": 9948,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/15512396",
+      "callNumber": "Beinecke MS 410",
+      "title": [
+        "Indulgence Scroll"
+      ],
+      "caption": "Verso Panel 2",
+      "dependentUris": [
+        "/ladybird/oid/15512396"
+      ],
+      "oid": 15512396,
+      "width": 3080,
+      "height": 10302,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/15512397",
+      "callNumber": "Beinecke MS 410",
+      "title": [
+        "Indulgence Scroll"
+      ],
+      "caption": "Verso Panel 3",
+      "dependentUris": [
+        "/ladybird/oid/15512397"
+      ],
+      "oid": 15512397,
+      "width": 3080,
+      "height": 8359,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/15512398",
+      "callNumber": "Beinecke MS 410",
+      "title": [
+        "Indulgence Scroll"
+      ],
+      "caption": "Verso Stitched",
+      "dependentUris": [
+        "/ladybird/oid/15512398"
+      ],
+      "oid": 15512398,
+      "width": 3320,
+      "height": 24517,
+      "children": [
+
+      ]
+    }
+  ],
+  "abstract": [
+    "Manuscript on parchment roll, unevenly trimmed at top and bottom, composed of three membranes segments glued together, the third an addition of the late 15th century. Includes Prayers to be said for a pardon of 32,055 years; and Prayer based on the measurement of the length of the body of Christ. The texts are written on one side of a roll (dorse is blank)."
   ]
 }

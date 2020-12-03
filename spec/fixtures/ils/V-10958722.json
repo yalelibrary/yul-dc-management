@@ -1,12 +1,13 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002104686564?bib=9869346",
-  "identifierShelfMark": "801 Beinecke MS",
+  "callNumber": "Beinecke MS 801",
   "title": [
     "Texts on St. Jerome"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "Settimo near Florence"
   ],
   "publisher": [
@@ -22,6 +23,9 @@
     "paper and parchment ;"
   ],
   "language": [
+    "Italian"
+  ],
+  "languageCode": [
     "ita"
   ],
   "description": [
@@ -44,7 +48,7 @@
     "Manuscripts, Medieval Italy 15th century",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
-  "format": [
+  "itemType": [
     "unspecified"
   ],
   "orbisBibId": "9869346",
@@ -53,11 +57,11 @@
     "https://pre1600ms.beinecke.library.yale.edu/docs/MS801.pdf",
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=10962124"
   ],
-  "references": [
+  "preferredCitation": [
     "Texts on St. Jerome. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1457    "
+    "1457"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [
@@ -71,6 +75,9 @@
   ],
   "subjectTitleDisplay": [
     "Jerome, Saint, -419 or 420."
+  ],
+  "accessCondition": [
+    "Material is open for research"
   ],
   "dependentUris": [
     "/ils/holding/10167771",

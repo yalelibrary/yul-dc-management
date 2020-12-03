@@ -1,8 +1,30 @@
 {
-  "oid": 2034600,
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/2034600",
+  "callNumber": "JWJ A +Eb74",
+  "sourceTitle": "Ebony magazine",
+  "sourceCreated": "Chicago : Johnson Pub. Co",
+  "title": [
+    "[Magazine page with various photographs of Leontyne Price]"
+  ],
+  "extentOfDigitization": [
+    "Partial work digitized."
+  ],
   "date": [
     "1961 April"
+  ],
+  "extent": [
+    "1 p.",
+    "34 cm.",
+    "b&w illustration"
+  ],
+  "language": [
+    "English"
+  ],
+  "subjectName": [
+    "Price, Leontyne"
   ],
   "genre": [
     "Halftones",
@@ -11,80 +33,62 @@
     "Photographs",
     "Photomechanical prints"
   ],
-  "title": [
-    "[Magazine page with various photographs of Leontyne Price]"
-  ],
-  "extent": [
-    "1 p.",
-    "34 cm.",
-    "b&w illustration"
-  ],
   "format": [
     "mixed material"
+  ],
+  "itemType": [
+    "Books, Journals & Pamphlets"
   ],
   "partOf": "Beinecke Library",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "source": "ladybird",
-  "abstract": [
-    "Reproduced photographs accompanying article about Leontyne Price's visit to hometown of Laurel, Miss."
-  ],
-  "children": [
-    {
-      "oid": 1126257,
-      "uri": "/ladybird/oid/1126257",
-      "title": [
-        "[Magazine page with various photographs of Leontyne Price]"
-      ],
-      "width": 4143,
-      "height": 5420,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "p. 100",
-      "children": [
-
-      ],
-      "callNumber": "JWJ A +Eb74",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/1126257"
-      ]
-    }
-  ],
-  "language": [
-    "English"
-  ],
-  "callNumber": "JWJ A +Eb74",
   "orbisBibId": "752400",
-  "recordType": "oid",
-  "repository": "Beinecke Library",
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1961"
+  ],
   "contributor": [
     "Price, Leontyne"
   ],
-  "sourceTitle": "Ebony magazine",
-  "subjectName": [
-    "Price, Leontyne"
-  ],
-  "collectionId": 1,
-  "resourceType": "Books, Journals & Pamphlets",
-  "dependentUris": [
-    "/ladybird/oid/2034600"
-  ],
-  "sourceCreated": "Chicago : Johnson Pub. Co",
-  "dateStructured": [
-    "1961-04-00T00:00:00Z"
-  ],
-  "itemPermission": "Public",
+  "repository": "Beinecke Library",
   "subjectGeographic": [
     "Laurel (Miss.)"
   ],
   "contributorDisplay": [
     "Price, Leontyne"
   ],
-  "extentOfDigitization": [
-    "Partial work digitized."
+  "dependentUris": [
+    "/ladybird/oid/2034600"
+  ],
+  "oid": 2034600,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1126257",
+      "callNumber": "JWJ A +Eb74",
+      "title": [
+        "[Magazine page with various photographs of Leontyne Price]"
+      ],
+      "caption": "p. 100",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1126257"
+      ],
+      "oid": 1126257,
+      "width": 4143,
+      "height": 5420,
+      "children": [
+
+      ]
+    }
+  ],
+  "abstract": [
+    "Reproduced photographs accompanying article about Leontyne Price's visit to hometown of Laurel, Miss."
   ]
 }

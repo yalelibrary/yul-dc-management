@@ -1,50 +1,37 @@
 {
+  "jsonModelType": "BibSolrRecord",
+  "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/bib/752400",
-  "date": [
-    ""
-  ],
-  "bibId": 752400,
-  "genre": [
-    "Periodicals"
-  ],
   "title": [
     "Ebony"
   ],
-  "extent": [
-    "v. : 35 cm"
+  "alternativeTitle": [
+    "Ebony",
+    "Ebony",
+    "Ebony magazine"
   ],
-  "itemId": 0,
-  "source": "ils",
-  "children": [
-
-  ],
-  "language": [
-    "eng"
-  ],
-  "material": [
-    "ill., ports. ;"
-  ],
-  "holdingId": 0,
-  "indexedBy": [
-    "Magazine index 1959-",
-    "Popular magazine review 0740-3763 1984-",
-    "Film literature index 0093-6758",
-    "Biography index",
-    "Readers' guide to periodical literature 0034-0464",
-    "Infobank Jan. 1969-",
-    "Media review digest 0363-7778",
-    "Abridged readers' guide to periodical literature 0001-334X"
+  "creationPlace": [
+    "Chicago"
   ],
   "publisher": [
     "Johnson Pub. Co."
   ],
-  "createDate": "2002-06-01T04:00:00.000+0000",
-  "findingAid": [
-    "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=JWJ_A_+Eb74"
+  "date": [
+    ""
   ],
-  "orbisBibId": "752400",
-  "recordType": "bib",
-  "updateDate": "2020-02-27T14:43:04.000+0000",
+  "extent": [
+    "v. : 35 cm"
+  ],
+  "material": [
+    "ill., ports. ;"
+  ],
+  "language": [
+    "English"
+  ],
+  "languageCode": [
+    "eng"
+  ],
   "description": [
     "Publisher varies.",
     "BEIN JWJ A +Eb74: Presentation inscription: Eunice W. Johnson. Autograph: John H. Johnson: 1:3 (copies 1 and 2).",
@@ -57,29 +44,46 @@
   "subjectTopic": [
     "African Americans"
   ],
-  "dependentUris": [
-    "/ils/bib/752400"
+  "subjectGeographicCode": "n-us---",
+  "genre": [
+    "Periodicals"
+  ],
+  "orbisBibId": "752400",
+  "findingAid": [
+    "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=JWJ_A_+Eb74"
   ],
   "dateStructured": [
-    "19459999"
+    "1945"
   ],
-  "suppressInOpac": false,
+  "illustrativeMatter": "mr p",
   "titleStatement": [
     "Ebony"
   ],
-  "alternativeTitle": [
-    "Ebony",
-    "Ebony",
-    "Ebony magazine"
-  ],
-  "publicationPlace": [
-    "Chicago"
-  ],
-  "illustrativeMatter": "mr p",
   "provenanceControlled": "Van Vechten, Carl, 1880-1964 Bookplate. Van Vechten, Carl, 1880-1964 Ownership. Johnson, John H. (John Harold), 1918- Autograph. Johnson, Eunice Walker Autograph. Johnson, Grace Nail, 1885-1976 Presentation inscription to Yale University Library.",
-  "subjectGeographicCode": "n-us---",
+  "indexedBy": [
+    "Magazine index 1959-",
+    "Popular magazine review 0740-3763 1984-",
+    "Film literature index 0093-6758",
+    "Biography index",
+    "Readers' guide to periodical literature 0034-0464",
+    "Infobank Jan. 1969-",
+    "Media review digest 0363-7778",
+    "Abridged readers' guide to periodical literature 0001-334X"
+  ],
   "alternativeTitleDisplay": [
     "Ebony magazine"
   ],
-  "libraryOfCongressClassificationNumber": "AP2 .E165"
+  "libraryOfCongressClassificationNumber": "AP2 .E165",
+  "dependentUris": [
+    "/ils/bib/752400"
+  ],
+  "bibId": 752400,
+  "suppressInOpac": false,
+  "createDate": "2002-06-01T04:00:00.000+0000",
+  "updateDate": "2020-02-27T14:43:04.000+0000",
+  "holdingId": 0,
+  "itemId": 0,
+  "children": [
+
+  ]
 }

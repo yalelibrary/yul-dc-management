@@ -1,117 +1,121 @@
 {
-  "oid": 2012143,
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/2012143",
-  "date": [
-    "[s.a.]"
-  ],
-  "genre": [
-    "Handscrolls"
-  ],
+  "callNumber": "Ethiopic MSS 28",
   "title": [
     "Ethiopic ms. scroll"
+  ],
+  "extentOfDigitization": [
+    "Complete work digitized."
+  ],
+  "creationPlace": [
+    "[Ethiopia]"
+  ],
+  "date": [
+    "[s.a.]"
   ],
   "extent": [
     "1 scroll; 2 l.",
     "10.4 x 156.5 cm."
   ],
+  "description": [
+    "Leaves are sewn vertically, end to end."
+  ],
+  "genre": [
+    "Handscrolls"
+  ],
   "format": [
     "text"
+  ],
+  "itemType": [
+    "Archives or Manuscripts"
   ],
   "partOf": "Beinecke Library",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "source": "ladybird",
-  "children": [
-    {
-      "oid": 1052971,
-      "uri": "/ladybird/oid/1052971",
-      "width": 1945,
-      "height": 7342,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/1052971"
-      ]
-    },
-    {
-      "oid": 1052972,
-      "uri": "/ladybird/oid/1052972",
-      "width": 1966,
-      "height": 7458,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/1052972"
-      ]
-    },
-    {
-      "oid": 1052973,
-      "uri": "/ladybird/oid/1052973",
-      "width": 1985,
-      "height": 7493,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/1052973"
-      ]
-    },
-    {
-      "oid": 1052974,
-      "uri": "/ladybird/oid/1052974",
-      "width": 2061,
-      "height": 7098,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/1052974"
-      ]
-    }
-  ],
-  "contents": [
-    "Leaves are sewn vertically, end to end."
-  ],
-  "recordType": "oid",
-  "repository": "Beinecke Library",
-  "description": [
-    "Leaves are sewn vertically, end to end."
-  ],
   "orbisBibId": "13888969",
-  "collectionId": 1,
-  "resourceType": "Archives or Manuscripts",
+  "itemPermission": "Public",
+  "repository": "Beinecke Library",
   "dependentUris": [
     "/ladybird/oid/2012143"
   ],
-  "itemPermission": "Public",
-  "publicationPlace": [
-    "[Ethiopia]"
-  ],
-  "identifierShelfMark": "Ethiopic MSS 28",
-  "extentOfDigitization": [
-    "Complete work digitized."
+  "oid": 2012143,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1052971",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1052971"
+      ],
+      "oid": 1052971,
+      "width": 1945,
+      "height": 7342,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1052972",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1052972"
+      ],
+      "oid": 1052972,
+      "width": 1966,
+      "height": 7458,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1052973",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1052973"
+      ],
+      "oid": 1052973,
+      "width": 1985,
+      "height": 7493,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1052974",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1052974"
+      ],
+      "oid": 1052974,
+      "width": 2061,
+      "height": 7098,
+      "children": [
+
+      ]
+    }
   ]
 }

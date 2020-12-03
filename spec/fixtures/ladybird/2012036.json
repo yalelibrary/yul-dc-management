@@ -1,190 +1,193 @@
 {
-  "box": "4",
-  "oid": 2012036,
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/2012036",
-  "date": [
-    "n.d."
-  ],
-  "genre": [
-    "Artifacts"
-  ],
+  "callNumber": "YCAL MSS 202",
+  "containerGrouping": "Box 4 | Folder 201",
+  "box": "4",
+  "folder": "201",
+  "sourceCreator": "Whitman, Walt, 1819-1892",
+  "sourceTitle": "Walt Whitman collection",
+  "sourceDate": "1842-1949",
+  "sourceNote": "Series V. Adrian Van Sinderen Gift. OTHER PAPERS",
   "title": [
     "[Gold?] coin"
+  ],
+  "date": [
+    "n.d."
   ],
   "extent": [
     "1 coin",
     "2 cm."
   ],
-  "folder": "201",
+  "language": [
+    "English"
+  ],
+  "description": [
+    "Inscribed: Walt Whitman to Mary Davis Xmas 1891."
+  ],
+  "subjectName": [
+    "Whitman, Walt, 1819-1892"
+  ],
+  "subjectTopic": [
+    "American literature --19th century",
+    "Authors, American --19th century --Archives"
+  ],
+  "genre": [
+    "Artifacts"
+  ],
   "format": [
     "three dimensional object"
+  ],
+  "itemType": [
+    "Archives or Manuscripts"
   ],
   "partOf": "Beinecke Library",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "source": "ladybird",
-  "digital": "Walt Whitman Collection",
-  "children": [
-    {
-      "oid": 1052760,
-      "uri": "/ladybird/oid/1052760",
-      "title": [
-        "[Gold?] coin"
-      ],
-      "width": 2411,
-      "height": 2135,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/1052760"
-      ],
-      "identifierShelfMark": "YCAL MSS 202"
-    },
-    {
-      "oid": 1052761,
-      "uri": "/ladybird/oid/1052761",
-      "title": [
-        "[Gold?] coin"
-      ],
-      "width": 2435,
-      "height": 2129,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/1052761"
-      ],
-      "identifierShelfMark": "YCAL MSS 202"
-    },
-    {
-      "oid": 1052762,
-      "uri": "/ladybird/oid/1052762",
-      "title": [
-        "[Gold?] coin"
-      ],
-      "width": 1536,
-      "height": 532,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/1052762"
-      ],
-      "identifierShelfMark": "YCAL MSS 202"
-    },
-    {
-      "oid": 1052763,
-      "uri": "/ladybird/oid/1052763",
-      "title": [
-        "[Gold?] coin"
-      ],
-      "width": 1536,
-      "height": 664,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/1052763"
-      ],
-      "identifierShelfMark": "YCAL MSS 202"
-    },
-    {
-      "oid": 1052764,
-      "uri": "/ladybird/oid/1052764",
-      "title": [
-        "[Gold?] coin"
-      ],
-      "width": 1536,
-      "height": 520,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/1052764"
-      ],
-      "identifierShelfMark": "YCAL MSS 202"
-    }
-  ],
-  "contents": [
-    "Inscribed: Walt Whitman to Mary Davis Xmas 1891."
-  ],
-  "language": [
-    "English"
-  ],
-  "indexedBy": [
-    "Walt Whitman Collection. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library.\n\n"
-  ],
+  "orbisBibId": "6805375",
+  "orbisBarcode": "39002091459793",
   "findingAid": [
     "http://hdl.handle.net/10079/fa/beinecke.whitman"
   ],
-  "recordType": "oid",
-  "references": [
+  "preferredCitation": [
     "Walt Whitman Collection. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library.\n\n"
   ],
-  "repository": "Beinecke Library",
-  "sourceDate": "1842-1949",
-  "sourceNote": "Series V. Adrian Van Sinderen Gift. OTHER PAPERS",
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1891"
+  ],
   "subjectEra": "Authors, American --19th century --Archives",
   "contributor": [
     "Whitman, Walt, 1819-1892"
   ],
-  "description": [
-    "Inscribed: Walt Whitman to Mary Davis Xmas 1891."
-  ],
-  "orbisBibId": "6805375",
-  "sourceTitle": "Walt Whitman collection",
-  "subjectName": [
-    "Whitman, Walt, 1819-1892"
-  ],
-  "collectionId": 1,
-  "orbisBarcode": "39002091459793",
-  "resourceType": "Archives or Manuscripts",
+  "repository": "Beinecke Library",
   "subjectTitle": "Authors, American --19th century --Archives",
-  "subjectTopic": [
-    "American literature --19th century",
-    "Authors, American --19th century --Archives"
-  ],
-  "dependentUris": [
-    "/ladybird/oid/2012036"
-  ],
-  "dateStructured": [
-    "1891-00-00T00:00:00Z"
-  ],
-  "itemPermission": "Public",
-  "archiveSpaceUri": "/repositories/11/archival_objects/555049",
-  "contributorDisplay": [
-    "Whitman, Walt, 1819-1892"
-  ],
-  "identifierShelfMark": "YCAL MSS 202",
   "subjectTitleDisplay": [
     "American literature --19th century",
     "Authors, American --19th century --Archives"
+  ],
+  "contributorDisplay": [
+    "Whitman, Walt, 1819-1892"
+  ],
+  "archiveSpaceUri": "/repositories/11/archival_objects/555049",
+  "dependentUris": [
+    "/ladybird/oid/2012036"
+  ],
+  "oid": 2012036,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1052760",
+      "callNumber": "YCAL MSS 202",
+      "title": [
+        "[Gold?] coin"
+      ],
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1052760"
+      ],
+      "oid": 1052760,
+      "width": 2411,
+      "height": 2135,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1052761",
+      "callNumber": "YCAL MSS 202",
+      "title": [
+        "[Gold?] coin"
+      ],
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1052761"
+      ],
+      "oid": 1052761,
+      "width": 2435,
+      "height": 2129,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1052762",
+      "callNumber": "YCAL MSS 202",
+      "title": [
+        "[Gold?] coin"
+      ],
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1052762"
+      ],
+      "oid": 1052762,
+      "width": 1536,
+      "height": 532,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1052763",
+      "callNumber": "YCAL MSS 202",
+      "title": [
+        "[Gold?] coin"
+      ],
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1052763"
+      ],
+      "oid": 1052763,
+      "width": 1536,
+      "height": 664,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1052764",
+      "callNumber": "YCAL MSS 202",
+      "title": [
+        "[Gold?] coin"
+      ],
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1052764"
+      ],
+      "oid": 1052764,
+      "width": 1536,
+      "height": 520,
+      "children": [
+
+      ]
+    }
   ]
 }

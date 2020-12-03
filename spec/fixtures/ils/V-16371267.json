@@ -1,11 +1,12 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/bib/13006050",
   "title": [
     "Livre du Lancelot du Lac: three miniatures"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "Paris"
   ],
   "publisher": [
@@ -21,6 +22,9 @@
     "parchment ;"
   ],
   "language": [
+    "French, Middle (ca. 1300-1600)"
+  ],
+  "languageCode": [
     "frm"
   ],
   "description": [
@@ -40,18 +44,18 @@
     "Early works to 1800",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
-  "format": [
+  "itemType": [
     "unspecified"
   ],
   "orbisBibId": "13006050",
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16394251"
   ],
-  "references": [
+  "preferredCitation": [
     "Livre du Lancelot du Lac: three miniatures (Takamiya MS 99). General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1440    "
+    "1440"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [
@@ -67,6 +71,9 @@
   ],
   "subjectTitleDisplay": [
     "Lancelot (Legendary character)"
+  ],
+  "accessCondition": [
+    "This material is open for research"
   ],
   "dependentUris": [
     "/ils/bib/13006050"

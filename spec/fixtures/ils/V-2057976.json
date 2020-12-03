@@ -1,8 +1,9 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002094210060?bib=7039963",
-  "identifierShelfMark": "7 Osborn Music MS",
+  "callNumber": "Osborn Music MS 7",
   "title": [
     "\"Vaudevilles et chansons\", [18th Century]."
   ],
@@ -10,6 +11,9 @@
     "1 v. (ca. 300 p.) ; 25 x 18 cm."
   ],
   "language": [
+    "French"
+  ],
+  "languageCode": [
     "fre"
   ],
   "description": [
@@ -21,11 +25,11 @@
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=1262704"
   ],
-  "references": [
+  "preferredCitation": [
     "Vaudevilles et Chansons. James Marshall and Marie-Louise Osborn Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "17uu    "
+    "1750"
   ],
   "illustrativeMatter": "uuu ",
   "titleStatement": [

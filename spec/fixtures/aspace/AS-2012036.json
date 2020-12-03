@@ -1,12 +1,13 @@
 {
-  "recordType": "archival_object",
+  "jsonModelType": "ArchiveSpaceSolrRecord",
   "source": "aspace",
+  "recordType": "archival_object",
   "uri": "/aspace/repositories/11/archival_objects/555049",
   "identifier": "/aspace/repositories/11/archival_objects/555049",
   "localRecordNumber": "YCAL MSS 202",
-  "containerGrouping": "4, folder 201",
+  "containerGrouping": "Box 4, reel 202, frame 22",
   "creator": [
-    "Unauthorized"
+    "Whitman, Walt, 1819-1892"
   ],
   "title": [
     "[Gold?] coin"
@@ -18,17 +19,25 @@
     "11.65 linear_feet",
     "3.13 linear_feet"
   ],
+  "language": [
+    "eng",
+    "English"
+  ],
+  "languageCode": [
+    "eng"
+  ],
   "description": [
-    "This collection contains accessions of single manuscripts and small groups of manuscripts and other papers, by or related to Walt Whitman, acquired by the library from a variety of sources. The collection contains letters, manuscripts, photographs, and personal papers, and spans the years 1842-1949. \n\nThe collection is housed in 17 boxes and organized by provenance into six series: Owen Franklin Aldis Gift, Walter Gierasch Gift, Mrs. Bernard Gimbel Gift, Louis Mayer Rabinowitz Gift, Adrian Van Sinderen Gift, and Material from Other Sources. Boxes 12-15 contain Oversize material. Boxes 16-17 contain Restricted Fragile material. \n\nSeries I, Owen Franklin Aldis Gift , is organized into two subseries: Letters from Walt Whitman and Writings of Walt Whitman. \n\nThe correspondence includes brief letters to Anne Botta, Whitman biographer Richard Maurice Bucke, and naturalist John Burroughs. There are two letters to Thomas Nicholson, one describing Whitman's experience in Canada in the summer of 1880, and six letters to James R. Osgood and Company dating from mid-late 1881, concerning an edition of Leaves of Grass. Letters deal with copyright, presswork, and other issues related to the production of the book. The Writings of Walt Whitman includes a holograph manuscript of \"Two Rivulets\" and a corrected galley for the poem \"Thou Who Hast Slept...\" \n\nSeries II, Walter Gierasch Gifts , is also organized into two subseries: Correspondence and Writings. \n\nThe correspondence consists of one typescript extract of a letter from Whitman to William Sloane Kennedy and several third-party letters, dating from 1902-1908, to Whitman scholar and biographer George R. Carpenter. There are letters from Charles Bastide, Thomas Wentworth Higginson, Curtis Hidden Page, Fred Scott Newton, and others. The Writings subseries includes an extract of Whitman's Notes and Fragments. \n\nSeries III, Mrs. Bernard Gimbel Gift , is organized into three small subseries: Letters from Walt Whitman, Photographs, and Other Papers. \n\nThere are four letters from Whitman, one each to E. S. Marsh and John Swinton, and two to unidentified individuals. There are three photographs of Whitman, several printed reproductions of photographs, and a colored version of the Samuel Hollyer engraving that served as the frontispiece in the first edition (1855) of Leaves of Grass. \n\nSeries IV, Louis Mayer Rabinowitz Gift , is organized into three subseries: Correspondence, Writings of Walt Whitman, and Other Papers. \n\nThe correspondence is subdivided for Letters to Whitman and Other Correspondence. Letters to Whitman consists of 14 letters from Civil War soldiers and former patients dating from 1865-1870. Most letters are brief, \"a few lines,\" written to inform Whitman of the correspondent's health and whereabouts. Some mention Whitman's work and mutual friends, express interest in meeting, and seek favors, including help in obtaining work. Other Correspondence consists of third-party correspondence, with one letter, from H. F. to Elmira Crossman, in Whitman's hand. \n\nThe Writings subseries includes several galley proofs for individual articles and poems, some inscribed and signed by Whitman, as well as an untitled holograph manuscript on writing, a holograph note titled \"Incidents for Soldiers in the Ranks,\" and holograph fragments of November Boughs. \n\nOther Papers contains two groups of papers, one concerning Whitman's brother George and one concerning New York Civil War regiments. The papers relating to George Whitman, dating from 1864-65, include journal entries and letters documenting Whitman's efforts to determine the health and location of his brother during the war. Whitman's journal entries provide a rough history of his brother's movements. There is an undated memo from George Whitman, enclosed with a \"Feb. 19th, 1865\" letter from Captain William Cook to Louisa Whitman, in which he reveals his captivity in Virginia and reassures his family that he is \"in tip top health and spirits.\" Whitman's first journal entry, dated December 26, 1864, describes the family's experience after receiving George's army trunk, which appears to have been shipped home after George went missing or was taken prisoner. Whitman writes, \"It stood some hours before we felt inclined to open it.\" The papers concerning New York Civil War regiments include newspaper clippings, holograph notes, and two notebooks on the 51st New York Veterans. \n\nSeries V, Adrian Van Sinderen Gift , housed in boxes 2-9, is organized into five series: Correspondence, Writings, Photographs, Artwork and Objects, and Other Papers. \n\nCorrespondence, housed in box 2, is organized into subdivisions for Letters from Walt Whitman, Letters to Walt Whitman, and Third-party Letters. There is correspondence from Whitman to John Burroughs, Julius Chambers, Moncure Conway, Boston editor Nathan Hale, William Sloane Kennedy, William Michael Rossetti, John Swinton, his mother Louisa Van Velsor Whitman, and others. There are brief letters to editors and individuals regarding manuscripts and books, including a translation of Leaves of Grass into Russian. The two largest groups of letters, to John Burroughs and Louisa Van Velsor Whitman, are personal in nature. There are incoming letters from family members, Richard Maurice Bucke, and a number of journalists and writers, including Samuel Clemens, John Camden Hotten, William Douglas O'Connor, Allen Thorndike Rice, and Algernon Swinburne. Third-party Correspondence includes letters from Edward Dowden, H. Buxton Forman, Edmund Clarence Stedman, Horace Traubel, and John Townsend Trowbridge. \n\nThe Writings subseries, housed in box 3, consists chiefly of work by Whitman. There are articles and essays, autobiographical writings, a diary fragment, lectures and speeches, notes and notebooks, outlines and proposals, and poetry. Writings are present in manuscript, corrected galley proofs, and printed versions. In addition, there are proofs of two Robert Green Ingersoll pieces on Whitman. \n\nThe Van Sinderen Gift includes small subseries, housed in box 4, for Photographs, Artwork and Objects, and Other Papers. The Photographs subseries consists chiefly of studio portraits of Whitman dating from the 1870-80s; many photographs are signed. There are numerous artistic representations of Whitman, including woodcuts by Gustav Kruell and Bertrand Zadig, engravings by Samuel Hollyer, an oil painting by George W. Waters, and a bust by Samuel Murray. There are also etchings, lithographs, and medallions. The Other Papers subseries includes, among other miscellaneous items, Whitman's last pair of eyeglasses. \n\n There are 57 cases accompanying the Van Sinderen manuscript material. Manuscripts and letters were removed and the cases stored separately in boxes 5-9. \n\nSeries VI, Material from Other Sources , housed in boxes 10-11, consists of single and small gifts and purchases from various sources. Provenance is documented when known on individual folders. The series is organized into five subseries: Correspondence, Writings, Photographs, Artwork, and Other Papers. \n\nThe Correspondence subseries is organized into three subvidisions: Letters from Walt Whitman, Letters to Walt Whitman, and Third-Party Correspondence. There are letters from Whitman to George Routledge, William James Linton, and others. Whitman's letters are of a business nature. His letter to Routledge, for example, confirms an agreement for \"$50 in gold\" for use of an unnamed poem. Other correspondents include Karl Knortz. \n\nWritings includes work by Whitman and others. There are holograph manuscripts for a poem, \"Sea-Captains, Young or Old,\" and an untitled autobiographical statement. The autobiographical statement, written in 1888, discusses Whitman's service to the wounded in Maryland and Virginia during the Civil War from 1862 to 1865. There are several galley proofs for other Whitman poems and for Louis Untermeyer's The Poetry and Prose of Walt Whitman. \n\nThe Photographs and Artwork subseries contain the work of well-known 19th century photographers and artists. There are photographs of Whitman by Thomas Eakins and sculptor Samuel Murray, and both original engravings and reproductions of work by Samuel Hollyer, Gustav Kruell, William James Linton, and Stephen Alonzo Schoff. \n\nOversize  material, housed in boxes 12-15, contains items from Series IV-VI. Restricted Fragile material is housed in boxes 16-17.",
-    "Gift of Adrian Van Sinderen, 1940",
     "Includes inscription \"Walt Whitman to Mary Davis. Xmas 1891\""
   ],
   "rights": [
     "The Walt Whitman Collection is the physical property of the Beinecke Rare Book and Manuscript Library, Yale University. Literary rights, including copyright, belong to the authors or their legal heirs and assigns. For further information, consult the appropriate curator.",
-    "This collection is open for research. \n\nBoxes 16-17: ‡a Restricted fragile material.  Reference surrogates have been substituted in the main files.  For further information consult the appropriate curator."
+    "The materials are open for research. \n\nBoxes 16-18: Restricted fragile material.  Reference surrogates have been substituted in the main files.  For further information consult the appropriate curator."
   ],
   "orbisBibId": "6805375",
   "orbisBarcode": "39002091459793",
+  "dateStructured": [
+
+  ],
   "resourceType": "mixed_materials",
   "provenanceUncontrolled": "The Walt Whitman Collection was acquired through various gifts and purchases dating from 1911.",
   "ancestorTitles": [
@@ -49,12 +58,12 @@
   ],
   "archiveSpaceUri": "/repositories/11/archival_objects/555049",
   "dependentUris": [
+    "/aspace/repositories/11/top_containers/68645",
     "/aspace/repositories/11/archival_objects/555049",
+    "/aspace/agents/people/79383",
     "/aspace/repositories/11/archival_objects/555042",
     "/aspace/repositories/11/archival_objects/554841",
-    "/aspace/repositories/11/resources/1453",
-    "/aspace/agents/people/15099",
-    "/aspace/repositories/11/top_containers/68645"
+    "/aspace/repositories/11/resources/1453"
   ],
   "children": [
 

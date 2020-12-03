@@ -1,12 +1,13 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002099391428?bib=13226126",
-  "identifierShelfMark": "suppl. 584 Arabic MSS",
+  "callNumber": "Arabic MSS suppl. 584",
   "title": [
     "Islamic prayers, invocations and decorations : manuscript"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "Place not identified"
   ],
   "publisher": [
@@ -19,6 +20,10 @@
     "1 volume (72 leaves) ; 19 cm"
   ],
   "language": [
+    "Arabic",
+    "Turkish, Ottoman"
+  ],
+  "languageCode": [
     "ara",
     "ara",
     "ota"
@@ -44,7 +49,7 @@
     "Early works to 1800",
     "Arabic manuscripts"
   ],
-  "format": [
+  "itemType": [
     "text"
   ],
   "orbisBibId": "13226126",
@@ -52,11 +57,11 @@
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=Arabic_MSS_suppl._584"
   ],
-  "references": [
+  "preferredCitation": [
     "Islamic prayers, invocations and decorations. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "17uu    "
+    "1750"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [

@@ -1,2793 +1,29 @@
 {
-  "oid": 16156712,
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/16156712",
-  "date": [
-    "[ca. 1450]"
-  ],
-  "genre": [
-    "Manuscripts, Medieval--England--15th century."
-  ],
+  "callNumber": "Takamiya MS 97",
   "title": [
     "Mirour of mans salvacioune."
+  ],
+  "alternativeTitle": [
+    "Speculum humanae salvationis. English, Middle (ca. 1100-1500)"
+  ],
+  "extentOfDigitization": [
+    "Complete work digitized."
+  ],
+  "creationPlace": [
+    "[England],"
+  ],
+  "date": [
+    "[ca. 1450]"
   ],
   "extent": [
     "64 l. : paper ; 284 x 210 mm."
   ],
-  "format": [
-    "text"
-  ],
-  "partOf": "Beinecke Library",
-  "rights": [
-    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-  ],
-  "source": "ladybird",
-  "abstract": [
-    "Manuscript, on paper, in a single hand, of the English verse translation of this work of popular theology and devotional meditation."
-  ],
-  "children": [
-    {
-      "oid": 16157343,
-      "uri": "/ladybird/oid/16157343",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3598,
-      "height": 4721,
-      "source": "ladybird",
-      "caption": "[Front cover]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157343"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157344,
-      "uri": "/ladybird/oid/16157344",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4725,
-      "source": "ladybird",
-      "caption": "[Front pastedown]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157344"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157345,
-      "uri": "/ladybird/oid/16157345",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3475,
-      "height": 4652,
-      "source": "ladybird",
-      "caption": "[Front free endpaper recto]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157345"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157346,
-      "uri": "/ladybird/oid/16157346",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4725,
-      "source": "ladybird",
-      "caption": "[Front free endpaper verso]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157346"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157347,
-      "uri": "/ladybird/oid/16157347",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3479,
-      "height": 4651,
-      "source": "ladybird",
-      "caption": "[ii]r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157347"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157348,
-      "uri": "/ladybird/oid/16157348",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4725,
-      "source": "ladybird",
-      "caption": "[ii]v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157348"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157349,
-      "uri": "/ladybird/oid/16157349",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3536,
-      "height": 4670,
-      "source": "ladybird",
-      "caption": "1r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157349"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157350,
-      "uri": "/ladybird/oid/16157350",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4725,
-      "source": "ladybird",
-      "caption": "1v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157350"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157351,
-      "uri": "/ladybird/oid/16157351",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3536,
-      "height": 4670,
-      "source": "ladybird",
-      "caption": "2r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157351"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157352,
-      "uri": "/ladybird/oid/16157352",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4725,
-      "source": "ladybird",
-      "caption": "2v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157352"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157353,
-      "uri": "/ladybird/oid/16157353",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3536,
-      "height": 4670,
-      "source": "ladybird",
-      "caption": "3r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157353"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157354,
-      "uri": "/ladybird/oid/16157354",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4725,
-      "source": "ladybird",
-      "caption": "3v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157354"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157355,
-      "uri": "/ladybird/oid/16157355",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3536,
-      "height": 4670,
-      "source": "ladybird",
-      "caption": "4r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157355"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157356,
-      "uri": "/ladybird/oid/16157356",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4725,
-      "source": "ladybird",
-      "caption": "4v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157356"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157357,
-      "uri": "/ladybird/oid/16157357",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3536,
-      "height": 4670,
-      "source": "ladybird",
-      "caption": "5r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157357"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157358,
-      "uri": "/ladybird/oid/16157358",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4725,
-      "source": "ladybird",
-      "caption": "5v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157358"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157359,
-      "uri": "/ladybird/oid/16157359",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "6r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157359"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157360,
-      "uri": "/ladybird/oid/16157360",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4725,
-      "source": "ladybird",
-      "caption": "6v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157360"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157361,
-      "uri": "/ladybird/oid/16157361",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4702,
-      "source": "ladybird",
-      "caption": "7r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157361"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157362,
-      "uri": "/ladybird/oid/16157362",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4731,
-      "source": "ladybird",
-      "caption": "7v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157362"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157363,
-      "uri": "/ladybird/oid/16157363",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "8r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157363"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157364,
-      "uri": "/ladybird/oid/16157364",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4711,
-      "source": "ladybird",
-      "caption": "8v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157364"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157365,
-      "uri": "/ladybird/oid/16157365",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "9r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157365"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157366,
-      "uri": "/ladybird/oid/16157366",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4714,
-      "source": "ladybird",
-      "caption": "9v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157366"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157367,
-      "uri": "/ladybird/oid/16157367",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "10r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157367"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157368,
-      "uri": "/ladybird/oid/16157368",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4699,
-      "source": "ladybird",
-      "caption": "10v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157368"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157369,
-      "uri": "/ladybird/oid/16157369",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "11r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157369"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157370,
-      "uri": "/ladybird/oid/16157370",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4708,
-      "source": "ladybird",
-      "caption": "11v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157370"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157371,
-      "uri": "/ladybird/oid/16157371",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "12r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157371"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157372,
-      "uri": "/ladybird/oid/16157372",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4714,
-      "source": "ladybird",
-      "caption": "12v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157372"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157373,
-      "uri": "/ladybird/oid/16157373",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "13r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157373"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157374,
-      "uri": "/ladybird/oid/16157374",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4708,
-      "source": "ladybird",
-      "caption": "13v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157374"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157375,
-      "uri": "/ladybird/oid/16157375",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "14r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157375"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157376,
-      "uri": "/ladybird/oid/16157376",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4713,
-      "source": "ladybird",
-      "caption": "14v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157376"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157377,
-      "uri": "/ladybird/oid/16157377",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "15r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157377"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157378,
-      "uri": "/ladybird/oid/16157378",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4698,
-      "source": "ladybird",
-      "caption": "15v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157378"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157379,
-      "uri": "/ladybird/oid/16157379",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "16r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157379"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157380,
-      "uri": "/ladybird/oid/16157380",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4697,
-      "source": "ladybird",
-      "caption": "16v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157380"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157381,
-      "uri": "/ladybird/oid/16157381",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "17r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157381"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157382,
-      "uri": "/ladybird/oid/16157382",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4697,
-      "source": "ladybird",
-      "caption": "17v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157382"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157383,
-      "uri": "/ladybird/oid/16157383",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "18r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157383"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157384,
-      "uri": "/ladybird/oid/16157384",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4666,
-      "source": "ladybird",
-      "caption": "18v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157384"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157385,
-      "uri": "/ladybird/oid/16157385",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "19r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157385"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157386,
-      "uri": "/ladybird/oid/16157386",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4667,
-      "source": "ladybird",
-      "caption": "19v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157386"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157387,
-      "uri": "/ladybird/oid/16157387",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "20r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157387"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157388,
-      "uri": "/ladybird/oid/16157388",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4672,
-      "source": "ladybird",
-      "caption": "20v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157388"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157389,
-      "uri": "/ladybird/oid/16157389",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "21r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157389"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157390,
-      "uri": "/ladybird/oid/16157390",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4681,
-      "source": "ladybird",
-      "caption": "21v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157390"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157391,
-      "uri": "/ladybird/oid/16157391",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "22r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157391"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157392,
-      "uri": "/ladybird/oid/16157392",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4681,
-      "source": "ladybird",
-      "caption": "22v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157392"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157393,
-      "uri": "/ladybird/oid/16157393",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "23r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157393"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157394,
-      "uri": "/ladybird/oid/16157394",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4697,
-      "source": "ladybird",
-      "caption": "23v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157394"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157395,
-      "uri": "/ladybird/oid/16157395",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "24r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157395"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157396,
-      "uri": "/ladybird/oid/16157396",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4672,
-      "source": "ladybird",
-      "caption": "24v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157396"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157397,
-      "uri": "/ladybird/oid/16157397",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "26r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157397"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157398,
-      "uri": "/ladybird/oid/16157398",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4670,
-      "source": "ladybird",
-      "caption": "26v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157398"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157399,
-      "uri": "/ladybird/oid/16157399",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "27r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157399"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157400,
-      "uri": "/ladybird/oid/16157400",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4676,
-      "source": "ladybird",
-      "caption": "27v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157400"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157401,
-      "uri": "/ladybird/oid/16157401",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "28r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157401"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157402,
-      "uri": "/ladybird/oid/16157402",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4682,
-      "source": "ladybird",
-      "caption": "28v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157402"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157403,
-      "uri": "/ladybird/oid/16157403",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "29r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157403"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157404,
-      "uri": "/ladybird/oid/16157404",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4670,
-      "source": "ladybird",
-      "caption": "29v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157404"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157405,
-      "uri": "/ladybird/oid/16157405",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "30r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157405"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157406,
-      "uri": "/ladybird/oid/16157406",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4697,
-      "source": "ladybird",
-      "caption": "30v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157406"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157407,
-      "uri": "/ladybird/oid/16157407",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "31r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157407"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157408,
-      "uri": "/ladybird/oid/16157408",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4685,
-      "source": "ladybird",
-      "caption": "31v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157408"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157409,
-      "uri": "/ladybird/oid/16157409",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "32r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157409"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157410,
-      "uri": "/ladybird/oid/16157410",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4670,
-      "source": "ladybird",
-      "caption": "32v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157410"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157411,
-      "uri": "/ladybird/oid/16157411",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3553,
-      "height": 4695,
-      "source": "ladybird",
-      "caption": "33r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157411"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157412,
-      "uri": "/ladybird/oid/16157412",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4679,
-      "source": "ladybird",
-      "caption": "33v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157412"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157413,
-      "uri": "/ladybird/oid/16157413",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "34r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157413"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157414,
-      "uri": "/ladybird/oid/16157414",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4697,
-      "source": "ladybird",
-      "caption": "34v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157414"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157415,
-      "uri": "/ladybird/oid/16157415",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "35r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157415"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157416,
-      "uri": "/ladybird/oid/16157416",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3674,
-      "height": 4697,
-      "source": "ladybird",
-      "caption": "35v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157416"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157417,
-      "uri": "/ladybird/oid/16157417",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "36r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157417"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157418,
-      "uri": "/ladybird/oid/16157418",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3674,
-      "height": 4697,
-      "source": "ladybird",
-      "caption": "36v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157418"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157419,
-      "uri": "/ladybird/oid/16157419",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "37r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157419"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157420,
-      "uri": "/ladybird/oid/16157420",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3674,
-      "height": 4697,
-      "source": "ladybird",
-      "caption": "37v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157420"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157421,
-      "uri": "/ladybird/oid/16157421",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "38r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157421"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157422,
-      "uri": "/ladybird/oid/16157422",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3674,
-      "height": 4697,
-      "source": "ladybird",
-      "caption": "38v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157422"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157423,
-      "uri": "/ladybird/oid/16157423",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "39r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157423"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157424,
-      "uri": "/ladybird/oid/16157424",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3674,
-      "height": 4697,
-      "source": "ladybird",
-      "caption": "39v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157424"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157425,
-      "uri": "/ladybird/oid/16157425",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "40r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157425"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157426,
-      "uri": "/ladybird/oid/16157426",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3674,
-      "height": 4697,
-      "source": "ladybird",
-      "caption": "40v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157426"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157427,
-      "uri": "/ladybird/oid/16157427",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "41r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157427"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157428,
-      "uri": "/ladybird/oid/16157428",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3674,
-      "height": 4697,
-      "source": "ladybird",
-      "caption": "41v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157428"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157429,
-      "uri": "/ladybird/oid/16157429",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "42r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157429"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157430,
-      "uri": "/ladybird/oid/16157430",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3674,
-      "height": 4697,
-      "source": "ladybird",
-      "caption": "42v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157430"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157431,
-      "uri": "/ladybird/oid/16157431",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "43r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157431"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157432,
-      "uri": "/ladybird/oid/16157432",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3674,
-      "height": 4697,
-      "source": "ladybird",
-      "caption": "43v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157432"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157433,
-      "uri": "/ladybird/oid/16157433",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "44r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157433"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157434,
-      "uri": "/ladybird/oid/16157434",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3674,
-      "height": 4697,
-      "source": "ladybird",
-      "caption": "44v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157434"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157435,
-      "uri": "/ladybird/oid/16157435",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "45r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157435"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157436,
-      "uri": "/ladybird/oid/16157436",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3674,
-      "height": 4676,
-      "source": "ladybird",
-      "caption": "45v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157436"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157437,
-      "uri": "/ladybird/oid/16157437",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3636,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "45[bis]r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157437"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157438,
-      "uri": "/ladybird/oid/16157438",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3674,
-      "height": 4665,
-      "source": "ladybird",
-      "caption": "45[bis]v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157438"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157439,
-      "uri": "/ladybird/oid/16157439",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "46r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157439"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157440,
-      "uri": "/ladybird/oid/16157440",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3674,
-      "height": 4679,
-      "source": "ladybird",
-      "caption": "46v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157440"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157441,
-      "uri": "/ladybird/oid/16157441",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "47r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157441"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157442,
-      "uri": "/ladybird/oid/16157442",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3674,
-      "height": 4693,
-      "source": "ladybird",
-      "caption": "47v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157442"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157443,
-      "uri": "/ladybird/oid/16157443",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "48r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157443"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157444,
-      "uri": "/ladybird/oid/16157444",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3635,
-      "height": 4687,
-      "source": "ladybird",
-      "caption": "48v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157444"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157445,
-      "uri": "/ladybird/oid/16157445",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "49r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157445"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157446,
-      "uri": "/ladybird/oid/16157446",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3608,
-      "height": 4668,
-      "source": "ladybird",
-      "caption": "49v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157446"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157447,
-      "uri": "/ladybird/oid/16157447",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "50r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157447"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157448,
-      "uri": "/ladybird/oid/16157448",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4658,
-      "source": "ladybird",
-      "caption": "51v [i.e., 50v]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157448"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157449,
-      "uri": "/ladybird/oid/16157449",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "52r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157449"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157450,
-      "uri": "/ladybird/oid/16157450",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3605,
-      "height": 4658,
-      "source": "ladybird",
-      "caption": "52v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157450"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157451,
-      "uri": "/ladybird/oid/16157451",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "53r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157451"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157452,
-      "uri": "/ladybird/oid/16157452",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4654,
-      "source": "ladybird",
-      "caption": "53v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157452"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157453,
-      "uri": "/ladybird/oid/16157453",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "54r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157453"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157454,
-      "uri": "/ladybird/oid/16157454",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4654,
-      "source": "ladybird",
-      "caption": "54v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157454"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157455,
-      "uri": "/ladybird/oid/16157455",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "55r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157455"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157456,
-      "uri": "/ladybird/oid/16157456",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4654,
-      "source": "ladybird",
-      "caption": "55v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157456"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157457,
-      "uri": "/ladybird/oid/16157457",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "56r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157457"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157458,
-      "uri": "/ladybird/oid/16157458",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4654,
-      "source": "ladybird",
-      "caption": "56v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157458"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157459,
-      "uri": "/ladybird/oid/16157459",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "57r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157459"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157460,
-      "uri": "/ladybird/oid/16157460",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4654,
-      "source": "ladybird",
-      "caption": "57v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157460"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157461,
-      "uri": "/ladybird/oid/16157461",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "58r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157461"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157462,
-      "uri": "/ladybird/oid/16157462",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4654,
-      "source": "ladybird",
-      "caption": "58v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157462"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157463,
-      "uri": "/ladybird/oid/16157463",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "59r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157463"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157464,
-      "uri": "/ladybird/oid/16157464",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4654,
-      "source": "ladybird",
-      "caption": "59v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157464"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157465,
-      "uri": "/ladybird/oid/16157465",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "60r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157465"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157466,
-      "uri": "/ladybird/oid/16157466",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4654,
-      "source": "ladybird",
-      "caption": "60v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157466"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157467,
-      "uri": "/ladybird/oid/16157467",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "61r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157467"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157468,
-      "uri": "/ladybird/oid/16157468",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4654,
-      "source": "ladybird",
-      "caption": "61v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157468"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157469,
-      "uri": "/ladybird/oid/16157469",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4667,
-      "source": "ladybird",
-      "caption": "62r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157469"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157470,
-      "uri": "/ladybird/oid/16157470",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4654,
-      "source": "ladybird",
-      "caption": "62v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157470"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157471,
-      "uri": "/ladybird/oid/16157471",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4660,
-      "source": "ladybird",
-      "caption": "63r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157471"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157472,
-      "uri": "/ladybird/oid/16157472",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4654,
-      "source": "ladybird",
-      "caption": "63v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157472"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157473,
-      "uri": "/ladybird/oid/16157473",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4696,
-      "source": "ladybird",
-      "caption": "64r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157473"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157474,
-      "uri": "/ladybird/oid/16157474",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4654,
-      "source": "ladybird",
-      "caption": "64v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157474"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157475,
-      "uri": "/ladybird/oid/16157475",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4644,
-      "source": "ladybird",
-      "caption": "65r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157475"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157476,
-      "uri": "/ladybird/oid/16157476",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4654,
-      "source": "ladybird",
-      "caption": "65v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157476"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157477,
-      "uri": "/ladybird/oid/16157477",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "[66]r",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157477"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157478,
-      "uri": "/ladybird/oid/16157478",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4654,
-      "source": "ladybird",
-      "caption": "[66]v",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157478"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157479,
-      "uri": "/ladybird/oid/16157479",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "[Back free endpaper recto]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157479"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157480,
-      "uri": "/ladybird/oid/16157480",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3612,
-      "height": 4654,
-      "source": "ladybird",
-      "caption": "[Back free endpaper verso]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157480"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157481,
-      "uri": "/ladybird/oid/16157481",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4716,
-      "source": "ladybird",
-      "caption": "[Back pastedown]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157481"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157482,
-      "uri": "/ladybird/oid/16157482",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3507,
-      "height": 404,
-      "source": "ladybird",
-      "caption": "[Head]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157482"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157483,
-      "uri": "/ladybird/oid/16157483",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3495,
-      "height": 364,
-      "source": "ladybird",
-      "caption": "[Tail]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157483"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157484,
-      "uri": "/ladybird/oid/16157484",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 458,
-      "height": 4694,
-      "source": "ladybird",
-      "caption": "[Fore-edge]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157484"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157485,
-      "uri": "/ladybird/oid/16157485",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 381,
-      "height": 4689,
-      "source": "ladybird",
-      "caption": "[Spine]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157485"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    },
-    {
-      "oid": 16157486,
-      "uri": "/ladybird/oid/16157486",
-      "title": [
-        "Mirour of mans salvacioune."
-      ],
-      "width": 3620,
-      "height": 4740,
-      "source": "ladybird",
-      "caption": "[Back cover]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16157486"
-      ],
-      "identifierShelfMark": "Takamiya MS 97"
-    }
-  ],
-  "contents": [
-    "Binding: nineteenth-century full brown morocco, gilt.",
-    "Decoration: some initials, line fillers, underlining, in red ink.",
-    "Ex libris Alfred Henry Huth; Sir Leicester Harmsworth; William and Christina Foyle. On deposit from the collection of Toshiyuki Takamiya, 2013-.",
-    "Layout: single columns of 17 lines.",
-    "Script: gothic bookhand.",
-    "Some errors in contemporary foliation."
-  ],
   "language": [
     "English, Middle (1100-1500)"
-  ],
-  "indexedBy": [
-    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends &amp; colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes &amp; De Graff, 2010, pp. 421-437.",
-    "Mirour of mans salvacioune. Takamiya MS 97."
-  ],
-  "recordType": "oid",
-  "references": [
-    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends &amp; colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes &amp; De Graff, 2010, pp. 421-437.",
-    "Mirour of mans salvacioune. Takamiya MS 97."
-  ],
-  "repository": "Beinecke Library",
-  "subjectEra": "Typology (Theology)--Early works to 1800.",
-  "contributor": [
-    "Foyle, William A.--(William Alfred),--1885-1963--Bookplate.",
-    "Harmsworth, R. Leicester--(Robert Leicester),--Sir,--1870-1937--Ownership.",
-    "Huth, Alfred Henry,--1850-1910--Bookplate."
   ],
   "description": [
     "Binding: nineteenth-century full brown morocco, gilt.",
@@ -2797,16 +33,11 @@
     "Script: gothic bookhand.",
     "Some errors in contemporary foliation."
   ],
-  "orbisBibId": "11756910",
   "subjectName": [
     "Foyle, William A.--(William Alfred),--1885-1963--Bookplate.",
     "Harmsworth, R. Leicester--(Robert Leicester),--Sir,--1870-1937--Ownership.",
     "Huth, Alfred Henry,--1850-1910--Bookplate."
   ],
-  "collectionId": 1,
-  "orbisBarcode": "39002091549304",
-  "resourceType": "Archives or Manuscripts",
-  "subjectTitle": "Typology (Theology)--Early works to 1800.",
   "subjectTopic": [
     "Christian life--Early works to 1800.",
     "Devotional literature, English (Middle)",
@@ -2817,26 +48,38 @@
     "Salvation--Early works to 1800.",
     "Typology (Theology)--Early works to 1800."
   ],
-  "dependentUris": [
-    "/ladybird/oid/16156712"
+  "genre": [
+    "Manuscripts, Medieval--England--15th century."
   ],
-  "dateStructured": [
-    "1450-00-00T00:00:00Z"
+  "format": [
+    "text"
+  ],
+  "itemType": [
+    "Archives or Manuscripts"
+  ],
+  "partOf": "Beinecke Library",
+  "rights": [
+    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+  ],
+  "orbisBibId": "11756910",
+  "orbisBarcode": "39002091549304",
+  "preferredCitation": [
+    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends &amp; colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes &amp; De Graff, 2010, pp. 421-437.",
+    "Mirour of mans salvacioune. Takamiya MS 97."
   ],
   "itemPermission": "Public",
-  "alternativeTitle": [
-    "Speculum humanae salvationis. English, Middle (ca. 1100-1500)"
+  "dateStructured": [
+    "1450"
   ],
-  "publicationPlace": [
-    "[England],"
-  ],
-  "contributorDisplay": [
+  "illustrativeMatter": "131114s1450    ctu                 enm d",
+  "subjectEra": "Typology (Theology)--Early works to 1800.",
+  "contributor": [
     "Foyle, William A.--(William Alfred),--1885-1963--Bookplate.",
     "Harmsworth, R. Leicester--(Robert Leicester),--Sir,--1870-1937--Ownership.",
     "Huth, Alfred Henry,--1850-1910--Bookplate."
   ],
-  "illustrativeMatter": "131114s1450    ctu                 enm d",
-  "identifierShelfMark": "Takamiya MS 97",
+  "repository": "Beinecke Library",
+  "subjectTitle": "Typology (Theology)--Early works to 1800.",
   "subjectTitleDisplay": [
     "Christian life--Early works to 1800.",
     "Devotional literature, English (Middle)",
@@ -2847,7 +90,2899 @@
     "Salvation--Early works to 1800.",
     "Typology (Theology)--Early works to 1800."
   ],
-  "extentOfDigitization": [
-    "Complete work digitized."
+  "contributorDisplay": [
+    "Foyle, William A.--(William Alfred),--1885-1963--Bookplate.",
+    "Harmsworth, R. Leicester--(Robert Leicester),--Sir,--1870-1937--Ownership.",
+    "Huth, Alfred Henry,--1850-1910--Bookplate."
+  ],
+  "dependentUris": [
+    "/ladybird/oid/16156712"
+  ],
+  "oid": 16156712,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157343",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[Front cover]",
+      "dependentUris": [
+        "/ladybird/oid/16157343"
+      ],
+      "oid": 16157343,
+      "width": 3598,
+      "height": 4721,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157344",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[Front pastedown]",
+      "dependentUris": [
+        "/ladybird/oid/16157344"
+      ],
+      "oid": 16157344,
+      "width": 3635,
+      "height": 4725,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157345",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[Front free endpaper recto]",
+      "dependentUris": [
+        "/ladybird/oid/16157345"
+      ],
+      "oid": 16157345,
+      "width": 3475,
+      "height": 4652,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157346",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[Front free endpaper verso]",
+      "dependentUris": [
+        "/ladybird/oid/16157346"
+      ],
+      "oid": 16157346,
+      "width": 3635,
+      "height": 4725,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157347",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[ii]r",
+      "dependentUris": [
+        "/ladybird/oid/16157347"
+      ],
+      "oid": 16157347,
+      "width": 3479,
+      "height": 4651,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157348",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[ii]v",
+      "dependentUris": [
+        "/ladybird/oid/16157348"
+      ],
+      "oid": 16157348,
+      "width": 3635,
+      "height": 4725,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157349",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "1r",
+      "dependentUris": [
+        "/ladybird/oid/16157349"
+      ],
+      "oid": 16157349,
+      "width": 3536,
+      "height": 4670,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157350",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "1v",
+      "dependentUris": [
+        "/ladybird/oid/16157350"
+      ],
+      "oid": 16157350,
+      "width": 3635,
+      "height": 4725,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157351",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "2r",
+      "dependentUris": [
+        "/ladybird/oid/16157351"
+      ],
+      "oid": 16157351,
+      "width": 3536,
+      "height": 4670,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157352",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "2v",
+      "dependentUris": [
+        "/ladybird/oid/16157352"
+      ],
+      "oid": 16157352,
+      "width": 3635,
+      "height": 4725,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157353",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "3r",
+      "dependentUris": [
+        "/ladybird/oid/16157353"
+      ],
+      "oid": 16157353,
+      "width": 3536,
+      "height": 4670,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157354",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "3v",
+      "dependentUris": [
+        "/ladybird/oid/16157354"
+      ],
+      "oid": 16157354,
+      "width": 3635,
+      "height": 4725,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157355",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "4r",
+      "dependentUris": [
+        "/ladybird/oid/16157355"
+      ],
+      "oid": 16157355,
+      "width": 3536,
+      "height": 4670,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157356",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "4v",
+      "dependentUris": [
+        "/ladybird/oid/16157356"
+      ],
+      "oid": 16157356,
+      "width": 3635,
+      "height": 4725,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157357",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "5r",
+      "dependentUris": [
+        "/ladybird/oid/16157357"
+      ],
+      "oid": 16157357,
+      "width": 3536,
+      "height": 4670,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157358",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "5v",
+      "dependentUris": [
+        "/ladybird/oid/16157358"
+      ],
+      "oid": 16157358,
+      "width": 3635,
+      "height": 4725,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157359",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "6r",
+      "dependentUris": [
+        "/ladybird/oid/16157359"
+      ],
+      "oid": 16157359,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157360",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "6v",
+      "dependentUris": [
+        "/ladybird/oid/16157360"
+      ],
+      "oid": 16157360,
+      "width": 3635,
+      "height": 4725,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157361",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "7r",
+      "dependentUris": [
+        "/ladybird/oid/16157361"
+      ],
+      "oid": 16157361,
+      "width": 3553,
+      "height": 4702,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157362",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "7v",
+      "dependentUris": [
+        "/ladybird/oid/16157362"
+      ],
+      "oid": 16157362,
+      "width": 3635,
+      "height": 4731,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157363",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "8r",
+      "dependentUris": [
+        "/ladybird/oid/16157363"
+      ],
+      "oid": 16157363,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157364",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "8v",
+      "dependentUris": [
+        "/ladybird/oid/16157364"
+      ],
+      "oid": 16157364,
+      "width": 3635,
+      "height": 4711,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157365",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "9r",
+      "dependentUris": [
+        "/ladybird/oid/16157365"
+      ],
+      "oid": 16157365,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157366",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "9v",
+      "dependentUris": [
+        "/ladybird/oid/16157366"
+      ],
+      "oid": 16157366,
+      "width": 3635,
+      "height": 4714,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157367",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "10r",
+      "dependentUris": [
+        "/ladybird/oid/16157367"
+      ],
+      "oid": 16157367,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157368",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "10v",
+      "dependentUris": [
+        "/ladybird/oid/16157368"
+      ],
+      "oid": 16157368,
+      "width": 3635,
+      "height": 4699,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157369",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "11r",
+      "dependentUris": [
+        "/ladybird/oid/16157369"
+      ],
+      "oid": 16157369,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157370",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "11v",
+      "dependentUris": [
+        "/ladybird/oid/16157370"
+      ],
+      "oid": 16157370,
+      "width": 3635,
+      "height": 4708,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157371",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "12r",
+      "dependentUris": [
+        "/ladybird/oid/16157371"
+      ],
+      "oid": 16157371,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157372",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "12v",
+      "dependentUris": [
+        "/ladybird/oid/16157372"
+      ],
+      "oid": 16157372,
+      "width": 3635,
+      "height": 4714,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157373",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "13r",
+      "dependentUris": [
+        "/ladybird/oid/16157373"
+      ],
+      "oid": 16157373,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157374",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "13v",
+      "dependentUris": [
+        "/ladybird/oid/16157374"
+      ],
+      "oid": 16157374,
+      "width": 3635,
+      "height": 4708,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157375",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "14r",
+      "dependentUris": [
+        "/ladybird/oid/16157375"
+      ],
+      "oid": 16157375,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157376",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "14v",
+      "dependentUris": [
+        "/ladybird/oid/16157376"
+      ],
+      "oid": 16157376,
+      "width": 3635,
+      "height": 4713,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157377",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "15r",
+      "dependentUris": [
+        "/ladybird/oid/16157377"
+      ],
+      "oid": 16157377,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157378",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "15v",
+      "dependentUris": [
+        "/ladybird/oid/16157378"
+      ],
+      "oid": 16157378,
+      "width": 3635,
+      "height": 4698,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157379",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "16r",
+      "dependentUris": [
+        "/ladybird/oid/16157379"
+      ],
+      "oid": 16157379,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157380",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "16v",
+      "dependentUris": [
+        "/ladybird/oid/16157380"
+      ],
+      "oid": 16157380,
+      "width": 3635,
+      "height": 4697,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157381",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "17r",
+      "dependentUris": [
+        "/ladybird/oid/16157381"
+      ],
+      "oid": 16157381,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157382",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "17v",
+      "dependentUris": [
+        "/ladybird/oid/16157382"
+      ],
+      "oid": 16157382,
+      "width": 3635,
+      "height": 4697,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157383",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "18r",
+      "dependentUris": [
+        "/ladybird/oid/16157383"
+      ],
+      "oid": 16157383,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157384",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "18v",
+      "dependentUris": [
+        "/ladybird/oid/16157384"
+      ],
+      "oid": 16157384,
+      "width": 3635,
+      "height": 4666,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157385",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "19r",
+      "dependentUris": [
+        "/ladybird/oid/16157385"
+      ],
+      "oid": 16157385,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157386",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "19v",
+      "dependentUris": [
+        "/ladybird/oid/16157386"
+      ],
+      "oid": 16157386,
+      "width": 3635,
+      "height": 4667,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157387",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "20r",
+      "dependentUris": [
+        "/ladybird/oid/16157387"
+      ],
+      "oid": 16157387,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157388",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "20v",
+      "dependentUris": [
+        "/ladybird/oid/16157388"
+      ],
+      "oid": 16157388,
+      "width": 3635,
+      "height": 4672,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157389",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "21r",
+      "dependentUris": [
+        "/ladybird/oid/16157389"
+      ],
+      "oid": 16157389,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157390",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "21v",
+      "dependentUris": [
+        "/ladybird/oid/16157390"
+      ],
+      "oid": 16157390,
+      "width": 3635,
+      "height": 4681,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157391",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "22r",
+      "dependentUris": [
+        "/ladybird/oid/16157391"
+      ],
+      "oid": 16157391,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157392",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "22v",
+      "dependentUris": [
+        "/ladybird/oid/16157392"
+      ],
+      "oid": 16157392,
+      "width": 3635,
+      "height": 4681,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157393",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "23r",
+      "dependentUris": [
+        "/ladybird/oid/16157393"
+      ],
+      "oid": 16157393,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157394",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "23v",
+      "dependentUris": [
+        "/ladybird/oid/16157394"
+      ],
+      "oid": 16157394,
+      "width": 3635,
+      "height": 4697,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157395",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "24r",
+      "dependentUris": [
+        "/ladybird/oid/16157395"
+      ],
+      "oid": 16157395,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157396",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "24v",
+      "dependentUris": [
+        "/ladybird/oid/16157396"
+      ],
+      "oid": 16157396,
+      "width": 3635,
+      "height": 4672,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157397",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "26r",
+      "dependentUris": [
+        "/ladybird/oid/16157397"
+      ],
+      "oid": 16157397,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157398",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "26v",
+      "dependentUris": [
+        "/ladybird/oid/16157398"
+      ],
+      "oid": 16157398,
+      "width": 3635,
+      "height": 4670,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157399",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "27r",
+      "dependentUris": [
+        "/ladybird/oid/16157399"
+      ],
+      "oid": 16157399,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157400",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "27v",
+      "dependentUris": [
+        "/ladybird/oid/16157400"
+      ],
+      "oid": 16157400,
+      "width": 3635,
+      "height": 4676,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157401",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "28r",
+      "dependentUris": [
+        "/ladybird/oid/16157401"
+      ],
+      "oid": 16157401,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157402",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "28v",
+      "dependentUris": [
+        "/ladybird/oid/16157402"
+      ],
+      "oid": 16157402,
+      "width": 3635,
+      "height": 4682,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157403",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "29r",
+      "dependentUris": [
+        "/ladybird/oid/16157403"
+      ],
+      "oid": 16157403,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157404",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "29v",
+      "dependentUris": [
+        "/ladybird/oid/16157404"
+      ],
+      "oid": 16157404,
+      "width": 3635,
+      "height": 4670,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157405",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "30r",
+      "dependentUris": [
+        "/ladybird/oid/16157405"
+      ],
+      "oid": 16157405,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157406",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "30v",
+      "dependentUris": [
+        "/ladybird/oid/16157406"
+      ],
+      "oid": 16157406,
+      "width": 3635,
+      "height": 4697,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157407",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "31r",
+      "dependentUris": [
+        "/ladybird/oid/16157407"
+      ],
+      "oid": 16157407,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157408",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "31v",
+      "dependentUris": [
+        "/ladybird/oid/16157408"
+      ],
+      "oid": 16157408,
+      "width": 3635,
+      "height": 4685,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157409",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "32r",
+      "dependentUris": [
+        "/ladybird/oid/16157409"
+      ],
+      "oid": 16157409,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157410",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "32v",
+      "dependentUris": [
+        "/ladybird/oid/16157410"
+      ],
+      "oid": 16157410,
+      "width": 3635,
+      "height": 4670,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157411",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "33r",
+      "dependentUris": [
+        "/ladybird/oid/16157411"
+      ],
+      "oid": 16157411,
+      "width": 3553,
+      "height": 4695,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157412",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "33v",
+      "dependentUris": [
+        "/ladybird/oid/16157412"
+      ],
+      "oid": 16157412,
+      "width": 3635,
+      "height": 4679,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157413",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "34r",
+      "dependentUris": [
+        "/ladybird/oid/16157413"
+      ],
+      "oid": 16157413,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157414",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "34v",
+      "dependentUris": [
+        "/ladybird/oid/16157414"
+      ],
+      "oid": 16157414,
+      "width": 3635,
+      "height": 4697,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157415",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "35r",
+      "dependentUris": [
+        "/ladybird/oid/16157415"
+      ],
+      "oid": 16157415,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157416",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "35v",
+      "dependentUris": [
+        "/ladybird/oid/16157416"
+      ],
+      "oid": 16157416,
+      "width": 3674,
+      "height": 4697,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157417",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "36r",
+      "dependentUris": [
+        "/ladybird/oid/16157417"
+      ],
+      "oid": 16157417,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157418",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "36v",
+      "dependentUris": [
+        "/ladybird/oid/16157418"
+      ],
+      "oid": 16157418,
+      "width": 3674,
+      "height": 4697,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157419",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "37r",
+      "dependentUris": [
+        "/ladybird/oid/16157419"
+      ],
+      "oid": 16157419,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157420",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "37v",
+      "dependentUris": [
+        "/ladybird/oid/16157420"
+      ],
+      "oid": 16157420,
+      "width": 3674,
+      "height": 4697,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157421",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "38r",
+      "dependentUris": [
+        "/ladybird/oid/16157421"
+      ],
+      "oid": 16157421,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157422",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "38v",
+      "dependentUris": [
+        "/ladybird/oid/16157422"
+      ],
+      "oid": 16157422,
+      "width": 3674,
+      "height": 4697,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157423",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "39r",
+      "dependentUris": [
+        "/ladybird/oid/16157423"
+      ],
+      "oid": 16157423,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157424",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "39v",
+      "dependentUris": [
+        "/ladybird/oid/16157424"
+      ],
+      "oid": 16157424,
+      "width": 3674,
+      "height": 4697,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157425",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "40r",
+      "dependentUris": [
+        "/ladybird/oid/16157425"
+      ],
+      "oid": 16157425,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157426",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "40v",
+      "dependentUris": [
+        "/ladybird/oid/16157426"
+      ],
+      "oid": 16157426,
+      "width": 3674,
+      "height": 4697,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157427",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "41r",
+      "dependentUris": [
+        "/ladybird/oid/16157427"
+      ],
+      "oid": 16157427,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157428",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "41v",
+      "dependentUris": [
+        "/ladybird/oid/16157428"
+      ],
+      "oid": 16157428,
+      "width": 3674,
+      "height": 4697,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157429",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "42r",
+      "dependentUris": [
+        "/ladybird/oid/16157429"
+      ],
+      "oid": 16157429,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157430",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "42v",
+      "dependentUris": [
+        "/ladybird/oid/16157430"
+      ],
+      "oid": 16157430,
+      "width": 3674,
+      "height": 4697,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157431",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "43r",
+      "dependentUris": [
+        "/ladybird/oid/16157431"
+      ],
+      "oid": 16157431,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157432",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "43v",
+      "dependentUris": [
+        "/ladybird/oid/16157432"
+      ],
+      "oid": 16157432,
+      "width": 3674,
+      "height": 4697,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157433",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "44r",
+      "dependentUris": [
+        "/ladybird/oid/16157433"
+      ],
+      "oid": 16157433,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157434",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "44v",
+      "dependentUris": [
+        "/ladybird/oid/16157434"
+      ],
+      "oid": 16157434,
+      "width": 3674,
+      "height": 4697,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157435",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "45r",
+      "dependentUris": [
+        "/ladybird/oid/16157435"
+      ],
+      "oid": 16157435,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157436",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "45v",
+      "dependentUris": [
+        "/ladybird/oid/16157436"
+      ],
+      "oid": 16157436,
+      "width": 3674,
+      "height": 4676,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157437",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "45[bis]r",
+      "dependentUris": [
+        "/ladybird/oid/16157437"
+      ],
+      "oid": 16157437,
+      "width": 3636,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157438",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "45[bis]v",
+      "dependentUris": [
+        "/ladybird/oid/16157438"
+      ],
+      "oid": 16157438,
+      "width": 3674,
+      "height": 4665,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157439",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "46r",
+      "dependentUris": [
+        "/ladybird/oid/16157439"
+      ],
+      "oid": 16157439,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157440",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "46v",
+      "dependentUris": [
+        "/ladybird/oid/16157440"
+      ],
+      "oid": 16157440,
+      "width": 3674,
+      "height": 4679,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157441",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "47r",
+      "dependentUris": [
+        "/ladybird/oid/16157441"
+      ],
+      "oid": 16157441,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157442",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "47v",
+      "dependentUris": [
+        "/ladybird/oid/16157442"
+      ],
+      "oid": 16157442,
+      "width": 3674,
+      "height": 4693,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157443",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "48r",
+      "dependentUris": [
+        "/ladybird/oid/16157443"
+      ],
+      "oid": 16157443,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157444",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "48v",
+      "dependentUris": [
+        "/ladybird/oid/16157444"
+      ],
+      "oid": 16157444,
+      "width": 3635,
+      "height": 4687,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157445",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "49r",
+      "dependentUris": [
+        "/ladybird/oid/16157445"
+      ],
+      "oid": 16157445,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157446",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "49v",
+      "dependentUris": [
+        "/ladybird/oid/16157446"
+      ],
+      "oid": 16157446,
+      "width": 3608,
+      "height": 4668,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157447",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "50r",
+      "dependentUris": [
+        "/ladybird/oid/16157447"
+      ],
+      "oid": 16157447,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157448",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "51v [i.e., 50v]",
+      "dependentUris": [
+        "/ladybird/oid/16157448"
+      ],
+      "oid": 16157448,
+      "width": 3612,
+      "height": 4658,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157449",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "52r",
+      "dependentUris": [
+        "/ladybird/oid/16157449"
+      ],
+      "oid": 16157449,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157450",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "52v",
+      "dependentUris": [
+        "/ladybird/oid/16157450"
+      ],
+      "oid": 16157450,
+      "width": 3605,
+      "height": 4658,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157451",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "53r",
+      "dependentUris": [
+        "/ladybird/oid/16157451"
+      ],
+      "oid": 16157451,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157452",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "53v",
+      "dependentUris": [
+        "/ladybird/oid/16157452"
+      ],
+      "oid": 16157452,
+      "width": 3612,
+      "height": 4654,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157453",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "54r",
+      "dependentUris": [
+        "/ladybird/oid/16157453"
+      ],
+      "oid": 16157453,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157454",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "54v",
+      "dependentUris": [
+        "/ladybird/oid/16157454"
+      ],
+      "oid": 16157454,
+      "width": 3612,
+      "height": 4654,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157455",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "55r",
+      "dependentUris": [
+        "/ladybird/oid/16157455"
+      ],
+      "oid": 16157455,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157456",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "55v",
+      "dependentUris": [
+        "/ladybird/oid/16157456"
+      ],
+      "oid": 16157456,
+      "width": 3612,
+      "height": 4654,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157457",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "56r",
+      "dependentUris": [
+        "/ladybird/oid/16157457"
+      ],
+      "oid": 16157457,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157458",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "56v",
+      "dependentUris": [
+        "/ladybird/oid/16157458"
+      ],
+      "oid": 16157458,
+      "width": 3612,
+      "height": 4654,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157459",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "57r",
+      "dependentUris": [
+        "/ladybird/oid/16157459"
+      ],
+      "oid": 16157459,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157460",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "57v",
+      "dependentUris": [
+        "/ladybird/oid/16157460"
+      ],
+      "oid": 16157460,
+      "width": 3612,
+      "height": 4654,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157461",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "58r",
+      "dependentUris": [
+        "/ladybird/oid/16157461"
+      ],
+      "oid": 16157461,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157462",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "58v",
+      "dependentUris": [
+        "/ladybird/oid/16157462"
+      ],
+      "oid": 16157462,
+      "width": 3612,
+      "height": 4654,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157463",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "59r",
+      "dependentUris": [
+        "/ladybird/oid/16157463"
+      ],
+      "oid": 16157463,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157464",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "59v",
+      "dependentUris": [
+        "/ladybird/oid/16157464"
+      ],
+      "oid": 16157464,
+      "width": 3612,
+      "height": 4654,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157465",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "60r",
+      "dependentUris": [
+        "/ladybird/oid/16157465"
+      ],
+      "oid": 16157465,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157466",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "60v",
+      "dependentUris": [
+        "/ladybird/oid/16157466"
+      ],
+      "oid": 16157466,
+      "width": 3612,
+      "height": 4654,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157467",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "61r",
+      "dependentUris": [
+        "/ladybird/oid/16157467"
+      ],
+      "oid": 16157467,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157468",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "61v",
+      "dependentUris": [
+        "/ladybird/oid/16157468"
+      ],
+      "oid": 16157468,
+      "width": 3612,
+      "height": 4654,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157469",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "62r",
+      "dependentUris": [
+        "/ladybird/oid/16157469"
+      ],
+      "oid": 16157469,
+      "width": 3620,
+      "height": 4667,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157470",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "62v",
+      "dependentUris": [
+        "/ladybird/oid/16157470"
+      ],
+      "oid": 16157470,
+      "width": 3612,
+      "height": 4654,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157471",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "63r",
+      "dependentUris": [
+        "/ladybird/oid/16157471"
+      ],
+      "oid": 16157471,
+      "width": 3620,
+      "height": 4660,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157472",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "63v",
+      "dependentUris": [
+        "/ladybird/oid/16157472"
+      ],
+      "oid": 16157472,
+      "width": 3612,
+      "height": 4654,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157473",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "64r",
+      "dependentUris": [
+        "/ladybird/oid/16157473"
+      ],
+      "oid": 16157473,
+      "width": 3620,
+      "height": 4696,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157474",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "64v",
+      "dependentUris": [
+        "/ladybird/oid/16157474"
+      ],
+      "oid": 16157474,
+      "width": 3612,
+      "height": 4654,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157475",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "65r",
+      "dependentUris": [
+        "/ladybird/oid/16157475"
+      ],
+      "oid": 16157475,
+      "width": 3620,
+      "height": 4644,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157476",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "65v",
+      "dependentUris": [
+        "/ladybird/oid/16157476"
+      ],
+      "oid": 16157476,
+      "width": 3612,
+      "height": 4654,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157477",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[66]r",
+      "dependentUris": [
+        "/ladybird/oid/16157477"
+      ],
+      "oid": 16157477,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157478",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[66]v",
+      "dependentUris": [
+        "/ladybird/oid/16157478"
+      ],
+      "oid": 16157478,
+      "width": 3612,
+      "height": 4654,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157479",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[Back free endpaper recto]",
+      "dependentUris": [
+        "/ladybird/oid/16157479"
+      ],
+      "oid": 16157479,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157480",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[Back free endpaper verso]",
+      "dependentUris": [
+        "/ladybird/oid/16157480"
+      ],
+      "oid": 16157480,
+      "width": 3612,
+      "height": 4654,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157481",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[Back pastedown]",
+      "dependentUris": [
+        "/ladybird/oid/16157481"
+      ],
+      "oid": 16157481,
+      "width": 3620,
+      "height": 4716,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157482",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[Head]",
+      "dependentUris": [
+        "/ladybird/oid/16157482"
+      ],
+      "oid": 16157482,
+      "width": 3507,
+      "height": 404,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157483",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[Tail]",
+      "dependentUris": [
+        "/ladybird/oid/16157483"
+      ],
+      "oid": 16157483,
+      "width": 3495,
+      "height": 364,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157484",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[Fore-edge]",
+      "dependentUris": [
+        "/ladybird/oid/16157484"
+      ],
+      "oid": 16157484,
+      "width": 458,
+      "height": 4694,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157485",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[Spine]",
+      "dependentUris": [
+        "/ladybird/oid/16157485"
+      ],
+      "oid": 16157485,
+      "width": 381,
+      "height": 4689,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16157486",
+      "callNumber": "Takamiya MS 97",
+      "title": [
+        "Mirour of mans salvacioune."
+      ],
+      "caption": "[Back cover]",
+      "dependentUris": [
+        "/ladybird/oid/16157486"
+      ],
+      "oid": 16157486,
+      "width": 3620,
+      "height": 4740,
+      "children": [
+
+      ]
+    }
+  ],
+  "abstract": [
+    "Manuscript, on paper, in a single hand, of the English verse translation of this work of popular theology and devotional meditation."
   ]
 }

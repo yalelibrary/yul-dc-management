@@ -1,12 +1,13 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002091549668?bib=9734763",
-  "identifierShelfMark": "407 Beinecke MS",
+  "callNumber": "Beinecke MS 407",
   "title": [
     "Albergati bible"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "Italy"
   ],
   "publisher": [
@@ -22,6 +23,9 @@
     "parchment ;"
   ],
   "language": [
+    "Latin"
+  ],
+  "languageCode": [
     "lat"
   ],
   "description": [
@@ -41,11 +45,12 @@
     "Versions",
     "Vulgate"
   ],
+  "subjectGeographicCode": "n-us-ct e-it---",
   "genre": [
     "Manuscripts, Medieval Italy 15th century",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
-  "format": [
+  "itemType": [
     "unspecified"
   ],
   "orbisBibId": "9734763",
@@ -54,11 +59,11 @@
     "https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms407.htm",
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?CN=Beinecke_MS_407"
   ],
-  "references": [
+  "preferredCitation": [
     "Albergati Bible. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1428    "
+    "1428"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [
@@ -71,8 +76,6 @@
     "Shailor, B. Catalogue of Medieval and Renaissance Manuscripts in the Beinecke Rare Book and Manuscript Library, MS 407."
   ],
   "subjectGeographic": [
-    "n-us-ct",
-    "e-it---",
     "Connecticut",
     "New Haven."
   ],
@@ -81,6 +84,10 @@
     "Bible. Latin"
   ],
   "volumeEnumeration": "Box",
+  "accessCondition": [
+    "Restricted material. May not be seen without the permission of the appropriate curator",
+    "Restricted material. May not be seen without the permission of the appropriate curator."
+  ],
   "dependentUris": [
     "/ils/holding/10050400",
     "/ils/item/10763785",

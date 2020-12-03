@@ -1,6 +1,7 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/bib/3832098",
   "title": [
     "[Qiṣṣat Sindbād al-barrī]. -- [17--?]."
@@ -12,6 +13,9 @@
     "81 20.5 x 14.5 cm. leaves ;"
   ],
   "language": [
+    "Arabic"
+  ],
+  "languageCode": [
     "ara"
   ],
   "description": [
@@ -23,12 +27,12 @@
     "Arabic language and literature",
     "Islamic binding"
   ],
-  "format": [
+  "itemType": [
     "unspecified"
   ],
   "orbisBibId": "3832098",
   "dateStructured": [
-    "17001799"
+    "1749"
   ],
   "illustrativeMatter": "||  ",
   "titleStatement": [

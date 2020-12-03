@@ -1,8 +1,9 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002113593827?bib=8317945",
-  "identifierShelfMark": "+1857 5615 Covers",
+  "callNumber": "Covers 5615 +1857",
   "creator": [
     "Dong, Chun (Cartographer), cartographer",
     "董醇 (Cartographer), cartographer"
@@ -14,7 +15,7 @@
   "alternativeTitle": [
     "Map of Ta Ch'ing River"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "China",
     "China"
   ],
@@ -32,14 +33,18 @@
     "color ;"
   ],
   "language": [
+    "Chinese"
+  ],
+  "languageCode": [
     "chi"
   ],
   "description": [
     "Jing zhe zhuang."
   ],
+  "subjectGeographicCode": "a-cc---",
   "scale": "Scale not given.",
   "coordinate": [
-    "a"
+    ""
   ],
   "genre": [
     "Maps",
@@ -47,7 +52,7 @@
     "Maps",
     "Chinese rare maps"
   ],
-  "format": [
+  "itemType": [
     "cartographic image"
   ],
   "orbisBibId": "8317945",
@@ -56,7 +61,7 @@
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16189148"
   ],
   "dateStructured": [
-    "1857    "
+    "1857"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [
@@ -68,13 +73,13 @@
     "Map of Ta Ch'ing River Container has title"
   ],
   "subjectGeographic": [
-    "a-cc---",
     "Hai River (China)"
   ],
   "creatorDisplay": [
     "Dong, Chun (Cartographer), cartographer",
     "董醇 (Cartographer), cartographer"
   ],
+  "libraryOfCongressClassificationNumber": "G7822.H31 1857 .D6",
   "dependentUris": [
     "/ils/holding/8710417",
     "/ils/item/11686833",

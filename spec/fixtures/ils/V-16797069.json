@@ -1,8 +1,9 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002075038423?bib=3435140",
-  "identifierShelfMark": "42 YCAL MSS",
+  "callNumber": "YCAL MSS 42",
   "creator": [
     "Wharton, Edith, 1862-1937"
   ],
@@ -16,6 +17,10 @@
     "31.0 linear feet (69 boxes) + 12 broadside, 4 art."
   ],
   "language": [
+    "English",
+    "French"
+  ],
+  "languageCode": [
     "eng",
     "eng",
     "fre"
@@ -81,11 +86,11 @@
     "http://hdl.handle.net/10079/fa/beinecke.wharton",
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=YCAL_MSS_42"
   ],
-  "references": [
+  "preferredCitation": [
     "Edith Wharton Collection. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
   "dateStructured": [
-    "18681981"
+    "1868"
   ],
   "illustrativeMatter": "    ",
   "subjectEra": "20th century. 20th century. 20th century. 20th century. 20th century.",
@@ -146,6 +151,9 @@
     "Wharton, Edith, 1862-1937"
   ],
   "volumeEnumeration": "Box 25",
+  "accessCondition": [
+    "This material is open for research"
+  ],
   "dependentUris": [
     "/ils/holding/3764443",
     "/ils/item/8114701",

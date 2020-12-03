@@ -1,14 +1,33 @@
 {
-  "oid": 11607445,
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/11607445",
-  "date": [
-    "[17--?]"
-  ],
+  "callNumber": "Landberg MSS 596",
   "title": [
     "[Qiṣṣat Sindbād al-barrī]"
   ],
+  "alternativeTitle": [
+    "Book of Sindbad.",
+    "Sindbad the sailor"
+  ],
+  "extentOfDigitization": [
+    "Complete work digitized."
+  ],
+  "date": [
+    "[17--?]"
+  ],
   "extent": [
     "81 leaves ; 20.5 x 14.5 cm."
+  ],
+  "description": [
+    "A few leaves supplied in a later hand.",
+    "Fair modern (18th century?) naskhī, in red and black.",
+    "Islamic binding, paper covered, with flap."
+  ],
+  "subjectTopic": [
+    "Arabic language and literature--Belles lettres",
+    "Islamic binding"
   ],
   "format": [
     "mixed material"
@@ -17,1926 +36,1985 @@
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "source": "ladybird",
-  "abstract": [
-    "Incomplete at beginning and end.",
-    "The tale of Sindbād and his princely pupil, in colloquial Arabic."
-  ],
-  "children": [
-    {
-      "oid": 11614486,
-      "uri": "/ladybird/oid/11614486",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 2626,
-      "height": 3249,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Front cover]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614486"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614487,
-      "uri": "/ladybird/oid/11614487",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 3586,
-      "height": 3256,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Front cover, flap open]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614487"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614488,
-      "uri": "/ladybird/oid/11614488",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4663,
-      "height": 3282,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Inside front cover]-1a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614488"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614489,
-      "uri": "/ladybird/oid/11614489",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4707,
-      "height": 3301,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "1b-2a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614489"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614490,
-      "uri": "/ladybird/oid/11614490",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "2b-3a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614490"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614491,
-      "uri": "/ladybird/oid/11614491",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "3b-4a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614491"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614492,
-      "uri": "/ladybird/oid/11614492",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "4b-5a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614492"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614493,
-      "uri": "/ladybird/oid/11614493",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "5b-6a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614493"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614494,
-      "uri": "/ladybird/oid/11614494",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "6b-7a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614494"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614495,
-      "uri": "/ladybird/oid/11614495",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "7b-8a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614495"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614496,
-      "uri": "/ladybird/oid/11614496",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "8b-9a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614496"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614497,
-      "uri": "/ladybird/oid/11614497",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "9b-10a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614497"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614498,
-      "uri": "/ladybird/oid/11614498",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "10b-11a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614498"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614499,
-      "uri": "/ladybird/oid/11614499",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "11b-12a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614499"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614500,
-      "uri": "/ladybird/oid/11614500",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "12b-13a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614500"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614501,
-      "uri": "/ladybird/oid/11614501",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "13b-14a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614501"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614502,
-      "uri": "/ladybird/oid/11614502",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "14b-15a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614502"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614503,
-      "uri": "/ladybird/oid/11614503",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "15b-16a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614503"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614504,
-      "uri": "/ladybird/oid/11614504",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "16b-17a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614504"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614505,
-      "uri": "/ladybird/oid/11614505",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3264,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "17b-18a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614505"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614506,
-      "uri": "/ladybird/oid/11614506",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4681,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "18b-19a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614506"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614507,
-      "uri": "/ladybird/oid/11614507",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4681,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "19b-20a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614507"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614508,
-      "uri": "/ladybird/oid/11614508",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4681,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "20b-21a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614508"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614509,
-      "uri": "/ladybird/oid/11614509",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4681,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "21b-22a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614509"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614510,
-      "uri": "/ladybird/oid/11614510",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4681,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "22b-23a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614510"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614511,
-      "uri": "/ladybird/oid/11614511",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4681,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "23b-24a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614511"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614512,
-      "uri": "/ladybird/oid/11614512",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4681,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "24b-25a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614512"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614513,
-      "uri": "/ladybird/oid/11614513",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4681,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "25b-26a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614513"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614514,
-      "uri": "/ladybird/oid/11614514",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4681,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "26b-27a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614514"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614515,
-      "uri": "/ladybird/oid/11614515",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4681,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "27b-28a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614515"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614516,
-      "uri": "/ladybird/oid/11614516",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4694,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "28b-29a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614516"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614517,
-      "uri": "/ladybird/oid/11614517",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4694,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "29b-30a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614517"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614518,
-      "uri": "/ladybird/oid/11614518",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4657,
-      "height": 3267,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "30b-31a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614518"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614519,
-      "uri": "/ladybird/oid/11614519",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4657,
-      "height": 3267,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "31b-32a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614519"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614520,
-      "uri": "/ladybird/oid/11614520",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3244,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "32b-33a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614520"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614521,
-      "uri": "/ladybird/oid/11614521",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "33b-34a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614521"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614522,
-      "uri": "/ladybird/oid/11614522",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "34b-35a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614522"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614523,
-      "uri": "/ladybird/oid/11614523",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "35b-36a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614523"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614524,
-      "uri": "/ladybird/oid/11614524",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "36b-37a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614524"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614525,
-      "uri": "/ladybird/oid/11614525",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "37b-38a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614525"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614526,
-      "uri": "/ladybird/oid/11614526",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "38b-39a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614526"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614527,
-      "uri": "/ladybird/oid/11614527",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "39b-40a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614527"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614528,
-      "uri": "/ladybird/oid/11614528",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4689,
-      "height": 3285,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "40b-41a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614528"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614529,
-      "uri": "/ladybird/oid/11614529",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4701,
-      "height": 3252,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "41b-42a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614529"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614530,
-      "uri": "/ladybird/oid/11614530",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4716,
-      "height": 3252,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "42b-43a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614530"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614531,
-      "uri": "/ladybird/oid/11614531",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4764,
-      "height": 3271,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "43b-44a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614531"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614532,
-      "uri": "/ladybird/oid/11614532",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4764,
-      "height": 3271,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "44b-45a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614532"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614533,
-      "uri": "/ladybird/oid/11614533",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4764,
-      "height": 3271,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "45b-46a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614533"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614534,
-      "uri": "/ladybird/oid/11614534",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4764,
-      "height": 3271,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "46b-47a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614534"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614535,
-      "uri": "/ladybird/oid/11614535",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4764,
-      "height": 3271,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "47b-48a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614535"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614536,
-      "uri": "/ladybird/oid/11614536",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4764,
-      "height": 3271,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "48b-49a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614536"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614537,
-      "uri": "/ladybird/oid/11614537",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4764,
-      "height": 3271,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "49b-50a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614537"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614538,
-      "uri": "/ladybird/oid/11614538",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4764,
-      "height": 3271,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "50b-51a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614538"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614539,
-      "uri": "/ladybird/oid/11614539",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4764,
-      "height": 3271,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "51b-52a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614539"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614540,
-      "uri": "/ladybird/oid/11614540",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4764,
-      "height": 3271,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "52b-53a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614540"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614541,
-      "uri": "/ladybird/oid/11614541",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4764,
-      "height": 3296,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "53b-54a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614541"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614542,
-      "uri": "/ladybird/oid/11614542",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4764,
-      "height": 3296,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "54b-55a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614542"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614543,
-      "uri": "/ladybird/oid/11614543",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4778,
-      "height": 3296,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "55b-56a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614543"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614544,
-      "uri": "/ladybird/oid/11614544",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4778,
-      "height": 3296,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "56b-57a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614544"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614545,
-      "uri": "/ladybird/oid/11614545",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4778,
-      "height": 3296,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "57b-58a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614545"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614546,
-      "uri": "/ladybird/oid/11614546",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4778,
-      "height": 3296,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "58b-59a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614546"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614547,
-      "uri": "/ladybird/oid/11614547",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4778,
-      "height": 3296,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "59b-60a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614547"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614548,
-      "uri": "/ladybird/oid/11614548",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4778,
-      "height": 3296,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "60b-61a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614548"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614549,
-      "uri": "/ladybird/oid/11614549",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4778,
-      "height": 3296,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "61b-62a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614549"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614550,
-      "uri": "/ladybird/oid/11614550",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4778,
-      "height": 3296,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "62b-63a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614550"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614551,
-      "uri": "/ladybird/oid/11614551",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4778,
-      "height": 3296,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "63b-64a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614551"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614552,
-      "uri": "/ladybird/oid/11614552",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4778,
-      "height": 3296,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "64b-65a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614552"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614553,
-      "uri": "/ladybird/oid/11614553",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4778,
-      "height": 3296,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "65b-66a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614553"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614554,
-      "uri": "/ladybird/oid/11614554",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4778,
-      "height": 3296,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "66b-67a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614554"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614555,
-      "uri": "/ladybird/oid/11614555",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4778,
-      "height": 3296,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "67b-68a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614555"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614556,
-      "uri": "/ladybird/oid/11614556",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4777,
-      "height": 3289,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "68b-69a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614556"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614557,
-      "uri": "/ladybird/oid/11614557",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4777,
-      "height": 3289,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "69b-70a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614557"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614558,
-      "uri": "/ladybird/oid/11614558",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4777,
-      "height": 3289,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "70b-71a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614558"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614559,
-      "uri": "/ladybird/oid/11614559",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4777,
-      "height": 3289,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "71b-72a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614559"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614560,
-      "uri": "/ladybird/oid/11614560",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4777,
-      "height": 3289,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "72b-73a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614560"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614561,
-      "uri": "/ladybird/oid/11614561",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4777,
-      "height": 3289,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "73b-74a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614561"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614562,
-      "uri": "/ladybird/oid/11614562",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4777,
-      "height": 3289,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "74b-75a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614562"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614563,
-      "uri": "/ladybird/oid/11614563",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4742,
-      "height": 3262,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "75b-76a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614563"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614564,
-      "uri": "/ladybird/oid/11614564",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4742,
-      "height": 3262,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "76b-77a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614564"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614565,
-      "uri": "/ladybird/oid/11614565",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4742,
-      "height": 3262,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "77b-78a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614565"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614566,
-      "uri": "/ladybird/oid/11614566",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4742,
-      "height": 3262,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "78b-79a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614566"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614567,
-      "uri": "/ladybird/oid/11614567",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4742,
-      "height": 3262,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "79b-80a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614567"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614568,
-      "uri": "/ladybird/oid/11614568",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4651,
-      "height": 3262,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "80b-81a",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614568"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614569,
-      "uri": "/ladybird/oid/11614569",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 4644,
-      "height": 3262,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Inside back cover]-81b",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614569"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    },
-    {
-      "oid": 11614570,
-      "uri": "/ladybird/oid/11614570",
-      "title": [
-        "[Qiṣṣat Sindbād al-barrī]"
-      ],
-      "width": 2564,
-      "height": 3308,
-      "rights": [
-        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
-      ],
-      "source": "ladybird",
-      "caption": "[Back cover]",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/11614570"
-      ],
-      "identifierShelfMark": "Landberg MSS 596"
-    }
-  ],
-  "contents": [
-    "A few leaves supplied in a later hand.",
-    "Fair modern (18th century?) naskhī, in red and black.",
-    "Islamic binding, paper covered, with flap."
-  ],
-  "indexedBy": [
-    "Brockelmann, S I, pp. 237, 239, 252."
-  ],
-  "recordType": "oid",
-  "references": [
-    "Brockelmann, S I, pp. 237, 239, 252."
-  ],
-  "repository": "Beinecke Library",
-  "subjectEra": "Islamic binding",
-  "description": [
-    "A few leaves supplied in a later hand.",
-    "Fair modern (18th century?) naskhī, in red and black.",
-    "Islamic binding, paper covered, with flap."
-  ],
   "orbisBibId": "3832098",
-  "collectionId": 1,
+  "preferredCitation": [
+    "Brockelmann, S I, pp. 237, 239, 252."
+  ],
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1700"
+  ],
+  "subjectEra": "Islamic binding",
+  "repository": "Beinecke Library",
   "subjectTitle": "Islamic binding",
-  "subjectTopic": [
+  "subjectTitleDisplay": [
     "Arabic language and literature--Belles lettres",
     "Islamic binding"
   ],
   "dependentUris": [
     "/ladybird/oid/11607445"
   ],
-  "dateStructured": [
-    "1700-00-00T00:00:00Z"
+  "oid": 11607445,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614486",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "[Front cover]",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614486"
+      ],
+      "oid": 11614486,
+      "width": 2626,
+      "height": 3249,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614487",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "[Front cover, flap open]",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614487"
+      ],
+      "oid": 11614487,
+      "width": 3586,
+      "height": 3256,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614488",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "[Inside front cover]-1a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614488"
+      ],
+      "oid": 11614488,
+      "width": 4663,
+      "height": 3282,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614489",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "1b-2a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614489"
+      ],
+      "oid": 11614489,
+      "width": 4707,
+      "height": 3301,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614490",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "2b-3a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614490"
+      ],
+      "oid": 11614490,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614491",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "3b-4a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614491"
+      ],
+      "oid": 11614491,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614492",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "4b-5a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614492"
+      ],
+      "oid": 11614492,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614493",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "5b-6a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614493"
+      ],
+      "oid": 11614493,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614494",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "6b-7a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614494"
+      ],
+      "oid": 11614494,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614495",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "7b-8a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614495"
+      ],
+      "oid": 11614495,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614496",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "8b-9a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614496"
+      ],
+      "oid": 11614496,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614497",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "9b-10a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614497"
+      ],
+      "oid": 11614497,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614498",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "10b-11a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614498"
+      ],
+      "oid": 11614498,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614499",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "11b-12a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614499"
+      ],
+      "oid": 11614499,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614500",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "12b-13a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614500"
+      ],
+      "oid": 11614500,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614501",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "13b-14a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614501"
+      ],
+      "oid": 11614501,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614502",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "14b-15a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614502"
+      ],
+      "oid": 11614502,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614503",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "15b-16a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614503"
+      ],
+      "oid": 11614503,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614504",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "16b-17a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614504"
+      ],
+      "oid": 11614504,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614505",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "17b-18a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614505"
+      ],
+      "oid": 11614505,
+      "width": 4689,
+      "height": 3264,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614506",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "18b-19a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614506"
+      ],
+      "oid": 11614506,
+      "width": 4681,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614507",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "19b-20a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614507"
+      ],
+      "oid": 11614507,
+      "width": 4681,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614508",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "20b-21a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614508"
+      ],
+      "oid": 11614508,
+      "width": 4681,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614509",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "21b-22a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614509"
+      ],
+      "oid": 11614509,
+      "width": 4681,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614510",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "22b-23a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614510"
+      ],
+      "oid": 11614510,
+      "width": 4681,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614511",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "23b-24a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614511"
+      ],
+      "oid": 11614511,
+      "width": 4681,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614512",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "24b-25a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614512"
+      ],
+      "oid": 11614512,
+      "width": 4681,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614513",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "25b-26a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614513"
+      ],
+      "oid": 11614513,
+      "width": 4681,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614514",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "26b-27a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614514"
+      ],
+      "oid": 11614514,
+      "width": 4681,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614515",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "27b-28a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614515"
+      ],
+      "oid": 11614515,
+      "width": 4681,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614516",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "28b-29a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614516"
+      ],
+      "oid": 11614516,
+      "width": 4694,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614517",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "29b-30a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614517"
+      ],
+      "oid": 11614517,
+      "width": 4694,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614518",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "30b-31a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614518"
+      ],
+      "oid": 11614518,
+      "width": 4657,
+      "height": 3267,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614519",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "31b-32a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614519"
+      ],
+      "oid": 11614519,
+      "width": 4657,
+      "height": 3267,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614520",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "32b-33a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614520"
+      ],
+      "oid": 11614520,
+      "width": 4689,
+      "height": 3244,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614521",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "33b-34a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614521"
+      ],
+      "oid": 11614521,
+      "width": 4689,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614522",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "34b-35a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614522"
+      ],
+      "oid": 11614522,
+      "width": 4689,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614523",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "35b-36a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614523"
+      ],
+      "oid": 11614523,
+      "width": 4689,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614524",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "36b-37a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614524"
+      ],
+      "oid": 11614524,
+      "width": 4689,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614525",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "37b-38a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614525"
+      ],
+      "oid": 11614525,
+      "width": 4689,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614526",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "38b-39a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614526"
+      ],
+      "oid": 11614526,
+      "width": 4689,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614527",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "39b-40a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614527"
+      ],
+      "oid": 11614527,
+      "width": 4689,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614528",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "40b-41a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614528"
+      ],
+      "oid": 11614528,
+      "width": 4689,
+      "height": 3285,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614529",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "41b-42a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614529"
+      ],
+      "oid": 11614529,
+      "width": 4701,
+      "height": 3252,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614530",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "42b-43a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614530"
+      ],
+      "oid": 11614530,
+      "width": 4716,
+      "height": 3252,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614531",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "43b-44a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614531"
+      ],
+      "oid": 11614531,
+      "width": 4764,
+      "height": 3271,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614532",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "44b-45a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614532"
+      ],
+      "oid": 11614532,
+      "width": 4764,
+      "height": 3271,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614533",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "45b-46a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614533"
+      ],
+      "oid": 11614533,
+      "width": 4764,
+      "height": 3271,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614534",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "46b-47a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614534"
+      ],
+      "oid": 11614534,
+      "width": 4764,
+      "height": 3271,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614535",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "47b-48a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614535"
+      ],
+      "oid": 11614535,
+      "width": 4764,
+      "height": 3271,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614536",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "48b-49a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614536"
+      ],
+      "oid": 11614536,
+      "width": 4764,
+      "height": 3271,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614537",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "49b-50a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614537"
+      ],
+      "oid": 11614537,
+      "width": 4764,
+      "height": 3271,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614538",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "50b-51a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614538"
+      ],
+      "oid": 11614538,
+      "width": 4764,
+      "height": 3271,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614539",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "51b-52a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614539"
+      ],
+      "oid": 11614539,
+      "width": 4764,
+      "height": 3271,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614540",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "52b-53a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614540"
+      ],
+      "oid": 11614540,
+      "width": 4764,
+      "height": 3271,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614541",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "53b-54a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614541"
+      ],
+      "oid": 11614541,
+      "width": 4764,
+      "height": 3296,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614542",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "54b-55a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614542"
+      ],
+      "oid": 11614542,
+      "width": 4764,
+      "height": 3296,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614543",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "55b-56a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614543"
+      ],
+      "oid": 11614543,
+      "width": 4778,
+      "height": 3296,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614544",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "56b-57a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614544"
+      ],
+      "oid": 11614544,
+      "width": 4778,
+      "height": 3296,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614545",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "57b-58a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614545"
+      ],
+      "oid": 11614545,
+      "width": 4778,
+      "height": 3296,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614546",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "58b-59a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614546"
+      ],
+      "oid": 11614546,
+      "width": 4778,
+      "height": 3296,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614547",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "59b-60a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614547"
+      ],
+      "oid": 11614547,
+      "width": 4778,
+      "height": 3296,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614548",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "60b-61a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614548"
+      ],
+      "oid": 11614548,
+      "width": 4778,
+      "height": 3296,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614549",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "61b-62a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614549"
+      ],
+      "oid": 11614549,
+      "width": 4778,
+      "height": 3296,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614550",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "62b-63a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614550"
+      ],
+      "oid": 11614550,
+      "width": 4778,
+      "height": 3296,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614551",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "63b-64a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614551"
+      ],
+      "oid": 11614551,
+      "width": 4778,
+      "height": 3296,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614552",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "64b-65a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614552"
+      ],
+      "oid": 11614552,
+      "width": 4778,
+      "height": 3296,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614553",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "65b-66a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614553"
+      ],
+      "oid": 11614553,
+      "width": 4778,
+      "height": 3296,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614554",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "66b-67a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614554"
+      ],
+      "oid": 11614554,
+      "width": 4778,
+      "height": 3296,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614555",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "67b-68a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614555"
+      ],
+      "oid": 11614555,
+      "width": 4778,
+      "height": 3296,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614556",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "68b-69a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614556"
+      ],
+      "oid": 11614556,
+      "width": 4777,
+      "height": 3289,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614557",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "69b-70a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614557"
+      ],
+      "oid": 11614557,
+      "width": 4777,
+      "height": 3289,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614558",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "70b-71a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614558"
+      ],
+      "oid": 11614558,
+      "width": 4777,
+      "height": 3289,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614559",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "71b-72a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614559"
+      ],
+      "oid": 11614559,
+      "width": 4777,
+      "height": 3289,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614560",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "72b-73a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614560"
+      ],
+      "oid": 11614560,
+      "width": 4777,
+      "height": 3289,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614561",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "73b-74a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614561"
+      ],
+      "oid": 11614561,
+      "width": 4777,
+      "height": 3289,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614562",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "74b-75a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614562"
+      ],
+      "oid": 11614562,
+      "width": 4777,
+      "height": 3289,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614563",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "75b-76a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614563"
+      ],
+      "oid": 11614563,
+      "width": 4742,
+      "height": 3262,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614564",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "76b-77a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614564"
+      ],
+      "oid": 11614564,
+      "width": 4742,
+      "height": 3262,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614565",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "77b-78a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614565"
+      ],
+      "oid": 11614565,
+      "width": 4742,
+      "height": 3262,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614566",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "78b-79a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614566"
+      ],
+      "oid": 11614566,
+      "width": 4742,
+      "height": 3262,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614567",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "79b-80a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614567"
+      ],
+      "oid": 11614567,
+      "width": 4742,
+      "height": 3262,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614568",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "80b-81a",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614568"
+      ],
+      "oid": 11614568,
+      "width": 4651,
+      "height": 3262,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614569",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "[Inside back cover]-81b",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614569"
+      ],
+      "oid": 11614569,
+      "width": 4644,
+      "height": 3262,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/11614570",
+      "callNumber": "Landberg MSS 596",
+      "title": [
+        "[Qiṣṣat Sindbād al-barrī]"
+      ],
+      "caption": "[Back cover]",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/11614570"
+      ],
+      "oid": 11614570,
+      "width": 2564,
+      "height": 3308,
+      "children": [
+
+      ]
+    }
   ],
-  "itemPermission": "Public",
-  "alternativeTitle": [
-    "Book of Sindbad.",
-    "Sindbad the sailor"
-  ],
-  "identifierShelfMark": "Landberg MSS 596",
-  "subjectTitleDisplay": [
-    "Arabic language and literature--Belles lettres",
-    "Islamic binding"
-  ],
-  "extentOfDigitization": [
-    "Complete work digitized."
+  "abstract": [
+    "Incomplete at beginning and end.",
+    "The tale of Sindbād and his princely pupil, in colloquial Arabic."
   ]
 }

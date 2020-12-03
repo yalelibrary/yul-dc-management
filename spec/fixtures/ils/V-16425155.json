@@ -1,6 +1,7 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/bib/9884809",
   "creator": [
     "Coronelli, Vincenzo, 1650-1718"
@@ -8,7 +9,7 @@
   "title": [
     "Amico Lettore"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "Venice",
     "Italy Venice"
   ],
@@ -25,6 +26,9 @@
     "hand col., paper gores over papier-mâché and plaster, mounted on a carved baroque walnut stand . Brass meridian with wooden horizon (5 cm wide) with mounted hand col. zodiacal paper"
   ],
   "language": [
+    "Italian"
+  ],
+  "languageCode": [
     "ita"
   ],
   "description": [
@@ -42,7 +46,7 @@
     "Convex proj."
   ],
   "coordinate": [
-    "a"
+    ""
   ],
   "genre": [
     "Celestial globes",
@@ -53,7 +57,7 @@
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16425166"
   ],
   "dateStructured": [
-    "1699    "
+    "1699"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [

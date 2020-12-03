@@ -1,8 +1,9 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002098971758?bib=7748458",
-  "identifierShelfMark": "229 YCAL MSS",
+  "callNumber": "YCAL MSS 229",
   "creator": [
     "Wodening, Jane, 1936-"
   ],
@@ -16,6 +17,9 @@
     "3 v."
   ],
   "language": [
+    "English"
+  ],
+  "languageCode": [
     "eng"
   ],
   "description": [
@@ -80,11 +84,11 @@
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=YCAL_MSS_229"
   ],
-  "references": [
+  "preferredCitation": [
     "Jane Wodening and Stan Brakhage Scrapbooks. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
   "dateStructured": [
-    "19581967"
+    "1958"
   ],
   "illustrativeMatter": "    ",
   "subjectEra": "20th century. 20th century.",
@@ -178,6 +182,9 @@
     "McClure, Michael."
   ],
   "volumeEnumeration": "2",
+  "accessCondition": [
+    "Boxes 1-3: Restricted fragile material. For further information consult the appropriate curator"
+  ],
   "dependentUris": [
     "/ils/holding/8398033",
     "/ils/item/8246363",

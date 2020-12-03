@@ -1,12 +1,13 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002091549445?bib=11781026",
-  "identifierShelfMark": "36 Takamiya MS",
+  "callNumber": "Takamiya MS 36",
   "title": [
     "Old testament chronicle and genealogy of Christ (Part 1)."
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "England"
   ],
   "publisher": [
@@ -22,6 +23,9 @@
     "parchment ;"
   ],
   "language": [
+    "English, Middle (1100-1500)"
+  ],
+  "languageCode": [
     "enm"
   ],
   "description": [
@@ -49,7 +53,7 @@
     "Early works to 1800",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
-  "format": [
+  "itemType": [
     "unspecified"
   ],
   "orbisBibId": "11781026",
@@ -57,11 +61,11 @@
   "findingAid": [
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16162989"
   ],
-  "references": [
+  "preferredCitation": [
     "Old Testament Chronicle and Genealogy of Christ (Part 1) (Takamiya MS 36). General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "14001450"
+    "1400"
   ],
   "illustrativeMatter": "    ",
   "subjectEra": "Middle English, 1100-1500. Middle English, 1100-1500.",
@@ -83,6 +87,9 @@
     "Bible"
   ],
   "volumeEnumeration": "Roll",
+  "accessCondition": [
+    "This material is open for research"
+  ],
   "dependentUris": [
     "/ils/holding/11898564",
     "/ils/item/10710370",

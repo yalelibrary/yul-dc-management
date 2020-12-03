@@ -1,6 +1,7 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/bib/1289001",
   "creator": [
     "Retzsch, Moritz, 1779-1857"
@@ -8,7 +9,7 @@
   "title": [
     "Faust; esquisses dessinées"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "Paris"
   ],
   "publisher": [
@@ -24,6 +25,9 @@
     "[66] plates."
   ],
   "language": [
+    "French"
+  ],
+  "languageCode": [
     "fre"
   ],
   "description": [
@@ -44,7 +48,7 @@
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16712919"
   ],
   "dateStructured": [
-    "1830    "
+    "1830"
   ],
   "illustrativeMatter": "f   ",
   "titleStatement": [

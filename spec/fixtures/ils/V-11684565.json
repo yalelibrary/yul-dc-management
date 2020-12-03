@@ -1,15 +1,16 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002091594300?bib=9801995",
-  "identifierShelfMark": "2 Beinecke MS",
+  "callNumber": "Beinecke MS 2",
   "creator": [
     "Zeno, Jacopo, 1417-1481"
   ],
   "title": [
     "Vita Caroli Zeni"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "Italy"
   ],
   "publisher": [
@@ -25,6 +26,9 @@
     "parchment ;"
   ],
   "language": [
+    "Latin"
+  ],
+  "languageCode": [
     "lat"
   ],
   "description": [
@@ -47,7 +51,7 @@
     "Manuscripts, Medieval Italy 15th century",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
-  "format": [
+  "itemType": [
     "unspecified"
   ],
   "orbisBibId": "9801995",
@@ -56,11 +60,11 @@
     "https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms002.htm",
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=Beinecke_MS_2"
   ],
-  "references": [
+  "preferredCitation": [
     "Jacopo Zeno, Vita Caroli Zeni. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1458    "
+    "1458"
   ],
   "illustrativeMatter": "    ",
   "subjectEra": "Middle Ages, 500-1500. 13th-15th centuries.",
@@ -82,6 +86,9 @@
   ],
   "creatorDisplay": [
     "Zeno, Jacopo, 1417-1481"
+  ],
+  "accessCondition": [
+    "Material is open for research"
   ],
   "dependentUris": [
     "/ils/holding/10109058",

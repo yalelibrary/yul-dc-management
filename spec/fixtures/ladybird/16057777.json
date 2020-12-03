@@ -1,393 +1,73 @@
 {
-  "box": "Box 1",
-  "oid": 16057777,
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/16057777",
-  "date": [
-    "ca. 1874"
-  ],
-  "genre": [
-    "Shotguns--England--19th century."
+  "callNumber": "WA MSS S-3019",
+  "containerGrouping": "Box 1",
+  "box": "Box 1",
+  "sourceCreator": "Salsbury, Nathan, 1846-1902, collector.",
+  "sourceTitle": "[Objects associated with Buffalo Bill]",
+  "sourceDate": "[circa 1870-1895]",
+  "creator": [
+    "James Dalziel Dougall and Sons"
   ],
   "title": [
     "Double-barrel shotgun"
   ],
+  "date": [
+    "ca. 1874"
+  ],
   "extent": [
     "1 shotgun ; 121 cm."
   ],
+  "description": [
+    "One double-barrel shotgun made by James Dalziel Dougall and Sons, and owned by John Burwell \"Texas Jack\" Omohundro, as a gift from the Irish game hunter Windham Thomas Wyndham-Quin, 4th Earl of Dunraven. The gun is 121 cm in length and was engraved by the maker in several places: \"J. D. Dougall. Gun and Rifle Manufacturer to H. R. H. The Prince of Wales. 59 St. James's St. London\" on low concave game rib, \"J. D. Dougall's Patent Lockfast\" on the bottom of the action, \"J. D. Dougall\" on each lockplate, and the serial number \"3303\" on the tang. An oval copper plate set in the bottom edge of the European walnut straight grip buttstock is engraved: \"From / Earl Dunraven / to / Texas Jack / 1874.\""
+  ],
+  "subjectName": [
+    "Buffalo Bill,--1846-1917.",
+    "Buffalo Bill's Wild West Company.",
+    "Buffalo Bill's Wild West Show.",
+    "Dunraven, Windham Thomas Wyndham-Quin,--Earl of,--1841-1926.",
+    "Dunraven, Windham Thomas Wyndham-Quin,--Earl of,--1841-1926--Presentation inscription to John Burwell Omohundro.",
+    "James Dalziel Dougall and Sons",
+    "Omohundro, John Burwell,--1846-1880.",
+    "Omohundro, John Burwell,--1846-1880--Presentation inscription from Windham Thomas Wyndham-Quin.",
+    "Salsbury, Nathan,--1846-1902.",
+    "Sitting Bull,--1831-1890."
+  ],
+  "subjectTopic": [
+    "Theatrical managers--United States.",
+    "Wild west shows."
+  ],
+  "genre": [
+    "Shotguns--England--19th century."
+  ],
   "format": [
     "three dimensional object"
+  ],
+  "itemType": [
+    "Tools, Equipment & Instruments"
   ],
   "partOf": "Beinecke Library",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement"
   ],
-  "source": "ladybird",
-  "creator": [
-    "James Dalziel Dougall and Sons"
-  ],
-  "abstract": [
-    "A collection of weapons and costume accessories owned by Nathan Salsbury and associated with colleagues of William F. \"Buffalo Bill\" Cody, including John Burwell \"Texas Jack\" Omohundro and Sitting Bull. Included are a shotgun, a bolas, a pair of moccasins, and a quiver containing a bow and arrows, as well as a revolver owned by Salsbury.",
-    "Nathan Salsbury (1846-1902), Civil War veteran, actor, and theatrical entrepreneur; after 1884 co-owner, producer and manager of \"Buffalo Bill's Wild West Show.\""
-  ],
-  "children": [
-    {
-      "oid": 16190094,
-      "uri": "/ladybird/oid/16190094",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 6918,
-      "height": 1566,
-      "source": "ladybird",
-      "caption": "Shotgun-001",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190094"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190095,
-      "uri": "/ladybird/oid/16190095",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 6715,
-      "height": 1656,
-      "source": "ladybird",
-      "caption": "Shotgun-002",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190095"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190096,
-      "uri": "/ladybird/oid/16190096",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 7360,
-      "height": 4912,
-      "source": "ladybird",
-      "caption": "Shotgun-003",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190096"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190097,
-      "uri": "/ladybird/oid/16190097",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 7346,
-      "height": 3684,
-      "source": "ladybird",
-      "caption": "Shotgun-004",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190097"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190098,
-      "uri": "/ladybird/oid/16190098",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 6209,
-      "height": 2709,
-      "source": "ladybird",
-      "caption": "Shotgun-005",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190098"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190099,
-      "uri": "/ladybird/oid/16190099",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 7339,
-      "height": 3238,
-      "source": "ladybird",
-      "caption": "Shotgun-006",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190099"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190100,
-      "uri": "/ladybird/oid/16190100",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 7243,
-      "height": 1853,
-      "source": "ladybird",
-      "caption": "Shotgun-007",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190100"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190101,
-      "uri": "/ladybird/oid/16190101",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 7180,
-      "height": 3075,
-      "source": "ladybird",
-      "caption": "Shotgun-008",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190101"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190102,
-      "uri": "/ladybird/oid/16190102",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 4005,
-      "height": 7209,
-      "source": "ladybird",
-      "caption": "Shotgun-009",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190102"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190103,
-      "uri": "/ladybird/oid/16190103",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 3399,
-      "height": 6334,
-      "source": "ladybird",
-      "caption": "Shotgun-010",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190103"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190104,
-      "uri": "/ladybird/oid/16190104",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 3948,
-      "height": 6920,
-      "source": "ladybird",
-      "caption": "Shotgun-011",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190104"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190105,
-      "uri": "/ladybird/oid/16190105",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 7256,
-      "height": 2975,
-      "source": "ladybird",
-      "caption": "Shotgun-012",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190105"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190106,
-      "uri": "/ladybird/oid/16190106",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 3825,
-      "height": 1950,
-      "source": "ladybird",
-      "caption": "Shotgun-013",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190106"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190107,
-      "uri": "/ladybird/oid/16190107",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 7277,
-      "height": 2703,
-      "source": "ladybird",
-      "caption": "Shotgun-014",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190107"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190108,
-      "uri": "/ladybird/oid/16190108",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 7093,
-      "height": 3251,
-      "source": "ladybird",
-      "caption": "Shotgun-015",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190108"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190109,
-      "uri": "/ladybird/oid/16190109",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 5913,
-      "height": 3729,
-      "source": "ladybird",
-      "caption": "Shotgun-016",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190109"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190110,
-      "uri": "/ladybird/oid/16190110",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 6927,
-      "height": 1783,
-      "source": "ladybird",
-      "caption": "Shotgun-017",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190110"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16190111,
-      "uri": "/ladybird/oid/16190111",
-      "title": [
-        "Double-barrel shotgun"
-      ],
-      "width": 7086,
-      "height": 1661,
-      "source": "ladybird",
-      "caption": "Shotgun-018",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16190111"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    }
-  ],
-  "contents": [
-    "One double-barrel shotgun made by James Dalziel Dougall and Sons, and owned by John Burwell \"Texas Jack\" Omohundro, as a gift from the Irish game hunter Windham Thomas Wyndham-Quin, 4th Earl of Dunraven. The gun is 121 cm in length and was engraved by the maker in several places: \"J. D. Dougall. Gun and Rifle Manufacturer to H. R. H. The Prince of Wales. 59 St. James's St. London\" on low concave game rib, \"J. D. Dougall's Patent Lockfast\" on the bottom of the action, \"J. D. Dougall\" on each lockplate, and the serial number \"3303\" on the tang. An oval copper plate set in the bottom edge of the European walnut straight grip buttstock is engraved: \"From / Earl Dunraven / to / Texas Jack / 1874.\""
-  ],
-  "indexedBy": [
-    "Nathan Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western Americana, Beinecke Rare Book and Manuscript Library."
-  ],
-  "recordType": "oid",
-  "references": [
-    "Nathan Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western Americana, Beinecke Rare Book and Manuscript Library."
-  ],
+  "orbisBibId": "12442385",
   "relatedUrl": [
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?&amp;CN=WA_MSS_S-3019"
   ],
-  "repository": "Beinecke Library",
-  "sourceDate": "[circa 1870-1895]",
+  "preferredCitation": [
+    "Nathan Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western Americana, Beinecke Rare Book and Manuscript Library."
+  ],
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1870"
+  ],
+  "illustrativeMatter": "150424i18701895vp nnn            rneng d",
+  "copyrightDate": [
+    "[circa 1870-1895]"
+  ],
   "subjectEra": "Wild west shows.",
   "contributor": [
     "Buffalo Bill,--1846-1917.",
@@ -401,43 +81,15 @@
     "Salsbury, Nathan,--1846-1902.",
     "Sitting Bull,--1831-1890."
   ],
-  "description": [
-    "One double-barrel shotgun made by James Dalziel Dougall and Sons, and owned by John Burwell \"Texas Jack\" Omohundro, as a gift from the Irish game hunter Windham Thomas Wyndham-Quin, 4th Earl of Dunraven. The gun is 121 cm in length and was engraved by the maker in several places: \"J. D. Dougall. Gun and Rifle Manufacturer to H. R. H. The Prince of Wales. 59 St. James's St. London\" on low concave game rib, \"J. D. Dougall's Patent Lockfast\" on the bottom of the action, \"J. D. Dougall\" on each lockplate, and the serial number \"3303\" on the tang. An oval copper plate set in the bottom edge of the European walnut straight grip buttstock is engraved: \"From / Earl Dunraven / to / Texas Jack / 1874.\""
-  ],
-  "orbisBibId": "12442385",
-  "sourceTitle": "[Objects associated with Buffalo Bill]",
-  "subjectName": [
-    "Buffalo Bill,--1846-1917.",
-    "Buffalo Bill's Wild West Company.",
-    "Buffalo Bill's Wild West Show.",
-    "Dunraven, Windham Thomas Wyndham-Quin,--Earl of,--1841-1926.",
-    "Dunraven, Windham Thomas Wyndham-Quin,--Earl of,--1841-1926--Presentation inscription to John Burwell Omohundro.",
-    "James Dalziel Dougall and Sons",
-    "Omohundro, John Burwell,--1846-1880.",
-    "Omohundro, John Burwell,--1846-1880--Presentation inscription from Windham Thomas Wyndham-Quin.",
-    "Salsbury, Nathan,--1846-1902.",
-    "Sitting Bull,--1831-1890."
-  ],
-  "collectionId": 1,
-  "resourceType": "Tools, Equipment & Instruments",
+  "repository": "Beinecke Library",
   "subjectTitle": "Wild west shows.",
-  "subjectTopic": [
+  "subjectTitleDisplay": [
     "Theatrical managers--United States.",
     "Wild west shows."
-  ],
-  "copyrightDate": [
-    "[circa 1870-1895]"
-  ],
-  "dependentUris": [
-    "/ladybird/oid/16057777"
   ],
   "creatorDisplay": [
     "James Dalziel Dougall and Sons"
   ],
-  "dateStructured": [
-    "1870-00-00T00:00:00Z"
-  ],
-  "itemPermission": "Public",
   "contributorDisplay": [
     "Buffalo Bill,--1846-1917.",
     "Buffalo Bill's Wild West Company.",
@@ -450,10 +102,375 @@
     "Salsbury, Nathan,--1846-1902.",
     "Sitting Bull,--1831-1890."
   ],
-  "illustrativeMatter": "150424i18701895vp nnn            rneng d",
-  "identifierShelfMark": "WA MSS S-3019",
-  "subjectTitleDisplay": [
-    "Theatrical managers--United States.",
-    "Wild west shows."
+  "dependentUris": [
+    "/ladybird/oid/16057777"
+  ],
+  "oid": 16057777,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190094",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-001",
+      "dependentUris": [
+        "/ladybird/oid/16190094"
+      ],
+      "oid": 16190094,
+      "width": 6918,
+      "height": 1566,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190095",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-002",
+      "dependentUris": [
+        "/ladybird/oid/16190095"
+      ],
+      "oid": 16190095,
+      "width": 6715,
+      "height": 1656,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190096",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-003",
+      "dependentUris": [
+        "/ladybird/oid/16190096"
+      ],
+      "oid": 16190096,
+      "width": 7360,
+      "height": 4912,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190097",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-004",
+      "dependentUris": [
+        "/ladybird/oid/16190097"
+      ],
+      "oid": 16190097,
+      "width": 7346,
+      "height": 3684,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190098",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-005",
+      "dependentUris": [
+        "/ladybird/oid/16190098"
+      ],
+      "oid": 16190098,
+      "width": 6209,
+      "height": 2709,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190099",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-006",
+      "dependentUris": [
+        "/ladybird/oid/16190099"
+      ],
+      "oid": 16190099,
+      "width": 7339,
+      "height": 3238,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190100",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-007",
+      "dependentUris": [
+        "/ladybird/oid/16190100"
+      ],
+      "oid": 16190100,
+      "width": 7243,
+      "height": 1853,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190101",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-008",
+      "dependentUris": [
+        "/ladybird/oid/16190101"
+      ],
+      "oid": 16190101,
+      "width": 7180,
+      "height": 3075,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190102",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-009",
+      "dependentUris": [
+        "/ladybird/oid/16190102"
+      ],
+      "oid": 16190102,
+      "width": 4005,
+      "height": 7209,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190103",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-010",
+      "dependentUris": [
+        "/ladybird/oid/16190103"
+      ],
+      "oid": 16190103,
+      "width": 3399,
+      "height": 6334,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190104",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-011",
+      "dependentUris": [
+        "/ladybird/oid/16190104"
+      ],
+      "oid": 16190104,
+      "width": 3948,
+      "height": 6920,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190105",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-012",
+      "dependentUris": [
+        "/ladybird/oid/16190105"
+      ],
+      "oid": 16190105,
+      "width": 7256,
+      "height": 2975,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190106",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-013",
+      "dependentUris": [
+        "/ladybird/oid/16190106"
+      ],
+      "oid": 16190106,
+      "width": 3825,
+      "height": 1950,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190107",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-014",
+      "dependentUris": [
+        "/ladybird/oid/16190107"
+      ],
+      "oid": 16190107,
+      "width": 7277,
+      "height": 2703,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190108",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-015",
+      "dependentUris": [
+        "/ladybird/oid/16190108"
+      ],
+      "oid": 16190108,
+      "width": 7093,
+      "height": 3251,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190109",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-016",
+      "dependentUris": [
+        "/ladybird/oid/16190109"
+      ],
+      "oid": 16190109,
+      "width": 5913,
+      "height": 3729,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190110",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-017",
+      "dependentUris": [
+        "/ladybird/oid/16190110"
+      ],
+      "oid": 16190110,
+      "width": 6927,
+      "height": 1783,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16190111",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Double-barrel shotgun"
+      ],
+      "caption": "Shotgun-018",
+      "dependentUris": [
+        "/ladybird/oid/16190111"
+      ],
+      "oid": 16190111,
+      "width": 7086,
+      "height": 1661,
+      "children": [
+
+      ]
+    }
+  ],
+  "abstract": [
+    "A collection of weapons and costume accessories owned by Nathan Salsbury and associated with colleagues of William F. \"Buffalo Bill\" Cody, including John Burwell \"Texas Jack\" Omohundro and Sitting Bull. Included are a shotgun, a bolas, a pair of moccasins, and a quiver containing a bow and arrows, as well as a revolver owned by Salsbury.",
+    "Nathan Salsbury (1846-1902), Civil War veteran, actor, and theatrical entrepreneur; after 1884 co-owner, producer and manager of \"Buffalo Bill's Wild West Show.\""
   ]
 }

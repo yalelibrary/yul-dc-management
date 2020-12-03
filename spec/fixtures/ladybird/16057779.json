@@ -1,124 +1,65 @@
 {
-  "box": "Box 2",
-  "oid": 16057779,
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/16057779",
-  "date": [
-    "[1870]"
-  ],
-  "genre": [
-    "Bolas (projectile weapons)--United States--19th century."
-  ],
+  "callNumber": "WA MSS S-3019",
+  "containerGrouping": "Box 2",
+  "box": "Box 2",
+  "sourceCreator": "Salsbury, Nathan, 1846-1902, collector.",
+  "sourceTitle": "[Objects associated with Buffalo Bill]",
+  "sourceDate": "[circa 1870-1895]",
   "title": [
     "Rawhide bolas"
+  ],
+  "date": [
+    "[1870]"
   ],
   "extent": [
     "1 bolas : 121 cm."
   ],
+  "description": [
+    "One twisted rawhide bolas with three rawhide-covered weights, and measuring 121 cm in length. Used to capture running game during a hunt, the bolas is unmarked and its original owner is unidentified."
+  ],
+  "subjectName": [
+    "Buffalo Bill,--1846-1917.",
+    "Buffalo Bill's Wild West Company.",
+    "Buffalo Bill's Wild West Show.",
+    "Salsbury, Nathan,--1846-1902.",
+    "Sitting Bull,--1831-1890."
+  ],
+  "subjectTopic": [
+    "Theatrical managers--United States.",
+    "Wild west shows."
+  ],
+  "genre": [
+    "Bolas (projectile weapons)--United States--19th century."
+  ],
   "format": [
     "three dimensional object"
+  ],
+  "itemType": [
+    "Tools, Equipment & Instruments"
   ],
   "partOf": "Beinecke Library",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement"
   ],
-  "source": "ladybird",
-  "abstract": [
-    "A collection of weapons and costume accessories owned by Nathan Salsbury and associated with colleagues of William F. \"Buffalo Bill\" Cody, including John Burwell \"Texas Jack\" Omohundro and Sitting Bull. Included are a shotgun, a bolas, a pair of moccasins, and a quiver containing a bow and arrows, as well as a revolver owned by Salsbury.",
-    "Nathan Salsbury (1846-1902), Civil War veteran, actor, and theatrical entrepreneur; after 1884 co-owner, producer and manager of \"Buffalo Bill's Wild West Show.\""
-  ],
-  "children": [
-    {
-      "oid": 16057781,
-      "uri": "/ladybird/oid/16057781",
-      "title": [
-        "Rawhide bolas"
-      ],
-      "width": 6004,
-      "height": 4523,
-      "source": "ladybird",
-      "caption": "Bolas-001",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16057781"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16057782,
-      "uri": "/ladybird/oid/16057782",
-      "title": [
-        "Rawhide bolas"
-      ],
-      "width": 5729,
-      "height": 4209,
-      "source": "ladybird",
-      "caption": "Bolas-002",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16057782"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16057783,
-      "uri": "/ladybird/oid/16057783",
-      "title": [
-        "Rawhide bolas"
-      ],
-      "width": 5210,
-      "height": 3941,
-      "source": "ladybird",
-      "caption": "Bolas-003",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16057783"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    },
-    {
-      "oid": 16057784,
-      "uri": "/ladybird/oid/16057784",
-      "title": [
-        "Rawhide bolas"
-      ],
-      "width": 4912,
-      "height": 6247,
-      "source": "ladybird",
-      "caption": "Bolas-004",
-      "children": [
-
-      ],
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16057784"
-      ],
-      "identifierShelfMark": "WA MSS S-3019"
-    }
-  ],
-  "contents": [
-    "One twisted rawhide bolas with three rawhide-covered weights, and measuring 121 cm in length. Used to capture running game during a hunt, the bolas is unmarked and its original owner is unidentified."
-  ],
-  "indexedBy": [
-    "Nathan Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western Americana, Beinecke Rare Book and Manuscript Library."
-  ],
-  "recordType": "oid",
-  "references": [
-    "Nathan Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western Americana, Beinecke Rare Book and Manuscript Library."
-  ],
+  "orbisBibId": "12442385",
   "relatedUrl": [
     "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?&amp;CN=WA_MSS_S-3019"
   ],
-  "repository": "Beinecke Library",
-  "sourceDate": "[circa 1870-1895]",
+  "preferredCitation": [
+    "Nathan Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western Americana, Beinecke Rare Book and Manuscript Library."
+  ],
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1870"
+  ],
+  "illustrativeMatter": "150424i18701895vp nnn            rneng d",
+  "copyrightDate": [
+    "[circa 1870-1895]"
+  ],
   "subjectEra": "Wild west shows.",
   "contributor": [
     "Buffalo Bill,--1846-1917.",
@@ -127,35 +68,12 @@
     "Salsbury, Nathan,--1846-1902.",
     "Sitting Bull,--1831-1890."
   ],
-  "description": [
-    "One twisted rawhide bolas with three rawhide-covered weights, and measuring 121 cm in length. Used to capture running game during a hunt, the bolas is unmarked and its original owner is unidentified."
-  ],
-  "orbisBibId": "12442385",
-  "sourceTitle": "[Objects associated with Buffalo Bill]",
-  "subjectName": [
-    "Buffalo Bill,--1846-1917.",
-    "Buffalo Bill's Wild West Company.",
-    "Buffalo Bill's Wild West Show.",
-    "Salsbury, Nathan,--1846-1902.",
-    "Sitting Bull,--1831-1890."
-  ],
-  "collectionId": 1,
-  "resourceType": "Tools, Equipment & Instruments",
+  "repository": "Beinecke Library",
   "subjectTitle": "Wild west shows.",
-  "subjectTopic": [
+  "subjectTitleDisplay": [
     "Theatrical managers--United States.",
     "Wild west shows."
   ],
-  "copyrightDate": [
-    "[circa 1870-1895]"
-  ],
-  "dependentUris": [
-    "/ladybird/oid/16057779"
-  ],
-  "dateStructured": [
-    "1870-00-00T00:00:00Z"
-  ],
-  "itemPermission": "Public",
   "contributorDisplay": [
     "Buffalo Bill,--1846-1917.",
     "Buffalo Bill's Wild West Company.",
@@ -163,10 +81,95 @@
     "Salsbury, Nathan,--1846-1902.",
     "Sitting Bull,--1831-1890."
   ],
-  "illustrativeMatter": "150424i18701895vp nnn            rneng d",
-  "identifierShelfMark": "WA MSS S-3019",
-  "subjectTitleDisplay": [
-    "Theatrical managers--United States.",
-    "Wild west shows."
+  "dependentUris": [
+    "/ladybird/oid/16057779"
+  ],
+  "oid": 16057779,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16057781",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Rawhide bolas"
+      ],
+      "caption": "Bolas-001",
+      "dependentUris": [
+        "/ladybird/oid/16057781"
+      ],
+      "oid": 16057781,
+      "width": 6004,
+      "height": 4523,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16057782",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Rawhide bolas"
+      ],
+      "caption": "Bolas-002",
+      "dependentUris": [
+        "/ladybird/oid/16057782"
+      ],
+      "oid": 16057782,
+      "width": 5729,
+      "height": 4209,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16057783",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Rawhide bolas"
+      ],
+      "caption": "Bolas-003",
+      "dependentUris": [
+        "/ladybird/oid/16057783"
+      ],
+      "oid": 16057783,
+      "width": 5210,
+      "height": 3941,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16057784",
+      "callNumber": "WA MSS S-3019",
+      "title": [
+        "Rawhide bolas"
+      ],
+      "caption": "Bolas-004",
+      "dependentUris": [
+        "/ladybird/oid/16057784"
+      ],
+      "oid": 16057784,
+      "width": 4912,
+      "height": 6247,
+      "children": [
+
+      ]
+    }
+  ],
+  "abstract": [
+    "A collection of weapons and costume accessories owned by Nathan Salsbury and associated with colleagues of William F. \"Buffalo Bill\" Cody, including John Burwell \"Texas Jack\" Omohundro and Sitting Bull. Included are a shotgun, a bolas, a pair of moccasins, and a quiver containing a bow and arrows, as well as a revolver owned by Salsbury.",
+    "Nathan Salsbury (1846-1902), Civil War veteran, actor, and theatrical entrepreneur; after 1884 co-owner, producer and manager of \"Buffalo Bill's Wild West Show.\""
   ]
 }

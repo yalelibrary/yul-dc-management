@@ -1,8 +1,9 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002091118928?bib=8394689",
-  "identifierShelfMark": "1860A 11",
+  "callNumber": "11 1860A",
   "title": [
     "Di qiu quan tu",
     "地球全圖"
@@ -14,7 +15,7 @@
   "edition": [
     "Tao yin ben."
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "China",
     "China",
     "China"
@@ -33,6 +34,9 @@
     "color ;"
   ],
   "language": [
+    "Chinese"
+  ],
+  "languageCode": [
     "chi"
   ],
   "subjectTopic": [
@@ -41,14 +45,16 @@
   ],
   "scale": "Scale not determined.",
   "coordinate": [
-    "a -180.000000 180.000000 090.000000 -090.000000",
+    "-180.000000 180.000000 090.000000 -090.000000"
+  ],
+  "coordinateDisplay": [
     "(W 180°--E 180°/N 90°--S 90°)."
   ],
   "genre": [
     "World maps",
     "Chinese rare maps"
   ],
-  "format": [
+  "itemType": [
     "cartographic image"
   ],
   "orbisBibId": "8394689",
@@ -57,7 +63,7 @@
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16595618"
   ],
   "dateStructured": [
-    "1855    "
+    "1855"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [

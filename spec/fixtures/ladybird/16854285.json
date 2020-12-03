@@ -1,152 +1,161 @@
 {
-  "box": "1",
-  "oid": 16854285,
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/16854285",
-  "genre": [
-    "Portraits",
-    "Posters--United States--19th century"
+  "callNumber": "YCAL MSS 1000",
+  "containerGrouping": "Box 1",
+  "box": "1",
+  "sourceCreator": "Fowler & Wells",
+  "sourceTitle": "Fowler & Wells Portrait Posters for Physiognomy Lectures",
+  "sourceDate": "circa 1860",
+  "creator": [
+    "Fowler & Wells"
   ],
   "title": [
     "Poster 1: Destructiveness small, Destructiveness large, Hydrocephalus James Cardinal, Thomas Sewall, Red Jacket, Language large"
   ],
+  "extentOfDigitization": [
+    "Complete work digitized."
+  ],
   "extent": [
     "1 scroll ; approx. 164 x 83.8 cm."
   ],
+  "subjectName": [
+    "Red Jacket, Seneca chief, approximately 1756-1830",
+    "Sewall, Thomas, 1786 or 1787-1845"
+  ],
+  "subjectTopic": [
+    "Phrenology--United States",
+    "Physiognomy--United States"
+  ],
+  "genre": [
+    "Portraits",
+    "Posters--United States--19th century"
+  ],
   "format": [
     "still image"
+  ],
+  "itemType": [
+    "Paintings & Drawings"
   ],
   "partOf": "Beinecke Library",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "source": "ladybird",
-  "creator": [
-    "Fowler & Wells"
-  ],
-  "children": [
-    {
-      "oid": 16854300,
-      "uri": "/ladybird/oid/16854300",
-      "title": [
-        "Poster 1: Destructiveness small, Destructiveness large, Hydrocephalus James Cardinal, Thomas Sewall, Red Jacket, Language large"
-      ],
-      "width": 10328,
-      "height": 7760,
-      "source": "ladybird",
-      "caption": "[Panels 1 - 2]",
-      "children": [
-
-      ],
-      "callNumber": "YCAL MSS 1000",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16854300"
-      ]
-    },
-    {
-      "oid": 16854301,
-      "uri": "/ladybird/oid/16854301",
-      "title": [
-        "Poster 1: Destructiveness small, Destructiveness large, Hydrocephalus James Cardinal, Thomas Sewall, Red Jacket, Language large"
-      ],
-      "width": 10328,
-      "height": 7487,
-      "source": "ladybird",
-      "caption": "[Panels 3 - 4]",
-      "children": [
-
-      ],
-      "callNumber": "YCAL MSS 1000",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16854301"
-      ]
-    },
-    {
-      "oid": 16854302,
-      "uri": "/ladybird/oid/16854302",
-      "title": [
-        "Poster 1: Destructiveness small, Destructiveness large, Hydrocephalus James Cardinal, Thomas Sewall, Red Jacket, Language large"
-      ],
-      "width": 10328,
-      "height": 7398,
-      "source": "ladybird",
-      "caption": "[Panels 5 - 6]",
-      "children": [
-
-      ],
-      "callNumber": "YCAL MSS 1000",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16854302"
-      ]
-    },
-    {
-      "oid": 16854303,
-      "uri": "/ladybird/oid/16854303",
-      "title": [
-        "Poster 1: Destructiveness small, Destructiveness large, Hydrocephalus James Cardinal, Thomas Sewall, Red Jacket, Language large"
-      ],
-      "width": 771,
-      "height": 1536,
-      "source": "ladybird",
-      "caption": "[Entire scroll]",
-      "children": [
-
-      ],
-      "callNumber": "YCAL MSS 1000",
-      "recordType": "oid",
-      "dependentUris": [
-        "/ladybird/oid/16854303"
-      ]
-    }
-  ],
-  "callNumber": "YCAL MSS 1000",
+  "orbisBibId": "12307100",
+  "orbisBarcode": "39002102340669",
   "findingAid": [
     "http://hdl.handle.net/10079/fa/beinecke.phrenology"
   ],
-  "orbisBibId": "12307100",
-  "recordType": "oid",
-  "repository": "Beinecke Library",
-  "sourceDate": "circa 1860",
+  "preferredCitation": [
+    "Fowler & Wells, Portrait Posters for Physiognomy Lectures. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
+  ],
+  "itemPermission": "Public",
   "subjectEra": "Physiognomy--United States",
   "contributor": [
     "Red Jacket, Seneca chief, approximately 1756-1830",
     "Sewall, Thomas, 1786 or 1787-1845"
   ],
-  "sourceTitle": "Fowler & Wells Portrait Posters for Physiognomy Lectures",
-  "subjectName": [
-    "Red Jacket, Seneca chief, approximately 1756-1830",
-    "Sewall, Thomas, 1786 or 1787-1845"
-  ],
-  "collectionId": 1,
-  "orbisBarcode": "39002102340669",
-  "resourceType": "Paintings & Drawings",
+  "repository": "Beinecke Library",
   "subjectTitle": "Physiognomy--United States",
-  "subjectTopic": [
+  "subjectTitleDisplay": [
     "Phrenology--United States",
     "Physiognomy--United States"
   ],
-  "dependentUris": [
-    "/ladybird/oid/16854285"
-  ],
   "creatorDisplay": [
     "Fowler & Wells"
-  ],
-  "itemPermission": "Public",
-  "archiveSpaceUri": "/repositories/11/archival_objects/515305",
-  "preferredCitation": [
-    "Fowler & Wells, Portrait Posters for Physiognomy Lectures. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
   "contributorDisplay": [
     "Red Jacket, Seneca chief, approximately 1756-1830",
     "Sewall, Thomas, 1786 or 1787-1845"
   ],
-  "subjectTitleDisplay": [
-    "Phrenology--United States",
-    "Physiognomy--United States"
+  "archiveSpaceUri": "/repositories/11/archival_objects/515305",
+  "dependentUris": [
+    "/ladybird/oid/16854285"
   ],
-  "extentOfDigitization": [
-    "Complete work digitized."
+  "oid": 16854285,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16854300",
+      "callNumber": "YCAL MSS 1000",
+      "title": [
+        "Poster 1: Destructiveness small, Destructiveness large, Hydrocephalus James Cardinal, Thomas Sewall, Red Jacket, Language large"
+      ],
+      "caption": "[Panels 1 - 2]",
+      "dependentUris": [
+        "/ladybird/oid/16854300"
+      ],
+      "oid": 16854300,
+      "width": 10328,
+      "height": 7760,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16854301",
+      "callNumber": "YCAL MSS 1000",
+      "title": [
+        "Poster 1: Destructiveness small, Destructiveness large, Hydrocephalus James Cardinal, Thomas Sewall, Red Jacket, Language large"
+      ],
+      "caption": "[Panels 3 - 4]",
+      "dependentUris": [
+        "/ladybird/oid/16854301"
+      ],
+      "oid": 16854301,
+      "width": 10328,
+      "height": 7487,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16854302",
+      "callNumber": "YCAL MSS 1000",
+      "title": [
+        "Poster 1: Destructiveness small, Destructiveness large, Hydrocephalus James Cardinal, Thomas Sewall, Red Jacket, Language large"
+      ],
+      "caption": "[Panels 5 - 6]",
+      "dependentUris": [
+        "/ladybird/oid/16854302"
+      ],
+      "oid": 16854302,
+      "width": 10328,
+      "height": 7398,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/16854303",
+      "callNumber": "YCAL MSS 1000",
+      "title": [
+        "Poster 1: Destructiveness small, Destructiveness large, Hydrocephalus James Cardinal, Thomas Sewall, Red Jacket, Language large"
+      ],
+      "caption": "[Entire scroll]",
+      "dependentUris": [
+        "/ladybird/oid/16854303"
+      ],
+      "oid": 16854303,
+      "width": 771,
+      "height": 1536,
+      "children": [
+
+      ]
+    }
   ]
 }

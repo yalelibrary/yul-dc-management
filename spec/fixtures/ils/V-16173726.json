@@ -1,8 +1,9 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/barcode/39002113593728?bib=12286028",
-  "identifierShelfMark": "+1880 5626 Covers",
+  "callNumber": "Covers 5626 +1880",
   "creator": [
     "Li, Mengquan (Cartographer), cartographer",
     "李蒙泉 (Cartographer), cartographer"
@@ -11,7 +12,7 @@
     "Su Sheng yu di ying wu quan tu",
     "蘇省輿地營伍全圖"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "China"
   ],
   "publisher": [
@@ -27,6 +28,9 @@
     "color ;"
   ],
   "language": [
+    "Chinese"
+  ],
+  "languageCode": [
     "chi"
   ],
   "description": [
@@ -36,9 +40,10 @@
     "Military camps",
     "Military camps"
   ],
+  "subjectGeographicCode": "a-cc-ku",
   "scale": "Scale not given.",
   "coordinate": [
-    "a"
+    ""
   ],
   "genre": [
     "Maps",
@@ -47,7 +52,7 @@
     "Maps",
     "Chinese rare maps"
   ],
-  "format": [
+  "itemType": [
     "cartographic image"
   ],
   "orbisBibId": "12286028",
@@ -56,7 +61,7 @@
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16173880"
   ],
   "dateStructured": [
-    "1880    "
+    "1880"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [
@@ -71,7 +76,6 @@
     ""
   ],
   "subjectGeographic": [
-    "a-cc-ku",
     "China",
     "Jiangsu Sheng",
     "China",
@@ -88,6 +92,7 @@
   "contributorDisplay": [
     "Chen, Jiaxun (Cartographer),"
   ],
+  "libraryOfCongressClassificationNumber": "UA839.J53 L52 1880",
   "dependentUris": [
     "/ils/holding/12453009",
     "/ils/item/11656798",
