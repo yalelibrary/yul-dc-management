@@ -247,6 +247,27 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       it 'returns an aspace url' do
         expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.2/aspace/repositories/11/archival_objects/608223"
       end
+
+      context "with the wrong metadata_cloud_version set" do
+        let(:ladybird_source) { FactoryBot.build(:metadata_source) }
+        around do |example|
+          original_vpn = ENV['VPN']
+          ENV['VPN'] = "true"
+          example.run
+          ENV['VPN'] = original_vpn
+        end
+        before do
+          stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/ladybird/oid/16797069?include-children=1")
+            .to_return(status: 400, body: File.open(File.join(fixture_path, "metadata_cloud_wrong_version.json")))
+        end
+        it "raises an error" do
+          allow(MetadataSource).to receive(:metadata_cloud_version).and_return("clearly_fake_version")
+          expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/ladybird/oid/16797069?include-children=1"
+          expect do
+            ladybird_source.fetch_record_on_vpn(parent_object)
+          end.to raise_error(MetadataSource::MetadataCloudVersionError, "MetadataCloud is not responding to requests for version: clearly_fake_version")
+        end
+      end
     end
 
     context 'with ladybird_json but no orbisBarcode' do
