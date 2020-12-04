@@ -56,6 +56,23 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     # rubocop:enable RSpec/AnyInstance
   end
 
+  context "with a parent object with many pages" do
+    let(:fixture_json) { JSON.parse(File.open(File.join(fixture_path, "ladybird", "2003431.json")).read) }
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_003_431, ladybird_json: fixture_json) }
+
+    around do |example|
+      perform_enqueued_jobs do
+        example.run
+      end
+    end
+
+    it "creates the child objects" do
+      expect do
+        parent_object.create_child_records
+      end.to change { ChildObject.count }.from(0).to(1366)
+    end
+  end
+
   context 'with a random notification' do
     let(:user_one) { FactoryBot.create(:user, uid: "human the first") }
     let(:user_two) { FactoryBot.create(:user, uid: "human the second") }

@@ -42,19 +42,27 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     ['solr-indexed', 'pdf-generated']
   end
 
-  def create_child_records(_current_batch_process, _current_batch_connection = current_batch_connection)
+  def create_child_records
+    return unless ladybird_json
+    return self.child_object_count = 0 if ladybird_json["children"].empty?
+    # Note - the upsert_all method skips ActiveRecord callbacks, and is entirely
+    # database driven. This also makes object creation much faster.
+    ChildObject.upsert_all(array_of_child_hashes)
+    self.child_object_count = child_objects.size
+  end
+
+  def array_of_child_hashes
     return unless ladybird_json
     ladybird_json["children"].map.with_index(1) do |child_record, index|
-      next if child_object_ids.include?(child_record["oid"])
-      child_objects.build(
+      {
         oid: child_record["oid"],
         # Ladybird has only one field for both order label (7v, etc.), and descriptive captions ("Mozart at the Keyboard")
         # For the first iteration we will map this field to label
         label: child_record["caption"],
-        order: index
-      )
+        order: index,
+        parent_object_oid: oid
+      }
     end
-    self.child_object_count = child_objects.size
   end
 
   # Fetches the record from the authoritative_metadata_source
