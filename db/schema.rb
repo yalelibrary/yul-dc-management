@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 2020_12_03_205054) do
     t.integer "height"
     t.integer "order"
     t.bigint "parent_object_oid", null: false
-    t.datetime "created_at", precision: 6, default: "2020-12-03 20:53:18", null: false
-    t.datetime "updated_at", precision: 6, default: "2020-12-03 20:53:19", null: false
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "label"
     t.string "checksum"
     t.string "viewing_hint"
