@@ -6,6 +6,16 @@
 </p>
 
 <p>
+  <strong>Viewing Direction:</strong>
+  <%= @parent_object.viewing_direction %>
+</p>
+
+<p>
+  <strong>Display Layout / Viewing Hint:</strong>
+  <%= @parent_object.display_layout %>
+</p>
+
+<p>
   <strong>Bib:</strong>
   <%= @parent_object.bib %>
 </p>
@@ -66,7 +76,7 @@
 </p>
 
 <div class="child-objects">
-  <strong>Children:</strong>  
+  <strong>Children:</strong>
     <div class="child-list">
       <ol>
         <% @parent_object.child_objects.map{|child| %>

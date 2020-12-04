@@ -67,6 +67,16 @@
   </div>
 
   <div class="field">
+    <%= form.label :viewing_direction %>
+    <%= form.select(:viewing_direction, ParentObject.viewing_directions) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :display_layout %>
+    <%= form.select(:display_layout, ParentObject.viewing_hints) %>
+  </div>
+
+  <div class="field">
     <%= form.label :last_id_update %>
     <%= form.text_field :last_id_update %>
   </div>
