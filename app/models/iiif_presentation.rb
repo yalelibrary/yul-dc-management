@@ -60,6 +60,7 @@ class IiifPresentation
     values = []
     METADATA_FIELDS.each do |m_field|
       value = @parent_object&.authoritative_json&.[](m_field[:field])
+      value = value.to_s unless value.nil? || value.is_a?(Array)
       values << metadata_pair(m_field[:label], value) if value
     end
     values
