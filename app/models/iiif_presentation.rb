@@ -64,10 +64,10 @@ class IiifPresentation
   end
 
   def metadata_pair(label, value)
-    value = [value] if value.is_a? String
+    value = [value.to_s] if value.is_a? String
     {
       'label' => label,
-      'value' => value.to_s
+      'value' => value
     }
   end
 
@@ -115,7 +115,7 @@ class IiifPresentation
 
   def add_metadata_to_canvas(canvas, child)
     metadata_values = []
-    metadata_values <<  metadata_pair('Image OID', child.oid) if child.oid
+    metadata_values <<  metadata_pair('Image OID', child.oid.to_s) if child.oid
     metadata_values <<  metadata_pair('Image Label', child.label) if child.label
     metadata_values <<  metadata_pair('Image Caption', child.caption) if child.caption
     canvas['metadata'] = metadata_values
