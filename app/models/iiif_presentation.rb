@@ -51,6 +51,8 @@ class IiifPresentation
     @sequence = IIIF::Presentation::Sequence.new
     @sequence["@id"] = "#{ENV['IIIF_MANIFESTS_BASE_URL']}/sequence/#{oid}"
     @sequence["rendering"] = rendering
+    @sequence["viewingDirection"] = @parent_object.viewing_direction unless @parent_object.viewing_direction.nil? || @parent_object.viewing_direction.empty?
+    @sequence["viewingHint"] = @parent_object.display_layout unless @parent_object.display_layout.nil? || @parent_object.display_layout.empty?
     @sequence
   end
 
@@ -58,17 +60,14 @@ class IiifPresentation
     values = []
     METADATA_FIELDS.each do |m_field|
       value = @parent_object&.authoritative_json&.[](m_field[:field])
-      values <<  metadata_pair(m_field[:label], value) if value
+      values << metadata_pair(m_field[:label], value) if value
     end
     values
   end
 
   def metadata_pair(label, value)
-    value = [value.to_s] if value.is_a? String
-    {
-      'label' => label,
-      'value' => value
-    }
+    value = [value] if value.is_a? String
+    { 'label' => label, 'value' => value }
   end
 
   def rendering

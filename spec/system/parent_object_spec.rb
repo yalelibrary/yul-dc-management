@@ -18,6 +18,27 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
       click_on("New Parent Object")
     end
 
+    context "setting non-required values" do
+      before do
+        stub_metadata_cloud("2012036")
+        fill_in('Oid', with: "2012036")
+      end
+
+      it "includes reference to documentation for IIIF values" do
+        expect(page).to have_link("IIIF viewing direction details", href: "https://iiif.io/api/presentation/2.1/#viewingdirection")
+        expect(page).to have_link("IIIF viewing hints details", href: "https://iiif.io/api/presentation/2.1/#viewinghint")
+      end
+
+      it "can set iiif values via the UI" do
+        page.select("left-to-right", from: "Viewing direction")
+        page.select("facing-pages", from: "Display layout")
+        click_on("Create Parent object")
+        expect(page.body).to include "Parent object was successfully created"
+        expect(page.body).to include "left-to-right"
+        expect(page.body).to include "facing-pages"
+      end
+    end
+
     context "with a ParentObject whose authoritative_metadata_source is Ladybird" do
       before do
         stub_metadata_cloud("2012036")
@@ -63,6 +84,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
       it "can create a new parent object" do
         expect(page.body).to include "Parent object was successfully created"
         expect(page.body).to include "Voyager"
+        expect(page.body).to include "Public"
       end
 
       it "has the correct authoritative_metadata_source in the database" do
@@ -76,6 +98,10 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         expect(po.voyager_json).not_to be_empty
         expect(po.holding).to eq "7397126"
         expect(po.item).to eq "8200460"
+      end
+
+      it "adds the visibility for public objects" do
+        expect(ParentObject.find_by(oid: "2012036")["visibility"]).to eq "Public"
       end
     end
 
@@ -119,25 +145,6 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
       it "still fills in non-empty values" do
         expect(ParentObject.find_by(oid: "2004628")["bib"]).to eq "3163155"
-      end
-    end
-
-    context "with a ParentObject whose authoritative_metadata_source is Voyager" do
-      before do
-        stub_metadata_cloud("2012036", "ladybird")
-        stub_metadata_cloud("V-2012036", "ils")
-        fill_in('Oid', with: "2012036")
-        select('Public')
-        click_on("Create Parent object")
-      end
-
-      it "can create a new parent object" do
-        expect(page.body).to include "Parent object was successfully created"
-        expect(page.body).to include "Public"
-      end
-
-      it "adds the visibility for public objects" do
-        expect(ParentObject.find_by(oid: "2012036")["visibility"]).to eq "Public"
       end
     end
 

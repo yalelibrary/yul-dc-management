@@ -20,7 +20,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
   let(:oid) { 16_172_421 }
   let(:iiif_presentation) { described_class.new(parent_object) }
   let(:logger_mock) { instance_double("Rails.logger").as_null_object }
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: oid) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, viewing_direction: "left-to-right", display_layout: "individuals") }
   let(:first_canvas) { iiif_presentation.manifest.sequences.first.canvases.first }
   let(:third_to_last_canvas) { iiif_presentation.manifest.sequences.first.canvases.third_to_last }
   before do
@@ -100,6 +100,12 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       expect(iiif_presentation.manifest.sequences.first["rendering"].first["@id"]).to eq "#{ENV['PDF_BASE_URL']}/#{oid}.pdf"
       expect(iiif_presentation.manifest.sequences.first["rendering"].first["format"]).to eq "application/pdf"
       expect(iiif_presentation.manifest.sequences.first["rendering"].first["label"]).to eq "Download as PDF"
+    end
+
+    it "includes viewingDirection when included on parent_object" do
+      expect(iiif_presentation.manifest.sequences.first["viewingDirection"].class).to eq String
+      expect(iiif_presentation.manifest.sequences.first["viewingDirection"]).to eq "left-to-right"
+      expect(iiif_presentation.manifest.sequences.first["viewingHint"]).to eq "individuals"
     end
 
     it "has a sequence with an id" do

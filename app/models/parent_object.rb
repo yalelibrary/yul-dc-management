@@ -26,6 +26,16 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     ['Private', 'Public', 'Yale Community Only']
   end
 
+  # Options from iiif presentation api 2.1 - see https://iiif.io/api/presentation/2.1/#viewingdirection
+  def self.viewing_directions
+    [nil, "left-to-right", "right-to-left", "top-to-bottom", "bottom-to-top"]
+  end
+
+  # Options from iiif presentation api 2.1 - see https://iiif.io/api/presentation/2.1/#viewinghint
+  def self.viewing_hints
+    [nil, "individuals", "paged", "continuous", "multi-part", "non-paged", "top", "facing-pages"]
+  end
+
   validates :visibility, inclusion: { in: visibilities,
                                       message: "%{value} is not a valid value" }
 

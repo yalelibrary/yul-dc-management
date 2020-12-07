@@ -67,6 +67,18 @@
   </div>
 
   <div class="field">
+    <%= form.label :viewing_direction %>
+    <%= link_to("IIIF viewing direction details", "https://iiif.io/api/presentation/2.1/#viewingdirection") %><br>
+    <%= form.select(:viewing_direction, ParentObject.viewing_directions) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :display_layout %>
+    <%= link_to("IIIF viewing hints details", "https://iiif.io/api/presentation/2.1/#viewinghint") %><br>
+    <%= form.select(:display_layout, ParentObject.viewing_hints) %>
+  </div>
+
+  <div class="field">
     <%= form.label :last_id_update %>
     <%= form.text_field :last_id_update %>
   </div>
