@@ -40,6 +40,8 @@ $( document ).on('turbolinks:load', function() {
       },
       "pagingType": "full_numbers",
       "columns": JSON.parse($(".datatable-data").text()),
+      // This will order all datatables by the first column descending
+      "order": [[0, "desc"]],
       "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]]
       // pagingType is optional, if you want full pagination controls.
       // Check dataTables documentation to learn more about
