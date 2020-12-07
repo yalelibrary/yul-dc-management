@@ -67,7 +67,7 @@ class IiifPresentation
     value = [value] if value.is_a? String
     {
       'label' => label,
-      'value' => value
+      'value' => value.to_s
     }
   end
 
@@ -108,8 +108,18 @@ class IiifPresentation
       add_image_to_canvas(child, canvas)
       canvas['height'] = canvas.images.first["resource"]["height"]
       canvas['width'] = canvas.images.first["resource"]["width"]
+      add_metadata_to_canvas(canvas, child)
       canvases << canvas
     end
+  end
+
+  def add_metadata_to_canvas(canvas, child)
+    metadata_values = []
+    metadata_values <<  metadata_pair('Image OID', child.oid) if child.oid
+    metadata_values <<  metadata_pair('Image Label', child.label) if child.label
+    metadata_values <<  metadata_pair('Image Caption', child.caption) if child.caption
+    canvas['metadata'] = metadata_values
+    canvas
   end
 
   def seed
