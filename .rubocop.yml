@@ -21,6 +21,10 @@ Metrics/MethodLength:
     Exclude:
       - 'app/models/concerns/solr_indexable.rb'
 
+Metrics/ClassLength:
+    Exclude:
+      - 'app/models/iiif_presentation.rb'
+
 Rails/OutputSafety:
   Exclude:
     - 'app/helpers/json_helper.rb'

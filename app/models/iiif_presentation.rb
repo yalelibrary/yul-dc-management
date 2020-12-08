@@ -60,6 +60,7 @@ class IiifPresentation
     values = []
     METADATA_FIELDS.each do |m_field|
       value = @parent_object&.authoritative_json&.[](m_field[:field])
+      value = value.to_s unless value.nil? || value.is_a?(Array)
       values << metadata_pair(m_field[:label], value) if value
     end
     values
@@ -107,8 +108,18 @@ class IiifPresentation
       add_image_to_canvas(child, canvas)
       canvas['height'] = canvas.images.first["resource"]["height"]
       canvas['width'] = canvas.images.first["resource"]["width"]
+      add_metadata_to_canvas(canvas, child)
       canvases << canvas
     end
+  end
+
+  def add_metadata_to_canvas(canvas, child)
+    metadata_values = []
+    metadata_values <<  metadata_pair('Image OID', child.oid.to_s) if child.oid
+    metadata_values <<  metadata_pair('Image Label', child.label) if child.label
+    metadata_values <<  metadata_pair('Image Caption', child.caption) if child.caption
+    canvas['metadata'] = metadata_values
+    canvas
   end
 
   def seed

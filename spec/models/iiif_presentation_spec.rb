@@ -119,6 +119,9 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
 
     it "has canvases with ids and labels" do
       expect(first_canvas["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188699"
+      expect(first_canvas["metadata"]).not_to be_nil
+      expect(first_canvas["metadata"]).to include("label" => "Image OID", "value" => ["16188699"])
+      expect(first_canvas["metadata"]).to include("label" => "Image Label", "value" => ["Swatch 1"])
       expect(third_to_last_canvas["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188700"
       expect(first_canvas["label"]).to eq "Swatch 1"
       expect(third_to_last_canvas["label"]).to eq "swatch 2"
