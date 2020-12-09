@@ -33,7 +33,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Options from iiif presentation api 2.1 - see https://iiif.io/api/presentation/2.1/#viewinghint
   def self.viewing_hints
-    [nil, "individuals", "paged", "continuous", "multi-part", "non-paged", "top", "facing-pages"]
+    [nil, "individuals", "paged", "continuous"]
   end
 
   validates :visibility, inclusion: { in: visibilities,

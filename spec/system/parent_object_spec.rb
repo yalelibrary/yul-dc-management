@@ -31,11 +31,11 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
       it "can set iiif values via the UI" do
         page.select("left-to-right", from: "Viewing direction")
-        page.select("facing-pages", from: "Display layout")
+        page.select("continuous", from: "Display layout")
         click_on("Create Parent object")
         expect(page.body).to include "Parent object was successfully created"
         expect(page.body).to include "left-to-right"
-        expect(page.body).to include "facing-pages"
+        expect(page.body).to include "continuous"
       end
     end
 
