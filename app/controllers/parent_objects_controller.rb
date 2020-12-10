@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class ParentObjectsController < ApplicationController
-  before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata]
+  before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata, :show_children]
+  before_action :set_child_objects, only: [:show_children]
 
   # GET /parent_objects
   # GET /parent_objects.json
@@ -93,6 +94,10 @@ class ParentObjectsController < ApplicationController
     end
   end
 
+  def show_children
+    @child_objects
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
@@ -105,6 +110,10 @@ class ParentObjectsController < ApplicationController
       @batch_process.batch_connections.build(connectable: @parent_object)
       @batch_process.save!
       @parent_object.current_batch_process = @batch_process
+    end
+
+    def set_child_objects
+      @child_objects = @parent_object.child_objects
     end
 
     # Only allow a list of trusted parameters through.

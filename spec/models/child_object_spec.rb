@@ -140,7 +140,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
 
     it "has a valid thumbnail url" do
       first_child_object = parent_object.child_objects.first
-      expect(first_child_object.thumbnail_url).to eq "#{(ENV['IIIF_IMAGE_BASE_URL'])}/2/456789/full/200,/0/default.jpg"
+      expect(first_child_object.thumbnail_url).to eq "#{(ENV['IIIF_IMAGE_BASE_URL'])}/2/456789/full/!200,200/0/default.jpg"
     end
 
     it "has a valid height and width after conversion" do

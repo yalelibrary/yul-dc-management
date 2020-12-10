@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     end
     member do
       post :update_metadata
+      get '/child_objects', to: 'parent_objects#show_children', as: :show_children
     end
   end
   resources :notifications, only: [:index, :destroy] do

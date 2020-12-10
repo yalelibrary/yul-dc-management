@@ -37,6 +37,19 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         expect(page.body).to include "left-to-right"
         expect(page.body).to include "continuous"
       end
+
+      it "can show the representative thumbnail via the UI" do
+        click_on("Create Parent object")
+        expect(page).to have_content("Children:")
+        expect(page).to have_content("1052760")
+        expect(page).to have_content("Representative thumbnail")
+      end
+
+      it "can select a different representative thumbnail via the UI" do
+        click_on("Create Parent object")
+        expect(page).to have_link("Select different representative thumbnail")
+        click_on("Select different representative thumbnail")
+      end
     end
 
     context "with a ParentObject whose authoritative_metadata_source is Ladybird" do

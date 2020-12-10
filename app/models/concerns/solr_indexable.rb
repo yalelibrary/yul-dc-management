@@ -109,7 +109,7 @@ module SolrIndexable
       subjectName_tesim: json_to_index["subjectName"],
       subjectTopic_tesim: json_to_index["subjectTopic"],
       subjectTopic_ssim: json_to_index["subjectTopic"],
-      thumbnail_path_ss: representative_thumbnail,
+      thumbnail_path_ss: representative_thumbnail_url,
       title_tesim: json_to_index["title"],
       title_ssim: json_to_index["title"],
       uri_ssim: json_to_index["uri"],
