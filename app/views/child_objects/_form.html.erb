@@ -37,6 +37,12 @@
   </div>
 
   <div class="field">
+    <%= form.label :viewing_hint %>
+    <%= link_to("IIIF viewing hints details", "https://iiif.io/api/presentation/2.1/#viewinghint") %><br>
+    <%= form.select(:viewing_hint, ChildObject.viewing_hints) %>
+  </div>
+
+  <div class="field">
     <%= form.label :parent_object_oid %>
     <%= form.text_field :parent_object_oid %>
   </div>

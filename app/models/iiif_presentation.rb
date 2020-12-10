@@ -108,6 +108,7 @@ class IiifPresentation
       add_image_to_canvas(child, canvas)
       canvas['height'] = canvas.images.first["resource"]["height"]
       canvas['width'] = canvas.images.first["resource"]["width"]
+      canvas['viewingHint'] = child.viewing_hint unless child.viewing_hint == ""
       add_metadata_to_canvas(canvas, child)
       canvases << canvas
     end

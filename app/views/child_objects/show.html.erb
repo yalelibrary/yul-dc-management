@@ -31,6 +31,11 @@
 </p>
 
 <p>
+  <strong>Viewing hint:</strong>
+  <%= @child_object.viewing_hint %>
+</p>
+
+<p>
   <strong>Parent object:</strong>
   <%= link_to "#{@child_object.parent_object_oid}", "#{parent_object_path(@child_object.parent_object_oid)}" %>
 </p>
