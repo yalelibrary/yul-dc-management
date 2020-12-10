@@ -10,6 +10,12 @@ class ChildObject < ApplicationRecord
 
   before_create :check_for_size_and_file
 
+  # Options from iiif presentation api 2.1 - see https://iiif.io/api/presentation/2.1/#viewinghint
+  # These are added to the manifest on the canvas level
+  def self.viewing_hints
+    [nil, "non-paged", "facing-pages"]
+  end
+
   def start_states
     ["ptiff-queued"]
   end
