@@ -102,10 +102,22 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       expect(iiif_presentation.manifest.sequences.first["rendering"].first["label"]).to eq "Download as PDF"
     end
 
-    it "includes viewingDirection when included on parent_object" do
+    it "includes viewingDirection on the sequence when included on parent_object" do
       expect(iiif_presentation.manifest.sequences.first["viewingDirection"].class).to eq String
       expect(iiif_presentation.manifest.sequences.first["viewingDirection"]).to eq "left-to-right"
       expect(iiif_presentation.manifest.sequences.first["viewingHint"]).to eq "individuals"
+    end
+
+    it "includes viewingHint on the canvas when included on the child_object" do
+      co = ChildObject.find(16_188_699)
+      co.update(viewing_hint: "non-paged")
+      expect(first_canvas["viewingHint"]).to eq "non-paged"
+    end
+
+    it "doesn't include viewingHint on the canvas when it isn't on the child_object" do
+      co = ChildObject.find(16_188_699)
+      co.update(viewing_hint: "")
+      expect(first_canvas["viewingHint"]).not_to be
     end
 
     it "has a sequence with an id" do
