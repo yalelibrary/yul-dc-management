@@ -79,9 +79,9 @@
   <strong>Children:</strong>
     <div class="child-list">
       <ol>
-        <% @parent_object.child_objects.map{|child| %>
+        <% @parent_object.child_objects.map do |child| %>
           <li><%= link_to( "#{child.label || 'no label'} /  #{child.caption || 'no caption'} (#{child.width}, #{child.height})", "#{child_objects_path}/#{child.oid}") %></li>
-        <% } %>
+        <% end %>
       </ol>
     </div>
 </div>
