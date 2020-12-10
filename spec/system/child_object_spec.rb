@@ -7,6 +7,7 @@ RSpec.describe "ChildObjects", type: :system, prep_metadata_sources: true do
   before do
     stub_ptiffs_and_manifests
     login_as user
+    stub_metadata_cloud("2004628")
   end
   around do |example|
     perform_enqueued_jobs do
