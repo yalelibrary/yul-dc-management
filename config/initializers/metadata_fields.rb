@@ -40,13 +40,6 @@ METADATA_FIELDS = [
     ]
   },
   {
-    label: 'Number of Pages',
-    field: 'numberOfPages',
-    solr_fields: [
-      'numberOfPages_ssim'
-    ]
-  },
-  {
     label: 'References',
     field: 'references',
     solr_fields: [
