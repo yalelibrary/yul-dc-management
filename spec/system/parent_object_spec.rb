@@ -47,6 +47,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
 
       it "can select a different representative thumbnail via the UI" do
         click_on("Create Parent object")
+        click_on("Edit")
         expect(page).to have_link("Select different representative thumbnail")
         click_on("Select different representative thumbnail")
       end

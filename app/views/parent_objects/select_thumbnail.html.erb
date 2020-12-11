@@ -1,0 +1,32 @@
+<%= form_with(model: @parent_object, local: true) do |form| %>
+  <% if @parent_object.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@parent_object.errors.count, "error") %> prohibited this parent_object from being saved:</h2>
+
+      <ul>
+        <% @parent_object.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table class="table table-responsive table-bordered table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>Thumbnail</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @child_objects.each do |child_object| %>
+        <tr>
+          <td><%= image_tag child_object.thumbnail_url %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

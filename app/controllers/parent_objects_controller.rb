@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ParentObjectsController < ApplicationController
-  before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata, :show_children]
-  before_action :set_child_objects, only: [:show_children]
+  before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata, :select_thumbnail]
+  before_action :set_child_objects, only: [:select_thumbnail]
 
   # GET /parent_objects
   # GET /parent_objects.json
@@ -94,7 +94,7 @@ class ParentObjectsController < ApplicationController
     end
   end
 
-  def show_children
+  def select_thumbnail
     @child_objects
   end
 
@@ -119,6 +119,6 @@ class ParentObjectsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def parent_object_params
       params.require(:parent_object).permit(:oid, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
-                                            :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction, :display_layout)
+                                            :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction, :display_layout, :representative_thumbnail)
     end
 end

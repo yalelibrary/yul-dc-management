@@ -2,5 +2,6 @@
 
 <%= render 'form', parent_object: @parent_object %>
 
+<%= link_to("Select different representative thumbnail", select_thumbnail_parent_object_path) %>
 <%= link_to 'Show', @parent_object %> |
 <%= link_to 'Back', parent_objects_path %>
