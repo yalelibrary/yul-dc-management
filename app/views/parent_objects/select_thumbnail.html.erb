@@ -11,6 +11,11 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= form.label :representative_child_oid %>
+    <%= form.select(:representative_child_oid, @parent_object.child_objects) %>
+  </div>
+
   <table class="table table-responsive table-bordered table-striped">
     <thead class="thead-dark">
       <tr>
