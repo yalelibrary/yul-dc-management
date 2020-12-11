@@ -224,7 +224,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def representative_thumbnail_url
-      representative_child&.thumbnail_url
+    representative_child&.thumbnail_url
   end
 
   def child_captions
