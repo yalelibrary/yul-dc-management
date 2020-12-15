@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     end
     member do
       post :update_metadata
-      get '/select_thumbnail', to: 'parent_objects#select_thumbnail', as: :select_thumbnail
+      get :select_thumbnail
     end
   end
   resources :notifications, only: [:index, :destroy] do
