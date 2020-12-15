@@ -245,6 +245,23 @@ We use Omniauth with cas to authenticate users.
 The uids of authorized cas users are read from a CSV at `ENV['SAMPLE_BUCKET']/authorization/cas_users.csv`.
 That list of uids is used to seed the database when the app starts.  Uids not found in that file will be deleted.
 
-To override the CSV on S3, place a csv in `config/cas_users.csv`.
+Management needs to deployed for a new file to be loaded.
 
-To upload a new CSV to S3, place the new csv in `config/cas_users.csv` and run the rake task from management shell with `rake authorized_users:upload`.
+To override the CSV on S3, place a csv in `config/cas_users.csv`.  This will be used, if it exists, instead of the file
+on S3.
+
+To upload a new CSV to S3:
+ - Download the existing cas_users.csv from S3 using the AWS management console.
+ - Place the downloaded csv in `config/cas_users.csv` and update it.
+ - Run the rake task from management shell with `rake authorized_users:upload`.
+ 
+ To upload to different environments, run from management container:
+ ```bash
+SAMPLE_BUCKET=yul-dc-development-samples rake authorized_users:upload
+SAMPLE_BUCKET=yul-dc-test-samples rake authorized_users:upload
+SAMPLE_BUCKET=yul-dc-uat-samples rake authorized_users:upload
+SAMPLE_BUCKET=yul-dc-infra-samples rake authorized_users:upload
+SAMPLE_BUCKET=yul-dc-prod-samples rake authorized_users:upload
+SAMPLE_BUCKET=yul-dc-samples rake authorized_users:upload
+SAMPLE_BUCKET=yul-dc-staging-samples rake authorized_users:upload
+```
