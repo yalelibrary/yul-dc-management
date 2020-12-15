@@ -13,6 +13,7 @@
 
   <div class="field">
     <% @child_objects.each do |child_object| %>
+      <%= child_object.order %>
       <%= form.radio_button :representative_child_oid, child_object.oid %>
       <%= form.label(:representative_child_oid, image_tag(child_object.thumbnail_url))  %>
     <% end %>

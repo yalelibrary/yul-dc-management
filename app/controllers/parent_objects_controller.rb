@@ -94,7 +94,7 @@ class ParentObjectsController < ApplicationController
   end
 
   def select_thumbnail
-    @child_objects = ChildObject.select([:oid, :parent_object_oid]).where(parent_object: @parent_object).group(:oid, :parent_object_oid).page(params[:page]).per(10)
+    @child_objects = ChildObject.select([:oid, :parent_object_oid, :order]).where(parent_object: @parent_object).group(:oid, :parent_object_oid, :order).order(:order).page(params[:page]).per(10)
   end
 
   private
