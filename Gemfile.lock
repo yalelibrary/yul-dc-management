@@ -127,6 +127,8 @@ GEM
       delayed_job (> 2.0.3)
       rack-protection (>= 1.5.5)
       sinatra (>= 1.4.4)
+    delayed_job_worker_pool (0.3.0)
+      delayed_job (>= 3.0, < 4.2)
     devise (4.7.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -437,6 +439,7 @@ DEPENDENCIES
   daemons
   delayed_job_active_record
   delayed_job_web
+  delayed_job_worker_pool
   devise
   factory_bot_rails
   ffaker
