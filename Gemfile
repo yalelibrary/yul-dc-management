@@ -47,6 +47,7 @@ gem 'webpacker', '~> 4.0'
 gem 'daemons'
 gem 'delayed_job_active_record'
 gem "delayed_job_web"
+gem 'delayed_job_worker_pool'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
