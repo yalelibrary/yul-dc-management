@@ -50,6 +50,10 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         click_on("Edit")
         expect(page).to have_link("Select different representative thumbnail")
         click_on("Select different representative thumbnail")
+        expect(page).to have_css("#parent_object_representative_child_oid_1052761")
+        page.find("#parent_object_representative_child_oid_1052761").choose
+        click_on("Update Parent object")
+        expect(ParentObject.find(2_012_036).representative_child_oid).to eq 1_052_761
       end
     end
 

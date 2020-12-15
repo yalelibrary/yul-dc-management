@@ -217,7 +217,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def representative_child
     if representative_child_oid
-      ChildObject.find(representative_child_oid)
+      child_objects.find(representative_child_oid)
+      # rescue =>
     else
       child_objects.where(order: 1)&.first
     end
