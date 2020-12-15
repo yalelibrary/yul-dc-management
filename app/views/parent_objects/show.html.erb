@@ -92,7 +92,7 @@
     <%= image_tag @parent_object.representative_child.thumbnail_url %>
   </p>
 <% end %>
-
+<%= link_to("Select different representative thumbnail", select_thumbnail_parent_object_path) %><br><br>
 <p>
   <strong>Authoritative JSON:</strong>
   <%= render 'authoritative_json', parent_object: @parent_object %>
