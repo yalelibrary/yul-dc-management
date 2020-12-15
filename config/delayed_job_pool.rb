@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# rubocop:disable Rails/Output
 worker_group do |g|
   g.workers = Integer(ENV['WORKER_COUNT'] || 1)
   g.queues = (ENV['WORKER_QUEUES'] || 'default,manifest,ptiff,zeros,metadata,solr_index,pdf').split(',')
@@ -16,7 +19,7 @@ after_preload_app do
 end
 
 # This runs in the worker processes after it has been forked
-on_worker_boot do |worker_info|
+on_worker_boot do |_worker_info|
   puts "Worker #{Process.pid} started"
 
   # Reconnect to the database
@@ -34,3 +37,4 @@ after_worker_shutdown do |worker_info|
   puts "Master #{Process.pid} detected dead worker #{worker_info.name} " \
         "with process id #{worker_info.process_id}"
 end
+# rubocop:enable Rails/Output
