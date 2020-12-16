@@ -2,8 +2,8 @@
 
 # rubocop:disable Rails/Output
 worker_group do |g|
-  g.workers = Integer(ENV['WORKER_COUNT'] || 1)
-  g.queues = (ENV['WORKER_QUEUES'] || 'default,manifest,ptiff,zeros,metadata,solr_index,pdf').split(',')
+  g.workers = Integer(ENV['WORKER_COUNT'].presence || 1)
+  g.queues = (ENV['WORKER_QUEUES'].presence || 'default,manifest,ptiff,zeros,metadata,solr_index,pdf').split(',')
   g.sleep_delay = ENV['WORKER_SLEEP_DELAY']
 end
 
