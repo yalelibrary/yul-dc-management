@@ -79,13 +79,20 @@
   <strong>Children:</strong>
     <div class="child-list">
       <ol>
-        <% @parent_object.child_objects.map{|child| %>
+        <% @parent_object.child_objects.map do |child| %>
           <li><%= link_to( "#{child.label || 'no label'} /  #{child.caption || 'no caption'} (#{child.width}, #{child.height})", "#{child_objects_path}/#{child.oid}") %></li>
-        <% } %>
+        <% end %>
       </ol>
     </div>
 </div>
 
+<% if @parent_object.representative_child %>
+  <p>
+    <strong>Representative thumbnail:</strong><br>
+    <%= image_tag @parent_object.representative_child.thumbnail_url %>
+  </p>
+<% end %>
+<%= link_to("Select different representative thumbnail", select_thumbnail_parent_object_path) %><br><br>
 <p>
   <strong>Authoritative JSON:</strong>
   <%= render 'authoritative_json', parent_object: @parent_object %>

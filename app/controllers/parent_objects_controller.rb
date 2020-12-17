@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ParentObjectsController < ApplicationController
-  before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata]
+  before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata, :select_thumbnail]
 
   # GET /parent_objects
   # GET /parent_objects.json
@@ -93,6 +93,10 @@ class ParentObjectsController < ApplicationController
     end
   end
 
+  def select_thumbnail
+    @child_objects = ChildObject.select([:oid, :parent_object_oid, :order]).where(parent_object: @parent_object).group(:oid, :parent_object_oid, :order).order(:order).page(params[:page]).per(10)
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
@@ -110,6 +114,6 @@ class ParentObjectsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def parent_object_params
       params.require(:parent_object).permit(:oid, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
-                                            :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction, :display_layout)
+                                            :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction, :display_layout, :representative_child_oid)
     end
 end

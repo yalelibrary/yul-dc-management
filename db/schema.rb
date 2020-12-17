@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_03_205054) do
+ActiveRecord::Schema.define(version: 2020_12_11_201525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(version: 2020_12_03_205054) do
     t.integer "child_object_count"
     t.boolean "generate_manifest", default: false
     t.boolean "use_ladybird", default: false
+    t.bigint "representative_child_oid"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end

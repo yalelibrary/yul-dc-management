@@ -1,0 +1,27 @@
+<%= form_with(model: @parent_object, local: true) do |form| %>
+  <% if @parent_object.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@parent_object.errors.count, "error") %> prohibited this parent_object from being saved:</h2>
+
+      <ul>
+        <% @parent_object.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <% @child_objects.each do |child_object| %>
+      <%= child_object.order %>
+      <%= form.radio_button :representative_child_oid, child_object.oid %>
+      <%= form.label(:representative_child_oid, image_tag(child_object.thumbnail_url))  %>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= paginate @child_objects %>

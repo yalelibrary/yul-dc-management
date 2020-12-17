@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     end
     member do
       post :update_metadata
+      get :select_thumbnail
     end
   end
   resources :notifications, only: [:index, :destroy] do
