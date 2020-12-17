@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
 # rubocop:disable Rails/Output
+# Rails helpers are not available at this point of loading the application
 worker_group do |g|
-  g.workers = Integer(ENV['WORKER_COUNT'].presence || 1)
-  g.queues = (ENV['WORKER_QUEUES'].presence || 'default,manifest,ptiff,zeros,metadata,solr_index,pdf').split(',')
+  # rubocop:disable Style/TernaryParentheses,Style/ZeroLengthPredicate,Style/NumericPredicate
+  worker_count = (ENV['WORKER_COUNT'] && ENV['WORKER_COUNT'].size > 0) ? ENV['WORKER_COUNT'] : 1
+  g.workers = Integer(worker_count)
+  worker_queue = (ENV['WORKER_QUEUES'] && ENV['WORKER_QUEUES'].size > 0) ? ENV['WORKER_QUEUES'] : 'default,manifest,ptiff,zeros,metadata,solr_index,pdf'
+  g.queues = worker_queue.split(',')
   g.sleep_delay = ENV['WORKER_SLEEP_DELAY']
+  # rubocop:enable Style/TernaryParentheses,Style/ZeroLengthPredicate,Style/NumericPredicate
 end
 
 preload_app
