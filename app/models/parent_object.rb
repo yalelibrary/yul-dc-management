@@ -216,15 +216,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def representative_child
-    if representative_child_oid
-      begin
-        child_objects.find(representative_child_oid)
-      rescue
-        child_objects.where(order: 1)&.first
-      end
-    else
-      child_objects.where(order: 1)&.first
-    end
+    @representative_child = (child_objects.find_by(oid: representative_child_oid) if representative_child_oid)
+    @representative_child ||= child_objects.where(order: 1)&.first
   end
 
   def representative_thumbnail_url
