@@ -64,7 +64,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     end
 
     it "has an attribution to Yale" do
-      expect(iiif_presentation.manifest["attribution"]).to eq "Yale University Libraries Digital Collections"
+      expect(iiif_presentation.manifest["attribution"]).to eq "Yale University Library"
     end
 
     it "can save a manifest to S3" do

@@ -41,7 +41,7 @@ class IiifPresentation
     @manifest = IIIF::Presentation::Manifest.new(seed)
     @manifest["rendering"] = rendering
     @manifest["metadata"] = metadata
-    @manifest["attribution"] = "Yale University Libraries Digital Collections"
+    @manifest["attribution"] = "Yale University Library"
     @manifest.sequences << sequence
     add_canvases_to_sequence(@manifest.sequences.first)
     @manifest
