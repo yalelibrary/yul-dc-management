@@ -10,79 +10,71 @@
       </ul>
     </div>
   <% end %>
+  <div class="form-row">
+    <div class="col-med-3">
+      <%= form.label :oid %>
+      <%= self.action_name == "edit" ? form.text_field(:oid, disabled: true) : form.text_field(:oid, disabled: false) %>
+    </div>
 
-  <div class="field">
-    <%= form.label :oid %>
-    <%= form.text_field :oid %>
+    <div class="col-med-3">
+      <%= form.label "Metadata Source" %>
+      <%= form.select(:authoritative_metadata_source_id, [['Ladybird', 1], ['Voyager', 2], ['ArchiveSpace', 3]]) %>
+    </div>
+
+    <div class="col-med-3">
+      <%= form.label :visibility %>
+      <%= form.select(:visibility, ParentObject.visibilities) %>
+    </div>
+  </div>
+  <br>
+  <h6 class="form-subgroup-title">Voyager identifiers</h6>
+  <div class="voyager_identifiers, form-row">
+    <div class="col-med-3">
+      <%= form.label :bib %>
+      <%= form.text_field :bib %>
+    </div>
+
+    <div class="col-med-3">
+      <%= form.label "Holding (optional)" %>
+      <%= form.text_field :holding %>
+    </div>
+
+    <div class="col-med-3">
+      <%= form.label "Item (optional)" %>
+      <%= form.text_field :item %>
+    </div>
   </div>
 
-  <div class="form-group">
-    <%= form.label :authoritative_metadata_source %>
-    <%= form.select(:authoritative_metadata_source_id, [['Ladybird', 1], ['Voyager', 2], ['ArchiveSpace', 3]]) %>
-  </div>
+  <br>
+  <h6 class="form-subgroup-title">Other identifiers</h6>
+  <div class="other_identifiers, form-row">
+    <div class="col-med-3">
+      <%= form.label :barcode %>
+      <%= form.text_field :barcode %>
+    </div>
 
-  <div class="field">
-    <%= form.label :bib %>
-    <%= form.text_field :bib %>
+    <div class="col-med-3">
+      <%= form.label "ASpace URI"%>
+      <%= form.text_field :aspace_uri %>
+    </div>
   </div>
+  <br>
 
-  <div class="field">
-    <%= form.label :holding %>
-    <%= form.text_field :holding %>
+  <h6 class="form-subgroup-title">IIIF Values</h6>
+  <div class="other_identifiers, form-row">
+    <div class="col-med-3">
+      <%= form.label :viewing_direction %>
+      <%= link_to("IIIF viewing direction details", "https://iiif.io/api/presentation/2.1/#viewingdirection") %><br>
+      <%= form.select(:viewing_direction, ParentObject.viewing_directions) %>
+    </div>
+
+    <div class="col-med-3">
+      <%= form.label :display_layout %>
+      <%= link_to("IIIF viewing hints details", "https://iiif.io/api/presentation/2.1/#viewinghint") %><br>
+      <%= form.select(:display_layout, ParentObject.viewing_hints) %>
+    </div>
   </div>
-
-  <div class="field">
-    <%= form.label :item %>
-    <%= form.text_field :item %>
-  </div>
-
-  <div class="field">
-    <%= form.label :barcode %>
-    <%= form.text_field :barcode %>
-  </div>
-
-  <div class="field">
-    <%= form.label :aspace_uri %>
-    <%= form.text_field :aspace_uri %>
-  </div>
-
-  <div class="field">
-    <%= form.label :last_ladybird_update %>
-    <%= form.text_field :last_ladybird_update %>
-  </div>
-
-  <div class="field">
-    <%= form.label :last_voyager_update %>
-    <%= form.text_field :last_voyager_update %>
-  </div>
-
-  <div class="field">
-    <%= form.label :last_aspace_update %>
-    <%= form.text_field :last_aspace_update %>
-  </div>
-
-  <div class="field">
-    <%= form.label :visibility %>
-    <%= form.select(:visibility, ParentObject.visibilities) %>
-  </div>
-
-  <div class="field">
-    <%= form.label :viewing_direction %>
-    <%= link_to("IIIF viewing direction details", "https://iiif.io/api/presentation/2.1/#viewingdirection") %><br>
-    <%= form.select(:viewing_direction, ParentObject.viewing_directions) %>
-  </div>
-
-  <div class="field">
-    <%= form.label :display_layout %>
-    <%= link_to("IIIF viewing hints details", "https://iiif.io/api/presentation/2.1/#viewinghint") %><br>
-    <%= form.select(:display_layout, ParentObject.viewing_hints) %>
-  </div>
-
-  <div class="field">
-    <%= form.label :last_id_update %>
-    <%= form.text_field :last_id_update %>
-  </div>
-
+  <br>
   <div class="actions">
     <%= form.submit %>
   </div>
