@@ -29,6 +29,10 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         expect(page).to have_link("IIIF viewing hints details", href: "https://iiif.io/api/presentation/2.1/#viewinghint")
       end
 
+      it "includes fields that are not editable" do
+        expect(page).to have_field("Oid", disabled: false)
+      end
+
       it "can set iiif values via the UI" do
         page.select("left-to-right", from: "Viewing direction")
         page.select("continuous", from: "Display layout")
@@ -196,6 +200,19 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
           expect(ParentObject.find_by(oid: "20000016189097")["visibility"]).to eq "Yale Community Only"
         end
       end
+    end
+  end
+
+  context "editing a ParentObject" do
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036) }
+    before do
+      stub_metadata_cloud("2012036")
+      parent_object
+      visit edit_parent_object_path(2_012_036)
+    end
+
+    it "can see non-editable fields" do
+      expect(page).to have_field("Oid", disabled: true)
     end
   end
 end
