@@ -73,6 +73,9 @@ def parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
   @datatable_view_mock ||= double
   allow(@datatable_view_mock).to receive(:parent_object_path).and_return("/parent_objects/1")
   allow(@datatable_view_mock).to receive(:edit_parent_object_path).and_return("/parent_objects/1/edit")
+  # rubocop:disable RSpec/AnyInstance
+  allow_any_instance_of(ParentObject).to receive(:child_object_count).and_return(4)
+  # rubocop:enable RSpec/AnyInstance
   allow(@datatable_view_mock).to receive(:update_metadata_parent_object_path).and_return("/parent_objects/1/update_metadata")
   allow(@datatable_view_mock).to receive(:link_to).with(anything, "/parent_objects/1")
                                                   .and_return("<a href='/parent_objects/1'>1</a>")

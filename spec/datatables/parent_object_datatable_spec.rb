@@ -26,6 +26,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       DT_RowId: 16_854_285,
       aspace_uri: nil,
       authoritative_source: "ladybird",
+      child_object_count: 4,
       barcode: nil,
       bib: nil,
       holding: nil,
