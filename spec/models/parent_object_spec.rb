@@ -175,6 +175,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         expect(parent_object.aspace_json).to be nil
       end
 
+      it "pulls the rights statement from Ladybird" do
+        expect(parent_object.reload.rights_statement).to include "The use of this image may be subject to the "
+      end
+
       it "pulls Voyager record from the MetadataCloud when the authoritative_metadata_source is changed to Voyager" do
         expect(parent_object.reload.authoritative_metadata_source_id).to eq ladybird
         parent_object.authoritative_metadata_source_id = voyager
@@ -426,6 +430,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       expect(po.display_layout).to be nil
       expect(po.child_object_count).to be nil
       expect(po.authoritative_metadata_source_id).to eq ladybird
+      expect(po.rights_statement).to be nil
     end
   end
 end

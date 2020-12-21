@@ -149,6 +149,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.barcode = lb_record["orbisBarcode"]
     self.aspace_uri = lb_record["archiveSpaceUri"]
     self.visibility = lb_record["itemPermission"]
+    self.rights_statement = lb_record["rights"]&.first
     self.use_ladybird = false
   end
 
