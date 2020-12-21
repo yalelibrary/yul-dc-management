@@ -65,6 +65,12 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         click_on("Update Parent object")
         expect(ParentObject.find(2_012_036).representative_child_oid).to eq 1_052_761
       end
+
+      it "can see number of child objects on the index page" do
+        click_on("Create Parent object")
+        click_on("Back")
+        expect(page).to have_content "Child object count"
+      end
     end
 
     context "with a ParentObject whose authoritative_metadata_source is Ladybird" do

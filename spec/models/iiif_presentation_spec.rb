@@ -63,6 +63,10 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["label"]).to eq "Strawberry Thief fabric, made by Morris and Company "
     end
 
+    it "has an attribution to Yale" do
+      expect(iiif_presentation.manifest["attribution"]).to eq "Yale University Library"
+    end
+
     it "can save a manifest to S3" do
       expect(iiif_presentation.save).to eq true
     end

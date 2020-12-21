@@ -40,7 +40,8 @@ class IiifPresentation
     return @manifest if @manifest
     @manifest = IIIF::Presentation::Manifest.new(seed)
     @manifest["rendering"] = rendering
-    @manifest['metadata'] = metadata
+    @manifest["metadata"] = metadata
+    @manifest["attribution"] = "Yale University Library"
     @manifest.sequences << sequence
     add_canvases_to_sequence(@manifest.sequences.first)
     @manifest
