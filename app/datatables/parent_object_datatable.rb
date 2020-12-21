@@ -16,6 +16,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
     @view_columns ||= {
       oid: { source: "ParentObject.oid", cond: :like },
       authoritative_source: { source: "MetadataSource.display_name", cond: :like, searchable: true },
+      child_object_count: { source: "ParentObject.child_object_count" },
       bib: { source: "ParentObject.bib", cond: :like, searchable: true },
       holding: { source: "ParentObject.holding", cond: :like, searchable: true },
       item: { source: "ParentObject.item", cond: :like, searchable: true },
@@ -30,12 +31,13 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
     }
   end
 
+  # rubocop:disable Rails/OutputSafety,Metrics/MethodLength
   def data
-    # rubocop:disable Rails/OutputSafety
     records.map do |parent_object|
       {
         oid: link_to(parent_object.oid, parent_object_path(parent_object)) + get_blacklight_parent_url(parent_object).html_safe,
         authoritative_source: parent_object.source_name,
+        child_object_count: parent_object.child_object_count,
         bib: parent_object.bib,
         holding: parent_object.holding,
         item: parent_object.item,
@@ -50,8 +52,8 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
         DT_RowId: parent_object.oid
       }
     end
-    # rubocop:enable Rails/OutputSafety
   end
+  # rubocop:enable Rails/OutputSafety,Metrics/MethodLength
 
   def actions(parent_object)
     "#{link_to('Edit', edit_parent_object_path(parent_object))}" \
