@@ -17,6 +17,19 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     # rubocop:enable RSpec/AnyInstance
   end
 
+  describe "ParentObject without some values for solr mapping" do
+    let(:oid) { "2034600" }
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
+    before do
+      stub_metadata_cloud(oid)
+      parent_object
+    end
+    it "does not have null values in to_solr hash" do
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document.values).not_to include(nil)
+    end
+  end
+
   describe "changing the authoritative metadata source", solr: true do
     let(:oid) { "2034600" }
     let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
