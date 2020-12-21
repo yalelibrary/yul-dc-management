@@ -15,9 +15,9 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
     ENV["GOOBI_MOUNT"] = original_path
   end
 
-  let(:goobi_path) { File.join(fixture_path, "goobi", "metadata", "16172421", "meta.xml") }
-  let(:no_oid_file) { File.open(File.join(fixture_path, "goobi", "metadata", "16172421", "no_oid.xml")).read }
-  let(:blank_oid_file) { File.open(File.join(fixture_path, "goobi", "metadata", "16172421", "blank_oid.xml")).read }
+  let(:goobi_path) { "spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml" }
+  let(:no_oid_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/no_oid_mets.xml").read }
+  let(:blank_oid_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/empty_oid_mets.xml").read }
   let(:image_missing_file) { File.open(File.join(fixture_path, "goobi", "metadata", "16172421", "missing_image.xml")).read }
   let(:no_image_files_path) { File.join(fixture_path, "goobi", "metadata", "2012315", "no_image_files.xml") }
 
@@ -42,12 +42,12 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
   end
 
   describe "determining if the image files described are available to the application" do
-    it "returns false for a valid METs file that points to images that are all available on the file system" do
+    it "returns false for a valid METs file that points to images that are not available on the file system" do
       mets_doc = described_class.new(image_missing_file)
       expect(mets_doc.all_images_present?).to be_falsey
     end
 
-    it "returns true for a valid METs file that points to images that are not available on the file system" do
+    it "returns true for a valid METs file that points to images that are all available on the file system" do
       mets_doc = described_class.new(valid_goobi_xml)
       expect(mets_doc.all_images_present?).to be_truthy
     end
@@ -55,7 +55,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
 
   it "can return the oid" do
     mets_doc = described_class.new(valid_goobi_xml)
-    expect(mets_doc.oid).to eq "16172421"
+    expect(mets_doc.oid).to eq "30000317"
   end
 
   it "returns nil if there is no oid field in the METs document" do
@@ -68,21 +68,23 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
     expect(mets_doc.oid).to be_empty
   end
 
-  it "can return the uuid" do
+  it "can return the parent_uuid" do
     mets_doc = described_class.new(valid_goobi_xml)
-    expect(mets_doc.uuid).to eq "1597600754705"
+    expect(mets_doc.parent_uuid).to eq "b9afab50-9f22-4505-ada6-807dd7d05733"
   end
 
   it "can return the first file id" do
     mets_doc = described_class.new(valid_goobi_xml)
-    expect(mets_doc.files.first[:id]).to eq "FILE_0001_PRESENTATION"
+    expect(mets_doc.files.count).to eq 1
+    expect(mets_doc.files.first[:id]).to eq "444d3360-bf78-4e35-9850-44ef7f832105"
   end
 
   it "can return the ORDERLABEL, id for the physical structure, and file id" do
     mets_doc = described_class.new(valid_goobi_xml)
-    expect(mets_doc.physical_divs.first[:order_label]).to eq "7r"
+    expect(mets_doc.physical_divs.first[:order_label]).to eq " - "
+    expect(mets_doc.physical_divs.first[:order]).to eq "1"
     expect(mets_doc.physical_divs.first[:phys_id]).to eq "PHYS_0001"
-    expect(mets_doc.physical_divs.first[:file_id]).to eq "FILE_0001_PRESENTATION"
+    expect(mets_doc.physical_divs.first[:file_id]).to eq "444d3360-bf78-4e35-9850-44ef7f832105"
   end
 
   it "returns true for a valid mets file" do
@@ -92,7 +94,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
 
   it "can return the combined data needed for the iiif manifest" do
     mets_doc = described_class.new(valid_goobi_xml)
-    expect(mets_doc.combined.first[:order_label]).to eq "7r"
+    expect(mets_doc.combined.first[:order_label]).to eq " - "
     expect(mets_doc.combined.first[:order]).to eq "1"
   end
 end
