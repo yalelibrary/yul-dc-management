@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     member do
       post :update_metadata
       get :select_thumbnail
+      get :solr_document
     end
   end
   resources :notifications, only: [:index, :destroy] do

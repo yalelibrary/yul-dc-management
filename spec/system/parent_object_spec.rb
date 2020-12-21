@@ -98,6 +98,18 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         po = ParentObject.find_by(oid: "2012036")
         expect(po.batch_connections.count).to eq 1
       end
+
+      it 'has functioning Solr Document link' do
+        expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
+        click_on("Solr Document")
+        solr_data = JSON.parse(page.body)
+        expect(solr_data['numFound']).to eq 1
+        expect(solr_data["docs"].count).to eq 1
+        document = solr_data["docs"].first
+        expect(document["id"]).to eq "2012036"
+        expect(document["callNumber_tesim"]).to include "YCAL MSS 202"
+        expect(document["dateStructured_ssim"]).to include "1891"
+      end
     end
 
     context "with a ParentObject whose authoritative_metadata_source is Voyager" do
@@ -131,9 +143,29 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
       it "adds the visibility for public objects" do
         expect(ParentObject.find_by(oid: "2012036")["visibility"]).to eq "Public"
       end
+
+      it 'has functioning Solr Document link' do
+        expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
+        click_on("Solr Document")
+        solr_data = JSON.parse(page.body)
+        expect(solr_data['numFound']).to eq 1
+        expect(solr_data["docs"].count).to eq 1
+        document = solr_data["docs"].first
+        expect(document["id"]).to eq "2012036"
+        expect(document["callNumber_tesim"]).to include "YCAL MSS 202"
+        expect(document["dateStructured_ssim"]).to eq ["1842/1949"]
+        expect(document["year_isim"]).to include 1845
+      end
     end
 
     context "with a ParentObject whose authoritative_metadata_source is ArchiveSpace" do
+      around do |example|
+        original_vpn = ENV['VPN']
+        ENV['VPN'] = 'false'
+        example.run
+        ENV['VPN'] = original_vpn
+      end
+
       before do
         stub_metadata_cloud("2012036", "ladybird")
         stub_metadata_cloud("AS-2012036", "aspace")
@@ -151,6 +183,17 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         po = ParentObject.find_by(oid: "2012036")
         expect(po.aspace_json).not_to be nil
         expect(po.aspace_json).not_to be_empty
+      end
+
+      it 'has functioning Solr Document link' do
+        expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
+        click_on("Solr Document")
+        solr_data = JSON.parse(page.body)
+        expect(solr_data['numFound']).to eq 1
+        expect(solr_data["docs"].count).to eq 1
+        document = solr_data["docs"].first
+        expect(document["id"]).to eq "2012036"
+        expect(document["localRecordNumber_ssim"]).to include "YCAL MSS 202"
       end
     end
 
