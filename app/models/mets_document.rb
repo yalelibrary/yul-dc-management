@@ -18,6 +18,10 @@ class MetsDocument
     file_group.xpath("@ID").first.inner_text
   end
 
+  def metadata_source_path
+    @mets.xpath("//mods:identifier").inner_text
+  end
+
   def valid_mets?
     return false unless @mets.xml?
     return false unless @mets.collect_namespaces.include?("xmlns:mets")

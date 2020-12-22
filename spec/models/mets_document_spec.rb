@@ -21,10 +21,6 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
   let(:image_missing_file) { File.open(File.join(fixture_path, "goobi", "metadata", "16172421", "missing_image.xml")).read }
   let(:no_image_files_path) { File.join(fixture_path, "goobi", "metadata", "2012315", "no_image_files.xml") }
 
-  before do
-    stub_metadata_cloud("16172421")
-  end
-
   it "can be instantiated with xml from the DB instead of a file" do
     described_class.new(batch_process.mets_xml)
   end
@@ -58,6 +54,11 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
     expect(mets_doc.oid).to eq "30000317"
   end
 
+  it "can return the system of record API call" do
+    mets_doc = described_class.new(valid_goobi_xml)
+    expect(mets_doc.metadata_source_path)
+  end
+
   it "returns nil if there is no oid field in the METs document" do
     mets_doc = described_class.new(no_oid_file)
     expect(mets_doc.oid).to be_empty
@@ -79,7 +80,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
     expect(mets_doc.files.first[:id]).to eq "444d3360-bf78-4e35-9850-44ef7f832105"
   end
 
-  it "can return the ORDERLABEL, id for the physical structure, and file id" do
+  it "can return the ORDERLABEL, order, id for the physical structure, and file id" do
     mets_doc = described_class.new(valid_goobi_xml)
     expect(mets_doc.physical_divs.first[:order_label]).to eq " - "
     expect(mets_doc.physical_divs.first[:order]).to eq "1"
