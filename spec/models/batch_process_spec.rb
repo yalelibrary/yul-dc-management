@@ -7,7 +7,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
   let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids_with_source.csv")) }
-  let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/16172421/meta.xml')) }
+  let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
   around do |example|
     original_path = ENV["GOOBI_MOUNT"]
     ENV["GOOBI_MOUNT"] = File.join("spec", "fixtures", "goobi", "metadata")
@@ -175,7 +175,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       it "has an oid associated with it" do
         batch_process.file = xml_upload
         batch_process.save!
-        expect(batch_process.oid).to eq 16_172_421
+        expect(batch_process.oid).to eq 30_000_317
       end
 
       it "has a mets document associated with it that is not saved to the database" do
