@@ -10,11 +10,12 @@ class MetsDocument
   end
 
   def oid
-    @mets.xpath("//mods:recordIdentifier[@source='local']").inner_text
+    @mets.xpath("//mods:recordIdentifier[@source='gbv-ppn']").inner_text
   end
 
-  def uuid
-    @mets.xpath("//mods:recordIdentifier[@source='gbv-ppn']").inner_text
+  def parent_uuid
+    file_group = @mets.xpath("/mets:mets/mets:fileSec/mets:fileGrp")
+    file_group.xpath("@ID").first.inner_text
   end
 
   def valid_mets?
@@ -54,14 +55,14 @@ class MetsDocument
   def physical_info(physical_div)
     {
       phys_id: physical_div.xpath('@ID').to_s,
-      file_id: physical_div.xpath('mets:fptr/@FILEID').to_s,
+      file_id: physical_div.xpath('mets:fptr/@FILEID').first.inner_text,
       order_label: physical_div.xpath("@ORDERLABEL").to_s,
       order: physical_div.xpath("@ORDER").to_s
     }
   end
 
   def files
-    @mets.xpath("/mets:mets/mets:fileSec/mets:fileGrp/mets:file").map do |f|
+    @mets.xpath("/mets:mets/mets:fileSec/mets:fileGrp[@USE='PRESENTATION']/mets:file").map do |f|
       file_info(f)
     end
   end
@@ -73,7 +74,7 @@ class MetsDocument
       checksum: file.xpath('@CHECKSUM').to_s,
       mime_type: file.xpath('@MIMETYPE').to_s,
       url: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\/\/#{mount_path}\//, ''),
-      image_id: file.xpath('mets:FLocat/@xlink:href').to_s.match(/#{oid}\/media\/(\d*)/)[1]
+      image_id: file.xpath('@ID').inner_text
     }
   end
 

@@ -74,20 +74,20 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
   context "when uploading an xml" do
     it "uploads and increases xml count and gives a success message" do
       expect(BatchProcess.count).to eq 0
-      page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/16172421/meta.xml')
+      page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
       click_button("Import")
       expect(BatchProcess.count).to eq 1
       expect(page).to have_content("Your records have been retrieved from the MetadataCloud. PTIFF generation, manifest generation and indexing happen in the background.")
-      expect(BatchProcess.last.file_name).to eq "meta.xml"
+      expect(BatchProcess.last.file_name).to eq "111860A_8394689_mets.xml"
     end
 
     context "deleting a parent object" do
       before do
-        page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/16172421/meta.xml')
+        page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
         click_button("Import")
       end
       it "can still load the batch_process page" do
-        po = ParentObject.find(16_172_421)
+        po = ParentObject.find(30_000_317)
         po.delete
         expect(po.destroyed?).to be true
         visit batch_processes_path

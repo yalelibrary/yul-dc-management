@@ -65,16 +65,16 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       FactoryBot.create(
         :batch_process,
         user: user,
-        mets_xml: File.open(fixture_path + '/goobi/metadata/16172421/meta.xml').read,
-        file_name: "meta.xml",
+        mets_xml: File.open(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml').read,
+        file_name: "111860A_8394689_mets.xml",
         created_at: "2020-10-08 16:17:01"
       )
     end
     it "can see the details of the import" do
       expect(page).to have_content(batch_process.id.to_s)
       expect(page).to have_content("johnsmith2530")
-      expect(page).to have_link("meta.xml", href: "/batch_processes/#{batch_process.id}/download")
-      expect(page).to have_link('16172421', href: "/batch_processes/#{batch_process.id}/parent_objects/16172421")
+      expect(page).to have_link("111860A_8394689_mets.xml", href: "/batch_processes/#{batch_process.id}/download")
+      expect(page).to have_link('30000317', href: "/batch_processes/#{batch_process.id}/parent_objects/30000317")
       expect(page).to have_content("2020-10-08 16:17:01")
     end
   end
