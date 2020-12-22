@@ -42,6 +42,12 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         expect(page.body).to include "continuous"
       end
 
+      it "can set the rights statement via the UI" do
+        click_on("Create Parent object")
+        click_on("Edit")
+        expect(page).to have_field("Rights statement")
+      end
+
       it "can show the representative thumbnail via the UI" do
         click_on("Create Parent object")
         expect(page).to have_content("Children:")
@@ -78,6 +84,12 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         expect(page.body).to include "Parent object was successfully created"
         expect(page.body).to include "Ladybird"
         expect(page.body).to include "Authoritative JSON"
+      end
+
+      it "includes the rights statment" do
+        within("div.rights-statement") do
+          expect(page).to have_content("The use of this image may be subject to the")
+        end
       end
 
       it "saves the Ladybird record from the MC to the DB" do
