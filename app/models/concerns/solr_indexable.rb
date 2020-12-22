@@ -147,7 +147,7 @@ module SolrIndexable
       sourceTitle_ssim: json_to_index["sourceTitle"], # repleaced by sourceTitle_tesim
       subject_topic_tsim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
       title_tsim: json_to_index["title"] # replaced by title_tesim
-    }
+    }.delete_if { |_k, v| v.nil? }
   end
 
   def expand_date_structured(date_structured)
