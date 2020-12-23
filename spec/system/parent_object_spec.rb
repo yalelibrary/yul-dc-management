@@ -117,6 +117,9 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         stub_metadata_cloud("2012036", "ladybird")
         stub_metadata_cloud("V-2012036", "ils")
         fill_in('Oid', with: "2012036")
+        fill_in('Bib', with: "6805375")
+        fill_in('Barcode', with: "39002091459793")
+        select('Public')
         select('Voyager')
         click_on("Create Parent object")
       end
@@ -150,6 +153,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         stub_metadata_cloud("2012036", "ladybird")
         stub_metadata_cloud("AS-2012036", "aspace")
         fill_in('Oid', with: "2012036")
+        fill_in('parent_object_aspace_uri', with: "/repositories/11/archival_objects/555049")
         select('ArchiveSpace')
         click_on("Create Parent object")
       end

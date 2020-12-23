@@ -28,6 +28,16 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       solr_document = parent_object.reload.to_solr
       expect(solr_document.values).not_to include(nil)
     end
+
+    it "will index the count of child objects" do
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document[:imageCount_isi]).to eq 1
+    end
+
+    it "can index a thumbnail path to Solr" do
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document[:thumbnail_path_ss]).to eq "http://localhost:8182/iiif/2/1126257/full/!200,200/0/default.jpg"
+    end
   end
 
   describe "changing the authoritative metadata source", solr: true do
@@ -130,7 +140,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     let(:id_prefix) { "V-" }
 
     context "with a public item" do
-      let(:parent_object_with_public_visibility) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ils', visibility: "Public") }
+      let(:parent_object_with_public_visibility) { FactoryBot.create(:parent_object, oid: oid, bib: "6805375", barcode: "39002091459793", source_name: 'ils', visibility: "Public") }
       around do |example|
         original_image_url = ENV['IIIF_IMAGE_BASE_URL']
         ENV['IIIF_IMAGE_BASE_URL'] = "http://localhost:8182/iiif"
@@ -143,20 +153,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         stub_metadata_cloud("AS-#{oid}", "aspace")
       end
 
-      it "can create a Solr document for a record, including visibility from Ladybird" do
+      it "can create a Solr document for a record, including visibility" do
         solr_document = parent_object_with_public_visibility.reload.to_solr
         expect(solr_document[:title_tsim]).to eq ["Walt Whitman collection, 1842-1949"]
         expect(solr_document[:visibility_ssi]).to include "Public"
-      end
-
-      it "can index an item's image count to Solr" do
-        solr_document = parent_object_with_public_visibility.reload.to_solr
-        expect(solr_document[:imageCount_isi]).to eq 5
-      end
-
-      it "can index a thumbnail path to Solr" do
-        solr_document = parent_object_with_public_visibility.reload.to_solr
-        expect(solr_document[:thumbnail_path_ss]).to eq "http://localhost:8182/iiif/2/1052760/full/!200,200/0/default.jpg"
       end
     end
 
@@ -194,7 +194,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
           perform_enqueued_jobs
           parent_object.reload
         end.to change(parent_object, :visibility).from("Private").to("Public")
-                                                 .and change(parent_object, :use_ladybird).from(true).to(false)
+
         expect do
           parent_object.visibility = "Yale Community Only"
           parent_object.bib = "123321xx"
