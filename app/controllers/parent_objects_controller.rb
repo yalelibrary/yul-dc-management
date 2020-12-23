@@ -97,6 +97,13 @@ class ParentObjectsController < ApplicationController
     @child_objects = ChildObject.select([:oid, :parent_object_oid, :order]).where(parent_object: @parent_object).group(:oid, :parent_object_oid, :order).order(:order).page(params[:page]).per(10)
   end
 
+  def solr_document
+    solr = SolrService.connection
+    oid = params[:id].to_i
+    response = solr.get 'select', params: { q: "oid_ssi:#{oid}" }
+    render json: response["response"]
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
