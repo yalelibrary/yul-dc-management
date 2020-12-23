@@ -86,15 +86,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         stub_metadata_cloud("V-30000317", "ils")
       end
 
-      around do |example|
-        original_vpn = ENV['VPN']
-        ENV['VPN'] = 'true'
-        perform_enqueued_jobs do
-          example.run
-        end
-        ENV['VPN'] = original_vpn
-      end
-
       it "creates a new parent object" do
         expect do
           batch_process.file = xml_upload
@@ -107,7 +98,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         batch_process.save
         po = ParentObject.find(30_000_317)
         expect(po.bib).to eq "8394689"
-        expect(IngestEvent.where("reason LIKE (?)", "%Metadata Cloud did not return json%")).to be_empty
       end
     end
   end
