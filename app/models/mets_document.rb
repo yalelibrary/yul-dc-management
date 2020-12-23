@@ -22,6 +22,14 @@ class MetsDocument
     @mets.xpath("//mods:identifier").inner_text
   end
 
+  def metadata_source
+    metadata_source_path.match(/\/(\w*)\/(\w*)\/(\d*)\W(\w*)\W(\w*)/).captures.first
+  end
+
+  def bib
+    metadata_source_path.match(/\/(\w*)\/(\w*)\/(\d*)\W(\w*)\W(\w*)/).captures.last if metadata_source == "ils"
+  end
+
   def valid_mets?
     return false unless @mets.xml?
     return false unless @mets.collect_namespaces.include?("xmlns:mets")

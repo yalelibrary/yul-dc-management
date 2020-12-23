@@ -65,7 +65,9 @@ class MetadataSource < ApplicationRecord
   end
 
   def mc_get(mc_url)
-    HTTP.basic_auth(user: ENV.fetch("MC_USER"), pass: ENV.fetch("MC_PW")).get(mc_url)
+    metadata_cloud_username = ENV["MC_USER"]
+    metadata_cloud_password = ENV["MC_PW"]
+    HTTP.basic_auth(user: metadata_cloud_username, pass: metadata_cloud_password).get(mc_url)
   end
 
   # Hard coding the metadata cloud version because it is directly correlated with the solr indexing code

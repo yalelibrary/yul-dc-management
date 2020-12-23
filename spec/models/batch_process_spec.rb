@@ -102,12 +102,11 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         end.to change { ParentObject.count }.from(0).to(1)
       end
 
-      xit "does not try to get Ladybird data for new goobi objects" do
+      it "does not try to get Ladybird data for new Goobi objects" do
         batch_process.file = xml_upload
         batch_process.save
         po = ParentObject.find(30_000_317)
-        expect(po.bib).to eq 8_394_689
-        # expect(IngestEvent.where(reason: "S3 did not return json for ladybird/30000317.json")).to be_empty
+        expect(po.bib).to eq "8394689"
         expect(IngestEvent.where("reason LIKE (?)", "%Metadata Cloud did not return json%")).to be_empty
       end
     end
