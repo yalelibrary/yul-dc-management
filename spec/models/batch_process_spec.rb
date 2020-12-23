@@ -83,7 +83,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
 
     describe "running the background jobs" do
       before do
-        stub_metadata_cloud("30000317", "ils")
+        stub_metadata_cloud("V-30000317", "ils")
       end
 
       around do |example|
@@ -115,6 +115,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   describe "with the metadata cloud mocked" do
     before do
       stub_metadata_cloud("2034600")
+      stub_metadata_cloud("2005512")
       stub_metadata_cloud("2046567")
       stub_metadata_cloud("16414889")
       stub_metadata_cloud("14716192")
