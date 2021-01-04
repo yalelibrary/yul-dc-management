@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BatchProcess < ApplicationRecord
+class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   attr_reader :file
   after_create :refresh_metadata_cloud
   before_create :mets_oid
@@ -76,7 +76,18 @@ class BatchProcess < ApplicationRecord
   end
 
   def refresh_metadata_cloud_mets
-    create_parent_objects_from_oids([mets_doc.oid], ['ladybird']) # TODO: make 'ladybird' a metadata source attribute on this object
+    fresh = false
+    po = ParentObject.where(oid: oid).first_or_create do |parent_object|
+      # Only runs on newly created parent objects
+      metadata_source = mets_doc.metadata_source
+      parent_object.bib = mets_doc.bib
+      setup_for_background_jobs(parent_object, metadata_source)
+      fresh = true
+    end
+    return if fresh
+    po.metadata_update = true
+    setup_for_background_jobs(po, metadata_source)
+    po.save!
   end
 
   def refresh_metadata_cloud

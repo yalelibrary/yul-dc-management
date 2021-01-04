@@ -81,10 +81,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                     when "ladybird"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
                     when "ils"
-                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
                       self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
                     when "aspace"
-                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
                       self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
                     end
     processing_event("Metadata has been fetched", "metadata-fetched") if fetch_results
@@ -172,19 +170,18 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def voyager_cloud_url
-    return nil unless ladybird_json.present?
-    orbis_bib = ladybird_json['orbisBibId']
-    identifier_block = if ladybird_json["orbisBarcode"].nil?
-                         "/bib/#{orbis_bib}"
+    raise StandardError, "Bib id required to build Voyager url" unless bib.present?
+    identifier_block = if !barcode.present?
+                         "/bib/#{bib}"
                        else
-                         "/barcode/#{ladybird_json['orbisBarcode']}?bib=#{orbis_bib}"
+                         "/barcode/#{barcode}?bib=#{bib}"
                        end
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/ils#{identifier_block}"
   end
 
   def aspace_cloud_url
-    return nil unless ladybird_json.present?
-    "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace#{ladybird_json['archiveSpaceUri']}"
+    raise StandardError, "ArchiveSpace uri required to build ArchiveSpace url" unless aspace_uri.present?
+    "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace#{aspace_uri}"
   end
 
   def source_name=(metadata_source)

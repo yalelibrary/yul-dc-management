@@ -146,6 +146,18 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     end
   end
 
+  context 'without ladybird_json or identifiers set' do
+    let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
+
+    it 'raises an error when building a voyager url' do
+      expect { parent_object.voyager_cloud_url }.to raise_error(StandardError, "Bib id required to build Voyager url")
+    end
+
+    it 'returns an aspace url' do
+      expect { parent_object.aspace_cloud_url }.to raise_error(StandardError, "ArchiveSpace uri required to build ArchiveSpace url")
+    end
+  end
+
   context "a newly created ParentObject with an expected (ladybird, voyager, or aspace) authoritative_metadata_source" do
     let(:parent_object) { FactoryBot.create(:parent_object, oid: "2005512", authoritative_metadata_source_id: ladybird) }
 
@@ -167,10 +179,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         stub_metadata_cloud("2005512", "ladybird")
         stub_metadata_cloud("V-2005512", "ils")
       end
+
       it "pulls from the MetadataCloud for Ladybird and not Voyager or ArchiveSpace" do
         expect(parent_object.reload.authoritative_metadata_source_id).to eq ladybird
         expect(parent_object.ladybird_json).not_to be nil
         expect(parent_object.ladybird_json).not_to be_empty
+        expect(parent_object.visibility).to eq "Public"
         expect(parent_object.voyager_json).to be nil
         expect(parent_object.aspace_json).to be nil
       end
@@ -210,12 +224,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     end
 
     context "a newly created ParentObject with Voyager as authoritative_metadata_source" do
-      let(:parent_object) { described_class.create(oid: "2004628", authoritative_metadata_source_id: voyager) }
+      let(:parent_object) { described_class.create(oid: "2004628", bib: '3163155', authoritative_metadata_source_id: voyager) }
 
-      it "pulls from the MetadataCloud for Ladybird and Voyager and not ArchiveSpace" do
+      it "pulls from the MetadataCloud for Voyager" do
         expect(parent_object.reload.authoritative_metadata_source_id).to eq voyager
-        expect(parent_object.ladybird_json).not_to be nil
-        expect(parent_object.ladybird_json).not_to be_empty
+        expect(parent_object.ladybird_json).to be nil
         expect(parent_object.voyager_json).not_to be nil
         expect(parent_object.voyager_json).not_to be_empty
         expect(parent_object.aspace_json).to be nil
@@ -227,16 +240,15 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     end
 
     context "a newly created ParentObject with ArchiveSpace as authoritative_metadata_source" do
-      let(:parent_object) { described_class.create(oid: "2012036", authoritative_metadata_source_id: aspace) }
+      let(:parent_object) { described_class.create(oid: "2012036", aspace_uri: "/repositories/11/archival_objects/555049", authoritative_metadata_source_id: aspace) }
       before do
         stub_metadata_cloud("2012036", "ladybird")
         stub_metadata_cloud("AS-2012036", "aspace")
       end
 
-      it "pulls from the MetadataCloud for Ladybird and ArchiveSpace and not Voyager" do
+      it "pulls from the MetadataCloud for ArchiveSpace" do
         expect(parent_object.reload.authoritative_metadata_source_id).to eq aspace # 3 is ArchiveSpace
-        expect(parent_object.ladybird_json).not_to be nil
-        expect(parent_object.ladybird_json).not_to be_empty
+        expect(parent_object.ladybird_json).to be nil
         expect(parent_object.aspace_json).not_to be nil
         expect(parent_object.aspace_json).not_to be_empty
         expect(parent_object.voyager_json).to be nil
@@ -244,7 +256,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     end
 
     context "has a shortcut for the metadata_cloud_name" do
-      let(:parent_object) { described_class.create(oid: "2004628", authoritative_metadata_source_id: voyager) }
+      let(:parent_object) { described_class.create(oid: "2004628", bib: "6805375", barcode: "39002091459793", authoritative_metadata_source_id: voyager) }
+
       it 'returns source name when authoritative source is set' do
         expect(parent_object.source_name).to eq 'ils'
       end
@@ -255,7 +268,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     end
 
     context 'with ladybird_json' do
-      let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069', ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16797069.json")))) }
+      let(:parent_object) do
+        FactoryBot.build(:parent_object, oid: '16797069', bib: '3435140', barcode: '39002075038423',
+                                         ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16797069.json"))))
+      end
 
       it 'returns a ladybird url' do
         expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/16797069?include-children=1"
@@ -291,23 +307,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       end
     end
 
-    context 'with ladybird_json but no orbisBarcode' do
-      let(:parent_object) { FactoryBot.build(:parent_object, oid: '16712419', ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16712419.json")))) }
+    context 'with a bib but no barcode' do
+      let(:parent_object) { FactoryBot.build(:parent_object, oid: '16712419', bib: '1289001') }
 
       it 'returns a voyager url using the bib' do
         expect(parent_object.voyager_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ils/bib/1289001"
-      end
-    end
-
-    context 'without ladybird_json' do
-      let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
-
-      it 'returns a voyager url' do
-        expect(parent_object.voyager_cloud_url).to eq nil
-      end
-
-      it 'returns an aspace url' do
-        expect(parent_object.aspace_cloud_url).to eq nil
       end
     end
 

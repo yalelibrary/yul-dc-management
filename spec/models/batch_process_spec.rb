@@ -58,9 +58,54 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     end
   end
 
+  describe 'xml file import' do
+    it "does not error out" do
+      batch_process.file = xml_upload
+      expect(batch_process).to be_valid
+    end
+
+    it "has an oid associated with it" do
+      batch_process.file = xml_upload
+      batch_process.save!
+      expect(batch_process.oid).to eq 30_000_317
+    end
+
+    it "has a mets document associated with it that is not saved to the database" do
+      batch_process.file = xml_upload
+      expect(batch_process.mets_doc.valid_mets?).to eq true
+    end
+
+    it "evaluates a valid METs file as valid" do
+      batch_process.file = xml_upload
+      expect(batch_process.mets_xml).to be_present
+      expect(batch_process).to be_valid
+    end
+
+    describe "running the background jobs" do
+      before do
+        stub_metadata_cloud("V-30000317", "ils")
+      end
+
+      it "creates a new parent object" do
+        expect do
+          batch_process.file = xml_upload
+          batch_process.save
+        end.to change { ParentObject.count }.from(0).to(1)
+      end
+
+      it "does not try to get Ladybird data for new Goobi objects" do
+        batch_process.file = xml_upload
+        batch_process.save
+        po = ParentObject.find(30_000_317)
+        expect(po.bib).to eq "8394689"
+      end
+    end
+  end
+
   describe "with the metadata cloud mocked" do
     before do
       stub_metadata_cloud("2034600")
+      stub_metadata_cloud("2005512")
       stub_metadata_cloud("2046567")
       stub_metadata_cloud("16414889")
       stub_metadata_cloud("14716192")
@@ -80,10 +125,10 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         stub_metadata_cloud("16371253")
       end
       it "can create a parent_object from an array of oids" do
-        expect(ParentObject.count).to eq 0
-        batch_process.save
-        batch_process.create_parent_objects_from_oids(["16371253"], ["ladybird"])
-        expect(ParentObject.count).to eq 1
+        expect do
+          batch_process.save
+          batch_process.create_parent_objects_from_oids(["16371253"], ["ladybird"])
+        end.to change { ParentObject.count }.from(0).to(1)
       end
     end
 
@@ -163,37 +208,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
           po_two = ParentObject.find(2_005_512)
           expect(po_two.visibility).to eq "Public"
         end
-      end
-    end
-
-    describe 'xml file import' do
-      it "does not error out" do
-        batch_process.file = xml_upload
-        expect(batch_process).to be_valid
-      end
-
-      it "has an oid associated with it" do
-        batch_process.file = xml_upload
-        batch_process.save!
-        expect(batch_process.oid).to eq 30_000_317
-      end
-
-      it "has a mets document associated with it that is not saved to the database" do
-        batch_process.file = xml_upload
-        expect(batch_process.mets_doc.valid_mets?).to eq true
-      end
-
-      it "evaluates a valid METs file as valid" do
-        batch_process.file = xml_upload
-        expect(batch_process.mets_xml).to be_present
-        expect(batch_process).to be_valid
-      end
-
-      it "can refresh the ParentObjects from the MetadataCloud" do
-        expect(ParentObject.count).to eq 0
-        batch_process.file = xml_upload
-        batch_process.save
-        expect(ParentObject.count).to eq 1
       end
     end
   end

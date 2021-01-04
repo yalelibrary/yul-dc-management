@@ -65,14 +65,6 @@ class MetadataSource < ApplicationRecord
   end
 
   def mc_get(mc_url)
-    # TODO: Do we still need the Honeybadger context part of this?
-    Honeybadger.context(
-      metadata_cloud_username: ENV["MC_USER"],
-      metadata_cloud_password: ENV["MC_PW"],
-      mc_host: MetadataSource.metadata_cloud_host,
-      mc_host_env: ENV['METADATA_CLOUD_HOST'],
-      mc_url: mc_url
-    )
     metadata_cloud_username = ENV["MC_USER"]
     metadata_cloud_password = ENV["MC_PW"]
     HTTP.basic_auth(user: metadata_cloud_username, pass: metadata_cloud_password).get(mc_url)

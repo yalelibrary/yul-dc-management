@@ -80,10 +80,28 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         click_on("Create Parent object")
       end
 
+      around do |example|
+        perform_enqueued_jobs do
+          example.run
+        end
+      end
+
       it "can create a new parent object" do
         expect(page.body).to include "Parent object was successfully created"
         expect(page.body).to include "Ladybird"
         expect(page.body).to include "Authoritative JSON"
+        expect(page.body).to include "Public"
+      end
+
+      it "can change the visibility via the UI" do
+        click_on("Edit")
+        select("Yale Community Only")
+        click_on("Update Parent object")
+        expect(page.body).to include "Yale Community Only"
+        click_on("Back")
+        click_on("Update Metadata")
+        visit parent_object_path(2_012_036)
+        expect(page.body).to include "Yale Community Only"
       end
 
       it "includes the rights statment" do
@@ -129,6 +147,9 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         stub_metadata_cloud("2012036", "ladybird")
         stub_metadata_cloud("V-2012036", "ils")
         fill_in('Oid', with: "2012036")
+        fill_in('Bib', with: "6805375")
+        fill_in('Barcode', with: "39002091459793")
+        select('Public')
         select('Voyager')
         click_on("Create Parent object")
       end
@@ -182,6 +203,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         stub_metadata_cloud("2012036", "ladybird")
         stub_metadata_cloud("AS-2012036", "aspace")
         fill_in('Oid', with: "2012036")
+        fill_in('parent_object_aspace_uri', with: "/repositories/11/archival_objects/555049")
         select('ArchiveSpace')
         click_on("Create Parent object")
       end
