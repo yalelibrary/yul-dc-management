@@ -41,6 +41,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def initialize(attributes = nil)
     super
+    self.use_ladybird = true
   end
 
   def start_states
@@ -141,12 +142,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     super(lb_record)
     return lb_record if lb_record.blank?
     self.last_ladybird_update = DateTime.current
-    return if ladybird_json_previously_changed?
+    return unless use_ladybird
     self.bib = lb_record["orbisBibId"]
     self.barcode = lb_record["orbisBarcode"]
     self.aspace_uri = lb_record["archiveSpaceUri"]
     self.visibility = lb_record["itemPermission"]
     self.rights_statement = lb_record["rights"]&.first
+    self.use_ladybird = false
   end
 
   def voyager_json=(v_record)

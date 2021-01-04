@@ -33,7 +33,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       item: nil,
       last_aspace_update: nil,
       last_id_update: nil,
-      last_ladybird_update: Time.zone.parse('2020-06-10 17:38:27.000000000 +0000'),
+      last_ladybird_update: nil,
       last_voyager_update: nil,
       oid: "<a href='/parent_objects/1'>1</a><br> <a class='btn btn-info btn-sm' href='#{ENV['BLACKLIGHT_BASE_URL'] || 'localhost:3000'}/catalog/16854285' target='_blank' > Public View</a>",
       visibility: "Private",

@@ -179,10 +179,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         stub_metadata_cloud("2005512", "ladybird")
         stub_metadata_cloud("V-2005512", "ils")
       end
+
       it "pulls from the MetadataCloud for Ladybird and not Voyager or ArchiveSpace" do
         expect(parent_object.reload.authoritative_metadata_source_id).to eq ladybird
         expect(parent_object.ladybird_json).not_to be nil
         expect(parent_object.ladybird_json).not_to be_empty
+        expect(parent_object.visibility).to eq "Public"
         expect(parent_object.voyager_json).to be nil
         expect(parent_object.aspace_json).to be nil
       end
