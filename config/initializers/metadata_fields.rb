@@ -259,15 +259,16 @@ METADATA_FIELDS = [
     field: 'oid',
     solr_fields: [
       'oid_ssi'
-    ]
+    ],
+    digital_only: true
   },
-  {
-    label: 'Collection Name',
-    field: 'partOf',
-    solr_fields: [
-      'partOf_ssim'
-    ]
-  },
+  # {
+  #   label: 'Collection Name',
+  #   field: 'partOf',
+  #   solr_fields: [
+  #     'partOf_ssim'
+  #   ]
+  # },
   {
     label: 'URI',
     field: 'uri',
@@ -281,6 +282,14 @@ METADATA_FIELDS = [
     solr_fields: [
       'url_suppl_ssim'
     ]
+  },
+  {
+    label: 'Access',
+    field: 'visibility',
+    solr_fields: [
+      'visibility_ssi'
+    ],
+    digital_only: true
   },
   {
     label: 'Rights',
