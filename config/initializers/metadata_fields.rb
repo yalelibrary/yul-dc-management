@@ -224,7 +224,7 @@ METADATA_FIELDS = [
   },
   {
     label: 'Container / Volume Information',
-    field: :container_information,
+    field: 'extract_container_information',
     solr_fields: [
       'containerGrouping_ssim'
     ],
@@ -237,19 +237,13 @@ METADATA_FIELDS = [
       'findingAid_ssim'
     ]
   },
-  {
-    label: 'Folder',
-    field: 'folder',
-    solr_fields: [
-      'folder_ssim'
-    ]
-  },
+  # identifier mfhd? do we want one?
   {
     label: 'Call Number',
     field: 'callNumber',
     solr_fields: [
-      'identifierShelfMark_ssim',
-      'identifierShelfMark_tesim'
+      'callNumber_ssim',
+      'callNumber_tesim'
     ]
   },
   {
@@ -257,7 +251,8 @@ METADATA_FIELDS = [
     field: 'bib',
     solr_fields: [
       'orbisBibId_ssi'
-    ]
+    ],
+    digital_only: true
   },
   {
     label: 'OID',
