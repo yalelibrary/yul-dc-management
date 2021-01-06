@@ -40,10 +40,17 @@ METADATA_FIELDS = [
     ]
   },
   {
-    label: 'References',
-    field: 'references',
+    label: 'Number of Pages',
+    field: 'number_of_pages_ss',
     solr_fields: [
-      'references_tesim'
+      'numberOfPages_ssim'
+    ]
+  },
+  {
+    label: 'References',
+    field: 'preferredCitation',
+    solr_fields: [
+      'preferredCitation_tesim'
     ]
   },
   {
@@ -78,9 +85,9 @@ METADATA_FIELDS = [
   },
   {
     label: 'Subject (Geographic)',
-    field: 'geoSubject',
+    field: 'subjectGeographic',
     solr_fields: [
-      'geoSubject_ssim'
+      'subjectGeographic_tesim'
     ]
   },
   {
@@ -166,10 +173,10 @@ METADATA_FIELDS = [
   },
   {
     label: 'Publication Place',
-    field: 'Creation Place',
+    field: 'creationPlace',
     solr_fields: [
-      'publicationPlace_ssim',
-      'publicationPlace_tesim'
+      'creationPlace_ssim',
+      'creationPlace_tesim'
     ]
   },
   {
@@ -214,6 +221,14 @@ METADATA_FIELDS = [
     solr_fields: [
       'sourceTitle_tesim'
     ]
+  },
+  {
+    label: 'Container / Volume Information',
+    field: :container_information,
+    solr_fields: [
+      'containerGrouping_ssim'
+    ],
+    digital_only: true
   },
   {
     label: 'Finding Aid',
