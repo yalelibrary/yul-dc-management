@@ -96,7 +96,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["metadata"].last.class).to eq Hash
       expect(iiif_presentation.manifest["metadata"].last["label"]).to eq "Source"
       expect(iiif_presentation.manifest["metadata"].last["value"].first).to include 'ladybird'
-      expect(iiif_presentation.manifest["metadata"].select {|k| true if k["label"]=="Orbis Bib ID" }).not_to be_empty
+      expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"] == "Orbis Bib ID" }).not_to be_empty
       expect(iiif_presentation.manifest["metadata"][12]["value"].first).to eq 'Box 12, Folder 117'
     end
 
