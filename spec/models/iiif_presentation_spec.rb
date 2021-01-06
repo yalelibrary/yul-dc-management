@@ -20,7 +20,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
   let(:oid) { 16_172_421 }
   let(:iiif_presentation) { described_class.new(parent_object) }
   let(:logger_mock) { instance_double("Rails.logger").as_null_object }
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, viewing_direction: "left-to-right", display_layout: "individuals") }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, viewing_direction: "left-to-right", display_layout: "individuals", bib: "12834515") }
   let(:first_canvas) { iiif_presentation.manifest.sequences.first.canvases.first }
   let(:third_to_last_canvas) { iiif_presentation.manifest.sequences.first.canvases.third_to_last }
   before do
@@ -96,7 +96,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["metadata"].last.class).to eq Hash
       expect(iiif_presentation.manifest["metadata"].last["label"]).to eq "Source"
       expect(iiif_presentation.manifest["metadata"].last["value"].first).to include 'ladybird'
-      expect(iiif_presentation.manifest["metadata"].map {|k| true if k["label"]=="Orbis Bib ID" }).to include true
+      expect(iiif_presentation.manifest["metadata"].select {|k| true if k["label"]=="Orbis Bib ID" }).not_to be_empty
       expect(iiif_presentation.manifest["metadata"][12]["value"].first).to eq 'Box 12, Folder 117'
     end
 
