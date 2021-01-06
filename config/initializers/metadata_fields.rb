@@ -237,7 +237,6 @@ METADATA_FIELDS = [
       'findingAid_ssim'
     ]
   },
-  # identifier mfhd? do we want one?
   {
     label: 'Call Number',
     field: 'callNumber',
@@ -262,13 +261,6 @@ METADATA_FIELDS = [
     ],
     digital_only: true
   },
-  # {
-  #   label: 'Collection Name',
-  #   field: 'partOf',
-  #   solr_fields: [
-  #     'partOf_ssim'
-  #   ]
-  # },
   {
     label: 'URI',
     field: 'uri',
