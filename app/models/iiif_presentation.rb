@@ -62,7 +62,8 @@ class IiifPresentation
     METADATA_FIELDS.each do |m_field|
       if m_field[:digital_only] == true
         byebug
-        value = @parent_object.m_field[:field]
+        method_symbol = m_field[:field]
+        value = @parent_object
       else
         value = @parent_object&.authoritative_json&.[](m_field[:field])
         value = value.to_s unless value.nil? || value.is_a?(Array)
