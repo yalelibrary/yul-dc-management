@@ -40,10 +40,17 @@ METADATA_FIELDS = [
     ]
   },
   {
-    label: 'References',
-    field: 'references',
+    label: 'Number of Pages',
+    field: 'number_of_pages_ss',
     solr_fields: [
-      'references_tesim'
+      'numberOfPages_ssim'
+    ]
+  },
+  {
+    label: 'References',
+    field: 'preferredCitation',
+    solr_fields: [
+      'preferredCitation_tesim'
     ]
   },
   {
@@ -78,9 +85,9 @@ METADATA_FIELDS = [
   },
   {
     label: 'Subject (Geographic)',
-    field: 'geoSubject',
+    field: 'subjectGeographic',
     solr_fields: [
-      'geoSubject_ssim'
+      'subjectGeographic_tesim'
     ]
   },
   {
@@ -166,10 +173,10 @@ METADATA_FIELDS = [
   },
   {
     label: 'Publication Place',
-    field: 'Creation Place',
+    field: 'creationPlace',
     solr_fields: [
-      'publicationPlace_ssim',
-      'publicationPlace_tesim'
+      'creationPlace_ssim',
+      'creationPlace_tesim'
     ]
   },
   {
@@ -216,6 +223,14 @@ METADATA_FIELDS = [
     ]
   },
   {
+    label: 'Container / Volume Information',
+    field: 'extract_container_information',
+    solr_fields: [
+      'containerGrouping_ssim'
+    ],
+    digital_only: true
+  },
+  {
     label: 'Finding Aid',
     field: 'findingAid',
     solr_fields: [
@@ -223,18 +238,11 @@ METADATA_FIELDS = [
     ]
   },
   {
-    label: 'Folder',
-    field: 'folder',
-    solr_fields: [
-      'folder_ssim'
-    ]
-  },
-  {
     label: 'Call Number',
     field: 'callNumber',
     solr_fields: [
-      'identifierShelfMark_ssim',
-      'identifierShelfMark_tesim'
+      'callNumber_ssim',
+      'callNumber_tesim'
     ]
   },
   {
@@ -242,21 +250,16 @@ METADATA_FIELDS = [
     field: 'bib',
     solr_fields: [
       'orbisBibId_ssi'
-    ]
+    ],
+    digital_only: true
   },
   {
     label: 'OID',
     field: 'oid',
     solr_fields: [
       'oid_ssi'
-    ]
-  },
-  {
-    label: 'Collection Name',
-    field: 'partOf',
-    solr_fields: [
-      'partOf_ssim'
-    ]
+    ],
+    digital_only: true
   },
   {
     label: 'URI',
@@ -271,6 +274,14 @@ METADATA_FIELDS = [
     solr_fields: [
       'url_suppl_ssim'
     ]
+  },
+  {
+    label: 'Access',
+    field: 'visibility',
+    solr_fields: [
+      'visibility_ssi'
+    ],
+    digital_only: true
   },
   {
     label: 'Rights',

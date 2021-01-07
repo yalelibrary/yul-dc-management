@@ -234,7 +234,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     child_objects.map(&:oid)
   end
 
-  def extract_container_information(json)
+  def extract_container_information(json = authoritative_json)
     return nil unless json
     return json["containerGrouping"] unless json["containerGrouping"].nil? || json["containerGrouping"].empty?
     return [(json["box"] && (json['box']).to_s), (json["folder"] && (json['folder']).to_s)].join(", ") if json["box"] || json["folder"]
