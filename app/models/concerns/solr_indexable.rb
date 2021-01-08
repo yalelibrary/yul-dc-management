@@ -92,8 +92,8 @@ module SolrIndexable
       repository_ssim: json_to_index["repository"],
       resourceType_ssim: json_to_index["resourceType"],
       resourceType_tesim: json_to_index["resourceType"],
-      rights_ssim: json_to_index["rights"],
-      rights_tesim: json_to_index["rights"],
+      rights_ssim: rights_statement,
+      rights_tesim: rights_statement,
       scale_tesim: json_to_index["scale"],
       source_ssim: json_to_index["source"], # refers to source of metadata, e.g. Ladybird, Voyager, etc.
       sourceCreated_tesim: json_to_index["sourceCreated"],
