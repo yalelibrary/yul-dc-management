@@ -46,6 +46,9 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         click_on("Create Parent object")
         click_on("Edit")
         expect(page).to have_field("Rights statement")
+        fill_in("Rights statement", with: "This is a rights statement")
+        click_on("Update Parent object")
+        expect(page).to have_content("This is a rights statement")
       end
 
       it "can show the representative thumbnail via the UI" do
