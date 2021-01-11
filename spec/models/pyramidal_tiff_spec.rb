@@ -16,6 +16,8 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
       .to_return(status: 200)
     stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/33/10/02/53/1002533.tif")
       .to_return(status: 404)
+    stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/01/10/01/1001.tif")
+      .to_return(status: 404)
   end
 
   around do |example|

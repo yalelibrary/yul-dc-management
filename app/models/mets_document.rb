@@ -30,6 +30,22 @@ class MetsDocument
     metadata_source_path.match(/\/(\w*)\/(\w*)\/(\d*)\W(\w*)\W(\w*)/).captures.last if metadata_source == "ils"
   end
 
+  def visibility
+    @mets.xpath("//mods:accessCondition[@type='restriction on access']").inner_text
+  end
+
+  def rights_statement
+    @mets.xpath("//mods:accessCondition[@type='use and reproduction']").inner_text
+  end
+
+  def viewing_direction
+    @mets.xpath("//mods:extension/intranda:intranda/intranda:ViewingDirection").inner_text
+  end
+
+  def viewing_hint
+    @mets.xpath("//mods:extension/intranda:intranda/intranda:ViewingHint").inner_text
+  end
+
   def valid_mets?
     return false unless @mets.xml?
     return false unless @mets.collect_namespaces.include?("xmlns:mets")
@@ -39,19 +55,10 @@ class MetsDocument
 
   def all_images_present?
     mount_path = ENV["GOOBI_MOUNT"] || "data"
-    files.all? { |file| File.exist?(Rails.root.join(mount_path, file[:url])) }
+    files.all? { |file| File.exist?(Rails.root.join(mount_path, file[:mets_access_master_path])) }
   end
 
-  # def viewing_direction
-  #   right_to_left ? "right-to-left" : "left-to-right"
-  # end
-
-  # def right_to_left
-  #   @mets.xpath("/mets:mets/mets:structMap[@TYPE='logical']/mets:div/@TYPE") \
-  #        .to_s.start_with? 'RTL'
-  # end
-
-  # Combines the physical info and file info for a given image, used for iiif manifest creation
+  # Combines the physical info and file info for a given image
   def combined
     zipped = files.zip(physical_divs)
     zipped.map { |file, physical_div| file.merge(physical_div) }
@@ -66,10 +73,10 @@ class MetsDocument
 
   def physical_info(physical_div)
     {
-      phys_id: physical_div.xpath('@ID').to_s,
-      file_id: physical_div.xpath('mets:fptr/@FILEID').first.inner_text,
-      order_label: physical_div.xpath("@ORDERLABEL").to_s,
-      order: physical_div.xpath("@ORDER").to_s
+      oid: physical_div.xpath('@CONTENTIDS').inner_text, # oid for child object
+      label: physical_div.xpath("@ORDERLABEL").inner_text,
+      order: physical_div.xpath("@ORDER").inner_text,
+      parent_object_oid: oid
     }
   end
 
@@ -82,11 +89,8 @@ class MetsDocument
   def file_info(file)
     mount_path = ENV["GOOBI_MOUNT"] || "data"
     {
-      id: file.xpath('@ID').to_s,
       checksum: file.xpath('@CHECKSUM').to_s,
-      mime_type: file.xpath('@MIMETYPE').to_s,
-      url: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\/\/#{mount_path}\//, ''),
-      image_id: file.xpath('@ID').inner_text
+      mets_access_master_path: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\/\/#{mount_path}\//, '')
     }
   end
 

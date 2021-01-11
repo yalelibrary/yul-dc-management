@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_06_144702) do
+ActiveRecord::Schema.define(version: 2021_01_08_202352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2021_01_06_144702) do
     t.string "checksum"
     t.string "viewing_hint"
     t.datetime "ptiff_conversion_at"
+    t.string "mets_access_master_path"
     t.index ["oid"], name: "index_child_objects_on_oid", unique: true
     t.index ["parent_object_oid"], name: "index_child_objects_on_parent_object_oid"
   end

@@ -74,18 +74,11 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
     expect(mets_doc.parent_uuid).to eq "b9afab50-9f22-4505-ada6-807dd7d05733"
   end
 
-  it "can return the first file id" do
+  it "can return the label, order, child oid for the physical structure" do
     mets_doc = described_class.new(valid_goobi_xml)
-    expect(mets_doc.files.count).to eq 1
-    expect(mets_doc.files.first[:id]).to eq "444d3360-bf78-4e35-9850-44ef7f832105"
-  end
-
-  it "can return the ORDERLABEL, order, id for the physical structure, and file id" do
-    mets_doc = described_class.new(valid_goobi_xml)
-    expect(mets_doc.physical_divs.first[:order_label]).to eq " - "
+    expect(mets_doc.physical_divs.first[:label]).to eq " - "
     expect(mets_doc.physical_divs.first[:order]).to eq "1"
-    expect(mets_doc.physical_divs.first[:phys_id]).to eq "PHYS_0001"
-    expect(mets_doc.physical_divs.first[:file_id]).to eq "444d3360-bf78-4e35-9850-44ef7f832105"
+    expect(mets_doc.physical_divs.first[:oid]).to eq "30000318"
   end
 
   it "returns true for a valid mets file" do
@@ -95,7 +88,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
 
   it "can return the combined data needed for the iiif manifest" do
     mets_doc = described_class.new(valid_goobi_xml)
-    expect(mets_doc.combined.first[:order_label]).to eq " - "
+    expect(mets_doc.combined.first[:label]).to eq " - "
     expect(mets_doc.combined.first[:order]).to eq "1"
   end
 end

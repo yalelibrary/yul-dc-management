@@ -8,11 +8,19 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
   let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids_with_source.csv")) }
   let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
+  let(:xml_upload_two) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml')) }
+
   around do |example|
+    original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
     original_path = ENV["GOOBI_MOUNT"]
+    original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
+    ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
     ENV["GOOBI_MOUNT"] = File.join("spec", "fixtures", "goobi", "metadata")
+    ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "images", "access_masters")
     example.run
+    ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
     ENV["GOOBI_MOUNT"] = original_path
+    ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
   end
 
   before do
@@ -59,6 +67,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   end
 
   describe 'xml file import' do
+    before do
+      stub_metadata_cloud("V-30000401", "ils")
+    end
     it "does not error out" do
       batch_process.file = xml_upload
       expect(batch_process).to be_valid
@@ -84,20 +95,55 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     describe "running the background jobs" do
       before do
         stub_metadata_cloud("V-30000317", "ils")
+        stub_pdfs
+        stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/02/30/00/04/02/30000402.tif").to_return(status: 200)
+        stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/03/30/00/04/03/30000403.tif").to_return(status: 200)
+        stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/04/30/00/04/04/30000404.tif").to_return(status: 200)
+        stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/02/30/00/04/02/30000402.tif").to_return(status: 200)
+        stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/03/30/00/04/03/30000403.tif").to_return(status: 200)
+        stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/04/30/00/04/04/30000404.tif").to_return(status: 200)
       end
 
-      it "creates a new parent object" do
+      around do |example|
+        perform_enqueued_jobs do
+          example.run
+        end
+      end
+
+      # Doing one large test here, because with copying images, etc., it is an expensive one
+      it "creates a parent object with the expected values and child objects with expected values" do
+        expect(File.exist?("spec/fixtures/images/access_masters/00/02/30/00/04/02/30000402.tif")).to be false
+        expect(File.exist?("spec/fixtures/images/access_masters/00/03/30/00/04/03/30000403.tif")).to be false
+        expect(File.exist?("spec/fixtures/images/access_masters/00/04/30/00/04/04/30000404.tif")).to be false
         expect do
-          batch_process.file = xml_upload
+          batch_process.file = xml_upload_two
           batch_process.save
         end.to change { ParentObject.count }.from(0).to(1)
-      end
-
-      it "does not try to get Ladybird data for new Goobi objects" do
-        batch_process.file = xml_upload
-        batch_process.save
-        po = ParentObject.find(30_000_317)
-        expect(po.bib).to eq "8394689"
+           .and change { ChildObject.count }.from(0).to(3)
+        po = ParentObject.find(30_000_401)
+        co = ChildObject.find(30_000_404)
+        # parent object expectations
+        expect(po.child_object_count).to eq 3
+        expect(po.visibility).to eq "Public"
+        expect(po.rights_statement).to include "The use of this image may be subject to"
+        expect(po.authoritative_metadata_source.display_name).to eq "Voyager"
+        expect(po.voyager_json.present?).to be_truthy
+        expect(po.bib).to eq "1188135"
+        expect(po.holding).to eq "1330141"
+        expect(po.item).to eq "0"
+        expect(po.barcode).to eq nil
+        expect(po.viewing_direction).to eq "left-to-right"
+        expect(po.display_layout).to eq "individuals"
+        # child object expectations
+        expect(co.checksum).to eq "c314697a5b0fd444e26e7c12a1d8d487545dacfc"
+        expect(co.mets_access_master_path).to eq "30000401_20201204_193140/IkSw55739ve_RA_media/30000404.tif"
+        expect(File.exist?("spec/fixtures/images/access_masters/00/02/30/00/04/02/30000402.tif")).to be true
+        expect(File.exist?("spec/fixtures/images/access_masters/00/03/30/00/04/03/30000403.tif")).to be true
+        expect(File.exist?("spec/fixtures/images/access_masters/00/04/30/00/04/04/30000404.tif")).to be true
+        expect(co.ptiff_conversion_at.present?).to be_truthy
+        File.delete("spec/fixtures/images/access_masters/00/02/30/00/04/02/30000402.tif")
+        File.delete("spec/fixtures/images/access_masters/00/03/30/00/04/03/30000403.tif")
+        File.delete("spec/fixtures/images/access_masters/00/04/30/00/04/04/30000404.tif")
       end
     end
   end

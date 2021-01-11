@@ -81,8 +81,13 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       # Only runs on newly created parent objects
       metadata_source = mets_doc.metadata_source
       parent_object.bib = mets_doc.bib
+      parent_object.visibility = mets_doc.visibility
+      parent_object.rights_statement = mets_doc.rights_statement
+      parent_object.viewing_direction = mets_doc.viewing_direction
+      parent_object.display_layout = mets_doc.viewing_hint
       setup_for_background_jobs(parent_object, metadata_source)
       fresh = true
+      parent_object.from_mets = true
     end
     return if fresh
     po.metadata_update = true

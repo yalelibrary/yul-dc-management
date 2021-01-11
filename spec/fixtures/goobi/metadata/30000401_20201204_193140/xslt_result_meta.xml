@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:a="http://www.lunaimaging.com/xsd" xmlns:mets="http://www.loc.gov/METS/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:goobi="http://meta.goobi.org/v1.5.1/" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <element>
+    <metadata>
+      <name>PublicationYear</name>
+      <value>1739.</value>
+    </metadata>
+    <metadata>
+      <name>PublicationYearSort</name>
+      <value>1739</value>
+    </metadata>
+    <metadata>
+      <name>CreatorsAllOrigin</name>
+      <value>Swift, Jonathan; S----, Dr.</value>
+    </metadata>
+    <metadata>
+      <name>ViewingDirection</name>
+      <value>left-to-right</value>
+    </metadata>
+    <metadata>
+      <name>DisplayLayout</name>
+      <value>individuals</value>
+    </metadata>
+    <metadata>
+      <name>YaleUse</name>
+      <value>The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement.</value>
+    </metadata>
+    <metadata>
+      <name>YaleRestriction</name>
+      <value>Public</value>
+    </metadata>
+    <metadata>
+      <name>ExtentDigitization</name>
+      <value>Completely digitized</value>
+    </metadata>
+    <metadata>
+      <name>CatalogIDSource</name>
+      <value>/ils/holding/1330141?bib=1188135</value>
+    </metadata>
+    <metadata>
+      <name>shelfmarksource</name>
+      <value>Ik Sw55 739ve</value>
+    </metadata>
+    <metadata>
+      <name>singleDigCollection</name>
+      <value>DefaultCollection</value>
+    </metadata>
+    <metadata>
+      <name>CatalogIDDigital</name>
+      <value>30000401</value>
+    </metadata>
+    <metadata>
+      <name>TitleDocMain</name>
+      <value>Verses on the death of Dr. S----, D.S.P.D. : occasioned by reading a maxim in Rochefoulcault ...</value>
+    </metadata>
+    <metadata>
+      <name>_directionRTL</name>
+      <value>false</value>
+    </metadata>
+    <metadata>
+      <name>Author</name>
+      <value>                        Swift                        Jonathan                        Swift, Jonathan                     </value>
+    </metadata>
+    <metadata>
+      <name>Author</name>
+      <value>                        S----                        Dr.                        S----, Dr.                     </value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>pathimagefiles</name>
+      <value>file:///opt/digiverso/goobi/metadata/195/images/IkSw55739ve_RA_tif</value>
+    </metadata>
+    <metadata>
+      <name>_urn</name>
+      <value>30000401</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000402</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000403</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000404</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000405</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000406</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000407</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000408</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000409</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000410</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000411</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000412</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000413</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000414</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000415</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000416</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000417</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000418</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000419</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000420</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000421</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000422</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000423</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000424</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000425</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000426</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000427</value>
+    </metadata>
+  </element>
+  <element>
+    <metadata>
+      <name>_urn</name>
+      <value>30000428</value>
+    </metadata>
+  </element>
+  <pages>
+    <page name="xlinkTo">
+      <value>PHYS_0001</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0002</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0003</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0004</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0005</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0006</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0007</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0008</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0009</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0010</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0011</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0012</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0013</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0014</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0015</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0016</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0017</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0018</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0019</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0020</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0021</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0022</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0023</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0024</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0025</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0026</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0027</value>
+    </page>
+  </pages>
+</record>
