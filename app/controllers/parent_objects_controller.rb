@@ -30,7 +30,7 @@ class ParentObjectsController < ApplicationController
     if ParentObject.exists?(oid: parent_object_params[:oid])
       respond_to do |format|
         format.html { redirect_to new_parent_object_path, flash: { alert: "The oid already exists: [#{parent_object_params[:oid]}]" } }
-        format.json { render json: {error:"The oid already exists: [#{parent_object_params[:oid]}]"}, status: :unprocessable_entity }
+        format.json { render json: { error: "The oid already exists: [#{parent_object_params[:oid]}]" }, status: :unprocessable_entity }
       end
       return
     end
