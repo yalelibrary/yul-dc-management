@@ -140,6 +140,14 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         expect(document["callNumber_tesim"]).to include "YCAL MSS 202"
         expect(document["dateStructured_ssim"]).to include "1891"
       end
+
+      it 'shows error if creating parent with oid that exists' do
+        visit new_parent_object_path
+        fill_in('Oid', with: "2012036")
+        click_on("Create Parent object")
+        expect(page.body).to include "The oid already exists"
+        expect(page).to have_current_path(new_parent_object_path)
+      end
     end
 
     context "with a ParentObject whose authoritative_metadata_source is Voyager" do

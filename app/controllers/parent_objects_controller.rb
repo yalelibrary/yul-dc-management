@@ -27,13 +27,16 @@ class ParentObjectsController < ApplicationController
   # POST /parent_objects
   # POST /parent_objects.json
   def create
+    if ParentObject.exists?(oid: parent_object_params[:oid])
+      redirect_to new_parent_object_path, flash: { alert: "The oid already exists: [#{parent_object_params[:oid]}]" }
+      return
+    end
     @parent_object = ParentObject.new(parent_object_params)
     batch_process_of_one
     respond_to do |format|
       if @parent_object.save
         format.html { redirect_to @parent_object, notice: 'Parent object was successfully created.' }
         format.json { render :show, status: :created, location: @parent_object }
-
       else
         format.html { render :new }
         format.json { render json: @parent_object.errors, status: :unprocessable_entity }
