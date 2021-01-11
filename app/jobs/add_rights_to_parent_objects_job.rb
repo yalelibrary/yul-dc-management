@@ -11,7 +11,7 @@ class AddRightsToParentObjectsJob < ApplicationJob
 
   def perform(*_args)
     ParentObject.where(rights_statement: nil).find_each do |parent|
-      parent.rights_statement = parent.ladybird_json["rights"]&.first
+      parent.rights_statement = parent.ladybird_json&.[]("rights")&.first
       parent.save!
     end
   end
