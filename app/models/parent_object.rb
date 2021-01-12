@@ -52,17 +52,16 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     ['solr-indexed', 'pdf-generated']
   end
 
+  # Note - the upsert_all method skips ActiveRecord callbacks, and is entirely
+  # database driven. This also makes object creation much faster.
   def create_child_records
-    return unless ladybird_json
-    return self.child_object_count = 0 if ladybird_json["children"].empty?
-    # Note - the upsert_all method skips ActiveRecord callbacks, and is entirely
-    # database driven. This also makes object creation much faster.
-    ChildObject.upsert_all(array_of_child_hashes)
-    self.child_object_count = child_objects.size
-  end
-
-  def create_child_records_from_mets
-    ChildObject.upsert_all(current_batch_process.mets_doc.combined)
+    if from_mets == true
+      ChildObject.upsert_all(current_batch_process.mets_doc.combined)
+    else
+      return unless ladybird_json
+      return self.child_object_count = 0 if ladybird_json["children"].empty?
+      ChildObject.upsert_all(array_of_child_hashes)
+    end
     self.child_object_count = child_objects.size
   end
 

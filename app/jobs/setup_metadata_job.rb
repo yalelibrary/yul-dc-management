@@ -9,11 +9,7 @@ class SetupMetadataJob < ApplicationJob
     parent_object.generate_manifest = true
     # Do not continue running the background jobs if the metadata has not been successfully fetched
     return unless parent_object.default_fetch(current_batch_process, current_batch_connection)
-    if parent_object.from_mets == true
-      parent_object.create_child_records_from_mets
-    else
-      parent_object.create_child_records
-    end
+    parent_object.create_child_records
     parent_object.save!
     parent_object.processing_event("Child object records have been created", "child-records-created", current_batch_process, current_batch_connection)
     parent_object.child_objects.each do |child|
