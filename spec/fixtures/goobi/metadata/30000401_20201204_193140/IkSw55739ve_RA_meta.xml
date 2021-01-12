@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets OBJID="" xsi:schemaLocation="http://www.loc.gov/standards/premis/ http://www.loc.gov/standards/premis/v2/premis-v2-0.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/standards/mix/ http://www.loc.gov/standards/mix/mix.xsd" xmlns:mets="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:goobi="http://meta.goobi.org/v1.5.1/" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <mets:metsHdr CREATEDATE="2020-12-04T19:31:38Z">
+      <mets:agent OTHERTYPE="SOFTWARE" ROLE="CREATOR" TYPE="OTHER">
+         <mets:name>Goobi - 3647a - 2020-08-02 19:35:26+0000</mets:name>
+         <mets:note>Goobi</mets:note>
+      </mets:agent>
+   </mets:metsHdr>
+   <mets:dmdSec ID="DMDLOG_0000">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="PublicationYear">1739.</goobi:metadata>
+                     <goobi:metadata name="PublicationYearSort">1739</goobi:metadata>
+                     <goobi:metadata name="CreatorsAllOrigin">Swift, Jonathan; S----, Dr.</goobi:metadata>
+                     <goobi:metadata name="ViewingDirection">left-to-right</goobi:metadata>
+                     <goobi:metadata name="DisplayLayout">individuals</goobi:metadata>
+                     <goobi:metadata name="YaleUse">The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement.</goobi:metadata>
+                     <goobi:metadata name="YaleRestriction">Public</goobi:metadata>
+                     <goobi:metadata name="ExtentDigitization">Completely digitized</goobi:metadata>
+                     <goobi:metadata name="CatalogIDSource">/ils/holding/1330141?bib=1188135</goobi:metadata>
+                     <goobi:metadata name="shelfmarksource">Ik Sw55 739ve</goobi:metadata>
+                     <goobi:metadata name="singleDigCollection">DefaultCollection</goobi:metadata>
+                     <goobi:metadata name="CatalogIDDigital">30000401</goobi:metadata>
+                     <goobi:metadata name="TitleDocMain">Verses on the death of Dr. S----, D.S.P.D. : occasioned by reading a maxim in Rochefoulcault ...</goobi:metadata>
+                     <goobi:metadata name="_directionRTL">false</goobi:metadata>
+                     <goobi:metadata name="Author" type="person">
+                        <goobi:lastName>Swift</goobi:lastName>
+                        <goobi:firstName>Jonathan</goobi:firstName>
+                        <goobi:displayName>Swift, Jonathan</goobi:displayName>
+                     </goobi:metadata>
+                     <goobi:metadata name="Author" type="person">
+                        <goobi:lastName>S----</goobi:lastName>
+                        <goobi:firstName>Dr.</goobi:firstName>
+                        <goobi:displayName>S----, Dr.</goobi:displayName>
+                     </goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0000">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="pathimagefiles">file:///opt/digiverso/goobi/metadata/195/images/IkSw55739ve_RA_tif</goobi:metadata>
+                     <goobi:metadata name="_urn">30000401</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0001">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000402</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0002">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000403</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0003">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000404</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0004">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000405</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0005">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000406</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0006">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000407</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0007">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000408</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0008">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000409</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0009">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000410</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0010">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000411</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0011">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000412</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0012">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000413</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0013">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000414</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0014">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000415</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0015">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000416</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0016">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000417</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0017">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000418</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0018">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000419</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0019">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000420</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0020">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000421</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0021">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000422</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0022">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000423</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0023">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000424</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0024">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000425</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0025">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000426</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0026">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000427</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="DMDPHYS_0027">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:extension>
+                  <goobi:goobi>
+                     <goobi:metadata name="_urn">30000428</goobi:metadata>
+                  </goobi:goobi>
+               </mods:extension>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:fileSec>
+      <mets:fileGrp USE="LOCAL">
+         <mets:file ID="FILE_0001" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000402.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0002" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000403.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0003" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000404.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0004" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000405.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0005" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000406.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0006" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000407.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0007" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000408.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0008" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000409.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0009" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000410.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0010" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000411.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0011" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000412.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0012" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000413.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0013" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000414.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0014" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000415.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0015" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000416.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0016" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000417.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0017" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000418.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0018" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000419.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0019" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000420.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0020" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000421.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0021" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000422.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0022" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000423.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0023" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000424.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0024" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000425.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0025" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000426.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0026" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000427.tif"/>
+         </mets:file>
+         <mets:file ID="FILE_0027" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="30000428.tif"/>
+         </mets:file>
+      </mets:fileGrp>
+   </mets:fileSec>
+   <mets:structMap TYPE="LOGICAL">
+      <mets:div DMDID="DMDLOG_0000" ID="LOG_0000" TYPE="ILSObject"/>
+   </mets:structMap>
+   <mets:structMap TYPE="PHYSICAL">
+      <mets:div DMDID="DMDPHYS_0000" ID="PHYS_0000" TYPE="BoundBook">
+         <mets:div DMDID="DMDPHYS_0001" ID="PHYS_0001" ORDER="1" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0001"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0002" ID="PHYS_0002" ORDER="2" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0002"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0003" ID="PHYS_0003" ORDER="3" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0003"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0004" ID="PHYS_0004" ORDER="4" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0004"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0005" ID="PHYS_0005" ORDER="5" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0005"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0006" ID="PHYS_0006" ORDER="6" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0006"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0007" ID="PHYS_0007" ORDER="7" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0007"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0008" ID="PHYS_0008" ORDER="8" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0008"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0009" ID="PHYS_0009" ORDER="9" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0009"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0010" ID="PHYS_0010" ORDER="10" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0010"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0011" ID="PHYS_0011" ORDER="11" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0011"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0012" ID="PHYS_0012" ORDER="12" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0012"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0013" ID="PHYS_0013" ORDER="13" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0013"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0014" ID="PHYS_0014" ORDER="14" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0014"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0015" ID="PHYS_0015" ORDER="15" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0015"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0016" ID="PHYS_0016" ORDER="16" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0016"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0017" ID="PHYS_0017" ORDER="17" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0017"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0018" ID="PHYS_0018" ORDER="18" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0018"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0019" ID="PHYS_0019" ORDER="19" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0019"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0020" ID="PHYS_0020" ORDER="20" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0020"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0021" ID="PHYS_0021" ORDER="21" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0021"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0022" ID="PHYS_0022" ORDER="22" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0022"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0023" ID="PHYS_0023" ORDER="23" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0023"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0024" ID="PHYS_0024" ORDER="24" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0024"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0025" ID="PHYS_0025" ORDER="25" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0025"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0026" ID="PHYS_0026" ORDER="26" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0026"/>
+         </mets:div>
+         <mets:div DMDID="DMDPHYS_0027" ID="PHYS_0027" ORDER="27" ORDERLABEL="uncounted" TYPE="page">
+            <mets:fptr FILEID="FILE_0027"/>
+         </mets:div>
+      </mets:div>
+   </mets:structMap>
+   <mets:structLink>
+      <mets:smLink xlink:to="PHYS_0001" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0002" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0003" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0004" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0005" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0006" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0007" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0008" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0009" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0010" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0011" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0012" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0013" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0014" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0015" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0016" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0017" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0018" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0019" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0020" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0021" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0022" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0023" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0024" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0025" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0026" xlink:from="LOG_0000"/>
+      <mets:smLink xlink:to="PHYS_0027" xlink:from="LOG_0000"/>
+   </mets:structLink>
+</mets:mets>

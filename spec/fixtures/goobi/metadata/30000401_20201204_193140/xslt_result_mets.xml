@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:a="http://www.lunaimaging.com/xsd" xmlns:mets="http://www.loc.gov/METS/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:goobi="http://meta.goobi.org/v1.5.1/" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <element>
+    <id>DMDLOG_0000</id>
+    <title>Verses on the death of Dr. S----, D.S.P.D. : occasioned by reading a maxim in Rochefoulcault ...</title>
+    <publishing>
+      <place/>
+      <house/>
+      <year>1739.</year>
+    </publishing>
+  </element>
+  <pages>
+    <page name="xlinkTo">
+      <value>PHYS_0001</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0002</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0003</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0004</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0005</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0006</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0007</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0008</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0009</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0010</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0011</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0012</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0013</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0014</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0015</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0016</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0017</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0018</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0019</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0020</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0021</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0022</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0023</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0024</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0025</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0026</value>
+    </page>
+    <page name="xlinkTo">
+      <value>PHYS_0027</value>
+    </page>
+  </pages>
+</record>

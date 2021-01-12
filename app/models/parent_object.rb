@@ -52,12 +52,16 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     ['solr-indexed', 'pdf-generated']
   end
 
+  # Note - the upsert_all method skips ActiveRecord callbacks, and is entirely
+  # database driven. This also makes object creation much faster.
   def create_child_records
-    return unless ladybird_json
-    return self.child_object_count = 0 if ladybird_json["children"].empty?
-    # Note - the upsert_all method skips ActiveRecord callbacks, and is entirely
-    # database driven. This also makes object creation much faster.
-    ChildObject.upsert_all(array_of_child_hashes)
+    if from_mets == true
+      ChildObject.upsert_all(current_batch_process.mets_doc.combined)
+    else
+      return unless ladybird_json
+      return self.child_object_count = 0 if ladybird_json["children"].empty?
+      ChildObject.upsert_all(array_of_child_hashes)
+    end
     self.child_object_count = child_objects.size
   end
 
@@ -170,6 +174,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def voyager_cloud_url
+    # if we're working from a mets document, use the MetadataCloud call from the mets document
+    return "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}#{current_batch_process.mets_doc.metadata_source_path}" if from_mets
     raise StandardError, "Bib id required to build Voyager url" unless bib.present?
     identifier_block = if !barcode.present?
                          "/bib/#{bib}"

@@ -61,6 +61,42 @@ class ChildObject < ApplicationRecord
     @access_master_path = File.join(image_mount, directory, pairtree_path, "#{oid}.tif")
   end
 
+  def copy_to_access_master_pairtree
+    # Don't copy over existing access masters if they already exist
+    # TODO: Determine what happens if it's an intentional re-shoot of a child image
+    #  1. How is that signalled? (ensure that it's an intentional re-shoot, not accidental duplication)
+    #  2. We assume that there is only one access master at a time - BUT we only have one access master pair-tree
+    #     across *all* environments (no separation of dev, test, uat, production)
+    #     how do we ensure we don't accidentally overwrite something we want to keep?
+    if access_master_exists?
+      processing_event("Not copied from Goobi package to access master pair-tree, already exists", 'access-master-exists')
+      return true
+    end
+    image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    directory = format("%02d", pairtree_path.first)
+    # Create path to access master if it doesn't exist
+    FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
+    FileUtils.cp(mets_full_access_master_path, access_master_path)
+    access_master_checksum = Digest::SHA1.file(access_master_path).to_s
+    if checksum == access_master_checksum
+      processing_event("Copied from Goobi package to access master pair-tree", 'goobi-copied')
+      true
+    else
+      processing_event("Copy from Goobi to access master failed checksum check", 'failed')
+      false
+    end
+  end
+
+  def access_master_exists?
+    File.exist?(access_master_path)
+  end
+
+  def mets_full_access_master_path
+    mount_path = ENV["GOOBI_MOUNT"] || "data"
+    Rails.root.join(mount_path, mets_access_master_path)
+  end
+
   def remote_access_master_path
     return @remote_access_master_path if @remote_access_master_path
     image_bucket = "originals"
