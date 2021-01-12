@@ -13,7 +13,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :batch_processes, through: :batch_connections
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   attr_accessor :metadata_update
-  attr_accessor :from_mets
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
   self.primary_key = 'oid'
@@ -114,11 +113,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
        previous_changes["authoritative_metadata_source_id"].present? ||
        metadata_update.present?
       current_batch_connection&.save! unless current_batch_connection&.persisted?
-      if from_mets
-        SetupMetadataFromMetsJob.perform_later(self, current_batch_process, current_batch_connection)
-      else
-        SetupMetadataJob.perform_later(self, current_batch_process, current_batch_connection)
-      end
+      SetupMetadataJob.perform_later(self, current_batch_process, current_batch_connection)
       processing_event("Processing has been queued", "processing-queued", current_batch_process, current_batch_connection)
     end
   end
