@@ -102,6 +102,7 @@ module SolrIndexable
       sourceNote_tesim: json_to_index["sourceNote"],
       sourceTitle_tesim: json_to_index["sourceTitle"],
       subjectEra_ssim: json_to_index["subjectEra"],
+      subjectGeographic_ssim: json_to_index["subjectGeographic"],
       subjectGeographic_tesim: json_to_index["subjectGeographic"],
       subjectTitle_tsim: json_to_index["subjectTitle"],
       subjectTitleDisplay_tsim: json_to_index["subjectTitleDisplay"],
