@@ -77,7 +77,7 @@ class ChildObject < ApplicationRecord
     directory = format("%02d", pairtree_path.first)
     # Create path to access master if it doesn't exist
     FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
-    FileUtils.cp(mets_full_access_master_path, access_master_path)
+    FileUtils.cp(mets_access_master_path, access_master_path)
     access_master_checksum = Digest::SHA1.file(access_master_path).to_s
     if checksum == access_master_checksum
       processing_event("Copied from Goobi package to access master pair-tree", 'goobi-copied')
@@ -90,11 +90,6 @@ class ChildObject < ApplicationRecord
 
   def access_master_exists?
     File.exist?(access_master_path)
-  end
-
-  def mets_full_access_master_path
-    mount_path = ENV["GOOBI_MOUNT"] || "data"
-    Rails.root.join(mount_path, mets_access_master_path)
   end
 
   def remote_access_master_path

@@ -54,8 +54,7 @@ class MetsDocument
   end
 
   def all_images_present?
-    mount_path = ENV["GOOBI_MOUNT"] || "data"
-    files.all? { |file| File.exist?(Rails.root.join(mount_path, file[:mets_access_master_path])) }
+    files.all? { |file| File.exist?(file[:mets_access_master_path]) }
   end
 
   # Combines the physical info and file info for a given image
@@ -87,10 +86,9 @@ class MetsDocument
   end
 
   def file_info(file)
-    mount_path = ENV["GOOBI_MOUNT"] || "data"
     {
-      checksum: file.xpath('@CHECKSUM').to_s,
-      mets_access_master_path: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\/\/#{mount_path}\//, '')
+      checksum: file.xpath('@CHECKSUM').inner_text,
+      mets_access_master_path: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\/\//, '')
     }
   end
 

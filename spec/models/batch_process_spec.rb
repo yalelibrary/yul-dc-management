@@ -15,11 +15,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     original_path = ENV["GOOBI_MOUNT"]
     original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
-    ENV["GOOBI_MOUNT"] = File.join("spec", "fixtures", "goobi", "metadata")
     ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "images", "access_masters")
     example.run
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
-    ENV["GOOBI_MOUNT"] = original_path
     ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
   end
 
@@ -136,7 +134,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         expect(po.display_layout).to eq "individuals"
         # child object expectations
         expect(co.checksum).to eq "c314697a5b0fd444e26e7c12a1d8d487545dacfc"
-        expect(co.mets_access_master_path).to eq "30000401_20201204_193140/IkSw55739ve_RA_media/30000404.tif"
+        expect(co.mets_access_master_path).to eq "spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_media/30000404.tif"
         expect(File.exist?("spec/fixtures/images/access_masters/00/02/30/00/04/02/30000402.tif")).to be true
         expect(File.exist?("spec/fixtures/images/access_masters/00/03/30/00/04/03/30000403.tif")).to be true
         expect(File.exist?("spec/fixtures/images/access_masters/00/04/30/00/04/04/30000404.tif")).to be true
