@@ -16,7 +16,7 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
     @view_columns ||= {
       parent_oid: { source: 'BatchConnection.connectable_id', cond: :like, searchable: true },
       time: { source: 'BatchConnection.created_at', cond: :like, searchable: true },
-      children: { source: 'BatchConnection.connectable&.child_object_count', cond: :like, searchable: true },
+      children: { source: 'ParentObject.child_object_count', cond: :like, searchable: true },
       status: { source: 'BatchConnection.status', cond: :like, searchable: true }
     }
   end
@@ -36,6 +36,8 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    BatchConnection.where(batch_process_id: params[:id])
+    sql = "JOIN parent_objects ON batch_connections.connectable_id = parent_objects.oid AND batch_connections.connectable_type = 'ParentObject'"
+    BatchConnection.joins(sql).where(batch_process_id: params[:id])
   end
+
 end
