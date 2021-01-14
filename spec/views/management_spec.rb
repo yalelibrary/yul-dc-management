@@ -35,8 +35,8 @@ RSpec.describe "Management", type: :feature do
       expect(page).to have_selector("#iiif_image_version", text: "v4.delta.chi"),
                       "has a css id for the iiif image version"
       expect(page).to have_content("yalelibraryit/dc-iiif-cantaloupe")
-      expect(page).to have_selector("#iiif_manifest_version", text: "v5.lambda.phi")
-      expect(page).to have_content("yalelibraryit/dc-iiif-manifest")
+      expect(page).not_to have_selector("#iiif_manifest_version", text: "v5.lambda.phi")
+      expect(page).not_to have_content("yalelibraryit/dc-iiif-manifest")
     end
   end
 end
