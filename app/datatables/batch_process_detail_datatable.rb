@@ -39,5 +39,4 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
     sql = "JOIN parent_objects ON batch_connections.connectable_id = parent_objects.oid AND batch_connections.connectable_type = 'ParentObject'"
     BatchConnection.joins(sql).where(batch_process_id: params[:id])
   end
-
 end
