@@ -12,7 +12,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
 
   around do |example|
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
-    original_path = ENV["GOOBI_MOUNT"]
     original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
     ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "images", "access_masters")
