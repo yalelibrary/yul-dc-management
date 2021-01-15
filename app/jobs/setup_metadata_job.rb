@@ -7,10 +7,8 @@ class SetupMetadataJob < ApplicationJob
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
     parent_object.generate_manifest = true
-    if parent_object.from_mets
-      # Check for images from background job, since only background workers can see mounted file system
-      parent_object.processing_event("Could not find all images from METs document", "failed", current_batch_process, current_batch_connection) unless parent_object.current_batch_process.mets_doc.all_images_present?
-    end
+    mets_images_present = check_mets_images(parent_object)
+    return unless mets_images_present
     # Do not continue running the background jobs if the metadata has not been successfully fetched
     return unless parent_object.default_fetch(current_batch_process, current_batch_connection)
     parent_object.create_child_records
@@ -23,5 +21,13 @@ class SetupMetadataJob < ApplicationJob
   rescue => e
     parent_object.processing_event("Setup job failed to save: #{e.message}", "failed", current_batch_process, current_batch_connection)
     raise # this reraises the error after we document it
+  end
+
+  def check_mets_images(parent_object)
+    if parent_object.from_mets
+      parent_object.current_batch_process.mets_doc.all_images_present?
+    else
+      true
+    end
   end
 end
