@@ -88,7 +88,7 @@ class MetsDocument
   def file_info(file)
     {
       checksum: file.xpath('@CHECKSUM').inner_text,
-      mets_access_master_path: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\/\//, '')
+      mets_access_master_path: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, '')
     }
   end
 
