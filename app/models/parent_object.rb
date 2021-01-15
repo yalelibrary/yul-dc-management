@@ -186,6 +186,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def aspace_cloud_url
+    # if we're working from a mets document, use the MetadataCloud call from the mets document
+    return "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}#{current_batch_process.mets_doc.metadata_source_path}" if from_mets
     raise StandardError, "ArchiveSpace uri required to build ArchiveSpace url" unless aspace_uri.present?
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace#{aspace_uri}"
   end
