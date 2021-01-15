@@ -70,11 +70,6 @@ class MetsDocument
     zipped.map { |file, physical_div| file.merge(physical_div) }
   end
 
-  def combined_child
-    zipped = files_child.zip(physical_divs)
-    zipped.map { |file, physical_div| file.merge(physical_div) }
-  end
-
   def physical_divs
     @mets.xpath("/mets:mets/mets:structMap[@TYPE='PHYSICAL']/mets:div" \
                 "/mets:div").map do |p|
@@ -97,23 +92,10 @@ class MetsDocument
     end
   end
 
-  def files_child
-    @mets.xpath("/mets:mets/mets:fileSec/mets:fileGrp[@USE='PRESENTATION']/mets:file").map do |f|
-      file_info_child(f)
-    end
-  end
-
   def file_info(file)
     thumbnail_flag = file.xpath('@USE').inner_text == "banner" ? true : false
     {
       thumbnail_flag: thumbnail_flag,
-      checksum: file.xpath('@CHECKSUM').inner_text,
-      mets_access_master_path: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, '')
-    }
-  end
-
-  def file_info_child(file)
-    {
       checksum: file.xpath('@CHECKSUM').inner_text,
       mets_access_master_path: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, '')
     }
