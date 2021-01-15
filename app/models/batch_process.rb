@@ -88,6 +88,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       setup_for_background_jobs(parent_object, metadata_source)
       fresh = true
       parent_object.from_mets = true
+      parent_object.representative_child_oid = mets_doc.thumbnail_image
     end
     return if fresh
     po.metadata_update = true

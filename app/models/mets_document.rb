@@ -46,6 +46,13 @@ class MetsDocument
     @mets.xpath("//mods:extension/intranda:intranda/intranda:ViewingHint").inner_text
   end
 
+  def thumbnail_image
+    child_img = combined.find do |child|
+      child[:thumbnail_flag]
+    end
+    child_img&.[](:oid)&.to_i
+  end
+
   def valid_mets?
     return false unless @mets.xml?
     return false unless @mets.collect_namespaces.include?("xmlns:mets")
@@ -60,6 +67,11 @@ class MetsDocument
   # Combines the physical info and file info for a given image
   def combined
     zipped = files.zip(physical_divs)
+    zipped.map { |file, physical_div| file.merge(physical_div) }
+  end
+
+  def combined_child
+    zipped = files_child.zip(physical_divs)
     zipped.map { |file, physical_div| file.merge(physical_div) }
   end
 
@@ -85,7 +97,22 @@ class MetsDocument
     end
   end
 
+  def files_child
+    @mets.xpath("/mets:mets/mets:fileSec/mets:fileGrp[@USE='PRESENTATION']/mets:file").map do |f|
+      file_info_child(f)
+    end
+  end
+
   def file_info(file)
+    thumbnail_flag = file.xpath('@USE').inner_text == "banner" ? true : false
+    {
+      thumbnail_flag: thumbnail_flag,
+      checksum: file.xpath('@CHECKSUM').inner_text,
+      mets_access_master_path: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, '')
+    }
+  end
+
+  def file_info_child(file)
     {
       checksum: file.xpath('@CHECKSUM').inner_text,
       mets_access_master_path: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, '')

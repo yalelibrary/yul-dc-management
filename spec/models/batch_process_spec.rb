@@ -131,6 +131,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         expect(po.barcode).to eq nil
         expect(po.viewing_direction).to eq "left-to-right"
         expect(po.display_layout).to eq "individuals"
+        expect(po.representative_child_oid).to eq 30_000_403
         # child object expectations
         expect(co.checksum).to eq "c314697a5b0fd444e26e7c12a1d8d487545dacfc"
         expect(co.mets_access_master_path).to eq "/home/app/webapp/spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_media/30000404.tif"
