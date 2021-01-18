@@ -54,9 +54,10 @@ echo "channels: ${CHANNELS}"
 if [ ${CHANNELS} = "srgba" ]; then
     # we have to flatten the image to remove the alpha channel / trasparency before proceeding
     echo "removing alpha channel from $input"
-    vips im_extract_bands $input ${input}.noalpha.tif 0 3   2>&1
-    if [ -z "${savefiles}" ]; then rm $input; fi
-    mv ${input}.noalpha.tif $input
+    newname=$(basename ${input}).noalpha.tif #avoid overwriting original
+    vips im_extract_bands $input $newname 0 3   2>&1
+    input=$newname #the .noalpha version will be used as $input from here
+    #all this wil be cleaned up when the calling script destroys the tmpdir
 elif [[ ${CHANNELS} != "srgb" && ${CHANNELS} != "gray" && ${CHANNELS} != "cmyk" ]]; then
     echo "Image ${input} has color channels ${CHANNELS} which is not supported at this time."
     exit 1;
@@ -118,7 +119,8 @@ done
 # chroma subsampling so by default it produces JPEGs about 3x smaller with ycbcr
 # vs. when photometric interpretation is set to rgb
 # e.g. -c jpeg:r:90 vs. -c jpeg:90
-tiffcp -a -c jpeg:90 -t -w 256 -l 256 ${outprefix}_*.tif ${outfile}
+#using zip compression gets around the issue of attempting to encode 16bpp colordepth images to jpeg
+tiffcp -a -c zip -t -w 256 -l 256 ${outprefix}_*.tif ${outfile}
 
 # cleanup temp files but leave the outputput file in place
 if [ -z "${savefiles}" ]; then rm -f $tmpprefix*; fi
