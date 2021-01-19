@@ -1,0 +1,716 @@
+
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:dv="http://dfg-viewer.de/" xmlns:intranda="http://intranda.com/MODS/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OBJID="201" xsi:schemaLocation="http://www.loc.gov/standards/premis/ http://www.loc.gov/standards/premis/v2/premis-v2-0.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/standards/mix/ http://www.loc.gov/standards/mix/mix.xsd">
+  <mets:metsHdr CREATEDATE="2021-01-14T16:24:48Z">
+    <mets:agent OTHERTYPE="SOFTWARE" ROLE="CREATOR" TYPE="OTHER">
+      <mets:name>Goobi - 3647a - 2020-08-02 19:35:26+0000</mets:name>
+      <mets:note>Goobi</mets:note>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:dmdSec ID="DMDLOG_0000">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>Banmin kokoro no kagami 万民こころのかかみ.</mods:title>
+          </mods:titleInfo>
+          <mods:identifier type="PPNanalog">/ils/barcode/39002101693225?bib=10502849</mods:identifier>
+          <mods:recordInfo>
+            <mods:recordIdentifier source="gbv-ppn">30000483</mods:recordIdentifier>
+          </mods:recordInfo>
+          <mods:part>Completely digitized</mods:part>
+          <mods:classification authority="ivdcc">DefaultCollection</mods:classification>
+          <mods:originInfo>
+            <mods:dateIssued keyDate="no">Kaei 7 [1854]</mods:dateIssued>
+            <mods:dateIssued keyDate="yes">1854</mods:dateIssued>
+          </mods:originInfo>
+          <mods:accessCondition displayLabel="Yale Restriction" type="restriction on access">Public</mods:accessCondition>
+          <mods:accessCondition displayLabel="Yale Use" type="use and reproduction">The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement.</mods:accessCondition>
+          <mods:location>
+            <mods:shelfLocator>EAL J1730</mods:shelfLocator>
+          </mods:location>
+          <mods:name type="personal">
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+            <mods:namePart type="family">Yanada</mods:namePart>
+            <mods:namePart type="given">Mosui.</mods:namePart>
+            <mods:displayForm>Yanada, Mosui.</mods:displayForm>
+          </mods:name>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:directionRTL>false</intranda:directionRTL>
+              <intranda:ViewingDirection>left-to-right</intranda:ViewingDirection>
+              <intranda:ViewingHint>individuals</intranda:ViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:amdSec ID="AMD">
+    <mets:rightsMD ID="RIGHTS">
+      <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights>
+            <dv:owner>Beinecke Rare Book &amp; Manuscript Library</dv:owner>
+            <dv:ownerLogo />
+            <dv:ownerSiteURL>https://beinecke.library.yale.edu/</dv:ownerSiteURL>
+            <dv:ownerContact />
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="DIGIPROV">
+      <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links>
+            <dv:reference />
+            <dv:presentation />
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:fileSec>
+    <mets:fileGrp USE="PRESENTATION" ID="478ba913-0498-4037-9bd3-078c860fea1c">
+      <mets:file ID="59a58245-410e-4c7f-bb53-583439cd351a" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="9c68f106f29e142ce35d39d5874fc7dac5a4af81">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000484.tif" />
+      </mets:file>
+      <mets:file ID="6275ec96-c625-4f92-8e48-e6c16f3fca12" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="dca8253e3c505cf612bad5b5659abf97888db9ce">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000485.tif" />
+      </mets:file>
+      <mets:file ID="e9eec0a7-cb1b-4d9b-9ed0-450c8e4f3322" MIMETYPE="image/tiff" USE="banner" CHECKSUMTYPE="SHA-1" CHECKSUM="2eccdc19ce1caa25ad5d2d42bfb48c35ebcae12f">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000486.tif" />
+      </mets:file>
+      <mets:file ID="756efb06-4601-4afa-ba3f-b015e91de3af" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="8d2cb553002f1b316b77cfe84ca757486412f509">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000487.tif" />
+      </mets:file>
+      <mets:file ID="b844bf73-2ac9-4f8c-b1a6-7adf6b2e99d9" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="bf433d2c54bf1c10f57f0f7045c28b47f59d598a">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000488.tif" />
+      </mets:file>
+      <mets:file ID="f379974a-b1ac-40ad-9205-50346b0ef2b7" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="771459e54b8f08d69d470f1bf90b9a0521581394">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000489.tif" />
+      </mets:file>
+      <mets:file ID="fd10c125-9bb2-4f8c-b37f-b2d5c29d02c3" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="1989448e19cb5465b1f3f8edbf1bc3f544366ea6">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000490.tif" />
+      </mets:file>
+      <mets:file ID="73b8299e-4802-43f7-afe4-c45fcb7a8c63" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="db7aabdabf68175ce1d3dac47c136a29552ad026">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000491.tif" />
+      </mets:file>
+      <mets:file ID="d94a8338-87c6-4c05-828f-090d5d55a882" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="ca8852af1ab414418e2d9921e5bb5845074493c3">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000492.tif" />
+      </mets:file>
+      <mets:file ID="31f5a25a-ab70-450a-9be8-6f41bcff0318" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="b80c8c17df635a55b19b894ab8250dd145c7537e">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000493.tif" />
+      </mets:file>
+      <mets:file ID="c7492cfd-3ee3-48d7-99c2-2bd2096f439b" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="57f092b807a8c1b8d215417f369c1cc98d059399">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000494.tif" />
+      </mets:file>
+      <mets:file ID="7e9881e7-2279-4be4-84b5-18f275f4749d" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="35b48ef852a3bba0712eaeac93c0eeadd3639390">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000495.tif" />
+      </mets:file>
+      <mets:file ID="6b4dd81d-8f17-4563-87b0-75c77988305f" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="1ef2715eae80a6cf5d81ac31deb9dc0439133a40">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000496.tif" />
+      </mets:file>
+      <mets:file ID="f17def99-8b0f-4d70-a759-4cdd7cb36d48" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="454ea13523c9659058425204475e49312003a489">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000497.tif" />
+      </mets:file>
+      <mets:file ID="495a5be4-3764-4854-aee6-07e80675cd85" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="8ddaf374b0633c9f6a6e6e3a56b8888079292ed2">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000498.tif" />
+      </mets:file>
+      <mets:file ID="55df00ac-dac2-41c2-b829-12464fb99c35" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="16937e31e514ad632139ad7d37062ff3bf9935ae">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000499.tif" />
+      </mets:file>
+      <mets:file ID="e0c0b6c3-bb0c-44cb-aba8-b1ebb9eaeb5d" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="a8f85872cd3c9fd7f791ffe1d294f76680220d07">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000500.tif" />
+      </mets:file>
+      <mets:file ID="0c1eaf86-91aa-4132-83ea-1742053620d7" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="188b7f47c935a976f0d7679bfd822b6c0e28f89e">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000501.tif" />
+      </mets:file>
+      <mets:file ID="130bd03e-4fb7-4e29-bbc8-02bd03f53edd" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="0d8636538d89b3707a02317065519bcd26425bd9">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000502.tif" />
+      </mets:file>
+      <mets:file ID="0018e3dd-f6f2-4102-8a8f-74fc4eea8757" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="c1c19dabec4c304a5ec2816ccb6e822d9da00f96">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000503.tif" />
+      </mets:file>
+      <mets:file ID="b29def3e-fde3-479a-bbd9-818d843079df" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="17110fe54fd10b1ffeba73ae1c751663de131b30">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000504.tif" />
+      </mets:file>
+      <mets:file ID="4dbaca28-7b49-43fe-a419-de175bbbdd5f" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="37b8214eef9ba472f643bb57f2e077793f4c0842">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000505.tif" />
+      </mets:file>
+      <mets:file ID="5116cb44-dc49-44ae-b9fa-74f857fb797f" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="ae98a973be67e247a419751e9336cff41a9f943b">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000506.tif" />
+      </mets:file>
+      <mets:file ID="db8b6dc2-78cf-43e2-9ad6-2cf7de149e21" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="a917b9f4ac8c6fd85828d0ee6feeabb24fe16326">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000507.tif" />
+      </mets:file>
+      <mets:file ID="fafe160a-0cc6-407f-92da-7a7ae99a0737" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="e6ec0e9cb16f681b6223d2a8167283c8a3faf44f">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000508.tif" />
+      </mets:file>
+      <mets:file ID="f5f4da4b-52c1-4070-8970-02ec5ccb7f23" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="b16326a1c57449b2d0ea17f27d8a67ca1389b97c">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000509.tif" />
+      </mets:file>
+      <mets:file ID="b1c3fb0c-0b65-4b98-af90-cd388143bb38" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="9d60654e58e01e3015885d682826a1d95a6d83e0">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000510.tif" />
+      </mets:file>
+      <mets:file ID="a9b59dac-977b-4ef6-8c0c-f155caa55473" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="97352cffa2ea07b50c2987d627893ab6d6977cb9">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000511.tif" />
+      </mets:file>
+      <mets:file ID="0e007d9a-1929-44b9-b7a6-65cb00742f96" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="9d1f777cb7456742a2b247099bdd94b33f492292">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000512.tif" />
+      </mets:file>
+      <mets:file ID="4cd21cc5-1ae1-4c7e-82ff-acb5d80c48e0" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="965e42a051da50b095eda2cb332ede00e5a74ba6">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000513.tif" />
+      </mets:file>
+      <mets:file ID="21c22cca-580f-49b5-bd3f-706b3edb3afd" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="314191fa834bd219f1b837f0ba7b9bfd8640bf65">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000514.tif" />
+      </mets:file>
+      <mets:file ID="234d898a-6a92-4322-9820-2011cb57e8b9" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="a8c5f8e64546ab33ce85443b93d631335e86ecb6">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000515.tif" />
+      </mets:file>
+      <mets:file ID="fa06ece5-e947-4aad-80a7-bd7bcc533c06" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="717905aaad69f13ed97fe5232f3b3782fe12b92e">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000516.tif" />
+      </mets:file>
+      <mets:file ID="e3d2324f-edae-418d-b4fd-f08d8575d043" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="e182c62212cd21aadc11737dc42c9376b7a9ef33">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000517.tif" />
+      </mets:file>
+      <mets:file ID="b9579384-f8fe-4fba-80f1-99632c76b68f" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="c9f5b9522ce1ddf1616a44d35bcc65f2bbe4b321">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000518.tif" />
+      </mets:file>
+      <mets:file ID="1db8395b-d092-48c7-a401-db17060069cc" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="6902cd69b248b3eb51f33c9507e6af5ef226b90e">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000519.tif" />
+      </mets:file>
+      <mets:file ID="e05bc4a3-3626-46ee-aa28-06a581cf624e" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="9e7c9233af72bd04012f9d16226c8274a7d9d30d">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000520.tif" />
+      </mets:file>
+      <mets:file ID="3b2fa84d-1f97-4a8b-bab8-aa7f81eb1a01" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="6cd1325499e0e3120825100b8e280d01d1073d32">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000521.tif" />
+      </mets:file>
+      <mets:file ID="7146fca6-d8b9-4578-8b96-1df2d602f583" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="00722a406b9d9bf43f1961ec14a9d391452e9b36">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000522.tif" />
+      </mets:file>
+      <mets:file ID="1d7fc6d4-8e59-4163-81c4-ce96735bb1c1" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="8936d15cfad63607c15b4184dfb2642c30357c5f">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000523.tif" />
+      </mets:file>
+      <mets:file ID="70b15341-4fda-4662-9fcf-7137f87e0029" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="aebace389670e1d9e5d1a2d5c689a8a3dd066234">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000524.tif" />
+      </mets:file>
+      <mets:file ID="333b89c9-3859-4693-8592-40f7be32de25" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="0a18b2ffd16326014be4b15cd8ebd11fd7f93713">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000525.tif" />
+      </mets:file>
+      <mets:file ID="13204ad2-e90b-4c99-a92f-a374e028d814" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="8a465d7fff0871722edb3205438496f6faae7a68">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000526.tif" />
+      </mets:file>
+      <mets:file ID="68d4c0f8-b0b1-46d7-a26a-b1a78be4dbab" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="2c285d14f75f301c5268b99093c2b8e21886d9ed">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000527.tif" />
+      </mets:file>
+      <mets:file ID="9f63aa08-7381-4cc7-9d2c-1371f1f95ef4" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="cf70c3a515050775d0f0a3476eddb02f3614cded">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000528.tif" />
+      </mets:file>
+      <mets:file ID="34277cba-c81e-47d4-839f-2fa59020ec35" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="68975fc800811d6c5296b359f3decbbe512d50d0">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000529.tif" />
+      </mets:file>
+      <mets:file ID="34753b58-c4df-4cd6-beee-15d98d06401c" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="cba50b1a6ce28e2d0bf07b5b857a13033b160d45">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000530.tif" />
+      </mets:file>
+      <mets:file ID="f21c9f1e-c9fb-4ccd-8850-1b2e16b51964" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="416a615b5e06b605127b3278d5167966c0810168">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000531.tif" />
+      </mets:file>
+      <mets:file ID="cda7d039-1582-4364-8bb4-ba74686674a9" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="3fedca8dc8533ee3490f70d2acb146e00e7107fe">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000532.tif" />
+      </mets:file>
+      <mets:file ID="b255f1e2-466f-4d1d-9de1-fdd40cb0154f" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="7521492189c0aa0556b884f53984f2bb80188a21">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000533.tif" />
+      </mets:file>
+      <mets:file ID="66a63678-8439-4726-8723-8569b103d8f5" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="abd78af2ebbee74a185c466e35bf953964138bb4">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000534.tif" />
+      </mets:file>
+      <mets:file ID="30fa7a35-6bfd-4adf-9c37-47d9cf4087f2" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="2673b8bcaa581eeb8120c6328fa973d691b28828">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000535.tif" />
+      </mets:file>
+      <mets:file ID="482c32e5-1462-4318-a6b9-e52a8119636e" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="ef0b1b5a0911014025f190777adfc4621c538f70">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000536.tif" />
+      </mets:file>
+      <mets:file ID="5d3d3e28-cfbc-4956-80a1-50ce619c6ac2" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="eb323994dc0c81815e56a77db8f1548372f9b013">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000537.tif" />
+      </mets:file>
+      <mets:file ID="609da704-71cb-418a-a4e8-13d2b360c1a6" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="a1e80b016706310153303e1bc1bc104fa7f9ed73">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000538.tif" />
+      </mets:file>
+      <mets:file ID="e4f7c4d1-e7fe-471a-80e6-b674b46df46d" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="6549cba759cdbaccacd38398af05c846d6b561a8">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000539.tif" />
+      </mets:file>
+      <mets:file ID="c5e3cb21-ddd0-4875-8544-93da06484a80" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="7bb395ed33fb3fb03106a773ce0b67744befe44f">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_media/30000540.tif" />
+      </mets:file>
+    </mets:fileGrp>
+    <mets:fileGrp USE="PRESERVATION" ID="a1288c77-400f-4f68-b50a-adc23c0ef25c">
+      <mets:file ID="bc64aeca-478f-46bd-a57b-8194726f9249" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="9c68f106f29e142ce35d39d5874fc7dac5a4af81">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000484.tif" />
+      </mets:file>
+      <mets:file ID="aae973e1-353d-4e4a-b4b6-1d1593d85e3a" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="dca8253e3c505cf612bad5b5659abf97888db9ce">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000485.tif" />
+      </mets:file>
+      <mets:file ID="d33a31c7-fb18-4ebe-adf7-65fa3ed17178" MIMETYPE="image/tiff" USE="banner" CHECKSUMTYPE="SHA-1" CHECKSUM="2eccdc19ce1caa25ad5d2d42bfb48c35ebcae12f">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000486.tif" />
+      </mets:file>
+      <mets:file ID="403e935b-062b-4de3-aef7-e3a0d70622f6" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="8d2cb553002f1b316b77cfe84ca757486412f509">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000487.tif" />
+      </mets:file>
+      <mets:file ID="9cb2b3fe-8422-45c8-ba2c-a6bd5d841110" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="bf433d2c54bf1c10f57f0f7045c28b47f59d598a">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000488.tif" />
+      </mets:file>
+      <mets:file ID="a29c0f09-199c-4ff8-b451-da39f16c631e" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="771459e54b8f08d69d470f1bf90b9a0521581394">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000489.tif" />
+      </mets:file>
+      <mets:file ID="ea03db63-9a7e-4125-a02b-47fbb7a46594" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="1989448e19cb5465b1f3f8edbf1bc3f544366ea6">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000490.tif" />
+      </mets:file>
+      <mets:file ID="ca379185-1c26-4271-a184-e45cc9c9ea7f" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="db7aabdabf68175ce1d3dac47c136a29552ad026">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000491.tif" />
+      </mets:file>
+      <mets:file ID="2bab9b9c-ddf0-4695-ba89-c67d49c21633" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="ca8852af1ab414418e2d9921e5bb5845074493c3">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000492.tif" />
+      </mets:file>
+      <mets:file ID="6cc96d4e-f5eb-4122-866a-4fa6020d7c77" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="b80c8c17df635a55b19b894ab8250dd145c7537e">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000493.tif" />
+      </mets:file>
+      <mets:file ID="a4ccbba9-bc47-492b-a8f7-a7ad6766a9b8" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="57f092b807a8c1b8d215417f369c1cc98d059399">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000494.tif" />
+      </mets:file>
+      <mets:file ID="9cd250b9-d5d3-4191-8d87-866c8beb3b4a" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="35b48ef852a3bba0712eaeac93c0eeadd3639390">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000495.tif" />
+      </mets:file>
+      <mets:file ID="71a9dfcb-bbb8-4dc3-99cf-d6a7067bf138" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="1ef2715eae80a6cf5d81ac31deb9dc0439133a40">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000496.tif" />
+      </mets:file>
+      <mets:file ID="6996ba5a-84a2-42e8-adbf-e0dcabffbaae" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="454ea13523c9659058425204475e49312003a489">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000497.tif" />
+      </mets:file>
+      <mets:file ID="8c8e09c1-2c2c-4305-92cd-000d970abcb6" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="8ddaf374b0633c9f6a6e6e3a56b8888079292ed2">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000498.tif" />
+      </mets:file>
+      <mets:file ID="86fdb9c6-81ce-44b2-8cbb-42fe6b65f391" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="16937e31e514ad632139ad7d37062ff3bf9935ae">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000499.tif" />
+      </mets:file>
+      <mets:file ID="4f5de784-a3b7-424c-82e9-f7baec9f3119" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="a8f85872cd3c9fd7f791ffe1d294f76680220d07">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000500.tif" />
+      </mets:file>
+      <mets:file ID="038d1fda-f252-49c2-bcb8-9d21a6bad8c6" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="188b7f47c935a976f0d7679bfd822b6c0e28f89e">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000501.tif" />
+      </mets:file>
+      <mets:file ID="71368fdd-7b93-4a0f-b4e6-190696c12f44" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="0d8636538d89b3707a02317065519bcd26425bd9">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000502.tif" />
+      </mets:file>
+      <mets:file ID="df774a73-a397-4cd0-adf4-a3337fe9eab0" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="c1c19dabec4c304a5ec2816ccb6e822d9da00f96">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000503.tif" />
+      </mets:file>
+      <mets:file ID="bf6afb9c-d9fa-4f5c-b099-a8369e9032bd" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="17110fe54fd10b1ffeba73ae1c751663de131b30">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000504.tif" />
+      </mets:file>
+      <mets:file ID="f39f7442-67fc-4591-97cc-02ffcd0474e3" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="37b8214eef9ba472f643bb57f2e077793f4c0842">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000505.tif" />
+      </mets:file>
+      <mets:file ID="bb804133-b9d5-4fa4-b1de-91613bfeff70" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="ae98a973be67e247a419751e9336cff41a9f943b">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000506.tif" />
+      </mets:file>
+      <mets:file ID="df5766cf-c84f-4ac1-ab5f-4433096c68e3" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="a917b9f4ac8c6fd85828d0ee6feeabb24fe16326">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000507.tif" />
+      </mets:file>
+      <mets:file ID="bb0f5476-af75-441e-8538-e970eb264645" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="e6ec0e9cb16f681b6223d2a8167283c8a3faf44f">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000508.tif" />
+      </mets:file>
+      <mets:file ID="0bae1260-a985-4e2a-8d98-370bfa85f38f" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="b16326a1c57449b2d0ea17f27d8a67ca1389b97c">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000509.tif" />
+      </mets:file>
+      <mets:file ID="e6f2a2e3-c78d-4323-bd0b-740eca28e053" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="9d60654e58e01e3015885d682826a1d95a6d83e0">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000510.tif" />
+      </mets:file>
+      <mets:file ID="78c2b4ce-bce7-4943-896a-42695c2ae2f2" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="97352cffa2ea07b50c2987d627893ab6d6977cb9">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000511.tif" />
+      </mets:file>
+      <mets:file ID="d7c727f3-0451-45a2-9b2b-0693d5aaa46d" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="9d1f777cb7456742a2b247099bdd94b33f492292">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000512.tif" />
+      </mets:file>
+      <mets:file ID="bb88ca37-c60f-4351-8d2d-f2893a90f677" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="965e42a051da50b095eda2cb332ede00e5a74ba6">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000513.tif" />
+      </mets:file>
+      <mets:file ID="d1c29447-ea73-4bc7-bcbf-2b3767d0e163" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="314191fa834bd219f1b837f0ba7b9bfd8640bf65">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000514.tif" />
+      </mets:file>
+      <mets:file ID="82762575-1b8e-41af-acdf-8bde297221a0" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="a8c5f8e64546ab33ce85443b93d631335e86ecb6">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000515.tif" />
+      </mets:file>
+      <mets:file ID="cfa5312a-5798-4372-a505-86d87ace4635" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="717905aaad69f13ed97fe5232f3b3782fe12b92e">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000516.tif" />
+      </mets:file>
+      <mets:file ID="3ade2023-855b-4880-883f-1236a025e97a" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="e182c62212cd21aadc11737dc42c9376b7a9ef33">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000517.tif" />
+      </mets:file>
+      <mets:file ID="5827aaf9-8515-488a-a179-9120efa0c191" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="c9f5b9522ce1ddf1616a44d35bcc65f2bbe4b321">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000518.tif" />
+      </mets:file>
+      <mets:file ID="2604de8a-8446-40da-89ac-520a3bfd3bd5" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="6902cd69b248b3eb51f33c9507e6af5ef226b90e">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000519.tif" />
+      </mets:file>
+      <mets:file ID="91a4e25a-6e8d-492b-8ed5-535b0e28bff9" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="9e7c9233af72bd04012f9d16226c8274a7d9d30d">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000520.tif" />
+      </mets:file>
+      <mets:file ID="3e810705-2e6f-4400-8a38-15bfaaa87ad5" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="6cd1325499e0e3120825100b8e280d01d1073d32">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000521.tif" />
+      </mets:file>
+      <mets:file ID="e1a9c38b-7a90-4664-ab7e-32548c5b9de9" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="00722a406b9d9bf43f1961ec14a9d391452e9b36">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000522.tif" />
+      </mets:file>
+      <mets:file ID="8a7f0e20-2f29-449d-be45-dd680ad3738b" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="8936d15cfad63607c15b4184dfb2642c30357c5f">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000523.tif" />
+      </mets:file>
+      <mets:file ID="6edce91a-df90-44e6-ade7-596259c9a241" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="aebace389670e1d9e5d1a2d5c689a8a3dd066234">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000524.tif" />
+      </mets:file>
+      <mets:file ID="24a618cd-15d7-4570-9b4e-283c1c0a4eae" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="0a18b2ffd16326014be4b15cd8ebd11fd7f93713">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000525.tif" />
+      </mets:file>
+      <mets:file ID="63209663-c053-4c1b-b06c-a7f28a6edba2" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="8a465d7fff0871722edb3205438496f6faae7a68">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000526.tif" />
+      </mets:file>
+      <mets:file ID="106f5688-574c-4a96-a3a2-a6576810b866" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="2c285d14f75f301c5268b99093c2b8e21886d9ed">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000527.tif" />
+      </mets:file>
+      <mets:file ID="b7e23c83-a6e2-4e2d-b278-9d2995983ca4" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="cf70c3a515050775d0f0a3476eddb02f3614cded">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000528.tif" />
+      </mets:file>
+      <mets:file ID="97a74656-998a-4393-acd8-b207e5c08a59" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="68975fc800811d6c5296b359f3decbbe512d50d0">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000529.tif" />
+      </mets:file>
+      <mets:file ID="8d86cccc-565e-405d-b3a6-a64c73ef3402" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="cba50b1a6ce28e2d0bf07b5b857a13033b160d45">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000530.tif" />
+      </mets:file>
+      <mets:file ID="b20fe82b-f4d2-4066-b250-6fab4cb30824" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="416a615b5e06b605127b3278d5167966c0810168">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000531.tif" />
+      </mets:file>
+      <mets:file ID="f2c2dd93-b17e-4531-a900-efd8ff07d630" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="3fedca8dc8533ee3490f70d2acb146e00e7107fe">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000532.tif" />
+      </mets:file>
+      <mets:file ID="8ccce823-fe3b-47f1-89ef-4485872f89db" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="7521492189c0aa0556b884f53984f2bb80188a21">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000533.tif" />
+      </mets:file>
+      <mets:file ID="80d6caf9-33da-42f0-857c-078608ba172d" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="abd78af2ebbee74a185c466e35bf953964138bb4">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000534.tif" />
+      </mets:file>
+      <mets:file ID="1cbae6f2-3485-447b-9cdd-38cc2ef4fe1d" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="2673b8bcaa581eeb8120c6328fa973d691b28828">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000535.tif" />
+      </mets:file>
+      <mets:file ID="d84abfc5-e17d-43ff-b8d6-5b91ddce2bea" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="ef0b1b5a0911014025f190777adfc4621c538f70">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000536.tif" />
+      </mets:file>
+      <mets:file ID="dd708dfc-8472-4512-93ee-7718dbfc8175" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="eb323994dc0c81815e56a77db8f1548372f9b013">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000537.tif" />
+      </mets:file>
+      <mets:file ID="f0060d69-493d-46c5-bc50-8ab7d7a6eca3" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="a1e80b016706310153303e1bc1bc104fa7f9ed73">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000538.tif" />
+      </mets:file>
+      <mets:file ID="52630238-c7b0-4e0d-8c5a-827e8af34137" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="6549cba759cdbaccacd38398af05c846d6b561a8">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000539.tif" />
+      </mets:file>
+      <mets:file ID="1b38fa9f-875f-4ee9-9b63-29526d489c8c" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="7bb395ed33fb3fb03106a773ce0b67744befe44f">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000483_20210114_162447/EALJ1730_ilsbib10502849_master/30000540.tif" />
+      </mets:file>
+    </mets:fileGrp>
+  </mets:fileSec>
+  <mets:structMap TYPE="LOGICAL">
+    <mets:div ADMID="AMD" DMDID="DMDLOG_0000" ID="LOG_0000" LABEL="Banmin kokoro no kagami 万民こころのかかみ." TYPE="ILSObject" />
+  </mets:structMap>
+  <mets:structMap TYPE="PHYSICAL">
+    <mets:div CONTENTIDS="30000483" ID="PHYS_0000" TYPE="physSequence">
+      <mets:div CONTENTIDS="30000484" ID="PHYS_0001" ORDER="1" ORDERLABEL="[Front Cover, v. 1]" TYPE="page">
+        <mets:fptr FILEID="59a58245-410e-4c7f-bb53-583439cd351a" />
+        <mets:fptr FILEID="bc64aeca-478f-46bd-a57b-8194726f9249" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000485" ID="PHYS_0002" ORDER="2" ORDERLABEL="[Inside front cover-Title page]" TYPE="page">
+        <mets:fptr FILEID="6275ec96-c625-4f92-8e48-e6c16f3fca12" />
+        <mets:fptr FILEID="aae973e1-353d-4e4a-b4b6-1d1593d85e3a" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000486" ID="PHYS_0003" ORDER="3" ORDERLABEL="p. [2-3]" TYPE="page">
+        <mets:fptr FILEID="e9eec0a7-cb1b-4d9b-9ed0-450c8e4f3322" />
+        <mets:fptr FILEID="d33a31c7-fb18-4ebe-adf7-65fa3ed17178" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000487" ID="PHYS_0004" ORDER="4" ORDERLABEL="p. [4-5]" TYPE="page">
+        <mets:fptr FILEID="756efb06-4601-4afa-ba3f-b015e91de3af" />
+        <mets:fptr FILEID="403e935b-062b-4de3-aef7-e3a0d70622f6" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000488" ID="PHYS_0005" ORDER="5" ORDERLABEL="p. [6-7]" TYPE="page">
+        <mets:fptr FILEID="b844bf73-2ac9-4f8c-b1a6-7adf6b2e99d9" />
+        <mets:fptr FILEID="9cb2b3fe-8422-45c8-ba2c-a6bd5d841110" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000489" ID="PHYS_0006" ORDER="6" ORDERLABEL="p. [8-9]" TYPE="page">
+        <mets:fptr FILEID="f379974a-b1ac-40ad-9205-50346b0ef2b7" />
+        <mets:fptr FILEID="a29c0f09-199c-4ff8-b451-da39f16c631e" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000490" ID="PHYS_0007" ORDER="7" ORDERLABEL="p. [10-11]" TYPE="page">
+        <mets:fptr FILEID="fd10c125-9bb2-4f8c-b37f-b2d5c29d02c3" />
+        <mets:fptr FILEID="ea03db63-9a7e-4125-a02b-47fbb7a46594" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000491" ID="PHYS_0008" ORDER="8" ORDERLABEL="p. [12-13]" TYPE="page">
+        <mets:fptr FILEID="73b8299e-4802-43f7-afe4-c45fcb7a8c63" />
+        <mets:fptr FILEID="ca379185-1c26-4271-a184-e45cc9c9ea7f" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000492" ID="PHYS_0009" ORDER="9" ORDERLABEL="p. [14-15]" TYPE="page">
+        <mets:fptr FILEID="d94a8338-87c6-4c05-828f-090d5d55a882" />
+        <mets:fptr FILEID="2bab9b9c-ddf0-4695-ba89-c67d49c21633" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000493" ID="PHYS_0010" ORDER="10" ORDERLABEL="p. [16-17]" TYPE="page">
+        <mets:fptr FILEID="31f5a25a-ab70-450a-9be8-6f41bcff0318" />
+        <mets:fptr FILEID="6cc96d4e-f5eb-4122-866a-4fa6020d7c77" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000494" ID="PHYS_0011" ORDER="11" ORDERLABEL="p. [18-19]" TYPE="page">
+        <mets:fptr FILEID="c7492cfd-3ee3-48d7-99c2-2bd2096f439b" />
+        <mets:fptr FILEID="a4ccbba9-bc47-492b-a8f7-a7ad6766a9b8" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000495" ID="PHYS_0012" ORDER="12" ORDERLABEL="p. [20-21]" TYPE="page">
+        <mets:fptr FILEID="7e9881e7-2279-4be4-84b5-18f275f4749d" />
+        <mets:fptr FILEID="9cd250b9-d5d3-4191-8d87-866c8beb3b4a" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000496" ID="PHYS_0013" ORDER="13" ORDERLABEL="p. [22-23]" TYPE="page">
+        <mets:fptr FILEID="6b4dd81d-8f17-4563-87b0-75c77988305f" />
+        <mets:fptr FILEID="71a9dfcb-bbb8-4dc3-99cf-d6a7067bf138" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000497" ID="PHYS_0014" ORDER="14" ORDERLABEL="p. [24-25]" TYPE="page">
+        <mets:fptr FILEID="f17def99-8b0f-4d70-a759-4cdd7cb36d48" />
+        <mets:fptr FILEID="6996ba5a-84a2-42e8-adbf-e0dcabffbaae" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000498" ID="PHYS_0015" ORDER="15" ORDERLABEL="p. [26-27]" TYPE="page">
+        <mets:fptr FILEID="495a5be4-3764-4854-aee6-07e80675cd85" />
+        <mets:fptr FILEID="8c8e09c1-2c2c-4305-92cd-000d970abcb6" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000499" ID="PHYS_0016" ORDER="16" ORDERLABEL="p. [28-29]" TYPE="page">
+        <mets:fptr FILEID="55df00ac-dac2-41c2-b829-12464fb99c35" />
+        <mets:fptr FILEID="86fdb9c6-81ce-44b2-8cbb-42fe6b65f391" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000500" ID="PHYS_0017" ORDER="17" ORDERLABEL="p. [30-31]" TYPE="page">
+        <mets:fptr FILEID="e0c0b6c3-bb0c-44cb-aba8-b1ebb9eaeb5d" />
+        <mets:fptr FILEID="4f5de784-a3b7-424c-82e9-f7baec9f3119" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000501" ID="PHYS_0018" ORDER="18" ORDERLABEL="p. [32-33]" TYPE="page">
+        <mets:fptr FILEID="0c1eaf86-91aa-4132-83ea-1742053620d7" />
+        <mets:fptr FILEID="038d1fda-f252-49c2-bcb8-9d21a6bad8c6" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000502" ID="PHYS_0019" ORDER="19" ORDERLABEL="p. [34-35]" TYPE="page">
+        <mets:fptr FILEID="130bd03e-4fb7-4e29-bbc8-02bd03f53edd" />
+        <mets:fptr FILEID="71368fdd-7b93-4a0f-b4e6-190696c12f44" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000503" ID="PHYS_0020" ORDER="20" ORDERLABEL="p. [36-37]" TYPE="page">
+        <mets:fptr FILEID="0018e3dd-f6f2-4102-8a8f-74fc4eea8757" />
+        <mets:fptr FILEID="df774a73-a397-4cd0-adf4-a3337fe9eab0" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000504" ID="PHYS_0021" ORDER="21" ORDERLABEL="p. [38-39]" TYPE="page">
+        <mets:fptr FILEID="b29def3e-fde3-479a-bbd9-818d843079df" />
+        <mets:fptr FILEID="bf6afb9c-d9fa-4f5c-b099-a8369e9032bd" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000505" ID="PHYS_0022" ORDER="22" ORDERLABEL="p. [40-41]" TYPE="page">
+        <mets:fptr FILEID="4dbaca28-7b49-43fe-a419-de175bbbdd5f" />
+        <mets:fptr FILEID="f39f7442-67fc-4591-97cc-02ffcd0474e3" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000506" ID="PHYS_0023" ORDER="23" ORDERLABEL="p. [42-43]" TYPE="page">
+        <mets:fptr FILEID="5116cb44-dc49-44ae-b9fa-74f857fb797f" />
+        <mets:fptr FILEID="bb804133-b9d5-4fa4-b1de-91613bfeff70" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000507" ID="PHYS_0024" ORDER="24" ORDERLABEL="p. [44-45]" TYPE="page">
+        <mets:fptr FILEID="db8b6dc2-78cf-43e2-9ad6-2cf7de149e21" />
+        <mets:fptr FILEID="df5766cf-c84f-4ac1-ab5f-4433096c68e3" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000508" ID="PHYS_0025" ORDER="25" ORDERLABEL="p. [46-47]" TYPE="page">
+        <mets:fptr FILEID="fafe160a-0cc6-407f-92da-7a7ae99a0737" />
+        <mets:fptr FILEID="bb0f5476-af75-441e-8538-e970eb264645" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000509" ID="PHYS_0026" ORDER="26" ORDERLABEL="[Back Cover]" TYPE="page">
+        <mets:fptr FILEID="f5f4da4b-52c1-4070-8970-02ec5ccb7f23" />
+        <mets:fptr FILEID="0bae1260-a985-4e2a-8d98-370bfa85f38f" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000510" ID="PHYS_0027" ORDER="27" ORDERLABEL="[Front cover, v. 2]" TYPE="page">
+        <mets:fptr FILEID="b1c3fb0c-0b65-4b98-af90-cd388143bb38" />
+        <mets:fptr FILEID="e6f2a2e3-c78d-4323-bd0b-740eca28e053" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000511" ID="PHYS_0028" ORDER="28" ORDERLABEL="[Inside front cover-p.1]" TYPE="page">
+        <mets:fptr FILEID="a9b59dac-977b-4ef6-8c0c-f155caa55473" />
+        <mets:fptr FILEID="78c2b4ce-bce7-4943-896a-42695c2ae2f2" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000512" ID="PHYS_0029" ORDER="29" ORDERLABEL="p. [2-3]" TYPE="page">
+        <mets:fptr FILEID="0e007d9a-1929-44b9-b7a6-65cb00742f96" />
+        <mets:fptr FILEID="d7c727f3-0451-45a2-9b2b-0693d5aaa46d" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000513" ID="PHYS_0030" ORDER="30" ORDERLABEL="p. [4-5]" TYPE="page">
+        <mets:fptr FILEID="4cd21cc5-1ae1-4c7e-82ff-acb5d80c48e0" />
+        <mets:fptr FILEID="bb88ca37-c60f-4351-8d2d-f2893a90f677" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000514" ID="PHYS_0031" ORDER="31" ORDERLABEL="p. [6-7]" TYPE="page">
+        <mets:fptr FILEID="21c22cca-580f-49b5-bd3f-706b3edb3afd" />
+        <mets:fptr FILEID="d1c29447-ea73-4bc7-bcbf-2b3767d0e163" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000515" ID="PHYS_0032" ORDER="32" ORDERLABEL="p. [8-9]" TYPE="page">
+        <mets:fptr FILEID="234d898a-6a92-4322-9820-2011cb57e8b9" />
+        <mets:fptr FILEID="82762575-1b8e-41af-acdf-8bde297221a0" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000516" ID="PHYS_0033" ORDER="33" ORDERLABEL="p. [10-11]" TYPE="page">
+        <mets:fptr FILEID="fa06ece5-e947-4aad-80a7-bd7bcc533c06" />
+        <mets:fptr FILEID="cfa5312a-5798-4372-a505-86d87ace4635" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000517" ID="PHYS_0034" ORDER="34" ORDERLABEL="p. [12-13]" TYPE="page">
+        <mets:fptr FILEID="e3d2324f-edae-418d-b4fd-f08d8575d043" />
+        <mets:fptr FILEID="3ade2023-855b-4880-883f-1236a025e97a" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000518" ID="PHYS_0035" ORDER="35" ORDERLABEL="p. [14-15]" TYPE="page">
+        <mets:fptr FILEID="b9579384-f8fe-4fba-80f1-99632c76b68f" />
+        <mets:fptr FILEID="5827aaf9-8515-488a-a179-9120efa0c191" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000519" ID="PHYS_0036" ORDER="36" ORDERLABEL="p. [16-17]" TYPE="page">
+        <mets:fptr FILEID="1db8395b-d092-48c7-a401-db17060069cc" />
+        <mets:fptr FILEID="2604de8a-8446-40da-89ac-520a3bfd3bd5" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000520" ID="PHYS_0037" ORDER="37" ORDERLABEL="p. [18-19]" TYPE="page">
+        <mets:fptr FILEID="e05bc4a3-3626-46ee-aa28-06a581cf624e" />
+        <mets:fptr FILEID="91a4e25a-6e8d-492b-8ed5-535b0e28bff9" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000521" ID="PHYS_0038" ORDER="38" ORDERLABEL="p. [20-21]" TYPE="page">
+        <mets:fptr FILEID="3b2fa84d-1f97-4a8b-bab8-aa7f81eb1a01" />
+        <mets:fptr FILEID="3e810705-2e6f-4400-8a38-15bfaaa87ad5" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000522" ID="PHYS_0039" ORDER="39" ORDERLABEL="p. [22-23]" TYPE="page">
+        <mets:fptr FILEID="7146fca6-d8b9-4578-8b96-1df2d602f583" />
+        <mets:fptr FILEID="e1a9c38b-7a90-4664-ab7e-32548c5b9de9" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000523" ID="PHYS_0040" ORDER="40" ORDERLABEL="p. [24-25]" TYPE="page">
+        <mets:fptr FILEID="1d7fc6d4-8e59-4163-81c4-ce96735bb1c1" />
+        <mets:fptr FILEID="8a7f0e20-2f29-449d-be45-dd680ad3738b" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000524" ID="PHYS_0041" ORDER="41" ORDERLABEL="p. [26-27]" TYPE="page">
+        <mets:fptr FILEID="70b15341-4fda-4662-9fcf-7137f87e0029" />
+        <mets:fptr FILEID="6edce91a-df90-44e6-ade7-596259c9a241" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000525" ID="PHYS_0042" ORDER="42" ORDERLABEL="p. [28-29]" TYPE="page">
+        <mets:fptr FILEID="333b89c9-3859-4693-8592-40f7be32de25" />
+        <mets:fptr FILEID="24a618cd-15d7-4570-9b4e-283c1c0a4eae" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000526" ID="PHYS_0043" ORDER="43" ORDERLABEL="p. [30-31]" TYPE="page">
+        <mets:fptr FILEID="13204ad2-e90b-4c99-a92f-a374e028d814" />
+        <mets:fptr FILEID="63209663-c053-4c1b-b06c-a7f28a6edba2" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000527" ID="PHYS_0044" ORDER="44" ORDERLABEL="p. [32-33]" TYPE="page">
+        <mets:fptr FILEID="68d4c0f8-b0b1-46d7-a26a-b1a78be4dbab" />
+        <mets:fptr FILEID="106f5688-574c-4a96-a3a2-a6576810b866" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000528" ID="PHYS_0045" ORDER="45" ORDERLABEL="p. [34-35]" TYPE="page">
+        <mets:fptr FILEID="9f63aa08-7381-4cc7-9d2c-1371f1f95ef4" />
+        <mets:fptr FILEID="b7e23c83-a6e2-4e2d-b278-9d2995983ca4" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000529" ID="PHYS_0046" ORDER="46" ORDERLABEL="p. [36-37]" TYPE="page">
+        <mets:fptr FILEID="34277cba-c81e-47d4-839f-2fa59020ec35" />
+        <mets:fptr FILEID="97a74656-998a-4393-acd8-b207e5c08a59" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000530" ID="PHYS_0047" ORDER="47" ORDERLABEL="p. [38-39]" TYPE="page">
+        <mets:fptr FILEID="34753b58-c4df-4cd6-beee-15d98d06401c" />
+        <mets:fptr FILEID="8d86cccc-565e-405d-b3a6-a64c73ef3402" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000531" ID="PHYS_0048" ORDER="48" ORDERLABEL="p. [40-41]" TYPE="page">
+        <mets:fptr FILEID="f21c9f1e-c9fb-4ccd-8850-1b2e16b51964" />
+        <mets:fptr FILEID="b20fe82b-f4d2-4066-b250-6fab4cb30824" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000532" ID="PHYS_0049" ORDER="49" ORDERLABEL="p. [42-43]" TYPE="page">
+        <mets:fptr FILEID="cda7d039-1582-4364-8bb4-ba74686674a9" />
+        <mets:fptr FILEID="f2c2dd93-b17e-4531-a900-efd8ff07d630" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000533" ID="PHYS_0050" ORDER="50" ORDERLABEL="p. [44-45]" TYPE="page">
+        <mets:fptr FILEID="b255f1e2-466f-4d1d-9de1-fdd40cb0154f" />
+        <mets:fptr FILEID="8ccce823-fe3b-47f1-89ef-4485872f89db" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000534" ID="PHYS_0051" ORDER="51" ORDERLABEL="p. [46-47]" TYPE="page">
+        <mets:fptr FILEID="66a63678-8439-4726-8723-8569b103d8f5" />
+        <mets:fptr FILEID="80d6caf9-33da-42f0-857c-078608ba172d" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000535" ID="PHYS_0052" ORDER="52" ORDERLABEL="p. [48-49]" TYPE="page">
+        <mets:fptr FILEID="30fa7a35-6bfd-4adf-9c37-47d9cf4087f2" />
+        <mets:fptr FILEID="1cbae6f2-3485-447b-9cdd-38cc2ef4fe1d" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000536" ID="PHYS_0053" ORDER="53" ORDERLABEL="p. [50-51]" TYPE="page">
+        <mets:fptr FILEID="482c32e5-1462-4318-a6b9-e52a8119636e" />
+        <mets:fptr FILEID="d84abfc5-e17d-43ff-b8d6-5b91ddce2bea" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000537" ID="PHYS_0054" ORDER="54" ORDERLABEL="p. [52-53]" TYPE="page">
+        <mets:fptr FILEID="5d3d3e28-cfbc-4956-80a1-50ce619c6ac2" />
+        <mets:fptr FILEID="dd708dfc-8472-4512-93ee-7718dbfc8175" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000538" ID="PHYS_0055" ORDER="55" ORDERLABEL="p. [54-55]" TYPE="page">
+        <mets:fptr FILEID="609da704-71cb-418a-a4e8-13d2b360c1a6" />
+        <mets:fptr FILEID="f0060d69-493d-46c5-bc50-8ab7d7a6eca3" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000539" ID="PHYS_0056" ORDER="56" ORDERLABEL="p. [56-57]" TYPE="page">
+        <mets:fptr FILEID="e4f7c4d1-e7fe-471a-80e6-b674b46df46d" />
+        <mets:fptr FILEID="52630238-c7b0-4e0d-8c5a-827e8af34137" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000540" ID="PHYS_0057" ORDER="57" ORDERLABEL="[Back Cover]" TYPE="page">
+        <mets:fptr FILEID="c5e3cb21-ddd0-4875-8544-93da06484a80" />
+        <mets:fptr FILEID="1b38fa9f-875f-4ee9-9b63-29526d489c8c" />
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+  <mets:structLink>
+    <mets:smLink xlink:to="PHYS_0001" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0002" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0003" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0004" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0005" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0006" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0007" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0008" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0009" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0010" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0011" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0012" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0013" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0014" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0015" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0016" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0017" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0018" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0019" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0020" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0021" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0022" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0023" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0024" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0025" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0026" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0027" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0028" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0029" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0030" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0031" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0032" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0033" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0034" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0035" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0036" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0037" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0038" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0039" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0040" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0041" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0042" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0043" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0044" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0045" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0046" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0047" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0048" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0049" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0050" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0051" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0052" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0053" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0054" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0055" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0056" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0057" xlink:from="LOG_0000" />
+  </mets:structLink>
+</mets:mets>

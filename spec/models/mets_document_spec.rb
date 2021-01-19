@@ -8,13 +8,6 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
   let(:min_valid_xml_file) { File.open(File.join(fixture_path, "goobi", "min_valid_xml.xml")).read }
 
-  around do |example|
-    original_path = ENV["GOOBI_MOUNT"]
-    ENV["GOOBI_MOUNT"] = File.join("spec", "fixtures", "goobi", "metadata")
-    example.run
-    ENV["GOOBI_MOUNT"] = original_path
-  end
-
   let(:goobi_path) { "spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml" }
   let(:no_oid_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/no_oid_mets.xml").read }
   let(:blank_oid_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/empty_oid_mets.xml").read }
@@ -23,6 +16,20 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
 
   it "can be instantiated with xml from the DB instead of a file" do
     described_class.new(batch_process.mets_xml)
+  end
+
+  describe "a METs file with a non-standard ChildObject setup" do
+    let(:strange_children) { File.open("spec/fixtures/goobi/EALJ1730_ilsbib10502849_mets.xml").read }
+
+    it "can associate child objects with their parent" do
+      mets_doc = described_class.new(strange_children)
+      expect(mets_doc.valid_mets?).to be_truthy
+      expect(mets_doc.oid).to eq "30000483"
+      expect(mets_doc.metadata_source_path).to eq "/ils/barcode/39002101693225?bib=10502849"
+      expect(mets_doc.visibility).to eq "Public"
+      expect(mets_doc.combined.length).to eq 57
+      expect(mets_doc.thumbnail_image).to eq 30_000_486
+    end
   end
 
   describe "discerning between valid and invalid METs" do

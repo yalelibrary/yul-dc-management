@@ -25,7 +25,13 @@ class SetupMetadataJob < ApplicationJob
 
   def check_mets_images(parent_object)
     if parent_object&.from_mets
-      parent_object.current_batch_process&.mets_doc&.all_images_present?
+      images_present = parent_object.current_batch_process&.mets_doc&.all_images_present?
+      if images_present
+        parent_object.processing_event("All mets images are available on mounted directory", "mets-present", current_batch_process, current_batch_connection)
+      else
+        parent_object.processing_event("Could not find all mets images on mounted directory", "failed", current_batch_process, current_batch_connection)
+      end
+      images_present
     else
       true
     end
