@@ -94,7 +94,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                     when "aspace"
                       self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
                     end
-    processing_event("Metadata has been fetched", "metadata-fetched") if fetch_results
+    if fetch_results
+      processing_event("Metadata has been fetched", "metadata-fetched")
+    else
+      processing_event("Metadata has *not* been fetched", "failed")
+    end
     fetch_results
   end
 
