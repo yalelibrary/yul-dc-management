@@ -60,11 +60,11 @@ class PyramidalTiff
   def copy_access_master_to_working_directory(tmpdir)
     temp_file_path = File.join(tmpdir, File.basename(access_master_path))
     if ENV['ACCESS_MASTER_MOUNT'] == "s3"
-      download = S3Service.download_image(remote_access_master_path, temp_file_path)
-      if download
-        child_object.processing_event("Access master retrieved from S3", 'access-master')
-        temp_file_path
-      end
+      copy_from_s3(temp_file_path)
+    # TODO: remove this elsif statement and copy the Goobi file into the Access Master pair-tree
+    # in the generate_ptiff_job background job
+    elsif child_object.parent_object&.from_mets == true
+      copy_from_goobi(tmpdir)
     else
       FileUtils.cp(access_master_path, tmpdir)
       if checksums_match?(access_master_path, temp_file_path)
@@ -72,6 +72,21 @@ class PyramidalTiff
         temp_file_path
       end
     end
+  end
+
+  def copy_from_s3(temp_file_path)
+    download = S3Service.download_image(remote_access_master_path, temp_file_path)
+    return false unless download
+    child_object.processing_event("Access master retrieved from S3", 'access-master')
+    temp_file_path
+  end
+
+  def copy_from_goobi(tmpdir)
+    temp_file_path = File.join(tmpdir, File.basename(access_master_path))
+    FileUtils.cp(mets_access_master_path, tmpdir)
+    return false unless checksums_match?(mets_access_master_path, temp_file_path)
+    child_object.processing_event("Access master retrieved from Goobi file system", 'access-master')
+    temp_file_path
   end
 
   def build_command(ptiff_tmpdir, tiff_input_path, ptiff_output_path)

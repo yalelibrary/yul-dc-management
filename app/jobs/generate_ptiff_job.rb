@@ -10,7 +10,9 @@ class GeneratePtiffJob < ApplicationJob
   def perform(child_object, current_batch_process, current_batch_connection = child_object.parent_object.current_batch_connection)
     child_object.parent_object.current_batch_process = current_batch_process
     child_object.parent_object.current_batch_connection = current_batch_connection
-    child_object.copy_to_access_master_pairtree if child_object.parent_object.from_mets == true
+    # TODO: copy access master to persistent place from Goobi directory and remove the elsif statement
+    # from the copy_access_master_to_working_directory method in the pyramidal_tiff model
+    # child_object.copy_to_access_master_pairtree if child_object.parent_object.from_mets == true
     child_object.convert_to_ptiff!
     # Only generate manifest if all children are ready
     GenerateManifestJob.perform_later(child_object.parent_object, current_batch_process, current_batch_connection) if child_object.parent_object.needs_a_manifest?

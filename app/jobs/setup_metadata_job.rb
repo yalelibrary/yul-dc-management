@@ -24,8 +24,8 @@ class SetupMetadataJob < ApplicationJob
   end
 
   def check_mets_images(parent_object)
-    if parent_object.from_mets
-      parent_object.current_batch_process.mets_doc.all_images_present?
+    if parent_object&.from_mets
+      parent_object.current_batch_process&.mets_doc&.all_images_present?
     else
       true
     end
