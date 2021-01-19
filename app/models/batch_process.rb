@@ -90,7 +90,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
     return if fresh
     po.metadata_update = true
-    setup_for_background_jobs(po, metadata_source)
+    setup_for_background_jobs(po, po.metadata_source)
     po.save!
   end
 
