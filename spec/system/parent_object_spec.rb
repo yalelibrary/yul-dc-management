@@ -94,6 +94,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         expect(page.body).to include "Ladybird"
         expect(page.body).to include "Authoritative JSON"
         expect(page.body).to include "Public"
+        expect(page.body).to include "MetadataCloud url"
       end
 
       it "can change the visibility via the UI" do
