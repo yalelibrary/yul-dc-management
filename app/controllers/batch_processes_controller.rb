@@ -79,7 +79,7 @@ class BatchProcessesController < ApplicationController
     def set_child_object
       @child_object = ChildObject.find(params[:child_oid])
       @notes = @child_object.notes_for_batch_process(@batch_process)
-      @failures = @child_object.latest_failure(@batch_process)
+      @failure = @child_object.latest_failure(@batch_process)
     end
 
     def find_notes
