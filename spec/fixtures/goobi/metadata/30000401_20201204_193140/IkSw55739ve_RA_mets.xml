@@ -83,13 +83,13 @@
   <mets:fileSec>
     <mets:fileGrp USE="PRESENTATION" ID="785be83d-afea-4b9a-b7dd-2fb10adc3470">
       <mets:file ID="2059c536-cdd9-4120-9d29-8f80f15d5187" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="c314697a5b0fd444e26e7c12a1d8d487545dacfc">
-        <mets:FLocat LOCTYPE="URL" xlink:href="file:///spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_media/30000402.tif" />
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///home/app/webapp/spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_media/30000402.tif" />
       </mets:file>
-      <mets:file ID="055aa58f-c748-43ef-a71a-ae393255cfd9" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="c314697a5b0fd444e26e7c12a1d8d487545dacfc">
-        <mets:FLocat LOCTYPE="URL" xlink:href="file:///spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_media/30000403.tif" />
+      <mets:file ID="055aa58f-c748-43ef-a71a-ae393255cfd9" MIMETYPE="image/tiff" USE="banner" CHECKSUMTYPE="SHA-1" CHECKSUM="c314697a5b0fd444e26e7c12a1d8d487545dacfc">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///home/app/webapp/spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_media/30000403.tif" />
       </mets:file>
       <mets:file ID="b94ebb56-cd09-4504-a638-ef16a33517fd" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="c314697a5b0fd444e26e7c12a1d8d487545dacfc">
-        <mets:FLocat LOCTYPE="URL" xlink:href="file:///spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_media/30000404.tif" />
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///home/app/webapp/spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_media/30000404.tif" />
       </mets:file>
     </mets:fileGrp>
   </mets:fileSec>

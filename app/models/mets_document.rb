@@ -46,6 +46,13 @@ class MetsDocument
     @mets.xpath("//mods:extension/intranda:intranda/intranda:ViewingHint").inner_text
   end
 
+  def thumbnail_image
+    child_img = combined.find do |child|
+      child[:thumbnail_flag]
+    end
+    child_img&.[](:oid)&.to_i
+  end
+
   def valid_mets?
     return false unless @mets.xml?
     return false unless @mets.collect_namespaces.include?("xmlns:mets")
@@ -54,8 +61,7 @@ class MetsDocument
   end
 
   def all_images_present?
-    mount_path = ENV["GOOBI_MOUNT"] || "data"
-    files.all? { |file| File.exist?(Rails.root.join(mount_path, file[:mets_access_master_path])) }
+    files.all? { |file| File.exist?(file[:mets_access_master_path]) }
   end
 
   # Combines the physical info and file info for a given image
@@ -87,10 +93,11 @@ class MetsDocument
   end
 
   def file_info(file)
-    mount_path = ENV["GOOBI_MOUNT"] || "data"
+    thumbnail_flag = file.xpath('@USE').inner_text == "banner" ? true : false
     {
-      checksum: file.xpath('@CHECKSUM').to_s,
-      mets_access_master_path: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\/\/#{mount_path}\//, '')
+      thumbnail_flag: thumbnail_flag,
+      checksum: file.xpath('@CHECKSUM').inner_text,
+      mets_access_master_path: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, '')
     }
   end
 

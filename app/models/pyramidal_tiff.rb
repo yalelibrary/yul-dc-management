@@ -7,7 +7,7 @@ class PyramidalTiff
 
   attr_accessor :child_object, :conversion_information
   validate :verify_and_generate
-  delegate :access_master_path, :mets_full_access_master_path, :remote_access_master_path, :remote_ptiff_path, :oid, to: :child_object
+  delegate :access_master_path, :mets_access_master_path, :remote_access_master_path, :remote_ptiff_path, :oid, to: :child_object
 
   # This method takes the oid of a child_object and creates a new PyramidalTiff
   def initialize(child_object)
@@ -41,8 +41,8 @@ class PyramidalTiff
 
   def original_file_exists?
     if child_object.parent_object&.from_mets == true
-      image_exists = File.exist?(mets_full_access_master_path)
-      errors.add(:base, "Expected file #{mets_full_access_master_path} not found.") unless image_exists
+      image_exists = File.exist?(mets_access_master_path)
+      errors.add(:base, "Expected file #{mets_access_master_path} not found.") unless image_exists
     elsif ENV['ACCESS_MASTER_MOUNT'] == "s3"
       image_exists = S3Service.s3_exists?(remote_access_master_path)
       errors.add(:base, "Expected file #{remote_access_master_path} not found.") unless image_exists
