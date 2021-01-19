@@ -6,6 +6,12 @@
 </p>
 
 <p>
+  <strong>MetadataCloud url:</strong><br>
+  <small>Note: the "&mediaType=json" is not used for MetadataCloud calls, just so you can open this directly in your browser</small><br>
+  <%= link_to "#{@parent_object.metadata_cloud_url}&mediaType=json", "#{@parent_object.metadata_cloud_url}&mediaType=json" %>
+</p>
+
+<p>
   <strong>Bib:</strong>
   <%= @parent_object.bib %>
 </p>

@@ -126,6 +126,19 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     json_for(authoritative_metadata_source.metadata_cloud_name)
   end
 
+  def metadata_cloud_url
+    case source_name
+    when "ladybird"
+      ladybird_cloud_url
+    when "ils"
+      voyager_cloud_url
+    when "aspace"
+      aspace_cloud_url
+    else
+      raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
+    end
+  end
+
   def json_for(source_name)
     case source_name
     when "ladybird"
