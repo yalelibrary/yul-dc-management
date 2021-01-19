@@ -221,6 +221,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       it "pdf path on S3" do
         expect(parent_object.remote_pdf_path).not_to be_nil
       end
+
+      it "returns true from needs_a_manifest? only one time" do
+        parent_object.generate_manifest = true
+        parent_object.save!
+        expect(parent_object.needs_a_manifest?).to be_truthy
+        expect(parent_object.needs_a_manifest?).to be_falsey
+      end
     end
 
     context "a newly created ParentObject with Voyager as authoritative_metadata_source" do
