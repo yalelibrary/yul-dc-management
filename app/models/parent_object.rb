@@ -220,7 +220,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def needs_a_manifest?
     if ready_for_manifest? && generate_manifest
-      updated_rows = ActiveRecord::Base.connection.update("update parent_objects set generate_manifest = false where oid=#{oid}")
+      updated_rows = ParentObject.where(oid: oid, generate_manifest: true).update_all(generate_manifest: false) # rubocop:disable Rails/SkipsModelValidations
       self.generate_manifest = false
       return updated_rows == 1
     end
