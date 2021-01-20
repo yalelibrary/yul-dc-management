@@ -193,7 +193,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def voyager_cloud_url
     # if we're working from a mets document, use the MetadataCloud call from the mets document
-    return current_batch_process.mets_doc.full_metadatacloud_url if from_mets && current_batch_process.mets_doc.full_metadatacloud_url
+    return current_batch_process.mets_doc.full_metadata_cloud_url if from_mets && current_batch_process.mets_doc.full_metadata_cloud_url
     raise StandardError, "Bib id required to build Voyager url" unless bib.present?
     identifier_block = if !barcode.present?
                          "/bib/#{bib}"
@@ -205,7 +205,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def aspace_cloud_url
     # if we're working from a mets document, use the MetadataCloud call from the mets document
-    return current_batch_process.mets_doc.full_metadatacloud_url if from_mets && current_batch_process.mets_doc.full_metadatacloud_url
+    return current_batch_process.mets_doc.full_metadata_cloud_url if from_mets && current_batch_process.mets_doc.full_metadata_cloud_url
     raise StandardError, "ArchiveSpace uri required to build ArchiveSpace url" unless aspace_uri.present?
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace#{aspace_uri}"
   end

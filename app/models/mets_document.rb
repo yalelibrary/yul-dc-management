@@ -22,7 +22,7 @@ class MetsDocument
     @mets.xpath("//mods:identifier").inner_text
   end
 
-  def full_metadatacloud_url
+  def full_metadata_cloud_url
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}#{metadata_source_path}"
   end
 
