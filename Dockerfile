@@ -28,6 +28,7 @@ RUN /sbin/setuser app bash -l -c "bundle check || bundle install"
 
 COPY  --chown=app . $APP_HOME
 
+RUN groupadd -g 12005 nfs_share && usermod -aG nfs_share app
 # Assets and packs are moved aside - building them means you find out early if the asset compilation is broken
 # not on final deploy. It means that public/assets and public/packs can be volumes in production allowing for
 # cached pages / assets to be kept and cleaned the way Rails expects them to be while keeping deployment very fast.
