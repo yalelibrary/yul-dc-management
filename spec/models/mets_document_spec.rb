@@ -56,7 +56,8 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
 
   it "can return the system of record API call" do
     mets_doc = described_class.new(valid_goobi_xml)
-    expect(mets_doc.metadata_source_path)
+    expect(mets_doc.metadata_source_path).to eq "/ils/barcode/39002091118928?bib=8394689"
+    expect(mets_doc.full_metadatacloud_url).to eq "https://metadata-api-uat.library.yale.edu/metadatacloud/api/1.0.1/ils/barcode/39002091118928?bib=8394689"
   end
 
   it "returns nil if there is no oid field in the METs document" do
