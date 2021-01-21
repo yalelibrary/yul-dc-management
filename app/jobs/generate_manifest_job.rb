@@ -32,6 +32,7 @@ class GenerateManifestJob < ApplicationJob
 
   def index_to_solr(parent_object, current_batch_process = parent_object.current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     result = parent_object.solr_index
+    # if result.response[:status] == 200
     if result
       parent_object.processing_event("Solr index updated", "solr-indexed", current_batch_process, current_batch_connection)
     else
