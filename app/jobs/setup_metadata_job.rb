@@ -7,7 +7,7 @@ class SetupMetadataJob < ApplicationJob
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
     parent_object.generate_manifest = true
-    mets_images_present = check_mets_images(parent_object)
+    mets_images_present = check_mets_images(parent_object, current_batch_process, current_batch_connection)
     return unless mets_images_present
     # Do not continue running the background jobs if the metadata has not been successfully fetched
     return unless parent_object.default_fetch(current_batch_process, current_batch_connection)
@@ -23,9 +23,9 @@ class SetupMetadataJob < ApplicationJob
     raise # this reraises the error after we document it
   end
 
-  def check_mets_images(parent_object)
+  def check_mets_images(parent_object, current_batch_process, _current_batch_connection)
     if parent_object.from_mets
-      parent_object.current_batch_process.mets_doc.all_images_present?
+      current_batch_process.mets_doc.all_images_present?
     else
       true
     end

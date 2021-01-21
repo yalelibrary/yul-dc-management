@@ -126,6 +126,19 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     json_for(authoritative_metadata_source.metadata_cloud_name)
   end
 
+  def metadata_cloud_url
+    case source_name
+    when "ladybird"
+      ladybird_cloud_url
+    when "ils"
+      voyager_cloud_url
+    when "aspace"
+      aspace_cloud_url
+    else
+      raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
+    end
+  end
+
   def json_for(source_name)
     case source_name
     when "ladybird"
@@ -180,7 +193,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def voyager_cloud_url
     # if we're working from a mets document, use the MetadataCloud call from the mets document
-    return "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}#{current_batch_process.mets_doc.metadata_source_path}" if from_mets
+    return current_batch_process.mets_doc.full_metadata_cloud_url if from_mets && current_batch_process.mets_doc.full_metadata_cloud_url
     raise StandardError, "Bib id required to build Voyager url" unless bib.present?
     identifier_block = if !barcode.present?
                          "/bib/#{bib}"
@@ -192,7 +205,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def aspace_cloud_url
     # if we're working from a mets document, use the MetadataCloud call from the mets document
-    return "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}#{current_batch_process.mets_doc.metadata_source_path}" if from_mets
+    return current_batch_process.mets_doc.full_metadata_cloud_url if from_mets && current_batch_process.mets_doc.full_metadata_cloud_url
     raise StandardError, "ArchiveSpace uri required to build ArchiveSpace url" unless aspace_uri.present?
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace#{aspace_uri}"
   end
