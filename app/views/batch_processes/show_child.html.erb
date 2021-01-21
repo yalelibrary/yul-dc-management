@@ -56,7 +56,7 @@
   <% end %>
 </table>
 
-<% if @failures %>
+<% if @failure %>
   <table class="table table-bordered table-striped">
     <thead class="thead-dark">
       <tr>
@@ -64,12 +64,10 @@
         <th scope="col"> Time </th>
       </tr>
     </thead>
-    <% @failures.each do |failure| %>
     <tr>
-      <td class="reason"><%= failure["reason"] %></td>
-      <td class="time"><%= failure["time"] %></td>
+      <td class="reason"><%= @failure["reason"] %></td>
+      <td class="time"><%= @failure["time"] %></td>
     </tr>
-    <% end %>
   </table>
 <% end %>
 

@@ -75,9 +75,9 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def refresh_metadata_cloud_mets
     fresh = false
+    metadata_source = mets_doc.metadata_source
     po = ParentObject.where(oid: oid).first_or_create do |parent_object|
       # Only runs on newly created parent objects
-      metadata_source = mets_doc.metadata_source
       parent_object.bib = mets_doc.bib
       parent_object.visibility = mets_doc.visibility
       parent_object.rights_statement = mets_doc.rights_statement
