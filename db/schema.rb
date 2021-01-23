@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_12_173758) do
+ActiveRecord::Schema.define(version: 2021_01_23_185904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,7 +79,6 @@ ActiveRecord::Schema.define(version: 2021_01_12_173758) do
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
     t.index ["failed_at"], name: "index_delayed_jobs_on_failed_at"
-    t.index ["last_error"], name: "index_delayed_jobs_on_last_error"
     t.index ["locked_at", "failed_at"], name: "index_delayed_jobs_on_locked_at_and_failed_at"
     t.index ["locked_at"], name: "index_delayed_jobs_on_locked_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
