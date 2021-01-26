@@ -94,11 +94,24 @@ class PyramidalTiff
     S3Service.upload_image(ptiff_output_path, remote_ptiff_path, "image/tiff", metadata)
   end
 
+  DIGEST_CHUNK_SIZE = 1024 * 1024
+
+  ##
+  # perform checksum on file.
+  def digest_file(file_path)
+    digest = Digest::SHA2.new
+    File.open(file_path, "rb") do |f|
+      buffer = String.new
+      digest.update(buffer) while f.read(DIGEST_CHUNK_SIZE, buffer)
+    end
+    digest
+  end
+
   ##
   # @return [Boolean] true if checksums match
   def checksums_match?(access_master_path, temp_file_path)
-    access_master_checksum = Digest::SHA256.file(access_master_path)
-    temp_file_checksum = Digest::SHA256.file(temp_file_path)
+    access_master_checksum = digest_file(access_master_path)
+    temp_file_checksum = digest_file(temp_file_path)
     return true if access_master_checksum == temp_file_checksum
     checksum_info = { oid: oid.to_s, access_master_path: access_master_path.to_s, temp_file_path: temp_file_path.to_s }
     errors.add(:base, "File copy unsuccessful, checksums do not match: #{checksum_info.to_json}")
