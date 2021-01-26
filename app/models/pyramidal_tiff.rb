@@ -94,16 +94,15 @@ class PyramidalTiff
     S3Service.upload_image(ptiff_output_path, remote_ptiff_path, "image/tiff", metadata)
   end
 
-  DIGEST_CHUNK_SIZE = 1024 * 1024 * 5
+  DIGEST_CHUNK_SIZE = 1024 * 1024
 
   ##
   # perform checksum on file.
   def digest_file(file_path)
     digest = Digest::SHA2.new
     File.open(file_path, "rb") do |f|
-      while (buffer = f.read(DIGEST_CHUNK_SIZE))
-        digest.update(buffer)
-      end
+      buffer = String.new
+      digest.update(buffer) while f.read(DIGEST_CHUNK_SIZE, buffer)
     end
     digest
   end
