@@ -17,7 +17,7 @@ RSpec.describe GenerateManifestJob, type: :job do
       end.to change { Delayed::Job.count }.by(1)
     end
 
-    context 'job failes' do
+    context 'job fails' do
       let(:user) { FactoryBot.create(:user) }
       let(:metadata_source) { FactoryBot.create(:metadata_source) }
       let(:parent_object) { FactoryBot.create(:parent_object, authoritative_metadata_source: metadata_source) }
