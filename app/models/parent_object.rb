@@ -276,4 +276,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     base = ENV['BLACKLIGHT_BASE_URL'] || 'localhost:3000'
     "#{base}/catalog/#{oid}"
   end
+
+  def batch_connections_for(batch_process)
+    batch_connections.where(batch_process: batch_process)
+  end
 end

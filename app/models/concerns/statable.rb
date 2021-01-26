@@ -7,7 +7,7 @@ module Statable
   end
 
   def events_for_batch_process(batch_process)
-    IngestEvent.where(batch_connection: batch_process.batch_connections)
+    IngestEvent.where(batch_connection: batch_connections_for(batch_process))
   end
 
   def start_note(notes)
@@ -20,6 +20,10 @@ module Statable
 
   def deleted_note(notes)
     notes["parent-deleted"]
+  end
+
+  def batch_connections_for(batch_process)
+    raise 'Must be implemented'
   end
 
   def status_for_batch_process(batch_process)

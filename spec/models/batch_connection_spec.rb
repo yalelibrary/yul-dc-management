@@ -23,6 +23,15 @@ RSpec.describe BatchConnection, type: :model, prep_metadata_sources: true do
     expect(po.batch_connections.first.connectable.child_object_count).to eq po.child_object_count
   end
 
+  it "batch_connections_for returns itself" do
+    batch_process.file = csv_upload
+    batch_process.save!
+    batch_process.run_callbacks :create
+    po = ParentObject.find(2_034_600)
+    batch_connection = po.batch_connections.first
+    expect(batch_connection.batch_connections_for(batch_process)).to eq([batch_connection])
+  end
+
   describe "running the background job" do
     around do |example|
       perform_enqueued_jobs do
