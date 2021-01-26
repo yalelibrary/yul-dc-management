@@ -14,7 +14,7 @@ class BatchConnection < ApplicationRecord
     update_status && save!
   end
 
-  def batch_connections_for(batch_process)
+  def batch_connections_for(_batch_process)
     [self]
   end
 end

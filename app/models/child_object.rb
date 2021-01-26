@@ -138,6 +138,6 @@ class ChildObject < ApplicationRecord
   end
 
   def batch_connections_for(batch_process)
-    self.parent_object.batch_connections.where(batch_process: batch_process)
+    parent_object.batch_connections.where(batch_process: batch_process)
   end
 end

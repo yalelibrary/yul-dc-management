@@ -22,7 +22,7 @@ module Statable
     notes["parent-deleted"]
   end
 
-  def batch_connections_for(batch_process)
+  def batch_connections_for(_batch_process)
     raise 'Must be implemented'
   end
 
