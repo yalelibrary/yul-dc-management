@@ -136,4 +136,8 @@ class ChildObject < ApplicationRecord
   def convert_to_ptiff!
     convert_to_ptiff && save!
   end
+
+  def batch_connections_for(batch_process)
+    parent_object.batch_connections.where(batch_process: batch_process)
+  end
 end
