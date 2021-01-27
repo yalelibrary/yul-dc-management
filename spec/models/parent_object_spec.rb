@@ -455,4 +455,17 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       expect(po.rights_statement).to be nil
     end
   end
+
+  context 'a Parent Object' do
+    it 'finds batch connections' do
+      user = FactoryBot.create(:user)
+      parent_object = FactoryBot.create(:parent_object, oid: 2_003_431)
+      batch_process = BatchProcess.new(oid: parent_object.oid, user: user)
+      batch_process.batch_connections.build(connectable: parent_object)
+      batch_process.save!
+      batch_connection = parent_object.batch_connections
+
+      expect(parent_object.batch_connections_for(batch_process)).to eq(batch_connection)
+    end
+  end
 end
