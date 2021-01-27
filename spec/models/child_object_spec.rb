@@ -163,6 +163,22 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       expect(child_object.remote_ptiff_path).to eq "ptiffs/89/45/67/89/456789.tif"
     end
 
+    it "finds batch connections on the parent object" do
+      user = FactoryBot.create(:user)
+      batch_process = FactoryBot.create(:batch_process, user: user)
+      csv_upload = Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'short_fixture_ids.csv'))
+
+      batch_process.file = csv_upload
+      batch_process.save!
+      batch_process.run_callbacks :create
+
+      po = ParentObject.find(2_034_600)
+      po.child_objects = [child_object]
+      batch_connection = po.batch_connections.first
+
+      expect(child_object.batch_connections_for(batch_process)).to eq([batch_connection])
+    end
+
     describe "with a cached width and height on s3" do
       before do
         stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/89/45/67/89/456789.tif")
