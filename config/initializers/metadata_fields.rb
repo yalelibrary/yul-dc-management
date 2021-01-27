@@ -99,7 +99,7 @@ METADATA_FIELDS = [
   },
   {
     label: 'Resource Type',
-    field: 'resourceType',
+    field: 'itemType',
     solr_fields: [
       'resourceType_ssim',
       'resourceType_tesim'
