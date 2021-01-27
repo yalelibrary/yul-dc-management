@@ -165,18 +165,12 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
 
     it "finds batch connections on the parent object" do
       user = FactoryBot.create(:user)
-      batch_process = FactoryBot.create(:batch_process, user: user)
-      csv_upload = Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'short_fixture_ids.csv'))
-
-      batch_process.file = csv_upload
+      batch_process = BatchProcess.new(oid: parent_object.oid, user: user)
+      batch_process.batch_connections.build(connectable: parent_object)
       batch_process.save!
-      batch_process.run_callbacks :create
+      batch_connection = parent_object.batch_connections
 
-      po = ParentObject.find(2_034_600)
-      po.child_objects = [child_object]
-      batch_connection = po.batch_connections.first
-
-      expect(child_object.batch_connections_for(batch_process)).to eq([batch_connection])
+      expect(child_object.batch_connections_for(batch_process)).to eq(batch_connection)
     end
 
     describe "with a cached width and height on s3" do
