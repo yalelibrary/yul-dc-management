@@ -100,17 +100,6 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     expect(ptf.errors.full_messages.first).to match(/Conversion script exited with error code .*/)
   end
 
-  it "checks for file checksum and fails if it doesn't match" do
-    ptf.checksums_match?("spec/fixtures/images/access_masters/test_image.tif", "spec/fixtures/images/temp_images/autumn_test.tif")
-    expect(ptf.errors.full_messages.first).to eq("File copy unsuccessful, checksums do not match: {\"oid\":\"1002533\",\"access_master_path\":" \
-                  "\"spec/fixtures/images/access_masters/test_image.tif\",\"temp_file_path\":\"spec/fixtures/images/temp_images/autumn_test.tif\"}")
-  end
-
-  it "checks for file checksum and succeeds if files match" do
-    ptf.checksums_match?("spec/fixtures/images/access_masters/test_image.tif", "spec/fixtures/images/access_masters/test_image.tif")
-    expect(ptf.errors.full_messages).to be_empty
-  end
-
   it "copies the local access master to a swing directory" do
     tmpdir = "spec/fixtures/images/temp_images/"
     expected_file = "#{tmpdir}1002533.tif"
