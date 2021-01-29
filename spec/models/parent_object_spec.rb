@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-
+RSpec::Matchers.define_negated_matcher :not_change, :change
 RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   let(:ladybird) { 1 }
   let(:voyager) { 2 }
@@ -149,6 +149,30 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     end
   end
 
+  context "validating metadata" do
+    before do
+      stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/2005512.json")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "ladybird", "2005512norights.json")))
+      stub_metadata_cloud("2034600")
+    end
+    it "fails validate_metadata with no rights statement" do
+      parent_norights = described_class.create(oid: "2005512")
+      ladybird_json = JSON.parse(File.open(File.join(fixture_path, "ladybird", "2005512norights.json")).read)
+      parent_norights.ladybird_json = ladybird_json
+      expect(parent_norights.validate_metadata(ladybird_json)).to eq false
+    end
+    it "passes validate_metadata" do
+      parent_rights = described_class.create(oid: "2034600")
+      ladybird_json = JSON.parse(File.open(File.join(fixture_path, "ladybird", "2034600.json")).read)
+      parent_rights.ladybird_json = ladybird_json
+      expect(parent_rights.validate_metadata(ladybird_json)).to eq true
+    end
+    it "does not create the record" do
+      expect do
+        described_class.create(oid: "2005512")
+      end.to not_change { ParentObject.count }
+    end
+  end
   context "a newly created ParentObject with an unexpected authoritative_metadata_source" do
     let(:unexpected_metadata_source) { FactoryBot.create(:metadata_source, id: 4, metadata_cloud_name: "foo", display_name: "Foo", file_prefix: "F-") }
     let(:parent_object) { FactoryBot.create(:parent_object, oid: "2004628", authoritative_metadata_source: unexpected_metadata_source) }

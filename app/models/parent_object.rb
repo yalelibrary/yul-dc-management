@@ -44,6 +44,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.use_ladybird = true
   end
 
+  def validate_metadata(lb_record)
+    return false unless lb_record["rights"]&.present?
+    true
+  end
+
   def start_states
     ['processing-queued']
   end
@@ -161,10 +166,15 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Takes a JSON record from the MetadataCloud and saves the Ladybird-specific info to the DB
   def ladybird_json=(lb_record)
+    metadata_valid = validate_metadata(lb_record)
     super(lb_record)
     return lb_record if lb_record.blank?
     self.last_ladybird_update = DateTime.current
     return unless use_ladybird
+    assign_attributes_from_ladybird(lb_record)
+  end
+
+  def assign_attributes_from_ladybird(lb_record)
     self.bib = lb_record["orbisBibId"]
     self.barcode = lb_record["orbisBarcode"]
     self.aspace_uri = lb_record["archiveSpaceUri"]
