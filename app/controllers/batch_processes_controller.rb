@@ -33,7 +33,7 @@ class BatchProcessesController < ApplicationController
       if @batch_process.save
         format.html do
           redirect_to batch_processes_path,
-                      notice: "Your records have been retrieved from the MetadataCloud. PTIFF generation, manifest generation and indexing happen in the background."
+                      notice: "Your job is queued for processing in the background"
         end
       else
         format.html { render :new }
@@ -92,6 +92,6 @@ class BatchProcessesController < ApplicationController
     end
 
     def batch_process_params
-      params.require(:batch_process).permit(:file)
+      params.require(:batch_process).permit(:file, :batch_action)
     end
 end

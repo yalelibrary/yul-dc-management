@@ -9,6 +9,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :batch_connections
   has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connectable
 
+  def self.batch_actions
+    ['create parent objects', 'export child oids']
+  end
+
   def validate_import
     return if file.blank?
     if File.extname(file) == '.csv'
