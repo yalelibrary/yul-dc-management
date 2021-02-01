@@ -61,6 +61,8 @@ class MetsDocument
     return false unless @mets.xml?
     return false unless @mets.collect_namespaces.include?("xmlns:mets")
     return false unless @mets.xpath("//mets:file").count >= 1
+    return false if rights_statement.blank?
+    return false if metadata_source == 'ils' && bib !~ /\A\d*b?\z/
     true
   end
 

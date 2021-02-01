@@ -19,8 +19,9 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
   let(:no_oid_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/no_oid_mets.xml").read }
   let(:blank_oid_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/empty_oid_mets.xml").read }
   let(:image_missing_file) { File.open(File.join(fixture_path, "goobi", "metadata", "16172421", "missing_image.xml")).read }
+  let(:no_rights_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/no_rights_mets.xml") }
   let(:no_image_files_path) { File.join(fixture_path, "goobi", "metadata", "2012315", "no_image_files.xml") }
-
+  let(:bad_bib_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_bib.xml") }
   it "can be instantiated with xml from the DB instead of a file" do
     described_class.new(batch_process.mets_xml)
   end
@@ -33,6 +34,16 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
 
     it "returns false for a valid METs file that does not reference any images" do
       mets_doc = described_class.new(no_image_files_path)
+      expect(mets_doc.valid_mets?).to be_falsey
+    end
+
+    it "returns false when rights statement is not present" do
+      mets_doc = described_class.new(no_rights_file)
+      expect(mets_doc.valid_mets?).to be_falsey
+    end
+
+    it "returns false with a bib that contains characters other than numerals or b" do
+      mets_doc = described_class.new(bad_bib_file)
       expect(mets_doc.valid_mets?).to be_falsey
     end
   end
