@@ -22,6 +22,8 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
   let(:no_rights_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/no_rights_mets.xml") }
   let(:no_image_files_path) { File.join(fixture_path, "goobi", "metadata", "2012315", "no_image_files.xml") }
   let(:bad_bib_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_bib.xml") }
+  let(:bad_aspace_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_aspace.xml") }
+  let(:bad_voyager_uri_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_voyager_uri.xml") }
   it "can be instantiated with xml from the DB instead of a file" do
     described_class.new(batch_process.mets_xml)
   end
@@ -44,6 +46,16 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
 
     it "returns false with a bib that contains characters other than numerals or b" do
       mets_doc = described_class.new(bad_bib_file)
+      expect(mets_doc.valid_mets?).to be_falsey
+    end
+
+    it "returns false with a non-numeric holding/item/barcode" do
+      mets_doc = described_class.new(bad_voyager_uri_file)
+      expect(mets_doc.valid_mets?).to be_falsey
+    end
+
+    it "returns false with a malformed archivespace URI" do
+      mets_doc = described_class.new(bad_aspace_file)
       expect(mets_doc.valid_mets?).to be_falsey
     end
   end

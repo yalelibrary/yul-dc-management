@@ -9,6 +9,9 @@ class MetsDocument
     @mets = Nokogiri::XML(@source_xml)
   end
 
+  def parsed_metadata_source_path
+    metadata_source_path.match(/\/(\w*)\/(\w*)\/(\d*)\W(\w*)\W(\w*)/)
+  end
   def oid
     @mets.xpath("//mods:recordIdentifier[@source='gbv-ppn']").inner_text
   end
@@ -27,11 +30,11 @@ class MetsDocument
   end
 
   def metadata_source
-    metadata_source_path.match(/\/(\w*)\/(\w*)\/(\d*)\W(\w*)\W(\w*)/).captures.first
+    parsed_metadata_source_path.captures.first
   end
 
   def bib
-    metadata_source_path.match(/\/(\w*)\/(\w*)\/(\d*)\W(\w*)\W(\w*)/).captures.last if metadata_source == "ils"
+    parsed_metadata_source_path.captures.last if metadata_source == "ils"
   end
 
   def visibility
@@ -62,7 +65,9 @@ class MetsDocument
     return false unless @mets.collect_namespaces.include?("xmlns:mets")
     return false unless @mets.xpath("//mets:file").count >= 1
     return false if rights_statement.blank?
-    return false if metadata_source == 'ils' && bib !~ /\A\d*b?\z/
+    return false unless parsed_metadata_source_path
+    return false if metadata_source == 'ils' && (bib !~ /\A\d+b?\z/ || metadata_source_path !~ /\A\/ils\/\w*\/\d+/)
+    return false if metadata_source == 'aspace' && metadata_source_path !~ /\A\/aspace\/repositories\/\d+\/archival_objects\/\d+\z/
     true
   end
 
