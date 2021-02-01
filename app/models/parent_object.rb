@@ -241,6 +241,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def ready_for_manifest?
+    # returns false if any child objects have a width of nil
     !child_objects.pluck(:width).include?(nil)
   end
 

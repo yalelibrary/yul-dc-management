@@ -16,6 +16,7 @@ class PyramidalTiff
   end
 
   def generate_ptiff
+    # this adds the height and width to the object
     Dir.mktmpdir do |swing_tmpdir|
       tiff_input_path = copy_access_master_to_working_directory(swing_tmpdir)
       Dir.mktmpdir do |ptiff_tmpdir|
@@ -34,7 +35,7 @@ class PyramidalTiff
       true
     else
       # cannot convert to PTIFF if we can't find the original
-      return false unless original_file_exists?
+      return false if !original_file_exists? # this returns true
       generate_ptiff
     end
   end
@@ -48,7 +49,9 @@ class PyramidalTiff
       errors.add(:base, "Expected file #{remote_access_master_path} not found.") unless image_exists
     else
       image_exists = File.exist?(access_master_path)
-      errors.add(:base, "Expected file #{access_master_path} not found.") unless image_exists
+      # image_exists = File.exist?('/data/00/09/17/36/76/09/17367609.tif')
+      # image_exists = true
+      errors.add(:base, "Expected file #{access_master_path} not found.") if !image_exists
     end
     image_exists
   end
