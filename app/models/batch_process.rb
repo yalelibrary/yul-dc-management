@@ -2,7 +2,7 @@
 
 class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   attr_reader :file
-  after_create :refresh_metadata_cloud
+  after_create :determine_background_jobs
   before_create :mets_oid
   validate :validate_import
   belongs_to :user, class_name: "User"
@@ -57,9 +57,14 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     csv_string = CSV.generate do |csv|
       csv << headers
       oids.each do |oid|
-        po = ParentObject.find(oid.to_i)
-        po.child_objects.each do |co|
-          row = [co.oid, po.oid, co.order, po.authoritative_json["title"]&.first, co.label, co.caption, co.viewing_hint]
+        begin
+          po = ParentObject.find(oid.to_i)
+          po.child_objects.each do |co|
+            row = [co.oid, po.oid, co.order, po.authoritative_json["title"]&.first, co.label, co.caption, co.viewing_hint]
+            csv << row
+          end
+        rescue ActiveRecord::RecordNotFound
+          row = ["Parent Not Found in database", oid, "", "", "", ""]
           csv << row
         end
       end
@@ -114,8 +119,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     po.save!
   end
 
-  def refresh_metadata_cloud
-    if csv.present?
+  def determine_background_jobs
+    if csv.present? && (batch_action.eql? 'create parent objects')
       refresh_metadata_cloud_csv
     elsif mets_xml.present?
       refresh_metadata_cloud_mets
