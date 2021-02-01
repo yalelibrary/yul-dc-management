@@ -12,6 +12,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
   end
 
   before do
+    stub_ptiffs_and_manifests
     stub_metadata_cloud("2034600")
     stub_metadata_cloud("2005512")
     stub_metadata_cloud("16414889")
@@ -61,7 +62,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
     context "outputting csv" do
       let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600) }
       before do
-        stub_ptiffs_and_manifests
         parent_object
       end
       around do |example|
@@ -83,11 +83,16 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
     end
 
     context "deleting a parent object" do
+      around do |example|
+        perform_enqueued_jobs do
+          example.run
+        end
+      end
       before do
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
         click_button("Submit")
         po = ParentObject.find(16_854_285)
-        po.delete
+        po.destroy
         page.refresh
       end
 

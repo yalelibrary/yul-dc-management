@@ -53,7 +53,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def output_csv
     return nil unless batch_action == "export child oids"
-    headers = ["child_oid", "current_parent_oid", "order", "parent_title", "label (order_label in goobi)", "caption", "viewing_hint"]
+    headers = ["child_oid", "parent_oid", "order", "parent_title", "label", "caption", "viewing_hint"]
     csv_string = CSV.generate do |csv|
       csv << headers
       oids.each do |oid|
@@ -121,7 +121,9 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def determine_background_jobs
     if csv.present? && (batch_action.eql? 'create parent objects')
-      refresh_metadata_cloud_csv
+      RefreshMetadataCloudCsvJob.perform_later(self)
+    elsif csv.present? && (batch_action.eql? 'export child oids')
+      CreateChildOidCsvJob.perform_later(self)
     elsif mets_xml.present?
       refresh_metadata_cloud_mets
     end
