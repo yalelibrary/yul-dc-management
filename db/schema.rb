@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2021_01_29_175706) do
     t.bigint "user_id", null: false
     t.string "file_name"
     t.string "batch_status"
-    t.string "batch_action"
+    t.string "batch_action", default: "create parent objects"
     t.string "output_csv"
     t.index ["oid"], name: "index_batch_processes_on_oid"
     t.index ["user_id"], name: "index_batch_processes_on_user_id"
