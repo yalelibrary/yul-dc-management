@@ -14,7 +14,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      oid: { source: "ParentObject.oid", cond: :like },
+      oid: { source: "ParentObject.oid", cond: :like, searchable: true },
       authoritative_source: { source: "MetadataSource.display_name", cond: :like, searchable: true },
       child_object_count: { source: "ParentObject.child_object_count" },
       bib: { source: "ParentObject.bib", cond: :like, searchable: true },

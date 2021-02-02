@@ -39,5 +39,5 @@
 </div>
 
 <div id="parent-objects-data" class='d-none datatable-data'>
-  <%= ParentObjectDatatable.new(nil).view_columns.keys.map {|key| {data: key} }.to_json %>
+  <%= ParentObjectDatatable.new(nil).view_columns.map {|key, value| {data: key, searchable: value[:searchable]} }.to_json %>
 </div>
