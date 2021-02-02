@@ -57,15 +57,22 @@ $( document ).on('turbolinks:load', function() {
           let column = this;
           let colDef = columns[index++];
           if (colDef.searchable) {
-            let input = $("<input type='text' size='12' placeholder='" + $(column.header()).text() + "' />");
             let th = $("<th/>");
-            searchRow.append(th.append(input));
+            let input = null;
+            if (colDef.options) {
+              input = $("<select><option>All</option>" + colDef.options.map(function(option){return "<option>"+option+"</option>"}) + "</select>");
+            } else {
+              input = $("<input type='text' size='12' placeholder='" + $(column.header()).text() + "' />");
+            }
             (input).on('keyup change clear', function () {
-              if (column.search() !== this.value) {
-                column.search(this.value);
+              let v = this.value;
+              if (v==="All" && colDef.options) v = "";
+              if (column.search() !== v) {
+                column.search(v);
                 scheduleDraw();
               }
             });
+            searchRow.append(th.append(input));
           } else {
             searchRow.append("<th />");
           }
