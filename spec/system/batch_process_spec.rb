@@ -79,6 +79,10 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
         expect(BatchProcess.last.file_name).to eq "short_fixture_ids.csv"
         expect(BatchProcess.last.batch_action).to eq "export child oids"
         expect(BatchProcess.last.output_csv).to include "1126257"
+        click_on("View")
+        expect(page).to have_link("short_fixture_ids.csv", href: "/batch_processes/#{BatchProcess.last.id}/download")
+        expect(page).to have_link("short_fixture_ids_bp_#{BatchProcess.last.id}.csv", href: "/batch_processes/#{BatchProcess.last.id}/download_created")
+        click_on("short_fixture_ids_bp_#{BatchProcess.last.id}.csv")
       end
     end
 

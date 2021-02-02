@@ -15,7 +15,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
     ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "images", "access_masters")
-    example.run
+    perform_enqueued_jobs do
+      example.run
+    end
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
     ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
   end
@@ -36,6 +38,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     it "can reflect a failure" do
       parent_object
       batch_process_with_failure.file = csv_upload
+      batch_process_with_failure.save
       batch_process_with_failure.run_callbacks :create
       allow(parent_object).to receive(:processing_event).and_return(
         IngestEvent.create(
@@ -59,13 +62,14 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       expect(parent_object.latest_failure(batch_process_with_failure)).to be_an_instance_of Hash
       expect(parent_object.latest_failure(batch_process_with_failure)[:reason]).to eq "Fake failure 2"
       expect(parent_object.latest_failure(batch_process_with_failure)[:time]).to be
-      expect(batch_process_with_failure.batch_status).to eq "1 out of 5 parent objects have a failure."
+      expect(batch_process_with_failure.batch_status).to eq "Batch failed"
     end
   end
 
   describe 'xml file import' do
     before do
       stub_metadata_cloud("V-30000401", "ils")
+      stub_ptiffs_and_manifests
     end
     it "does not error out" do
       batch_process.file = xml_upload
@@ -159,6 +163,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       stub_metadata_cloud("14716192")
       stub_metadata_cloud("16854285")
       stub_metadata_cloud("16172421")
+      stub_metadata_cloud("30000016189097")
     end
 
     describe "batch import" do
@@ -181,6 +186,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     end
 
     describe "csv file import" do
+      before do
+        stub_ptiffs_and_manifests
+      end
       it "accepts a csv file as a virtual attribute and read the csv into the csv property" do
         batch_process.file = csv_upload
         batch_process.user_id = user.id
@@ -224,7 +232,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       it 'has a status for the batch process' do
         batch_process.file = csv_upload_with_source
         batch_process.save
-        expect(batch_process.batch_status).to eq "Batch in progress - no failures"
+        expect(batch_process.batch_status).to eq "4 out of 6 parent objects are in progress."
       end
 
       describe "with a parent object that had been previously created" do

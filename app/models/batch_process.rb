@@ -64,12 +64,17 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
             csv << row
           end
         rescue ActiveRecord::RecordNotFound
-          row = ["Parent Not Found in database", oid, "", "", "", ""]
+          row = ["----", oid, "", "Parent Not Found in database", "", ""]
           csv << row
         end
       end
       csv_string
     end
+  end
+
+  def created_file_name
+    return nil unless file_name
+    "#{file_name.delete_suffix('.csv')}_bp_#{id}.csv"
   end
 
   def create_parent_objects_from_oids(oids, metadata_sources)

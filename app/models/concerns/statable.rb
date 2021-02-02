@@ -30,10 +30,10 @@ module Statable
     notes = notes_for_batch_process(batch_process)
     if notes.empty?
       "Pending"
-    elsif finished_note(notes)
-      "Complete"
     elsif deleted_note(notes)
       "Parent object deleted"
+    elsif finished_note(notes)
+      "Complete"
     elsif latest_failure(batch_process).nil?
       "In progress - no failures"
     elsif latest_failure(batch_process)

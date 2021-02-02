@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BatchProcessesController < ApplicationController
-  before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml, :show_parent, :show_child]
+  before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml, :download_created, :show_parent, :show_child]
   before_action :set_parent_object, only: [:show_parent, :show_child]
   before_action :find_notes, only: [:show_parent]
   before_action :latest_failure, only: [:show_parent]
@@ -43,6 +43,12 @@ class BatchProcessesController < ApplicationController
 
   def download
     @batch_process.csv.nil? ? download_xml : download_csv
+  end
+
+  def download_created
+    send_data @batch_process.output_csv,
+              type: 'text/csv; charset=utf-8; header=present',
+              disposition: "attachment; filename=#{@batch_process.created_file_name}"
   end
 
   def download_csv
