@@ -33,7 +33,8 @@ require("datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css")
 let dataTable;
 $( document ).on('turbolinks:load', function() {
   if($('.is-datatable').length > 0 && !$('.is-datatable').hasClass('dataTable')){
-    let columns = JSON.parse($(".datatable-data").text());    
+    let columns = JSON.parse($(".datatable-data").text());
+    let hasSearch = columns.some(function(col){return col.searchable;});
     dataTable = $('.is-datatable').dataTable({
       "processing": true,
       "serverSide": true,
@@ -45,13 +46,12 @@ $( document ).on('turbolinks:load', function() {
       // This will order all datatables by the first column descending
       "order": [[0, "desc"]],
       "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]],
-      "sDom":"lrtip",
+      "sDom":hasSearch?'lrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
       // pagingType is optional, if you want full pagination controls.
       // Check dataTables documentation to learn more about
       // available options.
       initComplete: function () {
         // create the inputs for each header
-        let hasSearch = columns.some(function(col){return col.searchable;})
         if (hasSearch) {
           let searchRow = $("<tr role='row'></tr>");
           let index = 0;
