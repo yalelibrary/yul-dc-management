@@ -34,7 +34,12 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       FactoryBot.create(:batch_connection,
                         connectable: parent_object, batch_process: batch_process_with_failure)
     end
-
+    # rubocop:disable RSpec/AnyInstance
+    before do
+      allow_any_instance_of(ChildObject).to receive(:remote_ptiff_exists?).and_return(false)
+      allow_any_instance_of(PyramidalTiff).to receive(:valid?).and_return(false)
+    end
+    # rubocop:enable RSpec/AnyInstance
     it "can reflect a failure" do
       parent_object
       batch_process_with_failure.file = csv_upload
@@ -157,6 +162,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   describe "with the metadata cloud mocked" do
     before do
       stub_metadata_cloud("2034600")
+      stub_metadata_cloud("V-2030006", "ils")
+      stub_metadata_cloud("V-16414889", "ils")
+      stub_metadata_cloud("AS-2012036", "aspace")
       stub_metadata_cloud("2005512")
       stub_metadata_cloud("2046567")
       stub_metadata_cloud("16414889")
@@ -216,11 +224,11 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       it "can identify the metadata source" do
         batch_process.file = csv_upload_with_source
         batch_process.save
-        expect(ParentObject.first.authoritative_metadata_source_id).to eq 1
-        expect(ParentObject.second.authoritative_metadata_source_id).to eq 2
-        expect(ParentObject.third.authoritative_metadata_source_id).to eq 3
-        expect(ParentObject.fourth.authoritative_metadata_source_id).to eq 2
-        expect(ParentObject.fifth.authoritative_metadata_source_id).to eq 1
+        expect(ParentObject.find(2034600).authoritative_metadata_source_id).to eq 1
+        expect(ParentObject.find(2030006).authoritative_metadata_source_id).to eq 2
+        expect(ParentObject.find(2012036).authoritative_metadata_source_id).to eq 3
+        expect(ParentObject.find(16414889).authoritative_metadata_source_id).to eq 2
+        expect(ParentObject.find(16854285).authoritative_metadata_source_id).to eq 1
       end
 
       it 'defaults to ladybird if no metadata source is provided' do
