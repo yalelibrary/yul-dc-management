@@ -26,7 +26,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
       last_voyager_update: { source: "ParentObject.last_voyager_update" },
       last_aspace_update: { source: "ParentObject.last_aspace_update" },
       last_id_update: { source: "ParentObject.last_id_update" },
-      visibility: { source: "ParentObject.visibility", cond: :start_with, searchable: true, options: ["Public", "Yale Community Only", "Private"] },
+      visibility: { source: "ParentObject.visibility", cond: :string_eq, searchable: true, options: ["Public", "Yale Community Only", "Private"] },
       actions: { source: "ParentObject.oid", cond: :null_value, searchable: false, orderable: false }
     }
   end
