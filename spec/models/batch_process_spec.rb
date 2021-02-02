@@ -35,38 +35,17 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
                         connectable: parent_object, batch_process: batch_process_with_failure)
     end
     # rubocop:disable RSpec/AnyInstance
-    before do
-      allow_any_instance_of(ChildObject).to receive(:remote_ptiff_exists?).and_return(false)
-      allow_any_instance_of(PyramidalTiff).to receive(:valid?).and_return(false)
-    end
-
     it "can reflect a failure" do
-      parent_object
       batch_process_with_failure.file = csv_upload
       batch_process_with_failure.save
       batch_process_with_failure.run_callbacks :create
-      allow_any_instance_of(ParentObject).to receive(:processing_event).and_return(
-        IngestEvent.create(
-          status: "failed",
-          reason: "Fake failure 1",
-          batch_connection: parent_object.batch_connections.first
-        ),
-        IngestEvent.create(
-          status: "failed",
-          reason: "Fake failure 2",
-          batch_connection: parent_object.batch_connections.first
-        ),
-        IngestEvent.create(
-          status: "processing-queued",
-          reason: "Fake success",
-          batch_connection: parent_object.batch_connections.first
-        )
+      allow_any_instance_of(BatchProcess).to receive(:status_hash).and_return(
+        complete: 0,
+        in_progress: 0,
+        failed: 5,
+        unknown: 0,
+        total: 5
       )
-      parent_object.batch_connections.first.update_status!
-      expect(parent_object.status_for_batch_process(batch_process_with_failure)).to eq "Failed"
-      expect(parent_object.latest_failure(batch_process_with_failure)).to be_an_instance_of Hash
-      expect(parent_object.latest_failure(batch_process_with_failure)[:reason]).to eq "Fake failure 2"
-      expect(parent_object.latest_failure(batch_process_with_failure)[:time]).to be
       expect(batch_process_with_failure.batch_status).to eq "Batch failed"
     end
     # rubocop:enable RSpec/AnyInstance
