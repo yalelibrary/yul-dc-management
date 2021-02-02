@@ -10,8 +10,9 @@ class MetsDocument
   end
 
   def parsed_metadata_source_path
-    metadata_source_path.match(/\/(\w*)\/(\w*)\/(\d*)\W(\w*)\W(\w*)/)
+    @parsed_metadata_source_path ||= metadata_source_path.match(/\/(\w*)\/(\w*)\/(\d*)\W(\w*)\W(\w*)/)
   end
+
   def oid
     @mets.xpath("//mods:recordIdentifier[@source='gbv-ppn']").inner_text
   end
@@ -35,6 +36,18 @@ class MetsDocument
 
   def bib
     parsed_metadata_source_path.captures.last if metadata_source == "ils"
+  end
+
+  def barcode
+    parsed_metadata_source_path.captures.third if parsed_metadata_source_path.captures.include?("barcode")
+  end
+
+  def holding
+    parsed_metadata_source_path.captures.third if parsed_metadata_source_path.captures.include?("holding")
+  end
+
+  def item
+    parsed_metadata_source_path.captures.third if parsed_metadata_source_path.captures.include?("item")
   end
 
   def visibility
@@ -65,10 +78,34 @@ class MetsDocument
     return false unless @mets.collect_namespaces.include?("xmlns:mets")
     return false unless @mets.xpath("//mets:file").count >= 1
     return false if rights_statement.blank?
-    return false unless parsed_metadata_source_path
-    return false if metadata_source == 'ils' && (bib !~ /\A\d+b?\z/ || metadata_source_path !~ /\A\/ils\/\w*\/\d+/)
-    return false if metadata_source == 'aspace' && metadata_source_path !~ /\A\/aspace\/repositories\/\d+\/archival_objects\/\d+\z/
+    return false unless valid_metadata_source_path?
     true
+  end
+
+  def valid_metadata_source_path?
+    return false unless parsed_metadata_source_path
+    if metadata_source == 'ils'
+      return false unless valid_bib? && (valid_item? || valid_holding? || valid_barcode?)
+    elsif metadata_source == 'aspace' && metadata_source_path !~ /\A\/aspace\/repositories\/\d+\/archival_objects\/\d+\z/
+      return false
+    end
+    true
+  end
+
+  def valid_barcode?
+    barcode && (barcode !~ /\D/)
+  end
+
+  def valid_bib?
+    bib =~ /\A\d+b?\z/
+  end
+
+  def valid_item?
+    item && (item !~ /\D/)
+  end
+
+  def valid_holding?
+    holding && (holding !~ /\D/)
   end
 
   def all_images_present?

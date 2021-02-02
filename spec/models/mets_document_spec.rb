@@ -24,6 +24,8 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
   let(:bad_bib_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_bib.xml") }
   let(:bad_aspace_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_aspace.xml") }
   let(:bad_voyager_uri_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_voyager_uri.xml") }
+  let(:has_holding_file) { File.open("spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml") }
+
   it "can be instantiated with xml from the DB instead of a file" do
     described_class.new(batch_process.mets_xml)
   end
@@ -81,6 +83,23 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
     mets_doc = described_class.new(valid_goobi_xml)
     expect(mets_doc.metadata_source_path).to eq "/ils/barcode/39002091118928?bib=8394689"
     expect(mets_doc.full_metadata_cloud_url).to eq "https://metadata-api-uat.library.yale.edu/metadatacloud/api/1.0.1/ils/barcode/39002091118928?bib=8394689"
+    expect(mets_doc.bib).to eq "8394689"
+    expect(mets_doc.barcode).to eq "39002091118928"
+    expect(mets_doc.holding).to be nil
+    expect(mets_doc.item).to be nil
+  end
+
+  it "can identify the holding if present" do
+    mets_doc = described_class.new(has_holding_file)
+    expect(mets_doc.bib).to eq "1188135"
+    expect(mets_doc.holding).to eq "1330141"
+  end
+
+  it "can identify the item if present" do
+    mets_doc = described_class.new(valid_goobi_xml)
+    allow(mets_doc).to receive(:metadata_source_path).and_return("/ils/item/9136055?bib=1169354")
+    expect(mets_doc.bib).to eq "1169354"
+    expect(mets_doc.item).to eq "9136055"
   end
 
   it "returns nil if there is no oid field in the METs document" do
