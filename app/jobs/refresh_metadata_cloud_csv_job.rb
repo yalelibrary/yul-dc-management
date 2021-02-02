@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# TODO: this is a onetime thing for a data migration
-# it can be removed after 3/1/2021
 class RefreshMetadataCloudCsvJob < ApplicationJob
   queue_as :default
 
