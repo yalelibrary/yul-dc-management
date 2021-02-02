@@ -51,33 +51,38 @@ $( document ).on('turbolinks:load', function() {
       // available options.
       initComplete: function () {
         // create the inputs for each header
-        let searchRow = $("<tr role='row'></tr>");
-        let index = 0;
-        this.api().columns().every( function () {
-          let column = this;
-          let colDef = columns[index++];
-          if (colDef.searchable) {
-            let th = $("<th/>");
-            let input = null;
-            if (colDef.options) {
-              input = $("<select><option>All</option>" + colDef.options.map(function(option){return "<option>"+option+"</option>"}) + "</select>");
-            } else {
-              input = $("<input type='text' size='12' placeholder='" + $(column.header()).text() + "' />");
-            }
-            (input).on('keyup change clear', function () {
-              let v = this.value;
-              if (v==="All" && colDef.options) v = "";
-              if (column.search() !== v) {
-                column.search(v);
-                scheduleDraw();
+        let hasSearch = columns.some(function(col){return col.searchable;})
+        if (hasSearch) {
+          let searchRow = $("<tr role='row'></tr>");
+          let index = 0;
+          this.api().columns().every(function () {
+            let column = this;
+            let colDef = columns[index++];
+            if (colDef.searchable) {
+              let th = $("<th/>");
+              let input = null;
+              if (colDef.options) {
+                input = $("<select><option>All</option>" + colDef.options.map(function (option) {
+                  return "<option>" + option + "</option>"
+                }) + "</select>");
+              } else {
+                input = $("<input type='text' size='12' placeholder='" + $(column.header()).text() + "' />");
               }
-            });
-            searchRow.append(th.append(input));
-          } else {
-            searchRow.append("<th />");
-          }
-        } );
-        $(this.api().table().header()).append(searchRow);
+              (input).on('keyup change clear', function () {
+                let v = this.value;
+                if (v === "All" && colDef.options) v = "";
+                if (column.search() !== v) {
+                  column.search(v);
+                  scheduleDraw();
+                }
+              });
+              searchRow.append(th.append(input));
+            } else {
+              searchRow.append("<th />");
+            }
+          });
+          $(this.api().table().header()).append(searchRow);
+        }
       }
     })
   }
