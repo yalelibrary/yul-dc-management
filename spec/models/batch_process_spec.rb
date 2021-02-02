@@ -39,13 +39,13 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       allow_any_instance_of(ChildObject).to receive(:remote_ptiff_exists?).and_return(false)
       allow_any_instance_of(PyramidalTiff).to receive(:valid?).and_return(false)
     end
-    # rubocop:enable RSpec/AnyInstance
+
     it "can reflect a failure" do
       parent_object
       batch_process_with_failure.file = csv_upload
       batch_process_with_failure.save
       batch_process_with_failure.run_callbacks :create
-      allow(parent_object).to receive(:processing_event).and_return(
+      allow_any_instance_of(ParentObject).to receive(:processing_event).and_return(
         IngestEvent.create(
           status: "failed",
           reason: "Fake failure 1",
@@ -69,6 +69,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       expect(parent_object.latest_failure(batch_process_with_failure)[:time]).to be
       expect(batch_process_with_failure.batch_status).to eq "Batch failed"
     end
+    # rubocop:enable RSpec/AnyInstance
   end
 
   describe 'xml file import' do
