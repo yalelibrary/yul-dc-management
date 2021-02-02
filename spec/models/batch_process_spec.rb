@@ -224,11 +224,11 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       it "can identify the metadata source" do
         batch_process.file = csv_upload_with_source
         batch_process.save
-        expect(ParentObject.find(2034600).authoritative_metadata_source_id).to eq 1
-        expect(ParentObject.find(2030006).authoritative_metadata_source_id).to eq 2
-        expect(ParentObject.find(2012036).authoritative_metadata_source_id).to eq 3
-        expect(ParentObject.find(16414889).authoritative_metadata_source_id).to eq 2
-        expect(ParentObject.find(16854285).authoritative_metadata_source_id).to eq 1
+        expect(ParentObject.find(2_034_600).authoritative_metadata_source_id).to eq 1
+        expect(ParentObject.find(2_030_006).authoritative_metadata_source_id).to eq 2
+        expect(ParentObject.find(2_012_036).authoritative_metadata_source_id).to eq 3
+        expect(ParentObject.find(16_414_889).authoritative_metadata_source_id).to eq 2
+        expect(ParentObject.find(16_854_285).authoritative_metadata_source_id).to eq 1
       end
 
       it 'defaults to ladybird if no metadata source is provided' do
