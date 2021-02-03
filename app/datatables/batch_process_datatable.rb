@@ -14,11 +14,11 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      process_id: { source: "BatchProcess.id", cond: :like, searchable: true },
-      user: { source: "BatchProcess.user_id", cond: :like, searchable: true },
-      time: { source: "BatchProcess.created_at", cond: :like, searchable: true },
-      size: { source: "BatchProcess.oid", cond: :like, searchable: true },
-      status: { source: "BatchProcess.batch_status", cond: :null_value, searchable: false, orderable: false },
+      process_id: { source: "BatchProcess.id", cond: :eq, searchable: true, orderable: true },
+      user: { source: "User.uid", cond: :start_with, searchable: true, orderable: true },
+      time: { source: "BatchProcess.created_at", cond: :like, searchable: true, orderable: true },
+      size: { source: "BatchProcess.oid", searchable: false, orderable: false },
+      status: { source: "BatchProcess.batch_status", searchable: false, orderable: false },
       object_details: { cond: :null_value, searchable: false, orderable: false }
     }
   end

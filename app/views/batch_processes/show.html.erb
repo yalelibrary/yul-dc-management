@@ -47,7 +47,7 @@
 </div>
 
 <div id='batch-process-data' class='d-none datatable-data'>
-  <%= BatchProcessDetailDatatable.new(nil).view_columns.keys.map {|key| {data: key} }.to_json %>
+  <%= BatchProcessDetailDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], options: value[:options]} }.to_json %>
 </div>
 
 <%= link_to 'Back', batch_processes_path %>
