@@ -457,7 +457,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   end
 
   context 'a Parent Object' do
-    it 'finds batch connections' do
+    it 'finds batch connections to the batch process' do
       user = FactoryBot.create(:user)
       parent_object = FactoryBot.create(:parent_object, oid: 2_003_431)
       batch_process = BatchProcess.new(oid: parent_object.oid, user: user)

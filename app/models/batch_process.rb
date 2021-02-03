@@ -8,6 +8,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :user, class_name: "User"
   has_many :batch_connections
   has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connectable
+  has_many :child_objects, through: :batch_connections, source_type: "ChildObject", source: :connectable
 
   def validate_import
     return if file.blank?
@@ -62,10 +63,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def setup_for_background_jobs(parent_object, metadata_source)
-    parent_object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird'))
-    parent_object.current_batch_process = self
-    parent_object.current_batch_connection = batch_connections.build(connectable: parent_object)
+  def setup_for_background_jobs(object, _metadata_source = metadata_source)
+    object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
+    object.current_batch_process = self
+    object.current_batch_connection = batch_connections.build(connectable: object)
+    object.current_batch_connection.save! if object.class == ChildObject
   end
 
   def refresh_metadata_cloud_csv
@@ -126,7 +128,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def connected_statuses
-    @connected_statuses ||= batch_connections.map(&:status)
+    @connected_statuses ||= batch_connections.where(connectable_type: "ParentObject").map(&:status)
   end
 
   def status_hash

@@ -35,7 +35,7 @@ class PyramidalTiff
       true
     else
       # cannot convert to PTIFF if we can't find the original
-      return false if !original_file_exists? # this returns true
+      return false unless original_file_exists? # this returns true
       generate_ptiff
     end
   end
@@ -51,7 +51,7 @@ class PyramidalTiff
       image_exists = File.exist?(access_master_path)
       # image_exists = File.exist?('/data/00/09/17/36/76/09/17367609.tif')
       # image_exists = true
-      errors.add(:base, "Expected file #{access_master_path} not found.") if !image_exists
+      errors.add(:base, "Expected file #{access_master_path} not found.") unless image_exists
     end
     image_exists
   end

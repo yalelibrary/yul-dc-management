@@ -195,14 +195,26 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       #   expect(batch_process.csv).to be_blank
       # end
 
-      it "can refresh the ParentObjects from the MetadataCloud" do
-        expect(ParentObject.count).to eq 0
-        expect do
-          batch_process.file = csv_upload
-          batch_process.save
-        end.to change { batch_process.batch_connections.size }.from(0).to(5)
+      describe "importing a csv" do
+        around do |example|
+          perform_enqueued_jobs do
+            example.run
+          end
+        end
 
-        expect(ParentObject.count).to eq 5
+        it "creates batch connections for all parent and child objects in the batch process" do
+          expect(ParentObject.count).to eq 0
+          expect(ChildObject.count).to eq 0
+          expect do
+            batch_process.file = csv_upload
+            batch_process.save
+          end.to change { batch_process.batch_connections.size }.from(0).to(218)
+          expect(ParentObject.count).to eq 5
+          expect(ChildObject.count).to eq 213
+          expect(batch_process.batch_connections.where(connectable_type: "ParentObject").count).to eq(5)
+          expect(batch_process.batch_connections.where(connectable_type: "ChildObject").count).to eq(213)
+          expect(IngestEvent.where(batch_connection: ChildObject.first.batch_connections_for(batch_process)).to(exist))
+        end
       end
 
       it "can identify the metadata source" do
