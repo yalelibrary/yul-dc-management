@@ -46,13 +46,13 @@ class BatchProcessesController < ApplicationController
   end
 
   def download_created
-    send_data @batch_process.output_csv,
+    send_data "\uFEFF" + @batch_process.output_csv,
               type: 'text/csv; charset=utf-8; header=present',
               disposition: "attachment; filename=#{@batch_process.created_file_name}"
   end
 
   def download_csv
-    send_data @batch_process.csv,
+    send_data "\uFEFF" + @batch_process.csv,
               type: 'text/csv; charset=utf-8; header=present',
               disposition: "attachment; filename=#{@batch_process.file_name}"
   end
