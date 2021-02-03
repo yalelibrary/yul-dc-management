@@ -39,7 +39,7 @@ jobs:
           POSTGRES_PASSWORD: password
           SOLR_CORE: blacklight-test
           SOLR_BASE_URL: http://localhost:8983/solr
-      - image: yalelibraryit/dc-solr:v1.0.1
+      - image: yalelibraryit/dc-solr:v1.0.6
         command: bash -c 'precreate-core blacklight-test /opt/config; exec solr -f'
       - image: circleci/postgres:9.5-alpine-ram
         environment:
@@ -109,6 +109,7 @@ workflows:
       - build-and-push:
           context: yul-dc
       - run-tests:
+          context: yul-dc
           requires:
             - build-and-push
       - publish-latest:
