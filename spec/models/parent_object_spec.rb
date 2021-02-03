@@ -104,8 +104,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     it 'returns a processing_event message' do
       expect do
         batch_process.file = csv_upload
+        batch_process.save
         batch_process.run_callbacks :create
-      end.to change { batch_process.batch_connections.size }.from(0).to(5)
+      end.to change { batch_process.batch_connections.count }.from(0).to(5)
         .and change { IngestEvent.count }.from(0).to(456)
       statuses = IngestEvent.all.map(&:status)
       expect(statuses).to include "processing-queued"

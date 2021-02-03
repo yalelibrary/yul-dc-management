@@ -15,7 +15,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
     # or in aliased_join_table.column_name format
     @view_columns ||= {
       oid: { source: "ParentObject.oid", cond: :start_with, searchable: true },
-      authoritative_source: { source: "MetadataSource.metadata_cloud_name", cond: :string_eq, searchable: true },
+      authoritative_source: { source: "MetadataSource.metadata_cloud_name", cond: :string_eq, searchable: true, options: ["ladybird", "aspace", "ils"] },
       child_object_count: { source: "ParentObject.child_object_count" },
       bib: { source: "ParentObject.bib", cond: :string_eq, searchable: true },
       holding: { source: "ParentObject.holding", cond: :string_eq, searchable: true },
@@ -26,7 +26,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
       last_voyager_update: { source: "ParentObject.last_voyager_update" },
       last_aspace_update: { source: "ParentObject.last_aspace_update" },
       last_id_update: { source: "ParentObject.last_id_update" },
-      visibility: { source: "ParentObject.visibility", cond: :start_with, searchable: true },
+      visibility: { source: "ParentObject.visibility", cond: :string_eq, searchable: true, options: ["Public", "Yale Community Only", "Private"] },
       actions: { source: "ParentObject.oid", cond: :null_value, searchable: false, orderable: false }
     }
   end

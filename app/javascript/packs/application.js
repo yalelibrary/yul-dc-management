@@ -33,7 +33,8 @@ require("datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css")
 let dataTable;
 $( document ).on('turbolinks:load', function() {
   if($('.is-datatable').length > 0 && !$('.is-datatable').hasClass('dataTable')){
-    let columns = JSON.parse($(".datatable-data").text());    
+    let columns = JSON.parse($(".datatable-data").text());
+    let hasSearch = columns.some(function(col){return col.searchable;});
     dataTable = $('.is-datatable').dataTable({
       "processing": true,
       "serverSide": true,
@@ -45,32 +46,43 @@ $( document ).on('turbolinks:load', function() {
       // This will order all datatables by the first column descending
       "order": [[0, "desc"]],
       "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]],
-      "sDom":"lrtip",
+      "sDom":hasSearch?'lrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
       // pagingType is optional, if you want full pagination controls.
       // Check dataTables documentation to learn more about
       // available options.
       initComplete: function () {
         // create the inputs for each header
-        let searchRow = $("<tr role='row'></tr>");
-        let index = 0;
-        this.api().columns().every( function () {
-          let column = this;
-          let colDef = columns[index++];
-          if (colDef.searchable) {
-            let input = $("<input type='text' size='12' placeholder='" + $(column.header()).text() + "' />");
-            let th = $("<th/>");
-            searchRow.append(th.append(input));
-            (input).on('keyup change clear', function () {
-              if (column.search() !== this.value) {
-                column.search(this.value);
-                scheduleDraw();
+        if (hasSearch) {
+          let searchRow = $("<tr role='row'></tr>");
+          let index = 0;
+          this.api().columns().every(function () {
+            let column = this;
+            let colDef = columns[index++];
+            if (colDef.searchable) {
+              let th = $("<th/>");
+              let input = null;
+              if (colDef.options) {
+                input = $("<select><option>All</option>" + colDef.options.map(function (option) {
+                  return "<option>" + option + "</option>"
+                }) + "</select>");
+              } else {
+                input = $("<input type='text' size='12' placeholder='" + $(column.header()).text() + "' />");
               }
-            });
-          } else {
-            searchRow.append("<th />");
-          }
-        } );
-        $(this.api().table().header()).append(searchRow);
+              (input).on('keyup change clear', function () {
+                let v = this.value;
+                if (v === "All" && colDef.options) v = "";
+                if (column.search() !== v) {
+                  column.search(v);
+                  scheduleDraw();
+                }
+              });
+              searchRow.append(th.append(input));
+            } else {
+              searchRow.append("<th />");
+            }
+          });
+          $(this.api().table().header()).append(searchRow);
+        }
       }
     })
   }

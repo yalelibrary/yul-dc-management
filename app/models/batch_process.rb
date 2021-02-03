@@ -1,13 +1,18 @@
 # frozen_string_literal: true
 
 class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
+  include CsvExportable
   attr_reader :file
-  after_create :refresh_metadata_cloud
+  after_create :determine_background_jobs
   before_create :mets_oid
   validate :validate_import
   belongs_to :user, class_name: "User"
   has_many :batch_connections
   has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connectable
+
+  def self.batch_actions
+    ['create parent objects', 'export child oids']
+  end
 
   def validate_import
     return if file.blank?
@@ -45,6 +50,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def oids
     return @oids ||= parsed_csv.entries.map { |r| r['oid'] } unless csv.nil?
     @oids ||= [oid]
+  end
+
+  def created_file_name
+    return nil unless file_name
+    "#{file_name.delete_suffix('.csv')}_bp_#{id}.csv"
   end
 
   def create_parent_objects_from_oids(oids, metadata_sources)
@@ -94,9 +104,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     po.save!
   end
 
-  def refresh_metadata_cloud
-    if csv.present?
-      refresh_metadata_cloud_csv
+  def determine_background_jobs
+    if csv.present? && (batch_action.eql? 'create parent objects')
+      RefreshMetadataCloudCsvJob.perform_later(self)
+    elsif csv.present? && (batch_action.eql? 'export child oids')
+      CreateChildOidCsvJob.perform_later(self)
     elsif mets_xml.present?
       refresh_metadata_cloud_mets
     end
