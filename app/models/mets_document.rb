@@ -1,16 +1,12 @@
 # frozen_string_literal: true
 
 class MetsDocument
-  include MetsStructure
+  include MetadataCloudUrlParsable
   attr_reader :source_xml
   # Takes a path to the mets file
   def initialize(mets_xml)
     @source_xml = mets_xml
     @mets = Nokogiri::XML(@source_xml)
-  end
-
-  def parsed_metadata_source_path
-    @parsed_metadata_source_path ||= metadata_source_path.match(/\/(\w*)\/(\w*)\/(\d*)\W(\w*)\W(\w*)/)
   end
 
   def oid
@@ -24,30 +20,6 @@ class MetsDocument
 
   def metadata_source_path
     @mets.xpath("//mods:identifier").inner_text
-  end
-
-  def full_metadata_cloud_url
-    "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}#{metadata_source_path}"
-  end
-
-  def metadata_source
-    parsed_metadata_source_path.captures.first
-  end
-
-  def bib
-    parsed_metadata_source_path.captures.last if metadata_source == "ils"
-  end
-
-  def barcode
-    parsed_metadata_source_path.captures.third if parsed_metadata_source_path.captures.include?("barcode")
-  end
-
-  def holding
-    parsed_metadata_source_path.captures.third if parsed_metadata_source_path.captures.include?("holding")
-  end
-
-  def item
-    parsed_metadata_source_path.captures.third if parsed_metadata_source_path.captures.include?("item")
   end
 
   def visibility
@@ -80,32 +52,6 @@ class MetsDocument
     return false if rights_statement.blank?
     return false unless valid_metadata_source_path?
     true
-  end
-
-  def valid_metadata_source_path?
-    return false unless parsed_metadata_source_path
-    if metadata_source == 'ils'
-      return false unless valid_bib? && (valid_item? || valid_holding? || valid_barcode?)
-    elsif metadata_source == 'aspace' && metadata_source_path !~ /\A\/aspace\/repositories\/\d+\/archival_objects\/\d+\z/
-      return false
-    end
-    true
-  end
-
-  def valid_barcode?
-    barcode && (barcode !~ /\D/)
-  end
-
-  def valid_bib?
-    bib =~ /\A\d+b?\z/
-  end
-
-  def valid_item?
-    item && (item !~ /\D/)
-  end
-
-  def valid_holding?
-    holding && (holding !~ /\D/)
   end
 
   def all_images_present?
@@ -148,11 +94,4 @@ class MetsDocument
       mets_access_master_path: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, '')
     }
   end
-
-  # def file_opts(file)
-  #   return {} if
-  #     @mets.xpath("count(//mets:div/mets:fptr[@FILEID='#{file[:id]}'])") \
-  #          .to_i.positive?
-  #   { viewing_hint: 'non-paged' }
-  # end
 end
