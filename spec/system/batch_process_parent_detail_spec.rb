@@ -16,7 +16,9 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
   around do |example|
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
-    example.run
+    perform_enqueued_jobs do
+      example.run
+    end
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
   end
 
@@ -66,7 +68,7 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
       end
 
       it "shows the status of the parent object" do
-        expect(page).to have_content("In progress - no failures")
+        expect(page).to have_content("Complete")
       end
 
       it "shows when the parent object was submitted" do

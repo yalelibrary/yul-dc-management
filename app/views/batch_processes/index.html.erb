@@ -3,8 +3,9 @@
     <div class='notice'><%= flash[:notice] %></div>
   <% end %>
   <h1>Batch Processes</h1>
-  <%= render 'form' %>
-
+  <div class='row'>
+    <%= render 'form' %>
+  </div>
   <div class='row'>
     <div class='col overflow-auto'>
       <table id='batch-processes-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= batch_processes_path(format: :json) %>'>

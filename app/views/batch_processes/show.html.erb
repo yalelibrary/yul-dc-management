@@ -21,7 +21,12 @@
 
 <p>
   <strong>Manifest:</strong>
-  <%= link_to @batch_process.file_name, download_batch_process_path %>
+  <%= @batch_process.file_name ? link_to(@batch_process.file_name, download_batch_process_path) : "n/a" %>
+</p>
+
+<p>
+  <strong>Created file:</strong>
+  <%= @batch_process.file_name && @batch_process.batch_action == "export child oids" ? link_to(@batch_process.created_file_name, download_created_batch_process_path) : "n/a" %>
 </p>
 
 <div class='row'>

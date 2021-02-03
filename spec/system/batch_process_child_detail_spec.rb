@@ -19,7 +19,9 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
     around do |example|
       access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
       ENV["ACCESS_MASTER_MOUNT"] = "/data"
-      example.run
+      perform_enqueued_jobs do
+        example.run
+      end
       ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
     end
     before do
@@ -43,7 +45,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       end
 
       it 'shows the status of the child object' do
-        expect(page).to have_content('In progress - no failures')
+        expect(page).to have_content('Complete')
       end
 
       it 'shows the duration of the batch process' do

@@ -4,6 +4,7 @@ require 'rails_helper'
 RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources: true, js: true do
   let(:user) { FactoryBot.create(:user, uid: "johnsmith2530") }
   before do
+    stub_ptiffs_and_manifests
     stub_metadata_cloud("2004628")
     stub_metadata_cloud("2030006")
     stub_metadata_cloud("2034600")
@@ -14,6 +15,11 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
   end
 
   context "when uploading a csv" do
+    around do |example|
+      perform_enqueued_jobs do
+        example.run
+      end
+    end
     let(:batch_process) do
       FactoryBot.create(
         :batch_process,
@@ -33,12 +39,12 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
     end
 
     it "can see the status of the parent object imports" do
-      expect(page).to have_content("In progress - no failures")
+      expect(page).to have_content("Batch complete")
     end
 
     it "can see the overall status of the batch process" do
-      expect(batch_process.batch_status).to eq "Batch in progress - no failures"
-      expect(page).to have_content("Batch in progress - no failures")
+      expect(batch_process.batch_status).to eq "Batch complete"
+      expect(page).to have_content("Batch complete")
     end
 
     context "deleting a parent object" do
