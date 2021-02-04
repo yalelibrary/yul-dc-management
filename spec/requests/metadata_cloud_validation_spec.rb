@@ -38,8 +38,8 @@ RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources
                              "extentOfDigitization", "creationPlace", "date", "extent", "language",
                              "description", "subjectName", "subjectTopic", "genre", "format", "itemType", "partOf",
                              "rights", "orbisBibId", "orbisBarcode", "preferredCitation", "itemPermission",
-                             "dateStructured", "illustrativeMatter", "subjectEra", "contributor",
-                             "repository", "subjectTitle", "subjectTitleDisplay",
+                             "dateStructured", "illustrativeMatter", "intStartYear", "intEndYear", "subjectEra",
+                             "contributor", "repository", "subjectTitle", "subjectTitleDisplay",
                              "contributorDisplay", "dependentUris", "oid", "collectionId", "children", "abstract"]
   end
 
