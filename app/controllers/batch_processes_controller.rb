@@ -47,7 +47,7 @@ class BatchProcessesController < ApplicationController
 
   def download_created
     send_data @batch_process.output_csv,
-              type: "text/csv; charset=utf-8; header=present",
+              type: 'text/csv; charset=utf-8; header=present',
               disposition: "attachment; filename=#{@batch_process.created_file_name}"
   end
 

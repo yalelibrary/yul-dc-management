@@ -13,8 +13,8 @@ class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
 
   def view_columns
     @view_columns ||= {
-      child_oid: { source: 'ChildObject.oid' },
-      time: { source: 'ChildObject.created_at' },
+      child_oid: { source: 'ChildObject.oid', orderable: true },
+      time: { source: 'ChildObject.created_at', orderable: true },
       status: { source: '', cond: :null_value, searchable: false, orderable: false }
     }
   end

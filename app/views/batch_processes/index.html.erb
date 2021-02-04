@@ -28,5 +28,5 @@
 
 
 <div id='batch-processes-data' class='d-none datatable-data'>
-  <%= BatchProcessDatatable.new(nil).view_columns.keys.map {|key| {data: key} }.to_json %>
+  <%= BatchProcessDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], options: value[:options]} }.to_json %>
 </div>

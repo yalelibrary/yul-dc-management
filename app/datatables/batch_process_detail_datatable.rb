@@ -14,10 +14,10 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      parent_oid: { source: 'BatchConnection.connectable_id', cond: :like, searchable: true },
-      time: { source: 'BatchConnection.created_at', cond: :like, searchable: true },
-      children: { source: 'ParentObject.child_object_count', cond: :like, searchable: true },
-      status: { source: 'BatchConnection.status', cond: :like, searchable: true }
+      parent_oid: { source: 'BatchConnection.connectable_id', cond: :like, searchable: true, orderable: true },
+      time: { source: 'BatchConnection.created_at', cond: :like, searchable: true, orderable: true },
+      children: { source: 'ParentObject.child_object_count', cond: :like, searchable: true, orderable: true },
+      status: { source: 'BatchConnection.status', cond: :like, searchable: true, orderable: true }
     }
   end
 
