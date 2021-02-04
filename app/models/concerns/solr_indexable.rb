@@ -64,7 +64,7 @@ module SolrIndexable
       digital_ssim: json_to_index["digital"],
       edition_ssim: json_to_index["edition"],
       extent_ssim: json_to_index["extent"],
-      extentOfDigitization_ssim: json_to_index["extentOfDigitization"],
+      extentOfDigitization_ssim: extent_of_digitization,
       findingAid_ssim: json_to_index["findingAid"],
       folder_ssim: json_to_index["folder"],
       format: json_to_index["format"],
