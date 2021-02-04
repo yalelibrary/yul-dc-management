@@ -6,7 +6,8 @@ module CsvExportable
   def output_csv
     return nil unless batch_action == "export child oids"
     headers = ["child_oid", "parent_oid", "order", "parent_title", "label", "caption", "viewing_hint"]
-    csv_string = CSV.generate do |csv|
+    # Include encoding for UTF-8 so that Excel will open correctly
+    csv_string = CSV.generate(encoding: "utf-8") do |csv|
       csv << headers
       oids.each do |oid|
         begin
