@@ -32,15 +32,15 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
       expect(po.child_object_count).to eq 2
       expect(po.representative_child_oid).to be nil
       expect(po.rights_statement).to include "The use of this image may be subject to the copyright law"
-      expect(po.extent_of_digitization).to eq "Complete folder digitized."
+      expect(po.extent_of_digitization).to eq "Completely digitized"
     end
 
     it "can update the extent of digitization" do
       click_on("Create Parent object")
       click_on("Edit")
-      page.select("Partial collection digitized.", from: "Extent of digitization")
+      page.select("Partially digitized", from: "Extent of digitization")
       click_on("Update")
-      expect(page).to have_content("Partial collection digitized.")
+      expect(page).to have_content("Partially digitized")
     end
   end
   context "creating a new ParentObject based on oid" do

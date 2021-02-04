@@ -36,11 +36,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     [nil, "individuals", "paged", "continuous"]
   end
 
-  # TODO: Confirm this list and its ordering. Right now it reflects what is on collections.library.yale.edu,
-  # minus a single value which is clearly a typo ("Complete work digitzed.")
   def self.extent_of_digitizations
-    [nil, "Complete work digitized.", "Complete folder digitized.", "Partial work digitized.", "Partial folder digitized.", "Partial collection digitized.", "Complete fragment digitized.",
-     "Complete issue digitized.", "Partal work digitized.", "Partial album digitized."]
+    [nil, "Completely digitized", "Partially digitized"]
   end
 
   validates :visibility, inclusion: { in: visibilities,
@@ -177,8 +174,18 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.aspace_uri = lb_record["archiveSpaceUri"]
     self.visibility = lb_record["itemPermission"]
     self.rights_statement = lb_record["rights"]&.first
-    self.extent_of_digitization = lb_record["extentOfDigitization"]&.first
+    self.extent_of_digitization = normalize_extent_of_digitization
     self.use_ladybird = false
+  end
+
+  def normalize_extent_of_digitization
+    extent_from_ladybird = ladybird_json&.[]("extentOfDigitization")&.first
+    return unless extent_from_ladybird
+    if extent_from_ladybird.start_with?("Comp")
+      "Completely digitized"
+    elsif extent_from_ladybird.start_with?("Part")
+      "Partially digitized"
+    end
   end
 
   def voyager_json=(v_record)
