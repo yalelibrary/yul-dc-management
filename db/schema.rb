@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_29_175706) do
+ActiveRecord::Schema.define(version: 2021_02_04_184808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,6 +151,7 @@ ActiveRecord::Schema.define(version: 2021_01_29_175706) do
     t.bigint "representative_child_oid"
     t.string "rights_statement"
     t.boolean "from_mets", default: false
+    t.string "extent_of_digitization"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end

@@ -36,6 +36,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     [nil, "individuals", "paged", "continuous"]
   end
 
+  # TODO: Confirm this list and its ordering. Right now it reflects what is on collections.library.yale.edu,
+  # minus a single value which is clearly a typo ("Complete work digitzed.")
+  def self.extent_of_digitizations
+    [nil, "Complete work digitized.", "Complete folder digitized.", "Partial work digitized.", "Partial folder digitized.", "Partial collection digitized.", "Complete fragment digitized.",
+     "Complete issue digitized.", "Partal work digitized.", "Partial album digitized."]
+  end
+
   validates :visibility, inclusion: { in: visibilities,
                                       message: "%{value} is not a valid value" }
 
@@ -170,6 +177,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.aspace_uri = lb_record["archiveSpaceUri"]
     self.visibility = lb_record["itemPermission"]
     self.rights_statement = lb_record["rights"]&.first
+    self.extent_of_digitization = lb_record["extentOfDigitization"]&.first
     self.use_ladybird = false
   end
 
