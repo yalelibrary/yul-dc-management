@@ -173,7 +173,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         document = solr_data["docs"].first
         expect(document["id"]).to eq "2012036"
         expect(document["callNumber_tesim"]).to include "YCAL MSS 202"
-        expect(document["dateStructured_ssim"]).to include "1891"
+        expect(document["dateStructured_ssim"]).not_to be
       end
 
       it 'shows error if creating parent with oid that exists' do

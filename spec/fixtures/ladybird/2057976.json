@@ -55,6 +55,11 @@
   "orbisBibId": "7039963",
   "orbisBarcode": "39002094210060",
   "itemPermission": "Public",
+  "dateStructured": [
+    "1700/1799"
+  ],
+  "intStartYear": "1700",
+  "intEndYear": "1799",
   "subjectEra": "Vaudevilles--Librettos",
   "contributor": [
     "Valdruche, Eugene, d. 1913?, provenance"

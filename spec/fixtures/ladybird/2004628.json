@@ -38,6 +38,8 @@
   "dateStructured": [
     "1846/1848"
   ],
+  "intStartYear": "1846",
+  "intEndYear": "1848",
   "repository": "Beinecke Library",
   "dependentUris": [
     "/ladybird/oid/2004628"
