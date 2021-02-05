@@ -82,7 +82,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
   it "can return the system of record API call" do
     mets_doc = described_class.new(valid_goobi_xml)
     expect(mets_doc.metadata_source_path).to eq "/ils/barcode/39002091118928?bib=8394689"
-    expect(mets_doc.full_metadata_cloud_url).to eq "https://metadata-api-uat.library.yale.edu/metadatacloud/api/1.0.1/ils/barcode/39002091118928?bib=8394689"
+    expect(mets_doc.full_metadata_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ils/barcode/39002091118928?bib=8394689"
     expect(mets_doc.bib).to eq "8394689"
     expect(mets_doc.barcode).to eq "39002091118928"
     expect(mets_doc.holding).to be nil
