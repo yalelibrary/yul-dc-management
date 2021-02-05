@@ -52,6 +52,8 @@ class BatchProcessesController < ApplicationController
   end
 
   def download_csv
+    # Fix Excel problem a different way? Or assume maybe the folks using this are used to importing UTF-8 csvs
+    # rather than double clicking to open them?
     send_data "\uFEFF" + @batch_process.csv,
               type: 'text/csv; charset=utf-8; header=present',
               disposition: "attachment; filename=#{@batch_process.file_name}"
