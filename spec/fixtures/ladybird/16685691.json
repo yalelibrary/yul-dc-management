@@ -68,6 +68,7 @@
     "50000000",
     "a"
   ],
+  "intEndYear": "1916",
   "orbisBibId": "13881242",
   "recordType": "oid",
   "repository": "Beinecke Library",
@@ -79,6 +80,7 @@
     "Relief shown by hachures and spot heights."
   ],
   "collectionId": 1,
+  "intStartYear": "1914",
   "orbisBarcode": "39002131329220",
   "subjectTitle": "Steam-navigation--Maps.",
   "subjectTopic": [
