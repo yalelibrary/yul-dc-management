@@ -60,6 +60,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     false
   end
 
+  # See also from_ladybird_for_the_first_time?
   def from_mets_for_the_first_time?
     return true if changes["last_mets_update"] &&
                    !changes["last_mets_update"][0] &&
