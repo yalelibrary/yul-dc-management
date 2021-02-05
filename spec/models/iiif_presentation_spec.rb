@@ -32,6 +32,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/21/16/17/24/21/16172421.json")
       .to_return(status: 200)
     stub_metadata_cloud("16172421")
+    stub_metadata_cloud("2005512")
     stub_ptiffs
     stub_pdfs
     parent_object
