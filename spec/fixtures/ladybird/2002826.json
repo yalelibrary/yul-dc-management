@@ -1,0 +1,83 @@
+{
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
+  "uri": "/ladybird/oid/2002826",
+  "callNumber": "JWJ MSS 49",
+  "containerGrouping": "Box 103 | 865-867",
+  "box": "103",
+  "folder": "865-867",
+  "sourceCreator": "Johnson, James Weldon, 1871-1938",
+  "sourceTitle": "James Weldon Johnson and Grace Nail Johnson papers",
+  "sourceDate": "circa 1850-2005  (Bulk: 1900-1976)",
+  "sourceNote": "Series IX. Photographs. Formal Portraits of James Weldon Johnson and Grace Nail Johnson. Grace Nail Johnson",
+  "title": [
+    "Roe"
+  ],
+  "date": [
+    "1909"
+  ],
+  "extent": [
+    "1 photographic print",
+    "21.5 x 17 cm."
+  ],
+  "genre": [
+    "Photographic prints"
+  ],
+  "format": [
+    "still image"
+  ],
+  "itemType": [
+    "Archives or Manuscripts"
+  ],
+  "partOf": "Beinecke Library",
+  "rights": [
+    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+  ],
+  "orbisBibId": "3660118",
+  "orbisBarcode": "39002091652629",
+  "findingAid": [
+    "http://hdl.handle.net/10079/fa/beinecke.jwj"
+  ],
+  "preferredCitation": [
+    "James Weldon Johnson and Grace Nail Johnson Papers. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library.\n\n"
+  ],
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1909"
+  ],
+  "intStartYear": "1909",
+  "intEndYear": "1909",
+  "repository": "Beinecke Library",
+  "archiveSpaceUri": "/repositories/11/archival_objects/358426",
+  "dependentUris": [
+    "/ladybird/oid/2002826"
+  ],
+  "oid": 2002826,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1011398",
+      "callNumber": "JWJ MSS 49",
+      "title": [
+        "[Portrait of Grace Nail Johnson]"
+      ],
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1011398"
+      ],
+      "oid": 1011398,
+      "width": 4204,
+      "height": 5108,
+      "children": []
+    }
+  ],
+  "abstract": [
+    "Includes wooden frame made for the Johnsons by a sailor on their way to Nicaragua"
+  ]
+}

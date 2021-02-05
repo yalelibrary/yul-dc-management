@@ -2,6 +2,7 @@
 
 class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include CsvExportable
+  include Reassociatable
   attr_reader :file
   after_create :determine_background_jobs
   before_create :mets_oid
@@ -11,7 +12,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connectable
 
   def self.batch_actions
-    ['create parent objects', 'export child oids']
+    ['create parent objects', 'export child oids', 'reassociate child oids']
   end
 
   def validate_import
@@ -105,10 +106,15 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def determine_background_jobs
-    if csv.present? && (batch_action.eql? 'create parent objects')
-      RefreshMetadataCloudCsvJob.perform_later(self)
-    elsif csv.present? && (batch_action.eql? 'export child oids')
-      CreateChildOidCsvJob.perform_later(self)
+    if csv.present?
+      case batch_action
+      when 'create parent objects'
+        RefreshMetadataCloudCsvJob.perform_later(self)
+      when 'export child oids'
+        CreateChildOidCsvJob.perform_later(self)
+      when 'reassociate child oids'
+        ReassociateChildOidsJob.perform_later(self)
+      end
     elsif mets_xml.present?
       refresh_metadata_cloud_mets
     end
