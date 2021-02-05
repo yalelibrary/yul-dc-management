@@ -48,7 +48,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
   end
 
   context "when uploading a csv" do
-    it "uploads and increases csv count and gives a success message" do
+    it "defaults to creating parent objects, uploads and increases csv count and gives a success message" do
       expect(BatchProcess.count).to eq 0
       page.attach_file("batch_process_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
       click_button("Submit")
@@ -57,6 +57,35 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
       expect(BatchProcess.last.file_name).to eq "short_fixture_ids.csv"
       expect(BatchProcess.last.batch_action).to eq "create parent objects"
       expect(BatchProcess.last.output_csv).to be nil
+    end
+
+    context "re-associating child objects" do
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826") }
+      let(:parent_object_old_one) { FactoryBot.create(:parent_object, oid: "2004548") }
+      let(:parent_object_old_two) { FactoryBot.create(:parent_object, oid: "2004549") }
+
+      around do |example|
+        perform_enqueued_jobs do
+          example.run
+        end
+      end
+      before do
+        stub_metadata_cloud("2002826")
+        stub_metadata_cloud("2004548")
+        stub_metadata_cloud("2004549")
+        parent_object
+        parent_object_old_one
+        parent_object_old_two
+      end
+
+      it "uploads a CSV of child oids in order to re-associate them with new parent oids" do
+        expect(BatchProcess.count).to eq 0
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_small.csv")
+        select("reassociate child oids")
+        click_button("Submit")
+        expect(BatchProcess.count).to eq 1
+        expect(page).to have_content("Your job is queued for processing in the background")
+      end
     end
 
     context "outputting csv" do
