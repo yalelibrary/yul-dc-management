@@ -37,7 +37,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def parsed_csv
-    @parsed_csv ||= CSV.parse(csv, headers: true) if csv.present?
+    @parsed_csv ||= CSV.parse(csv, headers: true, encoding: "utf-8") if csv.present?
   end
 
   def mets_doc
