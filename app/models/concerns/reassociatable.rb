@@ -31,6 +31,9 @@ module Reassociatable
       po = ParentObject.find(oid)
       # TODO: What do we want to happen if the parent object no longer has any associated child objects?
       po.child_object_count = po.child_objects.count
+      # If the child objects have changed, we'll need to re-create the manifest and PDF objects
+      # and re-index to Solr
+      po.metadata_update = true
       po.save!
     end
   end

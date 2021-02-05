@@ -89,20 +89,26 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     metadata_source = mets_doc.metadata_source
     po = ParentObject.where(oid: oid).first_or_create do |parent_object|
       # Only runs on newly created parent objects
-      parent_object.bib = mets_doc.bib
-      parent_object.visibility = mets_doc.visibility
-      parent_object.rights_statement = mets_doc.rights_statement
-      parent_object.viewing_direction = mets_doc.viewing_direction
-      parent_object.display_layout = mets_doc.viewing_hint
-      setup_for_background_jobs(parent_object, metadata_source)
       fresh = true
-      parent_object.from_mets = true
-      parent_object.representative_child_oid = mets_doc.thumbnail_image
+      set_values_from_mets(parent_object, metadata_source)
     end
     return if fresh
     po.metadata_update = true
+    po.last_mets_update = Time.current
     setup_for_background_jobs(po, metadata_source)
     po.save!
+  end
+
+  def set_values_from_mets(parent_object, metadata_source)
+    parent_object.bib = mets_doc.bib
+    parent_object.visibility = mets_doc.visibility
+    parent_object.rights_statement = mets_doc.rights_statement
+    parent_object.viewing_direction = mets_doc.viewing_direction
+    parent_object.display_layout = mets_doc.viewing_hint
+    setup_for_background_jobs(parent_object, metadata_source)
+    parent_object.from_mets = true
+    parent_object.last_mets_update = Time.current
+    parent_object.representative_child_oid = mets_doc.thumbnail_image
   end
 
   def determine_background_jobs

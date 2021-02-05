@@ -48,6 +48,25 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.use_ladybird = true
   end
 
+  def from_upstream_for_the_first_time?
+    from_ladybird_for_the_first_time? || from_mets_for_the_first_time?
+  end
+
+  # Returns true if last_ladybird_update has changed from nil to some value, indicating initial ladybird fetch
+  def from_ladybird_for_the_first_time?
+    return true if changes["last_ladybird_update"] &&
+                   !changes["last_ladybird_update"][0] &&
+                   changes["last_ladybird_update"][1]
+    false
+  end
+
+  def from_mets_for_the_first_time?
+    return true if changes["last_mets_update"] &&
+                   !changes["last_mets_update"][0] &&
+                   changes["last_mets_update"][1]
+    false
+  end
+
   def start_states
     ['processing-queued']
   end
