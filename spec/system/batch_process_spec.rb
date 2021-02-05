@@ -111,7 +111,31 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
         click_on("View")
         expect(page).to have_link("short_fixture_ids.csv", href: "/batch_processes/#{BatchProcess.last.id}/download")
         expect(page).to have_link("short_fixture_ids_bp_#{BatchProcess.last.id}.csv", href: "/batch_processes/#{BatchProcess.last.id}/download_created")
+        bp = BatchProcess.last
+        expect(bp.oids).to eq ["2034600", "2005512", "16414889", "14716192", "16854285"]
         click_on("short_fixture_ids_bp_#{BatchProcess.last.id}.csv")
+      end
+
+      context "round-tripping csv" do
+        it "can create the output csv from a csv that has been generated from the application" do
+          page.attach_file("batch_process_file", Rails.root + "spec/fixtures/parents_for_reassociation_as_output.csv")
+          select("export child oids")
+          click_button("Submit")
+          expect(BatchProcess.count).to eq 1
+          expect(page).to have_content("Your job is queued for processing in the background")
+          bp = BatchProcess.last
+          expect(bp.oids).to eq ["2002826", "2004548", "2004549"]
+        end
+
+        it "can create the output csv from a handmade csv" do
+          page.attach_file("batch_process_file", Rails.root + "spec/fixtures/parents_for_reassociation.csv")
+          select("export child oids")
+          click_button("Submit")
+          expect(BatchProcess.count).to eq 1
+          expect(page).to have_content("Your job is queued for processing in the background")
+          bp = BatchProcess.last
+          expect(bp.oids).to eq ["2002826", "2004548", "2004549"]
+        end
       end
     end
 
