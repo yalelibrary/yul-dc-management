@@ -119,6 +119,7 @@ done
 # vs. when photometric interpretation is set to rgb
 # e.g. -c jpeg:r:90 vs. -c jpeg:90
 if ! tiffcp -a -c jpeg:90 -t -w 256 -l 256 ${outprefix}_*.tif ${outfile}; then
+  rm -f ${outfile}
   tiffcp -a -c zip -t -w 256 -l 256 ${outprefix}_*.tif ${outfile}
 fi
 
