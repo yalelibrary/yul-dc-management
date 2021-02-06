@@ -30,8 +30,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @file = value
     self[:file_name] = file.original_filename
     if File.extname(file) == '.csv'
-      # poke here?
-      self[:csv] = value.read
+      # Remove BOM if present 
+      self[:csv] = CSV.open(value, 'rb:bom|utf-8', headers: true, return_headers: true).read
     elsif File.extname(file) == '.xml'
       self[:mets_xml] = value.read
     end
