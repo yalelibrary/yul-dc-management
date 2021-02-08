@@ -60,6 +60,8 @@
   "dateStructured": [
     "1994/2002"
   ],
+  "intStartYear": "1994",
+  "intEndYear": "2002",
   "subjectEra": "Photographers--United States--Archives",
   "repository": "Beinecke Library",
   "subjectTitle": "Photographers--United States--Archives",

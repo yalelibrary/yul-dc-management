@@ -30,22 +30,73 @@ require("datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+let dataTable;
 $( document ).on('turbolinks:load', function() {
   if($('.is-datatable').length > 0 && !$('.is-datatable').hasClass('dataTable')){
-    $('.is-datatable').dataTable({
+    let columns = JSON.parse($(".datatable-data").text());
+    let hasSearch = columns.some(function(col){return col.searchable;});
+    dataTable = $('.is-datatable').dataTable({
       "processing": true,
       "serverSide": true,
       "ajax": {
         "url": $('.is-datatable').data('source')
       },
       "pagingType": "full_numbers",
-      "columns": JSON.parse($(".datatable-data").text()),
+      "columns": columns,
       // This will order all datatables by the first column descending
       "order": [[0, "desc"]],
-      "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]]
+      "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]],
+      "sDom":hasSearch?'lrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
       // pagingType is optional, if you want full pagination controls.
       // Check dataTables documentation to learn more about
       // available options.
+      initComplete: function () {
+        // create the inputs for each header
+        if (hasSearch) {
+          let searchRow = $("<tr role='row'></tr>");
+          let index = 0;
+          this.api().columns().every(function () {
+            let column = this;
+            let colDef = columns[index++];
+            if (colDef.searchable) {
+              let th = $("<th/>");
+              let input = null;
+              if (colDef.options) {
+                input = $("<select><option>All</option>" + colDef.options.map(function (option) {
+                  return "<option>" + option + "</option>"
+                }) + "</select>");
+              } else {
+                input = $("<input type='text' size='12' placeholder='" + $(column.header()).text() + "' />");
+              }
+              (input).on('keyup change clear', function () {
+                let v = this.value;
+                if (v === "All" && colDef.options) v = "";
+                if (column.search() !== v) {
+                  column.search(v);
+                  scheduleDraw();
+                }
+              });
+              searchRow.append(th.append(input));
+            } else {
+              searchRow.append("<th />");
+            }
+          });
+          $(this.api().table().header()).append(searchRow);
+        }
+      }
     })
   }
 });
+
+//  Delay the redraw so that if more changes trigger a redraw
+//  it will wait and make one request to the server.
+let drawTimer = 0;
+let scheduleDraw = function() {
+  if (drawTimer) clearInterval(drawTimer);
+  drawTimer = setInterval(triggerDraw, 500);
+}
+let triggerDraw = function() {
+  clearInterval(drawTimer);
+  drawTimer = 0;
+  dataTable.api().draw();  
+}

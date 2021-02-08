@@ -21,7 +21,12 @@
 
 <p>
   <strong>Manifest:</strong>
-  <%= link_to @batch_process.file_name, download_batch_process_path %>
+  <%= @batch_process.file_name ? link_to(@batch_process.file_name, download_batch_process_path) : "n/a" %>
+</p>
+
+<p>
+  <strong>Created file:</strong>
+  <%= @batch_process.file_name && @batch_process.batch_action == "export child oids" ? link_to(@batch_process.created_file_name, download_created_batch_process_path) : "n/a" %>
 </p>
 
 <div class='row'>
@@ -42,7 +47,7 @@
 </div>
 
 <div id='batch-process-data' class='d-none datatable-data'>
-  <%= BatchProcessDetailDatatable.new(nil).view_columns.keys.map {|key| {data: key} }.to_json %>
+  <%= BatchProcessDetailDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], options: value[:options]} }.to_json %>
 </div>
 
 <%= link_to 'Back', batch_processes_path %>

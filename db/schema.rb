@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_23_185904) do
+ActiveRecord::Schema.define(version: 2021_02_05_183201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 2021_01_23_185904) do
     t.bigint "user_id", null: false
     t.string "file_name"
     t.string "batch_status"
+    t.string "batch_action", default: "create parent objects"
+    t.string "output_csv"
     t.index ["oid"], name: "index_batch_processes_on_oid"
     t.index ["user_id"], name: "index_batch_processes_on_user_id"
   end
@@ -149,6 +151,8 @@ ActiveRecord::Schema.define(version: 2021_01_23_185904) do
     t.bigint "representative_child_oid"
     t.string "rights_statement"
     t.boolean "from_mets", default: false
+    t.string "extent_of_digitization"
+    t.datetime "last_mets_update"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
   end

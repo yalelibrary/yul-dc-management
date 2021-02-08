@@ -104,8 +104,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     it 'returns a processing_event message' do
       expect do
         batch_process.file = csv_upload
+        batch_process.save
         batch_process.run_callbacks :create
-      end.to change { batch_process.batch_connections.size }.from(0).to(5)
+      end.to change { batch_process.batch_connections.count }.from(0).to(5)
         .and change { IngestEvent.count }.from(0).to(456)
       statuses = IngestEvent.all.map(&:status)
       expect(statuses).to include "processing-queued"
@@ -128,6 +129,19 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       expect(statuses).not_to include "solr-indexed"
     end
     # rubocop:enable RSpec/AnyInstance
+  end
+
+  context "determining whether it's newly created" do
+    let(:parent_object) { FactoryBot.create(:parent_object) }
+
+    it "can determine whether it's freshly from Ladybird" do
+      parent_object.ladybird_json = JSON.parse(File.open("spec/fixtures/ladybird/2004628.json").read)
+      expect(parent_object.from_ladybird_for_the_first_time?).to eq true
+      expect(parent_object.from_upstream_for_the_first_time?).to eq true
+      parent_object.save!
+      expect(parent_object.from_ladybird_for_the_first_time?).to eq false
+      expect(parent_object.from_upstream_for_the_first_time?).to eq false
+    end
   end
 
   context "a newly created ParentObject with different visibilities" do

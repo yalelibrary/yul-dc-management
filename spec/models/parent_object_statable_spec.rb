@@ -86,10 +86,23 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
       FactoryBot.create(:batch_connection,
                         connectable: parent_object, batch_process: batch_process_with_failure)
     end
+    # rubocop:disable RSpec/AnyInstance
+    before do
+      allow_any_instance_of(ChildObject).to receive(:remote_ptiff_exists?).and_return(false)
+      allow_any_instance_of(PyramidalTiff).to receive(:valid?).and_return(false)
+    end
+    # rubocop:enable RSpec/AnyInstance
+
+    around do |example|
+      perform_enqueued_jobs do
+        example.run
+      end
+    end
 
     it "can reflect a failure" do
       parent_object
       batch_process_with_failure.file = csv_upload
+      batch_process_with_failure.save
       batch_process_with_failure.run_callbacks :create
       allow(parent_object).to receive(:processing_event).and_return(
         IngestEvent.create(
@@ -108,6 +121,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
           batch_connection: parent_object.batch_connections.first
         )
       )
+
       batch_process_with_failure.batch_connections.first.update_status!
       expect(parent_object.status_for_batch_process(batch_process_with_failure)).to eq "Failed"
       expect(parent_object.latest_failure(batch_process_with_failure)).to be_an_instance_of Hash

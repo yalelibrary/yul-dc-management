@@ -60,8 +60,10 @@
   ],
   "itemPermission": "Public",
   "dateStructured": [
-    "1902"
+    "1902/1939"
   ],
+  "intStartYear": "1902",
+  "intEndYear": "1939",
   "contributor": [
     "Grant, Robert, 1852-1940--Correspondence",
     "Lapsley, Gaillard Thomas--Correspondence",

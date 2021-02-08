@@ -12,6 +12,37 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
       example.run
     end
   end
+  context "a parent object with an extent of digitization" do
+    before do
+      visit parent_objects_path
+      click_on("New Parent Object")
+      stub_metadata_cloud("10001192")
+      fill_in('Oid', with: "10001192")
+    end
+
+    it "sets the expected fields in the database" do
+      click_on("Create Parent object")
+      po = ParentObject.find(10_001_192)
+      expect(po.oid).to eq 10_001_192
+      expect(po.bib).to eq "3659107"
+      expect(po.holding).to be_empty
+      expect(po.item).to be_empty
+      expect(po.barcode).to eq "39002091548348"
+      expect(po.visibility).to eq "Public"
+      expect(po.child_object_count).to eq 2
+      expect(po.representative_child_oid).to be nil
+      expect(po.rights_statement).to include "The use of this image may be subject to the copyright law"
+      expect(po.extent_of_digitization).to eq "Completely digitized"
+    end
+
+    it "can update the extent of digitization" do
+      click_on("Create Parent object")
+      click_on("Edit")
+      page.select("Partially digitized", from: "Extent of digitization")
+      click_on("Update")
+      expect(page).to have_content("Partially digitized")
+    end
+  end
   context "creating a new ParentObject based on oid" do
     before do
       visit parent_objects_path
@@ -142,7 +173,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         document = solr_data["docs"].first
         expect(document["id"]).to eq "2012036"
         expect(document["callNumber_tesim"]).to include "YCAL MSS 202"
-        expect(document["dateStructured_ssim"]).to include "1891"
+        expect(document["dateStructured_ssim"]).not_to be
       end
 
       it 'shows error if creating parent with oid that exists' do

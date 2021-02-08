@@ -64,7 +64,7 @@ module SolrIndexable
       digital_ssim: json_to_index["digital"],
       edition_ssim: json_to_index["edition"],
       extent_ssim: json_to_index["extent"],
-      extentOfDigitization_ssim: json_to_index["extentOfDigitization"],
+      extentOfDigitization_ssim: extent_of_digitization,
       findingAid_ssim: json_to_index["findingAid"],
       folder_ssim: json_to_index["folder"],
       format: json_to_index["format"],
@@ -101,6 +101,7 @@ module SolrIndexable
       sourceEdition_tesim: json_to_index["sourceEdition"], # Not currently in Blacklight application
       sourceNote_tesim: json_to_index["sourceNote"],
       sourceTitle_tesim: json_to_index["sourceTitle"],
+      sourceCreator_tesim: json_to_index["sourceCreator"],
       subjectEra_ssim: json_to_index["subjectEra"],
       subjectGeographic_ssim: json_to_index["subjectGeographic"],
       subjectGeographic_tesim: json_to_index["subjectGeographic"],

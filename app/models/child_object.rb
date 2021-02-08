@@ -135,7 +135,9 @@ class ChildObject < ApplicationRecord
     end
   end
 
-  def convert_to_ptiff!
+  def convert_to_ptiff!(force = false)
+    # setting the width to nil will force the PTIFF to be generated.
+    self.width = nil if force
     convert_to_ptiff && save!
   end
 

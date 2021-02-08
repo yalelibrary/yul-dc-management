@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MetsDocument
-  include MetsStructure
+  include MetadataCloudUrlParsable
   attr_reader :source_xml
   # Takes a path to the mets file
   def initialize(mets_xml)
@@ -20,18 +20,6 @@ class MetsDocument
 
   def metadata_source_path
     @mets.xpath("//mods:identifier").inner_text
-  end
-
-  def full_metadata_cloud_url
-    "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}#{metadata_source_path}"
-  end
-
-  def metadata_source
-    metadata_source_path.match(/\/(\w*)\/(\w*)\/(\d*)\W(\w*)\W(\w*)/).captures.first
-  end
-
-  def bib
-    metadata_source_path.match(/\/(\w*)\/(\w*)\/(\d*)\W(\w*)\W(\w*)/).captures.last if metadata_source == "ils"
   end
 
   def visibility
@@ -61,6 +49,8 @@ class MetsDocument
     return false unless @mets.xml?
     return false unless @mets.collect_namespaces.include?("xmlns:mets")
     return false unless @mets.xpath("//mets:file").count >= 1
+    return false if rights_statement.blank?
+    return false unless valid_metadata_source_path?
     true
   end
 
@@ -104,11 +94,4 @@ class MetsDocument
       mets_access_master_path: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, '')
     }
   end
-
-  # def file_opts(file)
-  #   return {} if
-  #     @mets.xpath("count(//mets:div/mets:fptr[@FILEID='#{file[:id]}'])") \
-  #          .to_i.positive?
-  #   { viewing_hint: 'non-paged' }
-  # end
 end

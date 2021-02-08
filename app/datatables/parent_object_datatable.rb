@@ -14,19 +14,19 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      oid: { source: "ParentObject.oid", cond: :like },
-      authoritative_source: { source: "MetadataSource.display_name", cond: :like, searchable: true },
-      child_object_count: { source: "ParentObject.child_object_count" },
-      bib: { source: "ParentObject.bib", cond: :like, searchable: true },
-      holding: { source: "ParentObject.holding", cond: :like, searchable: true },
-      item: { source: "ParentObject.item", cond: :like, searchable: true },
-      barcode: { source: "ParentObject.barcode", cond: :like, searchable: true },
-      aspace_uri: { source: "ParentObject.aspace_uri", cond: :like },
-      last_ladybird_update: { source: "ParentObject.last_ladybird_update", cond: :like },
-      last_voyager_update: { source: "ParentObject.last_voyager_update", cond: :like },
-      last_aspace_update: { source: "ParentObject.last_aspace_update", cond: :like },
-      last_id_update: { source: "ParentObject.last_id_update", cond: :like },
-      visibility: { source: "ParentObject.visibility", cond: :like, searchable: true },
+      oid: { source: "ParentObject.oid", cond: :start_with, searchable: true, orderable: true },
+      authoritative_source: { source: "MetadataSource.metadata_cloud_name", cond: :string_eq, searchable: true, options: ["ladybird", "aspace", "ils"], orderable: true },
+      child_object_count: { source: "ParentObject.child_object_count", orderable: true },
+      bib: { source: "ParentObject.bib", cond: :string_eq, searchable: true, orderable: true },
+      holding: { source: "ParentObject.holding", cond: :string_eq, searchable: true, orderable: true },
+      item: { source: "ParentObject.item", cond: :string_eq, searchable: true, orderable: true },
+      barcode: { source: "ParentObject.barcode", cond: :string_eq, searchable: true, orderable: true },
+      aspace_uri: { source: "ParentObject.aspace_uri", cond: :like, searchable: true, orderable: true },
+      last_ladybird_update: { source: "ParentObject.last_ladybird_update", orderable: true },
+      last_voyager_update: { source: "ParentObject.last_voyager_update", orderable: true },
+      last_aspace_update: { source: "ParentObject.last_aspace_update", orderable: true },
+      last_id_update: { source: "ParentObject.last_id_update", orderable: true },
+      visibility: { source: "ParentObject.visibility", cond: :string_eq, searchable: true, options: ["Public", "Yale Community Only", "Private"], orderable: true },
       actions: { source: "ParentObject.oid", cond: :null_value, searchable: false, orderable: false }
     }
   end
