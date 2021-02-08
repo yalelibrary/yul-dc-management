@@ -12,7 +12,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connectable
 
   def self.batch_actions
-    ['create parent objects', 'export child oids', 'reassociate child oids']
+    ['create parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
   end
 
   def validate_import
@@ -85,6 +85,24 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     create_parent_objects_from_oids(oids, metadata_sources)
   end
 
+  def recreate_child_oid_ptiffs
+    parents = Set[]
+    oids.each do |oid|
+      child_object = ChildObject.find_by_oid(oid.to_i)
+      next unless child_object
+      parent_object = child_object.parent_object
+      unless parents.include? parent_object.oid
+        parent_object.current_batch_process = self
+        parent_object.current_batch_connection = batch_connections.build(connectable: parent_object)
+        parent_object.current_batch_connection.save!
+        parent_object.processing_event("Connection to batch created", "parent-connection-created", self, parent_object.current_batch_connection)
+        parents.add parent_object.oid
+      end
+      GeneratePtiffJob.perform_later(child_object, self, parent_object.current_batch_connection)
+      child_object.processing_event("Ptiff Queued", "ptiff-queued", self, parent_object.current_batch_connection)
+    end
+  end
+
   def refresh_metadata_cloud_mets
     fresh = false
     metadata_source = mets_doc.metadata_source
@@ -121,6 +139,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         CreateChildOidCsvJob.perform_later(self)
       when 'reassociate child oids'
         ReassociateChildOidsJob.perform_later(self)
+      when 'recreate child oid ptiffs'
+        RecreateChildOidPtiffsJob.perform_later(self)
       end
     elsif mets_xml.present?
       refresh_metadata_cloud_mets
