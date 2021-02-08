@@ -91,11 +91,10 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     it "has metadata in the manifest" do
       expect(iiif_presentation.manifest["metadata"].class).to eq Array
       expect(iiif_presentation.manifest["metadata"].first.class).to eq Hash
-      expect(iiif_presentation.manifest["metadata"].first["label"]).to eq "Abstract"
-      expect(iiif_presentation.manifest["metadata"].first["value"].first).to include 'indigo'
+      expect(iiif_presentation.manifest["metadata"].first["label"]).to eq "Creator"
+      expect(iiif_presentation.manifest["metadata"].first["value"].first).to include "Morris & Co. (London, England)"
       expect(iiif_presentation.manifest["metadata"].last.class).to eq Hash
-      expect(iiif_presentation.manifest["metadata"].last["label"]).to eq "Source"
-      expect(iiif_presentation.manifest["metadata"].last["value"].first).to include 'ladybird'
+      expect(iiif_presentation.manifest["metadata"].last["label"]).to eq "OID"
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"] == "Orbis Bib ID" }).not_to be_empty
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"] == "Container / Volume Information" }.first["value"].first).to eq 'Box 12, Folder 117'
     end
