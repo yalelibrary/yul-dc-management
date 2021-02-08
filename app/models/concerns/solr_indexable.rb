@@ -101,6 +101,7 @@ module SolrIndexable
       sourceEdition_tesim: json_to_index["sourceEdition"], # Not currently in Blacklight application
       sourceNote_tesim: json_to_index["sourceNote"],
       sourceTitle_tesim: json_to_index["sourceTitle"],
+      sourceCreator_tesim: json_to_index["sourceCreator"],
       subjectEra_ssim: json_to_index["subjectEra"],
       subjectGeographic_ssim: json_to_index["subjectGeographic"],
       subjectGeographic_tesim: json_to_index["subjectGeographic"],

@@ -2,6 +2,7 @@
 
 class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include CsvExportable
+  include Reassociatable
   attr_reader :file
   after_create :determine_background_jobs
   before_create :mets_oid
@@ -11,7 +12,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connectable
 
   def self.batch_actions
-    ['create parent objects', 'export child oids']
+    ['create parent objects', 'export child oids', 'reassociate child oids']
   end
 
   def validate_import
@@ -29,14 +30,15 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @file = value
     self[:file_name] = file.original_filename
     if File.extname(file) == '.csv'
-      self[:csv] = value.read
+      # Remove BOM if present
+      self[:csv] = CSV.open(value, 'rb:bom|utf-8', headers: true, return_headers: true).read
     elsif File.extname(file) == '.xml'
       self[:mets_xml] = value.read
     end
   end
 
   def parsed_csv
-    @parsed_csv ||= CSV.parse(csv, headers: true) if csv.present?
+    @parsed_csv ||= CSV.parse(csv, headers: true, encoding: "utf-8") if csv.present?
   end
 
   def mets_doc
@@ -88,27 +90,38 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     metadata_source = mets_doc.metadata_source
     po = ParentObject.where(oid: oid).first_or_create do |parent_object|
       # Only runs on newly created parent objects
-      parent_object.bib = mets_doc.bib
-      parent_object.visibility = mets_doc.visibility
-      parent_object.rights_statement = mets_doc.rights_statement
-      parent_object.viewing_direction = mets_doc.viewing_direction
-      parent_object.display_layout = mets_doc.viewing_hint
-      setup_for_background_jobs(parent_object, metadata_source)
       fresh = true
-      parent_object.from_mets = true
-      parent_object.representative_child_oid = mets_doc.thumbnail_image
+      set_values_from_mets(parent_object, metadata_source)
     end
     return if fresh
     po.metadata_update = true
+    po.last_mets_update = Time.current
     setup_for_background_jobs(po, metadata_source)
     po.save!
   end
 
+  def set_values_from_mets(parent_object, metadata_source)
+    parent_object.bib = mets_doc.bib
+    parent_object.visibility = mets_doc.visibility
+    parent_object.rights_statement = mets_doc.rights_statement
+    parent_object.viewing_direction = mets_doc.viewing_direction
+    parent_object.display_layout = mets_doc.viewing_hint
+    setup_for_background_jobs(parent_object, metadata_source)
+    parent_object.from_mets = true
+    parent_object.last_mets_update = Time.current
+    parent_object.representative_child_oid = mets_doc.thumbnail_image
+  end
+
   def determine_background_jobs
-    if csv.present? && (batch_action.eql? 'create parent objects')
-      RefreshMetadataCloudCsvJob.perform_later(self)
-    elsif csv.present? && (batch_action.eql? 'export child oids')
-      CreateChildOidCsvJob.perform_later(self)
+    if csv.present?
+      case batch_action
+      when 'create parent objects'
+        RefreshMetadataCloudCsvJob.perform_later(self)
+      when 'export child oids'
+        CreateChildOidCsvJob.perform_later(self)
+      when 'reassociate child oids'
+        ReassociateChildOidsJob.perform_later(self)
+      end
     elsif mets_xml.present?
       refresh_metadata_cloud_mets
     end

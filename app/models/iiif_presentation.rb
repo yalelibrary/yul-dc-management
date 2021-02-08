@@ -109,7 +109,7 @@ class IiifPresentation
     child_objects.map do |child|
       canvas = IIIF::Presentation::Canvas.new
       canvas['@id'] = "#{manifest_base_url}/oid/#{oid}/canvas/#{child.oid}"
-      canvas['label'] = child.label
+      canvas['label'] = child.label || ''
       add_image_to_canvas(child, canvas)
       canvas['height'] = canvas.images.first["resource"]["height"]
       canvas['width'] = canvas.images.first["resource"]["width"]
