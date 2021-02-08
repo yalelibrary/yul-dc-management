@@ -34,10 +34,11 @@ METADATA_FIELDS = [
   },
   {
     label: 'Extent of Digitization',
-    field: 'extentOfDigitization',
+    field: 'extent_of_digitization',
     solr_fields: [
       'extentOfDigitization_ssim'
-    ]
+    ],
+    digital_only: true
   },
   {
     label: 'Number of Pages',
