@@ -15,7 +15,7 @@ class SetupMetadataJob < ApplicationJob
     parent_object.save!
     parent_object.processing_event("Child object records have been created", "child-records-created", current_batch_process, current_batch_connection)
     parent_object.child_objects.each do |child|
-      current_batch_process.setup_for_background_jobs(child)
+      parent_object.current_batch_process&.setup_for_background_jobs(child, nil)
       GeneratePtiffJob.perform_later(child)
       child.processing_event("Ptiff Queued", "ptiff-queued", child.current_batch_process, child.current_batch_connection)
     end
