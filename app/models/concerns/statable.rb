@@ -55,11 +55,7 @@ module Statable
   end
 
   def note_records(batch_process)
-    if self.class == ParentObject
-      IngestEvent.where(batch_connection: batch_connections.where(batch_process: batch_process))
-    elsif self.class == ChildObject
-      IngestEvent.where(batch_connection: parent_object.batch_connections.where(batch_process: batch_process))
-    end
+    IngestEvent.where(batch_connection: batch_connections.where(batch_process: batch_process))
   end
 
   def note_deletion
