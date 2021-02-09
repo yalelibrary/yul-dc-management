@@ -166,7 +166,8 @@ METADATA_FIELDS = [
     label: 'Container / Volume Information',
     field: 'extract_container_information',
     solr_fields: [
-      'containerGrouping_ssim'
+      'containerGrouping_ssim',
+      'containerGrouping_tesim'
     ],
     digital_only: true
   },
