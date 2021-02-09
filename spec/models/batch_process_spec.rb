@@ -65,6 +65,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       batch_process.file = xml_upload
       batch_process.save!
       expect(batch_process.oid).to eq 30_000_317
+      File.delete("spec/fixtures/images/access_masters/01/18/30/00/03/18/30000318.tif")
     end
 
     it "has a mets document associated with it that is not saved to the database" do
@@ -96,13 +97,12 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         end
       end
 
-      let(:logger_mock) { instance_double("Rails.logger").as_null_object }
       # Doing one large test here, because with copying images, etc., it is an expensive one
       it "creates a parent object with the expected values and child objects with expected values" do
-        allow(Rails.logger).to receive(:debug) { :logger_mock }
         expect(File.exist?("spec/fixtures/images/access_masters/00/02/30/00/04/02/30000402.tif")).to be false
         expect(File.exist?("spec/fixtures/images/access_masters/00/03/30/00/04/03/30000403.tif")).to be false
         expect(File.exist?("spec/fixtures/images/access_masters/00/04/30/00/04/04/30000404.tif")).to be false
+        expect(batch_process.batch_action).to eq "create parent objects"
         expect do
           batch_process.file = xml_upload_two
           batch_process.save
