@@ -19,7 +19,7 @@ METADATA_FIELDS = [
     ]
   },
   {
-    label: 'Date',
+    label: 'Published/Created Date',
     field: 'date',
     solr_fields: [
       'date_ssim'
