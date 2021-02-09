@@ -65,7 +65,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       batch_process.file = xml_upload
       batch_process.save!
       expect(batch_process.oid).to eq 30_000_317
-      File.delete("spec/fixtures/images/access_masters/01/18/30/00/03/18/30000318.tif")
+      # TODO: This test is not testing the file copy, update so that it doesn't copy file
+      file_path = "spec/fixtures/images/access_masters/01/18/30/00/03/18/30000318.tif"
+      File.delete("spec/fixtures/images/access_masters/01/18/30/00/03/18/30000318.tif") if File.exist?(file_path)
     end
 
     it "has a mets document associated with it that is not saved to the database" do
