@@ -2,6 +2,7 @@
 
 class ChildObjectsController < ApplicationController
   before_action :set_child_object, only: [:show, :edit, :update, :destroy]
+  before_action :set_paper_trail_whodunnit
 
   # GET /child_objects
   # GET /child_objects.json

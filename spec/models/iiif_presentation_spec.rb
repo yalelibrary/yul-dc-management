@@ -18,9 +18,12 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     ENV["PDF_BASE_URL"] = original_pdf_url
   end
   let(:oid) { 16_172_421 }
+  let(:oid_no_labels) { 2_005_512 }
   let(:iiif_presentation) { described_class.new(parent_object) }
   let(:logger_mock) { instance_double("Rails.logger").as_null_object }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, viewing_direction: "left-to-right", display_layout: "individuals", bib: "12834515") }
+  let(:iiif_presentation_no_labels) { described_class.new(parent_object_no_labels) }
+  let(:parent_object_no_labels) { FactoryBot.create(:parent_object, oid: oid_no_labels, viewing_direction: "left-to-right", display_layout: "individuals", bib: "16173726") }
   let(:first_canvas) { iiif_presentation.manifest.sequences.first.canvases.first }
   let(:third_to_last_canvas) { iiif_presentation.manifest.sequences.first.canvases.third_to_last }
   before do
@@ -29,6 +32,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/21/16/17/24/21/16172421.json")
       .to_return(status: 200)
     stub_metadata_cloud("16172421")
+    stub_metadata_cloud("2005512")
     stub_ptiffs
     stub_pdfs
     parent_object
@@ -91,11 +95,10 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     it "has metadata in the manifest" do
       expect(iiif_presentation.manifest["metadata"].class).to eq Array
       expect(iiif_presentation.manifest["metadata"].first.class).to eq Hash
-      expect(iiif_presentation.manifest["metadata"].first["label"]).to eq "Abstract"
-      expect(iiif_presentation.manifest["metadata"].first["value"].first).to include 'indigo'
+      expect(iiif_presentation.manifest["metadata"].first["label"]).to eq "Creator"
+      expect(iiif_presentation.manifest["metadata"].first["value"].first).to include "Morris & Co. (London, England)"
       expect(iiif_presentation.manifest["metadata"].last.class).to eq Hash
-      expect(iiif_presentation.manifest["metadata"].last["label"]).to eq "Source"
-      expect(iiif_presentation.manifest["metadata"].last["value"].first).to include 'ladybird'
+      expect(iiif_presentation.manifest["metadata"].last["label"]).to eq "OID"
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"] == "Orbis Bib ID" }).not_to be_empty
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"] == "Container / Volume Information" }.first["value"].first).to eq 'Box 12, Folder 117'
     end
@@ -181,6 +184,13 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
 
     it "can output a manifest as json" do
       expect(iiif_presentation.manifest.to_json(pretty: true)).to include "Strawberry Thief fabric, made by Morris and Company "
+    end
+
+    it "provides labels for all canvases" do
+      iiif_presentation_no_labels.manifest.sequences.first.canvases.each do |canvas|
+        expect(canvas['label']).not_to be_nil
+      end
+      expect(iiif_presentation_no_labels.manifest.to_json(pretty: true)).to include '"label": ""'
     end
   end
 

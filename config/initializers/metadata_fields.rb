@@ -2,20 +2,58 @@
 
 METADATA_FIELDS = [
   {
-    label: 'Abstract',
-    field: 'abstract',
-    solr_fields: [
-      'abstract_tesim',
-      'abstract_ssim'
-    ]
-  },
-  {
     label: 'Alternative Title',
     field: 'alternativeTitle',
     solr_fields: [
       'alternativeTitle_tesim',
       'alternativeTitle_ssim',
       'alternative_title_tsm'
+    ]
+  },
+  {
+    label: 'Creator',
+    field: 'creator',
+    solr_fields: [
+      'creator_ssim',
+      'creator_tesim'
+    ]
+  },
+  {
+    label: 'Date',
+    field: 'date',
+    solr_fields: [
+      'date_ssim'
+    ]
+  },
+  {
+    label: 'Copyright Date',
+    field: 'copyrightDate',
+    solr_fields: [
+      'copyrightDate_ssim'
+    ]
+  },
+  {
+    label: 'Publication Place',
+    field: 'creationPlace',
+    solr_fields: [
+      'creationPlace_ssim',
+      'creationPlace_tesim'
+    ]
+  },
+  {
+    label: 'Publisher',
+    field: 'publisher',
+    solr_fields: [
+      'publisher_ssim',
+      'publisher_ssim'
+    ]
+  },
+  {
+    label: 'Abstract',
+    field: 'abstract',
+    solr_fields: [
+      'abstract_tesim',
+      'abstract_ssim'
     ]
   },
   {
@@ -40,20 +78,6 @@ METADATA_FIELDS = [
     ]
   },
   {
-    label: 'Number of Pages',
-    field: 'number_of_pages_ss',
-    solr_fields: [
-      'numberOfPages_ssim'
-    ]
-  },
-  {
-    label: 'References',
-    field: 'preferredCitation',
-    solr_fields: [
-      'preferredCitation_tesim'
-    ]
-  },
-  {
     label: 'Projection',
     field: 'projection',
     solr_fields: [
@@ -68,86 +92,10 @@ METADATA_FIELDS = [
     ]
   },
   {
-    label: 'Format',
-    field: 'format',
-    solr_fields: [
-      'format_tesim',
-      'format'
-    ]
-  },
-  {
-    label: 'Genre',
-    field: 'genre',
-    solr_fields: [
-      'genre_ssim',
-      'genre_tesim'
-    ]
-  },
-  {
-    label: 'Subject (Geographic)',
-    field: 'subjectGeographic',
-    solr_fields: [
-      'subjectGeographic_tesim'
-    ]
-  },
-  {
-    label: 'Material',
-    field: 'material',
-    solr_fields: [
-      'material_tesim'
-    ]
-  },
-  {
-    label: 'Resource Type',
-    field: 'itemType',
-    solr_fields: [
-      'resourceType_ssim',
-      'resourceType_tesim'
-    ]
-  },
-  {
-    label: 'Subject (Name)',
-    field: 'subjectName',
-    solr_fields: [
-      'subjectName_ssim',
-      'subjectName_tesim'
-    ]
-  },
-  {
-    label: 'Subject (Topic)',
-    field: 'subjectTopic',
-    solr_fields: [
-      'subjectTopic_tesim',
-      'subjectTopic_ssim'
-    ]
-  },
-  {
-    label: 'Creator',
-    field: 'creator',
-    solr_fields: [
-      'creator_ssim',
-      'creator_tesim'
-    ]
-  },
-  {
-    label: 'Copyright Date',
-    field: 'copyrightDate',
-    solr_fields: [
-      'copyrightDate_ssim'
-    ]
-  },
-  {
     label: 'Coordinates',
     field: 'coordinate',
     solr_fields: [
       'coordinates_ssim'
-    ]
-  },
-  {
-    label: 'Date',
-    field: 'date',
-    solr_fields: [
-      'date_ssim'
     ]
   },
   {
@@ -172,19 +120,18 @@ METADATA_FIELDS = [
     ]
   },
   {
-    label: 'Publication Place',
-    field: 'creationPlace',
+    label: 'Call Number',
+    field: 'callNumber',
     solr_fields: [
-      'creationPlace_ssim',
-      'creationPlace_tesim'
+      'callNumber_ssim',
+      'callNumber_tesim'
     ]
   },
   {
-    label: 'Publisher',
-    field: 'publisher',
+    label: 'Source Title',
+    field: 'sourceTitle',
     solr_fields: [
-      'publisher_ssim',
-      'publisher_ssim'
+      'sourceTitle_tesim'
     ]
   },
   {
@@ -202,13 +149,6 @@ METADATA_FIELDS = [
     ]
   },
   {
-    label: 'Source Edition',
-    field: 'sourceEdition',
-    solr_fields: [
-      'sourceEdition_tesim'
-    ]
-  },
-  {
     label: 'Source Note',
     field: 'sourceNote',
     solr_fields: [
@@ -216,17 +156,18 @@ METADATA_FIELDS = [
     ]
   },
   {
-    label: 'Source Title',
-    field: 'sourceTitle',
+    label: 'Source Edition',
+    field: 'sourceEdition',
     solr_fields: [
-      'sourceTitle_tesim'
+      'sourceEdition_tesim'
     ]
   },
   {
     label: 'Container / Volume Information',
     field: 'extract_container_information',
     solr_fields: [
-      'containerGrouping_ssim'
+      'containerGrouping_ssim',
+      'containerGrouping_tesim'
     ],
     digital_only: true
   },
@@ -238,41 +179,57 @@ METADATA_FIELDS = [
     ]
   },
   {
-    label: 'Call Number',
-    field: 'callNumber',
+    label: 'Format',
+    field: 'format',
     solr_fields: [
-      'callNumber_ssim',
-      'callNumber_tesim'
+      'format_tesim',
+      'format'
     ]
   },
   {
-    label: 'Orbis Bib ID',
-    field: 'bib',
+    label: 'Genre',
+    field: 'genre',
     solr_fields: [
-      'orbisBibId_ssi'
-    ],
-    digital_only: true
-  },
-  {
-    label: 'OID',
-    field: 'oid',
-    solr_fields: [
-      'oid_ssi'
-    ],
-    digital_only: true
-  },
-  {
-    label: 'URI',
-    field: 'uri',
-    solr_fields: [
-      'uri_ssim'
+      'genre_ssim',
+      'genre_tesim'
     ]
   },
   {
-    label: 'More Information',
-    field: 'relatedUrl',
+    label: 'Material',
+    field: 'material',
     solr_fields: [
-      'url_suppl_ssim'
+      'material_tesim'
+    ]
+  },
+  {
+    label: 'Resource Type',
+    field: 'itemType',
+    solr_fields: [
+      'resourceType_ssim',
+      'resourceType_tesim'
+    ]
+  },
+  {
+    label: 'Subject (Geographic)',
+    field: 'subjectGeographic',
+    solr_fields: [
+      'subjectGeographic_tesim'
+    ]
+  },
+  {
+    label: 'Subject (Name)',
+    field: 'subjectName',
+    solr_fields: [
+      'subjectName_ssim',
+      'subjectName_tesim'
+    ]
+  },
+  {
+    label: 'Subject (Topic)',
+    field: 'subjectTopic',
+    solr_fields: [
+      'subjectTopic_tesim',
+      'subjectTopic_ssim'
     ]
   },
   {
@@ -292,17 +249,33 @@ METADATA_FIELDS = [
     ]
   },
   {
-    label: 'Record Type',
-    field: 'recordType',
+    label: 'References',
+    field: 'preferredCitation',
     solr_fields: [
-      'recordType_ssi'
+      'preferredCitation_tesim'
     ]
   },
   {
-    label: 'Source',
-    field: 'source',
+    label: 'Orbis Bib ID',
+    field: 'bib',
     solr_fields: [
-      'source_ssim'
+      'orbisBibId_ssi'
+    ],
+    digital_only: true
+  },
+  {
+    label: 'OID',
+    field: 'oid',
+    solr_fields: [
+      'oid_ssi'
+    ],
+    digital_only: true
+  },
+  {
+    label: 'More Information',
+    field: 'relatedUrl',
+    solr_fields: [
+      'url_suppl_ssim'
     ]
   }
 ].freeze

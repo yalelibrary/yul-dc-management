@@ -3,6 +3,7 @@
 # It is synonymous with a parent oid in Ladybird.
 
 class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
+  has_paper_trail
   include JsonFile
   include SolrIndexable
   include Statable
@@ -36,12 +37,36 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     [nil, "individuals", "paged", "continuous"]
   end
 
+  def self.extent_of_digitizations
+    [nil, "Completely digitized", "Partially digitized"]
+  end
+
   validates :visibility, inclusion: { in: visibilities,
                                       message: "%{value} is not a valid value" }
 
   def initialize(attributes = nil)
     super
     self.use_ladybird = true
+  end
+
+  def from_upstream_for_the_first_time?
+    from_ladybird_for_the_first_time? || from_mets_for_the_first_time?
+  end
+
+  # Returns true if last_ladybird_update has changed from nil to some value, indicating initial ladybird fetch
+  def from_ladybird_for_the_first_time?
+    return true if changes["last_ladybird_update"] &&
+                   !changes["last_ladybird_update"][0] &&
+                   changes["last_ladybird_update"][1]
+    false
+  end
+
+  # See also from_ladybird_for_the_first_time?
+  def from_mets_for_the_first_time?
+    return true if changes["last_mets_update"] &&
+                   !changes["last_mets_update"][0] &&
+                   changes["last_mets_update"][1]
+    false
   end
 
   def start_states
@@ -170,7 +195,18 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.aspace_uri = lb_record["archiveSpaceUri"]
     self.visibility = lb_record["itemPermission"]
     self.rights_statement = lb_record["rights"]&.first
+    self.extent_of_digitization = normalize_extent_of_digitization
     self.use_ladybird = false
+  end
+
+  def normalize_extent_of_digitization
+    extent_from_ladybird = ladybird_json&.[]("extentOfDigitization")&.first
+    return unless extent_from_ladybird
+    if extent_from_ladybird.start_with?("Comp")
+      "Completely digitized"
+    elsif extent_from_ladybird.start_with?("Part")
+      "Partially digitized"
+    end
   end
 
   def voyager_json=(v_record)
@@ -233,7 +269,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def needs_a_manifest?
     if ready_for_manifest? && generate_manifest
-      updated_rows = ParentObject.where(oid: oid, generate_manifest: true).update_all(generate_manifest: false) # rubocop:disable Rails/SkipsModelValidations
+      updated_rows = ParentObject.default_scoped.where(oid: oid, generate_manifest: true).update_all(generate_manifest: false) # rubocop:disable Rails/SkipsModelValidations
       self.generate_manifest = false
       return updated_rows == 1
     end

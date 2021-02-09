@@ -36,6 +36,14 @@
   </div>
   <br>
 
+  <div class="form-row">
+    <div class="col-med-9">
+      <%= form.label :extent_of_digitization %>
+      <%= form.select(:extent_of_digitization, ParentObject.extent_of_digitizations) %>
+    </div>
+  </div>
+  <br>
+
   <h6 class="form-subgroup-title">Voyager identifiers</h6>
   <div class="voyager_identifiers, form-row">
     <div class="col-med-3">

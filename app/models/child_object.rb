@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ChildObject < ApplicationRecord
+  has_paper_trail
   include Statable
   belongs_to :parent_object, foreign_key: 'parent_object_oid', class_name: "ParentObject"
   self.primary_key = 'oid'
@@ -133,7 +134,9 @@ class ChildObject < ApplicationRecord
     end
   end
 
-  def convert_to_ptiff!
+  def convert_to_ptiff!(force = false)
+    # setting the width to nil will force the PTIFF to be generated.
+    self.width = nil if force
     convert_to_ptiff && save!
   end
 

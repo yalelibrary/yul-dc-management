@@ -118,7 +118,10 @@ done
 # chroma subsampling so by default it produces JPEGs about 3x smaller with ycbcr
 # vs. when photometric interpretation is set to rgb
 # e.g. -c jpeg:r:90 vs. -c jpeg:90
-tiffcp -a -c jpeg:90 -t -w 256 -l 256 ${outprefix}_*.tif ${outfile}
+if ! tiffcp -a -c jpeg:90 -t -w 256 -l 256 ${outprefix}_*.tif ${outfile}; then
+  rm -f ${outfile}
+  tiffcp -a -c zip -t -w 256 -l 256 ${outprefix}_*.tif ${outfile}
+fi
 
 # cleanup temp files but leave the outputput file in place
 if [ -z "${savefiles}" ]; then rm -f $tmpprefix*; fi

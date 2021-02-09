@@ -61,6 +61,11 @@
     "Shailor, B. Catalogue of Medieval and Renaissance Manuscripts in the Beinecke Rare Book and Manuscript Library, MS 410."
   ],
   "itemPermission": "Public",
+  "dateStructured": [
+    "1475/1499"
+  ],
+  "intStartYear": "1475",
+  "intEndYear": "1499",
   "subjectEra": "Indulgences--England--Early works to 1800",
   "contributor": [
     "Innocent VI, Pope, d. 1362"

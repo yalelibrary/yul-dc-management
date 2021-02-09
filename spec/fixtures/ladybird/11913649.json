@@ -48,9 +48,11 @@
   ],
   "itemPermission": "Public",
   "dateStructured": [
-    "1800"
+    "1800/1899"
   ],
   "illustrativeMatter": "ara d",
+  "intStartYear": "1800",
+  "intEndYear": "1899",
   "subjectEra": "History--Egypt",
   "repository": "Beinecke Library",
   "subjectTitle": "History--Egypt",

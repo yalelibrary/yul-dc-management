@@ -2,6 +2,7 @@
 
 class ParentObjectsController < ApplicationController
   before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata, :select_thumbnail]
+  before_action :set_paper_trail_whodunnit
 
   # GET /parent_objects
   # GET /parent_objects.json
@@ -128,6 +129,6 @@ class ParentObjectsController < ApplicationController
     def parent_object_params
       params.require(:parent_object).permit(:oid, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
                                             :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction,
-                                            :display_layout, :representative_child_oid, :rights_statement)
+                                            :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization)
     end
 end

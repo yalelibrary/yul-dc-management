@@ -131,6 +131,19 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     # rubocop:enable RSpec/AnyInstance
   end
 
+  context "determining whether it's newly created" do
+    let(:parent_object) { FactoryBot.create(:parent_object) }
+
+    it "can determine whether it's freshly from Ladybird" do
+      parent_object.ladybird_json = JSON.parse(File.open("spec/fixtures/ladybird/2004628.json").read)
+      expect(parent_object.from_ladybird_for_the_first_time?).to eq true
+      expect(parent_object.from_upstream_for_the_first_time?).to eq true
+      parent_object.save!
+      expect(parent_object.from_ladybird_for_the_first_time?).to eq false
+      expect(parent_object.from_upstream_for_the_first_time?).to eq false
+    end
+  end
+
   context "a newly created ParentObject with different visibilities" do
     let(:parent_object_nil) { described_class.create(visibility: nil) }
     it "nil does not validate" do

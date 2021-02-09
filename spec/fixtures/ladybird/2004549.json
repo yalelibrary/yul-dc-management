@@ -1,0 +1,102 @@
+{
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
+  "uri": "/ladybird/oid/2004549",
+  "callNumber": "JWJ MSS 49",
+  "containerGrouping": "Box 103 | Folders 865-867",
+  "box": "Box 103",
+  "folder": "Folders 865-867",
+  "sourceCreator": "Johnson, James Weldon, 1871-1938",
+  "sourceTitle": "James Weldon Johnson and Grace Nail Johnson papers",
+  "sourceDate": "circa 1850-2005 (bulk 1900-1976)",
+  "title": [
+    "[Photograph of Grace Nail Johnson with arms folded]"
+  ],
+  "creationPlace": [
+    "New York"
+  ],
+  "publisher": [
+    "ROE"
+  ],
+  "date": [
+    "undated"
+  ],
+  "extent": [
+    "1 photographic print.",
+    "15.5 mounted to 20.5 cm."
+  ],
+  "description": [
+    "On verso: Grace Nail Johnson, this photograph New York City."
+  ],
+  "genre": [
+    "Photographic prints",
+    "Photographs"
+  ],
+  "format": [
+    "still image"
+  ],
+  "itemType": [
+    "Archives or Manuscripts"
+  ],
+  "partOf": "Beinecke Library",
+  "rights": [
+    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+  ],
+  "orbisBibId": "3660118",
+  "findingAid": [
+    "http://hdl.handle.net/10079/fa/beinecke.jwj"
+  ],
+  "itemPermission": "Public",
+  "repository": "Beinecke Library",
+  "archiveSpaceUri": "/repositories/11/archival_objects/358426",
+  "dependentUris": [
+    "/ladybird/oid/2004549"
+  ],
+  "oid": 2004549,
+  "collectionId": 1,
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1021927",
+      "callNumber": "JWJ MSS 49",
+      "title": [
+        "[Photograph of Grace Nail Johnson with arms folded]"
+      ],
+      "caption": "recto",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1021927"
+      ],
+      "oid": 1021927,
+      "width": 1620,
+      "height": 3274,
+      "children": []
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1021928",
+      "callNumber": "JWJ MSS 49",
+      "title": [
+        "[Photograph of Grace Nail Johnson with arms folded]"
+      ],
+      "caption": "verso",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1021928"
+      ],
+      "oid": 1021928,
+      "width": 1624,
+      "height": 3269,
+      "children": []
+    }
+  ]
+}

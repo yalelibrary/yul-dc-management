@@ -63,7 +63,12 @@
     "Islamic prayers, invocations and decorations. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "itemPermission": "Public",
+  "dateStructured": [
+    "1700/1799"
+  ],
   "illustrativeMatter": "170717s17uu    xx                  ara d",
+  "intStartYear": "1700",
+  "intEndYear": "1799",
   "subjectEra": "Prayer--Islam--Early works to 1800.",
   "repository": "Beinecke Library",
   "subjectTitle": "Prayer--Islam--Early works to 1800.",

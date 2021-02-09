@@ -42,8 +42,10 @@
   ],
   "itemPermission": "Public",
   "dateStructured": [
-    "1700"
+    "1700/1799"
   ],
+  "intStartYear": "1700",
+  "intEndYear": "1799",
   "subjectEra": "Islamic binding",
   "repository": "Beinecke Library",
   "subjectTitle": "Islamic binding",
