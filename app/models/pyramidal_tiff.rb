@@ -49,8 +49,6 @@ class PyramidalTiff
       errors.add(:base, "Expected file #{remote_access_master_path} not found.") unless image_exists
     else
       image_exists = File.exist?(access_master_path)
-      # image_exists = File.exist?('/data/00/09/17/36/76/09/17367609.tif')
-      # image_exists = true
       errors.add(:base, "Expected file #{access_master_path} not found.") unless image_exists
     end
     image_exists
