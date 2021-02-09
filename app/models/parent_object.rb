@@ -3,6 +3,7 @@
 # It is synonymous with a parent oid in Ladybird.
 
 class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
+  has_paper_trail
   include JsonFile
   include SolrIndexable
   include Statable
