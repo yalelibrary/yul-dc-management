@@ -61,11 +61,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     false
   end
 
-  # See also from_ladybird_for_the_first_time?
+  # Returns true if last_mets_update has changed from nil to some value,
+  # indicating assigning values from the mets document
   def from_mets_for_the_first_time?
-    return true if changes["last_mets_update"] &&
-                   !changes["last_mets_update"][0] &&
-                   changes["last_mets_update"][1]
+    return true if last_mets_update_before_last_save.nil? && !last_mets_update.nil?
     false
   end
 
