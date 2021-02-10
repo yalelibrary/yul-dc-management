@@ -19,7 +19,7 @@ METADATA_FIELDS = [
     ]
   },
   {
-    label: 'Date',
+    label: 'Published/Created Date',
     field: 'date',
     solr_fields: [
       'date_ssim'
@@ -128,35 +128,35 @@ METADATA_FIELDS = [
     ]
   },
   {
-    label: 'Source Title',
+    label: 'Collection Title',
     field: 'sourceTitle',
     solr_fields: [
       'sourceTitle_tesim'
     ]
   },
   {
-    label: 'Source Created',
+    label: 'Collection Created',
     field: 'sourceCreated',
     solr_fields: [
       'sourceCreated_tesim'
     ]
   },
   {
-    label: 'Source Date',
+    label: 'Collection Date',
     field: 'sourceDate',
     solr_fields: [
       'sourceDate_tesim'
     ]
   },
   {
-    label: 'Source Note',
+    label: 'Collection Note',
     field: 'sourceNote',
     solr_fields: [
       'sourceNote_tesim'
     ]
   },
   {
-    label: 'Source Edition',
+    label: 'Collection Edition',
     field: 'sourceEdition',
     solr_fields: [
       'sourceEdition_tesim'
@@ -166,8 +166,7 @@ METADATA_FIELDS = [
     label: 'Container / Volume Information',
     field: 'extract_container_information',
     solr_fields: [
-      'containerGrouping_ssim',
-      'containerGrouping_tesim'
+      'containerGrouping_ssim'
     ],
     digital_only: true
   },
@@ -249,14 +248,14 @@ METADATA_FIELDS = [
     ]
   },
   {
-    label: 'References',
+    label: 'Citation',
     field: 'preferredCitation',
     solr_fields: [
       'preferredCitation_tesim'
     ]
   },
   {
-    label: 'Orbis Bib ID',
+    label: 'Orbis ID',
     field: 'bib',
     solr_fields: [
       'orbisBibId_ssi'
