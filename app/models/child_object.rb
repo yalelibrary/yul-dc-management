@@ -30,15 +30,6 @@ class ChildObject < ApplicationRecord
     width_and_height(remote_metadata)
   end
 
-  def processing_event(message, status = 'info', _current_batch_process = current_batch_process, _current_batch_connection = current_batch_connection)
-    return unless current_batch_connection
-    IngestEvent.create!(
-      status: status,
-      reason: message,
-      batch_connection: current_batch_connection
-    )
-  end
-
   def remote_ptiff_exists?
     remote_metadata
   end
