@@ -16,8 +16,8 @@ class SetupMetadataJob < ApplicationJob
     parent_object.processing_event("Child object records have been created", "child-records-created")
     parent_object.child_objects.each do |child|
       parent_object.current_batch_process&.setup_for_background_jobs(child, nil)
-      GeneratePtiffJob.perform_later(child)
-      child.processing_event("Ptiff Queued", "ptiff-queued", child.current_batch_process, child.current_batch_connection)
+      GeneratePtiffJob.perform_later(child, current_batch_process)
+      child.processing_event("Ptiff Queued", "ptiff-queued")
     end
   rescue => e
     parent_object.processing_event("Setup job failed to save: #{e.message}", "failed")
