@@ -40,18 +40,22 @@
       </thead>
       <tr>
         <td> Sample Resource Bucket </td>
-        <td id="blacklight_version"> <%= ENV['S3_SOURCE_BUCKET_NAME'].present? ? "#{ENV['S3_SOURCE_BUCKET_NAME']}" : "" %> </td>
+        <td id="sample_resource_bucket"> <%= ENV['S3_SOURCE_BUCKET_NAME'].present? ? "#{ENV['S3_SOURCE_BUCKET_NAME']}" : "" %> </td>
       </tr><tr>
         <td> Sample Bucket </td>
-        <td id="blacklight_version"> <%= ENV['SAMPLE_BUCKET'].present? ? "#{ENV['SAMPLE_BUCKET']}" : "" %> </td>
+        <td id="sample_bucket"> <%= ENV['SAMPLE_BUCKET'].present? ? "#{ENV['SAMPLE_BUCKET']}" : "" %> </td>
+      </tr>
+      <tr>
+        <td> MetaData Cloud </td>
+        <td id="metadata_cloud_host"> <%= ENV['METADATA_CLOUD_HOST'].present? ? "#{ENV['METADATA_CLOUD_HOST']}" : "" %> </td>
       </tr>
       <tr>
         <td> Manifests </td>
-        <td id="blacklight_version"> <%= ENV['IIIF_MANIFESTS_BASE_URL'].present? ? "#{ENV['IIIF_MANIFESTS_BASE_URL']}" : "" %> </td>
+        <td id="manifests_storage"> <%= ENV['IIIF_MANIFESTS_BASE_URL'].present? ? "#{ENV['IIIF_MANIFESTS_BASE_URL']}" : "" %> </td>
       </tr>
       <tr>
         <td> PDFs </td>
-        <td id="iiif_image_version"> <%= ENV['PDF_BASE_URL'].present? ? "#{ENV['PDF_BASE_URL']}" : "" %> </td>
+        <td id="pdf_base_storage"> <%= ENV['PDF_BASE_URL'].present? ? "#{ENV['PDF_BASE_URL']}" : "" %> </td>
       </tr>
       <tr>
         <td> PTIFFs </td>
