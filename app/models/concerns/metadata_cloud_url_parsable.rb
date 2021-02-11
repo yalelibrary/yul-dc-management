@@ -31,6 +31,15 @@ module MetadataCloudUrlParsable
     parsed_metadata_source_path.captures.third if parsed_metadata_source_path.captures.include?("item")
   end
 
+  # leave of the first "aspace" to match Ladybird archiveSpaceUri. parsed_metadata_source_path.captures
+  # is 0-indexed
+  def aspace_uri
+    return nil unless valid_aspace?
+    parsed_path = parsed_metadata_source_path.captures
+    File.join("\/", parsed_path[1], parsed_path[2],
+              parsed_path[3], parsed_path[4])
+  end
+
   def valid_metadata_source_path?
     return false unless parsed_metadata_source_path
     return false unless valid_ils? || valid_aspace?
