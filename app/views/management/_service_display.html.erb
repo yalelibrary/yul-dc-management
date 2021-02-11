@@ -29,4 +29,26 @@
         <td id="iiif_image_version"> <%= ENV['IIIF_IMAGE_VERSION'].present? ? "#{ENV['IIIF_IMAGE_VERSION']}" : "" %> </td>
       </tr>
   </table>
+<!--</div>-->
+    <h3> Storage </h3>
+    <table class="table table-bordered table-responsive table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col"> Service </th>
+        <th scope="col"> Name </th>
+      </tr>
+      </thead>
+      <tr>
+        <td> Manifests </td>
+        <td id="blacklight_version"> <%= ENV['IIIF_MANIFESTS_BASE_URL'].present? ? "#{ENV['IIIF_MANIFESTS_BASE_URL']}" : "" %> </td>
+      </tr>
+      <tr>
+        <td> PDFs </td>
+        <td id="iiif_image_version"> <%= ENV['PDF_BASE_URL'].present? ? "#{ENV['PDF_BASE_URL']}" : "" %> </td>
+      </tr>
+      <tr>
+        <td> PTIFFs </td>
+        <td id="iiif_image_version"> <%= ENV['IIIF_IMAGE_BASE_URL'].present? ? "#{ENV['IIIF_IMAGE_BASE_URL']}" : "" %> </td>
+      </tr>
+  </table>
 </div>
