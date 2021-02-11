@@ -119,7 +119,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
 
   it "can return the label, order, child oid for the physical structure" do
     mets_doc = described_class.new(valid_goobi_xml)
-    expect(mets_doc.physical_divs.first[:label]).to eq " - "
+    expect(mets_doc.physical_divs.first[:label]).to eq nil
     expect(mets_doc.physical_divs.first[:order]).to eq "1"
     expect(mets_doc.physical_divs.first[:oid]).to eq "30000318"
   end
@@ -131,7 +131,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
 
   it "can return the combined data needed for the iiif manifest" do
     mets_doc = described_class.new(valid_goobi_xml)
-    expect(mets_doc.combined.first[:label]).to eq " - "
+    expect(mets_doc.combined.first[:label]).to eq nil
     expect(mets_doc.combined.first[:order]).to eq "1"
   end
 end
