@@ -74,10 +74,15 @@ class MetsDocument
   def physical_info(physical_div)
     {
       oid: physical_div.xpath('@CONTENTIDS').inner_text, # oid for child object
-      label: physical_div.xpath("@ORDERLABEL").inner_text,
+      label: normalize_label(physical_div),
       order: physical_div.xpath("@ORDER").inner_text,
       parent_object_oid: oid
     }
+  end
+
+  def normalize_label(physical_div)
+    return nil if physical_div.xpath("@ORDERLABEL").inner_text == " - "
+    physical_div.xpath("@ORDERLABEL").inner_text
   end
 
   def files
