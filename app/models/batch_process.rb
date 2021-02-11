@@ -120,10 +120,15 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def set_values_from_mets(parent_object, metadata_source)
     parent_object.bib = mets_doc.bib
+    parent_object.barcode = mets_doc.barcode
+    parent_object.holding = mets_doc.holding
+    parent_object.item = mets_doc.item
+
     parent_object.visibility = mets_doc.visibility
     parent_object.rights_statement = mets_doc.rights_statement
     parent_object.viewing_direction = mets_doc.viewing_direction
     parent_object.display_layout = mets_doc.viewing_hint
+    parent_object.aspace_uri = mets_doc.metadata_source if mets_doc.valid_aspace?
     setup_for_background_jobs(parent_object, metadata_source)
     parent_object.from_mets = true
     parent_object.last_mets_update = Time.current
