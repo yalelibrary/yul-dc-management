@@ -59,7 +59,7 @@ module Statable
   end
 
   def note_deletion
-    batch_connections.each do |batch_connection|
+    batch_connections.each do
       processing_event("The parent object was deleted", 'parent-deleted')
     end
   end
@@ -79,7 +79,7 @@ module Statable
 
   def processing_event(message, status = 'info')
     unless current_batch_connection
-      Rails.logger.error("no batch connection for #{self.oid} - #{message}")
+      Rails.logger.error("no batch connection for #{oid} - #{message}")
       return "no batch connection"
     end
     IngestEvent.create!(

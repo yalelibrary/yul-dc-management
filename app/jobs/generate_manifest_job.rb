@@ -10,12 +10,12 @@ class GenerateManifestJob < ApplicationJob
   def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
-    generate_manifest(parent_object, current_batch_process, current_batch_connection)
-    index_to_solr(parent_object, current_batch_process, current_batch_connection)
+    generate_manifest(parent_object)
+    index_to_solr(parent_object)
     GeneratePdfJob.perform_later(parent_object, current_batch_process, current_batch_connection)
   end
 
-  def generate_manifest(parent_object, current_batch_process = parent_object.current_batch_process, current_batch_connection = parent_object.current_batch_connection)
+  def generate_manifest(parent_object)
     # generate iiif manifest and save it to s3
     upload = parent_object.iiif_presentation.save
     if upload
@@ -34,7 +34,7 @@ class GenerateManifestJob < ApplicationJob
     raise # this reraises the error after we document it
   end
 
-  def index_to_solr(parent_object, current_batch_process = parent_object.current_batch_process, current_batch_connection = parent_object.current_batch_connection)
+  def index_to_solr(parent_object)
     result = parent_object.solr_index
     if (result&.[]("responseHeader")&.[]("status"))&.zero?
       parent_object.processing_event("Solr index updated", "solr-indexed")
