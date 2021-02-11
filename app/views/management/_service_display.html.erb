@@ -39,6 +39,9 @@
       </tr>
       </thead>
       <tr>
+        <td> Sample Resource Bucket </td>
+        <td id="blacklight_version"> <%= ENV['S3_SOURCE_BUCKET_NAME'].present? ? "#{ENV['S3_SOURCE_BUCKET_NAME']}" : "" %> </td>
+      </tr><tr>
         <td> Sample Bucket </td>
         <td id="blacklight_version"> <%= ENV['SAMPLE_BUCKET'].present? ? "#{ENV['SAMPLE_BUCKET']}" : "" %> </td>
       </tr>
