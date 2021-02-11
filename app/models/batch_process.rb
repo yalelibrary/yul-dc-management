@@ -127,7 +127,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parent_object.rights_statement = mets_doc.rights_statement
     parent_object.viewing_direction = mets_doc.viewing_direction
     parent_object.display_layout = mets_doc.viewing_hint
-    parent_object.aspace_uri = mets_doc.metadata_source_path if mets_doc.valid_aspace?
+    parent_object.aspace_uri = mets_doc.aspace_uri if mets_doc.valid_aspace?
     setup_for_background_jobs(parent_object, metadata_source)
     parent_object.from_mets = true
     parent_object.last_mets_update = Time.current

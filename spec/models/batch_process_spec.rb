@@ -59,7 +59,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       batch_process.file = aspace_xml_upload
       batch_process.save!
       po = ParentObject.find(30_000_557)
-      expect(po.aspace_uri).to eq "/aspace/repositories/11/archival_objects/329771"
+      expect(po.aspace_uri).to eq "/repositories/11/archival_objects/329771"
+      expect(po.metadata_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace/repositories/11/archival_objects/329771"
     end
   end
   describe "running the background jobs" do
