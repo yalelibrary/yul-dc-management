@@ -156,6 +156,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
         parent_object_with_remote_ptiff.current_batch_connection = BatchConnection.create!(connectable: parent_object_with_remote_ptiff, batch_process: batch_process)
         parent_object_with_remote_ptiff.save!
         allow(child_with_remote_ptiff).to receive(:parent_object).and_return(parent_object_with_remote_ptiff)
+        child_with_remote_ptiff.current_batch_connection = BatchConnection.create!(connectable: child_with_remote_ptiff, batch_process: batch_process)
         ptiff = described_class.new(child_with_remote_ptiff)
         expect(ptiff.valid?).to be(true)
       end.to change { IngestEvent.count }.by(1)
