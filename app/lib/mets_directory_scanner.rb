@@ -29,8 +29,14 @@ class MetsDirectoryScanner
       type: 'text/xml',
       tempfile: File.new(xml_file_path.to_s)
     )
-    ## create batch process with the mets file and start running.
-    BatchProcess.new(file: file, batch_action: 'create parent objects').refresh_metadata_cloud_mets
+    begin
+      batch_process = BatchProcess.new(batch_action: 'create parent objects')
+      # set file with setter to trigger reading
+      batch_process.file = file
+      batch_process.save!
+    rescue => e
+      Rails.logger.error("Error processing mets #{xml_file_path} #{e}")
+    end
   end
 
   def self.indicator_file_prefix
