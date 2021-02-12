@@ -5,16 +5,18 @@ require 'rails_helper'
 RSpec.describe MetsDirectoryScanner do
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
-  let(:progress_file_1) { "#{ENV['GOOBI_MOUNT']}/001/#{described_class.indicator_file_prefix}.progress" }
-  let(:progress_file_2) { "#{ENV['GOOBI_MOUNT']}/002/#{described_class.indicator_file_prefix}.progress" }
-  let(:done_file_1) { "#{ENV['GOOBI_MOUNT']}/001/#{described_class.indicator_file_prefix}.done" }
-  let(:done_file_2) { "#{ENV['GOOBI_MOUNT']}/002/#{described_class.indicator_file_prefix}.done" }
+  let(:progress_file_1) { "#{ENV['GOOBI_SCAN_DIRECTORIES']}/001/#{described_class.indicator_file_prefix}.progress" }
+  let(:progress_file_2) { "#{ENV['GOOBI_SCAN_DIRECTORIES']}/002/#{described_class.indicator_file_prefix}.progress" }
+  let(:progress_file_3) { "#{ENV['GOOBI_SCAN_DIRECTORIES']}/003/#{described_class.indicator_file_prefix}.progress" }
+  let(:done_file_1) { "#{ENV['GOOBI_SCAN_DIRECTORIES']}/001/#{described_class.indicator_file_prefix}.done" }
+  let(:done_file_2) { "#{ENV['GOOBI_SCAN_DIRECTORIES']}/002/#{described_class.indicator_file_prefix}.done" }
+  let(:done_file_3) { "#{ENV['GOOBI_SCAN_DIRECTORIES']}/003/#{described_class.indicator_file_prefix}.done" }
 
   around do |example|
-    original_metadata_cloud_host = ENV['GOOBI_MOUNT']
-    ENV['GOOBI_MOUNT'] = Rails.root.join("spec", "fixtures", "scan_test").to_s
+    original_goobi_scan_directories = ENV['GOOBI_SCAN_DIRECTORIES']
+    ENV['GOOBI_SCAN_DIRECTORIES'] = Rails.root.join("spec", "fixtures", "scan_test", "dcs").to_s
     example.run
-    ENV['GOOBI_MOUNT'] = original_metadata_cloud_host
+    ENV['GOOBI_SCAN_DIRECTORIES'] = original_goobi_scan_directories
   end
 
   before do
@@ -28,7 +30,8 @@ RSpec.describe MetsDirectoryScanner do
   end
 
   def clean_up_files
-    [progress_file_1, progress_file_2, done_file_1, done_file_2].each do |file|
+    # files ending with _3 should never exist, but may because of a problem with the code, so cleanup, just in case
+    [progress_file_1, progress_file_2, progress_file_3, done_file_1, done_file_2, done_file_3].each do |file|
       File.delete(file) if File.exist?(file)
     end
   end
@@ -42,8 +45,20 @@ RSpec.describe MetsDirectoryScanner do
     expect(File.exist?(done_file_2)).to be_truthy
   end
 
+  it "will scan a directory using GOOBI_MOUNT if GOOBI_SCAN_DIRECTORIES doesn't exist" do
+    expect(BatchProcess).to receive(:new).exactly(2).times.and_return(batch_process)
+    expect(File.exist?(done_file_1)).to be_falsey
+    expect(File.exist?(done_file_2)).to be_falsey
+    ENV['GOOBI_SCAN_DIRECTORIES'] = nil
+    ENV['GOOBI_MOUNT'] = Rails.root.join("spec", "fixtures", "scan_test").to_s
+    described_class.perform_scan
+    ENV['GOOBI_SCAN_DIRECTORIES'] = Rails.root.join("spec", "fixtures", "scan_test", "dcs").to_s
+    expect(File.exist?(done_file_1)).to be_truthy
+    expect(File.exist?(done_file_2)).to be_truthy
+  end
+
   it "will skip directory with done file" do
-    File.new("#{ENV['GOOBI_MOUNT']}/001/#{described_class.indicator_file_prefix}.done", "w")
+    File.new(done_file_1, "w")
     expect(BatchProcess).to receive(:new).exactly(1).times.and_return(batch_process)
     expect(File.exist?(done_file_2)).to be_falsey
     described_class.perform_scan
@@ -51,7 +66,7 @@ RSpec.describe MetsDirectoryScanner do
   end
 
   it "will skip directory with young enough progress file" do
-    File.new("#{ENV['GOOBI_MOUNT']}/002/#{described_class.indicator_file_prefix}.progress", "w")
+    File.new(progress_file_2, "w")
     expect(BatchProcess).to receive(:new).exactly(1).times.and_return(batch_process)
     expect(File.exist?(done_file_1)).to be_falsey
     described_class.perform_scan
