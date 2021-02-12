@@ -18,7 +18,7 @@ class MetsDirectoryScanner
             process_file path
           end
         rescue Errno::EEXIST # rubocop:disable Lint/HandleExceptions
-          # we get here is means some other instance of a scanner just put in a progress file,
+          # If we get here it means some other instance of a scanner just put in a progress file,
           # it's ok to let them handle it
         end
       end
@@ -40,9 +40,9 @@ class MetsDirectoryScanner
         # check for errors in management.
         # If we wait to create the done file until it is successful through the entire process,
         # we may pile up failed jobs if there's something wrong with the mets that makes it error out on
-        # some step or the import.
+        # some step of the import.
         # The process will restart using delayed jobs without kicking it off again from a scan.
-        # If we need to force a retry, we can manually delete the done file for a mets directory after the problem
+        # If we need to force a retry, we will manually delete the done file for a mets directory after the problem
         # is corrected.
         done_file = File.join(File.dirname(xml_file_path), "#{indicator_file_prefix}.done")
         progress_file = File.join(File.dirname(xml_file_path), "#{indicator_file_prefix}.progress")
