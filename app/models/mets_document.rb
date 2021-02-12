@@ -51,7 +51,15 @@ class MetsDocument
     return false unless @mets.xpath("//mets:file").count >= 1
     return false if rights_statement.blank?
     return false unless valid_metadata_source_path?
+    return false if fixture_images_in_production?
     true
+  end
+
+  # ensure we don't accidentally upload tiny fixture images in production
+  def fixture_images_in_production?
+    production_environment = ENV.fetch("RAILS_ENV") != "test" && ENV.fetch("RAILS_ENV") != "development"
+    has_fixtures = files.any? { |file| file[:mets_access_master_path].include?("spec/fixtures") }
+    production_environment && has_fixtures
   end
 
   def all_images_present?
@@ -74,10 +82,15 @@ class MetsDocument
   def physical_info(physical_div)
     {
       oid: physical_div.xpath('@CONTENTIDS').inner_text, # oid for child object
-      label: physical_div.xpath("@ORDERLABEL").inner_text,
+      label: normalize_label(physical_div),
       order: physical_div.xpath("@ORDER").inner_text,
       parent_object_oid: oid
     }
+  end
+
+  def normalize_label(physical_div)
+    return nil if physical_div.xpath("@ORDERLABEL").inner_text == " - "
+    physical_div.xpath("@ORDERLABEL").inner_text
   end
 
   def files

@@ -3,6 +3,7 @@
 # It is synonymous with a parent oid in Ladybird.
 
 class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
+  has_paper_trail
   include JsonFile
   include SolrIndexable
   include Statable
@@ -60,11 +61,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     false
   end
 
-  # See also from_ladybird_for_the_first_time?
+  # Returns true if last_mets_update has changed from nil to some value,
+  # indicating assigning values from the mets document
   def from_mets_for_the_first_time?
-    return true if changes["last_mets_update"] &&
-                   !changes["last_mets_update"][0] &&
-                   changes["last_mets_update"][1]
+    return true if last_mets_update_before_last_save.nil? && !last_mets_update.nil?
     false
   end
 
@@ -200,8 +200,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def voyager_json=(v_record)
     super(v_record)
     return v_record if v_record.blank?
-    self.holding = v_record["holdingId"]
-    self.item = v_record["itemId"]
+    self.holding = v_record["holdingId"] unless v_record["holdingId"].zero?
+    self.item = v_record["itemId"] unless v_record["itemId"].zero?
     self.last_id_update = DateTime.current
     self.last_voyager_update = DateTime.current
   end
@@ -216,20 +216,20 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def voyager_cloud_url
-    # if we're working from a mets document, use the MetadataCloud call from the mets document
-    return current_batch_process.mets_doc.full_metadata_cloud_url if from_mets && current_batch_process.mets_doc.full_metadata_cloud_url
     raise StandardError, "Bib id required to build Voyager url" unless bib.present?
-    identifier_block = if !barcode.present?
-                         "/bib/#{bib}"
-                       else
+    identifier_block = if barcode.present?
                          "/barcode/#{barcode}?bib=#{bib}"
+                       elsif holding.present?
+                         "/holding/#{holding}?bib=#{bib}"
+                       elsif item.present?
+                         "/item/#{item}?bib=#{bib}"
+                       else
+                         "/bib/#{bib}"
                        end
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/ils#{identifier_block}"
   end
 
   def aspace_cloud_url
-    # if we're working from a mets document, use the MetadataCloud call from the mets document
-    return current_batch_process.mets_doc.full_metadata_cloud_url if from_mets && current_batch_process.mets_doc.full_metadata_cloud_url
     raise StandardError, "ArchiveSpace uri required to build ArchiveSpace url" unless aspace_uri.present?
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace#{aspace_uri}"
   end

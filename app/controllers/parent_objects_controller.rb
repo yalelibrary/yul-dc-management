@@ -2,6 +2,7 @@
 
 class ParentObjectsController < ApplicationController
   before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata, :select_thumbnail]
+  before_action :set_paper_trail_whodunnit
 
   # GET /parent_objects
   # GET /parent_objects.json

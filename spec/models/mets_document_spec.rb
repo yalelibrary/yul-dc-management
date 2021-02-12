@@ -24,6 +24,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
   let(:bad_bib_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_bib.xml") }
   let(:bad_aspace_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_aspace.xml") }
   let(:bad_voyager_uri_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_voyager_uri.xml") }
+  let(:production_mets_file) { File.open("spec/fixtures/goobi/metadata/repositories11archival_objects329771.xml") }
   let(:has_holding_file) { File.open("spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml") }
 
   it "can be instantiated with xml from the DB instead of a file" do
@@ -63,6 +64,28 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
   end
 
   describe "determining if the image files described are available to the application" do
+    describe "setting the environment to production" do
+      around do |example|
+        original_env = ENV["RAILS_ENV"]
+        ENV["RAILS_ENV"] = "production"
+        example.run
+        ENV["RAILS_ENV"] = original_env
+      end
+
+      it "returns false with fixture paths in non-dev and non-test environments" do
+        mets_doc = described_class.new(valid_goobi_xml)
+        expect(mets_doc.all_images_present?).to be_truthy
+        expect(mets_doc.fixture_images_in_production?).to be_truthy
+        expect(mets_doc.valid_mets?).to be_falsey
+      end
+
+      it "returns true with non-fixture paths in non-dev and non-test environments" do
+        mets_doc = described_class.new(production_mets_file)
+        expect(mets_doc.all_images_present?).to be_falsey
+        expect(mets_doc.fixture_images_in_production?).to be_falsey
+      end
+    end
+
     it "returns false for a valid METs file that points to images that are not available on the file system" do
       mets_doc = described_class.new(image_missing_file)
       expect(mets_doc.all_images_present?).to be_falsey
@@ -119,7 +142,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
 
   it "can return the label, order, child oid for the physical structure" do
     mets_doc = described_class.new(valid_goobi_xml)
-    expect(mets_doc.physical_divs.first[:label]).to eq " - "
+    expect(mets_doc.physical_divs.first[:label]).to eq nil
     expect(mets_doc.physical_divs.first[:order]).to eq "1"
     expect(mets_doc.physical_divs.first[:oid]).to eq "30000318"
   end
@@ -131,7 +154,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
 
   it "can return the combined data needed for the iiif manifest" do
     mets_doc = described_class.new(valid_goobi_xml)
-    expect(mets_doc.combined.first[:label]).to eq " - "
+    expect(mets_doc.combined.first[:label]).to eq nil
     expect(mets_doc.combined.first[:order]).to eq "1"
   end
 end

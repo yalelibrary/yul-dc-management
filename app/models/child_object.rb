@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ChildObject < ApplicationRecord
+  has_paper_trail
   include Statable
   belongs_to :parent_object, foreign_key: 'parent_object_oid', class_name: "ParentObject"
   has_many :batch_connections, as: :connectable

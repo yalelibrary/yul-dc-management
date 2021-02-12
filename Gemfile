@@ -24,6 +24,8 @@ gem 'omniauth'
 gem 'omniauth-cas'
 # This addresses CVE-2015-9284 https://github.com/advisories/GHSA-ww4x-rwq6-qpgf
 gem 'omniauth-rails_csrf_protection', '~> 0.1'
+# Audit trail for changes to ActiveRecord models
+gem 'paper_trail'
 # Yale-specific pairtree gem
 gem 'partridge', '~> 0.1.2'
 # Use postgresql as the database for Active Record

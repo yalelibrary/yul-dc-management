@@ -45,6 +45,7 @@ module SolrIndexable
       collectionId_ssim: json_to_index["collectionId"],
       collectionId_tesim: json_to_index["collectionId"],
       containerGrouping_ssim: extract_container_information(json_to_index),
+      containerGrouping_tesim: extract_container_information(json_to_index),
       contents_tesim: json_to_index["contents"],
       contributor_tsim: json_to_index["contributor"],
       contributorDisplay_tsim: json_to_index["contributorDisplay"],
