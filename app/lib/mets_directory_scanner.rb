@@ -33,7 +33,20 @@ class MetsDirectoryScanner
       batch_process = BatchProcess.new(batch_action: 'create parent objects')
       # set file with setter to trigger reading
       batch_process.file = file
-      batch_process.save!
+      if batch_process.save!
+        # Jobs have been kicked off and batch job has been created, so we'll mark it as done and
+        # check for errors in management.
+        # If we wait to create the done file until it is successful through the entire process,
+        # we may pile up failed jobs if there's something wrong with the mets that makes it error out on
+        # some step or the import.
+        # The process will restart using delayed jobs without kicking it off again from a scan.
+        # If we need to force a retry, we can manually delete the done file for a mets directory after the problem
+        # is corrected.
+        done_file = File.join(File.dirname(xml_file_path), "#{indicator_file_prefix}.done")
+        progress_file = File.join(File.dirname(xml_file_path), "#{indicator_file_prefix}.progress")
+        File.new(done_file, "w")
+        File.delete(progress_file) if File.exist?(progress_file)
+      end
     rescue => e
       Rails.logger.error("Error processing mets #{xml_file_path} #{e}")
     end

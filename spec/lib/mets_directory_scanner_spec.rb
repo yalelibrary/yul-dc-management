@@ -8,6 +8,7 @@ RSpec.describe MetsDirectoryScanner do
   let(:progress_file_1) { "#{ENV['GOOBI_MOUNT']}/001/#{described_class.indicator_file_prefix}.progress" }
   let(:progress_file_2) { "#{ENV['GOOBI_MOUNT']}/002/#{described_class.indicator_file_prefix}.progress" }
   let(:done_file_1) { "#{ENV['GOOBI_MOUNT']}/001/#{described_class.indicator_file_prefix}.done" }
+  let(:done_file_2) { "#{ENV['GOOBI_MOUNT']}/002/#{described_class.indicator_file_prefix}.done" }
 
   around do |example|
     original_metadata_cloud_host = ENV['GOOBI_MOUNT']
@@ -18,44 +19,53 @@ RSpec.describe MetsDirectoryScanner do
 
   before do
     allow(batch_process).to receive(:validate_import).and_return(nil)
-    # delete existing done and progress files out of the directory
-    Dir.glob("#{ENV['GOOBI_MOUNT']}/**/#{described_class.indicator_file_prefix}.progress").each { |file| File.delete(file) }
-    Dir.glob("#{ENV['GOOBI_MOUNT']}/**/#{described_class.indicator_file_prefix}.done").each { |file| File.delete(file) }
+    # (They should be cleaned up by after, but just in case some got left behind)
+    clean_up_files
   end
 
   after do
-    # clean up by deleting existing done and progress files out of the directory
-    Dir.glob("#{ENV['GOOBI_MOUNT']}/**/#{described_class.indicator_file_prefix}.progress").each { |file| File.delete(file) }
-    Dir.glob("#{ENV['GOOBI_MOUNT']}/**/#{described_class.indicator_file_prefix}.done").each { |file| File.delete(file) }
+    clean_up_files
+  end
+
+  def clean_up_files
+    [progress_file_1, progress_file_2, done_file_1, done_file_2].each do |file|
+      File.delete(file) if File.exist?(file)
+    end
   end
 
   it "will scan a directory and create jobs with progress file" do
     expect(BatchProcess).to receive(:new).exactly(2).times.and_return(batch_process)
+    expect(File.exist?(done_file_1)).to be_falsey
+    expect(File.exist?(done_file_2)).to be_falsey
     described_class.perform_scan
-    expect(File.exist?(progress_file_1)).to be_truthy
-    expect(File.exist?(progress_file_2)).to be_truthy
+    expect(File.exist?(done_file_1)).to be_truthy
+    expect(File.exist?(done_file_2)).to be_truthy
   end
 
   it "will skip directory with done file" do
     File.new("#{ENV['GOOBI_MOUNT']}/001/#{described_class.indicator_file_prefix}.done", "w")
     expect(BatchProcess).to receive(:new).exactly(1).times.and_return(batch_process)
+    expect(File.exist?(done_file_2)).to be_falsey
     described_class.perform_scan
-    expect(File.exist?(progress_file_2)).to be_truthy
+    expect(File.exist?(done_file_2)).to be_truthy
   end
 
   it "will skip directory with young enough progress file" do
     File.new("#{ENV['GOOBI_MOUNT']}/002/#{described_class.indicator_file_prefix}.progress", "w")
     expect(BatchProcess).to receive(:new).exactly(1).times.and_return(batch_process)
+    expect(File.exist?(done_file_1)).to be_falsey
     described_class.perform_scan
-    expect(File.exist?(progress_file_1)).to be_truthy
+    expect(File.exist?(done_file_1)).to be_truthy
   end
 
   it "will remove old progress file and process" do
     File.new(progress_file_1, "w")
     File.utime(Time.now.utc, Time.now.utc - 5.days, progress_file_1)
     expect(BatchProcess).to receive(:new).exactly(2).times.and_return(batch_process)
+    expect(File.exist?(done_file_1)).to be_falsey
+    expect(File.exist?(done_file_2)).to be_falsey
     described_class.perform_scan
-    expect(File.exist?(progress_file_1)).to be_truthy
-    expect(File.exist?(progress_file_2)).to be_truthy
+    expect(File.exist?(done_file_1)).to be_truthy
+    expect(File.exist?(done_file_2)).to be_truthy
   end
 end
