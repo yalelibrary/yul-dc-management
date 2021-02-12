@@ -5,9 +5,9 @@ require 'rails_helper'
 RSpec.describe MetsDirectoryScanner do
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
-  let(:progress_file_1) {"#{ENV['GOOBI_MOUNT']}/001/#{described_class.indicator_file_prefix}.progress"}
-  let(:progress_file_2) {"#{ENV['GOOBI_MOUNT']}/002/#{described_class.indicator_file_prefix}.progress"}
-  let(:done_file_1) {"#{ENV['GOOBI_MOUNT']}/001/#{described_class.indicator_file_prefix}.done"}
+  let(:progress_file_1) { "#{ENV['GOOBI_MOUNT']}/001/#{described_class.indicator_file_prefix}.progress" }
+  let(:progress_file_2) { "#{ENV['GOOBI_MOUNT']}/002/#{described_class.indicator_file_prefix}.progress" }
+  let(:done_file_1) { "#{ENV['GOOBI_MOUNT']}/001/#{described_class.indicator_file_prefix}.done" }
 
   around do |example|
     original_metadata_cloud_host = ENV['GOOBI_MOUNT']
