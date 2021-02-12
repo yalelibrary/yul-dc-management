@@ -209,7 +209,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
           expect(ChildObject.count).to eq 213
           expect(batch_process.batch_connections.where(connectable_type: "ParentObject").count).to eq(5)
           expect(batch_process.batch_connections.where(connectable_type: "ChildObject").count).to eq(213)
-          expect(IngestEvent.where(batch_connection: ChildObject.first.batch_connections_for(batch_process)).should(exist))
         end
       end
 
