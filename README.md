@@ -91,11 +91,24 @@ This starts all of the applications, as they are all dependencies of yul-blackli
 
 - Access the image instance at `http://localhost:8182`
 
-- Access the manifests instance at `http://localhost/manifests`
-
 - Access the management app at `http://localhost:3001/management`
 
 ### Troubleshooting
+
+#### Bundling gems
+The `cam sh [service]` shortcut automatically includes `bundle exec`, so if you've used this command to bash into the container, you /will not/ be able to run `bundle install` in the container, because you are actually running `bundle exec bundle install`.
+
+In order to get new gems, if it's a gem someone else has added to the main branch, you can run `cam pull [service]` to pull the newest docker image, which should have the gem already installed. If it's a gem you are adding, outside of the container you can run `cam bundle management && cam bundle management_worker`.
+
+#### Speeding up development & testing
+Even if you are on the VPN, you can bring up the code with either `VPN=false cam up` (brings up blacklight and all of its dependencies, including management) or `VPN=false cam up management` (brings up management & its dependencies, excludes blacklight and image service). This means that the tests will not go to the live MetadataCloud to get data, meaning they will be able to run faster.
+
+#### Bashing into containers
+For rails services, you can use the shortcut `cam sh [service]`, including `cam sh management_worker` (helpful if you're having an issue with background jobs).
+- `cam sh management` (prefaces all commands with `bundle exec` so you don't have to type it constantly, use for running tests & rake tasks)
+- `cam sh management_worker` - helpful if you're having an issue with background jobs
+- `cam exec db --user postgres bash` or `cam exec db --user root bash`
+- `cam exec solr --user solr bash`
 
 #### If on VPN and cannot connect to network
 Check your Docker Engine setting:
@@ -254,7 +267,7 @@ To upload a new CSV to S3:
  - Download the existing cas_users.csv from S3 using the AWS management console.
  - Place the downloaded csv in `config/cas_users.csv` and update it.
  - Run the rake task from management shell with `rake authorized_users:upload`.
- 
+
  To upload to different environments, run from management container:
  ```bash
 SAMPLE_BUCKET=yul-dc-development-samples rake authorized_users:upload
