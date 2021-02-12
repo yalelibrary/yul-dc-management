@@ -134,7 +134,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         expect(ParentObject.find(16_414_889).authoritative_metadata_source_id).to eq 2
         expect(ParentObject.find(16_854_285).authoritative_metadata_source_id).to eq 1
       end
-      
+
       it "has an oid associated with it" do
         batch_process.file = xml_upload
         batch_process.save!
