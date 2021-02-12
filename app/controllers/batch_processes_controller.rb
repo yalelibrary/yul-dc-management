@@ -74,6 +74,7 @@ class BatchProcessesController < ApplicationController
 
   def show_child; end
 
+  # This is temporary for testing until we enable scheduling
   def trigger_mets_scan
     MetsDirectoryScanner.perform_scan
     redirect_to batch_processes_path
