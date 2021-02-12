@@ -8,10 +8,11 @@ class MetsDirectoryScanner
       Find.find(directory) do |path|
         next unless path =~ /.*_mets\.xml$/ && path !~ /.*xslt_result_mets\.xml$/
         is_done = File.exist?(File.join(File.dirname(path), "#{indicator_file_prefix}.done"))
+        progress_file = File.join(File.dirname(path), "#{indicator_file_prefix}.progress")
+        File.delete(progress_file) if File.exist?(progress_file) && File.mtime(progress_file) < (Time.now.utc - 1.day)
+        is_in_progress = File.exist?(progress_file)
         begin
-          unless is_done
-            progress_file = File.join(File.dirname(path), "#{indicator_file_prefix}.progress")
-            File.delete(progress_file) if File.exist?(progress_file) && File.mtime(progress_file) < (Time.now.utc - 1.day)
+          unless is_done || is_in_progress
             #  The following will fail if file is not created by this call:
             IO.sysopen(progress_file, Fcntl::O_WRONLY | Fcntl::O_EXCL | Fcntl::O_CREAT)
             #  If we get here, the done file doesn't exist, and we just created the progress file....so we are ready to go
