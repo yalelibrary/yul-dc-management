@@ -74,6 +74,11 @@ class BatchProcessesController < ApplicationController
 
   def show_child; end
 
+  def trigger_mets_scan
+    MetsDirectoryScanner.perform_scan
+    redirect_to batch_processes_path
+  end
+
   private
 
     def set_batch_process

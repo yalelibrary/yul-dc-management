@@ -2,7 +2,10 @@
 
 Rails.application.routes.draw do
   resources :batch_processes do
-    collection { post :import }
+    collection do
+      post :import
+      get :trigger_mets_scan
+    end
     member do
       get :download
       get :download_created

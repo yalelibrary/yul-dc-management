@@ -11,13 +11,14 @@ class MetsDirectoryScanner
         unless is_done
           progress_file = File.join(File.dirname(path), "#{indicator_file_prefix}.progress")
           File.delete(progress_file) if File.exist?(progress_file) && File.mtime(progress_file) < (Time.now.utc - 1.day)
-          #  The following will fail if file is not created by this call
+          #  The following will fail if file is not created by this call:
           IO.sysopen(progress_file, Fcntl::O_WRONLY | Fcntl::O_EXCL | Fcntl::O_CREAT)
           #  If we get here, the done file doesn't exist, and we just created the progress file....so we are ready to go
           process_file path
         end
       rescue Errno::EEXIST # rubocop:disable Lint/HandleExceptions
-        # we get here is some other instance of a scanner just put in a progress file, which is ok
+        # we get here is means some other instance of a scanner just put in a progress file,
+        # it's ok to let them handle it
       end
     end
   end
@@ -29,11 +30,11 @@ class MetsDirectoryScanner
       tempfile: File.new(xml_file_path.to_s)
     )
     ## create batch process with the mets file and start running.
-    BatchProcess.new(file: file, batch_action: 'create parent objects')
+    BatchProcess.new(file: file, batch_action: 'create parent objects').refresh_metadata_cloud_mets
   end
 
   def self.indicator_file_prefix
-    ENV['CLUSTER_NAME'] || 'NO_CLUSTER_NAME'
+    ENV['CLUSTER_NAME'] || 'NO_ENV_NAME'
   end
 
   def self.root_directory
