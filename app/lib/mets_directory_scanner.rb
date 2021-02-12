@@ -33,9 +33,7 @@ class MetsDirectoryScanner
       tempfile: File.new(xml_file_path.to_s)
     )
     begin
-      batch_process = BatchProcess.new(batch_action: 'create parent objects')
-      # set file with setter to trigger reading
-      batch_process.file = file
+      batch_process = BatchProcess.new(batch_action: 'create parent objects', user: system_user, file: file)
       if batch_process.save!
         # Jobs have been kicked off and batch job has been created, so we'll mark it as done and
         # check for errors in management.
@@ -61,5 +59,14 @@ class MetsDirectoryScanner
 
   def self.scan_directories
     ENV['GOOBI_SCAN_DIRECTORIES']&.split(',') || (ENV['GOOBI_MOUNT'] && [File.join('/', ENV['GOOBI_MOUNT'], 'dcs')]) || ['/brbl-dsu/dcs']
+  end
+
+  def self.system_user
+    system_user = User.find_by_uid('System')
+    unless system_user
+      system_user = User.new(uid: 'System')
+      Rails.logger.error("Unable to save system user") unless system_user.save!
+    end
+    system_user
   end
 end
