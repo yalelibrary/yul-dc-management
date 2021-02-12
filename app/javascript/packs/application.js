@@ -53,7 +53,7 @@ $( document ).on('turbolinks:load', function() {
       initComplete: function () {
         // create the inputs for each header
         if (hasSearch) {
-          let searchRow = $("<tr role='row'></tr>");
+          let searchRow = $("<tr role='row' id='search-row'></tr>");
           let index = 0;
           this.api().columns().every(function () {
             let column = this;
@@ -84,6 +84,10 @@ $( document ).on('turbolinks:load', function() {
           $(this.api().table().header()).append(searchRow);
         }
       }
+    })
+    $(document).on('turbolinks:before-cache', function(){
+      dataTable.api().destroy();
+      $('#search-row').remove();
     })
   }
 });
