@@ -45,18 +45,6 @@ RSpec.describe MetsDirectoryScanner do
     expect(File.exist?(done_file_2)).to be_truthy
   end
 
-  it "will scan a directory using GOOBI_MOUNT if GOOBI_SCAN_DIRECTORIES doesn't exist" do
-    expect(BatchProcess).to receive(:new).exactly(2).times.and_return(batch_process)
-    expect(File.exist?(done_file_1)).to be_falsey
-    expect(File.exist?(done_file_2)).to be_falsey
-    ENV['GOOBI_SCAN_DIRECTORIES'] = nil
-    ENV['GOOBI_MOUNT'] = Rails.root.join("spec", "fixtures", "scan_test").to_s
-    described_class.perform_scan
-    ENV['GOOBI_SCAN_DIRECTORIES'] = Rails.root.join("spec", "fixtures", "scan_test", "dcs").to_s
-    expect(File.exist?(done_file_1)).to be_truthy
-    expect(File.exist?(done_file_2)).to be_truthy
-  end
-
   it "will skip directory with done file" do
     File.new(done_file_1, "w")
     expect(BatchProcess).to receive(:new).exactly(1).times.and_return(batch_process)
@@ -82,5 +70,32 @@ RSpec.describe MetsDirectoryScanner do
     described_class.perform_scan
     expect(File.exist?(done_file_1)).to be_truthy
     expect(File.exist?(done_file_2)).to be_truthy
+  end
+
+  describe "when GOOBI_SCAN_DIRECTORIES doesn't exists, but GOOBI_MOUNT does" do
+    around do |example|
+      progress_file_1
+      progress_file_2
+      progress_file_3
+      done_file_1
+      done_file_2
+      done_file_3
+      original_goobi_scan_directories = ENV['GOOBI_SCAN_DIRECTORIES']
+      ENV['GOOBI_SCAN_DIRECTORIES'] = nil
+      original_goobi_mount = ENV['GOOBI_MOUNT']
+      ENV['GOOBI_MOUNT'] = Rails.root.join("spec", "fixtures", "scan_test").to_s
+      example.run
+      ENV['GOOBI_SCAN_DIRECTORIES'] = original_goobi_scan_directories
+      ENV['GOOBI_MOUNT'] = original_goobi_mount
+    end
+
+    it "will scan a directory using GOOBI_MOUNT" do
+      expect(BatchProcess).to receive(:new).exactly(2).times.and_return(batch_process)
+      expect(File.exist?(done_file_1)).to be_falsey
+      expect(File.exist?(done_file_2)).to be_falsey
+      described_class.perform_scan
+      expect(File.exist?(done_file_1)).to be_truthy
+      expect(File.exist?(done_file_2)).to be_truthy
+    end
   end
 end
