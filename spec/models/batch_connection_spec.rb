@@ -31,7 +31,7 @@ RSpec.describe BatchConnection, type: :model, prep_metadata_sources: true do
     batch_process.save!
     batch_process.run_callbacks :create
     expect(batch_process.batch_connections.where(connectable_type: "ParentObject").count).to eq 5
-    expect(batch_process.batch_connections.where(connectable_type: "ParentObject").count).to eq 213
+    expect(batch_process.batch_connections.where(connectable_type: "ChildObject").count).to eq 213
     # expect(batch_process.batch_connections.count).to eq 218
     po = ParentObject.find(2_034_600)
     bp = BatchProcess.find(batch_process.id)
