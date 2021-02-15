@@ -1,6 +1,6 @@
 # README
 
-[![CircleCI](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/master.svg?style=svg)](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/master) ![Docker Image CI](https://github.com/yalelibrary/yul-dc-management/workflows/Docker%20Image%20CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/yalelibrary/yul-dc-management/badge.svg?branch=master)](https://coveralls.io/github/yalelibrary/yul-dc-management?branch=master)
+[![CircleCI](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/main.svg?style=svg)](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/main) ![Docker Image CI](https://github.com/yalelibrary/yul-dc-management/workflows/Docker%20Image%20CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/yalelibrary/yul-dc-management/badge.svg?branch=main)](https://coveralls.io/github/yalelibrary/yul-dc-management?branch=main)
 
 # Table of contents
 
@@ -65,7 +65,7 @@ You can get the latest camerata version at any point by updating the code and re
 
 ```bash
 cd yul-dc-camerata
-git pull origin master
+git pull origin main
 bundle install
 rake install
 ```
@@ -200,7 +200,7 @@ If you'd like to hit the Metadata cloud endpoint and are running on the VPN, the
   ### Dynatrace
 
   - We've integrated Dynatrace OneAgent for monitoring our Docker container environments.
-    - Instructions on configuring OneAgent can be found [here](https://github.com/yalelibrary/yul-dc-camerata/tree/master/base)
+    - Instructions on configuring OneAgent can be found [here](https://github.com/yalelibrary/yul-dc-camerata/tree/main/base)
 
 
 ## Running the rake tasks
