@@ -121,7 +121,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
           expect do
             batch_process.file = Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "small_short_fixture_ids.csv"))
             batch_process.save
-          end.to change { batch_process.batch_connections.size }.from(0).to(11)
+          end.to change { batch_process.batch_connections.count }.from(0).to(11)
           expect(ParentObject.count).to eq 4
           expect(ChildObject.count).to eq 7
           expect(batch_process.batch_connections.where(connectable_type: "ParentObject").count).to eq(4)
