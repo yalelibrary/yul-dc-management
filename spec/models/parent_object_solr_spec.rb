@@ -29,6 +29,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       expect(solr_document.values).not_to include(nil)
     end
 
+    it "does not have empty strings in to_solr hash" do
+      parent_object.bib = ""
+      parent_object.save!
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document.values).not_to include("")
+    end
+
     it "will index the count of child objects" do
       solr_document = parent_object.reload.to_solr
       expect(solr_document[:imageCount_isi]).to eq 1
