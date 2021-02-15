@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:dv="http://dfg-viewer.de/" xmlns:intranda="http://intranda.com/MODS/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OBJID="191" xsi:schemaLocation="http://www.loc.gov/standards/premis/ http://www.loc.gov/standards/premis/v2/premis-v2-0.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/standards/mix/ http://www.loc.gov/standards/mix/mix.xsd">
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:dv="http://dfg-viewer.de/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OBJID="191" xsi:schemaLocation="http://www.loc.gov/standards/premis/ http://www.loc.gov/standards/premis/v2/premis-v2-0.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/standards/mix/ http://www.loc.gov/standards/mix/mix.xsd">
   <mets:metsHdr CREATEDATE="2020-12-03T14:09:47Z">
     <mets:agent OTHERTYPE="SOFTWARE" ROLE="CREATOR" TYPE="OTHER">
       <mets:name>Goobi - 3647a - 2020-08-02 19:35:26+0000</mets:name>
@@ -15,7 +15,7 @@
           </mods:titleInfo>
           <mods:identifier type="PPNanalog">/ils/barcode/39002091118928?bib=8394689</mods:identifier>
           <mods:recordInfo>
-            <mods:recordIdentifier source="gbv-ppn">30000317</mods:recordIdentifier>
+            <mods:recordIdentifier source="gbv-ppn">30001317</mods:recordIdentifier>
           </mods:recordInfo>
           <mods:part>Completely digitized</mods:part>
           <mods:classification authority="ivdcc">DefaultCollection</mods:classification>
@@ -36,13 +36,6 @@
             <mods:namePart type="given">Xiutang.</mods:namePart>
             <mods:displayForm>Chen, Xiutang.</mods:displayForm>
           </mods:name>
-          <mods:extension>
-            <intranda:intranda>
-              <intranda:directionRTL>false</intranda:directionRTL>
-              <intranda:ViewingDirection>left-to-right</intranda:ViewingDirection>
-              <intranda:ViewingHint>individuals</intranda:ViewingHint>
-            </intranda:intranda>
-          </mods:extension>
         </mods:mods>
       </mets:xmlData>
     </mets:mdWrap>
@@ -87,7 +80,7 @@
     <mets:div ADMID="AMD" DMDID="DMDLOG_0000" ID="LOG_0000" LABEL="Di qiu quan tu" TYPE="ILSObject" />
   </mets:structMap>
   <mets:structMap TYPE="PHYSICAL">
-    <mets:div CONTENTIDS="30000317" ID="PHYS_0000" TYPE="physSequence">
+    <mets:div CONTENTIDS="30001317" ID="PHYS_0000" TYPE="physSequence">
       <mets:div CONTENTIDS="30000318" ID="PHYS_0001" ORDER="1" ORDERLABEL=" - " TYPE="page">
         <mets:fptr FILEID="444d3360-bf78-4e35-9850-44ef7f832105" />
         <mets:fptr FILEID="63c82a0c-be28-4b42-ae74-c13922db5c15" />
