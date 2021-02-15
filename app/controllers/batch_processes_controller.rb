@@ -82,7 +82,7 @@ class BatchProcessesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   private
 
     def set_batch_process
