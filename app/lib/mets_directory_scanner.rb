@@ -19,7 +19,8 @@ class MetsDirectoryScanner
   end
 
   def self.indicator_file_prefix
-    "dcs-#{ENV['CLUSTER_NAME'] || 'NO_ENV_NAME'}"
+    env_info = (ENV['METS_SCAN_LOCK_NAME']) || (ENV['BLACKLIGHT_BASE_URL'] && URI.parse(ENV['BLACKLIGHT_BASE_URL']).host.split('.').first) || 'NO_ENV_NAME'
+    "dcs-#{env_info}"
   end
 
   def self.scan_directories
