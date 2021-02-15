@@ -19,7 +19,8 @@ class MetsDirectoryScanner
   end
 
   def self.indicator_file_prefix
-    "dcs-#{ENV['CLUSTER_NAME'] || 'NO_ENV_NAME'}"
+    env_info = (ENV['METS_SCAN_LOCK_NAME']) || (ENV['BLACKLIGHT_BASE_URL'] && URI.parse(ENV['BLACKLIGHT_BASE_URL']).host.split('.').first) || 'NO_ENV_NAME'
+    "dcs-#{env_info}"
   end
 
   def self.scan_directories
@@ -42,7 +43,7 @@ class MetsDirectoryScanner
     is_in_progress = File.exist?(progress_file)
     begin
       unless is_done || is_in_progress
-        #  The following will fail if file is not created by this call:
+        #  The following will fail if file is not created by this call because of Fcntl::O_EXCL option:
         IO.sysopen(progress_file, Fcntl::O_WRONLY | Fcntl::O_EXCL | Fcntl::O_CREAT)
         #  If we get here, the done file doesn't exist, and we just created the progress file....so we are ready to go
         process_file path

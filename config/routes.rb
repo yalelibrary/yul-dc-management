@@ -4,7 +4,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :batch_processes do
     collection do
       post :import
-      get :trigger_mets_scan
+      post :trigger_mets_scan
     end
     member do
       get :download

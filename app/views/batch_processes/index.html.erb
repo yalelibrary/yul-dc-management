@@ -1,8 +1,11 @@
 <div class='container'>
-  <% if flash[:notice] %>
-    <div class='notice'><%= flash[:notice] %></div>
-  <% end %>
-  <h1>Batch Processes</h1>
+  <%= render partial: "/management/flash_messages" %>
+  <div class="row">
+    <h1>Batch Processes</h1>
+  </div>    
+  <div class="float-right">
+    <%= link_to 'Start Goobi Scan', trigger_mets_scan_batch_processes_path, method: 'post', class: 'btn btn-secondary' %>
+  </div>
   <div class='row'>
     <%= render 'form' %>
   </div>
