@@ -4,6 +4,7 @@
 class MetsDirectoryScanJob < ApplicationJob
   queue_as :default
 
+  # Low priority, TODO: reconsider priority
   def default_priority
     100
   end
