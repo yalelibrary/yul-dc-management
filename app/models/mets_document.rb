@@ -31,12 +31,12 @@ class MetsDocument
   end
 
   def viewing_direction
-    return nil unless @mets.collect_namespaces.include?("intranda:intranda")
+    return nil unless @mets.collect_namespaces.keys.include?("xmlns:intranda")
     @mets.xpath("//mods:extension/intranda:intranda/intranda:ViewingDirection").inner_text
   end
 
   def viewing_hint
-    return nil unless @mets.collect_namespaces.include?("intranda:intranda")
+    return nil unless @mets.collect_namespaces.include?("xmlns:intranda")
     @mets.xpath("//mods:extension/intranda:intranda/intranda:ViewingHint").inner_text
   end
 

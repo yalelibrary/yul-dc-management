@@ -99,10 +99,10 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       expect(page).to have_content(batch_process.id.to_s)
       expect(page).to have_content("johnsmith2530")
       expect(page).to have_link("111860A_8394689_no_intranda_mets.xml", href: "/batch_processes/#{batch_process.id}/download")
-      expect(page).to have_link('30000317', href: "/batch_processes/#{batch_process.id}/parent_objects/30000317")
+      expect(page).to have_link('30001317', href: "/batch_processes/#{batch_process.id}/parent_objects/30001317")
       expect(page).to have_content("2020-10-08 16:17:01")
-      expect(ParentObject.find_by_oid(30_000_317).viewing_direction).to be_nil
-      expect(ParentObject.find_by_oid(30_000_317).display_layout).to be_nil
+      expect(ParentObject.find_by_oid(30_001_317).viewing_direction).to be_nil
+      expect(ParentObject.find_by_oid(30_001_317).display_layout).to be_nil
     end
   end
 end
