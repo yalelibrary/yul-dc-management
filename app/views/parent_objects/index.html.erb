@@ -8,7 +8,7 @@
       <%= link_to 'New Parent Object', new_parent_object_path, class: 'btn btn-primary' %>
       <%= link_to 'Reindex', reindex_parent_objects_path, method: 'post', class: 'btn btn-secondary' %>
       <%= link_to 'Update Metadata', all_metadata_parent_objects_path, method: 'post', class: 'btn btn-secondary' %>
-      <%= link_to 'Scan Goobi', trigger_mets_scan_batch_processes_path, class: 'btn btn-secondary' %>
+      <%= link_to 'Scan Goobi', trigger_mets_scan_parent_objects_path, method: 'post', class: 'btn btn-secondary' %>
     </div>
   </div>
 </div>

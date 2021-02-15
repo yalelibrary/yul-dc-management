@@ -111,6 +111,15 @@ class ParentObjectsController < ApplicationController
     render json: response["response"]
   end
 
+  # This is temporary for testing until we enable scheduling
+  def trigger_mets_scan
+    MetsDirectoryScanJob.perform_later
+    respond_to do |format|
+      format.html { redirect_to parent_objects_url, notice: 'Mets scan has been triggered.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
