@@ -97,11 +97,11 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     describe 'xml file import' do
       before do
         stub_metadata_cloud("V-30000401", "ils")
+        stub_metadata_cloud("2004628", "ladybird")
+        stub_metadata_cloud("2030006", "ladybird")
+        stub_metadata_cloud("2034600", "ladybird")
+        stub_metadata_cloud("16057779", "ladybird")
         stub_ptiffs_and_manifests
-        stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/2004628.json").to_return(status: 200)
-        stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/2030006.json").to_return(status: 200)
-        stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/2034600.json").to_return(status: 200)
-        stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/16057779.json").to_return(status: 200)
       end
       it "does not error out" do
         batch_process.file = xml_upload

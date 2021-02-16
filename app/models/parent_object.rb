@@ -79,7 +79,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Note - the upsert_all method skips ActiveRecord callbacks, and is entirely
   # database driven. This also makes object creation much faster.
   def create_child_records
-    if from_mets == true
+    if from_mets
       ChildObject.upsert_all(array_of_child_hashes_from_mets)
     else
       return unless ladybird_json
