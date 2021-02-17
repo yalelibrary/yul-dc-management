@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'users/index'
   resources :batch_processes do
     collection { post :import }
     member do
