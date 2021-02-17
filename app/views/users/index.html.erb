@@ -1,2 +1,22 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<div class='container'>
+  <% if flash[:notice] %>
+    <div class='notice'><%= flash[:notice] %></div>
+  <% end %>
+  <h1>Users</h1>
+  <table id="users-datatable" class='is-datatable table table-responsive table-bordered table-striped' data-source="<%= users_path(format: :json) %>">
+  <thead class='thead-dark'>
+    <tr>
+      <th>NetId</th>
+      <th>Email</th>
+      <th>Inactive</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+
+
+<div id='users-data' class='d-none datatable-data'>
+  <%= UserDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], options: value[:options]} }.to_json %>
+</div>

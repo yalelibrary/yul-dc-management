@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'users/index'
   resources :batch_processes do
     collection { post :import }
     member do
@@ -11,6 +10,7 @@ Rails.application.routes.draw do
       get '/parent_objects/:oid/child_objects/:child_oid', to: 'batch_processes#show_child', as: :show_child
     end
   end
+  resources :users, only: [:index]
   resources :child_objects
 
   resources :parent_objects do
