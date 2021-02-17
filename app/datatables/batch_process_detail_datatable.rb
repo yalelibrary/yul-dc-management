@@ -37,6 +37,6 @@ class BatchProcessDetailDatatable < AjaxDatatablesRails::ActiveRecord
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
     sql = "LEFT OUTER JOIN parent_objects ON batch_connections.connectable_id = parent_objects.oid AND batch_connections.connectable_type = 'ParentObject'"
-    BatchConnection.joins(sql).where(batch_process_id: params[:id])
+    BatchConnection.joins(sql).where(batch_process_id: params[:id], connectable_type: "ParentObject")
   end
 end

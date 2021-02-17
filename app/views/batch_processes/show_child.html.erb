@@ -46,7 +46,7 @@
       <td class="access_master"><%= @notes["access-master"] if @notes %></td>
     </tr>
     <tr>
-      <td>Generate PTIFF</td>
+      <td>Generated PTIFF</td>
       <td class="generate_ptiff"><%= @notes["ptiff-generated"] if @notes %></td>
     </tr>
     <tr>
@@ -65,8 +65,8 @@
       </tr>
     </thead>
     <tr>
-      <td class="reason"><%= @failure["reason"] %></td>
-      <td class="time"><%= @failure["time"] %></td>
+      <td class="reason"><%= @failure[:reason] %></td>
+      <td class="time"><%= @failure[:time] %></td>
     </tr>
   </table>
 <% end %>

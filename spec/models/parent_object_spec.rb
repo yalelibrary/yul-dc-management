@@ -106,7 +106,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
         batch_process.file = csv_upload
         batch_process.save
         batch_process.run_callbacks :create
-      end.to change { batch_process.batch_connections.count }.from(0).to(5)
+      end.to change { batch_process.batch_connections.where(connectable_type: "ParentObject").count }.from(0).to(5)
         .and change { IngestEvent.count }.from(0).to(456)
       statuses = IngestEvent.all.map(&:status)
       expect(statuses).to include "processing-queued"
@@ -471,7 +471,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
   end
 
   context 'a Parent Object' do
-    it 'finds batch connections' do
+    it 'finds batch connections to the batch process' do
       user = FactoryBot.create(:user)
       parent_object = FactoryBot.create(:parent_object, oid: 2_003_431)
       batch_process = BatchProcess.new(oid: parent_object.oid, user: user)

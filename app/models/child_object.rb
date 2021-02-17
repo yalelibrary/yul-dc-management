@@ -4,6 +4,8 @@ class ChildObject < ApplicationRecord
   has_paper_trail
   include Statable
   belongs_to :parent_object, foreign_key: 'parent_object_oid', class_name: "ParentObject"
+  has_many :batch_connections, as: :connectable
+  has_many :batch_processes, through: :batch_connections
   self.primary_key = 'oid'
   paginates_per 50
   attr_accessor :current_batch_process
@@ -27,15 +29,6 @@ class ChildObject < ApplicationRecord
 
   def check_for_size_and_file
     width_and_height(remote_metadata)
-  end
-
-  def processing_event(message, status = 'info', _current_batch_process = parent_object&.current_batch_process, current_batch_connection = parent_object&.current_batch_connection)
-    return unless current_batch_connection
-    IngestEvent.create!(
-      status: status,
-      reason: message,
-      batch_connection: current_batch_connection
-    )
   end
 
   def remote_ptiff_exists?
@@ -131,6 +124,7 @@ class ChildObject < ApplicationRecord
       end
     else
       parent_object.processing_event("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
+      processing_event("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
     end
   end
 
@@ -141,6 +135,6 @@ class ChildObject < ApplicationRecord
   end
 
   def batch_connections_for(batch_process)
-    parent_object.batch_connections.where(batch_process: batch_process)
+    batch_connections.where(batch_process: batch_process)
   end
 end

@@ -97,11 +97,46 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     describe 'xml file import' do
       before do
         stub_metadata_cloud("V-30000401", "ils")
+        stub_metadata_cloud("2004628", "ladybird")
+        stub_metadata_cloud("2030006", "ladybird")
+        stub_metadata_cloud("2034600", "ladybird")
+        stub_metadata_cloud("16057779", "ladybird")
         stub_ptiffs_and_manifests
       end
       it "does not error out" do
         batch_process.file = xml_upload
         expect(batch_process).to be_valid
+      end
+
+      describe "importing a csv" do
+        around do |example|
+          perform_enqueued_jobs do
+            example.run
+          end
+        end
+
+        it "creates batch connections for all parent and child objects in the batch process" do
+          expect(ParentObject.count).to eq 0
+          expect(ChildObject.count).to eq 0
+          expect do
+            batch_process.file = Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "small_short_fixture_ids.csv"))
+            batch_process.save
+          end.to change { batch_process.batch_connections.count }.from(0).to(11)
+          expect(ParentObject.count).to eq 4
+          expect(ChildObject.count).to eq 7
+          expect(batch_process.batch_connections.where(connectable_type: "ParentObject").count).to eq(4)
+          expect(batch_process.batch_connections.where(connectable_type: "ChildObject").count).to eq(7)
+        end
+      end
+
+      it "can identify the metadata source" do
+        batch_process.file = csv_upload_with_source
+        batch_process.save
+        expect(ParentObject.find(2_034_600).authoritative_metadata_source_id).to eq 1
+        expect(ParentObject.find(2_030_006).authoritative_metadata_source_id).to eq 2
+        expect(ParentObject.find(2_012_036).authoritative_metadata_source_id).to eq 3
+        expect(ParentObject.find(16_414_889).authoritative_metadata_source_id).to eq 2
+        expect(ParentObject.find(16_854_285).authoritative_metadata_source_id).to eq 1
       end
 
       it "has an oid associated with it" do
@@ -239,7 +274,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
           expect do
             batch_process.file = csv_upload
             batch_process.save
-          end.to change { batch_process.batch_connections.size }.from(0).to(5)
+          end.to change { batch_process.batch_connections.size }.from(0).to(218)
 
           expect(ParentObject.count).to eq 5
         end

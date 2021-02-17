@@ -16,6 +16,7 @@ class PyramidalTiff
   end
 
   def generate_ptiff
+    # this adds the height and width to the object
     Dir.mktmpdir do |swing_tmpdir|
       tiff_input_path = copy_access_master_to_working_directory(swing_tmpdir)
       Dir.mktmpdir do |ptiff_tmpdir|
@@ -34,7 +35,7 @@ class PyramidalTiff
       true
     else
       # cannot convert to PTIFF if we can't find the original
-      return false unless original_file_exists?
+      return false unless original_file_exists? # this returns true
       generate_ptiff
     end
   end

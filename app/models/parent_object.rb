@@ -79,7 +79,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Note - the upsert_all method skips ActiveRecord callbacks, and is entirely
   # database driven. This also makes object creation much faster.
   def create_child_records
-    if from_mets == true
+    if from_mets
       ChildObject.upsert_all(array_of_child_hashes_from_mets)
     else
       return unless ladybird_json
@@ -122,17 +122,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     fetch_results
   end
 
-  def processing_event(message, status = 'info', _current_batch_process = current_batch_process, current_batch_connection = self.current_batch_connection)
-    return "no batch connection" unless current_batch_connection
-    IngestEvent.create!(
-      status: status,
-      reason: message,
-      batch_connection: current_batch_connection
-    )
-    current_batch_connection&.save! unless current_batch_connection&.persisted?
-    current_batch_connection&.update_status!
-  end
-
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
   # OR if the authoritative metaadata source changes
   # OR if the metadata_update accessor is set
@@ -142,7 +131,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
        metadata_update.present?
       current_batch_connection&.save! unless current_batch_connection&.persisted?
       SetupMetadataJob.perform_later(self, current_batch_process, current_batch_connection)
-      processing_event("Processing has been queued", "processing-queued", current_batch_process, current_batch_connection)
+      processing_event("Processing has been queued", "processing-queued")
     end
   end
 
@@ -276,6 +265,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def ready_for_manifest?
+    # returns false if any child objects have a width of nil
     !child_objects.pluck(:width).include?(nil)
   end
 
