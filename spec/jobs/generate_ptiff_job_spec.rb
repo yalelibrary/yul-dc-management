@@ -25,6 +25,7 @@ RSpec.describe GeneratePtiffJob, type: :job do
       .to_return(status: 200, body: "", headers: {})
     stub_request(:head, "https://not-a-real-bucket.s3.amazonaws.com/ptiffs/89/45/67/89/456789.tif")
       .to_return(status: 200, body: "", headers: {})
+    allow(child_object).to receive(:convert_to_ptiff!).and_return(true)
     child_object
   end
 
@@ -48,6 +49,13 @@ RSpec.describe GeneratePtiffJob, type: :job do
       expect do
         generate_ptiff_job.perform(child_object, batch_process)
       end.to change { Delayed::Job.count }.by(0)
+    end
+
+    it 'raises an exception if convert to ptiff fails' do
+      allow(child_object).to receive(:convert_to_ptiff!).and_return(false)
+      expect do
+        generate_ptiff_job.perform(child_object, batch_process)
+      end.to raise_error
     end
   end
 end
