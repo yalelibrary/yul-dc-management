@@ -23,7 +23,7 @@ RSpec.describe 'User Authentication', type: :system, js: false, clean: true do
     it 'expires the user session' do
       login_as user
       visit root_path
-      travel(16.minutes)
+      travel(31.minutes)
       visit root_path
       expect(page).to have_button('You must sign in')
       travel_back

@@ -10,6 +10,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   belongs_to :user, class_name: "User"
   has_many :batch_connections
   has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connectable
+  has_many :child_objects, through: :batch_connections, source_type: "ChildObject", source: :connectable
 
   def self.batch_actions
     ['create parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
@@ -74,10 +75,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def setup_for_background_jobs(parent_object, metadata_source)
-    parent_object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird'))
-    parent_object.current_batch_process = self
-    parent_object.current_batch_connection = batch_connections.build(connectable: parent_object)
+  def setup_for_background_jobs(object, metadata_source)
+    object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
+    object.current_batch_process = self
+    object.current_batch_connection = batch_connections.build(connectable: object)
+    object.current_batch_connection.save! if object.class == ChildObject
   end
 
   def refresh_metadata_cloud_csv
@@ -95,11 +97,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         parent_object.current_batch_process = self
         parent_object.current_batch_connection = batch_connections.build(connectable: parent_object)
         parent_object.current_batch_connection.save!
-        parent_object.processing_event("Connection to batch created", "parent-connection-created", self, parent_object.current_batch_connection)
+        parent_object.processing_event("Connection to batch created", "parent-connection-created")
         parents.add parent_object.oid
       end
-      GeneratePtiffJob.perform_later(child_object, self, parent_object.current_batch_connection)
-      child_object.processing_event("Ptiff Queued", "ptiff-queued", self, parent_object.current_batch_connection)
+      GeneratePtiffJob.perform_later(child_object, self)
+      child_object.processing_event("Ptiff Queued", "ptiff-queued")
     end
   end
 
@@ -120,10 +122,14 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def set_values_from_mets(parent_object, metadata_source)
     parent_object.bib = mets_doc.bib
+    parent_object.barcode = mets_doc.barcode
+    parent_object.holding = mets_doc.holding
+    parent_object.item = mets_doc.item
     parent_object.visibility = mets_doc.visibility
     parent_object.rights_statement = mets_doc.rights_statement
     parent_object.viewing_direction = mets_doc.viewing_direction
     parent_object.display_layout = mets_doc.viewing_hint
+    parent_object.aspace_uri = mets_doc.aspace_uri if mets_doc.valid_aspace?
     setup_for_background_jobs(parent_object, metadata_source)
     parent_object.from_mets = true
     parent_object.last_mets_update = Time.current
@@ -171,7 +177,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def connected_statuses
-    @connected_statuses ||= batch_connections.map(&:status)
+    @connected_statuses ||= batch_connections.where(connectable_type: "ParentObject").map(&:status)
   end
 
   def status_hash

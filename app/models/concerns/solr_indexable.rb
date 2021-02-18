@@ -45,6 +45,7 @@ module SolrIndexable
       collectionId_ssim: json_to_index["collectionId"],
       collectionId_tesim: json_to_index["collectionId"],
       containerGrouping_ssim: extract_container_information(json_to_index),
+      containerGrouping_tesim: extract_container_information(json_to_index),
       contents_tesim: json_to_index["contents"],
       contributor_tsim: json_to_index["contributor"],
       contributorDisplay_tsim: json_to_index["contributorDisplay"],
@@ -149,7 +150,7 @@ module SolrIndexable
       sourceTitle_ssim: json_to_index["sourceTitle"], # repleaced by sourceTitle_tesim
       subject_topic_tsim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
       title_tsim: json_to_index["title"] # replaced by title_tesim
-    }.delete_if { |_k, v| v.nil? }
+    }.delete_if { |_k, v| !v.present? } # Delete nil and empty values
   end
 
   def expand_date_structured(date_structured)

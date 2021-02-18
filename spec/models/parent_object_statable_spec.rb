@@ -89,6 +89,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
     # rubocop:disable RSpec/AnyInstance
     before do
       allow_any_instance_of(ChildObject).to receive(:remote_ptiff_exists?).and_return(false)
+      allow_any_instance_of(ChildObject).to receive(:convert_to_ptiff!).and_return(true)
       allow_any_instance_of(PyramidalTiff).to receive(:valid?).and_return(false)
     end
     # rubocop:enable RSpec/AnyInstance

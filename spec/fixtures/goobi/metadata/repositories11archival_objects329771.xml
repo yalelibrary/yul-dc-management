@@ -1,0 +1,199 @@
+
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:dv="http://dfg-viewer.de/" xmlns:intranda="http://intranda.com/MODS/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OBJID="286" xsi:schemaLocation="http://www.loc.gov/standards/premis/ http://www.loc.gov/standards/premis/v2/premis-v2-0.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/standards/mix/ http://www.loc.gov/standards/mix/mix.xsd">
+  <mets:metsHdr CREATEDATE="2021-01-13T22:04:46Z">
+    <mets:agent OTHERTYPE="SOFTWARE" ROLE="CREATOR" TYPE="OTHER">
+      <mets:name>Goobi - 3647a - 2020-08-02 19:35:26+0000</mets:name>
+      <mets:note>Goobi</mets:note>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:dmdSec ID="DMDLOG_0000">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>The Liberator</mods:title>
+          </mods:titleInfo>
+          <mods:identifier type="PPNanalog">/aspace/repositories/11/archival_objects/329771</mods:identifier>
+          <mods:recordInfo>
+            <mods:recordIdentifier source="gbv-ppn">30000557</mods:recordIdentifier>
+          </mods:recordInfo>
+          <mods:part>Completely digitized</mods:part>
+          <mods:classification authority="ivdcc">Jean Toomer papers</mods:classification>
+          <mods:classification authority="ivdcc">DefaultCollection</mods:classification>
+          <mods:originInfo>
+            <mods:dateIssued keyDate="no">1921-22</mods:dateIssued>
+          </mods:originInfo>
+          <mods:part>
+            <mods>
+              <detail>
+                <mods:number>Box 4, folder 145</mods:number>
+              </detail>
+            </mods>
+          </mods:part>
+          <mods:accessCondition displayLabel="Yale Restriction" type="restriction on access">Public</mods:accessCondition>
+          <mods:accessCondition displayLabel="Yale Use" type="use and reproduction">Permission from the Yale University Committee on Literary Property is required to publish Jean Toomer materials in any format. To learn more, contact the Curator, Yale Collection of American Literature.</mods:accessCondition>
+          <mods:location>
+            <mods:shelfLocator>JWJ MSS 1</mods:shelfLocator>
+          </mods:location>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:directionRTL>false</intranda:directionRTL>
+              <intranda:ViewingDirection>left-to-right</intranda:ViewingDirection>
+              <intranda:ViewingHint>individuals</intranda:ViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:amdSec ID="AMD">
+    <mets:rightsMD ID="RIGHTS">
+      <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights>
+            <dv:owner>Beinecke Rare Book &amp; Manuscript Library</dv:owner>
+            <dv:ownerLogo />
+            <dv:ownerSiteURL>https://beinecke.library.yale.edu/</dv:ownerSiteURL>
+            <dv:ownerContact />
+            <dv:sponsorSiteURL>info@intranda.com</dv:sponsorSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="DIGIPROV">
+      <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links>
+            <dv:reference />
+            <dv:presentation />
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:fileSec>
+    <mets:fileGrp USE="PRESENTATION" ID="c91ce4e1-10d2-4e33-8df3-83f081ff0125">
+      <mets:file ID="a062c0c7-3392-4c00-a766-877cbe212bcd" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="0d0ca8772af81516ccabdbdea72160a643580787">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000558.tif" />
+      </mets:file>
+      <mets:file ID="f96ab16b-f16d-43e4-86f3-07140dfd1c30" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="121e9faa64ce8a6422b956c1915e18c79580d2c6">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000559.tif" />
+      </mets:file>
+      <mets:file ID="5dbb2afd-61e4-4e25-b2f0-5ebc5d76245a" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="b4c30cfe2abdcc3c795fde1c4e867bd9801509c8">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000560.tif" />
+      </mets:file>
+      <mets:file ID="3824c573-a4e6-49bf-a34f-378718a94602" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="fc452156b4fb9fe2576a34cd768e9cd087dbbabd">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000561.tif" />
+      </mets:file>
+      <mets:file ID="2ba11bca-1cff-43f6-b770-76e80bfe7fa7" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="aa7e51a9f4e4259aa7b42a923c2d78cc4b8c3f97">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000562.tif" />
+      </mets:file>
+      <mets:file ID="64f65829-cb1b-47f9-b5e9-9ddc5ba62427" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="b72ebd7a132edcfeb1fdeb49c03d1488922efc95">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000563.tif" />
+      </mets:file>
+      <mets:file ID="e71acc57-0af8-460e-880d-47269159abb7" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="66914f2e184977b8d2906849abe88500b70ffa2c">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000564.tif" />
+      </mets:file>
+      <mets:file ID="290b6a12-569e-481e-8877-492acb20d785" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="0d9e889290b1c73959645c5b9a4e910d817111f3">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000565.tif" />
+      </mets:file>
+      <mets:file ID="752e4c2d-55a4-4e7e-a65c-d3e0ef6d977d" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="8082d96d2da9e84e7870b897398dabb6e07b1427">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000566.tif" />
+      </mets:file>
+      <mets:file ID="f40aac8d-3ddf-4e27-b7af-b00c265f3af4" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="cdddd1b5fdafd06c70732d263ce0da97c682bc40">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000567.tif" />
+      </mets:file>
+      <mets:file ID="8461878e-4a16-423f-9bb1-2d8ae4c83e68" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="8ac7177f578aae927aa7d0d48f8440a504ae2ba3">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000568.tif" />
+      </mets:file>
+      <mets:file ID="5c526ce4-e83e-428b-806f-b586045e1ab4" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="b7de78e6abd063d59067d73d3ce384bf9450df14">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000569.tif" />
+      </mets:file>
+      <mets:file ID="b6c5f269-86bc-4fda-bd88-ec49a74135b4" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="954eba38dbcddc91599fea383e27ae14876491eb">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000570.tif" />
+      </mets:file>
+      <mets:file ID="58c9730b-6ba9-4fa1-a7e5-fd04d7ff432e" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="e3d46a487363b116290411e961fdd2526cd27408">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000571.tif" />
+      </mets:file>
+      <mets:file ID="0476da6d-4b6f-47b9-a2a9-c45de218e24d" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="d1344734f5d5cf479809cc48f0a426c902663d72">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000572.tif" />
+      </mets:file>
+      <mets:file ID="32fbc0bd-9813-4a1d-bc4f-50b0ec32bc9e" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="3144ccf6133e5f6ea74351946708f254f059e400">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30000557_20210113_220446/repositories11archival_objects329771__media/30000573.tif" />
+      </mets:file>
+    </mets:fileGrp>
+  </mets:fileSec>
+  <mets:structMap TYPE="LOGICAL">
+    <mets:div ADMID="AMD" DMDID="DMDLOG_0000" ID="LOG_0000" LABEL="&lt;title xlink:type=&quot;simple&quot; render=&quot;italic&quot;&gt;The Liberator&lt;/title&gt;" TYPE="ArchivalObject" />
+  </mets:structMap>
+  <mets:structMap TYPE="PHYSICAL">
+    <mets:div CONTENTIDS="30000557" ID="PHYS_0000" TYPE="physSequence">
+      <mets:div CONTENTIDS="30000558" ID="PHYS_0001" ORDER="1" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="a062c0c7-3392-4c00-a766-877cbe212bcd" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000559" ID="PHYS_0002" ORDER="2" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="f96ab16b-f16d-43e4-86f3-07140dfd1c30" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000560" ID="PHYS_0003" ORDER="3" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="5dbb2afd-61e4-4e25-b2f0-5ebc5d76245a" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000561" ID="PHYS_0004" ORDER="4" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="3824c573-a4e6-49bf-a34f-378718a94602" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000562" ID="PHYS_0005" ORDER="5" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="2ba11bca-1cff-43f6-b770-76e80bfe7fa7" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000563" ID="PHYS_0006" ORDER="6" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="64f65829-cb1b-47f9-b5e9-9ddc5ba62427" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000564" ID="PHYS_0007" ORDER="7" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="e71acc57-0af8-460e-880d-47269159abb7" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000565" ID="PHYS_0008" ORDER="8" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="290b6a12-569e-481e-8877-492acb20d785" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000566" ID="PHYS_0009" ORDER="9" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="752e4c2d-55a4-4e7e-a65c-d3e0ef6d977d" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000567" ID="PHYS_0010" ORDER="10" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="f40aac8d-3ddf-4e27-b7af-b00c265f3af4" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000568" ID="PHYS_0011" ORDER="11" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="8461878e-4a16-423f-9bb1-2d8ae4c83e68" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000569" ID="PHYS_0012" ORDER="12" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="5c526ce4-e83e-428b-806f-b586045e1ab4" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000570" ID="PHYS_0013" ORDER="13" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="b6c5f269-86bc-4fda-bd88-ec49a74135b4" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000571" ID="PHYS_0014" ORDER="14" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="58c9730b-6ba9-4fa1-a7e5-fd04d7ff432e" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000572" ID="PHYS_0015" ORDER="15" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="0476da6d-4b6f-47b9-a2a9-c45de218e24d" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000573" ID="PHYS_0016" ORDER="16" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="32fbc0bd-9813-4a1d-bc4f-50b0ec32bc9e" />
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+  <mets:structLink>
+    <mets:smLink xlink:to="PHYS_0001" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0002" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0003" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0004" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0005" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0006" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0007" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0008" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0009" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0010" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0011" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0012" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0013" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0014" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0015" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0016" xlink:from="LOG_0000" />
+  </mets:structLink>
+</mets:mets>

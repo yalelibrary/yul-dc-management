@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
-Rails.application.routes.draw do
+Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :batch_processes do
-    collection { post :import }
+    collection do
+      post :import
+      post :trigger_mets_scan
+    end
     member do
       get :download
       get :download_created
