@@ -7,7 +7,7 @@ class UserDatatable < AjaxDatatablesRails::ActiveRecord
     @view_columns ||= {
       netid: { source: "User.uid", cond: :like, searchable: true, orderable: true },
       email: { source: "User.email", cond: :like, searchable: true, orderable: true },
-      deactivated: { source: "User.deactivated", cond: :like, searchable: true, orderable: true, options: [true, false] }
+      deactivated: { source: "User.deactivated", cond: :like, searchable: true, orderable: true, options: [{ value: true, label: "Inactive" }, { value: false, label: "Active", selected: true }] }
     }
   end
 

@@ -36,6 +36,7 @@ $( document ).on('turbolinks:load', function() {
     let columns = JSON.parse($(".datatable-data").text());
     let hasSearch = columns.some(function(col){return col.searchable;});
     dataTable = $('.is-datatable').dataTable({
+      "deferLoading":true,
       "processing": true,
       "serverSide": true,
       "ajax": {
@@ -63,7 +64,13 @@ $( document ).on('turbolinks:load', function() {
               let input = null;
               if (colDef.options) {
                 input = $("<select><option>All</option>" + colDef.options.map(function (option) {
-                  return "<option>" + option + "</option>"
+                  if (typeof option==="string"){
+                    option={value:option, label:option}
+                  }
+                  if (option.selected) {
+                    column.search(option.value)
+                  }
+                  return "<option value='"+ option.value +"' "+ (option.selected ? "selected": '') + ">" + option.label + "</option>"
                 }) + "</select>");
               } else {
                 input = $("<input type='text' size='12' placeholder='" + $(column.header()).text() + "' />");
@@ -85,6 +92,7 @@ $( document ).on('turbolinks:load', function() {
         }
       }
     })
+    dataTable.api().draw()
   }
 });
 
