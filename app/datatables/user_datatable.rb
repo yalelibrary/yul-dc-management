@@ -7,7 +7,7 @@ class UserDatatable < AjaxDatatablesRails::ActiveRecord
     @view_columns ||= {
       netid: { source: "User.uid", cond: :like, searchable: true, orderable: true },
       email: { source: "User.email", cond: :like, searchable: true, orderable: true },
-      deactivated: { source: "User.deactivated", cond: :like, orderable: true }
+      deactivated: { source: "User.deactivated", cond: :like, searchable: true, orderable: true, options: [true, false] }
     }
   end
 
@@ -22,6 +22,6 @@ class UserDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    User.where(deactivated: false)
+    User.all
   end
 end

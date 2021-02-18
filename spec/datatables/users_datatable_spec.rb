@@ -30,13 +30,5 @@ RSpec.describe UserDatatable, type: :datatable do
         deactivated: "Active"
       )
     end
-
-    it "does not show deactivated users" do
-      login_as user
-      user2.deactivated = true
-      user2.save
-      output = UserDatatable.new(datatable_sample_params(columns)).data
-      expect(output.size).to eq(1)
-    end
   end
 end
