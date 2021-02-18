@@ -70,6 +70,15 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       end
     end
 
+    before do
+      # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(PyramidalTiff).to receive(:valid?).and_return(true)
+      allow_any_instance_of(PyramidalTiff).to receive(:conversion_information).and_return(width: 5, height: 5)
+      allow_any_instance_of(ChildObject).to receive(:remote_ptiff_exists?).and_return(false)
+      allow_any_instance_of(PdfRepresentable).to receive(:generate_pdf).and_return(nil)
+      # rubocop:enable RSpec/AnyInstance
+    end
+
     describe "with a parent object with a failure" do
       let(:batch_process_with_failure) { FactoryBot.create(:batch_process, user: user) }
       let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600) }
