@@ -122,6 +122,7 @@ class ChildObject < ApplicationRecord
         width_and_height(pyramidal_tiff.conversion_information)
         # Conversion info is true if the ptiff was skipped as already present
       end
+      true
     else
       report_ptiff_generation_error
       raise "Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join('\n')}"
