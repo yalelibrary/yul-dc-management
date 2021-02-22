@@ -3,6 +3,15 @@
 module PdfRepresentable
   extend ActiveSupport::Concern
 
+  NORMALIZED_COVER_FIELDS = %w[
+    callNumber
+    creator
+    date
+    sourceTitle
+    rights
+    extentOfDigitization
+  ].freeze
+
   def generate_pdf
     raise "No authoritative_json to create PDF for #{oid}" unless authoritative_json
     Dir.mktmpdir do |pdf_tmpdir|
@@ -62,15 +71,7 @@ module PdfRepresentable
       properties = {
         "Title" => title
       }
-      add_field_if_present(authoritative_json, "identifierShelfMark", "Call Number", properties)
-      add_field_if_present(authoritative_json, "creator", "Creator", properties)
-      add_field_if_present(authoritative_json, "date", "Date", properties)
-      add_field_if_present(authoritative_json, "rights", "Rights", properties)
-      container_information = extract_container_information(authoritative_json)
-      properties["Container information"] = container_information if container_information
-      properties["Generated"] = generated
-      properties["Terms of Use"] = "https://guides.library.yale.edu/about/policies/access"
-      properties["View in DL"] = "https://collections.library.yale.edu/catalog/#{oid}"
+      properties = cover_page(properties, generated)
       reshape_properties properties
     end
 
@@ -84,13 +85,31 @@ module PdfRepresentable
       end
     end
 
-    def extract_flat_field_value(json, field_name, default)
-      return default unless json && json[field_name].present?
-      Array(json[field_name]).join(", ")
+    def cover_page(properties, generated)
+      # for normalized fields
+      NORMALIZED_COVER_FIELDS.each do |field|
+        hash = METADATA_FIELDS[field.to_sym]
+        properties = add_field_if_present(authoritative_json, field, hash[:label], properties)
+      end
+
+      container_information = extract_container_information(authoritative_json)
+      properties["Container information"] = container_information if container_information
+      properties["Generated"] = generated
+      properties["Terms of Use"] = "https://guides.library.yale.edu/about/policies/access"
+      properties["View in DL"] = "https://collections.library.yale.edu/catalog/#{oid}"
+
+      properties
     end
 
     def add_field_if_present(json, field_name, hash_field, hash)
       value = extract_flat_field_value(json, field_name, nil)
       hash[hash_field] = value if value
+
+      hash
+    end
+
+    def extract_flat_field_value(json, field_name, default)
+      return default unless json && json[field_name].present?
+      Array(json[field_name]).join(", ")
     end
 end
