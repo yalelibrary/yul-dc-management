@@ -16,18 +16,13 @@ RSpec.describe UserDatatable, type: :datatable do
 
     it 'renders a complete data table' do
       login_as user
-      user2.reload
-      output = UserDatatable.new(datatable_sample_params(columns)).data
-      expect(output.size).to eq(2)
+      output = UserDatatable.new(datatable_sample_params(columns), view_context: user_datatable_view_mock(user.id, user.uid)).data
+      expect(output.size).to eq(1)
       expect(output[0]).to include(
-        netid: 'js2530',
+        netid: "<a href='/management/users/#{user.id}'>#{user.uid}</a>",
         email: 'juliasmith@email.com',
-        deactivated: "Active"
-      )
-      expect(output[1]).to include(
-        netid: 'pt4645',
-        email: 'pamthomas@email.com',
-        deactivated: "Active"
+        deactivated: "Active",
+        actions: "<a href='/management/users/#{user.id}/edit'>Edit</a>"
       )
     end
 
@@ -35,7 +30,7 @@ RSpec.describe UserDatatable, type: :datatable do
       login_as user
       user2.deactivated = true
       user2.save
-      output = UserDatatable.new(datatable_sample_params(columns)).data
+      output = UserDatatable.new(datatable_sample_params(columns), view_context: user_datatable_view_mock(user.id, user.uid)).data
       expect(output.size).to eq(2)
     end
   end

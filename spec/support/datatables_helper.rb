@@ -106,3 +106,12 @@ def batch_process_parent_datatable_view_mock(id, parent_oid, child_oid) # ruboco
                                                   .and_return("<a href='/batch_processes/#{id}/parent_objects/#{parent_oid}/child_objects/#{child_oid}'>#{child_oid}</a>")
   @datatable_view_mock
 end
+
+def user_datatable_view_mock(id, uid) # rubocop:disable Metrics/AbcSize
+  @datatable_view_mock ||= double
+  allow(@datatable_view_mock).to receive(:user_path).and_return("/management/users/#{id}")
+  allow(@datatable_view_mock).to receive(:edit_user_path).and_return("/management/users/#{id}/edit")
+  allow(@datatable_view_mock).to receive(:link_to).with(anything, "/management/users/#{id}").and_return("<a href='/management/users/#{id}'>#{uid}</a>")
+  allow(@datatable_view_mock).to receive(:link_to).with("Edit", "/management/users/#{id}/edit").and_return("<a href='/management/users/#{id}/edit'>Edit</a>")
+  @datatable_view_mock
+end
