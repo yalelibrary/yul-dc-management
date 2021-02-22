@@ -1,280 +1,244 @@
 # frozen_string_literal: true
 
-METADATA_FIELDS = [
-  {
+METADATA_FIELDS = {
+  alternativeTitle: {
     label: 'Alternative Title',
-    field: 'alternativeTitle',
     solr_fields: [
       'alternativeTitle_tesim',
       'alternativeTitle_ssim',
       'alternative_title_tsm'
     ]
   },
-  {
+  creator: {
     label: 'Creator',
-    field: 'creator',
     solr_fields: [
       'creator_ssim',
       'creator_tesim'
     ]
   },
-  {
+  date: {
     label: 'Published/Created Date',
-    field: 'date',
     solr_fields: [
       'date_ssim'
     ]
   },
-  {
+  copyrightDate: {
     label: 'Copyright Date',
-    field: 'copyrightDate',
     solr_fields: [
       'copyrightDate_ssim'
     ]
   },
-  {
+  creationPlace: {
     label: 'Publication Place',
-    field: 'creationPlace',
     solr_fields: [
       'creationPlace_ssim',
       'creationPlace_tesim'
     ]
   },
-  {
+  publisher: {
     label: 'Publisher',
-    field: 'publisher',
     solr_fields: [
       'publisher_ssim',
       'publisher_ssim'
     ]
   },
-  {
+  abstract: {
     label: 'Abstract',
-    field: 'abstract',
     solr_fields: [
       'abstract_tesim',
       'abstract_ssim'
     ]
   },
-  {
+  description: {
     label: 'Description',
-    field: 'description',
     solr_fields: [
       'description_tesim'
     ]
   },
-  {
+  extent: {
     label: 'Extent',
-    field: 'extent',
     solr_fields: [
       'extent_ssim'
     ]
   },
-  {
+  extentOfDigitization: {
     label: 'Extent of Digitization',
-    field: 'extentOfDigitization',
     solr_fields: [
       'extentOfDigitization_ssim'
     ]
   },
-  {
+  projection: {
     label: 'Projection',
-    field: 'projection',
     solr_fields: [
       'projection_tesim'
     ]
   },
-  {
+  scale: {
     label: 'Scale',
-    field: 'scale',
     solr_fields: [
       'scale_tesim'
     ]
   },
-  {
+  coordinate: {
     label: 'Coordinates',
-    field: 'coordinate',
     solr_fields: [
       'coordinates_ssim'
     ]
   },
-  {
+  digital: {
     label: 'Digital',
-    field: 'digital',
     solr_fields: [
       'digital_ssim'
     ]
   },
-  {
+  edition: {
     label: 'Edition',
-    field: 'edition',
     solr_fields: [
       'edition_ssim'
     ]
   },
-  {
+  language: {
     label: 'Language',
-    field: 'language',
     solr_fields: [
       'language_ssim'
     ]
   },
-  {
+  callNumber: {
     label: 'Call Number',
-    field: 'callNumber',
     solr_fields: [
       'callNumber_ssim',
       'callNumber_tesim'
     ]
   },
-  {
+  sourceTitle: {
     label: 'Collection Title',
-    field: 'sourceTitle',
     solr_fields: [
       'sourceTitle_tesim'
     ]
   },
-  {
+  sourceCreated: {
     label: 'Collection Created',
-    field: 'sourceCreated',
     solr_fields: [
       'sourceCreated_tesim'
     ]
   },
-  {
+  sourceDate: {
     label: 'Collection Date',
-    field: 'sourceDate',
     solr_fields: [
       'sourceDate_tesim'
     ]
   },
-  {
+  sourceNote: {
     label: 'Collection Note',
-    field: 'sourceNote',
     solr_fields: [
       'sourceNote_tesim'
     ]
   },
-  {
+  sourceEdition: {
     label: 'Collection Edition',
-    field: 'sourceEdition',
     solr_fields: [
       'sourceEdition_tesim'
     ]
   },
-  {
+  extract_container_information: {
     label: 'Container / Volume Information',
-    field: 'extract_container_information',
     solr_fields: [
       'containerGrouping_ssim'
     ],
     digital_only: true
   },
-  {
+  findingAid: {
     label: 'Finding Aid',
-    field: 'findingAid',
     solr_fields: [
       'findingAid_ssim'
     ]
   },
-  {
+  format: {
     label: 'Format',
-    field: 'format',
     solr_fields: [
       'format_tesim',
       'format'
     ]
   },
-  {
+  genre: {
     label: 'Genre',
-    field: 'genre',
     solr_fields: [
       'genre_ssim',
       'genre_tesim'
     ]
   },
-  {
+  material: {
     label: 'Material',
-    field: 'material',
     solr_fields: [
       'material_tesim'
     ]
   },
-  {
+  itemType: {
     label: 'Resource Type',
-    field: 'itemType',
     solr_fields: [
       'resourceType_ssim',
       'resourceType_tesim'
     ]
   },
-  {
+  subjectGeographic: {
     label: 'Subject (Geographic)',
-    field: 'subjectGeographic',
     solr_fields: [
       'subjectGeographic_tesim'
     ]
   },
-  {
+  subjectName: {
     label: 'Subject (Name)',
-    field: 'subjectName',
     solr_fields: [
       'subjectName_ssim',
       'subjectName_tesim'
     ]
   },
-  {
+  subjectTopic: {
     label: 'Subject (Topic)',
-    field: 'subjectTopic',
     solr_fields: [
       'subjectTopic_tesim',
       'subjectTopic_ssim'
     ]
   },
-  {
+  visibility: {
     label: 'Access',
-    field: 'visibility',
     solr_fields: [
       'visibility_ssi'
     ],
     digital_only: true
   },
-  {
+  rights: {
     label: 'Rights',
-    field: 'rights',
     solr_fields: [
       'rights_ssim',
       'rights_tesim'
     ]
   },
-  {
+  preferredCitation: {
     label: 'Citation',
-    field: 'preferredCitation',
     solr_fields: [
       'preferredCitation_tesim'
     ]
   },
-  {
+  bib: {
     label: 'Orbis ID',
-    field: 'bib',
     solr_fields: [
       'orbisBibId_ssi'
     ],
     digital_only: true
   },
-  {
+  oid: {
     label: 'OID',
-    field: 'oid',
     solr_fields: [
       'oid_ssi'
     ],
     digital_only: true
   },
-  {
+  relatedUrl: {
     label: 'More Information',
-    field: 'relatedUrl',
     solr_fields: [
       'url_suppl_ssim'
     ]
   }
-].freeze
+
+}.freeze
