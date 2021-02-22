@@ -10,13 +10,14 @@
       </ul>
     </div>
   <% end %>
-  <div class="form-row">
-    <div class="col-med-3">
+  <div>
+    <div>
       <%= form.label :email %>
       <%= form.text_field(:email, required: true) %>
     </div>
+    <br>
 
-    <div class="col-med-3">
+    <div>
       <%= form.label :deactivated %>
       <%= form.check_box(:deactivated) %>
     </div>
