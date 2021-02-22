@@ -16,6 +16,12 @@ module Reassociatable
       co = ChildObject.find(row["child_oid"].to_i)
       original_parent_oids << co.parent_object.oid
       po = ParentObject.find(row["parent_oid"].to_i)
+
+      po.current_batch_process = self
+      po.current_batch_connection = batch_connections.build(connectable: po)
+      po.current_batch_connection.save!
+      co.processing_event("reassociate", "reassociate")
+
       co.order = row["order"]
       co.label = row["label"]
       co.caption = row["caption"]
