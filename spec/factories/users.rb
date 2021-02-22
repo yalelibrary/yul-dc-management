@@ -6,6 +6,7 @@ FactoryBot.define do
   # provider "cas"
   factory :user do
     uid { FFaker::Internet.user_name }
+    email { FFaker::Internet.email }
     provider { "cas" }
   end
 end
