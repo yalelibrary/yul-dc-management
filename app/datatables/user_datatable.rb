@@ -3,7 +3,7 @@
 class UserDatatable < AjaxDatatablesRails::ActiveRecord
   extend Forwardable
 
-  def_delegators :@view, :link_to, :edit_user_path
+  def_delegators :@view, :link_to, :user_path, :edit_user_path
 
   def initialize(params, opts = {})
     @view = opts[:view_context]
@@ -24,7 +24,7 @@ class UserDatatable < AjaxDatatablesRails::ActiveRecord
   def data
     records.map do |user|
       {
-        netid: user.uid,
+        netid: link_to(user.uid, user_path(user)),
         email: user.email,
         deactivated: user.deactivated ? "Inactive" : "Active",
         actions: actions(user).html_safe # rubocop:disable Rails/OutputSafety
