@@ -1,24 +1,39 @@
 # frozen_string_literal: true
 
 class UserDatatable < AjaxDatatablesRails::ActiveRecord
+  extend Forwardable
+
+  def_delegators :@view, :link_to, :edit_user_path
+
+  def initialize(params, opts = {})
+    @view = opts[:view_context]
+    super
+  end
+
   def view_columns
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
       netid: { source: "User.uid", cond: :like, searchable: true, orderable: true },
       email: { source: "User.email", cond: :like, searchable: true, orderable: true },
-      deactivated: { source: "User.deactivated", cond: :like, searchable: true, orderable: true, options: [{ value: true, label: "Inactive" }, { value: false, label: "Active", selected: true }] }
+      deactivated: { source: "User.deactivated", cond: :like, searchable: true, orderable: true, options: [{ value: true, label: "Inactive" }, { value: false, label: "Active", selected: true }] },
+      actions: { source: "User.id", cond: :null_value, searchable: false, orderable: false }
     }
   end
 
   def data
-    records.map do |record|
+    records.map do |user|
       {
-        netid: record.uid,
-        email: record.email,
-        deactivated: record.deactivated ? "Inactive" : "Active"
+        netid: user.uid,
+        email: user.email,
+        deactivated: user.deactivated ? "Inactive" : "Active",
+        actions: actions(user).html_safe # rubocop:disable Rails/OutputSafety
       }
     end
+  end
+
+  def actions(user)
+    link_to('Edit', edit_user_path(user))
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
