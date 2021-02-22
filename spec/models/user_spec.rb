@@ -27,7 +27,7 @@ RSpec.describe User, type: :model do
   describe 'with email validations' do
     it 'verifies that a new user has an email' do
       user2 = described_class.new(email: nil)
-      expect(user2).to_not be_valid
+      expect(user2).not_to be_valid
       expect(user2.errors.messages[:email]).to eq ["can't be blank"]
     end
   end
