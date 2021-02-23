@@ -16,6 +16,8 @@ class UserDatatable < AjaxDatatablesRails::ActiveRecord
     @view_columns ||= {
       netid: { source: "User.uid", cond: :like, searchable: true, orderable: true },
       email: { source: "User.email", cond: :like, searchable: true, orderable: true },
+      first_name: { source: "User.first_name", cond: :like, searchable: true, orderable: true },
+      last_name: { source: "User.last_name", cond: :like, searchable: true, orderable: true },
       deactivated: { source: "User.deactivated", cond: :like, searchable: true, orderable: true, options: [{ value: true, label: "Inactive" }, { value: false, label: "Active", selected: true }] },
       actions: { source: "User.id", cond: :null_value, searchable: false, orderable: false }
     }
@@ -26,6 +28,8 @@ class UserDatatable < AjaxDatatablesRails::ActiveRecord
       {
         netid: link_to(user.uid, user_path(user)),
         email: user.email,
+        first_name: user.first_name,
+        last_name: user.last_name,
         deactivated: user.deactivated ? "Inactive" : "Active",
         actions: actions(user).html_safe # rubocop:disable Rails/OutputSafety
       }
