@@ -95,14 +95,14 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       parent_object = child_object.parent_object
       unless parents.include? parent_object.oid
         parent_object.current_batch_process = self
-        parent_object.current_batch_connection = batch_connections.build(connectable: parent_object)
+        parent_object.current_batch_connection = batch_connections.find_or_create_by(connectable: parent_object)
         parent_object.current_batch_connection.save!
         parent_object.processing_event("Connection to batch created", "parent-connection-created")
         parents.add parent_object.oid
       end
       GeneratePtiffJob.perform_later(child_object, self)
       child_object.current_batch_process = self
-      child_object.current_batch_connection = batch_connections.build(connectable: child_object)
+      child_object.current_batch_connection = batch_connections.find_or_create_by(connectable: child_object)
       child_object.current_batch_connection.save!
       child_object.processing_event("Ptiff Queued", "ptiff-queued")
     end
