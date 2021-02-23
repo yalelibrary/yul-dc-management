@@ -59,14 +59,14 @@ class IiifPresentation
 
   def metadata
     values = []
-    METADATA_FIELDS.each do |m_field|
-      value = if m_field[:digital_only] == true
-                @parent_object.send(m_field[:field])
+    METADATA_FIELDS.each do |field, hash|
+      value = if hash[:digital_only] == true
+                @parent_object.send(field.to_s)
               else
-                @parent_object&.authoritative_json&.[](m_field[:field])
+                @parent_object&.authoritative_json&.[](field.to_s)
               end
       value = value.to_s unless value.nil? || value.is_a?(Array)
-      values << metadata_pair(m_field[:label], value) if value
+      values << metadata_pair(hash[:label], value) if value
     end
     values
   end

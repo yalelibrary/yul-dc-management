@@ -33,6 +33,6 @@ class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    ChildObject.where(parent_object_oid: params[:oid])
+    @batch_process.child_objects.where(parent_object_oid: params[:oid])
   end
 end

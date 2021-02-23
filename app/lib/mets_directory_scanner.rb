@@ -24,7 +24,8 @@ class MetsDirectoryScanner
   end
 
   def self.scan_directories
-    ENV['GOOBI_SCAN_DIRECTORIES']&.split(',') || (ENV['GOOBI_MOUNT'] && [File.join('/', ENV['GOOBI_MOUNT'], 'dcs')]) || ['/brbl-dsu/dcs']
+    scans_by_goobi_mount = ENV['GOOBI_MOUNT'] && [File.join('/', ENV['GOOBI_MOUNT'], 'dcs'), File.join('/', ENV['GOOBI_MOUNT'], 'jss_export')]
+    ENV['GOOBI_SCAN_DIRECTORIES']&.split(',') || scans_by_goobi_mount || ['/brbl-dsu/dcs', '/brbl-dsu/jss_export']
   end
 
   def self.system_user
