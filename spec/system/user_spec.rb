@@ -31,6 +31,27 @@ RSpec.describe 'Users', type: :system, js: true do
       expect(current_path).to eq edit_user_path(user.id)
     end
 
+    it 'and require their full name to be present' do
+      visit users_path
+      click_on('Edit')
+      fill_in('First name', with: '')
+      click_on('Update User')
+
+      message = page.find('#user_first_name').native.attribute('validationMessage')
+
+      expect(message).to eq 'Please fill out this field.'
+      expect(current_path).to eq edit_user_path(user.id)
+
+      fill_in('First name', with: 'Aaliyah')
+      fill_in('Last name', with: '')
+      click_on('Update User')
+
+      message = page.find('#user_last_name').native.attribute('validationMessage')
+
+      expect(message).to eq 'Please fill out this field.'
+      expect(current_path).to eq edit_user_path(user.id)
+    end
+
     it 'and can be deactivated' do
       visit edit_user_path(user2.id)
       page.check('Deactivated')
