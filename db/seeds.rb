@@ -73,7 +73,7 @@ CSV.parse(user_csv, headers: false) do |row|
     )
   else
     @user.deactivated = false
-    @user.email = "#{@user.uid}@example.com"
+    @user.email = "#{@user.uid}@connect.yale.edu"
     @user.save!
   end
   authorized_uids.push uid
