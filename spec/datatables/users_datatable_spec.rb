@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe UserDatatable, type: :datatable do
-  let(:user) { FactoryBot.create(:user, uid: 'js2530', email: 'juliasmith@email.com') }
-  let(:user2) { FactoryBot.create(:user, uid: 'pt4645', email: 'pamthomas@email.com') }
+  let(:user) { FactoryBot.create(:user) }
+  let(:user2) { FactoryBot.create(:user) }
   columns = ['netid', 'email', 'deactivated']
 
   describe 'user data tables' do
@@ -17,10 +17,13 @@ RSpec.describe UserDatatable, type: :datatable do
     it 'renders a complete data table' do
       login_as user
       output = UserDatatable.new(datatable_sample_params(columns), view_context: user_datatable_view_mock(user.id, user.uid)).data
+
       expect(output.size).to eq(1)
       expect(output[0]).to include(
         netid: "<a href='/management/users/#{user.id}'>#{user.uid}</a>",
-        email: 'juliasmith@email.com',
+        email: "#{user.email}",
+        first_name: "#{user.first_name}",
+        last_name: "#{user.last_name}",
         deactivated: "Active",
         actions: "<a href='/management/users/#{user.id}/edit'>Edit</a>"
       )
