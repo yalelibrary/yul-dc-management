@@ -21,9 +21,9 @@ RSpec.describe UserDatatable, type: :datatable do
       expect(output.size).to eq(1)
       expect(output[0]).to include(
         netid: "<a href='/management/users/#{user.id}'>#{user.uid}</a>",
-        email: "#{user.email}",
-        first_name: "#{user.first_name}",
-        last_name: "#{user.last_name}",
+        email: user.email.to_s,
+        first_name: user.first_name.to_s,
+        last_name: user.last_name.to_s,
         deactivated: "Active",
         actions: "<a href='/management/users/#{user.id}/edit'>Edit</a>"
       )

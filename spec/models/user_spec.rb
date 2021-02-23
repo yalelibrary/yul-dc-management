@@ -9,11 +9,16 @@ RSpec.describe User, type: :model do
     u = described_class.new
     u.email = "river@yale.edu"
     u.provider = "cas"
+    u.first_name = 'River'
+    u.last_name = 'Dale'
     u.uid = "River"
     u.save!
+
     expect(u.errors).to be_empty
     expect(u.provider).to eq "cas"
     expect(u.uid).to eq "River"
+    expect(u.first_name).to eq 'River'
+    expect(u.last_name).to eq 'Dale'
   end
 
   describe 'deactivate!' do

@@ -13,6 +13,8 @@ RSpec.describe "Users", type: :request do
     {
       uid: 'fg1248',
       email: 'fg1248@example.com',
+      first_name: 'fitzgerald',
+      last_name: 'grant',
       deactivated: false
     }
   end
