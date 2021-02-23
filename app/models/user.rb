@@ -3,6 +3,8 @@
 class User < ApplicationRecord
   devise :timeoutable, :omniauthable, omniauth_providers: [:cas]
 
+  validates :email, presence: true
+
   has_many :notifications, as: :recipient
   has_many :batch_processes
 

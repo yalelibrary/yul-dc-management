@@ -1,0 +1,20 @@
+<h1>User Details</h1>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>UID:</strong>
+  <%= @user.uid %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Deactivated:</strong>
+  <%= @user.deactivated %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %>
+<%= link_to 'Back', users_path %>

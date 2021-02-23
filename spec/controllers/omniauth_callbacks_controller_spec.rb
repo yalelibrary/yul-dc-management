@@ -18,7 +18,8 @@ RSpec.describe OmniauthCallbacksController do
   context "when origin is present" do
     before do
       User.create(provider: 'cas',
-                  uid: 'handsome_dan')
+                  uid: 'handsome_dan',
+                  email: "handsome_dan@email.com")
       request.env["omniauth.origin"] = '/yale-only-map-of-china'
     end
 
@@ -33,7 +34,8 @@ RSpec.describe OmniauthCallbacksController do
   context "when origin is missing" do
     before do
       User.create(provider: 'cas',
-                  uid: 'handsome_dan')
+                  uid: 'handsome_dan',
+                  email: "handsome_dan@email.com")
     end
     it "redirects to dashboard" do
       post :cas
@@ -55,6 +57,7 @@ RSpec.describe OmniauthCallbacksController do
     before do
       User.create(provider: 'cas',
                   uid: 'handsome_dan',
+                  email: "handsome_dan@email.com",
                   deactivated: true)
     end
     it "redirect to origin" do
