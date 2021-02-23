@@ -34,6 +34,9 @@ module Reassociatable
       # If the child objects have changed, we'll need to re-create the manifest and PDF objects
       # and re-index to Solr
       po.metadata_update = true
+      po.current_batch_process = self
+      po.current_batch_connection = batch_connections.find_or_create_by(connectable: po)
+      po.current_batch_connection.save!
       po.save!
     end
   end
