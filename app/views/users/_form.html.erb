@@ -12,6 +12,18 @@
   <% end %>
   <div>
     <div>
+      <%= form.label :first_name %>
+      <%= form.text_field(:first_name, required: true) %>
+    </div>
+    <br>
+
+    <div>
+      <%= form.label :last_name %>
+      <%= form.text_field(:last_name, required: true) %>
+    </div>
+    <br>
+
+    <div>
       <%= form.label :email %>
       <%= form.text_field(:email, required: true) %>
     </div>
