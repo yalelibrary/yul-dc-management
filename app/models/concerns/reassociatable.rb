@@ -5,16 +5,17 @@ module Reassociatable
 
   def reassociate_child_oids
     return unless batch_action == "reassociate child oids"
-    original_parent_oids = update_child_objects
-    update_parent_objects(original_parent_oids)
+    parents_needing_update = update_child_objects
+    update_parent_objects(parents_needing_update)
   end
 
   def update_child_objects
     return unless batch_action == "reassociate child oids"
-    original_parent_oids = []
+    parents_needing_update = []
     parsed_csv.each_with_index do |row|
       co = ChildObject.find(row["child_oid"].to_i)
-      original_parent_oids << co.parent_object.oid
+      parents_needing_update << co.parent_object.oid
+      parents_needing_update << row["parent_oid"].to_i
       po = ParentObject.find(row["parent_oid"].to_i)
       co.order = row["order"]
       co.label = row["label"]
@@ -22,22 +23,22 @@ module Reassociatable
       co.parent_object = po
       co.save!
     end
-    original_parent_oids
+    parents_needing_update
   end
 
-  def update_parent_objects(original_parent_oids)
+  def update_parent_objects(parents_needing_update)
     return unless batch_action == "reassociate child oids"
-    original_parent_oids.uniq.each do |oid|
+    parents_needing_update.uniq.each do |oid|
       po = ParentObject.find(oid)
       # TODO: What do we want to happen if the parent object no longer has any associated child objects?
       po.child_object_count = po.child_objects.count
       # If the child objects have changed, we'll need to re-create the manifest and PDF objects
       # and re-index to Solr
-      po.metadata_update = true
       po.current_batch_process = self
       po.current_batch_connection = batch_connections.find_or_create_by(connectable: po)
       po.current_batch_connection.save!
       po.save!
+      GenerateManifestJob.perform_later(po, self, po.current_batch_connection)
     end
   end
 end
