@@ -3,6 +3,7 @@
 class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include CsvExportable
   include Reassociatable
+  include Statable
   attr_reader :file
   after_create :determine_background_jobs
   before_create :mets_oid
@@ -14,6 +15,20 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def self.batch_actions
     ['create parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
+  end
+
+  def batch_processing_event(message, status = 'info')
+    current_batch_connection = batch_connections.find_or_create_by!(connectable: self)
+    IngestEvent.create!(
+      status: status,
+      reason: message,
+      batch_connection: current_batch_connection
+    )
+  end
+
+  def batch_ingest_events
+    current_batch_connection = batch_connections.find_or_create_by!(connectable: self)
+    IngestEvent.where(batch_connection: current_batch_connection)
   end
 
   def validate_import
@@ -89,23 +104,29 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def recreate_child_oid_ptiffs
     parents = Set[]
-    oids.each do |oid|
+    oids.each_with_index do |oid, index|
       child_object = ChildObject.find_by_oid(oid.to_i)
+      unless child_object
+        batch_processing_event("Skipping row [#{index}] with unknown Child: #{oid}", 'Skipped Row')
+        next
+      end
       next unless child_object
       parent_object = child_object.parent_object
       unless parents.include? parent_object.oid
-        parent_object.current_batch_process = self
-        parent_object.current_batch_connection = batch_connections.find_or_create_by(connectable: parent_object)
-        parent_object.current_batch_connection.save!
+        attach_item(parent_object)
         parent_object.processing_event("Connection to batch created", "parent-connection-created")
         parents.add parent_object.oid
       end
       GeneratePtiffJob.perform_later(child_object, self)
-      child_object.current_batch_process = self
-      child_object.current_batch_connection = batch_connections.find_or_create_by(connectable: child_object)
-      child_object.current_batch_connection.save!
+      attach_item(child_object)
       child_object.processing_event("Ptiff Queued", "ptiff-queued")
     end
+  end
+
+  def attach_item(connectable)
+    connectable.current_batch_process = self
+    connectable.current_batch_connection = batch_connections.find_or_create_by(connectable: connectable)
+    connectable.current_batch_connection.save!
   end
 
   def refresh_metadata_cloud_mets

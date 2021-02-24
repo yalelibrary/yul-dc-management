@@ -12,11 +12,14 @@ module Reassociatable
   def update_child_objects
     return unless batch_action == "reassociate child oids"
     parents_needing_update = []
-    parsed_csv.each_with_index do |row|
-      co = ChildObject.find(row["child_oid"].to_i)
+    parsed_csv.each_with_index do |row, index|
+      co = load_child(index, row["child_oid"].to_i)
+      po = load_parent(index, row["parent_oid"].to_i)
+      next unless co.present? && po.present?
       parents_needing_update << co.parent_object.oid
       parents_needing_update << row["parent_oid"].to_i
-      po = ParentObject.find(row["parent_oid"].to_i)
+      order = extract_order(index, row)
+      next if order == :invalid_order
       co.order = row["order"]
       co.label = row["label"]
       co.caption = row["caption"]
@@ -24,6 +27,26 @@ module Reassociatable
       co.save!
     end
     parents_needing_update
+  end
+
+  def extract_order(index, row)
+    unless row["order"]&.to_i&.positive? || row["order"] == '0'
+      batch_processing_event("Skipping row [#{index}] with invalid order [#{row['order']}] (Parent: #{row['parent_oid']}, Child: #{row['child_oid']})", 'Skipped Row')
+      return :invalid_order
+    end
+    row["order"].to_i
+  end
+
+  def load_child(index, oid)
+    co = ChildObject.find_by_oid(oid)
+    batch_processing_event("Skipping row [#{index}] with Child Missing #{oid}", 'Skipped Row') unless co
+    co
+  end
+
+  def load_parent(index, oid)
+    po = ParentObject.find_by_oid(oid)
+    batch_processing_event("Skipping row [#{index}] with Parent Missing #{oid}", 'Skipped Row') unless po
+    po
   end
 
   def update_parent_objects(parents_needing_update)
