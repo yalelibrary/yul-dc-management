@@ -19,7 +19,9 @@ RSpec.describe OmniauthCallbacksController do
     before do
       User.create(provider: 'cas',
                   uid: 'handsome_dan',
-                  email: "handsome_dan@email.com")
+                  email: "handsome_dan@email.com",
+                  first_name: 'handsome',
+                  last_name: 'dan')
       request.env["omniauth.origin"] = '/yale-only-map-of-china'
     end
 
@@ -35,7 +37,9 @@ RSpec.describe OmniauthCallbacksController do
     before do
       User.create(provider: 'cas',
                   uid: 'handsome_dan',
-                  email: "handsome_dan@email.com")
+                  email: "handsome_dan@email.com",
+                  first_name: 'handsome',
+                  last_name: 'dan')
     end
     it "redirects to dashboard" do
       post :cas
@@ -58,6 +62,7 @@ RSpec.describe OmniauthCallbacksController do
       User.create(provider: 'cas',
                   uid: 'handsome_dan',
                   email: "handsome_dan@email.com",
+                  first_name: 'handsome', last_name: 'dan',
                   deactivated: true)
     end
     it "redirect to origin" do

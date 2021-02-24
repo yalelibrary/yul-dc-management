@@ -31,7 +31,7 @@ class MetsDirectoryScanner
   def self.system_user
     system_user = User.find_by_uid('System')
     unless system_user
-      system_user = User.new(uid: 'System', email: 'test@example.com')
+      system_user = User.new(uid: 'System', email: 'test@example.com', first_name: 'test', last_name: 'user')
       Rails.logger.error("Unable to save system user") unless system_user.save!
     end
     system_user
