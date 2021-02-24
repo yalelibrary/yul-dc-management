@@ -69,7 +69,10 @@ CSV.parse(user_csv, headers: false) do |row|
   if @user.nil?
     @user = User.create(
         provider: "cas",
-        uid: uid
+        uid: uid,
+        email: "#{uid}@connect.yale.edu",
+        first_name: "first_name",
+        last_name:"last_name"
     )
   else
     @user.deactivated = false
