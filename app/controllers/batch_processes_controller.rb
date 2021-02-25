@@ -9,6 +9,8 @@ class BatchProcessesController < ApplicationController
 
   def index
     @batch_process = BatchProcess.new
+    # force user to choose action in form
+    @batch_process.batch_action = nil
 
     respond_to do |format|
       format.html

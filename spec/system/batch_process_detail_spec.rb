@@ -29,6 +29,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
         created_at: "2020-10-08 14:17:01"
       )
     end
+
     it "can see the details of the import" do
       expect(page).to have_content(batch_process.id.to_s)
       expect(page).to have_content("johnsmith2530")
@@ -36,6 +37,27 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       expect(page).to have_link('16057779', href: "/batch_processes/#{batch_process.id}/parent_objects/16057779")
       expect(page).to have_content("4")
       expect(page).to have_content("2020-10-08 14:17:01")
+    end
+
+    context "when batch wide ingest event is available" do
+      let(:ingest_event) do
+        IngestEvent.create(
+          reason: "This is the batch event",
+          status: "Batch event statue"
+        )
+      end
+
+      before do
+        # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(BatchProcess).to receive(:batch_ingest_events).and_return([ingest_event])
+        # rubocop:enable RSpec/AnyInstance
+        visit batch_process_path(batch_process)
+      end
+
+      it "can see the ingest events of the import" do
+        expect(page).to have_content(batch_process.id.to_s)
+        expect(page).to have_content(ingest_event.reason)
+      end
     end
 
     it "can see the status of the parent object imports" do

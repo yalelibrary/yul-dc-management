@@ -20,6 +20,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
     stub_metadata_cloud("16854285")
     login_as user
     visit batch_processes_path
+    select("Create Parent Objects")
   end
 
   context "having created a parent_object via the UI" do
@@ -36,8 +37,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
     end
     it "can still successfully see the batch_process page" do
       visit batch_processes_path
-      click_on("View")
-      expect(page.body).to have_link('View', href: "/batch_processes/#{BatchProcess.last.id}")
+      click_on(BatchProcess.last.id.to_s)
+      expect(page.body).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
     end
     context "deleting a parent object" do
       it "can still load the batch_process page" do
@@ -45,8 +46,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
         po.delete
         expect(po.destroyed?).to be true
         visit batch_processes_path
-        click_on("View")
-        expect(page.body).to have_link('View', href: "/batch_processes/#{BatchProcess.last.id}")
+        click_on(BatchProcess.last.id.to_s)
+        expect(page.body).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
       end
     end
   end
@@ -85,7 +86,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
       it "uploads a CSV of child oids in order to re-associate them with new parent oids" do
         expect(BatchProcess.count).to eq 0
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_small.csv")
-        select("reassociate child oids")
+        select("Reassociate Child Oids")
         click_button("Submit")
         expect(BatchProcess.count).to eq 1
         expect(page).to have_content("Your job is queued for processing in the background")
@@ -105,14 +106,14 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
       it "uploads a CSV of parent oids in order to create export of child objects oids and orders" do
         expect(BatchProcess.count).to eq 0
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
-        select("export child oids")
+        select("Export Child Oids")
         click_button("Submit")
         expect(BatchProcess.count).to eq 1
         expect(page).to have_content("Your job is queued for processing in the background")
         expect(BatchProcess.last.file_name).to eq "short_fixture_ids.csv"
         expect(BatchProcess.last.batch_action).to eq "export child oids"
         expect(BatchProcess.last.output_csv).to include "1126257"
-        click_on("View")
+        click_on(BatchProcess.last.id.to_s)
         expect(page).to have_link("short_fixture_ids.csv", href: "/batch_processes/#{BatchProcess.last.id}/download")
         expect(page).to have_link("short_fixture_ids_bp_#{BatchProcess.last.id}.csv", href: "/batch_processes/#{BatchProcess.last.id}/download_created")
         bp = BatchProcess.last
@@ -123,7 +124,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
       context "round-tripping csv" do
         it "can create the output csv from a csv that has been generated from the application" do
           page.attach_file("batch_process_file", Rails.root + "spec/fixtures/parents_for_reassociation_as_output.csv")
-          select("export child oids")
+          select("Export Child Oids")
           click_button("Submit")
           expect(BatchProcess.count).to eq 1
           expect(page).to have_content("Your job is queued for processing in the background")
@@ -133,7 +134,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
 
         it "can create the output csv from a handmade csv" do
           page.attach_file("batch_process_file", Rails.root + "spec/fixtures/parents_for_reassociation.csv")
-          select("export child oids")
+          select("Export Child Oids")
           click_button("Submit")
           expect(BatchProcess.count).to eq 1
           expect(page).to have_content("Your job is queued for processing in the background")
@@ -160,7 +161,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
       it "can still see the details of the import" do
         expect(page).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
         expect(page).to have_content('5')
-        expect(page).to have_link('View', href: "/batch_processes/#{BatchProcess.last.id}")
+        expect(page).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
       end
     end
   end
@@ -184,8 +185,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
         po.delete
         expect(po.destroyed?).to be true
         visit batch_processes_path
-        click_on("View")
-        expect(page.body).to have_link('View', href: "/batch_processes/#{BatchProcess.last.id}")
+        click_on(BatchProcess.last.id.to_s)
+        expect(page.body).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
       end
     end
   end

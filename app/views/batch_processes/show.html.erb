@@ -29,8 +29,24 @@
   <%= @batch_process.file_name && @batch_process.batch_action == "export child oids" ? link_to(@batch_process.created_file_name, download_created_batch_process_path) : "n/a" %>
 </p>
 
+<% if @batch_process.batch_ingest_events.present? %>
+  <h3>Batch Messages:</h3>
+  <table class="table table-bordered table-responsive table-striped"><thead class='thead-dark'>
+  <tr>
+    <th scope='col'> Time </th>
+    <th scope='col'> Status </th>
+    <th scope='col'> Problem </th>
+  </tr>
+  </thead>
+    <% @batch_process.batch_ingest_events.each do |event| %>
+      <tr><td><%= event.updated_at %></td><td><%= event.status %></td><td><%= event.reason %></td></tr>
+    <% end %>
+  </table>
+<% end %>
+
 <div class='row'>
   <div class='col overflow-auto'>
+    <h3>Batch Parent Objects:</h3>
     <table id='batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= batch_process_path(format: :json) %>'>
       <thead class='thead-dark'>
         <tr>
