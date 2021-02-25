@@ -1,0 +1,32 @@
+<%= form_with(model: admin_set, local: true) do |form| %>
+  <% if admin_set.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(admin_set.errors.count, "error") %> prohibited this admin_set from being saved:</h2>
+
+      <ul>
+        <% admin_set.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :key %>
+    <%= form.text_field :key, :readonly => true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :label %>
+    <%= form.text_field :label %>
+  </div>
+
+  <div class="field">
+    <%= form.label :homepage %>
+    <%= form.text_field :homepage %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

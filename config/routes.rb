@@ -15,6 +15,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   end
   resources :users, only: [:index, :edit, :update, :show]
   resources :child_objects
+  resources :admin_sets
 
   resources :parent_objects do
     collection do

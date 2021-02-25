@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Key:</strong>
+  <%= @admin_set.key %>
+</p>
+
+<p>
+  <strong>Label:</strong>
+  <%= @admin_set.label %>
+</p>
+
+<p>
+  <strong>Homepage:</strong>
+  <%= @admin_set.homepage %>
+</p>
+
+<%= link_to 'Edit', edit_admin_set_path(@admin_set) %> |
+<%= link_to 'Back', admin_sets_path %>
