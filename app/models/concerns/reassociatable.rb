@@ -24,9 +24,17 @@ module Reassociatable
       co.label = row["label"]
       co.caption = row["caption"]
       co.parent_object = po
+      processing_event_for_child(co)
       co.save!
     end
     parents_needing_update
+  end
+
+  def processing_event_for_child(co)
+    co.current_batch_process = self
+    co.current_batch_connection = batch_connections.find_or_create_by(connectable: co)
+    co.current_batch_connection.save!
+    co.processing_event("Child has parent #{po.oid}", 'reassociate-complete')
   end
 
   def extract_order(index, row)
