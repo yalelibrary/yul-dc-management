@@ -16,10 +16,11 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
     @view_columns ||= {
       process_id: { source: "BatchProcess.id", cond: :eq, searchable: true, orderable: true },
       user: { source: "User.uid", cond: :start_with, searchable: true, orderable: true },
-      time: { source: "BatchProcess.created_at", cond: :like, searchable: true, orderable: true },
+      time: { source: "BatchProcess.created_at", cond: :like, orderable: true },
       size: { source: "BatchProcess.oid", searchable: false, orderable: false },
       status: { source: "BatchProcess.batch_status", searchable: false, orderable: false },
-      object_details: { cond: :null_value, searchable: false, orderable: false }
+      batch_ingest_events_count: { source: "BatchProcess.batch_ingest_events_count", searchable: false, orderable: false },
+      batch_action: { source: "BatchProcess.batch_action", searchable: true, orderable: true, options: BatchProcess.batch_actions }
     }
   end
 
@@ -32,7 +33,8 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
         time: batch_process.created_at,
         size: batch_process.oids&.count,
         status: batch_process.batch_status,
-        object_details: link_to("View", batch_process_path(batch_process)),
+        batch_ingest_events_count: link_to(batch_process.batch_ingest_events_count, batch_process_path(batch_process)),
+        batch_action: batch_process.batch_action,
         DT_RowId: batch_process.id
       }
     end

@@ -19,7 +19,8 @@
             <th scope='col'> Time </th>
             <th scope='col'> Size </th>
             <th scope='col'> Status </th>
-            <th scope='col'> Object Details </th>
+            <th scope='col'> Messages </th>
+            <th scope='col'> Batch Action </th>
           </tr>
         </thead>
         <tbody>
@@ -31,5 +32,5 @@
 
 
 <div id='batch-processes-data' class='d-none datatable-data'>
-  <%= BatchProcessDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], options: value[:options]} }.to_json %>
+  <%= BatchProcessDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], searchable: value[:searchable], options: value[:options]} }.to_json %>
 </div>

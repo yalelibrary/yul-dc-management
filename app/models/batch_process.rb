@@ -31,6 +31,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     IngestEvent.where(batch_connection: current_batch_connection)
   end
 
+  def batch_ingest_events_count
+    current_batch_connection = batch_connections.find_or_create_by!(connectable: self)
+    IngestEvent.where(batch_connection: current_batch_connection).count
+  end
+
   def validate_import
     return if file.blank?
     if File.extname(file) == '.csv'
