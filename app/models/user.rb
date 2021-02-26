@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  rolify
   devise :timeoutable, :omniauthable, omniauth_providers: [:cas]
 
   validates :email, presence: true
