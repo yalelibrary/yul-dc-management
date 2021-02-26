@@ -341,4 +341,37 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
       expect(page).to have_field("Oid", disabled: true)
     end
   end
+
+  context "pages has a New Parent Object button with an action event" do
+    before do
+      visit parent_objects_path
+    end
+
+    it "has a New Parent Object button" do
+      click_on("New Parent Object")
+    end
+
+  end
+
+  context "pages has a ReIndex button with an action event" do
+    before do
+      visit parent_objects_path
+    end
+
+    it "has a Reindex button" do
+      click_on("Reindex")
+    end
+
+  end
+
+  context "pages has a Update Metadata button with an action event" do
+    before do
+      visit parent_objects_path
+    end
+
+    it "has a Update Metadata button" do
+      click_on("Update Metadata")
+    end
+
+  end
 end
