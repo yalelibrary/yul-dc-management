@@ -91,6 +91,31 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
         expect(BatchProcess.count).to eq 1
         expect(page).to have_content("Your job is queued for processing in the background")
       end
+
+      it "displays children in batch parent details" do
+        expect(ChildObject.find_by_oid(1_021_925).parent_object.oid).to eq(2_004_548)
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_small.csv")
+        select("Reassociate Child Oids")
+        click_button("Submit")
+        expect(page).to have_content("Your job is queued for processing in the background")
+        click_link(BatchProcess.last.id.to_s)
+        expect(page).to have_link("2002826")
+        click_link("2002826")
+        expect(page).to have_link("1021925")
+        click_link("1021925")
+        expect(page).to have_content("Child Batch Process Detail")
+        expect(ChildObject.find_by_oid(1_021_925).parent_object.oid).to eq(2_002_826)
+      end
+
+      it "displays batch messages on batch show" do
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_small.csv")
+        select("Reassociate Child Oids")
+        click_button("Submit")
+        expect(page).to have_content("Your job is queued for processing in the background")
+        click_link(BatchProcess.last.id.to_s)
+        expect(page).to have_content("Batch Messages")
+        expect(page).to have_content("Skipped Row").twice
+      end
     end
 
     context "outputting csv" do
@@ -162,6 +187,41 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
         expect(page).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
         expect(page).to have_content('5')
         expect(page).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
+      end
+    end
+
+    context "re-generate ptiffs child objects" do
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826") }
+
+      around do |example|
+        perform_enqueued_jobs do
+          example.run
+        end
+      end
+      before do
+        stub_metadata_cloud("2002826")
+        parent_object
+      end
+      it "displays children in batch parent details" do
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/recreate_child_ptiffs.csv")
+        select("Recreate Child Oid Ptiffs")
+        click_button("Submit")
+        expect(page).to have_content("Your job is queued for processing in the background")
+        click_link(BatchProcess.last.id.to_s)
+        expect(page).to have_link("2002826")
+        click_link("2002826")
+        expect(page).to have_link("1011398")
+        click_link("1011398")
+        expect(page).to have_content("Child Batch Process Detail")
+      end
+      it "displays batch messages on batch details" do
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/recreate_child_ptiffs.csv")
+        select("Recreate Child Oid Ptiffs")
+        click_button("Submit")
+        expect(page).to have_content("Your job is queued for processing in the background")
+        click_link(BatchProcess.last.id.to_s)
+        expect(page).to have_content("Batch Messages")
+        expect(page).to have_content("Skipped Row")
       end
     end
   end

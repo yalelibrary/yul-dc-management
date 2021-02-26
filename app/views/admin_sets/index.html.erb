@@ -1,0 +1,30 @@
+<%= render partial: "/management/flash_messages" %>
+
+<h1>Admin Sets</h1>
+
+
+<div class='row'>
+  <div class='col overflow-auto'>
+    <table id='batch-processes-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= admin_sets_path(format: :json) %>'>
+      <thead class='thead-dark'>
+      <tr>
+        <th scope='col'> Key </th>
+        <th scope='col'> Label </th>
+        <th scope='col'> Homepage </th>
+        <th scope='col'> Actions </th>
+      </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div id='batch-processes-data' class='d-none datatable-data'>
+  <%= AdminSetDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], searchable: value[:searchable], options: value[:options]} }.to_json %>
+</div>
+<div>
+<%= link_to 'New Admin Set', new_admin_set_path, class: "btn btn-primary" %>
+</div>
+</div>
