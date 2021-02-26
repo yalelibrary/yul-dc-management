@@ -4,6 +4,6 @@ FactoryBot.define do
   factory :admin_set do
     key { "MyString" }
     label { "MyString" }
-    homepage { "MyString" }
+    homepage { "http://test.com" }
   end
 end

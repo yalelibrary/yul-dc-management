@@ -7,7 +7,7 @@ RSpec.describe "admin_sets/new", type: :view do
     assign(:admin_set, AdminSet.new(
                          key: "MyString",
                          label: "MyString",
-                         homepage: "MyString"
+                         homepage: "http://test.com"
                        ))
   end
 

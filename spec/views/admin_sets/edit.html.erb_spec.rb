@@ -7,7 +7,7 @@ RSpec.describe "admin_sets/edit", type: :view do
     AdminSet.create!(
       key: "MyString",
       label: "MyString",
-      homepage: "MyString"
+      homepage: "http://test.com"
     )
   end
 

@@ -11,22 +11,22 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :key %>
-    <%= form.text_field :key, :readonly => true %>
+    <%= form.text_field(:key, required: true, class: "form-control") %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :label %>
-    <%= form.text_field :label %>
+    <%= form.text_field(:label, required: true, class: "form-control") %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :homepage %>
-    <%= form.text_field :homepage %>
+    <%= form.text_field(:homepage, required: true, class: "form-control") %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit(@admin_set.persisted? ? "Update Admin Set" : "Create Admin Set", class: "btn-primary btn") %>
   </div>
 <% end %>

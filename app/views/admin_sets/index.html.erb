@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<%= render partial: "/management/flash_messages" %>
 
 <h1>Admin Sets</h1>
 
@@ -19,11 +19,12 @@
     </table>
   </div>
 </div>
-</div>
 
 
 <div id='batch-processes-data' class='d-none datatable-data'>
   <%= AdminSetDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], searchable: value[:searchable], options: value[:options]} }.to_json %>
 </div>
-
-<%= link_to 'New Admin Set', new_admin_set_path %>
+<div>
+<%= link_to 'New Admin Set', new_admin_set_path, class: "btn btn-primary" %>
+</div>
+</div>

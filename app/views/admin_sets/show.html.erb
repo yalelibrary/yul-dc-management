@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<%= render partial: "/management/flash_messages" %>
 
 <p>
   <strong>Key:</strong>
@@ -12,7 +12,7 @@
 
 <p>
   <strong>Homepage:</strong>
-  <%= @admin_set.homepage %>
+  <%= link_to(@admin_set.homepage, @admin_set.homepage, {target: "_blank"}) %>
 </p>
 
 <%= link_to 'Edit', edit_admin_set_path(@admin_set) %> |
