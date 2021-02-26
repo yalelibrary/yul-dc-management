@@ -38,6 +38,28 @@ puts "Oid Minter Initialized, initialization was #{sequence}, current value is #
 end
 puts "MetadataSources verified"
 
+
+[
+    {
+      key: "brbl",
+      label: "Beinecke Library",
+      summary: "Beinecke Library",
+      homepage: "https://beinecke.library.yale.edu/"
+    },
+    {
+        key: "sml",
+        label: "Sterling Memorial Library",
+        summary: "Sterling Memorial Library",
+        homepage: "https://web.library.yale.edu/building/sterling-library"
+    }    
+].each do |obj|
+  admin_set = AdminSet.where(key: obj[:key]).first
+  if admin_set.nil?
+    AdminSet.create!(obj)
+  end
+end
+puts "AdminSets verified"
+
 if Rails.env.development?
   require 'csv'
 

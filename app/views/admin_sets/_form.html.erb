@@ -1,0 +1,37 @@
+<%= form_with(model: admin_set, local: true) do |form| %>
+  <% if admin_set.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(admin_set.errors.count, "error") %> prohibited this admin_set from being saved:</h2>
+
+      <ul>
+        <% admin_set.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field form-group">
+    <%= form.label :key %>
+    <%= form.text_field(:key, required: true, class: "form-control") %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :label %>
+    <%= form.text_field(:label, required: true, class: "form-control") %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :homepage %>
+    <%= form.text_field(:homepage, required: true, class: "form-control") %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :summary %>
+    <%= form.text_field(:summary, class: "form-control") %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit(@admin_set.persisted? ? "Update Admin Set" : "Create Admin Set", class: "btn-primary btn") %>
+  </div>
+<% end %>
