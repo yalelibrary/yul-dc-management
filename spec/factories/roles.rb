@@ -4,6 +4,6 @@ FactoryBot.define do
   factory :role do
     name { 'editor' }
     users { [association(:user)] }
-    resource {association :admin_set}
+    resource { association :admin_set }
   end
 end

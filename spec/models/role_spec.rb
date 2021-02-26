@@ -17,5 +17,4 @@ RSpec.describe Role, type: :model do
     user.add_role :viewer, set
     expect(User.with_role(:viewer, set)).to include(user)
   end
-
 end
