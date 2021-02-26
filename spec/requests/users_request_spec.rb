@@ -79,4 +79,12 @@ RSpec.describe "Users", type: :request do
       end
     end
   end
+
+  describe "POST /create" do
+    it "correctly responds with invalid attributes" do
+      post users_url, params: { user: invalid_attributes }
+      expect(response).to be_successful
+      expect(response.body).to include('<h1>Create User</h1>')
+    end
+  end
 end
