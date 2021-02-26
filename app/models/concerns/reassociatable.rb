@@ -34,7 +34,7 @@ module Reassociatable
     co.current_batch_process = self
     co.current_batch_connection = batch_connections.find_or_create_by(connectable: co)
     co.current_batch_connection.save!
-    co.processing_event("Child has parent #{po.oid}", 'reassociate-complete')
+    co.processing_event("Child has parent #{co.parent_object.oid}", 'reassociate-complete')
   end
 
   def extract_order(index, row)
