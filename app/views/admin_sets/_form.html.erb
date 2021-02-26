@@ -26,6 +26,11 @@
     <%= form.text_field(:homepage, required: true, class: "form-control") %>
   </div>
 
+  <div class="field form-group">
+    <%= form.label :summary %>
+    <%= form.text_field(:summary, required: true, class: "form-control") %>
+  </div>
+
   <div class="actions">
     <%= form.submit(@admin_set.persisted? ? "Update Admin Set" : "Create Admin Set", class: "btn-primary btn") %>
   </div>

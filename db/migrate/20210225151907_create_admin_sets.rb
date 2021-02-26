@@ -4,7 +4,7 @@ class CreateAdminSets < ActiveRecord::Migration[6.0]
       t.string :key
       t.string :label
       t.string :homepage
-
+      t.string :summary
       t.timestamps
     end
   end

@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_151907) do
     t.string "key"
     t.string "label"
     t.string "homepage"
+    t.string "summary"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

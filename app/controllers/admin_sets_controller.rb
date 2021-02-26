@@ -79,6 +79,6 @@ class AdminSetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def admin_set_params
-      params.require(:admin_set).permit(:key, :label, :homepage)
+      params.require(:admin_set).permit(:key, :label, :homepage, :summary)
     end
 end

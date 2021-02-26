@@ -15,5 +15,10 @@
   <%= link_to(@admin_set.homepage, @admin_set.homepage, {target: "_blank"}) %>
 </p>
 
+<p>
+  <strong>Summary:</strong>
+  <%= @admin_set.summary %>
+</p>
+
 <%= link_to 'Edit', edit_admin_set_path(@admin_set) %> |
 <%= link_to 'Back', admin_sets_path %>

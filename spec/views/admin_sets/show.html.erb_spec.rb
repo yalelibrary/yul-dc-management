@@ -7,7 +7,8 @@ RSpec.describe "admin_sets/show", type: :view do
     @admin_set = assign(:admin_set, AdminSet.create!(
                                       key: "Key",
                                       label: "Label",
-                                      homepage: "http://test.com"
+                                      homepage: "http://test.com",
+                                      summary: "summary"
                                     ))
   end
 
@@ -16,5 +17,6 @@ RSpec.describe "admin_sets/show", type: :view do
     expect(rendered).to match(/Key/)
     expect(rendered).to match(/Label/)
     expect(rendered).to match(/http:\/\/test.com/)
+    expect(rendered).to match(/summary/)
   end
 end
