@@ -33,17 +33,17 @@ RSpec.describe User, type: :model do
     it 'adds the sysadmin role when set to true' do
       user.remove_role :sysadmin
       user.sysadmin = true
-      expect(user.has_role? :sysadmin).to eq(true)
+      expect(user.has_role?(:sysadmin)).to eq(true)
     end
     it 'removes the sysadmin role when set to false' do
       user.add_role :sysadmin
       user.sysadmin = false
-      expect(user.has_role? :sysadmin).to eq(false)
+      expect(user.has_role?(:sysadmin)).to eq(false)
     end
     it 'removes the sysadmin role when set to 0' do
       user.add_role :sysadmin
       user.sysadmin = '0'
-      expect(user.has_role? :sysadmin).to eq(false)
+      expect(user.has_role?(:sysadmin)).to eq(false)
     end
   end
 

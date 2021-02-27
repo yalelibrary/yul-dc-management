@@ -68,7 +68,7 @@ RSpec.describe 'Users', type: :system, js: true do
       page.check('System admin')
       click_on('Update User')
       visit users_path
-      expect(user2.has_role? :sysadmin).to eq(true)
+      expect(user2.has_role?(:sysadmin)).to eq(true)
     end
   end
 end
