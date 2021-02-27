@@ -96,12 +96,6 @@ CSV.parse(user_csv, headers: false) do |row|
         first_name: "first_name",
         last_name:"last_name"
     )
-  else
-    @user.deactivated = false
-    @user.email = "#{@user.uid}@connect.yale.edu"
-    @user.first_name = "first_name"
-    @user.last_name = "last_name"
-    @user.save!
   end
   authorized_uids.push uid
 end
@@ -110,4 +104,9 @@ end
   User.where(uid: old_uid).each do |user|
     user.deactivate!
   end
+end
+# make users sysadmins
+authorized_uids.each do |uid|
+  user = User.where(provider: "cas", uid: uid).first
+  user.add_role :sysadmin if user
 end

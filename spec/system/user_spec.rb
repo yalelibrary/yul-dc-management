@@ -61,5 +61,14 @@ RSpec.describe 'Users', type: :system, js: true do
       expect(page).to have_content(user.uid)
       expect(page).to have_no_content(user2.uid)
     end
+
+    it 'and can be made sysadmin' do
+      user2.remove_role :sysadmin
+      visit edit_user_path(user2.id)
+      page.check('System admin')
+      click_on('Update User')
+      visit users_path
+      expect(user2.has_role? :sysadmin).to eq(true)
+    end
   end
 end
