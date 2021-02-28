@@ -19,6 +19,18 @@ class User < ApplicationRecord
     self.deactivated = true
   end
 
+  def sysadmin=(value)
+    if value.present? && value && value != '0'
+      add_role :sysadmin
+    else
+      remove_role :sysadmin
+    end
+  end
+
+  def sysadmin
+    has_role?(:sysadmin)
+  end
+
   def deactivate!
     deactivate
     save!
