@@ -23,6 +23,7 @@ gem 'noticed', '~> 1.2', '>= 1.2.15'
 gem 'omniauth'
 gem 'omniauth-cas'
 # This addresses CVE-2015-9284 https://github.com/advisories/GHSA-ww4x-rwq6-qpgf
+gem 'cancancan'
 gem 'omniauth-rails_csrf_protection', '~> 0.1'
 gem 'rolify'
 # Audit trail for changes to ActiveRecord models

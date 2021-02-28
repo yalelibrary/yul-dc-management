@@ -6,6 +6,7 @@ RSpec.describe 'Users', type: :system, js: true do
   let(:user2) { FactoryBot.create(:user) }
 
   before do
+    user.sysadmin = true
     login_as user
   end
 
