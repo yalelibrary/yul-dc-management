@@ -64,12 +64,12 @@ RSpec.describe 'Users', type: :system, js: true do
     end
 
     it 'and can be made sysadmin' do
-      user2.remove_role :sysadmin
+      user2.sysadmin = false
       visit edit_user_path(user2.id)
       page.check('System admin')
       click_on('Update User')
       visit users_path
-      expect(user2.has_role?(:sysadmin)).to eq(true)
+      expect(user2.sysadmin).to eq(true)
     end
   end
 

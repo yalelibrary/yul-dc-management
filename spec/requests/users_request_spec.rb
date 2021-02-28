@@ -24,7 +24,7 @@ RSpec.describe "Users", type: :request do
 
   describe 'with sysadmin user' do
     before do
-      user.add_role :sysadmin
+      user.sysadmin = true
       login_as user
     end
 
