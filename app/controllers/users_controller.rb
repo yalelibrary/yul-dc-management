@@ -12,6 +12,24 @@ class UsersController < ApplicationController
 
   def edit; end
 
+  def new
+    @user = User.new(provider: 'cas')
+  end
+
+  def create
+    @user = User.new(user_params.merge(provider: 'cas'))
+
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.json { render :show, status: :created, location: @admin_set }
+      else
+        format.html { render :new }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def update
     respond_to do |format|
       if @user.update(user_params)
@@ -29,7 +47,7 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:email, :deactivated, :sysadmin, :first_name, :last_name)
+      params.require(:user).permit(:email, :deactivated, :sysadmin, :first_name, :last_name, :uid)
     end
 
     def set_user

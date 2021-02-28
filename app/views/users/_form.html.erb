@@ -11,39 +11,52 @@
     </div>
   <% end %>
   <div>
-    <div>
+    <div class="field form-group">
+      <%= form.label :provider %>
+      <%= form.text_field(:provider, required: true, readonly: true, class: 'form-control') %>
+    </div>
+    <br>
+
+    <div class="field form-group">
+      <%= form.label :uid %>
+      <%= form.text_field(:uid, required: true, readonly: @user.persisted?, class: 'form-control') %>
+    </div>
+    <br>
+
+
+    <div class="field form-group">
       <%= form.label :first_name %>
-      <%= form.text_field(:first_name, required: true) %>
+      <%= form.text_field(:first_name, required: true, class: 'form-control') %>
     </div>
     <br>
 
-    <div>
+    <div class="field form-group">
       <%= form.label :last_name %>
-      <%= form.text_field(:last_name, required: true) %>
+      <%= form.text_field(:last_name, required: true, class: 'form-control') %>
     </div>
     <br>
 
-    <div>
+    <div class="field form-group">
       <%= form.label :email %>
-      <%= form.text_field(:email, required: true) %>
+      <%= form.text_field(:email, required: true, class: 'form-control') %>
     </div>
     <br>
 
-    <div>
+    <div class="field form-group">
       <%= form.label :sysadmin, "System admin"  %>
       <%= form.check_box(:sysadmin) %>
     </div>
     <br>
 
-    <div>
+    <div class="field form-group">
       <%= form.label :deactivated %>
-      <%= form.check_box(:deactivated) %>
+      <%= form.check_box(:deactivated)%>
     </div>
   </div>
   <br>
 
   <br>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit(@user.persisted? ? "Update User" : "Create User", class: "btn-primary btn") %>
   </div>
 <% end %>

@@ -71,4 +71,33 @@ RSpec.describe 'Users', type: :system, js: true do
       expect(user2.has_role?(:sysadmin)).to eq(true)
     end
   end
+
+  describe 'created' do
+    it 'with valid user succeeds' do
+      visit users_path
+      click_on('New User')
+      expect(page).to have_content('Create User')
+      fill_in('Uid', with: 'testuid')
+      fill_in('First name', with: 'Teddy')
+      fill_in('Last name', with: 'Testerly')
+      fill_in('Email', with: 'tt@testerly.com')
+      click_on('Create User')
+      expect(page).to have_content('User was successfully created')
+      expect(page).to have_content('Teddy')
+    end
+  end
+
+  it 'with invalid properties provides feedback' do
+    visit users_path
+    click_on('New User')
+    expect(page).to have_content('Create User')
+    fill_in('Uid', with: 'testuid')
+    fill_in('First name', with: 'Teddy')
+    fill_in('Last name', with: '')
+    fill_in('Email', with: 'tt@testerly.com')
+    click_on('Create User')
+    message = page.find('#user_last_name').native.attribute('validationMessage')
+    expect(message).to eq 'Please fill out this field.'
+    expect(current_path).to eq new_user_path
+  end
 end

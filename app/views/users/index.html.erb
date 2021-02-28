@@ -18,8 +18,9 @@
     <tbody>
     </tbody>
   </table>
-</div>
 
+  <%= link_to('New User', new_user_path, class: 'btn btn-primary') %>
+</div>
 
 <div id='users-data' class='d-none datatable-data'>
   <%= UserDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], searchable: value[:searchable], options: value[:options]} }.to_json %>
