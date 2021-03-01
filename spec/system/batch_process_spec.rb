@@ -53,7 +53,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
   end
 
   context "when uploading a csv" do
-    it "defaults to creating parent objects, uploads and increases csv count and gives a success message" do
+    it "uploads and increases csv count and gives a success message" do
       expect(BatchProcess.count).to eq 0
       page.attach_file("batch_process_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
       click_button("Submit")
@@ -62,6 +62,17 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
       expect(BatchProcess.last.file_name).to eq "short_fixture_ids.csv"
       expect(BatchProcess.last.batch_action).to eq "create parent objects"
       expect(BatchProcess.last.output_csv).to be nil
+    end
+
+    it "does not create batch if error saving" do
+      expect(BatchProcess.count).to eq 0
+      # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(BatchProcess).to receive(:save).and_return(false)
+      # rubocop:enable RSpec/AnyInstance
+      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
+      click_button("Submit")
+      expect(BatchProcess.count).to eq 0
+      expect(page).not_to have_content("Your job is queued for processing in the background")
     end
 
     context "re-associating child objects" do
@@ -115,6 +126,17 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
         click_link(BatchProcess.last.id.to_s)
         expect(page).to have_content("Batch Messages")
         expect(page).to have_content("Skipped Row").twice
+      end
+
+      it "displays batch messages for invalid order" do
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_invalid_order.csv")
+        select("Reassociate Child Oids")
+        click_button("Submit")
+        expect(page).to have_content("Your job is queued for processing in the background")
+        click_link(BatchProcess.last.id.to_s)
+        expect(page).to have_content("Batch Messages")
+        expect(page).to have_content("Skipped Row").once
+        expect(page).to have_content("invalid order").once
       end
     end
 
@@ -249,5 +271,11 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
         expect(page.body).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
       end
     end
+  end
+  it "triggers directory scan" do
+    visit batch_processes_path
+    expect(MetsDirectoryScanJob).to receive(:perform_later).and_return(nil).once
+    click_on("Start Goobi Scan")
+    expect(page).to have_content("Mets scan has been triggered.")
   end
 end

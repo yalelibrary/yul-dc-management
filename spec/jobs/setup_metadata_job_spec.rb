@@ -21,13 +21,19 @@ RSpec.describe SetupMetadataJob, type: :job do
     let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
     let(:metadata_source) { FactoryBot.create(:metadata_source) }
     let(:parent_object) { FactoryBot.create(:parent_object, authoritative_metadata_source: metadata_source) }
-    before do
-      allow(parent_object).to receive(:save!).and_raise('boom!')
-    end
 
     it 'notifies on save failure' do
+      allow(parent_object).to receive(:save!).and_raise('boom!')
       expect(parent_object).to receive(:processing_event).twice
       expect { metadata_job.perform(parent_object, batch_process) }.to raise_error('boom!')
+    end
+
+    it 'notifies if all images are not present' do
+      # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(SetupMetadataJob).to receive(:check_mets_images).and_return(false)
+      # rubocop:enable RSpec/AnyInstance
+      expect(parent_object).to receive(:processing_event).with("SetupMetadataJob failed to find all images.", "failed").once
+      metadata_job.perform(parent_object, batch_process)
     end
   end
 end
