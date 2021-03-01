@@ -40,11 +40,8 @@ RSpec.describe GeneratePdfJob, type: :job do
     it 'throws exception with shell failure' do
       expect(parent_object).to receive(:authoritative_json).and_return([]).once
       expect(parent_object).to receive(:pdf_generator_json).and_return("").once
-      status = Object.new
-      def status.success?
-        false
-      end
-      expect(status).to receive(:success?).once
+      status = double
+      expect(status).to receive(:success?).and_return(false).once
       expect(Open3).to receive(:capture3).and_return(["stdout output", "stderr output", status]).once
       expect do
         generate_pdf_job.perform(parent_object, batch_process)
