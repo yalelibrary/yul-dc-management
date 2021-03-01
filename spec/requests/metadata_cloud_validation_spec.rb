@@ -34,13 +34,13 @@ RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources
 
   it "has the expected fields" do
     data = JSON.parse(response.body.to_s)
-    expect(data.keys).to eq ["jsonModelType", "callNumber", "title", "extentOfDigitization", "creationPlace",
-                             "date", "extent", "language", "description", "subjectName", "subjectTopic", "genre",
-                             "format", "itemType", "partOf", "rights", "orbisBibId", "orbisBarcode",
-                             "preferredCitation", "itemPermission", "dateStructured", "illustrativeMatter",
-                             "intStartYear", "intEndYear", "subjectEra", "contributor", "repository", "subjectTitle",
-                             "subjectTitleDisplay", "contributorDisplay", "dependentUris", "oid", "collectionId",
-                             "children", "abstract"]
+    expect(data.keys.sort).to eq ["jsonModelType", "source", "callNumber", "title", "extentOfDigitization", "creationPlace",
+                                  "date", "extent", "language", "description", "subjectName", "subjectTopic", "genre",
+                                  "format", "itemType", "partOf", "rights", "orbisBibId", "orbisBarcode",
+                                  "preferredCitation", "itemPermission", "dateStructured", "illustrativeMatter",
+                                  "intStartYear", "intEndYear", "subjectEra", "contributor", "repository", "subjectTitle",
+                                  "subjectTitleDisplay", "contributorDisplay", "dependentUris", "oid", "collectionId",
+                                  "children", "abstract", "uri", "recordType"].sort
   end
 
   it "gets a successful response from the Metadata Cloud" do
