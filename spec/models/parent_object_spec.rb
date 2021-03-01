@@ -325,16 +325,36 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
           example.run
           ENV['VPN'] = original_vpn
         end
-        before do
+        it "raises an error with wrong version" do
           stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/ladybird/oid/16797069?include-children=1")
-            .to_return(status: 400, body: File.open(File.join(fixture_path, "metadata_cloud_wrong_version.json")))
-        end
-        it "raises an error" do
+              .to_return(status: 400, body: File.open(File.join(fixture_path, "metadata_cloud_wrong_version.json")))
           allow(MetadataSource).to receive(:metadata_cloud_version).and_return("clearly_fake_version")
           expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/ladybird/oid/16797069?include-children=1"
           expect do
             ladybird_source.fetch_record_on_vpn(parent_object)
           end.to raise_error(MetadataSource::MetadataCloudVersionError, "MetadataCloud is not responding to requests for version: clearly_fake_version")
+        end
+        it "raises an error with 500 response" do
+          stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/16797069?include-children=1")
+              .to_return(status: 500, body: { error: "fake error" }.to_json)
+          expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/16797069?include-children=1"
+          expect do
+            ladybird_source.fetch_record_on_vpn(parent_object)
+          end.to raise_error(MetadataSource::MetadataCloudServerError, "MetadataCloud is responding with 5XX error")
+        end
+        it "returns false on out of range response" do
+          stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/16797069?include-children=1")
+              .to_return(status: 700, body: { error: "fake error" }.to_json)
+          expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/16797069?include-children=1"
+          expect(ladybird_source.fetch_record_on_vpn(parent_object)).to be_falsey
+        end
+        it "returns response" do
+          stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/16797069?include-children=1")
+              .to_return(status: 200, body: { data: "fake data" }.to_json)
+          expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/16797069?include-children=1"
+          allow(S3Service).to receive(:upload).and_return true
+          record = ladybird_source.fetch_record(parent_object)
+          expect(record['data']).to eq("fake data")
         end
       end
     end

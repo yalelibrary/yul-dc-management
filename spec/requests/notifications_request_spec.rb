@@ -43,6 +43,13 @@ RSpec.describe "Notifications", prep_metadata_sources: true, type: :request do
       end
     end
 
+    describe "DELETE /resolve_all" do
+      it "returns http success" do
+        delete '/notifications/resolve_all'
+        expect(response).to redirect_to(notifications_url)
+      end
+    end
+
     describe "DELETE /destroy" do
       it "destroys the requested notification" do
         notification = Notification.create!(valid_attributes)

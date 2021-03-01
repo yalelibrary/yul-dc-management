@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
   let(:oid) { 1_002_533 }
+  let(:parent_object) { FactoryBot.build_stubbed(:parent_object) }
   let(:child_object) { FactoryBot.build_stubbed(:child_object, oid: oid) }
   let(:ptf) { described_class.new(child_object) }
 
@@ -107,6 +108,28 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     expect(ptf.copy_access_master_to_working_directory(tmpdir)).to eq expected_file
     expect(File.exist?(expected_file)).to eq true
     File.delete(expected_file)
+  end
+
+  it "original_file_exists? responds correctly for mets" do
+    child_object.parent_object = parent_object
+    expect(parent_object).to receive(:from_mets).and_return(true).once
+    expect(File).to receive(:exist?).and_return(true).once
+    ptf.original_file_exists?
+  end
+
+  context "when using s3 access master mount" do
+    around do |example|
+      original_mount = ENV['ACCESS_MASTER_MOUNT']
+      ENV['ACCESS_MASTER_MOUNT'] = 's3'
+      example.run
+      ENV['ACCESS_MASTER_MOUNT'] = original_mount
+    end
+
+    it "original_file_exists? responds correctly s3" do
+      child_object.parent_object = parent_object
+      expect(S3Service).to receive(:s3_exists?).and_return(true).once
+      ptf.original_file_exists?
+    end
   end
 
   context "when pulling access masters from S3" do

@@ -37,6 +37,16 @@ RSpec.describe GeneratePdfJob, type: :job do
         generate_pdf_job.perform(parent_object, batch_process)
       end.to raise_error("No authoritative_json to create PDF for #{parent_object.oid}")
     end
+    it 'throws exception with shell failure' do
+      expect(parent_object).to receive(:authoritative_json).and_return([]).once
+      expect(parent_object).to receive(:pdf_generator_json).and_return("").once
+      status = double
+      expect(status).to receive(:success?).and_return(false).once
+      expect(Open3).to receive(:capture3).and_return(["stdout output", "stderr output", status]).once
+      expect do
+        generate_pdf_job.perform(parent_object, batch_process)
+      end.to raise_error("PDF Java app returned non zero response code for #{parent_object.oid}: stderr output stdout output")
+    end
     it "has correct priority" do
       expect(generate_pdf_job.default_priority).to eq(50)
     end

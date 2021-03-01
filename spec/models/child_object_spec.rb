@@ -123,6 +123,27 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     end
   end
 
+  describe "when access master exist" do
+    let(:child_object) { described_class.new }
+    it "copy_to_access_master_pairtree notifies and returns true" do
+      expect(child_object).to receive(:access_master_exists?).and_return(true).once
+      expect(child_object).to receive(:processing_event).with("Not copied from Goobi package to access master pair-tree, already exists", 'access-master-exists').once
+      child_object.copy_to_access_master_pairtree
+    end
+  end
+
+  describe "a child object that has doesn't have a valid ptiff" do
+    let(:child_object) { described_class.new }
+    it "raises error on convert_to_ptiff" do
+      # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(PyramidalTiff).to receive(:valid?).and_return(false)
+      # rubocop:enable RSpec/AnyInstance
+      expect do
+        child_object.convert_to_ptiff
+      end.to raise_error
+    end
+  end
+
   describe "a child object that has successfully generated a ptiff" do
     before do
       stub_metadata_cloud("2004628")

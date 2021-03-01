@@ -22,12 +22,22 @@ RSpec.describe GenerateManifestJob, type: :job do
       let(:metadata_source) { FactoryBot.create(:metadata_source) }
       let(:parent_object) { FactoryBot.create(:parent_object, authoritative_metadata_source: metadata_source) }
       let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
-      before do
-        allow(parent_object).to receive(:solr_index).and_raise('boom!')
-      end
 
       it 'notifies on Solr index failure' do
+        allow(parent_object).to receive(:solr_index).and_raise('boom!')
         expect(parent_object).to receive(:processing_event).twice
+        expect { generate_manifest_job.perform(parent_object, batch_process) }.to raise_error('boom!')
+      end
+
+      it 'notifies when save fails' do
+        allow(parent_object.iiif_presentation).to receive(:save).and_return(false)
+        expect(parent_object).to receive(:processing_event).twice
+        generate_manifest_job.perform(parent_object, batch_process)
+      end
+
+      it 'notifies when save raises error' do
+        allow(parent_object.iiif_presentation).to receive(:save).and_raise('boom!')
+        expect(parent_object).to receive(:processing_event)
         expect { generate_manifest_job.perform(parent_object, batch_process) }.to raise_error('boom!')
       end
     end
