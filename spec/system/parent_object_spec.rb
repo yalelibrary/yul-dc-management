@@ -352,25 +352,43 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
     end
   end
 
-  # TODO: test confirmation box
-  context "pages has a Reindex button with an action event" do
-    before do
-      visit parent_objects_path
+  describe "index page", js: true do
+    context "clicking ReIndex button" do
+      before do
+        visit parent_objects_path
+      end
+
+      it "does not Reindex without confirmation" do
+        expect(ParentObject).not_to receive(:solr_index)
+        click_on("Reindex")
+        expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed? This action will reindex the entire contents of the system.")
+      end
+
+      it "does Reindex with confirmation" do
+        expect(ParentObject).to receive(:solr_index).and_return(nil).once
+        click_on("Reindex")
+        expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed? This action will reindex the entire contents of the system.")
+        page.driver.browser.switch_to.alert.accept
+      end
     end
 
-    it "has a Reindex button" do
-      click_on("Reindex")
-    end
-  end
+    context "clicking Metadata button" do
+      before do
+        visit parent_objects_path
+      end
 
-  # TODO: test confirmation box
-  context "pages has a Update Metadata button with an action event" do
-    before do
-      visit parent_objects_path
-    end
+      it "does not update metadata without confirmation" do
+        expect(ParentObject).not_to receive(:find_each)
+        click_on("Update Metadata")
+        expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.")
+      end
 
-    it "has a Update Metadata button" do
-      click_on("Update Metadata")
+      it "does update metadata with confirmation" do
+        expect(ParentObject).to receive(:find_each).and_return([]).once
+        click_on("Update Metadata")
+        expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.")
+        page.driver.browser.switch_to.alert.accept
+      end
     end
   end
 end
