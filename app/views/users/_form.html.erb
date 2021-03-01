@@ -43,6 +43,12 @@
     <br>
 
     <div class="field form-group">
+      <%= form.label :sysadmin, "System admin"  %>
+      <%= form.check_box(:sysadmin) %>
+    </div>
+    <br>
+
+    <div class="field form-group">
       <%= form.label :deactivated %>
       <%= form.check_box(:deactivated)%>
     </div>

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  rolify
   devise :timeoutable, :omniauthable, omniauth_providers: [:cas]
 
   validates :email, presence: true
@@ -16,6 +17,18 @@ class User < ApplicationRecord
 
   def deactivate
     self.deactivated = true
+  end
+
+  def sysadmin=(value)
+    if value.present? && value && value != '0'
+      add_role :sysadmin
+    else
+      remove_role :sysadmin
+    end
+  end
+
+  def sysadmin
+    has_role?(:sysadmin)
   end
 
   def deactivate!

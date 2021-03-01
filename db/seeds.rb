@@ -111,3 +111,8 @@ end
     user.deactivate!
   end
 end
+# make users sysadmins
+authorized_uids.each do |uid|
+  user = User.where(provider: "cas", uid: uid).first
+  user.add_role :sysadmin if user
+end
