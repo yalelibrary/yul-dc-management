@@ -25,7 +25,7 @@ class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
       {
         child_oid: link_to(child_object&.oid, show_child_batch_process_path(oid: child_object&.parent_object_oid, child_oid: child_object&.oid)),
         # time: child_object&.created_at,
-        time: child_object.events_for_batch_process(batch_process).maximum(:created_at),
+        time: child_object.events_for_batch_process(@batch_process).maximum(:created_at),
         status: child_object&.status_for_batch_process(@batch_process).to_s,
         DT_RowId: child_object&.oid
       }
