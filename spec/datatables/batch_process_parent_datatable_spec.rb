@@ -38,7 +38,9 @@ RSpec.describe BatchProcessParentDatatable, type: :datatable, prep_metadata_sour
         DT_RowId: child_object.oid,
         child_oid: "<a href='/batch_processes/#{batch_process.id}/parent_objects/#{parent_object.oid}/child_objects/#{child_object.oid}'>#{child_object.oid}</a>",
         status: 'Pending',
-        time: child_object.created_at
+        # time: child_object.created_at
+        time: child_object.events_for_batch_process(batch_process).maximum(:created_at)
+
       )
     end
   end
