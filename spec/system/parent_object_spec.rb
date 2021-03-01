@@ -352,7 +352,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
     end
   end
 
-  context "pages has a ReIndex button with an action event" do
+  # TODO: test confirmation box
+  context "pages has a Reindex button with an action event" do
     before do
       visit parent_objects_path
     end
@@ -362,6 +363,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
     end
   end
 
+  # TODO: test confirmation box
   context "pages has a Update Metadata button with an action event" do
     before do
       visit parent_objects_path
