@@ -2,6 +2,10 @@
 
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
+  rescue_from CanCan::AccessDenied do |exception|
+    @error_message = exception.message
+    render plain: "Access denied", status: 401
+  end
 
   protected
 
