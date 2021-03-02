@@ -47,6 +47,42 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'viewer property' do
+    it 'adds the viewer role when set to true' do
+      user.remove_role :viewer
+      user.viewer = true
+      expect(user.has_role?(:viewer)).to eq(true)
+    end
+    it 'removes the viewer role when set to false' do
+      user.add_role :viewer
+      user.viewer = false
+      expect(user.has_role?(:viewer)).to eq(false)
+    end
+    it 'removes the viewer role when set to 0' do
+      user.add_role :viewer
+      user.viewer = '0'
+      expect(user.has_role?(:viewer)).to eq(false)
+    end
+  end
+
+  describe 'editor property' do
+    it 'adds the editor role when set to true' do
+      user.remove_role :editor
+      user.editor = true
+      expect(user.has_role?(:editor)).to eq(true)
+    end
+    it 'removes the editor role when set to false' do
+      user.add_role :editor
+      user.editor = false
+      expect(user.has_role?(:editor)).to eq(false)
+    end
+    it 'removes the editor role when set to 0' do
+      user.add_role :editor
+      user.editor = '0'
+      expect(user.has_role?(:editor)).to eq(false)
+    end
+  end
+
   describe 'with validations' do
     it 'verifies that a new user has an email' do
       user2 = described_class.new(email: nil)
