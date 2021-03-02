@@ -260,7 +260,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
       it "pulls from the MetadataCloud for Voyager" do
         expect(parent_object.reload.authoritative_metadata_source_id).to eq voyager
-        expect(parent_object.ladybird_json).to be nil
+        expect(parent_object.ladybird_json).not_to be_empty
+        expect(parent_object.ladybird_json).not_to be nil
         expect(parent_object.voyager_json).not_to be nil
         expect(parent_object.voyager_json).not_to be_empty
         expect(parent_object.aspace_json).to be nil
@@ -280,7 +281,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
 
       it "pulls from the MetadataCloud for ArchiveSpace" do
         expect(parent_object.reload.authoritative_metadata_source_id).to eq aspace # 3 is ArchiveSpace
-        expect(parent_object.ladybird_json).to be nil
+        expect(parent_object.ladybird_json).not_to be_empty
+        expect(parent_object.ladybird_json).not_to be nil
         expect(parent_object.aspace_json).not_to be nil
         expect(parent_object.aspace_json).not_to be_empty
         expect(parent_object.voyager_json).to be nil
