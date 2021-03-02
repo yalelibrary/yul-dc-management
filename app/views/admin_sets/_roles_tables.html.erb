@@ -1,0 +1,33 @@
+<table class='table table-striped'>
+  <thead class='thead-dark'>
+    <tr>
+      <th scope='col'> Viewers </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% User.all.each do |user| %>
+      <% if user.has_role?(:viewer, @admin_set) %>
+        <tr>
+          <td><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<table class='table table-striped'>
+  <thead class='thead-dark'>
+    <tr>
+      <th scope='col'> Editors </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% User.all.each do |user| %>
+      <% if user.has_role?(:editor, @admin_set) %>
+        <tr>
+          <td><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
