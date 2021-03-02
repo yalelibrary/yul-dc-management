@@ -31,6 +31,30 @@ class User < ApplicationRecord
     has_role?(:sysadmin)
   end
 
+  def editor=(value)
+    if value.present? && value && value != '0'
+      add_role :editor
+    else
+      remove_role :editor
+    end
+  end
+
+  def editor
+    has_role?(:editor)
+  end
+
+  def viewer=(value)
+    if value.present? && value && value != '0'
+      add_role :viewer
+    else
+      remove_role :viewer
+    end
+  end
+
+  def viewer
+    has_role?(:viewer)
+  end
+
   def deactivate!
     deactivate
     save!
