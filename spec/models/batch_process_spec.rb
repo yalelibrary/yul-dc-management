@@ -306,19 +306,19 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
 
         it 'has a status for the batch process' do
           possible_statuses = [
-              %r(\d out of \d parent objects have a failure.),
-              %r(\d out of \d parent objects are in progress.),
-              "Batch status unknown",
-              "Batch in progress - no failures",
-              "Batch complete",
-              "Batch failed"
+            %r{\d out of \d parent objects have a failure.},
+            %r{\d out of \d parent objects are in progress.},
+            "Batch status unknown",
+            "Batch in progress - no failures",
+            "Batch complete",
+            "Batch failed"
           ]
 
           batch_process.file = csv_upload_with_source
           batch_process.save
-          expect(possible_statuses.any? {|status|
+          expect(possible_statuses.any? do |status|
             status.match? batch_process.batch_status
-          }).to be_truthy
+          end).to be_truthy
         end
 
         describe "with a parent object that had been previously created" do
