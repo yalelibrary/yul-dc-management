@@ -7,7 +7,7 @@
   <tbody>
     <% User.with_role(:viewer, @admin_set).order('last_name ASC').each do |user| %>
       <tr>
-        <td><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %></td>
+        <td><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %><%= link_to 'X', role_path(:user => user), method: :delete %></td>
       </tr>
     <% end %>
   </tbody>
