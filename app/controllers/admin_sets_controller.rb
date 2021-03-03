@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AdminSetsController < ApplicationController
-  before_action :set_admin_set, only: [:show, :edit, :update, :destroy, :set_user_role]
+  before_action :set_admin_set, only: [:show, :edit, :update, :destroy]
 
   # GET /admin_sets
   # GET /admin_sets.json
@@ -44,11 +44,6 @@ class AdminSetsController < ApplicationController
         format.json { render json: @admin_set.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def set_user_role
-    @user = User.find_by(uid: params[:uid])
-    redirect_to @admin_set
   end
 
   # PATCH/PUT /admin_sets/1
