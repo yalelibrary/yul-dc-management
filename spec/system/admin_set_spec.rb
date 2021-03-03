@@ -15,6 +15,13 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
     expect(page).to have_content("admin-set-key")
   end
 
+  it 'displays the user roles tables' do
+    visit admin_sets_path
+    click_link('Show')
+    expect(page).to have_css('table', text: 'Viewers')
+    expect(page).to have_css('table', text: 'Editors')
+  end
+
   it "display admin edit form" do
     visit admin_sets_path
     within "tr#admin_set_#{admin_set.id}" do

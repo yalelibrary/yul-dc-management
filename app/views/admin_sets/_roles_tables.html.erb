@@ -1,0 +1,29 @@
+<table class='table table-striped'>
+  <thead class='thead-dark'>
+    <tr>
+      <th scope='col'> Viewers </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% User.with_role(:viewer, @admin_set).order('last_name ASC').each do |viewer| %>
+      <tr>
+        <td><%= "#{viewer.last_name}, #{viewer.first_name} (#{viewer.uid})" %> </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<table class='table table-striped'>
+  <thead class='thead-dark'>
+    <tr>
+      <th scope='col'> Editors </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% User.with_role(:editor, @admin_set).order('last_name ASC').each do |user| %>
+        <tr>
+          <td><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %> </td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

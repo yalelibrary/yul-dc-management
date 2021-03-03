@@ -31,6 +31,14 @@ class User < ApplicationRecord
     has_role?(:sysadmin)
   end
 
+  def editor(admin_set)
+    has_role?(:editor, admin_set)
+  end
+
+  def viewer(admin_set)
+    has_role?(:viewer, admin_set)
+  end
+
   def deactivate!
     deactivate
     save!
