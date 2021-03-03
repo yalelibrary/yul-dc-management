@@ -47,10 +47,10 @@ puts "MetadataSources verified"
       homepage: "https://beinecke.library.yale.edu/"
     },
     {
-        key: "sml",
-        label: "Sterling Memorial Library",
-        summary: "Sterling Memorial Library",
-        homepage: "https://web.library.yale.edu/building/sterling-library"
+      key: "sml",
+      label: "Sterling Memorial Library",
+      summary: "Sterling Memorial Library",
+      homepage: "https://web.library.yale.edu/building/sterling-library"
     }    
 ].each do |obj|
   admin_set = AdminSet.where(key: obj[:key]).first
@@ -58,6 +58,9 @@ puts "MetadataSources verified"
     AdminSet.create!(obj)
   end
 end
+puts "Verifying ParentObjects have AdminSets"
+admin_set = AdminSet.find_by_key("brbl")
+ParentObject.where(admin_set_id: nil).update_all(admin_set_id: admin_set.id)
 puts "AdminSets verified"
 
 if Rails.env.development?
