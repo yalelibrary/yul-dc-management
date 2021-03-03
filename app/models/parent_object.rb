@@ -13,7 +13,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :batch_connections, as: :connectable
   has_many :batch_processes, through: :batch_connections
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
-  belongs_to :admin_set
+  belongs_to :admin_set, optional: true
   attr_accessor :metadata_update
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
@@ -48,7 +48,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def initialize(attributes = nil)
     super
     self.use_ladybird = true
-    self.admin_set = AdminSet.find_by_key("brbl")
   end
 
   def from_upstream_for_the_first_time?

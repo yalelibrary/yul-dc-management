@@ -193,7 +193,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       expect(child_object.batch_connections_for(batch_process)).to eq(batch_connection)
     end
 
-    describe "with a cached width and height on s3" do
+    describe "with a cached width and height on s3", prep_admin_sets: true do
       before do
         stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/89/45/67/89/456789.tif")
           .to_return(status: 200, headers: { 'X-Amz-Meta-Width' => '50',
@@ -209,14 +209,14 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       end
 
       it "has relationship to parent admin set through parent property" do
-        expect(child_object.admin_set.key).to eq("brbl")
+        expect(child_object.admin_set).to be_nil
         child_object.parent_object.admin_set = AdminSet.find_by_key("sml")
         child_object.parent_object.save!
         expect(child_object.reload.admin_set.key).to eq("sml")
       end
 
       it "has relationship to parent admin set through child property" do
-        expect(child_object.parent_object.admin_set.key).to eq("brbl")
+        expect(child_object.parent_object.admin_set).to be_nil
         child_object.admin_set = AdminSet.find_by_key("sml")
         child_object.save!
         expect(child_object.parent_object.reload.admin_set.key).to eq("sml")
