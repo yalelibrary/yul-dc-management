@@ -5,9 +5,9 @@
     </tr>
   </thead>
   <tbody>
-    <% User.with_role(:viewer, @admin_set).order('last_name ASC').each do |viewer| %>
+    <% User.with_role(:viewer, @admin_set).order('last_name ASC').each do |user| %>
       <tr>
-        <td><%= "#{viewer.last_name}, #{viewer.first_name} (#{viewer.uid})" %> </td>
+        <td><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %></td>
       </tr>
     <% end %>
   </tbody>
