@@ -6,15 +6,15 @@ class RolesController < ApplicationController
 
   def create
     if @item && @user.has_role?(params[:role], @item)
-      redirect_back(fallback_location: root_path, flash: { alert: 'User already had this role' })
+      redirect_back(fallback_location: root_path, flash: { alert: "User: #{@user.uid} is already assigned as #{params[:role]}" })
     elsif @item
       # each user only gets one role per item, remove all others first.
       @user.roles.where(resource: @item).destroy_all
       @user.add_role(params[:role], @item)
-      redirect_back(fallback_location: root_path, notice: "Role Added to User")
+      redirect_back(fallback_location: root_path, notice: "User: #{@user.uid} added as #{params[:role]}")
     else
       @user.add_role(params[:role])
-      redirect_back(fallback_location: root_path, notice: "Role Added to User")
+      redirect_back(fallback_location: root_path, notice: "User: #{@user.uid} added as #{params[:role]}")
     end
   end
 
@@ -22,7 +22,7 @@ class RolesController < ApplicationController
     @user = User.find_by(uid: params[:uid])
     return true if @user
 
-    redirect_back(fallback_location: root_path, flash: { alert: 'User UID not found' })
+    redirect_back(fallback_location: root_path, flash: { alert: "User: #{params[:uid]} not found" })
     false
   end
 
