@@ -5,4 +5,9 @@
 .table {
   display: inline-block;
   width: auto;
+  vertical-align: top;
+
+  th {
+    width: 300px;
+  }
 }
