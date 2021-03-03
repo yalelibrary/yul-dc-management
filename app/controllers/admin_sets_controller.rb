@@ -46,6 +46,11 @@ class AdminSetsController < ApplicationController
     end
   end
 
+  def set_user_role
+    @user = User.find_by(uid: params[:uid])
+    redirect_to @admin_set
+  end
+
   # PATCH/PUT /admin_sets/1
   # PATCH/PUT /admin_sets/1.json
   def update

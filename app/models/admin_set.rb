@@ -5,4 +5,6 @@ class AdminSet < ApplicationRecord
   validates :label, presence: true
   validates :homepage, presence: true
   validates :homepage, format: URI.regexp(%w[http https])
+  attr_accessor :uid
+  attr_accessor :role
 end
