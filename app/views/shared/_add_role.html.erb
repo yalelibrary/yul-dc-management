@@ -1,0 +1,11 @@
+<%= form_tag(roles_path, :method => :post, class: 'admin-set-form' ) do %>
+  <%= label_tag 'Add NetID' %>
+  <%= text_field_tag(:uid, "", required: true, class: 'form-control') %>
+  <%= label_tag 'Role' %>
+  <%= select_tag(:role, options_for_select(['viewer', 'editor']), { :class => 'form-control', required: true }) %>
+  <%= hidden_field_tag :item_class, item.class.to_s %>
+  <%= hidden_field_tag :item_id, item.id %>
+  <div class='actions'>
+    <%= submit_tag %>
+  </div>
+<% end %>
