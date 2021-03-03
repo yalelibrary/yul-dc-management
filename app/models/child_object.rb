@@ -6,6 +6,7 @@ class ChildObject < ApplicationRecord
   belongs_to :parent_object, foreign_key: 'parent_object_oid', class_name: "ParentObject"
   has_many :batch_connections, as: :connectable
   has_many :batch_processes, through: :batch_connections
+  has_one :admin_set, through: :parent_object
   self.primary_key = 'oid'
   paginates_per 50
   attr_accessor :current_batch_process

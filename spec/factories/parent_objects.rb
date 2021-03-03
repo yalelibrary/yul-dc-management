@@ -4,6 +4,7 @@ FactoryBot.define do
   factory :parent_object do
     oid { "2004628" }
     authoritative_metadata_source_id { "1" }
+    admin_set_id { AdminSet.find_by_key("brbl").id }
     factory :parent_object_with_bib do
       oid { "2004628" }
       bib { "3163155" }

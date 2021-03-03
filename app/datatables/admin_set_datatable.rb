@@ -28,7 +28,7 @@ class AdminSetDatatable < AjaxDatatablesRails::ActiveRecord
         label: admin_set.label,
         homepage: link_to(admin_set.homepage, admin_set.homepage),
         actions: "#{link_to('Edit', edit_admin_set_path(admin_set))} / #{link_to('Show', admin_set)}".html_safe, # rubocop:disable Rails/OutputSafety
-        DT_RowId: admin_set.id
+        DT_RowId: "admin_set_#{admin_set.id}"
       }
     end
   end
