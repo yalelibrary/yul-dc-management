@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AdminSetsController < ApplicationController
-  before_action :set_admin_set, only: [:show, :edit, :update, :destroy]
+  before_action :set_admin_set, only: [:show, :edit, :update, :destroy, :set_user_role]
 
   # GET /admin_sets
   # GET /admin_sets.json
