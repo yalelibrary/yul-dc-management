@@ -22,15 +22,7 @@
 
 <%= render partial: "roles_tables" %>
 
-<%= form_for(@admin_set, :url => { :controller => 'admin_sets', :action => 'set_user_role' }, html: { :method => :put, class: 'admin-set-form' }) do |form| %>
-  <%= form.label 'Add NetID' %>
-  <%= form.text_field(:uid, required: true, class: 'form-control') %>
-  <%= form.label 'in role' %>
-  <%= form.select(:role, ['viewer', 'editor'], { :class => 'form-control', required: true }) %>
-  <div class='actions'>
-    <%= form.submit %>
-  </div>
-<% end %>
+<%= render partial: 'shared/add_role', locals: {item: @admin_set} %>
 
 <p>
   <%= link_to 'Edit', edit_admin_set_path(@admin_set) %> |

@@ -13,12 +13,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get '/parent_objects/:oid/child_objects/:child_oid', to: 'batch_processes#show_child', as: :show_child
     end
   end
+  resources :roles, only: [:create]
   resources :users, only: [:index, :edit, :update, :show, :new, :create]
   resources :child_objects
   resources :admin_sets do
-    member do
-      put :set_user_role
-    end 
   end
 
   resources :parent_objects do
