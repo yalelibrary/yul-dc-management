@@ -6,27 +6,36 @@ class RolesController < ApplicationController
 
   def create
     if @item && @user.has_role?(params[:role], @item)
-      redirect_back(fallback_location: root_path, flash: { alert: 'User already had this role' })
+      redirect_back(fallback_location: root_path, flash: { alert: "User: #{@user.uid} is already assigned as #{params[:role]}" })
     elsif @item
       # each user only gets one role per item, remove all others first.
       @user.roles.where(resource: @item).destroy_all
       @user.add_role(params[:role], @item)
-      redirect_back(fallback_location: root_path, notice: "Role Added to User")
+      redirect_back(fallback_location: root_path, notice: show_notice(@user, params[:role]))
     else
       @user.add_role(params[:role])
-      redirect_back(fallback_location: root_path, notice: "Role Added to User")
+      redirect_back(fallback_location: root_path, notice: show_notice(@user, params[:role]))
     end
   end
 
-  def set_user
-    @user = User.find_by(uid: params[:uid])
-    return true if @user
-
-    redirect_back(fallback_location: root_path, flash: { alert: 'User UID not found' })
-    false
+  def destroy
   end
 
-  def set_item
-    @item = params[:item_class]&.constantize&.find(params[:item_id]) if params[:item_id]
-  end
+  private
+
+    def set_user
+      @user = User.find_by(uid: params[:uid])
+      return true if @user
+
+      redirect_back(fallback_location: root_path, flash: { alert: "User: #{params[:uid]} not found" })
+      false
+    end
+
+    def set_item
+      @item = params[:item_class]&.constantize&.find(params[:item_id]) if params[:item_id]
+    end
+
+    def show_notice(user, role)
+      user.deactivated ? "User: #{user.uid} added as #{role}, but is deactivated" : "User: #{user.uid} added as #{role}"
+    end
 end

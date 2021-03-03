@@ -1,33 +1,29 @@
-<table class='table table-striped'>
+<table class='table table-striped admin-set-show-table'>
   <thead class='thead-dark'>
     <tr>
       <th scope='col'> Viewers </th>
     </tr>
   </thead>
   <tbody>
-    <% User.all.each do |user| %>
-      <% if user.has_role?(:viewer, @admin_set) %>
-        <tr>
-          <td><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %> </td>
-        </tr>
-      <% end %>
+    <% User.with_role(:viewer, @admin_set).order('last_name ASC').each do |user| %>
+      <tr>
+        <td><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %><%= link_to 'X', role_path(:user => user), method: :delete %></td>
+      </tr>
     <% end %>
   </tbody>
 </table>
 
-<table class='table table-striped'>
+<table class='table table-striped admin-set-show-table'>
   <thead class='thead-dark'>
     <tr>
       <th scope='col'> Editors </th>
     </tr>
   </thead>
   <tbody>
-    <% User.all.each do |user| %>
-      <% if user.has_role?(:editor, @admin_set) %>
+    <% User.with_role(:editor, @admin_set).order('last_name ASC').each do |user| %>
         <tr>
           <td><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %> </td>
         </tr>
-      <% end %>
     <% end %>
   </tbody>
 </table>
