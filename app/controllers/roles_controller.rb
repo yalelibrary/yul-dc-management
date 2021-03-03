@@ -11,10 +11,10 @@ class RolesController < ApplicationController
       # each user only gets one role per item, remove all others first.
       @user.roles.where(resource: @item).destroy_all
       @user.add_role(params[:role], @item)
-      redirect_back(fallback_location: root_path, notice: "User: #{@user.uid} added as #{params[:role]}")
+      redirect_back(fallback_location: root_path, notice: show_messaging(@user, params[:role]))
     else
       @user.add_role(params[:role])
-      redirect_back(fallback_location: root_path, notice: "User: #{@user.uid} added as #{params[:role]}")
+      redirect_back(fallback_location: root_path, notice: show_messaging(@user, params[:role]))
     end
   end
 
@@ -28,5 +28,9 @@ class RolesController < ApplicationController
 
   def set_item
     @item = params[:item_class]&.constantize&.find(params[:item_id]) if params[:item_id]
+  end
+
+  def show_messaging(user, role)
+    user.deactivated ? "User: #{user.uid} added as #{role}, but is deactivated" : "User: #{user.uid} added as #{role}"
   end
 end
