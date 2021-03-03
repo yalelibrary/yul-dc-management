@@ -47,7 +47,14 @@ class AdminSetsController < ApplicationController
   end
 
   def set_user_role
-    @user = User.find_by(uid: params[:uid])
+    @user = User.find_by(uid: params[:admin_set][:uid])
+
+    if params[:admin_set][:role] == 'viewer'
+      @admin_set.add_viewer(@user)
+    elsif params[:admin_set][:role] == 'editor'
+      @admin_set.add_editor(@user)
+    end
+
     redirect_to @admin_set
   end
 
