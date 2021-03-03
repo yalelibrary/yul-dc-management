@@ -11,26 +11,28 @@ class RolesController < ApplicationController
       # each user only gets one role per item, remove all others first.
       @user.roles.where(resource: @item).destroy_all
       @user.add_role(params[:role], @item)
-      redirect_back(fallback_location: root_path, notice: show_messaging(@user, params[:role]))
+      redirect_back(fallback_location: root_path, notice: show_notice(@user, params[:role]))
     else
       @user.add_role(params[:role])
-      redirect_back(fallback_location: root_path, notice: show_messaging(@user, params[:role]))
+      redirect_back(fallback_location: root_path, notice: show_notice(@user, params[:role]))
     end
   end
 
-  def set_user
-    @user = User.find_by(uid: params[:uid])
-    return true if @user
+  private
 
-    redirect_back(fallback_location: root_path, flash: { alert: "User: #{params[:uid]} not found" })
-    false
-  end
+    def set_user
+      @user = User.find_by(uid: params[:uid])
+      return true if @user
 
-  def set_item
-    @item = params[:item_class]&.constantize&.find(params[:item_id]) if params[:item_id]
-  end
+      redirect_back(fallback_location: root_path, flash: { alert: "User: #{params[:uid]} not found" })
+      false
+    end
 
-  def show_messaging(user, role)
-    user.deactivated ? "User: #{user.uid} added as #{role}, but is deactivated" : "User: #{user.uid} added as #{role}"
-  end
+    def set_item
+      @item = params[:item_class]&.constantize&.find(params[:item_id]) if params[:item_id]
+    end
+
+    def show_notice(user, role)
+      user.deactivated ? "User: #{user.uid} added as #{role}, but is deactivated" : "User: #{user.uid} added as #{role}"
+    end
 end
