@@ -137,7 +137,6 @@ class ChildObject < ApplicationRecord
   end
 
   def convert_to_ptiff!(force = false)
-    # setting the width to nil will force the PTIFF to be generated.
     pyramidal_tiff.force_update = force
     convert_to_ptiff && save!
   end
