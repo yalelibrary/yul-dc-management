@@ -13,6 +13,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :batch_connections, as: :connectable
   has_many :batch_processes, through: :batch_connections
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
+  belongs_to :admin_set, optional: true
   attr_accessor :metadata_update
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
@@ -114,10 +115,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                     when "ladybird"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
                     when "ils"
-                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
+                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless bib.present?
                       self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
                     when "aspace"
-                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
+                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless aspace_uri.present?
                       self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
                     end
     processing_event("Metadata has been fetched", "metadata-fetched") if fetch_results
