@@ -73,6 +73,7 @@ class ParentObjectsController < ApplicationController
   end
 
   def reindex
+    authorize!(:reindex_all, ParentObject)
     ParentObject.solr_index
     respond_to do |format|
       format.html { redirect_to parent_objects_url, notice: 'Parent objects have been reindexed.' }
@@ -81,6 +82,7 @@ class ParentObjectsController < ApplicationController
   end
 
   def all_metadata
+    authorize!(:update_metadata, ParentObject)
     ParentObject.find_each do |po|
       po.metadata_update = true
       po.setup_metadata_job

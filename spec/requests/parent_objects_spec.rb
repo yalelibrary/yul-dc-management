@@ -14,7 +14,7 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:sysadmin_user) }
   # ParentObject. As you add validations to ParentObject, be sure to
   # adjust the attributes here as well.
   before do
@@ -174,6 +174,27 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
       post update_metadata_parent_object_url(parent_object)
       expect(response).to redirect_to(parent_objects_url)
       expect(flash[:notice]).to eq('Parent object metadata update was queued.')
+    end
+  end
+
+  context 'without sys admin privileges' do
+    let(:user) { FactoryBot.create(:user) }
+    before do
+      login_as user
+    end
+
+    describe '#reindex' do
+      it 'is not allowed' do
+        post reindex_parent_objects_url
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    describe "#all_metadata" do
+      it 'is not allowed' do
+        post all_metadata_parent_objects_url
+        expect(response).to have_http_status(:unauthorized)
+      end
     end
   end
 end

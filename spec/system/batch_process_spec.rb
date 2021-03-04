@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: true do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:sysadmin_user) }
 
   around do |example|
     original_path = ENV["GOOBI_MOUNT"]
@@ -276,6 +276,20 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
     visit batch_processes_path
     expect(MetsDirectoryScanJob).to receive(:perform_later).and_return(nil).once
     click_on("Start Goobi Scan")
+    expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you start a Goobi Scan?")
+    page.driver.browser.switch_to.alert.accept
     expect(page).to have_content("Mets scan has been triggered.")
+  end
+
+  context "when logged in without sysadmin privileges" do
+    let(:user) { FactoryBot.create(:user) }
+    before do
+      login_as user
+      visit batch_processes_path
+    end
+
+    it "triggers directory scan is disabled" do
+      expect(page).to have_button('Start Goobi Scan', disabled: true)
+    end
   end
 end

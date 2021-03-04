@@ -78,6 +78,7 @@ class BatchProcessesController < ApplicationController
 
   # This is temporary for testing until we enable scheduling
   def trigger_mets_scan
+    authorize!(:trigger_mets_scan, ParentObject)
     MetsDirectoryScanJob.perform_later
     respond_to do |format|
       format.html { redirect_to batch_processes_path, notice: 'Mets scan has been triggered.' }
