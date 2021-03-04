@@ -27,6 +27,10 @@ class User < ApplicationRecord
     end
   end
 
+  def find_role(role, admin_set)
+    roles.find_by(name: role, resource_id: admin_set.id)
+  end
+
   def sysadmin
     has_role?(:sysadmin)
   end

@@ -7,7 +7,7 @@
   <tbody>
     <% User.with_role(:viewer, @admin_set).order('last_name ASC').each do |user| %>
       <tr>
-        <td><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %><%= link_to 'X', role_path(:user => user), method: :delete %></td>
+        <td><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %><%= link_to 'X', remove_role_path(uid: user.uid, role: user.find_role(:viewer, @admin_set), admin_set: @admin_set), method: :put %></td>
       </tr>
     <% end %>
   </tbody>
@@ -22,7 +22,7 @@
   <tbody>
     <% User.with_role(:editor, @admin_set).order('last_name ASC').each do |user| %>
         <tr>
-          <td><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %> </td>
+          <td><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %><%= link_to 'X', remove_role_path(uid: user.uid, role: user.find_role(:editor, @admin_set), admin_set: @admin_set), method: :put %> </td>
         </tr>
     <% end %>
   </tbody>
