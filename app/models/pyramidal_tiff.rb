@@ -5,7 +5,7 @@
 class PyramidalTiff
   include ActiveModel::Validations
 
-  attr_accessor :child_object, :conversion_information
+  attr_accessor :child_object, :conversion_information, :force_update
   validate :verify_and_generate
   delegate :access_master_path, :mets_access_master_path, :remote_access_master_path, :remote_ptiff_path, :oid, to: :child_object
 
@@ -27,12 +27,16 @@ class PyramidalTiff
     conversion_information
   end
 
+  def height_and_width?
+    child_object.height && child_object.width
+  end
+
   def verify_and_generate
     ptiff_info = { oid: oid.to_s }
     file_on_s3 = S3Service.s3_exists?(child_object.remote_ptiff_path)
-    child_object.check_for_size_and_file if !child_object.width.present? && file_on_s3
+    child_object.check_for_size_and_file if !height_and_width? && file_on_s3
     # do not do the image conversion if there is already a PTIFF on S3
-    if child_object.height && child_object.width && file_on_s3
+    if height_and_width? && !force_update && file_on_s3
       child_object.processing_event("PTIFF exists on S3, not converting: #{ptiff_info.to_json}", 'ptiff-ready-skipped')
       true
     else
