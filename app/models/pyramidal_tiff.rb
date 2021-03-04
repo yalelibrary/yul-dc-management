@@ -8,7 +8,7 @@ class PyramidalTiff
   attr_accessor :child_object, :conversion_information
   validate :verify_and_generate
   delegate :access_master_path, :mets_access_master_path, :remote_access_master_path, :remote_ptiff_path, :oid, to: :child_object
-
+  
   # This method takes the oid of a child_object and creates a new PyramidalTiff
   def initialize(child_object)
     @child_object = child_object
@@ -29,8 +29,12 @@ class PyramidalTiff
 
   def verify_and_generate
     ptiff_info = { oid: oid.to_s }
+    file_on_s3 = S3Service.s3_exists?(child_object.remote_ptiff_path)
+    if !child_object.width.present? && file_on_s3
+      child_object.check_for_size_and_file
+    end    
     # do not do the image conversion if there is already a PTIFF on S3
-    if child_object.height && child_object.width && S3Service.s3_exists?(child_object.remote_ptiff_path)
+    if child_object.height && child_object.width && file_on_s3
       child_object.processing_event("PTIFF exists on S3, not converting: #{ptiff_info.to_json}", 'ptiff-ready-skipped')
       true
     else
