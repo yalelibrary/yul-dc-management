@@ -3,8 +3,8 @@
   <div class="row">
     <h1>Batch Processes</h1>
   </div>    
-  <div class="float-right">
-    <%= link_to 'Start Goobi Scan', trigger_mets_scan_batch_processes_path, method: 'post', class: 'btn btn-secondary' %>
+  <div class="float-right button-list">
+    <%= button_to 'Start Goobi Scan', trigger_mets_scan_batch_processes_path, method: 'post', class: 'btn btn-secondary', data:{confirm: "Are you sure you start a Goobi Scan?"}, disabled: !(can? :trigger_mets_scan, ParentObject)  %>
   </div>
   <div class='row'>
     <%= render 'form' %>

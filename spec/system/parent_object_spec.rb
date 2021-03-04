@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:sysadmin_user) }
   before do
     stub_ptiffs_and_manifests
     login_as user
@@ -388,6 +388,20 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         click_on("Update Metadata")
         expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.")
         page.driver.browser.switch_to.alert.accept
+      end
+    end
+
+    context "logged in without sysadmin rights" do
+      let(:user) { FactoryBot.create(:user) }
+
+      before do
+        login_as user
+        visit parent_objects_path
+      end
+
+      it "does not update metadata without confirmation" do
+        expect(page).to have_button('Update Metadata', disabled: true)
+        expect(page).to have_button('Reindex', disabled: true)
       end
     end
   end
