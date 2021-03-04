@@ -44,10 +44,12 @@ RSpec.describe RecreateChildOidPtiffsJob, type: :job do
       end.to change { Delayed::Job.where(queue: 'ptiff').count }.by(1)
     end
     it "with recreate batch, will force ptiff creation" do
-      expect(child_object.pyramidal_tiff).to receive(:generate_ptiff).once
+      expect(child_object.pyramidal_tiff).to receive(:original_file_exists?).and_return(true).once
+      expect(child_object.pyramidal_tiff).to receive(:generate_ptiff).and_return(true).once
       generate_ptiff_job.perform(child_object, batch_process)
     end
     it "another type of batch will not force ptiff creation" do
+      expect(child_object.pyramidal_tiff).not_to receive(:original_file_exists?)
       expect(child_object.pyramidal_tiff).not_to receive(:generate_ptiff)
       generate_ptiff_job.perform(child_object, other_batch_process)
     end
