@@ -22,6 +22,40 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
     expect(page).to have_css('table', text: 'Editors')
   end
 
+  it 'allows roles to be added to users' do
+    visit admin_sets_path
+    click_link('Show')
+    fill_in('uid', with: 'johnsmith2530')
+    select('viewer', from: 'role')
+    click_on('Save changes')
+    within('table', text: 'Viewers') do
+      expect(page).to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
+    end
+    within('table', text: 'Editors') do
+      expect(page).not_to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
+    end
+  end
+
+  it 'removes the viewer role from a user when they are given an editor role' do
+    visit admin_sets_path
+    click_link('Show')
+    fill_in('uid', with: 'johnsmith2530')
+    select('viewer', from: 'role')
+    click_on('Save changes')
+    within('table', text: 'Viewers') do
+      expect(page).to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
+    end
+    fill_in('uid', with: 'johnsmith2530')
+    select('editor', from: 'role')
+    click_on('Save changes')
+    within('table', text: 'Viewers') do
+      expect(page).not_to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
+    end
+    within('table', text: 'Editors') do
+      expect(page).to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
+    end
+  end
+
   it "display admin edit form" do
     visit admin_sets_path
     click_link("Edit")
