@@ -139,6 +139,16 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         expect(page.body).to include "Yale Community Only"
       end
 
+      it "can change the Admin Set via the UI", prep_admin_sets: true do
+        visit parent_object_path(2_012_036)
+        click_on("Edit")
+        select 'Sterling', from: "parent_object[admin_set]"
+        click_on("Update Parent object")
+
+        visit parent_object_path(2_012_036)
+        expect(page).to have_content "Sterling"
+      end
+
       it "includes the rights statment" do
         within("div.rights-statement") do
           expect(page).to have_content("The use of this image may be subject to the")
