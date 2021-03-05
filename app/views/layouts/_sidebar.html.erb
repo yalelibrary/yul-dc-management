@@ -8,7 +8,6 @@
     <% if can? :manage,  AdminSet %>
       <%= link_to 'Sets', admin_sets_path, class: 'list-group-item list-group-item-action bg-light' %>
     <% end  %>
-    <%#= link_to 'Sets', admin_sets_path, class: 'list-group-item list-group-item-action bg-light' %>
     <%= link_to 'Parent Objects', parent_objects_path, class: 'list-group-item list-group-item-action bg-light' %>
     <%= link_to 'Batch Process', batch_processes_path, class: 'list-group-item list-group-item-action bg-light' %>
     <%= link_to 'Notifications', notifications_path, class: 'list-group-item list-group-item-action bg-light' %>
