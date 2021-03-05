@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class AdminSetsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_admin_set, only: [:show, :edit, :update, :destroy]
 
   # GET /admin_sets
