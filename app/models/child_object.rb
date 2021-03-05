@@ -12,7 +12,8 @@ class ChildObject < ApplicationRecord
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
 
-  before_create :check_for_size_and_file
+  # Does not get called because we use upsert to create children
+  # before_create :check_for_size_and_file
 
   # Options from iiif presentation api 2.1 - see https://iiif.io/api/presentation/2.1/#viewinghint
   # These are added to the manifest on the canvas level
@@ -136,8 +137,7 @@ class ChildObject < ApplicationRecord
   end
 
   def convert_to_ptiff!(force = false)
-    # setting the width to nil will force the PTIFF to be generated.
-    self.width = nil if force
+    pyramidal_tiff.force_update = force
     convert_to_ptiff && save!
   end
 
