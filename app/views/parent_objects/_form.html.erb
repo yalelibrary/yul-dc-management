@@ -17,6 +17,17 @@
     </div>
 
     <div class="col-med-3">
+      <%= form.label "Set" %>
+      <%= form.select(:admin_set,
+                  AdminSet.all.map { |admin_set|
+                    [admin_set.label, admin_set.key]
+                  } << ["None",nil],
+                  selected: parent_object.admin_set&.key || ["None", nil]
+          )
+       %>
+    </div>
+
+    <div class="col-med-3">
       <%= form.label "Metadata Source" %>
       <%= form.select(:authoritative_metadata_source_id, [['Ladybird', 1], ['Voyager', 2], ['ArchiveSpace', 3]]) %>
     </div>
