@@ -27,7 +27,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
     click_link('Show')
     fill_in('uid', with: 'johnsmith2530')
     select('viewer', from: 'role')
-    click_on('Save changes')
+    click_on('Save')
     within('table', text: 'Viewers') do
       expect(page).to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
     end
@@ -41,7 +41,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
     click_link('Show')
     fill_in('uid', with: 'johnsmith2530')
     select('viewer', from: 'role')
-    click_on('Save changes')
+    click_on('Save')
     within('table', text: 'Viewers') do
       expect(page).to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
     end
@@ -57,13 +57,13 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
     click_link('Show')
     fill_in('uid', with: 'johnsmith2530')
     select('viewer', from: 'role')
-    click_on('Save changes')
+    click_on('Save')
     within('table', text: 'Viewers') do
       expect(page).to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
     end
     fill_in('uid', with: 'johnsmith2530')
     select('editor', from: 'role')
-    click_on('Save changes')
+    click_on('Save')
     within('table', text: 'Viewers') do
       expect(page).not_to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
     end
