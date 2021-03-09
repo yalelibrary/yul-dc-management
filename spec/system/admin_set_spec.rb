@@ -36,6 +36,22 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
     end
   end
 
+  it 'allows roles to be removed from users' do
+    visit admin_sets_path
+    click_link('Show')
+    fill_in('uid', with: 'johnsmith2530')
+    select('viewer', from: 'role')
+    click_on('Save changes')
+    within('table', text: 'Viewers') do
+      expect(page).to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
+    end
+    click_on('X')
+    expect(page).to have_content("User: johnsmith2530 removed as viewer")
+    within('table', text: 'Viewers') do
+      expect(page).not_to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
+    end
+  end
+
   it 'removes the viewer role from a user when they are given an editor role' do
     visit admin_sets_path
     click_link('Show')
