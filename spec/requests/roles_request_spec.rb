@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Roles', type: :request do
   let(:user) { FactoryBot.create(:user) }
+  let(:role) { FactoryBot.create(:role) }
+  let(:admin_set) { FactoryBot.create(:admin_set) }
 
   before do
     login_as user
@@ -11,10 +13,10 @@ RSpec.describe 'Roles', type: :request do
 
   let(:valid_parameters) do
     {
-      uid: 'fcr7',
-      role: 'viewer',
+      uid: user.uid,
+      role: role,
       item_class: 'AdminSet',
-      item_id: '2'
+      item_id: admin_set.id
     }
   end
 
@@ -27,6 +29,10 @@ RSpec.describe 'Roles', type: :request do
     }
   end
 
+  # name { 'editor' }
+  # users { [association(:user)] }
+  # resource { association :admin_set }
+
   # let(:invalid_attributes) do
   #   {
   #     name: 'viewer',
@@ -37,18 +43,15 @@ RSpec.describe 'Roles', type: :request do
 
   describe 'POST /create' do
     context 'with valid parameters' do
-      it 'creates a new role' do
-        post roles_path, params: { role: valid_parameters }
-        byebug
-        # expect do
-        #   # post roles_path, params: valid_parameters
-        #   post roles_path, params: { role: valid_attributes }
-        # end.to change(Role, :count).by(1)
+      it 'adds a role to a user' do
+        expect do
+          post roles_url, params: valid_parameters
+        end.to change(user.roles, :count).by(1)
       end
     end
 
     # context 'with invalid parameters' do
     #   it 'does not create a new Role' do
     #   end
-    # end
+  end
 end
