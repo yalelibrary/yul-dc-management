@@ -5,8 +5,6 @@ class AdminSet < ApplicationRecord
   validates :label, presence: true
   validates :homepage, presence: true
   validates :homepage, format: URI.regexp(%w[http https])
-  attr_accessor :uid
-  attr_accessor :role
 
   def add_viewer(user)
     remove_editor(user) if user.editor(self)
@@ -14,7 +12,7 @@ class AdminSet < ApplicationRecord
   end
 
   def remove_viewer(user)
-    user.remove_role(:viewer)
+    user.remove_role(:viewer, self)
   end
 
   def add_editor(user)
@@ -23,6 +21,6 @@ class AdminSet < ApplicationRecord
   end
 
   def remove_editor(user)
-    user.remove_role(:editor)
+    user.remove_role(:editor, self)
   end
 end

@@ -10,6 +10,7 @@ class User < ApplicationRecord
 
   has_many :notifications, as: :recipient
   has_many :batch_processes
+  has_many :users_roles
 
   def active_for_authentication?
     super && !deactivated
@@ -25,6 +26,10 @@ class User < ApplicationRecord
     else
       remove_role :sysadmin
     end
+  end
+
+  def find_role(role, admin_set)
+    roles.find_by(name: role, resource_id: admin_set.id)
   end
 
   def sysadmin
