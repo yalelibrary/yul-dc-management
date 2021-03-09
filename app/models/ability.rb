@@ -18,8 +18,8 @@ class Ability
       can :read, ChildObject, parent_object: { admin_set: { roles: { name: viewer_roles, users: { id: user.id } } } }
     end
     can :add, AdminSet, roles: { name: editor_roles, users: { id: user.id } }
-    can [:edit, :create], ChildObject, parent_object: { admin_set: { roles: { name: editor_roles, users: { id: user.id } } } }
-    can [:edit, :create], ParentObject, admin_set: { roles: { name: editor_roles, users: { id: user.id } } }
+    can [:update, :create, :destroy], ChildObject, parent_object: { admin_set: { roles: { name: editor_roles, users: { id: user.id } } } }
+    can [:update, :create, :destroy], ParentObject, admin_set: { roles: { name: editor_roles, users: { id: user.id } } }
   end
 
   def viewer_roles

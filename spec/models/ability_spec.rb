@@ -112,14 +112,14 @@ RSpec.describe Ability, type: :model do
       user.remove_role :editor, admin_set
     end
 
-    it 'allows edit on a Parent Object' do
+    it 'allows update on a Parent Object' do
       ability = Ability.new(user)
-      assert ability.can?(:edit, parent_object)
+      assert ability.can?(:update, parent_object)
     end
 
-    it 'allows edit on a Child Object' do
+    it 'allows update on a Child Object' do
       ability = Ability.new(user)
-      assert ability.can?(:edit, child_object)
+      assert ability.can?(:update, child_object)
     end
 
     it 'allows create on a Parent Object' do
@@ -130,6 +130,16 @@ RSpec.describe Ability, type: :model do
     it 'allows create on a Child Object' do
       ability = Ability.new(user)
       assert ability.can?(:create, child_object)
+    end
+
+    it 'allows destroy on a Parent Object' do
+      ability = Ability.new(user)
+      assert ability.can?(:destroy, parent_object)
+    end
+
+    it 'allows destroy on a Child Object' do
+      ability = Ability.new(user)
+      assert ability.can?(:destroy, child_object)
     end
   end
 
@@ -144,14 +154,14 @@ RSpec.describe Ability, type: :model do
       assert ability.cannot?(:read, child_object)
     end
 
-    it 'disallows edit on a Parent Object' do
+    it 'disallows update on a Parent Object' do
       ability = Ability.new(user)
-      assert ability.cannot?(:edit, parent_object)
+      assert ability.cannot?(:update, parent_object)
     end
 
-    it 'disallows edit on a Child Object' do
+    it 'disallows update on a Child Object' do
       ability = Ability.new(user)
-      assert ability.cannot?(:edit, child_object)
+      assert ability.cannot?(:update, child_object)
     end
 
     it 'disallows create on a Parent Object' do
@@ -162,6 +172,16 @@ RSpec.describe Ability, type: :model do
     it 'disallows create on a Child Object' do
       ability = Ability.new(user)
       assert ability.cannot?(:create, child_object)
+    end
+
+    it 'disallows destroy on a Parent Object' do
+      ability = Ability.new(user)
+      assert ability.cannot?(:destroy, parent_object)
+    end
+
+    it 'disallows destroy on a Child Object' do
+      ability = Ability.new(user)
+      assert ability.cannot?(:destroy, child_object)
     end
   end
 end
