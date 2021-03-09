@@ -46,4 +46,15 @@ RSpec.describe 'Roles', type: :request do
       end
     end
   end
+
+  describe 'DELETE /remove' do
+    context 'with valid parameters' do
+      it 'removes a role from a user' do
+        post roles_url, params: valid_parameters
+        expect do
+          delete remove_roles_path, params: valid_parameters
+        end.to change(user.roles, :count).by(-1)
+      end
+    end
+  end
 end
