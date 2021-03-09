@@ -20,26 +20,14 @@ RSpec.describe 'Roles', type: :request do
     }
   end
 
-  let(:valid_attributes) do
+  let(:invalid_parameters) do
     {
-      id: 1,
-      name: 'viewer',
-      resource_type: 'AdminSet',
-      resource_id: '1'
+      uid: 10,
+      role: nil,
+      item_class: 'AdminSet',
+      item_id: nil
     }
   end
-
-  # name { 'editor' }
-  # users { [association(:user)] }
-  # resource { association :admin_set }
-
-  # let(:invalid_attributes) do
-  #   {
-  #     name: 'viewer',
-  #     resource_type: nil,
-  #     resource_id: '2'
-  #   }
-  # end
 
   describe 'POST /create' do
     context 'with valid parameters' do
@@ -50,8 +38,12 @@ RSpec.describe 'Roles', type: :request do
       end
     end
 
-    # context 'with invalid parameters' do
-    #   it 'does not create a new Role' do
-    #   end
+    context 'with invalid parameters' do
+      it 'does not add a role to a user' do
+        expect do
+          post roles_url, params: invalid_parameters
+        end.to change(user.roles, :count).by(0)
+      end
+    end
   end
 end
