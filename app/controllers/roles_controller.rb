@@ -36,7 +36,7 @@ class RolesController < ApplicationController
     end
 
     def set_role
-      @role = Role.find_by(name: params[:role]).name
+      @role = params[:role]
     end
 
     def set_item
