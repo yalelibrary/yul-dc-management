@@ -14,10 +14,9 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/admin_sets", type: :request do
-  let(:user) { FactoryBot.create(:user) }
-  before do
-    login_as user
-  end
+  let(:sysadmin_user) { FactoryBot.create(:sysadmin_user, uid: 'johnsmith2530') }
+  let(:user) { FactoryBot.create(:user, uid: 'martinsmith2530') }
+
   # AdminSet. As you add validations to AdminSet, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
@@ -37,107 +36,133 @@ RSpec.describe "/admin_sets", type: :request do
     }
   end
 
-  describe "GET /index" do
-    it "renders a successful response" do
-      AdminSet.create! valid_attributes
-      get admin_sets_url
-      expect(response).to be_successful
+  context "when user has permission to Sets" do
+    before do
+      login_as sysadmin_user
     end
-  end
-
-  describe "GET /show" do
-    it "renders a successful response" do
-      admin_set = AdminSet.create! valid_attributes
-      get admin_set_url(admin_set)
-      expect(response).to be_successful
+    describe "GET /index" do
+      it "renders a successful response" do
+        AdminSet.create! valid_attributes
+        get admin_sets_url
+        expect(response).to be_successful
+      end
     end
-  end
 
-  describe "GET /new" do
-    it "renders a successful response" do
-      get new_admin_set_url
-      expect(response).to be_successful
+    describe "GET /show" do
+      it "renders a successful response" do
+        admin_set = AdminSet.create! valid_attributes
+        get admin_set_url(admin_set)
+        expect(response).to be_successful
+      end
     end
-  end
 
-  describe "GET /edit" do
-    it "render a successful response" do
-      admin_set = AdminSet.create! valid_attributes
-      get edit_admin_set_url(admin_set)
-      expect(response).to be_successful
+    describe "GET /new" do
+      it "renders a successful response" do
+        get new_admin_set_url
+        expect(response).to be_successful
+      end
     end
-  end
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new AdminSet" do
-        expect do
+    describe "GET /edit" do
+      it "render a successful response" do
+        admin_set = AdminSet.create! valid_attributes
+        get edit_admin_set_url(admin_set)
+        expect(response).to be_successful
+      end
+    end
+
+    describe "POST /create" do
+      context "with valid parameters" do
+        it "creates a new AdminSet" do
+          expect do
+            post admin_sets_url, params: { admin_set: valid_attributes }
+          end.to change(AdminSet, :count).by(1)
+        end
+
+        it "redirects to the created admin_set" do
           post admin_sets_url, params: { admin_set: valid_attributes }
-        end.to change(AdminSet, :count).by(1)
+          expect(response).to redirect_to(admin_set_url(AdminSet.last))
+        end
       end
 
-      it "redirects to the created admin_set" do
-        post admin_sets_url, params: { admin_set: valid_attributes }
-        expect(response).to redirect_to(admin_set_url(AdminSet.last))
-      end
-    end
+      context "with invalid parameters" do
+        it "does not create a new AdminSet" do
+          expect do
+            post admin_sets_url, params: { admin_set: invalid_attributes }
+          end.to change(AdminSet, :count).by(0)
+        end
 
-    context "with invalid parameters" do
-      it "does not create a new AdminSet" do
-        expect do
+        it "renders a successful response (i.e. to display the 'new' template)" do
           post admin_sets_url, params: { admin_set: invalid_attributes }
-        end.to change(AdminSet, :count).by(0)
-      end
-
-      it "renders a successful response (i.e. to display the 'new' template)" do
-        post admin_sets_url, params: { admin_set: invalid_attributes }
-        expect(response).to be_successful
-      end
-    end
-  end
-
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) do
-        skip("Add a hash of attributes valid for your model")
-      end
-
-      it "updates the requested admin_set" do
-        admin_set = AdminSet.create! valid_attributes
-        patch admin_set_url(admin_set), params: { admin_set: new_attributes }
-        admin_set.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "redirects to the admin_set" do
-        admin_set = AdminSet.create! valid_attributes
-        patch admin_set_url(admin_set), params: { admin_set: new_attributes }
-        admin_set.reload
-        expect(response).to redirect_to(admin_set_url(admin_set))
+          expect(response).to be_successful
+        end
       end
     end
 
-    context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
-        admin_set = AdminSet.create! valid_attributes
-        patch admin_set_url(admin_set), params: { admin_set: invalid_attributes }
-        expect(response).to be_successful
+    describe "PATCH /update" do
+      context "with valid parameters" do
+        let(:new_attributes) do
+          skip("Add a hash of attributes valid for your model")
+        end
+
+        it "updates the requested admin_set" do
+          admin_set = AdminSet.create! valid_attributes
+          patch admin_set_url(admin_set), params: { admin_set: new_attributes }
+          admin_set.reload
+          skip("Add assertions for updated state")
+        end
+
+        it "redirects to the admin_set" do
+          admin_set = AdminSet.create! valid_attributes
+          patch admin_set_url(admin_set), params: { admin_set: new_attributes }
+          admin_set.reload
+          expect(response).to redirect_to(admin_set_url(admin_set))
+        end
+      end
+
+      context "with invalid parameters" do
+        it "renders a successful response (i.e. to display the 'edit' template)" do
+          admin_set = AdminSet.create! valid_attributes
+          patch admin_set_url(admin_set), params: { admin_set: invalid_attributes }
+          expect(response).to be_successful
+        end
       end
     end
-  end
 
-  describe "DELETE /destroy" do
-    it "destroys the requested admin_set" do
-      admin_set = AdminSet.create! valid_attributes
-      expect do
+    describe "DELETE /destroy" do
+      it "destroys the requested admin_set" do
+        admin_set = AdminSet.create! valid_attributes
+        expect do
+          delete admin_set_url(admin_set)
+        end.to change(AdminSet, :count).by(-1)
+      end
+
+      it "redirects to the admin_sets list" do
+        admin_set = AdminSet.create! valid_attributes
         delete admin_set_url(admin_set)
-      end.to change(AdminSet, :count).by(-1)
+        expect(response).to redirect_to(admin_sets_url)
+      end
+    end
+  end
+
+  context "when user does not permission to Sets" do
+    before do
+      login_as user
+    end
+    describe "GET /index" do
+      it "renders an unauthorized message" do
+        AdminSet.create! valid_attributes
+        get admin_sets_url
+        expect(response).to be_unauthorized
+      end
     end
 
-    it "redirects to the admin_sets list" do
-      admin_set = AdminSet.create! valid_attributes
-      delete admin_set_url(admin_set)
-      expect(response).to redirect_to(admin_sets_url)
+    describe "GET /show" do
+      it "renders an unauthorized message" do
+        admin_set = AdminSet.create! valid_attributes
+        get admin_set_url(admin_set)
+        expect(response).to be_unauthorized
+      end
     end
   end
 end

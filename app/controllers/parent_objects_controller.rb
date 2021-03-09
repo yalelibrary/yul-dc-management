@@ -73,6 +73,7 @@ class ParentObjectsController < ApplicationController
   end
 
   def reindex
+    authorize!(:reindex_all, ParentObject)
     ParentObject.solr_index
     respond_to do |format|
       format.html { redirect_to parent_objects_url, notice: 'Parent objects have been reindexed.' }
@@ -81,6 +82,7 @@ class ParentObjectsController < ApplicationController
   end
 
   def all_metadata
+    authorize!(:update_metadata, ParentObject)
     ParentObject.find_each do |po|
       po.metadata_update = true
       po.setup_metadata_job
@@ -127,8 +129,10 @@ class ParentObjectsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def parent_object_params
-      params.require(:parent_object).permit(:oid, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
-                                            :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction,
-                                            :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization)
+      cur_params = params.require(:parent_object).permit(:oid, :admin_set, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
+                                                         :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction,
+                                                         :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization)
+      cur_params[:admin_set] = AdminSet.where(key: cur_params[:admin_set]).first if cur_params[:admin_set]
+      cur_params
     end
 end

@@ -10,5 +10,8 @@ FactoryBot.define do
     first_name { FFaker::Name.first_name }
     last_name { FFaker::Name.last_name }
     provider { "cas" }
+    factory :sysadmin_user do
+      after(:create) { |user| user.add_role(:sysadmin) }
+    end
   end
 end

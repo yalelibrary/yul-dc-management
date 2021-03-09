@@ -81,4 +81,28 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       end
     end
   end
+
+  describe "POST /trigger_mets_scan" do
+    context "logged in with sysadmin" do
+      let(:user) { FactoryBot.create(:sysadmin_user) }
+      before do
+        login_as user
+      end
+
+      it "returns http success" do
+        post trigger_mets_scan_batch_processes_url
+        expect(response).to redirect_to(batch_processes_path)
+      end
+    end
+    context "logged in without sysadmin" do
+      let(:user) { FactoryBot.create(:user) }
+      before do
+        login_as user
+      end
+      it "returns http unauthorized" do
+        post trigger_mets_scan_batch_processes_url
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 end
