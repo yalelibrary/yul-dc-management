@@ -13,7 +13,6 @@ RSpec.describe Ability, type: :model do
   let(:child_object2) { FactoryBot.create(:child_object, oid: 900_000_000, parent_object: parent_object) }
 
   describe 'for a sysadmin' do
-
     it 'grants manage role to User' do
       ability = Ability.new(sysadmin_user)
       assert ability.can?(:manage, User)
