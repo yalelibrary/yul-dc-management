@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Ability, type: :model do
   let(:user) { FactoryBot.create(:user) }
   let(:viewer_user) { FactoryBot.create(:user) }
-  let(:sysadmin_user) { FactoryBot.create(:user) }
+  let(:sysadmin_user) { FactoryBot.create(:sysadmin_user) }
   let(:metadata_source) { FactoryBot.create(:metadata_source) }
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 16_057_779, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
@@ -13,9 +13,6 @@ RSpec.describe Ability, type: :model do
   let(:child_object2) { FactoryBot.create(:child_object, oid: 900_000_000, parent_object: parent_object) }
 
   describe 'for a sysadmin' do
-    before do
-      sysadmin_user.add_role :sysadmin
-    end
 
     it 'grants manage role to User' do
       ability = Ability.new(sysadmin_user)
@@ -76,6 +73,10 @@ RSpec.describe Ability, type: :model do
       viewer_user.add_role :viewer, admin_set
     end
 
+    after do
+      viewer_user.remove_role :viewer, admin_set
+    end
+
     it 'allows read on a Parent Object' do
       ability = Ability.new(viewer_user)
       assert ability.can?(:read, parent_object)
@@ -85,6 +86,22 @@ RSpec.describe Ability, type: :model do
       ability = Ability.new(viewer_user)
       assert ability.can?(:read, child_object)
     end
+
+    it 'allows fetching of the parent' do
+      ability = Ability.new(viewer_user)
+      # needed to instantiate the object
+      expect(parent_object).to be
+      expect(ParentObject.accessible_by(ability).count).to eq(1)
+    end
+
+    it 'allows fetching of the children' do
+      ability = Ability.new(viewer_user)
+      # needed to instantiate the object
+      expect(parent_object).to be
+      expect(child_object).to be
+      expect(child_object2).to be
+      expect(ChildObject.accessible_by(ability).count).to eq(2)
+    end
   end
 
   describe 'for a user with editor role on an AdminSet' do
@@ -92,14 +109,28 @@ RSpec.describe Ability, type: :model do
       user.add_role :editor, admin_set
     end
 
-    it 'allows manage on a Parent Object' do
-      ability = Ability.new(user)
-      assert ability.can?(:manage, parent_object)
+    after do
+      user.remove_role :editor, admin_set
     end
 
-    it 'allows manage on a Child Object' do
+    it 'allows edit on a Parent Object' do
       ability = Ability.new(user)
-      assert ability.can?(:manage, child_object)
+      assert ability.can?(:edit, parent_object)
+    end
+
+    it 'allows edit on a Child Object' do
+      ability = Ability.new(user)
+      assert ability.can?(:edit, child_object)
+    end
+
+    it 'allows create on a Parent Object' do
+      ability = Ability.new(user)
+      assert ability.can?(:create, parent_object)
+    end
+
+    it 'allows create on a Child Object' do
+      ability = Ability.new(user)
+      assert ability.can?(:create, child_object)
     end
   end
 
@@ -114,14 +145,24 @@ RSpec.describe Ability, type: :model do
       assert ability.cannot?(:read, child_object)
     end
 
-    it 'disallows manage on a Parent Object' do
+    it 'disallows edit on a Parent Object' do
       ability = Ability.new(user)
-      assert ability.cannot?(:manage, parent_object)
+      assert ability.cannot?(:edit, parent_object)
     end
 
-    it 'disallows manage on a Child Object' do
+    it 'disallows edit on a Child Object' do
       ability = Ability.new(user)
-      assert ability.cannot?(:manage, child_object)
+      assert ability.cannot?(:edit, child_object)
+    end
+
+    it 'disallows create on a Parent Object' do
+      ability = Ability.new(user)
+      assert ability.cannot?(:create, parent_object)
+    end
+
+    it 'disallows create on a Child Object' do
+      ability = Ability.new(user)
+      assert ability.cannot?(:create, child_object)
     end
   end
 end
