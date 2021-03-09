@@ -14,8 +14,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
   resources :roles, only: [:create] do
-    member do
-      put :remove
+    collection do
+      delete :remove
     end
   end
 
