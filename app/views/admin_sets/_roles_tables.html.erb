@@ -7,7 +7,7 @@
   <tbody>
     <% User.with_role(:viewer, @admin_set).order('last_name ASC').each do |user| %>
       <tr>
-        <td><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %><%= link_to 'X', remove_roles_path(uid: user.uid, item_class: 'AdminSet', item_id: @admin_set.id, role: :viewer), method: :delete %></td>
+        <td class='user-role'><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %><%= link_to 'X', remove_roles_path(uid: user.uid, item_class: 'AdminSet', item_id: @admin_set.id, role: :viewer), method: :delete %></td>
       </tr>
     <% end %>
   </tbody>
@@ -22,7 +22,7 @@
   <tbody>
     <% User.with_role(:editor, @admin_set).order('last_name ASC').each do |user| %>
         <tr>
-          <td><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %><%= link_to 'X', remove_roles_path(uid: user.uid, item_class: 'AdminSet', item_id: @admin_set.id, role: :editor), method: :delete %> </td>
+          <td class='user-role'><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %><%= link_to 'X', remove_roles_path(uid: user.uid, item_class: 'AdminSet', item_id: @admin_set.id, role: :editor), method: :delete %> </td>
         </tr>
     <% end %>
   </tbody>
