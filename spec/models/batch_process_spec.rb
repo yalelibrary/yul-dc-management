@@ -111,6 +111,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       let(:child_object) { parent_object.child_objects.first }
 
       before do
+        stub_metadata_cloud("V-30000317", "ils")
+        stub_ptiffs_and_manifests
         batch_process.file = xml_upload
         batch_process.save!
         parent_object.admin_set_id = admin_set.id
