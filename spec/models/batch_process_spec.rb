@@ -106,22 +106,20 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
 
     describe 'recreating child oid ptiffs' do
       let(:admin_set) { FactoryBot.create(:admin_set) }
-      let(:role) { FactoryBot.create(:role, name: editor) }
-      let(:parent_object) { ParentObject.find(30_000_317) }
+      let(:role) { FactoryBot.create(:role, name: :editor) }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set_id: admin_set.id) }
       let(:child_object) { parent_object.child_objects.first }
 
       before do
-        batch_process.file = xml_upload
-        batch_process.save!
-        parent_object.admin_set_id = admin_set.id
         parent_object.save!
+        batch_process.save!
       end
 
       it 'calls the configure_parent_object method' do
         parents = Set[]
-        expect do
-          batch_process.configure_parent_object(child_object, parents)
-        end.to change { IngestEvent.count }.by(1)
+        batch_process.configure_parent_object(child_object, parents)
+
+        expect(IngestEvent.count).to equal(1)
         expect(parents.size).to equal(1)
         expect(parent_object.batch_processes).to include(batch_process)
       end
@@ -130,15 +128,16 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         parents = Set[]
         batch_process.configure_parent_object(child_object, parents)
         batch_process.attach_item(child_object)
+
         expect do
           batch_process.user_update_permission(child_object)
         end.to change { IngestEvent.count }.by(3)
-
         expect(batch_process.user_update_permission(child_object)).to eq(false)
       end
 
       it 'calls the user_update_permission method and returns true if the user does have editor permission on the admin set' do
         user.add_role(:editor, admin_set)
+
         expect(batch_process.user_update_permission(child_object)).to eq(true)
       end
     end
