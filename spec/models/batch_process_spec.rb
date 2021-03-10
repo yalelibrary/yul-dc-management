@@ -63,6 +63,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       expect(po.metadata_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace/repositories/11/archival_objects/329771"
     end
   end
+
   describe "running the background jobs" do
     around do |example|
       perform_enqueued_jobs do
@@ -101,6 +102,27 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         expect(batch_process_with_failure.batch_status).to eq "Batch failed"
       end
       # rubocop:enable RSpec/AnyInstance
+    end
+
+    describe 'recreating child oid ptiffs' do
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600) }
+      let(:child_object) { parent_object.child_objects.first }
+      parents = Set[]
+
+      before do
+        batch_process.save!
+      end
+
+      it 'calls the configure_parent_object method' do
+        batch_process.configure_parent_object(child_object, parents)
+
+        expect(parents.size).to equal(1)
+        expect(parent_object.batch_processes).to include(batch_process)
+      end
+
+      it 'calls the user_update_permission method' do
+
+      end
     end
 
     describe 'xml file import' do
@@ -196,7 +218,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
             batch_process.file = xml_upload_two
             batch_process.save
           end.to change { ParentObject.count }.from(0).to(1)
-             .and change { ChildObject.count }.from(0).to(3)
+            .and change { ChildObject.count }.from(0).to(3)
           po = ParentObject.find(30_000_401)
           co = ChildObject.find(30_000_404)
           # parent object expectations
