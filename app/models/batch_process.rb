@@ -103,7 +103,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def refresh_metadata_cloud_csv
-    metadata_sources = parsed_csv.entries.map { |r| r['Source'] }
+    metadata_sources = parsed_csv.entries.map { |r| r['source'] }
     create_parent_objects_from_oids(oids, metadata_sources)
   end
 
