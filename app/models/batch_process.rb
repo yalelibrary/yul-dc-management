@@ -116,6 +116,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         next
       end
       next unless child_object
+
+      user = batch_process.user
+      ability = Ability.new(user)
+      batch_processing_event("#{user.first_name} does not have permission to update Child: #{child_object.oid}", 'Update permission denied') unless ability.can? :update, child_object
       parent_object = child_object.parent_object
       unless parents.include? parent_object.oid
         attach_item(parent_object)
