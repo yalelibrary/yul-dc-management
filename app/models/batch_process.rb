@@ -80,16 +80,19 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     "#{file_name.delete_suffix('.csv')}_bp_#{id}.csv"
   end
 
-  def create_parent_objects_from_oids(oids, metadata_sources)
-    oids.zip(metadata_sources).each do |oid, metadata_source|
+  def create_parent_objects_from_oids(oids, metadata_sources, admin_sets)
+    oids.zip(metadata_sources, admin_sets).each do |oid, metadata_source, adminset_key|
       fresh = false
+      admin_set = AdminSet.find_by_key(adminset_key)
       po = ParentObject.where(oid: oid).first_or_create do |parent_object|
         # Only runs on newly created parent objects
         setup_for_background_jobs(parent_object, metadata_source)
+        parent_object.admin_set = admin_set
         fresh = true
       end
       next if fresh
       po.metadata_update = true
+      po.admin_set = admin_set
       setup_for_background_jobs(po, metadata_source)
       po.save!
     end
@@ -104,8 +107,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def refresh_metadata_cloud_csv
     metadata_sources = parsed_csv.entries.map { |r| r['source'] }
-    create_parent_objects_from_oids(oids, metadata_sources)
+    admin_sets = parsed_csv.entries.map { |r| r['admin_set'] }
+    create_parent_objects_from_oids(oids, metadata_sources, admin_sets)
   end
+
 
   def recreate_child_oid_ptiffs
     parents = Set[]
