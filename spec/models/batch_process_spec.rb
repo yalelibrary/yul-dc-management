@@ -105,23 +105,38 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     end
 
     describe 'recreating child oid ptiffs' do
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600) }
+      let(:admin_set) { FactoryBot.create(:admin_set) }
+      let(:role) { FactoryBot.create(:role, name: editor) }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set_id: admin_set.id) }
       let(:child_object) { parent_object.child_objects.first }
-      parents = Set[]
 
       before do
         batch_process.save!
       end
 
       it 'calls the configure_parent_object method' do
+        parents = Set[]
         batch_process.configure_parent_object(child_object, parents)
-
+        expect(IngestEvent.count).to equal(1)
         expect(parents.size).to equal(1)
         expect(parent_object.batch_processes).to include(batch_process)
       end
 
-      it 'calls the user_update_permission method' do
+      it 'calls the user_update_permission method and returns false if the user does not have editor permissions on the admin set' do
+        parents = Set[]
+        batch_process.configure_parent_object(child_object, parents)
+        expect(IngestEvent.count).to eq(1)
+        batch_process.attach_item(child_object)
+        expect do
+          batch_process.user_update_permission(child_object)
+        end.to change { IngestEvent.count }.from(1).to(4)
 
+        expect(batch_process.user_update_permission(child_object)).to eq(false)
+      end
+
+      it 'calls the user_update_permission method and returns true if the user does have editor permission on the admin set' do
+        user.add_role(:editor, admin_set)
+        expect(batch_process.user_update_permission(child_object)).to eq(true)
       end
     end
 
