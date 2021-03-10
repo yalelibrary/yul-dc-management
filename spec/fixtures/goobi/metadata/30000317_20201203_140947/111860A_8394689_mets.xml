@@ -13,6 +13,7 @@
           <mods:titleInfo>
             <mods:title>Di qiu quan tu</mods:title>
           </mods:titleInfo>
+          <mods:note displayLabel="Yale Collection Owner" type="ownership">brbl</mods:note>
           <mods:identifier type="PPNanalog">/ils/barcode/39002091118928?bib=8394689</mods:identifier>
           <mods:recordInfo>
             <mods:recordIdentifier source="gbv-ppn">30000317</mods:recordIdentifier>

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
+RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
@@ -61,6 +61,14 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       po = ParentObject.find(30_000_557)
       expect(po.aspace_uri).to eq "/repositories/11/archival_objects/329771"
       expect(po.metadata_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace/repositories/11/archival_objects/329771"
+    end
+
+    it "creates a parent object with admin set from the METs document" do
+      batch_process.file = aspace_xml_upload
+      batch_process.save!
+      po = ParentObject.find(30_000_557)
+      expect(po.admin_set).not_to be_nil
+      expect(po.admin_set.key).to eq "brbl"
     end
   end
   describe "running the background jobs" do

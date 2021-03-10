@@ -31,6 +31,7 @@
                </mods:part>
                <mods:accessCondition type="use and reproduction">This is a Yale copyright information statement with information on how you're allowed to use these images.</mods:accessCondition>
                <mods:accessCondition type="restriction on access">yale_only</mods:accessCondition>
+               <mods:note displayLabel="Yale Collection Owner" type="ownership">brbl</mods:note>
                <mods:location>
                   <mods:shelfLocator>GEN MSS 1386</mods:shelfLocator>
                </mods:location>

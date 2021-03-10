@@ -32,6 +32,7 @@
           </mods:part>
           <mods:accessCondition displayLabel="Yale Restriction" type="restriction on access">Public</mods:accessCondition>
           <mods:accessCondition displayLabel="Yale Use" type="use and reproduction">Permission from the Yale University Committee on Literary Property is required to publish Jean Toomer materials in any format. To learn more, contact the Curator, Yale Collection of American Literature.</mods:accessCondition>
+          <mods:note displayLabel="Yale Collection Owner" type="ownership">brbl</mods:note>
           <mods:location>
             <mods:shelfLocator>JWJ MSS 1</mods:shelfLocator>
           </mods:location>
