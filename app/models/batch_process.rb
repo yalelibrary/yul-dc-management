@@ -117,21 +117,21 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       end
       next unless child_object
 
-      user = self.user
-      ability = Ability.new(user)
-      unless ability.can? :update, child_object
-        batch_processing_event("#{user.uid} does not have permission to update Child: #{child_object.oid} on Parent: #{child_object.parent_object.oid}", 'Permission Denied')
-        next
-      end
-
       parent_object = child_object.parent_object
       unless parents.include? parent_object.oid
         attach_item(parent_object)
         parent_object.processing_event("Connection to batch created", "parent-connection-created")
         parents.add parent_object.oid
       end
-      GeneratePtiffJob.perform_later(child_object, self)
       attach_item(child_object)
+      user = self.user
+      ability = Ability.new(user)
+      unless ability.can? :update, child_object
+        batch_processing_event("#{user.uid} does not have permission to update Child: #{child_object.oid} on Parent: #{child_object.parent_object.oid}", 'Permission Denied')
+        child_object.processing_event("#{user.uid} does not have permission to update Child: #{child_object.oid}", 'failed')
+        next
+      end
+      GeneratePtiffJob.perform_later(child_object, self)
       child_object.processing_event("Ptiff Queued", "ptiff-queued")
     end
   end
