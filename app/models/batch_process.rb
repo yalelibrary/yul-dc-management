@@ -119,7 +119,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
       configure_parent_object(child_object, parents)
       attach_item(child_object)
-      next unless check_user_update_permissions(child_object)
+      next unless user_update_permission(child_object)
 
       GeneratePtiffJob.perform_later(child_object, self)
       child_object.processing_event("Ptiff Queued", "ptiff-queued")
@@ -137,7 +137,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parents
   end
 
-  def check_user_update_permissions(child_object)
+  def user_update_permission(child_object)
     user = self.user
     ability = Ability.new(user)
     unless ability.can? :update, child_object
