@@ -41,10 +41,16 @@ RSpec.describe RecreateChildOidPtiffsJob, type: :job do
     it "has correct queue" do
       expect(recreate_child_oid_ptiffs_job.queue_name).to eq('default')
     end
-    it "will create appropriate number of ptiff jobs when run" do
-      expect do
-        recreate_child_oid_ptiffs_job.perform(batch_process)
-      end.to change { Delayed::Job.where(queue: 'ptiff').count }.by(1)
+    it 'succeeds if the user has the udpate permission' do
+      user.add_role(:editor, admin_set)
+      expect(Delayed::Job.where(queue: 'ptiff').count).to eq(0)
+      recreate_child_oid_ptiffs_job.perform(batch_process)
+      expect(Delayed::Job.where(queue: 'ptiff').count).to eq(1)
+    end
+    it 'fails if the user does not have the udpate permission' do
+      expect(Delayed::Job.where(queue: 'ptiff').count).to eq(0)
+      recreate_child_oid_ptiffs_job.perform(batch_process)
+      expect(Delayed::Job.where(queue: 'ptiff').count).to eq(0)
     end
     it "with recreate batch, will force ptiff creation" do
       expect(child_object.pyramidal_tiff).to receive(:original_file_exists?).and_return(true).once

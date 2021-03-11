@@ -63,6 +63,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       expect(po.metadata_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace/repositories/11/archival_objects/329771"
     end
   end
+
   describe "running the background jobs" do
     around do |example|
       perform_enqueued_jobs do
@@ -237,7 +238,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
             batch_process.file = xml_upload_two
             batch_process.save
           end.to change { ParentObject.count }.from(0).to(1)
-             .and change { ChildObject.count }.from(0).to(3)
+            .and change { ChildObject.count }.from(0).to(3)
           po = ParentObject.find(30_000_401)
           co = ChildObject.find(30_000_404)
           # parent object expectations
