@@ -78,10 +78,7 @@ module Statable
   end
 
   def processing_event(message, status = 'info')
-    unless current_batch_connection
-      # Rails.logger.error("no batch connection for #{oid} - #{message}")
-      return "no batch connection"
-    end
+    return "no batch connection" unless current_batch_connection
     IngestEvent.create!(
       status: status,
       reason: message,
