@@ -7,10 +7,12 @@ RSpec.describe RecreateChildOidPtiffsJob, type: :job do
     ActiveJob::QueueAdapters::DelayedJobAdapter.new
   end
   let(:user) { FactoryBot.create(:user) }
+  let(:role) { FactoryBot.create(:role, name: editor) }
+  let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user, batch_action: 'recreate child oid ptiffs') }
   let(:other_batch_process) { FactoryBot.create(:batch_process, user: user, batch_action: 'other recreate child oid ptiffs') }
   let(:metadata_source) { FactoryBot.create(:metadata_source) }
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source, admin_set_id: admin_set.id) }
   let(:child_object) { FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_object) }
   let(:recreate_child_oid_ptiffs_job) { RecreateChildOidPtiffsJob.new }
   let(:generate_ptiff_job) { GeneratePtiffJob.new }
@@ -29,6 +31,7 @@ RSpec.describe RecreateChildOidPtiffsJob, type: :job do
         .to_return(status: 200, body: "", headers: {})
     allow(batch_process).to receive(:oids).and_return(['456789'])
     child_object
+    user.add_role(:editor, admin_set)
   end
 
   describe 'recreate ptiff job' do
