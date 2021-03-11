@@ -76,9 +76,11 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
     end
 
     context "re-associating child objects" do
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826") }
-      let(:parent_object_old_one) { FactoryBot.create(:parent_object, oid: "2004548") }
-      let(:parent_object_old_two) { FactoryBot.create(:parent_object, oid: "2004549") }
+      let(:admin_set) { FactoryBot.create(:admin_set) }
+      let(:role) { FactoryBot.create(:role, name: editor) }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
+      let(:parent_object_old_one) { FactoryBot.create(:parent_object, oid: "2004548", admin_set_id: admin_set.id) }
+      let(:parent_object_old_two) { FactoryBot.create(:parent_object, oid: "2004549", admin_set_id: admin_set.id) }
 
       around do |example|
         perform_enqueued_jobs do
@@ -92,6 +94,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
         parent_object
         parent_object_old_one
         parent_object_old_two
+        user.add_role(:editor, admin_set)
       end
 
       it "uploads a CSV of child oids in order to re-associate them with new parent oids" do
