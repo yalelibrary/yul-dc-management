@@ -31,7 +31,6 @@ RSpec.describe RecreateChildOidPtiffsJob, type: :job do
         .to_return(status: 200, body: "", headers: {})
     allow(batch_process).to receive(:oids).and_return(['456789'])
     child_object
-    user.add_role(:editor, admin_set)
   end
 
   describe 'recreate ptiff job' do
