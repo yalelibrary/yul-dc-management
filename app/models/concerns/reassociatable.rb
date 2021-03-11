@@ -16,18 +16,27 @@ module Reassociatable
       co = load_child(index, row["child_oid"].to_i)
       po = load_parent(index, row["parent_oid"].to_i)
       next unless co.present? && po.present?
+
+      attach_item(po)
+      attach_item(co)
+      next unless user_update_permission(co, po)
+
       parents_needing_update << co.parent_object.oid
       parents_needing_update << row["parent_oid"].to_i
       order = extract_order(index, row)
       next if order == :invalid_order
-      co.order = row["order"]
-      co.label = row["label"]
-      co.caption = row["caption"]
-      co.parent_object = po
-      processing_event_for_child(co)
-      co.save!
+      reassociate_child(co, po, row)
     end
     parents_needing_update
+  end
+
+  def reassociate_child(co, po, row)
+    co.order = row["order"]
+    co.label = row["label"]
+    co.caption = row["caption"]
+    co.parent_object = po
+    processing_event_for_child(co)
+    co.save!
   end
 
   def processing_event_for_child(co)

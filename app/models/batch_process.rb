@@ -119,7 +119,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
       configure_parent_object(child_object, parents)
       attach_item(child_object)
-      next unless check_user_update_permissions(child_object)
+      next unless user_update_permission(child_object, child_object.parent_object)
 
       GeneratePtiffJob.perform_later(child_object, self)
       attach_item(child_object)
@@ -138,13 +138,13 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parents
   end
 
-  def check_user_update_permissions(child_object)
+  def user_update_permission(child_object, parent_object)
     user = self.user
     ability = Ability.new(user)
     unless ability.can? :update, child_object
       batch_processing_event("#{user.uid} does not have permission to update Child: #{child_object.oid} on Parent: #{child_object.parent_object.oid}", 'Permission Denied')
       child_object.processing_event("#{user.uid} does not have permission to update Child: #{child_object.oid}", 'failed')
-      child_object.parent_object.processing_event("#{user.uid} does not have permission to update Child: #{child_object.oid}", 'failed')
+      parent_object.processing_event("#{user.uid} does not have permission to update Child: #{child_object.oid}", 'failed')
       return false
     end
 
