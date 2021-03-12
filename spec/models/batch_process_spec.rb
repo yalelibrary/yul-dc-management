@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
+RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
@@ -255,7 +255,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         it "can create a parent_object from an array of oids" do
           expect do
             batch_process.save
-            batch_process.create_parent_objects_from_oids(["16371253"], ["ladybird"])
+            batch_process.create_parent_objects_from_oids(["16371253"], ["ladybird"], ["brbl"])
           end.to change { ParentObject.count }.from(0).to(1)
         end
       end

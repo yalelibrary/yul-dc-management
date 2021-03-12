@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_sources: true, js: true do
+RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
   let(:user) { FactoryBot.create(:user, uid: 'johnsmith2530') }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 16_057_779) }
   let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_object) }

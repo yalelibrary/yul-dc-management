@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ParentObject, type: :model, prep_metadata_sources: true do
+RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   let(:ladybird) { 1 }
   let(:voyager) { 2 }
   let(:aspace) { 3 }
