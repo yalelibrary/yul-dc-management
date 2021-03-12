@@ -13,7 +13,7 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
+RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
   # ParentObject. As you add validations to ParentObject, be sure to
   # adjust the attributes here as well.
@@ -22,18 +22,28 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
     login_as user
   end
 
-  let(:valid_attributes) do
+  let(:valid_params) do
     {
       oid: "2004628",
-      authoritative_metadata_source_id: 1
+      authoritative_metadata_source_id: 1,
+      admin_set: 'brbl'
     }
   end
 
-  let(:invalid_attributes) do
+  let(:invalid_params) do
     {
       oid: "2004628",
       authoritative_metadata_source_id: 4,
-      visibility: nil
+      visibility: nil,
+      admin_set: 'brbl'
+    }
+  end
+
+  let(:valid_attributes) do
+    {
+      oid: "2004628",
+      authoritative_metadata_source_id: 1,
+      admin_set: AdminSet.find_by_key('brbl')
     }
   end
 
@@ -72,13 +82,13 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
     context "with valid parameters" do
       it "creates a new ParentObject" do
         expect do
-          post parent_objects_url, params: { parent_object: valid_attributes }
+          post parent_objects_url, params: { parent_object: valid_params }
         end.to change(ParentObject, :count).by(1)
           .and change(BatchProcess, :count).by(1)
       end
 
       it "redirects to the created parent_object" do
-        post parent_objects_url, params: { parent_object: valid_attributes }
+        post parent_objects_url, params: { parent_object: valid_params }
         expect(response).to redirect_to(parent_object_url(ParentObject.last))
       end
     end
@@ -86,12 +96,12 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
     context "with invalid parameters" do
       it "does not create a new ParentObject" do
         expect do
-          post parent_objects_url, params: { parent_object: invalid_attributes }
+          post parent_objects_url, params: { parent_object: invalid_params }
         end.to change(ParentObject, :count).by(0)
       end
 
       it "renders a successful response (i.e. to display the 'new' template)" do
-        post parent_objects_url, params: { parent_object: invalid_attributes }
+        post parent_objects_url, params: { parent_object: invalid_params }
         expect(response).to be_successful
       end
     end
@@ -123,7 +133,7 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true do
     context "with invalid parameters" do
       it "renders a successful response (i.e. to display the 'edit' template)" do
         parent_object = ParentObject.create! valid_attributes
-        patch parent_object_url(parent_object), params: { parent_object: invalid_attributes }
+        patch parent_object_url(parent_object), params: { parent_object: invalid_params }
         expect(response).to be_successful
       end
     end
