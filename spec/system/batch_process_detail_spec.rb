@@ -10,6 +10,11 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
     stub_metadata_cloud("2034600")
     stub_metadata_cloud("16057779")
     stub_metadata_cloud("15234629")
+    stub_metadata_cloud("2034600")
+    stub_metadata_cloud("2005512")
+    stub_metadata_cloud("16414889")
+    stub_metadata_cloud("14716192")
+    stub_metadata_cloud("16854285")
     login_as user
     visit batch_process_path(batch_process)
   end
