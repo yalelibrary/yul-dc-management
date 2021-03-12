@@ -62,6 +62,14 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po.aspace_uri).to eq "/repositories/11/archival_objects/329771"
       expect(po.metadata_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace/repositories/11/archival_objects/329771"
     end
+
+    it "creates a parent object with admin set from the METs document" do
+      batch_process.file = aspace_xml_upload
+      batch_process.save!
+      po = ParentObject.find(30_000_557)
+      expect(po.admin_set).not_to be_nil
+      expect(po.admin_set.key).to eq "brbl"
+    end
   end
 
   describe "running the background jobs" do

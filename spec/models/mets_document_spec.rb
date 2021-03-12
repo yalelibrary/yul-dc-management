@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
+RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   let(:valid_goobi_xml) { File.open(goobi_path).read }
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
@@ -19,6 +19,8 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
   let(:no_oid_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/no_oid_mets.xml").read }
   let(:blank_oid_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/empty_oid_mets.xml").read }
   let(:image_missing_file) { File.open(File.join(fixture_path, "goobi", "metadata", "16172421", "missing_image.xml")).read }
+  let(:no_admin_set_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/no_admin_set.xml").read }
+  let(:unknown_admin_set_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/unknown_admin_set.xml").read }
   let(:no_rights_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/no_rights_mets.xml") }
   let(:no_image_files_path) { File.join(fixture_path, "goobi", "metadata", "2012315", "no_image_files.xml") }
   let(:bad_bib_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_bib.xml") }
@@ -59,6 +61,16 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true do
 
     it "returns false with a malformed archivespace URI" do
       mets_doc = described_class.new(bad_aspace_file)
+      expect(mets_doc.valid_mets?).to be_falsey
+    end
+
+    it "returns false with a missing admin set ownership" do
+      mets_doc = described_class.new(no_admin_set_file)
+      expect(mets_doc.valid_mets?).to be_falsey
+    end
+
+    it "returns false with a unknown admin set ownership" do
+      mets_doc = described_class.new(unknown_admin_set_file)
       expect(mets_doc.valid_mets?).to be_falsey
     end
   end

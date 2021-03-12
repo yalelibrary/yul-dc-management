@@ -22,7 +22,8 @@
                   AdminSet.all.map { |admin_set|
                     [admin_set.label, admin_set.key]
                   } << ["None",nil],
-                  selected: parent_object.admin_set&.key || ["None", nil]
+                  selected: parent_object.admin_set&.key || ["None", nil], 
+                  required: true
           )
        %>
     </div>

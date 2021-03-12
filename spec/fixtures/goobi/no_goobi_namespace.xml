@@ -13,6 +13,7 @@
                <mods:titleInfo>
                   <mods:title>Indulgence scroll</mods:title>
                </mods:titleInfo>
+               <mods:note displayLabel="Yale Collection Owner" type="ownership">brbl</mods:note>
                <mods:identifier type="PPNanalog">/ils/barcode/39002091597519?bib=9734851</mods:identifier>
                <mods:recordInfo>
                   <mods:recordIdentifier source="gbv-ppn">1595528690276</mods:recordIdentifier>

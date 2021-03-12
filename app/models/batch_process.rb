@@ -188,6 +188,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     po.save!
   end
 
+  # rubocop:disable Metrics/AbcSize
   def set_values_from_mets(parent_object, metadata_source)
     parent_object.bib = mets_doc.bib
     parent_object.barcode = mets_doc.barcode
@@ -202,7 +203,9 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parent_object.from_mets = true
     parent_object.last_mets_update = Time.current
     parent_object.representative_child_oid = mets_doc.thumbnail_image
+    parent_object.admin_set = mets_doc.admin_set
   end
+  # rubocop:enable Metrics/AbcSize
 
   def determine_background_jobs
     if csv.present?

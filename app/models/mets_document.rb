@@ -54,6 +54,7 @@ class MetsDocument
     return false if rights_statement.blank?
     return false unless valid_metadata_source_path?
     return false if fixture_images_in_production?
+    return false unless admin_set.present?
     true
   end
 
@@ -88,6 +89,14 @@ class MetsDocument
       order: physical_div.xpath("@ORDER").inner_text,
       parent_object_oid: oid
     }
+  end
+
+  def admin_set_key
+    @mets.xpath("//mods:note[@type='ownership' and @displayLabel='Yale Collection Owner']")&.inner_text
+  end
+
+  def admin_set
+    @admin_set ||= AdminSet.find_by(key: admin_set_key)
   end
 
   def normalize_label(physical_div)

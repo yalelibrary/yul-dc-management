@@ -31,6 +31,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       # expect needed to ensure the New Parent Page loads before filling in the oid
       expect(page).to have_xpath("//input[@name='parent_object[oid]']")
       fill_in('Oid', with: "16057779")
+      select('Beinecke Library')
       click_on("Create Parent object")
       # expect needed to ensure that the parent object form was processed by the server before running tests
       expect(page).to have_content('Parent object was successfully created.')
