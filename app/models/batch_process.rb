@@ -82,10 +82,15 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # rubocop:disable Metrics/MethodLength
   def create_parent_objects_from_oids(oids, metadata_sources, adminset_keys)
+    admin_set_hash = {}
     oids.zip(metadata_sources, adminset_keys).each_with_index do |record, index|
       oid, metadata_source, adminset_key = record
       fresh = false
-      admin_set = AdminSet.find_by_key(adminset_key)
+      admin_set = admin_set_hash[adminset_key]
+      if admin_set.nil?
+        admin_set = AdminSet.find_by_key(adminset_key)
+        admin_set_hash[adminset_key] = admin_set
+      end
       if admin_set.nil?
         batch_processing_event("Skipping row [#{index}] with unknown admin set [#{adminset_key}] for parent: #{oid}", 'Skipped Row')
         next
