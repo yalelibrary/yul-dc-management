@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe BatchConnection, type: :model, prep_metadata_sources: true do
+RSpec.describe BatchConnection, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "small_short_fixture_ids.csv")) }

@@ -13,6 +13,7 @@
           <mods:titleInfo>
             <mods:title>The Liberator</mods:title>
           </mods:titleInfo>
+          <mods:note displayLabel="Yale Collection Owner" type="ownership">brbl</mods:note>
           <mods:identifier type="PPNanalog">/aspace/repositories/11/archival_objects/329771</mods:identifier>
           <mods:recordInfo>
             <mods:recordIdentifier source="gbv-ppn">30000557</mods:recordIdentifier>

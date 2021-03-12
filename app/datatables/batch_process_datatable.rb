@@ -33,7 +33,8 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
         time: batch_process.created_at,
         size: batch_process.oids&.count,
         status: batch_process.batch_status,
-        batch_ingest_events_count: link_to(batch_process.batch_ingest_events_count, batch_process_path(batch_process)),
+        batch_ingest_events_count: link_to(batch_process.batch_ingest_events_count, batch_process_path(batch_process),
+                                           class: batch_process.batch_ingest_events_count.positive? ? "btn btn-warning" : ""),
         batch_action: batch_process.batch_action,
         DT_RowId: batch_process.id
       }

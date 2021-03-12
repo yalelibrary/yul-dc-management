@@ -28,13 +28,7 @@ class ParentObjectsController < ApplicationController
   # POST /parent_objects
   # POST /parent_objects.json
   def create
-    if ParentObject.exists?(oid: parent_object_params[:oid])
-      respond_to do |format|
-        format.html { redirect_to new_parent_object_path, flash: { alert: "The oid already exists: [#{parent_object_params[:oid]}]" } }
-        format.json { render json: { error: "The oid already exists: [#{parent_object_params[:oid]}]" }, status: :unprocessable_entity }
-      end
-      return
-    end
+    return unless valid_request?
     @parent_object = ParentObject.new(parent_object_params)
     batch_process_of_one
     respond_to do |format|
@@ -46,6 +40,16 @@ class ParentObjectsController < ApplicationController
         format.json { render json: @parent_object.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def valid_request?
+    return true if !ParentObject.exists?(oid: parent_object_params[:oid]) && parent_object_params[:admin_set]
+    alert = parent_object_params[:admin_set] ? "The oid already exists: [#{parent_object_params[:oid]}]" : "Admin set is required to create parent object"
+    respond_to do |format|
+      format.html { redirect_to new_parent_object_path, flash: { alert: alert } }
+      format.json { render json: { error: alert }, status: :unprocessable_entit }
+    end
+    false
   end
 
   # PATCH/PUT /parent_objects/1
@@ -132,7 +136,7 @@ class ParentObjectsController < ApplicationController
       cur_params = params.require(:parent_object).permit(:oid, :admin_set, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
                                                          :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction,
                                                          :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization)
-      cur_params[:admin_set] = AdminSet.where(key: cur_params[:admin_set]).first if cur_params[:admin_set]
+      cur_params[:admin_set] = AdminSet.find_by(key: cur_params[:admin_set])
       cur_params
     end
 end

@@ -24,6 +24,7 @@
           </mods:originInfo>
           <mods:accessCondition displayLabel="Yale Restriction" type="restriction on access">Public</mods:accessCondition>
           <mods:accessCondition displayLabel="Yale Use" type="use and reproduction">The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement.</mods:accessCondition>
+          <mods:note displayLabel="Yale Collection Owner" type="ownership">brbl</mods:note>
           <mods:location>
             <mods:shelfLocator>11 1860A</mods:shelfLocator>
           </mods:location>

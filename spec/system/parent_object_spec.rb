@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
+RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
   before do
     stub_ptiffs_and_manifests
@@ -18,6 +18,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
       click_on("New Parent Object")
       stub_metadata_cloud("10001192")
       fill_in('Oid', with: "10001192")
+      select('Beinecke Library')
     end
 
     it "sets the expected fields in the database" do
@@ -53,6 +54,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
       before do
         stub_metadata_cloud("2012036")
         fill_in('Oid', with: "2012036")
+        select('Beinecke Library')
       end
 
       it "includes reference to documentation for IIIF values" do
@@ -111,6 +113,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
       before do
         stub_metadata_cloud("2012036")
         fill_in('Oid', with: "2012036")
+        select("Beinecke Library")
         click_on("Create Parent object")
       end
 
@@ -189,8 +192,28 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
       it 'shows error if creating parent with oid that exists' do
         visit new_parent_object_path
         fill_in('Oid', with: "2012036")
+        select("Beinecke Library")
         click_on("Create Parent object")
         expect(page.body).to include "The oid already exists"
+        expect(page).to have_current_path(new_parent_object_path)
+      end
+    end
+
+    context "with a ParentObject whose authoritative_metadata_source is Ladybird" do
+      before do
+        stub_metadata_cloud("2005512")
+        fill_in('Oid', with: "2005512")
+        click_on("Create Parent object")
+      end
+
+      around do |example|
+        perform_enqueued_jobs do
+          example.run
+        end
+      end
+
+      it 'shows error if creating parent with no admin set' do
+        expect(page.body).to include "Admin set is required to create parent object"
         expect(page).to have_current_path(new_parent_object_path)
       end
     end
@@ -204,6 +227,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         fill_in('Barcode', with: "39002091459793")
         select('Public')
         select('Voyager')
+        select('Beinecke Library')
         click_on("Create Parent object")
       end
 
@@ -258,6 +282,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         fill_in('Oid', with: "2012036")
         fill_in('parent_object_aspace_uri', with: "/repositories/11/archival_objects/555049")
         select('ArchiveSpace')
+        select('Beinecke Library')
         click_on("Create Parent object")
       end
 
@@ -289,6 +314,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
         stub_metadata_cloud("2004628", "ladybird")
         stub_metadata_cloud("V-2004628", "ils")
         fill_in('Oid', with: "2004628")
+        select('Beinecke Library')
         click_on("Create Parent object")
       end
 
@@ -318,6 +344,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
           stub_metadata_cloud("10000016189097", "ladybird")
           stub_metadata_cloud("V-10000016189097", "ils")
           fill_in('Oid', with: "10000016189097")
+          select("Beinecke Library")
           click_on("Create Parent object")
         end
         it "adds the visibility for private objects" do
@@ -330,6 +357,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true do
           stub_metadata_cloud("20000016189097", "ladybird")
           stub_metadata_cloud("V-20000016189097", "ils")
           fill_in('Oid', with: "20000016189097")
+          select("Beinecke Library")
           click_on("Create Parent object")
         end
         it "adds the visibility for non-public objects" do

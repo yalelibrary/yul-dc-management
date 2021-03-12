@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources: true, js: true do
+RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
   let(:user) { FactoryBot.create(:user, uid: "johnsmith2530") }
   before do
     stub_ptiffs_and_manifests
@@ -26,6 +26,16 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
         user: user,
         csv: File.open(fixture_path + '/small_short_fixture_ids.csv').read,
         file_name: "small_short_fixture_ids.csv",
+        created_at: "2020-10-08 14:17:01"
+      )
+    end
+
+    let(:batch_process_bad_admin_set) do
+      FactoryBot.create(
+        :batch_process,
+        user: user,
+        csv: File.open(fixture_path + '/short_fixture_bad_admin_set.csv').read,
+        file_name: "short_fixture_bad_admin_set.csv",
         created_at: "2020-10-08 14:17:01"
       )
     end
@@ -67,6 +77,15 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
     it "can see the overall status of the batch process" do
       expect(batch_process.batch_status).to eq "Batch complete"
       expect(page).to have_content("Batch complete")
+    end
+
+    it "can see the overall status of the batch process BAD admin set" do
+      expect(batch_process_bad_admin_set.parent_objects.count).to eq 3
+      expect(batch_process_bad_admin_set.parent_objects.first.admin_set.key).to eq "brbl"
+      expect(batch_process_bad_admin_set.batch_status).to eq "Batch complete"
+      visit batch_processes_path
+      expect(page).to have_content("Batch complete")
+      expect(page).to have_link("1", href: batch_process_path(batch_process_bad_admin_set), class: 'btn btn-warning')
     end
 
     context "deleting a parent object" do

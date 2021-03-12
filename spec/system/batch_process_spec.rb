@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: true do
+RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
 
   around do |example|
@@ -31,6 +31,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, js: tru
       # expect needed to ensure the New Parent Page loads before filling in the oid
       expect(page).to have_xpath("//input[@name='parent_object[oid]']")
       fill_in('Oid', with: "16057779")
+      select('Beinecke Library')
       click_on("Create Parent object")
       # expect needed to ensure that the parent object form was processed by the server before running tests
       expect(page).to have_content('Parent object was successfully created.')

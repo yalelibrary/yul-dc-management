@@ -80,20 +80,35 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     "#{file_name.delete_suffix('.csv')}_bp_#{id}.csv"
   end
 
-  def create_parent_objects_from_oids(oids, metadata_sources)
-    oids.zip(metadata_sources).each do |oid, metadata_source|
+  # rubocop:disable Metrics/MethodLength
+  def create_parent_objects_from_oids(oids, metadata_sources, adminset_keys)
+    admin_set_hash = {}
+    oids.zip(metadata_sources, adminset_keys).each_with_index do |record, index|
+      oid, metadata_source, adminset_key = record
       fresh = false
+      admin_set = admin_set_hash[adminset_key]
+      if admin_set.nil?
+        admin_set = AdminSet.find_by_key(adminset_key)
+        admin_set_hash[adminset_key] = admin_set
+      end
+      if admin_set.nil?
+        batch_processing_event("Skipping row [#{index}] with unknown admin set [#{adminset_key}] for parent: #{oid}", 'Skipped Row')
+        next
+      end
       po = ParentObject.where(oid: oid).first_or_create do |parent_object|
         # Only runs on newly created parent objects
         setup_for_background_jobs(parent_object, metadata_source)
+        parent_object.admin_set = admin_set
         fresh = true
       end
       next if fresh
       po.metadata_update = true
+      po.admin_set = admin_set
       setup_for_background_jobs(po, metadata_source)
       po.save!
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def setup_for_background_jobs(object, metadata_source)
     object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
@@ -104,7 +119,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def refresh_metadata_cloud_csv
     metadata_sources = parsed_csv.entries.map { |r| r['source'] }
-    create_parent_objects_from_oids(oids, metadata_sources)
+    admin_sets = parsed_csv.entries.map { |r| r['admin_set'] }
+    create_parent_objects_from_oids(oids, metadata_sources, admin_sets)
   end
 
   def recreate_child_oid_ptiffs
@@ -172,6 +188,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     po.save!
   end
 
+  # rubocop:disable Metrics/AbcSize
   def set_values_from_mets(parent_object, metadata_source)
     parent_object.bib = mets_doc.bib
     parent_object.barcode = mets_doc.barcode
@@ -186,7 +203,9 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parent_object.from_mets = true
     parent_object.last_mets_update = Time.current
     parent_object.representative_child_oid = mets_doc.thumbnail_image
+    parent_object.admin_set = mets_doc.admin_set
   end
+  # rubocop:enable Metrics/AbcSize
 
   def determine_background_jobs
     if csv.present?

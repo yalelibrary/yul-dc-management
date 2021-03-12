@@ -24,6 +24,7 @@
             <mods:dateIssued keyDate="yes">1855</mods:dateIssued>
           </mods:originInfo>
           <mods:accessCondition displayLabel="Yale Restriction" type="restriction on access">Public</mods:accessCondition>
+          <mods:note displayLabel="Yale Collection Owner" type="ownership">brbl</mods:note>
           <mods:location>
             <mods:shelfLocator>11 1860A</mods:shelfLocator>
           </mods:location>
