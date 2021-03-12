@@ -80,7 +80,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
     end
 
     it "can see the overall status of the batch process BAD admin set" do
-      expect(batch_process_bad_admin_set.parent_objects.count).to eq 4
+      expect(batch_process_bad_admin_set.parent_objects.count).to eq 3
       expect(batch_process_bad_admin_set.parent_objects.first.admin_set.key).to eq "brbl"
       expect(batch_process_bad_admin_set.batch_status).to eq "Batch complete"
       visit batch_processes_path
