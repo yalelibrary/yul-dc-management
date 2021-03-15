@@ -20,10 +20,6 @@
   <strong>Duration</strong>
   <%= @child_object.present? ? "#{@child_object.duration_for_batch_process(@batch_process)} seconds" : "#{params[:oid]} deleted" %>
 </p>
-<p>
-  <strong>Access Master</strong>
-  <%= link_to @child_object.access_master_path, @child_object.access_master_url %>
-</p>
 <table class="table table-bordered table-striped">
   <thead class="thead-dark">
     <tr>

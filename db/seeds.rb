@@ -74,6 +74,7 @@ if Rails.env.development?
     ParentObject.where(oid: row).first_or_create do |po|
       po.oid = row
       po.visibility = "Public"
+      po.admin_set = AdminSet.find_by_key("brbl")
       puts "Parent Object created #{po.oid}"
     end
   end

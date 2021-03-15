@@ -41,14 +41,6 @@ class ChildObject < ApplicationRecord
     S3Service.remote_metadata(remote_ptiff_path)
   end
 
-  def access_master_url
-    if ENV['ACCESS_MASTER_MOUNT'] == "s3"
-      S3Service.presigned_url(remote_access_master_path, 120)
-    else
-      "/#{access_master_path}"
-    end
-  end
-
   def access_master_path
     return @access_master_path if @access_master_path
     image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"

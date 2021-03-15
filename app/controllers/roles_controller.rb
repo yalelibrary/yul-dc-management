@@ -4,6 +4,7 @@ class RolesController < ApplicationController
   before_action :set_user
   before_action :set_item
   before_action :set_role
+  before_action :verify_user
 
   def create
     if @item && @user.has_role?(@role, @item)
@@ -26,6 +27,10 @@ class RolesController < ApplicationController
   end
 
   private
+
+    def verify_user
+      authorize!(current_ability, :manage, @item) unless current_user.has_role? :sysadmin
+    end
 
     def set_user
       @user = User.find_by(uid: params[:uid])

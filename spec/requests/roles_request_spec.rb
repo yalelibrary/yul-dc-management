@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Roles', type: :request do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:sysadmin_user) }
   let(:role) { FactoryBot.create(:role) }
   let(:admin_set) { FactoryBot.create(:admin_set) }
 

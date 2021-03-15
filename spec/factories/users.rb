@@ -10,8 +10,16 @@ FactoryBot.define do
     first_name { FFaker::Name.first_name }
     last_name { FFaker::Name.last_name }
     provider { "cas" }
+    after(:create) do |user|
+      brbl = AdminSet.find_by_key('brbl')
+      sml = AdminSet.find_by_key('sml')
+      user.add_role(:editor, brbl) if brbl
+      user.add_role(:editor, sml) if sml
+    end
     factory :sysadmin_user do
-      after(:create) { |user| user.add_role(:sysadmin) }
+      after(:create) do |user|
+        user.add_role(:sysadmin)
+      end
     end
   end
 end

@@ -3,11 +3,12 @@
 class ChildObjectsController < ApplicationController
   before_action :set_child_object, only: [:show, :edit, :update, :destroy]
   before_action :set_paper_trail_whodunnit
+  load_and_authorize_resource except: [:new, :create]
 
   # GET /child_objects
   # GET /child_objects.json
   def index
-    @child_objects = ChildObject.page params[:page]
+    @child_objects = ChildObject.accessible_by(@current_ability, :read).page params[:page]
   end
 
   # GET /child_objects/1
@@ -26,7 +27,7 @@ class ChildObjectsController < ApplicationController
   # POST /child_objects.json
   def create
     @child_object = ChildObject.new(child_object_params)
-
+    authorize!(:create, @child_object)
     respond_to do |format|
       if @child_object.save
         format.html { redirect_to @child_object, notice: 'Child object was successfully created.' }
@@ -66,7 +67,7 @@ class ChildObjectsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_child_object
-      @child_object = ChildObject.find(params[:id])
+      @child_object = ChildObject.find(params[:id]) if params[:id]
     end
 
     # Only allow a list of trusted parameters through.

@@ -11,6 +11,7 @@ RSpec.describe AdminSet, type: :model do
     expect(admin_set.label).to eq "label"
     expect(admin_set.homepage).to eq "http://test.com"
   end
+
   it "is invalid without all properties set" do
     expect(admin_set.valid?).to be_truthy
     admin_set.key = nil

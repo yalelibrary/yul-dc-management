@@ -81,6 +81,8 @@ def parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
                                                   .and_return("<a href='/parent_objects/1'>1</a>")
   allow(@datatable_view_mock).to receive(:link_to).with("Edit", "/parent_objects/1/edit")
                                                   .and_return('<a href="/management/parent_objects/2034601/edit">Edit</a>')
+  allow(@datatable_view_mock).to receive(:link_to).with("View", "/parent_objects/1", method: :get)
+                                                  .and_return('<a href="/management/parent_objects/2034601">View</a>')
   allow(@datatable_view_mock).to receive(:link_to).with("Update Metadata", "/parent_objects/1/update_metadata", anything)
                                                   .and_return('<a data-method="post" href="/management/parent_objects/2034601/update_metadata">Update Metadata</a>')
   allow(@datatable_view_mock).to receive(:link_to).with("Destroy", "/parent_objects/1", anything)

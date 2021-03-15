@@ -7,6 +7,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
 
   def initialize(params, opts = {})
     @view = opts[:view_context]
+    @current_ability = opts[:current_ability]
     super
   end
 
@@ -56,9 +57,12 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   # rubocop:enable Rails/OutputSafety,Metrics/MethodLength
 
   def actions(parent_object)
-    "#{link_to('Edit', edit_parent_object_path(parent_object))}" \
-      " | #{link_to('Update Metadata', update_metadata_parent_object_path(parent_object), method: :post)}" \
-      " | #{link_to('Destroy', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' })}"
+    actions = []
+    actions << link_to('Edit', edit_parent_object_path(parent_object)) if @current_ability.can? :edit, parent_object
+    actions << link_to('Update Metadata', update_metadata_parent_object_path(parent_object), method: :post) if @current_ability.can? :update, parent_object
+    actions << link_to('Destroy', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' }) if @current_ability.can? :destroy, parent_object
+    actions << link_to('View', parent_object_path(parent_object), method: :get) if actions.empty?
+    actions.join(" | ")
   end
 
   def get_blacklight_parent_url(parent_object)
@@ -66,6 +70,6 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    ParentObject.joins(:authoritative_metadata_source)
+    ParentObject.accessible_by(@current_ability, :read).joins(:authoritative_metadata_source)
   end
 end
