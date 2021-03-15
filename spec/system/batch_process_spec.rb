@@ -172,7 +172,9 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.batch_action).to eq "export child oids"
         expect(BatchProcess.last.output_csv).to include "1126257"
         expect(BatchProcess.last.output_csv).to include '2005512,"",Access denied for parent object'
-        expect(BatchProcess.last.output_csv).not_to include "1030368"  # child of 2005512
+        expect(BatchProcess.last.output_csv).not_to include "1030368" # child of 2005512
+        expect(BatchProcess.last.batch_ingest_events.count).to eq 4
+        expect(BatchProcess.last.batch_ingest_events.map(&:reason)).to include "Skipping row [1] due to parent permissions: 2005512"
 
         click_on(BatchProcess.last.id.to_s)
         expect(page).to have_link("short_fixture_ids.csv", href: "/batch_processes/#{BatchProcess.last.id}/download")
