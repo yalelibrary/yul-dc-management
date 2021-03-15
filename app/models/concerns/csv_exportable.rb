@@ -9,7 +9,7 @@ module CsvExportable
 
   def output_csv
     had_events = batch_ingest_events_count.positive?
-    ability = Ability.new(user)
+    ability = current_ability
     return nil unless batch_action == "export child oids"
     CSV.generate do |csv|
       csv << headers
