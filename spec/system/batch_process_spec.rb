@@ -145,9 +145,16 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     end
 
     context "outputting csv" do
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600) }
+      let(:brbl) { AdminSet.find_by_key("brbl") }
+      let(:other_admin_set) { FactoryBot.create(:admin_set) }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: brbl) }
+      let(:parent_object2) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: other_admin_set) }
+      let(:user) { FactoryBot.create(:user) }
       before do
+        user.add_role(:viewer, brbl)
+        login_as user
         parent_object
+        parent_object2
       end
       around do |example|
         perform_enqueued_jobs do
@@ -164,6 +171,11 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.file_name).to eq "short_fixture_ids.csv"
         expect(BatchProcess.last.batch_action).to eq "export child oids"
         expect(BatchProcess.last.output_csv).to include "1126257"
+        expect(BatchProcess.last.output_csv).to include '2005512,"",Access denied for parent object'
+        expect(BatchProcess.last.output_csv).not_to include "1030368" # child of 2005512
+        expect(BatchProcess.last.batch_ingest_events.count).to eq 4
+        expect(BatchProcess.last.batch_ingest_events.map(&:reason)).to include "Skipping row [1] due to parent permissions: 2005512"
+
         click_on(BatchProcess.last.id.to_s)
         expect(page).to have_link("short_fixture_ids.csv", href: "/batch_processes/#{BatchProcess.last.id}/download")
         expect(page).to have_link("short_fixture_ids_bp_#{BatchProcess.last.id}.csv", href: "/batch_processes/#{BatchProcess.last.id}/download_created")
