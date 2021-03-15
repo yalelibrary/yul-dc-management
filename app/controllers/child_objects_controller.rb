@@ -3,11 +3,12 @@
 class ChildObjectsController < ApplicationController
   before_action :set_child_object, only: [:show, :edit, :update, :destroy]
   before_action :set_paper_trail_whodunnit
+  load_and_authorize_resource
 
   # GET /child_objects
   # GET /child_objects.json
   def index
-    @child_objects = ChildObject.page params[:page]
+    @child_objects = ChildObject.accessible_by(@current_ability, :read).page params[:page]
   end
 
   # GET /child_objects/1

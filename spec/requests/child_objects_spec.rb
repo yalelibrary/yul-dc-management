@@ -13,7 +13,7 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/child_objects", type: :request, prep_metadata_sources: true do
+RSpec.describe "/child_objects", type: :request, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:user) }
   # ChildObject. As you add validations to ChildObject, be sure to
   # adjust the attributes here as well.
@@ -31,7 +31,7 @@ RSpec.describe "/child_objects", type: :request, prep_metadata_sources: true do
     }
   end
 
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: "2004628") }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: "2004628", admin_set: AdminSet.find_by_key('brbl')) }
 
   before do
     stub_metadata_cloud("2004628")
@@ -56,46 +56,11 @@ RSpec.describe "/child_objects", type: :request, prep_metadata_sources: true do
     end
   end
 
-  describe "GET /new" do
-    it "renders a successful response" do
-      get new_child_object_url
-      expect(response).to be_successful
-    end
-  end
-
   describe "GET /edit" do
     it "render a successful response" do
       child_object = ChildObject.create! valid_attributes
       get edit_child_object_url(child_object)
       expect(response).to be_successful
-    end
-  end
-
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new ChildObject" do
-        expect do
-          post child_objects_url, params: { child_object: valid_attributes }
-        end.to change(ChildObject, :count).by(1)
-      end
-
-      it "redirects to the created child_object" do
-        post child_objects_url, params: { child_object: valid_attributes }
-        expect(response).to redirect_to(child_object_url(ChildObject.order("created_at ASC").last))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "does not create a new ChildObject" do
-        expect do
-          post child_objects_url, params: { child_object: invalid_attributes }
-        end.to change(ChildObject, :count).by(0)
-      end
-
-      it "renders a successful response (i.e. to display the 'new' template)" do
-        post child_objects_url, params: { child_object: invalid_attributes }
-        expect(response).to be_successful
-      end
     end
   end
 

@@ -368,7 +368,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   end
 
   context "editing a ParentObject" do
-    let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036) }
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl')) }
     before do
       stub_metadata_cloud("2012036")
       parent_object
@@ -441,6 +441,68 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         expect(page).to have_button('Update Metadata', disabled: true)
         expect(page).to have_button('Reindex', disabled: true)
       end
+    end
+  end
+  context "when logged in without admin set roles" do
+    before do
+      user.remove_role(:editor, AdminSet.find_by_key('brbl'))
+      visit parent_objects_path
+      click_on("New Parent Object")
+      stub_metadata_cloud("10001192")
+      fill_in('Oid', with: "10001192")
+      select('Beinecke Library')
+    end
+    it "does not allow creation of new parent with wrong admin set" do
+      click_on("Create Parent object")
+      expect(page.body).to eq 'Access denied'
+    end
+  end
+
+  context "when logged in with access to only some admin set roles", js: true do
+    let(:user) { FactoryBot.create(:user) }
+    let(:admin_set) { FactoryBot.create(:admin_set, key: "adminset") }
+    let(:admin_set2) { FactoryBot.create(:admin_set, key: "adminset2") }
+    let(:parent_object1) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
+    let(:parent_object2) { FactoryBot.create(:parent_object, oid: "2004548", admin_set_id: admin_set.id) }
+    let(:parent_object_no_access) { FactoryBot.create(:parent_object, oid: "2004549", admin_set_id: admin_set2.id) }
+    let(:child_object1) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object1) }
+    let(:child_object_no_access) { FactoryBot.create(:child_object, oid: "456790", parent_object: parent_object_no_access) }
+
+    before do
+      parent_object1
+      parent_object2
+      parent_object_no_access
+      child_object1
+      child_object_no_access
+      user.add_role(:editor, admin_set)
+      login_as user
+    end
+
+    it "does not display parent objects the user does not have access to view" do
+      visit parent_objects_path
+      expect(page).to have_content("2002826")
+      expect(page).to have_content("2004548")
+      expect(page).not_to have_content("2004549")
+    end
+
+    it "allows viewing of the parent object the user has access to" do
+      visit parent_object_path("2002826")
+      expect(page).not_to have_content("Access denied")
+    end
+
+    it "does not allow viewing of the parent object the user does not has access to" do
+      visit parent_object_path("2004549")
+      expect(page).to have_content("Access denied")
+    end
+
+    it "allows editing of the parent object the user has access to" do
+      visit edit_parent_object_path("2002826")
+      expect(page).not_to have_content("Access denied")
+    end
+
+    it "does not allow viewing of the child object the user does not has access to" do
+      visit edit_parent_object_path("2004549")
+      expect(page).to have_content("Access denied")
     end
   end
 end

@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
 class ParentObjectsController < ApplicationController
-  before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata, :select_thumbnail]
+  before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata, :select_thumbnail, :solr_document]
   before_action :set_paper_trail_whodunnit
+  load_and_authorize_resource except: [:solr_document, :new, :create, :update_metadata, :all_metadata, :reindex, :select_thumbnail]
 
   # GET /parent_objects
   # GET /parent_objects.json
   def index
     respond_to do |format|
       format.html
-      format.json { render json: ParentObjectDatatable.new(params, view_context: view_context) }
+      format.json { render json: ParentObjectDatatable.new(params, view_context: view_context, current_ability: current_ability) }
     end
   end
 
@@ -30,6 +31,7 @@ class ParentObjectsController < ApplicationController
   def create
     return unless valid_request?
     @parent_object = ParentObject.new(parent_object_params)
+    authorize!(:create, @parent_object)
     batch_process_of_one
     respond_to do |format|
       if @parent_object.save
@@ -98,6 +100,7 @@ class ParentObjectsController < ApplicationController
   end
 
   def update_metadata
+    authorize!(:update, @parent_object)
     @parent_object.metadata_update = true
     @parent_object.setup_metadata_job
     respond_to do |format|
@@ -107,10 +110,12 @@ class ParentObjectsController < ApplicationController
   end
 
   def select_thumbnail
+    authorize!(:update, @parent_object)
     @child_objects = ChildObject.select([:oid, :parent_object_oid, :order]).where(parent_object: @parent_object).group(:oid, :parent_object_oid, :order).order(:order).page(params[:page]).per(10)
   end
 
   def solr_document
+    authorize!(:read, @parent_object)
     solr = SolrService.connection
     oid = params[:id].to_i
     response = solr.get 'select', params: { q: "oid_ssi:#{oid}" }

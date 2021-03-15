@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe "child_objects/show", type: :view, prep_metadata_sources: true do
+  include Devise::Test::ControllerHelpers
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2004628") }
 
   before do

@@ -20,15 +20,16 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
     end
 
     it 'displays the user roles tables' do
-      visit admin_sets_path
-      click_link('Show')
+      visit admin_set_path(admin_set)
       expect(page).to have_css('table', text: 'Viewers')
       expect(page).to have_css('table', text: 'Editors')
     end
 
     it 'allows roles to be added to users' do
-      visit admin_sets_path
-      click_link('Show')
+      visit admin_set_path(admin_set)
+      within('table', text: 'Editors') do
+        expect(page).not_to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
+      end
       fill_in('uid', with: user.uid)
       select('viewer', from: 'role')
       click_on('Save')
@@ -160,7 +161,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       visit root_path
       expect(page).to have_no_link('Sets')
     end
-    it "display not not have admin sets" do
+    it "cannot access admin sets directly" do
       visit admin_sets_path
       expect(page).to have_content("Access denied")
     end

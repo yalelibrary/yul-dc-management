@@ -100,8 +100,17 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         setup_for_background_jobs(parent_object, metadata_source)
         parent_object.admin_set = admin_set
         fresh = true
+        unless Ability.new(user).can?(:create, parent_object)
+          batch_processing_event("Skipping row [#{index}] because of access violation for parent: #{oid}", 'Skipped Row')
+          parent_object.destroy
+          next
+        end
       end
       next if fresh
+      unless Ability.new(user).can?(:update, po)
+        batch_processing_event("Skipping row [#{index}] because of access violation for parent: #{oid}", 'Skipped Row')
+        next
+      end
       po.metadata_update = true
       po.admin_set = admin_set
       setup_for_background_jobs(po, metadata_source)
