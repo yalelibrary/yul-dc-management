@@ -9,14 +9,13 @@ module CsvExportable
 
   def output_csv
     had_events = batch_ingest_events_count.positive?
-    ability = Ability.new(user)
     return nil unless batch_action == "export child oids"
     CSV.generate do |csv|
       csv << headers
       oids.each_with_index do |oid, index|
         begin
           po = ParentObject.find(oid.to_i)
-          next unless check_can_view(ability, index, po, csv, had_events)
+          next unless check_can_view(current_ability, index, po, csv, had_events)
           po.child_objects.each do |co|
             row = [co.oid, po.oid, co.order, po.authoritative_json["title"]&.first, co.label, co.caption, co.viewing_hint]
             csv << row
