@@ -3,21 +3,21 @@
 class SolrReindexAllJob < ApplicationJob
   queue_as :solr_index
 
-  def job_limit
+  def self.job_limit
     5000
   end
 
-  def solr_batch_limit
+  def self.solr_batch_limit
     500
   end
 
   def perform(start_position = 0)
     solr = SolrService.connection
     # Groups of limit
-    parent_objects = ParentObject.order(:oid).offset(start_position).limit(job_limit)
-    last_job = parent_objects.count < job_limit
+    parent_objects = ParentObject.order(:oid).offset(start_position).limit(SolrReindexAllJob.job_limit)
+    last_job = parent_objects.count < SolrReindexAllJob.job_limit
     if parent_objects.count.positive?
-      parent_objects.each_slice(solr_batch_limit) do |parent_objects_group|
+      parent_objects.each_slice(SolrReindexAllJob.solr_batch_limit) do |parent_objects_group|
         solr.add(parent_objects_group.map(&:to_solr).compact)
         solr.commit
       end
