@@ -105,12 +105,9 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
           parent_object.destroy
           next
         end
-      end
       next if fresh
-      unless current_ability.can?(:update, po)
-        batch_processing_event("Skipping row [#{index}] because of access violation for parent: #{oid}", 'Skipped Row')
-        next
-      end
+      next unless user_update_parent_permission(index, po)
+
       po.metadata_update = true
       po.admin_set = admin_set
       setup_for_background_jobs(po, metadata_source)
@@ -161,6 +158,18 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     parents
+  end
+
+  def user_update_parent_permission(index, parent_object)
+    user = self.user
+    unless current_ability.can? :update, parent_object
+      attach_item(parent_object)
+      batch_processing_event("Skipping row [#{index}] because #{user.uid} does not have permission to update parent: #{parent_object.oid}", 'Skipped Row')
+      parent_object.processing_event("#{user.uid} does not have permission to update parent: #{parent_object.oid}", 'Permission Denied')
+      return false
+    end
+
+    true
   end
 
   def user_update_child_permission(child_object, parent_object)
