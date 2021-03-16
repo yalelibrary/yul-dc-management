@@ -95,16 +95,14 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         batch_processing_event("Skipping row [#{index}] with unknown admin set [#{adminset_key}] for parent: #{oid}", 'Skipped Row')
         next
       end
+      next unless user_create_permission(index, admin_set, oid)
+
       po = ParentObject.where(oid: oid).first_or_create do |parent_object|
         # Only runs on newly created parent objects
         setup_for_background_jobs(parent_object, metadata_source)
         parent_object.admin_set = admin_set
         fresh = true
-        unless current_ability.can?(:create, parent_object)
-          batch_processing_event("Skipping row [#{index}] because of access violation for parent: #{oid}", 'Skipped Row')
-          parent_object.destroy
-          next
-        end
+      end
       next if fresh
       next unless user_update_parent_permission(index, po)
 
@@ -158,6 +156,16 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     parents
+  end
+
+  def user_create_permission(index, admin_set, oid)
+    user = self.user
+    unless user.has_role?(:editor, admin_set)
+      batch_processing_event("Skipping row [#{index}] because #{user.uid} does not have permission to create parent: #{oid}", 'Permission Denied')
+      return false
+    end
+
+    true
   end
 
   def user_update_parent_permission(index, parent_object)
