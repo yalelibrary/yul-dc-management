@@ -136,20 +136,20 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.batch_processes).to include(batch_process)
       end
 
-      it 'calls the user_update_permission method and returns false if the user does not have editor permissions on the admin set' do
+      it 'calls the user_update_child_permission method and returns false if the user does not have editor permissions on the admin set' do
         parents = Set[]
         batch_process.configure_parent_object(child_object, parents)
         batch_process.attach_item(child_object)
         expect do
-          batch_process.user_update_permission(child_object, child_object.parent_object)
+          batch_process.user_update_child_permission(child_object, child_object.parent_object)
         end.to change { IngestEvent.count }.by(3)
 
-        expect(batch_process.user_update_permission(child_object, parent_object)).to eq(false)
+        expect(batch_process.user_update_child_permission(child_object, parent_object)).to eq(false)
       end
 
-      it 'calls the user_update_permission method and returns true if the user does have editor permission on the admin set' do
+      it 'calls the user_update_child_permission method and returns true if the user does have editor permission on the admin set' do
         user.add_role(:editor, admin_set)
-        expect(batch_process.user_update_permission(child_object, parent_object)).to eq(true)
+        expect(batch_process.user_update_child_permission(child_object, parent_object)).to eq(true)
       end
     end
 
