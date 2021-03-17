@@ -104,7 +104,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         fresh = true
       end
       next if fresh
-      next unless user_update_parent_permission(index, po)
 
       po.metadata_update = true
       po.admin_set = admin_set
@@ -161,19 +160,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def user_create_permission(index, admin_set, oid)
     user = self.user
     unless user.has_role?(:editor, admin_set)
-      batch_processing_event("Skipping row [#{index}] because #{user.uid} does not have permission to create parent: #{oid}", 'Permission Denied')
-      return false
-    end
-
-    true
-  end
-
-  def user_update_parent_permission(index, parent_object)
-    user = self.user
-    unless current_ability.can? :update, parent_object
-      attach_item(parent_object)
-      batch_processing_event("Skipping row [#{index}] because #{user.uid} does not have permission to update parent: #{parent_object.oid}", 'Skipped Row')
-      parent_object.processing_event("#{user.uid} does not have permission to update parent: #{parent_object.oid}", 'Permission Denied')
+      batch_processing_event("Skipping row [#{index}] because #{user.uid} does not have permission to create or update parent: #{oid}", 'Permission Denied')
       return false
     end
 
