@@ -19,7 +19,7 @@ module Reassociatable
 
       attach_item(po)
       attach_item(co)
-      next unless user_update_permission(co, po)
+      next unless user_update_child_permission(co, po)
 
       parents_needing_update << co.parent_object.oid
       parents_needing_update << row["parent_oid"].to_i
