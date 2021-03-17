@@ -44,7 +44,6 @@ $( document ).on('turbolinks:load', function() {
       },
       "pagingType": "full_numbers",
       "columns": columns,
-      // This will order all datatables by the first column descending
       "order": columnOrder(columns),
       "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]],
       "sDom":hasSearch?'lrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
@@ -110,22 +109,13 @@ let scheduleDraw = function() {
 let triggerDraw = function() {
   clearInterval(drawTimer);
   drawTimer = 0;
-  dataTable.api().draw();  
+  dataTable.api().draw();
 }
 
-let columnOrder = function(columns) {
-  let index = 0
-  let colDef = columns[index++]
-  console.log(colDef)
-  if(colDef.options==null){
-    return [[0, "desc"]]
-  } else {
-    colDef.options.map(function (option) {
-      if(option.order==="asc"){
-        [[0, "asc"]]
-      } else {
-        [[0, "desc"]]
-      } 
-    })
-  }
+// This will order all datatables by the first column descending
+// unless the first column has a value of "options: [{ order: 'asc' }]"
+const columnOrder = (columns) => {
+  return columns[0].options === null
+    ? [[0, 'desc']]
+    : [[0, 'asc']]
 }
