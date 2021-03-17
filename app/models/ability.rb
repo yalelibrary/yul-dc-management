@@ -7,7 +7,7 @@ class Ability
     return unless user
     if user.has_role? :sysadmin
       can :manage, User
-      can :manage, AdminSet
+      can [:update, :create, :destroy, :read], AdminSet
       can :read, ParentObject
       can :read, ChildObject
       can :reindex_all, ParentObject
@@ -19,6 +19,7 @@ class Ability
     end
     can :add, AdminSet, roles: { name: editor_roles, users: { id: user.id } }
     can [:update, :create, :destroy], ChildObject, parent_object: { admin_set: { roles: { name: editor_roles, users: { id: user.id } } } }
+    can [:update_parent_in, :create_parent_in, :update_child_in, :create_child_in], AdminSet, roles: { name: editor_roles, users: { id: user.id } }
     can [:update, :create, :destroy], ParentObject, admin_set: { roles: { name: editor_roles, users: { id: user.id } } }
   end
 

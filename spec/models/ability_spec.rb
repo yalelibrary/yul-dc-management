@@ -53,6 +53,54 @@ RSpec.describe Ability, type: :model do
       expect(child_object2).to be
       expect(ChildObject.accessible_by(ability).count).to eq(2)
     end
+
+    context "without editor role" do
+      it "does not allow update_parent_in" do
+        ability = Ability.new(sysadmin_user)
+        assert(ability.cannot?(:update_parent_in, admin_set))
+      end
+
+      it "does not allow create_parent_in" do
+        ability = Ability.new(sysadmin_user)
+        assert(ability.cannot?(:create_parent_in, admin_set))
+      end
+
+      it "does not allow update_child_in" do
+        ability = Ability.new(sysadmin_user)
+        assert(ability.cannot?(:update_child_in, admin_set))
+      end
+
+      it "does not allow create_child_in" do
+        ability = Ability.new(sysadmin_user)
+        assert(ability.cannot?(:create_child_in, admin_set))
+      end
+    end
+
+    context "with editor role" do
+      before do
+        sysadmin_user.add_role(:editor, admin_set)
+      end
+
+      it "allows update_parent_in" do
+        ability = Ability.new(sysadmin_user)
+        assert(ability.can?(:update_parent_in, admin_set))
+      end
+
+      it "allows create_parent_in" do
+        ability = Ability.new(sysadmin_user)
+        assert(ability.can?(:create_parent_in, admin_set))
+      end
+
+      it "allows update_child_in" do
+        ability = Ability.new(sysadmin_user)
+        assert(ability.can?(:update_child_in, admin_set))
+      end
+
+      it "allows create_child_in" do
+        ability = Ability.new(sysadmin_user)
+        assert(ability.can?(:create_child_in, admin_set))
+      end
+    end
   end
 
   describe 'for a non-sysadmin' do
@@ -64,6 +112,26 @@ RSpec.describe Ability, type: :model do
     it 'does not allow management of AdminSets' do
       ability = Ability.new(user)
       assert ability.cannot?(:manage, AdminSet)
+    end
+
+    it "does not allow create_parent_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:create_parent_in, admin_set)
+    end
+
+    it "does not allow update_parent_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:update_parent_in, admin_set)
+    end
+
+    it "does not allow create_child_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:create_child_in, admin_set)
+    end
+
+    it "does not allow update_child_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:update_child_in, admin_set)
     end
   end
 
@@ -100,6 +168,26 @@ RSpec.describe Ability, type: :model do
       expect(child_object).to be
       expect(child_object2).to be
       expect(ChildObject.accessible_by(ability).count).to eq(2)
+    end
+
+    it "does not allow create_parent_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:create_parent_in, admin_set)
+    end
+
+    it "does not allow update_parent_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:update_parent_in, admin_set)
+    end
+
+    it "does not allow create_child_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:create_child_in, admin_set)
+    end
+
+    it "does not allow update_child_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:update_child_in, admin_set)
     end
   end
 
@@ -140,6 +228,26 @@ RSpec.describe Ability, type: :model do
     it 'allows destroy on a Child Object' do
       ability = Ability.new(user)
       assert ability.can?(:destroy, child_object)
+    end
+
+    it "allows create_parent_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.can?(:create_parent_in, admin_set)
+    end
+
+    it "allows update_parent_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.can?(:update_parent_in, admin_set)
+    end
+
+    it "allows create_child_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.can?(:create_child_in, admin_set)
+    end
+
+    it "allows update_child_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.can?(:update_child_in, admin_set)
     end
   end
 
@@ -182,6 +290,26 @@ RSpec.describe Ability, type: :model do
     it 'disallows destroy on a Child Object' do
       ability = Ability.new(user)
       assert ability.cannot?(:destroy, child_object)
+    end
+
+    it "does not allow create_parent_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:create_parent_in, admin_set)
+    end
+
+    it "does not allow update_parent_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:update_parent_in, admin_set)
+    end
+
+    it "does not allow create_child_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:create_child_in, admin_set)
+    end
+
+    it "does not allow update_child_in of AdminSets" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:update_child_in, admin_set)
     end
   end
 end

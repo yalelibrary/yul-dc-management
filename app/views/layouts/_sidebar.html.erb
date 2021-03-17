@@ -5,7 +5,7 @@
     <% if can? :manage, User %>
       <%= link_to 'Users', users_path, class: 'list-group-item list-group-item-action bg-light' %>
     <% end  %>
-    <% if can? :manage,  AdminSet %>
+    <% if can? :update, AdminSet %>
       <%= link_to 'Sets', admin_sets_path, class: 'list-group-item list-group-item-action bg-light' %>
     <% end  %>
     <%= link_to 'Parent Objects', parent_objects_path, class: 'list-group-item list-group-item-action bg-light' %>
