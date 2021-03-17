@@ -53,6 +53,24 @@ RSpec.describe Ability, type: :model do
       expect(child_object2).to be
       expect(ChildObject.accessible_by(ability).count).to eq(2)
     end
+
+    context "without editor role" do
+      it "disallows add_member on an AdminSet" do
+        ability = Ability.new(sysadmin_user)
+        assert(ability.cannot?(:add_member, admin_set))
+      end
+    end
+
+    context "with editor role" do
+      before do
+        sysadmin_user.add_role(:editor, admin_set)
+      end
+
+      it "allows add_member on an AdminSet" do
+        ability = Ability.new(sysadmin_user)
+        assert(ability.can?(:add_member, admin_set))
+      end
+    end
   end
 
   describe 'for a non-sysadmin' do
@@ -64,6 +82,11 @@ RSpec.describe Ability, type: :model do
     it 'does not allow management of AdminSets' do
       ability = Ability.new(user)
       assert ability.cannot?(:manage, AdminSet)
+    end
+
+    it "does not allow add_member on an AdminSet" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:add_member, admin_set)
     end
   end
 
@@ -100,6 +123,11 @@ RSpec.describe Ability, type: :model do
       expect(child_object).to be
       expect(child_object2).to be
       expect(ChildObject.accessible_by(ability).count).to eq(2)
+    end
+
+    it "disallows add_member on an AdminSet" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:add_member, admin_set)
     end
   end
 
@@ -140,6 +168,11 @@ RSpec.describe Ability, type: :model do
     it 'allows destroy on a Child Object' do
       ability = Ability.new(user)
       assert ability.can?(:destroy, child_object)
+    end
+
+    it "allows add_member on an Admin Set" do
+      ability = Ability.new(user)
+      assert ability.can?(:add_member, admin_set)
     end
   end
 
@@ -182,6 +215,11 @@ RSpec.describe Ability, type: :model do
     it 'disallows destroy on a Child Object' do
       ability = Ability.new(user)
       assert ability.cannot?(:destroy, child_object)
+    end
+
+    it "disallows allow add_member on an Admin Set" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:add_member, admin_set)
     end
   end
 end
