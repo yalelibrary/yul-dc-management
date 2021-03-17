@@ -45,7 +45,7 @@ $( document ).on('turbolinks:load', function() {
       "pagingType": "full_numbers",
       "columns": columns,
       // This will order all datatables by the first column descending
-      "order": [[0, "desc"]],
+      "order": columnOrder(columns),
       "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]],
       "sDom":hasSearch?'lrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
       // pagingType is optional, if you want full pagination controls.
@@ -111,4 +111,21 @@ let triggerDraw = function() {
   clearInterval(drawTimer);
   drawTimer = 0;
   dataTable.api().draw();  
+}
+
+let columnOrder = function(columns) {
+  let index = 0
+  let colDef = columns[index++]
+  console.log(colDef)
+  if(colDef.options==null){
+    return [[0, "desc"]]
+  } else {
+    colDef.options.map(function (option) {
+      if(option.order==="asc"){
+        [[0, "asc"]]
+      } else {
+        [[0, "desc"]]
+      } 
+    })
+  }
 }

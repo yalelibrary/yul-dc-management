@@ -14,7 +14,7 @@ class UserDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      netid: { source: "User.uid", cond: :like, searchable: true, orderable: true },
+      netid: { source: "User.uid", cond: :like, searchable: true, orderable: true, options: [{ order: 'asc' }] },
       email: { source: "User.email", cond: :like, searchable: true, orderable: true },
       first_name: { source: "User.first_name", cond: :like, searchable: true, orderable: true },
       last_name: { source: "User.last_name", cond: :like, searchable: true, orderable: true },
