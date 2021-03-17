@@ -14,6 +14,9 @@ class Ability
       can :reindex_all, ParentObject
       can :update_metadata, ParentObject
       can :trigger_mets_scan, ParentObject
+    else
+      can :read, ParentObject, admin_set: { roles: { name: viewer_roles, users: { id: user.id } } }
+      can :read, ChildObject, parent_object: { admin_set: { roles: { name: viewer_roles, users: { id: user.id } } } }
     end
     can :add, AdminSet, roles: { name: editor_roles, users: { id: user.id } }
     can [:crud], ChildObject, parent_object: { admin_set: { roles: { name: editor_roles, users: { id: user.id } } } }
