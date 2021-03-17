@@ -136,20 +136,20 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.batch_processes).to include(batch_process)
       end
 
-      it 'calls the user_update_permission method and returns false if the user does not have editor permissions on the admin set' do
+      it 'calls the user_update_child_permission method and returns false if the user does not have editor permissions on the admin set' do
         parents = Set[]
         batch_process.configure_parent_object(child_object, parents)
         batch_process.attach_item(child_object)
         expect do
-          batch_process.user_update_permission(child_object, child_object.parent_object)
+          batch_process.user_update_child_permission(child_object, child_object.parent_object)
         end.to change { IngestEvent.count }.by(3)
 
-        expect(batch_process.user_update_permission(child_object, parent_object)).to eq(false)
+        expect(batch_process.user_update_child_permission(child_object, parent_object)).to eq(false)
       end
 
-      it 'calls the user_update_permission method and returns true if the user does have editor permission on the admin set' do
+      it 'calls the user_update_child_permission method and returns true if the user does have editor permission on the admin set' do
         user.add_role(:editor, admin_set)
-        expect(batch_process.user_update_permission(child_object, parent_object)).to eq(true)
+        expect(batch_process.user_update_child_permission(child_object, parent_object)).to eq(true)
       end
     end
 
@@ -405,12 +405,11 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         end
       end
 
-      describe "with a parent object that had been previously created and user without editor role" do
-        let(:admin_set) { FactoryBot.create(:admin_set) }
-        let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: admin_set) }
+      describe "uploading a csv of oids to create parent objects" do
+        let(:admin_set) { AdminSet.first }
+
         before do
           stub_ptiffs_and_manifests
-          user.add_role(:viewer, admin_set)
         end
 
         around do |example|
@@ -419,14 +418,21 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           end
         end
 
-        it "skips already-existing parent objects from that adminset" do
-          parent_object
+        it "succeeds if the user is an editor on the admin set of the parent object" do
           batch_process.file = csv_upload
           batch_process.save
-          po = ParentObject.find(2_034_600)
-          child = po.child_objects.first
-          expect(po.notes_for_batch_process(batch_process)).to be_empty
-          expect(child.notes_for_batch_process(batch_process)).to be_empty
+          expect(ParentObject.count).to eq(5)
+          expect(IngestEvent.count).to eq(456)
+        end
+
+        it "fails if the user is not an editor on the admin set of the parent object" do
+          user.remove_role(:editor, admin_set)
+
+          batch_process.file = csv_upload
+          batch_process.save
+          expect(ParentObject.count).to eq(0)
+          events = IngestEvent.all.select { |event| event.status == 'Permission Denied' }
+          expect(events.count).to eq(5)
         end
       end
     end
