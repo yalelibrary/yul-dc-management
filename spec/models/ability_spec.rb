@@ -57,7 +57,7 @@ RSpec.describe Ability, type: :model do
     context "without editor role" do
       it "does not allow add" do
         ability = Ability.new(sysadmin_user)
-        assert(ability.cannot?(:add, admin_set))
+        assert(ability.cannot?(:add_member, admin_set))
       end
     end
 
@@ -68,7 +68,7 @@ RSpec.describe Ability, type: :model do
 
       it "allows add" do
         ability = Ability.new(sysadmin_user)
-        assert(ability.can?(:add, admin_set))
+        assert(ability.can?(:add_member, admin_set))
       end
     end
   end
@@ -86,7 +86,7 @@ RSpec.describe Ability, type: :model do
 
     it "does not allow add of AdminSets" do
       ability = Ability.new(user)
-      assert ability.cannot?(:add, admin_set)
+      assert ability.cannot?(:add_member, admin_set)
     end
   end
 
@@ -127,7 +127,7 @@ RSpec.describe Ability, type: :model do
 
     it "does not allow add of AdminSets" do
       ability = Ability.new(user)
-      assert ability.cannot?(:add, admin_set)
+      assert ability.cannot?(:add_member, admin_set)
     end
   end
 
@@ -172,7 +172,7 @@ RSpec.describe Ability, type: :model do
 
     it "allows add of AdminSets" do
       ability = Ability.new(user)
-      assert ability.can?(:add, admin_set)
+      assert ability.can?(:add_member, admin_set)
     end
   end
 
@@ -219,7 +219,7 @@ RSpec.describe Ability, type: :model do
 
     it "does not allow add of AdminSets" do
       ability = Ability.new(user)
-      assert ability.cannot?(:add, admin_set)
+      assert ability.cannot?(:add_member, admin_set)
     end
   end
 end
