@@ -4,6 +4,7 @@ require 'rails_helper'
 RSpec.describe 'Users', type: :system, js: true do
   let(:user) { FactoryBot.create(:user) }
   let(:user2) { FactoryBot.create(:user) }
+  let(:user3) { FactoryBot.create(:user, deactivated: true) }
 
   before do
     user.sysadmin = true
@@ -11,11 +12,27 @@ RSpec.describe 'Users', type: :system, js: true do
   end
 
   describe 'datatable' do
-    it 'defaults to only display Active users' do
+    before do
       user2.reload
+      user3.reload
       visit users_path
+    end
+
+    it 'defaults to only display Active users' do
       expect(page).to have_content(user.uid)
       expect(page).to have_content(user2.uid)
+      expect(page).not_to have_content(user3.uid)
+    end
+
+    it 'defaults to ascending order' do
+      active_sorted_users = User.where(deactivated: false).pluck(:uid).sort
+      ordered_users_in_datatable = []
+
+      page.all('#users-datatable tbody tr').each do |tr|
+        ordered_users_in_datatable << tr.text.partition(" ").first
+      end
+
+      expect(ordered_users_in_datatable).to eq(active_sorted_users)
     end
   end
 
