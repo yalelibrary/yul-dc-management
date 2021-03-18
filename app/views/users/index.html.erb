@@ -23,5 +23,5 @@
 </div>
 
 <div id='users-data' class='d-none datatable-data'>
-  <%= UserDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], searchable: value[:searchable], options: value[:options]} }.to_json %>
+  <%= UserDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], searchable: value[:searchable], options: value[:options], sort_order: value[:sort_order]} }.to_json %>
 </div>

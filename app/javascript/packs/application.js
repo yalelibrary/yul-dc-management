@@ -113,9 +113,16 @@ let triggerDraw = function() {
 }
 
 // This will order all datatables by the first column descending
-// unless the first column has a value of "options: [{ order: 'asc' }]"
+// unless some columns have sort_order set in the column def
+// sort_order needs to be in the column in the datatable @view_columns, and the view page needs to pass those values
+// to the page.  See user_datatable.rb and views/users/index.html.erb for example.
 const columnOrder = (columns) => {
-  return columns[0].options === null
-    ? [[0, 'desc']]
-    : [[0, 'asc']]
+  if ( columns.filter((c)=>c.sort_order).length === 0 ) return [[0, 'desc']]
+  let columnOrder = []
+  columns.forEach((c,ix)=>{
+    if ( c.sort_order ) {
+      columnOrder.push([ix, c.sort_order])
+    }
+  })
+  return columnOrder;
 }
