@@ -28,6 +28,7 @@ RSpec.describe 'Users', type: :system, js: true do
       active_sorted_users = User.where(deactivated: false).pluck(:uid).sort
       ordered_users_in_datatable = []
 
+      expect(page).to have_content(user.uid)  # add expect to make sure page is loaded before page.all()
       page.all('#users-datatable tbody tr').each do |tr|
         ordered_users_in_datatable << tr.text.partition(" ").first
       end
