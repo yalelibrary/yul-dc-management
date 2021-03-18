@@ -2,9 +2,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :system, js: true do
-  let(:user) { FactoryBot.create(:user) }
-  let(:user2) { FactoryBot.create(:user) }
-  let(:user3) { FactoryBot.create(:user, deactivated: true) }
+  let(:user) { FactoryBot.create(:user, uid: 'mbl52342') }
+  let(:user2) { FactoryBot.create(:user, uid: 'abl52342') }
+  let(:user3) { FactoryBot.create(:user, uid: 'gbl52342', deactivated: true) }
 
   before do
     user.sysadmin = true
@@ -28,11 +28,28 @@ RSpec.describe 'Users', type: :system, js: true do
       active_sorted_users = User.where(deactivated: false).pluck(:uid).sort
       ordered_users_in_datatable = []
 
+      expect(page).to have_content(user.uid) # add expect to make sure page is loaded before page.all()
       page.all('#users-datatable tbody tr').each do |tr|
         ordered_users_in_datatable << tr.text.partition(" ").first
       end
 
       expect(ordered_users_in_datatable).to eq(active_sorted_users)
+    end
+
+    it 'filters by netid' do
+      active_sorted_users_name_starting_with_m = User.where(deactivated: false).where("uid like 'm%'").pluck(:uid).sort
+      active_users_without_name_starting_with_m = User.where(deactivated: false).where("not uid like 'm%'").pluck(:uid).sort
+      ordered_users_in_datatable = []
+
+      expect(page).to have_content(user.uid) # add expect to make sure page is loaded before page.all()
+      fill_in("NetId", with: "m")
+      expect(page).not_to have_content(active_users_without_name_starting_with_m[0]) if active_users_without_name_starting_with_m.count > 0
+      expect(page).to have_content(active_sorted_users_name_starting_with_m[0]) if active_sorted_users_name_starting_with_m.count > 0
+      page.all('#users-datatable tbody tr').each do |tr|
+        ordered_users_in_datatable << tr.text.partition(" ").first
+      end
+
+      expect(ordered_users_in_datatable).to eq(active_sorted_users_name_starting_with_m)
     end
   end
 
