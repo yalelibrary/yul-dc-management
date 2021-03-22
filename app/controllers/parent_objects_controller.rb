@@ -58,7 +58,10 @@ class ParentObjectsController < ApplicationController
   # PATCH/PUT /parent_objects/1.json
   def update
     respond_to do |format|
-      if @parent_object.update(parent_object_params)
+      invalidate_admin_set_edit unless valid_admin_set_edit?
+      updated = valid_admin_set_edit? ? @parent_object.update(parent_object_params) : false
+
+      if updated
         format.html { redirect_to @parent_object, notice: 'Parent object was successfully updated.' }
         format.json { render :show, status: :ok, location: @parent_object }
       else
@@ -123,6 +126,14 @@ class ParentObjectsController < ApplicationController
   end
 
   private
+
+    def valid_admin_set_edit?
+      !parent_object_params[:admin_set] || (parent_object_params[:admin_set] && current_user.editor(parent_object_params[:admin_set]))
+    end
+
+    def invalidate_admin_set_edit
+      @parent_object.errors.add :admin_set, :invalid, message: "cannot be assigned to a set the User cannot edit"
+    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_parent_object

@@ -24,6 +24,7 @@ Metrics/MethodLength:
 Metrics/ClassLength:
     Exclude:
       - 'app/models/iiif_presentation.rb'
+      - 'app/controllers/parent_objects_controller.rb'
 
 Rails/OutputSafety:
   Exclude:
