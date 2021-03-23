@@ -209,14 +209,12 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       end
 
       it "has relationship to parent admin set through parent property" do
-        expect(child_object.admin_set).to be_nil
         child_object.parent_object.admin_set = AdminSet.find_by_key("sml")
         child_object.parent_object.save!
         expect(child_object.reload.admin_set.key).to eq("sml")
       end
 
       it "has relationship to parent admin set through child property" do
-        expect(child_object.parent_object.admin_set).to be_nil
         child_object.admin_set = AdminSet.find_by_key("sml")
         child_object.save!
         expect(child_object.parent_object.reload.admin_set.key).to eq("sml")
