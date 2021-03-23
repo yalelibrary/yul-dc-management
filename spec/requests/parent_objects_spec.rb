@@ -111,7 +111,8 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
     context "with valid parameters" do
       let(:new_attributes) do
         {
-          authoritative_metadata_source_id: 2
+          authoritative_metadata_source_id: 2,
+          admin_set: 'brbl'
         }
       end
 
