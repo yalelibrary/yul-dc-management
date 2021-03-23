@@ -51,7 +51,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get 'api/oid/new(/:number)', to: 'oid_minter#generate_oids', as: :new_oid
 
   devise_scope :user do
-    authenticated :user, -> user { user.sysadmin } do
+    authenticated :user, ->(user) { user.sysadmin } do
       mount DelayedJobWeb, at: '/delayed_job'
     end
 
