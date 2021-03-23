@@ -120,7 +120,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
     # rubocop:disable RSpec/AnyInstance
     it "checks for solr success" do
-      po_actual = ParentObject.create(oid: 2_034_600)
+      po_actual = ParentObject.create(oid: 2_034_600, admin_set: FactoryBot.create(:admin_set))
       allow_any_instance_of(ParentObject).to receive(:solr_index).and_return("responseHeader" => { "status" => 404, "QTime" => 106 })
       batch_connection = batch_process.batch_connections.build(connectable: po_actual)
       gn = GenerateManifestJob.new
@@ -156,10 +156,17 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       expect(parent_object_restricted.visibility).to eq "Restricted Access"
     end
 
-    let(:parent_object_public) { described_class.create(oid: "2005512", visibility: "Public") }
+    let(:parent_object_public) { described_class.create(oid: "2005512", visibility: "Public", admin_set: FactoryBot.create(:admin_set)) }
     it "Public visibility does validate" do
       expect(parent_object_public.valid?).to eq true
       expect(parent_object_public.visibility).to eq "Public"
+    end
+  end
+
+  context "When trying to create a ParentObject" do
+    it "requires an admin_set to be valid" do
+      parent_object = ParentObject.new(oid: "2004628", authoritative_metadata_source_id: "1")
+      expect(parent_object).to_not be_valid
     end
   end
 
@@ -199,7 +206,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     context "a newly created ParentObject with just the oid and default authoritative_metadata_source (Ladybird for now)" do
-      let(:parent_object) { described_class.create(oid: "2005512") }
+      let(:parent_object) { described_class.create(oid: "2005512", admin_set: FactoryBot.create(:admin_set)) }
       before do
         stub_metadata_cloud("2005512", "ladybird")
         stub_metadata_cloud("V-2005512", "ils")
@@ -256,7 +263,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     context "a newly created ParentObject with Voyager as authoritative_metadata_source" do
-      let(:parent_object) { described_class.create(oid: "2004628", bib: '3163155', authoritative_metadata_source_id: voyager) }
+      let(:parent_object) { described_class.create(oid: "2004628", bib: '3163155', authoritative_metadata_source_id: voyager, admin_set: FactoryBot.create(:admin_set)) }
 
       it "pulls from the MetadataCloud for Voyager" do
         expect(parent_object.reload.authoritative_metadata_source_id).to eq voyager
@@ -272,7 +279,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     context "a newly created ParentObject with ArchiveSpace as authoritative_metadata_source" do
-      let(:parent_object) { described_class.create(oid: "2012036", aspace_uri: "/repositories/11/archival_objects/555049", authoritative_metadata_source_id: aspace) }
+      let(:parent_object) { described_class.create(oid: "2012036", aspace_uri: "/repositories/11/archival_objects/555049", authoritative_metadata_source_id: aspace, admin_set: FactoryBot.create(:admin_set)) }
       before do
         stub_metadata_cloud("2012036", "ladybird")
         stub_metadata_cloud("AS-2012036", "aspace")
