@@ -56,6 +56,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
 
     authenticated :user do
+      # authenticated user without the sysadmin role
       get '/*delayed_job', to: 'application#access_denied'
     end
   end
