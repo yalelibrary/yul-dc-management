@@ -16,6 +16,7 @@
       <%= child_object.order %>
       <%= form.radio_button :representative_child_oid, child_object.oid %>
       <%= form.label(:representative_child_oid, image_tag(child_object.thumbnail_url))  %>
+      <%= form.hidden_field :admin_set, value: child_object.admin_set.key %>
     <% end %>
   </div>
 
