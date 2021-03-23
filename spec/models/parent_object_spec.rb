@@ -166,7 +166,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
   context "When trying to create a ParentObject" do
     it "requires an admin_set to be valid" do
       parent_object = ParentObject.new(oid: "2004628", authoritative_metadata_source_id: "1")
-      expect(parent_object).to_not be_valid
+      expect(parent_object).not_to be_valid
     end
   end
 
@@ -279,7 +279,14 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     context "a newly created ParentObject with ArchiveSpace as authoritative_metadata_source" do
-      let(:parent_object) { described_class.create(oid: "2012036", aspace_uri: "/repositories/11/archival_objects/555049", authoritative_metadata_source_id: aspace, admin_set: FactoryBot.create(:admin_set)) }
+      let(:parent_object) do
+        described_class.create(
+          oid: "2012036",
+          aspace_uri: "/repositories/11/archival_objects/555049",
+          authoritative_metadata_source_id: aspace,
+          admin_set: FactoryBot.create(:admin_set)
+        )
+      end
       before do
         stub_metadata_cloud("2012036", "ladybird")
         stub_metadata_cloud("AS-2012036", "aspace")
