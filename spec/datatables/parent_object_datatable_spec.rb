@@ -26,6 +26,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
     expect(output.size).to eq(5)
     expect(output).to include(
       DT_RowId: 16_854_285,
+      admin_set: 'brbl',
       aspace_uri: nil,
       authoritative_source: "ladybird",
       child_object_count: 4,

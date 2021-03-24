@@ -8,6 +8,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   def initialize(params, opts = {})
     @view = opts[:view_context]
     @current_ability = opts[:current_ability]
+    @set_keys = AdminSet.order(:key).distinct.pluck(:key)
     super
   end
 
@@ -16,6 +17,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
     # or in aliased_join_table.column_name format
     @view_columns ||= {
       oid: { source: "ParentObject.oid", cond: :start_with, searchable: true, orderable: true },
+      admin_set: { source: "AdminSet.key", cond: :string_eq, searchable: true, options: @set_keys, orderable: true },
       authoritative_source: { source: "MetadataSource.metadata_cloud_name", cond: :string_eq, searchable: true, options: ["ladybird", "aspace", "ils"], orderable: true },
       child_object_count: { source: "ParentObject.child_object_count", orderable: true },
       bib: { source: "ParentObject.bib", cond: :string_eq, searchable: true, orderable: true },
@@ -37,6 +39,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
     records.map do |parent_object|
       {
         oid: link_to(parent_object.oid, parent_object_path(parent_object)) + get_blacklight_parent_url(parent_object).html_safe,
+        admin_set: parent_object.admin_set.key,
         authoritative_source: parent_object.source_name,
         child_object_count: parent_object.child_object_count,
         bib: parent_object.bib,
@@ -70,6 +73,6 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    ParentObject.accessible_by(@current_ability, :read).joins(:authoritative_metadata_source)
+    ParentObject.accessible_by(@current_ability, :read).joins(:authoritative_metadata_source, :admin_set)
   end
 end
