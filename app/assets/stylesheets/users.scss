@@ -6,3 +6,12 @@
   border-bottom: none;
   border-top: none;
 }
+
+.table.user-roles-table {
+  width: auto;
+  vertical-align: top;
+
+  th {
+    width: 300px;
+  }
+}
