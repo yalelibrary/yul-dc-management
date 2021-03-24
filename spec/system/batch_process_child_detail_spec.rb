@@ -34,10 +34,13 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       stub_ptiffs_and_manifests
       login_as user
       batch_process
-      visit show_child_batch_process_path(child_oid: child_oid, id: batch_process.id, oid: parent_oid)
     end
 
     describe 'with a csv import' do
+      before do
+        visit show_child_batch_process_path(child_oid: child_oid, id: batch_process.id, oid: parent_oid)
+      end
+
       it 'has a link to the batch process detail page' do
         expect(page).to have_link(batch_process&.id&.to_s, href: "/batch_processes/#{batch_process.id}")
       end

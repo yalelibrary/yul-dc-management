@@ -25,6 +25,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       let(:batch_process_with_failure) { FactoryBot.create(:batch_process, user: user) }
 
       before do
+        stub_ptiffs_and_manifests
         stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/#{parent_object.oid}.json")
           .to_return(status: 400, body: File.open(File.join(fixture_path, "metadata_cloud_no_record.json")))
       end
