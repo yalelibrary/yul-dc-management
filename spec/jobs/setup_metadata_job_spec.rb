@@ -23,8 +23,8 @@ RSpec.describe SetupMetadataJob, type: :job do
     let(:parent_object) { FactoryBot.create(:parent_object, authoritative_metadata_source: metadata_source) }
 
     it 'notifies on save failure' do
-      allow(parent_object).to receive(:save!).and_raise('boom!')
-      expect(parent_object).to receive(:processing_event).twice
+      allow(parent_object).to receive(:default_fetch).and_raise('boom!')
+      expect(parent_object).to receive(:processing_event).once
       expect { metadata_job.perform(parent_object, batch_process) }.to raise_error('boom!')
     end
 
