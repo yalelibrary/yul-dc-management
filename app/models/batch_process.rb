@@ -92,7 +92,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         admin_set_hash[adminset_key] = admin_set
       end
       if admin_set.nil?
-        batch_processing_event("Skipping row [#{index}] with unknown admin set [#{adminset_key}] for parent: #{oid}", 'Skipped Row')
+        batch_processing_event("Skipping row [#{index + 2}] with unknown admin set [#{adminset_key}] for parent: #{oid}", 'Skipped Row')
         next
       end
       next unless user_create_permission(index, admin_set, oid)
@@ -131,7 +131,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     oids.each_with_index do |oid, index|
       child_object = ChildObject.find_by_oid(oid.to_i)
       unless child_object
-        batch_processing_event("Skipping row [#{index}] with unknown Child: #{oid}", 'Skipped Row')
+        batch_processing_event("Skipping row [#{index + 2}] with unknown Child: #{oid}", 'Skipped Row')
         next
       end
       next unless child_object
@@ -160,7 +160,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def user_create_permission(index, admin_set, oid)
     user = self.user
     unless current_ability.can? :add_member, admin_set
-      batch_processing_event("Skipping row [#{index}] because #{user.uid} does not have permission to create or update parent: #{oid}", 'Permission Denied')
+      batch_processing_event("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{oid}", 'Permission Denied')
       return false
     end
 
