@@ -23,11 +23,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
     context "with no metadatacloud record" do
       let(:batch_process_with_failure) { FactoryBot.create(:batch_process, user: user) }
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: 16_609_818, admin_set: brbl) }
-      let(:batch_connection) do
-        FactoryBot.create(:batch_connection,
-                          connectable: parent_object, batch_process: batch_process_with_failure)
-      end
 
       before do
         stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/#{parent_object.oid}.json")
@@ -41,11 +36,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       it "does not continue with the background jobs if that particular oid does not have a record" do
-        parent_object
         batch_process_with_failure.file = bad_oid_upload
         batch_process_with_failure.save
         batch_process_with_failure.run_callbacks :create
         batch_process_with_failure.batch_connections.first.update_status!
+        parent_object = batch_process_with_failure.parent_objects.first
         expect(parent_object.status_for_batch_process(batch_process_with_failure)).to eq "Failed"
         expect(parent_object.notes_for_batch_process(batch_process_with_failure)).not_to include "metadata-fetched"
       end
@@ -82,11 +77,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
   describe "with a parent object with a failure" do
     let(:batch_process_with_failure) { FactoryBot.create(:batch_process, user: user) }
-    let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: brbl) }
-    let(:batch_connection) do
-      FactoryBot.create(:batch_connection,
-                        connectable: parent_object, batch_process: batch_process_with_failure)
-    end
+
     # rubocop:disable RSpec/AnyInstance
     before do
       allow_any_instance_of(ChildObject).to receive(:remote_ptiff_exists?).and_return(false)
@@ -102,10 +93,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     it "can reflect a failure" do
-      parent_object
       batch_process_with_failure.file = csv_upload
       batch_process_with_failure.save
       batch_process_with_failure.run_callbacks :create
+      parent_object = batch_process_with_failure.parent_objects.first
       allow(parent_object).to receive(:processing_event).and_return(
         IngestEvent.create(
           status: "failed",

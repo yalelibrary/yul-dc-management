@@ -11,7 +11,6 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
     stub_metadata_cloud("16057779")
     stub_metadata_cloud("15234629")
     login_as user
-    visit batch_process_path(batch_process)
   end
 
   context "when uploading a csv" do
@@ -41,6 +40,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
     end
 
     it "can see the details of the import" do
+      visit batch_process_path(batch_process)
       expect(page).to have_content(batch_process.id.to_s)
       expect(page).to have_content("johnsmith2530")
       expect(page).to have_link("small_short_fixture_ids.csv", href: "/batch_processes/#{batch_process.id}/download")
@@ -71,10 +71,12 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
     end
 
     it "can see the status of the parent object imports" do
+      visit batch_process_path(batch_process)
       expect(page).to have_content("Batch complete")
     end
 
     it "can see the overall status of the batch process" do
+      visit batch_process_path(batch_process)
       expect(batch_process.batch_status).to eq "Batch complete"
       expect(page).to have_content("Batch complete")
     end
@@ -118,6 +120,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       )
     end
     it "can see the details of the import" do
+      visit batch_process_path(batch_process)
       expect(page).to have_content(batch_process.id.to_s)
       expect(page).to have_content("johnsmith2530")
       expect(page).to have_link("111860A_8394689_mets.xml", href: "/batch_processes/#{batch_process.id}/download")
@@ -137,6 +140,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       )
     end
     it "can see the details of the import" do
+      visit batch_process_path(batch_process)
       expect(page).to have_content(batch_process.id.to_s)
       expect(page).to have_content("johnsmith2530")
       expect(page).to have_link("111860A_8394689_no_intranda_mets.xml", href: "/batch_processes/#{batch_process.id}/download")

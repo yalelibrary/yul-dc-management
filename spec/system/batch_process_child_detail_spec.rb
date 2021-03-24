@@ -5,8 +5,8 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
   let(:user) { FactoryBot.create(:user, uid: 'johnsmith2530') }
   let(:brbl) { AdminSet.find_by_key('brbl') }
   let(:sml) { AdminSet.find_by_key('sml') }
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: 16_057_779, admin_set: brbl) }
-  let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_object) }
+  # let(:parent_object) { FactoryBot.create(:parent_object, oid: 16_057_779, admin_set: brbl) }
+  # let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_object) }
   let(:batch_process) do
     FactoryBot.create(
       :batch_process,
@@ -18,6 +18,9 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
   end
 
   describe 'with expected success' do
+    let(:child_oid) { batch_process.parent_objects.first.child_objects.first.oid }
+    let(:parent_oid) { batch_process.parent_objects.first.oid }
+
     around do |example|
       access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
       ENV["ACCESS_MASTER_MOUNT"] = "/data"
@@ -30,7 +33,8 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       stub_metadata_cloud('16057779')
       stub_ptiffs_and_manifests
       login_as user
-      visit show_child_batch_process_path(child_oid: child_object.oid, id: batch_process.id, oid: child_object.parent_object_oid)
+      batch_process
+      visit show_child_batch_process_path(child_oid: child_oid, id: batch_process.id, oid: parent_oid)
     end
 
     describe 'with a csv import' do
@@ -39,11 +43,11 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       end
 
       it 'has a link to the parent object page' do
-        expect(page).to have_link('16057779', href: "/batch_processes/#{batch_process.id}/parent_objects/16057779")
+        expect(page).to have_link(parent_oid.to_s, href: "/batch_processes/#{batch_process.id}/parent_objects/#{parent_oid}")
       end
 
       it 'has a link to the child object page' do
-        expect(page).to have_link('10736292 (current record)', href: '/child_objects/10736292')
+        expect(page).to have_link("#{child_oid} (current record)", href: "/child_objects/#{child_oid}")
       end
 
       it 'shows the status of the child object' do
