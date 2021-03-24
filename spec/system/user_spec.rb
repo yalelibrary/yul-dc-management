@@ -53,6 +53,23 @@ RSpec.describe 'Users', type: :system, js: true do
     end
   end
 
+  describe 'are viewable' do
+    before do
+      visit users_path
+      click_on(user.uid.to_s)
+    end
+
+    it 'displays the users roles' do
+      admin_set = FactoryBot.create(:admin_set)
+      user.add_role(:editor, admin_set)
+
+      within('table', text: 'Admin Set') do
+        expect(page).to have_css('td', text: admin_set.label.to_s)
+        expect(page).to have_css('td', text: "editor")
+      end
+    end
+  end
+
   describe 'are editable' do
     it 'and require an email to be present' do
       visit users_path
