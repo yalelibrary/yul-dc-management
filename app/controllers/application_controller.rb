@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
     render plain: "Access denied", status: 401
   end
 
+  def access_denied
+    render(plain: 'Access denied', status: 401)
+  end
+
   protected
 
     def authenticate_user!
