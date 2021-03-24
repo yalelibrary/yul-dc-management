@@ -428,12 +428,12 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
             end
           end
 
-          it "throws exception in Job when trying to create parent object" do
+          it "does not alter child_object" do
+            original_updated_at = child_object.reload.updated_at
             allow(Rails.logger).to receive(:error) { :logger_mock }
             batch_process.file = csv_upload
-            expect do
-              batch_process.save
-            end.to raise_error("One or more of the child objects exists, Unable to create children")
+            batch_process.save
+            expect(child_object.reload.updated_at).to eq(original_updated_at)
           end
         end
       end
