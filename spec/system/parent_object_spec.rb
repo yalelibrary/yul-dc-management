@@ -461,7 +461,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   context "when logged in with access to only some admin set roles", js: true do
     let(:user) { FactoryBot.create(:user) }
     let(:admin_set) { FactoryBot.create(:admin_set, key: "adminset") }
-    let(:admin_set2) { FactoryBot.create(:admin_set, key: "adminset2") }
+    let(:admin_set2) { FactoryBot.create(:admin_set, key: "adminset2", label: "AdminSet2") }
     let(:parent_object1) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
     let(:parent_object2) { FactoryBot.create(:parent_object, oid: "2004548", admin_set_id: admin_set.id) }
     let(:parent_object_no_access) { FactoryBot.create(:parent_object, oid: "2004549", admin_set_id: admin_set2.id) }
@@ -503,6 +503,14 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     it "does not allow viewing of the child object the user does not has access to" do
       visit edit_parent_object_path("2004549")
       expect(page).to have_content("Access denied")
+    end
+
+    it "does not allow changing parent_object to admin_set user does not have access to" do
+      visit edit_parent_object_path("2002826")
+      select 'AdminSet2', from: "parent_object[admin_set]"
+      click_on("Update Parent object")
+
+      expect(page).to have_content "Admin set cannot be assigned to a set the User cannot edit"
     end
   end
 end
