@@ -410,7 +410,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
             expect(parent_object.reload.updated_at).to eq(original_updated_at)
           end
         end
-        
+
         describe "with a child object that had been previously created and user with editor role" do
           let(:admin_set) { FactoryBot.create(:admin_set) }
           let(:parent_object) { FactoryBot.create(:parent_object, oid: 1002, admin_set: admin_set) }
