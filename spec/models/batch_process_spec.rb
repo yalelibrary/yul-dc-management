@@ -410,6 +410,32 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
             expect(parent_object.reload.updated_at).to eq(original_updated_at)
           end
         end
+        
+        describe "with a child object that had been previously created and user with editor role" do
+          let(:admin_set) { FactoryBot.create(:admin_set) }
+          let(:parent_object) { FactoryBot.create(:parent_object, oid: 1002, admin_set: admin_set) }
+          let(:child_object) { FactoryBot.create(:child_object, oid: 1_030_368, parent_object: parent_object) }
+          let(:logger_mock) { instance_double("Rails.logger").as_null_object }
+          before do
+            child_object
+            stub_ptiffs_and_manifests
+            user.add_role(:editor, admin_set)
+          end
+
+          around do |example|
+            perform_enqueued_jobs do
+              example.run
+            end
+          end
+
+          it "throws exception in Job when trying to create parent object" do
+            allow(Rails.logger).to receive(:error) { :logger_mock }
+            batch_process.file = csv_upload
+            expect do
+              batch_process.save
+            end.to raise_error("One or more of the child objects exists, Unable to create children")
+          end
+        end
       end
 
       describe "uploading a csv of oids to create parent objects" do

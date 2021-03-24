@@ -18,8 +18,8 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
   end
 
   describe 'with expected success' do
-    let(:child_oid) { batch_process.parent_objects.first.child_objects.first.oid }
-    let(:parent_oid) { batch_process.parent_objects.first.oid }
+    let(:child_oid) { batch_process.parent_objects.last.child_objects.first.oid }
+    let(:parent_oid) { batch_process.parent_objects.last.oid }
 
     around do |example|
       access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
@@ -33,7 +33,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       stub_metadata_cloud('16057779')
       stub_ptiffs_and_manifests
       login_as user
-      batch_process
+      batch_process.save!
     end
 
     describe 'with a csv import' do

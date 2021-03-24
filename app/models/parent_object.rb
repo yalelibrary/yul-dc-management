@@ -91,8 +91,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def upsert_child_objects(child_objects_hash)
-    raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
-    ChildObject.upsert_all(child_objects_hash)
+    if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
+      processing_event("One or more of the child objects existed", "failed")
+      raise "One or more of the child objects exists, Unable to create children"
+    end
+
+    ChildObject.insert_all(child_objects_hash)
   end
 
   def array_of_child_hashes_from_mets
