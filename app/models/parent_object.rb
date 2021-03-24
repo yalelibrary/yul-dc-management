@@ -81,13 +81,19 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # database driven. This also makes object creation much faster.
   def create_child_records
     if from_mets
-      ChildObject.upsert_all(array_of_child_hashes_from_mets)
+      upsert_child_objects(array_of_child_hashes_from_mets)
     else
       return unless ladybird_json
       return self.child_object_count = 0 if ladybird_json["children"].empty?
-      ChildObject.upsert_all(array_of_child_hashes)
+      upsert_child_objects(array_of_child_hashes)
     end
     self.child_object_count = child_objects.size
+  end
+
+  def upsert_child_objects(child_objects_hash)
+    raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
+
+    ChildObject.insert_all(child_objects_hash)
   end
 
   def array_of_child_hashes_from_mets

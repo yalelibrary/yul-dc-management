@@ -40,5 +40,7 @@ class SetupMetadataJob < ApplicationJob
       GeneratePtiffJob.perform_later(child, current_batch_process)
       child.processing_event("Ptiff Queued", "ptiff-queued")
     end
+  rescue => child_create_error
+    parent_object.processing_event(child_create_error.message, "failed")
   end
 end

@@ -70,6 +70,20 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po.admin_set).not_to be_nil
       expect(po.admin_set.key).to eq "brbl"
     end
+
+    context "when parent object already exists" do
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 30_000_557) }
+
+      it "does not change parent object and reports error" do
+        original_updated_at = parent_object.reload.updated_at
+        expect do
+          batch_process.file = aspace_xml_upload
+          batch_process.save!
+          expect(batch_process.batch_ingest_events.count).to eq(1)
+        end.not_to change { parent_object }
+        expect(parent_object.reload.updated_at).to eq(original_updated_at)
+      end
+    end
   end
 
   describe "running the background jobs" do
@@ -385,22 +399,41 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
             end
           end
 
-          it "assigns the batch_process to an already-existing parent object" do
+          it "does not alter already-existing parent object" do
             parent_object
-            po = ParentObject.find(2_034_600)
-            expect(po.visibility).to eq "Public"
+            original_updated_at = parent_object.reload.updated_at
+            expect do
+              batch_process.file = csv_upload
+              batch_process.save
+              expect(batch_process.batch_ingest_events.count).to eq(1)
+            end.not_to change { parent_object }
+            expect(parent_object.reload.updated_at).to eq(original_updated_at)
+          end
+        end
+
+        describe "with a child object that had been previously created and user with editor role" do
+          let(:admin_set) { FactoryBot.create(:admin_set) }
+          let(:parent_object) { FactoryBot.create(:parent_object, oid: 1002, admin_set: admin_set) }
+          let(:child_object) { FactoryBot.create(:child_object, oid: 1_030_368, parent_object: parent_object) }
+          let(:logger_mock) { instance_double("Rails.logger").as_null_object }
+          before do
+            child_object
+            stub_ptiffs_and_manifests
+            user.add_role(:editor, admin_set)
+          end
+
+          around do |example|
+            perform_enqueued_jobs do
+              example.run
+            end
+          end
+
+          it "does not alter child_object" do
+            original_updated_at = child_object.reload.updated_at
+            allow(Rails.logger).to receive(:error) { :logger_mock }
             batch_process.file = csv_upload
             batch_process.save
-            child = po.child_objects.first
-            notes = child.notes_for_batch_process(batch_process)
-            expect(notes).to include("ptiff-ready")
-            expect(notes).to include("ptiff-queued")
-            expect(child.status_for_batch_process(batch_process)).to eq "Complete"
-            expect(po.status_for_batch_process(batch_process)).to eq "Complete"
-            expect(po.batch_processes.first).to eq batch_process
-            expect(po.visibility).to eq "Public"
-            po_two = ParentObject.find(2_005_512)
-            expect(po_two.visibility).to eq "Public"
+            expect(child_object.reload.updated_at).to eq(original_updated_at)
           end
         end
       end
