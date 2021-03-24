@@ -26,5 +26,22 @@
   <%= @user.deactivated %>
 </p>
 
+<table class='table table-striped user-roles-table table-bordered'>
+  <thead class='thead-dark'>
+    <tr>
+      <th scope='col'> Admin Set </th>
+      <th scope='col'> Role </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user.roles.excluding(@user.roles.where(name: 'sysadmin')).each do |role| %>
+      <tr>
+        <td><%= link_to role.resource.label, admin_set_path(role.resource)  %></td>
+        <td><%= role.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <%= link_to 'Edit', edit_user_path(@user) %>
 <%= link_to 'Back', users_path %>
