@@ -85,7 +85,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     admin_set_hash = {}
     oids.zip(metadata_sources, adminset_keys).each_with_index do |record, index|
       oid, metadata_source, adminset_key = record
-      fresh = false
       admin_set = admin_set_hash[adminset_key]
       if admin_set.nil?
         admin_set = AdminSet.find_by_key(adminset_key)
@@ -96,19 +95,15 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         next
       end
       next unless user_create_permission(index, admin_set, oid)
-
-      po = ParentObject.where(oid: oid).first_or_create do |parent_object|
+      if ParentObject.where(oid: oid).count.positive?
+        batch_processing_event("Skipping row [#{index}] with existing parent oid: #{oid}", 'Skipped Row')
+        next
+      end
+      ParentObject.create(oid: oid) do |parent_object|
         # Only runs on newly created parent objects
         setup_for_background_jobs(parent_object, metadata_source)
         parent_object.admin_set = admin_set
-        fresh = true
       end
-      next if fresh
-
-      po.metadata_update = true
-      po.admin_set = admin_set
-      setup_for_background_jobs(po, metadata_source)
-      po.save!
     end
   end
   # rubocop:enable Metrics/MethodLength
@@ -186,18 +181,14 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def refresh_metadata_cloud_mets
-    fresh = false
     metadata_source = mets_doc.metadata_source
-    po = ParentObject.where(oid: oid).first_or_create do |parent_object|
-      # Only runs on newly created parent objects
-      fresh = true
+    if ParentObject.exists?(oid: oid)
+      batch_processing_event("Skipping mets import for existing parent: #{oid}", 'Skipped Import')
+      return
+    end
+    ParentObject.create(oid: oid) do |parent_object|
       set_values_from_mets(parent_object, metadata_source)
     end
-    return if fresh
-    po.metadata_update = true
-    po.last_mets_update = Time.current
-    setup_for_background_jobs(po, metadata_source)
-    po.save!
   end
 
   # rubocop:disable Metrics/AbcSize
