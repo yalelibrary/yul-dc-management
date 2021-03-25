@@ -96,7 +96,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       end
       next unless user_create_permission(index, admin_set, oid)
       if ParentObject.where(oid: oid).count.positive?
-        batch_processing_event("Skipping row [#{index}] with existing parent oid: #{oid}", 'Skipped Row')
+        batch_processing_event("Skipping row [#{index + 2}] with existing parent oid: #{oid}", 'Skipped Row')
         next
       end
       ParentObject.create(oid: oid) do |parent_object|
