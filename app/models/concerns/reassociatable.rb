@@ -48,7 +48,7 @@ module Reassociatable
 
   def extract_order(index, row)
     unless row["order"]&.to_i&.positive? || row["order"] == '0'
-      batch_processing_event("Skipping row [#{index}] with invalid order [#{row['order']}] (Parent: #{row['parent_oid']}, Child: #{row['child_oid']})", 'Skipped Row')
+      batch_processing_event("Skipping row [#{index + 2}] with invalid order [#{row['order']}] (Parent: #{row['parent_oid']}, Child: #{row['child_oid']})", 'Skipped Row')
       return :invalid_order
     end
     row["order"].to_i
@@ -56,13 +56,13 @@ module Reassociatable
 
   def load_child(index, oid)
     co = ChildObject.find_by_oid(oid)
-    batch_processing_event("Skipping row [#{index}] with Child Missing #{oid}", 'Skipped Row') unless co
+    batch_processing_event("Skipping row [#{index + 2}] with Child Missing #{oid}", 'Skipped Row') unless co
     co
   end
 
   def load_parent(index, oid)
     po = ParentObject.find_by_oid(oid)
-    batch_processing_event("Skipping row [#{index}] with Parent Missing #{oid}", 'Skipped Row') unless po
+    batch_processing_event("Skipping row [#{index + 2}] with Parent Missing #{oid}", 'Skipped Row') unless po
     po
   end
 
