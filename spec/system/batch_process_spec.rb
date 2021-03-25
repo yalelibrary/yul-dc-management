@@ -171,10 +171,17 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.file_name).to eq "short_fixture_ids.csv"
         expect(BatchProcess.last.batch_action).to eq "export child oids"
         expect(BatchProcess.last.output_csv).to include "1126257"
-        expect(BatchProcess.last.output_csv).to include '2005512,"",Access denied for parent object'
+        expect(BatchProcess.last.output_csv).to include '2005512,0,Access denied for parent object'
         expect(BatchProcess.last.output_csv).not_to include "1030368" # child of 2005512
         expect(BatchProcess.last.batch_ingest_events.count).to eq 4
-        expect(BatchProcess.last.batch_ingest_events.map(&:reason)).to include "Skipping row [1] due to parent permissions: 2005512"
+        expect(BatchProcess.last.batch_ingest_events.map(&:reason)).to include "Skipping row [3] due to parent permissions: 2005512"
+
+        sorted_child_objects = BatchProcess.last.sorted_child_objects
+        expect(sorted_child_objects[0]).to include 2_005_512
+        expect(sorted_child_objects[1]).to include 14_716_192
+        expect(sorted_child_objects[2]).to include 16_414_889
+        expect(sorted_child_objects[3]).to include 16_854_285
+        expect(sorted_child_objects[4]).to be_a(ChildObject)
 
         click_on(BatchProcess.last.id.to_s)
         expect(page).to have_link("short_fixture_ids.csv", href: "/batch_processes/#{BatchProcess.last.id}/download")
