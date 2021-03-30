@@ -109,9 +109,3 @@ CSV.parse(user_csv, headers: false) do |row|
   end
   authorized_uids.push uid
 end
-(prior_uids - authorized_uids).each do |old_uid|
-  Rails.logger.info("Deactivating user with uid #{old_uid}")
-  User.where(uid: old_uid).each do |user|
-    user.deactivate!
-  end
-end
