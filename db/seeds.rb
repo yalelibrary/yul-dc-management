@@ -51,7 +51,7 @@ puts "MetadataSources verified"
       label: "Sterling Memorial Library",
       summary: "Sterling Memorial Library",
       homepage: "https://web.library.yale.edu/building/sterling-library"
-    }    
+    }
 ].each do |obj|
   admin_set = AdminSet.where(key: obj[:key]).first
   if admin_set.nil?
@@ -101,10 +101,10 @@ CSV.parse(user_csv, headers: false) do |row|
         last_name:"last_name"
     )
   else
-    @user.deactivated = false
-    @user.email = "#{@user.uid}@connect.yale.edu"
-    @user.first_name = "first_name"
-    @user.last_name = "last_name"
+    @user.deactivated ||= false
+    @user.email ||= "#{@user.uid}@connect.yale.edu"
+    @user.first_name ||= "first_name"
+    @user.last_name ||= "last_name"
     @user.save!
   end
   authorized_uids.push uid
@@ -114,9 +114,4 @@ end
   User.where(uid: old_uid).each do |user|
     user.deactivate!
   end
-end
-# make users sysadmins
-authorized_uids.each do |uid|
-  user = User.where(provider: "cas", uid: uid).first
-  user.add_role :sysadmin if user
 end
