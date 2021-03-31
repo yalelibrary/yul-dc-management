@@ -4,6 +4,9 @@ class SetupMetadataJob < ApplicationJob
   queue_as :metadata
 
   def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
+    # when creating parent objects, the following is failing with "undefined method `parent_object_id=' for #<SetupMetadataJob:0x0000563f388aad40>"
+    # self.parent_object_id = parent_object.id
+
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
     parent_object.generate_manifest = true
