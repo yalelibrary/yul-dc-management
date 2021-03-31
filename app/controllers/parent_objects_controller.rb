@@ -74,6 +74,14 @@ class ParentObjectsController < ApplicationController
   # DELETE /parent_objects/1
   # DELETE /parent_objects/1.json
   def destroy
+    @parent_object.delayed_jobs.each do |job|
+      jobs = Delayed::Job.all
+      jobs.each do |j|
+        next unless j.handler.include?(job)
+        j.destroy
+      end
+    end
+
     @parent_object.destroy
     respond_to do |format|
       format.html { redirect_to parent_objects_url, notice: 'Parent object was successfully destroyed.' }
