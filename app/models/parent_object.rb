@@ -23,7 +23,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_update :solr_index_job # we index from the fetch job on create
   after_destroy :solr_delete
   after_destroy :note_deletion
-  after_destroy :delayed_job_deletion
+  after_destroy :delayed_jobs_deletion
   paginates_per 50
 
   def self.visibilities

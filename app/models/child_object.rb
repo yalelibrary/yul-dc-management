@@ -12,7 +12,7 @@ class ChildObject < ApplicationRecord
   paginates_per 50
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
-  after_destroy :delayed_job_deletion
+  after_destroy :delayed_jobs_deletion
 
   # Does not get called because we use upsert to create children
   # before_create :check_for_size_and_file
