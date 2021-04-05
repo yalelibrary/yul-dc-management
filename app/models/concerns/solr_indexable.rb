@@ -171,8 +171,7 @@ module SolrIndexable
     end.to_a
   end
 
-  def generate_hash()
+  def generate_hash
     Digest::MD5.hexdigest oid.to_s
   end
-
 end
