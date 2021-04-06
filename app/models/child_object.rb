@@ -3,6 +3,7 @@
 class ChildObject < ApplicationRecord
   has_paper_trail
   include Statable
+  include Delayable
   belongs_to :parent_object, foreign_key: 'parent_object_oid', class_name: "ParentObject"
   has_many :batch_connections, as: :connectable
   has_many :batch_processes, through: :batch_connections
@@ -11,6 +12,7 @@ class ChildObject < ApplicationRecord
   paginates_per 50
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
+  after_destroy :delayed_jobs_deletion
 
   # Does not get called because we use upsert to create children
   # before_create :check_for_size_and_file
