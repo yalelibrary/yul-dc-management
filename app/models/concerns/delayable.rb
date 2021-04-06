@@ -8,7 +8,7 @@ module Delayable
   end
 
   def setup_metadata_jobs
-    Delayed::Job.where("handler LIKE ? AND handler LIKE ?", "job_class: SetupMetadataJob", "%#{self.class}/#{oid}%")
+    Delayed::Job.where("handler LIKE ? AND handler LIKE ?", "job_class: %SetupMetadataJob%", "%#{self.class}/#{oid}%")
   end
 
   def delayed_jobs_deletion
