@@ -109,3 +109,12 @@ CSV.parse(user_csv, headers: false) do |row|
   end
   authorized_uids.push uid
 end
+
+case Rails.env
+when 'development'
+  # make users sysadmins
+  authorized_uids.each do |uid|
+    user = User.where(provider: "cas", uid: uid).first
+    user.add_role :sysadmin if user
+  end
+end
