@@ -17,6 +17,10 @@ RSpec.describe Delayable, prep_metadata_sources: true, prep_admin_sets: true do
       expect(parent_object.setup_metadata_jobs.first).to eq setup_job
     end
 
-    it 'will destroy all jobs from a given parent object when the parent object is destroyed'
+    it 'will destroy all jobs from a given parent object when the parent object is destroyed' do
+      expect(parent_object.delayed_jobs.count).to eq 2
+      parent_object.destroy
+      expect(parent_object.delayed_jobs.count).to eq 0
+    end
   end
 end
