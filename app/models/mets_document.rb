@@ -13,9 +13,19 @@ class MetsDocument
     @mets.xpath("//mods:recordIdentifier[@source='gbv-ppn']").inner_text
   end
 
+
   def parent_uuid
     file_group = @mets.xpath("/mets:mets/mets:fileSec/mets:fileGrp")
     file_group.xpath("@ID").first.inner_text
+  end
+
+  def child_uuid
+    children_uuid = []
+    file_group = @mets.xpath("/mets:mets/mets:fileSec/mets:fileGrp/mets:file")
+    file_group.each do |uuid|
+      children_uuid << file_group.xpath("@ID").first.inner_text
+    end
+     children_uuid
   end
 
   def metadata_source_path
@@ -90,7 +100,7 @@ class MetsDocument
       parent_object_oid: oid
     }
   end
-
+  
   def admin_set_key
     @mets.xpath("//mods:note[@type='ownership' and @displayLabel='Yale Collection Owner']")&.inner_text
   end
