@@ -105,7 +105,7 @@ class IiifPresentation
 
   def add_canvases_to_sequence(sequence)
     canvases = sequence.canvases
-    child_objects = ChildObject.where(parent_object: parent_object).order(:order)
+    child_objects = parent_object.child_objects
     child_objects.map do |child|
       canvas = IIIF::Presentation::Canvas.new
       canvas['@id'] = "#{manifest_base_url}/oid/#{oid}/canvas/#{child.oid}"

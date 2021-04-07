@@ -10,7 +10,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include PdfRepresentable
   include Delayable
   has_many :dependent_objects
-  has_many :child_objects, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
+  has_many :child_objects, -> { order('"order" ASC, oid ASC') }, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
   has_many :batch_connections, as: :connectable
   has_many :batch_processes, through: :batch_connections
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
@@ -282,7 +282,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def representative_child
     @representative_child = (child_objects.find_by(oid: representative_child_oid) if representative_child_oid)
-    @representative_child ||= child_objects.where(order: 1)&.first
+    @representative_child ||= child_objects&.first
   end
 
   def representative_thumbnail_url
