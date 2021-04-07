@@ -1,0 +1,2 @@
+class PreservicaIngest < ApplicationRecord
+end

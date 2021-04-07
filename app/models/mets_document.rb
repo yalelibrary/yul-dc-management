@@ -83,11 +83,13 @@ class MetsDocument
   end
 
   def physical_info(physical_div)
+    #byebug
     {
       oid: physical_div.xpath('@CONTENTIDS').inner_text, # oid for child object
       label: normalize_label(physical_div),
       order: physical_div.xpath("@ORDER").inner_text,
-      parent_object_oid: oid
+      parent_object_oid: oid,
+      child_uuid: physical_div.xpath("mets:fptr/@FILEID").first.text # uuid for child object
     }
   end
 
