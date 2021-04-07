@@ -148,6 +148,34 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       expect(third_to_last_canvas["label"]).to eq "swatch 2"
     end
 
+    it "has canvases with ids and labels based on order property of child_objects" do
+      co = ChildObject.find(16_188_699)
+      co.update(order: 2)
+      co = ChildObject.find(16_188_700)
+      co.update(order: 1)
+      expect(first_canvas["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188700"
+      expect(third_to_last_canvas["label"]).to eq "Swatch 1"
+      expect(first_canvas["label"]).to eq "swatch 2"
+      expect(third_to_last_canvas["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188699"
+      expect(third_to_last_canvas["metadata"]).not_to be_nil
+      expect(third_to_last_canvas["metadata"]).to include("label" => "Image OID", "value" => ["16188699"])
+      expect(third_to_last_canvas["metadata"]).to include("label" => "Image Label", "value" => ["Swatch 1"])
+    end
+
+    it "has canvases with ids and labels based on order property of child_objects, using oid as tie breaker" do
+      co = ChildObject.find(16_188_699)
+      co.update(order: 1)
+      co = ChildObject.find(16_188_700)
+      co.update(order: 1)
+      expect(first_canvas["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188699"
+      expect(first_canvas["metadata"]).not_to be_nil
+      expect(first_canvas["metadata"]).to include("label" => "Image OID", "value" => ["16188699"])
+      expect(first_canvas["metadata"]).to include("label" => "Image Label", "value" => ["Swatch 1"])
+      expect(third_to_last_canvas["@id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188700"
+      expect(first_canvas["label"]).to eq "Swatch 1"
+      expect(third_to_last_canvas["label"]).to eq "swatch 2"
+    end
+
     it "has a canvas with width and height" do
       expect(first_canvas["height"]).to eq 4056
       expect(first_canvas["width"]).to eq 2591

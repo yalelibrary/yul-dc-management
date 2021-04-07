@@ -71,6 +71,39 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.create_child_records
       end.to change { ChildObject.count }.from(0).to(1366)
     end
+
+    it "orders child_oids based on order field" do
+      parent_object.create_child_records
+      oid1 = parent_object.child_oids.first
+      oid2 = parent_object.child_oids.second
+      parent_object.child_objects.first.update(order: 2)
+      parent_object.child_objects.second.update(order: 1)
+      parent_object.reload
+      expect(parent_object.child_oids.first).to eq(oid2)
+      expect(parent_object.child_oids.second).to eq(oid1)
+    end
+
+    it "orders child_labels based on order field" do
+      parent_object.create_child_records
+      label1 = parent_object.child_labels.first
+      label2 = parent_object.child_labels.second
+      parent_object.child_objects.first.update(order: 2)
+      parent_object.child_objects.second.update(order: 1)
+      parent_object.reload
+      expect(parent_object.child_labels.first).to eq(label2)
+      expect(parent_object.child_labels.second).to eq(label1)
+    end
+
+    it "orders child_objects based on order field" do
+      parent_object.create_child_records
+      child1 = parent_object.child_objects.first
+      child2 = parent_object.child_objects.second
+      parent_object.child_objects.first.update(order: 2)
+      parent_object.child_objects.second.update(order: 1)
+      parent_object.reload
+      expect(parent_object.child_objects.first).to eq(child2)
+      expect(parent_object.child_objects.second).to eq(child1)
+    end
   end
 
   context 'with a random notification' do
