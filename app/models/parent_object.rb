@@ -84,6 +84,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def create_child_records
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
+      # byebug
+      upsert_preservica_ingest_child_objects(array_preservica_hashes_from_mets)
+
     else
       return unless ladybird_json
       return self.child_object_count = 0 if ladybird_json["children"].empty?
@@ -98,9 +101,23 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     ChildObject.insert_all(child_objects_hash)
   end
 
+  def upsert_preservica_ingest_child_objects(preservica_ingest_hash)
+    PreservicaIngest.insert_all(preservica_ingest_hash)
+  end
+
   def array_of_child_hashes_from_mets
     return unless current_batch_process&.mets_doc
-    current_batch_process.mets_doc.combined.map { |child_hash| child_hash.select { |k| k != :thumbnail_flag } }
+    current_batch_process.mets_doc.combined.map { |child_hash| child_hash.select { |k| k != :thumbnail_flag && k != :child_uuid } }
+  end
+
+  def array_preservica_hashes_from_mets
+    return unless current_batch_process&.mets_doc
+    current_batch_process.mets_doc.combined.map do |child_hash|
+      { parent_oid: oid, preservica_id: current_batch_process.mets_doc.parent_uuid,
+        batch_process_id: current_batch_process.id,
+        ingest_time: Time.current, child_oid: child_hash[:oid],
+        preservica_child_id: child_hash[:child_uuid] }
+    end
   end
 
   def array_of_child_hashes

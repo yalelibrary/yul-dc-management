@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :preservica_ingest do
     ingest_time { "2021-04-07 15:33:30" }
