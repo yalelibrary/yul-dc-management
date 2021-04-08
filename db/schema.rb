@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_05_192852) do
+ActiveRecord::Schema.define(version: 2021_04_07_204716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,6 +166,17 @@ ActiveRecord::Schema.define(version: 2021_03_05_192852) do
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
+  end
+
+  create_table "preservica_ingests", force: :cascade do |t|
+    t.datetime "ingest_time"
+    t.bigint "parent_oid"
+    t.bigint "child_oid"
+    t.string "preservica_id"
+    t.string "preservica_child_id"
+    t.bigint "batch_process_id"
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
   end
 
   create_table "roles", force: :cascade do |t|

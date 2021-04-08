@@ -71,6 +71,14 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po.admin_set.key).to eq "brbl"
     end
 
+    it "creates a preservica ingest with parent uuid from the METs document" do
+      batch_process.file = aspace_xml_upload
+      batch_process.save!
+      pj = PreservicaIngest.find_by_parent_oid(30_000_557)
+      expect(pj.preservica_id).to eq "c91ce4e1-10d2-4e33-8df3-83f081ff0125"
+      expect(pj.batch_process_id).to eq batch_process.id
+    end
+
     context "when parent object already exists" do
       let(:parent_object) { FactoryBot.create(:parent_object, oid: 30_000_557) }
 

@@ -169,4 +169,10 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
     expect(mets_doc.combined.first[:label]).to eq nil
     expect(mets_doc.combined.first[:order]).to eq "1"
   end
+
+  it "can return the combined data needed for the child uuid" do
+    mets_doc = described_class.new(valid_goobi_xml)
+    expect(mets_doc.combined.first[:child_uuid]).to eq "444d3360-bf78-4e35-9850-44ef7f832105"
+    expect(mets_doc.combined.second[:child_uuid]).to eq "1234d3360-bf78-4e35-9850-44ef7f832100"
+  end
 end
