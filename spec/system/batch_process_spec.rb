@@ -38,7 +38,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     end
     it "can still successfully see the batch_process page" do
       visit batch_processes_path
-      click_on(BatchProcess.last.id.to_s)
+      click_on(BatchProcess.last.id.to_s, match: :first)
       expect(page.body).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
     end
     context "deleting a parent object" do
@@ -312,6 +312,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     it "create preservica ingest for the parent and children objects" do
       # rubocop:disable RSpec/AnyInstance
       allow_any_instance_of(SetupMetadataJob).to receive(:check_mets_images).and_return(true)
+      allow_any_instance_of(ParentObject).to receive(:default_fetch).and_return(true)
       # rubocop:enable RSpec/AnyInstance check_mets_images
       expect(BatchProcess.count).to eq 0
       page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
