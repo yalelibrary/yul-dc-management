@@ -73,7 +73,6 @@ module SolrIndexable
       genre_ssim: json_to_index["genre"],
       genre_tesim: json_to_index["genre"],
       geoSubject_ssim: json_to_index["geoSubject"],
-      hashed_id_ssi: generate_hash,
       identifierMfhd_ssim: json_to_index["identifierMfhd"],
       imageCount_isi: child_object_count,
       indexedBy_tsim: json_to_index["indexedBy"],
@@ -169,9 +168,5 @@ module SolrIndexable
         set << date.to_i
       end
     end.to_a
-  end
-
-  def generate_hash
-    Digest::MD5.hexdigest oid.to_s
   end
 end
