@@ -271,11 +271,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     end
   end
   context "when uploading an xml" do
-    around do |example|
-      perform_enqueued_jobs do
-        example.run
-      end
-    end
     it "uploads and increases xml count and gives a success message" do
       expect(BatchProcess.count).to eq 0
       page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
@@ -283,18 +278,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       expect(BatchProcess.count).to eq 1
       expect(page).to have_content("Your job is queued for processing in the background")
       expect(BatchProcess.last.file_name).to eq "111860A_8394689_mets.xml"
-    end
-
-    it "create preservica ingest for the parent and children objects" do
-      # rubocop:disable RSpec/AnyInstance
-      allow_any_instance_of(SetupMetadataJob).to receive(:check_mets_images).and_return(true)
-      # rubocop:enable RSpec/AnyInstance check_mets_images
-      expect(BatchProcess.count).to eq 0
-      page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
-      click_button("Submit")
-      pj = PreservicaIngest.find_by_child_oid(30_000_319)
-      expect(pj.preservica_child_id).to eq "1234d3360-bf78-4e35-9850-44ef7f832100"
-      expect(pj.preservica_id).to eq "b9afab50-9f22-4505-ada6-807dd7d05733"
     end
 
     context "deleting a parent object" do
@@ -312,6 +295,33 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
     end
   end
+
+  context "when uploading an xml with jobs running" do
+    let(:logger_mock) { instance_double("Rails.logger").as_null_object }
+
+    before do
+      logger_mock
+    end
+
+    around do |example|
+      perform_enqueued_jobs do
+        example.run
+      end
+    end
+
+    it "create preservica ingest for the parent and children objects" do
+      # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(SetupMetadataJob).to receive(:check_mets_images).and_return(true)
+      # rubocop:enable RSpec/AnyInstance check_mets_images
+      expect(BatchProcess.count).to eq 0
+      page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
+      click_button("Submit")
+      pj = PreservicaIngest.find_by_child_oid(30_000_319)
+      expect(pj.preservica_child_id).to eq "1234d3360-bf78-4e35-9850-44ef7f832100"
+      expect(pj.preservica_id).to eq "b9afab50-9f22-4505-ada6-807dd7d05733"
+    end
+  end
+
   it "triggers directory scan" do
     visit batch_processes_path
     expect(MetsDirectoryScanJob).to receive(:perform_later).and_return(nil).once

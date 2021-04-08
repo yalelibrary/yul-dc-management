@@ -15,7 +15,7 @@ class MetsDocument
 
   def parent_uuid
     file_group = @mets.xpath("/mets:mets/mets:fileSec/mets:fileGrp")
-    file_group.xpath("@ID").first.inner_text
+    file_group.xpath("@ID").first&.inner_text
   end
 
   def metadata_source_path
