@@ -56,6 +56,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     from_ladybird_for_the_first_time? || from_mets_for_the_first_time?
   end
 
+  def self.cannot_reindex
+    return true if Delayable.solr_reindex_jobs.count > 0
+  end
+
   # Returns true if last_ladybird_update has changed from nil to some value, indicating initial ladybird fetch
   def from_ladybird_for_the_first_time?
     return true if changes["last_ladybird_update"] &&
