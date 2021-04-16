@@ -11,6 +11,12 @@ module Delayable
     Delayed::Job.where("handler LIKE ? AND handler LIKE ?", "job_class: %SetupMetadataJob%", "%#{self.class}/#{oid}%")
   end
 
+  def solr_reindex_jobs
+    Delayed::Job.where("handler LIKE ?", "%job_class: SolrReindexAllJob%")
+  end
+
+  module_function :solr_reindex_jobs
+
   def delayed_jobs_deletion
     delayed_jobs.destroy_all
   end

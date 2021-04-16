@@ -83,10 +83,14 @@ class ParentObjectsController < ApplicationController
 
   def reindex
     authorize!(:reindex_all, ParentObject)
-    ParentObject.solr_index
-    respond_to do |format|
-      format.html { redirect_to parent_objects_url, notice: 'Parent objects have been reindexed.' }
-      format.json { head :no_content }
+    if ParentObject.cannot_reindex
+      redirect_back(fallback_location: root_path, notice: 'There is already a Reindex job in progress, please wait for that job to complete before submitting a new reindex request')
+    else
+      ParentObject.solr_index
+      respond_to do |format|
+        format.html { redirect_to parent_objects_url, notice: 'Parent objects have been reindexed.' }
+        format.json { head :no_content }
+      end
     end
   end
 
