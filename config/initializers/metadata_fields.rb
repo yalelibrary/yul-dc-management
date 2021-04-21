@@ -207,6 +207,12 @@ METADATA_FIELDS = {
     ],
     digital_only: true
   },
+  viewingHint: {
+    label: 'Viewing Hint',
+    solr_fields: [
+      'viewing_hint_ssi'
+    ]
+  },
   rights: {
     label: 'Rights',
     solr_fields: [
