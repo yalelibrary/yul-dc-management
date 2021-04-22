@@ -222,6 +222,46 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     end
   end
 
+  describe 'iiif presentation representative children', :vpn_true do
+    let(:oid_rep) { 2_055_095 }
+    let(:parent_object_rep) { FactoryBot.create(:parent_object, oid: oid_rep, viewing_direction: "left-to-right", display_layout: "individuals", bib: "12834515") }
+
+    before do
+      stub_metadata_cloud("20055095")
+      stub_ptiffs
+      stub_pdfs
+      parent_object_rep
+      # The parent object gets its metadata populated via a background job, and we can't assume that has run,
+      # so stub the part of the metadata we need for the iiif_presentation
+      allow(parent_object_rep).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{oid}.json"))))
+    end
+
+    it 'sets thumbnail to the representative child' do
+      iiif_presentation_rep = described_class.new(parent_object_rep)
+
+      expect(iiif_presentation_rep.manifest["thumbnail"][0]["@id"]).to include parent_object_rep.representative_child.oid.to_s
+    end
+
+    context 'representative child is one of the first 10 children' do
+      it 'sets startCanvas to representative child' do
+        parent_object_rep_edited = parent_object_rep
+        parent_object_rep_edited.representative_child_oid = parent_object_rep.child_objects[8].oid
+
+        iiif_presentation_rep = described_class.new(parent_object_rep_edited)
+        expect(iiif_presentation_rep.manifest["startCanvas"]).to include parent_object_rep_edited.representative_child_oid.to_s
+      end
+    end
+    context 'representative child is not one of the first 10 children' do
+      it 'uses the first child as the startCanvas' do
+        parent_object_rep_edited = parent_object_rep
+        parent_object_rep_edited.representative_child_oid = parent_object_rep.child_objects[20].oid
+
+        iiif_presentation_rep = described_class.new(parent_object_rep_edited)
+        expect(iiif_presentation_rep.manifest["startCanvas"]).to be_nil
+      end
+    end
+  end
+
   describe 'iiif presentation validations' do
     context 'manifests' do
       manifest = IIIF::Presentation::Manifest.new

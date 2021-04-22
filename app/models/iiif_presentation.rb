@@ -100,13 +100,15 @@ class IiifPresentation
       profile: 'http://iiif.io/api/image/2/level2.json'
     )
     image["resource"] = image_resource
+
+    @manifest['thumbnail'] = [image] if child_as_thumbnail?(child[:oid])
     images << image
   end
 
   def add_canvases_to_sequence(sequence)
     canvases = sequence.canvases
     child_objects = parent_object.child_objects
-    child_objects.map do |child|
+    child_objects.map do |child, index|
       canvas = IIIF::Presentation::Canvas.new
       canvas['@id'] = "#{manifest_base_url}/oid/#{oid}/canvas/#{child.oid}"
       canvas['label'] = child.label || ''
@@ -115,6 +117,8 @@ class IiifPresentation
       canvas['width'] = canvas.images.first["resource"]["width"]
       canvas['viewingHint'] = child.viewing_hint unless child.viewing_hint == ""
       add_metadata_to_canvas(canvas, child)
+
+      @manifest["startCanvas"] = canvas['@id'] if child_as_start_canvas? child.oid, index
       canvases << canvas
     end
   end
@@ -126,6 +130,18 @@ class IiifPresentation
     metadata_values <<  metadata_pair('Image Caption', child.caption) if child.caption
     canvas['metadata'] = metadata_values
     canvas
+  end
+
+  def child_as_start_canvas?(child, index)
+    return true if index.eql? 0 # set the first child as start canvas
+    return false unless child_as_thumbnail? child
+    child_oids = @parent_object.child_objects.map { |child_cur| child_cur[:oid] }
+
+    child_oids.index(child) < 10 # only set if the rep. child is one of the first 10
+  end
+
+  def child_as_thumbnail?(child)
+    @parent_object.representative_child.oid.eql? child # checks if child is the rep
   end
 
   def seed
