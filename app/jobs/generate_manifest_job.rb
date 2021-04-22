@@ -10,6 +10,7 @@ class GenerateManifestJob < ApplicationJob
   def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
+    parent_object.manifest_generated = true # do not run manifest generation if saving during manifest generation
     generate_manifest(parent_object)
     index_to_solr(parent_object)
     GeneratePdfJob.perform_later(parent_object, current_batch_process, current_batch_connection)
