@@ -18,11 +18,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   attr_accessor :metadata_update
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
-  attr_accessor :manifest_generated
   self.primary_key = 'oid'
   after_save :setup_metadata_job
-  # after_update :solr_index_job # This is handled during the generate manifest job
-  after_update :generate_manifest_job, unless: :manifest_generated
+  after_update :solr_index_job # we index from the fetch job on create
   after_destroy :solr_delete
   after_destroy :note_deletion
   after_destroy :delayed_jobs_deletion
@@ -167,10 +165,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       SetupMetadataJob.perform_later(self, current_batch_process, current_batch_connection)
       processing_event("Processing has been queued", "processing-queued")
     end
-  end
-
-  def generate_manifest_job(current_batch_connection = self.current_batch_connection)
-    GenerateManifestJob.perform_later(self, current_batch_process, current_batch_connection)
   end
 
   def authoritative_json
