@@ -101,7 +101,7 @@ class IiifPresentation
     )
     image["resource"] = image_resource
 
-    @manifest['thumbnail'] = [image] if child_as_thumbnail?(child[:oid])
+    @manifest['thumbnail'] = [image_resource] if child_is_thumbnail?(child[:oid])
     images << image
   end
 
@@ -118,7 +118,7 @@ class IiifPresentation
       canvas['viewingHint'] = child.viewing_hint unless child.viewing_hint == ""
       add_metadata_to_canvas(canvas, child)
 
-      @manifest["startCanvas"] = canvas['@id'] if child_as_start_canvas? child.oid, index
+      @manifest["startCanvas"] = canvas['@id'] if child_is_start_canvas? child.oid, index
       canvases << canvas
     end
   end
@@ -132,15 +132,15 @@ class IiifPresentation
     canvas
   end
 
-  def child_as_start_canvas?(child, index)
+  def child_is_start_canvas?(child, index)
     return true if index.eql? 0 # set the first child as start canvas
-    return false unless child_as_thumbnail? child
+    return false unless child_is_thumbnail? child
     child_oids = @parent_object.child_objects.map { |child_cur| child_cur[:oid] }
 
     child_oids.index(child) < 10 # only set if the rep. child is one of the first 10
   end
 
-  def child_as_thumbnail?(child)
+  def child_is_thumbnail?(child)
     @parent_object.representative_child.oid.eql? child # checks if child is the rep
   end
 
