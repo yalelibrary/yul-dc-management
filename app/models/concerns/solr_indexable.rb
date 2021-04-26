@@ -118,6 +118,7 @@ module SolrIndexable
       title_ssim: json_to_index["title"],
       uri_ssim: json_to_index["uri"],
       url_suppl_ssim: json_to_index["relatedUrl"],
+      viewing_hint_ssi: display_layout,
       visibility_ssi: visibility,
       # fields below this point will be deprecated in a future release
       abstract_ssim: json_to_index["abstract"], # replaced by abstract_tesim
