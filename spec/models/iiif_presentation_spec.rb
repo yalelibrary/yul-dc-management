@@ -222,7 +222,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     end
   end
 
-  describe 'iiif presentation representative children', :vpn_true do
+  describe 'iiif presentation representative children', :vpn_only do
     let(:oid_rep) { 2_055_095 }
     let(:parent_object_rep) { FactoryBot.create(:parent_object, oid: oid_rep, viewing_direction: "left-to-right", display_layout: "individuals", bib: "12834515") }
 
