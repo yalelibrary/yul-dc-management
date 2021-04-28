@@ -3,16 +3,22 @@
 class PreservicaIngestDatatable < AjaxDatatablesRails::ActiveRecord
   extend Forwardable
 
-  def_delegators :@view, :link_to, :show_parent_preservica_ingest_path, :parent_object_path
+  def_delegators :@view
+
+  def initialize(params, opts = {})
+    @view = opts[:view_context]
+    @current_ability = opts[:current_ability]
+    super
+  end
 
   def view_columns
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      parent_oid: { source: "PreservicaIngest.parent_oid", orderable: true },
-      child_oid: { source: "PreservicaIngest.child_oid", orderable: true },
-      preservica_id: { source: "PreservicaIngest.preservica_id", orderable: true },
-      batch_process_id: { source: "PreservicaIngest.batch_process_id", orderable: true },
+      parent_oid: { source: "PreservicaIngest.parent_oid", searchable: true, orderable: true },
+      child_oid: { source: "PreservicaIngest.child_oid", searchable: true, orderable: true },
+      preservica_id: { source: "PreservicaIngest.preservica_id", searchable: true, orderable: false },
+      batch_process_id: { source: "PreservicaIngest.batch_process_id", searchable: true, orderable: true },
       timestamp: { source: "PreservicaIngest.ingest_time", orderable: true }
     }
   end
@@ -30,6 +36,6 @@ class PreservicaIngestDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    PreservicaIngest.all
+    PreservicaIngest.accessible_by(@current_ability, :read)
   end
 end
