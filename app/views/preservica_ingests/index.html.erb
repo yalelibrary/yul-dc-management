@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<p id='notice'><%= notice %></p>
 <div class='row'>
   <div class='col'>
     <h1>Preservica Ingests</h1>
@@ -6,10 +6,14 @@
 </div>
 <div class='row'>
   <div class='col overflow-auto'>
-    <table id="preservica-ingests-datatable" class="is-datatable table table-responsive table-bordered table-striped" data-source="<%= preservica_ingests_path(format: :json) %>">
-      <thead  class="thead-dark">
+    <table id='preservica-ingests-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= preservica_ingests_path(format: :json) %>'>
+      <thead  class='thead-dark'>
         <tr>
-          <th scope="col">Parent Oid</th>
+          <th scope='col'>Parent OID</th>
+          <th scope='col'>Child OID</th>
+          <th scope='col'>Preservica ID</th>
+          <th scope='col'>Batch Process ID</th>
+          <th scope='col'>Timestamp</th>
         </tr>
       </thead>
       <tbody>
@@ -18,6 +22,6 @@
   </div>
 </div>
 
-<div id="preservica-ingests-data" class='d-none datatable-data'>
+<div id='preservica-ingests-data' class='d-none datatable-data'>
   <%= PreservicaIngestDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], searchable: value[:searchable], options: value[:options]} }.to_json %>
 </div>
