@@ -79,6 +79,7 @@ module SolrIndexable
       indexedBy_tsim: json_to_index["indexedBy"],
       label_tesim: child_labels,
       language_ssim: json_to_index["language"],
+      languageCode_ssim: json_to_index["languageCode"],
       localRecordNumber_ssim: json_to_index["localRecordNumber"],
       material_tesim: json_to_index["material"],
       number_of_pages_ss: json_to_index["numberOfPages"],
