@@ -17,7 +17,8 @@ class PreservicaIngestDatatable < AjaxDatatablesRails::ActiveRecord
     @view_columns ||= {
       parent_oid: { source: "PreservicaIngest.parent_oid", searchable: true, orderable: true },
       child_oid: { source: "PreservicaIngest.child_oid", searchable: true, orderable: true },
-      preservica_id: { source: "PreservicaIngest.preservica_id", searchable: true, orderable: false },
+      parent_preservica_id: { source: "PreservicaIngest.preservica_id", searchable: true, orderable: false },
+      child_preservica_id: { source: "PreservicaIngest.preservica_id", searchable: true, orderable: false },
       batch_process_id: { source: "PreservicaIngest.batch_process_id", searchable: true, orderable: true },
       timestamp: { source: "PreservicaIngest.ingest_time", orderable: true }
     }
@@ -28,7 +29,8 @@ class PreservicaIngestDatatable < AjaxDatatablesRails::ActiveRecord
       {
         parent_oid: preservica_ingest.parent_oid,
         child_oid: preservica_ingest.child_oid,
-        preservica_id: preservica_ingest.preservica_id,
+        parent_preservica_id: preservica_ingest.preservica_id,
+        child_preservica_id: preservica_ingest.preservica_child_id,
         batch_process_id: preservica_ingest.batch_process_id,
         timestamp: preservica_ingest.ingest_time
       }

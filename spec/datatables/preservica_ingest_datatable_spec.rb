@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe PreservicaIngestDatatable, type: :datatable, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
-  columns = ['parent_oid', 'child_oid', 'preservica_id', 'batch_process_id', 'timestamp']
+  columns = ['parent_oid', 'child_oid', 'parent_preservica_id', 'parent_preservica_id', 'batch_process_id', 'timestamp']
 
   it 'can handle an empty model set' do
     output = PreservicaIngestDatatable.new(datatable_sample_params(columns), current_ability: Ability.new(user)).data
@@ -33,7 +33,8 @@ RSpec.describe PreservicaIngestDatatable, type: :datatable, prep_metadata_source
         batch_process_id: batch_process_xml.id,
         child_oid: nil,
         parent_oid: 30_000_317,
-        preservica_id: 'b9afab50-9f22-4505-ada6-807dd7d05733'
+        parent_preservica_id: 'b9afab50-9f22-4505-ada6-807dd7d05733',
+        child_preservica_id: nil
       )
       expect(output[0][:timestamp]).to be_within(3.seconds).of(batch_process_xml.created_at)
     end
