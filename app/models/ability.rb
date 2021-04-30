@@ -11,6 +11,7 @@ class Ability
       can :crud, AdminSet
       can :read, ParentObject
       can :read, ChildObject
+      can :read, PreservicaIngest
       can :reindex_all, ParentObject
       can :update_metadata, ParentObject
       can :trigger_mets_scan, ParentObject
