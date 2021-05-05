@@ -337,4 +337,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def batch_connections_for(batch_process)
     batch_connections.where(batch_process: batch_process)
   end
+
+  def full_text?
+    return false unless child_objects.any?
+    # Iterate over the child objects and check the bucket to see if any children have a .txt file (what does this structure look like?)
+    child_objects.map(&:full_text_exists?)
+  end
 end

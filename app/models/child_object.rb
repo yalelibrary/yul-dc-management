@@ -43,6 +43,10 @@ class ChildObject < ApplicationRecord
     S3Service.remote_metadata(remote_ptiff_path)
   end
 
+  def remote_ocr
+    S3Service.full_text_exists?(remote_oc_path)
+  end
+
   def access_master_path
     return @access_master_path if @access_master_path
     image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
@@ -93,6 +97,15 @@ class ChildObject < ApplicationRecord
     return @remote_ptiff_path if @remote_ptiff_path
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
     @remote_ptiff_path = File.join("ptiffs", pairtree_path, File.basename(access_master_path))
+  end
+
+  def remote_ocr_path
+    # What does this path look like? Currently there is only one directory - fulltext/
+    # Once we have the path we can use use this path in the remote_ocr method to check if the object that is returned has a content_type of txt
+
+    # return @remote_ptiff_path if @remote_ptiff_path
+    # pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    # @remote_ptiff_path = File.join("ptiffs", pairtree_path, File.basename(access_master_path))
   end
 
   def pyramidal_tiff

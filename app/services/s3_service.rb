@@ -56,4 +56,12 @@ class S3Service
     object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
     object.exists?
   end
+
+  # We need to figure out the default bucket. This is just one of the ocr buckets but we should use an ENV variable
+  # The directories are set up on S3 but they are empty (yul-dc-ocr-test etc.)
+  # Update bucket from "yul-dc-ocr-test" when we have ENV variables set up
+  def self.full_text_exists?(remote_path, bucket = "yul-dc-ocr-test")
+    object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
+    return true if object.content_type == "txt"
+  end
 end
