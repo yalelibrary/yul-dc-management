@@ -44,7 +44,7 @@ class ChildObject < ApplicationRecord
   end
 
   def remote_ocr
-    S3Service.full_text_exists?(remote_oc_path)
+    S3Service.full_text_exists?(remote_ocr_path)
   end
 
   def access_master_path
