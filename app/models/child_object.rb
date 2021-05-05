@@ -100,12 +100,9 @@ class ChildObject < ApplicationRecord
   end
 
   def remote_ocr_path
-    # What does this path look like? Currently there is only one directory - fulltext/
-    # Once we have the path we can use use this path in the remote_ocr method to check if the object that is returned has a content_type of txt
-
-    # return @remote_ptiff_path if @remote_ptiff_path
-    # pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
-    # @remote_ptiff_path = File.join("ptiffs", pairtree_path, File.basename(access_master_path))
+    return @remote_ocr_path if @remote_ocr_path
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    @remote_ocr_path = File.join('fulltext', pairtree_path, "#{oid}.txt")
   end
 
   def pyramidal_tiff
