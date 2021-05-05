@@ -63,5 +63,6 @@ class S3Service
     bucket = 'yul-dc-ocr-test'
     object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
     return true if object.exists? && object.content_type == 'text/plain'
+    false
   end
 end
