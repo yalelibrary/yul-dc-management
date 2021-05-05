@@ -296,11 +296,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
     end
 
-    context "a parent object" do
+    context "a parent object with children" do
       let(:parent_object) { described_class.create(oid: "2004628", admin_set: FactoryBot.create(:admin_set)) }
       before do
         stub_metadata_cloud("2004628")
-        stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/fulltext/89/45/67/89/456789.txt")
+        stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/fulltext/03/10/42/00/1042003.txt")
         .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
       end
 
