@@ -12,6 +12,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
     ENV["ACCESS_MASTER_MOUNT"] = "s3"
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
+    ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     example.run
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
     ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
@@ -191,6 +192,22 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       batch_process.save!
       batch_connection = child_object.batch_connections
       expect(child_object.batch_connections_for(batch_process)).to eq(batch_connection)
+    end
+
+    describe "full text availability" do
+      before do
+        stub_metadata_cloud("2004628")
+        stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/fulltext/89/45/67/89/456789.txt")
+        .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
+      end
+
+      it "can return a the remote ocr path" do
+        expect(child_object.remote_ocr_path).to eq "fulltext/89/45/67/89/456789.txt"
+      end
+
+      it "can determine if a child object has a txt file" do
+        expect(child_object.remote_ocr).to eq(true)
+      end
     end
 
     describe "with a cached width and height on s3", prep_admin_sets: true do

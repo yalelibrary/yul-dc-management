@@ -27,6 +27,8 @@ RSpec.describe S3Service, type: :has_vcr do
       .to_return(status: 200, headers: { 'X-Amz-Meta-Width' => '100',
                                          'X-Amz-Meta-Height' => '200',
                                          'Content-Type' => 'image/tiff' })
+    stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/fulltext/43/10/14/54/1014543.txt")
+      .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
     stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
       .to_return(status: 200, body: "")
     stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/fake.tif")
@@ -38,6 +40,7 @@ RSpec.describe S3Service, type: :has_vcr do
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
     ENV['SAMPLE_BUCKET'] = "yul-test-samples"
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
+    ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     example.run
     ENV['SAMPLE_BUCKET'] = original_metadata_sample_bucket
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
@@ -96,5 +99,11 @@ RSpec.describe S3Service, type: :has_vcr do
   it "can retrieve the metadata from S3" do
     remote_path = "tests/fake_ptiff.tif"
     expect(described_class.remote_metadata(remote_path)).to include(width: "100", height: "200")
+  end
+
+  it "can tell if full text exists on an object" do
+    child_object_oid = "1014543"
+    remote_path = "fulltext/43/10/14/54/#{child_object_oid}.txt"
+    expect(described_class.full_text_exists?(remote_path)).to eq(true)
   end
 end

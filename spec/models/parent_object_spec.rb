@@ -11,6 +11,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
   around do |example|
     original_metadata_sample_bucket = ENV['SAMPLE_BUCKET']
+    ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     ENV['SAMPLE_BUCKET'] = "yul-dc-development-samples"
     example.run
     ENV['SAMPLE_BUCKET'] = original_metadata_sample_bucket
@@ -292,6 +293,19 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.save!
         expect(parent_object.needs_a_manifest?).to be_truthy
         expect(parent_object.needs_a_manifest?).to be_falsey
+      end
+    end
+
+    context "a parent object" do
+      let(:parent_object) { described_class.create(oid: "2004628", admin_set: FactoryBot.create(:admin_set)) }
+      before do
+        stub_metadata_cloud("2004628")
+        stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/fulltext/89/45/67/89/456789.txt")
+        .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
+      end
+
+      it "can determine if any of it's children have fulltext availability" do
+        expect(parent_object.full_text?).to include(true)
       end
     end
 
