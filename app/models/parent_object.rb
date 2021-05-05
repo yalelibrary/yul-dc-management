@@ -341,6 +341,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def full_text?
     # Iterate over the child objects and check the bucket to see if any children have a .txt file
     return false unless child_objects.any?
-    child_objects.map(&:remote_ocr)
+    child_objects.map(&:remote_ocr).include?(true)
   end
 end

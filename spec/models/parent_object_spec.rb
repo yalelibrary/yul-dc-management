@@ -305,7 +305,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       it "can determine if any of it's children have fulltext availability" do
-        expect(parent_object.full_text?).to include(true)
+        expect(parent_object.full_text?).to eq(true)
       end
     end
 
