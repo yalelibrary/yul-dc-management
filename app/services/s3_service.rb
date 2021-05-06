@@ -57,12 +57,13 @@ class S3Service
     object.exists?
   end
 
-  # The directories are set up on S3 but they are empty (yul-dc-ocr-test etc.)
   def self.full_text_exists?(remote_path, bucket = ENV['OCR_DOWNLOAD_BUCKET'])
-    # TODO(alishaevn): remove the line below when we are able to access the env variable
-    bucket = 'yul-dc-ocr-test'
     object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
-    return true if object.exists? && object.content_type == 'text/plain'
+    begin
+      return true if object.exists? && object.content_type == 'text/plain'
+    rescue Aws::S3::Errors::Forbidden
+      false
+    end
     false
   end
 end
