@@ -37,5 +37,11 @@ module StubRequestHelper
   def stub_pdfs
     allow_any_instance_of(PdfRepresentable).to receive(:generate_pdf).and_return(true)
   end
+
+  def stub_full_text(child_object)
+    stub_request(:get, "https://#{ENV['OCR_DOWNLOAD_BUCKET']}.s3.amazonaws.com/#{child_object.remote_ocr_path}")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "full_text", "#{child_object.oid}.txt")))
+  end
+
   # rubocop:enable RSpec/AnyInstance
 end

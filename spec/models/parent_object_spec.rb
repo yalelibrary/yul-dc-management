@@ -55,6 +55,42 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
     end
     # rubocop:enable RSpec/AnyInstance
+    context "with full_text? true" do
+      around do |example|
+        original_ocr_path = ENV['OCR_DOWNLOAD_BUCKET']
+        ENV['OCR_DOWNLOAD_BUCKET'] = 'yul-dc-ocr-test'
+        perform_enqueued_jobs do
+          example.run
+        end
+        ENV['OCR_DOWNLOAD_BUCKET'] = original_ocr_path
+      end
+
+      before do
+        allow(parent_of_four).to receive(:full_text?).and_return(true)
+        allow(parent_of_four).to receive(:manifest_completed?).and_return(true).exactly(4).times
+        parent_of_four.default_fetch
+      end
+
+      context "with full text not found in s3" do
+        it "raises exception" do
+          expect { parent_of_four.to_solr }.to raise_error("Missing full text for child object: 16057781, for parent object: 16057779")
+        end
+      end
+
+      context "with full text in s3" do
+        before do
+          parent_of_four.child_objects.each do |child_object|
+            stub_full_text(child_object)
+          end
+        end
+
+        it "indexes the full text" do
+          solr_document = parent_of_four.to_solr
+          expect(solr_document).not_to be_nil
+          expect(solr_document[:fulltext_tsim].to_s).to include("много трудившейся")
+        end
+      end
+    end
   end
 
   context "with a parent object with many pages" do

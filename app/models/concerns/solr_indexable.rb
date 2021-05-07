@@ -70,6 +70,7 @@ module SolrIndexable
       folder_ssim: json_to_index["folder"],
       format: json_to_index["format"],
       format_tesim: json_to_index["format"],
+      fulltext_tsim: solr_full_text,
       genre_ssim: json_to_index["genre"],
       genre_tesim: json_to_index["genre"],
       geoSubject_ssim: json_to_index["geoSubject"],
@@ -154,6 +155,18 @@ module SolrIndexable
       subject_topic_tsim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
       title_tsim: json_to_index["title"] # replaced by title_tesim
     }.delete_if { |_k, v| !v.present? } # Delete nil and empty values
+  end
+
+  def solr_full_text
+    if full_text?
+      full_text_array = child_objects.map do |child_object|
+        full_text = S3Service.download_full_text(child_object.remote_ocr_path)
+        raise "Missing full text for child object: #{child_object.oid}, for parent object: #{oid}" if full_text.nil?
+        full_text
+      end
+      return full_text_array
+    end
+    nil
   end
 
   def expand_date_structured(date_structured)
