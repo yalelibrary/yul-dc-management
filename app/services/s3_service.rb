@@ -56,4 +56,14 @@ class S3Service
     object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
     object.exists?
   end
+
+  def self.full_text_exists?(remote_path, bucket = ENV['OCR_DOWNLOAD_BUCKET'])
+    object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
+    begin
+      return true if object.exists? && object.content_type == 'text/plain'
+    rescue Aws::S3::Errors::Forbidden
+      false
+    end
+    false
+  end
 end

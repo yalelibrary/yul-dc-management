@@ -43,6 +43,10 @@ class ChildObject < ApplicationRecord
     S3Service.remote_metadata(remote_ptiff_path)
   end
 
+  def remote_ocr
+    S3Service.full_text_exists?(remote_ocr_path)
+  end
+
   def access_master_path
     return @access_master_path if @access_master_path
     image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
@@ -93,6 +97,12 @@ class ChildObject < ApplicationRecord
     return @remote_ptiff_path if @remote_ptiff_path
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
     @remote_ptiff_path = File.join("ptiffs", pairtree_path, File.basename(access_master_path))
+  end
+
+  def remote_ocr_path
+    return @remote_ocr_path if @remote_ocr_path
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    @remote_ocr_path = File.join('fulltext', pairtree_path, "#{oid}.txt")
   end
 
   def pyramidal_tiff

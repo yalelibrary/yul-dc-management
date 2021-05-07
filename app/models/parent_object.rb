@@ -337,4 +337,18 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def batch_connections_for(batch_process)
     batch_connections.where(batch_process: batch_process)
   end
+
+  def full_text?
+    # Iterate over the child objects and check the bucket to see if the first children have a .txt file
+    return false unless child_objects.any?
+    child_objects.first.remote_ocr
+
+    # This will iterate over all child objects to check if they have a .txt file in the ocr bucket
+    # If any do not have a .txt file, the loop will exit and return false
+
+    # child_objects.each do |object|
+    #   return false unless object.remote_ocr
+    # end
+    # true
+  end
 end
