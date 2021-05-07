@@ -19,12 +19,15 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
   self.primary_key = 'oid'
+  before_update :create_or_delete_manifest, if: :visibility_changed?
   after_save :setup_metadata_job
   after_update :solr_index_job # we index from the fetch job on create
+  before_destroy :delete_manifest_log
   after_destroy :solr_delete
   after_destroy :note_deletion
   after_destroy :delayed_jobs_deletion
   paginates_per 50
+  serialize :manifest_logs, Array
 
   def self.visibilities
     ['Private', 'Public', 'Yale Community Only']
@@ -283,6 +286,25 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @iiif_manifest = @iiif_presentation.manifest if iiif_presentation.valid?
   end
 
+  def create_or_delete_manifest
+    if (visibility.eql? "Private") && delete_manifest_log?
+      delete_manifest_log
+    elsif create_manifest_log?
+      create_manifest_log
+    end
+  end
+
+  def delete_manifest_log
+    manifest_logs << { status: "Delete", timestamp: Time.zone.now }
+    self.manifest_checksum = nil
+  end
+
+  def create_manifest_log
+    self.manifest_logs ||= []
+    self.manifest_logs << { status: "Create", timestamp: Time.zone.now }
+    self.manifest_checksum = Digest::SHA1.hexdigest iiif_manifest.to_yaml
+  end
+
   def manifest_completed?
     ready_for_manifest? && iiif_presentation.valid? && S3Service.s3_exists?(iiif_presentation.manifest_path, ENV['SAMPLE_BUCKET'])
   end
@@ -299,6 +321,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def ready_for_manifest?
     # returns false if any child objects have a width of nil
     !child_objects.pluck(:width).include?(nil)
+  end
+
+  def create_manifest_log?
+    manifest_checksum.nil?
+  end
+
+  def delete_manifest_log?
+    (visibility.eql? "Private") && manifest_checksum.present?
   end
 
   def representative_child

@@ -11,6 +11,8 @@ class GenerateManifestJob < ApplicationJob
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
     generate_manifest(parent_object)
+    update_manifest_log(parent_object)
+
     index_to_solr(parent_object)
     GeneratePdfJob.perform_later(parent_object, current_batch_process, current_batch_connection)
   end
@@ -32,6 +34,19 @@ class GenerateManifestJob < ApplicationJob
   rescue => e
     parent_object.processing_event("IIIF Manifest generation failed due to #{e.message}", "failed")
     raise # this reraises the error after we document it
+  end
+
+  def update_manifest_log(parent_object)
+    ## logs create if checksum is nil
+    if parent_object.create_manifest_log?
+      parent_object.create_manifest_log
+    else
+      # #checks if checksum is different before update
+      updated_checksum = Digest::SHA1.hexdigest parent_object.iiif_manifest.to_yaml
+      parent_object.manifest_logs << { status: "Update", timestamp: Time.zone.now } unless updated_checksum.eql? parent_object.manifest_checksum
+    end
+
+    parent_object.save!
   end
 
   def index_to_solr(parent_object)
