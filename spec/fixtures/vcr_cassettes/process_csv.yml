@@ -20,8 +20,8 @@ http_interactions:
       X-Amz-Content-Sha256:
       - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=xxxxx/20201016/us-east-1/s3/aws4_request,
-        SignedHeaders=host;user-agent;x-amz-content-sha256;x-amz-date, Signature=ca79060ef110ee3ec9dc3903b19b94a688e8783d3336d15eb21d2aa3a2281439
+      - AWS4-HMAC-SHA256 Credential=xxxxx/20201016/us-east-1/s3/aws4_request, SignedHeaders=host;user-agent;x-amz-content-sha256;x-amz-date,
+        Signature=ca79060ef110ee3ec9dc3903b19b94a688e8783d3336d15eb21d2aa3a2281439
       Content-Length:
       - '0'
       Accept:
@@ -195,4 +195,49 @@ http_interactions:
             "status":0,
             "QTime":96}}
   recorded_at: Fri, 16 Oct 2020 20:31:11 GMT
+- request:
+    method: head
+    uri: https://yul-dc-ocr-test.s3.amazonaws.com/fulltext/81/16/05/77/81/16057781.txt
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Content-Type:
+      - ''
+      Accept-Encoding:
+      - ''
+      User-Agent:
+      - aws-sdk-ruby3/3.104.4 ruby/2.6.6 x86_64-linux aws-sdk-s3/1.75.0
+      Host:
+      - yul-dc-ocr-test.s3.amazonaws.com
+      X-Amz-Date:
+      - 20210507T195532Z
+      X-Amz-Content-Sha256:
+      - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=xxxxx/20210507/us-east-1/s3/aws4_request,
+        SignedHeaders=host;user-agent;x-amz-content-sha256;x-amz-date, Signature=98b1b75ef59566542cbf888b821a7bdb6bc37c0940f44848deda6c50a78bdc02
+      Content-Length:
+      - '0'
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      X-Amz-Request-Id:
+      - 4AZVVBFCRZA79AFA
+      X-Amz-Id-2:
+      - Ntb0UZAH0UdKFUl7AAhOewv/o3XC4UwZTHGTVvr2Wygfd3+YpgQWjTEoQ9IsJwVMejehRPFQza0=
+      Content-Type:
+      - application/xml
+      Date:
+      - Fri, 07 May 2021 19:55:32 GMT
+      Server:
+      - AmazonS3
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Fri, 07 May 2021 19:55:32 GMT
 recorded_with: VCR 6.0.0

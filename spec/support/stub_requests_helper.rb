@@ -38,9 +38,10 @@ module StubRequestHelper
     allow_any_instance_of(PdfRepresentable).to receive(:generate_pdf).and_return(true)
   end
 
-  def stub_full_text(child_object)
-    stub_request(:get, "https://#{ENV['OCR_DOWNLOAD_BUCKET']}.s3.amazonaws.com/#{child_object.remote_ocr_path}")
-        .to_return(status: 200, body: File.open(File.join(fixture_path, "full_text", "#{child_object.oid}.txt")))
+  def stub_full_text(oid)
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    stub_request(:get, "https://#{ENV['OCR_DOWNLOAD_BUCKET']}.s3.amazonaws.com/fulltext/#{pairtree_path}/#{oid}.txt")
+        .to_return(status: 200, body: File.open(File.join(fixture_path, "full_text", "#{oid}.txt")))
   end
 
   # rubocop:enable RSpec/AnyInstance

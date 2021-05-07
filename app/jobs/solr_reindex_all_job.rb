@@ -18,7 +18,7 @@ class SolrReindexAllJob < ApplicationJob
     last_job = parent_objects.count < SolrReindexAllJob.job_limit
     if parent_objects.count.positive?
       parent_objects.each_slice(SolrReindexAllJob.solr_batch_limit) do |parent_objects_group|
-        solr.add(parent_objects_group.map(&:to_solr).compact)
+        solr.add(parent_objects_group.map(&:to_solr_full_text).compact)
         solr.commit
       end
       SolrReindexAllJob.perform_later(start_position + parent_objects.count) unless last_job

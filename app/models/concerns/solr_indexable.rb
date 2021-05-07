@@ -9,7 +9,7 @@ module SolrIndexable
   end
 
   def solr_index
-    indexable = to_solr
+    indexable = to_solr_full_text
     return unless indexable.present?
     solr = SolrService.connection
     solr.add([indexable])
@@ -70,7 +70,6 @@ module SolrIndexable
       folder_ssim: json_to_index["folder"],
       format: json_to_index["format"],
       format_tesim: json_to_index["format"],
-      fulltext_tsim: solr_full_text,
       genre_ssim: json_to_index["genre"],
       genre_tesim: json_to_index["genre"],
       geoSubject_ssim: json_to_index["geoSubject"],
@@ -155,6 +154,12 @@ module SolrIndexable
       subject_topic_tsim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
       title_tsim: json_to_index["title"] # replaced by title_tesim
     }.delete_if { |_k, v| !v.present? } # Delete nil and empty values
+  end
+
+  def to_solr_full_text(json_to_index = nil)
+    full_text = to_solr(json_to_index)
+    full_text[:fulltext_tsim] = solr_full_text unless full_text.nil?
+    full_text
   end
 
   def solr_full_text
