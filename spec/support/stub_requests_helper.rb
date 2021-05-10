@@ -41,7 +41,9 @@ module StubRequestHelper
   def stub_full_text(oid)
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
     stub_request(:get, "https://#{ENV['OCR_DOWNLOAD_BUCKET']}.s3.amazonaws.com/fulltext/#{pairtree_path}/#{oid}.txt")
-        .to_return(status: 200, body: File.open(File.join(fixture_path, "full_text", "#{oid}.txt")))
+        .to_return(status: 200, body: File.exist?(File.join(fixture_path, "full_text", "#{oid}.txt")) ? File.open(File.join(fixture_path, "full_text", "#{oid}.txt")) : "#{oid} full text")
+    stub_request(:head, "https://#{ENV['OCR_DOWNLOAD_BUCKET']}.s3.amazonaws.com/fulltext/#{pairtree_path}/#{oid}.txt")
+        .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
   end
 
   # rubocop:enable RSpec/AnyInstance
