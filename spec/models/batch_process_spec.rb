@@ -16,9 +16,12 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
     ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "images", "access_masters")
+    original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+    ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     example.run
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
     ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
+    ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
   end
 
   before do
