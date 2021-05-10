@@ -84,6 +84,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           stub_full_text_not_found("16057782")
         end
         it "raises exception" do
+          allow(Rails.logger).to receive(:error) { :logger_mock }
           expect { parent_of_four.to_solr_full_text }.to raise_error("Missing full text for child object: 16057782, for parent object: 16057779")
         end
       end

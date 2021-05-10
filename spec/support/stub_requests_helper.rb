@@ -50,6 +50,8 @@ module StubRequestHelper
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
     stub_request(:head, "https://#{ENV['OCR_DOWNLOAD_BUCKET']}.s3.amazonaws.com/fulltext/#{pairtree_path}/#{oid}.txt")
         .to_return(status: 403)
+    stub_request(:get, "https://#{ENV['OCR_DOWNLOAD_BUCKET']}.s3.amazonaws.com/fulltext/#{pairtree_path}/#{oid}.txt")
+        .to_return(status: 404)
   end
 
   # rubocop:enable RSpec/AnyInstance
