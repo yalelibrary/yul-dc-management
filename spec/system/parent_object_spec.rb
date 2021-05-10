@@ -9,7 +9,10 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   end
   around do |example|
     perform_enqueued_jobs do
+      original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+      ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
       example.run
+      ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
     end
   end
   context "a parent object with an extent of digitization" do
