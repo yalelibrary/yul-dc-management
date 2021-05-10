@@ -80,6 +80,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       context "with full text not found in s3" do
+        before do
+          stub_full_text_not_found("16057782")
+        end
         it "raises exception" do
           expect { parent_of_four.to_solr_full_text }.to raise_error("Missing full text for child object: 16057782, for parent object: 16057779")
         end
