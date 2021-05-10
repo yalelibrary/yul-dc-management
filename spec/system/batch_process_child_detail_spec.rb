@@ -24,10 +24,13 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
     around do |example|
       access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
       ENV["ACCESS_MASTER_MOUNT"] = "/data"
+      original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+      ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
       perform_enqueued_jobs do
         example.run
       end
       ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
+      ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
     end
     before do
       stub_metadata_cloud('16057779')

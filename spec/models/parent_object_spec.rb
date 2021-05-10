@@ -11,10 +11,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
   around do |example|
     original_metadata_sample_bucket = ENV['SAMPLE_BUCKET']
-    ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     ENV['SAMPLE_BUCKET'] = "yul-dc-development-samples"
+    original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+    ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     example.run
     ENV['SAMPLE_BUCKET'] = original_metadata_sample_bucket
+    ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
   end
 
   before do
@@ -29,6 +31,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     stub_ptiffs_and_manifests
     stub_full_text('1030368')
     stub_full_text('1032318')
+    stub_full_text('16057781')
   end
 
   context "with four child objects", :has_vcr do
@@ -50,6 +53,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
     # rubocop:disable RSpec/AnyInstance
     it "receives a check for whether it's ready for manifests 4 times, one for each child" do
+      parent_of_four.child_objects.each do |child_object|
+        stub_full_text(child_object.oid)
+      end
       allow_any_instance_of(ChildObject).to receive(:parent_object).and_return(parent_of_four)
       VCR.use_cassette("process csv") do
         expect(parent_of_four).to receive(:needs_a_manifest?).exactly(4).times
@@ -75,7 +81,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
       context "with full text not found in s3" do
         it "raises exception" do
-          expect { parent_of_four.to_solr_full_text }.to raise_error("Missing full text for child object: 16057781, for parent object: 16057779")
+          expect { parent_of_four.to_solr_full_text }.to raise_error("Missing full text for child object: 16057782, for parent object: 16057779")
         end
       end
 

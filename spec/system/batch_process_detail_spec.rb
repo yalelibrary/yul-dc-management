@@ -15,9 +15,12 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
 
   context "when uploading a csv" do
     around do |example|
+      original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+      ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
       perform_enqueued_jobs do
         example.run
       end
+      ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
     end
     let(:batch_process) do
       FactoryBot.create(
