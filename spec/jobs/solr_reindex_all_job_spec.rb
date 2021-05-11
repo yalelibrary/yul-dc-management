@@ -33,7 +33,7 @@ RSpec.describe SolrReindexAllJob, type: :job, prep_metadata_sources: true, solr:
       expect(solr_service).to receive(:commit).exactly(total_records / solr_limit).times
 
       doc = double
-      expect(doc).to receive(:to_solr).exactly(total_records).times
+      expect(doc).to receive(:to_solr_full_text).exactly(total_records).times
 
       parent_object_order = double
       parent_object_order_offset1 = double

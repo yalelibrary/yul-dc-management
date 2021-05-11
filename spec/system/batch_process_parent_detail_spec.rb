@@ -16,10 +16,13 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
   around do |example|
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
+    original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+    ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     perform_enqueued_jobs do
       example.run
     end
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
+    ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
   end
 
   describe "with a failure" do

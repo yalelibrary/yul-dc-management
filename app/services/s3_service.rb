@@ -66,4 +66,11 @@ class S3Service
     end
     false
   end
+
+  def self.download_full_text(file_path, bucket = ENV['OCR_DOWNLOAD_BUCKET'])
+    resp = @client.get_object(bucket: bucket, key: file_path)
+    resp.body&.read
+  rescue Aws::S3::Errors::NoSuchKey, Aws::S3::Errors::NotFound, Aws::S3::Errors::BadRequest
+    nil
+  end
 end

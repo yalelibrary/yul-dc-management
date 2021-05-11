@@ -38,12 +38,14 @@ RSpec.describe S3Service, type: :has_vcr do
   around do |example|
     original_metadata_sample_bucket = ENV['SAMPLE_BUCKET']
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
+    original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
     ENV['SAMPLE_BUCKET'] = "yul-test-samples"
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
     ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     example.run
     ENV['SAMPLE_BUCKET'] = original_metadata_sample_bucket
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
+    ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
   end
 
   it "can upload metadata to a given bucket" do

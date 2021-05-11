@@ -7,8 +7,11 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   around do |example|
     original_path = ENV["GOOBI_MOUNT"]
     ENV["GOOBI_MOUNT"] = File.join("spec", "fixtures", "goobi", "metadata")
+    original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+    ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     example.run
     ENV["GOOBI_MOUNT"] = original_path
+    ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
   end
 
   before do
@@ -18,6 +21,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     stub_metadata_cloud("16414889")
     stub_metadata_cloud("14716192")
     stub_metadata_cloud("16854285")
+    stub_full_text('1030368')
+    stub_full_text('1032318')
     login_as user
     visit batch_processes_path
     select("Create Parent Objects")

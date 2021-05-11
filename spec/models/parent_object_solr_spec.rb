@@ -6,7 +6,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
   # this doesn't seem to run from a helper, not clear why
   around do |example|
     perform_enqueued_jobs do
+      original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+      ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
       example.run
+      ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
     end
   end
 
@@ -15,6 +18,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     # rubocop:disable RSpec/AnyInstance
     allow_any_instance_of(ParentObject).to receive(:manifest_completed?).and_return(true)
     # rubocop:enable RSpec/AnyInstance
+    stub_full_text('1032318')
   end
 
   describe "ParentObject without some values for solr mapping" do

@@ -11,10 +11,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
   around do |example|
     original_metadata_sample_bucket = ENV['SAMPLE_BUCKET']
-    ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     ENV['SAMPLE_BUCKET'] = "yul-dc-development-samples"
+    original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+    ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     example.run
     ENV['SAMPLE_BUCKET'] = original_metadata_sample_bucket
+    ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
   end
 
   before do
@@ -28,6 +30,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     stub_metadata_cloud("16854285")
     stub_metadata_cloud("16057779")
     stub_ptiffs_and_manifests
+    stub_full_text('1030368')
+    stub_full_text('1032318')
+    stub_full_text('16057781')
     stub_request(:any, /localhost:8182*/).to_return(body: '{"service_id": 123123, "width": 10, "height": 10}')
   end
 
@@ -50,6 +55,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
     # rubocop:disable RSpec/AnyInstance
     it "receives a check for whether it's ready for manifests 4 times, one for each child" do
+      parent_of_four.child_objects.each do |child_object|
+        stub_full_text(child_object.oid)
+      end
       allow_any_instance_of(ChildObject).to receive(:parent_object).and_return(parent_of_four)
       VCR.use_cassette("process csv") do
         expect(parent_of_four).to receive(:needs_a_manifest?).exactly(4).times
@@ -57,6 +65,46 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
     end
     # rubocop:enable RSpec/AnyInstance
+    context "with full_text? true" do
+      around do |example|
+        original_ocr_path = ENV['OCR_DOWNLOAD_BUCKET']
+        ENV['OCR_DOWNLOAD_BUCKET'] = 'yul-dc-ocr-test'
+        perform_enqueued_jobs do
+          example.run
+        end
+        ENV['OCR_DOWNLOAD_BUCKET'] = original_ocr_path
+      end
+
+      before do
+        allow(parent_of_four).to receive(:full_text?).and_return(true)
+        allow(parent_of_four).to receive(:manifest_completed?).and_return(true).exactly(4).times
+        parent_of_four.default_fetch
+      end
+
+      context "with full text not found in s3" do
+        before do
+          stub_full_text_not_found("16057782")
+        end
+        it "raises exception" do
+          allow(Rails.logger).to receive(:error) { :logger_mock }
+          expect { parent_of_four.to_solr_full_text }.to raise_error("Missing full text for child object: 16057782, for parent object: 16057779")
+        end
+      end
+
+      context "with full text in s3" do
+        before do
+          parent_of_four.child_objects.each do |child_object|
+            stub_full_text(child_object.oid)
+          end
+        end
+
+        it "indexes the full text" do
+          solr_document = parent_of_four.to_solr_full_text
+          expect(solr_document).not_to be_nil
+          expect(solr_document[:fulltext_tsim].to_s).to include("много трудившейся")
+        end
+      end
+    end
   end
 
   context "with a parent object with many pages" do

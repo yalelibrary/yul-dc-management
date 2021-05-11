@@ -9,7 +9,7 @@ module SolrIndexable
   end
 
   def solr_index
-    indexable = to_solr
+    indexable = to_solr_full_text
     return unless indexable.present?
     solr = SolrService.connection
     solr.add([indexable])
@@ -154,6 +154,25 @@ module SolrIndexable
       subject_topic_tsim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
       title_tsim: json_to_index["title"] # replaced by title_tesim
     }.delete_if { |_k, v| !v.present? } # Delete nil and empty values
+  end
+
+  def to_solr_full_text(json_to_index = nil)
+    solr_document = to_solr(json_to_index)
+    solr_full_text_field = solr_full_text
+    solr_document[:fulltext_tsim] = solr_full_text_field unless solr_document.nil? || solr_full_text_field.nil?
+    solr_document
+  end
+
+  def solr_full_text
+    if full_text?
+      full_text_array = child_objects.map do |child_object|
+        child_object_full_text = S3Service.download_full_text(child_object.remote_ocr_path)
+        raise "Missing full text for child object: #{child_object.oid}, for parent object: #{oid}" if child_object_full_text.nil?
+        child_object_full_text
+      end
+      return full_text_array
+    end
+    nil
   end
 
   def expand_date_structured(date_structured)
