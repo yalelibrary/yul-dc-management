@@ -71,8 +71,8 @@ class MetsDocument
 
   # Combines the physical info and file info for a given image
   def combined
-    zipped = files.zip(physical_divs)
-    zipped.map { |file, physical_div| file.merge(physical_div) }
+    zipped = logical_divs.empty? ? files.zip(physical_divs) : files.zip(physical_divs, logical_divs)
+    logical_divs.empty? ? zipped.map { |file, physical_div| file.merge(physical_div) } : zipped.map { |file, physical_div, logical_div| file.merge(physical_div, logical_div) }
   end
 
   def physical_divs
@@ -105,7 +105,7 @@ class MetsDocument
       logical_id: logical_div.xpath("@ID").inner_text,
       caption: caption_info(logical_div),
       type: logical_div.xpath("@TYPE").inner_text,
-      label: logical_div.xpath("@LABEL").inner_text
+      type_label: logical_div.xpath("@LABEL").inner_text
     }
   end
 

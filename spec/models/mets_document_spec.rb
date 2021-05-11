@@ -179,10 +179,11 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
 
   it "can return caption, type, label, id for the logical structure" do
     mets_doc = described_class.new(has_caption_file)
+    expect(mets_doc.combined.first[:caption]).to eq "Swatch 1"
     expect(mets_doc.logical_divs.first[:caption]).to eq "Swatch 1"
     expect(mets_doc.logical_divs.first[:type]).to eq "caption"
     expect(mets_doc.logical_divs.second[:caption]).to eq nil
-    expect(mets_doc.logical_divs.second[:label]).to eq "Swatch 2"
+    expect(mets_doc.logical_divs.second[:type_label]).to eq "Swatch 2"
     expect(mets_doc.logical_divs.last[:type]).to eq "cover"
     expect(mets_doc.logical_divs.first[:dmdid]).to eq "DMDLOG_0001"
   end
