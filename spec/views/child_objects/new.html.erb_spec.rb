@@ -7,6 +7,7 @@ RSpec.describe "child_objects/new", type: :view do
     assign(:child_object, ChildObject.new(
                             oid: 1,
                             caption: "MyString",
+                            label: "2v",
                             width: 1,
                             height: 1,
                             order: 1,
@@ -21,6 +22,8 @@ RSpec.describe "child_objects/new", type: :view do
       assert_select "input[name=?]", "child_object[oid]"
 
       assert_select "input[name=?]", "child_object[caption]"
+
+      assert_select "input[name=?]", "child_object[label]"
 
       assert_select "input[name=?]", "child_object[width]"
 
