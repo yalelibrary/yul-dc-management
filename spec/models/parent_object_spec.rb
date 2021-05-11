@@ -22,11 +22,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     stub_metadata_cloud("2005512", "ladybird")
     stub_metadata_cloud("V-2004628", "ils")
     stub_metadata_cloud("2034600", "ladybird")
+
     stub_metadata_cloud("16414889")
     stub_metadata_cloud("14716192")
     stub_metadata_cloud("16854285")
     stub_metadata_cloud("16057779")
     stub_ptiffs_and_manifests
+    stub_request(:any, /localhost:8182*/).to_return(body: '{"service_id": 123123, "width": 10, "height": 10}')
   end
 
   context "with four child objects", :has_vcr do
@@ -552,9 +554,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
   end
 
   context 'a Parent Object' do
+    let(:user) { FactoryBot.create(:user) }
+    let(:parent_object) { FactoryBot.build(:parent_object, oid: 2_107_188, visibility: "Public") }
     it 'finds batch connections to the batch process' do
-      user = FactoryBot.create(:user)
-      parent_object = FactoryBot.create(:parent_object, oid: 2_003_431)
       batch_process = BatchProcess.new(oid: parent_object.oid, user: user)
       batch_process.batch_connections.build(connectable: parent_object)
       batch_process.save!
@@ -562,5 +564,101 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
       expect(parent_object.batch_connections_for(batch_process)).to eq(batch_connection)
     end
+
+    describe 'manifest logs', :vpn_only do
+      let(:generate_manifest_job) { GenerateManifestJob.new }
+
+      before do
+        stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/00/20/34/60/2034600.json")
+            .to_return(status: 200)
+        stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/12/20/05/51/2005512.json")
+            .to_return(status: 200)
+        stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/89/16/41/48/89/16414889.json")
+            .to_return(status: 200)
+        stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/92/14/71/61/92/14716192.json")
+            .to_return(status: 200)
+        stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/85/16/85/42/85/16854285.json")
+            .to_return(status: 200)
+      end
+
+      around do |example|
+        perform_enqueued_jobs do
+          example.run
+        end
+      end
+
+      context 'creating manifest' do
+        it '"Create" action proceeds a "Delete" action' do
+          handle_manifest_gen(parent_object)
+          expect(parent_object.manifest_logs.first[:status]).to eq "Create"
+
+          parent_object.visibility = "Private"
+          parent_object.remove_instance_variable(:@iiif_presentation)
+          parent_object.generate_manifest = true
+          parent_object.save!
+
+          handle_manifest_gen(parent_object)
+
+          expect(parent_object.manifest_logs.length).to eq 3
+          expect(parent_object.manifest_logs.first[:status]).to eq "Create"
+          expect(parent_object.manifest_logs[1][:status]).to eq "Delete"
+          expect(parent_object.manifest_logs.last[:status]).to eq "Create"
+        end
+        it 'has a "Create" action for new parents' do
+          handle_manifest_gen(parent_object)
+          expect(parent_object.manifest_logs.first[:status]).to eq "Create"
+        end
+      end
+
+      context 'updating manifest' do
+        it 'has "Update" action for a different manifest' do
+          handle_manifest_gen(parent_object)
+          expect(parent_object.manifest_logs.first[:status]).to eq "Create"
+
+          parent_object.representative_child_oid = 1_329_644
+          parent_object.remove_instance_variable(:@iiif_presentation)
+          parent_object.generate_manifest = true
+          parent_object.save!
+
+          handle_manifest_gen(parent_object)
+
+          expect(parent_object.manifest_logs.length).to eq 2
+          expect(parent_object.manifest_logs.last[:status]).to eq "Update"
+        end
+        it 'does not have "Update" action for the same manifest' do
+          handle_manifest_gen(parent_object)
+          parent_object.remove_instance_variable(:@iiif_presentation)
+          parent_object.generate_manifest = true
+          parent_object.save!
+
+          handle_manifest_gen(parent_object)
+
+          expect(parent_object.manifest_logs.length).to eq 1
+          expect(parent_object.manifest_logs.last[:status]).to eq "Create"
+        end
+      end
+
+      context 'delete manifest' do
+        it 'has a "Delete" action when changing parent to private' do
+          handle_manifest_gen(parent_object)
+          expect(parent_object.manifest_logs.first[:status]).to eq "Create"
+
+          parent_object.visibility = "Private"
+          parent_object.remove_instance_variable(:@iiif_presentation)
+          parent_object.generate_manifest = true
+          parent_object.save!
+
+          expect(parent_object.manifest_logs.length).to eq 2
+          expect(parent_object.manifest_logs.last[:status]).to eq "Delete"
+        end
+      end
+    end
   end
+end
+
+def handle_manifest_gen(parent_object)
+  batch_process = BatchProcess.new(oid: parent_object.oid, user: user)
+  batch_process.batch_connections.build(connectable: parent_object)
+  batch_process.save
+  generate_manifest_job.perform(parent_object, batch_process)
 end

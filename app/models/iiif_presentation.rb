@@ -167,4 +167,8 @@ class IiifPresentation
   def manifest_path
     @manifest_path ||= "manifests/#{pairtree_path}/#{oid}.json" if pairtree_path && oid
   end
+
+  def checksum
+    Digest::SHA1.hexdigest manifest.to_json
+  end
 end
