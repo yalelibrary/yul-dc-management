@@ -42,8 +42,12 @@ class GenerateManifestJob < ApplicationJob
       parent_object.create_manifest_log
     else
       # #checks if checksum is different before update
-      updated_checksum = Digest::SHA1.hexdigest parent_object.iiif_manifest.to_yaml
-      parent_object.manifest_logs << { status: "Update", timestamp: Time.zone.now } unless updated_checksum.eql? parent_object.manifest_checksum
+      updated_checksum = parent_object.iiif_presentation.checksum
+
+      unless parent_object.manifest_checksum.eql? updated_checksum
+        parent_object.manifest_logs << { status: "Update", timestamp: Time.zone.now } unless updated_checksum.eql? parent_object.manifest_checksum
+        parent_object.manifest_checksum = updated_checksum
+      end
     end
 
     parent_object.save!

@@ -579,7 +579,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           expect(parent_object.manifest_logs.first[:status]).to eq "Create"
 
           parent_object.visibility = "Private"
-          parent_object.remove_instance_variable(:@iiif_manifest)
           parent_object.remove_instance_variable(:@iiif_presentation)
           parent_object.generate_manifest = true
           parent_object.save!
@@ -603,7 +602,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           expect(parent_object.manifest_logs.first[:status]).to eq "Create"
 
           parent_object.representative_child_oid = 1_329_644
-          parent_object.remove_instance_variable(:@iiif_manifest)
           parent_object.remove_instance_variable(:@iiif_presentation)
           parent_object.generate_manifest = true
           parent_object.save!
@@ -615,7 +613,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         end
         it 'does not have "Update" action for the same manifest' do
           handle_manifest_gen(parent_object)
-          parent_object.remove_instance_variable(:@iiif_manifest)
           parent_object.remove_instance_variable(:@iiif_presentation)
           parent_object.generate_manifest = true
           parent_object.save!
@@ -633,7 +630,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           expect(parent_object.manifest_logs.first[:status]).to eq "Create"
 
           parent_object.visibility = "Private"
-          parent_object.remove_instance_variable(:@iiif_manifest)
           parent_object.remove_instance_variable(:@iiif_presentation)
           parent_object.generate_manifest = true
           parent_object.save!

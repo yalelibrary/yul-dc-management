@@ -302,7 +302,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def create_manifest_log
     self.manifest_logs ||= []
     self.manifest_logs << { status: "Create", timestamp: Time.zone.now }
-    self.manifest_checksum = Digest::SHA1.hexdigest iiif_manifest.to_yaml
+    self.manifest_checksum = iiif_presentation.checksum
   end
 
   def manifest_completed?
