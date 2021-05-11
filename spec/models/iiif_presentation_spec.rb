@@ -7,15 +7,18 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     original_manifests_base_url = ENV['IIIF_MANIFESTS_BASE_URL']
     original_image_base_url = ENV["IIIF_IMAGE_BASE_URL"]
     original_pdf_url = ENV["PDF_BASE_URL"]
+    original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
     ENV['IIIF_MANIFESTS_BASE_URL'] = "http://localhost/manifests"
     ENV['IIIF_IMAGE_BASE_URL'] = "http://localhost:8182/iiif"
     ENV["PDF_BASE_URL"] = "http://localhost/pdfs"
+    ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     perform_enqueued_jobs do
       example.run
     end
     ENV['IIIF_MANIFESTS_BASE_URL'] = original_manifests_base_url
     ENV['IIIF_IMAGE_BASE_URL'] = original_image_base_url
     ENV["PDF_BASE_URL"] = original_pdf_url
+    ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
   end
   let(:oid) { 16_172_421 }
   let(:oid_no_labels) { 2_005_512 }

@@ -10,12 +10,14 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
   around do |example|
     access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
+    original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
     ENV["ACCESS_MASTER_MOUNT"] = "s3"
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
     ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     example.run
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
     ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
+    ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
   end
 
   describe "with a mounted directory for access masters" do
