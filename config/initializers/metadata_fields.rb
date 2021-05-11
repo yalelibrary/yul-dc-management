@@ -213,6 +213,12 @@ METADATA_FIELDS = {
       'viewing_hint_ssi'
     ]
   },
+  caption: {
+    label: 'Caption',
+    solr_fields: [
+      'caption_tesim'
+    ]
+  },
   rights: {
     label: 'Rights',
     solr_fields: [

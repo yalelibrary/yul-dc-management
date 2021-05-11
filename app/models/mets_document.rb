@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+# rubocop:disable Metrics/ClassLength
 class MetsDocument
   include MetadataCloudUrlParsable
   attr_reader :source_xml
@@ -82,6 +82,13 @@ class MetsDocument
     end
   end
 
+  def logical_divs
+    @mets.xpath("/mets:mets/mets:structMap[@TYPE='LOGICAL']/mets:div" \
+                "/mets:div").map do |l|
+      logical_info(l)
+    end
+  end
+
   def physical_info(physical_div)
     {
       oid: physical_div.xpath('@CONTENTIDS').inner_text, # oid for child object
@@ -90,6 +97,21 @@ class MetsDocument
       parent_object_oid: oid,
       child_uuid: physical_div.xpath("mets:fptr/@FILEID").first.text # uuid for child object
     }
+  end
+
+  def logical_info(logical_div)
+    {
+      dmdid: logical_div.xpath("@DMDID").inner_text,
+      logical_id: logical_div.xpath("@ID").inner_text,
+      caption: caption_info(logical_div),
+      type: logical_div.xpath("@TYPE").inner_text,
+      label: logical_div.xpath("@LABEL").inner_text
+    }
+  end
+
+  def caption_info(logical_div)
+    return nil if logical_div.xpath("@TYPE").inner_text != "caption"
+    logical_div.xpath("@LABEL").inner_text
   end
 
   def admin_set_key
@@ -119,4 +141,5 @@ class MetsDocument
       mets_access_master_path: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, '')
     }
   end
+  # rubocop:enable Metrics/ClassLength
 end

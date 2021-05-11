@@ -28,6 +28,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
   let(:bad_voyager_uri_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_voyager_uri.xml") }
   let(:production_mets_file) { File.open("spec/fixtures/goobi/metadata/repositories11archival_objects329771.xml") }
   let(:has_holding_file) { File.open("spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml") }
+  let(:has_caption_file) { File.open("spec/fixtures/goobi/metadata/16172421/meta.xml") }
 
   it "can be instantiated with xml from the DB instead of a file" do
     described_class.new(batch_process.mets_xml)
@@ -174,5 +175,15 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
     mets_doc = described_class.new(valid_goobi_xml)
     expect(mets_doc.combined.first[:child_uuid]).to eq "444d3360-bf78-4e35-9850-44ef7f832105"
     expect(mets_doc.combined.second[:child_uuid]).to eq "1234d3360-bf78-4e35-9850-44ef7f832100"
+  end
+
+  it "can return caption, type, label, id for the logical structure" do
+    mets_doc = described_class.new(has_caption_file)
+    expect(mets_doc.logical_divs.first[:caption]).to eq "Swatch 1"
+    expect(mets_doc.logical_divs.first[:type]).to eq "caption"
+    expect(mets_doc.logical_divs.second[:caption]).to eq nil
+    expect(mets_doc.logical_divs.second[:label]).to eq "Swatch 2"
+    expect(mets_doc.logical_divs.last[:type]).to eq "cover"
+    expect(mets_doc.logical_divs.first[:dmdid]).to eq "DMDLOG_0001"
   end
 end
