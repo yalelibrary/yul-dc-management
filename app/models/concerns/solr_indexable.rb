@@ -157,17 +157,18 @@ module SolrIndexable
   end
 
   def to_solr_full_text(json_to_index = nil)
-    full_text = to_solr(json_to_index)
-    full_text[:fulltext_tsim] = solr_full_text unless full_text.nil?
-    full_text
+    solr_document = to_solr(json_to_index)
+    solr_full_text_field = solr_full_text
+    solr_document[:fulltext_tsim] = solr_full_text_field unless solr_document.nil? || solr_full_text_field.nil?
+    solr_document
   end
 
   def solr_full_text
     if full_text?
       full_text_array = child_objects.map do |child_object|
-        full_text = S3Service.download_full_text(child_object.remote_ocr_path)
+        child_object_full_text = S3Service.download_full_text(child_object.remote_ocr_path)
         raise "Missing full text for child object: #{child_object.oid}, for parent object: #{oid}" if full_text.nil?
-        full_text
+        child_object_full_text
       end
       return full_text_array
     end
