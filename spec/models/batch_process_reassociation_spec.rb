@@ -14,7 +14,10 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
 
   around do |example|
     perform_enqueued_jobs do
+      original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+      ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
       example.run
+      ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
     end
   end
 

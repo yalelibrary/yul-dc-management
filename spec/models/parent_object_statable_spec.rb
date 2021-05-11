@@ -10,6 +10,18 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
   let(:bad_oid_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "bad_oid.csv")) }
   let(:brbl) { AdminSet.find_by_key('brbl') }
 
+  before do
+    stub_full_text("1032318")
+    stub_full_text("1030368")
+  end
+
+  around do |example|
+    original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+    ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
+    example.run
+    ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
+  end
+
   describe "with stubbed metadata cloud" do
     before do
       login_as(:user)
