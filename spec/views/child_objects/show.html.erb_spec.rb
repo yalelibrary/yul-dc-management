@@ -13,6 +13,7 @@ RSpec.describe "child_objects/show", type: :view, prep_metadata_sources: true do
     @child_object = assign(:child_object, ChildObject.create!(
                                             oid: 10,
                                             caption: "Caption",
+                                            label: "1v",
                                             width: 2591,
                                             height: 4056,
                                             order: 4,
@@ -24,6 +25,7 @@ RSpec.describe "child_objects/show", type: :view, prep_metadata_sources: true do
     render
     expect(rendered).to match(/Oid/)
     expect(rendered).to match(/Caption/)
+    expect(rendered).to match(/1v/)
     expect(rendered).to match(/2591/)
     expect(rendered).to match(/4056/)
     expect(rendered).to match(/4/)

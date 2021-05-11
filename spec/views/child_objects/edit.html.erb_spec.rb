@@ -8,6 +8,7 @@ RSpec.describe "child_objects/edit", type: :view, prep_metadata_sources: true do
     assign(:child_object, ChildObject.create!(
                             oid: 1,
                             caption: "10v",
+                            label: "10v-",
                             width: 1,
                             height: 1,
                             order: 1,
@@ -28,6 +29,8 @@ RSpec.describe "child_objects/edit", type: :view, prep_metadata_sources: true do
       assert_select "input[name=?]", "child_object[oid]"
 
       assert_select "input[name=?]", "child_object[caption]"
+
+      assert_select "input[name=?]", "child_object[label]"
 
       assert_select "input[name=?]", "child_object[width]"
 
