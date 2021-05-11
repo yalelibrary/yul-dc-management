@@ -8,7 +8,10 @@ RSpec.describe BatchConnection, type: :model, prep_metadata_sources: true, prep_
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "small_short_fixture_ids.csv")) }
   around do |example|
     perform_enqueued_jobs do
+      original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+      ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
       example.run
+      ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
     end
   end
 
