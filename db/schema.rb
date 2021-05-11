@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_204716) do
+ActiveRecord::Schema.define(version: 2021_04_29_171457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,6 +163,8 @@ ActiveRecord::Schema.define(version: 2021_04_07_204716) do
     t.string "extent_of_digitization"
     t.datetime "last_mets_update"
     t.bigint "admin_set_id"
+    t.text "manifest_logs"
+    t.string "manifest_checksum"
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
