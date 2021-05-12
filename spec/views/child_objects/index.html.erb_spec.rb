@@ -15,7 +15,7 @@ RSpec.describe "child_objects/index", type: :view, prep_metadata_sources: true d
                                                      ChildObject.create!(
                                                        oid: 111,
                                                        caption: "Caption",
-                                                       label: "label",
+                                                       label: "Label",
                                                        width: 2591,
                                                        height: 4056,
                                                        order: 4,
