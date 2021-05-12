@@ -52,8 +52,8 @@ class IiifPresentation
     @sequence = IIIF::Presentation::Sequence.new
     @sequence["@id"] = "#{ENV['IIIF_MANIFESTS_BASE_URL']}/sequence/#{oid}"
     @sequence["rendering"] = rendering
-    @sequence["viewingDirection"] = @parent_object.viewing_direction unless @parent_object.viewing_direction.nil? || @parent_object.viewing_direction.empty?
-    @sequence["viewingHint"] = @parent_object.display_layout unless @parent_object.display_layout.nil? || @parent_object.display_layout.empty?
+    @sequence["viewingDirection"] = @parent_object.viewing_direction if @parent_object.viewing_direction.present?
+    @sequence["viewingHint"] = @parent_object.display_layout if @parent_object.display_layout.present?
     @sequence
   end
 

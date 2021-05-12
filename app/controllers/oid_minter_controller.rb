@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class OidMinterController < ActionController::Base
+class OidMinterController < ApplicationController
   # Allowing unauthenticated access
   # before_action :authenticate_user!
 

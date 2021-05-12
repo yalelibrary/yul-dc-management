@@ -80,7 +80,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         batch_process.file = csv_upload
         batch_process.save
         batch_process.run_callbacks :create
-        po = ParentObject.find(14_716_192)
+        po = described_class.find(14_716_192)
         expect(po.status_for_batch_process(batch_process)).to eq "Complete"
         expect(po.duration_for_batch_process(batch_process)).not_to eq "n/a"
         expect(po.duration_for_batch_process(batch_process)).to be_an_instance_of Float

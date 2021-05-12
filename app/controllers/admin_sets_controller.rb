@@ -73,13 +73,13 @@ class AdminSetsController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_admin_set
-      @admin_set = AdminSet.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_admin_set
+    @admin_set = AdminSet.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def admin_set_params
-      params.require(:admin_set).permit(:key, :label, :homepage, :summary)
-    end
+  # Only allow a list of trusted parameters through.
+  def admin_set_params
+    params.require(:admin_set).permit(:key, :label, :homepage, :summary)
+  end
 end

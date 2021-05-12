@@ -88,30 +88,30 @@ class BatchProcessesController < ApplicationController
 
   private
 
-    def set_batch_process
-      @batch_process = BatchProcess.find(params[:id])
-    end
+  def set_batch_process
+    @batch_process = BatchProcess.find(params[:id])
+  end
 
-    def set_parent_object
-      @parent_object = ParentObject.find_by(oid: params[:oid])
-    end
+  def set_parent_object
+    @parent_object = ParentObject.find_by(oid: params[:oid])
+  end
 
-    def set_child_object
-      @child_object = ChildObject.find(params[:child_oid])
-      @notes = @child_object.notes_for_batch_process(@batch_process)
-      # TODO: Find failure related only to child object?
-      @failure = @child_object.latest_failure(@batch_process)
-    end
+  def set_child_object
+    @child_object = ChildObject.find(params[:child_oid])
+    @notes = @child_object.notes_for_batch_process(@batch_process)
+    # TODO: Find failure related only to child object?
+    @failure = @child_object.latest_failure(@batch_process)
+  end
 
-    def find_notes
-      @notes = @parent_object.notes_for_batch_process(@batch_process) if @parent_object
-    end
+  def find_notes
+    @notes = @parent_object.notes_for_batch_process(@batch_process) if @parent_object
+  end
 
-    def latest_failure
-      @latest_failure = @parent_object.latest_failure(@batch_process) if @parent_object
-    end
+  def latest_failure
+    @latest_failure = @parent_object.latest_failure(@batch_process) if @parent_object
+  end
 
-    def batch_process_params
-      params.require(:batch_process).permit(:file, :batch_action)
-    end
+  def batch_process_params
+    params.require(:batch_process).permit(:file, :batch_action)
+  end
 end

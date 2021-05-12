@@ -11,7 +11,7 @@ RSpec.describe GeneratePdfJob, type: :job do
   let(:metadata_source) { FactoryBot.create(:metadata_source) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source) }
   let(:child_object) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object) }
-  let(:generate_pdf_job) { GeneratePdfJob.new }
+  let(:generate_pdf_job) { described_class.new }
   let(:parent_object_with_authoritative_json) { FactoryBot.build(:parent_object, oid: '16712419', ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16712419.json")))) }
 
   around do |example|

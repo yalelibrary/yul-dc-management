@@ -55,61 +55,61 @@ module PdfRepresentable
 
   private
 
-    def child_pages
-      pages = []
-      child_objects = ChildObject.where(parent_object: self).order(:order)
-      child_objects.map do |child|
-        pages << {
-          "caption" => child['label'] || "",
-          "file" => S3Service.presigned_url(child.remote_ptiff_path, 24_000)
-        }
-      end
-      pages
-    end
-
-    def pdf_properties(title, generated)
-      properties = {
-        "Title" => title
+  def child_pages
+    pages = []
+    child_objects = ChildObject.where(parent_object: self).order(:order)
+    child_objects.map do |child|
+      pages << {
+        "caption" => child['label'] || "",
+        "file" => S3Service.presigned_url(child.remote_ptiff_path, 24_000)
       }
-      properties = cover_page(properties, generated)
-      reshape_properties properties
+    end
+    pages
+  end
+
+  def pdf_properties(title, generated)
+    properties = {
+      "Title" => title
+    }
+    properties = cover_page(properties, generated)
+    reshape_properties properties
+  end
+
+  def reshape_properties(properties)
+    properties.keys.map do |key|
+      value = properties[key]
+      {
+        "name" => key,
+        "value" => value
+      }
+    end
+  end
+
+  def cover_page(properties, generated)
+    # for normalized fields
+    NORMALIZED_COVER_FIELDS.each do |field|
+      hash = METADATA_FIELDS[field.to_sym]
+      properties = add_field_if_present(authoritative_json, field, hash[:label], properties)
     end
 
-    def reshape_properties(properties)
-      properties.keys.map do |key|
-        value = properties[key]
-        {
-          "name" => key,
-          "value" => value
-        }
-      end
-    end
+    container_information = extract_container_information(authoritative_json)
+    properties["Container information"] = container_information if container_information
+    properties["Generated"] = generated
+    properties["Terms of Use"] = "https://guides.library.yale.edu/about/policies/access"
+    properties["View in DL"] = "https://collections.library.yale.edu/catalog/#{oid}"
 
-    def cover_page(properties, generated)
-      # for normalized fields
-      NORMALIZED_COVER_FIELDS.each do |field|
-        hash = METADATA_FIELDS[field.to_sym]
-        properties = add_field_if_present(authoritative_json, field, hash[:label], properties)
-      end
+    properties
+  end
 
-      container_information = extract_container_information(authoritative_json)
-      properties["Container information"] = container_information if container_information
-      properties["Generated"] = generated
-      properties["Terms of Use"] = "https://guides.library.yale.edu/about/policies/access"
-      properties["View in DL"] = "https://collections.library.yale.edu/catalog/#{oid}"
+  def add_field_if_present(json, field_name, hash_field, hash)
+    value = extract_flat_field_value(json, field_name, nil)
+    hash[hash_field] = value if value
 
-      properties
-    end
+    hash
+  end
 
-    def add_field_if_present(json, field_name, hash_field, hash)
-      value = extract_flat_field_value(json, field_name, nil)
-      hash[hash_field] = value if value
-
-      hash
-    end
-
-    def extract_flat_field_value(json, field_name, default)
-      return default unless json && json[field_name].present?
-      Array(json[field_name]).join(", ")
-    end
+  def extract_flat_field_value(json, field_name, default)
+    return default unless json && json[field_name].present?
+    Array(json[field_name]).join(", ")
+  end
 end

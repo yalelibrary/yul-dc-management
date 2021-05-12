@@ -7,12 +7,12 @@ RSpec.describe SetupMetadataJob, type: :job do
     ActiveJob::QueueAdapters::DelayedJobAdapter.new
   end
 
-  let(:metadata_job) { SetupMetadataJob.new }
+  let(:metadata_job) { described_class.new }
 
   it 'increments the job queue by one' do
     ActiveJob::Base.queue_adapter = :delayed_job
     expect do
-      SetupMetadataJob.perform_later(metadata_job)
+      described_class.perform_later(metadata_job)
     end.to change { Delayed::Job.count }.by(1)
   end
 
@@ -30,7 +30,7 @@ RSpec.describe SetupMetadataJob, type: :job do
 
     it 'notifies if all images are not present' do
       # rubocop:disable RSpec/AnyInstance
-      allow_any_instance_of(SetupMetadataJob).to receive(:check_mets_images).and_return(false)
+      allow_any_instance_of(described_class).to receive(:check_mets_images).and_return(false)
       # rubocop:enable RSpec/AnyInstance
       expect(parent_object).to receive(:processing_event).with("SetupMetadataJob failed to find all images.", "failed").once
       metadata_job.perform(parent_object, batch_process)

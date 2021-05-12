@@ -27,7 +27,7 @@ RSpec.describe BatchProcessParentDatatable, type: :datatable, prep_metadata_sour
       child_object = FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_object)
       batch_process = FactoryBot.create(:batch_process, user: user, child_objects: [child_object])
 
-      output = BatchProcessParentDatatable.new(
+      output = described_class.new(
         batch_parent_datatable_sample_params(columns, parent_object.oid),
         view_context: batch_process_parent_datatable_view_mock(batch_process.id, parent_object.oid, child_object.oid),
         batch_process: batch_process

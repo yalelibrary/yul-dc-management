@@ -14,39 +14,39 @@ RSpec.describe Ability, type: :model do
 
   describe 'for a sysadmin' do
     it 'grants manage role to User' do
-      ability = Ability.new(sysadmin_user)
+      ability = described_class.new(sysadmin_user)
       assert ability.can?(:manage, User)
     end
 
     it 'grants read access to a ParentObject' do
-      ability = Ability.new(sysadmin_user)
+      ability = described_class.new(sysadmin_user)
       assert ability.can?(:read, parent_object)
     end
 
     it 'grants read access to a ChildObject' do
-      ability = Ability.new(sysadmin_user)
+      ability = described_class.new(sysadmin_user)
       assert ability.can?(:read, child_object)
     end
 
     it 'does not grant manage access to a ParentObject' do
-      ability = Ability.new(sysadmin_user)
+      ability = described_class.new(sysadmin_user)
       assert ability.cannot?(:manage, parent_object)
     end
 
     it 'does not grant manage access to a ChildObject' do
-      ability = Ability.new(sysadmin_user)
+      ability = described_class.new(sysadmin_user)
       assert ability.cannot?(:manage, child_object)
     end
 
     it 'allows fetching of the parent' do
-      ability = Ability.new(sysadmin_user)
+      ability = described_class.new(sysadmin_user)
       # needed to instantiate the object
       expect(parent_object).to be
       expect(ParentObject.accessible_by(ability).count).to eq(1)
     end
 
     it 'allows fetching of the children' do
-      ability = Ability.new(sysadmin_user)
+      ability = described_class.new(sysadmin_user)
       # needed to instantiate the object
       expect(parent_object).to be
       expect(child_object).to be
@@ -56,7 +56,7 @@ RSpec.describe Ability, type: :model do
 
     context "without editor role" do
       it "disallows add_member on an AdminSet" do
-        ability = Ability.new(sysadmin_user)
+        ability = described_class.new(sysadmin_user)
         assert(ability.cannot?(:add_member, admin_set))
       end
     end
@@ -67,7 +67,7 @@ RSpec.describe Ability, type: :model do
       end
 
       it "allows add_member on an AdminSet" do
-        ability = Ability.new(sysadmin_user)
+        ability = described_class.new(sysadmin_user)
         assert(ability.can?(:add_member, admin_set))
       end
     end
@@ -75,17 +75,17 @@ RSpec.describe Ability, type: :model do
 
   describe 'for a non-sysadmin' do
     it 'does not allow management of Users' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.cannot?(:manage, User)
     end
 
     it 'does not allow management of AdminSets' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.cannot?(:manage, AdminSet)
     end
 
     it "does not allow add_member on an AdminSet" do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.cannot?(:add_member, admin_set)
     end
   end
@@ -100,24 +100,24 @@ RSpec.describe Ability, type: :model do
     end
 
     it 'allows read on a Parent Object' do
-      ability = Ability.new(viewer_user)
+      ability = described_class.new(viewer_user)
       assert ability.can?(:read, parent_object)
     end
 
     it 'allows read on a Child Object' do
-      ability = Ability.new(viewer_user)
+      ability = described_class.new(viewer_user)
       assert ability.can?(:read, child_object)
     end
 
     it 'allows fetching of the parent' do
-      ability = Ability.new(viewer_user)
+      ability = described_class.new(viewer_user)
       # needed to instantiate the object
       expect(parent_object).to be
       expect(ParentObject.accessible_by(ability).count).to eq(1)
     end
 
     it 'allows fetching of the children' do
-      ability = Ability.new(viewer_user)
+      ability = described_class.new(viewer_user)
       # needed to instantiate the object
       expect(parent_object).to be
       expect(child_object).to be
@@ -126,7 +126,7 @@ RSpec.describe Ability, type: :model do
     end
 
     it "disallows add_member on an AdminSet" do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.cannot?(:add_member, admin_set)
     end
   end
@@ -141,84 +141,84 @@ RSpec.describe Ability, type: :model do
     end
 
     it 'allows update on a Parent Object' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.can?(:update, parent_object)
     end
 
     it 'allows update on a Child Object' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.can?(:update, child_object)
     end
 
     it 'allows create on a Parent Object' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.can?(:create, parent_object)
     end
 
     it 'allows create on a Child Object' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.can?(:create, child_object)
     end
 
     it 'allows destroy on a Parent Object' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.can?(:destroy, parent_object)
     end
 
     it 'allows destroy on a Child Object' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.can?(:destroy, child_object)
     end
 
     it "allows add_member on an Admin Set" do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.can?(:add_member, admin_set)
     end
   end
 
   describe 'for a user without roles on an AdminSet' do
     it 'disallows read on a Parent Object' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.cannot?(:read, parent_object)
     end
 
     it 'disallows read on a Child Object' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.cannot?(:read, child_object)
     end
 
     it 'disallows update on a Parent Object' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.cannot?(:update, parent_object)
     end
 
     it 'disallows update on a Child Object' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.cannot?(:update, child_object)
     end
 
     it 'disallows create on a Parent Object' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.cannot?(:create, parent_object)
     end
 
     it 'disallows create on a Child Object' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.cannot?(:create, child_object)
     end
 
     it 'disallows destroy on a Parent Object' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.cannot?(:destroy, parent_object)
     end
 
     it 'disallows destroy on a Child Object' do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.cannot?(:destroy, child_object)
     end
 
     it "disallows allow add_member on an Admin Set" do
-      ability = Ability.new(user)
+      ability = described_class.new(user)
       assert ability.cannot?(:add_member, admin_set)
     end
   end

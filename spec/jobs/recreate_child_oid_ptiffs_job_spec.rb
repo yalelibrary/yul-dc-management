@@ -14,7 +14,7 @@ RSpec.describe RecreateChildOidPtiffsJob, type: :job do
   let(:metadata_source) { FactoryBot.create(:metadata_source) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source, admin_set_id: admin_set.id) }
   let(:child_object) { FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_object) }
-  let(:recreate_child_oid_ptiffs_job) { RecreateChildOidPtiffsJob.new }
+  let(:recreate_child_oid_ptiffs_job) { described_class.new }
   let(:generate_ptiff_job) { GeneratePtiffJob.new }
 
   around do |example|

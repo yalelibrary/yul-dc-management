@@ -28,27 +28,27 @@ class RolesController < ApplicationController
 
   private
 
-    def verify_user
-      authorize!(current_ability, :manage, @item) unless current_user.has_role? :sysadmin
-    end
+  def verify_user
+    authorize!(current_ability, :manage, @item) unless current_user.has_role? :sysadmin
+  end
 
-    def set_user
-      @user = User.find_by(uid: params[:uid])
-      return true if @user
+  def set_user
+    @user = User.find_by(uid: params[:uid])
+    return true if @user
 
-      redirect_back(fallback_location: root_path, flash: { alert: "User: #{params[:uid]} not found" })
-      false
-    end
+    redirect_back(fallback_location: root_path, flash: { alert: "User: #{params[:uid]} not found" })
+    false
+  end
 
-    def set_role
-      @role = params[:role]
-    end
+  def set_role
+    @role = params[:role]
+  end
 
-    def set_item
-      @item = params[:item_class]&.constantize&.find(params[:item_id]) if params[:item_id]
-    end
+  def set_item
+    @item = params[:item_class]&.constantize&.find(params[:item_id]) if params[:item_id]
+  end
 
-    def show_notice(user, role)
-      user.deactivated ? "User: #{user.uid} added as #{role}, but is deactivated" : "User: #{user.uid} added as #{role}"
-    end
+  def show_notice(user, role)
+    user.deactivated ? "User: #{user.uid} added as #{role}, but is deactivated" : "User: #{user.uid} added as #{role}"
+  end
 end

@@ -26,15 +26,13 @@ module CsvExportable
     had_events = batch_ingest_events_count.positive?
     arr = []
     oids.each_with_index do |oid, index|
-      begin
-        po = ParentObject.find(oid.to_i)
-        next unless check_can_view(current_ability, index, po, arr, had_events)
-        po.child_objects.each do |co|
-          arr << co
-        end
-      rescue ActiveRecord::RecordNotFound
-        parent_not_found(index, oid, arr, had_events)
+      po = ParentObject.find(oid.to_i)
+      next unless check_can_view(current_ability, index, po, arr, had_events)
+      po.child_objects.each do |co|
+        arr << co
       end
+    rescue ActiveRecord::RecordNotFound
+      parent_not_found(index, oid, arr, had_events)
     end
 
     arr.sort_by { |co| [co.try(:order) || co[2], co.try(:oid) || co[1]] }

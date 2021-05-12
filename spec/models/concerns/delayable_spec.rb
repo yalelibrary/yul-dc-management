@@ -16,8 +16,8 @@ RSpec.describe Delayable, prep_metadata_sources: true, prep_admin_sets: true do
       expect(Delayed::Job.count).to eq 3
       expect(parent_object.setup_metadata_jobs.count).to eq 1
       expect(parent_object.setup_metadata_jobs.first).to eq setup_job
-      expect(Delayable.solr_reindex_jobs.count).to eq 1
-      expect(Delayable.solr_reindex_jobs.first).to eq reindex_job
+      expect(described_class.solr_reindex_jobs.count).to eq 1
+      expect(described_class.solr_reindex_jobs.first).to eq reindex_job
     end
 
     it 'will destroy all jobs from a given parent object when the parent object is destroyed' do

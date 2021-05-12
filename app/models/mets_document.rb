@@ -54,7 +54,7 @@ class MetsDocument
     return false if rights_statement.blank?
     return false unless valid_metadata_source_path?
     return false if fixture_images_in_production?
-    return false unless admin_set.present?
+    return false if admin_set.blank?
     true
   end
 

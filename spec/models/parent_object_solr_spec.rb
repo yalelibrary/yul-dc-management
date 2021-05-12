@@ -16,7 +16,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
   before do
     stub_ptiffs_and_manifests
     # rubocop:disable RSpec/AnyInstance
-    allow_any_instance_of(ParentObject).to receive(:manifest_completed?).and_return(true)
+    allow_any_instance_of(described_class).to receive(:manifest_completed?).and_return(true)
     # rubocop:enable RSpec/AnyInstance
     stub_full_text('1032318')
   end
@@ -86,7 +86,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
           stub_metadata_cloud(oid)
           FactoryBot.create(:parent_object, oid: oid)
         end
-      end.to change { ParentObject.count }.by(5)
+      end.to change { described_class.count }.by(5)
 
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 5
@@ -111,7 +111,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
           stub_metadata_cloud(oid)
           FactoryBot.create(:parent_object, oid: oid)
         end
-      end.to change { ParentObject.count }.by(5)
+      end.to change { described_class.count }.by(5)
       expect(SolrReindexAllJob.perform_now).to be
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 5
@@ -128,7 +128,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
           stub_metadata_cloud(oid)
           FactoryBot.create(:parent_object, oid: oid)
         end
-      end.to change { ParentObject.count }.by(1)
+      end.to change { described_class.count }.by(1)
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 1
 
@@ -136,9 +136,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         [
           '2034600'
         ].each do |oid|
-          ParentObject.find(oid).destroy
+          described_class.find(oid).destroy
         end
-      end.to change { ParentObject.count }.by(-1)
+      end.to change { described_class.count }.by(-1)
 
       response = solr.get 'select', params: { q: '*:*' }
       expect(response["response"]["numFound"]).to eq 0

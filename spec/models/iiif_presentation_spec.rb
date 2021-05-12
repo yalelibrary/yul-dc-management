@@ -103,7 +103,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["metadata"].last.class).to eq Hash
       expect(iiif_presentation.manifest["metadata"].last["label"]).to eq "OID"
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"] == "Orbis ID" }).not_to be_empty
-      expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"] == "Container / Volume Information" }.first["value"].first).to eq 'Box 12, Folder 117'
+      expect(iiif_presentation.manifest["metadata"].find { |k| true if k["label"] == "Container / Volume Information" }["value"].first).to eq 'Box 12, Folder 117'
     end
 
     it "has a rendering in the sequence" do
@@ -311,7 +311,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     context 'with no images in the canvas' do
       let(:no_child_oid) { "100001" }
       let(:no_child_parent_object) { FactoryBot.create(:parent_object, oid: no_child_oid) }
-      let(:no_child_iiif_presentation) { IiifPresentation.new(no_child_parent_object) }
+      let(:no_child_iiif_presentation) { described_class.new(no_child_parent_object) }
 
       before do
         stub_metadata_cloud("100001")

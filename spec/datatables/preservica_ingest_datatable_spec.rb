@@ -7,7 +7,7 @@ RSpec.describe PreservicaIngestDatatable, type: :datatable, prep_metadata_source
   columns = ['parent_oid', 'child_oid', 'parent_preservica_id', 'parent_preservica_id', 'batch_process_id', 'timestamp']
 
   it 'can handle an empty model set' do
-    output = PreservicaIngestDatatable.new(datatable_sample_params(columns), current_ability: Ability.new(user)).data
+    output = described_class.new(datatable_sample_params(columns), current_ability: Ability.new(user)).data
 
     expect(output).to eq([])
   end
@@ -26,7 +26,7 @@ RSpec.describe PreservicaIngestDatatable, type: :datatable, prep_metadata_source
 
     it 'renders data with proper permissions' do
       batch_process_xml
-      output = PreservicaIngestDatatable.new(datatable_sample_params(columns), current_ability: Ability.new(user)).data
+      output = described_class.new(datatable_sample_params(columns), current_ability: Ability.new(user)).data
 
       expect(output.size).to eq(1)
       expect(output[0]).to include(

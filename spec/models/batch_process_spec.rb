@@ -125,7 +125,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         batch_process_with_failure.file = csv_upload
         batch_process_with_failure.save
         batch_process_with_failure.run_callbacks :create
-        allow_any_instance_of(BatchProcess).to receive(:status_hash).and_return(
+        allow_any_instance_of(described_class).to receive(:status_hash).and_return(
           complete: 0,
           in_progress: 0,
           failed: 5,

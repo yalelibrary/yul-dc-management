@@ -131,32 +131,32 @@ class ParentObjectsController < ApplicationController
 
   private
 
-    def valid_admin_set_edit?
-      !parent_object_params[:admin_set] || (parent_object_params[:admin_set] && current_user.editor(parent_object_params[:admin_set]))
-    end
+  def valid_admin_set_edit?
+    !parent_object_params[:admin_set] || (parent_object_params[:admin_set] && current_user.editor(parent_object_params[:admin_set]))
+  end
 
-    def invalidate_admin_set_edit
-      @parent_object.errors.add :admin_set, :invalid, message: "cannot be assigned to a set the User cannot edit"
-    end
+  def invalidate_admin_set_edit
+    @parent_object.errors.add :admin_set, :invalid, message: "cannot be assigned to a set the User cannot edit"
+  end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_parent_object
-      @parent_object = ParentObject.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_parent_object
+    @parent_object = ParentObject.find(params[:id])
+  end
 
-    def batch_process_of_one
-      @batch_process = BatchProcess.new(user: current_user, oid: @parent_object.oid)
-      @parent_object.current_batch_connection = @batch_process.batch_connections.build(connectable: @parent_object)
-      @batch_process.save!
-      @parent_object.current_batch_process = @batch_process
-    end
+  def batch_process_of_one
+    @batch_process = BatchProcess.new(user: current_user, oid: @parent_object.oid)
+    @parent_object.current_batch_connection = @batch_process.batch_connections.build(connectable: @parent_object)
+    @batch_process.save!
+    @parent_object.current_batch_process = @batch_process
+  end
 
-    # Only allow a list of trusted parameters through.
-    def parent_object_params
-      cur_params = params.require(:parent_object).permit(:oid, :admin_set, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
-                                                         :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction,
-                                                         :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization)
-      cur_params[:admin_set] = AdminSet.find_by(key: cur_params[:admin_set])
-      cur_params
-    end
+  # Only allow a list of trusted parameters through.
+  def parent_object_params
+    cur_params = params.require(:parent_object).permit(:oid, :admin_set, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
+                                                       :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction,
+                                                       :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization)
+    cur_params[:admin_set] = AdminSet.find_by(key: cur_params[:admin_set])
+    cur_params
+  end
 end

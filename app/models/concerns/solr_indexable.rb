@@ -10,7 +10,7 @@ module SolrIndexable
 
   def solr_index
     indexable = to_solr_full_text
-    return unless indexable.present?
+    return if indexable.blank?
     solr = SolrService.connection
     solr.add([indexable])
     solr.commit
@@ -153,7 +153,7 @@ module SolrIndexable
       sourceTitle_ssim: json_to_index["sourceTitle"], # repleaced by sourceTitle_tesim
       subject_topic_tsim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
       title_tsim: json_to_index["title"] # replaced by title_tesim
-    }.delete_if { |_k, v| !v.present? } # Delete nil and empty values
+    }.delete_if { |_k, v| v.blank? } # Delete nil and empty values
   end
 
   def to_solr_full_text(json_to_index = nil)

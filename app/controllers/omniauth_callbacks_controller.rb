@@ -21,7 +21,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   protected
 
-    def after_omniauth_failure_path_for(_resource)
-      root_path
-    end
+  def after_omniauth_failure_path_for(_resource)
+    root_path
+  end
 end

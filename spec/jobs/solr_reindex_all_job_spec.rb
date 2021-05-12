@@ -14,15 +14,15 @@ RSpec.describe SolrReindexAllJob, type: :job, prep_metadata_sources: true, solr:
       parent_object
       ActiveJob::Base.queue_adapter = :delayed_job
       expect do
-        SolrReindexAllJob.perform_later
+        described_class.perform_later
       end.to change { Delayed::Job.count }.by(1)
     end
   end
 
   context 'with more than limit parent objects' do
     before do
-      limit = SolrReindexAllJob.job_limit
-      solr_limit = SolrReindexAllJob.solr_batch_limit
+      limit = described_class.job_limit
+      solr_limit = described_class.solr_batch_limit
       total_records = 8000 #  some number > SolrReindexAllJob.job_limit < SolrReindexAllJob.job_limit * 2
 
       # create mocks for everything the job uses
@@ -52,7 +52,7 @@ RSpec.describe SolrReindexAllJob, type: :job, prep_metadata_sources: true, solr:
     end
 
     it 'goes through all parents in batches' do
-      SolrReindexAllJob.perform_later
+      described_class.perform_later
     end
   end
 end

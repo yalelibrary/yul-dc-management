@@ -68,12 +68,12 @@ RSpec.describe 'Roles', type: :request do
 
     it 'is denied permission to add a role to a user' do
       post roles_url, params: valid_parameters
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
     end
 
     it 'is denied permission to delete a role from a user' do
       delete remove_roles_path, params: valid_parameters
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
     end
   end
 end

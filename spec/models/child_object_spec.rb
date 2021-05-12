@@ -61,7 +61,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
         user
         parent_object
       end.to change(ParentObject, :count).by(1)
-         .and change(ChildObject, :count).by(1)
+         .and change(described_class, :count).by(1)
          .and change(Notification, :count).by(7)
       statuses = Notification.all.map { |note| note.params[:status] }
       expect(statuses).to include "ptiff-ready"

@@ -55,7 +55,7 @@ class GenerateManifestJob < ApplicationJob
 
   def index_to_solr(parent_object)
     result = parent_object.solr_index
-    if (result&.[]("responseHeader")&.[]("status"))&.zero?
+    if result&.[]("responseHeader")&.[]("status")&.zero?
       parent_object.processing_event("Solr index updated", "solr-indexed")
     else
       parent_object.processing_event("Solr index after manifest generation failed", "failed")

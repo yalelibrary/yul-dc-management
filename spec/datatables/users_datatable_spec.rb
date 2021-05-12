@@ -9,14 +9,14 @@ RSpec.describe UserDatatable, type: :datatable do
 
   describe 'user data tables' do
     it 'can handle an empty model set' do
-      output = UserDatatable.new(datatable_sample_params(columns)).data
+      output = described_class.new(datatable_sample_params(columns)).data
 
       expect(output).to eq([])
     end
 
     it 'renders a complete data table' do
       login_as user
-      output = UserDatatable.new(datatable_sample_params(columns), view_context: user_datatable_view_mock(user.id, user.uid)).data
+      output = described_class.new(datatable_sample_params(columns), view_context: user_datatable_view_mock(user.id, user.uid)).data
 
       expect(output.size).to eq(1)
       expect(output[0]).to include(
@@ -33,14 +33,14 @@ RSpec.describe UserDatatable, type: :datatable do
       login_as user
       user2.deactivated = true
       user2.save
-      output = UserDatatable.new(datatable_sample_params(columns), view_context: user_datatable_view_mock(user.id, user.uid)).data
+      output = described_class.new(datatable_sample_params(columns), view_context: user_datatable_view_mock(user.id, user.uid)).data
       expect(output.size).to eq(2)
     end
 
     it "shows sysadmin status correctly" do
       login_as user
       user.add_role :sysadmin
-      output = UserDatatable.new(datatable_sample_params(columns), view_context: user_datatable_view_mock(user.id, user.uid)).data
+      output = described_class.new(datatable_sample_params(columns), view_context: user_datatable_view_mock(user.id, user.uid)).data
       expect(output.size).to eq(1)
       expect(output[0]).to include(
         netid: "<a href='/management/users/#{user.id}'>#{user.uid}</a>",

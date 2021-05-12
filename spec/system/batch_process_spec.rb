@@ -43,8 +43,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     end
     it "can still successfully see the batch_process page" do
       visit batch_processes_path
-      click_on(BatchProcess.last.id.to_s, match: :first)
-      expect(page.body).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
+      click_on(described_class.last.id.to_s, match: :first)
+      expect(page.body).to have_link(described_class.last.id.to_s, href: "/batch_processes/#{described_class.last.id}")
     end
     context "deleting a parent object" do
       it "can still load the batch_process page" do
@@ -52,32 +52,32 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         po.delete
         expect(po.destroyed?).to be true
         visit batch_processes_path
-        click_on(BatchProcess.last.id.to_s)
-        expect(page.body).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
+        click_on(described_class.last.id.to_s)
+        expect(page.body).to have_link(described_class.last.id.to_s, href: "/batch_processes/#{described_class.last.id}")
       end
     end
   end
 
   context "when uploading a csv" do
     it "uploads and increases csv count and gives a success message" do
-      expect(BatchProcess.count).to eq 0
+      expect(described_class.count).to eq 0
       page.attach_file("batch_process_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
       click_button("Submit")
-      expect(BatchProcess.count).to eq 1
+      expect(described_class.count).to eq 1
       expect(page).to have_content("Your job is queued for processing in the background")
-      expect(BatchProcess.last.file_name).to eq "short_fixture_ids.csv"
-      expect(BatchProcess.last.batch_action).to eq "create parent objects"
-      expect(BatchProcess.last.output_csv).to be nil
+      expect(described_class.last.file_name).to eq "short_fixture_ids.csv"
+      expect(described_class.last.batch_action).to eq "create parent objects"
+      expect(described_class.last.output_csv).to be nil
     end
 
     it "does not create batch if error saving" do
-      expect(BatchProcess.count).to eq 0
+      expect(described_class.count).to eq 0
       # rubocop:disable RSpec/AnyInstance
-      allow_any_instance_of(BatchProcess).to receive(:save).and_return(false)
+      allow_any_instance_of(described_class).to receive(:save).and_return(false)
       # rubocop:enable RSpec/AnyInstance
       page.attach_file("batch_process_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
       click_button("Submit")
-      expect(BatchProcess.count).to eq 0
+      expect(described_class.count).to eq 0
       expect(page).not_to have_content("Your job is queued for processing in the background")
     end
 
@@ -104,11 +104,11 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
 
       it "uploads a CSV of child oids in order to re-associate them with new parent oids" do
-        expect(BatchProcess.count).to eq 0
+        expect(described_class.count).to eq 0
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_small.csv")
         select("Reassociate Child Oids")
         click_button("Submit")
-        expect(BatchProcess.count).to eq 1
+        expect(described_class.count).to eq 1
         expect(page).to have_content("Your job is queued for processing in the background")
       end
 
@@ -118,7 +118,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Reassociate Child Oids")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        click_link(BatchProcess.last.id.to_s)
+        click_link(described_class.last.id.to_s)
         expect(page).to have_link("2002826")
         click_link("2002826")
         expect(page).to have_link("1021925")
@@ -132,7 +132,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Reassociate Child Oids")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        click_link(BatchProcess.last.id.to_s)
+        click_link(described_class.last.id.to_s)
         expect(page).to have_content("Batch Messages")
         expect(page).to have_content("Skipped Row").twice
       end
@@ -142,7 +142,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Reassociate Child Oids")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        click_link(BatchProcess.last.id.to_s)
+        click_link(described_class.last.id.to_s)
         expect(page).to have_content("Batch Messages")
         expect(page).to have_content("Skipped Row").once
         expect(page).to have_content("invalid order").once
@@ -167,33 +167,33 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         end
       end
       it "uploads a CSV of parent oids in order to create export of child objects oids and orders" do
-        expect(BatchProcess.count).to eq 0
+        expect(described_class.count).to eq 0
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
         select("Export Child Oids")
         click_button("Submit")
-        expect(BatchProcess.count).to eq 1
+        expect(described_class.count).to eq 1
         expect(page).to have_content("Your job is queued for processing in the background")
-        expect(BatchProcess.last.file_name).to eq "short_fixture_ids.csv"
-        expect(BatchProcess.last.batch_action).to eq "export child oids"
-        expect(BatchProcess.last.output_csv).to include "1126257"
-        expect(BatchProcess.last.output_csv).to include '2005512,0,Access denied for parent object'
-        expect(BatchProcess.last.output_csv).not_to include "1030368" # child of 2005512
-        expect(BatchProcess.last.batch_ingest_events.count).to eq 4
-        expect(BatchProcess.last.batch_ingest_events.map(&:reason)).to include "Skipping row [3] due to parent permissions: 2005512"
+        expect(described_class.last.file_name).to eq "short_fixture_ids.csv"
+        expect(described_class.last.batch_action).to eq "export child oids"
+        expect(described_class.last.output_csv).to include "1126257"
+        expect(described_class.last.output_csv).to include '2005512,0,Access denied for parent object'
+        expect(described_class.last.output_csv).not_to include "1030368" # child of 2005512
+        expect(described_class.last.batch_ingest_events.count).to eq 4
+        expect(described_class.last.batch_ingest_events.map(&:reason)).to include "Skipping row [3] due to parent permissions: 2005512"
 
-        sorted_child_objects = BatchProcess.last.sorted_child_objects
+        sorted_child_objects = described_class.last.sorted_child_objects
         expect(sorted_child_objects[0]).to include 2_005_512
         expect(sorted_child_objects[1]).to include 14_716_192
         expect(sorted_child_objects[2]).to include 16_414_889
         expect(sorted_child_objects[3]).to include 16_854_285
         expect(sorted_child_objects[4]).to be_a(ChildObject)
 
-        click_on(BatchProcess.last.id.to_s)
-        expect(page).to have_link("short_fixture_ids.csv", href: "/batch_processes/#{BatchProcess.last.id}/download")
-        expect(page).to have_link("short_fixture_ids_bp_#{BatchProcess.last.id}.csv", href: "/batch_processes/#{BatchProcess.last.id}/download_created")
-        bp = BatchProcess.last
+        click_on(described_class.last.id.to_s)
+        expect(page).to have_link("short_fixture_ids.csv", href: "/batch_processes/#{described_class.last.id}/download")
+        expect(page).to have_link("short_fixture_ids_bp_#{described_class.last.id}.csv", href: "/batch_processes/#{described_class.last.id}/download_created")
+        bp = described_class.last
         expect(bp.oids).to eq ["2034600", "2005512", "16414889", "14716192", "16854285"]
-        click_on("short_fixture_ids_bp_#{BatchProcess.last.id}.csv")
+        click_on("short_fixture_ids_bp_#{described_class.last.id}.csv")
       end
 
       context "round-tripping csv" do
@@ -201,9 +201,9 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
           page.attach_file("batch_process_file", Rails.root + "spec/fixtures/parents_for_reassociation_as_output.csv")
           select("Export Child Oids")
           click_button("Submit")
-          expect(BatchProcess.count).to eq 1
+          expect(described_class.count).to eq 1
           expect(page).to have_content("Your job is queued for processing in the background")
-          bp = BatchProcess.last
+          bp = described_class.last
           expect(bp.oids).to eq ["2002826", "2004548", "2004549"]
         end
 
@@ -211,9 +211,9 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
           page.attach_file("batch_process_file", Rails.root + "spec/fixtures/parents_for_reassociation.csv")
           select("Export Child Oids")
           click_button("Submit")
-          expect(BatchProcess.count).to eq 1
+          expect(described_class.count).to eq 1
           expect(page).to have_content("Your job is queued for processing in the background")
-          bp = BatchProcess.last
+          bp = described_class.last
           expect(bp.oids).to eq ["2002826", "2004548", "2004549"]
         end
       end
@@ -234,9 +234,9 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
 
       it "can still see the details of the import" do
-        expect(page).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
+        expect(page).to have_link(described_class.last.id.to_s, href: "/batch_processes/#{described_class.last.id}")
         expect(page).to have_content('5')
-        expect(page).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
+        expect(page).to have_link(described_class.last.id.to_s, href: "/batch_processes/#{described_class.last.id}")
       end
     end
 
@@ -257,7 +257,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Recreate Child Oid Ptiffs")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        click_link(BatchProcess.last.id.to_s)
+        click_link(described_class.last.id.to_s)
         expect(page).to have_link("2002826")
         click_link("2002826")
         expect(page).to have_link("1011398")
@@ -269,7 +269,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Recreate Child Oid Ptiffs")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        click_link(BatchProcess.last.id.to_s)
+        click_link(described_class.last.id.to_s)
         expect(page).to have_content("Batch Messages")
         expect(page).to have_content("Skipped Row")
       end
@@ -277,12 +277,12 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   end
   context "when uploading an xml" do
     it "uploads and increases xml count and gives a success message" do
-      expect(BatchProcess.count).to eq 0
+      expect(described_class.count).to eq 0
       page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
       click_button("Submit")
-      expect(BatchProcess.count).to eq 1
+      expect(described_class.count).to eq 1
       expect(page).to have_content("Your job is queued for processing in the background")
-      expect(BatchProcess.last.file_name).to eq "111860A_8394689_mets.xml"
+      expect(described_class.last.file_name).to eq "111860A_8394689_mets.xml"
     end
 
     context "deleting a parent object" do
@@ -295,8 +295,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         po.delete
         expect(po.destroyed?).to be true
         visit batch_processes_path
-        click_on(BatchProcess.last.id.to_s)
-        expect(page.body).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
+        click_on(described_class.last.id.to_s)
+        expect(page.body).to have_link(described_class.last.id.to_s, href: "/batch_processes/#{described_class.last.id}")
       end
     end
   end
@@ -319,7 +319,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       allow_any_instance_of(SetupMetadataJob).to receive(:check_mets_images).and_return(true)
       allow_any_instance_of(ParentObject).to receive(:default_fetch).and_return(true)
       # rubocop:enable RSpec/AnyInstance check_mets_images
-      expect(BatchProcess.count).to eq 0
+      expect(described_class.count).to eq 0
       page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
       click_button("Submit")
       pj = PreservicaIngest.find_by_child_oid(30_000_319)

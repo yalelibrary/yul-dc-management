@@ -204,8 +204,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
     # rubocop:disable RSpec/AnyInstance
     it "checks for solr success" do
-      po_actual = ParentObject.create(oid: 2_034_600, admin_set: FactoryBot.create(:admin_set))
-      allow_any_instance_of(ParentObject).to receive(:solr_index).and_return("responseHeader" => { "status" => 404, "QTime" => 106 })
+      po_actual = described_class.create(oid: 2_034_600, admin_set: FactoryBot.create(:admin_set))
+      allow_any_instance_of(described_class).to receive(:solr_index).and_return("responseHeader" => { "status" => 404, "QTime" => 106 })
       batch_connection = batch_process.batch_connections.build(connectable: po_actual)
       gn = GenerateManifestJob.new
       gn.perform(po_actual, batch_process, batch_connection)
@@ -249,7 +249,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
   context "When trying to create a ParentObject" do
     it "requires an admin_set to be valid" do
-      parent_object = ParentObject.new(oid: "2004628", authoritative_metadata_source_id: "1")
+      parent_object = described_class.new(oid: "2004628", authoritative_metadata_source_id: "1")
       expect(parent_object).not_to be_valid
     end
   end
@@ -406,7 +406,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       it 'returns nil when authoritative source is not set' do
-        expect(ParentObject.new(authoritative_metadata_source_id: nil).source_name).to eq nil
+        expect(described_class.new(authoritative_metadata_source_id: nil).source_name).to eq nil
       end
     end
 
@@ -559,7 +559,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     it 'returns nil when authoritative source is not set' do
-      expect(ParentObject.new(authoritative_metadata_source_id: nil).source_name).to eq nil
+      expect(described_class.new(authoritative_metadata_source_id: nil).source_name).to eq nil
     end
   end
 

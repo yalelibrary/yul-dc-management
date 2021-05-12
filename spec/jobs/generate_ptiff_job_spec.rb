@@ -11,7 +11,7 @@ RSpec.describe GeneratePtiffJob, type: :job do
   let(:metadata_source) { FactoryBot.create(:metadata_source) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source) }
   let(:child_object) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object) }
-  let(:generate_ptiff_job) { GeneratePtiffJob.new }
+  let(:generate_ptiff_job) { described_class.new }
 
   around do |example|
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
@@ -32,7 +32,7 @@ RSpec.describe GeneratePtiffJob, type: :job do
   describe 'generate ptiff job' do
     it 'increments the job queue by one' do
       expect do
-        GeneratePtiffJob.perform_later(child_object)
+        described_class.perform_later(child_object)
       end.to change { Delayed::Job.count }.by(1)
     end
 

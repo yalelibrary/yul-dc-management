@@ -54,13 +54,13 @@ RSpec.describe "Request new OIDs", type: :request do
       it "returns an error when a non-integer is supplied" do
         number = "5%2E25"
         get new_oid_path(number), headers: { 'ACCEPT' => "application/json" }
-        expect(response).to have_http_status(400)
+        expect(response).to have_http_status(:bad_request)
         expect(response.content_type).to eq "text/plain; charset=utf-8"
       end
 
       it "returns an appropriate HTTP status for a non-JSON or text request" do
         get new_oid_path, headers: { 'ACCEPT' => "text/html" }
-        expect(response).to have_http_status(406)
+        expect(response).to have_http_status(:not_acceptable)
       end
     end
 

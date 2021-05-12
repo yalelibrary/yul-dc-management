@@ -8,12 +8,12 @@ RSpec.describe GenerateManifestJob, type: :job do
   end
 
   let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
-  let(:generate_manifest_job) { GenerateManifestJob.new }
+  let(:generate_manifest_job) { described_class.new }
 
   describe 'generate manifests job' do
     it 'increments the job queue by one' do
       expect do
-        GenerateManifestJob.perform_later(parent_object)
+        described_class.perform_later(parent_object)
       end.to change { Delayed::Job.count }.by(1)
     end
 
