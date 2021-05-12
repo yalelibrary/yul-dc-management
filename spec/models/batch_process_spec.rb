@@ -14,9 +14,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   around do |example|
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
     original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
+    original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
     ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "images", "access_masters")
-    original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
     ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     example.run
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
@@ -326,6 +326,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       context "creating a ParentObject from an import" do
         before do
           stub_metadata_cloud("16371253")
+          stub_full_text('1032318')
         end
         it "can create a parent_object from an array of oids" do
           expect do
@@ -454,6 +455,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
         before do
           stub_ptiffs_and_manifests
+          stub_full_text('1032318')
         end
 
         around do |example|
