@@ -59,10 +59,12 @@ module PdfRepresentable
       pages = []
       child_objects = ChildObject.where(parent_object: self).order(:order)
       child_objects.map do |child|
-        pages << {
+        page = {
           "caption" => child['label'] || "",
           "file" => S3Service.presigned_url(child.remote_ptiff_path, 24_000)
         }
+        page['properties'] = [{ 'name' => 'Caption:', 'value' => child.caption }] if child.caption.present?
+        pages << page
       end
       pages
     end
