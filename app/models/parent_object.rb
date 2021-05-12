@@ -9,9 +9,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Statable
   include PdfRepresentable
   include Delayable
-  has_many :dependent_objects
+  has_many :dependent_objects, dependent: nil
   has_many :child_objects, -> { order('"order" ASC, oid ASC') }, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
-  has_many :batch_connections, as: :connectable
+  has_many :batch_connections, as: :connectable, dependent: nil
   has_many :batch_processes, through: :batch_connections
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   belongs_to :admin_set
@@ -147,10 +147,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                     when "ladybird"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
                     when "ils"
-                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless bib.present?
+                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) if bib.blank?
                       self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
                     when "aspace"
-                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless aspace_uri.present?
+                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) if aspace_uri.blank?
                       self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
                     end
     processing_event("Metadata has been fetched", "metadata-fetched") if fetch_results
@@ -251,7 +251,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def voyager_cloud_url
-    raise StandardError, "Bib id required to build Voyager url" unless bib.present?
+    raise StandardError, "Bib id required to build Voyager url" if bib.blank?
     identifier_block = if barcode.present?
                          "/barcode/#{barcode}?bib=#{bib}"
                        elsif holding.present?
@@ -265,7 +265,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def aspace_cloud_url
-    raise StandardError, "ArchiveSpace uri required to build ArchiveSpace url" unless aspace_uri.present?
+    raise StandardError, "ArchiveSpace uri required to build ArchiveSpace url" if aspace_uri.blank?
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace#{aspace_uri}"
   end
 
@@ -354,7 +354,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def extract_container_information(json = authoritative_json)
     return nil unless json
-    return json["containerGrouping"] unless json["containerGrouping"].nil? || json["containerGrouping"].empty?
+    return json["containerGrouping"] if json["containerGrouping"].present?
     return [(json["box"] && (json['box']).to_s), (json["folder"] && (json['folder']).to_s)].join(", ") if json["box"] || json["folder"]
     json["volumeEnumeration"]
   end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MetadataSource < ApplicationRecord
-  has_many :parent_objects, foreign_key: "authoritative_metadata_source_id"
+  has_many :parent_objects, foreign_key: "authoritative_metadata_source_id", dependent: nil
   class MetadataCloudServerError < StandardError
     def message
       "MetadataCloud is responding with 5XX error"
@@ -21,7 +21,7 @@ class MetadataSource < ApplicationRecord
                    else
                      s3_path = "#{metadata_cloud_name}/#{file_name(parent_object)}"
                      r = S3Service.download(s3_path)
-                     parent_object.processing_event("S3 did not return json for #{s3_path}", "failed") unless r.present?
+                     parent_object.processing_event("S3 did not return json for #{s3_path}", "failed") if r.blank?
                      r
                    end
     return unless raw_metadata
@@ -76,6 +76,6 @@ class MetadataSource < ApplicationRecord
   end
 
   def self.metadata_cloud_host
-    ENV['METADATA_CLOUD_HOST'].present? ? ENV['METADATA_CLOUD_HOST'] : 'metadata-api-uat.library.yale.edu'
+    ENV['METADATA_CLOUD_HOST'].presence || 'metadata-api-uat.library.yale.edu'
   end
 end
