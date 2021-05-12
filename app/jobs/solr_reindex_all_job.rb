@@ -26,7 +26,7 @@ class SolrReindexAllJob < ApplicationJob
         end.compact)
         solr.commit
         reindex_child_documents(child_documents)
-        solr.commit
+        # solr.commit
       end
       SolrReindexAllJob.perform_later(start_position + parent_objects.count) unless last_job
     end
