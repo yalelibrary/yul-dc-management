@@ -2,7 +2,7 @@
 
 namespace :parent_oids do
   desc "Create list of random selection of parent oids"
-  task random: :environment, [:samples] { |_t, args|
+  task :random, [:samples] => [:environment] do |_t, args|
     oid_path = Rails.root.join("spec", "fixtures", "public_oids_comma.csv")
     fixture_ids_table = CSV.read(oid_path, headers: true)
     oids = fixture_ids_table.by_col[0]
@@ -11,7 +11,7 @@ namespace :parent_oids do
       csv << ["oid"]
       random_parent_oids.each { |oid| csv << [oid] }
     end
-  }
+  end
 
   desc "Update Ladybird fixtures"
   task update_ladybird_fixtures: :environment do
