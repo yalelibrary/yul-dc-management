@@ -9,9 +9,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Statable
   include PdfRepresentable
   include Delayable
-  has_many :dependent_objects, dependent: nil
+  has_many :dependent_objects, dependent: :restrict_with_exception
   has_many :child_objects, -> { order('"order" ASC, oid ASC') }, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
-  has_many :batch_connections, as: :connectable, dependent: nil
+  has_many :batch_connections, as: :connectable, dependent: :restrict_with_exception
   has_many :batch_processes, through: :batch_connections
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   belongs_to :admin_set

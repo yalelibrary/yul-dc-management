@@ -8,9 +8,9 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  has_many :notifications, as: :recipient, dependent: nil
-  has_many :batch_processes, dependent: nil
-  has_many :users_roles, dependent: nil
+  has_many :notifications, as: :recipient, dependent: :restrict_with_exception
+  has_many :batch_processes, dependent: :restrict_with_exception
+  has_many :users_roles, dependent: :restrict_with_exception
 
   def active_for_authentication?
     super && !deactivated

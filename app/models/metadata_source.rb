@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MetadataSource < ApplicationRecord
-  has_many :parent_objects, foreign_key: "authoritative_metadata_source_id", dependent: nil
+  has_many :parent_objects, foreign_key: "authoritative_metadata_source_id", dependent: :restrict_with_exception
   class MetadataCloudServerError < StandardError
     def message
       "MetadataCloud is responding with 5XX error"

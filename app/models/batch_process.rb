@@ -9,7 +9,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_create :mets_oid
   validate :validate_import
   belongs_to :user, class_name: "User"
-  has_many :batch_connections, dependent: nil
+  has_many :batch_connections, dependent: :restrict_with_exception
   has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connectable
   has_many :child_objects, through: :batch_connections, source_type: "ChildObject", source: :connectable
 

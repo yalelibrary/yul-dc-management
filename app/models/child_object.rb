@@ -5,7 +5,7 @@ class ChildObject < ApplicationRecord
   include Statable
   include Delayable
   belongs_to :parent_object, foreign_key: 'parent_object_oid', class_name: "ParentObject"
-  has_many :batch_connections, as: :connectable, dependent: nil
+  has_many :batch_connections, as: :connectable, dependent: :restrict_with_exception
   has_many :batch_processes, through: :batch_connections
   has_one :admin_set, through: :parent_object
   self.primary_key = 'oid'
