@@ -15,6 +15,7 @@ RSpec.describe "child_objects/index", type: :view, prep_metadata_sources: true d
                                                      ChildObject.create!(
                                                        oid: 111,
                                                        caption: "Caption",
+                                                       label: "Label",
                                                        width: 2591,
                                                        height: 4056,
                                                        order: 4,
@@ -23,6 +24,7 @@ RSpec.describe "child_objects/index", type: :view, prep_metadata_sources: true d
                                                      ChildObject.create!(
                                                        oid: 222,
                                                        caption: "Caption",
+                                                       label: "Label",
                                                        width: 2591,
                                                        height: 4056,
                                                        order: 4,
@@ -36,6 +38,7 @@ RSpec.describe "child_objects/index", type: :view, prep_metadata_sources: true d
     assert_select "tr>td", text: 111.to_s, count: 1
     assert_select "tr>td", text: 222.to_s, count: 1
     assert_select "tr>td", text: "Caption".to_s, count: 2
+    assert_select "tr>td", text: "Label".to_s, count: 2
     assert_select "tr>td", text: 2591.to_s, count: 2
     assert_select "tr>td", text: 4056.to_s, count: 2
     assert_select "tr>td", text: 4.to_s, count: 2
