@@ -101,11 +101,7 @@ class MetsDocument
 
   def logical_info(logical_div)
     {
-      dmdid: logical_div.xpath("@DMDID").inner_text,
-      logical_id: logical_div.xpath("@ID").inner_text,
-      caption: caption_info(logical_div),
-      type: logical_div.xpath("@TYPE").inner_text,
-      type_label: logical_div.xpath("@LABEL").inner_text
+      caption: caption_info(logical_div)
     }
   end
 
