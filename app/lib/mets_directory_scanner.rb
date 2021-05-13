@@ -5,7 +5,7 @@ require 'find'
 class MetsDirectoryScanner
   def self.perform_scan # rubocop:disable Metrics/AbcSize
     MetsDirectoryScanner.scan_directories.each do |directory|
-      Dir.glob(File.join(directory, '**/*_mets.xml')) do |path|
+      Dir.glob(File.join(directory, '*/*_mets.xml')) do |path|
         next unless path =~ /.*_mets\.xml$/ && path !~ /.*xslt_result_mets\.xml$/
         check_file(path)
       end
