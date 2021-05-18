@@ -159,8 +159,7 @@ class IiifPresentation
 
   def seed
     {
-      '@id' =>
-          @sequence["@id"] = File.join((ENV['IIIF_MANIFESTS_BASE_URL']).to_s, oid.to_s),
+      '@id' => File.join((ENV['IIIF_MANIFESTS_BASE_URL']).to_s, oid.to_s),
       'label' => @parent_object&.authoritative_json&.[]("title")&.first
     }
   end
