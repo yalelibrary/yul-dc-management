@@ -44,7 +44,18 @@ class IiifPresentation
     @manifest["attribution"] = "Yale University Library"
     @manifest.sequences << sequence
     add_canvases_to_sequence(@manifest.sequences.first)
+    @manifest["service"] ||= []
+    @manifest["service"] << search_service
     @manifest
+  end
+
+  def search_service
+    {
+      "@context": "http://iiif.io/api/search/0/context.json",
+      "@id": "http://localhost:3000/catalog/#{oid}/iiif_search",
+      "profile": "http://iiif.io/api/search/0/search",
+      "label": "Search Here"
+    }
   end
 
   def sequence
