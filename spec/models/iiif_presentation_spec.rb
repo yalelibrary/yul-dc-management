@@ -44,8 +44,22 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     allow(parent_object).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{oid}.json"))))
   end
 
+  describe 'building a manifest' do
+    it "does have the search service section if the parent_object full_text? is true" do
+      allow(parent_object_no_labels).to receive(:full_text?).and_return true
+      expect(iiif_presentation_no_labels.manifest["service"].first[:@context]).to eq("http://iiif.io/api/search/0/context.json")
+      expect(iiif_presentation_no_labels.manifest["service"].first[:@id]).to eq("http://localhost:3000/catalog/2005512/iiif_search")
+      expect(iiif_presentation_no_labels.manifest["service"].first[:profile]).to eq("http://iiif.io/api/search/0/search")
+    end
+
+    it "does NOT have the service section if the parent_object full_text? is false" do
+      expect(iiif_presentation.manifest["service"]).to eq(nil)
+    end
+  end
+
   describe "creating a manifest with a valid mets xml import" do
     it "can be instantiated" do
+      byebug
       expect(iiif_presentation.oid).to eq oid
     end
 
