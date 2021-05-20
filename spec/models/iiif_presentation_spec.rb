@@ -59,7 +59,6 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
 
   describe "creating a manifest with a valid mets xml import" do
     it "can be instantiated" do
-      byebug
       expect(iiif_presentation.oid).to eq oid
     end
 
