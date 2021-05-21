@@ -1,0 +1,892 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:dv="http://dfg-viewer.de/" xmlns:intranda="http://intranda.com/MODS/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OBJID="1054" xsi:schemaLocation="http://www.loc.gov/standards/premis/ http://www.loc.gov/standards/premis/v2/premis-v2-0.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/standards/mix/ http://www.loc.gov/standards/mix/mix.xsd">
+  <mets:metsHdr CREATEDATE="2021-05-07T15:39:42Z">
+    <mets:agent OTHERTYPE="SOFTWARE" ROLE="CREATOR" TYPE="OTHER">
+      <mets:name>Goobi - b336f - 2020-08-02 19:35:26+0000</mets:name>
+      <mets:note>Goobi</mets:note>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:dmdSec ID="DMDLOG_0000">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[American broadside ballads, 1850-1890].</mods:title>
+          </mods:titleInfo>
+          <mods:identifier type="PPNanalog">/ils/barcode/39002098318018?bib=10819995</mods:identifier>
+          <mods:recordInfo>
+            <mods:recordIdentifier source="gbv-ppn">30597978</mods:recordIdentifier>
+          </mods:recordInfo>
+          <mods:part>Completely digitized</mods:part>
+          <mods:classification authority="ivdcc">DefaultCollection</mods:classification>
+          <mods:originInfo>
+            <mods:dateIssued keyDate="no">ca. 1850-ca. 1890]</mods:dateIssued>
+            <mods:dateIssued keyDate="yes">1850/1890</mods:dateIssued>
+          </mods:originInfo>
+          <mods:accessCondition displayLabel="Yale Restriction" type="restriction on access">Public</mods:accessCondition>
+          <mods:accessCondition displayLabel="Yale Use" type="use and reproduction">The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement.</mods:accessCondition>
+          <mods:note displayLabel="Yale Collection Owner" type="ownership">brbl</mods:note>
+          <mods:location>
+            <mods:shelfLocator>2012 +230</mods:shelfLocator>
+          </mods:location>
+          <mods:name type="personal">
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+            <mods:namePart type="family">Partridge</mods:namePart>
+            <mods:namePart type="given">Horace</mods:namePart>
+            <mods:displayForm>Partridge, Horace</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal">
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+            <mods:namePart type="family">Eastlack</mods:namePart>
+            <mods:namePart type="given">Francis F.</mods:namePart>
+            <mods:displayForm>Eastlack, Francis F.</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal">
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+            <mods:namePart type="family">Williams</mods:namePart>
+            <mods:namePart type="given">Gus</mods:namePart>
+            <mods:displayForm>Williams, Gus</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal">
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+            <mods:namePart type="family">Braham</mods:namePart>
+            <mods:namePart type="given">David</mods:namePart>
+            <mods:displayForm>Braham, David</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal">
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+            <mods:namePart type="family">Harrigan</mods:namePart>
+            <mods:namePart type="given">Edward</mods:namePart>
+            <mods:displayForm>Harrigan, Edward</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal">
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+            <mods:namePart type="family">Auner</mods:namePart>
+            <mods:namePart type="given">A</mods:namePart>
+            <mods:displayForm>Auner, A</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal">
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+            <mods:namePart type="family">Sterling</mods:namePart>
+            <mods:namePart type="given">H</mods:namePart>
+            <mods:displayForm>Sterling, H</mods:displayForm>
+          </mods:name>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:directionRTL>false</intranda:directionRTL>
+              <intranda:ViewingDirection>left-to-right</intranda:ViewingDirection>
+              <intranda:ViewingHint>individuals</intranda:ViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0001">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[1]. Ambrosial Song</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0002">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[2]. The Bold Privateer</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0003">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[3]. Good Will Hose Song</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0004">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[4]. The Great Know Nothing Song, "I Don't Know"</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0005">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[5]. Homeward Bound</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0006">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[6]. Hundred Years Ago</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0007">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[7]. I'm Afloat</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0008">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[8]. Indian Maid of the Chapparal</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0009">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[9]. Isabella, with the Gingham Umbrella</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0010">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[10]. Low Back'd Car</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0011">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[11]. Market on Saturday Night</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0012">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[12]. Meet Me at the Lane</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0013">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[13]. Muldoon the Solid Man</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0014">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[14]. My Daughter Julia</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0015">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[15]. Mygel Snyder's Bardy</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0016">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[16]. Oil on the Brain</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0017">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[17]. The Paupers</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DMDLOG_0018">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>[18]. When I Saw Sweet Nellie Home</mods:title>
+          </mods:titleInfo>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:ImageViewingHint>none</intranda:ImageViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:amdSec ID="AMD">
+    <mets:rightsMD ID="RIGHTS">
+      <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights>
+            <dv:owner>Beinecke Rare Book &amp; Manuscript Library</dv:owner>
+            <dv:ownerLogo />
+            <dv:ownerSiteURL>https://beinecke.library.yale.edu/</dv:ownerSiteURL>
+            <dv:ownerContact />
+            <dv:sponsorSiteURL>info@intranda.com</dv:sponsorSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="DIGIPROV">
+      <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links>
+            <dv:reference />
+            <dv:presentation />
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:fileSec>
+    <mets:fileGrp USE="PRESENTATION" ID="4e8e5f4a-4e56-4db9-8cf8-e5f995b09658">
+      <mets:file ID="abbe93c6-8a97-400d-88ca-3d9bdfbd39ca" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="5218ebf747eca41069baba6b0aa3e68db0f449a7">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597979.tif" />
+      </mets:file>
+      <mets:file ID="334cee35-9d2c-4d91-b304-11dde6a787aa" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="8acc046006fd27d85302d6e62f96759cf1daf7fd">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597980.tif" />
+      </mets:file>
+      <mets:file ID="02b87812-44ba-4913-bb87-0e2b6707048a" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="b3a605d64c5d4ab5e60d65181c872d35c6ca2c61">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597981.tif" />
+      </mets:file>
+      <mets:file ID="edadb216-e7a8-4a8b-b3fa-f6f428a8f9c5" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="ad96c33840ff0273b7d53abd4879e19e2a45bab2">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597982.tif" />
+      </mets:file>
+      <mets:file ID="fba27c89-e287-449e-b234-00dde5af67ad" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="bb71eded419d1b1b7dadabafb39158b623c61dcd">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597983.tif" />
+      </mets:file>
+      <mets:file ID="d3fdb93e-cc24-453b-8a1f-eb267117697d" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="b02210dd2e7c29aee0d7ab13df8b4788e3638d4d">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597984.tif" />
+      </mets:file>
+      <mets:file ID="a4325d1b-1529-40fb-b40f-b32dd4b11500" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="54f21737540e7f6305c16719ce04c47977f46e36">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597985.tif" />
+      </mets:file>
+      <mets:file ID="ce4923b1-ed71-4d80-9b05-53dd333d836d" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="36c349a7d729b208012d137ee2fed154d651f144">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597986.tif" />
+      </mets:file>
+      <mets:file ID="a33bf94d-6781-4054-bd9b-fad5e424605a" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="803af4604acf371fc000eefea9970e5b534755dd">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597987.tif" />
+      </mets:file>
+      <mets:file ID="aa4f0de3-64c1-48f9-832c-b1d7910e56a3" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="629bbc3f29918d2cbab77025601923a1548a3b34">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597988.tif" />
+      </mets:file>
+      <mets:file ID="e7ff7833-116b-4075-bd98-92a4156fd1ca" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="71eb8a04f27620c561dc319d00883171f8027b6a">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597989.tif" />
+      </mets:file>
+      <mets:file ID="c7576771-0ab8-47bc-85fe-dee1fc8cac14" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="cef3398a22ecff412249050aff78f2f85319d448">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597990.tif" />
+      </mets:file>
+      <mets:file ID="189ca94e-63fa-4d45-840e-ca1c87185ef0" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="a8ef33fe4ae3ddc13d5436dff39ca609834597a1">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597991.tif" />
+      </mets:file>
+      <mets:file ID="566048a8-4783-4a2b-a41c-74f832d705ff" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="d6a1d7594f8f18d64a42fc4dd934e9d35f21daf4">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597992.tif" />
+      </mets:file>
+      <mets:file ID="688c5bfa-6fff-476d-8c91-63d143375347" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="ecb053eaf5f574a7f68c905ace2a4d9117e2de8f">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597993.tif" />
+      </mets:file>
+      <mets:file ID="5d208cd7-b199-4d9f-b49c-6131f6c0f52c" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="4b8459c6f6256f644968cf9b2a82c7ef123997f0">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597994.tif" />
+      </mets:file>
+      <mets:file ID="a6dc4351-dace-40e1-86e3-1fe56c45a593" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="88bab3582c869fa77978b2752b9225c69594b9fa">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597995.tif" />
+      </mets:file>
+      <mets:file ID="de387a30-8c6e-4cfd-ba6b-dd508893ba46" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="3ca2865e40c8d6bd4dfeb13014f55359ffa900c9">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597996.tif" />
+      </mets:file>
+      <mets:file ID="90cb1518-f890-450f-9d1e-7a77d16aa272" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="44e505feafced8bb4daeddc0ae8830c94250b35f">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597997.tif" />
+      </mets:file>
+      <mets:file ID="fb6a906a-05ff-4099-8c05-c959dc090236" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="de86c2d6fae8f09b54797b9043adba35bddad5e3">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597998.tif" />
+      </mets:file>
+      <mets:file ID="efa2beff-cdfa-439e-83af-dbd406104a44" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="cdc1e5c8456990313f9ee68d3677add58ee396e6">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30597999.tif" />
+      </mets:file>
+      <mets:file ID="89074057-3205-4b87-a6e3-3750b731991c" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="4c7a4ddb1f665c29dd47873be15cf6b225e02ef8">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598000.tif" />
+      </mets:file>
+      <mets:file ID="fd8374e7-814d-4958-87f7-dc88768ae5fa" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="70df8f41fbf6a336e4b1c377e84acb65424537ee">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598001.tif" />
+      </mets:file>
+      <mets:file ID="b160600f-2474-4a37-9448-ae2264a57a30" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="c685ad5b40b4a396b5bc91817568ba0e96c16ebd">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598002.tif" />
+      </mets:file>
+      <mets:file ID="220b70ce-4365-478f-b9ce-23771087c4e4" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="ac457732167018148c662bb8dac372898e5cf8ba">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598003.tif" />
+      </mets:file>
+      <mets:file ID="e0c19566-7888-434c-a8a5-ba034fe55f80" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="1ab8411c1962a2c348704409ae5f634caaa88198">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598004.tif" />
+      </mets:file>
+      <mets:file ID="a0ca907c-a967-470b-887f-691f1b09ba94" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="8b2417154cc9f633b4f9e52d1a1682e1ce24c7c4">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598005.tif" />
+      </mets:file>
+      <mets:file ID="f17f1a58-acb7-4804-abfc-8f6dc2a612eb" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="0e05561155cc09c0043b26ba182d631fbfd5b56c">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598006.tif" />
+      </mets:file>
+      <mets:file ID="6a850acf-2fa4-4a6d-808e-d082c997a71c" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="8ef44fe267e59ecbc81d6fe15b1a247e3e73d4a7">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598007.tif" />
+      </mets:file>
+      <mets:file ID="a260344d-e5d2-484a-9e42-1da24a63b80d" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="829de9282b9f7ed7a661b59aa759bb1181550ffe">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598008.tif" />
+      </mets:file>
+      <mets:file ID="88ebec1c-bf41-4db4-905d-592809765a68" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="83d3850d16579dff1238ced8d61c0a73ec747050">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598009.tif" />
+      </mets:file>
+      <mets:file ID="01ea0f13-b91b-405b-9ddf-f9bdfd40b95f" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="a0d1e6f58735dfaa8249fbbfcb58f27f7e9dc1e9">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598010.tif" />
+      </mets:file>
+      <mets:file ID="f28f9a8a-c667-4198-b8d6-67637716e67b" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="93ad9209f8e2cab917519e018bd633d411c85deb">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598011.tif" />
+      </mets:file>
+      <mets:file ID="8d6f65e6-65fa-4ccd-a06d-f1babf20d632" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="cdf7f0fd15369173f37f4cf651b2de829d4065f8">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598012.tif" />
+      </mets:file>
+      <mets:file ID="da981f13-c876-49e1-89d1-8d80f8594325" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="f0f1e3a3157a22de3684d02cb1f6295e46b054a6">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598013.tif" />
+      </mets:file>
+      <mets:file ID="ee5d72a1-1bab-4d8d-81e0-837b5eecd66a" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="3402c27f768b061744dba6665628d2abf282f2d5">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598014.tif" />
+      </mets:file>
+      <mets:file ID="4b552b15-ed26-45e0-9852-7f51e6846118" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="5fe974a9bf1f3346ee530bb83548aff2ecfc868f">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598015.tif" />
+      </mets:file>
+      <mets:file ID="38e5e33e-3a3b-497e-ac1b-0612f9a20a21" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="cb9b9e3f037a546904b3a5d6bfa4f39047e57ec0">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598016.tif" />
+      </mets:file>
+      <mets:file ID="2be080c2-ed84-4015-aa79-f7a3e76112f0" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="d020050fa145c643ee1c724bf3fc6694f6af4030">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598017.tif" />
+      </mets:file>
+      <mets:file ID="bf0e28d2-819a-49b6-80c8-a46811e670bf" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="bea82e9328fb0b2b32f4af3834da3b1d2b4379c8">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598018.tif" />
+      </mets:file>
+      <mets:file ID="70a728b1-6827-4a8c-96df-26f2ff0c924d" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="cfbbf8cf61837bab2167fae8f8a59fb35c7e4c70">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598019.tif" />
+      </mets:file>
+      <mets:file ID="cf1883d3-1063-418e-81b2-3b3cc5df0bd1" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="0b5d81a3a75c1e4bdb5fa386dfaa7b6ccb78f1a9">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598020.tif" />
+      </mets:file>
+      <mets:file ID="10151949-df96-479a-9b65-a81bf4c49cdb" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="a6072f8175c6d2de28ca2df4b129d54582b64aeb">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598021.tif" />
+      </mets:file>
+      <mets:file ID="d63caa71-65d3-4234-be27-f0081d3fcdf7" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="219c3bca982cf0f81f28790ded5f470e72591b37">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598022.tif" />
+      </mets:file>
+      <mets:file ID="92cd3af8-0598-495a-a3c2-9b3a3fa512c3" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="f1fa0c11ba666544d7c16e0f7ae8bb0ea530fec0">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598023.tif" />
+      </mets:file>
+      <mets:file ID="46e97b39-ba21-4c74-af68-30dd4d7e28b1" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="1358e9ccbad759bbe3e84b32e4a7b4756b83f85a">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598024.tif" />
+      </mets:file>
+      <mets:file ID="04e0126c-b4e5-4ba2-9159-fe98b29b8320" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="f0c78caf5a2e4cf1aa4506416010522c88dbbed9">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598025.tif" />
+      </mets:file>
+      <mets:file ID="8ae832e8-f3b0-495d-9a3a-fc2734301f37" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="e66689b41c9b768b3ef8fa33edde2d4d83146385">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598026.tif" />
+      </mets:file>
+      <mets:file ID="bd6b5526-dbf7-4964-be5b-a45b85cdcbb6" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="bf7ea58417a4ef4042d77982406e6d88750de01d">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598027.tif" />
+      </mets:file>
+      <mets:file ID="79687599-3c3c-423e-8577-200213f43ca2" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="90f6148d4d5ba4b4d755e3de13706bf28eecd19e">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598028.tif" />
+      </mets:file>
+      <mets:file ID="3f4eab8a-0a3f-4227-8992-96ccee850b4c" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="449b46f8528b244619c5278bfea1b38b1bc77b6e">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598029.tif" />
+      </mets:file>
+      <mets:file ID="ba866a0d-b9fd-4102-ae0f-07dd12c50794" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="2f699ef97d7dafdd5746967a3d89cd45cf9141be">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598030.tif" />
+      </mets:file>
+      <mets:file ID="42ebb493-90e7-4903-b14a-32dc19cd7ebc" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="98378d9af59f512e8c97e05d8b5f0a6913e81484">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598031.tif" />
+      </mets:file>
+      <mets:file ID="24612545-0397-4b07-94f5-5a383598ebfa" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="857156d916472b2b7dfcbfacdbee882c2feb65af">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598032.tif" />
+      </mets:file>
+      <mets:file ID="928bd552-d4a4-481d-97b0-7ed6793077f1" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="04dd9ffe0e9557bd5ad2f9e87bffbf5cb7b124f0">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598033.tif" />
+      </mets:file>
+      <mets:file ID="1f0258ef-9d65-4565-8a9b-26bb2c021b14" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="372b0f4c768af13899888f9266287c8f68d6d508">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///brbl-dsu/dcs/30597978_20210507_153942/2012230_RA_media/30598034.tif" />
+      </mets:file>
+    </mets:fileGrp>
+  </mets:fileSec>
+  <mets:structMap TYPE="LOGICAL">
+    <mets:div ADMID="AMD" DMDID="DMDLOG_0000" ID="LOG_0000" LABEL="[American broadside ballads, 1850-1890]." TYPE="ILSObject">
+      <mets:div DMDID="DMDLOG_0001" ID="LOG_0001" LABEL="[1]. Ambrosial Song" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0002" ID="LOG_0002" LABEL="[2]. The Bold Privateer" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0003" ID="LOG_0003" LABEL="[3]. Good Will Hose Song" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0004" ID="LOG_0004" LABEL="[4]. The Great Know Nothing Song, &quot;I Don't Know&quot;" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0005" ID="LOG_0005" LABEL="[5]. Homeward Bound" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0006" ID="LOG_0006" LABEL="[6]. Hundred Years Ago" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0007" ID="LOG_0007" LABEL="[7]. I'm Afloat" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0008" ID="LOG_0008" LABEL="[8]. Indian Maid of the Chapparal" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0009" ID="LOG_0009" LABEL="[9]. Isabella, with the Gingham Umbrella" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0010" ID="LOG_0010" LABEL="[10]. Low Back'd Car" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0011" ID="LOG_0011" LABEL="[11]. Market on Saturday Night" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0012" ID="LOG_0012" LABEL="[12]. Meet Me at the Lane" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0013" ID="LOG_0013" LABEL="[13]. Muldoon the Solid Man" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0014" ID="LOG_0014" LABEL="[14]. My Daughter Julia" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0015" ID="LOG_0015" LABEL="[15]. Mygel Snyder's Bardy" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0016" ID="LOG_0016" LABEL="[16]. Oil on the Brain" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0017" ID="LOG_0017" LABEL="[17]. The Paupers" TYPE="caption" />
+      <mets:div DMDID="DMDLOG_0018" ID="LOG_0018" LABEL="[18]. When I Saw Sweet Nellie Home" TYPE="caption" />
+    </mets:div>
+  </mets:structMap>
+  <mets:structMap TYPE="PHYSICAL">
+    <mets:div CONTENTIDS="30597978" ID="PHYS_0000" TYPE="physSequence">
+      <mets:div CONTENTIDS="30597979" ID="PHYS_0001" ORDER="1" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="abbe93c6-8a97-400d-88ca-3d9bdfbd39ca" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597980" ID="PHYS_0002" ORDER="2" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="334cee35-9d2c-4d91-b304-11dde6a787aa" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597981" ID="PHYS_0003" ORDER="3" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="02b87812-44ba-4913-bb87-0e2b6707048a" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597982" ID="PHYS_0004" ORDER="4" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="edadb216-e7a8-4a8b-b3fa-f6f428a8f9c5" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597983" ID="PHYS_0005" ORDER="5" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="fba27c89-e287-449e-b234-00dde5af67ad" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597984" ID="PHYS_0006" ORDER="6" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="d3fdb93e-cc24-453b-8a1f-eb267117697d" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597985" ID="PHYS_0007" ORDER="7" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="a4325d1b-1529-40fb-b40f-b32dd4b11500" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597986" ID="PHYS_0008" ORDER="8" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="ce4923b1-ed71-4d80-9b05-53dd333d836d" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597987" ID="PHYS_0009" ORDER="9" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="a33bf94d-6781-4054-bd9b-fad5e424605a" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597988" ID="PHYS_0010" ORDER="10" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="aa4f0de3-64c1-48f9-832c-b1d7910e56a3" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597989" ID="PHYS_0011" ORDER="11" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="e7ff7833-116b-4075-bd98-92a4156fd1ca" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597990" ID="PHYS_0012" ORDER="12" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="c7576771-0ab8-47bc-85fe-dee1fc8cac14" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597991" ID="PHYS_0013" ORDER="13" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="189ca94e-63fa-4d45-840e-ca1c87185ef0" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597992" ID="PHYS_0014" ORDER="14" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="566048a8-4783-4a2b-a41c-74f832d705ff" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597993" ID="PHYS_0015" ORDER="15" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="688c5bfa-6fff-476d-8c91-63d143375347" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597994" ID="PHYS_0016" ORDER="16" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="5d208cd7-b199-4d9f-b49c-6131f6c0f52c" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597995" ID="PHYS_0017" ORDER="17" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="a6dc4351-dace-40e1-86e3-1fe56c45a593" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597996" ID="PHYS_0018" ORDER="18" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="de387a30-8c6e-4cfd-ba6b-dd508893ba46" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597997" ID="PHYS_0019" ORDER="19" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="90cb1518-f890-450f-9d1e-7a77d16aa272" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597998" ID="PHYS_0020" ORDER="20" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="fb6a906a-05ff-4099-8c05-c959dc090236" />
+      </mets:div>
+      <mets:div CONTENTIDS="30597999" ID="PHYS_0021" ORDER="21" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="efa2beff-cdfa-439e-83af-dbd406104a44" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598000" ID="PHYS_0022" ORDER="22" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="89074057-3205-4b87-a6e3-3750b731991c" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598001" ID="PHYS_0023" ORDER="23" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="fd8374e7-814d-4958-87f7-dc88768ae5fa" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598002" ID="PHYS_0024" ORDER="24" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="b160600f-2474-4a37-9448-ae2264a57a30" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598003" ID="PHYS_0025" ORDER="25" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="220b70ce-4365-478f-b9ce-23771087c4e4" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598004" ID="PHYS_0026" ORDER="26" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="e0c19566-7888-434c-a8a5-ba034fe55f80" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598005" ID="PHYS_0027" ORDER="27" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="a0ca907c-a967-470b-887f-691f1b09ba94" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598006" ID="PHYS_0028" ORDER="28" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="f17f1a58-acb7-4804-abfc-8f6dc2a612eb" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598007" ID="PHYS_0029" ORDER="29" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="6a850acf-2fa4-4a6d-808e-d082c997a71c" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598008" ID="PHYS_0030" ORDER="30" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="a260344d-e5d2-484a-9e42-1da24a63b80d" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598009" ID="PHYS_0031" ORDER="31" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="88ebec1c-bf41-4db4-905d-592809765a68" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598010" ID="PHYS_0032" ORDER="32" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="01ea0f13-b91b-405b-9ddf-f9bdfd40b95f" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598011" ID="PHYS_0033" ORDER="33" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="f28f9a8a-c667-4198-b8d6-67637716e67b" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598012" ID="PHYS_0034" ORDER="34" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="8d6f65e6-65fa-4ccd-a06d-f1babf20d632" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598013" ID="PHYS_0035" ORDER="35" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="da981f13-c876-49e1-89d1-8d80f8594325" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598014" ID="PHYS_0036" ORDER="36" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="ee5d72a1-1bab-4d8d-81e0-837b5eecd66a" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598015" ID="PHYS_0037" ORDER="37" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="4b552b15-ed26-45e0-9852-7f51e6846118" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598016" ID="PHYS_0038" ORDER="38" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="38e5e33e-3a3b-497e-ac1b-0612f9a20a21" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598017" ID="PHYS_0039" ORDER="39" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="2be080c2-ed84-4015-aa79-f7a3e76112f0" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598018" ID="PHYS_0040" ORDER="40" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="bf0e28d2-819a-49b6-80c8-a46811e670bf" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598019" ID="PHYS_0041" ORDER="41" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="70a728b1-6827-4a8c-96df-26f2ff0c924d" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598020" ID="PHYS_0042" ORDER="42" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="cf1883d3-1063-418e-81b2-3b3cc5df0bd1" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598021" ID="PHYS_0043" ORDER="43" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="10151949-df96-479a-9b65-a81bf4c49cdb" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598022" ID="PHYS_0044" ORDER="44" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="d63caa71-65d3-4234-be27-f0081d3fcdf7" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598023" ID="PHYS_0045" ORDER="45" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="92cd3af8-0598-495a-a3c2-9b3a3fa512c3" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598024" ID="PHYS_0046" ORDER="46" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="46e97b39-ba21-4c74-af68-30dd4d7e28b1" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598025" ID="PHYS_0047" ORDER="47" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="04e0126c-b4e5-4ba2-9159-fe98b29b8320" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598026" ID="PHYS_0048" ORDER="48" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="8ae832e8-f3b0-495d-9a3a-fc2734301f37" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598027" ID="PHYS_0049" ORDER="49" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="bd6b5526-dbf7-4964-be5b-a45b85cdcbb6" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598028" ID="PHYS_0050" ORDER="50" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="79687599-3c3c-423e-8577-200213f43ca2" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598029" ID="PHYS_0051" ORDER="51" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="3f4eab8a-0a3f-4227-8992-96ccee850b4c" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598030" ID="PHYS_0052" ORDER="52" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="ba866a0d-b9fd-4102-ae0f-07dd12c50794" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598031" ID="PHYS_0053" ORDER="53" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="42ebb493-90e7-4903-b14a-32dc19cd7ebc" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598032" ID="PHYS_0054" ORDER="54" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="24612545-0397-4b07-94f5-5a383598ebfa" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598033" ID="PHYS_0055" ORDER="55" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="928bd552-d4a4-481d-97b0-7ed6793077f1" />
+      </mets:div>
+      <mets:div CONTENTIDS="30598034" ID="PHYS_0056" ORDER="56" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="1f0258ef-9d65-4565-8a9b-26bb2c021b14" />
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+  <mets:structLink>
+    <mets:smLink xlink:to="PHYS_0001" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0002" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0003" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0004" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0005" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0006" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0007" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0008" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0009" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0010" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0011" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0012" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0013" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0014" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0015" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0016" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0017" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0018" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0019" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0020" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0021" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0022" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0023" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0024" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0025" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0026" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0027" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0028" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0029" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0030" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0031" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0032" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0033" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0034" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0035" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0036" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0037" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0038" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0039" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0040" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0041" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0042" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0043" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0044" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0045" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0046" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0047" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0048" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0049" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0050" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0051" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0052" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0053" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0054" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0055" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0056" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0001" xlink:from="LOG_0001" />
+    <mets:smLink xlink:to="PHYS_0002" xlink:from="LOG_0001" />
+    <mets:smLink xlink:to="PHYS_0003" xlink:from="LOG_0001" />
+    <mets:smLink xlink:to="PHYS_0004" xlink:from="LOG_0002" />
+    <mets:smLink xlink:to="PHYS_0005" xlink:from="LOG_0002" />
+    <mets:smLink xlink:to="PHYS_0006" xlink:from="LOG_0002" />
+    <mets:smLink xlink:to="PHYS_0007" xlink:from="LOG_0003" />
+    <mets:smLink xlink:to="PHYS_0008" xlink:from="LOG_0003" />
+    <mets:smLink xlink:to="PHYS_0009" xlink:from="LOG_0003" />
+    <mets:smLink xlink:to="PHYS_0010" xlink:from="LOG_0004" />
+    <mets:smLink xlink:to="PHYS_0011" xlink:from="LOG_0004" />
+    <mets:smLink xlink:to="PHYS_0012" xlink:from="LOG_0004" />
+    <mets:smLink xlink:to="PHYS_0013" xlink:from="LOG_0005" />
+    <mets:smLink xlink:to="PHYS_0014" xlink:from="LOG_0005" />
+    <mets:smLink xlink:to="PHYS_0015" xlink:from="LOG_0005" />
+    <mets:smLink xlink:to="PHYS_0016" xlink:from="LOG_0005" />
+    <mets:smLink xlink:to="PHYS_0017" xlink:from="LOG_0006" />
+    <mets:smLink xlink:to="PHYS_0018" xlink:from="LOG_0006" />
+    <mets:smLink xlink:to="PHYS_0019" xlink:from="LOG_0006" />
+    <mets:smLink xlink:to="PHYS_0020" xlink:from="LOG_0006" />
+    <mets:smLink xlink:to="PHYS_0021" xlink:from="LOG_0007" />
+    <mets:smLink xlink:to="PHYS_0022" xlink:from="LOG_0007" />
+    <mets:smLink xlink:to="PHYS_0023" xlink:from="LOG_0007" />
+    <mets:smLink xlink:to="PHYS_0024" xlink:from="LOG_0008" />
+    <mets:smLink xlink:to="PHYS_0025" xlink:from="LOG_0008" />
+    <mets:smLink xlink:to="PHYS_0026" xlink:from="LOG_0008" />
+    <mets:smLink xlink:to="PHYS_0027" xlink:from="LOG_0009" />
+    <mets:smLink xlink:to="PHYS_0028" xlink:from="LOG_0009" />
+    <mets:smLink xlink:to="PHYS_0029" xlink:from="LOG_0009" />
+    <mets:smLink xlink:to="PHYS_0030" xlink:from="LOG_0010" />
+    <mets:smLink xlink:to="PHYS_0031" xlink:from="LOG_0010" />
+    <mets:smLink xlink:to="PHYS_0032" xlink:from="LOG_0010" />
+    <mets:smLink xlink:to="PHYS_0033" xlink:from="LOG_0011" />
+    <mets:smLink xlink:to="PHYS_0034" xlink:from="LOG_0011" />
+    <mets:smLink xlink:to="PHYS_0035" xlink:from="LOG_0011" />
+    <mets:smLink xlink:to="PHYS_0036" xlink:from="LOG_0012" />
+    <mets:smLink xlink:to="PHYS_0037" xlink:from="LOG_0012" />
+    <mets:smLink xlink:to="PHYS_0038" xlink:from="LOG_0012" />
+    <mets:smLink xlink:to="PHYS_0039" xlink:from="LOG_0013" />
+    <mets:smLink xlink:to="PHYS_0040" xlink:from="LOG_0013" />
+    <mets:smLink xlink:to="PHYS_0041" xlink:from="LOG_0013" />
+    <mets:smLink xlink:to="PHYS_0042" xlink:from="LOG_0014" />
+    <mets:smLink xlink:to="PHYS_0043" xlink:from="LOG_0014" />
+    <mets:smLink xlink:to="PHYS_0044" xlink:from="LOG_0014" />
+    <mets:smLink xlink:to="PHYS_0045" xlink:from="LOG_0015" />
+    <mets:smLink xlink:to="PHYS_0046" xlink:from="LOG_0015" />
+    <mets:smLink xlink:to="PHYS_0047" xlink:from="LOG_0015" />
+    <mets:smLink xlink:to="PHYS_0048" xlink:from="LOG_0016" />
+    <mets:smLink xlink:to="PHYS_0049" xlink:from="LOG_0016" />
+    <mets:smLink xlink:to="PHYS_0050" xlink:from="LOG_0016" />
+    <mets:smLink xlink:to="PHYS_0051" xlink:from="LOG_0017" />
+    <mets:smLink xlink:to="PHYS_0052" xlink:from="LOG_0017" />
+    <mets:smLink xlink:to="PHYS_0053" xlink:from="LOG_0017" />
+    <mets:smLink xlink:to="PHYS_0054" xlink:from="LOG_0018" />
+    <mets:smLink xlink:to="PHYS_0055" xlink:from="LOG_0018" />
+    <mets:smLink xlink:to="PHYS_0056" xlink:from="LOG_0018" />
+  </mets:structLink>
+</mets:mets>

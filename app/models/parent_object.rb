@@ -111,7 +111,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def array_of_child_hashes_from_mets
     return unless current_batch_process&.mets_doc
-    current_batch_process.mets_doc.combined.map { |child_hash| child_hash.select { |k| k != :thumbnail_flag && k != :child_uuid } }
+    current_batch_process.mets_doc.combined.map { |child_hash| child_hash.select { |k| k != :thumbnail_flag && k != :child_uuid && k != :physical_id && k != :logical_id } }
   end
 
   def array_preservica_hashes_from_mets
