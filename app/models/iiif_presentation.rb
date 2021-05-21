@@ -44,13 +44,26 @@ class IiifPresentation
     @manifest["attribution"] = "Yale University Library"
     @manifest.sequences << sequence
     add_canvases_to_sequence(@manifest.sequences.first)
+    if parent_object.full_text?
+      @manifest["service"] ||= []
+      @manifest["service"] << search_service
+    end
     @manifest
+  end
+
+  def search_service
+    base = ENV['BLACKLIGHT_BASE_URL'] || 'http://localhost:3000'
+    {
+      "@context": "http://iiif.io/api/search/0/context.json",
+      "@id": File.join(base, "catalog/#{oid}/iiif_search"),
+      "profile": "http://iiif.io/api/search/0/search"
+    }
   end
 
   def sequence
     return @sequence if @sequence
     @sequence = IIIF::Presentation::Sequence.new
-    @sequence["@id"] = "#{ENV['IIIF_MANIFESTS_BASE_URL']}/sequence/#{oid}"
+    @sequence["@id"] = File.join((ENV['IIIF_MANIFESTS_BASE_URL']).to_s, "sequence/#{oid}")
     @sequence["rendering"] = rendering
     @sequence["viewingDirection"] = @parent_object.viewing_direction unless @parent_object.viewing_direction.nil? || @parent_object.viewing_direction.empty?
     @sequence["viewingHint"] = @parent_object.display_layout unless @parent_object.display_layout.nil? || @parent_object.display_layout.empty?
@@ -79,7 +92,7 @@ class IiifPresentation
   def rendering
     [
       {
-        "@id" => "#{pdf_base_url}/#{@oid}.pdf",
+        "@id" => File.join(pdf_base_url.to_s, "#{@oid}.pdf"),
         "format" => "application/pdf",
         "label" => "Download as PDF"
       }
@@ -89,10 +102,10 @@ class IiifPresentation
   def add_image_to_canvas(child, canvas)
     images = canvas.images
     image = IIIF::Presentation::Resource.new
-    image['@id'] = "#{manifest_base_url}/oid/#{oid}/canvas/#{child.oid}/image/1"
+    image['@id'] = File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}/image/1")
     image['@type'] = "oa:Annotation"
     image["motivation"] = "sc:painting"
-    image["on"] = "#{manifest_base_url}/oid/#{oid}/canvas/#{child.oid}"
+    image["on"] = File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}")
     image_resource = IIIF::Presentation::ImageResource.create_image_api_image_resource(
       service_id: image_url(child.oid),
       height: child.height,
@@ -105,12 +118,13 @@ class IiifPresentation
     images << image
   end
 
+  # rubocop:disable Metrics/AbcSize
   def add_canvases_to_sequence(sequence)
     canvases = sequence.canvases
     child_objects = parent_object.child_objects
     child_objects.map do |child, index|
       canvas = IIIF::Presentation::Canvas.new
-      canvas['@id'] = "#{manifest_base_url}/oid/#{oid}/canvas/#{child.oid}"
+      canvas['@id'] = File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}")
       canvas['label'] = child.label || ''
       add_image_to_canvas(child, canvas)
       canvas['height'] = canvas.images.first["resource"]["height"]
@@ -122,6 +136,7 @@ class IiifPresentation
       canvases << canvas
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def add_metadata_to_canvas(canvas, child)
     metadata_values = []
@@ -146,7 +161,7 @@ class IiifPresentation
 
   def seed
     {
-      '@id' => "#{ENV['IIIF_MANIFESTS_BASE_URL']}/#{@oid}",
+      '@id' => File.join((ENV['IIIF_MANIFESTS_BASE_URL']).to_s, oid.to_s),
       'label' => @parent_object&.authoritative_json&.[]("title")&.first
     }
   end
