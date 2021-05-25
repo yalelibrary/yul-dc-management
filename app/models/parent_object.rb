@@ -88,7 +88,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def create_child_records
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
-      # byebug
       upsert_preservica_ingest_child_objects(array_preservica_hashes_from_mets)
 
     else

@@ -71,11 +71,21 @@ class MetsDocument
 
   # Combines the physical info and file info for a given image
   def combined
-    zipped = combined_logical_link_hash.nil? ? files.zip(physical_divs) : files.zip(combined_logical_link_physical_hash)
+    zipped = add_nil_caption.nil? ? files.zip(physical_divs) : files.zip(add_nil_caption)
     zipped.map { |file, physical_div| file.merge(physical_div) }
   end
 
   # merge into physical divs
+  def add_nil_caption
+    if combined_logical_link_hash.nil? == true
+      nil
+    else
+      combined_logical_link_physical_hash.each do |i|
+        i[:caption] = i[:caption].nil? ? nil : i[:caption]
+      end
+    end
+  end
+
   def combined_logical_link_physical_hash
     index = combined_logical_link_hash.group_by { |entry| entry[:physical_id] } unless combined_logical_link_hash.nil?
     physical_divs.map { |entry| (index[entry[:physical_id]] || []).reduce(entry, :merge) } unless combined_logical_link_hash.nil?

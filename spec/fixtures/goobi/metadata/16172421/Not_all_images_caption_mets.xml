@@ -646,6 +646,7 @@
   </mets:fileSec>
   <mets:structMap TYPE="LOGICAL">
     <mets:div ADMID="AMD" DMDID="DMDLOG_0000" ID="LOG_0000" LABEL="The Chilocco beacon" TYPE="ILSObject">
+      <mets:div DMDID="DMDLOG_0001" ID="LOG_0001" LABEL="test test" TYPE="Acknowledge" />
       <mets:div DMDID="DMDLOG_0001" ID="LOG_0001" LABEL="[V.1:no.1(1900:Nov.)]" TYPE="caption" />
       <mets:div DMDID="DMDLOG_0002" ID="LOG_0002" LABEL="[V.1:no.2(1900:Dec.)]" TYPE="caption" />
       <mets:div DMDID="DMDLOG_0003" ID="LOG_0003" LABEL="[V.1:no.3(1901:Jan.)]" TYPE="caption" />
