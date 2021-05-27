@@ -59,7 +59,7 @@ class IiifPresentation
       "profile": "http://iiif.io/api/search/0/search",
       "service": {
         "@id": File.join(base, "catalog/#{oid}/iiif_suggest"),
-        "profile": "http://iiif.io/api/search/1/autocomplete"
+        "profile": "http://iiif.io/api/search/0/autocomplete"
       }
     }
   end
