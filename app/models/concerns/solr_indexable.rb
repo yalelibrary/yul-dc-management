@@ -181,7 +181,7 @@ module SolrIndexable
     {
       id: child_object.oid,
       parent_ssi: parent_object.oid,
-      child_fulltext_tesim: child_object_full_text,
+      child_fulltext_tesim: child_object_full_text
     }
   end
 
