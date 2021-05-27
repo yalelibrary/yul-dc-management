@@ -56,7 +56,11 @@ class IiifPresentation
     {
       "@context": "http://iiif.io/api/search/0/context.json",
       "@id": File.join(base, "catalog/#{oid}/iiif_search"),
-      "profile": "http://iiif.io/api/search/0/search"
+      "profile": "http://iiif.io/api/search/0/search",
+      "service": {
+        "@id": File.join(base, "catalog/#{oid}/iiif_suggest"),
+        "profile": "http://iiif.io/api/search/1/autocomplete"
+      }
     }
   end
 
