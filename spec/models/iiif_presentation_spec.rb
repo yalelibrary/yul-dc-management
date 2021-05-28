@@ -50,6 +50,8 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       expect(iiif_presentation_no_labels.manifest["service"].first[:@context]).to eq("http://iiif.io/api/search/0/context.json")
       expect(iiif_presentation_no_labels.manifest["service"].first[:@id]).to eq("http://localhost:3000/catalog/2005512/iiif_search")
       expect(iiif_presentation_no_labels.manifest["service"].first[:profile]).to eq("http://iiif.io/api/search/0/search")
+      expect(iiif_presentation_no_labels.manifest["service"].first[:service][:@id]).to eq("http://localhost:3000/catalog/2005512/iiif_suggest")
+      expect(iiif_presentation_no_labels.manifest["service"].first[:service][:profile]).to eq("http://iiif.io/api/search/0/autocomplete")
     end
 
     it "does NOT have the service section if the parent_object full_text? is false" do
