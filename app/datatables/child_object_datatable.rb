@@ -26,6 +26,7 @@ class ChildObjectDatatable < AjaxDatatablesRails::ActiveRecord
     }
   end
 
+  # rubocop:disable Rails/OutputSafety
   def data
     records.map do |child_object|
       {
@@ -41,6 +42,7 @@ class ChildObjectDatatable < AjaxDatatablesRails::ActiveRecord
       }
     end
   end
+  # rubocop:enable Rails/OutputSafety
 
   def actions(child_object)
     actions = []
@@ -49,6 +51,7 @@ class ChildObjectDatatable < AjaxDatatablesRails::ActiveRecord
     actions.join(' | ')
   end
 
+  # rubocop:disable Naming/AccessorMethodName
   def get_raw_records
     ChildObject.accessible_by(@current_ability, :read)
   end
