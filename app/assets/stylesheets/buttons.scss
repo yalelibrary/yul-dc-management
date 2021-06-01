@@ -3,13 +3,13 @@ DEFAULT DESKTOP STYLING
 ********************************************************/
 @import 'theme/colors', 'theme/typography', 'theme/breakpoints';
 
-.primary_button {
+.primary-button {
     background-color: $primary_button;
     border-color: $primary_button;
     color: $white;
 }
 
-.secondary_button {
+.secondary-button {
     background-color: $secondary_button;
     border-color: $secondary_button;
     color: $white;

@@ -5,9 +5,9 @@
   </div>
   <div class='col'>
     <div class='float-right button-list'>
-      <%= link_to 'New Parent Object', new_parent_object_path, class: 'btn primary_button' %>
-      <%= button_to 'Reindex', reindex_parent_objects_path, method: 'post', class: 'btn secondary_button', id: 'reindex', data:( ParentObject.cannot_reindex ? nil : { confirm: "Are you sure you want to proceed? This action will reindex the entire contents of the system." }), disabled: !(can? :reindex_all, ParentObject) %>
-      <%= button_to 'Update Metadata', all_metadata_parent_objects_path, method: 'post', class: 'btn secondary_button',id: 'update_metadata', data:{confirm: "Are you sure you want to proceed?  This action will update metadata for the entire contents of the system."}, disabled: !(can? :update_metadata, ParentObject) %>
+      <%= link_to 'New Parent Object', new_parent_object_path, class: 'btn primary-button' %>
+      <%= button_to 'Reindex', reindex_parent_objects_path, method: 'post', class: 'btn secondary-button', id: 'reindex', data:( ParentObject.cannot_reindex ? nil : { confirm: "Are you sure you want to proceed? This action will reindex the entire contents of the system." }), disabled: !(can? :reindex_all, ParentObject) %>
+      <%= button_to 'Update Metadata', all_metadata_parent_objects_path, method: 'post', class: 'btn secondary-button',id: 'update_metadata', data:{confirm: "Are you sure you want to proceed?  This action will update metadata for the entire contents of the system."}, disabled: !(can? :update_metadata, ParentObject) %>
     </div>
   </div>
 </div>
