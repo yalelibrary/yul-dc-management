@@ -14,7 +14,7 @@ RSpec.describe ChildObjectDatatable, type: :datatable, prep_metadata_sources: tr
     stub_metadata_cloud('2004628')
     admin_set = AdminSet.find_by_key('brbl')
     parent_object = FactoryBot.create(:parent_object, admin_set: admin_set)
-    child_object = FactoryBot.create(:child_object, parent_object: parent_object)
+    FactoryBot.create(:child_object, parent_object: parent_object)
 
     output = ChildObjectDatatable.new(datatable_sample_params(columns), view_context: child_object_datatable_view_mock, current_ability: Ability.new(user)).data
 
@@ -26,9 +26,10 @@ RSpec.describe ChildObjectDatatable, type: :datatable, prep_metadata_sources: tr
       width: 1,
       height: 1,
       order: 1,
-      parent_object: 2004628,
-      actions: "<a href=\"/management/child_objects/10736292/edit\">Edit</a> | <a data-confirm=\"Are you sure?\" rel=\"nofollow\" data-method=\"delete\" href=\"/management/child_objects/10736292\">Destroy</a>",
-      DT_RowId: 10736292
+      parent_object: 2_004_628,
+      actions: "<a href=\"/management/child_objects/10736292/edit\">Edit</a>" \
+      " | <a data-confirm=\"Are you sure?\" rel=\"nofollow\" data-method=\"delete\" href=\"/management/child_objects/10736292\">Destroy</a>",
+      DT_RowId: 10_736_292
     )
   end
 end
