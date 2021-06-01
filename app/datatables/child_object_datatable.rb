@@ -3,7 +3,7 @@
 class ChildObjectDatatable < AjaxDatatablesRails::ActiveRecord
   extend Forwardable
 
-  def_delegators :@view, :link_to, :child_object_path
+  def_delegators :@view, :link_to, :child_object_path, :edit_child_object_path
 
   def initialize(params, opts = {})
     @view = opts[:view_context]
@@ -21,7 +21,8 @@ class ChildObjectDatatable < AjaxDatatablesRails::ActiveRecord
       width: { source: 'ChildObject.width' },
       height: { source: 'ChildObject.height' },
       order: { source: 'ChildObject.order' },
-      parent_object: { source: 'ChildObject.parent_object_oid' }
+      parent_object: { source: 'ChildObject.parent_object_oid' },
+      actions: { source: 'ChildObject.oid' }
     }
   end
 
@@ -35,8 +36,17 @@ class ChildObjectDatatable < AjaxDatatablesRails::ActiveRecord
         height: child_object.height,
         order: child_object.order,
         parent_object: child_object.parent_object_oid,
+        actions: actions(child_object).html_safe,
+        DT_RowId: child_object.oid
       }
     end
+  end
+
+  def actions(child_object)
+    actions = []
+    actions << link_to('Edit', edit_child_object_path(child_object)) if @current_ability.can? :edit, child_object
+    actions << link_to('Destroy', child_object_path(child_object), method: :delete, data: { confirm: 'Are you sure?' }) if @current_ability.can? :destroy, child_object
+    actions.join(' | ')
   end
 
   def get_raw_records
