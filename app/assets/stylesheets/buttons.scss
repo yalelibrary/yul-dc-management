@@ -1,0 +1,16 @@
+/********************************************************
+DEFAULT DESKTOP STYLING
+********************************************************/
+@import 'theme/colors', 'theme/typography', 'theme/breakpoints';
+
+.primary_button {
+    background-color: $primary_button;
+    border-color: $primary_button;
+    color: $white;
+}
+
+.secondary_button {
+    background-color: $secondary_button;
+    border-color: $secondary_button;
+    color: $white;
+}
