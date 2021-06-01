@@ -1,8 +1,7 @@
-/*!
- * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/templates/simple-sidebar)
- * Copyright 2013-2020 Start Bootstrap
- * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-simple-sidebar/blob/master/LICENSE)
- */
+/********************************************************
+DEFAULT DESKTOP STYLING
+********************************************************/
+@import 'theme/colors', 'theme/typography', 'theme/breakpoints';
 
 #wrapper {
   overflow-x: hidden;
@@ -35,7 +34,8 @@
   margin-left: 0;
 }
 
-@media (min-width: 768px) {
+// TODO(alishaevn): convert this file to primary desktop styling
+@media (min-width: $medium_device) {
   #sidebar-wrapper {
     margin-left: 0;
   }
