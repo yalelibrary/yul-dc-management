@@ -78,7 +78,6 @@ $( document ).on('turbolinks:load', function() {
         }
       });
       $(dataTable.api().table().header()).append(searchRow);
-      console.log("SETTING " + "DT-columns-" + btoa(document.location.href));
       localStorage.setItem("DT-columns-" + btoa(document.location.href), JSON.stringify(colVisibilityMap));
     }
     
@@ -92,6 +91,7 @@ $( document ).on('turbolinks:load', function() {
         "url": $('.is-datatable').data('source')
       },
       "pagingType": "full_numbers",
+      "bAutoWidth": false,
       "columns": columns,
       "order": columnOrder(columns),
       "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]],
