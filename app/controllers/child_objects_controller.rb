@@ -8,7 +8,10 @@ class ChildObjectsController < ApplicationController
   # GET /child_objects
   # GET /child_objects.json
   def index
-    @child_objects = ChildObject.accessible_by(@current_ability, :read).page params[:page]
+    respond_to do |format|
+      format.html
+      format.json { render json: ChildObjectDatatable.new(params, view_context: view_context, current_ability: current_ability) }
+    end
   end
 
   # GET /child_objects/1
