@@ -16,3 +16,34 @@ td.actions {
 .child-objects {
   margin-bottom: 15px;
 }
+
+.dt-buttons {
+  float: right;
+}
+
+.dt-button.dropdown-item {
+  background-color: transparent;
+  color: #495057;
+}
+.dt-button.dropdown-item.active {
+  background-color: transparent;
+  color: #495057;
+}
+
+.dt-button.dropdown-item::before {
+  content: "◻";
+  background: transparent;
+  margin-right: 8px;
+  color: #888888
+}
+.dt-button.dropdown-item.active::before {
+  content: "✓";
+  color: inherit;
+}
+
+
+@media (min-width: 768px) {
+  .dt-button-collection .dropdown-menu {
+    margin-left: -175px;
+  }
+}

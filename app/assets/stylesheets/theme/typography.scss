@@ -91,6 +91,92 @@ FONT FILE TYPES
   font-style: normal;
 }
 
+/*************************** MALLORY ***************************/
+@font-face {
+  font-family: 'Mallory-Bold';
+  src: url(https://static.library.yale.edu/fonts/mallory/Mallory-Bold.woff2) format('woff2'),
+       url(https://static.library.yale.edu/fonts/mallory/Mallory-Bold.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Mallory-BoldItalic';
+  src: url(https://static.library.yale.edu/fonts/mallory/Mallory-BoldItalic.woff2) format('woff2'),
+       url(https://static.library.yale.edu/fonts/mallory/Mallory-BoldItalic.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Mallory-Book';
+  src: url(https://static.library.yale.edu/fonts/mallory/Mallory-Book.woff2) format('woff2'),
+       url(https://static.library.yale.edu/fonts/mallory/Mallory-Book.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Mallory-BookItalic';
+  src: url(https://static.library.yale.edu/fonts/mallory/Mallory-BookItalic.woff2) format('woff2'),
+       url(https://static.library.yale.edu/fonts/mallory/Mallory-BookItalic.woff);
+}
+
+@font-face {
+  font-family: 'Mallory-Light';
+  src: url(https://static.library.yale.edu/fonts/mallory/Mallory-Light.woff2) format('woff2'),
+       url(https://static.library.yale.edu/fonts/mallory/Mallory-Light.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Mallory-LightItalic';
+  src: url(https://static.library.yale.edu/fonts/mallory/Mallory-LightItalic.woff2) format('woff2'),
+       url(https://static.library.yale.edu/fonts/mallory/Mallory-LightItalic.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Mallory-Medium';
+  src: url(https://static.library.yale.edu/fonts/mallory/Mallory-Medium.woff2) format('woff2'),
+       url(https://static.library.yale.edu/fonts/mallory/Mallory-Medium.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Mallory-MediumItalic';
+  src: url(https://static.library.yale.edu/fonts/mallory/Mallory-MediumItalic.woff2) format('woff2'),
+       url(https://static.library.yale.edu/fonts/mallory/Mallory-MediumItalic.woff) format('woff');
+}
+
+/*************************** MALLORY MP ***************************/
+@font-face {
+  font-family: 'MalloryMP-Black';
+  src: url(https://static.library.yale.edu/fonts/mallory/MalloryMP-Black.woff2) format('woff2'),
+       url(https://static.library.yale.edu/fonts/mallory/MalloryMP-Black.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'MalloryMP-BlackItalic';
+  src: url(https://static.library.yale.edu/fonts/mallory/MalloryMP-BlackItalic.woff2) format('woff2'),
+       url(https://static.library.yale.edu/fonts/mallory/MalloryMP-BlackItalic.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'MalloryMP-Bold';
+  src: url(https://static.library.yale.edu/fonts/mallory/MalloryMP-Bold.woff2) format('woff2'),
+       url(https://static.library.yale.edu/fonts/mallory/MalloryMP-Bold.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'MalloryMP-BoldItalic';
+  src: url(https://static.library.yale.edu/fonts/mallory/MalloryMP-BoldItalic.woff2) format('woff2'),
+       url(https://static.library.yale.edu/fonts/mallory/MalloryMP-BoldItalic.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'MalloryMP-Medium';
+  src: url(https://static.library.yale.edu/fonts/mallory/MalloryMP-Medium.woff2) format('woff2'),
+       url(https://static.library.yale.edu/fonts/mallory/MalloryMP-Medium.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'MalloryMP-MediumItalic';
+  src: url(https://static.library.yale.edu/fonts/mallory/MalloryMP-MediumItalic.woff2) format('woff2'),
+       url(https://static.library.yale.edu/fonts/mallory/MalloryMP-MediumItalic.woff) format('woff');
+}
+
 $yale_display_roman: YaleDisplay-Roman;
 
 $yale_design_small_caps: YaleDesign-SmallCaps;
@@ -101,3 +187,19 @@ $yale_new_bold: YaleNew-Bold;
 $yale_new_bold_italic: YaleNew-BoldItalic;
 $yale_new_italic: YaleNew-Italic;
 $yale_new_roman: YaleNew-Roman;
+
+$mallory_bold: Mallory-Bold;
+$mallory_bold_italic: Mallory-BoldItalic;
+$mallory_book: Mallory-Book;
+$mallory_book_italic: Mallory-BookItalic;
+$mallory_light: Mallory-Light;
+$mallory_light_italic: Mallory-LightItalic;
+$mallory_medium: Mallory-Medium;
+$mallory_medium_italic: Mallory-MediumItalic;
+
+$mallory_mp_black: MalloryMP-Black;
+$mallory_mp_black_italic: MalloryMP-BlackItalic;
+$mallory_mp_bold: MalloryMP-Bold;
+$mallory_mp_bold_italic: MalloryMP-BoldItalic;
+$mallory_mp_medium: MalloryMP-Medium;
+$mallory_mp_medium_italic: MalloryMP-MediumItalic;
