@@ -23,7 +23,7 @@
     "ssri": "^8.0.1",
     "tailwindcss": "^2.1.2",
     "turbolinks": "^5.2.0",
-    "ws": "^7.4.6"
+    "ws": "^6.2.2"
   },
   "version": "0.1.0",
   "devDependencies": {
