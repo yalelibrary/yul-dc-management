@@ -34,10 +34,16 @@ let dataTable;
 $( document ).on('turbolinks:load', function() {     
   if($('.is-datatable').length > 0 && !$('.is-datatable').hasClass('dataTable')){
     let columns = JSON.parse($(".datatable-data").text());
-    let columnInfo = localStorage.getItem("DT-columns-" + btoa(document.location.href));
+    // load the information about which columns are visible for this page
+    let dataTableStorageKey = "DT-columns-" + btoa(document.location.href);
+    let columnInfo = localStorage.getItem(dataTableStorageKey);
     try { columnInfo = columnInfo && JSON.parse(columnInfo); } catch (e) { columnInfo = null; }
     columns = columns.map(function (col) {if (columnInfo && columnInfo[col.data] && columnInfo[col.data].hidden) col.visible = false; return col } )           
     let hasSearch = columns.some(function(col){return col.searchable;});
+    const onColumnsUpdate = function(dataTable) {
+      let colVisibilityMap = createSearchRow(dataTable); 
+      localStorage.setItem(dataTableStorageKey, JSON.stringify(colVisibilityMap));
+    }
     const createSearchRow = function(dataTable) {
       $('#search-row').remove();
       let searchRow = $("<tr role='row' id='search-row'></tr>");
@@ -78,7 +84,8 @@ $( document ).on('turbolinks:load', function() {
         }
       });
       $(dataTable.api().table().header()).append(searchRow);
-      localStorage.setItem("DT-columns-" + btoa(document.location.href), JSON.stringify(colVisibilityMap));
+      // store the information about which columns are visible for this page
+      return colVisibilityMap;
     }
     
     
@@ -91,7 +98,7 @@ $( document ).on('turbolinks:load', function() {
         "url": $('.is-datatable').data('source')
       },
       "pagingType": "full_numbers",
-      "bAutoWidth": false,
+      "bAutoWidth": false, // AutoWidth has issues with hiding and showing columns as startup
       "columns": columns,
       "order": columnOrder(columns),
       "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]],
@@ -106,14 +113,17 @@ $( document ).on('turbolinks:load', function() {
       // Check dataTables documentation to learn more about
       // available options.
       initComplete: function () {
-        if (hasSearch) createSearchRow(this);
+        if (hasSearch) onColumnsUpdate(this);
       }
       
     })
     dataTable.api().draw();
 
     $('.is-datatable').on( 'column-visibility.dt', function ( e, settings, column, state ) {
-      if (hasSearch && "true" !== $( '.is-datatable' ).data("destroying")) createSearchRow($( '.is-datatable' ).dataTable(), hasSearch);
+      // Check for data-destroying because this gets called after turbo links updates document.location and the 
+      // datatable is destroyed in turbolinks:before-cache. In that case, don't create the search row or 
+      // write the column information to localStorage using the wrong document.location.href
+      if (hasSearch && "true" !== $( '.is-datatable' ).data("destroying")) onColumnsUpdate($( '.is-datatable' ).dataTable());
     } );
     
     
