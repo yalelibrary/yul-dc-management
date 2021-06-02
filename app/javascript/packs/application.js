@@ -31,22 +31,22 @@ require("datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 let dataTable;
-$( document ).on('turbolinks:load', function() {
-  
-  
-  
+$( document ).on('turbolinks:load', function() {     
   if($('.is-datatable').length > 0 && !$('.is-datatable').hasClass('dataTable')){
     let columns = JSON.parse($(".datatable-data").text());
+    let columnInfo = localStorage.getItem("DT-columns-" + btoa(document.location.href));
+    try { columnInfo = columnInfo && JSON.parse(columnInfo); } catch (e) { columnInfo = null; }
+    columns = columns.map(function (col) {if (columnInfo && columnInfo[col.data] && columnInfo[col.data].hidden) col.visible = false; return col } )           
     let hasSearch = columns.some(function(col){return col.searchable;});
-
-
     const createSearchRow = function(dataTable) {
       $('#search-row').remove();
       let searchRow = $("<tr role='row' id='search-row'></tr>");
       let index = 0;
+      let colVisibilityMap = {}
       dataTable.api().columns().every(function () {
         let column = this;
         let colDef = columns[index++];
+        colVisibilityMap[colDef.data] = {hidden:!column.visible()};
         if (!column.visible()) return;
         if (colDef.searchable) {
           let th = $("<th/>");
@@ -78,6 +78,8 @@ $( document ).on('turbolinks:load', function() {
         }
       });
       $(dataTable.api().table().header()).append(searchRow);
+      console.log("SETTING " + "DT-columns-" + btoa(document.location.href));
+      localStorage.setItem("DT-columns-" + btoa(document.location.href), JSON.stringify(colVisibilityMap));
     }
     
     
@@ -111,11 +113,12 @@ $( document ).on('turbolinks:load', function() {
     dataTable.api().draw();
 
     $('.is-datatable').on( 'column-visibility.dt', function ( e, settings, column, state ) {
-      if (hasSearch) createSearchRow($( '.is-datatable' ).dataTable(), hasSearch);
+      if (hasSearch && "true" !== $( '.is-datatable' ).data("destroying")) createSearchRow($( '.is-datatable' ).dataTable(), hasSearch);
     } );
     
     
     $(document).on('turbolinks:before-cache', function(){
+      $( '.is-datatable' ).data("destroying", "true");
       dataTable.api().destroy();
       $('#search-row').remove();
     })
