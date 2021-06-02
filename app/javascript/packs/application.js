@@ -31,10 +31,65 @@ require("datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 let dataTable;
-$( document ).on('turbolinks:load', function() {
+$( document ).on('turbolinks:load', function() {     
   if($('.is-datatable').length > 0 && !$('.is-datatable').hasClass('dataTable')){
     let columns = JSON.parse($(".datatable-data").text());
+    // load the information about which columns are visible for this page
+    let dataTableStorageKey = "DT-columns-" + btoa(document.location.href);
+    let columnInfo = localStorage.getItem(dataTableStorageKey);
+    try { columnInfo = columnInfo && JSON.parse(columnInfo); } catch (e) { columnInfo = null; }
+    columns = columns.map(function (col) {if (columnInfo && columnInfo[col.data] && columnInfo[col.data].hidden) col.visible = false; return col } )           
     let hasSearch = columns.some(function(col){return col.searchable;});
+    const onColumnsUpdate = function(dataTable) {
+      let colVisibilityMap = createSearchRow(dataTable); 
+      localStorage.setItem(dataTableStorageKey, JSON.stringify(colVisibilityMap));
+    }
+    const createSearchRow = function(dataTable) {
+      $('#search-row').remove();
+      let searchRow = $("<tr role='row' id='search-row'></tr>");
+      let index = 0;
+      let colVisibilityMap = {}
+      dataTable.api().columns().every(function () {
+        let column = this;
+        let colDef = columns[index++];
+        colVisibilityMap[colDef.data] = {hidden:!column.visible()};
+        if (!column.visible()) return;
+        if (colDef.searchable) {
+          let th = $("<th/>");
+          let input = null;
+          if (colDef.options) {
+            input = $("<select><option>All</option>" + colDef.options.map(function (option) {
+              if (typeof option==="string"){
+                option={value:option, label:option}
+              }
+              if (option.selected) {
+                column.search(option.value)
+              }
+              return "<option value='"+ option.value +"' "+ (option.selected ? "selected": '') + ">" + option.label + "</option>"
+            }) + "</select>");
+          } else {
+            input = $("<input type='text' size='12' placeholder='" + $(column.header()).text() + "' />");
+          }
+          (input).on('keyup change clear', function () {
+            let v = this.value;
+            if (v === "All" && colDef.options) v = "";
+            if (column.search() !== v) {
+              column.search(v);
+              scheduleDraw();
+            }
+          });
+          searchRow.append(th.append(input));
+        } else {
+          searchRow.append("<th />");
+        }
+      });
+      $(dataTable.api().table().header()).append(searchRow);
+      // store the information about which columns are visible for this page
+      return colVisibilityMap;
+    }
+    
+    
+    
     dataTable = $('.is-datatable').dataTable({
       "deferLoading":true,
       "processing": true,
@@ -43,56 +98,37 @@ $( document ).on('turbolinks:load', function() {
         "url": $('.is-datatable').data('source')
       },
       "pagingType": "full_numbers",
+      "bAutoWidth": false, // AutoWidth has issues with hiding and showing columns as startup
       "columns": columns,
       "order": columnOrder(columns),
       "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]],
-      "sDom":hasSearch?'lrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
+      "sDom":hasSearch?'Blrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
+      buttons: [
+          {
+          extend: 'colvis',
+          text: "\u25EB"
+        },
+      ],
       // pagingType is optional, if you want full pagination controls.
       // Check dataTables documentation to learn more about
       // available options.
       initComplete: function () {
-        // create the inputs for each header
-        if (hasSearch) {
-          let searchRow = $("<tr role='row' id='search-row'></tr>");
-          let index = 0;
-          this.api().columns().every(function () {
-            let column = this;
-            let colDef = columns[index++];
-            if (colDef.searchable) {
-              let th = $("<th/>");
-              let input = null;
-              if (colDef.options) {
-                input = $("<select><option>All</option>" + colDef.options.map(function (option) {
-                  if (typeof option==="string"){
-                    option={value:option, label:option}
-                  }
-                  if (option.selected) {
-                    column.search(option.value)
-                  }
-                  return "<option value='"+ option.value +"' "+ (option.selected ? "selected": '') + ">" + option.label + "</option>"
-                }) + "</select>");
-              } else {
-                input = $("<input type='text' size='12' placeholder='" + $(column.header()).text() + "' />");
-              }
-              (input).on('keyup change clear', function () {
-                let v = this.value;
-                if (v === "All" && colDef.options) v = "";
-                if (column.search() !== v) {
-                  column.search(v);
-                  scheduleDraw();
-                }
-              });
-              searchRow.append(th.append(input));
-            } else {
-              searchRow.append("<th />");
-            }
-          });
-          $(this.api().table().header()).append(searchRow);
-        }
+        if (hasSearch) onColumnsUpdate(this);
       }
+      
     })
     dataTable.api().draw();
+
+    $('.is-datatable').on( 'column-visibility.dt', function ( e, settings, column, state ) {
+      // Check for data-destroying because this gets called after turbo links updates document.location and the 
+      // datatable is destroyed in turbolinks:before-cache. In that case, don't create the search row or 
+      // write the column information to localStorage using the wrong document.location.href
+      if (hasSearch && "true" !== $( '.is-datatable' ).data("destroying")) onColumnsUpdate($( '.is-datatable' ).dataTable());
+    } );
+    
+    
     $(document).on('turbolinks:before-cache', function(){
+      $( '.is-datatable' ).data("destroying", "true");
       dataTable.api().destroy();
       $('#search-row').remove();
     })
