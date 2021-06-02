@@ -88,7 +88,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def create_child_records
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
-      # byebug
       upsert_preservica_ingest_child_objects(array_preservica_hashes_from_mets)
 
     else
@@ -111,7 +110,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def array_of_child_hashes_from_mets
     return unless current_batch_process&.mets_doc
-    current_batch_process.mets_doc.combined.map { |child_hash| child_hash.select { |k| k != :thumbnail_flag && k != :child_uuid } }
+    current_batch_process.mets_doc.combined.map { |child_hash| child_hash.select { |k| k != :thumbnail_flag && k != :child_uuid && k != :physical_id && k != :logical_id } }
   end
 
   def array_preservica_hashes_from_mets

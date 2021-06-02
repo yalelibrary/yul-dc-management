@@ -71,8 +71,30 @@ class MetsDocument
 
   # Combines the physical info and file info for a given image
   def combined
-    zipped = logical_divs.empty? ? files.zip(physical_divs) : files.zip(physical_divs, logical_divs)
-    logical_divs.empty? ? zipped.map { |file, physical_div| file.merge(physical_div) } : zipped.map { |file, physical_div, logical_div| file.merge(physical_div, logical_div) }
+    zipped = add_nil_caption.nil? ? files.zip(physical_divs) : files.zip(add_nil_caption)
+    zipped.map { |file, physical_div| file.merge(physical_div) }
+  end
+
+  # merge into physical divs
+  def add_nil_caption
+    if combined_logical_link_hash.nil? == true
+      nil
+    else
+      combined_logical_link_physical_hash.each do |i|
+        i[:caption] = i[:caption].nil? ? nil : i[:caption]
+      end
+    end
+  end
+
+  def combined_logical_link_physical_hash
+    index = combined_logical_link_hash.group_by { |entry| entry[:physical_id] } unless combined_logical_link_hash.nil?
+    physical_divs.map { |entry| (index[entry[:physical_id]] || []).reduce(entry, :merge) } unless combined_logical_link_hash.nil?
+  end
+
+  # combine logic_link with logic divs
+  def combined_logical_link_hash
+    index = logical_divs.group_by { |entry| entry[:logical_id] } unless logical_divs.empty?
+    link_value_hash.map { |entry| (index[entry[:logical_id]] || []).reduce(entry, :merge) } unless logical_divs.empty?
   end
 
   def physical_divs
@@ -95,19 +117,43 @@ class MetsDocument
       label: normalize_label(physical_div),
       order: physical_div.xpath("@ORDER").inner_text,
       parent_object_oid: oid,
-      child_uuid: physical_div.xpath("mets:fptr/@FILEID").first.text # uuid for child object
+      child_uuid: physical_div.xpath("mets:fptr/@FILEID").first.text, # uuid for child object
+      physical_id: physical_div.xpath("@ID").inner_text
+
     }
   end
 
   def logical_info(logical_div)
     {
-      caption: caption_info(logical_div)
+      caption: caption_info(logical_div), # caption for child object
+      logical_id: caption_logical_id(logical_div)
     }
   end
 
   def caption_info(logical_div)
     return nil if logical_div.xpath("@TYPE").inner_text != "caption"
     logical_div.xpath("@LABEL").inner_text
+  end
+
+  def caption_logical_id(logical_div)
+    return nil if logical_div.xpath("@TYPE").inner_text != "caption"
+    logical_div.xpath("@ID").inner_text
+  end
+
+  def parent_logical_id
+    parent_logical = @mets.xpath("/mets:mets/mets:structMap[@TYPE='LOGICAL']/mets:div")
+    parent_logical.xpath("@ID").inner_text
+  end
+
+  def link_value_hash
+    link_array = []
+    link_value = @mets.xpath("/mets:mets/mets:structLink/mets:smLink")
+
+    link_value.each do |pl|
+      link_array.push pl.values unless pl.values[1] == parent_logical_id
+    end
+    link_array
+      .map { |(physical_id, logical_id)| { physical_id: physical_id, logical_id: logical_id } }
   end
 
   def admin_set_key

@@ -29,6 +29,9 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
   let(:production_mets_file) { File.open("spec/fixtures/goobi/metadata/repositories11archival_objects329771.xml") }
   let(:has_holding_file) { File.open("spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml") }
   let(:has_caption_file) { File.open("spec/fixtures/goobi/metadata/16172421/meta.xml") }
+  let(:has_test_caption_file) { File.open("spec/fixtures/goobi/metadata/16172421/caption.xml") }
+  let(:has_test_not_all_caption_file) { File.open("spec/fixtures/goobi/metadata/16172421/Not_all_images_caption_mets.xml") }
+  let(:has_test_no_caption_file) { File.open("spec/fixtures/goobi/metadata/16172421/meta_no_logical.xml") }
 
   it "can be instantiated with xml from the DB instead of a file" do
     described_class.new(batch_process.mets_xml)
@@ -177,10 +180,30 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
     expect(mets_doc.combined.second[:child_uuid]).to eq "1234d3360-bf78-4e35-9850-44ef7f832100"
   end
 
-  it "can return caption, type, label, id for the logical structure" do
+  it "can return caption for the logical structure" do
     mets_doc = described_class.new(has_caption_file)
-    expect(mets_doc.combined.first[:caption]).to eq "Swatch 1"
+    expect(mets_doc.combined.first[:caption]).to eq nil # first image does not have caption based on the structLink
     expect(mets_doc.logical_divs.first[:caption]).to eq "Swatch 1"
     expect(mets_doc.logical_divs.second[:caption]).to eq nil
+  end
+
+  it "can return caption for the logical structure with different index" do
+    mets_doc = described_class.new(has_test_caption_file)
+    expect(mets_doc.combined.first[:caption]).to eq "[1]. Ambrosial Song"
+    expect(mets_doc.logical_divs.first[:caption]).to eq "[1]. Ambrosial Song"
+  end
+
+  it "can return caption for not all images have caption" do
+    mets_doc = described_class.new(has_test_not_all_caption_file)
+    expect(mets_doc.combined.first[:caption]).to eq nil # first image does not have caption based on the structLink
+    expect(mets_doc.combined[3][:caption]).to eq "[V.1:no.1(1900:Nov.)]" # first image has the caption
+    expect(mets_doc.logical_divs[4][:caption]).to eq "[V.1:no.4(1901:Feb.)]"
+  end
+
+  it "return nil for no logical/caption div" do
+    mets_doc = described_class.new(has_test_no_caption_file)
+    expect(mets_doc.logical_divs).to be_empty
+    expect(mets_doc.combined.first[:caption]). to eq nil
+    expect(mets_doc.combined[3][:caption]).to eq nil
   end
 end

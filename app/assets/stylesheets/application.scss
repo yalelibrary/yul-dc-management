@@ -13,6 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+// TODO(alishaevn): figure out how to import all files in theme once, instead of in every file ;
+// @import 'theme/*';
+
 .main-content{
   min-height: 90vh
 }

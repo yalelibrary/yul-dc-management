@@ -1,43 +1,43 @@
-<p id="notice"><%= notice %></p>
+<p id='notice'><%= notice %></p>
 
-<h1>Child Objects</h1>
+<div class='row'>
+  <div class='col'>
+    <h1>Child Objects</h1>
+  </div>
+  <div class='col'>
+    <div class='float-right button-list'>
+      <%= link_to 'New Child Object', new_child_object_path, class: 'btn primary-button' %>
+    </div>
+  </div>
+</div>
 
+<div class='row'>
+  <div class='col overflow-auto'>
+    <table id='child-objects-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= child_objects_path(format: :json) %>'>
+      <thead class='thead-dark'>
+        <tr>
+          <th scope='col'>Oid</th>
+          <th scope='col'>Label</th>
+          <th scope='col'>Caption</th>
+          <th scope='col'>Width</th>
+          <th scope='col'>Height</th>
+          <th scope='col'>Order</th>
+          <th scope='col'>Parent Object</th>
+          <th scope='col'>Actions</th>
+        </tr>
+      </thead>
 
-<table class="table table-responsive table-bordered table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th>Oid</th>
-      <th>Label</th>
-      <th>Caption</th>
-      <th>Width</th>
-      <th>Height</th>
-      <th>Order</th>
-      <th>Parent object</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-  <tbody>
-    <% @child_objects.each do |child_object| %>
-      <tr>
-        <td><%= child_object.oid %></td>
-        <td><%= child_object.label %></td>
-        <td><%= child_object.caption %></td>
-        <td><%= child_object.width %></td>
-        <td><%= child_object.height %></td>
-        <td><%= child_object.order %></td>
-        <td><%= child_object.parent_object_oid %></td>
-        <td><%= link_to 'Show', child_object %></td>
-        <% if can? :edit, child_object %>
-          <td><%= link_to 'Edit', edit_child_object_path(child_object) %></td>
-          <td><%= link_to 'Destroy', child_object, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= paginate @child_objects %>
-<br>
-
-<%= link_to 'New Child Object', new_child_object_path %>
+<div id='child-objects-data' class='d-none datatable-data'>
+  <%= ChildObjectDatatable.new(nil).view_columns.map {|key, value| {
+    data: key,
+    orderable: value[:orderable] || true,
+    searchable: value[:searchable] || true,
+    options: value[:options]
+  }}.to_json %>
+</div>
