@@ -22,8 +22,7 @@
     "postcss": "^8.2.15",
     "ssri": "^8.0.1",
     "tailwindcss": "^2.1.2",
-    "turbolinks": "^5.2.0",
-    "ws": "^6.2.2"
+    "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
   "devDependencies": {
