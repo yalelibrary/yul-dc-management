@@ -8,6 +8,6 @@ RSpec.describe 'footer', type: :system do
 
   it 'has css' do
     expect(page).to have_css '.branch-name'
-    expect(page).to have_css '.yale_management_header_footer'f
+    expect(page).to have_css '.yale_management_header_footer'
   end
 end
