@@ -1,0 +1,12 @@
+/********************************************************
+DEFAULT DESKTOP STYLING
+********************************************************/
+@import 'theme/colors', 'theme/typography', 'theme/breakpoints';
+
+.yale_management_header_footer{
+  background-color: $white;
+  height: 70px;
+  padding: 1% 0 0 2%;
+  border-top: 2px solid $white;
+  border-color: rgba(209, 209, 209, 0.4);
+}
