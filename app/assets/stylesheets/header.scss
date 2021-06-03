@@ -1,0 +1,29 @@
+/********************************************************
+DEFAULT DESKTOP STYLING
+********************************************************/
+@import 'theme/colors', 'theme/typography', 'theme/breakpoints';
+
+.main_yale_management_banner{
+  background-color: $yale_blue;
+  height: 80px;
+  padding: 1% 0 0 2%;
+  display: flex;
+  align-items: center;
+}
+
+.main_yale_management_banner h1{
+  color: $white;
+  font-family: $yale_new_roman;
+  font-size: 36px;
+}
+.sub_yale_management_banner{
+  height: 60px;
+  border-bottom: 2px solid $yale_blue;
+  border-color: rgba(4, 54, 105, 0.4);}
+
+.sub_yale_management_banner h2{
+  color: $yale_blue;
+  font-family: $mallory_light;
+  font-size: 26px;
+  padding: 1% 0 0 2%;
+}
