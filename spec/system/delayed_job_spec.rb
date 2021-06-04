@@ -45,7 +45,7 @@ RSpec.describe 'Delayed Jobs', type: :system, js: true do
 
     it 'are accessible through the delayed jobs dashboard menu item' do
       visit root_path
-      expect(page).to have_content('Delayed Job Dashboard')
+      expect(page).to have_content('DELAYED JOB DASHBOARD')
     end
     it 'are accessible manually through the delayed jobs endpoint' do
       visit delayed_job_web_path

@@ -14,6 +14,7 @@ DEFAULT DESKTOP STYLING
   -moz-transition: margin .25s ease-out;
   -o-transition: margin .25s ease-out;
   transition: margin .25s ease-out;
+  border-right: 1px none #dee2e6 !important;
 }
 
 #sidebar-wrapper .sidebar-heading {
@@ -21,10 +22,44 @@ DEFAULT DESKTOP STYLING
   font-size: 1.2rem;
 }
 
-#sidebar-wrapper .list-group {
-  width: 15rem;
+.sidebar_yale{
+  width: 22%;
 }
 
+#sidebar-wrapper .list-group{
+  font-family: $mallory_book;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+#sidebar-wrapper .flex-column{
+  width: auto;
+}
+
+#sidebar-wrapper .top-menu-item{
+  margin-top: 8%;
+}
+
+#sidebar-wrapper .list-group-item{
+  padding: 1rem 2.25rem;
+  border: 1px none rgba(0, 0, 0, 0.125);
+  color: $sidebar_links;
+}
+
+#sidebar-wrapper .border-right{
+    border-right: 1px none #dee2e6 !important;
+}
+
+#sidebar-wrapper .list-group-item:hover{
+  color: $sidebar_active_link;
+  background-color: $sidebar_hover !important;
+}
+
+#sidebar-wrapper .sign-button{
+  text-transform: capitalize;
+  color: $sidebar_sign_out;
+}
+
+//Body
 #page-content-wrapper {
   min-width: 100vw;
   margin: 33px;
