@@ -21,7 +21,7 @@ COPY vips_8.10.2-1_amd64.deb $APP_HOME
 RUN dpkg -i ./vips_8.10.2-1_amd64.deb
 RUN vips --version
 
-COPY jpegs2pdf-1.0.jar $APP_HOME
+COPY jpegs2pdf-1.1.jar $APP_HOME
 
 COPY --chown=app Gemfile* $APP_HOME/
 RUN /sbin/setuser app bash -l -c "bundle check || bundle install"
