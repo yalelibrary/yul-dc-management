@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>YulDcManagement</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>YulDcManagement</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-  <body>
-    <div class="d-flex" id="wrapper">
+  <%= render 'layouts/header' %>
 
-      <%= render 'layouts/sidebar' %>
-      <div id="page-content-wrapper">
-        <div class="main-content d-flex flex-column">
-          <div class="flex-grow-1">
-          <%= yield %>
-          </div>
-          <div>
-          <%= render 'layouts/footer' %>
-          </div>
-        </div>
+</head>
+
+<body>
+<div class="d-flex" id="wrapper">
+
+  <%= render 'layouts/sidebar' %>
+  <div id="page-content-wrapper">
+    <div class="main-content d-flex flex-column">
+      <div class="flex-grow-1">
+        <%= yield %>
       </div>
     </div>
-  </body>
+  </div>
+</div>
+</body>
+<div>
+  <%= render 'layouts/footer' %>
+</div>
 </html>

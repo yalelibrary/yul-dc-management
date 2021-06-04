@@ -348,4 +348,16 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       expect(page).to have_button('Start Goobi Scan', disabled: true)
     end
   end
+
+  context "batch processes page", js: true do
+    let(:user) { FactoryBot.create(:user) }
+    before do
+      login_as user
+      visit batch_processes_path
+    end
+
+    it "has column visibility button" do
+      expect(page).to have_css(".buttons-colvis")
+    end
+  end
 end

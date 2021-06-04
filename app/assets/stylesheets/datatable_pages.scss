@@ -1,0 +1,95 @@
+/********************************************************
+DEFAULT DESKTOP STYLING
+********************************************************/
+// styles are in order from the top to the bottom of the page
+@import 'theme/colors', 'theme/typography', 'theme/breakpoints';
+
+.datatable-heading {
+  margin-bottom: 25px;
+
+  h1 {
+    font-size: 30px;
+    font-family: $mallory_medium, Arial, Helvetica, sans-serif;
+  }
+}
+
+.button {
+  color: $white;
+  border-radius: 0;
+  font-family: $mallory_book, Arial, Helvetica, sans-serif;
+}
+
+.primary-button {
+  background-color: $primary_button;
+  border-color: $primary_button;
+}
+
+.secondary-button {
+  background-color: $secondary_button;
+  border-color: $secondary_button;
+}
+
+.dataTables_length {
+  font-family: $mallory_book, Arial, Helvetica, sans-serif;
+  font-size: 17px;
+}
+
+.dataTables_length .custom-select {
+  border-radius: 0;
+
+  option {
+    font-family: $mallory_book, Arial, Helvetica, sans-serif;
+  }
+}
+
+.table-head {
+  background-color: $table_head;
+  color: $white;
+  font-family: $mallory_book, Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+.is-datatable .row > th {
+  width: 170px;
+}
+
+.is-datatable #search-row {
+  input {
+    padding-left: 7px;
+    font-size: 15px;
+  }
+
+  select {
+    padding-left: 7px;
+    font-size: 15px;
+    border-radius: 0;
+  }
+}
+
+.datatable-body {
+  td {
+    font-family: $mallory_light, Arial, Helvetica, sans-serif;
+    font-size: 18px;
+  }
+
+  a {
+    font-family: $mallory_book, Arial, Helvetica, sans-serif;
+    font-size: 18px;
+  }
+}
+
+.dataTables_info {
+  font-size: 20px;
+}
+
+.dataTables_info,
+.dataTables_paginate {
+  display: inline-block;
+  line-height: 38.25px;
+  width: 50%;
+
+  a {
+    font-family: $mallory_book;
+  }
+}

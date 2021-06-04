@@ -197,12 +197,13 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
     mets_doc = described_class.new(has_test_not_all_caption_file)
     expect(mets_doc.combined.first[:caption]).to eq nil # first image does not have caption based on the structLink
     expect(mets_doc.combined[3][:caption]).to eq "[V.1:no.1(1900:Nov.)]" # first image has the caption
-    expect(mets_doc.logical_divs[3][:caption]).to eq "[V.1:no.4(1901:Feb.)]"
+    expect(mets_doc.logical_divs[4][:caption]).to eq "[V.1:no.4(1901:Feb.)]"
   end
 
   it "return nil for no logical/caption div" do
     mets_doc = described_class.new(has_test_no_caption_file)
-    expect(mets_doc.combined.first[:caption]).to eq nil
+    expect(mets_doc.logical_divs).to be_empty
+    expect(mets_doc.combined.first[:caption]). to eq nil
     expect(mets_doc.combined[3][:caption]).to eq nil
   end
 end

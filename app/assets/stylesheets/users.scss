@@ -1,6 +1,7 @@
-// Place all the styles related to the Users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+/********************************************************
+DEFAULT DESKTOP STYLING
+********************************************************/
+@import 'theme/colors', 'theme/typography', 'theme/breakpoints';
 
 #users-datatable {
   border-bottom: none;

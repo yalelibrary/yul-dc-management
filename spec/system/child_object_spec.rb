@@ -17,10 +17,7 @@ RSpec.describe "ChildObjects", type: :system, prep_metadata_sources: true, prep_
 
   it "creates child objects" do
     parent_object
-    visit(child_objects_path)
-    expect(page).to have_content("1042003")
-    expect(page).to have_link("Edit")
-    click_on("Edit")
+    visit(edit_child_object_path(parent_object.child_objects.first.oid))
     expect(page).to have_content("Caption")
     expect(page).to have_content("Viewing hint")
     select("non-paged")
