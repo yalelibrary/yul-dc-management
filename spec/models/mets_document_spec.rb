@@ -32,6 +32,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
   let(:has_test_caption_file) { File.open("spec/fixtures/goobi/metadata/16172421/caption.xml") }
   let(:has_test_not_all_caption_file) { File.open("spec/fixtures/goobi/metadata/16172421/Not_all_images_caption_mets.xml") }
   let(:has_test_no_caption_file) { File.open("spec/fixtures/goobi/metadata/16172421/meta_no_logical.xml") }
+  let(:has_digitized) { File.open("spec/fixtures/goobi/metadata/eodig.xml") }
 
   it "can be instantiated with xml from the DB instead of a file" do
     described_class.new(batch_process.mets_xml)
@@ -46,6 +47,11 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
     it "returns false for a valid METs file that does not reference any images" do
       mets_doc = described_class.new(no_image_files_path)
       expect(mets_doc.valid_mets?).to be_falsey
+    end
+
+    it "returns actual value Extent of digitization when present" do
+      mets_doc = described_class.new(has_digitized)
+      expect(mets_doc.extent_of_dig).to eq "Completely digitized"
     end
 
     it "returns false when rights statement is not present" do

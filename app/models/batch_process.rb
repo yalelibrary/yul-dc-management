@@ -208,6 +208,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parent_object.last_mets_update = Time.current
     parent_object.representative_child_oid = mets_doc.thumbnail_image
     parent_object.admin_set = mets_doc.admin_set
+    parent_object.extent_of_digitization = mets_doc.extent_of_dig
   end
   # rubocop:enable Metrics/AbcSize
 
