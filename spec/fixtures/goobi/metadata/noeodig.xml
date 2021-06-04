@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:dv="http://dfg-viewer.de/" xmlns:intranda="http://intranda.com/MODS/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OBJID="195" xsi:schemaLocation="http://www.loc.gov/standards/premis/ http://www.loc.gov/standards/premis/v2/premis-v2-0.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/standards/mix/ http://www.loc.gov/standards/mix/mix.xsd">
+  <mets:metsHdr CREATEDATE="2020-12-04T19:31:41Z">
+    <mets:agent OTHERTYPE="SOFTWARE" ROLE="CREATOR" TYPE="OTHER">
+      <mets:name>Goobi - 3647a - 2020-08-02 19:35:26+0000</mets:name>
+      <mets:note>Goobi</mets:note>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:dmdSec ID="DMDLOG_0000">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>Verses on the death of Dr. S----, D.S.P.D. : occasioned by reading a maxim in Rochefoulcault ...</mods:title>
+          </mods:titleInfo>
+          <mods:identifier type="PPNanalog">/ils/holding/1330141?bib=1188135</mods:identifier>
+          <mods:recordInfo>
+            <mods:recordIdentifier source="gbv-ppn">30000401</mods:recordIdentifier>
+          </mods:recordInfo>
+          <mods:classification authority="ivdcc">DefaultCollection</mods:classification>
+          <mods:originInfo>
+            <mods:dateIssued keyDate="no">1739.</mods:dateIssued>
+            <mods:dateIssued keyDate="yes">1739</mods:dateIssued>
+          </mods:originInfo>
+          <mods:accessCondition displayLabel="Yale Restriction" type="restriction on access">Public</mods:accessCondition>
+          <mods:accessCondition displayLabel="Yale Use" type="use and reproduction">The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement.</mods:accessCondition>
+          <mods:note displayLabel="Yale Collection Owner" type="ownership">brbl</mods:note>
+          <mods:location>
+            <mods:shelfLocator>Ik Sw55 739ve</mods:shelfLocator>
+          </mods:location>
+          <mods:name type="personal">
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+            <mods:namePart type="family">Swift</mods:namePart>
+            <mods:namePart type="given">Jonathan</mods:namePart>
+            <mods:displayForm>Swift, Jonathan</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal">
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+            <mods:namePart type="family">S----</mods:namePart>
+            <mods:namePart type="given">Dr.</mods:namePart>
+            <mods:displayForm>S----, Dr.</mods:displayForm>
+          </mods:name>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:directionRTL>false</intranda:directionRTL>
+              <intranda:ViewingDirection>left-to-right</intranda:ViewingDirection>
+              <intranda:ViewingHint>individuals</intranda:ViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:amdSec ID="AMD">
+    <mets:rightsMD ID="RIGHTS">
+      <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights>
+            <dv:owner>Beinecke Rare Book &amp; Manuscript Library</dv:owner>
+            <dv:ownerLogo />
+            <dv:ownerSiteURL>https://beinecke.library.yale.edu/</dv:ownerSiteURL>
+            <dv:ownerContact />
+            <dv:sponsorSiteURL>info@intranda.com</dv:sponsorSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="DIGIPROV">
+      <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links>
+            <dv:reference />
+            <dv:presentation />
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:fileSec>
+    <mets:fileGrp USE="PRESENTATION" ID="785be83d-afea-4b9a-b7dd-2fb10adc3470">
+      <mets:file ID="2059c536-cdd9-4120-9d29-8f80f15d5187" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="c314697a5b0fd444e26e7c12a1d8d487545dacfc">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///home/app/webapp/spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_media/30000402.tif" />
+      </mets:file>
+      <mets:file ID="055aa58f-c748-43ef-a71a-ae393255cfd9" MIMETYPE="image/tiff" USE="banner" CHECKSUMTYPE="SHA-1" CHECKSUM="c314697a5b0fd444e26e7c12a1d8d487545dacfc">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///home/app/webapp/spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_media/30000403.tif" />
+      </mets:file>
+      <mets:file ID="b94ebb56-cd09-4504-a638-ef16a33517fd" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="c314697a5b0fd444e26e7c12a1d8d487545dacfc">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///home/app/webapp/spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_media/30000404.tif" />
+      </mets:file>
+    </mets:fileGrp>
+  </mets:fileSec>
+  <mets:structMap TYPE="LOGICAL">
+    <mets:div ADMID="AMD" DMDID="DMDLOG_0000" ID="LOG_0000" LABEL="Verses on the death of Dr. S----, D.S.P.D. : occasioned by reading a maxim in Rochefoulcault ..." TYPE="ILSObject" />
+  </mets:structMap>
+  <mets:structMap TYPE="PHYSICAL">
+    <mets:div CONTENTIDS="30000401" ID="PHYS_0000" TYPE="physSequence">
+      <mets:div CONTENTIDS="30000402" ID="PHYS_0001" ORDER="1" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="2059c536-cdd9-4120-9d29-8f80f15d5187" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000403" ID="PHYS_0002" ORDER="2" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="055aa58f-c748-43ef-a71a-ae393255cfd9" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000404" ID="PHYS_0003" ORDER="3" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="b94ebb56-cd09-4504-a638-ef16a33517fd" />
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+  <mets:structLink>
+    <mets:smLink xlink:to="PHYS_0001" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0002" xlink:from="LOG_0000" />
+    <mets:smLink xlink:to="PHYS_0003" xlink:from="LOG_0000" />
+  </mets:structLink>
+</mets:mets>

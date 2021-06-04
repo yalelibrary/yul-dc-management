@@ -26,6 +26,12 @@ class MetsDocument
     @mets.xpath("//mods:accessCondition[@type='restriction on access']").inner_text
   end
 
+  def extent_of_dig
+    eodig = @mets.xpath("//mods:part").inner_text
+    return nil unless eodig.include?("digitized")
+    eodig
+  end
+
   def rights_statement
     @mets.xpath("//mods:accessCondition[@type='use and reproduction']").inner_text
   end
