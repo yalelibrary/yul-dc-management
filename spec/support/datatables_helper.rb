@@ -90,6 +90,19 @@ def parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
   @datatable_view_mock
 end
 
+def child_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
+  @datatable_view_mock ||= double
+  allow(@datatable_view_mock).to receive(:child_object_path).and_return('/child_objects/1')
+  allow(@datatable_view_mock).to receive(:edit_child_object_path).and_return('/child_objects/1/edit')
+  allow(@datatable_view_mock).to receive(:link_to).with(anything, '/child_objects/1')
+                                                  .and_return('<a href="/child_objects/1">1</a>')
+  allow(@datatable_view_mock).to receive(:link_to).with('Edit', '/child_objects/1/edit')
+                                                  .and_return('<a href="/management/child_objects/10736292/edit">Edit</a>')
+  allow(@datatable_view_mock).to receive(:link_to).with('Destroy', '/child_objects/1', anything)
+  .and_return('<a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/management/child_objects/10736292">Destroy</a>')
+  @datatable_view_mock
+end
+
 def batch_process_datatable_view_mock(id) # rubocop:disable Metrics/AbcSize
   @datatable_view_mock ||= double
   allow(@datatable_view_mock).to receive(:batch_process_path).and_return("/batch_processes/#{id}")

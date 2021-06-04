@@ -523,4 +523,14 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       expect(page).to have_content "Admin set cannot be assigned to a set the User cannot edit"
     end
   end
+
+  context "parent objects page", js: true do
+    before do
+      visit parent_objects_path
+    end
+
+    it "has column visibility button" do
+      expect(page).to have_css(".buttons-colvis")
+    end
+  end
 end

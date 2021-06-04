@@ -1,5 +1,7 @@
-<div class="branch-name">
-  Branch: <span title="SHA:<%=GIT_SHA%>"><%=ENV['MANAGEMENT_VERSION']||GIT_BRANCH%></span>
-  <br>
-  Deployed:<%=DEPLOYED_AT%>
+<div class="flex-container yale_management_footer" id="wrapper">
+  <div class="footer yale_management_header_footer branch-name">
+    Branch: <span title="SHA:<%=GIT_SHA%>"><%=ENV['MANAGEMENT_VERSION']||GIT_BRANCH%></span>
+    <br>
+    Deployed:<%=DEPLOYED_AT%>
+  </div>
 </div>
