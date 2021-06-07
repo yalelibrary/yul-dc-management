@@ -40,6 +40,8 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       last_voyager_update: nil,
       oid: "<a href='/parent_objects/1'>1</a><br> <a class='btn btn-info btn-sm' href='#{ENV['BLACKLIGHT_BASE_URL'] || 'localhost:3000'}/catalog/16854285' target='_blank' > Public View</a>",
       visibility: "Private",
+      extent_of_digitization: nil,
+      digitization_note: nil,
       actions: '<a href="/management/parent_objects/2034601/edit">Edit</a>' \
       ' | <a data-method="post" href="/management/parent_objects/2034601/update_metadata">Update Metadata</a>' \
       ' | <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/management/parent_objects/2034601">Destroy</a>'
