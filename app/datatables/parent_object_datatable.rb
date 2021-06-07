@@ -12,6 +12,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
     super
   end
 
+  # rubocop:disable Metrics/MethodLength
   def view_columns
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
@@ -30,9 +31,12 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
       last_aspace_update: { source: "ParentObject.last_aspace_update", orderable: true },
       last_id_update: { source: "ParentObject.last_id_update", orderable: true },
       visibility: { source: "ParentObject.visibility", cond: :string_eq, searchable: true, options: ["Public", "Yale Community Only", "Private"], orderable: true },
+      extent_of_digitization: { source: "ParentObject.extent_of_digitization", orderable: true },
+      digitization_note: { source: "ParentObject.digitization_note", orderable: true },
       actions: { source: "ParentObject.oid", cond: :null_value, searchable: false, orderable: false }
     }
   end
+  # rubocop: enable Metrics/MethodLength
 
   # rubocop:disable Rails/OutputSafety,Metrics/MethodLength
   def data
@@ -52,6 +56,8 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
         last_aspace_update: parent_object.last_aspace_update,
         last_id_update: parent_object.last_id_update,
         visibility: parent_object.visibility,
+        extent_of_digitization: parent_object.extent_of_digitization,
+        digitization_note: parent_object.digitization_note,
         actions: actions(parent_object).html_safe,
         DT_RowId: parent_object.oid
       }
