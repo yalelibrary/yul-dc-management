@@ -37,7 +37,7 @@ class MetsDocument
     return nil unless dig_note.present?
     dig_note
   end
-  
+
   def rights_statement
     @mets.xpath("//mods:accessCondition[@type='use and reproduction']").inner_text
   end
