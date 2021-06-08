@@ -38,11 +38,13 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   end
   # rubocop: enable Metrics/MethodLength
 
-  # rubocop:disable Rails/OutputSafety,Metrics/MethodLength
+  # rubocop:disable Rails/OutputSafety,Metrics/MethodLength,Metrics/AbcSize
   def data
     records.map do |parent_object|
       {
-        oid: link_to(parent_object.oid, parent_object_path(parent_object)) + (with_icon('fa fa-pencil-alt', edit_parent_object_path(parent_object)) if @current_ability.can? :edit, parent_object) + with_icon('fa fa-eye', parent_object.dl_show_url),
+        oid: link_to(parent_object.oid, parent_object_path(parent_object)) +
+          (with_icon('fa fa-pencil-alt', edit_parent_object_path(parent_object)) if @current_ability.can? :edit, parent_object) +
+          with_icon('fa fa-eye', parent_object.dl_show_url),
         admin_set: parent_object.admin_set.key,
         authoritative_source: parent_object.source_name,
         child_object_count: parent_object.child_object_count,
@@ -67,7 +69,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
 
   def actions(parent_object)
     actions = []
-    actions << with_icon('fa fa-trash', parent_object_path(parent_object), { method: :delete, data: { confirm: 'Are you sure?' } }) if @current_ability.can? :destroy, parent_object
+    actions << with_icon('fa fa-trash', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' }) if @current_ability.can? :destroy, parent_object
     actions << link_to('Update Metadata', update_metadata_parent_object_path(parent_object), method: :post) if @current_ability.can? :update, parent_object
     actions.join('<br>')
   end
