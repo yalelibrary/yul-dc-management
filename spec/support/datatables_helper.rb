@@ -69,7 +69,6 @@ def batch_parent_datatable_sample_params(columns, oid)
 end
 
 def parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
-  base = ENV['BLACKLIGHT_BASE_URL'] || 'localhost:3000'
   @datatable_view_mock ||= double
   allow(@datatable_view_mock).to receive(:parent_object_path).and_return('/parent_objects/2034600')
   allow(@datatable_view_mock).to receive(:edit_parent_object_path).and_return('/parent_objects/2034600/edit')
@@ -81,12 +80,12 @@ def parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
                                                   .and_return('<a href="/parent_objects/2034600">2034600</a>')
   allow(@datatable_view_mock).to receive(:link_to).with('/parent_objects/2034600/edit', {})
   .and_return('<a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil-alt"></i></a>')
-  allow(@datatable_view_mock).to receive(:link_to).with("#{base}/catalog/2034600", {})
-                                                  .and_return("<a href=\"#{base}/catalog/2034600\">1</a>")
-  allow(@datatable_view_mock).to receive(:link_to).with('Update Metadata', '/parent_objects/2034600/update_metadata', anything)
-                                                  .and_return('<a data-method="post" href="/parent_objects/2034600/update_metadata">Update Metadata</a>')
-  allow(@datatable_view_mock).to receive(:link_to).with('/parent_objects/2034600', anything)
+  allow(@datatable_view_mock).to receive(:link_to).with('/parent_objects/2034600', method: :delete, data: { confirm: 'Are you sure?' })
                                                   .and_return('<a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/parent_objects/2034600"><i class="fa fa-trash"></i></a>')
+  allow(@datatable_view_mock).to receive(:link_to).with('Update Metadata', '/parent_objects/2034600/update_metadata', method: :post)
+                                                  .and_return('<a data-method="post" href="/parent_objects/2034600/update_metadata">Update Metadata</a>')
+  allow(@datatable_view_mock).to receive(:link_to).with('http://localhost:3000/catalog/2034600', {})
+                                                  .and_return('<a href="http://localhost:3000/catalog/2034600">1</a>')
   @datatable_view_mock
 end
 
