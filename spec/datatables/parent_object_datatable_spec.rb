@@ -10,30 +10,20 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
     expect(ParentObjectDatatable.new(datatable_sample_params(columns), view_context: parent_object_datatable_view_mock, current_ability: Ability.new(user)).data).to eq([])
   end
 
-  it 'can handle a set of parent objects' do
+  it 'can handle a parent object' do
     admin_set = AdminSet.find_by_key('brbl')
-    # TODO(alishaevn): figure out why this doesn't work when the other 4 oids aren't commented out
-    [
-      '2005512'
-      # '2034600',
-      # '14716192',
-      # '16414889',
-      # '16854285'
-    ].each do |oid|
-      stub_metadata_cloud(oid)
-      FactoryBot.create(:parent_object, oid: oid, admin_set: admin_set)
-    end
-    first_parent_oid = ParentObject.first.oid.to_i
+    oid = '2034600'
 
-    output = ParentObjectDatatable.new(datatable_sample_params(columns), view_context: parent_object_datatable_view_mock(first_parent_oid), current_ability: Ability.new(user)).data
+    stub_metadata_cloud(oid)
+    FactoryBot.create(:parent_object, oid: oid, admin_set: admin_set)
 
-    # TODO(alishaevn): use the "5" line instead of "1" when all 5 oids are working
-    # expect(output.size).to eq(5)
+    output = ParentObjectDatatable.new(datatable_sample_params(columns), view_context: parent_object_datatable_view_mock, current_ability: Ability.new(user)).data
+
     expect(output.size).to eq(1)
     # rubocop:disable Metrics/LineLength
     expect(output).to include(
-      DT_RowId: 2_005_512,
-      actions: "<a data-confirm='Are you sure?' rel='nofollow' data-method='delete' href='/parent_objects/#{first_parent_oid}'><i class='fa fa-trash'></i></a><br><a data-method='post' href='/parent_objects/#{first_parent_oid}/update_metadata'>Update Metadata</a>",
+      DT_RowId: 2_034_600,
+      actions: '<a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/parent_objects/2034600"><i class="fa fa-trash"></i></a><br><a data-method="post" href="/parent_objects/2034600/update_metadata">Update Metadata</a>',
       admin_set: 'brbl',
       aspace_uri: nil,
       authoritative_source: 'ladybird',
@@ -48,8 +38,8 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       last_id_update: nil,
       last_ladybird_update: nil,
       last_voyager_update: nil,
-      oid: "<a href='/parent_objects/#{first_parent_oid}'>#{first_parent_oid}</a> <a href='/parent_objects/#{first_parent_oid}/edit'><i class='fa fa-pencil-alt'></i></a> <a href='http://localhost:3000/catalog/#{first_parent_oid}'>#{first_parent_oid}</a>",
-      visibility: "Private"
+      oid: '<a href="/parent_objects/2034600">2034600</a> <a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil-alt"></i></a> <a href="http://localhost:3000/catalog/2034600">1</a>',
+      visibility: 'Private'
     )
     # rubocop:enable Metrics/LineLength
   end
