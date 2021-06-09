@@ -1,25 +1,33 @@
-<div class='container'>
-  <% if flash[:notice] %>
-    <div class='notice'><%= flash[:notice] %></div>
-  <% end %>
-  <h1>Users</h1>
-  <table style="width:100%" id="users-datatable" class='is-datatable table table-responsive table-bordered table-striped' data-source="<%= users_path(format: :json) %>">
-  <thead class='thead-dark'>
-    <tr>
-      <th>NetId</th>
-      <th>Email</th>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>System Admin</th>
-      <th>Inactive</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-
-  <%= link_to('New User', new_user_path, class: 'btn btn-primary') %>
+<% if flash[:notice] %>
+  <div class='notice'><%= flash[:notice] %></div>
+<% end %>
+<div class='row datatable-heading'>
+  <div class='col'>
+    <h1>Users</h1>
+  </div>
+  <div class='col'>
+    <div class='float-right button-list'>
+      <%= link_to('New User', new_user_path, class: 'btn button primary-button') %>
+    </div>
+  </div>
+</div>
+<div class='row'>
+  <div class='col overflow-auto'>
+    <table id="users-datatable" class='is-datatable table table-responsive table-bordered table-striped' data-source="<%= users_path(format: :json) %>">
+    <thead class='table-head'>
+      <tr>
+        <th scope='col'>NetId</th>
+        <th scope='col'>Email</th>
+        <th scope='col'>First name</th>
+        <th scope='col'>Last name</th>
+        <th scope='col'>System Admin</th>
+        <th scope='col'>Inactive</th>
+      </tr>
+      </thead>
+      <tbody class='datatable-body'>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div id='users-data' class='d-none datatable-data'>
