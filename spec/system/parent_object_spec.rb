@@ -394,6 +394,26 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   end
 
   describe "index page", js: true do
+    context 'datatable' do
+      let(:parent_object1) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: AdminSet.find_by_key('brbl')) }
+      let(:parent_object2) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: AdminSet.find_by_key('brbl')) }
+
+      before do
+        stub_metadata_cloud('2034600')
+        stub_metadata_cloud('2005512')
+        parent_object1
+        parent_object2
+        visit parent_objects_path
+      end
+
+      it 'has multiple Parent Objects' do
+        within '#parent-objects-datatable' do
+          expect(page).to have_xpath '//*[@id="2034600"]/td[@class="sorting_1"]/a[1]', text: '2034600'
+          expect(page).to have_xpath '//*[@id="2005512"]/td[@class="sorting_1"]/a[1]', text: '2005512'
+        end
+      end
+    end
+
     context "clicking ReIndex button" do
       before do
         visit parent_objects_path
@@ -453,6 +473,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
     end
   end
+
   context "when logged in without admin set roles" do
     before do
       user.remove_role(:editor, AdminSet.find_by_key('brbl'))
