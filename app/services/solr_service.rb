@@ -51,4 +51,22 @@ class SolrService
     connection.delete_by_id(orphans)
     connection.commit
   end
+
+  # Creates a new field type to update schema of already create solr index
+  def self.create_new_field_type(name, type, indexed, stored, multi_value)
+    data =
+      {
+        "add-dynamic-field": {
+          "name": name,
+          "type": type,
+          "indexed": indexed,
+          "multiValued": multi_value,
+          "stored": stored
+        }
+      }
+    connection.connection.post('schema') do |req|
+      req.body = data.to_json
+      req.headers['Content-Type'] = 'application/json'
+    end
+  end
 end
