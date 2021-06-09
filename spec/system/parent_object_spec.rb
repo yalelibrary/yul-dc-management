@@ -394,10 +394,10 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   end
 
   describe "index page", js: true do
-    let(:parent_object1) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: AdminSet.find_by_key('brbl')) }
-    let(:parent_object2) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: AdminSet.find_by_key('brbl')) }
-
     context 'datatable' do
+      let(:parent_object1) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: AdminSet.find_by_key('brbl')) }
+      let(:parent_object2) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: AdminSet.find_by_key('brbl')) }
+
       before do
         stub_metadata_cloud('2034600')
         stub_metadata_cloud('2005512')
@@ -407,8 +407,10 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
 
       it 'has multiple Parent Objects' do
-        expect(page.body).to include '<tr id="2034600" class="odd">'
-        expect(page.body).to include '<tr id="2005512" class="even">'
+        within '#parent-objects-datatable' do
+          expect(page).to have_xpath '//*[@id="2034600"]/td[@class="sorting_1"]/a[1]', text: '2034600'
+          expect(page).to have_xpath '//*[@id="2005512"]/td[@class="sorting_1"]/a[1]', text: '2005512'
+        end
       end
     end
 
@@ -471,6 +473,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
     end
   end
+
   context "when logged in without admin set roles" do
     before do
       user.remove_role(:editor, AdminSet.find_by_key('brbl'))
