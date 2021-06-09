@@ -77,8 +77,6 @@ def parent_object_datatable_view_mock(oid) # rubocop:disable Metrics/AbcSize
   allow_any_instance_of(ParentObject).to receive(:child_object_count).and_return(4)
   # rubocop:enable RSpec/AnyInstance
   allow(@datatable_view_mock).to receive(:update_metadata_parent_object_path).and_return("/parent_objects/#{oid}/update_metadata")
-  allow(@datatable_view_mock).to receive(:link_to).with(oid, "/parent_objects/#{oid}")
-                                                  .and_return("<a href='/parent_objects/#{oid}'>#{oid}</a>")
   allow(@datatable_view_mock).to receive(:link_to).with("http://localhost:3000/catalog/#{oid}", {})
                                                   .and_return("<a href='http://localhost:3000/catalog/#{oid}'>#{oid}</a>")
   allow(@datatable_view_mock).to receive(:link_to).with("/parent_objects/#{oid}/edit", {})
@@ -87,6 +85,8 @@ def parent_object_datatable_view_mock(oid) # rubocop:disable Metrics/AbcSize
                                                   .and_return("<a data-confirm='Are you sure?' rel='nofollow' data-method='delete' href='/parent_objects/#{oid}'><i class='fa fa-trash'></i></a>")
   allow(@datatable_view_mock).to receive(:link_to).with('Update Metadata', "/parent_objects/#{oid}/update_metadata", anything)
                                                   .and_return("<a data-method='post' href='/parent_objects/#{oid}/update_metadata'>Update Metadata</a>")
+  allow(@datatable_view_mock).to receive(:link_to).with(oid, "/parent_objects/#{oid}")
+                                                  .and_return("<a href='/parent_objects/#{oid}'>#{oid}</a>")
   @datatable_view_mock
 end
 
