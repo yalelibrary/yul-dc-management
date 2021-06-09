@@ -69,24 +69,24 @@ def batch_parent_datatable_sample_params(columns, oid)
 end
 # rubocop:enable Metrics/MethodLength
 
-def parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
+def parent_object_datatable_view_mock(oid) # rubocop:disable Metrics/AbcSize
   @datatable_view_mock ||= double
-  allow(@datatable_view_mock).to receive(:parent_object_path).and_return("/parent_objects/1")
-  allow(@datatable_view_mock).to receive(:edit_parent_object_path).and_return("/parent_objects/1/edit")
+  allow(@datatable_view_mock).to receive(:parent_object_path).and_return("/parent_objects/#{oid}")
+  allow(@datatable_view_mock).to receive(:edit_parent_object_path).and_return("/parent_objects/#{oid}/edit")
   # rubocop:disable RSpec/AnyInstance
   allow_any_instance_of(ParentObject).to receive(:child_object_count).and_return(4)
   # rubocop:enable RSpec/AnyInstance
-  allow(@datatable_view_mock).to receive(:update_metadata_parent_object_path).and_return("/parent_objects/1/update_metadata")
-  allow(@datatable_view_mock).to receive(:link_to).with(anything, "/parent_objects/1")
-                                                  .and_return("<a href='/parent_objects/1'>1</a>")
-  allow(@datatable_view_mock).to receive(:link_to).with("Edit", "/parent_objects/1/edit")
-                                                  .and_return('<a href="/management/parent_objects/2034601/edit">Edit</a>')
-  allow(@datatable_view_mock).to receive(:link_to).with("View", "/parent_objects/1", method: :get)
-                                                  .and_return('<a href="/management/parent_objects/2034601">View</a>')
-  allow(@datatable_view_mock).to receive(:link_to).with("Update Metadata", "/parent_objects/1/update_metadata", anything)
-                                                  .and_return('<a data-method="post" href="/management/parent_objects/2034601/update_metadata">Update Metadata</a>')
-  allow(@datatable_view_mock).to receive(:link_to).with("Destroy", "/parent_objects/1", anything)
-                                                  .and_return('<a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/management/parent_objects/2034601">Destroy</a>')
+  allow(@datatable_view_mock).to receive(:update_metadata_parent_object_path).and_return("/parent_objects/#{oid}/update_metadata")
+  allow(@datatable_view_mock).to receive(:link_to).with(oid, "/parent_objects/#{oid}")
+                                                  .and_return("<a href='/parent_objects/#{oid}'>#{oid}</a>")
+  allow(@datatable_view_mock).to receive(:link_to).with("http://localhost:3000/catalog/#{oid}", {})
+                                                  .and_return("<a href='http://localhost:3000/catalog/#{oid}'>#{oid}</a>")
+  allow(@datatable_view_mock).to receive(:link_to).with("/parent_objects/#{oid}/edit", {})
+                                                  .and_return("<a href='/parent_objects/#{oid}/edit'><i class='fa fa-pencil-alt'></i></a>")
+  allow(@datatable_view_mock).to receive(:link_to).with("/parent_objects/#{oid}", anything)
+                                                  .and_return("<a data-confirm='Are you sure?' rel='nofollow' data-method='delete' href='/parent_objects/#{oid}'><i class='fa fa-trash'></i></a>")
+  allow(@datatable_view_mock).to receive(:link_to).with('Update Metadata', "/parent_objects/#{oid}/update_metadata", anything)
+                                                  .and_return("<a data-method='post' href='/parent_objects/#{oid}/update_metadata'>Update Metadata</a>")
   @datatable_view_mock
 end
 
