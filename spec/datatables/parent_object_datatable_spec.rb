@@ -12,6 +12,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
 
   it 'can handle a set of parent objects' do
     admin_set = AdminSet.find_by_key('brbl')
+    # TODO(alishaevn): figure out why this doesn't work when the other 4 oids aren't commented out
     [
       '2005512'
       # '2034600',
@@ -26,6 +27,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
 
     output = ParentObjectDatatable.new(datatable_sample_params(columns), view_context: parent_object_datatable_view_mock(first_parent_oid), current_ability: Ability.new(user)).data
 
+    # TODO(alishaevn): use the "5" line instead of "1" when all 5 oids are working
     # expect(output.size).to eq(5)
     expect(output.size).to eq(1)
     # rubocop:disable Metrics/LineLength
