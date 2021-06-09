@@ -394,6 +394,24 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   end
 
   describe "index page", js: true do
+    let(:parent_object1) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: AdminSet.find_by_key('brbl')) }
+    let(:parent_object2) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: AdminSet.find_by_key('brbl')) }
+
+    context 'datatable' do
+      before do
+        stub_metadata_cloud('2034600')
+        stub_metadata_cloud('2005512')
+        parent_object1
+        parent_object2
+        visit parent_objects_path
+      end
+
+      it 'has multiple Parent Objects' do
+        expect(page.body).to include '<tr id="2034600" class="odd">'
+        expect(page.body).to include '<tr id="2005512" class="even">'
+      end
+    end
+
     context "clicking ReIndex button" do
       before do
         visit parent_objects_path
