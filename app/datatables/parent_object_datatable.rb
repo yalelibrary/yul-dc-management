@@ -38,13 +38,11 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   end
   # rubocop: enable Metrics/MethodLength
 
-  # rubocop:disable Rails/OutputSafety,Metrics/MethodLength,Metrics/AbcSize
+  # rubocop:disable Rails/OutputSafety,Metrics/MethodLength
   def data
     records.map do |parent_object|
       {
-        oid: link_to(parent_object.oid, parent_object_path(parent_object)) +
-          (with_icon('fa fa-pencil-alt', edit_parent_object_path(parent_object)) if @current_ability.can? :edit, parent_object) +
-          with_icon('fa fa-eye', parent_object.dl_show_url),
+        oid: oid_column(parent_object).html_safe,
         admin_set: parent_object.admin_set.key,
         authoritative_source: parent_object.source_name,
         child_object_count: parent_object.child_object_count,
@@ -67,6 +65,14 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   end
   # rubocop:enable Rails/OutputSafety,Metrics/MethodLength
 
+  def oid_column(parent_object)
+    result = []
+    result << link_to(parent_object.oid, parent_object_path(parent_object))
+    result << with_icon('fa fa-pencil-alt', edit_parent_object_path(parent_object)) if @current_ability.can? :edit, parent_object
+    result << with_icon('fa fa-eye', parent_object.dl_show_url)
+    result.join(' ')
+  end
+
   def actions(parent_object)
     actions = []
     actions << with_icon('fa fa-trash', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' }) if @current_ability.can? :destroy, parent_object
@@ -75,7 +81,9 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def with_icon(class_name, path, options = {})
-    link_to(content_tag(:i, '', class: class_name), path, options)
+    link_to(path, options) do
+      content_tag(:i, '', class: class_name)
+    end
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
