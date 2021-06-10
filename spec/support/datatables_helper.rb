@@ -129,3 +129,13 @@ def user_datatable_view_mock(id, uid) # rubocop:disable Metrics/AbcSize
   allow(@datatable_view_mock).to receive(:link_to).with("Edit", "/management/users/#{id}/edit").and_return("<a href='/management/users/#{id}/edit'>Edit</a>")
   @datatable_view_mock
 end
+
+def admin_set_datatable_view_mock(id, key, homepage) # rubocop:disable Metrics/AbcSize
+  @datatable_view_mock ||= double
+  allow(@datatable_view_mock).to receive(:admin_set_path).and_return("/admin_sets/#{id}")
+  allow(@datatable_view_mock).to receive(:edit_admin_set_path).and_return("/admin_sets/#{id}/edit")
+  allow(@datatable_view_mock).to receive(:link_to).with(anything, "/admin_sets/#{id}").and_return("<a href='/admin_sets/#{id}'>#{key}</a>")
+  allow(@datatable_view_mock).to receive(:link_to).with(homepage.to_s, homepage.to_s).and_return("<a href=#{homepage}>#{homepage}</a>")
+  allow(@datatable_view_mock).to receive(:link_to).with("/admin_sets/#{id}/edit", {}).and_return("<a href='/admin_sets/#{id}/edit'><i class=\"fa fa-pencil-alt></i>\"</a>")
+  @datatable_view_mock
+end
