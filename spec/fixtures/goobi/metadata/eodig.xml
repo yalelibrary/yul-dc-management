@@ -19,6 +19,13 @@
           </mods:recordInfo>
           <mods:part>Completely digitized</mods:part>
           <mods:classification authority="ivdcc">DefaultCollection</mods:classification>
+          <mods:part>
+            <mods>
+              <detail>
+                <mods:number>File 19004</mods:number>
+              </detail>
+            </mods>
+          </mods:part>
           <mods:originInfo>
             <mods:dateIssued keyDate="no">-1918.</mods:dateIssued>
             <mods:dateIssued keyDate="yes">1878</mods:dateIssued>

@@ -27,7 +27,7 @@ class MetsDocument
   end
 
   def extent_of_dig
-    eodig = @mets.xpath("//mods:part").inner_text
+    eodig = @mets.xpath("//mods:part").first.inner_text
     return nil unless eodig.include?("digitized")
     eodig
   end
