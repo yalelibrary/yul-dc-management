@@ -126,7 +126,7 @@ def user_datatable_view_mock(id, uid) # rubocop:disable Metrics/AbcSize
   allow(@datatable_view_mock).to receive(:user_path).and_return("/management/users/#{id}")
   allow(@datatable_view_mock).to receive(:edit_user_path).and_return("/management/users/#{id}/edit")
   allow(@datatable_view_mock).to receive(:link_to).with(anything, "/management/users/#{id}").and_return("<a href='/management/users/#{id}'>#{uid}</a>")
-  allow(@datatable_view_mock).to receive(:link_to).with("Edit", "/management/users/#{id}/edit").and_return("<a href='/management/users/#{id}/edit'>Edit</a>")
+  allow(@datatable_view_mock).to receive(:link_to).with("/management/users/#{id}/edit", {}).and_return("<a href='/management/users/#{id}/edit'><i class=\"fa fa-pencil-alt\"></i></a>")
   @datatable_view_mock
 end
 

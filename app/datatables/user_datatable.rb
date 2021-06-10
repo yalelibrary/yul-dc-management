@@ -3,7 +3,7 @@
 class UserDatatable < AjaxDatatablesRails::ActiveRecord
   extend Forwardable
 
-  def_delegators :@view, :link_to, :user_path, :edit_user_path
+  def_delegators :@view, :link_to, :user_path, :edit_user_path, :content_tag
 
   def initialize(params, opts = {})
     @view = opts[:view_context]
@@ -19,27 +19,27 @@ class UserDatatable < AjaxDatatablesRails::ActiveRecord
       first_name: { source: "User.first_name", cond: :like, searchable: true, orderable: true },
       last_name: { source: "User.last_name", cond: :like, searchable: true, orderable: true },
       system_admin: { source: "User.id", cond: :null_value, searchable: false, orderable: false },
-      deactivated: { source: "User.deactivated", cond: :like, searchable: true, orderable: true, options: [{ value: true, label: "Inactive" }, { value: false, label: "Active", selected: true }] },
-      actions: { source: "User.id", cond: :null_value, searchable: false, orderable: false }
+      deactivated: { source: "User.deactivated", cond: :like, searchable: true, orderable: true, options: [{ value: true, label: "Inactive" }, { value: false, label: "Active", selected: true }] }
     }
   end
 
   def data
     records.map do |user|
       {
-        netid: link_to(user.uid, user_path(user)),
+        netid: link_to(user.uid, user_path(user)) + with_icon('fa fa-pencil-alt', edit_user_path(user)),
         email: user.email,
         first_name: user.first_name,
         last_name: user.last_name,
         system_admin: user.sysadmin,
-        deactivated: user.deactivated ? "Inactive" : "Active",
-        actions: actions(user).html_safe # rubocop:disable Rails/OutputSafety
+        deactivated: user.deactivated ? "Inactive" : "Active"
       }
     end
   end
 
-  def actions(user)
-    link_to('Edit', edit_user_path(user))
+  def with_icon(class_name, path, options = {})
+    link_to(path, options) do
+      content_tag(:i, '', class: class_name)
+    end
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
