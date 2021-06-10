@@ -27,7 +27,7 @@ class SolrService
     solr_page = 0
     solr_ids = []
     while (solr_page = solr_page.next)
-      search = connection.paginate(solr_page, batch_size, "select", params: { q: 'id:*', fl: 'id' })
+      search = connection.paginate(solr_page, batch_size, "select", params: { q: 'oid_ssim:[* TO *]', fl: 'id' })
       ids = (search&.[]('response')&.[]('docs')&.map { |r| r.values })&.flatten
       break if ids.empty?
       solr_ids.concat(ids.map(&:to_i))
