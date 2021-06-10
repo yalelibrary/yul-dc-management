@@ -20,15 +20,15 @@ RSpec.describe ChildObjectDatatable, type: :datatable, prep_metadata_sources: tr
 
     expect(output.size).to eq(1)
     expect(output).to include(
-      oid: "<a href=\"/child_objects/1\">1</a>",
+      oid: "<a href=\"/child_objects/1\">1</a><a href=\"/management/child_objects/10736292/edit\"><i class=\"fa fa-pencil-alt\"></i></a>",
       label: nil,
       caption: 'MyString',
       width: 1,
       height: 1,
       order: 1,
       parent_object: 2_004_628,
-      actions: "<a href=\"/management/child_objects/10736292/edit\">Edit</a>" \
-      " | <a data-confirm=\"Are you sure?\" rel=\"nofollow\" data-method=\"delete\" href=\"/management/child_objects/10736292\">Destroy</a>",
+      actions:
+      "<a data-confirm=\"Are you sure?\" rel=\"nofollow\" data-method=\"delete\" href=\"/management/child_objects/10736292\"><i class=\"fa fa-trash\"></i></a>",
       DT_RowId: 10_736_292
     )
   end

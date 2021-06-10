@@ -1,29 +1,28 @@
 <p id="notice"><%= notice %></p>
-<div class='row'>
+<div class='row datatable-heading'>
   <div class='col'>
     <h1>Notifications</h1>
   </div>
-</div>
-<div class='col'>
-  <div class='float-right'>
-    <%= link_to 'Resolve All', resolve_all_notifications_path, method: 'delete', class: 'btn btn-primary' %>
+  <div class='col'>
+    <div class='float-right'>
+      <%= link_to 'Resolve All', resolve_all_notifications_path, method: 'delete', class: 'btn button primary-button' %>
+    </div>
   </div>
 </div>
 <div class='row'>
   <div class='col'>
     <table class="table table-responsive table-bordered table-striped">
-      <thead class="thead-dark">
+      <thead class='table-head'>
         <tr>
           <th scope="col">Status</th>
           <th scope="col">Parent Object</th>
           <th scope="col">Reason</th>
           <th scope="col">Read</th>
           <th scope="col">Created at</th>
-          <th scope="col"></th>
         </tr>
       </thead>
 
-      <tbody>
+      <tbody class='datatable-body'>
         <% @notifications.each do |notification| %>
           <% notice = notification.to_notification %>
           <tr>
