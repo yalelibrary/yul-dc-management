@@ -3,7 +3,7 @@
 class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   extend Forwardable
 
-  def_delegators :@view, :link_to, :parent_object_path, :edit_parent_object_path, :update_metadata_parent_object_path
+  def_delegators :@view, :link_to, :parent_object_path, :edit_parent_object_path, :update_metadata_parent_object_path, :content_tag
 
   def initialize(params, opts = {})
     @view = opts[:view_context]
@@ -42,7 +42,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   def data
     records.map do |parent_object|
       {
-        oid: link_to(parent_object.oid, parent_object_path(parent_object)) + get_blacklight_parent_url(parent_object).html_safe,
+        oid: oid_column(parent_object).html_safe,
         admin_set: parent_object.admin_set.key,
         authoritative_source: parent_object.source_name,
         child_object_count: parent_object.child_object_count,
@@ -65,17 +65,25 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   end
   # rubocop:enable Rails/OutputSafety,Metrics/MethodLength
 
-  def actions(parent_object)
-    actions = []
-    actions << link_to('Edit', edit_parent_object_path(parent_object)) if @current_ability.can? :edit, parent_object
-    actions << link_to('Update Metadata', update_metadata_parent_object_path(parent_object), method: :post) if @current_ability.can? :update, parent_object
-    actions << link_to('Destroy', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' }) if @current_ability.can? :destroy, parent_object
-    actions << link_to('View', parent_object_path(parent_object), method: :get) if actions.empty?
-    actions.join(" | ")
+  def oid_column(parent_object)
+    result = []
+    result << link_to(parent_object.oid, parent_object_path(parent_object))
+    result << with_icon('fa fa-pencil-alt', edit_parent_object_path(parent_object)) if @current_ability.can? :edit, parent_object
+    result << with_icon('fa fa-eye', parent_object.dl_show_url)
+    result.join(' ')
   end
 
-  def get_blacklight_parent_url(parent_object)
-    "<br> <a class='btn btn-info btn-sm' href='#{parent_object.dl_show_url}' target='_blank' > Public View</a>"
+  def actions(parent_object)
+    actions = []
+    actions << with_icon('fa fa-trash', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' }) if @current_ability.can? :destroy, parent_object
+    actions << link_to('Update Metadata', update_metadata_parent_object_path(parent_object), method: :post) if @current_ability.can? :update, parent_object
+    actions.join('<br>')
+  end
+
+  def with_icon(class_name, path, options = {})
+    link_to(path, options) do
+      content_tag(:i, '', class: class_name)
+    end
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
