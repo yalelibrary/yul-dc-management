@@ -10,11 +10,27 @@ DEFAULT DESKTOP STYLING
   .form-inline {
     padding-top: 0;
   }
+}
 
+.batch-process-heading,
+.batch-process-subheading {
+  h1 {
+    font-size: 30px;
+    font-family: $mallory_medium, Arial, Helvetica, sans-serif;
+  }
+}
+
+.batch-process-subheading {
+  padding-top: 25px;
 }
 
 .batch-process-show-details {
   display: flex;
+
+  p {
+    font-size: 16px;
+    font-family: $mallory_book, Arial, Helvetica, sans-serif;
+  }
 
   p:not(:first-child) {
     margin-left: 20px;
@@ -23,4 +39,9 @@ DEFAULT DESKTOP STYLING
 
 .button-list form {
   display: inline-block;
+}
+
+.page-actions {
+  font-size: 16px;
+  font-family: $mallory_book, Arial, Helvetica, sans-serif;
 }
