@@ -6,7 +6,8 @@
     <h1><%= "Batch Process #{@batch_process.id}" %></h1>
   </div>
 </div>
-<div class='batch-process-show-details'>
+
+<div class='batch-process-details'>
   <p>
     <strong>BatchID:</strong>
     <%= @batch_process.id %>
@@ -24,15 +25,13 @@
     <%= @batch_process.created_at %>
   </p>
 </div>
-
-<div class='batch-process-show-details'>
+<div class='batch-process-details'>
   <p>
     <strong>Manifest:</strong>
     <%= @batch_process.file_name ? link_to(@batch_process.file_name, download_batch_process_path) : 'n/a' %>
   </p>
 </div>
-
-<div class='batch-process-show-details'>
+<div class='batch-process-details'>
   <p>
     <strong>Created file:</strong>
     <%= @batch_process.file_name && @batch_process.batch_action == 'export child oids' ? link_to(@batch_process.created_file_name, download_created_batch_process_path) : 'n/a' %>

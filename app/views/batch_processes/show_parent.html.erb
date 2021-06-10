@@ -7,7 +7,7 @@
   </div>
 </div>
 
-<div class='batch-process-show-details'>
+<div class='batch-process-details'>
   <p>
     <strong>Batch Process ID</strong>
     <%= link_to @batch_process.id, batch_process_path(@batch_process) %>
@@ -28,11 +28,11 @@
 
 <div class='row batch-process-subheading'>
   <div class='col'>
-    <table class='table w-auto table-bordered table-striped'>
+    <table class='table table-responsive table-bordered table-striped'>
       <thead class='table-head'>
         <tr>
-          <th scope='col'> Ingest step </th>
-          <th scope='col'> Time </th>
+          <th scope='col'>Ingest step</th>
+          <th scope='col'>Time</th>
         </tr>
       </thead>
       <tbody class='datatable-body'>
@@ -70,11 +70,11 @@
 </div>
 
 <% if @latest_failure %>
-<table class='table w-auto table-bordered table-striped'>
+<table class='table table-responsive table-bordered table-striped'>
   <thead class='table-head'>
     <tr>
-      <th scope='col'> Last Failure Message </th>
-      <th scope='col'> Time </th>
+      <th scope='col'>Last Failure Message</th>
+      <th scope='col'>Time</th>
     </tr>
   </thead>
   <tbody class='datatable-body'>
@@ -91,9 +91,9 @@
     <table id='parent-batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= show_parent_batch_process_path(format: :json) %>'>
       <thead class='table-head'>
         <tr>
-          <th scope='col'> Child OID </th>
-          <th scope='col'> Time </th>
-          <th scope='col'> Status </th>
+          <th scope='col'>Child OID</th>
+          <th scope='col'>Time</th>
+          <th scope='col'>Status</th>
         </tr>
       </thead>
       <tbody class='datatable-body'>
