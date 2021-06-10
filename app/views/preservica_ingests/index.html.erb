@@ -1,5 +1,5 @@
 <p id='notice'><%= notice %></p>
-<div class='row'>
+<div class='row datatable-heading'>
   <div class='col'>
     <h1>Preservica Ingests</h1>
   </div>
@@ -7,7 +7,7 @@
 <div class='row'>
   <div class='col overflow-auto'>
     <table id='preservica-ingests-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= preservica_ingests_path(format: :json) %>'>
-      <thead class='thead-dark'>
+      <thead class='table-head'>
         <tr>
           <th scope='col'>Parent OID</th>
           <th scope='col'>Child OID</th>
@@ -17,7 +17,7 @@
           <th scope='col'>Timestamp</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class='datatable-body'>
       </tbody>
     </table>
   </div>
