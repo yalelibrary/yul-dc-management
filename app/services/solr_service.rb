@@ -53,17 +53,56 @@ class SolrService
   end
 
   # Creates a new field type to update schema of already create solr index
-  def self.create_new_field_type(name, type, indexed, stored, multi_value)
-    data =
-      {
-        "add-dynamic-field": {
-          "name": name,
-          "type": type,
-          "indexed": indexed,
-          "multiValued": multi_value,
-          "stored": stored
-        }
+  def self.add_field_type(name, type, index_analyzer, query_analyzer)
+    post_to_schema(
+      "add-field-type": {
+        "name": name,
+        "class": type,
+        "indexAnalyzer": index_analyzer,
+        "queryAnalyzer": query_analyzer
       }
+    )
+  end
+
+  # Creates a new field type to update schema of already create solr index
+  def self.replace_field_type(name, type, index_analyzer, query_analyzer)
+    post_to_schema(
+      "replace-field-type": {
+        "name": name,
+        "class": type,
+        "indexAnalyzer": index_analyzer,
+        "queryAnalyzer": query_analyzer
+      }
+    )
+  end
+
+  # Creates a new field type to update schema of already create solr index
+  def self.replace_dynamic_field(name, type, indexed, stored, multi_value)
+    post_to_schema(
+      "replace-dynamic-field": {
+        "name": name,
+        "type": type,
+        "indexed": indexed,
+        "multiValued": multi_value,
+        "stored": stored
+      }
+    )
+  end
+
+  # Creates a new field type to update schema of already create solr index
+  def self.add_dynamic_field(name, type, indexed, stored, multi_value)
+    post_to_schema(
+      "add-dynamic-field": {
+        "name": name,
+        "type": type,
+        "indexed": indexed,
+        "multiValued": multi_value,
+        "stored": stored
+      }
+    )
+  end
+
+  def self.post_to_schema(data)
     connection.connection.post('schema') do |req|
       req.body = data.to_json
       req.headers['Content-Type'] = 'application/json'
