@@ -75,7 +75,7 @@ RSpec.describe 'Users', type: :system, js: true do
   describe 'are editable' do
     it 'and require an email to be present' do
       visit users_path
-      page.find(:css, 'i.fa.fa-pencil-alt').click
+      page.find(:css, 'svg.fa-pencil-alt').click
       expect(page).to have_content('Email')
       fill_in('Email', with: '')
       click_on('Update User')
@@ -88,7 +88,7 @@ RSpec.describe 'Users', type: :system, js: true do
 
     it 'and require their full name to be present' do
       visit users_path
-      page.find(:css, 'i.fa.fa-pencil-alt').click
+      page.find(:css, 'svg.fa-pencil-alt').click
       expect(page).to have_content('First name')
       fill_in('First name', with: '')
       click_on('Update User')
