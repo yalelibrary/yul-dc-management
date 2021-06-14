@@ -50,11 +50,6 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
       expect(mets_doc.valid_mets?).to be_falsey
     end
 
-    it "returns actual value Extent of digitization when present" do
-      mets_doc = described_class.new(has_digitized)
-      expect(mets_doc.extent_of_dig).to eq "Completely digitized"
-    end
-
     it "returns false when rights statement is not present" do
       mets_doc = described_class.new(no_rights_file)
       expect(mets_doc.valid_mets?).to be_falsey
@@ -212,6 +207,11 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
     expect(mets_doc.logical_divs).to be_empty
     expect(mets_doc.combined.first[:caption]). to eq nil
     expect(mets_doc.combined[3][:caption]).to eq nil
+  end
+
+  it "returns actual value Extent of digitization when present" do
+    mets_doc = described_class.new(has_digitized)
+    expect(mets_doc.extent_of_dig).to eq "Completely digitized"
   end
 
   it "returns empty digitization note " do

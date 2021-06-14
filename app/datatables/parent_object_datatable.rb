@@ -31,8 +31,8 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
       last_aspace_update: { source: "ParentObject.last_aspace_update", orderable: true },
       last_id_update: { source: "ParentObject.last_id_update", orderable: true },
       visibility: { source: "ParentObject.visibility", cond: :string_eq, searchable: true, options: ["Public", "Yale Community Only", "Private"], orderable: true },
-      extent_of_digitization: { source: "ParentObject.extent_of_digitization", orderable: true },
-      digitization_note: { source: "ParentObject.digitization_note", orderable: true },
+      extent_of_digitization: { source: "ParentObject.extent_of_digitization", cond: :string_eq, searchable: true, options: ["Completely digitized", "Partially digitized"], orderable: true },
+      digitization_note: { source: "ParentObject.digitization_note", cond: :like, searchable: true, orderable: true },
       actions: { source: "ParentObject.oid", cond: :null_value, searchable: false, orderable: false }
     }
   end
