@@ -240,6 +240,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def aspace_json=(a_record)
     super(a_record)
     self.last_aspace_update = DateTime.current if a_record.present?
+    self.bib = a_record["orbisBibId"]
+    self.barcode = a_record["orbisBarcode"]
   end
 
   def ladybird_cloud_url
