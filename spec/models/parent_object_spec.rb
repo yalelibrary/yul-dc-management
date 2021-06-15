@@ -399,9 +399,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       it "correctly sets the bib and barcode on the parent object" do
-        parent_object.reload
-        expect(parent_object.aspace_json["orbisBibId"]).to eq "6805375"
-        expect(parent_object.aspace_json["orbisBarcode"]).to eq "39002091459793"
+        expect(parent_object.bib).to eq "6805375"
+        expect(parent_object.barcode).to eq "39002091459793"
       end
     end
 
