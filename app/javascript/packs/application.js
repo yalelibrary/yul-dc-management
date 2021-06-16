@@ -136,6 +136,13 @@ $( document ).on('turbolinks:load', function() {
       $('#search-row').remove();
     })
   }
+
+  // Allows all datatables, no matter the amount of columns, to have 100% width
+  const tableWidth = document.getElementsByClassName('is-datatable')[0].clientWidth;
+  const tableHeadWidth = document.getElementsByClassName('table-head')[0].clientWidth;
+  if (tableHeadWidth <= tableWidth) {
+    $('.is-datatable').addClass('expanded')
+  }
 });
 
 //  Delay the redraw so that if more changes trigger a redraw
