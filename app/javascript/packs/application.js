@@ -137,7 +137,7 @@ $( document ).on('turbolinks:load', function() {
     })
   }
 
-  // Allows all datatables, no matter the width, to have 100% width
+  // Allows all datatables, no matter the amount of columns, to have 100% width
   const tableWidth = document.getElementsByClassName('is-datatable')[0].clientWidth;
   const tableHeadWidth = document.getElementsByClassName('table-head')[0].clientWidth;
   if (tableHeadWidth < tableWidth) {
