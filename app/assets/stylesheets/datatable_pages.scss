@@ -29,6 +29,18 @@ DEFAULT DESKTOP STYLING
   border-color: $secondary_button;
 }
 
+.datatable {
+  margin: 0;
+}
+
+.col.overflow-auto {
+  padding: 0;
+}
+
+.expanded {
+  display: table;
+}
+
 .dataTables_length {
   font-family: $mallory_book, Arial, Helvetica, sans-serif;
   font-size: 17px;
