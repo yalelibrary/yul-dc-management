@@ -19,7 +19,7 @@ module PdfRepresentable
       temp_json_file.write(pdf_generator_json)
       temp_json_file.close
       temp_pdf_file = "#{temp_json_file.path}.pdf"
-      cmd = "java -Djava.io.tmpdir=#{pdf_tmpdir} -jar jpegs2pdf-1.1.jar #{temp_json_file.path} #{temp_pdf_file}"
+      cmd = "java -Djava.io.tmpdir=#{pdf_tmpdir} -jar jpegs2pdf-1.2.jar #{temp_json_file.path} #{temp_pdf_file}"
       stdout, stderr, status = Open3.capture3({ "MAGICK_TMPDIR" => pdf_tmpdir }, cmd)
       success = status.success?
       if success
