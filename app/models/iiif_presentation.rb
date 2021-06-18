@@ -39,6 +39,7 @@ class IiifPresentation
   def manifest
     return @manifest if @manifest
     @manifest = IIIF::Presentation::Manifest.new(seed)
+    @manifest["related"] = related
     @manifest["rendering"] = rendering
     @manifest["metadata"] = metadata
     @manifest["attribution"] = "Yale University Library"
@@ -74,6 +75,16 @@ class IiifPresentation
   def metadata_pair(label, value)
     value = [value] if value.is_a? String
     { 'label' => label, 'value' => value }
+  end
+
+  def related
+    [
+      {
+        "@id" => "https://collections.library.yale.edu/catalog/#{@oid}",
+        "format" => "text/html",
+        "label" => "Yale Digital Collections page"
+      }
+    ]
   end
 
   def rendering

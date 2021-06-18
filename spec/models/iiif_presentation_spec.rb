@@ -87,6 +87,14 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       expect(iiif_presentation.manifest.sequences.class).to eq Array
     end
 
+    it "has a related in the manifest" do
+      expect(iiif_presentation.manifest["related"].class).to eq Array
+      expect(iiif_presentation.manifest["related"].first.class).to eq Hash
+      expect(iiif_presentation.manifest["related"].first["@id"]).to eq "https://collections.library.yale.edu/catalog/#{oid}"
+      expect(iiif_presentation.manifest["related"].first["format"]).to eq "text/html"
+      expect(iiif_presentation.manifest["related"].first["label"]).to eq "Yale Digital Collections page"
+    end
+
     it "has a rendering in the manifest" do
       expect(iiif_presentation.manifest["rendering"].class).to eq Array
       expect(iiif_presentation.manifest["rendering"].first.class).to eq Hash
