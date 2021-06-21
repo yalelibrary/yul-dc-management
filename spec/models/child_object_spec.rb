@@ -41,21 +41,6 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     end
   end
 
-  describe "when created from a parent_object" do
-    let(:user) { FactoryBot.create(:user) }
-    around do |example|
-      perform_enqueued_jobs do
-        example.run
-      end
-    end
-    before do
-      stub_metadata_cloud("2004628")
-      stub_ptiffs_and_manifests
-      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/28/20/04/62/2004628.json")
-        .to_return(status: 200)
-    end
-  end
-
   describe "a child object that already has a remote ptiff" do
     around do |example|
       access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
