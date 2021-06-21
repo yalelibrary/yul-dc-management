@@ -23,7 +23,6 @@ RSpec.describe 'the management application has sidebar', type: :system, js: true
     expect(page).to have_content("CHILD OBJECTS")
     expect(page).to have_content("BATCH PROCESS")
     expect(page).to have_content("PRESERVATION")
-    expect(page).to have_content("NOTIFICATIONS")
   end
 
   it "item with hovering is visible to the user" do
