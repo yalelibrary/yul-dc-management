@@ -10,6 +10,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
   let(:xml_upload_two) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml')) }
   let(:aspace_xml_upload) { Rack::Test::UploadedFile.new("spec/fixtures/goobi/metadata/30000317_20201203_140947/good_aspace.xml") }
+  let(:xml_upload_three) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/noeodig.xml')) }
+  let(:xml_upload_four) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/dignote_met.xml')) }
 
   around do |example|
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
@@ -43,12 +45,28 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po.voyager_json.present?).to be_falsy
       expect(po.bib).to eq "1188135"
       expect(po.holding).to eq "1330141"
+      expect(po.extent_of_digitization).to eq "Completely digitized"
+      expect(po.digitization_note).to eq nil
       expect(po.item).to eq nil
       expect(po.barcode).to eq nil
       expect(po.viewing_direction).to eq "left-to-right"
       expect(po.display_layout).to eq "individuals"
       expect(po.representative_child_oid).to eq 30_000_403
       expect(po.metadata_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/ils/holding/1330141?bib=1188135"
+    end
+
+    it "creates a parent object with extent of digitization empty" do
+      batch_process.file = xml_upload_three
+      batch_process.save!
+      po = ParentObject.find(30_000_401)
+      expect(po.extent_of_digitization).to eq nil
+    end
+
+    it "creates a parent object with extent of digitization note" do
+      batch_process.file = xml_upload_four
+      batch_process.save!
+      po = ParentObject.find(30_000_401)
+      expect(po.digitization_note).to eq "Test digitization note"
     end
 
     it "creates a parent object with barcode from the METs document" do

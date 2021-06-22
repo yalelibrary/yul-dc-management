@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:dv="http://dfg-viewer.de/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OBJID="3325" xsi:schemaLocation="http://www.loc.gov/standards/premis/ http://www.loc.gov/standards/premis/v2/premis-v2-0.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/standards/mix/ http://www.loc.gov/standards/mix/mix.xsd">
+  <mets:metsHdr CREATEDATE="2021-06-01T23:20:31Z">
+    <mets:agent OTHERTYPE="SOFTWARE" ROLE="CREATOR" TYPE="OTHER">
+      <mets:name>Goobi - b336f - 2020-08-02 19:35:26+0000</mets:name>
+      <mets:note>Goobi</mets:note>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:dmdSec ID="DMDLOG_0000">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>Vi︠e︡stnikʺ Evropy</mods:title>
+          </mods:titleInfo>
+          <mods:identifier type="PPNanalog">/ils/barcode/39002072385975?bib=3689466</mods:identifier>
+          <mods:recordInfo>
+            <mods:recordIdentifier source="gbv-ppn">31901015</mods:recordIdentifier>
+          </mods:recordInfo>
+          <mods:part>Completely digitized</mods:part>
+          <mods:classification authority="ivdcc">DefaultCollection</mods:classification>
+          <mods:part>
+            <mods>
+              <detail>
+                <mods:number>File 19004</mods:number>
+              </detail>
+            </mods>
+          </mods:part>
+          <mods:originInfo>
+            <mods:dateIssued keyDate="no">-1918.</mods:dateIssued>
+            <mods:dateIssued keyDate="yes">1878</mods:dateIssued>
+          </mods:originInfo>
+          <mods:note type="source dimensions">II 72:v.4 / 1878</mods:note>
+          <mods:accessCondition displayLabel="Yale Restriction" type="restriction on access">Public</mods:accessCondition>
+          <mods:accessCondition displayLabel="Yale Use" type="use and reproduction">The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement.</mods:accessCondition>
+          <mods:note displayLabel="Yale Collection Owner" type="ownership">sml</mods:note>
+          <mods:location>
+            <mods:shelfLocator>A90 V67</mods:shelfLocator>
+          </mods:location>
+          <mods:name type="personal">
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+            <mods:namePart type="family">Posnikov</mods:namePart>
+            <mods:namePart type="given">Aleksandr Sergeevich</mods:namePart>
+            <mods:displayForm>Posnikov, Aleksandr Sergeevich</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal">
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+            <mods:namePart type="family">Arsenʹev</mods:namePart>
+            <mods:namePart type="given">K</mods:namePart>
+            <mods:displayForm>Arsenʹev, K</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal">
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+            <mods:namePart type="family">Grimm</mods:namePart>
+            <mods:namePart type="given">D</mods:namePart>
+            <mods:displayForm>Grimm, D</mods:displayForm>
+          </mods:name>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+</mets:mets>

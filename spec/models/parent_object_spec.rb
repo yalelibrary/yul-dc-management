@@ -384,6 +384,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         described_class.create(
           oid: "2012036",
           aspace_uri: "/repositories/11/archival_objects/555049",
+          bib: "6805375",
+          barcode: "39002091459793",
           authoritative_metadata_source_id: aspace,
           admin_set: FactoryBot.create(:admin_set)
         )
@@ -399,6 +401,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.aspace_json).not_to be nil
         expect(parent_object.aspace_json).not_to be_empty
         expect(parent_object.voyager_json).to be nil
+      end
+
+      it "correctly sets the bib and barcode on the parent object" do
+        expect(parent_object.bib).to eq "6805375"
+        expect(parent_object.barcode).to eq "39002091459793"
       end
     end
 

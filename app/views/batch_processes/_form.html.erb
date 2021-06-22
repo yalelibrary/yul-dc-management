@@ -1,8 +1,8 @@
 <div class='batch-import'>
   <%= form_for(@batch_process, multipart: true, html: { class: 'form' }) do |f| %>
     <% if @batch_process.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@batch_process.errors.count, "error") %> prohibited this event from being saved:</h2>
+      <div id='error_explanation'>
+        <h2><%= pluralize(@batch_process.errors.count, 'error') %> prohibited this event from being saved:</h2>
         <ul>
         <% @batch_process.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -10,13 +10,13 @@
         </ul>
       </div>
     <% end %>
-    <div class="form-group" >
+    <div class='form-group' >
       <%= f.label :batch_action %>
-      <%= f.select(:batch_action, BatchProcess.batch_actions.map {|option| [option.split.map(&:capitalize).join(' '), option]}, {prompt:"Select Batch Action"}, { :class => 'form-control', required: true }) %>
+      <%= f.select(:batch_action, BatchProcess.batch_actions.map {|option| [option.split.map(&:capitalize).join(' '), option]}, {prompt:'Select Batch Action'}, { :class => 'form-control', required: true }) %>
     </div>
-    <div class="form-group" >
+    <div class='form-group' >
       <%= f.file_field :file, accept: '.csv, .xml', required: true %>
-      <%= f.submit "Submit", class: "btn btn-primary" %>
+      <%= f.submit 'Submit', class: 'btn button primary-button' %>
     </div>
   <% end %>
 </div>

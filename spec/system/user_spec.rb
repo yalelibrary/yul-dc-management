@@ -30,7 +30,7 @@ RSpec.describe 'Users', type: :system, js: true do
 
       expect(page).to have_content(user.uid) # add expect to make sure page is loaded before page.all()
       page.all('#users-datatable tbody tr').each do |tr|
-        ordered_users_in_datatable << tr.text.partition(" ").first
+        ordered_users_in_datatable << tr.text.split(" ").first
       end
 
       expect(ordered_users_in_datatable).to eq(active_sorted_users)
@@ -46,7 +46,7 @@ RSpec.describe 'Users', type: :system, js: true do
       expect(page).not_to have_content(active_users_without_name_starting_with_m[0]) if active_users_without_name_starting_with_m.count > 0
       expect(page).to have_content(active_sorted_users_name_starting_with_m[0]) if active_sorted_users_name_starting_with_m.count > 0
       page.all('#users-datatable tbody tr').each do |tr|
-        ordered_users_in_datatable << tr.text.partition(" ").first
+        ordered_users_in_datatable << tr.text.split(" ").first
       end
 
       expect(ordered_users_in_datatable).to eq(active_sorted_users_name_starting_with_m)
@@ -75,7 +75,7 @@ RSpec.describe 'Users', type: :system, js: true do
   describe 'are editable' do
     it 'and require an email to be present' do
       visit users_path
-      click_on('Edit')
+      page.find(:css, 'svg.fa-pencil-alt').click
       expect(page).to have_content('Email')
       fill_in('Email', with: '')
       click_on('Update User')
@@ -88,7 +88,7 @@ RSpec.describe 'Users', type: :system, js: true do
 
     it 'and require their full name to be present' do
       visit users_path
-      click_on('Edit')
+      page.find(:css, 'svg.fa-pencil-alt').click
       expect(page).to have_content('First name')
       fill_in('First name', with: '')
       click_on('Update User')

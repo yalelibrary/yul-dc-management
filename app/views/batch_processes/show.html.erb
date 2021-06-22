@@ -1,6 +1,13 @@
-<h1><%= "Batch Process #{@batch_process.id}" %></h1>
-<p id='notice'><%= notice %></p>
-<div class='batch-process-show-details'>
+<% if notice %>
+  <p id='notice'><%= notice %></p>
+<% end %>
+<div class='row batch-process-heading'>
+  <div class='col'>
+    <h1><%= "Batch Process #{@batch_process.id}" %></h1>
+  </div>
+</div>
+
+<div class='batch-process-details'>
   <p>
     <strong>BatchID:</strong>
     <%= @batch_process.id %>
@@ -18,37 +25,50 @@
     <%= @batch_process.created_at %>
   </p>
 </div>
-
-<p>
-  <strong>Manifest:</strong>
-  <%= @batch_process.file_name ? link_to(@batch_process.file_name, download_batch_process_path) : "n/a" %>
-</p>
-
-<p>
-  <strong>Created file:</strong>
-  <%= @batch_process.file_name && @batch_process.batch_action == "export child oids" ? link_to(@batch_process.created_file_name, download_created_batch_process_path) : "n/a" %>
-</p>
+<div class='batch-process-details'>
+  <p>
+    <strong>Manifest:</strong>
+    <%= @batch_process.file_name ? link_to(@batch_process.file_name, download_batch_process_path) : 'n/a' %>
+  </p>
+</div>
+<div class='batch-process-details'>
+  <p>
+    <strong>Created file:</strong>
+    <%= @batch_process.file_name && @batch_process.batch_action == 'export child oids' ? link_to(@batch_process.created_file_name, download_created_batch_process_path) : 'n/a' %>
+  </p>
+</div>
 
 <% if @batch_process.batch_ingest_events.present? %>
-  <h3>Batch Messages:</h3>
-  <table class="table table-bordered table-responsive table-striped"><thead class='thead-dark'>
-  <tr>
-    <th scope='col'> Time </th>
-    <th scope='col'> Status </th>
-    <th scope='col'> Problem </th>
-  </tr>
-  </thead>
-    <% @batch_process.batch_ingest_events.each do |event| %>
-      <tr><td><%= event.updated_at %></td><td><%= event.status %></td><td><%= event.reason %></td></tr>
-    <% end %>
+  <div class='row batch-process-subheading'>
+    <div class='col'>
+      <h1>Batch Messages:</h1>
+    <div>
+  </div>
+  <table class='table table-bordered table-responsive table-striped'>
+    <thead class='table-head'>
+      <tr>
+        <th scope='col'> Time </th>
+        <th scope='col'> Status </th>
+        <th scope='col'> Problem </th>
+      </tr>
+    </thead>
+    <tbody class='datatable-body'>
+      <% @batch_process.batch_ingest_events.each do |event| %>
+        <tr><td><%= event.updated_at %></td><td><%= event.status %></td><td><%= event.reason %></td></tr>
+      <% end %>
+    </tbody>
   </table>
 <% end %>
 
 <div class='row'>
   <div class='col overflow-auto'>
-    <h3>Batch Parent Objects:</h3>
+    <div class='row batch-process-subheading'>
+      <div class='col'>
+        <h1>Batch Parent Objects:</h1>
+      </div>
+    </div>
     <table id='batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= batch_process_path(format: :json) %>'>
-      <thead class='thead-dark'>
+      <thead class='table-head'>
         <tr>
           <th scope='col'> Parent OID </th>
           <th scope='col'> Time </th>
@@ -56,7 +76,7 @@
           <th scope='col'> Status </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class='datatable-body'>
       </tbody>
     </table>
   </div>
@@ -66,4 +86,4 @@
   <%= BatchProcessDetailDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], options: value[:options]} }.to_json %>
 </div>
 
-<%= link_to 'Back', batch_processes_path %>
+<%= link_to 'Back', batch_processes_path, class: 'page-actions' %>
