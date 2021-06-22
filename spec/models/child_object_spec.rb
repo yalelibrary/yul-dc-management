@@ -41,34 +41,6 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     end
   end
 
-  describe "when created from a parent_object" do
-    let(:user) { FactoryBot.create(:user) }
-    around do |example|
-      perform_enqueued_jobs do
-        example.run
-      end
-    end
-    before do
-      stub_metadata_cloud("2004628")
-      stub_ptiffs_and_manifests
-      stub_request(:head, "https://yul-dc-development-samples.s3.amazonaws.com/manifests/28/20/04/62/2004628.json")
-        .to_return(status: 200)
-    end
-    # This code is tested on the parent object and ptiff successfully, setup to allow for BatchConnection
-    # Not yet working
-    xit "notifies on child object creation and ptiff generation" do
-      expect do
-        user
-        parent_object
-      end.to change(ParentObject, :count).by(1)
-         .and change(ChildObject, :count).by(1)
-         .and change(Notification, :count).by(7)
-      statuses = Notification.all.map { |note| note.params[:status] }
-      expect(statuses).to include "ptiff-ready"
-      expect(statuses).to include "child-records-created"
-    end
-  end
-
   describe "a child object that already has a remote ptiff" do
     around do |example|
       access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
