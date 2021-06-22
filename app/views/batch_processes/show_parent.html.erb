@@ -1,6 +1,13 @@
-<h1>Parent Batch Process Detail</h1>
-<p id='notice'><%= notice %></p>
-<div class='batch-process-show-details'>
+<% if notice %>
+  <p id='notice'><%= notice %></p>
+<% end %>
+<div class='row batch-process-heading'>
+  <div class='col'>
+    <h1>Parent Batch Process Detail</h1>
+  </div>
+</div>
+
+<div class='batch-process-details'>
   <p>
     <strong>Batch Process ID</strong>
     <%= link_to @batch_process.id, batch_process_path(@batch_process) %>
@@ -18,73 +25,78 @@
     <%= @parent_object.present? ? "#{@parent_object.duration_for_batch_process(@batch_process)}" : 'Pending' %>
   </p>
 </div>
-<div class='row'>
-  <div class='col overflow-auto'>
-    <table class="table w-auto table-bordered table-striped">
-      <thead class="thead-dark">
+
+<div class='row batch-process-subheading'>
+  <div class='col'>
+    <table class='table table-responsive table-bordered table-striped'>
+      <thead class='table-head'>
         <tr>
-          <th scope="col"> Ingest step </th>
-          <th scope="col"> Time </th>
+          <th scope='col'>Ingest step</th>
+          <th scope='col'>Time</th>
         </tr>
       </thead>
-      <tr>
-        <td>Submitted</td>
-        <td class="submission_time"><%= @batch_process&.created_at %></td>
-      </tr>
-      <tr>
-        <td>Processing Queued</td>
-        <td class="processing_queued_time"><%= @notes && @notes["processing-queued"] ? @notes["processing-queued"] : 'Pending' %></td>
-      </tr>
-      <tr>
-        <td>Metadata Fetched</td>
-        <td class="metadata_fetched"><%= @notes && @notes["metadata-fetched"] ? @notes["metadata-fetched"] : 'Pending' %></td>
-      </tr>
-      <tr>
-        <td>Child Records Created</td>
-        <td class="children_created"><%= @notes && @notes["child-records-created"] ? @notes["child-records-created"] : 'Pending' %></td>
-      </tr>
-      <tr>
-        <td>Manifest Saved</td>
-        <td class="manifest_saved"><%= @notes && @notes["manifest-saved"] ? @notes["manifest-saved"] : 'Pending' %></td>
-      </tr>
-      <tr>
-        <td>Solr Indexed</td>
-        <td class="solr_indexed"><%= @notes && @notes["solr-indexed"] ? @notes["solr-indexed"] : 'Pending' %></td>
-      </tr>
-      <tr>
-        <td>PDF Generated</td>
-        <td class="pdf-generated"><%= @notes && @notes["pdf-generated"] ? @notes["pdf-generated"] : 'Pending' %></td>
-      </tr>
+      <tbody class='datatable-body'>
+        <tr>
+          <td>Submitted</td>
+          <td class='submission_time'><%= @batch_process&.created_at %></td>
+        </tr>
+        <tr>
+          <td>Processing Queued</td>
+          <td class='processing_queued_time'><%= @notes && @notes['processing-queued'] ? @notes['processing-queued'] : 'Pending' %></td>
+        </tr>
+        <tr>
+          <td>Metadata Fetched</td>
+          <td class='metadata_fetched'><%= @notes && @notes['metadata-fetched'] ? @notes['metadata-fetched'] : 'Pending' %></td>
+        </tr>
+        <tr>
+          <td>Child Records Created</td>
+          <td class='children_created'><%= @notes && @notes['child-records-created'] ? @notes['child-records-created'] : 'Pending' %></td>
+        </tr>
+        <tr>
+          <td>Manifest Saved</td>
+          <td class='manifest_saved'><%= @notes && @notes['manifest-saved'] ? @notes['manifest-saved'] : 'Pending' %></td>
+        </tr>
+        <tr>
+          <td>Solr Indexed</td>
+          <td class='solr_indexed'><%= @notes && @notes['solr-indexed'] ? @notes['solr-indexed'] : 'Pending' %></td>
+        </tr>
+        <tr>
+          <td>PDF Generated</td>
+          <td class='pdf-generated'><%= @notes && @notes['pdf-generated'] ? @notes['pdf-generated'] : 'Pending' %></td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </div>
 
 <% if @latest_failure %>
-<table class="table  w-auto table-bordered table-striped">
-  <thead class="thead-dark">
+<table class='table table-responsive table-bordered table-striped'>
+  <thead class='table-head'>
     <tr>
-      <th scope="col"> Last Failure Message </th>
-      <th scope="col"> Time </th>
+      <th scope='col'>Last Failure Message</th>
+      <th scope='col'>Time</th>
     </tr>
   </thead>
-  <tr>
-    <td class="reason"><%= @latest_failure[:reason] %></td>
-    <td class="time"><%= @latest_failure[:time] %></td>
-  </tr>
+  <tbody class='datatable-body'>
+    <tr>
+      <td class='reason'><%= @latest_failure[:reason] %></td>
+      <td class='time'><%= @latest_failure[:time] %></td>
+    </tr>
+  </tbody>
 </table>
 <% end %>
 
-<div class='row'>
-  <div class='col overflow-auto'>
+<div class='row batch-process-subheading'>
+  <div class='col'>
     <table id='parent-batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= show_parent_batch_process_path(format: :json) %>'>
-      <thead class='thead-dark'>
+      <thead class='table-head'>
         <tr>
-          <th scope='col'> Child OID </th>
-          <th scope='col'> Time </th>
-          <th scope='col'> Status </th>
+          <th scope='col'>Child OID</th>
+          <th scope='col'>Time</th>
+          <th scope='col'>Status</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class='datatable-body'>
       </tbody>
     </table>
   </div>
@@ -94,5 +106,4 @@
   <%= BatchProcessParentDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], options: value[:options]} }.to_json %>
 </div>
 
-
-<%= link_to 'Back', batch_process_path %>
+<%= link_to 'Back', batch_process_path, class: 'page-actions' %>

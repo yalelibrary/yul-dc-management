@@ -240,6 +240,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def aspace_json=(a_record)
     super(a_record)
     self.last_aspace_update = DateTime.current if a_record.present?
+    self.bib = a_record["orbisBibId"]
+    self.barcode = a_record["orbisBarcode"]
   end
 
   def ladybird_cloud_url
@@ -329,7 +331,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def dl_show_url
-    base = ENV['BLACKLIGHT_BASE_URL'] || 'localhost:3000'
+    base = ENV['BLACKLIGHT_BASE_URL'] || 'http://localhost:3000'
     "#{base}/catalog/#{oid}"
   end
 

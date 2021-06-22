@@ -1,7 +1,6 @@
-<div class="bg-light border-right" id="sidebar-wrapper">
-  <div class="sidebar-heading">Management</div>
-  <div class="list-group list-group-flush">
-    <%= link_to 'Dashboard', root_path, class: 'list-group-item list-group-item-action bg-light' %>
+<div class="bg-light border-right sidebar_yale" id="sidebar-wrapper">
+  <div class="flex-column list-group list-group-flush">
+    <%= link_to 'Dashboard', root_path, class: 'list-group-item list-group-item-action bg-light top-menu-item' %>
     <% if can? :manage, User %>
       <%= link_to 'Users', users_path, class: 'list-group-item list-group-item-action bg-light' %>
     <% end  %>
@@ -12,18 +11,15 @@
     <%= link_to 'Child Objects', child_objects_path, class: 'list-group-item list-group-item-action bg-light' %>
     <%= link_to 'Batch Process', batch_processes_path, class: 'list-group-item list-group-item-action bg-light' %>
     <%= link_to 'Preservation', preservica_ingests_path, class: 'list-group-item list-group-item-action bg-light' %>
-    <%= link_to 'Notifications', notifications_path, class: 'list-group-item list-group-item-action bg-light' %>
     <% if current_user&.sysadmin %>
       <%= link_to 'Delayed Job Dashboard', delayed_job_web_path, class: 'list-group-item list-group-item-action bg-light' %>
     <% end %>
     <% if current_user %>
-      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'list-group-item list-group-item-action bg-light' %>
+      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'list-group-item list-group-item-action bg-light sign-button' %>
     <% else %>
       <!-- In order to address CVE-2015-9284 https://github.com/advisories/GHSA-ww4x-rwq6-qpgf the
           Sign In link *must* use post method, not get -->
-      <%= button_to 'Sign In', user_cas_omniauth_authorize_path, class: 'list-group-item list-group-item-action bg-light' %>
+      <%= button_to 'Sign In', user_cas_omniauth_authorize_path, class: 'list-group-item list-group-item-action bg-light sign-button' %>
     <% end %>
-
   </div>
-
 </div>

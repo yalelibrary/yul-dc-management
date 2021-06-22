@@ -35,11 +35,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get :solr_document
     end
   end
-  resources :notifications, only: [:index, :destroy] do
-    collection do
-      delete :resolve_all
-    end
-  end
 
   devise_for :users, skip: [:sessions, :registrations, :passwords], controllers: { omniauth_callbacks: "omniauth_callbacks" }
   devise_scope :user do

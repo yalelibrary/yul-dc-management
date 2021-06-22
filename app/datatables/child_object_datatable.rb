@@ -3,7 +3,7 @@
 class ChildObjectDatatable < AjaxDatatablesRails::ActiveRecord
   extend Forwardable
 
-  def_delegators :@view, :link_to, :child_object_path, :edit_child_object_path
+  def_delegators :@view, :link_to, :child_object_path, :edit_child_object_path, :content_tag
 
   def initialize(params, opts = {})
     @view = opts[:view_context]
@@ -30,7 +30,7 @@ class ChildObjectDatatable < AjaxDatatablesRails::ActiveRecord
   def data
     records.map do |child_object|
       {
-        oid: link_to(child_object.oid, child_object_path(child_object)),
+        oid: link_to(child_object.oid, child_object_path(child_object)) + (with_icon('fa fa-pencil-alt', edit_child_object_path(child_object)) if @current_ability.can? :edit, child_object),
         label: child_object.label,
         caption: child_object.caption,
         width: child_object.width,
@@ -46,9 +46,14 @@ class ChildObjectDatatable < AjaxDatatablesRails::ActiveRecord
 
   def actions(child_object)
     actions = []
-    actions << link_to('Edit', edit_child_object_path(child_object)) if @current_ability.can? :edit, child_object
-    actions << link_to('Destroy', child_object_path(child_object), method: :delete, data: { confirm: 'Are you sure?' }) if @current_ability.can? :destroy, child_object
+    actions << with_icon('fa fa-trash', child_object_path(child_object), method: :delete, data: { confirm: 'Are you sure?' }) if @current_ability.can? :destroy, child_object
     actions.join(' | ')
+  end
+
+  def with_icon(class_name, path, options = {})
+    link_to(path, options) do
+      content_tag(:i, '', class: class_name)
+    end
   end
 
   # rubocop:disable Naming/AccessorMethodName

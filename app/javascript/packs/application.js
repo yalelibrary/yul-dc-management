@@ -20,6 +20,9 @@ require("datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css")
 require("datatables.net-select-bs4/css/select.bootstrap4.min.css")
 require("datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css")
 
+import "@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/js/all.js";
+
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
@@ -38,10 +41,10 @@ $( document ).on('turbolinks:load', function() {
     let dataTableStorageKey = "DT-columns-" + btoa(document.location.href);
     let columnInfo = localStorage.getItem(dataTableStorageKey);
     try { columnInfo = columnInfo && JSON.parse(columnInfo); } catch (e) { columnInfo = null; }
-    columns = columns.map(function (col) {if (columnInfo && columnInfo[col.data] && columnInfo[col.data].hidden) col.visible = false; return col } )           
+    columns = columns.map(function (col) {if (columnInfo && columnInfo[col.data] && columnInfo[col.data].hidden) col.visible = false; return col } )
     let hasSearch = columns.some(function(col){return col.searchable;});
     const onColumnsUpdate = function(dataTable) {
-      let colVisibilityMap = createSearchRow(dataTable); 
+      let colVisibilityMap = createSearchRow(dataTable);
       localStorage.setItem(dataTableStorageKey, JSON.stringify(colVisibilityMap));
     }
     const createSearchRow = function(dataTable) {
@@ -87,9 +90,6 @@ $( document ).on('turbolinks:load', function() {
       // store the information about which columns are visible for this page
       return colVisibilityMap;
     }
-    
-    
-    
     dataTable = $('.is-datatable').dataTable({
       "deferLoading":true,
       "processing": true,
@@ -115,23 +115,29 @@ $( document ).on('turbolinks:load', function() {
       initComplete: function () {
         if (hasSearch) onColumnsUpdate(this);
       }
-      
     })
     dataTable.api().draw();
 
     $('.is-datatable').on( 'column-visibility.dt', function ( e, settings, column, state ) {
-      // Check for data-destroying because this gets called after turbo links updates document.location and the 
-      // datatable is destroyed in turbolinks:before-cache. In that case, don't create the search row or 
+      // Check for data-destroying because this gets called after turbo links updates document.location and the
+      // datatable is destroyed in turbolinks:before-cache. In that case, don't create the search row or
       // write the column information to localStorage using the wrong document.location.href
       if (hasSearch && "true" !== $( '.is-datatable' ).data("destroying")) onColumnsUpdate($( '.is-datatable' ).dataTable());
     } );
-    
-    
+
+
     $(document).on('turbolinks:before-cache', function(){
       $( '.is-datatable' ).data("destroying", "true");
       dataTable.api().destroy();
       $('#search-row').remove();
     })
+  }
+
+  // Allows all datatables, no matter the amount of columns, to have 100% width
+  const tableWidth = document.getElementsByClassName('is-datatable')[0].clientWidth;
+  const tableHeadWidth = document.getElementsByClassName('table-head')[0].clientWidth;
+  if (tableHeadWidth <= tableWidth) {
+    $('.is-datatable').addClass('expanded')
   }
 });
 

@@ -32,6 +32,8 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
   let(:has_test_caption_file) { File.open("spec/fixtures/goobi/metadata/16172421/caption.xml") }
   let(:has_test_not_all_caption_file) { File.open("spec/fixtures/goobi/metadata/16172421/Not_all_images_caption_mets.xml") }
   let(:has_test_no_caption_file) { File.open("spec/fixtures/goobi/metadata/16172421/meta_no_logical.xml") }
+  let(:has_digitized) { File.open("spec/fixtures/goobi/metadata/eodig.xml") }
+  let(:has_digitized_note) { File.open("spec/fixtures/goobi/metadata/digitizationnote.xml") }
 
   it "can be instantiated with xml from the DB instead of a file" do
     described_class.new(batch_process.mets_xml)
@@ -205,5 +207,20 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
     expect(mets_doc.logical_divs).to be_empty
     expect(mets_doc.combined.first[:caption]). to eq nil
     expect(mets_doc.combined[3][:caption]).to eq nil
+  end
+
+  it "returns actual value Extent of digitization when present" do
+    mets_doc = described_class.new(has_digitized)
+    expect(mets_doc.extent_of_dig).to eq "Completely digitized"
+  end
+
+  it "returns empty digitization note " do
+    mets_doc = described_class.new(has_digitized)
+    expect(mets_doc.dig_note).to eq nil
+  end
+
+  it "returns actual value of digitization note " do
+    mets_doc = described_class.new(has_digitized_note)
+    expect(mets_doc.dig_note).to eq "Test digitization note"
   end
 end
