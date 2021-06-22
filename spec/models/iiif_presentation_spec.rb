@@ -103,6 +103,16 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["rendering"].first["label"]).to eq "Download as PDF"
     end
 
+    it "has a seeAlso in the manifest" do
+      expect(iiif_presentation.manifest["seeAlso"].class).to eq Array
+      expect(iiif_presentation.manifest["seeAlso"].first.class).to eq Hash
+      # rubocop:disable Metrics/LineLength
+      expect(iiif_presentation.manifest["seeAlso"].first["@id"]).to eq "https://collections.library.yale.edu/catalog/oai?verb=GetRecord&metadataPrefix=oai_mods&identifier=oai:collections.library.yale.edu:#{oid}"
+      # rubocop:enable Metrics/LineLength
+      expect(iiif_presentation.manifest["seeAlso"].first["format"]).to eq "application/mods+xml"
+      expect(iiif_presentation.manifest["seeAlso"].first["profile"]).to eq "http://www.loc.gov/mods/v3"
+    end
+
     it "has metadata in the manifest" do
       expect(iiif_presentation.manifest["metadata"].class).to eq Array
       expect(iiif_presentation.manifest["metadata"].first.class).to eq Hash
