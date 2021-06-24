@@ -10,6 +10,10 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
     ENV['METADATA_CLOUD_HOST'] = original_metadata_cloud_host
   end
 
+  def queue_adapter_for_test
+    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+  end
+
   let(:asr) { described_class.new }
   let(:relevant_parent_object) do
     FactoryBot.create(
@@ -245,66 +249,82 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
       dependent_object_ladybird_two
       parent_object_with_aspace_uri
       dependent_object_aspace_repository
+
+      parent_object_with_aspace_uri.default_fetch
+      parent_object_with_aspace_uri.metadata_update = false
+      parent_object_with_aspace_uri.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'aspace')
+      parent_object_with_aspace_uri.default_fetch
+      parent_object_with_aspace_uri.last_aspace_update = 5.years.ago
+      parent_object_with_aspace_uri.save!
+      Delayed::Job.delete(parent_object_with_aspace_uri.setup_metadata_jobs)
+
+      relevant_parent_object.default_fetch
+      relevant_parent_object.metadata_update = false
+      relevant_parent_object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'ils')
+      relevant_parent_object.default_fetch
+      relevant_parent_object.last_voyager_update = 5.years.ago
+      relevant_parent_object.save!
+      Delayed::Job.delete(relevant_parent_object.setup_metadata_jobs)
+
+      asl_old_success
     end
 
     it "can get a page from the MetadataCloud activity stream" do
       expect(asr.fetch_and_parse_page("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity")["type"]).to eq "OrderedCollectionPage"
     end
 
-    it "marks objects as updated in the database" do
-      relevant_parent_object.last_ladybird_update = 2.days.ago
-      ladybird_update_before = relevant_parent_object.last_ladybird_update
-      relevant_parent_object.last_voyager_update = 3.days.ago
-      voyager_update_before = relevant_parent_object.last_voyager_update
-      parent_object_with_aspace_uri.last_aspace_update = 4.days.ago
-      aspace_update_before = parent_object_with_aspace_uri.last_aspace_update
+    it "queues objects to be updated" do
       described_class.update
-      ladybird_update_after = ParentObject.find_by(oid: relevant_oid).last_ladybird_update
-      voyager_update_after = ParentObject.find_by(oid: relevant_oid).last_voyager_update
-      aspace_update_after = ParentObject.find_by(aspace_uri: "/repositories/11/archival_objects/515305").last_aspace_update
-      expect(ladybird_update_before).to be < ladybird_update_after
-      expect(voyager_update_before).to be < voyager_update_after
-      expect(aspace_update_before).to be < aspace_update_after
+      po_ils = ParentObject.find_by(oid: relevant_oid)
+      po_aspace = ParentObject.find_by(aspace_uri: "/repositories/11/archival_objects/515305")
+      expect(po_ils.setup_metadata_jobs.count).to eq 1
+      expect(po_aspace.setup_metadata_jobs.count).to eq 1
     end
 
     # There are ~1837 total items from the relevant time period, but only 3 of them
     # are unique Ladybird, Voyager, or ArchiveSpace updates
     # with the oid that has been added to the database in our before block
     it "can process the partial activity stream if there is a previous successful run" do
-      asl_old_success
       expect(ActivityStreamLog.count).to eq 1
       expect(ActivityStreamLog.last.retrieved_records).to eq asl_old_success.retrieved_records
       asr.process_activity_stream
       expect(ActivityStreamLog.count).to eq 2
-      expect(ActivityStreamLog.last.retrieved_records).to eq 3
+      expect(ActivityStreamLog.last.retrieved_records).to eq 2 # skipping lb so 2
     end
 
-    # There are ~4000 total items, but only 3 of them are unique Ladybird, Voyager,
-    # or ArchiveSpace updates with the oid of the relevant_parent_object
-    # that have been added to the database in our before block
-    it "processes the entire activity stream if it has never been run before" do
-      expect(ActivityStreamLog.count).to eq 0
-      described_class.update
-      expect(ActivityStreamLog.count).to eq 1
-      expect(ActivityStreamLog.last.activity_stream_items).to be > 4000
-      expect(ActivityStreamLog.last.retrieved_records).to eq 3
+    context "with records setup for aspace and ils" do
+      before do
+        parent_object_with_aspace_uri.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'aspace')
+        parent_object_with_aspace_uri.save!
+        relevant_parent_object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'ils')
+        relevant_parent_object.save!
+      end
+
+      # only processes the first page, and all are out of date.
+      it "processes the only first page of activity stream if it has never been run before" do
+        expect(ActivityStreamLog.count).to eq 1
+        described_class.update
+        expect(ActivityStreamLog.count).to eq 2
+        expect(ActivityStreamLog.last.activity_stream_items).to be > 1000
+        expect(ActivityStreamLog.last.retrieved_records).to eq 2
+      end
     end
 
-    context "creates a set of remote_dependent_uris from activity stream entries" do
-      it "adds relevant oids for update to an array" do
-        expect(asr.remote_dependent_uris.size).to eq 0
+    context "creates a set of updated_uris from activity stream entries" do
+      it "adds relevant updated_uris" do
+        expect(asr.updated_uris.size).to eq 0
         asr.process_item(relevant_item_from_ladybird)
-        expect(asr.remote_dependent_uris.size).to eq 1
+        expect(asr.updated_uris.size).to eq 1
         asr.process_item(relevant_item_two)
-        expect(asr.remote_dependent_uris.size).to eq 2
+        expect(asr.updated_uris.size).to eq 2
         asr.process_item(relevant_item_from_voyager)
-        expect(asr.remote_dependent_uris.size).to eq 3
-        expect(asr.remote_dependent_uris).not_to include nil
-        expect(asr.remote_dependent_uris).to include "http://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ils/bib/3163155"
+        expect(asr.updated_uris.size).to eq 3
+        expect(asr.updated_uris).not_to include nil
+        expect(asr.updated_uris).to include "/ils/bib/3163155"
         asr.process_item(relevant_item_from_voyager_holding)
-        expect(asr.remote_dependent_uris.size).to eq 4
+        expect(asr.updated_uris.size).to eq 4
         asr.process_item(relevant_item_from_aspace)
-        expect(asr.remote_dependent_uris.size).to eq 5
+        expect(asr.updated_uris.size).to eq 5
       end
     end
   end
@@ -318,18 +338,21 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
     end
 
     it "can confirm that a Ladybird item is relevant" do
+      asl_old_success
       relevant_parent_object
       dependent_object_ladybird
       expect(asr.relevant?(relevant_item_from_ladybird)).to be_truthy
     end
 
     it "can confirm that a Voyager item is relevant using bib id" do
+      asl_old_success
       relevant_parent_object
       dependent_object_voyager_bib
       expect(asr.relevant?(relevant_item_from_voyager)).to be_truthy
     end
 
     it "can confirm that a Voyager item is relevant using item and holding ids" do
+      asl_old_success
       relevant_parent_object_two
       dependent_object_voyager_holding
       dependent_object_voyager_item
@@ -338,12 +361,14 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
     end
 
     it "can confirm that an ArchiveSpace item is relevant" do
+      asl_old_success
       parent_object_with_aspace_uri
       dependent_object_aspace_repository
       expect(asr.relevant?(relevant_item_from_aspace)).to be_truthy
     end
 
     it "can confirm that an ArchiveSpace item is relevant based on its dependent URI" do
+      asl_old_success
       parent_object_with_aspace_uri
       dependent_object_aspace_agent
       expect(asr.relevant?(relevant_item_from_aspace_dependent_uri)).to be_truthy
@@ -375,37 +400,6 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
       asl_new_success
       asl_failed
       expect(asr.last_run_time).to eq asl_new_success.run_time
-    end
-  end
-
-  context "with multiple oids for a single dependent uri" do
-    let(:parent_object_aspace_2) do
-      FactoryBot.create(
-        :parent_object_with_aspace_uri,
-        oid: "12345",
-        aspace_uri: "/repositories/11/archival_objects/515305",
-        last_aspace_update: "2020-06-10 17:38:27".to_datetime
-      )
-    end
-    let(:dependent_object_aspace_agent_2) do
-      FactoryBot.create(
-        :dependent_object,
-        parent_object_id: "12345",
-        metadata_source: "aspace",
-        dependent_uri: "/aspace/agents/corporate_entities/2251"
-      )
-    end
-
-    context "creating a set of dependent_uris from database" do
-      it "creates a set of local dependent uris" do
-        parent_object_with_aspace_uri
-        relevant_parent_object
-        relevant_parent_object_two
-        expect(asr.local_dependent_uris).not_to be nil
-        expect(asr.local_dependent_uris.class).to eq Set
-        expect(asr.local_dependent_uris.count).to eq 16
-        expect(asr.local_dependent_uris.include?("/ils/bib/3163155")).to be_truthy
-      end
     end
   end
 end
