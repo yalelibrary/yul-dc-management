@@ -250,6 +250,8 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
       parent_object_with_aspace_uri
       dependent_object_aspace_repository
 
+      # This is to prime these objects so they have the default json,
+      # This is necessary because these tests do not perform all jobs synchronously to fully create the object.
       parent_object_with_aspace_uri.default_fetch
       parent_object_with_aspace_uri.metadata_update = false
       parent_object_with_aspace_uri.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'aspace')
