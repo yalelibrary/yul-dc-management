@@ -327,8 +327,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.save!
         expected_uris = ['/ils/bib/4113177', '/ils/holding/4482860', '/ils/item/8090926', '/ils/barcode/39002093768050'].to_set
         expect(parent_object.reload.dependent_objects.count).to eq expected_uris.count
-        expect(parent_object.reload.dependent_objects.all? { |dobj| dobj.metadata_source == 'ils' }).to be_truthy
-        uris = parent_object.reload.dependent_objects.map(&:dependent_uri).to_set
+        expect(parent_object.dependent_objects.all? { |dobj| dobj.metadata_source == 'ils' }).to be_truthy
+        uris = parent_object.dependent_objects.map(&:dependent_uri).to_set
         expect(uris).to eq expected_uris
       end
 
@@ -427,8 +427,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
                          "/aspace/repositories/11/archival_objects/554841",
                          "/aspace/repositories/11/resources/1453"].to_set
         expect(parent_object.reload.dependent_objects.count).to eq expected_uris.count
-        expect(parent_object.reload.dependent_objects.all? { |dobj| dobj.metadata_source == 'aspace' }).to be_truthy
-        uris = parent_object.reload.dependent_objects.map(&:dependent_uri).to_set
+        expect(parent_object.dependent_objects.all? { |dobj| dobj.metadata_source == 'aspace' }).to be_truthy
+        uris = parent_object.dependent_objects.map(&:dependent_uri).to_set
         expect(uris).to eq expected_uris
       end
     end
