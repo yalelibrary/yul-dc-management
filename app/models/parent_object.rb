@@ -142,7 +142,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     metadata_source = authoritative_metadata_source&.metadata_cloud_name
     dep_objs = []
     json["dependentUris"].each do |uri|
-      dep_objs << DependentObject.create(
+      dep_objs << DependentObject.find_or_create_by(
         dependent_uri: uri,
         metadata_source: metadata_source,
         parent_object_id: oid
