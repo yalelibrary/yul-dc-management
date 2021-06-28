@@ -117,7 +117,7 @@ class ActivityStreamReader
       metadata_source = parent_object_array[1]
       po = ParentObject.find_by(oid: oid)
       if po
-        po.complete_fetch
+        po.default_fetch
         po.save
       end
 
