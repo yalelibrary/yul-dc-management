@@ -88,9 +88,6 @@ class ActivityStreamReader
   # Takes a set of parent object refs, sets up a batch job, and queues a SetupMetadataJob
   def refresh_updated_items(parent_object_refs)
     #  Create a single batch for this update
-    system_user = User.system_user
-    batch_process = BatchProcess.new(batch_action: 'activity stream updates', user: system_user)
-    batch_process.save!
     parent_object_refs.each do |parent_object_array|
       oid = parent_object_array[0]
       metadata_source = parent_object_array[1]
@@ -109,12 +106,16 @@ class ActivityStreamReader
       #  if po has a Metadata Job queued or in progress, skip it.
       next unless po.setup_metadata_jobs.empty?
 
-      queue_parent_object(batch_process, po)
+      queue_parent_object(po)
       @tally_queued_records += 1
     end
   end
 
-  def queue_parent_object(batch_process, po)
+  def batch_process
+    @batch_process ||= BatchProcess.create!(batch_action: 'activity stream updates', user: User.system_user)
+  end
+
+  def queue_parent_object(po)
     po.metadata_update = true
     po.current_batch_connection = batch_process.batch_connections.build(connectable: po)
     batch_process.save
