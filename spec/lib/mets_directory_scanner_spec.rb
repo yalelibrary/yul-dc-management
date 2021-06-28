@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe MetsDirectoryScanner do
-  let(:user) { described_class.system_user }
+  let(:user) { User.system_user }
   let(:mets_file) do
     ActionDispatch::Http::UploadedFile.new(
       filename: File.basename("test_mets.xml"),
