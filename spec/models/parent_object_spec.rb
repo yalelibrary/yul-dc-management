@@ -288,6 +288,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       expect(ChildObject.where(parent_object_oid: "2005512").first.order).to eq 1
     end
 
+    it "creates and has correct DependentObjects" do
+      expect(parent_object.reload.dependent_objects.count).to eq 1
+      expect(parent_object.dependent_objects.first.metadata_source).to eq 'ladybird'
+      expect(parent_object.dependent_objects.first.dependent_uri).to eq '/ladybird/oid/2005512'
+    end
+
     context "a newly created ParentObject with just the oid and default authoritative_metadata_source (Ladybird for now)" do
       let(:parent_object) { described_class.create(oid: "2005512", admin_set: FactoryBot.create(:admin_set)) }
       before do
@@ -314,6 +320,16 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.save!
         expect(parent_object.reload.authoritative_metadata_source_id).to eq voyager
         expect(parent_object.voyager_json).not_to be nil
+      end
+
+      it "updates DependentObjects when the authoritative_metadata_source is changed to Voyager" do
+        parent_object.authoritative_metadata_source_id = voyager
+        parent_object.save!
+        expected_uris = ['/ils/bib/4113177', '/ils/holding/4482860', '/ils/item/8090926', '/ils/barcode/39002093768050'].to_set
+        expect(parent_object.reload.dependent_objects.count).to eq expected_uris.count
+        expect(parent_object.dependent_objects.all? { |dobj| dobj.metadata_source == 'ils' }).to be_truthy
+        uris = parent_object.dependent_objects.map(&:dependent_uri).to_set
+        expect(uris).to eq expected_uris
       end
 
       it "creates and has a count of ChildObjects" do
@@ -401,6 +417,19 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       it "correctly sets the bib and barcode on the parent object" do
         expect(parent_object.bib).to eq "6805375"
         expect(parent_object.barcode).to eq "39002091459793"
+      end
+
+      it "stores dependent objects property" do
+        expected_uris = ["/aspace/repositories/11/top_containers/68645",
+                         "/aspace/repositories/11/archival_objects/555049",
+                         "/aspace/agents/people/79383",
+                         "/aspace/repositories/11/archival_objects/555042",
+                         "/aspace/repositories/11/archival_objects/554841",
+                         "/aspace/repositories/11/resources/1453"].to_set
+        expect(parent_object.reload.dependent_objects.count).to eq expected_uris.count
+        expect(parent_object.dependent_objects.all? { |dobj| dobj.metadata_source == 'aspace' }).to be_truthy
+        uris = parent_object.dependent_objects.map(&:dependent_uri).to_set
+        expect(uris).to eq expected_uris
       end
     end
 
