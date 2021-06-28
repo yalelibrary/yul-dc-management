@@ -87,12 +87,30 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       expect(iiif_presentation.manifest.sequences.class).to eq Array
     end
 
+    it "has a related in the manifest" do
+      expect(iiif_presentation.manifest["related"].class).to eq Array
+      expect(iiif_presentation.manifest["related"].first.class).to eq Hash
+      expect(iiif_presentation.manifest["related"].first["@id"]).to eq "https://collections.library.yale.edu/catalog/#{oid}"
+      expect(iiif_presentation.manifest["related"].first["format"]).to eq "text/html"
+      expect(iiif_presentation.manifest["related"].first["label"]).to eq "Yale Digital Collections page"
+    end
+
     it "has a rendering in the manifest" do
       expect(iiif_presentation.manifest["rendering"].class).to eq Array
       expect(iiif_presentation.manifest["rendering"].first.class).to eq Hash
       expect(iiif_presentation.manifest["rendering"].first["@id"]).to eq "#{ENV['PDF_BASE_URL']}/#{oid}.pdf"
       expect(iiif_presentation.manifest["rendering"].first["format"]).to eq "application/pdf"
       expect(iiif_presentation.manifest["rendering"].first["label"]).to eq "Download as PDF"
+    end
+
+    it "has a seeAlso in the manifest" do
+      expect(iiif_presentation.manifest["seeAlso"].class).to eq Array
+      expect(iiif_presentation.manifest["seeAlso"].first.class).to eq Hash
+      # rubocop:disable Metrics/LineLength
+      expect(iiif_presentation.manifest["seeAlso"].first["@id"]).to eq "https://collections.library.yale.edu/catalog/oai?verb=GetRecord&metadataPrefix=oai_mods&identifier=oai:collections.library.yale.edu:#{oid}"
+      # rubocop:enable Metrics/LineLength
+      expect(iiif_presentation.manifest["seeAlso"].first["format"]).to eq "application/mods+xml"
+      expect(iiif_presentation.manifest["seeAlso"].first["profile"]).to eq "http://www.loc.gov/mods/v3"
     end
 
     it "has metadata in the manifest" do

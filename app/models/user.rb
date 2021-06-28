@@ -8,7 +8,6 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  has_many :notifications, as: :recipient
   has_many :batch_processes
   has_many :users_roles
 

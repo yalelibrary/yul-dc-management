@@ -137,6 +137,20 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  def assign_dependent_objects(json = authoritative_json)
+    return unless json
+    metadata_source = authoritative_metadata_source&.metadata_cloud_name
+    dep_objs = []
+    json["dependentUris"].each do |uri|
+      dep_objs << DependentObject.find_or_create_by(
+        dependent_uri: uri,
+        metadata_source: metadata_source,
+        parent_object_id: oid
+      )
+    end
+    self.dependent_objects = dep_objs
+  end
+
   # Fetches the record from the authoritative_metadata_source
   def default_fetch(_current_batch_process = current_batch_process, _current_batch_connection = current_batch_connection)
     fetch_results = case authoritative_metadata_source&.metadata_cloud_name
@@ -149,7 +163,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless aspace_uri.present?
                       self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
                     end
-    processing_event("Metadata has been fetched", "metadata-fetched") if fetch_results
+    if fetch_results
+      assign_dependent_objects
+      processing_event("Metadata has been fetched", "metadata-fetched")
+    end
     fetch_results
   end
 
@@ -194,13 +211,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     else
       raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
-  end
-
-  def complete_fetch
-    self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
-    self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
-    return unless ladybird_json["archiveSpaceUri"]
-    self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
   end
 
   # Takes a JSON record from the MetadataCloud and saves the Ladybird-specific info to the DB

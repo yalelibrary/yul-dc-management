@@ -39,7 +39,9 @@ class IiifPresentation
   def manifest
     return @manifest if @manifest
     @manifest = IIIF::Presentation::Manifest.new(seed)
+    @manifest["related"] = related
     @manifest["rendering"] = rendering
+    @manifest["seeAlso"] = see_also
     @manifest["metadata"] = metadata
     @manifest["attribution"] = "Yale University Library"
     @manifest.sequences << sequence
@@ -76,12 +78,32 @@ class IiifPresentation
     { 'label' => label, 'value' => value }
   end
 
+  def related
+    [
+      {
+        "@id" => "https://collections.library.yale.edu/catalog/#{@oid}",
+        "format" => "text/html",
+        "label" => "Yale Digital Collections page"
+      }
+    ]
+  end
+
   def rendering
     [
       {
         "@id" => "#{pdf_base_url}/#{@oid}.pdf",
         "format" => "application/pdf",
         "label" => "Download as PDF"
+      }
+    ]
+  end
+
+  def see_also
+    [
+      {
+        "@id" => "https://collections.library.yale.edu/catalog/oai?verb=GetRecord&metadataPrefix=oai_mods&identifier=oai:collections.library.yale.edu:#{oid}",
+        "format" => "application/mods+xml",
+        "profile" => "http://www.loc.gov/mods/v3"
       }
     ]
   end
