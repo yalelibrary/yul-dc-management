@@ -209,6 +209,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         expect do
           parent_object.visibility = "Yale Community Only"
           parent_object.bib = "123321xx"
+          parent_object.call_number = "JWJ A +Eb74"
           parent_object.child_object_count = 985_555
           parent_object.barcode = "3200000000000"
           parent_object.aspace_uri = "/repository/12345/archiveobject/566666"
@@ -225,6 +226,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
            .and change(parent_object, :display_layout).from(nil).to("book")
         response = solr.get 'select', params: { q: 'oid_ssi:2034600' }
         expect(response["response"]["docs"].first["visibility_ssi"]).to eq "Yale Community Only"
+        expect(response["response"]["docs"].first["callNumber_tesim"]).to include "JWJ A +Eb74"
         expect(response["response"]["docs"].first["orbisBibId_ssi"]).to eq "123321xx"
         expect(response["response"]["docs"].first["imageCount_isi"]).to eq 985_555
         expect(response["response"]["docs"].first["orbisBarcode_ssi"]).to eq "3200000000000"

@@ -222,6 +222,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return unless use_ladybird
     self.bib = lb_record["orbisBibId"]
     self.barcode = lb_record["orbisBarcode"]
+    self.call_number = normalize_call_number
     self.aspace_uri = lb_record["archiveSpaceUri"]
     self.visibility = lb_record["itemPermission"]
     self.rights_statement = lb_record["rights"]&.first
@@ -237,6 +238,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     elsif extent_from_ladybird.start_with?("Part")
       "Partially digitized"
     end
+  end
+
+  def normalize_call_number
+    call_number = ladybird_json&.[]("callNumber")
+    return call_number.first if call_number.is_a?(Array)
+    call_number
   end
 
   def voyager_json=(v_record)
