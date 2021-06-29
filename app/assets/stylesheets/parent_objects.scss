@@ -3,10 +3,14 @@ DEFAULT DESKTOP STYLING
 ********************************************************/
 @import 'theme/colors', 'theme/typography', 'theme/breakpoints';
 
-.delete-item-container {
+.delete-item-container,
+.update-item-container {
   display: grid;
-  grid-template-columns: 0.25fr 1fr;
   padding-top: 10px;
+}
+
+.delete-item-container {
+  grid-template-columns: 0.25fr 1fr;
 }
 
 .delete-item-label {
@@ -27,9 +31,7 @@ DEFAULT DESKTOP STYLING
 }
 
 .update-item-container {
-  display: grid;
   grid-template-columns: 0.75fr 1fr;
-  padding-top: 10px;
 }
 
 .update-item-button {
