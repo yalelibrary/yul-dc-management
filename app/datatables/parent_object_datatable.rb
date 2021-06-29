@@ -32,8 +32,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
       last_id_update: { source: "ParentObject.last_id_update", orderable: true },
       visibility: { source: "ParentObject.visibility", cond: :string_eq, searchable: true, options: ["Public", "Yale Community Only", "Private"], orderable: true },
       extent_of_digitization: { source: "ParentObject.extent_of_digitization", cond: :string_eq, searchable: true, options: ["Completely digitized", "Partially digitized"], orderable: true },
-      digitization_note: { source: "ParentObject.digitization_note", cond: :like, searchable: true, orderable: true },
-      actions: { source: "ParentObject.oid", cond: :null_value, searchable: false, orderable: false }
+      digitization_note: { source: "ParentObject.digitization_note", cond: :like, searchable: true, orderable: true }
     }
   end
   # rubocop: enable Metrics/MethodLength
@@ -58,7 +57,6 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
         visibility: parent_object.visibility,
         extent_of_digitization: parent_object.extent_of_digitization,
         digitization_note: parent_object.digitization_note,
-        actions: actions(parent_object).html_safe,
         DT_RowId: parent_object.oid
       }
     end
@@ -71,12 +69,6 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
     result << with_icon('fa fa-pencil-alt', edit_parent_object_path(parent_object)) if @current_ability.can? :edit, parent_object
     result << with_icon('fa fa-eye', parent_object.dl_show_url)
     result.join(' ')
-  end
-
-  def actions(parent_object)
-    actions = []
-    actions << link_to('Update Metadata', update_metadata_parent_object_path(parent_object), method: :post) if @current_ability.can? :update, parent_object
-    actions.join('<br>')
   end
 
   def with_icon(class_name, path, options = {})
