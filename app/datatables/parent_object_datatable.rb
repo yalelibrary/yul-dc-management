@@ -32,7 +32,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
       last_id_update: { source: "ParentObject.last_id_update", orderable: true },
       visibility: { source: "ParentObject.visibility", cond: :string_eq, searchable: true, options: ["Public", "Yale Community Only", "Private"], orderable: true },
       extent_of_digitization: { source: "ParentObject.extent_of_digitization", cond: :string_eq, searchable: true, options: ["Completely digitized", "Partially digitized"], orderable: true },
-      digitization_note: { source: "ParentObject.digitization_note", cond: :like, searchable: true, orderable: true },
+      digitization_note: { source: "ParentObject.digitization_note", cond: :like, searchable: true, orderable: true }
     }
   end
   # rubocop: enable Metrics/MethodLength
