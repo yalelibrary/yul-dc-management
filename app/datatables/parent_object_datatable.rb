@@ -75,7 +75,6 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
 
   def actions(parent_object)
     actions = []
-    actions << with_icon('fa fa-trash', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' }) if @current_ability.can? :destroy, parent_object
     actions << link_to('Update Metadata', update_metadata_parent_object_path(parent_object), method: :post) if @current_ability.can? :update, parent_object
     actions.join('<br>')
   end

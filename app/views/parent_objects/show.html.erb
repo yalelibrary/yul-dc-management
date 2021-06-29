@@ -106,7 +106,7 @@
     <div class="child-list">
       <ol>
         <% @parent_object.child_objects.map do |child| %>
-          <li><%= link_to( "#{child.label || 'no label'} /  #{child.caption || 'no caption'} (#{child.width}, #{child.height})", "#{child_objects_path}/#{child.oid}") %></li>
+          <li><%= link_to( "#{child.label || 'no label'} / #{child.caption || 'no caption'} (#{child.width}, #{child.height})", "#{child_objects_path}/#{child.oid}") %></li>
         <% end %>
       </ol>
     </div>
@@ -125,9 +125,21 @@
 </p>
 
 <p>
-    <strong>Solr Record:</strong>
-    <%= render 'solr_document', parent_object: @parent_object %>
+  <strong>Solr Record:</strong>
+  <%= render 'solr_document', parent_object: @parent_object %>
 </p>
+
+<% if can? :destroy, @parent_object %>
+  <div class='delete-item-container'>
+    <div>
+      <p class='delete-item-label'>Delete this Item</p>
+      <p>Permanently delete this item</p>
+    </div>
+    <div>
+      <%= link_to 'Delete this item', parent_object_path(@parent_object), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn button delete-item-button' %>
+    </div>
+  </div>
+<% end %>
 <% if can? :edit, @parent_object %>
   <%= link_to 'Edit', edit_parent_object_path(@parent_object) %> |
 <% end %>
