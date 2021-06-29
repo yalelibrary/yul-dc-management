@@ -4,7 +4,7 @@ module CsvExportable
   extend ActiveSupport::Concern
 
   def headers
-    ["child_oid", "parent_oid", "order", "parent_title", "label", "caption", "viewing_hint"]
+    ["parent_oid", "child_oid", "order", "parent_title", "label", "caption", "viewing_hint"]
   end
 
   def output_csv
@@ -15,7 +15,7 @@ module CsvExportable
         if co.is_a?(Array)
           csv << co
         else
-          row = [co.oid, co.parent_object.oid, co.order, co.parent_object.authoritative_json["title"]&.first, co.label, co.caption, co.viewing_hint]
+          row = [co.parent_object.oid, co.oid, co.order, co.parent_object.authoritative_json["title"]&.first, co.label, co.caption, co.viewing_hint]
           csv << row
         end
       end
