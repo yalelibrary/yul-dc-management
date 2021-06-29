@@ -28,36 +28,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     select("Create Parent Objects")
   end
 
-  context "having created a parent_object via the UI" do
-    before do
-      stub_metadata_cloud("16057779")
-      visit parent_objects_path
-      click_on("New Parent Object")
-      # expect needed to ensure the New Parent Page loads before filling in the oid
-      expect(page).to have_xpath("//input[@name='parent_object[oid]']")
-      fill_in('Oid', with: "16057779")
-      select('Beinecke Library')
-      click_on("Create Parent object")
-      # expect needed to ensure that the parent object form was processed by the server before running tests
-      expect(page).to have_content('Parent object was successfully created.')
-    end
-    it "can still successfully see the batch_process page" do
-      visit batch_processes_path
-      click_on(BatchProcess.last.id.to_s, match: :first)
-      expect(page.body).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
-    end
-    context "deleting a parent object" do
-      it "can still load the batch_process page" do
-        po = ParentObject.find(16_057_779)
-        po.delete
-        expect(po.destroyed?).to be true
-        visit batch_processes_path
-        click_on(BatchProcess.last.id.to_s)
-        expect(page.body).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
-      end
-    end
-  end
-
   context "when uploading a csv" do
     it "uploads and increases csv count and gives a success message" do
       expect(BatchProcess.count).to eq 0
