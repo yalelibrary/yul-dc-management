@@ -1,0 +1,23 @@
+/********************************************************
+DEFAULT DESKTOP STYLING
+********************************************************/
+@import 'theme/colors', 'theme/typography', 'theme/breakpoints';
+
+.delete-item-container {
+  display: grid;
+  grid-template-columns: 0.25fr 1fr;
+  padding-top: 10px;
+}
+
+.delete-item-label {
+  margin-bottom: 6px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.delete-item-button {
+  color: $delete_button_text;
+  background-color: $white;
+  border: 2px solid $delete_button_border;
+  border-radius: 7px;
+}
