@@ -15,9 +15,23 @@ DEFAULT DESKTOP STYLING
   font-weight: bold;
 }
 
-.delete-item-button {
-  color: $delete_button_text;
+.delete-item-button,
+.update-item-button {
   background-color: $white;
   border: 2px solid $delete_button_border;
   border-radius: 7px;
+}
+
+.delete-item-button {
+  color: $delete_button_text;
+}
+
+.update-item-container {
+  display: grid;
+  grid-template-columns: 0.75fr 1fr;
+  padding-top: 10px;
+}
+
+.update-item-button {
+  color: $black;
 }

@@ -96,6 +96,18 @@
   <%= @parent_object.authoritative_metadata_source.display_name %>
 </p>
 
+<% if can? :update, @parent_object %>
+  <div class='update-item-container'>
+    <p>
+      <strong>Update Metadata for this Object:</strong><br>
+      <small>Update the metadata for this object from the authoritative metadata source.<small>
+    </p>
+    <div>
+      <%= link_to 'Update this item', update_metadata_parent_object_path(@parent_object), method: :post, class: 'btn button update-item-button' %>
+    </div>
+  </div>
+<% end %>
+
 <p>
   <strong>Child Count:</strong>
   <%= @parent_object.child_object_ids.count %>
