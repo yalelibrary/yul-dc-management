@@ -23,7 +23,6 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
     # rubocop:disable Metrics/LineLength
     expect(output).to include(
       DT_RowId: 2_034_600,
-      actions: '<a data-method="post" href="/parent_objects/2034600/update_metadata">Update Metadata</a>',
       admin_set: 'brbl',
       aspace_uri: nil,
       authoritative_source: 'ladybird',
