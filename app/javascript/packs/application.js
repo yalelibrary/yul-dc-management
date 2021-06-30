@@ -172,3 +172,12 @@ const columnOrder = (columns) => {
   })
   return columnOrder;
 }
+
+$( document ).on('turbolinks:load', function() {
+  $('#batch_process_batch_action').on('change', function(){
+    let batch_action = $(this).val()
+    $('#batch_template_batch_action').val(batch_action)
+    console.log($('#batch_template_batch_action').val());
+  })
+})
+
