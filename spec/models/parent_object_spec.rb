@@ -314,7 +314,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.reload.rights_statement).to include "The use of this image may be subject to the "
       end
 
-      it "pulls the assigns the call number and container grouping" do
+      it "assigns the call number and container grouping" do
         parent_object.reload
         expect(parent_object.call_number).to eq "GEN MSS 257"
         expect(parent_object.container_grouping).to eq "Box 3 | Folder 24"
