@@ -28,6 +28,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       po = ParentObject.find(10_001_192)
       expect(po.oid).to eq 10_001_192
       expect(po.bib).to eq "3659107"
+      expect(po.call_number).to eq "GEN MSS 963"
       expect(po.holding).to be_empty
       expect(po.item).to be_empty
       expect(po.barcode).to eq "39002091548348"

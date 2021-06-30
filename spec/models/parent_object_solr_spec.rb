@@ -209,6 +209,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         expect do
           parent_object.visibility = "Yale Community Only"
           parent_object.bib = "123321xx"
+          parent_object.call_number = "JWJ A +Eb74"
           parent_object.child_object_count = 985_555
           parent_object.barcode = "3200000000000"
           parent_object.aspace_uri = "/repository/12345/archiveobject/566666"

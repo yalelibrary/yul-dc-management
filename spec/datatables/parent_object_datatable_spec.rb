@@ -28,6 +28,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       authoritative_source: 'ladybird',
       barcode: nil,
       bib: nil,
+      call_number: nil,
       child_object_count: 4,
       digitization_note: nil,
       extent_of_digitization: nil,
