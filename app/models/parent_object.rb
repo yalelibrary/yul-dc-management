@@ -166,7 +166,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                     end
     if fetch_results
       assign_dependent_objects
-      self.call_number = normalize_call_number
+      assign_values
       processing_event("Metadata has been fetched", "metadata-fetched")
     end
     fetch_results
@@ -189,10 +189,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     json_for(authoritative_metadata_source.metadata_cloud_name)
   end
 
-  def normalize_call_number
-    call_number = authoritative_json["callNumber"]
-    return call_number.first if call_number.is_a?(Array)
-    call_number
+  def assign_values
+    self.call_number = authoritative_json["callNumber"].is_a?(Array) ? authoritative_json["callNumber"].first : authoritative_json["callNumber"]
+    self.container_grouping = authoritative_json["containerGrouping"].is_a?(Array) ? authoritative_json["containerGrouping"].first : authoritative_json["containerGrouping"]
   end
 
   def metadata_cloud_url
