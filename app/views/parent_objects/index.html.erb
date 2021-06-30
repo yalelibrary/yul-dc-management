@@ -5,7 +5,6 @@
   </div>
   <div class='col'>
     <div class='float-right button-list'>
-      <%= link_to 'New Parent Object', new_parent_object_path, class: 'btn button primary-button' %>
       <%= button_to 'Reindex', reindex_parent_objects_path, method: 'post', class: 'btn button secondary-button', id: 'reindex',
         data:( ParentObject.cannot_reindex ? nil : { confirm: 'Are you sure you want to proceed? This action will reindex the entire contents of the system.' }),
         disabled: !(can? :reindex_all, ParentObject)
@@ -26,6 +25,8 @@
           <th scope='col'>Admin Set</th>
           <th scope='col'>Authoritative Source</th>
           <th scope='col'>Child object count</th>
+          <th scope='col'>Call Number</th>
+          <th scope='col'>Container Grouping</th>
           <th scope='col'>Bib</th>
           <th scope='col'>Holding</th>
           <th scope='col'>Item</th>
@@ -38,7 +39,6 @@
           <th scope='col'>Visibility</th>
           <th scope='col'>Extent of digitization</th>
           <th scope='col'>Digitization note</th>
-          <th scope='col'>Actions</th>
         </tr>
       </thead>
       <tbody class='datatable-body'>
