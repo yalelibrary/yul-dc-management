@@ -24,20 +24,25 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       reason: message,
       batch_connection: current_batch_connection
     )
-  end 
-  
-  def csv_template(batch_action)
-    if batch_action == "create parent objects"
-      csv = # Add Create_Parent_Objects template here
-    elsif batch_action == "export child oids"
-      csv = # Add Export_Child_Oids template here
-    elsif batch_action == "reassociate child oids"
-      csv = # Add Reasscociate_Child_Oids template here
-    elsif batch_action == "recreate child oid ptiffs"
-      csv = # Add Recreate_Child_Oid_Ptiffs template here
-    end
-    csv
-  end 
+  end
+
+  # TODO
+  # Create csv templates
+  # Store templates
+  # add templates below
+
+  # def csv_template(batch_action)
+  #   if batch_action == "create parent objects"
+  #     csv = #Add Create_Parent_Objects template here
+  #   elsif (batch_action == "export child oids")
+  #     csv = #Add Export_Child_Oids template here
+  #   elsif batch_action == "reassociate child oids"
+  #     csv = #Add Reasscociate_Child_Oids template here
+  #   elsif batch_action == "recreate child oid ptiffs"
+  #     csv = #Add Recreate_Child_Oid_Ptiffs template here
+  #   end
+  #   csv
+  # end
 
   def batch_ingest_events
     current_batch_connection = batch_connections.find_or_create_by!(connectable: self)

@@ -54,8 +54,8 @@ class BatchProcessesController < ApplicationController
 
     # Add BOM to force Excel to open correctly
     send_data "\xEF\xBB\xBF" + "#{::Rails.root}/spec/fixtures/#{csv_template}",
-    type: 'text/csv; charset=utf-8; header=present',
-    disposition: "attachment; filename=#{batch_action + "_template"}"
+              type: 'text/csv; charset=utf-8; header=present',
+              disposition: "attachment; filename=#{batch_action + '_template'}"
   end
 
   def download_created
