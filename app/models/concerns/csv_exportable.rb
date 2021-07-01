@@ -34,6 +34,7 @@ module CsvExportable
       end
     end
 
+    # sort first by the parent oid, then by the child objects order in the parent grouping
     arr.sort_by { |co| [co.try(:parent_object_oid) || co[0], co.try(:order) || co[2]] }
   end
 
