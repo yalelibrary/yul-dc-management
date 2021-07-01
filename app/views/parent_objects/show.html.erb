@@ -156,4 +156,5 @@
   <%= link_to 'Edit', edit_parent_object_path(@parent_object) %> |
 <% end %>
 <%= link_to 'Solr Document', solr_document_parent_object_path("#{@parent_object.oid}"), target: '_blank' %> |
+<%= link_to 'Public View', @parent_object.dl_show_url, target: '_blank' %> |
 <%= link_to 'Back', parent_objects_path %>
