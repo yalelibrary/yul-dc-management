@@ -146,7 +146,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
   end
 
   context "with Archival fixture data" do
-    let(:oid){"2005512"}
+    let(:oid) { "2005512" }
     let(:metadata_source) { "aspace" }
     let(:id_prefix) { "AS-" }
 
