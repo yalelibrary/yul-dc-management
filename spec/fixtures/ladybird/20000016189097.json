@@ -2,86 +2,97 @@
   "jsonModelType": "LadybirdSolrRecord",
   "source": "ladybird",
   "recordType": "oid",
-  "uri": "/ladybird/oid/16189097",
-  "callNumber": "Lanman Covers 56 189x",
+  "uri": "/ladybird/oid/2004443",
+  "callNumber": "YCAL MSS 938",
+  "sourceCreator": "Osborn, Robert Chesley, 1904-",
+  "sourceTitle": "Robert Osborn papers, ca. 1928-[ongoing]",
+  "sourceNote": "Papers: charcoal drawings, watercolor illustrations, mixed media drawings and cartoons, sketchbooks and other artwork",
+  "creator": [
+    "Osborn, Robert Chesley, 1904-"
+  ],
   "title": [
-    "[Map of China]."
-  ],
-  "extentOfDigitization": [
-    "Complete work digitized."
-  ],
-  "creationPlace": [
-    "Kyoto [Japan] :"
-  ],
-  "publisher": [
-    "Umemura Yahaku,"
+    "My \"single\" rowing out in Oshkosh on the Fox River"
   ],
   "date": [
-    "[189x?]"
+    "1930?, 1932?"
   ],
   "extent": [
-    "1 map ; folded in covers 25 x 16 cm."
+    "1 drawing",
+    "38 cm.",
+    "color illustration"
   ],
   "language": [
-    "Japanese"
+    "English"
   ],
   "description": [
-    "In Japanese.",
-    "Japanese reprint of a Chinese map published in 1663.",
-    "Transliteration supplied by cataloger."
+    "On verso: Glorious sensation. Osborn. My \"single,\" rowing out in Oshkosh on the Fox River summers 1930? 32?."
   ],
-  "scale": "Scale not given.",
-  "coordinate": [
-    "a"
+  "subjectName": [
+    "Osborn, Robert Chesley, 1904-"
+  ],
+  "subjectTopic": [
+    "Cartoonists --United States --Archives"
   ],
   "genre": [
-    "Maps."
+    "Annotations",
+    "Drawings",
+    "Hand coloring",
+    "Illustrations"
   ],
   "format": [
-    "cartographic"
-  ],
-  "itemType": [
-    "Maps, Atlases & Globes"
+    "still image"
   ],
   "partOf": "Beinecke Library",
+  "accessRestrictions": "Access to this image is restricted to the Yale community.",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "orbisBibId": "8330740",
-  "orbisBarcode": "39002113593819",
-  "itemPermission": "Public",
+  "orbisBibId": "3627311",
+  "itemPermission": "Yale Community Only",
   "dateStructured": [
-    "1890/1899"
+    "1930/1932"
   ],
-  "illustrativeMatter": "080815s189u    ja ",
-  "intStartYear": "1890",
-  "intEndYear": "1899",
+  "intStartYear": "1930",
+  "intEndYear": "1932",
+  "subjectEra": "Cartoonists --United States --Archives",
+  "contributor": [
+    "Osborn, Robert Chesley, 1904-"
+  ],
   "repository": "Beinecke Library",
-  "subjectGeographic": [
-    "China--Maps."
+  "subjectTitle": "Cartoonists --United States --Archives",
+  "subjectTitleDisplay": [
+    "Cartoonists --United States --Archives"
+  ],
+  "creatorDisplay": [
+    "Osborn, Robert Chesley, 1904-"
+  ],
+  "contributorDisplay": [
+    "Osborn, Robert Chesley, 1904-"
   ],
   "dependentUris": [
-    "/ladybird/oid/16189097"
+    "/ladybird/oid/2004443"
   ],
-  "oid": 16189097,
+  "oid": 2004443,
   "collectionId": 1,
   "children": [
     {
       "jsonModelType": "LadybirdSolrRecord",
       "source": "ladybird",
       "recordType": "oid",
-      "uri": "/ladybird/oid/16189150",
-      "callNumber": "Lanman Covers 56 189x",
+      "uri": "/ladybird/oid/1021358",
+      "callNumber": "YCAL MSS 938",
       "title": [
-        "[Map of China]."
+        "[Figure in boat]"
       ],
-      "caption": "recto",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
       "dependentUris": [
-        "/ladybird/oid/16189150"
+        "/ladybird/oid/1021358"
       ],
-      "oid": 16189150,
-      "width": 1532,
-      "height": 1536,
+      "oid": 1021358,
+      "width": 5204,
+      "height": 4467,
       "children": [
 
       ]
@@ -90,18 +101,20 @@
       "jsonModelType": "LadybirdSolrRecord",
       "source": "ladybird",
       "recordType": "oid",
-      "uri": "/ladybird/oid/16189151",
-      "callNumber": "Lanman Covers 56 189x",
+      "uri": "/ladybird/oid/1021359",
+      "callNumber": "YCAL MSS 938",
       "title": [
-        "[Map of China]."
+        "[Figure in boat]"
       ],
-      "caption": "[Front cover]",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
       "dependentUris": [
-        "/ladybird/oid/16189151"
+        "/ladybird/oid/1021359"
       ],
-      "oid": 16189151,
-      "width": 2568,
-      "height": 3966,
+      "oid": 1021359,
+      "width": 5181,
+      "height": 4449,
       "children": [
 
       ]

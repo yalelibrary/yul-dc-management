@@ -54,7 +54,7 @@ RSpec.describe FixtureParsingService, prep_metadata_sources: true do
         described_class.find_dependent_uris(metadata_source)
         expect(DependentObject.find_by(parent_object_id: oid).dependent_uri).to include "/ladybird/oid/16854285"
         expect(DependentObject.find_by(parent_object_id: private_oid).dependent_uri).to include "/ladybird/oid/10000016189097"
-        expect(DependentObject.find_by(parent_object_id: yale_only_oid).dependent_uri).to include "/ladybird/oid/20000016189097"
+        expect(DependentObject.find_by(parent_object_id: yale_only_oid).dependent_uri).to include "/ladybird/oid/2004443"
       end
     end
   end
