@@ -192,6 +192,11 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         expect(document["dateStructured_ssim"]).not_to be
       end
 
+      it 'has a Public View link' do
+        po = ParentObject.find_by(oid: "2012036")
+        expect(page).to have_link("Public View", href: po.dl_show_url)
+      end
+
       it 'shows error if creating parent with oid that exists' do
         visit new_parent_object_path
         fill_in('Oid', with: "2012036")
