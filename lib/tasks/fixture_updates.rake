@@ -10,6 +10,11 @@ namespace :fixtures do
   task update_ils: :environment do
     fixture_updates("ils")
   end
+
+  desc "update Ladybird fixtures"
+  task update_ladybird: :environment do
+    fixture_updates("ladybird")
+  end
 end
 
 def mc_get(mc_url)
@@ -24,7 +29,7 @@ def fixture_updates(type)
   files.each do |file|
     fixture_file = File.read(file)
     metadata = JSON.parse(fixture_file)
-    mc_response = mc_get("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}#{metadata['uri']}")
+    mc_response = mc_get("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}#{metadata['uri']}?include-children=1")
     next unless mc_response.status == 200
     new_metadata = mc_response.body.to_str
     metadata = JSON.parse(new_metadata)
