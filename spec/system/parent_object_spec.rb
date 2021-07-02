@@ -17,8 +17,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   end
   context "a parent object with an extent of digitization" do
     before do
-      visit parent_objects_path
-      click_on("New Parent Object")
+      visit "parent_objects/new"
       stub_metadata_cloud("10001192")
       fill_in('Oid', with: "10001192")
       select('Beinecke Library')
@@ -29,6 +28,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       po = ParentObject.find(10_001_192)
       expect(po.oid).to eq 10_001_192
       expect(po.bib).to eq "3659107"
+      expect(po.call_number).to eq "GEN MSS 963"
       expect(po.holding).to be_empty
       expect(po.item).to be_empty
       expect(po.barcode).to eq "39002091548348"
@@ -50,7 +50,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   context "creating a new ParentObject based on oid" do
     before do
       visit parent_objects_path
-      click_on("New Parent Object")
+      visit "parent_objects/new"
     end
 
     context "setting non-required values" do
@@ -383,16 +383,6 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     end
   end
 
-  context "pages has a New Parent Object button with an action event" do
-    before do
-      visit parent_objects_path
-    end
-
-    it "has a New Parent Object button" do
-      click_on("New Parent Object")
-    end
-  end
-
   describe "index page", js: true do
     context 'datatable' do
       let(:parent_object1) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: AdminSet.find_by_key('brbl')) }
@@ -477,8 +467,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   context "when logged in without admin set roles" do
     before do
       user.remove_role(:editor, AdminSet.find_by_key('brbl'))
-      visit parent_objects_path
-      click_on("New Parent Object")
+      visit "parent_objects/new"
       stub_metadata_cloud("10001192")
       fill_in('Oid', with: "10001192")
       select('Beinecke Library')

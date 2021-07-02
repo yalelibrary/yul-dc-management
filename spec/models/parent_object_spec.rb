@@ -314,6 +314,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.reload.rights_statement).to include "The use of this image may be subject to the "
       end
 
+      it "assigns the call number and container grouping" do
+        parent_object.reload
+        expect(parent_object.call_number).to eq "GEN MSS 257"
+        expect(parent_object.container_grouping).to eq "Box 3 | Folder 24"
+      end
+
       it "pulls Voyager record from the MetadataCloud when the authoritative_metadata_source is changed to Voyager" do
         expect(parent_object.reload.authoritative_metadata_source_id).to eq ladybird
         parent_object.authoritative_metadata_source_id = voyager
@@ -423,7 +429,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expected_uris = ["/aspace/repositories/11/top_containers/68645",
                          "/aspace/repositories/11/archival_objects/555049",
                          "/aspace/agents/people/79383",
-			 "/aspace/repositories/11",
+                         "/aspace/repositories/11",
                          "/aspace/repositories/11/archival_objects/555042",
                          "/aspace/repositories/11/archival_objects/554841",
                          "/aspace/repositories/11/resources/1453"].to_set

@@ -23,13 +23,14 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
     # rubocop:disable Metrics/LineLength
     expect(output).to include(
       DT_RowId: 2_034_600,
-      actions: '<a data-method="post" href="/parent_objects/2034600/update_metadata">Update Metadata</a>',
       admin_set: 'brbl',
       aspace_uri: nil,
       authoritative_source: 'ladybird',
       barcode: nil,
       bib: nil,
       child_object_count: 4,
+      call_number: nil,
+      container_grouping: nil,
       digitization_note: nil,
       extent_of_digitization: nil,
       holding: nil,
@@ -38,7 +39,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       last_id_update: nil,
       last_ladybird_update: nil,
       last_voyager_update: nil,
-      oid: '<a href="/parent_objects/2034600">2034600</a> <a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil-alt"></i></a> <a href="http://localhost:3000/catalog/2034600">1</a>',
+      oid: '<a href="/parent_objects/2034600">2034600</a> <a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil-alt"></i></a> <a target="_blank" href="http://localhost:3000/catalog/2034600">1</a>',
       visibility: 'Private'
     )
     # rubocop:enable Metrics/LineLength

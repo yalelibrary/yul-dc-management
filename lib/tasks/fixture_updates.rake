@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 namespace :fixtures do
   desc "update Archives Space fixtures"
@@ -8,14 +9,12 @@ namespace :fixtures do
       fixture_file = File.read(file)
       metadata = JSON.parse(fixture_file)
       mc_response = mc_get("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}#{metadata['uri']}")
-      if mc_response.status == 200
-        new_metadata = mc_response.body.to_str
-        puts "rewriting #{file}"
-        File.write(file, new_metadata)
-      end
+      next unless mc_response.status == 200
+      new_metadata = mc_response.body.to_str
+      puts "rewriting #{file}"
+      File.write(file, new_metadata)
     end
   end
-
 
   desc "update ILS fixtures"
   task update_ils: :environment do
@@ -25,17 +24,13 @@ namespace :fixtures do
       fixture_file = File.read(file)
       metadata = JSON.parse(fixture_file)
       mc_response = mc_get("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}#{metadata['uri']}")
-      if mc_response.status == 200
-        new_metadata = mc_response.body.to_str
-        metadata = JSON.parse(new_metadata)
-        puts "rewriting #{file}"
-        File.write(file, new_metadata)
-      end
+      next unless mc_response.status == 200
+      new_metadata = mc_response.body.to_str
+      puts "rewriting #{file}"
+      File.write(file, new_metadata)
     end
   end
-
 end
-
 
 def mc_get(mc_url)
   metadata_cloud_username = ENV["MC_USER"]

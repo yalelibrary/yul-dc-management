@@ -55,5 +55,3 @@
   <%= link_to 'Edit', edit_child_object_path(@child_object) %> |
 <% end %>
 <%= link_to "Parent: #{@child_object.parent_object_oid}", "#{parent_object_path(@child_object.parent_object_oid)}" %>
-|
-<%= link_to 'All Child Objects', child_objects_path %>
