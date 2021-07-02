@@ -1,1 +1,95 @@
-{"jsonModelType":"BibSolrRecord","source":"ils","recordType":"bib","uri":"/ils/barcode/39002099258734?bib=9896328","callNumber":"Beinecke MS 1121","callNumberWithPublicNote":"Beinecke MS 1121","creator":["Galen"],"title":["Opera varia"],"creationPlace":["Constantinople or southern Italy"],"publisher":[""],"date":["[ca. 1300]"],"language":["Greek, Ancient (to 1453)"],"languageCode":["grc"],"description":["In Greek."],"subjectName":["Galen."],"subjectTopic":["Manuscripts, Medieval","Medicine, Greek and Roman"],"genre":["Manuscripts, Medieval Byzantine Empire 14th century","Manuscripts, Medieval Italy 14th century","Medieval and Renaissance Manuscripts in Beinecke Library"],"itemType":["unspecified"],"orbisBibId":"9896328","orbisBarcode":"39002099258734","findingAid":["https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms1121.htm","http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=Beinecke_MS_1121"],"preferredCitation":["Galen, Opera Varia. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."],"dateStructured":["1300"],"illustrativeMatter":"    ","titleStatement":["Opera varia"],"repository":"beingen","subjectGeographic":["Connecticut","New Haven."],"subjectTitleDisplay":["Galen."],"creatorDisplay":["Galen"],"accessCondition":["Material is open for research"],"dependentUris":["/ils/holding/10191430","/ils/item/9349078","/ils/bib/9896328","/ils/barcode/39002099258734"],"bibId":9896328,"suppressInOpac":false,"createDate":"2011-08-09T15:55:02.000+0000","updateDate":"2018-10-01T19:01:04.000+0000","holdingId":10191430,"itemId":9349078,"children":[],"abstract":["Manuscript on paper"]}
+{
+  "jsonModelType": "BibSolrRecord",
+  "source": "ils",
+  "recordType": "bib",
+  "uri": "/ils/barcode/39002099258734?bib=9896328",
+  "callNumber": "Beinecke MS 1121",
+  "callNumberWithPublicNote": "Beinecke MS 1121",
+  "creator": [
+    "Galen"
+  ],
+  "title": [
+    "Opera varia"
+  ],
+  "creationPlace": [
+    "Constantinople or southern Italy"
+  ],
+  "publisher": [
+    ""
+  ],
+  "date": [
+    "[ca. 1300]"
+  ],
+  "language": [
+    "Greek, Ancient (to 1453)"
+  ],
+  "languageCode": [
+    "grc"
+  ],
+  "description": [
+    "In Greek."
+  ],
+  "subjectName": [
+    "Galen."
+  ],
+  "subjectTopic": [
+    "Manuscripts, Medieval",
+    "Medicine, Greek and Roman"
+  ],
+  "genre": [
+    "Manuscripts, Medieval Byzantine Empire 14th century",
+    "Manuscripts, Medieval Italy 14th century",
+    "Medieval and Renaissance Manuscripts in Beinecke Library"
+  ],
+  "itemType": [
+    "unspecified"
+  ],
+  "orbisBibId": "9896328",
+  "orbisBarcode": "39002099258734",
+  "findingAid": [
+    "https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms1121.htm",
+    "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=Beinecke_MS_1121"
+  ],
+  "preferredCitation": [
+    "Galen, Opera Varia. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
+  ],
+  "dateStructured": [
+    "1300"
+  ],
+  "illustrativeMatter": "    ",
+  "titleStatement": [
+    "Opera varia"
+  ],
+  "repository": "beingen",
+  "subjectGeographic": [
+    "Connecticut",
+    "New Haven."
+  ],
+  "subjectTitleDisplay": [
+    "Galen."
+  ],
+  "creatorDisplay": [
+    "Galen"
+  ],
+  "accessCondition": [
+    "Material is open for research"
+  ],
+  "dependentUris": [
+    "/ils/holding/10191430",
+    "/ils/item/9349078",
+    "/ils/bib/9896328",
+    "/ils/barcode/39002099258734"
+  ],
+  "bibId": 9896328,
+  "suppressInOpac": false,
+  "createDate": "2011-08-09T15:55:02.000+0000",
+  "updateDate": "2018-10-01T19:01:04.000+0000",
+  "holdingId": 10191430,
+  "itemId": 9349078,
+  "children": [
+
+  ],
+  "abstract": [
+    "Manuscript on paper"
+  ]
+}

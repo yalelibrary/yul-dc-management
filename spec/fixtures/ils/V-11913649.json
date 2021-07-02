@@ -1,1 +1,70 @@
-{"jsonModelType":"BibSolrRecord","source":"ils","recordType":"bib","uri":"/ils/barcode/39002097273412?bib=3827095","callNumber":"Landberg MSS 492","callNumberWithPublicNote":"Landberg MSS 492","creator":["Maqrīzī, Aḥmad ibn ʻAlī, 1364-1442"],"title":["al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / [18--?]."],"extent":["15 33 x 22 cm. leaves ;"],"language":["Arabic"],"languageCode":["ara"],"description":["Modern (19th century) naskhī."],"genre":["History"],"itemType":["unspecified"],"orbisBibId":"3827095","orbisBarcode":"39002097273412","findingAid":["http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=11977426"],"dateStructured":["1800/1899"],"illustrativeMatter":"||  ","titleStatement":["al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī. -- [18--?]."],"repository":"lsfbeir","indexedBy":["Brockelmann, II, 40; S II, p. 37."],"creatorDisplay":["Maqrīzī, Aḥmad ibn ʻAlī, 1364-1442"],"volumeEnumeration":"Box","dependentUris":["/ils/holding/4184367","/ils/item/10907425","/ils/bib/3827095","/ils/barcode/39002097273412"],"bibId":3827095,"suppressInOpac":false,"createDate":"2002-06-01T04:00:00.000+0000","updateDate":"2018-10-01T18:58:13.000+0000","holdingId":4184367,"itemId":10907425,"children":[],"abstract":["Treatise on the Arab tribes which settled in Egypt"]}
+{
+  "jsonModelType": "BibSolrRecord",
+  "source": "ils",
+  "recordType": "bib",
+  "uri": "/ils/barcode/39002097273412?bib=3827095",
+  "callNumber": "Landberg MSS 492",
+  "callNumberWithPublicNote": "Landberg MSS 492",
+  "creator": [
+    "Maqrīzī, Aḥmad ibn ʻAlī, 1364-1442"
+  ],
+  "title": [
+    "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / [18--?]."
+  ],
+  "extent": [
+    "15 33 x 22 cm. leaves ;"
+  ],
+  "language": [
+    "Arabic"
+  ],
+  "languageCode": [
+    "ara"
+  ],
+  "description": [
+    "Modern (19th century) naskhī."
+  ],
+  "genre": [
+    "History"
+  ],
+  "itemType": [
+    "unspecified"
+  ],
+  "orbisBibId": "3827095",
+  "orbisBarcode": "39002097273412",
+  "findingAid": [
+    "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=11977426"
+  ],
+  "dateStructured": [
+    "1800/1899"
+  ],
+  "illustrativeMatter": "||  ",
+  "titleStatement": [
+    "al-Bayān wa-al-iʻrāb ʻammā bi-arḍ Miṣr min al-Aʻrāb / Aḥmad ibn ʻAlī al-Maqrīzī. -- [18--?]."
+  ],
+  "repository": "lsfbeir",
+  "indexedBy": [
+    "Brockelmann, II, 40; S II, p. 37."
+  ],
+  "creatorDisplay": [
+    "Maqrīzī, Aḥmad ibn ʻAlī, 1364-1442"
+  ],
+  "volumeEnumeration": "Box",
+  "dependentUris": [
+    "/ils/holding/4184367",
+    "/ils/item/10907425",
+    "/ils/bib/3827095",
+    "/ils/barcode/39002097273412"
+  ],
+  "bibId": 3827095,
+  "suppressInOpac": false,
+  "createDate": "2002-06-01T04:00:00.000+0000",
+  "updateDate": "2018-10-01T18:58:13.000+0000",
+  "holdingId": 4184367,
+  "itemId": 10907425,
+  "children": [
+
+  ],
+  "abstract": [
+    "Treatise on the Arab tribes which settled in Egypt"
+  ]
+}

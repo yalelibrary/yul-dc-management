@@ -1,1 +1,174 @@
-{"jsonModelType":"BibSolrRecord","source":"ils","recordType":"bib","uri":"/ils/barcode/39002075038423?bib=3435140","callNumber":"YCAL MSS 42","callNumberWithPublicNote":"YCAL MSS 42","creator":["Wharton, Edith, 1862-1937"],"title":["Edith Wharton collection, 1868-1981 (inclusive)."],"alternativeTitle":["http://id.loc.gov/authorities/names/n79151500"],"extent":["31.0 linear feet (69 boxes) + 12 broadside, 4 art."],"language":["English","French"],"languageCode":["eng","fre"],"description":["Edith Wharton (1862-1937) was a noted American fiction writer,best known for her novels Ethan Frome, The House of Mirth, and The Age of Innocence.","Unpublished finding aid in repository."],"subjectName":["Auchincloss, Louis.","Beerbohm, Max, Sir, 1872-1956.","Benson, Arthur Christopher, 1862-1925.","Berenson, Bernard, 1865-1959.","Berry, Walter, 1859-1927.","Bourget, Paul, 1852-1935.","Brownell, W. C. 1851-1928. (William Crary),","Chanler, Margaret.","Clark, Kenneth, 1903-1983.","Conrad, Joseph, 1857-1924.","Edel, Leon, 1907-1997.","Farrand, Beatrix, 1872-1959.","Gardner, Isabella Stewart, 1840-1924.","Gide, André, 1869-1951.","Gilder, Richard Watson, 1844-1909.","Gillet, Louis, 1876-1943.","Gosse, Edmund, 1849-1928.","James, Henry, 1843-1916.","Johnson, Robert Underwood, 1853-1937.","Jones, Mary Cadwalader.","Lubbock, Percy, 1879-1965.","Mitchell, S. Weir 1829-1914. (Silas Weir),","Norton, Sara, 1864-","Roosevelt, Theodore, 1858-1919.","Sargent, John Singer, 1856-1925.","Wharton, Edith, 1862-1937.","Cobden-Sanderson, Richard.","Charles Scribner's Sons.","Curtis Brown Ltd.","D. Appleton and Company.","Dodd, Mead & Company.","Macmillan & Co.","National Institute of Arts and Letters (U.S.)","E. Plon, Nourrit and Co."],"subjectTopic":["American literature","Charities","Drama","Fiction","Poetry, Modern","Short stories, American","World War, 1914-1918","Description and travel","Social life and customs","Intellectual life"],"genre":["Photographs"],"orbisBibId":"3435140","orbisBarcode":"39002075038423","findingAid":["http://hdl.handle.net/10079/fa/beinecke.wharton","http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=YCAL_MSS_42"],"preferredCitation":["Edith Wharton Collection. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."],"dateStructured":["1868/1981"],"illustrativeMatter":"    ","subjectEra":"20th century. 20th century. 20th century. 20th century. 20th century.","titleStatement":["Edith Wharton collection, 1868-1981 (inclusive)."],"provenanceUncontrolled":"Bequest of Edith Wharton (1937); gifts of Louis Auchincloss, Gaillard Lapsley, Percy Lubbock, Oscar Lichtenberg, and Georges Markow-Totevy.","repository":"beinycal","subjectGeographic":["France.","France","Newport (R.I.)","Paris (France)"],"subjectOccupation":["Authors.","Novelists.","Women authors."],"subjectTitleDisplay":["Auchincloss, Louis.","Beerbohm, Max, Sir, 1872-1956.","Benson, Arthur Christopher, 1862-1925.","Berenson, Bernard, 1865-1959.","Berry, Walter, 1859-1927.","Bourget, Paul, 1852-1935.","Brownell, W. C. 1851-1928. (William Crary),","Chanler, Margaret.","Clark, Kenneth, 1903-1983.","Conrad, Joseph, 1857-1924.","Edel, Leon, 1907-1997.","Farrand, Beatrix, 1872-1959.","Gardner, Isabella Stewart, 1840-1924.","Gide, André, 1869-1951.","Gilder, Richard Watson, 1844-1909.","Gillet, Louis, 1876-1943.","Gosse, Edmund, 1849-1928.","James, Henry, 1843-1916.","Johnson, Robert Underwood, 1853-1937.","Jones, Mary Cadwalader.","Lubbock, Percy, 1879-1965.","Mitchell, S. Weir 1829-1914. (Silas Weir),","Norton, Sara, 1864-","Roosevelt, Theodore, 1858-1919.","Sargent, John Singer, 1856-1925.","Wharton, Edith, 1862-1937.","Cobden-Sanderson, Richard.","Charles Scribner's Sons.","Curtis Brown Ltd.","D. Appleton and Company.","Dodd, Mead & Company.","Macmillan & Co.","National Institute of Arts and Letters (U.S.)","E. Plon, Nourrit and Co."],"creatorDisplay":["Wharton, Edith, 1862-1937"],"volumeEnumeration":"Box 25","accessCondition":["This material is open for research"],"dependentUris":["/ils/holding/3764443","/ils/item/8114701","/ils/bib/3435140","/ils/barcode/39002075038423"],"bibId":3435140,"suppressInOpac":false,"createDate":"2002-06-01T04:00:00.000+0000","updateDate":"2019-05-28T13:10:04.000+0000","holdingId":3764443,"itemId":8114701,"children":[],"abstract":["The Edith Wharton Collection consists of manuscripts, correspondence, photographs, and personal papers relating to the life and career of American author Edith Wharton, as well as letters and research material gathered by Gaillard Lapsley, Percy Lubbock, Oscar Lichtenberg, Georges Markow-Totevy, and Louis Auchincloss"]}
+{
+  "jsonModelType": "BibSolrRecord",
+  "source": "ils",
+  "recordType": "bib",
+  "uri": "/ils/barcode/39002075038423?bib=3435140",
+  "callNumber": "YCAL MSS 42",
+  "callNumberWithPublicNote": "YCAL MSS 42",
+  "creator": [
+    "Wharton, Edith, 1862-1937"
+  ],
+  "title": [
+    "Edith Wharton collection, 1868-1981 (inclusive)."
+  ],
+  "alternativeTitle": [
+    "http://id.loc.gov/authorities/names/n79151500"
+  ],
+  "extent": [
+    "31.0 linear feet (69 boxes) + 12 broadside, 4 art."
+  ],
+  "language": [
+    "English",
+    "French"
+  ],
+  "languageCode": [
+    "eng",
+    "fre"
+  ],
+  "description": [
+    "Edith Wharton (1862-1937) was a noted American fiction writer,best known for her novels Ethan Frome, The House of Mirth, and The Age of Innocence.",
+    "Unpublished finding aid in repository."
+  ],
+  "subjectName": [
+    "Auchincloss, Louis.",
+    "Beerbohm, Max, Sir, 1872-1956.",
+    "Benson, Arthur Christopher, 1862-1925.",
+    "Berenson, Bernard, 1865-1959.",
+    "Berry, Walter, 1859-1927.",
+    "Bourget, Paul, 1852-1935.",
+    "Brownell, W. C. 1851-1928. (William Crary),",
+    "Chanler, Margaret.",
+    "Clark, Kenneth, 1903-1983.",
+    "Conrad, Joseph, 1857-1924.",
+    "Edel, Leon, 1907-1997.",
+    "Farrand, Beatrix, 1872-1959.",
+    "Gardner, Isabella Stewart, 1840-1924.",
+    "Gide, André, 1869-1951.",
+    "Gilder, Richard Watson, 1844-1909.",
+    "Gillet, Louis, 1876-1943.",
+    "Gosse, Edmund, 1849-1928.",
+    "James, Henry, 1843-1916.",
+    "Johnson, Robert Underwood, 1853-1937.",
+    "Jones, Mary Cadwalader.",
+    "Lubbock, Percy, 1879-1965.",
+    "Mitchell, S. Weir 1829-1914. (Silas Weir),",
+    "Norton, Sara, 1864-",
+    "Roosevelt, Theodore, 1858-1919.",
+    "Sargent, John Singer, 1856-1925.",
+    "Wharton, Edith, 1862-1937.",
+    "Cobden-Sanderson, Richard.",
+    "Charles Scribner's Sons.",
+    "Curtis Brown Ltd.",
+    "D. Appleton and Company.",
+    "Dodd, Mead & Company.",
+    "Macmillan & Co.",
+    "National Institute of Arts and Letters (U.S.)",
+    "E. Plon, Nourrit and Co."
+  ],
+  "subjectTopic": [
+    "American literature",
+    "Charities",
+    "Drama",
+    "Fiction",
+    "Poetry, Modern",
+    "Short stories, American",
+    "World War, 1914-1918",
+    "Description and travel",
+    "Social life and customs",
+    "Intellectual life"
+  ],
+  "genre": [
+    "Photographs"
+  ],
+  "orbisBibId": "3435140",
+  "orbisBarcode": "39002075038423",
+  "findingAid": [
+    "http://hdl.handle.net/10079/fa/beinecke.wharton",
+    "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?WC=N&SS=N&CN=YCAL_MSS_42"
+  ],
+  "preferredCitation": [
+    "Edith Wharton Collection. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
+  ],
+  "dateStructured": [
+    "1868/1981"
+  ],
+  "illustrativeMatter": "    ",
+  "subjectEra": "20th century. 20th century. 20th century. 20th century. 20th century.",
+  "titleStatement": [
+    "Edith Wharton collection, 1868-1981 (inclusive)."
+  ],
+  "provenanceUncontrolled": "Bequest of Edith Wharton (1937); gifts of Louis Auchincloss, Gaillard Lapsley, Percy Lubbock, Oscar Lichtenberg, and Georges Markow-Totevy.",
+  "repository": "beinycal",
+  "subjectGeographic": [
+    "France.",
+    "France",
+    "Newport (R.I.)",
+    "Paris (France)"
+  ],
+  "subjectOccupation": [
+    "Authors.",
+    "Novelists.",
+    "Women authors."
+  ],
+  "subjectTitleDisplay": [
+    "Auchincloss, Louis.",
+    "Beerbohm, Max, Sir, 1872-1956.",
+    "Benson, Arthur Christopher, 1862-1925.",
+    "Berenson, Bernard, 1865-1959.",
+    "Berry, Walter, 1859-1927.",
+    "Bourget, Paul, 1852-1935.",
+    "Brownell, W. C. 1851-1928. (William Crary),",
+    "Chanler, Margaret.",
+    "Clark, Kenneth, 1903-1983.",
+    "Conrad, Joseph, 1857-1924.",
+    "Edel, Leon, 1907-1997.",
+    "Farrand, Beatrix, 1872-1959.",
+    "Gardner, Isabella Stewart, 1840-1924.",
+    "Gide, André, 1869-1951.",
+    "Gilder, Richard Watson, 1844-1909.",
+    "Gillet, Louis, 1876-1943.",
+    "Gosse, Edmund, 1849-1928.",
+    "James, Henry, 1843-1916.",
+    "Johnson, Robert Underwood, 1853-1937.",
+    "Jones, Mary Cadwalader.",
+    "Lubbock, Percy, 1879-1965.",
+    "Mitchell, S. Weir 1829-1914. (Silas Weir),",
+    "Norton, Sara, 1864-",
+    "Roosevelt, Theodore, 1858-1919.",
+    "Sargent, John Singer, 1856-1925.",
+    "Wharton, Edith, 1862-1937.",
+    "Cobden-Sanderson, Richard.",
+    "Charles Scribner's Sons.",
+    "Curtis Brown Ltd.",
+    "D. Appleton and Company.",
+    "Dodd, Mead & Company.",
+    "Macmillan & Co.",
+    "National Institute of Arts and Letters (U.S.)",
+    "E. Plon, Nourrit and Co."
+  ],
+  "creatorDisplay": [
+    "Wharton, Edith, 1862-1937"
+  ],
+  "volumeEnumeration": "Box 25",
+  "accessCondition": [
+    "This material is open for research"
+  ],
+  "dependentUris": [
+    "/ils/holding/3764443",
+    "/ils/item/8114701",
+    "/ils/bib/3435140",
+    "/ils/barcode/39002075038423"
+  ],
+  "bibId": 3435140,
+  "suppressInOpac": false,
+  "createDate": "2002-06-01T04:00:00.000+0000",
+  "updateDate": "2019-05-28T13:10:04.000+0000",
+  "holdingId": 3764443,
+  "itemId": 8114701,
+  "children": [
+
+  ],
+  "abstract": [
+    "The Edith Wharton Collection consists of manuscripts, correspondence, photographs, and personal papers relating to the life and career of American author Edith Wharton, as well as letters and research material gathered by Gaillard Lapsley, Percy Lubbock, Oscar Lichtenberg, Georges Markow-Totevy, and Louis Auchincloss"
+  ]
+}

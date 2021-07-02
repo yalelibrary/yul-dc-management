@@ -1,1 +1,101 @@
-{"jsonModelType":"BibSolrRecord","source":"ils","recordType":"bib","uri":"/ils/barcode/39002104850970?bib=7151233","callNumber":"YCAL MSS 702","callNumberWithPublicNote":"YCAL MSS 702 Former call numbers: Uncat MSS 765, Uncat MSS 1274","creator":["Giard, Robert"],"title":["Robert Giard papers, 1972-2002"],"alternativeTitle":["http://id.loc.gov/authorities/names/n96096720"],"extent":["50.34 linear feet (271 boxes)"],"language":["English"],"languageCode":["eng"],"description":["Robert Giard was an American photographer, born in Hartford, Connecticut in 1939. He received a Bachelor of Arts from Yale University in 1961, and Master of Arts in Comparative Literature from Boston University in 1965. In 1972 he began to take photographs, focusing on landscapes and portraits of his friends, artists, writers, and nudes. His monograph Particular Voices: Portraits of Gay and Lesbian Writers, published by MIT Press in 1997, contains a selection from over 500 portraits he had taken in the previous decade. In 1996, Giard was commissioned to document the 321 grant recipients of the Thanks Be To Grandmother Winifred Foundation. The grant recipients were women over the age of 54 whose projects benefited adult women. From 1996 to 2001, Giard traveled across the U. S. to photograph each year's grant recipents. He died in 2002 of a heart attack.","Finding aid available","In English."],"subjectName":["Giard, Robert.","Thanks Be to Grandmother Winifred Foundation."],"subjectTopic":["Gay authors","Lesbian authors","Photographers","Older women"],"genre":["Portraits","Archives","Photographic prints","LGBTQ resource"],"orbisBibId":"7151233","orbisBarcode":"39002104850970","findingAid":["http://hdl.handle.net/10079/fa/beinecke.giard","http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?CN=YCAL_MSS_702"],"preferredCitation":["Robert Giard Papers. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."],"dateStructured":["1972/2002"],"illustrativeMatter":"    ","subjectEra":"20th century.","titleStatement":["Robert Giard papers, 1972-2002"],"provenanceUncontrolled":"Purchased from Jonathan G. Silin on the Eugene G. O'Neill Memorial Fund, 2004. Gift of Jonathan G. Silin, 2011.","repository":"lsfbeiar","subjectGeographic":["United States"],"subjectOccupation":["Photographers"],"subjectTitleDisplay":["Giard, Robert.","Thanks Be to Grandmother Winifred Foundation."],"creatorDisplay":["Giard, Robert"],"volumeEnumeration":"Box 8","accessCondition":["This material is open for research"],"dependentUris":["/ils/holding/7686921","/ils/item/10378652","/ils/bib/7151233","/ils/barcode/39002104850970"],"bibId":7151233,"suppressInOpac":false,"createDate":"2006-01-09T19:38:56.000+0000","updateDate":"2019-04-23T19:22:01.000+0000","holdingId":7686921,"itemId":10378652,"children":[],"abstract":["The papers consist of photographs, correspondence, diaries, financial papers, and printed materials documenting Robert Giard's career as a photographer and personal life, spanning the years 1972 to 2002. The bulk of the papers contain photographic prints by Giard in several sizes of various subjects, including portraits of gay and lesbian writers, landscapes, nudes, still lifes, and portraits of the Thanks Be To Grandmother Winifred Foundation grant recipients"]}
+{
+  "jsonModelType": "BibSolrRecord",
+  "source": "ils",
+  "recordType": "bib",
+  "uri": "/ils/barcode/39002104850970?bib=7151233",
+  "callNumber": "YCAL MSS 702",
+  "callNumberWithPublicNote": "YCAL MSS 702 Former call numbers: Uncat MSS 765, Uncat MSS 1274",
+  "creator": [
+    "Giard, Robert"
+  ],
+  "title": [
+    "Robert Giard papers, 1972-2002"
+  ],
+  "alternativeTitle": [
+    "http://id.loc.gov/authorities/names/n96096720"
+  ],
+  "extent": [
+    "50.34 linear feet (271 boxes)"
+  ],
+  "language": [
+    "English"
+  ],
+  "languageCode": [
+    "eng"
+  ],
+  "description": [
+    "Robert Giard was an American photographer, born in Hartford, Connecticut in 1939. He received a Bachelor of Arts from Yale University in 1961, and Master of Arts in Comparative Literature from Boston University in 1965. In 1972 he began to take photographs, focusing on landscapes and portraits of his friends, artists, writers, and nudes. His monograph Particular Voices: Portraits of Gay and Lesbian Writers, published by MIT Press in 1997, contains a selection from over 500 portraits he had taken in the previous decade. In 1996, Giard was commissioned to document the 321 grant recipients of the Thanks Be To Grandmother Winifred Foundation. The grant recipients were women over the age of 54 whose projects benefited adult women. From 1996 to 2001, Giard traveled across the U. S. to photograph each year's grant recipents. He died in 2002 of a heart attack.",
+    "Finding aid available",
+    "In English."
+  ],
+  "subjectName": [
+    "Giard, Robert.",
+    "Thanks Be to Grandmother Winifred Foundation."
+  ],
+  "subjectTopic": [
+    "Gay authors",
+    "Lesbian authors",
+    "Photographers",
+    "Older women"
+  ],
+  "genre": [
+    "Portraits",
+    "Archives",
+    "Photographic prints",
+    "LGBTQ resource"
+  ],
+  "orbisBibId": "7151233",
+  "orbisBarcode": "39002104850970",
+  "findingAid": [
+    "http://hdl.handle.net/10079/fa/beinecke.giard",
+    "http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?CN=YCAL_MSS_702"
+  ],
+  "preferredCitation": [
+    "Robert Giard Papers. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
+  ],
+  "dateStructured": [
+    "1972/2002"
+  ],
+  "illustrativeMatter": "    ",
+  "subjectEra": "20th century.",
+  "titleStatement": [
+    "Robert Giard papers, 1972-2002"
+  ],
+  "provenanceUncontrolled": "Purchased from Jonathan G. Silin on the Eugene G. O'Neill Memorial Fund, 2004. Gift of Jonathan G. Silin, 2011.",
+  "repository": "lsfbeiar",
+  "subjectGeographic": [
+    "United States"
+  ],
+  "subjectOccupation": [
+    "Photographers"
+  ],
+  "subjectTitleDisplay": [
+    "Giard, Robert.",
+    "Thanks Be to Grandmother Winifred Foundation."
+  ],
+  "creatorDisplay": [
+    "Giard, Robert"
+  ],
+  "volumeEnumeration": "Box 8",
+  "accessCondition": [
+    "This material is open for research"
+  ],
+  "dependentUris": [
+    "/ils/holding/7686921",
+    "/ils/item/10378652",
+    "/ils/bib/7151233",
+    "/ils/barcode/39002104850970"
+  ],
+  "bibId": 7151233,
+  "suppressInOpac": false,
+  "createDate": "2006-01-09T19:38:56.000+0000",
+  "updateDate": "2019-04-23T19:22:01.000+0000",
+  "holdingId": 7686921,
+  "itemId": 10378652,
+  "children": [
+
+  ],
+  "abstract": [
+    "The papers consist of photographs, correspondence, diaries, financial papers, and printed materials documenting Robert Giard's career as a photographer and personal life, spanning the years 1972 to 2002. The bulk of the papers contain photographic prints by Giard in several sizes of various subjects, including portraits of gay and lesbian writers, landscapes, nudes, still lifes, and portraits of the Thanks Be To Grandmother Winifred Foundation grant recipients"
+  ]
+}

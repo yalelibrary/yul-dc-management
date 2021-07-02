@@ -1,1 +1,96 @@
-{"jsonModelType":"BibSolrRecord","source":"ils","recordType":"bib","uri":"/ils/barcode/39002113593827?bib=8317945","callNumber":"Covers 5615 +1857","callNumberWithPublicNote":"Covers 5615 +1857","creator":["Dong, Chun (Cartographer), cartographer","董醇 (Cartographer), cartographer"],"title":["Zhi li Da Qing He yuan liu zong tu","直隷大清河源流總圖"],"alternativeTitle":["Map of Ta Ch'ing River"],"creationPlace":["China"],"publisher":["publisher not identified"],"date":["Xianfeng 7 [1857]"],"extent":["1 map : 27 x 150 cm, folded to 27 x 13 cm"],"material":["color ;"],"language":["Chinese"],"languageCode":["chi"],"description":["Jing zhe zhuang."],"subjectGeographicCode":"a-cc---","scale":"Scale not given.","coordinate":[""],"genre":["Maps","Pictorial maps","Chinese rare maps"],"itemType":["cartographic image"],"orbisBibId":"8317945","orbisBarcode":"39002113593827","findingAid":["http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16189148"],"dateStructured":["1857"],"illustrativeMatter":"    ","titleStatement":["Zhi li Da Qing He yuan liu zong tu / Qing he dao Dong Chun","直隷大清河源流總圖 / 清河道董醇"],"repository":"beingen","alternativeTitleDisplay":["Map of Ta Ch'ing River Container has title"],"subjectGeographic":["Hai River (China)"],"creatorDisplay":["Dong, Chun (Cartographer), cartographer","董醇 (Cartographer), cartographer"],"libraryOfCongressClassificationNumber":"G7822.H31 1857 .D6","dependentUris":["/ils/holding/8710417","/ils/item/11686833","/ils/bib/8317945","/ils/barcode/39002113593827"],"bibId":8317945,"suppressInOpac":false,"createDate":"2008-08-05T15:29:21.000+0000","updateDate":"2018-05-29T15:48:35.000+0000","holdingId":8710417,"itemId":11686833,"children":[]}
+{
+  "jsonModelType": "BibSolrRecord",
+  "source": "ils",
+  "recordType": "bib",
+  "uri": "/ils/barcode/39002113593827?bib=8317945",
+  "callNumber": "Covers 5615 +1857",
+  "callNumberWithPublicNote": "Covers 5615 +1857",
+  "creator": [
+    "Dong, Chun (Cartographer), cartographer",
+    "董醇 (Cartographer), cartographer"
+  ],
+  "title": [
+    "Zhi li Da Qing He yuan liu zong tu",
+    "直隷大清河源流總圖"
+  ],
+  "alternativeTitle": [
+    "Map of Ta Ch'ing River"
+  ],
+  "creationPlace": [
+    "China"
+  ],
+  "publisher": [
+    "publisher not identified"
+  ],
+  "date": [
+    "Xianfeng 7 [1857]"
+  ],
+  "extent": [
+    "1 map : 27 x 150 cm, folded to 27 x 13 cm"
+  ],
+  "material": [
+    "color ;"
+  ],
+  "language": [
+    "Chinese"
+  ],
+  "languageCode": [
+    "chi"
+  ],
+  "description": [
+    "Jing zhe zhuang."
+  ],
+  "subjectGeographicCode": "a-cc---",
+  "scale": "Scale not given.",
+  "coordinate": [
+    ""
+  ],
+  "genre": [
+    "Maps",
+    "Pictorial maps",
+    "Chinese rare maps"
+  ],
+  "itemType": [
+    "cartographic image"
+  ],
+  "orbisBibId": "8317945",
+  "orbisBarcode": "39002113593827",
+  "findingAid": [
+    "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16189148"
+  ],
+  "dateStructured": [
+    "1857"
+  ],
+  "illustrativeMatter": "    ",
+  "titleStatement": [
+    "Zhi li Da Qing He yuan liu zong tu / Qing he dao Dong Chun",
+    "直隷大清河源流總圖 / 清河道董醇"
+  ],
+  "repository": "beingen",
+  "alternativeTitleDisplay": [
+    "Map of Ta Ch'ing River Container has title"
+  ],
+  "subjectGeographic": [
+    "Hai River (China)"
+  ],
+  "creatorDisplay": [
+    "Dong, Chun (Cartographer), cartographer",
+    "董醇 (Cartographer), cartographer"
+  ],
+  "libraryOfCongressClassificationNumber": "G7822.H31 1857 .D6",
+  "dependentUris": [
+    "/ils/holding/8710417",
+    "/ils/item/11686833",
+    "/ils/bib/8317945",
+    "/ils/barcode/39002113593827"
+  ],
+  "bibId": 8317945,
+  "suppressInOpac": false,
+  "createDate": "2008-08-05T15:29:21.000+0000",
+  "updateDate": "2018-05-29T15:48:35.000+0000",
+  "holdingId": 8710417,
+  "itemId": 11686833,
+  "children": [
+
+  ]
+}

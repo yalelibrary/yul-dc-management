@@ -1,1 +1,105 @@
-{"jsonModelType":"BibSolrRecord","source":"ils","recordType":"bib","uri":"/ils/barcode/39002104623971?bib=12297336","callNumber":"Takamiya MS 81","callNumberWithPublicNote":"Takamiya MS 81","title":["Missal, use of Sarum (fragment)"],"creationPlace":["England"],"publisher":[""],"date":["[between 1400 and 1450]"],"extent":["3 l. : 491 x 340 mm."],"material":["parchment ;"],"language":["Latin"],"languageCode":["lat"],"description":["In Latin.","Layout: double columns of 39 lines.","Script: gothic liturgical script.","Decoration: numerous initials in burnished gold or blue; extensive penwork."],"subjectName":["Catholic Church."],"subjectTopic":["Manuscripts, Medieval","Missals"],"genre":["Early works to 1800","Manuscripts, Medieval England 15th century","Missals England 15th century","Medieval and Renaissance Manuscript Fragments in Beinecke Library","Medieval and Renaissance Manuscripts in Beinecke Library"],"itemType":["unspecified"],"orbisBibId":"12297336","orbisBarcode":"39002104623971","findingAid":["http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16394803"],"preferredCitation":["Missal, Use of Sarum (Fragment) (Takamiya MS 81). General Collection, Beinecke Rare Book and Manuscript Library, Yale University."],"dateStructured":["1400/1450"],"illustrativeMatter":"    ","titleStatement":["Missal, use of Sarum (fragment)"],"provenanceUncontrolled":"Purchased from Toshiyuki Takamiya on the Edwin J. Beinecke Book Fund, 2017.","repository":"beingen","subjectTitle":"Sarum manual.","indexedBy":["A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437."],"subjectGeographic":["Connecticut","New Haven."],"subjectTitleDisplay":["Catholic Church. Sarum manual."],"volumeEnumeration":"File (Oversize)","accessCondition":["This material is open for research"],"dependentUris":["/ils/holding/12462455","/ils/item/10982675","/ils/bib/12297336","/ils/barcode/39002104623971"],"bibId":12297336,"suppressInOpac":false,"createDate":"2014-11-12T19:59:10.000+0000","updateDate":"2019-02-24T22:33:44.000+0000","holdingId":12462455,"itemId":10982675,"children":[],"abstract":["Manuscript leaves from a Sarum missal, containing text from Masses for the third and eighth Sundays after Pentecost and for the dedication of a church"]}
+{
+  "jsonModelType": "BibSolrRecord",
+  "source": "ils",
+  "recordType": "bib",
+  "uri": "/ils/barcode/39002104623971?bib=12297336",
+  "callNumber": "Takamiya MS 81",
+  "callNumberWithPublicNote": "Takamiya MS 81",
+  "title": [
+    "Missal, use of Sarum (fragment)"
+  ],
+  "creationPlace": [
+    "England"
+  ],
+  "publisher": [
+    ""
+  ],
+  "date": [
+    "[between 1400 and 1450]"
+  ],
+  "extent": [
+    "3 l. : 491 x 340 mm."
+  ],
+  "material": [
+    "parchment ;"
+  ],
+  "language": [
+    "Latin"
+  ],
+  "languageCode": [
+    "lat"
+  ],
+  "description": [
+    "In Latin.",
+    "Layout: double columns of 39 lines.",
+    "Script: gothic liturgical script.",
+    "Decoration: numerous initials in burnished gold or blue; extensive penwork."
+  ],
+  "subjectName": [
+    "Catholic Church."
+  ],
+  "subjectTopic": [
+    "Manuscripts, Medieval",
+    "Missals"
+  ],
+  "genre": [
+    "Early works to 1800",
+    "Manuscripts, Medieval England 15th century",
+    "Missals England 15th century",
+    "Medieval and Renaissance Manuscript Fragments in Beinecke Library",
+    "Medieval and Renaissance Manuscripts in Beinecke Library"
+  ],
+  "itemType": [
+    "unspecified"
+  ],
+  "orbisBibId": "12297336",
+  "orbisBarcode": "39002104623971",
+  "findingAid": [
+    "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16394803"
+  ],
+  "preferredCitation": [
+    "Missal, Use of Sarum (Fragment) (Takamiya MS 81). General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
+  ],
+  "dateStructured": [
+    "1400/1450"
+  ],
+  "illustrativeMatter": "    ",
+  "titleStatement": [
+    "Missal, use of Sarum (fragment)"
+  ],
+  "provenanceUncontrolled": "Purchased from Toshiyuki Takamiya on the Edwin J. Beinecke Book Fund, 2017.",
+  "repository": "beingen",
+  "subjectTitle": "Sarum manual.",
+  "indexedBy": [
+    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437."
+  ],
+  "subjectGeographic": [
+    "Connecticut",
+    "New Haven."
+  ],
+  "subjectTitleDisplay": [
+    "Catholic Church. Sarum manual."
+  ],
+  "volumeEnumeration": "File (Oversize)",
+  "accessCondition": [
+    "This material is open for research"
+  ],
+  "dependentUris": [
+    "/ils/holding/12462455",
+    "/ils/item/10982675",
+    "/ils/bib/12297336",
+    "/ils/barcode/39002104623971"
+  ],
+  "bibId": 12297336,
+  "suppressInOpac": false,
+  "createDate": "2014-11-12T19:59:10.000+0000",
+  "updateDate": "2019-02-24T22:33:44.000+0000",
+  "holdingId": 12462455,
+  "itemId": 10982675,
+  "children": [
+
+  ],
+  "abstract": [
+    "Manuscript leaves from a Sarum missal, containing text from Masses for the third and eighth Sundays after Pentecost and for the dedication of a church"
+  ]
+}

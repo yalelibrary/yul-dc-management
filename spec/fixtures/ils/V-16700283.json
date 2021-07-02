@@ -1,1 +1,97 @@
-{"jsonModelType":"BibSolrRecord","source":"ils","recordType":"bib","uri":"/ils/barcode/39002094365690?bib=13640726","callNumber":"Takamiya MS 142","callNumberWithPublicNote":"Takamiya MS 142","title":["Book of hours (fragment)"],"creationPlace":["Flanders"],"publisher":[""],"date":["[ca. 1300]"],"extent":["1 l. : 65 x 85 mm"],"material":["parchment ;"],"language":["Latin"],"languageCode":["lat"],"description":["In Latin.","Script: Gothic.","Decoration: decorated border showing two hounds chasing a stag.","Byname: Ghistelles Hours."],"subjectTopic":["Books of hours","Manuscripts, Medieval"],"genre":["Early works to 1800","Manuscripts, Medieval Flanders 14th century","Medieval and Renaissance Manuscripts in Beinecke Library"],"itemType":["unspecified"],"orbisBibId":"13640726","orbisBarcode":"39002094365690","findingAid":["http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16700284"],"preferredCitation":["Book of Hours (Fragment). Takamiya MS 142."],"dateStructured":["1400"],"illustrativeMatter":"    ","titleStatement":["Book of hours (fragment)"],"provenanceControlled":"Cockerell, Sydney Carlyle, Sir, 1867-1962 Ownership. Thomas, Alan G. Ownership.","provenanceUncontrolled":"Previously owned by Sir Sydney Cockerell? Previously owned by Alan G. Thomas. Purchased from Toshiyuki Takamiya on the Edwin J. Beinecke Book Fund, 2017.","repository":"beingen","indexedBy":["A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437."],"subjectGeographic":["Connecticut","New Haven."],"volumeEnumeration":"File","accessCondition":["This material is open for research"],"dependentUris":["/ils/holding/13669853","/ils/item/11982215","/ils/bib/13640726","/ils/barcode/39002094365690"],"bibId":13640726,"suppressInOpac":false,"createDate":"2018-06-18T15:04:26.000+0000","updateDate":"2019-04-23T14:13:33.000+0000","holdingId":13669853,"itemId":11982215,"children":[],"abstract":["Lower half of a single manuscript leaf, on parchment, containing five lines of text and marginal decoration. From the \"Ghistelles Hours.\""]}
+{
+  "jsonModelType": "BibSolrRecord",
+  "source": "ils",
+  "recordType": "bib",
+  "uri": "/ils/barcode/39002094365690?bib=13640726",
+  "callNumber": "Takamiya MS 142",
+  "callNumberWithPublicNote": "Takamiya MS 142",
+  "title": [
+    "Book of hours (fragment)"
+  ],
+  "creationPlace": [
+    "Flanders"
+  ],
+  "publisher": [
+    ""
+  ],
+  "date": [
+    "[ca. 1300]"
+  ],
+  "extent": [
+    "1 l. : 65 x 85 mm"
+  ],
+  "material": [
+    "parchment ;"
+  ],
+  "language": [
+    "Latin"
+  ],
+  "languageCode": [
+    "lat"
+  ],
+  "description": [
+    "In Latin.",
+    "Script: Gothic.",
+    "Decoration: decorated border showing two hounds chasing a stag.",
+    "Byname: Ghistelles Hours."
+  ],
+  "subjectTopic": [
+    "Books of hours",
+    "Manuscripts, Medieval"
+  ],
+  "genre": [
+    "Early works to 1800",
+    "Manuscripts, Medieval Flanders 14th century",
+    "Medieval and Renaissance Manuscripts in Beinecke Library"
+  ],
+  "itemType": [
+    "unspecified"
+  ],
+  "orbisBibId": "13640726",
+  "orbisBarcode": "39002094365690",
+  "findingAid": [
+    "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16700284"
+  ],
+  "preferredCitation": [
+    "Book of Hours (Fragment). Takamiya MS 142."
+  ],
+  "dateStructured": [
+    "1400"
+  ],
+  "illustrativeMatter": "    ",
+  "titleStatement": [
+    "Book of hours (fragment)"
+  ],
+  "provenanceControlled": "Cockerell, Sydney Carlyle, Sir, 1867-1962 Ownership. Thomas, Alan G. Ownership.",
+  "provenanceUncontrolled": "Previously owned by Sir Sydney Cockerell? Previously owned by Alan G. Thomas. Purchased from Toshiyuki Takamiya on the Edwin J. Beinecke Book Fund, 2017.",
+  "repository": "beingen",
+  "indexedBy": [
+    "A handlist of western Medieval manuscripts in the Takamiya collection / Toshiyuki Takamiya, in The Medieval book: glosses from friends & colleagues of Christopher de Hamel, ed. by Richard Linenthal, James Marrow and William Noel. 't Goy-Houten: Hes & De Graff, 2010, pp. 421-437."
+  ],
+  "subjectGeographic": [
+    "Connecticut",
+    "New Haven."
+  ],
+  "volumeEnumeration": "File",
+  "accessCondition": [
+    "This material is open for research"
+  ],
+  "dependentUris": [
+    "/ils/holding/13669853",
+    "/ils/item/11982215",
+    "/ils/bib/13640726",
+    "/ils/barcode/39002094365690"
+  ],
+  "bibId": 13640726,
+  "suppressInOpac": false,
+  "createDate": "2018-06-18T15:04:26.000+0000",
+  "updateDate": "2019-04-23T14:13:33.000+0000",
+  "holdingId": 13669853,
+  "itemId": 11982215,
+  "children": [
+
+  ],
+  "abstract": [
+    "Lower half of a single manuscript leaf, on parchment, containing five lines of text and marginal decoration. From the \"Ghistelles Hours.\""
+  ]
+}

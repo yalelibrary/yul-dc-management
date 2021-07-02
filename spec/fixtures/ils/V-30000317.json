@@ -1,1 +1,107 @@
-{"jsonModelType":"BibSolrRecord","source":"ils","recordType":"bib","uri":"/ils/barcode/39002091118928?bib=8394689","callNumber":"11 1860A","callNumberWithPublicNote":"11 1860A","title":["Di qiu quan tu","地球全圖"],"alternativeTitle":["Shi jie di tu","世界地圖"],"edition":["Tao yin ben."],"creationPlace":["China"],"publisher":["publisher not identified"],"date":["Xianfeng wu nian [1855]"],"extent":["1 map : 93 x 170 cm"],"material":["color ;"],"language":["Chinese"],"languageCode":["chi"],"subjectTopic":["World maps"],"scale":"Scale not determined.","coordinate":["-180.000000 180.000000 090.000000 -090.000000"],"coordinateDisplay":["(W 180°--E 180°/N 90°--S 90°)."],"genre":["Chinese rare maps","World maps"],"itemType":["cartographic image"],"orbisBibId":"8394689","orbisBarcode":"39002091118928","findingAid":["http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16595618"],"dateStructured":["1855"],"illustrativeMatter":"    ","coordinateWest":"-180.000000","coordinateEast":"180.000000","coordinateNorth":"090.000000","coordinateSouth":"-090.000000","titleStatement":["Di qiu quan tu / Dechen zhi ; Chen Xiutang zhu zi.","地球全圖 / 德臣製 ; 陳修堂註字"],"contributor":["Chen, Xiutang."],"repository":"beingen","alternativeTitleDisplay":["Shi jie di tu","世界地圖"],"relatedTitle":[""],"relatedTitleDisplay":["Chen, Xiutang","陳修堂"],"contributorDisplay":["Chen, Xiutang."],"dependentUris":["/ils/holding/8833608","/ils/item/7599022","/ils/bib/8394689","/ils/barcode/39002091118928"],"bibId":8394689,"suppressInOpac":false,"createDate":"2008-10-15T15:01:44.000+0000","updateDate":"2018-11-28T16:47:49.000+0000","holdingId":8833608,"itemId":7599022,"children":[]}
+{
+  "jsonModelType": "BibSolrRecord",
+  "source": "ils",
+  "recordType": "bib",
+  "uri": "/ils/barcode/39002091118928?bib=8394689",
+  "callNumber": "11 1860A",
+  "callNumberWithPublicNote": "11 1860A",
+  "title": [
+    "Di qiu quan tu",
+    "地球全圖"
+  ],
+  "alternativeTitle": [
+    "Shi jie di tu",
+    "世界地圖"
+  ],
+  "edition": [
+    "Tao yin ben."
+  ],
+  "creationPlace": [
+    "China"
+  ],
+  "publisher": [
+    "publisher not identified"
+  ],
+  "date": [
+    "Xianfeng wu nian [1855]"
+  ],
+  "extent": [
+    "1 map : 93 x 170 cm"
+  ],
+  "material": [
+    "color ;"
+  ],
+  "language": [
+    "Chinese"
+  ],
+  "languageCode": [
+    "chi"
+  ],
+  "subjectTopic": [
+    "World maps"
+  ],
+  "scale": "Scale not determined.",
+  "coordinate": [
+    "-180.000000 180.000000 090.000000 -090.000000"
+  ],
+  "coordinateDisplay": [
+    "(W 180°--E 180°/N 90°--S 90°)."
+  ],
+  "genre": [
+    "Chinese rare maps",
+    "World maps"
+  ],
+  "itemType": [
+    "cartographic image"
+  ],
+  "orbisBibId": "8394689",
+  "orbisBarcode": "39002091118928",
+  "findingAid": [
+    "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=16595618"
+  ],
+  "dateStructured": [
+    "1855"
+  ],
+  "illustrativeMatter": "    ",
+  "coordinateWest": "-180.000000",
+  "coordinateEast": "180.000000",
+  "coordinateNorth": "090.000000",
+  "coordinateSouth": "-090.000000",
+  "titleStatement": [
+    "Di qiu quan tu / Dechen zhi ; Chen Xiutang zhu zi.",
+    "地球全圖 / 德臣製 ; 陳修堂註字"
+  ],
+  "contributor": [
+    "Chen, Xiutang."
+  ],
+  "repository": "beingen",
+  "alternativeTitleDisplay": [
+    "Shi jie di tu",
+    "世界地圖"
+  ],
+  "relatedTitle": [
+    ""
+  ],
+  "relatedTitleDisplay": [
+    "Chen, Xiutang",
+    "陳修堂"
+  ],
+  "contributorDisplay": [
+    "Chen, Xiutang."
+  ],
+  "dependentUris": [
+    "/ils/holding/8833608",
+    "/ils/item/7599022",
+    "/ils/bib/8394689",
+    "/ils/barcode/39002091118928"
+  ],
+  "bibId": 8394689,
+  "suppressInOpac": false,
+  "createDate": "2008-10-15T15:01:44.000+0000",
+  "updateDate": "2018-11-28T16:47:49.000+0000",
+  "holdingId": 8833608,
+  "itemId": 7599022,
+  "children": [
+
+  ]
+}

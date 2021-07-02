@@ -1,1 +1,80 @@
-{"jsonModelType":"ArchiveSpaceSolrRecord","source":"aspace","recordType":"archival_object","uri":"/aspace/repositories/11/archival_objects/214638","identifier":"/aspace/repositories/11/archival_objects/214638","localRecordNumber":"GEN MSS 257","callNumber":"GEN MSS 257","containerGrouping":"Box 3, folder 24","creator":["Lincoln, Abraham, 1809-1865"],"title":["The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion, Washington, D.C., 1863 Jan 1"],"date":["n.d."],"language":["English"],"languageCode":["eng"],"description":["Gift, 1965"],"rights":["The Abraham Lincoln Collection is the physical property of the Beinecke Rare Book and Manuscript Library, Yale University. Literary rights, including copyright, belong to the authors or their legal heirs and assigns. For further information, consult the appropriate curator.","The materials are open for research. \n\nBox 4 and broadside folder 28: Restricted fragile material.  Reference surrogates have been substituted in the main files.  For further information consult the appropriate curator."],"orbisBibId":"4113177","orbisBarcode":"39002093768050","findingAid":["http://hdl.handle.net/10079/fa/beinecke.lincoln"],"dateStructured":[],"resourceType":"mixed materials digital object","provenanceUncontrolled":"Ongoing collection of documents acquired by gift and purchase from various sources. Type of accession (gift or purchase) and date of acquisition is noted in the box-and-folder list. For further information, consult the appropriate curator.","ancestorTitles":["Oversize","Abraham Lincoln collection (GEN MSS 257)","Beinecke Rare Book and Manuscript Library (BRBL)"],"ancestorDisplayStrings":["Oversize, n.d.","Abraham Lincoln collection","Beinecke Rare Book and Manuscript Library (BRBL)"],"ancestorIdentifiers":["/aspace/repositories/11/archival_objects/214637","/aspace/repositories/11/resources/640","/aspace/repositories/11"],"repository":"Beinecke Rare Book and Manuscript Library (BRBL)","createdBeginDate":[],"createdEndDate":[],"archiveSpaceUri":"/repositories/11/archival_objects/214638","archivalSort":"00002.00000","dependentUris":["/aspace/repositories/11/top_containers/19359","/aspace/repositories/11/archival_objects/214638","/aspace/agents/people/87197","/aspace/repositories/11/archival_objects/214637","/aspace/repositories/11/resources/640","/aspace/repositories/11"],"children":[],"abstract":["Correspondence and writings by and about Abraham Lincoln, and a gold pen used by Lincoln. 4 ALS from Lincoln to Benjamin F. James, William M. Dickson, and to an unidentified recipient. Writings by Lincoln include an autograph praecipe issued by Lincoln for writ in his first law case, \"David Woolridge vs. Hawthorne\", and a fragment of a speech on slavery. Also present is a letter by Edwin Booth to Colonel A. Badeau concerning Lincoln's assassination by his brother, John Wilkes Booth, two days earlier; two volumes containing letters and writings by and about members of Lincoln's cabinet, including Andrew Johnson, Edwin M. Stanton, a letter to W. P. Fessenden regarding the attack on Petersburg, and Gideon Welles' autographed manuscript recollections on the formation of Lincoln's cabinet. Accompanied by the gold pen used by Lincoln to sign the Emancipation Proclamation, with accompanying documentation."]}
+{
+  "jsonModelType": "ArchiveSpaceSolrRecord",
+  "source": "aspace",
+  "recordType": "archival_object",
+  "uri": "/aspace/repositories/11/archival_objects/214638",
+  "identifier": "/aspace/repositories/11/archival_objects/214638",
+  "localRecordNumber": "GEN MSS 257",
+  "callNumber": "GEN MSS 257",
+  "containerGrouping": "Box 3, folder 24",
+  "creator": [
+    "Lincoln, Abraham, 1809-1865"
+  ],
+  "title": [
+    "The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion, Washington, D.C., 1863 Jan 1"
+  ],
+  "date": [
+    "n.d."
+  ],
+  "language": [
+    "English"
+  ],
+  "languageCode": [
+    "eng"
+  ],
+  "description": [
+    "Gift, 1965"
+  ],
+  "rights": [
+    "The Abraham Lincoln Collection is the physical property of the Beinecke Rare Book and Manuscript Library, Yale University. Literary rights, including copyright, belong to the authors or their legal heirs and assigns. For further information, consult the appropriate curator.",
+    "The materials are open for research. \n\nBox 4 and broadside folder 28: Restricted fragile material.  Reference surrogates have been substituted in the main files.  For further information consult the appropriate curator."
+  ],
+  "orbisBibId": "4113177",
+  "orbisBarcode": "39002093768050",
+  "findingAid": [
+    "http://hdl.handle.net/10079/fa/beinecke.lincoln"
+  ],
+  "dateStructured": [
+
+  ],
+  "resourceType": "mixed materials digital object",
+  "provenanceUncontrolled": "Ongoing collection of documents acquired by gift and purchase from various sources. Type of accession (gift or purchase) and date of acquisition is noted in the box-and-folder list. For further information, consult the appropriate curator.",
+  "ancestorTitles": [
+    "Oversize",
+    "Abraham Lincoln collection (GEN MSS 257)",
+    "Beinecke Rare Book and Manuscript Library (BRBL)"
+  ],
+  "ancestorDisplayStrings": [
+    "Oversize, n.d.",
+    "Abraham Lincoln collection",
+    "Beinecke Rare Book and Manuscript Library (BRBL)"
+  ],
+  "ancestorIdentifiers": [
+    "/aspace/repositories/11/archival_objects/214637",
+    "/aspace/repositories/11/resources/640",
+    "/aspace/repositories/11"
+  ],
+  "repository": "Beinecke Rare Book and Manuscript Library (BRBL)",
+  "createdBeginDate": [
+
+  ],
+  "createdEndDate": [
+
+  ],
+  "archiveSpaceUri": "/repositories/11/archival_objects/214638",
+  "archivalSort": "00002.00000",
+  "dependentUris": [
+    "/aspace/repositories/11/top_containers/19359",
+    "/aspace/repositories/11/archival_objects/214638",
+    "/aspace/agents/people/87197",
+    "/aspace/repositories/11/archival_objects/214637",
+    "/aspace/repositories/11/resources/640",
+    "/aspace/repositories/11"
+  ],
+  "children": [
+
+  ],
+  "abstract": [
+    "Correspondence and writings by and about Abraham Lincoln, and a gold pen used by Lincoln. 4 ALS from Lincoln to Benjamin F. James, William M. Dickson, and to an unidentified recipient. Writings by Lincoln include an autograph praecipe issued by Lincoln for writ in his first law case, \"David Woolridge vs. Hawthorne\", and a fragment of a speech on slavery. Also present is a letter by Edwin Booth to Colonel A. Badeau concerning Lincoln's assassination by his brother, John Wilkes Booth, two days earlier; two volumes containing letters and writings by and about members of Lincoln's cabinet, including Andrew Johnson, Edwin M. Stanton, a letter to W. P. Fessenden regarding the attack on Petersburg, and Gideon Welles' autographed manuscript recollections on the formation of Lincoln's cabinet. Accompanied by the gold pen used by Lincoln to sign the Emancipation Proclamation, with accompanying documentation."
+  ]
+}
