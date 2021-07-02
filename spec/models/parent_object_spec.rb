@@ -423,6 +423,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expected_uris = ["/aspace/repositories/11/top_containers/68645",
                          "/aspace/repositories/11/archival_objects/555049",
                          "/aspace/agents/people/79383",
+			 "/aspace/repositories/11",
                          "/aspace/repositories/11/archival_objects/555042",
                          "/aspace/repositories/11/archival_objects/554841",
                          "/aspace/repositories/11/resources/1453"].to_set
