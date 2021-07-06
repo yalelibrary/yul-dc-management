@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002094210060?bib=7039963",
   "callNumber": "Osborn Music MS 7",
+  "callNumberWithPublicNote": "Osborn Music MS 7",
   "title": [
     "\"Vaudevilles et chansons\", [18th Century]."
   ],
@@ -29,7 +30,7 @@
     "Vaudevilles et Chansons. James Marshall and Marie-Louise Osborn Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1750"
+    "1700/1799"
   ],
   "illustrativeMatter": "uuu ",
   "titleStatement": [

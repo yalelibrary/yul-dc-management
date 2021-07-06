@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002099391428?bib=13226126",
   "callNumber": "Arabic MSS suppl. 584",
+  "callNumberWithPublicNote": "Arabic MSS suppl. 584",
   "title": [
     "Islamic prayers, invocations and decorations : manuscript"
   ],
@@ -25,10 +26,10 @@
   ],
   "languageCode": [
     "ara",
-    "ara",
     "ota"
   ],
   "description": [
+    "In Arabic and Ottoman Turkish.",
     "Title supplied by cataloger.",
     "Romanization supplied by cataloger.",
     "Incipit: The first leaf seems to be missing.",
@@ -36,17 +37,15 @@
     "12 x 19 cm; written surface: 6 x 10 cm; lines per page vary.",
     "Binding: In brown leather binding with flap; covers richly gilt with central medallion on both sides and corners decorations; edges slightly rubbed.",
     "In large and beautiful naskh or thulth scripts, in black ink on thin white paper; with headings in white ink on gold background; catchwords.",
-    "Colophon: Last page seems to be missing; ends with a magic square and the katchword \"barkamsah\".",
-    "In Arabic and Ottoman Turkish."
+    "Colophon: Last page seems to be missing; ends with a magic square and the katchword \"barkamsah\"."
   ],
   "subjectTopic": [
     "Islamic decorative arts",
     "Prayer"
   ],
   "genre": [
+    "Early works to 1800",
     "Manuscripts, Arabic 18th century",
-    "Early works to 1800",
-    "Early works to 1800",
     "Arabic manuscripts"
   ],
   "itemType": [
@@ -61,7 +60,7 @@
     "Islamic prayers, invocations and decorations. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1750"
+    "1700/1799"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [

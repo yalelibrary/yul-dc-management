@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002104623971?bib=12297336",
   "callNumber": "Takamiya MS 81",
+  "callNumberWithPublicNote": "Takamiya MS 81",
   "title": [
     "Missal, use of Sarum (fragment)"
   ],
@@ -29,10 +30,10 @@
     "lat"
   ],
   "description": [
+    "In Latin.",
     "Layout: double columns of 39 lines.",
     "Script: gothic liturgical script.",
-    "Decoration: numerous initials in burnished gold or blue; extensive penwork.",
-    "In Latin."
+    "Decoration: numerous initials in burnished gold or blue; extensive penwork."
   ],
   "subjectName": [
     "Catholic Church."
@@ -42,9 +43,9 @@
     "Missals"
   ],
   "genre": [
+    "Early works to 1800",
     "Manuscripts, Medieval England 15th century",
     "Missals England 15th century",
-    "Early works to 1800",
     "Medieval and Renaissance Manuscript Fragments in Beinecke Library",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
@@ -60,7 +61,7 @@
     "Missal, Use of Sarum (Fragment) (Takamiya MS 81). General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1400"
+    "1400/1450"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [

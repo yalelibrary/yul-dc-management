@@ -5,6 +5,7 @@
   "uri": "/aspace/repositories/11/archival_objects/608223",
   "identifier": "/aspace/repositories/11/archival_objects/608223",
   "localRecordNumber": "YCAL MSS 42",
+  "callNumber": "YCAL MSS 42",
   "containerGrouping": "Box 25, folder 787-93",
   "creator": [
     "Wharton, Edith, 1862-1937"
@@ -15,12 +16,7 @@
   "date": [
     "1905-39"
   ],
-  "extent": [
-    "38.75 linear_feet",
-    "3.5 linear_feet"
-  ],
   "language": [
-    "eng",
     "English"
   ],
   "languageCode": [
@@ -35,19 +31,30 @@
   ],
   "orbisBibId": "3435140",
   "orbisBarcode": "39002075038423",
+  "findingAid": [
+    "http://hdl.handle.net/10079/fa/beinecke.wharton"
+  ],
   "dateStructured": [
     "1905/1939"
   ],
-  "resourceType": "mixed_materials",
+  "resourceType": "mixed materials",
   "provenanceUncontrolled": "The collection was formed from gifts from the Edith Wharton Estate (1938-1939), Gaillard Lapsley (1938-1946), Oscar Lichtenberg (1959-1965), Percy Lubbock (1954), Georges Markow-Totevy (1980), and Louis Auchincloss (?), with smaller bequests from numerous other donors (especially John Hugh Smith and Margaret Chanler) and with purchases with Beinecke funds.",
   "ancestorTitles": [
     "Personal Correspondence",
-    "Edith Wharton collection"
+    "Edith Wharton collection (YCAL MSS 42)",
+    "Beinecke Rare Book and Manuscript Library (BRBL)"
+  ],
+  "ancestorDisplayStrings": [
+    "Series II: Personal Correspondence, Dates 1885-1937",
+    "Edith Wharton collection",
+    "Beinecke Rare Book and Manuscript Library (BRBL)"
   ],
   "ancestorIdentifiers": [
     "/aspace/repositories/11/archival_objects/608166",
-    "/aspace/repositories/11/resources/1575"
+    "/aspace/repositories/11/resources/1575",
+    "/aspace/repositories/11"
   ],
+  "repository": "Beinecke Rare Book and Manuscript Library (BRBL)",
   "createdBeginDate": [
     "1905"
   ],
@@ -56,12 +63,14 @@
   ],
   "createdEarliestDate": "1905",
   "archiveSpaceUri": "/repositories/11/archival_objects/608223",
+  "archivalSort": "00001.00038",
   "dependentUris": [
     "/aspace/repositories/11/top_containers/72818",
     "/aspace/repositories/11/archival_objects/608223",
     "/aspace/agents/people/62209",
     "/aspace/repositories/11/archival_objects/608166",
-    "/aspace/repositories/11/resources/1575"
+    "/aspace/repositories/11/resources/1575",
+    "/aspace/repositories/11"
   ],
   "children": [
 

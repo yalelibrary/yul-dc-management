@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002104624045?bib=12329381",
   "callNumber": "Takamiya MS 104",
+  "callNumberWithPublicNote": "Takamiya MS 104",
   "title": [
     "Bible (Proverbs to Apocalypse)."
   ],
@@ -29,22 +30,22 @@
     "lat"
   ],
   "description": [
+    "In Latin.",
     "With an Oxford pledge note for the Selton Loan Chest dated 1469 and the mark of the stationer John More. There is also a note by M. Paris, possibly Master Thomas Paris of Oriel College.",
     "Layout: double columns of 49 lines.",
     "Script: small gothic script.",
     "Decoration: red and blue penwork initials.",
-    "Binding: modern goatskin.",
-    "In Latin."
+    "Binding: modern goatskin."
   ],
   "subjectName": [
     "Oriel College.",
     "University of Oxford."
   ],
   "subjectTopic": [
-    "Manuscripts, Medieval",
-    "Universities and colleges",
     "Versions",
-    "Vulgate"
+    "Vulgate",
+    "Manuscripts, Medieval",
+    "Universities and colleges"
   ],
   "genre": [
     "Manuscripts, Medieval England 13th century",
@@ -62,7 +63,7 @@
     "Bible (Proverbs to Apocalypse) (Takamiya MS 104)."
   ],
   "dateStructured": [
-    "1200"
+    "1200/1299"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [

@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002075038423?bib=3435140",
   "callNumber": "YCAL MSS 42",
+  "callNumberWithPublicNote": "YCAL MSS 42",
   "creator": [
     "Wharton, Edith, 1862-1937"
   ],
@@ -21,7 +22,6 @@
     "French"
   ],
   "languageCode": [
-    "eng",
     "eng",
     "fre"
   ],
@@ -90,7 +90,7 @@
     "Edith Wharton Collection. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
   "dateStructured": [
-    "1868"
+    "1868/1981"
   ],
   "illustrativeMatter": "    ",
   "subjectEra": "20th century. 20th century. 20th century. 20th century. 20th century.",
@@ -100,7 +100,6 @@
   "provenanceUncontrolled": "Bequest of Edith Wharton (1937); gifts of Louis Auchincloss, Gaillard Lapsley, Percy Lubbock, Oscar Lichtenberg, and Georges Markow-Totevy.",
   "repository": "beinycal",
   "subjectGeographic": [
-    "France.",
     "France.",
     "France",
     "Newport (R.I.)",
