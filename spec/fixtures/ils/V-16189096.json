@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002113593827?bib=8317945",
   "callNumber": "Covers 5615 +1857",
+  "callNumberWithPublicNote": "Covers 5615 +1857",
   "creator": [
     "Dong, Chun (Cartographer), cartographer",
     "董醇 (Cartographer), cartographer"
@@ -16,11 +17,9 @@
     "Map of Ta Ch'ing River"
   ],
   "creationPlace": [
-    "China",
     "China"
   ],
   "publisher": [
-    "publisher not identified",
     "publisher not identified"
   ],
   "date": [
@@ -49,7 +48,6 @@
   "genre": [
     "Maps",
     "Pictorial maps",
-    "Maps",
     "Chinese rare maps"
   ],
   "itemType": [

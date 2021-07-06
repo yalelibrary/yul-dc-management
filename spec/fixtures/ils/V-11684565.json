@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002091594300?bib=9801995",
   "callNumber": "Beinecke MS 2",
+  "callNumberWithPublicNote": "Beinecke MS 2",
   "creator": [
     "Zeno, Jacopo, 1417-1481"
   ],
@@ -32,10 +33,10 @@
     "lat"
   ],
   "description": [
+    "In Latin.",
     "Script: Written in humanistic script by Franciscus de Tianis of Pistoia.",
     "On f. 1r, a foliage border which includes hares, stork, vase, and arms of the Piccolomini family (argent, a cross azur with 5 crescents or; surmounted by keys in saltire argent and a papal tiara; supported by a pair of angels). Eleven elaborate initials, 11- to 7-line, in gold, red, blue, and green entwined with foliage. The style of decoration is decidedly Roman.",
-    "Binding: Eighteenth century. Brownish-red goatskin, gold-tooled; pale green and gold, Dutch gilt paper boards.",
-    "In Latin."
+    "Binding: Eighteenth century. Brownish-red goatskin, gold-tooled; pale green and gold, Dutch gilt paper boards."
   ],
   "subjectName": [
     "Zeno, Carlo, 1334-1418.",

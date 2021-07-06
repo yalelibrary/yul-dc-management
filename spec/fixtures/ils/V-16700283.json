@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002094365690?bib=13640726",
   "callNumber": "Takamiya MS 142",
+  "callNumberWithPublicNote": "Takamiya MS 142",
   "title": [
     "Book of hours (fragment)"
   ],
@@ -29,18 +30,18 @@
     "lat"
   ],
   "description": [
+    "In Latin.",
     "Script: Gothic.",
     "Decoration: decorated border showing two hounds chasing a stag.",
-    "Byname: Ghistelles Hours.",
-    "In Latin."
+    "Byname: Ghistelles Hours."
   ],
   "subjectTopic": [
     "Books of hours",
     "Manuscripts, Medieval"
   ],
   "genre": [
-    "Manuscripts, Medieval Flanders 14th century",
     "Early works to 1800",
+    "Manuscripts, Medieval Flanders 14th century",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
   "itemType": [
