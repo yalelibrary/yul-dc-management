@@ -429,10 +429,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expected_uris = ["/aspace/repositories/11/top_containers/68645",
                          "/aspace/repositories/11/archival_objects/555049",
                          "/aspace/agents/people/79383",
+                         "/aspace/repositories/11",
                          "/aspace/repositories/11/archival_objects/555042",
                          "/aspace/repositories/11/archival_objects/554841",
-                         "/aspace/repositories/11/resources/1453",
-                         "/aspace/repositories/11"].to_set
+                         "/aspace/repositories/11/resources/1453"].to_set
         puts(parent_object.reload.dependent_objects.map(&:dependent_uri))
         expect(parent_object.reload.dependent_objects.count).to eq expected_uris.count
         expect(parent_object.dependent_objects.all? { |dobj| dobj.metadata_source == 'aspace' }).to be_truthy
