@@ -174,10 +174,19 @@ const columnOrder = (columns) => {
 }
 
 $( document ).on('turbolinks:load', function() {
-  $('#batch_process_batch_action').on('change', function(){
-    let batch_action = $(this).val()
-    $('#batch_template_batch_action').val(batch_action)
-    console.log($('#batch_template_batch_action').val());
-  })
+  $(".download_batch_process_template").on("click", function(e) {
+    e.preventDefault();
+     document.location.href = "/management/batch_processes/download_template?batch_action=" + $('#batch_process_batch_action').val();
+  });
+  let show_hide_template_link = function(){
+    let batch_action = $('#batch_process_batch_action').val()
+    if (batch_action) {
+      $(".download_batch_process_template").fadeIn();
+    } else {
+      $(".download_batch_process_template").fadeOut();
+    }
+  }
+  $('#batch_process_batch_action').on('change', show_hide_template_link)
+  show_hide_template_link();
 })
 

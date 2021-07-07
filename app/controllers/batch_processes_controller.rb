@@ -48,14 +48,19 @@ class BatchProcessesController < ApplicationController
   end
 
   def download_template
-    batch_action = params[:batch_template][:batch_action]
+    batch_action = params[:batch_action]
 
-    csv_template = BatchProcess.csv_template(batch_action)
+    begin
 
-    # Add BOM to force Excel to open correctly
-    send_data "\xEF\xBB\xBF" + "#{::Rails.root}/spec/fixtures/#{csv_template}",
-              type: 'text/csv; charset=utf-8; header=present',
-              disposition: "attachment; filename=#{batch_action + '_template'}"
+      csv_template = BatchProcess.csv_template(batch_action)
+
+      # Add BOM to force Excel to open correctly
+      send_data "\xEF\xBB\xBF" + csv_template,
+                type: 'text/csv; charset=utf-8; header=present',
+                disposition: "attachment; filename=#{batch_action.parameterize.underscore + '_template'}"
+    rescue
+      redirect_to batch_processes_path
+    end
   end
 
   def download_created

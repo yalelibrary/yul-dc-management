@@ -5,12 +5,6 @@
     <%= render 'form' %>
   </div>
   <div class='col'>
-    <%= form_for(:batch_template, url: download_template_batch_processes_path, multipart: true, html: { class: 'form' }) do |f| %>
-      <div class='form-group' >
-        <%= f.submit 'Download', class: 'btn button primary-button' %>
-        <%= f.hidden_field :batch_action %>
-      </div>
-    <% end %>
     <div class='float-right button-list'>
       <%= button_to 'Start Goobi Scan', trigger_mets_scan_batch_processes_path, method: 'post', class: 'btn button secondary-button', data:{confirm: 'Are you sure you start a Goobi Scan?'}, disabled: !(can? :trigger_mets_scan, ParentObject) %>
     </div>
