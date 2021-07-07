@@ -5,6 +5,7 @@
   "uri": "/aspace/repositories/11/archival_objects/555049",
   "identifier": "/aspace/repositories/11/archival_objects/555049",
   "localRecordNumber": "YCAL MSS 202",
+  "callNumber": "YCAL MSS 202",
   "containerGrouping": "Box 4, reel 202, frame 22",
   "creator": [
     "Whitman, Walt, 1819-1892"
@@ -15,12 +16,7 @@
   "date": [
     "n.d."
   ],
-  "extent": [
-    "11.65 linear_feet",
-    "3.13 linear_feet"
-  ],
   "language": [
-    "eng",
     "English"
   ],
   "languageCode": [
@@ -35,21 +31,33 @@
   ],
   "orbisBibId": "6805375",
   "orbisBarcode": "39002091459793",
+  "findingAid": [
+    "http://hdl.handle.net/10079/fa/beinecke.whitman"
+  ],
   "dateStructured": [
 
   ],
-  "resourceType": "mixed_materials",
+  "resourceType": "mixed materials",
   "provenanceUncontrolled": "The Walt Whitman Collection was acquired through various gifts and purchases dating from 1911.",
   "ancestorTitles": [
     "OTHER PAPERS",
     "Adrian Van Sinderen Gift",
-    "Walt Whitman collection"
+    "Walt Whitman collection (YCAL MSS 202)",
+    "Beinecke Rare Book and Manuscript Library (BRBL)"
+  ],
+  "ancestorDisplayStrings": [
+    "OTHER PAPERS",
+    "Series V: Adrian Van Sinderen Gift, 1842-1925",
+    "Walt Whitman collection",
+    "Beinecke Rare Book and Manuscript Library (BRBL)"
   ],
   "ancestorIdentifiers": [
     "/aspace/repositories/11/archival_objects/555042",
     "/aspace/repositories/11/archival_objects/554841",
-    "/aspace/repositories/11/resources/1453"
+    "/aspace/repositories/11/resources/1453",
+    "/aspace/repositories/11"
   ],
+  "repository": "Beinecke Rare Book and Manuscript Library (BRBL)",
   "createdBeginDate": [
 
   ],
@@ -57,13 +65,15 @@
 
   ],
   "archiveSpaceUri": "/repositories/11/archival_objects/555049",
+  "archivalSort": "00004.00004.00006",
   "dependentUris": [
     "/aspace/repositories/11/top_containers/68645",
     "/aspace/repositories/11/archival_objects/555049",
     "/aspace/agents/people/79383",
     "/aspace/repositories/11/archival_objects/555042",
     "/aspace/repositories/11/archival_objects/554841",
-    "/aspace/repositories/11/resources/1453"
+    "/aspace/repositories/11/resources/1453",
+    "/aspace/repositories/11"
   ],
   "children": [
 

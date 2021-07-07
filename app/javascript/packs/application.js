@@ -34,7 +34,8 @@ import "@fortawesome/fontawesome-free/js/all.js";
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 let dataTable;
-$( document ).on('turbolinks:load', function() {     
+$( document ).on('turbolinks:load', function() {
+  let initialColumnSearchValues = [];
   if($('.is-datatable').length > 0 && !$('.is-datatable').hasClass('dataTable')){
     let columns = JSON.parse($(".datatable-data").text());
     // load the information about which columns are visible for this page
@@ -54,11 +55,12 @@ $( document ).on('turbolinks:load', function() {
       let colVisibilityMap = {}
       dataTable.api().columns().every(function () {
         let column = this;
+        let searchInit = initialColumnSearchValues[index];
         let colDef = columns[index++];
         colVisibilityMap[colDef.data] = {hidden:!column.visible()};
         if (!column.visible()) return;
         if (colDef.searchable) {
-          let th = $("<th/>");
+          let th = $("<th class='datatable-search-row'/>");
           let input = null;
           if (colDef.options) {
             input = $("<select><option>All</option>" + colDef.options.map(function (option) {
@@ -82,6 +84,7 @@ $( document ).on('turbolinks:load', function() {
             }
           });
           searchRow.append(th.append(input));
+          input.val(searchInit);
         } else {
           searchRow.append("<th />");
         }
@@ -90,10 +93,12 @@ $( document ).on('turbolinks:load', function() {
       // store the information about which columns are visible for this page
       return colVisibilityMap;
     }
+
     dataTable = $('.is-datatable').dataTable({
       "deferLoading":true,
       "processing": true,
       "serverSide": true,
+      "stateSave": true,
       "ajax": {
         "url": $('.is-datatable').data('source')
       },
@@ -104,17 +109,30 @@ $( document ).on('turbolinks:load', function() {
       "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]],
       "sDom":hasSearch?'Blrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
       buttons: [
-          {
+        {
+          text: "Clear Filters",
+          className: "clear-filters-button",
+          action: () => {
+            dataTable.api().columns().search('').visible( true, true ).order('asc' ).state.clear().draw() ;
+            $(".datatable-search-row input").val("");
+          }
+        },
+        {
           extend: 'colvis',
           text: "\u25EB"
-        },
+        }
       ],
       // pagingType is optional, if you want full pagination controls.
       // Check dataTables documentation to learn more about
       // available options.
       initComplete: function () {
         if (hasSearch) onColumnsUpdate(this);
+      },
+      stateLoaded: function (e, setting, data) {
+        // load the search settings when state is loaded by the datatable to fill in the inputs.
+        setting.columns.forEach((c) => initialColumnSearchValues.push(c.search.search));
       }
+
     })
     dataTable.api().draw();
 

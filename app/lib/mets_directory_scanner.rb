@@ -22,15 +22,6 @@ class MetsDirectoryScanner
     ENV['GOOBI_SCAN_DIRECTORIES']&.split(',') || scans_by_goobi_mount || ['/brbl-dsu/dcs', '/brbl-dsu/jss_export']
   end
 
-  def self.system_user
-    system_user = User.find_by_uid('System')
-    unless system_user
-      system_user = User.new(uid: 'System', email: 'test@example.com', first_name: 'test', last_name: 'user')
-      Rails.logger.error("Unable to save system user") unless system_user.save!
-    end
-    system_user
-  end
-
   def self.check_file(path)
     is_done = File.exist?(File.join(File.dirname(path), "#{indicator_file_prefix}.done"))
     progress_file = File.join(File.dirname(path), "#{indicator_file_prefix}.progress")
@@ -56,7 +47,7 @@ class MetsDirectoryScanner
       tempfile: File.new(xml_file_path.to_s)
     )
     begin
-      batch_process = BatchProcess.new(batch_action: 'create parent objects', user: system_user, file: file)
+      batch_process = BatchProcess.new(batch_action: 'create parent objects', user: User.system_user, file: file)
       if batch_process.save!
         # Jobs have been kicked off and batch job has been created, so we'll mark it as done and
         # check for errors in management.

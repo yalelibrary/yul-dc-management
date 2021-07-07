@@ -5,6 +5,7 @@
   "uri": "/aspace/repositories/11/archival_objects/214638",
   "identifier": "/aspace/repositories/11/archival_objects/214638",
   "localRecordNumber": "GEN MSS 257",
+  "callNumber": "GEN MSS 257",
   "containerGrouping": "Box 3, folder 24",
   "creator": [
     "Lincoln, Abraham, 1809-1865"
@@ -15,11 +16,7 @@
   "date": [
     "n.d."
   ],
-  "extent": [
-    "1.8 linear_feet"
-  ],
   "language": [
-    "eng",
     "English"
   ],
   "languageCode": [
@@ -34,19 +31,30 @@
   ],
   "orbisBibId": "4113177",
   "orbisBarcode": "39002093768050",
+  "findingAid": [
+    "http://hdl.handle.net/10079/fa/beinecke.lincoln"
+  ],
   "dateStructured": [
 
   ],
-  "resourceType": "mixed_materials digital_object",
+  "resourceType": "mixed materials digital object",
   "provenanceUncontrolled": "Ongoing collection of documents acquired by gift and purchase from various sources. Type of accession (gift or purchase) and date of acquisition is noted in the box-and-folder list. For further information, consult the appropriate curator.",
   "ancestorTitles": [
     "Oversize",
-    "Abraham Lincoln collection"
+    "Abraham Lincoln collection (GEN MSS 257)",
+    "Beinecke Rare Book and Manuscript Library (BRBL)"
+  ],
+  "ancestorDisplayStrings": [
+    "Oversize, n.d.",
+    "Abraham Lincoln collection",
+    "Beinecke Rare Book and Manuscript Library (BRBL)"
   ],
   "ancestorIdentifiers": [
     "/aspace/repositories/11/archival_objects/214637",
-    "/aspace/repositories/11/resources/640"
+    "/aspace/repositories/11/resources/640",
+    "/aspace/repositories/11"
   ],
+  "repository": "Beinecke Rare Book and Manuscript Library (BRBL)",
   "createdBeginDate": [
 
   ],
@@ -54,12 +62,14 @@
 
   ],
   "archiveSpaceUri": "/repositories/11/archival_objects/214638",
+  "archivalSort": "00002.00000",
   "dependentUris": [
     "/aspace/repositories/11/top_containers/19359",
     "/aspace/repositories/11/archival_objects/214638",
     "/aspace/agents/people/87197",
     "/aspace/repositories/11/archival_objects/214637",
-    "/aspace/repositories/11/resources/640"
+    "/aspace/repositories/11/resources/640",
+    "/aspace/repositories/11"
   ],
   "children": [
 

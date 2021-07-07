@@ -5,6 +5,7 @@
   "uri": "/aspace/repositories/11/archival_objects/515305",
   "identifier": "/aspace/repositories/11/archival_objects/515305",
   "localRecordNumber": "YCAL MSS 1000",
+  "callNumber": "YCAL MSS 1000",
   "containerGrouping": "Box 1",
   "creator": [
     "Fowler & Wells"
@@ -15,11 +16,7 @@
   "date": [
 
   ],
-  "extent": [
-    "19 boxes"
-  ],
   "language": [
-    "eng",
     "English"
   ],
   "languageCode": [
@@ -34,17 +31,27 @@
   ],
   "orbisBibId": "12307100",
   "orbisBarcode": "39002102340669",
+  "findingAid": [
+    "http://hdl.handle.net/10079/fa/beinecke.phrenology"
+  ],
   "dateStructured": [
 
   ],
-  "resourceType": "mixed_materials",
+  "resourceType": "mixed materials",
   "provenanceUncontrolled": "Purchased from Ian Brabner, Bookseller, on the Edwin J. Beinecke Book Fund, 2011.",
   "ancestorTitles": [
-    "Fowler & Wells Portrait Posters for Physiognomy Lectures"
+    "Fowler & Wells Portrait Posters for Physiognomy Lectures (YCAL MSS 1000)",
+    "Beinecke Rare Book and Manuscript Library (BRBL)"
+  ],
+  "ancestorDisplayStrings": [
+    "Fowler & Wells Portrait Posters for Physiognomy Lectures",
+    "Beinecke Rare Book and Manuscript Library (BRBL)"
   ],
   "ancestorIdentifiers": [
-    "/aspace/repositories/11/resources/1394"
+    "/aspace/repositories/11/resources/1394",
+    "/aspace/repositories/11"
   ],
+  "repository": "Beinecke Rare Book and Manuscript Library (BRBL)",
   "createdBeginDate": [
 
   ],
@@ -52,11 +59,13 @@
 
   ],
   "archiveSpaceUri": "/repositories/11/archival_objects/515305",
+  "archivalSort": ".00000",
   "dependentUris": [
     "/aspace/repositories/11/top_containers/66093",
     "/aspace/repositories/11/archival_objects/515305",
     "/aspace/agents/corporate_entities/12845",
-    "/aspace/repositories/11/resources/1394"
+    "/aspace/repositories/11/resources/1394",
+    "/aspace/repositories/11"
   ],
   "children": [
 

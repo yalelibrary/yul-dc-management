@@ -141,8 +141,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return unless json
     metadata_source = authoritative_metadata_source&.metadata_cloud_name
     dep_objs = []
+    DependentObject.delete(dependent_objects)
     json["dependentUris"].each do |uri|
-      dep_objs << DependentObject.find_or_create_by(
+      dep_objs << DependentObject.create(
         dependent_uri: uri,
         metadata_source: metadata_source,
         parent_object_id: oid
@@ -165,6 +166,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                     end
     if fetch_results
       assign_dependent_objects
+      assign_values
       processing_event("Metadata has been fetched", "metadata-fetched")
     end
     fetch_results
@@ -185,6 +187,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def authoritative_json
     json_for(authoritative_metadata_source.metadata_cloud_name)
+  end
+
+  def assign_values
+    self.call_number = authoritative_json["callNumber"].is_a?(Array) ? authoritative_json["callNumber"].first : authoritative_json["callNumber"]
+    self.container_grouping = authoritative_json["containerGrouping"].is_a?(Array) ? authoritative_json["containerGrouping"].first : authoritative_json["containerGrouping"]
   end
 
   def metadata_cloud_url

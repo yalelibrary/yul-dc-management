@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002098971758?bib=7748458",
   "callNumber": "YCAL MSS 229",
+  "callNumberWithPublicNote": "YCAL MSS 229",
   "creator": [
     "Wodening, Jane, 1936-"
   ],
@@ -88,7 +89,7 @@
     "Jane Wodening and Stan Brakhage Scrapbooks. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
   "dateStructured": [
-    "1958"
+    "1958/1967"
   ],
   "illustrativeMatter": "    ",
   "subjectEra": "20th century. 20th century.",
@@ -114,12 +115,7 @@
   "repository": "beinycal",
   "relatedTitle": [
     "",
-    "Snarling garland of Xmas verses.",
-    "",
-    "",
-    "",
-    "",
-    ""
+    "Snarling garland of Xmas verses."
   ],
   "relatedTitleDisplay": [
     "Brakhage, Stan",

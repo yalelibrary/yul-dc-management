@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002091459793?bib=6805375",
   "callNumber": "YCAL MSS 202",
+  "callNumberWithPublicNote": "YCAL MSS 202",
   "creator": [
     "Whitman, Walt, 1819-1892"
   ],
@@ -64,9 +65,9 @@
     "History"
   ],
   "genre": [
+    "Archives",
     "Engravings (prints)",
-    "Photographic prints",
-    "Archives"
+    "Photographic prints"
   ],
   "orbisBibId": "6805375",
   "orbisBarcode": "39002091459793",
