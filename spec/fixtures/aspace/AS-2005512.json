@@ -41,12 +41,19 @@
   "provenanceUncontrolled": "Ongoing collection of documents acquired by gift and purchase from various sources. Type of accession (gift or purchase) and date of acquisition is noted in the box-and-folder list. For further information, consult the appropriate curator.",
   "ancestorTitles": [
     "Oversize",
-    "Abraham Lincoln collection"
+    "Abraham Lincoln collection (GEN MSS 257)",
+    "Beinecke Rare Book and Manuscript Library (BRBL)"
+  ],
+  "ancestorDisplayStrings": [
+    "Oversize, n.d.",
+    "Abraham Lincoln collection",
+    "Beinecke Rare Book and Manuscript Library (BRBL)"
   ],
   "ancestorIdentifiers": [
     "/aspace/repositories/11/archival_objects/214637",
     "/aspace/repositories/11/resources/640"
   ],
+  "repository": "Beinecke Rare Book and Manuscript Library (BRBL)",
   "createdBeginDate": [
 
   ],
@@ -54,6 +61,7 @@
 
   ],
   "archiveSpaceUri": "/repositories/11/archival_objects/214638",
+  "archivalSort": "00002.00000",
   "dependentUris": [
     "/aspace/repositories/11/top_containers/19359",
     "/aspace/repositories/11/archival_objects/214638",
