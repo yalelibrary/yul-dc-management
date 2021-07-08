@@ -37,7 +37,6 @@ module SolrIndexable
       accessRestrictions_tesim: json_to_index["accessRestrictions"],
       alternativeTitle_tesim: json_to_index["alternativeTitle"],
       alternativeTitleDisplay_tesim: json_to_index["alternativeTitleDisplay"],
-      ancestorTitles_tesim: json_to_index["ancestorTitles"],
       archiveSpaceUri_ssi: aspace_uri,
       callNumber_ssim: json_to_index["callNumber"],
       callNumber_tesim: json_to_index["callNumber"],
