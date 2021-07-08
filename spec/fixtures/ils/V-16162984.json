@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002091549445?bib=11781026",
   "callNumber": "Takamiya MS 36",
+  "callNumberWithPublicNote": "Takamiya MS 36",
   "title": [
     "Old testament chronicle and genealogy of Christ (Part 1)."
   ],
@@ -29,13 +30,13 @@
     "enm"
   ],
   "description": [
+    "In Middle English.",
     "Originally formed a single roll with Takamiya MS 53.",
     "Annotation at top of roll in late 18th century hand attributing ownership in 1485 to Richard Kidderminster, Abbot of Winchecombe.",
     "Layout: double column.",
     "Script: English gothic bookhand.",
     "Decoration: names in colored cartouches of green or brown squares.",
-    "Binding: modern case.",
-    "In Middle English."
+    "Binding: modern case."
   ],
   "subjectName": [
     "Jesus Christ"
@@ -46,11 +47,10 @@
     "Manuscripts, Medieval"
   ],
   "genre": [
-    "Manuscripts, Medieval England 15th century",
     "Genealogy",
     "Early works to 1800",
     "Chronology",
-    "Early works to 1800",
+    "Manuscripts, Medieval England 15th century",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
   "itemType": [
@@ -65,7 +65,7 @@
     "Old Testament Chronicle and Genealogy of Christ (Part 1) (Takamiya MS 36). General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1400"
+    "1400/1450"
   ],
   "illustrativeMatter": "    ",
   "subjectEra": "Middle English, 1100-1500. Middle English, 1100-1500.",

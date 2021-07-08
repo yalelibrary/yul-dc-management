@@ -17,8 +17,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   end
   context "a parent object with an extent of digitization" do
     before do
-      visit parent_objects_path
-      click_on("New Parent Object")
+      visit "parent_objects/new"
       stub_metadata_cloud("10001192")
       fill_in('Oid', with: "10001192")
       select('Beinecke Library')
@@ -29,6 +28,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       po = ParentObject.find(10_001_192)
       expect(po.oid).to eq 10_001_192
       expect(po.bib).to eq "3659107"
+      expect(po.call_number).to eq "GEN MSS 963"
       expect(po.holding).to be_empty
       expect(po.item).to be_empty
       expect(po.barcode).to eq "39002091548348"
@@ -50,7 +50,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   context "creating a new ParentObject based on oid" do
     before do
       visit parent_objects_path
-      click_on("New Parent Object")
+      visit "parent_objects/new"
     end
 
     context "setting non-required values" do
@@ -190,6 +190,11 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         expect(document["id"]).to eq "2012036"
         expect(document["callNumber_tesim"]).to include "YCAL MSS 202"
         expect(document["dateStructured_ssim"]).not_to be
+      end
+
+      it 'has a Public View link' do
+        po = ParentObject.find_by(oid: "2012036")
+        expect(page).to have_link("Public View", href: po.dl_show_url)
       end
 
       it 'shows error if creating parent with oid that exists' do
@@ -383,16 +388,6 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     end
   end
 
-  context "pages has a New Parent Object button with an action event" do
-    before do
-      visit parent_objects_path
-    end
-
-    it "has a New Parent Object button" do
-      click_on("New Parent Object")
-    end
-  end
-
   describe "index page", js: true do
     context 'datatable' do
       let(:parent_object1) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: AdminSet.find_by_key('brbl')) }
@@ -414,144 +409,165 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
     end
 
-    context "clicking ReIndex button" do
-      before do
-        visit parent_objects_path
+    describe "index page", js: true do
+      context 'datatable' do
+        let(:parent_object1) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: AdminSet.find_by_key('brbl')) }
+        let(:parent_object2) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: AdminSet.find_by_key('brbl')) }
+
+        before do
+          stub_metadata_cloud('2034600')
+          stub_metadata_cloud('2005512')
+          parent_object1
+          parent_object2
+          visit parent_objects_path
+        end
+
+        it 'has multiple Parent Objects' do
+          within '#parent-objects-datatable' do
+            expect(page).to have_xpath '//*[@id="2034600"]/td[@class="sorting_1"]/a[1]', text: '2034600'
+            expect(page).to have_xpath '//*[@id="2005512"]/td[@class="sorting_1"]/a[1]', text: '2005512'
+          end
+        end
       end
 
-      it "does not Reindex if a reindex job is already in progress" do
-        allow(ParentObject).to receive(:cannot_reindex).and_return(:true)
-        click_on("Reindex")
-        page.driver.browser.switch_to.alert.accept
-        expect(page.body).to include 'There is already a Reindex job in progress, please wait for that job to complete before submitting a new reindex request'
+      context "clicking ReIndex button" do
+        before do
+          visit parent_objects_path
+        end
+
+        it "does not Reindex if a reindex job is already in progress" do
+          allow(ParentObject).to receive(:cannot_reindex).and_return(:true)
+          click_on("Reindex")
+          page.driver.browser.switch_to.alert.accept
+          expect(page.body).to include 'There is already a Reindex job in progress, please wait for that job to complete before submitting a new reindex request'
+        end
+
+        it "does not Reindex without confirmation" do
+          expect(ParentObject).not_to receive(:solr_index)
+          click_on("Reindex")
+          expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed? This action will reindex the entire contents of the system.")
+        end
+
+        it "does Reindex with confirmation" do
+          expect(ParentObject).to receive(:solr_index).and_return(nil).once
+          click_on("Reindex")
+          expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed? This action will reindex the entire contents of the system.")
+          page.driver.browser.switch_to.alert.accept
+        end
       end
 
-      it "does not Reindex without confirmation" do
-        expect(ParentObject).not_to receive(:solr_index)
-        click_on("Reindex")
-        expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed? This action will reindex the entire contents of the system.")
+      context "clicking Metadata button" do
+        before do
+          visit parent_objects_path
+        end
+
+        it "does not update metadata without confirmation" do
+          expect(ParentObject).not_to receive(:find_each)
+          click_on("Update Metadata")
+          expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.")
+        end
+
+        it "does update metadata with confirmation" do
+          expect(ParentObject).to receive(:find_each).and_return([]).once
+          click_on("Update Metadata")
+          expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.")
+          page.driver.browser.switch_to.alert.accept
+        end
       end
 
-      it "does Reindex with confirmation" do
-        expect(ParentObject).to receive(:solr_index).and_return(nil).once
-        click_on("Reindex")
-        expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed? This action will reindex the entire contents of the system.")
-        page.driver.browser.switch_to.alert.accept
+      context "logged in without sysadmin rights" do
+        let(:user) { FactoryBot.create(:user) }
+
+        before do
+          login_as user
+          visit parent_objects_path
+        end
+
+        it "does not update metadata without confirmation" do
+          expect(page).to have_button('Update Metadata', disabled: true)
+          expect(page).to have_button('Reindex', disabled: true)
+        end
       end
     end
 
-    context "clicking Metadata button" do
+    context "when logged in without admin set roles" do
       before do
-        visit parent_objects_path
+        user.remove_role(:editor, AdminSet.find_by_key('brbl'))
+        visit "parent_objects/new"
+        stub_metadata_cloud("10001192")
+        fill_in('Oid', with: "10001192")
+        select('Beinecke Library')
       end
-
-      it "does not update metadata without confirmation" do
-        expect(ParentObject).not_to receive(:find_each)
-        click_on("Update Metadata")
-        expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.")
-      end
-
-      it "does update metadata with confirmation" do
-        expect(ParentObject).to receive(:find_each).and_return([]).once
-        click_on("Update Metadata")
-        expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.")
-        page.driver.browser.switch_to.alert.accept
+      it "does not allow creation of new parent with wrong admin set" do
+        click_on("Create Parent object")
+        expect(page).to have_content('Access denied')
       end
     end
 
-    context "logged in without sysadmin rights" do
+    context "when logged in with access to only some admin set roles", js: true do
       let(:user) { FactoryBot.create(:user) }
+      let(:admin_set) { FactoryBot.create(:admin_set, key: "adminset") }
+      let(:admin_set2) { FactoryBot.create(:admin_set, key: "adminset2", label: "AdminSet2") }
+      let(:parent_object1) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
+      let(:parent_object2) { FactoryBot.create(:parent_object, oid: "2004548", admin_set_id: admin_set.id) }
+      let(:parent_object_no_access) { FactoryBot.create(:parent_object, oid: "2004549", admin_set_id: admin_set2.id) }
+      let(:child_object1) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object1) }
+      let(:child_object_no_access) { FactoryBot.create(:child_object, oid: "456790", parent_object: parent_object_no_access) }
 
       before do
+        parent_object1
+        parent_object2
+        parent_object_no_access
+        child_object1
+        child_object_no_access
+        user.add_role(:editor, admin_set)
         login_as user
+      end
+
+      it "does not display parent objects the user does not have access to view" do
+        visit parent_objects_path
+        expect(page).to have_content("2002826")
+        expect(page).to have_content("2004548")
+        expect(page).not_to have_content("2004549")
+      end
+
+      it "allows viewing of the parent object the user has access to" do
+        visit parent_object_path("2002826")
+        expect(page).not_to have_content("Access denied")
+      end
+
+      it "does not allow viewing of the parent object the user does not has access to" do
+        visit parent_object_path("2004549")
+        expect(page).to have_content("Access denied")
+      end
+
+      it "allows editing of the parent object the user has access to" do
+        visit edit_parent_object_path("2002826")
+        expect(page).not_to have_content("Access denied")
+      end
+
+      it "does not allow viewing of the child object the user does not has access to" do
+        visit edit_parent_object_path("2004549")
+        expect(page).to have_content("Access denied")
+      end
+
+      it "does not allow changing parent_object to admin_set user does not have access to" do
+        visit edit_parent_object_path("2002826")
+        select 'AdminSet2', from: "parent_object[admin_set]"
+        click_on("Update Parent object")
+
+        expect(page).to have_content "Admin set cannot be assigned to a set the User cannot edit"
+      end
+    end
+
+    context "parent objects page", js: true do
+      before do
         visit parent_objects_path
       end
 
-      it "does not update metadata without confirmation" do
-        expect(page).to have_button('Update Metadata', disabled: true)
-        expect(page).to have_button('Reindex', disabled: true)
+      it "has column visibility button" do
+        expect(page).to have_css(".buttons-colvis")
       end
-    end
-  end
-
-  context "when logged in without admin set roles" do
-    before do
-      user.remove_role(:editor, AdminSet.find_by_key('brbl'))
-      visit parent_objects_path
-      click_on("New Parent Object")
-      stub_metadata_cloud("10001192")
-      fill_in('Oid', with: "10001192")
-      select('Beinecke Library')
-    end
-    it "does not allow creation of new parent with wrong admin set" do
-      click_on("Create Parent object")
-      expect(page.body).to eq 'Access denied'
-    end
-  end
-
-  context "when logged in with access to only some admin set roles", js: true do
-    let(:user) { FactoryBot.create(:user) }
-    let(:admin_set) { FactoryBot.create(:admin_set, key: "adminset") }
-    let(:admin_set2) { FactoryBot.create(:admin_set, key: "adminset2", label: "AdminSet2") }
-    let(:parent_object1) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
-    let(:parent_object2) { FactoryBot.create(:parent_object, oid: "2004548", admin_set_id: admin_set.id) }
-    let(:parent_object_no_access) { FactoryBot.create(:parent_object, oid: "2004549", admin_set_id: admin_set2.id) }
-    let(:child_object1) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object1) }
-    let(:child_object_no_access) { FactoryBot.create(:child_object, oid: "456790", parent_object: parent_object_no_access) }
-
-    before do
-      parent_object1
-      parent_object2
-      parent_object_no_access
-      child_object1
-      child_object_no_access
-      user.add_role(:editor, admin_set)
-      login_as user
-    end
-
-    it "does not display parent objects the user does not have access to view" do
-      visit parent_objects_path
-      expect(page).to have_content("2002826")
-      expect(page).to have_content("2004548")
-      expect(page).not_to have_content("2004549")
-    end
-
-    it "allows viewing of the parent object the user has access to" do
-      visit parent_object_path("2002826")
-      expect(page).not_to have_content("Access denied")
-    end
-
-    it "does not allow viewing of the parent object the user does not has access to" do
-      visit parent_object_path("2004549")
-      expect(page).to have_content("Access denied")
-    end
-
-    it "allows editing of the parent object the user has access to" do
-      visit edit_parent_object_path("2002826")
-      expect(page).not_to have_content("Access denied")
-    end
-
-    it "does not allow viewing of the child object the user does not has access to" do
-      visit edit_parent_object_path("2004549")
-      expect(page).to have_content("Access denied")
-    end
-
-    it "does not allow changing parent_object to admin_set user does not have access to" do
-      visit edit_parent_object_path("2002826")
-      select 'AdminSet2', from: "parent_object[admin_set]"
-      click_on("Update Parent object")
-
-      expect(page).to have_content "Admin set cannot be assigned to a set the User cannot edit"
-    end
-  end
-
-  context "parent objects page", js: true do
-    before do
-      visit parent_objects_path
-    end
-
-    it "has column visibility button" do
-      expect(page).to have_css(".buttons-colvis")
     end
   end
 end

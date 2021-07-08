@@ -1,10 +1,13 @@
 {
-  "recordType": "oid",
+  "jsonModelType": "LadybirdSolrRecord",
   "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/16172421",
   "callNumber": "GEN MSS 1386",
+  "containerGrouping": "Box 12 | Folder 117",
   "box": "Box 12",
   "folder": "Folder 117",
+  "sourceCreator": "Patterson, Catharine T.(Catharine Tinker), collector",
   "sourceTitle": "Catharine T. Patterson Collection of Walter Crane",
   "sourceDate": "1867-1957",
   "sourceNote": "Series II. Writings and Graphic Material. Other material. Textiles.",
@@ -17,7 +20,7 @@
   "extentOfDigitization": [
     "Complete folder digitized."
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "England"
   ],
   "date": [
@@ -35,6 +38,9 @@
   "format": [
     "three dimensional object"
   ],
+  "itemType": [
+    "Archives or Manuscripts"
+  ],
   "partOf": "Beinecke Library",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
@@ -46,9 +52,9 @@
   ],
   "itemPermission": "Public",
   "dateStructured": [
-    "1883-00-00T00:00:00Z"
+    "1883"
   ],
-  "resourceType": "Archives or Manuscripts",
+  "intStartYear": "1883",
   "repository": "Beinecke Library",
   "creatorDisplay": [
     "Morris & Co. (London, England)"
@@ -60,8 +66,9 @@
   "collectionId": 1,
   "children": [
     {
-      "recordType": "oid",
+      "jsonModelType": "LadybirdSolrRecord",
       "source": "ladybird",
+      "recordType": "oid",
       "uri": "/ladybird/oid/16188699",
       "callNumber": "GEN MSS 1386",
       "title": [
@@ -74,11 +81,14 @@
       "oid": 16188699,
       "width": 9997,
       "height": 2673,
-      "children": []
+      "children": [
+
+      ]
     },
     {
-      "recordType": "oid",
+      "jsonModelType": "LadybirdSolrRecord",
       "source": "ladybird",
+      "recordType": "oid",
       "uri": "/ladybird/oid/16188700",
       "callNumber": "GEN MSS 1386",
       "title": [
@@ -91,11 +101,14 @@
       "oid": 16188700,
       "width": 7886,
       "height": 2811,
-      "children": []
+      "children": [
+
+      ]
     },
     {
-      "recordType": "oid",
+      "jsonModelType": "LadybirdSolrRecord",
       "source": "ladybird",
+      "recordType": "oid",
       "uri": "/ladybird/oid/16188701",
       "callNumber": "GEN MSS 1386",
       "title": [
@@ -108,11 +121,14 @@
       "oid": 16188701,
       "width": 3143,
       "height": 2385,
-      "children": []
+      "children": [
+
+      ]
     },
     {
-      "recordType": "oid",
+      "jsonModelType": "LadybirdSolrRecord",
       "source": "ladybird",
+      "recordType": "oid",
       "uri": "/ladybird/oid/16188702",
       "callNumber": "GEN MSS 1386",
       "title": [
@@ -125,7 +141,9 @@
       "oid": 16188702,
       "width": 1011,
       "height": 5555,
-      "children": []
+      "children": [
+
+      ]
     }
   ],
   "abstract": [

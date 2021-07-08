@@ -3,7 +3,8 @@
   "source": "ils",
   "recordType": "bib",
   "uri": "/ils/barcode/39002104850970?bib=7151233",
-  "callNumber": "YCAL MSS 702 Former call numbers: Uncat MSS 765, Uncat MSS 1274",
+  "callNumber": "YCAL MSS 702",
+  "callNumberWithPublicNote": "YCAL MSS 702 Former call numbers: Uncat MSS 765, Uncat MSS 1274",
   "creator": [
     "Giard, Robert"
   ],
@@ -24,8 +25,8 @@
   ],
   "description": [
     "Robert Giard was an American photographer, born in Hartford, Connecticut in 1939. He received a Bachelor of Arts from Yale University in 1961, and Master of Arts in Comparative Literature from Boston University in 1965. In 1972 he began to take photographs, focusing on landscapes and portraits of his friends, artists, writers, and nudes. His monograph Particular Voices: Portraits of Gay and Lesbian Writers, published by MIT Press in 1997, contains a selection from over 500 portraits he had taken in the previous decade. In 1996, Giard was commissioned to document the 321 grant recipients of the Thanks Be To Grandmother Winifred Foundation. The grant recipients were women over the age of 54 whose projects benefited adult women. From 1996 to 2001, Giard traveled across the U. S. to photograph each year's grant recipents. He died in 2002 of a heart attack.",
-    "In English.",
-    "Finding aid available"
+    "Finding aid available",
+    "In English."
   ],
   "subjectName": [
     "Giard, Robert.",
@@ -38,11 +39,9 @@
     "Older women"
   ],
   "genre": [
-    "Photographic prints",
-    "Portraits",
     "Portraits",
     "Archives",
-    "Portraits",
+    "Photographic prints",
     "LGBTQ resource"
   ],
   "orbisBibId": "7151233",
@@ -55,7 +54,7 @@
     "Robert Giard Papers. Yale Collection of American Literature, Beinecke Rare Book and Manuscript Library."
   ],
   "dateStructured": [
-    "1972"
+    "1972/2002"
   ],
   "illustrativeMatter": "    ",
   "subjectEra": "20th century.",
@@ -65,9 +64,6 @@
   "provenanceUncontrolled": "Purchased from Jonathan G. Silin on the Eugene G. O'Neill Memorial Fund, 2004. Gift of Jonathan G. Silin, 2011.",
   "repository": "lsfbeiar",
   "subjectGeographic": [
-    "United States",
-    "United States",
-    "United States",
     "United States"
   ],
   "subjectOccupation": [

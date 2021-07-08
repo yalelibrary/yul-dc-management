@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002091118928?bib=8394689",
   "callNumber": "11 1860A",
+  "callNumberWithPublicNote": "11 1860A",
   "title": [
     "Di qiu quan tu",
     "地球全圖"
@@ -16,12 +17,9 @@
     "Tao yin ben."
   ],
   "creationPlace": [
-    "China",
-    "China",
     "China"
   ],
   "publisher": [
-    "publisher not identified",
     "publisher not identified"
   ],
   "date": [
@@ -40,7 +38,6 @@
     "chi"
   ],
   "subjectTopic": [
-    "World maps",
     "World maps"
   ],
   "scale": "Scale not determined.",
@@ -51,8 +48,8 @@
     "(W 180°--E 180°/N 90°--S 90°)."
   ],
   "genre": [
-    "World maps",
-    "Chinese rare maps"
+    "Chinese rare maps",
+    "World maps"
   ],
   "itemType": [
     "cartographic image"
@@ -104,5 +101,7 @@
   "updateDate": "2018-11-28T16:47:49.000+0000",
   "holdingId": 8833608,
   "itemId": 7599022,
-  "children": []
+  "children": [
+
+  ]
 }

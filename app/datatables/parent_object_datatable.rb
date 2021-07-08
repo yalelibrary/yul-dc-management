@@ -21,6 +21,8 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
       admin_set: { source: "AdminSet.key", cond: :string_eq, searchable: true, options: @set_keys, orderable: true },
       authoritative_source: { source: "MetadataSource.metadata_cloud_name", cond: :string_eq, searchable: true, options: ["ladybird", "aspace", "ils"], orderable: true },
       child_object_count: { source: "ParentObject.child_object_count", orderable: true },
+      call_number: { source: "ParentObject.call_number", searchable: true, orderable: true },
+      container_grouping: { source: "ParentObject.container_grouping", searchable: true, orderable: true },
       bib: { source: "ParentObject.bib", cond: :string_eq, searchable: true, orderable: true },
       holding: { source: "ParentObject.holding", cond: :string_eq, searchable: true, orderable: true },
       item: { source: "ParentObject.item", cond: :string_eq, searchable: true, orderable: true },
@@ -32,8 +34,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
       last_id_update: { source: "ParentObject.last_id_update", orderable: true },
       visibility: { source: "ParentObject.visibility", cond: :string_eq, searchable: true, options: ["Public", "Yale Community Only", "Private"], orderable: true },
       extent_of_digitization: { source: "ParentObject.extent_of_digitization", cond: :string_eq, searchable: true, options: ["Completely digitized", "Partially digitized"], orderable: true },
-      digitization_note: { source: "ParentObject.digitization_note", cond: :like, searchable: true, orderable: true },
-      actions: { source: "ParentObject.oid", cond: :null_value, searchable: false, orderable: false }
+      digitization_note: { source: "ParentObject.digitization_note", cond: :like, searchable: true, orderable: true }
     }
   end
   # rubocop: enable Metrics/MethodLength
@@ -46,6 +47,8 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
         admin_set: parent_object.admin_set.key,
         authoritative_source: parent_object.source_name,
         child_object_count: parent_object.child_object_count,
+        call_number: parent_object.call_number,
+        container_grouping: parent_object.container_grouping,
         bib: parent_object.bib,
         holding: parent_object.holding,
         item: parent_object.item,
@@ -58,7 +61,6 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
         visibility: parent_object.visibility,
         extent_of_digitization: parent_object.extent_of_digitization,
         digitization_note: parent_object.digitization_note,
-        actions: actions(parent_object).html_safe,
         DT_RowId: parent_object.oid
       }
     end
@@ -69,15 +71,8 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
     result = []
     result << link_to(parent_object.oid, parent_object_path(parent_object))
     result << with_icon('fa fa-pencil-alt', edit_parent_object_path(parent_object)) if @current_ability.can? :edit, parent_object
-    result << with_icon('fa fa-eye', parent_object.dl_show_url)
+    result << with_icon('fa fa-eye', parent_object.dl_show_url, target: :_blank)
     result.join(' ')
-  end
-
-  def actions(parent_object)
-    actions = []
-    actions << with_icon('fa fa-trash', parent_object_path(parent_object), method: :delete, data: { confirm: 'Are you sure?' }) if @current_ability.can? :destroy, parent_object
-    actions << link_to('Update Metadata', update_metadata_parent_object_path(parent_object), method: :post) if @current_ability.can? :update, parent_object
-    actions.join('<br>')
   end
 
   def with_icon(class_name, path, options = {})

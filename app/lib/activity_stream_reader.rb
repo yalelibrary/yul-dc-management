@@ -2,7 +2,7 @@
 
 # An ActivityStreamReader reads json formatted activity stream documents from the MetadataCloud
 class ActivityStreamReader
-  attr_reader :tally_activity_stream_items, :tally_retrieved_records
+  attr_reader :tally_activity_stream_items, :tally_queued_records
 
   # This is the primary way that automated updates will happen.
   def self.update
@@ -12,19 +12,21 @@ class ActivityStreamReader
 
   def initialize
     @tally_activity_stream_items = 0
-    @tally_retrieved_records = 0
+    @tally_queued_records = 0
   end
 
   # Logs and kicks off processing the activity stream from the MetadataCloud
   def process_activity_stream
-    log = ActivityStreamLog.create(run_time: DateTime.current, status: "Running")
-    log.save
-    process_page("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity")
-    common_uris = intersection_of_dependent_uris(remote_dependent_uris, local_dependent_uris)
-    parent_objects_for_update = items_for_update_from_dependent_uris(common_uris)
-    refresh_updated_items(parent_objects_for_update)
+    @updated_uris = []
+    @most_recent_update = nil
+    # recursively look at activity stream and add to updated_uris
+    process_recursive("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity")
+    parent_object_refs = parents_for_update_from_dependent_uris(updated_uris)
+    refresh_updated_items(parent_object_refs)
+    return unless @most_recent_update
+    log = ActivityStreamLog.create(run_time: @most_recent_update, status: "Running")
     log.activity_stream_items = @tally_activity_stream_items
-    log.retrieved_records = @tally_retrieved_records
+    log.retrieved_records = @tally_queued_records
     log.status = "Success"
     log.save
   end
@@ -32,98 +34,93 @@ class ActivityStreamReader
   ##
   # It takes the url for an Activity Stream page, and if there is a link to a previous page,
   # recursively processes that page as well, until all pages have been processed.
-  def process_page(page_url)
+  def process_recursive(page_url)
     page = fetch_and_parse_page(page_url)
     page["orderedItems"].each do |item|
       @tally_activity_stream_items += 1
+      @most_recent_update = item["endTime"] if @most_recent_update.nil?
       process_item(item) if relevant?(item)
     end
     earliest_item_on_page = page["orderedItems"].last["endTime"].to_datetime
-    process_page(previous_page_link(page)) if (previous_page_link(page) && last_run_time.nil?) || (previous_page_link(page) && earliest_item_on_page.after?(last_run_time))
+    process_recursive(previous_page_link(page)) if (previous_page_link(page) && last_run_time.nil?) || (previous_page_link(page) && earliest_item_on_page.after?(last_run_time))
   end
 
   ##
-  # Adds the item's uri to the array of remote_dependent_uris, for later comparison to the set of local_dependent_uris
+  # Adds the item's uri to the array of updated_uris, for later comparison to the set of local_dependent_uris
   def process_item(item)
-    remote_dependent_uris.push(item["object"]["id"])
+    uri = item["object"]["id"].match(/.*\/api(.*)/)[1] # strip everything from the URL except after /api
+    updated_uris.push(uri)
+    update_time_uri_map[uri] = item["endTime"]
   end
 
   ##
   # It takes an item from the activity stream and returns either true or false depending on whether that object is an update
   def relevant?(item)
-    return false unless item["type"] == "Update"
+    # Don't process changes which occur after last_run_time
+    return false unless item["type"] == "Update" && item['endTime'].to_datetime.after?(last_run_time)
     true
   end
 
   ##
   # Return the last time the Activity Stream was successfully read
   # If the ActivityStreamReader has not yet successfully run (if the ActivityStreamLog is empty or does not have successes),
-  # then the ActivityStreamReader should read through the entire activity stream from the MetadataCloud.
+  # then the ActivityStreamReader starts at the current time.
   def last_run_time
-    @last_run_time ||= ActivityStreamLog.where(status: "Success").last&.run_time&.to_datetime
+    @last_run_time ||= ActivityStreamLog.where(status: "Success").last&.run_time&.to_datetime || Time.current
   end
 
-  def local_dependent_uris
-    @local_dependent_uris ||= build_local_dependent_uri_set
+  def updated_uris
+    @updated_uris ||= []
   end
 
-  ##
-  # Ensures that the existing dependent URIs from the fixture objects have been updated in the database
-  def update_local_dependent_uris
-    FixtureParsingService.find_dependent_uris("aspace")
-    FixtureParsingService.find_dependent_uris("ladybird")
-    FixtureParsingService.find_dependent_uris("ils")
+  def update_time_uri_map
+    @update_time_uri_map ||= {}
   end
 
-  ##
-  # Creates a set of all the dependent uris in the database for later comparison with the dependent_uris from the activity stream
-  def build_local_dependent_uri_set
-    update_local_dependent_uris
-    dependent_uri_array = DependentObject.all.map(&:dependent_uri)
-    dependent_uri_array.to_set
-  end
-
-  def remote_dependent_uris
-    @remote_dependent_uris ||= []
+  def parents_for_update_from_dependent_uris(updated_uris)
+    # See: https://guides.rubyonrails.org/active_record_querying.html#subset-conditions
+    dependent_objects = DependentObject.where(dependent_uri: updated_uris)
+    parent_object_refs = dependent_objects.map { |depobj| [depobj.parent_object_id, depobj.metadata_source] }
+    parent_object_refs.to_set
   end
 
   ##
-  # Takes the array of remote_dependent_uris and the set of local_dependent_uris and returns a Set that
-  # is the intersection of local and remote dependent uris - that is, the uris of objects we want to update
-  # from the MetadataCloud.
-  def intersection_of_dependent_uris(remote_dependent_uris, local_dependent_uris)
-    remote_dependent_uris_short = remote_dependent_uris.map { |uri| /\/api(\S*)/.match(uri).captures.first }
-    remote_dependent_uris_short.to_set.intersection local_dependent_uris
-  end
-
-  ##
-  # Takes the Set of dependent_uris that we are interested in refreshing (those that appear in the Activity Stream and
-  # are in our local database), and returns a set containing the oid and metadata_source needed for the object's record
-  # to be retrieved from the MetadataCloud.
-  # @example
-  #  { ["2004628", "ladybird"], ["2004628", "ils"] }
-  def items_for_update_from_dependent_uris(common_uris)
-    dependent_objects = common_uris.map { |uri| DependentObject.find_by(dependent_uri: uri) }
-    parent_objects_for_update = dependent_objects.map { |depobj| [depobj.parent_object_id, depobj.metadata_source] }
-    parent_objects_for_update.to_set
-  end
-
-  ##
-  # Takes a set of arrays (see tems_for_update_from_dependent_uris(common_uris) for example), retrieves the appropriate record from
-  # the MetadataCloud, and saves it to disk.
-  def refresh_updated_items(parent_objects_for_update)
-    parent_objects_for_update.each do |parent_object_array|
+  # Takes a set of parent object refs, sets up a batch job, and queues a SetupMetadataJob
+  def refresh_updated_items(parent_object_refs)
+    #  Create a single batch for this update
+    parent_object_refs.each do |parent_object_array|
       oid = parent_object_array[0]
       metadata_source = parent_object_array[1]
-      po = ParentObject.find_by(oid: oid)
-      if po
-        po.default_fetch
-        po.save
-      end
+      # skip ladybird updates
+      next if metadata_source == "ladybird"
 
-      po.to_json_file(metadata_source: MetadataSource.find_by(metadata_cloud_name: metadata_source))
-      @tally_retrieved_records += 1
+      po = ParentObject.find_by_oid(oid)
+      # skip it if the metadata source does not match (This should never happen after dependent uris are updating properly)
+      next unless po.authoritative_metadata_source.metadata_cloud_name == metadata_source
+
+      #  if po was updated after the most recent update of one of all the dependent uris, skip it
+      last_update = metadata_source == 'aspace' ? po.last_aspace_update : po.last_voyager_update
+      most_recent_dependend_object_update = DependentObject.where(parent_object_id: oid).map { |dobj| update_time_uri_map[dobj.dependent_uri] }.compact.map(&:to_datetime).max
+      next if last_update&.after?(most_recent_dependend_object_update)
+
+      #  if po has a Metadata Job queued or in progress, skip it.
+      next unless po.setup_metadata_jobs.empty?
+
+      queue_parent_object(po)
+      @tally_queued_records += 1
     end
+  end
+
+  def batch_process
+    @batch_process ||= BatchProcess.create!(batch_action: 'activity stream updates', user: User.system_user)
+  end
+
+  def queue_parent_object(po)
+    po.metadata_update = true
+    po.current_batch_connection = batch_process.batch_connections.build(connectable: po)
+    batch_process.save
+    po.current_batch_process = batch_process
+    po.save! # save will cause SetupMetadataJob to be queued since metadata_update is true.
   end
 
   ##

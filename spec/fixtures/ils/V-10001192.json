@@ -3,7 +3,8 @@
   "source": "ils",
   "recordType": "bib",
   "uri": "/ils/barcode/39002091548348?bib=3659107",
-  "callNumber": "GEN MSS 963 Former call number: MS Vault Eliot",
+  "callNumber": "GEN MSS 963",
+  "callNumberWithPublicNote": "GEN MSS 963 Former call number: MS Vault Eliot",
   "creator": [
     "Eliot, George, 1819-1880"
   ],
@@ -55,10 +56,9 @@
     "Novelists, English"
   ],
   "genre": [
-    "Diaries",
-    "Photographic prints",
     "Archives",
-    "Archives"
+    "Diaries",
+    "Photographic prints"
   ],
   "orbisBibId": "3659107",
   "orbisBarcode": "39002091548348",
@@ -70,7 +70,7 @@
     "George Eliot and George Henry Lewes Collection. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1834"
+    "1834/1981"
   ],
   "illustrativeMatter": "    ",
   "subjectEra": "19th century 19th century",
