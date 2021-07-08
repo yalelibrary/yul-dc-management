@@ -174,12 +174,9 @@ const columnOrder = (columns) => {
 }
 
 $( document ).on('turbolinks:load', function() {
-  $(".download_batch_process_template").on("click", function(e) {
-    e.preventDefault();
-     document.location.href = "download_template?batch_action=" + $('#batch_process_batch_action').val();
-  });
   let show_hide_template_link = function(){
-    let batch_action = $('#batch_process_batch_action').val()
+    let batch_action = $('#batch_process_batch_action').val();
+    $(".download_batch_process_template").attr("href", "batch_processes/download_template?batch_action=" + $('#batch_process_batch_action').val());
     if (batch_action) {
       $(".download_batch_process_template").fadeIn();
     } else {

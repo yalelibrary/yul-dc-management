@@ -57,7 +57,7 @@ class BatchProcessesController < ApplicationController
       # Add BOM to force Excel to open correctly
       send_data "\xEF\xBB\xBF" + csv_template,
                 type: 'text/csv; charset=utf-8; header=present',
-                disposition: "attachment; filename=#{batch_action.parameterize.underscore + '_template'}"
+                disposition: "attachment; filename=#{batch_action.parameterize.underscore + '_template.csv'}"
     rescue
       redirect_to batch_processes_path
     end

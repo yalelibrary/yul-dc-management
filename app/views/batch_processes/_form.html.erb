@@ -13,7 +13,7 @@
     <div class='form-group' >
       <%= f.label :batch_action %>
       <%= f.select(:batch_action, BatchProcess.batch_actions.map {|option| [option.split.map(&:capitalize).join(' '), option]}, {prompt:'Select Batch Action'}, { :class => 'form-control', required: true }) %>
-      <%= link_to("Download Template", "#", class:"download_batch_process_template")%>
+      <%= link_to("Download Template", "#", class:"download_batch_process_template", target: "_blank")%>
     </div>
     <div class='form-group' >
       <%= f.file_field :file, accept: '.csv, .xml', required: true %>

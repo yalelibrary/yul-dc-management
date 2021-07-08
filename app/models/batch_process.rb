@@ -27,7 +27,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def self.csv_template(batch_action)
-    File.read(Rails.root.join("app", "assets", "templates", "#{batch_action.parameterize.underscore}.csv"))
+    File.read(Rails.root.join("public", "batch_processes", "templates", "#{batch_action.parameterize.underscore}.csv"))
   end
 
   def batch_ingest_events
