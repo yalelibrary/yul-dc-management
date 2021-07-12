@@ -110,7 +110,7 @@
   <div class='update-item-container'>
     <p>
       <strong>Update Metadata for this Object:</strong><br>
-      <small>Update the metadata for this object from the authoritative metadata source.<small>
+      <small>Update the metadata for this object from the authoritative metadata source.</small>
     </p>
     <div>
       <%= link_to 'Update this item', update_metadata_parent_object_path(@parent_object), method: :post, class: 'btn button update-item-button' %>
@@ -166,4 +166,5 @@
   <%= link_to 'Edit', edit_parent_object_path(@parent_object) %> |
 <% end %>
 <%= link_to 'Solr Document', solr_document_parent_object_path("#{@parent_object.oid}"), target: '_blank' %> |
+<%= link_to 'Public View', @parent_object.dl_show_url, target: '_blank' %> |
 <%= link_to 'Back', parent_objects_path %>

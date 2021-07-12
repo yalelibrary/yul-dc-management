@@ -79,8 +79,8 @@ def parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
                                                   .and_return('<a href="/parent_objects/2034600">2034600</a>')
   allow(@datatable_view_mock).to receive(:link_to).with('/parent_objects/2034600/edit', {})
                                                   .and_return('<a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil-alt"></i></a>')
-  allow(@datatable_view_mock).to receive(:link_to).with('http://localhost:3000/catalog/2034600', {})
-                                                  .and_return('<a href="http://localhost:3000/catalog/2034600">1</a>')
+  allow(@datatable_view_mock).to receive(:link_to).with('http://localhost:3000/catalog/2034600', target: :_blank)
+                                                  .and_return('<a target="_blank" href="http://localhost:3000/catalog/2034600">1</a>')
   @datatable_view_mock
 end
 

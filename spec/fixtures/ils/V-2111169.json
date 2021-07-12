@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002099258734?bib=9896328",
   "callNumber": "Beinecke MS 1121",
+  "callNumberWithPublicNote": "Beinecke MS 1121",
   "creator": [
     "Galen"
   ],

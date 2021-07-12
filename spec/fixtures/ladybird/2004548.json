@@ -75,7 +75,9 @@
       "oid": 1021925,
       "width": 1608,
       "height": 3274,
-      "children": []
+      "children": [
+
+      ]
     },
     {
       "jsonModelType": "LadybirdSolrRecord",
@@ -96,7 +98,9 @@
       "oid": 1021926,
       "width": 1605,
       "height": 3256,
-      "children": []
+      "children": [
+
+      ]
     }
   ]
 }

@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002113593728?bib=12286028",
   "callNumber": "Covers 5626 +1880",
+  "callNumberWithPublicNote": "Covers 5626 +1880",
   "creator": [
     "Li, Mengquan (Cartographer), cartographer",
     "李蒙泉 (Cartographer), cartographer"
@@ -37,7 +38,6 @@
     "\"Mei fang er shi li\"--Volume 6."
   ],
   "subjectTopic": [
-    "Military camps",
     "Military camps"
   ],
   "subjectGeographicCode": "a-cc-ku",
@@ -49,7 +49,6 @@
     "Maps",
     "Military maps",
     "Pictorial maps",
-    "Maps",
     "Chinese rare maps"
   ],
   "itemType": [
@@ -78,7 +77,6 @@
   "subjectGeographic": [
     "China",
     "Jiangsu Sheng",
-    "China",
     "Jiangsu Sheng."
   ],
   "relatedTitleDisplay": [

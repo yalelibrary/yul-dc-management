@@ -111,7 +111,7 @@ class ParentObjectsController < ApplicationController
     @parent_object.metadata_update = true
     @parent_object.setup_metadata_job
     respond_to do |format|
-      format.html { redirect_to parent_objects_url, notice: 'Parent object metadata update was queued.' }
+      format.html { redirect_back fallback_location: parent_object_url(@parent_object), notice: 'This object has been queued for a metadata update.' }
       format.json { head :no_content }
     end
   end

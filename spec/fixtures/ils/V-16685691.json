@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002131329220?bib=13881242",
   "callNumber": "BrSides Elephant Folio 2018 22",
+  "callNumberWithPublicNote": "BrSides Elephant Folio 2018 22",
   "creator": [
     "United States. Hydrographic Office, cartographer"
   ],
@@ -53,8 +54,8 @@
     "(W 180°--E 180°/N 90°--S 90°)."
   ],
   "genre": [
-    "World maps",
-    "Maps"
+    "Maps",
+    "World maps"
   ],
   "itemType": [
     "cartographic image"
@@ -68,6 +69,10 @@
     "1916"
   ],
   "illustrativeMatter": "dg  ",
+  "coordinateWest": "-180.000000",
+  "coordinateEast": "180.000000",
+  "coordinateNorth": "090.000000",
+  "coordinateSouth": "-090.000000",
   "titleStatement": [
     "Tracks for full powered steam vessels with the shortest navigable distances in nautical miles from anchorage to anchorage, New York distances are measures to and from the Battery achorage"
   ],
