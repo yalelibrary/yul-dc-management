@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002002294065?bib=5404463",
   "callNumber": "EEa 794b",
+  "callNumberWithPublicNote": "EEa 794b",
   "creator": [
     "Baldwyn, George Augustus"
   ],
@@ -32,9 +33,9 @@
     "eng"
   ],
   "description": [
+    "BEIR EEa 794b: Autograph of N.B. Haswell.",
     "Many of the plates dated 1794.",
-    "Irregularities in paging 1 map (Europe) wanting.",
-    "BEIR EEa 794b: Autograph of N.B. Haswell."
+    "Irregularities in paging 1 map (Europe) wanting."
   ],
   "subjectTopic": [
     "Geography"
@@ -59,8 +60,6 @@
   "provenanceControlled": "Haswell, N.B. Autograph.",
   "repository": "lsfbeir",
   "relatedTitle": [
-    "",
-    "",
     ""
   ],
   "relatedTitleDisplay": [

@@ -429,9 +429,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expected_uris = ["/aspace/repositories/11/top_containers/68645",
                          "/aspace/repositories/11/archival_objects/555049",
                          "/aspace/agents/people/79383",
+                         "/aspace/repositories/11",
                          "/aspace/repositories/11/archival_objects/555042",
                          "/aspace/repositories/11/archival_objects/554841",
                          "/aspace/repositories/11/resources/1453"].to_set
+        puts(parent_object.reload.dependent_objects.map(&:dependent_uri))
         expect(parent_object.reload.dependent_objects.count).to eq expected_uris.count
         expect(parent_object.dependent_objects.all? { |dobj| dobj.metadata_source == 'aspace' }).to be_truthy
         uris = parent_object.dependent_objects.map(&:dependent_uri).to_set
@@ -504,7 +506,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/16797069?include-children=1")
               .to_return(status: 200, body: { data: "fake data" }.to_json)
           expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/16797069?include-children=1"
-          allow(S3Service).to receive(:upload).and_return true
+          allow(S3Service).to receive(:upload_if_changed).and_return true
           record = ladybird_source.fetch_record(parent_object)
           expect(record['data']).to eq("fake data")
         end

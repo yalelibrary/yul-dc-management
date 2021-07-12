@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002091549304?bib=11756910",
   "callNumber": "Takamiya MS 97",
+  "callNumberWithPublicNote": "Takamiya MS 97",
   "title": [
     "Mirour of mans salvacioune"
   ],
@@ -32,11 +33,11 @@
     "enm"
   ],
   "description": [
+    "In Middle English.",
     "Layout: single columns of 17 lines.",
     "Script: gothic bookhand.",
     "Decoration: some initials, line fillers, underlining, in red ink.",
-    "Binding: nineteenth-century full brown morocco, gilt.",
-    "In Middle English."
+    "Binding: nineteenth-century full brown morocco, gilt."
   ],
   "subjectTopic": [
     "Christian life",
@@ -48,10 +49,8 @@
     "Typology (Theology)"
   ],
   "genre": [
+    "Early works to 1800",
     "Manuscripts, Medieval England 15th century",
-    "Early works to 1800",
-    "Early works to 1800",
-    "Early works to 1800",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
   "itemType": [

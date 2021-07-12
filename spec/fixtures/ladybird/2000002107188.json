@@ -1,18 +1,19 @@
 {
-  "recordType": "oid",
+  "jsonModelType": "LadybirdSolrRecord",
   "source": "ladybird",
+  "recordType": "oid",
   "uri": "/ladybird/oid/2107188",
-  "identifierShelfMark": "Brsides 2007 18",
+  "callNumber": "Brsides 2007 18",
   "creator": [
     "Viets, Dan, 1751-"
   ],
   "title": [
-    "Fair Lucretia’s garland [yale-only copy]"
+    "Fair Lucretia’s garland"
   ],
   "extentOfDigitization": [
     "Complete work digitized."
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "[New Haven?]"
   ],
   "publisher": [
@@ -35,19 +36,65 @@
   "format": [
     "text"
   ],
-  "partOf": "Treasures Old & New: Recent Additions to Beinecke Collections",
+  "partOf": "Beinecke Library",
   "rights": [
     "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
   ],
-  "dependentUris": [
-    "/ladybird/oid/2000002107188"
-  ],
   "orbisBibId": "7972227",
-  "itemPermission": "Yale Community Only",
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1779"
+  ],
+  "intStartYear": "1779",
   "repository": "Beinecke Library",
-  "oid": "2000002107188",
+  "creatorDisplay": [
+    "Viets, Dan, 1751-"
+  ],
+  "dependentUris": [
+    "/ladybird/oid/2107188"
+  ],
+  "oid": 2107188,
   "collectionId": 1,
-  "children": [],
+  "children": [
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1329643",
+      "caption": "Recto",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1329643"
+      ],
+      "oid": 1329643,
+      "width": 3744,
+      "height": 5715,
+      "children": [
+
+      ]
+    },
+    {
+      "jsonModelType": "LadybirdSolrRecord",
+      "source": "ladybird",
+      "recordType": "oid",
+      "uri": "/ladybird/oid/1329644",
+      "caption": "Verso",
+      "rights": [
+        "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      ],
+      "dependentUris": [
+        "/ladybird/oid/1329644"
+      ],
+      "oid": 1329644,
+      "width": 3738,
+      "height": 5708,
+      "children": [
+
+      ]
+    }
+  ],
   "abstract": [
     "An apparently unrecorded eighteenth century American verse broadside. The poem recounts the tragic tale of a young merchant who falls in love with Lucretia, becomes engaged to her, then sails away to make his fortune. The text is surrounded by printer’s ornaments of four-petaled flowers, suns, and rosettes, including those used by Samuel and Thomas Green who were printing in partnership in New Haven, 1769-97."
   ]

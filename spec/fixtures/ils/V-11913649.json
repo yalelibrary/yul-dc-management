@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002097273412?bib=3827095",
   "callNumber": "Landberg MSS 492",
+  "callNumberWithPublicNote": "Landberg MSS 492",
   "creator": [
     "Maqrīzī, Aḥmad ibn ʻAlī, 1364-1442"
   ],
@@ -34,7 +35,7 @@
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=11977426"
   ],
   "dateStructured": [
-    "1849"
+    "1800/1899"
   ],
   "illustrativeMatter": "||  ",
   "titleStatement": [

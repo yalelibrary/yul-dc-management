@@ -9,6 +9,11 @@ require "rails_helper"
 # WebMock.allow_net_connect!
 
 RSpec.describe S3Service, type: :has_vcr do
+  let(:etag_manifest_path) { "manifests/etag.tif" }
+  let(:etag_data) { Time.current.to_s }
+  let(:etag_digest) { "\"#{Digest::MD5.hexdigest(etag_data)}\"" }
+  let(:etag_manifest_url) { "https://yul-test-samples.s3.amazonaws.com/manifests/etag.tif" }
+
   before do
     stub_request(:put, "https://yul-test-samples.s3.amazonaws.com/testing_test/test.txt")
       .to_return(status: 200, body: "")
@@ -33,6 +38,8 @@ RSpec.describe S3Service, type: :has_vcr do
       .to_return(status: 200, body: "")
     stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/fake.tif")
       .to_return(status: 404, body: "")
+    stub_request(:head, etag_manifest_url).to_return(status: 200, body: "", headers: { 'etag' => etag_digest })
+    stub_request(:put, etag_manifest_url).to_return(status: 200, body: "")
   end
 
   around do |example|
@@ -107,5 +114,19 @@ RSpec.describe S3Service, type: :has_vcr do
     child_object_oid = "1014543"
     remote_path = "fulltext/43/10/14/54/#{child_object_oid}.txt"
     expect(described_class.full_text_exists?(remote_path)).to eq(true)
+  end
+
+  it "can check the etag" do
+    expect(described_class.etag(etag_manifest_path, ENV['SAMPLE_BUCKET'])).to eq(etag_digest)
+  end
+
+  it "conditionally skips saving when the data has not changed" do
+    expect(described_class.upload_if_changed(etag_manifest_path, etag_data)).to be_truthy
+    expect(WebMock).not_to have_requested(:put, etag_manifest_url)
+  end
+
+  it "conditionally saves data based when content has changed" do
+    expect(described_class.upload_if_changed(etag_manifest_path, "New data here")).to be_truthy
+    expect(WebMock).to have_requested(:put, etag_manifest_url)
   end
 end

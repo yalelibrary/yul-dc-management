@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002093768050?bib=4113177",
   "callNumber": "GEN MSS 257",
+  "callNumberWithPublicNote": "GEN MSS 257",
   "creator": [
     "Lincoln, Abraham, 1809-1865"
   ],
@@ -53,7 +54,7 @@
     "Abraham Lincoln Collection. General Collection, Beinecke Rare Book and Manuscript Library, Yale University"
   ],
   "dateStructured": [
-    "1824"
+    "1824/1865"
   ],
   "illustrativeMatter": "    ",
   "subjectEra": "Civil War, 1861-1865",
