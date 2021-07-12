@@ -14,7 +14,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :child_objects, through: :batch_connections, source_type: "ChildObject", source: :connectable
 
   def self.batch_actions
-    ['create parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
+    ['create parent objects', 'delete parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
   end
 
   def batch_processing_event(message, status = 'info')
@@ -94,13 +94,40 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         batch_processing_event("Skipping row [#{index + 2}] with unknown admin set [#{adminset_key}] for parent: #{oid}", 'Skipped Row')
         next
       end
-      next unless user_create_permission(index, admin_set, oid)
+      next unless user_edit_permission(index, admin_set, oid)
       if ParentObject.where(oid: oid).count.positive?
         batch_processing_event("Skipping row [#{index + 2}] with existing parent oid: #{oid}", 'Skipped Row')
         next
       end
       ParentObject.create(oid: oid) do |parent_object|
         # Only runs on newly created parent objects
+        setup_for_background_jobs(parent_object, metadata_source)
+        parent_object.admin_set = admin_set
+      end
+    end
+  end
+
+  def delete_parent_object(oids, metadata_sources, adminset_keys)
+    admin_set_hash = {}
+    oids.zip(metadata_sources, adminset_keys).each_with_index do |record, index|
+      oid, metadata_source, adminset_key = record
+      admin_set = admin_set_hash[adminset_key]
+      if admin_set.nil?
+        admin_set = AdminSet.find_by_key(adminset_key)
+        admin_set_hash[adminset_key] = admin_set
+      end
+      if admin_set.nil?
+        batch_processing_event("Skipping row [#{index + 2}] with unknown admin set [#{adminset_key}] for parent: #{oid}", 'Skipped Row')
+        next
+      end
+      next unless user_edit_permission(index, admin_set, oid)
+
+      if ParentObject.where(oid: oid).count.negative?
+        batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid} because it was not found in local database", 'Skipped Row')
+        next
+      end
+
+      ParentObject.destroy(oid) do |parent_object|
         setup_for_background_jobs(parent_object, metadata_source)
         parent_object.admin_set = admin_set
       end
@@ -119,6 +146,12 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     metadata_sources = parsed_csv.entries.map { |r| r['source'] }
     admin_sets = parsed_csv.entries.map { |r| r['admin_set'] }
     create_parent_objects_from_oids(oids, metadata_sources, admin_sets)
+  end
+
+  def remove_from_metadata_cloud_csv
+    metadata_sources = parsed_csv.entries.map { |r| r['source'] }
+    admin_sets = parsed_csv.entries.map { |r| r['admin_set'] }
+    delete_parent_object(oids, metadata_sources, admin_sets)
   end
 
   def recreate_child_oid_ptiffs
@@ -152,7 +185,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parents
   end
 
-  def user_create_permission(index, admin_set, oid)
+  def user_edit_permission(index, admin_set, oid)
     user = self.user
     unless current_ability.can? :add_member, admin_set
       batch_processing_event("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{oid}", 'Permission Denied')
@@ -218,6 +251,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       case batch_action
       when 'create parent objects'
         RefreshMetadataCloudCsvJob.perform_later(self)
+      when 'delete parent objects'
+        RemoveFromMetadataCloudCsvJob.perform_later(self)
       when 'export child oids'
         CreateChildOidCsvJob.perform_later(self)
       when 'reassociate child oids'

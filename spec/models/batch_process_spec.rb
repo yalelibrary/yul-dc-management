@@ -316,6 +316,22 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           File.delete("spec/fixtures/images/access_masters/00/03/30/00/04/03/30000403.tif")
           File.delete("spec/fixtures/images/access_masters/00/04/30/00/04/04/30000404.tif")
         end
+
+        it "deletes a parent object with the expected values and child objects with expected values" do
+          expect do
+            batch_process.file = csv_upload_with_source
+            batch_process.save
+          end.to change { ParentObject.count }.from(0).to(6)
+            .and change { ChildObject.count }.from(0).to(39)
+
+          delete_batch_process = described_class.new(batch_action: "delete parent objects", user_id: user.id)
+          expect(delete_batch_process.batch_action).to eq "delete parent objects"
+          expect do
+            delete_batch_process.file = csv_upload_with_source
+            delete_batch_process.save
+          end.to change { ParentObject.count }.from(6).to(0)
+            .and change { ChildObject.count }.from(39).to(0)
+        end
       end
     end
 
@@ -351,6 +367,32 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
             batch_process.save
             batch_process.create_parent_objects_from_oids(["16371253"], ["ladybird"], ["brbl"])
           end.to change { ParentObject.count }.from(0).to(1)
+        end
+      end
+
+      describe "batch delete" do
+        it "includes the originating user NETid" do
+          batch_process.user_id = user.id
+          expect(batch_process.user.uid).to eq "mk2525"
+        end
+      end
+
+      context "creating a ParentObject from an import" do
+        before do
+          stub_metadata_cloud("16371253")
+          stub_full_text('1032318')
+        end
+        it "can create a parent_object from an array of oids" do
+          expect do
+            batch_process.save
+            batch_process.create_parent_objects_from_oids(["16371253"], ["ladybird"], ["brbl"])
+          end.to change { ParentObject.count }.from(0).to(1)
+
+          delete_batch_process = described_class.new(batch_action: "delete parent objects", user_id: user.id)
+          expect do
+            delete_batch_process.save
+            delete_batch_process.delete_parent_object(["16371253"], ["ladybird"], ["brbl"])
+          end.to change { ParentObject.count }.from(1).to(0)
         end
       end
 
