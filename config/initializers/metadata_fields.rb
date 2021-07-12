@@ -128,12 +128,11 @@ METADATA_FIELDS = {
       'sourceDate_tesim'
     ]
   },
-  ancestorTitles: {
+  sourceNote: {
     label: 'Collection Note',
     solr_fields: [
-      'ancestorTitles_tesim'
-    ],
-    join_char: ' > '
+      'sourceNote_tesim'
+    ]
   },
   sourceEdition: {
     label: 'Collection Edition',
