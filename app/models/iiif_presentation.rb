@@ -68,6 +68,7 @@ class IiifPresentation
                 @parent_object&.authoritative_json&.[](field.to_s)
               end
       value = value.to_s unless value.nil? || value.is_a?(Array)
+      value.reverse! if value.is_a?(Array) && hash[:reverse_array]
       value = value.join(hash[:join_char]) if value.is_a?(Array) && hash[:join_char].present?
       values << metadata_pair(hash[:label], value) if value
     end
