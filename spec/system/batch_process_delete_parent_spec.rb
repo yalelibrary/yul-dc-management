@@ -2,20 +2,11 @@
 require 'rails_helper'
 
 RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
-  let(:user) { FactoryBot.create(:user, uid: "johnsmith2530") }
-  let(:admin_set) { FactoryBot.create(:admin_set) }
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: 1002, admin_set: admin_set) }
-  let(:child_object) { FactoryBot.create(:child_object, oid: 1_030_368, parent_object: parent_object) }
-  # let(:batch_process) do
-  #   FactoryBot.create(
-  #     :batch_process,
-  #     user: user,
-  #     csv: File.open(fixture_path + '/short_fixture_ids_with_source.csv').read,
-  #     file_name: "short_fixture_ids_with_source.csv",
-  #     created_at: "2020-10-08 14:17:01"
-  #   )
-  # end
-  # let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826") }
+  let(:user) { FactoryBot.create(:user) }
+  let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
+  # parent object has four child objects
+  let!(:parent_object) { FactoryBot.create(:parent_object, oid: "16854285", admin_set_id: admin_set.id) }
+  
 
   around do |example|
     original_path = ENV["GOOBI_MOUNT"]
@@ -29,18 +20,11 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
   before do
     stub_ptiffs_and_manifests
-    # stub_metadata_cloud("2004628")
-    login_as user
-    # stub_metadata_cloud("2030006")
-    # stub_metadata_cloud("2034600")
-    # stub_metadata_cloud("16057779")
-    # stub_metadata_cloud("2002826")
-    # stub_full_text('1030368')
-    # stub_full_text('1032318')
-    # parent_object
+    stub_metadata_cloud("16854285")
   end
 
-  context "with a user with edit permissions" do
+
+  context "with a user with edit permissions", solr: true do
     context "deleting a batch of parent objects" do
       around do |example|
         perform_enqueued_jobs do
@@ -48,52 +32,50 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         end
       end
       before do
+        login_as user
         user.add_role(:editor, admin_set)
-        visit batch_processes_path
+        stub_request(:put, "https://yul-dc-ocr-test.s3.amazonaws.com/pdfs/85/16/85/42/85/16854285.pdf")
+        .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
+        # stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/originals/89/45/67/89/456789.tif")
+        # .to_return(status: 200, body: "", headers: {})
+        # stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/ptiffs/89/45/67/89/456789.tif")
+        # .to_return(status: 200, body: "", headers: {})
       end
       
       it "deletes the parent and artifacts" do
-        select("Create Parent Objects")
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/delete_sample_fixture_ids.csv")
-        click_button("Submit")
-        # byebug
-        expect(ParentObject.count).to eq 1
-        # visit "/manifests/#{po.oid}"
-        # expect(page.status_code).to eq 200        
+        # perform batch delete        
         visit batch_processes_path
         select("Delete Parent Objects")
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/delete_sample_fixture_ids.csv")
         click_button("Submit")
         expect(page).to have_content "Your job is queued for processing in the background"
         
-        # parent expectations
+        # parent expectations - delete parent object, pdf, manifest, and solr document
+        # parent object
         expect(ParentObject.count).to eq 0
-        # visit "/catalog/#{po.oid}"
-        # expect(page).to have_content "The page you were looking for doesn't exist."
-        byebug
-        # pdf is deleted
-        # visit "/pdfs/#{parent_object.oid}.pdf"
-        # expect(page.status_code).to eq 302
+        visit "/parent_objects/#{parent_object.oid}"
+        expect(page).to have_content("Parent object, oid: #{parent_object.oid}, was not found in local instance.")
+        # pdf
+        # byebug
+        expect do
+          visit 'https://yul-dc-ocr-test.s3.amazonaws.com/pdfs/85/16/85/42/85/16854285.pdf'
+        end.to (status: 404)
+        # manifest
+        # expect(parent_object.needs_a_manifest?).to be_truthy
+        # solr document
+        response = solr.get 'select', params: { q: '*:*' }
+        expect(response["response"]["numFound"]).to eq 0
         
+        # # child expectations - delete child object, solr document
+        # expect(ChildObject.count).to eq 0
+        # visit "/child_objects/#{child_object.oid}"
+        # expect(response).to have_http_status(:not_found)
+
         
-        # manifest is deleted
-        # visit "/manifests/#{parent_object.oid}"
-        # expect(page.status_code).to eq 404
-        
-        # solr document is deleted
-        # click_link(BatchProcess.last.id.to_s)
-        visit "/management/parent_objects/#{parent_object.oid}/solr_document"
-        # expect(page.status_code).to eq 404
-        
-        # child expectations
-        expect(ChildObject.count).to eq 0
-        
-        # solr document is deleted
-        get "/management/child_objects/#{child_object.oid}/solr_document"
-        expect(response).to have_http_status(:not_found)
-        
-        click_link(BatchProcess.last.id)
-        expect(page).to have_content "Parent object was successfully destroyed."
+        # # confirmation message
+        # visit batch_processes_path
+        # click_link(BatchProcess.last.id)
+        # expect(page).to have_content "Parent object was successfully destroyed."
       end
 
       it "leaves the ptiffs" do
