@@ -30,6 +30,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   before do
     stub_ptiffs_and_manifests
     # stub_metadata_cloud("2004628")
+    login_as user
     # stub_metadata_cloud("2030006")
     # stub_metadata_cloud("2034600")
     # stub_metadata_cloud("16057779")
@@ -48,7 +49,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
       before do
         user.add_role(:editor, admin_set)
-        login_as user
         visit batch_processes_path
       end
       
@@ -58,8 +58,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         click_button("Submit")
         # byebug
         expect(ParentObject.count).to eq 1
-        po = ParentObject.find(ParentObject.first.oid)
-        co = ChildObject.find(po.child_oids)
         # visit "/manifests/#{po.oid}"
         # expect(page.status_code).to eq 200        
         visit batch_processes_path
@@ -71,26 +69,27 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # parent expectations
         expect(ParentObject.count).to eq 0
         # visit "/catalog/#{po.oid}"
-        expect(page).to have_content "The page you were looking for doesn't exist."
-        
+        # expect(page).to have_content "The page you were looking for doesn't exist."
+        byebug
         # pdf is deleted
-        visit "/pdfs/#{po.oid}.pdf"
+        # visit "/pdfs/#{parent_object.oid}.pdf"
         # expect(page.status_code).to eq 302
         
         
         # manifest is deleted
-        visit "/manifests/#{po.oid}"
+        # visit "/manifests/#{parent_object.oid}"
         # expect(page.status_code).to eq 404
         
         # solr document is deleted
-        visit "/management/parent_objects/#{po.oid}/solr_document"
+        # click_link(BatchProcess.last.id.to_s)
+        visit "/management/parent_objects/#{parent_object.oid}/solr_document"
         # expect(page.status_code).to eq 404
         
         # child expectations
         expect(ChildObject.count).to eq 0
         
         # solr document is deleted
-        get "/management/child_objects/#{co.oid}/solr_document"
+        get "/management/child_objects/#{child_object.oid}/solr_document"
         expect(response).to have_http_status(:not_found)
         
         click_link(BatchProcess.last.id)
