@@ -141,7 +141,14 @@ class ParentObjectsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_parent_object
-      @parent_object = ParentObject.find(params[:id])
+      begin
+        @parent_object = ParentObject.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        respond_to do |format|
+          format.html { redirect_to parent_objects_url, notice: "Parent object, oid: #{params[:id]}, was not found in local instance." }
+          format.json { head :no_content }
+        end
+      end
     end
 
     def batch_process_of_one
