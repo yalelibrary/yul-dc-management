@@ -4,6 +4,7 @@
   "recordType": "bib",
   "uri": "/ils/barcode/39002091597519?bib=9734851",
   "callNumber": "Beinecke MS 410",
+  "callNumberWithPublicNote": "Beinecke MS 410",
   "title": [
     "Indulgence scroll"
   ],
@@ -29,12 +30,12 @@
     "lat"
   ],
   "description": [
+    "In Latin and English.",
     "Script: Written in gothic liturgical script in brown and red ink.",
     "Membrane I: Two miniatures of the Emblems of the Passion, the one above the written space in a gothic architectural setting, with a Saint on either side and instruments of the Passion included around the full-figure of Christ standing with the cross. The miniature below with three exceptionally large nails and a heart enclosed by a crown of thorns and supported by two angels; surrounded by instruments of the Passion. The patron in clerical costume of white gown and blue robe [Austin friar?] in prayer with a scroll. A curling acanthus and floral border, containing birds holding snakes in their beaks; red, blue, pink and orange, framed in blue, with a gentle ogee arch at the top.",
     "Membrane II: A large empty cross (17 mm.) drawn in black ink and colored brown, in the center of the written space. One 6-line initial, pink and blue acanthus on a gold ground infilled with an aroid. Three 2-line initials, one blue filled with a pink flower on gold, one pink with white filigree on gold, one gold, filled with blue with white filigree on a pink ground. Floral border, including columbines, roses, in red, blue, pink and green, with insects, against a tan ground with brown dots, framed in red and blue.",
     "Membrane III: A miniature of the Christ Child as Salvator Mundi: seated on a red cushion beside the cross, holding the orb and blessing. This iconography, rare and perhaps unknown in English manuscript illustration, is probably of foreign origin. One 3-line initial, pink and blue with white highlights, filled with a blue and pink flower on a gold ground. Border with large blue, pink, green and orange flowers joined by an undulating green stem, with brown hair-spray and gold dots. Framed in blue and pink.",
-    "Holes and tears in the margins of the upper two segments; considerably rubbed, with some loss of text.",
-    "In Latin and English."
+    "Holes and tears in the margins of the upper two segments; considerably rubbed, with some loss of text."
   ],
   "subjectName": [
     "Catholic Church"
@@ -46,8 +47,8 @@
     "Manuscripts, Medieval"
   ],
   "genre": [
-    "Manuscripts, Medieval England 15th century",
     "Prayers and devotions",
+    "Manuscripts, Medieval England 15th century",
     "Medieval and Renaissance Manuscripts in Beinecke Library"
   ],
   "itemType": [
@@ -63,7 +64,7 @@
     "Indulgence Scroll. General Collection, Beinecke Rare Book and Manuscript Library, Yale University."
   ],
   "dateStructured": [
-    "1475"
+    "1475/1500"
   ],
   "illustrativeMatter": "    ",
   "titleStatement": [

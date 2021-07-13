@@ -3,7 +3,8 @@
   "source": "ils",
   "recordType": "bib",
   "uri": "/ils/barcode/39002094045136?bib=1169354",
-  "callNumber": "GEN MSS VOL 728 (Oversize) Bound with 1 other title. To view full description, search by call number: GEN MSS VOL 728 (Oversize) Former call number: MS Vault Johnson",
+  "callNumber": "GEN MSS VOL 728 (Oversize)",
+  "callNumberWithPublicNote": "GEN MSS VOL 728 (Oversize) Bound with 1 other title. To view full description, search by call number: GEN MSS VOL 728 (Oversize) Former call number: MS Vault Johnson",
   "creator": [
     "Johnson, Samuel, 1709-1784"
   ],

@@ -17,6 +17,15 @@
 // TODO(alishaevn): figure out how to import all files in theme once, instead of in every file ;
 // @import 'theme/*';
 
+@import 'theme/typography';
+
 .main-content{
-  min-height: 90vh
+  min-height: 90vh;
+  font-family: $standard_font_family;
+  p, ol, ul, td {
+    font-family: $standard_font_family;
+  }
+  strong {
+    font-family: $bold_font_family;
+  }
 }

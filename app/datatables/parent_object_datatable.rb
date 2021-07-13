@@ -71,7 +71,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
     result = []
     result << link_to(parent_object.oid, parent_object_path(parent_object))
     result << with_icon('fa fa-pencil-alt', edit_parent_object_path(parent_object)) if @current_ability.can? :edit, parent_object
-    result << with_icon('fa fa-eye', parent_object.dl_show_url)
+    result << with_icon('fa fa-eye', parent_object.dl_show_url, target: :_blank)
     result.join(' ')
   end
 

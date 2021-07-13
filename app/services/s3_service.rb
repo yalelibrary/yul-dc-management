@@ -11,6 +11,16 @@ class S3Service
     )
   end
 
+  def self.upload_if_changed(file_path, data, bucket = ENV['SAMPLE_BUCKET'])
+    return true if checksum_matches?(file_path, bucket, data)
+    status = @client.put_object(
+      body: data,
+      bucket: bucket,
+      key: file_path
+    )
+    status.successful?
+  end
+
   # Returns the response body text
   def self.download(file_path)
     resp = @client.get_object(bucket: ENV['SAMPLE_BUCKET'], key: file_path)
@@ -50,6 +60,19 @@ class S3Service
     object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
     return false unless object.exists?
     object.metadata.symbolize_keys
+  end
+
+  def self.checksum_matches?(remote_path, bucket, data)
+    etag = S3Service.etag(remote_path, bucket)
+    return false unless etag
+    md5 = "\"#{Digest::MD5.hexdigest(data)}\""
+    md5 == etag
+  end
+
+  def self.etag(remote_path, bucket = ENV['SAMPLE_BUCKET'])
+    object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
+    return nil unless object.exists?
+    object.etag
   end
 
   def self.s3_exists?(remote_path, bucket = ENV['S3_SOURCE_BUCKET_NAME'])

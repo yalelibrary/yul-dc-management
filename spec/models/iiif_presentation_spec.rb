@@ -75,7 +75,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     end
 
     it "can save a manifest to S3" do
-      expect(iiif_presentation.save).to eq true
+      expect(iiif_presentation.save).to eq(true)
     end
 
     it "can download a manifest from S3" do
@@ -121,7 +121,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["metadata"].last.class).to eq Hash
       expect(iiif_presentation.manifest["metadata"].last["label"]).to eq "OID"
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"] == "Orbis ID" }).not_to be_empty
-      expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"] == "Container / Volume Information" }.first["value"].first).to eq 'Box 12, Folder 117'
+      expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"] == "Container / Volume Information" }.first["value"].first).to eq 'Box 12 | Folder 117'
     end
 
     it "has a rendering in the sequence" do

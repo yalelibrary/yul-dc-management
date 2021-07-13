@@ -1,6 +1,7 @@
 {
-  "recordType": "bib",
+  "jsonModelType": "BibSolrRecord",
   "source": "ils",
+  "recordType": "bib",
   "uri": "/ils/bib/7972227",
   "creator": [
     "Viets, Dan, 1751-"
@@ -8,7 +9,7 @@
   "title": [
     "Fair Lucretia's garland"
   ],
-  "publicationPlace": [
+  "creationPlace": [
     "New Haven?"
   ],
   "publisher": [
@@ -21,12 +22,15 @@
     "1 sheet ([1] p.) ; 36 x 24 cm."
   ],
   "language": [
-    "en"
+    "English"
+  ],
+  "languageCode": [
+    "eng"
   ],
   "description": [
+    "BEIN Broadsides 2007 18: In ms. on verso: Colebrook.",
     "Poem.",
-    "Not in Evans.",
-    "BEIN Broadsides 2007 18: In ms. on verso: Colebrook."
+    "Not in Evans."
   ],
   "genre": [
     "Broadside poems Connecticut New Haven 1779"
@@ -36,9 +40,9 @@
     "http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=1329643"
   ],
   "dateStructured": [
-    "1779   "
+    "1779"
   ],
-  "illustrativeMatter": "   ",
+  "illustrativeMatter": "    ",
   "titleStatement": [
     "Fair Lucretia's garland"
   ],
