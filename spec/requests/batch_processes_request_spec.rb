@@ -138,7 +138,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
         #   delete_batch_process.save
         #   delete_batch_process.delete_parent_object(["16371253"], ["ladybird"], ["brbl"])
         # end.to change { ParentObject.count }.from(1).to(0)
-        byebug
+
         # po = ParentObject.find(ParentObject.first.oid)
         # co = ChildObject.find(po.child_oids)
 
@@ -153,38 +153,13 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
         expect(response).to have_http_status(:not_found)
         
         # solr document is deleted
-        get "/management/parent_objects/#{parent_object.oid}/solr_document"
+        get "/parent_objects/#{parent_object.oid}/solr_document"
         expect(response).to have_http_status(:not_found)
         
         # solr document is deleted
-        get "/management/child_objects/#{co.oid}/solr_document"
+        get "/child_objects/#{co.oid}/solr_document"
         expect(response).to have_http_status(:not_found)
       end
-
-            # parent expectations
-            # expect(ParentObject.count).to eq 0
-            # # get "/catalog/#{po.oid}"
-            # expect(page).to have_content "The page you were looking for doesn't exist."
-            
-            # # pdf is deleted
-            # visit "/pdfs/#{po.oid}.pdf"
-            # # expect(response).to eq 302
-            
-            
-            # # manifest is deleted
-            # visit "/manifests/#{po.oid}"
-            # # expect(page.status_code).to eq 404
-            
-            # # solr document is deleted
-            # visit "/management/parent_objects/#{po.oid}/solr_document"
-            # # expect(page.status_code).to eq 404
-            
-            # # child expectations
-            # expect(ChildObject.count).to eq 0
-            
-            # # solr document is deleted
-            # get "/management/child_objects/#{co.oid}/solr_document"
-            # expect(response).to have_http_status(:not_found)
     end
     context "logged in without edit permission" do
       let(:admin_user) { FactoryBot.create(:sysadmin_user) }
