@@ -4,7 +4,7 @@ module CsvExportable
   extend ActiveSupport::Concern
 
   def headers
-    ['parent_oid', 'child_oid', 'order', 'parent_title', 'label', 'caption', 'viewing_hint']
+    ['parent_oid', 'child_oid', 'order', 'parent_title', 'call_number', 'label', 'caption', 'viewing_hint']
   end
 
   def output_csv
@@ -15,7 +15,7 @@ module CsvExportable
       sorted_child_objects.each do |co|
         next csv << co if co.is_a?(Array)
 
-        row = [co.parent_object.oid, co.oid, co.order, co.parent_object.authoritative_json['title']&.first, co.label, co.caption, co.viewing_hint]
+        row = [co.parent_object.oid, co.oid, co.order, co.parent_object.authoritative_json['title']&.first, co.parent_object.call_number, co.label, co.caption, co.viewing_hint]
         csv << row
       end
     end
@@ -47,7 +47,7 @@ module CsvExportable
   def check_can_view(ability, index, parent_object, arr, had_events)
     return true if ability.can?(:read, parent_object)
 
-    row = [parent_object.oid.to_i, nil, 0, 'Access denied for parent object', '', '']
+    row = [parent_object.oid.to_i, nil, 0, 'Access denied for parent object', '', '', '']
     batch_processing_event("Skipping row [#{index + 2}] due to parent permissions: #{parent_object.oid}", 'Skipped Row') unless had_events
     arr << row
     false

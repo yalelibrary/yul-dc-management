@@ -1,7 +1,7 @@
-child_oid,parent_oid,order,parent_title,label,caption,viewing_hint
-1011398,2002826,1,Roe,[Portrait of Grace Nail Johnson],,
-1021925,2002826,2,Roe,"[Photograph of Mrs. Grace Nail Johnson standing, with hat and with handbag] recto",,
-1021926,2002826,3,Roe,"Changed label, verso",,
-1021927,2002826,4,Roe,[Photograph of Grace Nail Johnson with arms folded] recto,,
-1021928,2002826,5,Roe,[Photograph of Grace Nail Johnson with arms folded] verso,,
-9921928,8802826,5,Roe,[Photograph of Grace Nail Johnson with arms folded] verso,,
+child_oid,parent_oid,order,parent_title,call_number,label,caption,viewing_hint
+1011398,2002826,1,Roe,MSS GEN1,[Portrait of Grace Nail Johnson],,
+1021925,2002826,2,Roe,MSS GEN1,"[Photograph of Mrs. Grace Nail Johnson standing, with hat and with handbag] recto",,
+1021926,2002826,3,Roe,MSS GEN1,"Changed label, verso",,
+1021927,2002826,4,Roe,MSS GEN1,[Photograph of Grace Nail Johnson with arms folded] recto,,
+1021928,2002826,5,Roe,MSS GEN1,[Photograph of Grace Nail Johnson with arms folded] verso,,
+9921928,8802826,5,Roe,MSS GEN1,[Photograph of Grace Nail Johnson with arms folded] verso,,
