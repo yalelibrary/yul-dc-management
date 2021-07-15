@@ -70,12 +70,11 @@ class ChildObjectsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_child_object
-      @child_object = ChildObject.find_by(id: params[:id]) if params[:id]
-      if @child_object.blank?
-        respond_to do |format|
-          format.html { redirect_to child_objects_url, notice: "Child object, oid: #{params[:id]}, was not found in local database." }
-          format.json { head :no_content }
-        end
+      @child_object = ChildObject.find(params[:id]) if params[:id]
+    rescue ActiveRecord::RecordNotFound
+      respond_to do |format|
+        format.html { redirect_to child_objects_url, notice: "Child object, oid: #{params[:id]}, was not found in local database." }
+        format.json { head :no_content }
       end
     end
 
