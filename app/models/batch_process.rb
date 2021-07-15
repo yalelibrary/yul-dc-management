@@ -111,14 +111,12 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
       parent_object = ParentObject.find_or_initialize_by(oid: oid)
       # Only runs on newly created parent objects
-      if parent_object.new_record?
-        setup_for_background_jobs(parent_object, metadata_source)
-        parent_object.admin_set = admin_set
-        parent_object.save
-      else
-        break
-        # TODO: enable edit action when added to batch actions
-      end
+      next unless parent_object.new_record?
+
+      setup_for_background_jobs(parent_object, metadata_source)
+      parent_object.admin_set = admin_set
+      parent_object.save
+      # TODO: enable edit action when added to batch actions
     end
   end
 

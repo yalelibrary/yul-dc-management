@@ -34,10 +34,10 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         user.add_role(:editor, admin_set)
         stub_request(:put, "https://yul-dc-ocr-test.s3.amazonaws.com/pdfs/85/16/85/42/85/16854285.pdf")
         .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
-        # stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/originals/89/45/67/89/456789.tif")
-        # .to_return(status: 200, body: "", headers: {})
-        # stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/ptiffs/89/45/67/89/456789.tif")
-        # .to_return(status: 200, body: "", headers: {})
+        stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/originals/89/45/67/89/456789.tif")
+        .to_return(status: 200, body: "", headers: {})
+        stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/ptiffs/89/45/67/89/456789.tif")
+        .to_return(status: 200, body: "", headers: {})
       end
 
       it "deletes the parent and artifacts" do
@@ -71,11 +71,9 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
       # How to check for the ptiffs when the parent object doesnt exist. Cant click the po link. Stub?
       it "leaves the ptiffs" do
-        expect(page).to have_link("2002826")
-        click_link("2002826")
-        expect(page).to have_link("1011398")
-        click_link("1011398")
-        expect(page).to have_content("Child Batch Process Detail")
+        expect do
+          visit 'https://yul-dc-ocr-test.s3.amazonaws.com/originals/89/45/67/89/456789.tif'
+        end.not_to raise_error
       end
 
       # skipping until full text feature merged

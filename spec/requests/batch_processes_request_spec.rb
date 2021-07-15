@@ -94,11 +94,13 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
         expect(response).to redirect_to(batch_processes_path)
       end
     end
+
     context "logged in without sysadmin" do
       let(:user) { FactoryBot.create(:user) }
       before do
         login_as user
       end
+
       it "returns http unauthorized" do
         post trigger_mets_scan_batch_processes_url
         expect(response).to have_http_status(:unauthorized)
@@ -109,33 +111,32 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
   describe "DELETE /delete_parent_object" do
     context "logged in with edit permission" do
       let(:user) { FactoryBot.create(:user) }
-      let(:parent_object) { FactoryBot.create(:parent_object) }
+      let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
+      let!(:parent_object) { FactoryBot.create(:parent_object, oid: "16854285", admin_set_id: admin_set.id) }
       before do
-        parent_object
         login_as user
+        user.add_role(:editor, admin_set)
       end
 
-      it "returns not found for deleted artifacts" do
+      it "returns http success" do
+        # this is probably not the right url
         delete parent_object_url(parent_object.oid.to_s)
-        # pdf is deleted
-        get "/pdfs/#{parent_object.oid}.pdf"
-        # expect(response).to eq have_http_status(:redirect)
-
-        # manifest is deleted
-        get "/manifests/#{parent_object.oid}"
-        expect(response).to have_http_status(:not_found)
-
-        # solr document is deleted
-        get "/parent_objects/#{parent_object.oid}/solr_document"
-        expect(response).to have_http_status(:not_found)
-
-        # solr document is deleted
-        get "/child_objects/#{co.oid}/solr_document"
-        expect(response).to have_http_status(:not_found)
+        expect(response).to have_http_status(:success)
       end
     end
+
     context "logged in without edit permission" do
       let(:admin_user) { FactoryBot.create(:sysadmin_user) }
+      let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
+      let!(:parent_object) { FactoryBot.create(:parent_object, oid: "16854285", admin_set_id: admin_set.id) }
+      before do
+        login_as admin_user
+      end
+
+      it "returns http unauthorized" do
+        delete parent_object_url(parent_object.oid.to_s)
+        expect(response).to have_http_status(:unauthorized)
+      end
     end
   end
 end
