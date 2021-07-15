@@ -7,6 +7,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
   let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids_with_source.csv")) }
+  let(:delete_sample) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "delete_sample_fixture_ids.csv")) }
   let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
   let(:xml_upload_two) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml')) }
   let(:aspace_xml_upload) { Rack::Test::UploadedFile.new("spec/fixtures/goobi/metadata/30000317_20201203_140947/good_aspace.xml") }
@@ -364,8 +365,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         end
         it "can create a parent_object from an array of oids" do
           expect do
+            batch_process.file = delete_sample
             batch_process.save
-            batch_process.create_parent_objects_from_oids(["16371253"], ["ladybird"], ["brbl"])
+            batch_process.refresh_metadata_cloud_csv
           end.to change { ParentObject.count }.from(0).to(1)
         end
       end
@@ -377,21 +379,23 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         end
       end
 
-      context "creating a ParentObject from an import" do
+      context "deleting a ParentObject from an import" do
         before do
           stub_metadata_cloud("16371253")
           stub_full_text('1032318')
         end
-        it "can create a parent_object from an array of oids" do
+        it "can delete a parent_object from an array of oids" do
           expect do
+            batch_process.file = delete_sample
             batch_process.save
-            batch_process.create_parent_objects_from_oids(["16371253"], ["ladybird"], ["brbl"])
+            batch_process.refresh_metadata_cloud_csv
           end.to change { ParentObject.count }.from(0).to(1)
 
           delete_batch_process = described_class.new(batch_action: "delete parent objects", user_id: user.id)
           expect do
+            delete_batch_process.file = delete_sample
             delete_batch_process.save
-            delete_batch_process.delete_parent_object(["16371253"], ["ladybird"], ["brbl"])
+            delete_batch_process.remove_from_metadata_cloud_csv
           end.to change { ParentObject.count }.from(1).to(0)
         end
       end
@@ -477,7 +481,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
             expect do
               batch_process.file = csv_upload
               batch_process.save
-              expect(batch_process.batch_ingest_events.count).to eq(1)
             end.not_to change { parent_object }
             expect(parent_object.reload.updated_at).to eq(original_updated_at)
           end
