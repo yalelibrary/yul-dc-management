@@ -105,57 +105,30 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       end
     end
   end
-  
+
   describe "DELETE /delete_parent_object" do
     context "logged in with edit permission" do
       let(:user) { FactoryBot.create(:user) }
-      # let!(:batch_process_csv) do
-      #   FactoryBot.create(
-      #     :batch_process,
-      #     user: user,
-      #     csv: File.open(fixture_path + '/short_fixture_ids.csv').read,
-      #     file_name: "short_fixture_ids.csv"
-      #   )
-      # end
       let(:parent_object) { FactoryBot.create(:parent_object) }
       before do
         parent_object
         login_as user
       end
-      # before do
-      #   stub_metadata_cloud("16371253")
-      #   stub_full_text('1032318')
-      # end
-      
+
       it "returns not found for deleted artifacts" do
-        # expect do
-        #   batch_process.save
-        #   batch_process.create_parent_objects_from_oids(["16371253"], ["ladybird"], ["brbl"])
-        # end.to change { ParentObject.count }.from(0).to(1)
-
-        # delete_batch_process = described_class.new(batch_action: "delete parent objects", user_id: user.id)
-        # expect do
-        #   delete_batch_process.save
-        #   delete_batch_process.delete_parent_object(["16371253"], ["ladybird"], ["brbl"])
-        # end.to change { ParentObject.count }.from(1).to(0)
-
-        # po = ParentObject.find(ParentObject.first.oid)
-        # co = ChildObject.find(po.child_oids)
-
-        delete parent_object_url("#{parent_object.oid}")
+        delete parent_object_url(parent_object.oid.to_s)
         # pdf is deleted
         get "/pdfs/#{parent_object.oid}.pdf"
         # expect(response).to eq have_http_status(:redirect)
-        
-        
+
         # manifest is deleted
         get "/manifests/#{parent_object.oid}"
         expect(response).to have_http_status(:not_found)
-        
+
         # solr document is deleted
         get "/parent_objects/#{parent_object.oid}/solr_document"
         expect(response).to have_http_status(:not_found)
-        
+
         # solr document is deleted
         get "/child_objects/#{co.oid}/solr_document"
         expect(response).to have_http_status(:not_found)

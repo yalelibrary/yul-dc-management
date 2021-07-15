@@ -6,7 +6,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
   # parent object has four child objects
   let!(:parent_object) { FactoryBot.create(:parent_object, oid: "16854285", admin_set_id: admin_set.id) }
-  
 
   around do |example|
     original_path = ENV["GOOBI_MOUNT"]
@@ -40,7 +39,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/ptiffs/89/45/67/89/456789.tif")
         # .to_return(status: 200, body: "", headers: {})
       end
-      
+
       it "deletes the parent and artifacts" do
         # perform batch delete(passes)
         visit batch_processes_path
@@ -48,25 +47,25 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/delete_sample_fixture_ids.csv")
         click_button("Submit")
         expect(page).to have_content "Your job is queued for processing in the background"
-        
+
         # parent object delete(passes)
         expect(ParentObject.count).to eq 0
         visit "/parent_objects/#{parent_object.oid}"
         expect(page).to have_content("Parent object, oid: #{parent_object.oid}, was not found in local instance.")
-        
+
         # pdf (selenium timeout error)
-        # expect do
-        #   visit 'https://yul-dc-ocr-test.s3.amazonaws.com/pdfs/85/16/85/42/85/16854285.pdf'
-        # end.to raise_error
-        
+        expect do
+          visit 'https://yul-dc-ocr-test.s3.amazonaws.com/pdfs/85/16/85/42/85/16854285.pdf'
+        end.to raise_error
+
         # manifest(passes)
         expect(parent_object.iiif_manifest).to be_nil
 
         # solr document(passes)
         response = solr.get 'select', params: { q: '*:*' }
         expect(response["response"]["numFound"]).to eq 0
-        
-        # child delete(passes)
+
+        # child object delete(passes)
         expect(ChildObject.count).to eq 0
       end
 
@@ -87,7 +86,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
   context "with a user without edit permissions" do
     let(:admin_user) { FactoryBot.create(:sysadmin_user) }
-    
+
     context "deleting a batch of parent objects" do
       around do |example|
         perform_enqueued_jobs do
@@ -98,7 +97,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         login_as admin_user
         visit batch_processes_path
       end
-      
+
       it "does not permit parent to be deleted" do
         select("Delete Parent Objects")
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/delete_sample_fixture_ids.csv")
