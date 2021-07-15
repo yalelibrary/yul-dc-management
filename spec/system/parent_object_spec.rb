@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
+UPDATE_PARENT_OBJECT_BUTTON = 'Save Parent Object And Update Metadata'
+
 RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
   before do
@@ -84,7 +86,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         click_on("Edit")
         expect(page).to have_field("Rights statement")
         fill_in("Rights statement", with: "This is a rights statement")
-        click_on("Update Parent object")
+        click_on(UPDATE_PARENT_OBJECT_BUTTON)
         expect(page).to have_content("This is a rights statement")
       end
 
@@ -138,7 +140,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       it "can change the visibility via the UI" do
         click_on("Edit")
         select("Yale Community Only")
-        click_on("Update Parent object")
+        click_on(UPDATE_PARENT_OBJECT_BUTTON)
         expect(page.body).to include "Yale Community Only"
         click_on("Back")
         click_on("Update Metadata")
@@ -150,7 +152,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         visit parent_object_path(2_012_036)
         click_on("Edit")
         select 'Sterling', from: "parent_object[admin_set]"
-        click_on("Update Parent object")
+        click_on(UPDATE_PARENT_OBJECT_BUTTON)
 
         visit parent_object_path(2_012_036)
         expect(page).to have_content "Sterling"
@@ -534,7 +536,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     it "does not allow changing parent_object to admin_set user does not have access to" do
       visit edit_parent_object_path("2002826")
       select 'AdminSet2', from: "parent_object[admin_set]"
-      click_on("Update Parent object")
+      click_on(UPDATE_PARENT_OBJECT_BUTTON)
 
       expect(page).to have_content "Admin set cannot be assigned to a set the User cannot edit"
     end
