@@ -117,6 +117,15 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(page).to have_content("Skipped Row").once
         expect(page).to have_content("invalid order").once
       end
+
+      it "updates all parent object counts" do
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_child_object_counts.csv")
+        select("Reassociate Child Oids")
+        click_button("Submit")
+        expect(page).to have_content("Your job is queued for processing in the background")
+        expect(parent_object.reload.child_object_count).to eq(0)
+        expect(parent_object_old_one.reload.child_object_count).to eq(3)
+      end
     end
 
     context "outputting csv" do
