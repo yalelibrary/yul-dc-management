@@ -118,10 +118,9 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
         user.add_role(:editor, admin_set)
       end
 
-      it "returns http success" do
-        # this is probably not the right url
-        delete parent_object_url(parent_object.oid.to_s)
-        expect(response).to have_http_status(:success)
+      it "returns http redirect" do
+        delete parent_object_url(parent_object)
+        expect(response).to have_http_status(:redirect)
       end
     end
 
@@ -131,10 +130,11 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       let!(:parent_object) { FactoryBot.create(:parent_object, oid: "16854285", admin_set_id: admin_set.id) }
       before do
         login_as admin_user
+        admin_user.remove_role(:editor)
       end
 
       it "returns http unauthorized" do
-        delete parent_object_url(parent_object.oid.to_s)
+        delete parent_object_url(parent_object)
         expect(response).to have_http_status(:unauthorized)
       end
     end
