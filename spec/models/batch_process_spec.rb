@@ -395,7 +395,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect do
             delete_batch_process.file = delete_sample
             delete_batch_process.save
-            delete_batch_process.remove_from_metadata_cloud_csv
+            delete_batch_process.delete_objects
           end.to change { ParentObject.count }.from(1).to(0)
         end
       end

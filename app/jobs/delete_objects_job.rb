@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RemoveFromMetadataCloudCsvJob < ApplicationJob
+class DeleteObjectsJob < ApplicationJob
   queue_as :default
 
   def default_priority
@@ -8,6 +8,6 @@ class RemoveFromMetadataCloudCsvJob < ApplicationJob
   end
 
   def perform(batch_process)
-    batch_process.remove_from_metadata_cloud_csv
+    batch_process.delete_objects
   end
 end

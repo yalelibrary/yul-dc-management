@@ -133,7 +133,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def remove_from_metadata_cloud_csv
+  def delete_objects
     parsed_csv.each_with_index do |row, index|
       oid = row['oid']
       metadata_source = row['source']
@@ -232,7 +232,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       when 'create parent objects'
         RefreshMetadataCloudCsvJob.perform_later(self)
       when 'delete parent objects'
-        RemoveFromMetadataCloudCsvJob.perform_later(self)
+        DeleteObjectsJob.perform_later(self)
       when 'export child oids'
         CreateChildOidCsvJob.perform_later(self)
       when 'reassociate child oids'
