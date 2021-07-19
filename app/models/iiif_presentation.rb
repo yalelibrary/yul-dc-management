@@ -74,6 +74,13 @@ class IiifPresentation
     values
   end
 
+  def process_metadata_array(value, hash)
+    value = value.reverse if hash[:reverse_array]
+    value = value.join(hash[:join_char]) if hash[:join_char].present?
+
+    value
+  end
+
   def metadata_pair(label, value)
     value = [value] if value.is_a? String
     { 'label' => label, 'value' => value }
