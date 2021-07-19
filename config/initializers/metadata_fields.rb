@@ -131,8 +131,8 @@ METADATA_FIELDS = {
   ancestorTitles: {
     label: 'Collection Note',
     solr_fields: [
-      'ancestorTitles_tesim',
-      'sourceNote_tesim'
+      'sourceNote_tesim',
+      'ancestorTitles_tesim'
     ],
     join_char: ' > ',
     digital_only: true,
