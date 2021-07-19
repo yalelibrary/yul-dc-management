@@ -1,11 +1,18 @@
 # frozen_string_literal: true
 
 class S3Service
-  @client ||= Aws::S3::Client.new
+  @client ||= Aws::S3::Client.new(http_wire_trace: true)
 
   def self.upload(file_path, data)
     @client.put_object(
       body: data,
+      bucket: ENV['SAMPLE_BUCKET'],
+      key: file_path
+    )
+  end
+
+  def self.delete(file_path)
+    @client.delete_object(
       bucket: ENV['SAMPLE_BUCKET'],
       key: file_path
     )

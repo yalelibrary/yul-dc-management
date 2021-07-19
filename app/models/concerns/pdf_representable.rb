@@ -33,6 +33,10 @@ module PdfRepresentable
     end
   end
 
+  def pdf_deletion
+    S3Service.delete(remote_pdf_path)
+  end
+
   def remote_pdf_path
     "pdfs/#{Partridge::Pairtree.oid_to_pairtree(oid)}/#{oid}.pdf"
   end
