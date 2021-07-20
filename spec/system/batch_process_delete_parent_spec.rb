@@ -29,10 +29,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
 
       it "deletes the parent and artifacts" do
-        expect(ParentObject.count).to eq 1
-        expect(ChildObject.count).to eq 4
-        response = solr.get 'select', params: { q: '*:*' }
-        expect(response["response"]["numFound"]).to eq 1
 
         # perform batch delete
         visit batch_processes_path
