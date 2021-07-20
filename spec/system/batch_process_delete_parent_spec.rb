@@ -29,7 +29,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
 
       it "deletes the parent and artifacts" do
-
         # perform batch delete
         visit batch_processes_path
         select("Delete Parent Objects")
