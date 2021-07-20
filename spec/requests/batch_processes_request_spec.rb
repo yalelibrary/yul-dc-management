@@ -109,6 +109,20 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
   end
 
   describe "DELETE /delete_parent_object" do
+
+    around do |example|
+      original_metadata_sample_bucket = ENV['SAMPLE_BUCKET']
+      original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
+      original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+      ENV['SAMPLE_BUCKET'] = "yul-test-samples"
+      ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
+      ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
+      example.run
+      ENV['SAMPLE_BUCKET'] = original_metadata_sample_bucket
+      ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
+      ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
+    end
+
     context "logged in with edit permission" do
       let(:user) { FactoryBot.create(:user) }
       let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
@@ -118,7 +132,9 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
         user.add_role(:editor, admin_set)
       end
 
-      it "returns http redirect" do
+      it "delete the pdf but not delete the ptifs" do
+        expect(S3Service).to receive(:delete).with("pdfs/85/16/85/42/85/16854285.pdf").once
+        expect(S3Service).to_not receive(:delete).with("originals/89/45/67/89/456789.tif")
         delete parent_object_url(parent_object)
         expect(response).to have_http_status(:redirect)
       end

@@ -108,4 +108,10 @@ RSpec.describe S3Service, type: :has_vcr do
     remote_path = "fulltext/43/10/14/54/#{child_object_oid}.txt"
     expect(described_class.full_text_exists?(remote_path)).to eq(true)
   end
+
+  it 'can delete a PDF' do
+    stub_request(:delete, "https://yul-test-samples.s3.amazonaws.com/pdfs/85/16/85/42/85/16854285.pdf")
+    .to_return(status: 200, headers: {})
+    expect(S3Service.delete("pdfs/85/16/85/42/85/16854285.pdf")).to be
+  end
 end
