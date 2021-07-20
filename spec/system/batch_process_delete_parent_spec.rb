@@ -2,7 +2,6 @@
 require 'rails_helper'
 
 RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
-
   let(:user) { FactoryBot.create(:user) }
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
   # parent object has four child objects
@@ -55,7 +54,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # solr document delete
         response = solr.get 'select', params: { q: '*:*' }
         expect(response["response"]["numFound"]).to eq 0
-
       end
 
       # skipping until full text feature merged

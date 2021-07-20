@@ -109,7 +109,6 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
   end
 
   describe "DELETE /delete_parent_object" do
-
     around do |example|
       original_metadata_sample_bucket = ENV['SAMPLE_BUCKET']
       original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
@@ -134,7 +133,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
 
       it "delete the pdf but not delete the ptifs" do
         expect(S3Service).to receive(:delete).with("pdfs/85/16/85/42/85/16854285.pdf").once
-        expect(S3Service).to_not receive(:delete).with("originals/89/45/67/89/456789.tif")
+        expect(S3Service).not_to receive(:delete).with("originals/89/45/67/89/456789.tif")
         delete parent_object_url(parent_object)
         expect(response).to have_http_status(:redirect)
       end

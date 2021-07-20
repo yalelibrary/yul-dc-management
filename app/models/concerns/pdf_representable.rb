@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ModuleLength
 module PdfRepresentable
   extend ActiveSupport::Concern
+  # rubocop:enable Metrics/ModuleLength
 
   NORMALIZED_COVER_FIELDS = %w[
     callNumber
