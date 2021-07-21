@@ -135,7 +135,6 @@ METADATA_FIELDS = {
       'ancestorTitles_tesim'
     ],
     join_char: ' > ',
-    digital_only: true,
     reverse_array: true
   },
   sourceEdition: {
