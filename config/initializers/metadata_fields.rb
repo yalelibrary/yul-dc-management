@@ -134,7 +134,8 @@ METADATA_FIELDS = {
       'sourceNote_tesim',
       'ancestorTitles_tesim'
     ],
-    join_char: ' > '
+    join_char: ' > ',
+    reverse_array: true
   },
   sourceEdition: {
     label: 'Collection Edition',
