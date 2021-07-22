@@ -23,6 +23,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       stub_metadata_cloud("10001192")
       fill_in('Oid', with: "10001192")
       select('Beinecke Library')
+      select('Ladybird')
     end
 
     it "sets the expected fields in the database" do
@@ -51,7 +52,6 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   end
   context "creating a new ParentObject based on oid" do
     before do
-      visit parent_objects_path
       visit "parent_objects/new"
     end
 
@@ -60,6 +60,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         stub_metadata_cloud("2012036")
         fill_in('Oid', with: "2012036")
         select('Beinecke Library')
+        select('Ladybird')
       end
 
       it "includes reference to documentation for IIIF values" do
@@ -119,6 +120,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         stub_metadata_cloud("2012036")
         fill_in('Oid', with: "2012036")
         select("Beinecke Library")
+        select('Ladybird')
         click_on("Create Parent object")
       end
 
@@ -213,6 +215,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       before do
         stub_metadata_cloud("2005512")
         fill_in('Oid', with: "2005512")
+        select('Ladybird')
         click_on("Create Parent object")
       end
 
@@ -325,6 +328,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         stub_metadata_cloud("V-2004628", "ils")
         fill_in('Oid', with: "2004628")
         select('Beinecke Library')
+        select('Ladybird')
         click_on("Create Parent object")
       end
 
@@ -355,6 +359,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
           stub_metadata_cloud("V-10000016189097", "ils")
           fill_in('Oid', with: "10000016189097")
           select("Beinecke Library")
+          select("Ladybird")
           click_on("Create Parent object")
         end
         it "adds the visibility for private objects" do
@@ -368,6 +373,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
           stub_metadata_cloud("V-20000016189097", "ils")
           fill_in('Oid', with: "20000016189097")
           select("Beinecke Library")
+          select('Ladybird')
           click_on("Create Parent object")
         end
         it "adds the visibility for non-public objects" do
@@ -509,6 +515,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       stub_metadata_cloud("10001192")
       fill_in('Oid', with: "10001192")
       select('Beinecke Library')
+      select('Ladybird')
     end
     it "does not allow creation of new parent with wrong admin set" do
       click_on("Create Parent object")
