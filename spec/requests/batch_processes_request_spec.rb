@@ -154,4 +154,25 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       end
     end
   end
+  
+  describe "GET /download_template" do
+    let(:user) { FactoryBot.create(:user) }
+    before do
+      login_as user
+    end
+
+    it "downloads template for parent objects" do
+      get download_template_batch_processes_url(batch_action: "create parent objects")
+      expect(response).to have_http_status(:success)
+      expect(response.content_type).to eq("text/csv; charset=utf-8")
+      expect(response.body.to_s).to eq("\xEF\xBB\xBFoid,admin_set")
+    end
+
+    it "downloads templates for reassociate" do
+      get download_template_batch_processes_url(batch_action: "reassociate child oids")
+      expect(response).to have_http_status(:success)
+      expect(response.content_type).to eq("text/csv; charset=utf-8")
+      expect(response.body).to match("\xEF\xBB\xBFchild_oid,parent_oid,order,parent_title,call_number,label,caption,viewing_hint")
+    end
+  end
 end
