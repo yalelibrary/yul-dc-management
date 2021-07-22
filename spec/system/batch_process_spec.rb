@@ -117,6 +117,15 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(page).to have_content("Skipped Row").once
         expect(page).to have_content("invalid order").once
       end
+
+      it "updates all parent object counts" do
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_child_object_counts.csv")
+        select("Reassociate Child Oids")
+        click_button("Submit")
+        expect(page).to have_content("Your job is queued for processing in the background")
+        expect(parent_object.reload.child_object_count).to eq(0)
+        expect(parent_object_old_one.reload.child_object_count).to eq(3)
+      end
     end
 
     context "outputting csv" do
@@ -149,7 +158,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.file_name).to eq "short_fixture_ids.csv"
         expect(BatchProcess.last.batch_action).to eq "export child oids"
         expect(BatchProcess.last.output_csv).to include "1126257"
-        expect(BatchProcess.last.output_csv).to include '2005512,,0,Access denied for parent object,"",""'
+        expect(BatchProcess.last.output_csv).to include '2005512,0,Access denied for parent object'
         expect(BatchProcess.last.output_csv).not_to include "1030368" # child of 2005512
         expect(BatchProcess.last.batch_ingest_events.count).to eq 4
         expect(BatchProcess.last.batch_ingest_events.map(&:reason)).to include "Skipping row [3] due to parent permissions: 2005512"
