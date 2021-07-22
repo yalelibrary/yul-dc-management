@@ -154,7 +154,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       end
     end
   end
-  
+
   describe "GET /download_template" do
     let(:user) { FactoryBot.create(:user) }
     before do

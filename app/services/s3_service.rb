@@ -17,7 +17,7 @@ class S3Service
       key: file_path
     )
   end
-  
+
   def self.upload_if_changed(file_path, data, bucket = ENV['SAMPLE_BUCKET'])
     return true if checksum_matches?(file_path, bucket, data)
     status = @client.put_object(

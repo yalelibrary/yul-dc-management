@@ -121,7 +121,7 @@ RSpec.describe S3Service, type: :has_vcr do
     .to_return(status: 200, headers: {})
     expect(S3Service.delete("pdfs/85/16/85/42/85/16854285.pdf")).to be
   end
-  
+
   it "can check the etag" do
     expect(described_class.etag(etag_manifest_path, ENV['SAMPLE_BUCKET'])).to eq(etag_digest)
   end
@@ -135,5 +135,4 @@ RSpec.describe S3Service, type: :has_vcr do
     expect(described_class.upload_if_changed(etag_manifest_path, "New data here")).to be_truthy
     expect(WebMock).to have_requested(:put, etag_manifest_url)
   end
-
 end
