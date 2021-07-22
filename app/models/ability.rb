@@ -6,6 +6,7 @@ class Ability
   def initialize(user)
     alias_action :create, :read, :update, :destroy, to: :crud
     return unless user
+    can :create_new, ParentObject if user.roles.find_by(name: :editor)
     if user.has_role? :sysadmin
       can :manage, User
       can :crud, AdminSet

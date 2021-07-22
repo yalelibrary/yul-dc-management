@@ -469,6 +469,37 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         expect(page).to have_button('Reindex', disabled: true)
       end
     end
+
+    context "logged in without any editor rights" do
+      let(:user) { FactoryBot.create(:user) }
+
+      before do
+        brbl = AdminSet.find_by_key('brbl')
+        sml = AdminSet.find_by_key('sml')
+        user.remove_role(:editor, brbl) if brbl
+        user.remove_role(:editor, sml) if sml
+        login_as user
+        visit parent_objects_path
+      end
+
+      it "does allow create parent" do
+        expect(page).to have_button('New Parent', disabled: true)
+      end
+    end
+
+    context "logged in with editor rights" do
+      let(:user) { FactoryBot.create(:user) }
+      let(:admin_set) { FactoryBot.create(:admin_set, key: "adminset") }
+
+      before do
+        login_as user
+        visit parent_objects_path
+      end
+
+      it "does allow create parent" do
+        expect(page).to have_button('New Parent', disabled: false)
+      end
+    end
   end
 
   context "when logged in without admin set roles" do
