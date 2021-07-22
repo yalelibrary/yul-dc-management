@@ -505,6 +505,11 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       it "does allow create parent" do
         expect(page).to have_button('New Parent', disabled: false)
       end
+
+      it "does not allow editing of oid for non-sysadmin" do
+        click_on "New Parent"
+        expect(page).to have_selector("#parent_object_oid[readonly]")
+      end
     end
   end
 
