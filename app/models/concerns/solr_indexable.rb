@@ -38,6 +38,7 @@ module SolrIndexable
       alternativeTitle_tesim: json_to_index["alternativeTitle"],
       alternativeTitleDisplay_tesim: json_to_index["alternativeTitleDisplay"],
       ancestorDisplayStrings_tesim: json_to_index["ancestorDisplayStrings"],
+      ancestor_titles_hierarchy_ssim: ancestor_structure(json_to_index["ancestorTitles"]),
       ancestorTitles_tesim: json_to_index["ancestorTitles"],
       archivalSort_ssi: json_to_index["archivalSort"],
       archiveSpaceUri_ssi: aspace_uri,
@@ -178,6 +179,24 @@ module SolrIndexable
       return full_text_array
     end
     nil
+  end
+
+  def ancestor_structure(ancestor_title)
+    #Building the hierarchy structure
+    return nil unless ancestor_title&.is_a?(Array)
+    anc_struct = Array.new
+    ancestor_title = ancestor_title.reverse
+    arr_size = 0
+    prev_string = ""
+    ancestor_title.each do |anc|
+      if arr_size > 0
+        prev_string = prev_string + "#{ancestor_title[arr_size - 1]}" + " > "
+      end
+      anc = prev_string + anc + " > "
+      anc_struct.push(anc)
+      arr_size = arr_size + 1
+    end
+    anc_struct
   end
 
   def expand_date_structured(date_structured)
