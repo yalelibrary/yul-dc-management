@@ -7,6 +7,7 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+const JSZip = require('jszip')
 require('datatables.net-bs4')(window, $)
 require('datatables.net-buttons-bs4')(window, $)
 require('datatables.net-buttons/js/buttons.colVis.js')(window, $)
@@ -33,6 +34,8 @@ import "@fortawesome/fontawesome-free/js/all.js";
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+window.JSZip = JSZip;
+
 let dataTable;
 $( document ).on('turbolinks:load', function() {
   let initialColumnSearchValues = [];
@@ -99,7 +102,7 @@ $( document ).on('turbolinks:load', function() {
     dataTable = $('.is-datatable').dataTable({
       "deferLoading":true,
       "processing": true,
-      "serverSide": true,        
+      "serverSide": true,
       "stateSave": true,
       "ajax": {
         "url": $('.is-datatable').data('source')
@@ -122,6 +125,20 @@ $( document ).on('turbolinks:load', function() {
         {
           extend: 'colvis',
           text: "\u25EB"
+        },
+        {
+          extend: 'csvHtml5',
+          text: "CSV",
+          exportOptions: {
+            columns: ':visible'
+          }
+        },
+        {
+          extend: 'excelHtml5',
+          text: "Excel",
+          exportOptions: {
+            columns: ':visible'
+          }
         }
       ],
       // pagingType is optional, if you want full pagination controls.
@@ -132,7 +149,7 @@ $( document ).on('turbolinks:load', function() {
       },
       stateLoaded: function (e, setting, data) {
         // load the search settings when state is loaded by the datatable to fill in the inputs.
-        setting.columns.forEach((c) => initialColumnSearchValues.push(c.search.search));      
+        setting.columns.forEach((c) => initialColumnSearchValues.push(c.search.search));
       }
 
     })
@@ -202,4 +219,3 @@ $( document ).on('turbolinks:load', function() {
   $('#batch_process_batch_action').on('change', show_hide_template_link)
   show_hide_template_link();
 })
-
