@@ -182,19 +182,17 @@ module SolrIndexable
   end
 
   def ancestor_structure(ancestor_title)
-    #Building the hierarchy structure
+    # Building the hierarchy structure
     return nil unless ancestor_title&.is_a?(Array)
-    anc_struct = Array.new
+    anc_struct = []
     ancestor_title = ancestor_title.reverse
     arr_size = 0
     prev_string = ""
     ancestor_title.each do |anc|
-      if arr_size > 0
-        prev_string = prev_string + "#{ancestor_title[arr_size - 1]}" + " > "
-      end
+      prev_string += (ancestor_title[arr_size - 1]).to_s + " > " unless arr_size.zero?
       anc = prev_string + anc + " > "
       anc_struct.push(anc)
-      arr_size = arr_size + 1
+      arr_size += 1
     end
     anc_struct
   end
