@@ -140,7 +140,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(co.reload.label).to eq("TEST LABEL STAY SAME")
         expect(co.caption).to eq("TEST LABEL STAY SAME2")
         expect(co.order).to eq(3_445_234)
-      end 
+      end
     end
 
     context "outputting csv" do
