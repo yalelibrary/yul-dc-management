@@ -354,6 +354,14 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       visit batch_processes_path
     end
 
+    it "has csv button" do
+      expect(page).to have_css(".buttons-csv")
+    end
+
+    it "has excel button" do
+      expect(page).to have_css(".buttons-excel")
+    end
+
     it "has column visibility button" do
       expect(page).to have_css(".buttons-colvis")
     end
