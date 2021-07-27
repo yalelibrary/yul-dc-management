@@ -31,9 +31,9 @@ module Reassociatable
   end
 
   def reassociate_child(co, po, row)
-    co.order = row["order"]
-    co.label = row["label"]
-    co.caption = row["caption"]
+    co.order = row["order"] unless row["order"].nil?
+    co.label = row["label"] unless row["label"].nil?
+    co.caption = row["caption"] unless row["caption"].nil?
     co.parent_object = po
     processing_event_for_child(co)
     co.save!
