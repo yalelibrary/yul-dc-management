@@ -198,6 +198,23 @@ module SolrIndexable
     end.to_a
   end
 
+
+  def ancestor_structure(ancestor_title)
+    # Building the hierarchy structure
+    return nil unless ancestor_title&.is_a?(Array)
+    anc_struct = []
+    ancestor_title = ancestor_title.reverse
+    arr_size = 0
+    prev_string = ""
+    ancestor_title.each do |anc|
+      prev_string += (ancestor_title[arr_size - 1]).to_s + " > " unless arr_size.zero?
+      anc = prev_string + anc + " > "
+      anc_struct.push(anc)
+      arr_size += 1
+    end
+    anc_struct
+  end
+
   def generate_hash
     Digest::MD5.hexdigest oid.to_s
   end
