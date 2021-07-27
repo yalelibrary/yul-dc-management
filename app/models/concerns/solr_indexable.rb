@@ -39,6 +39,7 @@ module SolrIndexable
       alternativeTitleDisplay_tesim: json_to_index["alternativeTitleDisplay"],
       ancestorDisplayStrings_tesim: json_to_index["ancestorDisplayStrings"],
       ancestorTitles_tesim: json_to_index["ancestorTitles"],
+      ancestor_titles_hierarchy_ssim: ancestor_structure(json_to_index["ancestorTitles"]),
       archivalSort_ssi: json_to_index["archivalSort"],
       archiveSpaceUri_ssi: aspace_uri,
       callNumber_ssim: json_to_index["callNumber"],
