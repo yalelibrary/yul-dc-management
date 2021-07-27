@@ -198,7 +198,6 @@ module SolrIndexable
     end.to_a
   end
 
-
   def ancestor_structure(ancestor_title)
     # Building the hierarchy structure
     return nil unless ancestor_title&.is_a?(Array)
