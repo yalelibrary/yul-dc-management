@@ -16,10 +16,6 @@ module CsvExportable
       sorted_child_objects.each do |co|
         next csv << co if co.is_a?(Array)
 
-        row = [co.parent_object.oid, co.oid, co.order, co.parent_object.authoritative_json['title']&.first, co.label, co.caption, co.viewing_hint]
-        csv << row
-        next csv << co if co.is_a?(Array)
-
         row = [co.parent_object.oid, co.oid, co.order, co.parent_object.authoritative_json['title']&.first, co.parent_object.call_number, co.label, co.caption, co.viewing_hint]
         csv << row
       end

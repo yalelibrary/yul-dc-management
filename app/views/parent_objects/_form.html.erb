@@ -13,7 +13,7 @@
   <div class="form-row">
     <div class="col-med-3">
       <%= form.label :oid %>
-      <%= self.action_name == "edit" ? form.text_field(:oid, disabled: true) : form.text_field(:oid, disabled: false) %>
+      <%= self.action_name == "edit" ? form.text_field(:oid, disabled: true) : form.text_field(:oid, readonly: !(current_user&.sysadmin) ) %>
     </div>
 
     <div class="col-med-3">
