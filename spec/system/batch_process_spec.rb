@@ -173,6 +173,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.file_name).to eq "short_fixture_ids.csv"
         expect(BatchProcess.last.batch_action).to eq "export child oids"
         expect(BatchProcess.last.output_csv).to include "1126257"
+        expect(BatchProcess.last.output_csv).to include "JWJ"
+        expect(BatchProcess.last.output_csv).to include '2005512,,0,Access denied for parent object,"",""'
         expect(BatchProcess.last.output_csv).to include '2005512,,0,Access denied for parent object,"",""'
         expect(BatchProcess.last.output_csv).not_to include "1030368" # child of 2005512
         expect(BatchProcess.last.batch_ingest_events.count).to eq 4
@@ -351,6 +353,14 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     before do
       login_as user
       visit batch_processes_path
+    end
+
+    it "has csv button" do
+      expect(page).to have_css(".buttons-csv")
+    end
+
+    it "has excel button" do
+      expect(page).to have_css(".buttons-excel")
     end
 
     it "has column visibility button" do

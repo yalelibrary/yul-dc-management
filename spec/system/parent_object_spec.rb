@@ -23,6 +23,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       stub_metadata_cloud("10001192")
       fill_in('Oid', with: "10001192")
       select('Beinecke Library')
+      select('Ladybird')
     end
 
     it "sets the expected fields in the database" do
@@ -52,7 +53,6 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
   context "creating a new ParentObject based on oid" do
     before do
-      visit parent_objects_path
       visit "parent_objects/new"
     end
 
@@ -61,6 +61,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         stub_metadata_cloud("2012036")
         fill_in('Oid', with: "2012036")
         select('Beinecke Library')
+        select('Ladybird')
       end
 
       it "includes reference to documentation for IIIF values" do
@@ -120,6 +121,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         stub_metadata_cloud("2012036")
         fill_in('Oid', with: "2012036")
         select("Beinecke Library")
+        select('Ladybird')
         click_on("Create Parent object")
       end
 
@@ -214,6 +216,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       before do
         stub_metadata_cloud("2005512")
         fill_in('Oid', with: "2005512")
+        select('Ladybird')
         click_on("Create Parent object")
       end
 
@@ -326,6 +329,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         stub_metadata_cloud("V-2004628", "ils")
         fill_in('Oid', with: "2004628")
         select('Beinecke Library')
+        select('Ladybird')
         click_on("Create Parent object")
       end
 
@@ -356,6 +360,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
           stub_metadata_cloud("V-10000016189097", "ils")
           fill_in('Oid', with: "10000016189097")
           select("Beinecke Library")
+          select("Ladybird")
           click_on("Create Parent object")
         end
         it "adds the visibility for private objects" do
@@ -369,6 +374,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
           stub_metadata_cloud("V-20000016189097", "ils")
           fill_in('Oid', with: "20000016189097")
           select("Beinecke Library")
+          select('Ladybird')
           click_on("Create Parent object")
         end
         it "adds the visibility for non-public objects" do
@@ -470,6 +476,42 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         expect(page).to have_button('Reindex', disabled: true)
       end
     end
+
+    context "logged in without any editor rights" do
+      let(:user) { FactoryBot.create(:user) }
+
+      before do
+        brbl = AdminSet.find_by_key('brbl')
+        sml = AdminSet.find_by_key('sml')
+        user.remove_role(:editor, brbl) if brbl
+        user.remove_role(:editor, sml) if sml
+        login_as user
+        visit parent_objects_path
+      end
+
+      it "does allow create parent" do
+        expect(page).to have_button('New Parent', disabled: true)
+      end
+    end
+
+    context "logged in with editor rights" do
+      let(:user) { FactoryBot.create(:user) }
+      let(:admin_set) { FactoryBot.create(:admin_set, key: "adminset") }
+
+      before do
+        login_as user
+        visit parent_objects_path
+      end
+
+      it "does allow create parent" do
+        expect(page).to have_button('New Parent', disabled: false)
+      end
+
+      it "does not allow editing of oid for non-sysadmin" do
+        click_on "New Parent"
+        expect(page).to have_selector("#parent_object_oid[readonly]")
+      end
+    end
   end
 
   context "when logged in without admin set roles" do
@@ -479,6 +521,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       stub_metadata_cloud("10001192")
       fill_in('Oid', with: "10001192")
       select('Beinecke Library')
+      select('Ladybird')
     end
     it "does not allow creation of new parent with wrong admin set" do
       click_on("Create Parent object")
@@ -545,6 +588,14 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   context "parent objects page", js: true do
     before do
       visit parent_objects_path
+    end
+
+    it "has csv button" do
+      expect(page).to have_css(".buttons-csv")
+    end
+
+    it "has excel button" do
+      expect(page).to have_css(".buttons-excel")
     end
 
     it "has column visibility button" do
