@@ -117,7 +117,7 @@ RSpec.describe S3Service, type: :has_vcr do
   end
 
   it 'can delete a PDF' do
-    stub_request(:delete, "https://yul-test-samples.s3.amazonaws.com/pdfs/85/16/85/42/85/16854285.pdf")
+    stub_request(:delete, "https://yale-test-image-samples.s3.amazonaws.com/pdfs/85/16/85/42/85/16854285.pdf")
     .to_return(status: 200, headers: {})
     expect(S3Service.delete("pdfs/85/16/85/42/85/16854285.pdf")).to be
   end
