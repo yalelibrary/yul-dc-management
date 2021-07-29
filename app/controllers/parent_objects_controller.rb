@@ -21,6 +21,8 @@ class ParentObjectsController < ApplicationController
   # GET /parent_objects/new
   def new
     @parent_object = ParentObject.new
+    @parent_object.oid = OidMinterService.generate_oids(1).first
+    @parent_object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'aspace')
   end
 
   # GET /parent_objects/1/edit

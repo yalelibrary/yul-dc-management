@@ -126,6 +126,21 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(parent_object.reload.child_object_count).to eq(0)
         expect(parent_object_old_one.reload.child_object_count).to eq(3)
       end
+
+      it "does not update label, caption, or order if not in csv" do
+        co = ChildObject.find(1_011_398)
+        co.label = "TEST LABEL STAY SAME"
+        co.caption = "TEST LABEL STAY SAME2"
+        co.order = 3_445_234
+        co.save
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_missing_column.csv")
+        select("Reassociate Child Oids")
+        click_button("Submit")
+        expect(page).to have_content("Your job is queued for processing in the background")
+        expect(co.reload.label).to eq("TEST LABEL STAY SAME")
+        expect(co.caption).to eq("TEST LABEL STAY SAME2")
+        expect(co.order).to eq(3_445_234)
+      end
     end
 
     context "outputting csv" do
@@ -337,6 +352,14 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     before do
       login_as user
       visit batch_processes_path
+    end
+
+    it "has csv button" do
+      expect(page).to have_css(".buttons-csv")
+    end
+
+    it "has excel button" do
+      expect(page).to have_css(".buttons-excel")
     end
 
     it "has column visibility button" do
