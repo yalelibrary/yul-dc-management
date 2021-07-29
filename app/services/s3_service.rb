@@ -13,7 +13,8 @@ class S3Service
 
   def self.delete(file_path)
     @client.delete_object(
-      bucket: ENV['SAMPLE_BUCKET'],
+      # bucket issue?
+      bucket: ENV['S3_SOURCE_BUCKET_NAME'],
       key: file_path
     )
   end
