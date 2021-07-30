@@ -71,9 +71,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Delete Parent Objects")
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/delete_sample_fixture_ids.csv")
         click_button("Submit")
-        click_link(BatchProcess.last.id)
-        page.refresh
-        expect(page).to have_content("Skipping row [2] with parent oid: #{parent_object.oid}, user does not have permission to delete.")
+        expect(ParentObject.count).to eq 1
       end
     end
   end
