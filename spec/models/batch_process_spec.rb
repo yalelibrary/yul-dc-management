@@ -367,6 +367,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         before do
           stub_metadata_cloud("16371253")
           stub_full_text('1032318')
+          allow(S3Service).to receive(:delete).and_return(true)
         end
         it "can delete a parent_object from an array of oids" do
           expect do
