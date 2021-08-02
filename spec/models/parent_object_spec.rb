@@ -100,7 +100,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         it "indexes the full text" do
           solr_document = parent_of_four.to_solr_full_text
           expect(solr_document).not_to be_nil
-          expect(solr_document[:fulltext_tsim].to_s).to include("много трудившейся")
+          expect(solr_document[:fulltext_tesim].to_s).to include("много трудившейся")
         end
       end
     end
