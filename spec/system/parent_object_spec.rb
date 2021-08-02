@@ -374,7 +374,6 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
     end
   end
-
   context "editing a ParentObject" do
     let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl')) }
     before do
@@ -387,7 +386,6 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       expect(page).to have_field("Oid", disabled: true)
     end
   end
-
   describe "index page", js: true do
     context 'datatable' do
       let(:parent_object1) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: AdminSet.find_by_key('brbl')) }
