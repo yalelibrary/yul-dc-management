@@ -7,6 +7,7 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+const JSZip = require('jszip')
 require('datatables.net-bs4')(window, $)
 require('datatables.net-buttons-bs4')(window, $)
 require('datatables.net-buttons/js/buttons.colVis.js')(window, $)
@@ -33,6 +34,8 @@ import "@fortawesome/fontawesome-free/js/all.js";
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+window.JSZip = JSZip;
+
 let dataTable;
 $( document ).on('turbolinks:load', function() {
   let initialColumnSearchValues = [];
@@ -93,7 +96,7 @@ $( document ).on('turbolinks:load', function() {
       // store the information about which columns are visible for this page
       return colVisibilityMap;
     }
-
+    
     dataTable = $('.is-datatable').dataTable({
       "deferLoading":true,
       "processing": true,
@@ -120,6 +123,20 @@ $( document ).on('turbolinks:load', function() {
         {
           extend: 'colvis',
           text: "\u25EB"
+        },
+        {
+          extend: 'csvHtml5',
+          text: "CSV",
+          exportOptions: {
+            columns: ':visible'
+          }
+        },
+        {
+          extend: 'excelHtml5',
+          text: "Excel",
+          exportOptions: {
+            columns: ':visible'
+          }
         }
       ],
       // pagingType is optional, if you want full pagination controls.
@@ -186,3 +203,17 @@ const columnOrder = (columns) => {
   })
   return columnOrder;
 }
+
+$( document ).on('turbolinks:load', function() {
+  let show_hide_template_link = function(){
+    let batch_action = $('#batch_process_batch_action').val();
+    $(".download_batch_process_template").attr("href", "batch_processes/download_template?batch_action=" + $('#batch_process_batch_action').val());
+    if (batch_action) {
+      $(".download_batch_process_template").fadeIn();
+    } else {
+      $(".download_batch_process_template").fadeOut();
+    }
+  }
+  $('#batch_process_batch_action').on('change', show_hide_template_link)
+  show_hide_template_link();
+})
