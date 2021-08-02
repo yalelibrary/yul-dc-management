@@ -49,6 +49,12 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # solr document delete
         response = solr.get 'select', params: { q: '*:*' }
         expect(response["response"]["numFound"]).to eq 0
+
+        # ptiff and pdf deletion checked in spec/requests/batch_processes_request_spec.rb:134
+
+        # can still display a show_parent batch process page
+        visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/16854285"
+        expect(page).to have_content "Status 16854285 deleted"
       end
 
       # skipping until full text feature merged
