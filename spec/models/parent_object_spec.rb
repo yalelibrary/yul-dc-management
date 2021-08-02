@@ -399,12 +399,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     context "a newly created ParentObject with ArchiveSpace as authoritative_metadata_source" do
       let(:parent_object) do
         described_class.create(
-            oid: "2012036",
-            aspace_uri: "/repositories/11/archival_objects/555049",
-            bib: "6805375",
-            barcode: "39002091459793",
-            authoritative_metadata_source_id: aspace,
-            admin_set: FactoryBot.create(:admin_set)
+          oid: "2012036",
+          aspace_uri: "/repositories/11/archival_objects/555049",
+          bib: "6805375",
+          barcode: "39002091459793",
+          authoritative_metadata_source_id: aspace,
+          admin_set: FactoryBot.create(:admin_set)
         )
       end
       before do
@@ -456,7 +456,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     context 'with ladybird_json' do
       let(:parent_object) do
         FactoryBot.build(:parent_object, oid: '16797069', bib: '3435140', barcode: '39002075038423',
-                         ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16797069.json"))))
+                                         ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16797069.json"))))
       end
 
       it 'returns a ladybird url' do
