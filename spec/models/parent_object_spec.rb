@@ -32,10 +32,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     stub_full_text('1030368')
     stub_full_text('1032318')
     stub_full_text('16057781')
-    stub_full_text('16057782')
-    stub_full_text('16057783')
-    stub_full_text('16057784')
-    stub_full_text('1042003')
     stub_request(:any, /localhost:8182*/).to_return(body: '{"service_id": 123123, "width": 10, "height": 10}')
   end
 
@@ -54,7 +50,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
     before do
       stub_request(:post, "#{ENV['SOLR_BASE_URL']}/blacklight-test/update?wt=json")
-        .to_return(status: 200)
+          .to_return(status: 200)
     end
     # rubocop:disable RSpec/AnyInstance
     it "receives a check for whether it's ready for manifests 4 times, one for each child" do
@@ -169,15 +165,15 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       user_two
       user_three
       stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/00/20/34/60/2034600.json")
-        .to_return(status: 200)
+          .to_return(status: 200)
       stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/12/20/05/51/2005512.json")
-        .to_return(status: 200)
+          .to_return(status: 200)
       stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/89/16/41/48/89/16414889.json")
-        .to_return(status: 200)
+          .to_return(status: 200)
       stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/92/14/71/61/92/14716192.json")
-        .to_return(status: 200)
+          .to_return(status: 200)
       stub_request(:head, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/85/16/85/42/85/16854285.json")
-        .to_return(status: 200)
+          .to_return(status: 200)
     end
     around do |example|
       perform_enqueued_jobs do
@@ -194,7 +190,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         batch_process.save
         batch_process.run_callbacks :create
       end.to change { batch_process.batch_connections.where(connectable_type: "ParentObject").count }.from(0).to(5)
-        .and change { IngestEvent.count }.from(0).to(456)
+                 .and change { IngestEvent.count }.from(0).to(456)
       statuses = IngestEvent.all.map(&:status)
       expect(statuses).to include "processing-queued"
       expect(statuses).to include "metadata-fetched"
@@ -376,7 +372,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       before do
         stub_metadata_cloud("2004628")
         stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/fulltext/03/10/42/00/1042003.txt")
-        .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
+            .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
       end
 
       it "can determine if any of it's children have fulltext availability" do
@@ -403,12 +399,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     context "a newly created ParentObject with ArchiveSpace as authoritative_metadata_source" do
       let(:parent_object) do
         described_class.create(
-          oid: "2012036",
-          aspace_uri: "/repositories/11/archival_objects/555049",
-          bib: "6805375",
-          barcode: "39002091459793",
-          authoritative_metadata_source_id: aspace,
-          admin_set: FactoryBot.create(:admin_set)
+            oid: "2012036",
+            aspace_uri: "/repositories/11/archival_objects/555049",
+            bib: "6805375",
+            barcode: "39002091459793",
+            authoritative_metadata_source_id: aspace,
+            admin_set: FactoryBot.create(:admin_set)
         )
       end
       before do
@@ -437,6 +433,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
                          "/aspace/repositories/11/archival_objects/555042",
                          "/aspace/repositories/11/archival_objects/554841",
                          "/aspace/repositories/11/resources/1453"].to_set
+        puts(parent_object.reload.dependent_objects.map(&:dependent_uri))
         expect(parent_object.reload.dependent_objects.count).to eq expected_uris.count
         expect(parent_object.dependent_objects.all? { |dobj| dobj.metadata_source == 'aspace' }).to be_truthy
         uris = parent_object.dependent_objects.map(&:dependent_uri).to_set
@@ -459,7 +456,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     context 'with ladybird_json' do
       let(:parent_object) do
         FactoryBot.build(:parent_object, oid: '16797069', bib: '3435140', barcode: '39002075038423',
-                                         ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16797069.json"))))
+                         ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16797069.json"))))
       end
 
       it 'returns a ladybird url' do
