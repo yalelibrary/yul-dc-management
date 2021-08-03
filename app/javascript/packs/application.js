@@ -96,7 +96,7 @@ $( document ).on('turbolinks:load', function() {
       // store the information about which columns are visible for this page
       return colVisibilityMap;
     }
-    
+
     dataTable = $('.is-datatable').dataTable({
       "deferLoading":true,
       "processing": true,
