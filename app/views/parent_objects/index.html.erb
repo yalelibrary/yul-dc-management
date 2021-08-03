@@ -6,12 +6,16 @@
   <div class='col'>
     <div class='float-right button-list'>
       <%= button_to 'Reindex', reindex_parent_objects_path, method: 'post', class: 'btn button secondary-button', id: 'reindex',
-        data:( ParentObject.cannot_reindex ? nil : { confirm: 'Are you sure you want to proceed? This action will reindex the entire contents of the system.' }),
-        disabled: !(can? :reindex_all, ParentObject)
+                    data:( ParentObject.cannot_reindex ? nil : { confirm: 'Are you sure you want to proceed? This action will reindex the entire contents of the system.' }),
+                    disabled: !(can? :reindex_all, ParentObject)
       %>
       <%= button_to 'Update Metadata', all_metadata_parent_objects_path, method: 'post', class: 'btn button secondary-button',
-        id: 'update_metadata', data:{confirm: 'Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.'},
-        disabled: !(can? :update_metadata, ParentObject)
+                    id: 'update_metadata', data:{confirm: 'Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.'},
+                    disabled: !(can? :update_metadata, ParentObject)
+      %>
+      <%= button_to 'New Parent', new_parent_object_path, method: 'get', class: 'btn button secondary-button',
+                    id: 'new_parent',
+                    disabled: !(can? :create_new, ParentObject)
       %>
     </div>
   </div>
@@ -20,26 +24,26 @@
   <div class='col overflow-auto'>
     <table id='parent-objects-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= parent_objects_path(format: :json) %>'>
       <thead class='table-head'>
-        <tr>
-          <th scope='col'>OID</th>
-          <th scope='col'>Admin Set</th>
-          <th scope='col'>Authoritative Source</th>
-          <th scope='col'>Child object count</th>
-          <th scope='col'>Call Number</th>
-          <th scope='col'>Container Grouping</th>
-          <th scope='col'>Bib</th>
-          <th scope='col'>Holding</th>
-          <th scope='col'>Item</th>
-          <th scope='col'>Barcode</th>
-          <th scope='col'>Aspace uri</th>
-          <th scope='col'>Last ladybird update</th>
-          <th scope='col'>Last voyager update</th>
-          <th scope='col'>Last aspace update</th>
-          <th scope='col'>Last id update</th>
-          <th scope='col'>Visibility</th>
-          <th scope='col'>Extent of digitization</th>
-          <th scope='col'>Digitization note</th>
-        </tr>
+      <tr>
+        <th scope='col'>OID</th>
+        <th scope='col'>Admin Set</th>
+        <th scope='col'>Authoritative Source</th>
+        <th scope='col'>Child object count</th>
+        <th scope='col'>Call Number</th>
+        <th scope='col'>Container Grouping</th>
+        <th scope='col'>Bib</th>
+        <th scope='col'>Holding</th>
+        <th scope='col'>Item</th>
+        <th scope='col'>Barcode</th>
+        <th scope='col'>Aspace uri</th>
+        <th scope='col'>Last ladybird update</th>
+        <th scope='col'>Last voyager update</th>
+        <th scope='col'>Last aspace update</th>
+        <th scope='col'>Last id update</th>
+        <th scope='col'>Visibility</th>
+        <th scope='col'>Extent of digitization</th>
+        <th scope='col'>Digitization note</th>
+      </tr>
       </thead>
       <tbody class='datatable-body'>
       </tbody>

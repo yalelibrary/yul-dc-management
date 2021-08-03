@@ -34,7 +34,7 @@ class MetadataSource < ApplicationRecord
     case full_response.status
     when 200
       response_text = full_response.body.to_str
-      S3Service.upload("#{metadata_cloud_name}/#{file_name(parent_object)}", response_text)
+      S3Service.upload_if_changed("#{metadata_cloud_name}/#{file_name(parent_object)}", response_text)
       response_text
     when 400...500
       parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body}", "failed")
