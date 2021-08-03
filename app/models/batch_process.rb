@@ -117,7 +117,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       # Only runs on newly created parent objects
       unless parent_object.new_record?
         batch_processing_event("Skipping row [#{index + 2}] with existing parent oid: #{oid}", 'Skipped Row')
-        return false
+        next
       end
 
       setup_for_background_jobs(parent_object, metadata_source)
