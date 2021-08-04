@@ -32,10 +32,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     stub_full_text('1030368')
     stub_full_text('1032318')
     stub_full_text('16057781')
-    stub_full_text('16057782')
-    stub_full_text('16057783')
-    stub_full_text('16057784')
-    stub_full_text('1042003')
     stub_request(:any, /localhost:8182*/).to_return(body: '{"service_id": 123123, "width": 10, "height": 10}')
   end
 
@@ -102,10 +98,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         end
 
         it "indexes the full text" do
-          solr_document = parent_of_four.to_solr_full_text.first
+          solr_document = parent_of_four.to_solr_full_text
           expect(solr_document).not_to be_nil
-          expect(solr_document[:fulltext_tesim].to_s).to include("много трудившейся")
-          expect(solr_document[:has_fulltext_ssi].to_s).to eq "Yes"
+          expect(solr_document[:fulltext_tsim].to_s).to include("много трудившейся")
         end
       end
     end
@@ -438,6 +433,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
                          "/aspace/repositories/11/archival_objects/555042",
                          "/aspace/repositories/11/archival_objects/554841",
                          "/aspace/repositories/11/resources/1453"].to_set
+        puts(parent_object.reload.dependent_objects.map(&:dependent_uri))
         expect(parent_object.reload.dependent_objects.count).to eq expected_uris.count
         expect(parent_object.dependent_objects.all? { |dobj| dobj.metadata_source == 'aspace' }).to be_truthy
         uris = parent_object.dependent_objects.map(&:dependent_uri).to_set
@@ -510,7 +506,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/16797069?include-children=1")
               .to_return(status: 200, body: { data: "fake data" }.to_json)
           expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/16797069?include-children=1"
-          allow(S3Service).to receive(:upload).and_return true
+          allow(S3Service).to receive(:upload_if_changed).and_return true
           record = ladybird_source.fetch_record(parent_object)
           expect(record['data']).to eq("fake data")
         end
