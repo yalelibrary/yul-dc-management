@@ -14,7 +14,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :child_objects, through: :batch_connections, source_type: "ChildObject", source: :connectable
 
   def self.batch_actions
-    ['create parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
+    ['create parent objects', 'update parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
   end
 
   def batch_processing_event(message, status = 'info')
