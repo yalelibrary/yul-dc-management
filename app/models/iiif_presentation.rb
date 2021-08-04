@@ -200,12 +200,9 @@ class IiifPresentation
     S3Service.download(manifest_path)
   end
 
-  def formatted_manifest
-    manifest.to_json(pretty: true)
-  end
-
   def save
-    S3Service.upload_if_changed(manifest_path, formatted_manifest)
+    upload = S3Service.upload(manifest_path, manifest.to_json(pretty: true))
+    upload.successful?
   end
 
   def manifest_path

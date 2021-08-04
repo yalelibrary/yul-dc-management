@@ -21,8 +21,6 @@ class ParentObjectsController < ApplicationController
   # GET /parent_objects/new
   def new
     @parent_object = ParentObject.new
-    @parent_object.oid = OidMinterService.generate_oids(1).first
-    @parent_object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'aspace')
   end
 
   # GET /parent_objects/1/edit
@@ -64,8 +62,7 @@ class ParentObjectsController < ApplicationController
       updated = valid_admin_set_edit? ? @parent_object.update(parent_object_params) : false
 
       if updated
-        queue_parent_metadata_update
-        format.html { redirect_to @parent_object, notice: 'Parent object was successfully saved, a full update has been queued.' }
+        format.html { redirect_to @parent_object, notice: 'Parent object was successfully updated.' }
         format.json { render :show, status: :ok, location: @parent_object }
       else
         format.html { render :edit }
@@ -110,9 +107,11 @@ class ParentObjectsController < ApplicationController
   end
 
   def update_metadata
-    queue_parent_metadata_update
+    authorize!(:update, @parent_object)
+    @parent_object.metadata_update = true
+    @parent_object.setup_metadata_job
     respond_to do |format|
-      format.html { redirect_back fallback_location: parent_object_url(@parent_object), notice: 'This object has been queued for a metadata update.' }
+      format.html { redirect_to parent_objects_url, notice: 'Parent object metadata update was queued.' }
       format.json { head :no_content }
     end
   end
@@ -131,12 +130,6 @@ class ParentObjectsController < ApplicationController
   end
 
   private
-
-    def queue_parent_metadata_update
-      authorize!(:update, @parent_object)
-      @parent_object.metadata_update = true
-      @parent_object.setup_metadata_job
-    end
 
     def valid_admin_set_edit?
       !parent_object_params[:admin_set] || (parent_object_params[:admin_set] && current_user.editor(parent_object_params[:admin_set]))

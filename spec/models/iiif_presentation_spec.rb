@@ -90,7 +90,7 @@ RSpec.describe IiifPresentation, prep_metadata_sources: true do
     end
 
     it "can save a manifest to S3" do
-      expect(iiif_presentation.save).to eq(true)
+      expect(iiif_presentation.save).to eq true
     end
 
     it "can download a manifest from S3" do

@@ -123,16 +123,6 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
         expect(parent_object.authoritative_metadata_source_id).to eq 2
       end
 
-      it "queues metadata update after it updates parent_object" do
-        parent_object = ParentObject.create! valid_attributes
-        # rubocop:disable RSpec/AnyInstance
-        expect_any_instance_of(ParentObjectsController).to receive(:queue_parent_metadata_update)
-        # rubocop:enable RSpec/AnyInstance
-        patch parent_object_url(parent_object), params: { parent_object: new_attributes }
-        parent_object.reload
-        expect(parent_object.authoritative_metadata_source_id).to eq 2
-      end
-
       it "redirects to the parent_object" do
         parent_object = ParentObject.create! valid_attributes
         patch parent_object_url(parent_object), params: { parent_object: new_attributes }
@@ -193,8 +183,8 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
     it 'redirects to the parent_objects list' do
       parent_object = ParentObject.create! valid_attributes
       post update_metadata_parent_object_url(parent_object)
-      expect(response).to redirect_to(parent_object_url(parent_object))
-      expect(flash[:notice]).to eq('This object has been queued for a metadata update.')
+      expect(response).to redirect_to(parent_objects_url)
+      expect(flash[:notice]).to eq('Parent object metadata update was queued.')
     end
   end
 
