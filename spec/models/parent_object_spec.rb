@@ -20,6 +20,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
   end
 
   before do
+    allow(Rails.logger).to receive(:error) { :logger_mock }
     stub_metadata_cloud("2004628", "ladybird")
     stub_metadata_cloud("2005512", "ladybird")
     stub_metadata_cloud("V-2004628", "ils")
@@ -98,7 +99,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         end
 
         it "indexes the full text" do
-          solr_document = parent_of_four.to_solr_full_text
+          solr_document, = parent_of_four.to_solr_full_text
           expect(solr_document).not_to be_nil
           expect(solr_document[:fulltext_tesim].to_s).to include("много трудившейся")
         end
@@ -433,7 +434,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
                          "/aspace/repositories/11/archival_objects/555042",
                          "/aspace/repositories/11/archival_objects/554841",
                          "/aspace/repositories/11/resources/1453"].to_set
-        puts(parent_object.reload.dependent_objects.map(&:dependent_uri))
         expect(parent_object.reload.dependent_objects.count).to eq expected_uris.count
         expect(parent_object.dependent_objects.all? { |dobj| dobj.metadata_source == 'aspace' }).to be_truthy
         uris = parent_object.dependent_objects.map(&:dependent_uri).to_set
