@@ -5,7 +5,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     collection do
       post :import
       post :trigger_mets_scan
-      get :download_template
     end
     member do
       get :download

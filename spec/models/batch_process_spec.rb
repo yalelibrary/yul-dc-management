@@ -289,7 +289,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
             batch_process.file = xml_upload_two
             batch_process.save
           end.to change { ParentObject.count }.from(0).to(1)
-                                              .and change { ChildObject.count }.from(0).to(3)
+            .and change { ChildObject.count }.from(0).to(3)
           po = ParentObject.find(30_000_401)
           co = ChildObject.find(30_000_404)
           # parent object expectations

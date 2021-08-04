@@ -9,14 +9,14 @@ DEFAULT DESKTOP STYLING
 
   h1 {
     font-size: 30px;
-    font-family: $bold_font_family;
+    font-family: $mallory_medium, Arial, Helvetica, sans-serif;
   }
 }
 
 .button {
   color: $white;
   border-radius: 0;
-  font-family: $standard_font_family;
+  font-family: $mallory_book, Arial, Helvetica, sans-serif;
 }
 
 .primary-button {
@@ -42,7 +42,7 @@ DEFAULT DESKTOP STYLING
 }
 
 .dataTables_length {
-  font-family: $standard_font_family;
+  font-family: $mallory_book, Arial, Helvetica, sans-serif;
   font-size: 17px;
   padding-bottom: 5px;
 }
@@ -51,14 +51,14 @@ DEFAULT DESKTOP STYLING
   border-radius: 0;
 
   option {
-    font-family: $standard_font_family;
+    font-family: $mallory_book, Arial, Helvetica, sans-serif;
   }
 }
 
 .table-head {
   background-color: $table_head;
   color: $white;
-  font-family: $standard_font_family;
+  font-family: $mallory_book, Arial, Helvetica, sans-serif;
   font-size: 18px;
   letter-spacing: 1px;
 }
@@ -87,7 +87,7 @@ DEFAULT DESKTOP STYLING
   }
 
   a {
-    font-family: $standard_font_family;
+    font-family: $mallory_book, Arial, Helvetica, sans-serif;
     font-size: 18px;
   }
 }
@@ -116,7 +116,7 @@ DEFAULT DESKTOP STYLING
   width: 50%;
 
   a {
-    font-family: $standard_font_family;
+    font-family: $mallory_book;
   }
 }
 

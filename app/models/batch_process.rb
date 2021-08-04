@@ -26,10 +26,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     )
   end
 
-  def self.csv_template(batch_action)
-    File.read(Rails.root.join("public", "batch_processes", "templates", "#{batch_action.parameterize.underscore}.csv"))
-  end
-
   def batch_ingest_events
     current_batch_connection = batch_connections.find_or_create_by!(connectable: self)
     IngestEvent.where(batch_connection: current_batch_connection)
