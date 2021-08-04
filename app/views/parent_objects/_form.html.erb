@@ -13,7 +13,7 @@
   <div class="form-row">
     <div class="col-med-3">
       <%= form.label :oid %>
-      <%= self.action_name == "edit" ? form.text_field(:oid, disabled: true) : form.text_field(:oid, disabled: false) %>
+      <%= self.action_name == "edit" ? form.text_field(:oid, disabled: true) : form.text_field(:oid, readonly: !(current_user&.sysadmin) ) %>
     </div>
 
     <div class="col-med-3">
@@ -22,7 +22,7 @@
                   AdminSet.all.map { |admin_set|
                     [admin_set.label, admin_set.key]
                   } << ["None",nil],
-                  selected: parent_object.admin_set&.key || ["None", nil], 
+                  selected: parent_object.admin_set&.key || ["None", nil],
                   required: true
           )
        %>
@@ -114,6 +114,6 @@
   </div>
   <br>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit(@parent_object.new_record? ? 'Create Parent object' : 'Save Parent Object And Update Metadata') %>
   </div>
 <% end %>
