@@ -6,6 +6,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
+  let(:csv_update_example) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "update_batch_process_example.csv")) }
   let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids_with_source.csv")) }
   let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
   let(:xml_upload_two) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml')) }
@@ -334,6 +335,35 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         stub_metadata_cloud("30000016189097")
       end
 
+      describe "batch update" do
+        it "includes the originating user NETid" do
+          batch_process.user_id = user.id
+          expect(batch_process.user.uid).to eq "mk2525"
+        end
+      end
+
+      context "updating a ParentObject from an import" do
+        before do
+          stub_metadata_cloud("2002826")
+          stub_full_text('1032318')
+        end
+        it "can update a parent_object from an array of oids" do
+          expect do
+            batch_process.file = csv_update_example
+            batch_process.save
+            batch_process.refresh_metadata_cloud_csv
+          end.to change { ParentObject.count }.from(0).to(1)
+
+          delete_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
+          expect do
+            delete_batch_process.file = csv_upload
+            delete_batch_process.save
+            delete_batch_process.update_parent_objects
+            byebug
+          end.to change { ParentObject.count }.from(5).to(5)
+        end
+      end
+
       describe "batch import" do
         it "includes the originating user NETid" do
           batch_process.user_id = user.id
@@ -499,6 +529,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect(events.count).to eq(5)
         end
       end
+
+
     end
   end
 end

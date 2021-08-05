@@ -145,6 +145,31 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  def updatable_parent_object(oid, index)
+    parent_object = ParentObject.find_by(oid: oid)
+    if parent_object.blank?
+      batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid} because it was not found in local database", 'Skipped Row')
+      return false
+    elsif !current_ability.can?(:update, parent_object)
+      batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}, user does not have permission to update.", 'Permission Denied')
+      return false
+    else
+      parent_object
+    end
+  end
+
+  def update_parent_objects
+    parsed_csv.each_with_index do |row, index|
+      oid = row['oid']
+      metadata_source = row['source']
+      parent_object = updatable_parent_object(oid, index)
+      next unless parent_object
+      setup_for_background_jobs(parent_object, metadata_source)
+      # byebug
+      parent_object.update(visibility: parent_object.visibility, rights_statement: parent_object.rights_statement, extent_of_digitization: parent_object.extent_of_digitization, digitization_note: parent_object.digitization_note)
+    end
+  end
+
   def configure_parent_object(child_object, parents)
     parent_object = child_object.parent_object
     unless parents.include? parent_object.oid
@@ -224,6 +249,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         RefreshMetadataCloudCsvJob.perform_later(self)
       when 'export child oids'
         CreateChildOidCsvJob.perform_later(self)
+      when 'update parent objects'
+        UpdateParentObjectsJob.perform_later(self)
       when 'reassociate child oids'
         ReassociateChildOidsJob.perform_later(self)
       when 'recreate child oid ptiffs'
