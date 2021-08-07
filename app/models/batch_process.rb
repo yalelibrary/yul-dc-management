@@ -162,11 +162,34 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parsed_csv.each_with_index do |row, index|
       oid = row['oid']
       metadata_source = row['source']
+      admin_set = row['admin_set']
+      visibility = row['visibility']
+      rights_statement = row['rights_statement']
+      extent_of_digitization = row['extent_of_digitization']
+      digitization_note = row['digitization_note']
+      bib = row['bib']
+      holding = row['holding']
+      item = row['item']
+      barcode = row['barcode']
+      aspace_uri = row['aspace_uri']
+      viewing_direction = row['viewing_direction']
+      viewing_hint = row['viewing_hint']
+
       parent_object = updatable_parent_object(oid, index)
       next unless parent_object
       setup_for_background_jobs(parent_object, metadata_source)
       # byebug
-      parent_object.update(visibility: parent_object.visibility, rights_statement: parent_object.rights_statement, extent_of_digitization: parent_object.extent_of_digitization, digitization_note: parent_object.digitization_note)
+      parent_object.update(
+        visibility: visibility.presence || parent_object.visibility,
+        rights_statement: rights_statement.presence || parent_object.rights_statement,
+        extent_of_digitization: extent_of_digitization.presence || parent_object.extent_of_digitization,
+        digitization_note: digitization_note.presence || parent_object.digitization_note,
+        bib: bib.presence || parent_object.bib,
+        holding: holding.presence || parent_object.holding,
+        item: item.presence || parent_object.item,
+        barcode: barcode.presence || parent_object.barcode,
+        aspace_uri: aspace_uri.presence || parent_object.aspace_uri,
+        viewing_direction: viewing_direction.presence || parent_object.viewing_direction)
     end
   end
 

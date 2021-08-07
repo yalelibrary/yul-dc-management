@@ -343,24 +343,32 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       context "updating a ParentObject from an import" do
-        before do
-          stub_metadata_cloud("2002826")
-          stub_full_text('1032318')
-        end
-        it "can update a parent_object from an array of oids" do
+        it "can update a parent_object from a csv" do
           expect do
-            batch_process.file = csv_update_example
+            batch_process.file = csv_upload
             batch_process.save
             batch_process.refresh_metadata_cloud_csv
-          end.to change { ParentObject.count }.from(0).to(1)
+          end.to change { ParentObject.count }.from(0).to(5)
 
-          delete_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
+          update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
           expect do
-            delete_batch_process.file = csv_upload
-            delete_batch_process.save
-            delete_batch_process.update_parent_objects
-            byebug
-          end.to change { ParentObject.count }.from(5).to(5)
+            update_batch_process.file = csv_update_example
+            update_batch_process.save
+            update_batch_process.update_parent_objects
+            # byebug
+          end.not_to change { ParentObject.count }.from(5)
+          po = ParentObject.find_by(oid: 2034600)
+
+          expect(po.visibility).to eq "Public"
+          expect(po.rights_statement).to eq "The use of this image may be subject to the copyright law of the United States"
+          expect(po.extent_of_digitization).to eq "Completely digitized"
+          expect(po.digitization_note).to be_nil
+          expect(po.bib).to eq "12307100"
+          expect(po.holding).to be_nil
+          expect(po.item).to be_nil
+          expect(po.barcode).to eq "39002102340669"
+          expect(po.aspace_uri).to eq "/repositories/11/archival_objects/515305"
+          expect(po.viewing_direction).to be_nil
         end
       end
 
@@ -529,8 +537,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect(events.count).to eq(5)
         end
       end
-
-
     end
   end
 end
