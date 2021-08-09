@@ -4,6 +4,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include CsvExportable
   include Reassociatable
   include Statable
+  include Updatable
   attr_reader :file
   after_create :determine_background_jobs
   before_create :mets_oid
@@ -142,54 +143,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       GeneratePtiffJob.perform_later(child_object, self)
       attach_item(child_object)
       child_object.processing_event("Ptiff Queued", "ptiff-queued")
-    end
-  end
-
-  def updatable_parent_object(oid, index)
-    parent_object = ParentObject.find_by(oid: oid)
-    if parent_object.blank?
-      batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid} because it was not found in local database", 'Skipped Row')
-      return false
-    elsif !current_ability.can?(:update, parent_object)
-      batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}, user does not have permission to update.", 'Permission Denied')
-      return false
-    else
-      parent_object
-    end
-  end
-
-  def update_parent_objects
-    parsed_csv.each_with_index do |row, index|
-      oid = row['oid']
-      metadata_source = row['source']
-      admin_set = row['admin_set']
-      visibility = row['visibility']
-      rights_statement = row['rights_statement']
-      extent_of_digitization = row['extent_of_digitization']
-      digitization_note = row['digitization_note']
-      bib = row['bib']
-      holding = row['holding']
-      item = row['item']
-      barcode = row['barcode']
-      aspace_uri = row['aspace_uri']
-      viewing_direction = row['viewing_direction']
-      viewing_hint = row['viewing_hint']
-
-      parent_object = updatable_parent_object(oid, index)
-      next unless parent_object
-      setup_for_background_jobs(parent_object, metadata_source)
-      # byebug
-      parent_object.update(
-        visibility: visibility.presence || parent_object.visibility,
-        rights_statement: rights_statement.presence || parent_object.rights_statement,
-        extent_of_digitization: extent_of_digitization.presence || parent_object.extent_of_digitization,
-        digitization_note: digitization_note.presence || parent_object.digitization_note,
-        bib: bib.presence || parent_object.bib,
-        holding: holding.presence || parent_object.holding,
-        item: item.presence || parent_object.item,
-        barcode: barcode.presence || parent_object.barcode,
-        aspace_uri: aspace_uri.presence || parent_object.aspace_uri,
-        viewing_direction: viewing_direction.presence || parent_object.viewing_direction)
     end
   end
 
