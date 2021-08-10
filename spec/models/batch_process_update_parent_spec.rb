@@ -53,16 +53,17 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       end.not_to change { ParentObject.count }.from(5)
       po = ParentObject.find_by(oid: 2_034_600)
 
-      expect(po.visibility).to eq "Public"
-      expect(po.rights_statement).to eq "The use of this image may be subject to the copyright law of the United States"
-      expect(po.extent_of_digitization).to eq "Completely digitized"
-      expect(po.digitization_note).to be_nil
+      expect(po.aspace_uri).to eq "/repositories/11/archival_objects/515305"
+      expect(po.barcode).to eq "39002102340669"
       expect(po.bib).to eq "12307100"
+      expect(po.digitization_note).to be_nil
+      expect(po.display_layout).to be_nil
+      expect(po.extent_of_digitization).to eq "Completely digitized"
       expect(po.holding).to be_nil
       expect(po.item).to be_nil
-      expect(po.barcode).to eq "39002102340669"
-      expect(po.aspace_uri).to eq "/repositories/11/archival_objects/515305"
+      expect(po.rights_statement).to eq "The use of this image may be subject to the copyright law of the United States"
       expect(po.viewing_direction).to be_nil
+      expect(po.visibility).to eq "Public"
     end
   end
 end
