@@ -24,6 +24,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_destroy :solr_delete
   after_destroy :note_deletion
   after_destroy :delayed_jobs_deletion
+  after_destroy :pdf_deletion
   paginates_per 50
 
   def self.visibilities
