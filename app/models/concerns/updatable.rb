@@ -2,7 +2,7 @@
 
 module Updatable
   extend ActiveSupport::Concern
-  
+
   def updatable_parent_object(oid, index)
     parent_object = ParentObject.find_by(oid: oid)
     if parent_object.blank?
@@ -23,54 +23,54 @@ module Updatable
       metadata_source = row['source'] unless row['source'].nil?
       parent_object = updatable_parent_object(oid, index)
       next unless parent_object
-      
-      aspace_uri = ( 
-        row['aspace_uri'].present? && 
-        row['aspace_uri'] != parent_object.aspace_uri 
+
+      aspace_uri = (
+        row['aspace_uri'].present? &&
+        row['aspace_uri'] != parent_object.aspace_uri
       ) ? row['aspace_uri'] : parent_object.aspace_uri
-      bib = ( 
-        row['bib'].present? && 
-        row['bib'] != parent_object.bib 
+      bib = (
+        row['bib'].present? &&
+        row['bib'] != parent_object.bib
       ) ? row['bib'] : parent_object.bib
-      barcode = ( 
-        row['barcode'].present? && 
-        row['barcode'] != parent_object.barcode 
+      barcode = (
+        row['barcode'].present? &&
+        row['barcode'] != parent_object.barcode
       ) ? row['barcode'] : parent_object.barcode
-      digitization_note = ( 
-        row['digitization_note'].present? && 
-        row['digitization_note'] != parent_object.digitization_note 
+      digitization_note = (
+        row['digitization_note'].present? &&
+        row['digitization_note'] != parent_object.digitization_note
       ) ? row['digitization_note'] : parent_object.digitization_note
-      display_layout = ( 
-        row['display_layout'].present? && 
-        row['display_layout'] != parent_object.display_layout && 
-        (ParentObject.viewing_hints.include? row['display_layout']) 
+      display_layout = (
+        row['display_layout'].present? &&
+        row['display_layout'] != parent_object.display_layout &&
+        (ParentObject.viewing_hints.include? row['display_layout'])
       ) ? row['display_layout'] : parent_object.display_layout
-      extent_of_digitization = ( 
-        row['extent_of_digitization'].present? && 
-        row['extent_of_digitization'] != parent_object.extent_of_digitization && 
-        (ParentObject.extent_of_digitizations.include? row['extent_of_digitization']) 
+      extent_of_digitization = (
+        row['extent_of_digitization'].present? &&
+        row['extent_of_digitization'] != parent_object.extent_of_digitization &&
+        (ParentObject.extent_of_digitizations.include? row['extent_of_digitization'])
       ) ? row['extent_of_digitization'] : parent_object.extent_of_digitization
-      holding = ( 
-        row['holding'].present? && 
-        row['holding'] != parent_object.holding 
+      holding = (
+        row['holding'].present? &&
+        row['holding'] != parent_object.holding
       ) ? row['holding'] : parent_object.holding
-      item = ( 
-        row['item'].present? && 
-        row['item'] != parent_object.item 
+      item = (
+        row['item'].present? &&
+        row['item'] != parent_object.item
       ) ? row['item'] : parent_object.item
-      rights_statement = ( 
-        row['rights_statement'].present? && 
-        row['rights_statement'] != parent_object.rights_statement 
+      rights_statement = (
+        row['rights_statement'].present? &&
+        row['rights_statement'] != parent_object.rights_statement
       ) ? row['rights_statement'] : parent_object.rights_statement
-      viewing_direction = ( 
-        row['viewing_direction'].present? && 
-        row['viewing_direction'] != parent_object.viewing_direction && 
-        (ParentObject.viewing_directions.include? row['viewing_direction']) 
+      viewing_direction = (
+        row['viewing_direction'].present? &&
+        row['viewing_direction'] != parent_object.viewing_direction &&
+        (ParentObject.viewing_directions.include? row['viewing_direction'])
       ) ? row['viewing_direction'] : parent_object.viewing_direction
-      visibility = ( 
-        row['visibility'].present? && 
-        row['visibility'] != parent_object.visibility && 
-        (ParentObject.visibilities.include? row['visibility']) 
+      visibility = (
+        row['visibility'].present? &&
+        row['visibility'] != parent_object.visibility &&
+        (ParentObject.visibilities.include? row['visibility'])
       ) ? row['visibility'] : parent_object.visibility
 
       setup_for_background_jobs(parent_object, metadata_source)
@@ -86,9 +86,9 @@ module Updatable
         item: item,
         rights_statement: rights_statement,
         viewing_direction: viewing_direction,
-        visibility: visibility,
+        visibility: visibility
       )
-    
+
       # delete old object from s3
       # replace with new metadata
       # GenerateManifestJob.perform_later(po, self, po.current_batch_connection)
