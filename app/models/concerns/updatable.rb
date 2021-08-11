@@ -28,15 +28,6 @@ module Updatable
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.update(processed_fields)
 
-      # delete old object from s3
-      # replace with new metadata
-      
-      parent_object.current_batch_process = self
-      parent_object.current_batch_connection = batch_connections.find_or_create_by(connectable: parent_object)
-      parent_object.current_batch_connection.save!
-      parent_object.save!
-
-      GenerateManifestJob.perform_later(parent_object, self, parent_object.current_batch_connection)
       processing_event_for_parent(parent_object)
     end
   end
@@ -72,5 +63,9 @@ module Updatable
     parent_object.current_batch_connection = batch_connections.find_or_create_by(connectable: parent_object)
     parent_object.current_batch_connection.save!
     parent_object.processing_event("Parent #{parent_object.oid} has been updated", 'update complete')
+  end
+
+  def remote_po_path(oid, metadata_source)
+    "#{metadata_source}/#{oid}.json"
   end
 end
