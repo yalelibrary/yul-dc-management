@@ -30,7 +30,13 @@ module Updatable
 
       # delete old object from s3
       # replace with new metadata
-      # GenerateManifestJob.perform_later(parent_object, self, parent_object.current_batch_connection)
+      
+      parent_object.current_batch_process = self
+      parent_object.current_batch_connection = batch_connections.find_or_create_by(connectable: parent_object)
+      parent_object.current_batch_connection.save!
+      parent_object.save!
+
+      GenerateManifestJob.perform_later(parent_object, self, parent_object.current_batch_connection)
       processing_event_for_parent(parent_object)
     end
   end
