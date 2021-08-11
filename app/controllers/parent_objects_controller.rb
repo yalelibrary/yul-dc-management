@@ -99,10 +99,7 @@ class ParentObjectsController < ApplicationController
 
   def all_metadata
     authorize!(:update_metadata, ParentObject)
-    ParentObject.find_each do |po|
-      po.metadata_update = true
-      po.setup_metadata_job
-    end
+    UpdateAllMetadataJob.perform_later
     respond_to do |format|
       format.html { redirect_to parent_objects_url, notice: 'Parent objects have been queued for metadata update.' }
       format.json { head :no_content }
