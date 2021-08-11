@@ -10,7 +10,7 @@ class UpdateAllMetadataJob < ApplicationJob
   def perform(start_position = 0)
     parent_objects = ParentObject.order(:oid).offset(start_position).limit(UpdateAllMetadataJob.job_limit)
     last_job = parent_objects.count < UpdateAllMetadataJob.job_limit
-    return unless parent_objects.count.positive?
+    return unless parent_objects.count.positive?  # stop if nothing is found
     parent_objects.each do |po|
       po.metadata_update = true
       po.setup_metadata_job
