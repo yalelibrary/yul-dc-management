@@ -458,9 +458,12 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         click_on("Update Metadata")
         order = double
         offset = double
+        where = double
         allow(offset).to receive(:limit).and_return([])
         allow(order).to receive(:offset).and_return(offset)
-        expect(ParentObject).to receive(:order).and_return(order)
+        allow(ParentObject).to receive(:where).with({}).and_return(ParentObject.where({}))
+        expect(ParentObject).to receive(:where).with('').and_return(where)
+        expect(where).to receive(:order).and_return(order)
         expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.")
         page.driver.browser.switch_to.alert.accept
       end

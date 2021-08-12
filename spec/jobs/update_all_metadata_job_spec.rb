@@ -29,10 +29,12 @@ RSpec.describe UpdateAllMetadataJob, type: :job, prep_metadata_sources: true, so
       expect(parent).to receive(:metadata_update=).exactly(total_records).times
       expect(parent).to receive(:setup_metadata_job).exactly(total_records).times
 
+      parent_object_where = double
       parent_object_order = double
       parent_object_order_offset1 = double
       parent_object_order_offset2 = double
-      expect(ParentObject).to receive(:order).and_return(parent_object_order).exactly((total_records.to_f / limit).ceil).times
+      expect(ParentObject).to receive(:where).with('').and_return(parent_object_where).exactly((total_records.to_f / limit).ceil).times
+      expect(parent_object_where).to receive(:order).and_return(parent_object_order).exactly((total_records.to_f / limit).ceil).times
       expect(parent_object_order).to receive(:offset).with(0).and_return parent_object_order_offset1
       expect(parent_object_order).to receive(:offset).with(limit).and_return parent_object_order_offset2
       expect(parent_object_order_offset1).to receive(:limit).with(limit).and_return [*1..limit].map { |_ix| parent }

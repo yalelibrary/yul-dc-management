@@ -97,9 +97,28 @@ class ParentObjectsController < ApplicationController
     end
   end
 
+  def all_metadata_where
+    where = {}
+    admin_set_ids = params[:admin_set_ids]
+    if !admin_set_ids
+      authorize!(:update_metadata, ParentObject)
+    else
+      where[:admin_set_id] = admin_set_ids
+      unless authorize!(:update_metadata, ParentObject)
+        admin_set_ids.each do |admin_set_id|
+          admin_set = AdminSet.find_by(id: admin_set_id)
+          raise("Access Denied") unless current_ability.can?(:reindex_admin_set, admin_set)
+        end
+      end
+    end
+    metadata_source_ids = params[:metadata_source_ids]
+    where[:authoritative_metadata_source_id] = metadata_source_ids if metadata_source_ids
+    where = '' if where.empty?
+    where
+  end
+
   def all_metadata
-    authorize!(:update_metadata, ParentObject)
-    UpdateAllMetadataJob.perform_later
+    UpdateAllMetadataJob.perform_later(0, all_metadata_where)
     respond_to do |format|
       format.html { redirect_to parent_objects_url, notice: 'Parent objects have been queued for metadata update.' }
       format.json { head :no_content }
