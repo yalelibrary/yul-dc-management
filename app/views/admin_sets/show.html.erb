@@ -1,4 +1,7 @@
 <%= render partial: "/management/flash_messages" %>
+<p>
+<a href="#BatchUpdateMetadata" role="button" class="btn btn-large btn-secondary" data-toggle="modal">Batch Update Metadata</a>
+</p>
 
 <p>
   <strong>Key:</strong>
@@ -24,7 +27,57 @@
 
 <%= render partial: 'shared/add_role', locals: {item: @admin_set} %>
 
+
 <p>
   <%= link_to 'Edit', edit_admin_set_path(@admin_set) %> |
   <%= link_to 'Back', admin_sets_path %>
 </p>
+
+<div id="BatchUpdateMetadata" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Batch Update Metadata</h4>
+        <button type="button" class="close_button btn btn-link" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body">
+        <%= form_with url: all_metadata_parent_objects_path do |form| %>
+          <div class="form-group">
+            <%= form.label(:admin_set, "Admin Sets:") %>
+            <% available_admin_sets = current_ability.can?(:update_metadata, ParentObject) ? AdminSet.all : AdminSet.all.select {|as| current_ability.can?(:reindex_admin_set, as)} %>
+            <%= form.select(:admin_set,
+                            options_from_collection_for_select(available_admin_sets,
+                :id, :label,[@admin_set&.id]),
+                            {},
+                            {
+                            required: true,
+                            multiple: true,
+                            size: [available_admin_sets.count,5].min}
+                )
+            %>
+          </div>
+          <div class="form-group">
+            <%= form.label(:metadata_source_ids, "Metadata Sources:") %>
+            <%= form.select(:metadata_source_ids,
+                            options_from_collection_for_select(MetadataSource.all,
+                                                               :id, :display_name, []),
+                            {},
+                            {
+                                class: 'select',
+                                required: true,
+                                multiple: true,
+                                size: [MetadataSource.all.count,5].min}
+                )
+            %>
+          </div>
+          <div class="form-group">
+            <%= form.submit("Update Metadata", {class: "btn btn-primary"}) %>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <small>Updating metadata will refresh metadata from the authoritative metadata source.  You may select more than one metadata source and admin set.</small>
+      </div>
+    </div>
+  </div>
+</div>

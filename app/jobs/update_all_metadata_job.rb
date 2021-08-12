@@ -15,6 +15,6 @@ class UpdateAllMetadataJob < ApplicationJob
       po.metadata_update = true
       po.setup_metadata_job
     end
-    UpdateAllMetadataJob.perform_later(start_position + parent_objects.count) unless last_job
+    UpdateAllMetadataJob.perform_later(start_position + parent_objects.count, where) unless last_job
   end
 end
