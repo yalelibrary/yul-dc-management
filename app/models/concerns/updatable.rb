@@ -46,11 +46,14 @@ module Updatable
       ) ? row[f] : parent_object.send(f)
     end
     validation_fields.each do |k, v|
-      processed_fields[k.to_sym] = (
-        row[k].present? &&
-        row[k] != parent_object.send(k) &&
-        (ParentObject.send(v).include? row[k])
-      ) ? row[k] : parent_object.send(k)
+      processed_fields[k.to_sym] =  if row[k].present? && row[k] != parent_object.send(k) && (ParentObject.send(v).include? row[k])
+                                      row[k]
+                                    elsif row[k].present? && row[k] != parent_object.send(k) && !(ParentObject.send(v).include? row[k])
+                                      process_invalid_vocab_event(k, row[k], parent_object.oid)
+                                      parent_object.send(k)
+                                    else
+                                      parent_object.send(k)
+                                    end
     end
 
     processed_fields
@@ -67,5 +70,18 @@ module Updatable
 
   def remote_po_path(oid, metadata_source)
     "#{metadata_source}/#{oid}.json"
+  end
+
+  def process_invalid_vocab_event(column_name, row_value, oid)
+    case column_name
+    when 'display_layout'
+      batch_processing_event("Parent #{oid} did not update value for Viewing Hint. Value: #{row_value} is invalid. For field Display Layout / Viewing Hint please use: individuals, paged, continuous, or leave column empty", 'Invalid Vocabulary')
+    when 'extent_of_digitization'
+      batch_processing_event("Parent #{oid} did not update value for Viewing Hint. Value: #{row_value} is invalid. For field Extent of Digitization please use: Completely digitizied, Partially digitizied, or leave column empty", 'Invalid Vocabulary')
+    when 'viewing_direction'
+      batch_processing_event("Parent #{oid} did not update value for Viewing Hint. Value: #{row_value} is invalid. For field Viewing Direction please use: left-to-right, right-to-left, top-to-bottom, bottom-to-top, or leave column empty", 'Invalid Vocabulary')
+    when 'visibility'
+      batch_processing_event("Parent #{oid} did not update value for Viewing Hint. Value: #{row_value} is invalid. For field Visibility please use: Private, Public, or Yale Community Only", 'Invalid Vocabulary')
+    end
   end
 end

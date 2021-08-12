@@ -21,8 +21,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     end
   end
 
-  context "with a user with edit permissions", solr: true do
-    context "deleting a batch of parent objects" do
+  context "with a user with edit permissions and valid controlled vocabulary", solr: true do
+    context "updating a batch of parent objects" do
       before do
         login_as user
         user.add_role(:editor, admin_set)
@@ -35,9 +35,9 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(page).to have_content("Item:\n")
         expect(page).to have_content("Barcode:\n")
         expect(page).to have_content("Aspace uri:\n")
-        expect(page).to have_content("Visibility: Private")
+        expect(page).to have_content("Visibility: Public\n")
         expect(page).to have_content("Rights Statement:\n")
-        expect(page).to have_content("Extent of Digitization:\n")
+        expect(page).to have_content("Extent of Digitization: Partially digitized\n")
         expect(page).to have_content("Digitization Note:\n")
         expect(page).to have_content("Viewing Direction:\n")
         expect(page).to have_content("Display Layout / Viewing Hint:\n")
@@ -65,6 +65,52 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(page).to have_content "Status In progress - no failures"
       end
     end
+  end
+
+  context "with a user with edit permissions but without valid controlled vocabulary", solr: true do
+    context "updating a batch of parent objects" do
+      before do
+        login_as user
+        user.add_role(:editor, admin_set)
+      end
+
+      it "does not update the parent with invalid values" do
+        visit "/parent_objects/#{parent_object.oid}"
+        # original values
+        expect(page).to have_content("Extent of Digitization: Partially digitized\n")
+        expect(page).to have_content("Visibility: Public\n")
+        expect(page).to have_content("Viewing Direction:\n")
+        expect(page).to have_content("Display Layout / Viewing Hint:\n")
+
+        # perform batch update
+        visit batch_processes_path
+        select("Update Parent Objects")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/update_example_invalid.csv")
+        click_button("Submit")
+        expect(page).to have_content "Your job is queued for processing in the background"
+
+        visit "/parent_objects/#{parent_object.oid}"
+        expect(page).to have_content("Extent of Digitization: Partially digitized")
+        expect(page).to have_content("Visibility: Public\n")
+        expect(page).to have_content("Viewing Direction:\n")
+        expect(page).to have_content("Display Layout / Viewing Hint:\n")
+
+        visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/2034600"
+        expect(page).to have_content "Status In progress - no failures"
+      end
+
+      it "displays help text to the user" do
+        visit batch_processes_path
+        select("Update Parent Objects")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/update_example_small.csv")
+        click_button("Submit")
+        visit "/batch_processes/#{BatchProcess.last.id}"
+        expect(page).to have_content "Invalid Vocabulary For field Extent of Digitization please use: Completely digitizied, Partially digitizied, or leave column empty"
+        expect(page).to have_content "Invalid Vocabulary For field Display Layout / Viewing Hint please use: individuals, paged, continuous, or leave column empty"
+        expect(page).to have_content "Invalid Vocabulary For field Visibility please use: Private, Public, or Yale Community Only"
+        expect(page).to have_content "Invalid Vocabulary For field Viewing Direction please use: left-to-right, right-to-left, top-to-bottom, bottom-to-top, or leave column empty"
+      end
+    end   
   end
 
   context "with a user without edit permissions" do
