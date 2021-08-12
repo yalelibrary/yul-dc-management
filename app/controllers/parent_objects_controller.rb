@@ -100,7 +100,7 @@ class ParentObjectsController < ApplicationController
   def all_metadata_where
     where = {}
     admin_set_ids = params[:admin_set]
-    admin_set_ids.compact!
+    admin_set_ids&.compact!
     if !admin_set_ids
       authorize!(:update_metadata, ParentObject)
     else
