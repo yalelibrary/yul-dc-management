@@ -24,7 +24,7 @@ module Updatable
       parent_object = updatable_parent_object(oid, index)
       next unless parent_object
 
-      processed_fields = process_fields_for_update(parent_object, row)
+      processed_fields = validate_field(parent_object, row)
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.update(processed_fields)
 
@@ -32,34 +32,31 @@ module Updatable
     end
   end
 
-  # rubocop:disable Style/MultilineTernaryOperator
-  # rubocop:disable Style/TernaryParentheses
-  def process_fields_for_update(parent_object, row)
+  def validate_field(parent_object, row)
     fields = ['aspace_uri', 'barcode', 'bib', 'digitization_note', 'holding', 'item', 'rights_statement']
     validation_fields = { "display_layout" => 'viewing_hints', "extent_of_digitization" => 'extent_of_digitizations', "viewing_direction" => 'viewing_directions', "visibility" => 'visibilities' }
 
     processed_fields = {}
     fields.each do |f|
-      processed_fields[f.to_sym] = (
-        row[f].present? &&
-        row[f] != parent_object.send(f)
-      ) ? row[f] : parent_object.send(f)
+      processed_fields[f.to_sym] = if row[f].present? && row[f] != parent_object.send(f)
+                                     row[f]
+                                   else
+                                     parent_object.send(f)
+                                   end
     end
     validation_fields.each do |k, v|
-      processed_fields[k.to_sym] =  if row[k].present? && row[k] != parent_object.send(k) && (ParentObject.send(v).include? row[k])
-                                      row[k]
-                                    elsif row[k].present? && row[k] != parent_object.send(k) && !(ParentObject.send(v).include? row[k])
-                                      process_invalid_vocab_event(k, row[k], parent_object.oid)
-                                      parent_object.send(k)
-                                    else
-                                      parent_object.send(k)
-                                    end
+      processed_fields[k.to_sym] = if row[k].present? && row[k] != parent_object.send(k) && (ParentObject.send(v).include? row[k])
+                                     row[k]
+                                   elsif row[k].present? && row[k] != parent_object.send(k) && !(ParentObject.send(v).include? row[k])
+                                     process_invalid_vocab_event(k, row[k], parent_object.oid)
+                                     parent_object.send(k)
+                                   else
+                                     parent_object.send(k)
+                                   end
     end
 
     processed_fields
   end
-  # rubocop:enable Style/MultilineTernaryOperator
-  # rubocop:enable Style/TernaryParentheses
 
   def processing_event_for_parent(parent_object)
     parent_object.current_batch_process = self
@@ -72,6 +69,7 @@ module Updatable
     "#{metadata_source}/#{oid}.json"
   end
 
+  # rubocop:disable Metrics/LineLength
   def process_invalid_vocab_event(column_name, row_value, oid)
     case column_name
     when 'display_layout'
@@ -84,4 +82,5 @@ module Updatable
       batch_processing_event("Parent #{oid} did not update value for Visibility. Value: #{row_value} is invalid. For field Visibility please use: Private, Public, or Yale Community Only", 'Invalid Vocabulary')
     end
   end
+  # rubocop:enable Metrics/LineLength
 end

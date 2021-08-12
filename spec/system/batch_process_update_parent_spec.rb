@@ -110,7 +110,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(page).to have_content "Invalid Vocabulary For field Visibility please use: Private, Public, or Yale Community Only"
         expect(page).to have_content "Invalid Vocabulary For field Viewing Direction please use: left-to-right, right-to-left, top-to-bottom, bottom-to-top, or leave column empty"
       end
-    end   
+    end
   end
 
   context "with a user without edit permissions" do
