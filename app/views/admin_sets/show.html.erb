@@ -40,9 +40,9 @@
         <h4 class="modal-title">Batch Update Metadata</h4>
         <button type="button" class="close_button btn btn-link" data-dismiss="modal" aria-hidden="true">&times;</button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body update-metadata-form">
         <%= form_with url: all_metadata_parent_objects_path do |form| %>
-          <div class="form-group update-metadata-form">
+          <div class="form-group">
             <%= form.label(:admin_set, "Admin Sets:") %>
             <%= link_to('Select All', "#", {class: 'select-all-btn', data: { target_select:'#admin_set'}}) %>
             <br />
