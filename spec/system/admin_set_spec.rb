@@ -5,6 +5,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
   let(:admin_set) { FactoryBot.create(:admin_set, key: "admin-set-key", label: "admin-set-label", homepage: "http://admin-set-homepage.com") }
   let(:sysadmin_user) { FactoryBot.create(:sysadmin_user, uid: 'johnsmith2530') }
   let(:user) { FactoryBot.create(:user, uid: 'martinsmith2530') }
+  let(:metadata_source) { FactoryBot.create(:metadata_source, display_name: "test source") }
 
   before do
     admin_set
@@ -152,7 +153,44 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       visit root_path
       expect(page).to have_link('Sets')
     end
+
+    it 'has update metadata button' do
+      visit admin_set_path(admin_set)
+      expect(page).to have_css('a', text: 'Batch Update Metadata')
+    end
+
+    context 'update metadata dialog' do
+      before do
+        metadata_source
+        visit admin_set_path(admin_set)
+        expect(page).to have_css('a', text: 'Batch Update Metadata')
+        click_on('Batch Update Metadata')
+      end
+
+      it 'autoselects the current admin set' do
+        expect(page.find("#admin_set").value).to eq([admin_set.id.to_s])
+      end
+
+      it 'requires selection of metadata sources' do
+        expect(page).to have_css('input[value="Update Metadata"]')
+        click_on('Update Metadata')
+        expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to update the metadata for these Admin Sets?")
+        page.driver.browser.switch_to.alert.accept
+        message = page.find("#metadata_source_ids").native.attribute("validationMessage")
+        expect(message).to eq('Please select an item in the list.')
+      end
+
+      it 'starts job when dialog is submitted' do
+        expect(UpdateAllMetadataJob).to receive(:perform_later).with(0, admin_set_id: ["", admin_set.id.to_s], authoritative_metadata_source_id: ["", metadata_source.id.to_s])
+        expect(page).to have_css('input[value="Update Metadata"]')
+        page.find("#metadata_source_ids").set [metadata_source.id.to_s]
+        click_on('Update Metadata')
+        expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to update the metadata for these Admin Sets?")
+        page.driver.browser.switch_to.alert.accept
+      end
+    end
   end
+
   context "when user does not have permission to Sets" do
     before do
       login_as user
