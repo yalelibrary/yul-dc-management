@@ -38,21 +38,10 @@ module Updatable
 
     processed_fields = {}
     fields.each do |f|
-      processed_fields[f.to_sym] = if row[f].present? && row[f] != parent_object.send(f)
-                                     row[f]
-                                   else
-                                     parent_object.send(f)
-                                   end
+      processed_fields[f.to_sym] = valid_regular_fields(row, f, parent_object)
     end
     validation_fields.each do |k, v|
-      processed_fields[k.to_sym] = if row[k].present? && row[k] != parent_object.send(k) && (ParentObject.send(v).include? row[k])
-                                     row[k]
-                                   elsif row[k].present? && row[k] != parent_object.send(k) && !(ParentObject.send(v).include? row[k])
-                                     process_invalid_vocab_event(k, row[k], parent_object.oid)
-                                     parent_object.send(k)
-                                   else
-                                     parent_object.send(k)
-                                   end
+      processed_fields[k.to_sym] = valid_controlled_vocab_fields(row, k, v, parent_object)
     end
 
     processed_fields
@@ -62,11 +51,30 @@ module Updatable
     parent_object.current_batch_process = self
     parent_object.current_batch_connection = batch_connections.find_or_create_by(connectable: parent_object)
     parent_object.current_batch_connection.save!
-    parent_object.processing_event("Parent #{parent_object.oid} has been updated", 'update complete')
+    parent_object.processing_event("Parent #{parent_object.oid} has been updated", 'update-complete')
   end
 
   def remote_po_path(oid, metadata_source)
     "#{metadata_source}/#{oid}.json"
+  end
+
+  def valid_regular_fields(row, field_value, parent_object)
+    if row[field_value].present? && row[field_value] != parent_object.send(field_value)
+      row[field_value]
+    else
+      parent_object.send(field_value)
+    end
+  end
+
+  def valid_controlled_vocab_fields(row, column_name, vocab, parent_object)
+    if row[column_name].present? && row[column_name] != parent_object.send(column_name) && (ParentObject.send(vocab).include? row[column_name])
+      row[column_name]
+    elsif row[column_name].present? && row[column_name] != parent_object.send(column_name) && !(ParentObject.send(vocab).include? row[column_name])
+      process_invalid_vocab_event(column_name, row[column_name], parent_object.oid)
+      parent_object.send(column_name)
+    else
+      parent_object.send(column_name)
+    end
   end
 
   # rubocop:disable Metrics/LineLength
