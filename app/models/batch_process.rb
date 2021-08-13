@@ -4,6 +4,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include CsvExportable
   include Reassociatable
   include Statable
+  include Updatable
   attr_reader :file
   after_create :determine_background_jobs
   before_create :mets_oid
@@ -14,7 +15,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :child_objects, through: :batch_connections, source_type: "ChildObject", source: :connectable
 
   def self.batch_actions
-    ['create parent objects', 'delete parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
+    ['create parent objects', 'update parent objects', 'delete parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
   end
 
   def batch_processing_event(message, status = 'info')
@@ -233,6 +234,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Metrics/AbcSize
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def determine_background_jobs
     if csv.present?
       case batch_action
@@ -242,6 +244,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         DeleteObjectsJob.perform_later(self)
       when 'export child oids'
         CreateChildOidCsvJob.perform_later(self)
+      when 'update parent objects'
+        UpdateParentObjectsJob.perform_later(self)
       when 'reassociate child oids'
         ReassociateChildOidsJob.perform_later(self)
       when 'recreate child oid ptiffs'
@@ -251,6 +255,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       refresh_metadata_cloud_mets
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def batch_status
     current_status = status_hash

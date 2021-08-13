@@ -6,7 +6,7 @@ module Reassociatable
   def reassociate_child_oids
     return unless batch_action == "reassociate child oids"
     parents_needing_update = update_child_objects
-    update_parent_objects(parents_needing_update)
+    update_related_parent_objects(parents_needing_update)
   end
 
   def update_child_objects
@@ -66,7 +66,7 @@ module Reassociatable
     po
   end
 
-  def update_parent_objects(parents_needing_update)
+  def update_related_parent_objects(parents_needing_update)
     return unless batch_action == "reassociate child oids"
     parents_needing_update.uniq.each do |oid|
       po = ParentObject.find(oid)
