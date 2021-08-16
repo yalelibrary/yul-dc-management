@@ -20,8 +20,9 @@ module Updatable
     return unless batch_action == "update parent objects"
     parsed_csv.each_with_index do |row, index|
       oid = row['oid'] unless ['oid'].nil?
-      metadata_source = row['source'] unless row['source'].nil?
+      byebug
       parent_object = updatable_parent_object(oid, index)
+      metadata_source = row['source'].presence || parent_object.authoritative_metadata_source.metadata_cloud_name
       next unless parent_object
 
       processed_fields = validate_field(parent_object, row)
