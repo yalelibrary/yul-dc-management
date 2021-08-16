@@ -48,6 +48,8 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
       stub_metadata_cloud("15234629")
       stub_ptiffs_and_manifests
       login_as user
+      brbl = AdminSet.find_by_key('brbl')
+      user.add_role(:editor, brbl)
       visit show_parent_batch_process_path(batch_process, 16_057_779)
     end
 
@@ -85,19 +87,6 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
         expect(page).to have_content("Manifest Saved")
         expect(page).to have_content("Solr Indexed")
         expect(page).to have_content("PDF Generated")
-      end
-
-      describe "after deleting a parent object" do
-        before do
-          batch_process
-          perform_enqueued_jobs
-          po = ParentObject.find(16_057_779)
-          po.destroy
-        end
-
-        it "can still display a show_parent page" do
-          visit show_parent_batch_process_path(batch_process, 16_057_779)
-        end
       end
     end
   end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
+UPDATE_PARENT_OBJECT_BUTTON = 'Save Parent Object And Update Metadata'
+
 RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
   before do
@@ -21,6 +23,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       stub_metadata_cloud("10001192")
       fill_in('Oid', with: "10001192")
       select('Beinecke Library')
+      select('Ladybird')
     end
 
     it "sets the expected fields in the database" do
@@ -49,7 +52,6 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   end
   context "creating a new ParentObject based on oid" do
     before do
-      visit parent_objects_path
       visit "parent_objects/new"
     end
 
@@ -58,6 +60,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         stub_metadata_cloud("2012036")
         fill_in('Oid', with: "2012036")
         select('Beinecke Library')
+        select('Ladybird')
       end
 
       it "includes reference to documentation for IIIF values" do
@@ -83,7 +86,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         click_on("Edit")
         expect(page).to have_field("Rights statement")
         fill_in("Rights statement", with: "This is a rights statement")
-        click_on("Update Parent object")
+        click_on(UPDATE_PARENT_OBJECT_BUTTON)
         expect(page).to have_content("This is a rights statement")
       end
 
@@ -117,6 +120,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         stub_metadata_cloud("2012036")
         fill_in('Oid', with: "2012036")
         select("Beinecke Library")
+        select('Ladybird')
         click_on("Create Parent object")
       end
 
@@ -137,7 +141,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       it "can change the visibility via the UI" do
         click_on("Edit")
         select("Yale Community Only")
-        click_on("Update Parent object")
+        click_on(UPDATE_PARENT_OBJECT_BUTTON)
         expect(page.body).to include "Yale Community Only"
         click_on("Back")
         click_on("Update Metadata")
@@ -149,7 +153,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         visit parent_object_path(2_012_036)
         click_on("Edit")
         select 'Sterling', from: "parent_object[admin_set]"
-        click_on("Update Parent object")
+        click_on(UPDATE_PARENT_OBJECT_BUTTON)
 
         visit parent_object_path(2_012_036)
         expect(page).to have_content "Sterling"
@@ -211,6 +215,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       before do
         stub_metadata_cloud("2005512")
         fill_in('Oid', with: "2005512")
+        select('Ladybird')
         click_on("Create Parent object")
       end
 
@@ -323,6 +328,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         stub_metadata_cloud("V-2004628", "ils")
         fill_in('Oid', with: "2004628")
         select('Beinecke Library')
+        select('Ladybird')
         click_on("Create Parent object")
       end
 
@@ -353,6 +359,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
           stub_metadata_cloud("V-10000016189097", "ils")
           fill_in('Oid', with: "10000016189097")
           select("Beinecke Library")
+          select("Ladybird")
           click_on("Create Parent object")
         end
         it "adds the visibility for private objects" do
@@ -366,6 +373,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
           stub_metadata_cloud("V-20000016189097", "ils")
           fill_in('Oid', with: "20000016189097")
           select("Beinecke Library")
+          select('Ladybird')
           click_on("Create Parent object")
         end
         it "adds the visibility for non-public objects" do
@@ -461,19 +469,26 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
           visit parent_objects_path
         end
 
-        it "does not update metadata without confirmation" do
-          expect(ParentObject).not_to receive(:find_each)
-          click_on("Update Metadata")
-          expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.")
-        end
-
-        it "does update metadata with confirmation" do
-          expect(ParentObject).to receive(:find_each).and_return([]).once
-          click_on("Update Metadata")
-          expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.")
-          page.driver.browser.switch_to.alert.accept
-        end
+      it "does not update metadata without confirmation" do
+        expect(ParentObject).not_to receive(:order)
+        click_on("Update Metadata")
+        expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.")
       end
+
+      it "does update metadata with confirmation" do
+        click_on("Update Metadata")
+        order = double
+        offset = double
+        where = double
+        allow(offset).to receive(:limit).and_return([])
+        allow(order).to receive(:offset).and_return(offset)
+        allow(ParentObject).to receive(:where).with({}).and_return(ParentObject.where({}))
+        expect(ParentObject).to receive(:where).with('').and_return(where)
+        expect(where).to receive(:order).and_return(order)
+        expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.")
+        page.driver.browser.switch_to.alert.accept
+      end
+    end
 
       context "logged in without sysadmin rights" do
         let(:user) { FactoryBot.create(:user) }
@@ -483,26 +498,63 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
           visit parent_objects_path
         end
 
-        it "does not update metadata without confirmation" do
-          expect(page).to have_button('Update Metadata', disabled: true)
-          expect(page).to have_button('Reindex', disabled: true)
-        end
+      it "does not update metadata without confirmation" do
+        expect(page).to have_button('Update Metadata', disabled: true)
+        expect(page).to have_button('Reindex', disabled: true)
       end
     end
 
-    context "when logged in without admin set roles" do
+    context "logged in without any editor rights" do
+      let(:user) { FactoryBot.create(:user) }
+
       before do
-        user.remove_role(:editor, AdminSet.find_by_key('brbl'))
-        visit "parent_objects/new"
-        stub_metadata_cloud("10001192")
-        fill_in('Oid', with: "10001192")
-        select('Beinecke Library')
+        brbl = AdminSet.find_by_key('brbl')
+        sml = AdminSet.find_by_key('sml')
+        user.remove_role(:editor, brbl) if brbl
+        user.remove_role(:editor, sml) if sml
+        login_as user
+        visit parent_objects_path
       end
-      it "does not allow creation of new parent with wrong admin set" do
-        click_on("Create Parent object")
-        expect(page).to have_content('Access denied')
+
+      it "does allow create parent" do
+        expect(page).to have_button('New Parent', disabled: true)
       end
     end
+
+    context "logged in with editor rights" do
+      let(:user) { FactoryBot.create(:user) }
+      let(:admin_set) { FactoryBot.create(:admin_set, key: "adminset") }
+
+      before do
+        login_as user
+        visit parent_objects_path
+      end
+
+      it "does allow create parent" do
+        expect(page).to have_button('New Parent', disabled: false)
+      end
+
+      it "does not allow editing of oid for non-sysadmin" do
+        click_on "New Parent"
+        expect(page).to have_selector("#parent_object_oid[readonly]")
+      end
+    end
+  end
+
+  context "when logged in without admin set roles" do
+    before do
+      user.remove_role(:editor, AdminSet.find_by_key('brbl'))
+      visit "parent_objects/new"
+      stub_metadata_cloud("10001192")
+      fill_in('Oid', with: "10001192")
+      select('Beinecke Library')
+      select('Ladybird')
+    end
+    it "does not allow creation of new parent with wrong admin set" do
+      click_on("Create Parent object")
+      expect(page.body).to eq 'Access denied'
+    end
+  end
 
     context "when logged in with access to only some admin set roles", js: true do
       let(:user) { FactoryBot.create(:user) }
@@ -551,10 +603,10 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         expect(page).to have_content("Access denied")
       end
 
-      it "does not allow changing parent_object to admin_set user does not have access to" do
-        visit edit_parent_object_path("2002826")
-        select 'AdminSet2', from: "parent_object[admin_set]"
-        click_on("Update Parent object")
+    it "does not allow changing parent_object to admin_set user does not have access to" do
+      visit edit_parent_object_path("2002826")
+      select 'AdminSet2', from: "parent_object[admin_set]"
+      click_on(UPDATE_PARENT_OBJECT_BUTTON)
 
         expect(page).to have_content "Admin set cannot be assigned to a set the User cannot edit"
       end
@@ -568,6 +620,24 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       it "has column visibility button" do
         expect(page).to have_css(".buttons-colvis")
       end
+    end
+  end
+
+  context "parent objects page", js: true do
+    before do
+      visit parent_objects_path
+    end
+
+    it "has csv button" do
+      expect(page).to have_css(".buttons-csv")
+    end
+
+    it "has excel button" do
+      expect(page).to have_css(".buttons-excel")
+    end
+
+    it "has column visibility button" do
+      expect(page).to have_css(".buttons-colvis")
     end
   end
 end

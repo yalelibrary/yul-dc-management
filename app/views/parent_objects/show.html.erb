@@ -110,7 +110,7 @@
   <div class='update-item-container'>
     <p>
       <strong>Update Metadata for this Object:</strong><br>
-      <small>Update the metadata for this object from the authoritative metadata source.<small>
+      <small>Update the metadata for this object from the authoritative metadata source.</small>
     </p>
     <div>
       <%= link_to 'Update this item', update_metadata_parent_object_path(@parent_object), method: :post, class: 'btn button update-item-button' %>
@@ -155,10 +155,10 @@
   <div class='delete-item-container'>
     <div>
       <p class='delete-item-label'>Delete this Item</p>
-      <p>Permanently delete this item</p>
+      <p>Permanently delete this item and its children.</p>
     </div>
     <div>
-      <%= link_to 'Delete this item', parent_object_path(@parent_object), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn button delete-item-button' %>
+      <%= link_to 'Delete this item', parent_object_path(@parent_object), method: :delete, data: { confirm: 'Are you sure you want to delete this item and its children?' }, class: 'btn button delete-item-button' %>
     </div>
   </div>
 <% end %>

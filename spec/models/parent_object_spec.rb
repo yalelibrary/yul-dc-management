@@ -510,7 +510,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/16797069?include-children=1")
               .to_return(status: 200, body: { data: "fake data" }.to_json)
           expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/16797069?include-children=1"
-          allow(S3Service).to receive(:upload).and_return true
+          allow(S3Service).to receive(:upload_if_changed).and_return true
           record = ladybird_source.fetch_record(parent_object)
           expect(record['data']).to eq("fake data")
         end

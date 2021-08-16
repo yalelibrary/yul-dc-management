@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ModuleLength
 module PdfRepresentable
   extend ActiveSupport::Concern
+  # rubocop:enable Metrics/ModuleLength
 
   NORMALIZED_COVER_FIELDS = %w[
     callNumber
@@ -31,6 +33,10 @@ module PdfRepresentable
         raise "PDF Java app returned non zero response code for #{oid}: #{stderr} #{stdout}"
       end
     end
+  end
+
+  def pdf_deletion
+    S3Service.delete(remote_pdf_path)
   end
 
   def remote_pdf_path
