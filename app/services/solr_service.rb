@@ -27,7 +27,7 @@ class SolrService
     solr_page = 0
     solr_ids = []
     while (solr_page = solr_page.next)
-      search = connection.paginate(solr_page, batch_size, "select", params: { q: 'id:*', fl: 'id' })
+      search = connection.paginate(solr_page, batch_size, "select", params: { q: 'oid_ssim:[* TO *]', fl: 'id' })
       ids = (search&.[]('response')&.[]('docs')&.map { |r| r.values })&.flatten
       break if ids.empty?
       solr_ids.concat(ids.map(&:to_i))
@@ -50,5 +50,62 @@ class SolrService
     orphans = solr_index_orphans(opts)
     connection.delete_by_id(orphans)
     connection.commit
+  end
+
+  # Creates a new field type to update schema of already create solr index
+  def self.add_field_type(name, type, index_analyzer, query_analyzer)
+    post_to_schema(
+      "add-field-type": {
+        "name": name,
+        "class": type,
+        "indexAnalyzer": index_analyzer,
+        "queryAnalyzer": query_analyzer
+      }
+    )
+  end
+
+  # Creates a new field type to update schema of already create solr index
+  def self.replace_field_type(name, type, index_analyzer, query_analyzer)
+    post_to_schema(
+      "replace-field-type": {
+        "name": name,
+        "class": type,
+        "indexAnalyzer": index_analyzer,
+        "queryAnalyzer": query_analyzer
+      }
+    )
+  end
+
+  # Creates a new field type to update schema of already create solr index
+  def self.replace_dynamic_field(name, type, indexed, stored, multi_value)
+    post_to_schema(
+      "replace-dynamic-field": {
+        "name": name,
+        "type": type,
+        "indexed": indexed,
+        "multiValued": multi_value,
+        "stored": stored
+      }
+    )
+  end
+
+  # Creates a new field type to update schema of already create solr index
+  def self.add_dynamic_field(name, type, indexed, stored, multi_value)
+    post_to_schema(
+      "add-dynamic-field": {
+        "name": name,
+        "type": type,
+        "indexed": indexed,
+        "multiValued": multi_value,
+        "stored": stored
+      }
+    )
+  end
+
+  def self.post_to_schema(data)
+    connection.connection.post('schema') do |req|
+      req.body = data.to_json
+      req.headers['Content-Type'] = 'application/json'
+    end
   end
 end

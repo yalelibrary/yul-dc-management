@@ -65,15 +65,15 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       parent_object.save!
       solr_document = parent_object.reload.to_solr
       expect(solr_document[:title_tesim]).to eq ["Ebony"]
-      response = solr.get 'select', params: { q: '*:*' }
+      response = solr.get 'select', params: { q: 'type_ssi:parent' }
       expect(response["response"]["numFound"]).to eq 1
     end
   end
 
   context "indexing to Solr from the database with Ladybird ParentObjects", solr: true do
     it "can index the 5 parent objects in the database to Solr and can remove those items" do
-      response = solr.get 'select', params: { q: '*:*' }
-      expect(response["response"]["numFound"]).to eq 0
+      response = solr.get 'select', params: { q: 'type_ssi:parent' }
+      existing_solr_count = response["response"]["numFound"].to_i
 
       expect do
         [
@@ -88,8 +88,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         end
       end.to change { ParentObject.count }.by(5)
 
-      response = solr.get 'select', params: { q: '*:*' }
-      expect(response["response"]["numFound"]).to eq 5
+      response = solr.get 'select', params: { q: 'type_ssi:parent' }
+      expect(response["response"]["numFound"]).to eq(5 + existing_solr_count)
 
       expect(SolrService.delete_all).to be
       response = solr.get 'select', params: { q: '*:*' }
@@ -97,7 +97,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     end
 
     it "can reindex all the parent objects in a background job" do
-      response = solr.get 'select', params: { q: '*:*' }
+      response = solr.get 'select', params: { q: 'type_ssi:parent' }
       expect(response["response"]["numFound"]).to eq 0
 
       expect do
@@ -113,12 +113,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         end
       end.to change { ParentObject.count }.by(5)
       expect(SolrReindexAllJob.perform_now).to be
-      response = solr.get 'select', params: { q: '*:*' }
+      response = solr.get 'select', params: { q: 'type_ssi:parent' }
       expect(response["response"]["numFound"]).to eq 5
     end
 
     it 'can remove an item from Solr' do
-      response = solr.get 'select', params: { q: '*:*' }
+      response = solr.get 'select', params: { q: 'type_ssi:parent' }
       expect(response["response"]["numFound"]).to eq 0
 
       expect do
@@ -129,7 +129,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
           FactoryBot.create(:parent_object, oid: oid)
         end
       end.to change { ParentObject.count }.by(1)
-      response = solr.get 'select', params: { q: '*:*' }
+      response = solr.get 'select', params: { q: 'type_ssi:parent' }
       expect(response["response"]["numFound"]).to eq 1
 
       expect do
@@ -140,7 +140,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         end
       end.to change { ParentObject.count }.by(-1)
 
-      response = solr.get 'select', params: { q: '*:*' }
+      response = solr.get 'select', params: { q: 'type_ssi:parent' }
       expect(response["response"]["numFound"]).to eq 0
     end
   end
