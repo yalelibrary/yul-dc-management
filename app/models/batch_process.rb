@@ -107,7 +107,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def refresh_metadata_cloud_csv
+  def create_new_parent_csv
     parsed_csv.each_with_index do |row, index|
       oid = row['oid']
       metadata_source = row['source']
@@ -239,7 +239,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     if csv.present?
       case batch_action
       when 'create parent objects'
-        RefreshMetadataCloudCsvJob.perform_later(self)
+        CreateNewParentJob.perform_later(self)
       when 'delete parent objects'
         DeleteObjectsJob.perform_later(self)
       when 'export child oids'
