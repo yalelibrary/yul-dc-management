@@ -156,7 +156,8 @@ module SolrIndexable
       sourceNote_ssim: json_to_index["sourceNote"], # replaced by sourceNote_tesim
       sourceTitle_ssim: json_to_index["sourceTitle"], # repleaced by sourceTitle_tesim
       subject_topic_tsim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
-      title_tsim: json_to_index["title"] # replaced by title_tesim
+      title_tsim: json_to_index["title"], # replaced by title_tesim
+      type_ssi: 'parent'
     }.delete_if { |_k, v| !v.present? } # Delete nil and empty values
   end
 
@@ -187,7 +188,8 @@ module SolrIndexable
       id: child_object.oid,
       parent_ssi: parent_object.oid,
       child_fulltext_tesim: child_object_full_text,
-      child_fulltext_wstsim: child_object_full_text
+      child_fulltext_wstsim: child_object_full_text,
+      type_ssi: 'child'
     }
   end
 
