@@ -116,6 +116,12 @@ RSpec.describe S3Service, type: :has_vcr do
     expect(described_class.full_text_exists?(remote_path)).to eq(true)
   end
 
+  it 'can delete a PDF' do
+    stub_request(:delete, "https://yale-test-image-samples.s3.amazonaws.com/pdfs/85/16/85/42/85/16854285.pdf")
+    .to_return(status: 200, headers: {})
+    expect(S3Service.delete("pdfs/85/16/85/42/85/16854285.pdf")).to be
+  end
+
   it "can check the etag" do
     expect(described_class.etag(etag_manifest_path, ENV['SAMPLE_BUCKET'])).to eq(etag_digest)
   end

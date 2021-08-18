@@ -1,4 +1,7 @@
 <%= render partial: "/management/flash_messages" %>
+<p>
+<a href="#BatchUpdateMetadata" role="button" class="btn btn-large btn-secondary" data-toggle="modal">Batch Update Metadata</a>
+</p>
 
 <p>
   <strong>Key:</strong>
@@ -24,7 +27,10 @@
 
 <%= render partial: 'shared/add_role', locals: {item: @admin_set} %>
 
+
 <p>
   <%= link_to 'Edit', edit_admin_set_path(@admin_set) %> |
   <%= link_to 'Back', admin_sets_path %>
 </p>
+
+<%= render partial: "update_metadata_dialog" %>

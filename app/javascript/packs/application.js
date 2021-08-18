@@ -170,11 +170,13 @@ $( document ).on('turbolinks:load', function() {
     })
   }
 
-  // Allows all datatables, no matter the amount of columns, to have 100% width
-  const tableWidth = document.getElementsByClassName('is-datatable')[0].clientWidth;
-  const tableHeadWidth = document.getElementsByClassName('table-head')[0].clientWidth;
-  if (tableHeadWidth <= tableWidth) {
-    $('.is-datatable').addClass('expanded')
+  if (document.getElementsByClassName('is-datatable')[0]) {
+    // Allows all datatables, no matter the amount of columns, to have 100% width
+    const tableWidth = document.getElementsByClassName('is-datatable')[0].clientWidth;
+    const tableHeadWidth = document.getElementsByClassName('table-head')[0].clientWidth;
+    if (tableHeadWidth <= tableWidth) {
+      $('.is-datatable').addClass('expanded')
+    }
   }
 });
 
@@ -220,3 +222,15 @@ $( document ).on('turbolinks:load', function() {
   show_hide_template_link();
 })
 
+
+$( document ).on('turbolinks:load', function() {
+  $('.select-all-btn').click( function(e) {
+    select_all($(this).data('target-select'));
+    e.preventDefault();
+    return false;
+  })
+})
+
+function select_all( select ) {
+  $(select + ' option').prop('selected', true);
+}

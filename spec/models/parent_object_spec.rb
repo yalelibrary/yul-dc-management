@@ -32,6 +32,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     stub_full_text('1030368')
     stub_full_text('1032318')
     stub_full_text('16057781')
+    stub_full_text('16057782')
+    stub_full_text('16057783')
+    stub_full_text('16057784')
+    stub_full_text('1042003')
     stub_request(:any, /localhost:8182*/).to_return(body: '{"service_id": 123123, "width": 10, "height": 10}')
   end
 
@@ -98,9 +102,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         end
 
         it "indexes the full text" do
-          solr_document = parent_of_four.to_solr_full_text
+          solr_document = parent_of_four.to_solr_full_text.first
           expect(solr_document).not_to be_nil
-          expect(solr_document[:fulltext_tsim].to_s).to include("много трудившейся")
+          expect(solr_document[:fulltext_tesim].to_s).to include("много трудившейся")
+          expect(solr_document[:has_fulltext_ssi].to_s).to eq "Yes"
         end
       end
     end
