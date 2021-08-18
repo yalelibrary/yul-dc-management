@@ -186,7 +186,9 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(sorted_child_objects[3]).to include 16_414_889
         expect(sorted_child_objects[4]).to include 16_854_285
 
-        click_on(BatchProcess.last.id.to_s)
+        within("td:first-child") do
+          click_on(BatchProcess.last.id.to_s)
+        end
         expect(page).to have_link("short_fixture_ids.csv", href: "/batch_processes/#{BatchProcess.last.id}/download")
         expect(page).to have_link("short_fixture_ids_bp_#{BatchProcess.last.id}.csv", href: "/batch_processes/#{BatchProcess.last.id}/download_created")
         bp = BatchProcess.last
