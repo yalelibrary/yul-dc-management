@@ -43,7 +43,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect do
         batch_process.file = csv_upload
         batch_process.save
-        batch_process.refresh_metadata_cloud_csv
+        batch_process.create_new_parent_csv
       end.to change { ParentObject.count }.from(0).to(5)
       po_original = ParentObject.find_by(oid: 2_034_600)
       expect(po_original.aspace_uri).to be_nil
@@ -85,7 +85,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect do
         batch_process.file = csv_upload
         batch_process.save
-        batch_process.refresh_metadata_cloud_csv
+        batch_process.create_new_parent_csv
       end.to change { ParentObject.count }.from(0).to(5)
       po_original = ParentObject.find_by(oid: 2_034_600)
 
@@ -128,7 +128,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect do
         batch_process.file = csv_upload
         batch_process.save
-        batch_process.refresh_metadata_cloud_csv
+        batch_process.create_new_parent_csv
       end.to change { ParentObject.count }.from(0).to(5)
       po_original = ParentObject.find_by(oid: 2_034_600)
 

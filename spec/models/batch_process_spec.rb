@@ -351,7 +351,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect do
             batch_process.file = delete_sample
             batch_process.save
-            batch_process.refresh_metadata_cloud_csv
+            batch_process.create_new_parent_csv
           end.to change { ParentObject.count }.from(0).to(1)
         end
       end
@@ -373,7 +373,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect do
             batch_process.file = delete_sample
             batch_process.save
-            batch_process.refresh_metadata_cloud_csv
+            batch_process.create_new_parent_csv
           end.to change { ParentObject.count }.from(0).to(1)
 
           delete_batch_process = described_class.new(batch_action: "delete parent objects", user_id: user.id)
