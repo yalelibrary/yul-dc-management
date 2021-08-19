@@ -279,8 +279,8 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
       described_class.update
       po_ils = ParentObject.find_by(oid: relevant_oid)
       po_aspace = ParentObject.find_by(aspace_uri: "/repositories/11/archival_objects/515305")
-      expect(po_ils.setup_metadata_jobs.count).to eq 1
-      expect(po_aspace.setup_metadata_jobs.count).to eq 1
+      expect(po_ils.setup_metadata_jobs.count).to eq 2
+      expect(po_aspace.setup_metadata_jobs.count).to eq 2
     end
 
     # There are ~1837 total items from the relevant time period, but only 3 of them

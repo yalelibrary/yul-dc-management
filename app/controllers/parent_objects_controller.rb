@@ -97,14 +97,30 @@ class ParentObjectsController < ApplicationController
     end
   end
 
-  def all_metadata
-    authorize!(:update_metadata, ParentObject)
-    ParentObject.find_each do |po|
-      po.metadata_update = true
-      po.setup_metadata_job
+  def all_metadata_where
+    where = {}
+    admin_set_ids = params[:admin_set]
+    admin_set_ids&.compact!
+    if !admin_set_ids
+      authorize!(:update_metadata, ParentObject)
+    else
+      where[:admin_set_id] = admin_set_ids
+      unless authorize!(:update_metadata, ParentObject)
+        admin_set_ids.map { |id| AdminSet.find_by(id: id) }.compact.each.each do |admin_set|
+          raise("Access Denied") unless current_ability.can?(:reindex_admin_set, admin_set)
+        end
+      end
     end
+    metadata_source_ids = params[:metadata_source_ids]
+    where[:authoritative_metadata_source_id] = metadata_source_ids if metadata_source_ids
+    where = '' if where.empty?
+    where
+  end
+
+  def all_metadata
+    UpdateAllMetadataJob.perform_later(0, all_metadata_where)
     respond_to do |format|
-      format.html { redirect_to parent_objects_url, notice: 'Parent objects have been queued for metadata update.' }
+      format.html { redirect_back fallback_location: parent_objects_url, notice: 'Parent objects have been queued for metadata update.' }
       format.json { head :no_content }
     end
   end
@@ -149,6 +165,11 @@ class ParentObjectsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_parent_object
       @parent_object = ParentObject.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      respond_to do |format|
+        format.html { redirect_to parent_objects_url, notice: "Parent object, oid: #{params[:id]}, was not found in local database." }
+        format.json { head :no_content }
+      end
     end
 
     def batch_process_of_one

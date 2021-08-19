@@ -175,7 +175,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.output_csv).to include "1126257"
         expect(BatchProcess.last.output_csv).to include "JWJ"
         expect(BatchProcess.last.output_csv).to include '2005512,,0,Access denied for parent object,"",""'
-        expect(BatchProcess.last.output_csv).to include '2005512,,0,Access denied for parent object,"",""'
         expect(BatchProcess.last.output_csv).not_to include "1030368" # child of 2005512
         expect(BatchProcess.last.batch_ingest_events.count).to eq 4
         expect(BatchProcess.last.batch_ingest_events.map(&:reason)).to include "Skipping row [3] due to parent permissions: 2005512"

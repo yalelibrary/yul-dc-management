@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe "admin_sets/show", type: :view do
+  include Devise::Test::ControllerHelpers
   before do
     @admin_set = assign(:admin_set, AdminSet.create!(
                                       key: "Key",

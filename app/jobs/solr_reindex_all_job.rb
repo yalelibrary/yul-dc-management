@@ -18,11 +18,24 @@ class SolrReindexAllJob < ApplicationJob
     last_job = parent_objects.count < SolrReindexAllJob.job_limit
     if parent_objects.count.positive?
       parent_objects.each_slice(SolrReindexAllJob.solr_batch_limit) do |parent_objects_group|
-        solr.add(parent_objects_group.map(&:to_solr_full_text).compact)
+        child_documents = []
+        solr.add(parent_objects_group.map do |parent_object|
+          results, child_results = parent_object.to_solr_full_text
+          child_documents += child_results unless child_results.nil?
+          results
+        end.compact)
         solr.commit
+        reindex_child_documents(solr, child_documents)
       end
       SolrReindexAllJob.perform_later(start_position + parent_objects.count) unless last_job
     end
     SolrService.clean_index_orphans if last_job
+  end
+
+  def reindex_child_documents(solr, child_documents)
+    child_documents.each_slice(SolrReindexAllJob.solr_batch_limit) do |child_documents_group|
+      solr.add(child_documents_group.compact)
+      solr.commit
+    end
   end
 end

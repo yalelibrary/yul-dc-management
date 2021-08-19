@@ -3,15 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe SolrReindexAllJob, type: :job, prep_metadata_sources: true, solr: true do
-  let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
-
   context 'with tests active job queue' do
     def queue_adapter_for_test
       ActiveJob::QueueAdapters::DelayedJobAdapter.new
     end
 
     it 'increments the job queue by one' do
-      parent_object
       ActiveJob::Base.queue_adapter = :delayed_job
       expect do
         SolrReindexAllJob.perform_later
@@ -29,11 +26,13 @@ RSpec.describe SolrReindexAllJob, type: :job, prep_metadata_sources: true, solr:
       solr_service = double
       expect(SolrService).to receive(:connection).and_return(solr_service).twice
       expect(SolrService).to receive(:clean_index_orphans).once
-      expect(solr_service).to receive(:add).exactly(total_records / solr_limit).times
-      expect(solr_service).to receive(:commit).exactly(total_records / solr_limit).times
+
+      # 2 * because of the children
+      expect(solr_service).to receive(:add).exactly(2 * total_records / solr_limit).times
+      expect(solr_service).to receive(:commit).exactly(2 * total_records / solr_limit).times
 
       doc = double
-      expect(doc).to receive(:to_solr_full_text).exactly(total_records).times
+      expect(doc).to receive(:to_solr_full_text).and_return([nil, [double]]).exactly(total_records).times
 
       parent_object_order = double
       parent_object_order_offset1 = double
