@@ -182,6 +182,10 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       it "can determine if a child object has a txt file" do
         expect(child_object.remote_ocr).to eq(true)
       end
+
+      it "can determine full text status" do
+        expect(child_object.full_text).to eq(false)
+      end
     end
 
     describe "with a cached width and height on s3", prep_admin_sets: true do
