@@ -29,12 +29,12 @@ module Reassociatable
     end
     parents_needing_update
   end
-
   # You can set the field to an empty string "" but the implementation skips any value that is nil. For the label, caption, and viewing hint it should be possible to set the value to nil.
   def reassociate_child(co, po, row)
-    co.order = row["order"]
+    co.order = row["order"] unless row["order"].nil?
     co.label = row["label"]
     co.caption = row["caption"]
+    co.viewing_hint = row["viewing_hint"]
     co.parent_object = po
     processing_event_for_child(co)
     co.save!
