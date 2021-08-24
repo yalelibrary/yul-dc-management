@@ -9,6 +9,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:role) { FactoryBot.create(:role, name: editor) }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "reassociation_example_small.csv")) }
   let(:child_object_nil_values) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "reassociation_example_child_object_counts.csv")) }
+  let(:child_object_with_missing_columns) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "reassociation_example_child_object_missing_columns.csv")) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
   let(:parent_object_old_one) { FactoryBot.create(:parent_object, oid: "2004548", admin_set_id: admin_set.id) }
   let(:parent_object_old_two) { FactoryBot.create(:parent_object, oid: "2004549", admin_set_id: admin_set.id) }
@@ -47,6 +48,35 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         expect(co.caption).to be_nil
         expect(co.label).to be_nil
         expect(co.viewing_hint).to be_nil
+      end
+    end
+  end
+
+  describe "child object reassociation with missing column will not delete existing value" do
+    before do
+      user.add_role(:editor, admin_set)
+      batch_process.user_id = user.id
+    end
+
+    with_versioning do
+      it "does not delete already existing values if column is missing" do
+        co = ChildObject.find(1_021_925)
+        co.label = "TEST LABEL STAY SAME"
+        co.caption = "TEST LABEL STAY SAME2"
+        co.order = 3_445_234
+        co.viewing_hint = nil
+        co.parent_object.authoritative_json["title"] = "po_title"
+        co.parent_object.call_number = "call_number"
+        co.save
+        batch_process.file = child_object_with_missing_columns
+        batch_process.save
+        co = ChildObject.find(1_021_925)
+        expect(co.label).to eq "TEST LABEL STAY SAME"
+        expect(co.caption).to eq "TEST LABEL STAY SAME2"
+        expect(co.order).to eq 3_445_234
+        expect(co.viewing_hint).to eq "facing-pages"
+        expect(co.parent_object.authoritative_json["title"]).to eq "po_title"
+        expect(co.parent_object.call_number).to eq "call_number"
       end
     end
   end

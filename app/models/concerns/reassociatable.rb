@@ -2,6 +2,7 @@
 
 module Reassociatable
   extend ActiveSupport::Concern
+  include Updatable
 
   def reassociate_child_oids
     return unless batch_action == "reassociate child oids"
@@ -23,21 +24,22 @@ module Reassociatable
 
       parents_needing_update << co.parent_object.oid
       parents_needing_update << row["parent_oid"].to_i
-      if row["order"].present?
-        order = extract_order(index, row)
-        next if order == :invalid_order
-      end
+      # check_columns(index, row, co)
+      order = extract_order(index, row)
+      next if order == :invalid_order
       reassociate_child(co, po, row)
     end
     parents_needing_update
   end
 
   def reassociate_child(co, po, row)
-    co.order = row["order"] unless row["order"].nil?
-    co.label = row["label"]
-    co.caption = row["caption"]
-    co.viewing_hint = row["viewing_hint"]
     co.parent_object = po
+    co.order = row["order"].present? ? row["order"] : co.order
+    co.label = row["label"].present? ? row["label"] : co.label
+    co.caption = row["caption"].present? ? row["caption"] : co.caption
+    co.viewing_hint = row["viewing_hint"].present? ? row["viewing_hint"] : co.viewing_hint
+    co.parent_object.authoritative_json["title"] = row["parent_title"].present? ? row["parent_title"] : co.parent_object.authoritative_json["title"]  
+    co.parent_object.call_number = row["call_number"].present? ? row["call_number"] : co.parent_object.call_number
     processing_event_for_child(co)
     co.save!
   end
