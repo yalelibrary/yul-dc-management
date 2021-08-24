@@ -79,7 +79,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       before do
-        allow(parent_of_four).to receive(:full_text?).and_return(true)
+        allow(parent_of_four).to receive(:full_text?).and_return("Yes")
         allow(parent_of_four).to receive(:manifest_completed?).and_return(true).exactly(4).times
         parent_of_four.default_fetch
       end
@@ -378,10 +378,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         stub_metadata_cloud("2004628")
         stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/fulltext/03/10/42/00/1042003.txt")
         .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
+        parent_object.child_objects.each do |co|
+          co.set_full_text_status
+        end
       end
 
       it "can determine if any of it's children have fulltext availability" do
-        expect(parent_object.full_text?).to eq(true)
+        expect(parent_object.full_text?).to eq "Yes"
       end
     end
 

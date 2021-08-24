@@ -183,8 +183,13 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
         expect(child_object.remote_ocr).to eq(true)
       end
 
-      it "can determine full text status" do
+      it "defaults to false for full text status" do
         expect(child_object.full_text).to eq(false)
+      end
+      
+      it "can save full text status from s3" do
+        child_object.set_full_text_status
+        expect(child_object.full_text).to eq(true)
       end
     end
 

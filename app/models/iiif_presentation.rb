@@ -46,7 +46,7 @@ class IiifPresentation
     @manifest["attribution"] = "Yale University Library"
     @manifest.sequences << sequence
     add_canvases_to_sequence(@manifest.sequences.first)
-    if parent_object.full_text?
+    if parent_object.full_text? == "Yes" || parent_object.full_text? == "Partial"
       @manifest["service"] ||= []
       @manifest["service"] << search_service
     end

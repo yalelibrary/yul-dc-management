@@ -171,7 +171,7 @@ module SolrIndexable
   end
 
   def child_object_solr_documents
-    if full_text?
+    if full_text? == "Yes" || full_text? == "Partial"
       full_text_array = child_objects.map do |child_object|
         child_object_full_text = S3Service.download_full_text(child_object.remote_ocr_path)
         raise "Missing full text for child object: #{child_object.oid}, for parent object: #{oid}" if child_object_full_text.nil?

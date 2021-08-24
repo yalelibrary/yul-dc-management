@@ -13,6 +13,7 @@ class ChildObject < ApplicationRecord
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
   after_destroy :delayed_jobs_deletion
+  after_create :set_full_text_status
 
   # Does not get called because we use upsert to create children
   # before_create :check_for_size_and_file
@@ -103,6 +104,15 @@ class ChildObject < ApplicationRecord
     return @remote_ocr_path if @remote_ocr_path
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
     @remote_ocr_path = File.join('fulltext', pairtree_path, "#{oid}.txt")
+  end
+
+  def set_full_text_status
+    if self.remote_ocr
+      self.full_text = true
+    else
+      self.full_text = false
+    end
+    self.save
   end
 
   def pyramidal_tiff
