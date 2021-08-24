@@ -23,8 +23,10 @@ module Reassociatable
 
       parents_needing_update << co.parent_object.oid
       parents_needing_update << row["parent_oid"].to_i
-      order = extract_order(index, row)
-      next if order == :invalid_order
+      if row["order"].present?
+        order = extract_order(index, row)
+        next if order == :invalid_order
+      end
       reassociate_child(co, po, row)
     end
     parents_needing_update
