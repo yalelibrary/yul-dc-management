@@ -18,14 +18,19 @@ module Reassociatable
       po = load_parent(index, row["parent_oid"].to_i)
       next unless co.present? && po.present?
 
+      # byebug
+
+      # headers - check if headers present before update
       attach_item(po)
       attach_item(co)
       next unless user_update_child_permission(co, po)
 
       parents_needing_update << co.parent_object.oid
       parents_needing_update << row["parent_oid"].to_i
-      order = extract_order(index, row)
-      next if order == :invalid_order
+      if row["order"].present?
+        order = extract_order(index, row)
+        next if order == :invalid_order
+      end
       reassociate_child(co, po, row)
     end
     parents_needing_update
@@ -34,10 +39,9 @@ module Reassociatable
   def reassociate_child(co, po, row)
     # byebug
     co.parent_object = po
-    co.order = row["order"].present? ? row["order"] : co.order
     co.label = row["label"].present? ? row["label"] : co.label
     co.caption = row["caption"].present? ? row["caption"] : co.caption
-    co.viewing_hint = row["viewing_hint"].present? ? row["viewing_hint"] : co.viewing_hint
+    co.viewing_hint = row["viewing_hint"].present? ? valid_view(row["viewing_hint"], co.oid) : co.viewing_hint
     co.parent_object.authoritative_json["title"] = row["parent_title"].present? ? row["parent_title"] : co.parent_object.authoritative_json["title"]
     co.parent_object.call_number = row["call_number"].present? ? row["call_number"] : co.parent_object.call_number
     processing_event_for_child(co)
@@ -69,6 +73,15 @@ module Reassociatable
     po = ParentObject.find_by_oid(oid)
     batch_processing_event("Skipping row [#{index + 2}] with Parent Missing #{oid}", 'Skipped Row') unless po
     po
+  end
+
+  def valid_view(viewing_hint, oid)
+    if ChildObject.viewing_hints.include? viewing_hint
+      viewing_hint
+    else
+      batch_processing_event("Child #{oid} did not update value for Viewing Hint. Value: #{viewing_hint} is invalid. For field Display Layout / Viewing Hint please use: non-paged, facing-pages, or leave column empty", 'Invalid Vocabulary')
+      nil
+    end
   end
 
   def update_related_parent_objects(parents_needing_update)

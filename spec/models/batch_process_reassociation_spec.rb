@@ -52,36 +52,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     end
   end
 
-  describe "child object reassociation with missing columns" do
-    before do
-      user.add_role(:editor, admin_set)
-      batch_process.user_id = user.id
-    end
-
-    with_versioning do
-      it "does not update already existing values if column is missing" do
-        co = ChildObject.find(1_021_925)
-        co.label = "Sample Label"
-        co.caption = "Example Caption"
-        co.order = 3_445_234
-        co.viewing_hint = nil
-        co.parent_object.authoritative_json["title"] = "['Title from Parent Object']"
-        co.parent_object.call_number = "Call Number from Parent Object"
-        co.save
-        # csv has only child oid, parent oid, and viewing_hint
-        batch_process.file = child_object_with_missing_columns
-        batch_process.save
-        co = ChildObject.find(1_021_925)
-        expect(co.label).to eq "Sample Label"
-        expect(co.caption).to eq "Example Caption"
-        expect(co.order).to eq 3_445_234
-        expect(co.viewing_hint).to eq "facing-pages"
-        expect(co.parent_object.authoritative_json["title"]).to eq "['Title from Parent Object']"
-        expect(co.parent_object.call_number).to eq "Call Number from Parent Object"
-      end
-    end
-  end
-
   describe "reassociation as a user with an editor role" do
     # Original oids [2002826, 2004548, 2004548, 2004549, 2004549]
     before do
