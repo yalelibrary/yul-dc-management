@@ -174,8 +174,8 @@ module SolrIndexable
     if full_text?
       full_text_array = child_objects.map do |child_object|
         child_object_full_text = S3Service.download_full_text(child_object.remote_ocr_path)
-        raise "Missing full text for child object: #{child_object.oid}, for parent object: #{oid}" if child_object_full_text.nil?
-        child_object_to_solr(child_object, child_object_full_text)
+
+        child_object_to_solr(child_object, child_object_full_text) unless child_object_full_text.nil?
       end
       return full_text_array
     end
@@ -214,6 +214,7 @@ module SolrIndexable
     return unless solr_document
     present = solr_document.try(:[], "fulltext_tesim".to_sym).try("present?") ? "Yes" : "No"
     solr_document[:has_fulltext_ssi] = present
+    solr_document[:is_partial_fulltext_ssi] = partial_fulltext? ? "Yes" : "No"
 
     solr_document
   end

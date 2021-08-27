@@ -359,16 +359,28 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def full_text?
-    # Iterate over the child objects and check the bucket to see if the first children have a .txt file
     return false unless child_objects.any?
-    child_objects.first.remote_ocr
 
     # This will iterate over all child objects to check if they have a .txt file in the ocr bucket
     # If any do not have a .txt file, the loop will exit and return false
+    #
+    children_with_ft = false
+    children_without_ft = false
 
-    # child_objects.each do |object|
-    #   return false unless object.remote_ocr
-    # end
-    # true
+    child_objects.each do |object|
+      if object.remote_ocr
+        children_with_ft = true
+      else
+        children_without_ft = true
+      end
+    end
+    @partial_fulltext = children_with_ft && children_without_ft
+
+    children_with_ft
+  end
+
+  def partial_fulltext?
+    @partial_fulltext ||= false
+    @partial_fulltext
   end
 end
