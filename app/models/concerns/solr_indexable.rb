@@ -164,7 +164,7 @@ module SolrIndexable
   def to_solr_full_text(json_to_index = nil)
     solr_document = to_solr(json_to_index)
     child_solr_documents = child_object_solr_documents
-    solr_document[:fulltext_tesim] = child_solr_documents.map { |child_solr_document| child_solr_document[:child_fulltext_tesim] } unless solr_document.nil? || child_solr_documents.nil?
+    solr_document[:fulltext_tesim] = child_solr_documents.map { |child_solr_document| child_solr_document.try(:[], :child_fulltext_tesim) } unless solr_document.nil? || child_solr_documents.nil?
     solr_document = append_full_text_status(solr_document)
 
     [solr_document, child_solr_documents]

@@ -86,7 +86,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
       context "with full text not found in s3" do
         before do
+          allow(parent_of_four).to receive(:full_text?).and_call_original
           stub_full_text_not_found("16057782")
+          parent_of_four.default_fetch
         end
         it "becomes a partial fulltext" do
           solr_document = parent_of_four.to_solr_full_text.first
