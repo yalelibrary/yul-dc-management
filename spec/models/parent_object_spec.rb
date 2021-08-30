@@ -88,9 +88,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         before do
           stub_full_text_not_found("16057782")
         end
-        it "raises exception" do
-          allow(Rails.logger).to receive(:error) { :logger_mock }
-          expect { parent_of_four.to_solr_full_text }.to raise_error("Missing full text for child object: 16057782, for parent object: 16057779")
+        it "becomes a partial fulltext" do
+          solr_document = parent_of_four.to_solr_full_text.first
+          expect(solr_document).not_to be_nil
+          expect(solr_document[:has_fulltext_ssi].to_s).to eq "Yes"
+          expect(solr_document[:is_partial_fulltext_ssi].to_s).to eq "Yes"
         end
       end
 
@@ -106,6 +108,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           expect(solr_document).not_to be_nil
           expect(solr_document[:fulltext_tesim].to_s).to include("много трудившейся")
           expect(solr_document[:has_fulltext_ssi].to_s).to eq "Yes"
+          expect(solr_document[:is_partial_fulltext_ssi].to_s).to eq "No"
         end
       end
     end
