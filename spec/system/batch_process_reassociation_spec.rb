@@ -9,9 +9,9 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
 
   before do
-    parent_object
-    stub_ptiffs_and_manifests
     stub_metadata_cloud("2005512")
+    stub_ptiffs_and_manifests
+    parent_object
   end
 
   around do |example|
@@ -35,8 +35,9 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     end
 
     it "does not update already existing values if column is missing" do
+      # byebug
       expect(page).to have_content "Your job is queued for processing in the background"
-      co = ChildObject.first
+      co = parent_object.child_objects.first
       expect(co.order).to eq 1
       expect(co.label).to be_nil
       expect(co.caption).to be_nil
@@ -49,7 +50,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_child_object_missing_columns.csv")
       click_button("Submit")
       expect(page).to have_content "Your job is queued for processing in the background"
-      co = ChildObject.first
+      co = parent_object.child_objects.first
       expect(co.order).to eq 1
       expect(co.label).to eq "note"
       expect(co.caption).to be_nil
@@ -72,7 +73,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
     it "updates value to nil when nil value present in csv" do
       expect(page).to have_content "Your job is queued for processing in the background"
-      co = ChildObject.first
+      co = parent_object.child_objects.first
       expect(co.order).to eq 1
       expect(co.label).to be_nil
       expect(co.caption).to be_nil
