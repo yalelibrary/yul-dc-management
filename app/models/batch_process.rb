@@ -210,7 +210,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     ParentObject.create(oid: oid) do |parent_object|
       set_values_from_mets(parent_object, metadata_source)
     end
-    PreservicaIngest.create(parent_oid: oid, preservica_id: mets_doc.parent_uuid, batch_process_id: id, ingest_time: Time.current)
+    PreservicaIngest.create(parent_oid: oid, preservica_id: mets_doc.parent_uuid, batch_process_id: id, ingest_time: Time.current) unless mets_doc.parent_uuid.nil?
   end
 
   # rubocop:disable Metrics/AbcSize

@@ -131,7 +131,7 @@ class MetsDocument
       label: normalize_label(physical_div),
       order: physical_div.xpath("@ORDER").inner_text,
       parent_object_oid: oid,
-      child_uuid: physical_div.xpath("mets:fptr/@FILEID").first.text, # uuid for child object
+      child_uuid: child_uuid_check(physical_div), # uuid for child object
       physical_id: physical_div.xpath("@ID").inner_text
 
     }
@@ -181,6 +181,10 @@ class MetsDocument
   def normalize_label(physical_div)
     return nil if physical_div.xpath("@ORDERLABEL").inner_text == " - "
     physical_div.xpath("@ORDERLABEL").inner_text
+  end
+
+  def child_uuid_check(physical_div)
+    physical_div.xpath("mets:fptr/@FILEID").first&.text
   end
 
   def files
