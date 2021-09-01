@@ -326,6 +326,18 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       expect(pj.preservica_child_id).to eq "1234d3360-bf78-4e35-9850-44ef7f832100"
       expect(pj.preservica_id).to eq "b9afab50-9f22-4505-ada6-807dd7d05733"
     end
+
+    it "does not create preservica ingest if no parent uuid" do
+      # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(SetupMetadataJob).to receive(:check_mets_images).and_return(true)
+      allow_any_instance_of(ParentObject).to receive(:default_fetch).and_return(true)
+      # rubocop:enable RSpec/AnyInstance check_mets_images
+      expect(BatchProcess.count).to eq 0
+      page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/no_uuid.xml')
+      click_button("Submit")
+      pj = PreservicaIngest.find_by_child_oid(30_000_321)
+      expect(pj.nil?).to be_truthy
+    end
   end
 
   it "triggers directory scan" do
