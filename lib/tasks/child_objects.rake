@@ -10,4 +10,27 @@ namespace :child_objects do
     csv_child_oids = all_child_oids.flatten.to_csv
     File.write(File.join("data", "child_oids.csv"), csv_child_oids)
   end
+
+  desc "Generate pagination labels"
+  task generate_labels: :environment do
+    # Grab all the child oids
+    all_child_oids = []
+    ParentObject.all.map do |p|
+      all_child_oids << p.child_objects.map(&:oid)
+    end
+    # check if label is "", " ", or nil
+    not_labeled_children = []
+    all_child_oids.flatten.each do |o|
+      co = ChildObject.find_by(oid: o)
+      # put those missing labels into an array
+      not_labeled_children << co unless co.label.present?
+    end
+    # map over them
+    not_labeled_children.each do |c|
+      # get child object order
+      c.label = "page #{c.order}"
+      # and save label to child object
+      c.save
+    end
+  end
 end

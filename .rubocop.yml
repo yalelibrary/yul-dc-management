@@ -30,6 +30,10 @@ Rails/OutputSafety:
   Exclude:
     - 'app/helpers/json_helper.rb'
 
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/lib/tasks/*.rb'
+
 RSpec/ExampleLength:
   Exclude:
     - 'spec/**/*.rb'
