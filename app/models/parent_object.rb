@@ -45,7 +45,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     [nil, "Completely digitized", "Partially digitized"]
   end
 
-  validates :visibility, inclusion: { in: visibilities, allow_nil: true,
+  validates :visibility, inclusion: { in: visibilities,
                                       message: "%{value} is not a valid value" }
 
   def initialize(attributes = nil)
