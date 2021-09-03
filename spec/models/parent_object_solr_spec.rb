@@ -34,10 +34,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     end
 
     it "does not have empty strings in to_solr hash" do
-            parent_object.bib = ""
+      parent_object.bib = ""
       parent_object.save!
       solr_document = parent_object.reload.to_solr
-      byebug
       expect(solr_document.values).not_to include("")
     end
 
