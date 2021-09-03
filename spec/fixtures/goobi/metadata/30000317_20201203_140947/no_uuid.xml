@@ -16,7 +16,7 @@
           <mods:note displayLabel="Yale Collection Owner" type="ownership">brbl</mods:note>
           <mods:identifier type="PPNanalog">/ils/barcode/39002091118928?bib=8394689</mods:identifier>
           <mods:recordInfo>
-            <mods:recordIdentifier source="gbv-ppn">30000320</mods:recordIdentifier>
+            <mods:recordIdentifier source="gbv-ppn">30000321</mods:recordIdentifier>
           </mods:recordInfo>
           <mods:part>Completely digitized</mods:part>
           <mods:classification authority="ivdcc">DefaultCollection</mods:classification>
@@ -73,7 +73,7 @@
     </mets:digiprovMD>
   </mets:amdSec>
   <mets:fileSec>
-    <mets:fileGrp USE="PRESENTATION" >
+    <mets:fileGrp USE="PRESENTATION">
       <mets:file MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="4e870f62d9b11c7cd93520d1aa5fe3def9ad3565">
         <mets:FLocat LOCTYPE="URL" xlink:href="file:///home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000318.tif" />
       </mets:file>
@@ -88,6 +88,7 @@
   <mets:structMap TYPE="PHYSICAL">
     <mets:div CONTENTIDS="30000321" ID="PHYS_0000" TYPE="physSequence">
       <mets:div CONTENTIDS="30000322" ID="PHYS_0001" ORDER="1" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="444d3360-bf78-4e35-9850-44ef7f832105" />
       </mets:div>
       <mets:div CONTENTIDS="30000323" ID="PHYS_0002" ORDER="2" ORDERLABEL=" - " TYPE="page">
       </mets:div>
