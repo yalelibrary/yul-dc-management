@@ -335,8 +335,10 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       expect(BatchProcess.count).to eq 0
       page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/no_uuid.xml')
       click_button("Submit")
-      pj = PreservicaIngest.find_by_child_oid(30_000_321)
+      pj = PreservicaIngest.find_by_child_oid(30_000_322)
       expect(pj.nil?).to be_truthy
+      pj_parent = PreservicaIngest.find_by_parent_oid(30_000_321)
+      expect(pj_parent.nil?).to be_truthy
     end
   end
 

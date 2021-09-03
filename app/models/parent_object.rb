@@ -89,7 +89,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def create_child_records
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
-      upsert_preservica_ingest_child_objects(array_preservica_hashes_from_mets)
+      upsert_preservica_ingest_child_objects(array_preservica_hashes_from_mets) unless array_preservica_hashes_from_mets.nil?
 
     else
       return unless ladybird_json
@@ -115,11 +115,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def array_preservica_hashes_from_mets
-    return unless current_batch_process&.mets_doc
+    return unless current_batch_process&.mets_doc && current_batch_process.mets_doc.parent_uuid.present?
     current_batch_process.mets_doc.combined.map do |child_hash|
-      { parent_oid: oid, preservica_id: current_batch_process.mets_doc.parent_uuid,
+      { parent_oid: oid,
+        preservica_id: current_batch_process.mets_doc.parent_uuid,
         batch_process_id: current_batch_process.id,
-        ingest_time: Time.current, child_oid: child_hash[:oid],
+        ingest_time: Time.current,
+        child_oid: child_hash[:oid],
         preservica_child_id: child_hash[:child_uuid] }
     end
   end
