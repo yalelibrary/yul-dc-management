@@ -45,7 +45,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     [nil, "Completely digitized", "Partially digitized"]
   end
 
-  validates :visibility, inclusion: { in: visibilities,
+  validates :visibility, inclusion: { in: visibilities, allow_nil: true,
                                       message: "%{value} is not a valid value" }
 
   def initialize(attributes = nil)
@@ -230,7 +230,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.bib = lb_record["orbisBibId"]
     self.barcode = lb_record["orbisBarcode"]
     self.aspace_uri = lb_record["archiveSpaceUri"]
-    self.visibility = lb_record["itemPermission"]
+    self.visibility = lb_record["itemPermission"].nil? ? "Private" : lb_record["itemPermission"]
     self.rights_statement = lb_record["rights"]&.first
     self.extent_of_digitization = normalize_extent_of_digitization
     self.use_ladybird = false
