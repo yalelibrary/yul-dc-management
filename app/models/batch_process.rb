@@ -144,11 +144,15 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def delete_objects
     parsed_csv.each_with_index do |row, index|
       oid = row['oid']
+      action = row['action']
       metadata_source = row['source']
+      batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}, action value for oid must be 'delete' to complete deletion.", 'Invalid Vocab') if action != "delete"
+      next unless action == 'delete'
       parent_object = deletable_parent_object(oid, index)
       next unless parent_object
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.destroy
+      parent_object.processing_event("Parent #{parent_object.oid} has been deleted", 'deleted')
     end
   end
 
