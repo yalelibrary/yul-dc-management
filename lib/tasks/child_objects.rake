@@ -15,8 +15,12 @@ namespace :child_objects do
   task generate_labels: :environment do
     # Grab all the child oids
     all_child_oids = []
-    ParentObject.all.map do |p|
-      all_child_oids << p.child_objects.map(&:oid)
+    parent_table = CSV.parse(File.read(Rails.root.join("spec/fixtures/csv", "full_text_staged.csv")), headers: true)
+    parent_oids = parent_table.by_col[0]
+    parent_oids.map do |p|
+      po = ParentObject.find_by(oid: p)
+      next if po.nil?
+      all_child_oids << po.child_objects.map(&:oid)
     end
     # check if label is "", " ", or nil
     not_labeled_children = []
