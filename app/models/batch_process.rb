@@ -89,7 +89,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
     object.current_batch_process = self
     object.current_batch_connection = batch_connections.build(connectable: object)
-    object.current_batch_connection.save! if object.class == ChildObject
+    if object.class == ChildObject
+      object.full_text = object.remote_ocr
+      object.current_batch_connection.save!
+    end
   end
 
   def editable_admin_set(admin_set_key, oid, index)

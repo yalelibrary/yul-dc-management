@@ -35,6 +35,7 @@ module Reassociatable
     co.label = row["label"] unless row["label"].nil?
     co.caption = row["caption"] unless row["caption"].nil?
     co.parent_object = po
+    co.full_text = co.remote_ocr
     processing_event_for_child(co)
     co.save!
   end

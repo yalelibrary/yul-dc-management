@@ -105,6 +105,12 @@ class ChildObject < ApplicationRecord
     @remote_ocr_path = File.join('fulltext', pairtree_path, "#{oid}.txt")
   end
 
+  def self.remote_ocr_path(oid)
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    remote_ocr_path = File.join('fulltext', pairtree_path, "#{oid}.txt")
+    S3Service.full_text_exists?(remote_ocr_path)
+  end
+
   def pyramidal_tiff
     @pyramidal_tiff ||= PyramidalTiff.new(self)
   end

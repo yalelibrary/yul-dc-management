@@ -97,12 +97,18 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       return self.child_object_count = 0 if ladybird_json["children"].empty?
       upsert_child_objects(array_of_child_hashes)
     end
+    self.child_objects.each do |co|
+      co.fulltext = co.remote_ocr
+      co.save!
+    end
     self.child_object_count = child_objects.size
   end
 
   def upsert_child_objects(child_objects_hash)
     raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
-
+    child_objects_hash.map! do |co|
+      co[:full_text]=  ChildObject.remote_ocr_path(co[:oid])
+    end
     ChildObject.insert_all(child_objects_hash)
   end
 
@@ -368,7 +374,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     children_without_ft = false
 
     child_objects.each do |object|
-      if object.remote_ocr
+      if object.fulltext
         children_with_ft = true
       else
         children_without_ft = true

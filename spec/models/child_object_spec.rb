@@ -181,6 +181,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
 
       it "can determine if a child object has a txt file" do
         expect(child_object.remote_ocr).to eq(true)
+        expect(child_object.full_text).to eq(true)
       end
     end
 
