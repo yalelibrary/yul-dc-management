@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ChildObject < ApplicationRecord
+class ChildObject < ApplicationRecord # rubocop:disable  Metrics/ClassLength
   has_paper_trail
   include Statable
   include Delayable
@@ -154,4 +154,4 @@ class ChildObject < ApplicationRecord
   def batch_connections_for(batch_process)
     batch_connections.where(batch_process: batch_process)
   end
-end
+end # rubocop:enable  Metrics/ClassLength
