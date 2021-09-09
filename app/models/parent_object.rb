@@ -371,4 +371,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     # end
     # true
   end
+
+  def update_fulltext_for_children
+    child_objects.each do |child_object|
+      child_object.processing_event("Child #{oid} is being processed", 'processing-queued')
+      # child_object.full_text = child_object.remote_fulltext_exists
+      child_object.processing_event("Child #{oid} has been updated", 'update-complete')
+    end
+  end
 end
