@@ -24,7 +24,7 @@ RSpec.describe "rake child_objects save_child_oids_to_csv", type: :task, prep_me
     end
   end
 
-  context 'with parent object with child objects' do
+  pending context 'with parent object with child objects' do
     it 'creates a csv with child objects' do
       Rake::Task["child_objects:save_child_oids_to_csv"].invoke
       file = File.read(Rails.root.join("data", "child_oids.csv"))
