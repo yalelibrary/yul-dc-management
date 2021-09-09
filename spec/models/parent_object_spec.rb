@@ -300,10 +300,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     context "a newly created ParentObject with just the oid and default authoritative_metadata_source (Ladybird for now)" do
-      let(:parent_object) { described_class.create(oid: "2005512", admin_set: FactoryBot.create(:admin_set)) }
+      let(:parent_object) { described_class.create(oid: "2012036", admin_set: FactoryBot.create(:admin_set)) }
       before do
-        stub_metadata_cloud("2005512", "ladybird")
-        stub_metadata_cloud("V-2005512", "ils")
+        stub_metadata_cloud("2012036", "ladybird")
+        stub_metadata_cloud("V-2012036", "ils")
       end
 
       it "pulls from the MetadataCloud for Ladybird and not Voyager or ArchiveSpace" do
@@ -315,14 +315,16 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.aspace_json).to be nil
       end
 
+      # rubocop:disable Metrics/LineLength
       it "pulls the rights statement from Ladybird" do
-        expect(parent_object.reload.rights_statement).to include "The use of this image may be subject to the "
+        expect(parent_object.reload.rights_statement).to include "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement.\nAdditional - The use of this image"
       end
+      # rubocop:enable Metrics/LineLength
 
       it "assigns the call number and container grouping" do
         parent_object.reload
-        expect(parent_object.call_number).to eq "GEN MSS 257"
-        expect(parent_object.container_grouping).to eq "Box 3 | Folder 24"
+        expect(parent_object.call_number).to eq "YCAL MSS 202"
+        expect(parent_object.container_grouping).to eq "Box 4 | Folder 201"
       end
 
       it "pulls Voyager record from the MetadataCloud when the authoritative_metadata_source is changed to Voyager" do
@@ -336,7 +338,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       it "updates DependentObjects when the authoritative_metadata_source is changed to Voyager" do
         parent_object.authoritative_metadata_source_id = voyager
         parent_object.save!
-        expected_uris = ['/ils/bib/4113177', '/ils/holding/4482860', '/ils/item/8090926', '/ils/barcode/39002093768050'].to_set
+        expected_uris = ['/ils/holding/7397126', '/ils/item/8200460', '/ils/bib/6805375', '/ils/barcode/39002091459793'].to_set
         expect(parent_object.reload.dependent_objects.count).to eq expected_uris.count
         expect(parent_object.dependent_objects.all? { |dobj| dobj.metadata_source == 'ils' }).to be_truthy
         uris = parent_object.dependent_objects.map(&:dependent_uri).to_set
@@ -344,8 +346,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       it "creates and has a count of ChildObjects" do
-        expect(parent_object.reload.child_object_count).to eq 2
-        expect(ChildObject.where(parent_object_oid: "2005512").count).to eq 2
+        expect(parent_object.reload.child_object_count).to eq 5
+        expect(ChildObject.where(parent_object_oid: "2012036").count).to eq 5
       end
 
       it "generated pdf json correctly" do
