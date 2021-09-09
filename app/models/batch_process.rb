@@ -159,6 +159,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         batch_processing_event("Skipping row [#{index + 2}] because unknown parent: #{parent_oid}", 'Unknown Parent')
       elsif current_ability.can?(:update, parent_object)
         attach_item(parent_object)
+        parent_object.child_objects.each { |co| attach_item(co) }
         parent_object.processing_event("Parent #{parent_object.oid} is being processed", 'processing-queued')
         parent_object.update_fulltext_for_children
         parent_object.processing_event("Parent #{parent_object.oid} has been updated", 'update-complete')
