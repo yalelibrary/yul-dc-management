@@ -24,7 +24,7 @@ class ChildObject < ApplicationRecord
   end
 
   def start_states
-    ["ptiff-queued"]
+    ["ptiff-queued", "processing-queued"]
   end
 
   def finished_states
