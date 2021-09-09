@@ -131,7 +131,7 @@ class MetsDocument
       label: normalize_label(physical_div),
       order: physical_div.xpath("@ORDER").inner_text,
       parent_object_oid: oid,
-      child_uuid: physical_div.xpath("mets:fptr/@FILEID").first.text, # uuid for child object
+      child_uuid: physical_div.xpath("mets:fptr/@FILEID").first&.text, # uuid for child object
       physical_id: physical_div.xpath("@ID").inner_text
 
     }

@@ -46,7 +46,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     [nil, "Completely digitized", "Partially digitized"]
   end
 
-  validates :visibility, inclusion: { in: visibilities,
+  validates :visibility, inclusion: { in: visibilities, allow_nil: true,
                                       message: "%{value} is not a valid value" }
 
   def initialize(attributes = nil)
@@ -82,7 +82,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def finished_states
-    ['solr-indexed', 'pdf-generated', 'ptiffs-recreated', 'update-complete']
+    ['solr-indexed', 'pdf-generated', 'ptiffs-recreated', 'update-complete', 'deleted']
   end
 
   # Note - the upsert_all method skips ActiveRecord callbacks, and is entirely
@@ -90,7 +90,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def create_child_records
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
-      upsert_preservica_ingest_child_objects(array_preservica_hashes_from_mets)
+      upsert_preservica_ingest_child_objects(array_preservica_hashes_from_mets) unless array_preservica_hashes_from_mets.nil?
 
     else
       return unless ladybird_json
@@ -116,11 +116,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def array_preservica_hashes_from_mets
-    return unless current_batch_process&.mets_doc
+    return unless current_batch_process&.mets_doc && current_batch_process.mets_doc.parent_uuid.present?
     current_batch_process.mets_doc.combined.map do |child_hash|
-      { parent_oid: oid, preservica_id: current_batch_process.mets_doc.parent_uuid,
+      { parent_oid: oid,
+        preservica_id: current_batch_process.mets_doc.parent_uuid,
         batch_process_id: current_batch_process.id,
-        ingest_time: Time.current, child_oid: child_hash[:oid],
+        ingest_time: Time.current,
+        child_oid: child_hash[:oid],
         preservica_child_id: child_hash[:child_uuid] }
     end
   end
@@ -231,7 +233,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.bib = lb_record["orbisBibId"]
     self.barcode = lb_record["orbisBarcode"]
     self.aspace_uri = lb_record["archiveSpaceUri"]
-    self.visibility = lb_record["itemPermission"]
+    self.visibility = lb_record["itemPermission"].nil? ? "Private" : lb_record["itemPermission"]
     self.rights_statement = lb_record["rights"]&.first
     self.extent_of_digitization = normalize_extent_of_digitization
     self.use_ladybird = false

@@ -99,7 +99,6 @@ module SolrIndexable
       publisher_tesim: json_to_index["publisher"],
       publisher_ssim: json_to_index["publisher"],
       recordType_ssi: json_to_index["recordType"],
-      repository_ssi: json_to_index["repository"],
       relatedResourceOnline_ssim: json_to_index["relatedResourceOnline"],
       repository_ssim: json_to_index["repository"],
       resourceType_ssim: json_to_index["itemType"],

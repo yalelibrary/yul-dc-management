@@ -186,7 +186,9 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(sorted_child_objects[3]).to include 16_414_889
         expect(sorted_child_objects[4]).to include 16_854_285
 
-        click_on(BatchProcess.last.id.to_s)
+        within("td:first-child") do
+          click_on(BatchProcess.last.id.to_s)
+        end
         expect(page).to have_link("short_fixture_ids.csv", href: "/batch_processes/#{BatchProcess.last.id}/download")
         expect(page).to have_link("short_fixture_ids_bp_#{BatchProcess.last.id}.csv", href: "/batch_processes/#{BatchProcess.last.id}/download_created")
         bp = BatchProcess.last
@@ -323,6 +325,20 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       pj = PreservicaIngest.find_by_child_oid(30_000_319)
       expect(pj.preservica_child_id).to eq "1234d3360-bf78-4e35-9850-44ef7f832100"
       expect(pj.preservica_id).to eq "b9afab50-9f22-4505-ada6-807dd7d05733"
+    end
+
+    it "does not create preservica ingest if no parent uuid" do
+      # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(SetupMetadataJob).to receive(:check_mets_images).and_return(true)
+      allow_any_instance_of(ParentObject).to receive(:default_fetch).and_return(true)
+      # rubocop:enable RSpec/AnyInstance check_mets_images
+      expect(BatchProcess.count).to eq 0
+      page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/no_uuid.xml')
+      click_button("Submit")
+      pj = PreservicaIngest.find_by_child_oid(30_000_322)
+      expect(pj.nil?).to be_truthy
+      pj_parent = PreservicaIngest.find_by_parent_oid(30_000_321)
+      expect(pj_parent.nil?).to be_truthy
     end
   end
 
