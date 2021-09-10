@@ -11,7 +11,7 @@ class GenerateManifestJob < ApplicationJob
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
     generate_manifest(parent_object)
-    index_to_solr(parent_object)
+    parent_object.save #  save will trigger solr index job with correct batch connections
     GeneratePdfJob.perform_later(parent_object, current_batch_process, current_batch_connection)
   end
 
@@ -31,18 +31,6 @@ class GenerateManifestJob < ApplicationJob
     end
   rescue => e
     parent_object.processing_event("IIIF Manifest generation failed due to #{e.message}", "failed")
-    raise # this reraises the error after we document it
-  end
-
-  def index_to_solr(parent_object)
-    result = parent_object.solr_index
-    if (result&.[]("responseHeader")&.[]("status"))&.zero?
-      parent_object.processing_event("Solr index updated", "solr-indexed")
-    else
-      parent_object.processing_event("Solr index after manifest generation failed", "failed")
-    end
-  rescue => e
-    parent_object.processing_event("Solr indexing failed due to #{e.message}", "failed")
     raise # this reraises the error after we document it
   end
 end

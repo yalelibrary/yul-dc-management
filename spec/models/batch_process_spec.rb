@@ -516,7 +516,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.file = csv_upload
           batch_process.save
           expect(ParentObject.count).to eq(5)
-          expect(IngestEvent.count).to eq(456)
+          expect(IngestEvent.count).to eq(466)
         end
 
         it "fails if the user is not an editor on the admin set of the parent object" do
