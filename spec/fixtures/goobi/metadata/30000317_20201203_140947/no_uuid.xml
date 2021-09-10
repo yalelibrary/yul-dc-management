@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:dv="http://dfg-viewer.de/" xmlns:intranda="http://intranda.com/MODS/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OBJID="191" xsi:schemaLocation="http://www.loc.gov/standards/premis/ http://www.loc.gov/standards/premis/v2/premis-v2-0.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/standards/mix/ http://www.loc.gov/standards/mix/mix.xsd">
+  <mets:metsHdr CREATEDATE="2020-12-03T14:09:47Z">
+    <mets:agent OTHERTYPE="SOFTWARE" ROLE="CREATOR" TYPE="OTHER">
+      <mets:name>Goobi - 3647a - 2020-08-02 19:35:26+0000</mets:name>
+      <mets:note>Goobi</mets:note>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:dmdSec ID="DMDLOG_0000">
+    <mets:mdWrap MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods>
+          <mods:titleInfo>
+            <mods:title>Di qiu quan tu</mods:title>
+          </mods:titleInfo>
+          <mods:note displayLabel="Yale Collection Owner" type="ownership">brbl</mods:note>
+          <mods:identifier type="PPNanalog">/ils/barcode/39002091118928?bib=8394689</mods:identifier>
+          <mods:recordInfo>
+            <mods:recordIdentifier source="gbv-ppn">30000321</mods:recordIdentifier>
+          </mods:recordInfo>
+          <mods:part>Completely digitized</mods:part>
+          <mods:classification authority="ivdcc">DefaultCollection</mods:classification>
+          <mods:originInfo>
+            <mods:dateIssued keyDate="no">Xianfeng wu nian [1855]</mods:dateIssued>
+            <mods:dateIssued keyDate="yes">1855</mods:dateIssued>
+          </mods:originInfo>
+          <mods:accessCondition displayLabel="Yale Restriction" type="restriction on access">Public</mods:accessCondition>
+          <mods:accessCondition displayLabel="Yale Use" type="use and reproduction">The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement.</mods:accessCondition>
+          <mods:location>
+            <mods:shelfLocator>11 1860A</mods:shelfLocator>
+          </mods:location>
+          <mods:name type="personal">
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+            <mods:namePart type="family">Chen</mods:namePart>
+            <mods:namePart type="given">Xiutang.</mods:namePart>
+            <mods:displayForm>Chen, Xiutang.</mods:displayForm>
+          </mods:name>
+          <mods:extension>
+            <intranda:intranda>
+              <intranda:directionRTL>false</intranda:directionRTL>
+              <intranda:ViewingDirection>left-to-right</intranda:ViewingDirection>
+              <intranda:ViewingHint>individuals</intranda:ViewingHint>
+            </intranda:intranda>
+          </mods:extension>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:amdSec ID="AMD">
+    <mets:rightsMD ID="RIGHTS">
+      <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights>
+            <dv:owner>Beinecke Rare Book &amp; Manuscript Library</dv:owner>
+            <dv:ownerLogo />
+            <dv:ownerSiteURL>https://beinecke.library.yale.edu/</dv:ownerSiteURL>
+            <dv:ownerContact />
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="DIGIPROV">
+      <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links>
+            <dv:reference />
+            <dv:presentation />
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:fileSec>
+    <mets:fileGrp USE="PRESENTATION">
+      <mets:file MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="4e870f62d9b11c7cd93520d1aa5fe3def9ad3565">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000318.tif" />
+      </mets:file>
+      <mets:file  MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="4e870f62d9b11c7cd93520d1aa5fe3def9ad3565">
+        <mets:FLocat LOCTYPE="URL" xlink:href="file:///home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000319.tif" />
+      </mets:file>
+    </mets:fileGrp>
+  </mets:fileSec>
+  <mets:structMap TYPE="LOGICAL">
+    <mets:div ADMID="AMD" DMDID="DMDLOG_0000" ID="LOG_0000" LABEL="Di qiu quan tu" TYPE="ILSObject" />
+  </mets:structMap>
+  <mets:structMap TYPE="PHYSICAL">
+    <mets:div CONTENTIDS="30000321" ID="PHYS_0000" TYPE="physSequence">
+      <mets:div CONTENTIDS="30000322" ID="PHYS_0001" ORDER="1" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="444d3360-bf78-4e35-9850-44ef7f832105" />
+      </mets:div>
+      <mets:div CONTENTIDS="30000323" ID="PHYS_0002" ORDER="2" ORDERLABEL=" - " TYPE="page">
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+  <mets:structLink>
+    <mets:smLink xlink:to="PHYS_0001" xlink:from="LOG_0000" />
+  </mets:structLink>
+</mets:mets>

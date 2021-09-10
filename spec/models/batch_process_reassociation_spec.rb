@@ -8,6 +8,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:role) { FactoryBot.create(:role, name: editor) }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "reassociation_example_small.csv")) }
+  let(:child_object_nil_values) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "reassociation_example_child_object_counts.csv")) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
   let(:parent_object_old_one) { FactoryBot.create(:parent_object, oid: "2004548", admin_set_id: admin_set.id) }
   let(:parent_object_old_two) { FactoryBot.create(:parent_object, oid: "2004549", admin_set_id: admin_set.id) }
@@ -30,6 +31,24 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     parent_object_old_one
     parent_object_old_two
     login_as(:user)
+  end
+
+  describe "child object reassociation with nil values for caption, label, viewing hint" do
+    before do
+      user.add_role(:editor, admin_set)
+      batch_process.user_id = user.id
+      batch_process.file = child_object_nil_values
+      batch_process.save
+    end
+
+    with_versioning do
+      it "can set caption, label, viewing hint values to nil" do
+        co = ChildObject.find(1_021_925)
+        expect(co.caption).to be_nil
+        expect(co.label).to be_nil
+        expect(co.viewing_hint).to be_nil
+      end
+    end
   end
 
   describe "reassociation as a user with an editor role" do

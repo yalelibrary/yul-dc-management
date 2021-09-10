@@ -110,6 +110,36 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     end
   end
 
+  context "with a user with edit permissions but with only an oid value", solr: true do
+    context "updating a batch of parent objects" do
+      before do
+        login_as user
+        user.add_role(:editor, admin_set)
+      end
+
+      it "triggers a metadata update" do
+        today = Time.zone.today
+        # perform batch update
+        visit batch_processes_path
+        select("Update Parent Objects")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/update_example_oid_only.csv")
+        click_button("Submit")
+        expect(page).to have_content "Your job is queued for processing in the background"
+
+        visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/2034600"
+        expect(page).to have_content "Status Complete"
+
+        expect(page).to have_content "Submitted #{today}"
+        expect(page).to have_content "Processing Queued Pending"
+        expect(page).to have_content "Metadata Fetched #{today}"
+        expect(page).to have_content "Child Records Created #{today}"
+        expect(page).to have_content "Manifest Saved #{today}"
+        expect(page).to have_content "Solr Indexed #{today}"
+        expect(page).to have_content "PDF Generated #{today}"
+      end
+    end
+  end
+
   context "with a user without edit permissions" do
     let(:admin_user) { FactoryBot.create(:sysadmin_user) }
 

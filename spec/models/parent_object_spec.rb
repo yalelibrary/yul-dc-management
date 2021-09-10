@@ -661,4 +661,15 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       expect(parent_object.batch_connections_for(batch_process)).to eq(batch_connection)
     end
   end
+
+  context "a ladybird Object without itemPermission" do
+    let(:parent_object) { described_class.create(oid: "16688180", admin_set: FactoryBot.create(:admin_set)) }
+    before do
+      stub_metadata_cloud("16688180")
+    end
+
+    it "will have Private as the default visibility" do
+      expect(parent_object.visibility).to eq "Private"
+    end
+  end
 end

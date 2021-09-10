@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ModuleLength
 module Reassociatable
   extend ActiveSupport::Concern
 
@@ -19,21 +20,62 @@ module Reassociatable
 
       attach_item(po)
       attach_item(co)
+
       next unless user_update_child_permission(co, po)
 
       parents_needing_update << co.parent_object.oid
       parents_needing_update << row["parent_oid"].to_i
-      order = extract_order(index, row)
-      next if order == :invalid_order
-      reassociate_child(co, po, row)
+
+      reassociate_child(co, po)
+
+      values_to_update = check_headers(headers, row)
+      update_child_parent_values(values_to_update, co, row, index)
     end
     parents_needing_update
   end
 
-  def reassociate_child(co, po, row)
-    co.order = row["order"] unless row["order"].nil?
-    co.label = row["label"] unless row["label"].nil?
-    co.caption = row["caption"] unless row["caption"].nil?
+  def check_headers(headers, row)
+    possible_headers = headers
+    values_to_update = []
+    possible_headers.each do |h|
+      values_to_update << h if row.headers.include?(h)
+    end
+    values_to_update
+  end
+
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/MethodLength
+  def update_child_parent_values(values_to_update, co, row, index)
+    values_to_update.each do |h|
+      if h == 'viewing_hint'
+        co.viewing_hint = valid_view(row[h], co.oid)
+      elsif h == 'call_number'
+        co.parent_object.call_number = row[h]
+      elsif h == 'parent_title'
+        co.parent_object.authoritative_json["title"] = row[h]
+      elsif values_to_update.include? h
+        if h == 'label'
+          co.label = row[h]
+        elsif h == 'caption'
+          co.caption = row[h]
+        elsif h == 'order'
+          co.order = extract_order(index, row)
+        elsif h == 'child_oid' || h == 'parent_oid'
+          next
+        end
+      else
+        next
+      end
+      co.save
+      co.parent_object.save
+    end
+  end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/MethodLength
+
+  def reassociate_child(co, po)
     co.parent_object = po
     processing_event_for_child(co)
     co.save!
@@ -66,6 +108,17 @@ module Reassociatable
     po
   end
 
+  # rubocop:disable Metrics/LineLength
+  def valid_view(viewing_hint, oid)
+    if ChildObject.viewing_hints.include? viewing_hint
+      viewing_hint
+    else
+      batch_processing_event("Child #{oid} did not update value for Viewing Hint. Value: #{viewing_hint} is invalid. For field Viewing Hint please use: non-paged, facing-pages, or leave column empty", 'Invalid Vocabulary')
+      nil
+    end
+  end
+  # rubocop:enable Metrics/LineLength
+
   def update_related_parent_objects(parents_needing_update)
     return unless batch_action == "reassociate child oids"
     parents_needing_update.uniq.each do |oid|
@@ -82,3 +135,4 @@ module Reassociatable
     end
   end
 end
+# rubocop:enable Metrics/ModuleLength
