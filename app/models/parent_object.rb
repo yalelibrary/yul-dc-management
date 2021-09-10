@@ -20,7 +20,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   attr_accessor :current_batch_connection
   self.primary_key = 'oid'
   after_save :setup_metadata_job
-  after_update :solr_index_job # we index from the fetch job on create
+  # after_update :solr_index_job # we index from the fetch job on create
   after_destroy :solr_delete
   after_destroy :note_deletion
   after_destroy :delayed_jobs_deletion

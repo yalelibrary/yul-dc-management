@@ -195,7 +195,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         batch_process.save
         batch_process.run_callbacks :create
       end.to change { batch_process.batch_connections.where(connectable_type: "ParentObject").count }.from(0).to(5)
-        .and change { IngestEvent.count }.from(0).to(466)
+        .and change { IngestEvent.count }.from(0).to(456)
       statuses = IngestEvent.all.map(&:status)
       expect(statuses).to include "processing-queued"
       expect(statuses).to include "metadata-fetched"

@@ -11,7 +11,8 @@ class GenerateManifestJob < ApplicationJob
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
     generate_manifest(parent_object)
-    parent_object.save #  save will trigger solr index job with correct batch connections
+    parent_object.save
+    parent_object.solr_index_job
     GeneratePdfJob.perform_later(parent_object, current_batch_process, current_batch_connection)
   end
 

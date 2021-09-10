@@ -268,6 +268,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
 
       it 'has functioning Solr Document link' do
+        po = ParentObject.find_by(oid: "2012036")
+        po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
         click_on("Solr Document")
         solr_data = JSON.parse(page.body)
@@ -311,6 +313,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
 
       it 'has functioning Solr Document link' do
+        po = ParentObject.find_by(oid: "2012036")
+        po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
         click_on("Solr Document")
         solr_data = JSON.parse(page.body)

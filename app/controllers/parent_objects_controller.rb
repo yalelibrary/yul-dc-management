@@ -37,6 +37,7 @@ class ParentObjectsController < ApplicationController
     batch_process_of_one
     respond_to do |format|
       if @parent_object.save
+        queue_parent_metadata_update
         format.html { redirect_to @parent_object, notice: 'Parent object was successfully created.' }
         format.json { render :show, status: :created, location: @parent_object }
       else
