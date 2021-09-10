@@ -218,6 +218,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
           parent_object.viewing_direction = "left to right"
           parent_object.display_layout = "book"
           parent_object.save!
+          parent_object.solr_index_job
           parent_object.reload
         end.to change(parent_object, :visibility).from("Public").to("Yale Community Only")
            .and change(parent_object, :holding).from(nil).to("555555555")
