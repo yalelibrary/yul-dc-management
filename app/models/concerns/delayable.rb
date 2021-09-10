@@ -8,11 +8,11 @@ module Delayable
   end
 
   def setup_metadata_jobs
-    Delayed::Job.where("handler LIKE ? AND handler LIKE ?", "%job_class: %SetupMetadataJob%", "%#{self.class}/#{oid}%")
+    Delayed::Job.where("handler LIKE ? AND handler LIKE ?", "%job_class: %SetupMetadataJob%", "%#{self.class}/#{oid}\n%")
   end
 
   def solr_index_jobs
-    Delayed::Job.where("handler LIKE ? AND handler LIKE ?", "%job_class: %SolrIndexJob%", "%#{self.class}/#{oid}%")
+    Delayed::Job.where("handler LIKE ? AND handler LIKE ?", "%job_class: %SolrIndexJob%", "%#{self.class}/#{oid}\n%")
   end
 
   def solr_reindex_jobs
