@@ -187,7 +187,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
     let(:parent_object) { FactoryBot.build(:parent_object, oid: 2_034_600) }
     let(:batch_process) { FactoryBot.create(:batch_process, user: user_one) }
-    let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
+    let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids.csv")) }
 
     it 'returns a processing_event message' do
       expect do

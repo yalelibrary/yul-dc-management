@@ -4,7 +4,7 @@ require "rails_helper"
 RSpec.describe FixtureParsingService, prep_metadata_sources: true do
   let(:oid) { "2004628" }
   let(:metadata_source) { "ladybird" }
-  let(:short_oid_path) { Rails.root.join("spec", "fixtures", "short_fixture_ids.csv") }
+  let(:short_oid_path) { Rails.root.join("spec", "fixtures", "csv", "short_fixture_ids.csv") }
   before do
     stub_metadata_cloud("16854285", "ladybird")
     stub_metadata_cloud("V-16854285", "ils")

@@ -5,9 +5,9 @@ require 'rails_helper'
 RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
-  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
-  let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids_with_source.csv")) }
-  let(:delete_sample) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "delete_sample_fixture_ids.csv")) }
+  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids.csv")) }
+  let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids_with_source.csv")) }
+  let(:delete_sample) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_sample_fixture_ids.csv")) }
   let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
   let(:xml_upload_two) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml')) }
   let(:aspace_xml_upload) { Rack::Test::UploadedFile.new("spec/fixtures/goobi/metadata/30000317_20201203_140947/good_aspace.xml") }
@@ -222,7 +222,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect(ParentObject.count).to eq 0
           expect(ChildObject.count).to eq 0
           expect do
-            batch_process.file = Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "small_short_fixture_ids.csv"))
+            batch_process.file = Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "small_short_fixture_ids.csv"))
             batch_process.save
           end.to change { batch_process.batch_connections.count }.from(0).to(11)
           expect(ParentObject.count).to eq 4

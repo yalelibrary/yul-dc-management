@@ -6,8 +6,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: brbl) }
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
-  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
-  let(:bad_oid_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "bad_oid.csv")) }
+  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids.csv")) }
+  let(:bad_oid_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "bad_oid.csv")) }
   let(:brbl) { AdminSet.find_by_key('brbl') }
 
   before do
