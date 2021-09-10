@@ -15,6 +15,10 @@ module Delayable
     Delayed::Job.where("handler LIKE ? AND (handler LIKE ? or handler LIKE ?)", "%job_class: %SolrIndexJob%", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
   end
 
+  def queued_solr_index_jobs
+    Delayed::Job.where("locked_by IS NULL AND handler LIKE ? AND (handler LIKE ? or handler LIKE ?)", "%job_class: %SolrIndexJob%", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
+  end
+
   def solr_reindex_jobs
     Delayed::Job.where("handler LIKE ?", "%job_class: SolrReindexAllJob%")
   end
