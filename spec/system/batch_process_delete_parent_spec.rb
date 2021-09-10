@@ -32,7 +32,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # perform batch delete
         visit batch_processes_path
         select("Delete Parent Objects")
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/delete_sample_fixture_ids.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/delete_sample_fixture_ids.csv")
         click_button("Submit")
         expect(page).to have_content "Your job is queued for processing in the background"
 
@@ -75,7 +75,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
       it "does not permit parent to be deleted" do
         select("Delete Parent Objects")
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/delete_sample_fixture_ids.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/delete_sample_fixture_ids.csv")
         click_button("Submit")
         expect(ParentObject.count).to eq 1
       end

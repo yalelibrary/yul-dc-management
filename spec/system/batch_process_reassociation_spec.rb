@@ -30,7 +30,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       batch_process.user_id = user.id
       visit batch_processes_path
       select("Reassociate Child Oids")
-      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_child_object_all_columns.csv")
+      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_child_object_all_columns.csv")
       click_button("Submit")
     end
 
@@ -47,7 +47,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       # csv has only child oid, parent oid, and label
       visit batch_processes_path
       select("Reassociate Child Oids")
-      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_child_object_missing_columns.csv")
+      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_child_object_missing_columns.csv")
       click_button("Submit")
       expect(page).to have_content "Your job is queued for processing in the background"
       co = parent_object.child_objects.first
@@ -67,7 +67,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       batch_process.user_id = user.id
       visit batch_processes_path
       select("Reassociate Child Oids")
-      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_child_object_all_columns.csv")
+      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_child_object_all_columns.csv")
       click_button("Submit")
     end
 
@@ -90,7 +90,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       batch_process.user_id = user.id
       visit batch_processes_path
       select("Reassociate Child Oids")
-      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_child_object_invalid_view.csv")
+      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_child_object_invalid_view.csv")
       click_button("Submit")
     end
 

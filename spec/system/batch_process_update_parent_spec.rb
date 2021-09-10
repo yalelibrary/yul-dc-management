@@ -45,7 +45,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # perform batch update
         visit batch_processes_path
         select("Update Parent Objects")
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/update_example_small.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_small.csv")
         click_button("Submit")
         expect(page).to have_content "Your job is queued for processing in the background"
 
@@ -85,7 +85,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # perform batch update
         visit batch_processes_path
         select("Update Parent Objects")
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/update_example_invalid.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_invalid.csv")
         click_button("Submit")
         expect(page).to have_content "Your job is queued for processing in the background"
 
@@ -122,7 +122,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # perform batch update
         visit batch_processes_path
         select("Update Parent Objects")
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/update_example_oid_only.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_oid_only.csv")
         click_button("Submit")
         expect(page).to have_content "Your job is queued for processing in the background"
 
@@ -152,7 +152,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
       it "does not permit parent to be updated" do
         select("Update Parent Objects")
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/update_example_small.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_small.csv")
         click_button("Submit")
         visit "/batch_processes/#{BatchProcess.last.id}"
         expect(page).to have_content "Permission Denied Skipping row [2] with parent oid: 2034600, user does not have permission to update."
