@@ -7,8 +7,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:role) { FactoryBot.create(:role, name: editor) }
-  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "reassociation_example_small.csv")) }
-  let(:child_object_nil_values) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "reassociation_example_child_object_counts.csv")) }
+  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_small.csv")) }
+  let(:child_object_nil_values) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_child_object_counts.csv")) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
   let(:parent_object_old_one) { FactoryBot.create(:parent_object, oid: "2004548", admin_set_id: admin_set.id) }
   let(:parent_object_old_two) { FactoryBot.create(:parent_object, oid: "2004549", admin_set_id: admin_set.id) }

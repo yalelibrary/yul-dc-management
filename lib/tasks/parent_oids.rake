@@ -3,7 +3,7 @@
 namespace :parent_oids do
   desc "Create list of random selection of parent oids"
   task :random, [:samples] do |_t, args|
-    oid_path = Rails.root.join("spec", "fixtures", "public_oids_comma.csv")
+    oid_path = Rails.root.join("spec", "fixtures", "csv", "public_oids_comma.csv")
     fixture_ids_table = CSV.read(oid_path, headers: true)
     oids = fixture_ids_table.by_col[0]
     random_parent_oids = oids.sample(args[:samples].to_i)

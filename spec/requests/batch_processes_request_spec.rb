@@ -36,7 +36,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       FactoryBot.create(
         :batch_process,
         user: user,
-        csv: File.open(fixture_path + '/short_fixture_ids.csv').read,
+        csv: File.open(fixture_path + '/csv/short_fixture_ids.csv').read,
         file_name: "short_fixture_ids.csv"
       )
     end
@@ -52,7 +52,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       FactoryBot.create(
         :batch_process,
         user: user,
-        csv: File.open(fixture_path + '/short_fixture_ids.csv').read,
+        csv: File.open(fixture_path + '/csv/short_fixture_ids.csv').read,
         file_name: "short_fixture_ids.csv"
       )
     end
@@ -65,7 +65,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
 
   describe "POST /create" do
     context "with invalid parameters" do
-      let(:file) { fixture_file_upload('short_fixture_ids.csv', 'text/csv') }
+      let(:file) { fixture_file_upload('csv/short_fixture_ids.csv', 'text/csv') }
       # This was previously stubbed in such a way that it would pass no matter what, which is not a
       # meaningful test. Marking pending until we can create a meaningful test
       xit "does not create a new BatchProcess" do
