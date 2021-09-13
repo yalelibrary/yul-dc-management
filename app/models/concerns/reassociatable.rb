@@ -53,7 +53,7 @@ module Reassociatable
       elsif h == 'call_number'
         co.parent_object.call_number = row[h]
       elsif h == 'parent_title'
-        co.parent_object.authoritative_json["title"] = row[h]
+        co.parent_object.authoritative_json["title"] = row[h].split("  ")
       elsif values_to_update.include? h
         if h == 'label'
           co.label = row[h]
