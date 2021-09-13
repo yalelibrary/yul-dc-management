@@ -185,17 +185,16 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         example.run
       end
     end
-    let(:parent_object) { FactoryBot.build(:parent_object, oid: 2_034_600) }
     let(:batch_process) { FactoryBot.create(:batch_process, user: user_one) }
-    let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids.csv")) }
+    let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
 
     it 'returns a processing_event message' do
       expect do
         batch_process.file = csv_upload
         batch_process.save
         batch_process.run_callbacks :create
-      end.to change { batch_process.batch_connections.where(connectable_type: "ParentObject").count }.from(0).to(5)
-        .and change { IngestEvent.count }.from(0).to(456)
+      end.to change { batch_process.batch_connections.where(connectable_type: "ParentObject").count }.from(0).to(1)
+        .and change { IngestEvent.count }.from(0).to(10)
       statuses = IngestEvent.all.map(&:status)
       expect(statuses).to include "processing-queued"
       expect(statuses).to include "metadata-fetched"
@@ -208,6 +207,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
     # rubocop:disable RSpec/AnyInstance
     it "checks for solr success" do
+      # TODO: Why not factorybot?
       po_actual = ParentObject.create(oid: 2_034_600, admin_set: FactoryBot.create(:admin_set))
       allow_any_instance_of(ParentObject).to receive(:solr_index).and_return("responseHeader" => { "status" => 404, "QTime" => 106 })
       batch_connection = batch_process.batch_connections.build(connectable: po_actual)
