@@ -9,12 +9,23 @@ module SolrIndexable
   end
 
   def solr_index
-    indexable, child_solr_documents = to_solr_full_text
-    return unless indexable.present?
-    solr = SolrService.connection
-    solr.add([indexable])
-    solr.add(child_solr_documents) unless child_solr_documents.nil?
-    solr.commit
+    begin
+      indexable, child_solr_documents = to_solr_full_text
+      return unless indexable.present?
+      solr = SolrService.connection
+      solr.add([indexable])
+      solr.add(child_solr_documents) unless child_solr_documents.nil?
+      result = solr.commit
+      if (result&.[]("responseHeader")&.[]("status"))&.zero?
+        processing_event("Solr index updated", "solr-indexed")
+      else
+        processing_event("Solr index after manifest generation failed", "failed")
+      end
+    rescue => e
+      processing_event("Solr indexing failed due to #{e.message}", "failed")
+      raise # this reraises the error after we document it
+    end
+    result
   end
 
   def solr_delete
@@ -24,7 +35,8 @@ module SolrIndexable
   end
 
   def solr_index_job
-    SolrIndexJob.perform_later(self)
+    current_batch_connection&.save
+    SolrIndexJob.perform_later(self, current_batch_process, current_batch_connection) if queued_solr_index_jobs.empty?
   end
 
   def to_solr(json_to_index = nil)
