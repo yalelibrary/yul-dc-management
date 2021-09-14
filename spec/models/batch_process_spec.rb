@@ -341,10 +341,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       context "creating a ParentObject from an import" do
-        before do
-          stub_metadata_cloud("16371253")
-          stub_full_text('1032318')
-        end
         it "can create a parent_object from an array of oids" do
           expect do
             batch_process.file = delete_sample
@@ -363,8 +359,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
       context "deleting a ParentObject from an import" do
         before do
-          stub_metadata_cloud("16371253")
-          stub_full_text('1032318')
+          stub_metadata_cloud("2005512")
           allow(S3Service).to receive(:delete).and_return(true)
         end
         it "can delete a parent_object from an array of oids" do
