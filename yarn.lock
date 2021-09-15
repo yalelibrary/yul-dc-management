@@ -926,10 +926,10 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@rails/actioncable@^6.0.3":
-  version "6.0.4"
-  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.0.4.tgz#d533c3d9176ed7763145162dec4f460a9d6fb550"
-  integrity sha512-dTirb2EMt/YPVkEZp3GSXwjR+dYjbK0b0NtupEiuwj5dsffFfRnvtPK/aqLibZH6J3G8EAHnuoAaTF0neq2ggw==
+"@rails/actioncable@^6.1.4-1":
+  version "6.1.4-1"
+  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.1.4-1.tgz#69982e7f352d732f71fda0cc01b7ba8269c9945b"
+  integrity sha512-b6sLoMop3gX22Wm2P5LPpKcZGwsf1ZoAGS+g1HrTrdlsZ/ENOKIBiSNnHOJajHwcYlF0TefBs7e7jIYZHVYihQ==
 
 "@rails/activestorage@^6.0.3":
   version "6.0.4"
@@ -2420,7 +2420,15 @@ cyclist@^1.0.1:
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
   integrity sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk=
 
-datatables.net-bs4@^1.10.15, datatables.net-bs4@^1.10.22:
+datatables.net-bs4@>=1.10.25, datatables.net-bs4@^1.11.2:
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/datatables.net-bs4/-/datatables.net-bs4-1.11.2.tgz#ad5fbe635733f9e50710a934edf7a7d4234e90ae"
+  integrity sha512-5a61G9xhx9R1HQO87DFQ9d1pvLcWRsHc8CUobbPwiYJrPQZ5f2tbPRvgWeJMR3Ti8dmBXmCC3jm5vmnrJcoINg==
+  dependencies:
+    datatables.net ">=1.10.25"
+    jquery ">=1.7"
+
+datatables.net-bs4@^1.10.15:
   version "1.10.25"
   resolved "https://registry.yarnpkg.com/datatables.net-bs4/-/datatables.net-bs4-1.10.25.tgz#4474d6738bf55a25d20da79afe18e1e654cfca42"
   integrity sha512-leoiWJWxoPKHBNC9dkFRE84PRybQcAI2Aw4UiS5zisROcYRx8YG1uQOTtID4jbqakmbwwXap/c2eH+sdVP5t2w==
@@ -2428,21 +2436,21 @@ datatables.net-bs4@^1.10.15, datatables.net-bs4@^1.10.22:
     datatables.net "1.10.25"
     jquery ">=1.7"
 
-datatables.net-buttons-bs4@^1.6.4:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/datatables.net-buttons-bs4/-/datatables.net-buttons-bs4-1.7.1.tgz#d2fdef1f1b4073129d42806d24b8f037e9bd473b"
-  integrity sha512-s+fwsgAAWp7mOKwuztPH06kaw2JNAJ71VNTw/TqGQTL6BK9FshweDKZSRIB/ePcc/Psiy8fhNEj3XHxx4OO6BA==
+datatables.net-buttons-bs4@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/datatables.net-buttons-bs4/-/datatables.net-buttons-bs4-2.0.0.tgz#9ef5325f8f770d550624d97292b0fa44b8d7d39b"
+  integrity sha512-VRJftKENRaWHLmCBqJNq15tJXuIkpIGN/8sh/LxNLd0VuWFbTAlNeuAHp7FM8sJWGrromm+3SaKqWKkoDBtqXQ==
   dependencies:
-    datatables.net-bs4 "^1.10.15"
-    datatables.net-buttons "1.7.1"
+    datatables.net-bs4 ">=1.10.25"
+    datatables.net-buttons ">=1.7.1"
     jquery ">=1.7"
 
-datatables.net-buttons@1.7.1, datatables.net-buttons@^1.6.4:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/datatables.net-buttons/-/datatables.net-buttons-1.7.1.tgz#b701bda4bf4dd76ebc9238251c62d13c18b2bb34"
-  integrity sha512-D2OxZeR18jhSx+l0xcfAJzfUH7l3LHCu0e606fV7+v3hMhphOfljjZYLaiRmGiR9lqO/f5xE/w2a+OtG/QMavw==
+datatables.net-buttons@>=1.7.1, datatables.net-buttons@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/datatables.net-buttons/-/datatables.net-buttons-2.0.0.tgz#a1452e4f851164d4a7fecc46ad4aff82186fac79"
+  integrity sha512-2DGrCekliPiVESRGJKXkNjxM6ECyZrHDREVb+VRBmz5TSX4y34xobxPdAkVEtYUMnLu+1OarOzOSeGevXrwGeA==
   dependencies:
-    datatables.net "^1.10.15"
+    datatables.net ">=1.10.25"
     jquery ">=1.7"
 
 datatables.net-responsive-bs4@^2.2.6:
@@ -2479,10 +2487,17 @@ datatables.net-select@1.3.3, datatables.net-select@^1.3.1:
     datatables.net "^1.10.15"
     jquery ">=1.7"
 
-datatables.net@1.10.25, datatables.net@^1.10.15, datatables.net@^1.10.22:
+datatables.net@1.10.25, datatables.net@^1.10.15:
   version "1.10.25"
   resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-1.10.25.tgz#fc03a239e08f91d1d64ba101aa54daf4086d162c"
   integrity sha512-y0+C7all+MC/h1acwnjErhaJPjYGKpWTvbXrfEUbR8+P+nnhgjNn5nL1udgsTwBObMhlj1KITNBRrM/ZLSoj+Q==
+  dependencies:
+    jquery ">=1.7"
+
+datatables.net@>=1.10.25, datatables.net@^1.11.2:
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-1.11.2.tgz#019b37cda35d22087a65f983afa4e876eb9202e3"
+  integrity sha512-Dg+Yeyky+BhXoooJqTDTGssLxkAxe73CljcjYd4630XQZKqqqy0akYk2r4RSHSJLyYCOGRZEZiUF/N39+5nqvg==
   dependencies:
     jquery ">=1.7"
 
