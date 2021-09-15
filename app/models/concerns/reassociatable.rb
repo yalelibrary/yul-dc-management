@@ -52,8 +52,6 @@ module Reassociatable
         co.viewing_hint = valid_view(row[h], co.oid)
       elsif h == 'call_number'
         co.parent_object.call_number = row[h]
-      elsif h == 'parent_title'
-        co.parent_object.authoritative_json["title"] = row[h]
       elsif values_to_update.include? h
         if h == 'label'
           co.label = row[h]
