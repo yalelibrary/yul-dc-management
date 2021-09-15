@@ -48,10 +48,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(parent_object.iiif_manifest).to be_nil
 
         response = solr.get 'select', params: { q: '*:*' }
-        # solr document deletes parent but leaves full text - is 2 not 3
-        expect(response["response"]["numFound"]).to eq 2
-        # full text remains
-        expect(response["response"]["docs"][0]["child_fulltext_tesim"]).to eq ["fake child object text file"]
+        expect(response["response"]["numFound"]).to eq 0
 
         # ptiff and pdf deletion checked in spec/requests/batch_processes_request_spec.rb:134
 

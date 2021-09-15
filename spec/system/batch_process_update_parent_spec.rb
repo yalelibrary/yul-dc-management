@@ -33,7 +33,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # original values
         expect(p_o.holding).to be_nil
         expect(p_o.item).to be_nil
-        expect(p_o.barcode).to eq("39002093768050")
+        expect(p_o.barcode).to be_nil
 
         # perform batch update
         visit batch_processes_path
@@ -67,7 +67,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # original values
         expect(p_o.holding).to be_nil
         expect(p_o.item).to be_nil
-        expect(p_o.barcode).to eq("39002093768050")
+        expect(p_o.barcode).to be_nil
 
         # perform batch update
         visit batch_processes_path
@@ -79,7 +79,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # values stay the same
         expect(p_o.holding).to be_nil
         expect(p_o.item).to be_nil
-        expect(p_o.barcode).to eq("39002093768050")
+        expect(p_o.barcode).to be_nil
 
         visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/2005512"
         expect(page).to have_content "Status Complete"
