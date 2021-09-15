@@ -64,7 +64,6 @@ module Reassociatable
         next
       end
       co.save
-      co.parent_object.save
     end
   end
   # rubocop:enable Metrics/PerceivedComplexity
