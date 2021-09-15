@@ -35,13 +35,13 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     end
 
     it "does not update already existing values if column is missing" do
-      # byebug
       expect(page).to have_content "Your job is queued for processing in the background"
       co = parent_object.child_objects.first
       expect(co.order).to eq 1
       expect(co.label).to be_nil
       expect(co.caption).to be_nil
       expect(co.viewing_hint).to be_nil
+      # parent title and call number should remain same values
       expect(co.parent_object.authoritative_json["title"]).to eq ["The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion, Washington, D.C., 1863 Jan 1"]
       expect(co.parent_object.call_number).to eq "GEN MSS 257"
       # csv has only child oid, parent oid, and label
