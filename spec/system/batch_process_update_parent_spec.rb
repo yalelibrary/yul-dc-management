@@ -63,7 +63,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
       it "does not update the parent with invalid values" do
         p_o = ParentObject.find_by(oid: parent_object.oid)
-        
+
         # original values
         expect(p_o.holding).to be_nil
         expect(p_o.item).to be_nil

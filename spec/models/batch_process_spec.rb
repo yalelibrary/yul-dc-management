@@ -134,7 +134,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
     describe "with a parent object with a failure" do
       let(:batch_process_with_failure) { FactoryBot.create(:batch_process, user: user) }
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2005512) }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_005_512) }
       let(:batch_connection) do
         FactoryBot.create(:batch_connection,
                           connectable: parent_object, batch_process: batch_process_with_failure)
@@ -439,7 +439,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
         describe "with a parent object that had been previously created and user with editor role" do
           let(:admin_set) { FactoryBot.create(:admin_set) }
-          let(:parent_object) { FactoryBot.create(:parent_object, oid: 2005512, admin_set: admin_set) }
+          let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: admin_set) }
           before do
             stub_ptiffs_and_manifests
             user.add_role(:editor, admin_set)
