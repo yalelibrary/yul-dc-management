@@ -89,6 +89,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           allow(parent_of_four).to receive(:full_text?).and_call_original
           stub_full_text_not_found("16057782")
           parent_of_four.default_fetch
+          recreate_children parent_of_four
         end
         it "becomes a partial fulltext" do
           solr_document = parent_of_four.to_solr_full_text.first

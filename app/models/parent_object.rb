@@ -114,10 +114,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def upsert_preservica_ingest_child_objects(preservica_ingest_hash)
-    preservica_ingest_hash.map! do |co|
-      co[:full_text] = ChildObject.remote_ocr_path(co[:oid])
-      co
-    end
     PreservicaIngest.insert_all(preservica_ingest_hash)
   end
 

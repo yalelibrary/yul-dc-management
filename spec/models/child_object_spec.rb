@@ -173,6 +173,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
         stub_metadata_cloud("2004628")
         stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/fulltext/89/45/67/89/456789.txt")
         .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
+        recreate_children(parent_object)
       end
 
       it "can return a the remote ocr path" do
