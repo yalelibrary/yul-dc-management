@@ -98,7 +98,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       upsert_child_objects(array_of_child_hashes)
     end
     child_objects.each do |co|
-      co.fulltext = co.remote_ocr
+      co.full_text = co.remote_ocr
       co.save!
     end
     self.child_object_count = child_objects.size
@@ -108,6 +108,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
     child_objects_hash.map! do |co|
       co[:full_text] = ChildObject.remote_ocr_path(co[:oid])
+      co
     end
     ChildObject.insert_all(child_objects_hash)
   end
@@ -115,6 +116,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def upsert_preservica_ingest_child_objects(preservica_ingest_hash)
     child_objects_hash.map! do |co|
       co[:full_text] = ChildObject.remote_ocr_path(co[:oid])
+      co
     end
     PreservicaIngest.insert_all(preservica_ingest_hash)
   end
@@ -377,7 +379,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     children_without_ft = false
 
     child_objects.each do |object|
-      if object.fulltext
+      if object.full_text
         children_with_ft = true
       else
         children_without_ft = true
