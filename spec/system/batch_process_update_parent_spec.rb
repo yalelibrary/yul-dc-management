@@ -29,20 +29,11 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
 
       it "updates the parent" do
-        # visit "/parent_objects/#{parent_object.oid}"
         p_o = ParentObject.find_by(oid: parent_object.oid)
         # original values
         expect(p_o.holding).to be_nil
-        # expect(page).to have_content("Holding:\n")
-        # expect(page).to have_content("Item:\n")
-        # expect(page).to have_content("Barcode: 39002093768050\n")
-        # expect(page).to have_content("Aspace uri: /repositories/11/archival_objects/214638\n")
-        # expect(page).to have_content("Visibility: Public\n")
-        # expect(page).to have_content("Rights Statement:\nThe use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement.\n")
-        # expect(page).to have_content("Extent of Digitization: Completely digitized\n")
-        # expect(page).to have_content("Digitization Note:\n")
-        # expect(page).to have_content("Viewing Direction:\n")
-        # expect(page).to have_content("Display Layout / Viewing Hint:\n")
+        expect(p_o.item).to be_nil
+        expect(p_o.barcode).to eq("39002093768050")
 
         # perform batch update
         visit batch_processes_path
@@ -51,18 +42,11 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         click_button("Submit")
         expect(page).to have_content "Your job is queued for processing in the background"
 
+        # updated values
         p_o_a = ParentObject.find_by(oid: parent_object.oid)
-        # visit "/parent_objects/#{parent_object.oid}"
         expect(p_o_a.holding).to eq("temporary")
-        # expect(page).to have_content("Item: reel")
-        # expect(page).to have_content("Barcode: 39002102340669")
-        # expect(page).to have_content("Aspace uri: /repositories/11/archival_objects/515305")
-        # expect(page).to have_content("Visibility: Public")
-        # expect(page).to have_content("Rights Statement:\nThe use of this image may be subject to the copyright law of the United States")
-        # expect(page).to have_content("Extent of Digitization: Completely digitized")
-        # expect(page).to have_content("Digitization Note: 5678")
-        # expect(page).to have_content("Viewing Direction: left-to-right")
-        # expect(page).to have_content("Display Layout / Viewing Hint: paged")
+        expect(p_o_a.item).to eq("reel")
+        expect(p_o_a.barcode).to eq("39002102340669")
 
         visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/2005512"
         expect(page).to have_content "Status Complete"
@@ -78,12 +62,12 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
 
       it "does not update the parent with invalid values" do
-        visit "/parent_objects/#{parent_object.oid}"
+        p_o = ParentObject.find_by(oid: parent_object.oid)
+        
         # original values
-        expect(page).to have_content("Extent of Digitization: Partially digitized\n")
-        expect(page).to have_content("Visibility: Public\n")
-        expect(page).to have_content("Viewing Direction:\n")
-        expect(page).to have_content("Display Layout / Viewing Hint:\n")
+        expect(p_o.holding).to be_nil
+        expect(p_o.item).to be_nil
+        expect(p_o.barcode).to eq("39002093768050")
 
         # perform batch update
         visit batch_processes_path
@@ -92,22 +76,21 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         click_button("Submit")
         expect(page).to have_content "Your job is queued for processing in the background"
 
-        visit "/parent_objects/#{parent_object.oid}"
-        expect(page).to have_content("Extent of Digitization: Partially digitized")
-        expect(page).to have_content("Visibility: Public\n")
-        expect(page).to have_content("Viewing Direction:\n")
-        expect(page).to have_content("Display Layout / Viewing Hint:\n")
+        # values stay the same
+        expect(p_o.holding).to be_nil
+        expect(p_o.item).to be_nil
+        expect(p_o.barcode).to eq("39002093768050")
 
-        visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/2034600"
+        visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/2005512"
         expect(page).to have_content "Status Complete"
 
         # displays help text to user
         # rubocop:disable Metrics/LineLength
         visit "/batch_processes/#{BatchProcess.last.id}"
-        expect(page).to have_content "Invalid Vocabulary Parent 2034600 did not update value for Extent of Digitization. Value: some is invalid. For field Extent of Digitization please use: Completely digitizied, Partially digitizied, or leave column empty\n"
-        expect(page).to have_content "Invalid Vocabulary Parent 2034600 did not update value for Viewing Hint. Value: continual is invalid. For field Display Layout / Viewing Hint please use: individuals, paged, continuous, or leave column empty\n"
-        expect(page).to have_content "Invalid Vocabulary Parent 2034600 did not update value for Visibility. Value: Yale-Community is invalid. For field Visibility please use: Private, Public, or Yale Community Only\n"
-        expect(page).to have_content "Invalid Vocabulary Parent 2034600 did not update value for Viewing Directions. Value: upside down is invalid. For field Viewing Direction please use: left-to-right, right-to-left, top-to-bottom, bottom-to-top, or leave column empty\n"
+        expect(page).to have_content "Invalid Vocabulary Parent 2005512 did not update value for Extent of Digitization. Value: some is invalid. For field Extent of Digitization please use: Completely digitizied, Partially digitizied, or leave column empty\n"
+        expect(page).to have_content "Invalid Vocabulary Parent 2005512 did not update value for Viewing Hint. Value: continual is invalid. For field Display Layout / Viewing Hint please use: individuals, paged, continuous, or leave column empty\n"
+        expect(page).to have_content "Invalid Vocabulary Parent 2005512 did not update value for Visibility. Value: Yale-Community is invalid. For field Visibility please use: Private, Public, or Yale Community Only\n"
+        expect(page).to have_content "Invalid Vocabulary Parent 2005512 did not update value for Viewing Directions. Value: upside down is invalid. For field Viewing Direction please use: left-to-right, right-to-left, top-to-bottom, bottom-to-top, or leave column empty\n"
         # rubocop:enable Metrics/LineLength
       end
     end
@@ -129,7 +112,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         click_button("Submit")
         expect(page).to have_content "Your job is queued for processing in the background"
 
-        visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/2034600"
+        visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/2005512"
         expect(page).to have_content "Status Complete"
 
         expect(page).to have_content "Submitted #{today}"
@@ -158,7 +141,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_small.csv")
         click_button("Submit")
         visit "/batch_processes/#{BatchProcess.last.id}"
-        expect(page).to have_content "Permission Denied Skipping row [2] with parent oid: 2034600, user does not have permission to update."
+        expect(page).to have_content "Permission Denied Skipping row [2] with parent oid: 2005512, user does not have permission to update."
       end
     end
   end
