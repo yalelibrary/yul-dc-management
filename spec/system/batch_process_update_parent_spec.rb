@@ -4,12 +4,13 @@ require 'rails_helper'
 RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
   let(:user) { FactoryBot.create(:user) }
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
-  # parent object has four child objects
-  let!(:parent_object) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
+  # parent object has two child objects
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
 
   before do
     stub_ptiffs_and_manifests
     stub_metadata_cloud("2005512")
+    parent_object
   end
 
   around do |example|
@@ -33,7 +34,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # original values
         expect(p_o.holding).to be_nil
         expect(p_o.item).to be_nil
-        expect(p_o.barcode).to be_nil
+        expect(p_o.barcode).to eq("39002093768050")
 
         # perform batch update
         visit batch_processes_path
@@ -67,7 +68,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # original values
         expect(p_o.holding).to be_nil
         expect(p_o.item).to be_nil
-        expect(p_o.barcode).to be_nil
+        expect(p_o.barcode).to eq("39002093768050")
 
         # perform batch update
         visit batch_processes_path
@@ -79,7 +80,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # values stay the same
         expect(p_o.holding).to be_nil
         expect(p_o.item).to be_nil
-        expect(p_o.barcode).to be_nil
+        expect(p_o.barcode).to eq("39002093768050")
 
         visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/2005512"
         expect(page).to have_content "Status Complete"
