@@ -316,7 +316,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       it "pulls the rights statement from Ladybird" do
-        expect(parent_object.reload.rights_statement).to include "The use of this image may be subject to the "
+        expect(parent_object.reload.rights_statement).to include "The use of this image may be subject to"
       end
 
       it "assigns the call number and container grouping" do
@@ -400,6 +400,19 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.authoritative_json).to eq parent_object.voyager_json
       end
     end
+
+    # rubocop:disable Metrics/LineLength
+    context 'a newly created ParentObject with Ladybird and multiple rights statements' do
+      let(:parent_object) { described_class.create(oid: "17105661", admin_set: FactoryBot.create(:admin_set)) }
+      before do
+        stub_metadata_cloud("17105661", "ladybird")
+      end
+
+      it 'indexes all rights statements and concats with new lines' do
+        expect(parent_object.reload.rights_statement).to include "Copyright Beinecke Rare Book & Manuscript Library.\nThe use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      end
+    end
+    # rubocop:enable Metrics/LineLength
 
     context "a newly created ParentObject with ArchiveSpace as authoritative_metadata_source" do
       let(:parent_object) do
