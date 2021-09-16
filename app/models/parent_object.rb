@@ -97,10 +97,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       return self.child_object_count = 0 if ladybird_json["children"].empty?
       upsert_child_objects(array_of_child_hashes)
     end
-    child_objects.each do |co|
-      co.full_text = co.remote_ocr
-      co.save!
-    end
+
     self.child_object_count = child_objects.size
   end
 
@@ -368,9 +365,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def full_text?
     return false unless child_objects.any?
 
-    # This will iterate over all child objects to check if they have a .txt file in the ocr bucket
-    # If any do not have a .txt file, the loop will exit and return false
-    #
+    %w[Partial Yes].include? extent_of_full_text
+  end
+
+  def extent_of_full_text
     children_with_ft = false
     children_without_ft = false
 
@@ -380,14 +378,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       else
         children_without_ft = true
       end
+
+      break if children_with_ft && children_without_ft
     end
-    @partial_fulltext = children_with_ft && children_without_ft
 
-    children_with_ft
-  end
-
-  def partial_fulltext?
-    @partial_fulltext ||= false
-    @partial_fulltext
+    return "Partial" if children_with_ft && children_without_ft # if some children have full text and others dont
+    return "No" unless children_with_ft # if none of children have full_text
+    "Yes"
   end
 end

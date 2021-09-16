@@ -212,9 +212,7 @@ module SolrIndexable
 
   def append_full_text_status(solr_document)
     return unless solr_document
-    present = solr_document.try(:[], "fulltext_tesim".to_sym).try("present?") ? "Yes" : "No"
-    solr_document[:has_fulltext_ssi] = present
-    solr_document[:is_partial_fulltext_ssi] = partial_fulltext? ? "Yes" : "No"
+    solr_document[:has_fulltext_ssi] = extent_of_full_text
 
     solr_document
   end
