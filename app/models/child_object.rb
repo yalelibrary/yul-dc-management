@@ -105,7 +105,12 @@ class ChildObject < ApplicationRecord # rubocop:disable  Metrics/ClassLength
     @remote_ocr_path = File.join('fulltext', pairtree_path, "#{oid}.txt")
   end
 
-  def self.remote_ocr_path(oid)
+  def remote_ocr_exists?
+    return @remote_ocr_exists if @remote_ocr_exists
+    @remote_ocr_exists = ChildObject.remote_ocr_exists?(oid)
+  end
+
+  def self.remote_ocr_exists?(oid)
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
     remote_ocr_path = File.join('fulltext', pairtree_path, "#{oid}.txt")
     S3Service.full_text_exists?(remote_ocr_path)
