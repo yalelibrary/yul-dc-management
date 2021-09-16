@@ -37,11 +37,13 @@ end
 RSpec.configure do |config|
   config.include(ActiveJob::TestHelper)
   config.include(MetdataSourcesHelper)
+  config.include(DelayedJobsHelper)
   config.include(AdminSetsHelper)
   config.include(SolrHelper)
   config.include(StubRequestHelper)
   config.include(Devise::Test::IntegrationHelpers)
   config.include Warden::Test::Helpers
+  config.include(ParentChildObjectHelper)
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

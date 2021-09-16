@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ChildObject < ApplicationRecord
+class ChildObject < ApplicationRecord # rubocop:disable  Metrics/ClassLength
   has_paper_trail
   include Statable
   include Delayable
@@ -105,6 +105,12 @@ class ChildObject < ApplicationRecord
     @remote_ocr_path = File.join('fulltext', pairtree_path, "#{oid}.txt")
   end
 
+  def self.remote_ocr_path(oid)
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    remote_ocr_path = File.join('fulltext', pairtree_path, "#{oid}.txt")
+    S3Service.full_text_exists?(remote_ocr_path)
+  end
+
   def pyramidal_tiff
     @pyramidal_tiff ||= PyramidalTiff.new(self)
   end
@@ -148,4 +154,4 @@ class ChildObject < ApplicationRecord
   def batch_connections_for(batch_process)
     batch_connections.where(batch_process: batch_process)
   end
-end
+end # rubocop:enable  Metrics/ClassLength

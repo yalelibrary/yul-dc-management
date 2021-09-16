@@ -170,7 +170,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
 
     describe "full text availability" do
       before do
-        stub_metadata_cloud("2004628")
+        stub_metadata_cloud("2004628", "ladybird")
         stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/fulltext/89/45/67/89/456789.txt")
         .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
       end
@@ -180,7 +180,11 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       end
 
       it "can determine if a child object has a txt file" do
+        recreate_children(parent_object)
+        child_object = parent_object.child_objects.first
+
         expect(child_object.remote_ocr).to eq(true)
+        expect(child_object.full_text).to eq(true)
       end
     end
 
