@@ -43,17 +43,13 @@ module Reassociatable
     values_to_update
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/MethodLength
   def update_child_parent_values(values_to_update, co, row, index)
     values_to_update.each do |h|
       if h == 'viewing_hint'
         co.viewing_hint = valid_view(row[h], co.oid)
-      elsif h == 'call_number'
-        co.parent_object.call_number = row[h]
-      elsif h == 'parent_title'
-        co.parent_object.authoritative_json["title"] = row[h]&.split("  ")
+      # should not update parent title or call number
       elsif values_to_update.include? h
         if h == 'label'
           co.label = row[h]
@@ -68,10 +64,8 @@ module Reassociatable
         next
       end
       co.save
-      co.parent_object.save
     end
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/MethodLength
 
