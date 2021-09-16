@@ -47,7 +47,7 @@
 
 <p>
   <strong>Download full text:</strong>
-  <%= link_to 'Click to Download', S3Service.presigned_url_ft(@child_object.remote_ocr_path, 24_000) %>
+  <%= link_to 'Click to Download', S3Service.presigned_url(@child_object.remote_ocr_path, 600, ENV["OCR_DOWNLOAD_BUCKET"]) %>
 </p>
 
 <p>
