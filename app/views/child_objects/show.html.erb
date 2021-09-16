@@ -41,6 +41,16 @@
 </p>
 
 <p>
+  <strong>Full text:</strong>
+  <%= @child_object.full_text ? "Yes" : "No" %>
+</p>
+
+<p>
+  <strong>Download full text:</strong>
+  <%= link_to 'Click to Download', S3Service.presigned_url_ft(@child_object.remote_ocr_path, 24_000) %>
+</p>
+
+<p>
   <strong>PTiff Download:</strong>
   <%= link_to 'Click to Download', S3Service.presigned_url(@child_object.remote_ptiff_path, 600) %>
 </p>
