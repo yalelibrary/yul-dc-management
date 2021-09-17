@@ -15,7 +15,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :child_objects, through: :batch_connections, source_type: "ChildObject", source: :connectable
 
   def self.batch_actions
-    ['create parent objects', 'update parent objects', 'delete parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
+    ['create parent objects', 'update parent objects', 'delete parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status']
   end
 
   def batch_processing_event(message, status = 'info')
@@ -155,6 +155,23 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  def update_fulltext_status
+    oids.each_with_index do |parent_oid, index|
+      parent_object = ParentObject.find_by(oid: parent_oid)
+      if parent_object.nil?
+        batch_processing_event("Skipping row [#{index + 2}] because unknown parent: #{parent_oid}", 'Unknown Parent')
+      elsif current_ability.can?(:update, parent_object)
+        attach_item(parent_object)
+        parent_object.child_objects.each { |co| attach_item(co) }
+        parent_object.processing_event("Parent #{parent_object.oid} is being processed", 'processing-queued')
+        parent_object.update_fulltext_for_children
+        parent_object.processing_event("Parent #{parent_object.oid} has been updated", 'update-complete')
+      else
+        batch_processing_event("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{parent_oid}", 'Permission Denied')
+      end
+    end
+  end
+
   def recreate_child_oid_ptiffs
     parents = Set[]
     oids.each_with_index do |oid, index|
@@ -238,6 +255,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/AbcSize
 
   # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
   def determine_background_jobs
     if csv.present?
       case batch_action
@@ -253,12 +271,15 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         ReassociateChildOidsJob.perform_later(self)
       when 'recreate child oid ptiffs'
         RecreateChildOidPtiffsJob.perform_later(self)
+      when 'update fulltext status'
+        UpdateFulltextStatusJob.perform_later(self)
       end
     elsif mets_xml.present?
       refresh_metadata_cloud_mets
     end
   end
   # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
 
   def batch_status
     current_status = status_hash
