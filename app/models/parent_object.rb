@@ -104,7 +104,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def upsert_child_objects(child_objects_hash)
     raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
     child_objects_hash.map! do |co|
-      co[:full_text] = ChildObject.remote_ocr_path(co[:oid])
+      co[:full_text] = ChildObject.remote_ocr_exists?(co[:oid])
       co
     end
     ChildObject.insert_all(child_objects_hash)
@@ -385,5 +385,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return "Partial" if children_with_ft && children_without_ft # if some children have full text and others dont
     return "No" unless children_with_ft # if none of children have full_text
     "Yes"
+  end
+
+  def update_fulltext_for_children
+    child_objects.each do |child_object|
+      child_object.processing_event("Child #{child_object.oid} is being processed", 'processing-queued')
+      child_object.full_text = ChildObject.remote_ocr_exists?(child_object.oid)
+      child_object.save!
+      child_object.processing_event("Child #{child_object.oid} has been updated: #{child_object.full_text ? 'YES' : 'NO'}", 'update-complete')
+    end
   end
 end

@@ -30,6 +30,11 @@
   </p>
 </div>
 
+<% if @batch_process.batch_action == "update fulltext status"  %>
+  <p>
+    <strong>Current Full Text Status:</strong> <%= @child_object.full_text ? "Available" : "Not Found" %>
+  </p>
+<% else %>
 <table class='table table-responsive table-bordered table-striped'>
   <thead class='table-head'>
     <tr>
@@ -63,6 +68,7 @@
     <% end %>
   </tbody>
 </table>
+<% end %>
 
 <% if @failure %>
   <table class='table table-responsive table-bordered table-striped'>
