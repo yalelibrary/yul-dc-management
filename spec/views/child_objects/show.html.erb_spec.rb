@@ -17,7 +17,8 @@ RSpec.describe "child_objects/show", type: :view, prep_metadata_sources: true do
                                             width: 2591,
                                             height: 4056,
                                             order: 4,
-                                            parent_object_oid: "2004628"
+                                            parent_object_oid: "2004628",
+                                            full_text: true
                                           ))
   end
 
@@ -30,5 +31,6 @@ RSpec.describe "child_objects/show", type: :view, prep_metadata_sources: true do
     expect(rendered).to match(/4056/)
     expect(rendered).to match(/4/)
     expect(rendered).to match(//)
+    expect(rendered).to match(/Yes/)
   end
 end

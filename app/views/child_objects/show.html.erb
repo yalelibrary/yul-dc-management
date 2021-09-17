@@ -45,10 +45,12 @@
   <%= @child_object.full_text ? "Yes" : "No" %>
 </p>
 
+<% if @child_object.full_text %>
 <p>
   <strong>Download full text:</strong>
-  <%= link_to 'Click to Download', S3Service.presigned_url(@child_object.remote_ocr_path, 600, ENV["OCR_DOWNLOAD_BUCKET"]) %>
+  <%= link_to 'Click to Download', S3Service.presigned_url(@child_object.remote_ocr_path, 600, ENV["OCR_DOWNLOAD_BUCKET"] ) %>
 </p>
+<% end %>
 
 <p>
   <strong>PTiff Download:</strong>
