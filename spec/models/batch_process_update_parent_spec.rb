@@ -6,7 +6,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids.csv")) }
-  let(:csv_small) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_small.csv")) }
+  let(:csv_small) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example.csv")) }
   let(:csv_missing) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_missing.csv")) }
   let(:csv_invalid) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_invalid.csv")) }
 

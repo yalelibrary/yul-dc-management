@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
-  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids.csv")) }
+  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
   let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids_with_source.csv")) }
   let(:delete_sample) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_sample_fixture_ids.csv")) }
   let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
@@ -134,7 +134,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
     describe "with a parent object with a failure" do
       let(:batch_process_with_failure) { FactoryBot.create(:batch_process, user: user) }
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600) }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_005_512) }
       let(:batch_connection) do
         FactoryBot.create(:batch_connection,
                           connectable: parent_object, batch_process: batch_process_with_failure)
@@ -147,9 +147,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         allow_any_instance_of(BatchProcess).to receive(:status_hash).and_return(
           complete: 0,
           in_progress: 0,
-          failed: 5,
+          failed: 1,
           unknown: 0,
-          total: 5
+          total: 1
         )
         expect(batch_process_with_failure.batch_status).to eq "Batch failed"
       end
@@ -238,8 +238,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         expect(ParentObject.find(2_034_600).authoritative_metadata_source_id).to eq 1
         expect(ParentObject.find(2_030_006).authoritative_metadata_source_id).to eq 2
         expect(ParentObject.find(2_012_036).authoritative_metadata_source_id).to eq 3
-        expect(ParentObject.find(16_414_889).authoritative_metadata_source_id).to eq 2
-        expect(ParentObject.find(16_854_285).authoritative_metadata_source_id).to eq 1
       end
 
       it "has an oid associated with it" do
@@ -343,10 +341,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       context "creating a ParentObject from an import" do
-        before do
-          stub_metadata_cloud("16371253")
-          stub_full_text('1032318')
-        end
         it "can create a parent_object from an array of oids" do
           expect do
             batch_process.file = delete_sample
@@ -365,8 +359,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
       context "deleting a ParentObject from an import" do
         before do
-          stub_metadata_cloud("16371253")
-          stub_full_text('1032318')
+          stub_metadata_cloud("2005512")
           allow(S3Service).to receive(:delete).and_return(true)
         end
         it "can delete a parent_object from an array of oids" do
@@ -394,7 +387,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.user_id = user.id
           expect(batch_process.csv).to be_present
           expect(batch_process).to be_valid
-          expect(batch_process.file_name).to eq "short_fixture_ids.csv"
+          expect(batch_process.file_name).to eq "shorter_fixture_ids.csv"
         end
         #
         # it "does not accept non csv files" do
@@ -408,9 +401,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect do
             batch_process.file = csv_upload
             batch_process.save
-          end.to change { batch_process.batch_connections.size }.from(0).to(218)
+          end.to change { batch_process.batch_connections.size }.from(0).to(3)
 
-          expect(ParentObject.count).to eq 5
+          expect(ParentObject.count).to eq 1
         end
 
         it "can identify the metadata source" do
@@ -419,8 +412,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect(ParentObject.find(2_034_600).authoritative_metadata_source_id).to eq 1
           expect(ParentObject.find(2_030_006).authoritative_metadata_source_id).to eq 2
           expect(ParentObject.find(2_012_036).authoritative_metadata_source_id).to eq 3
-          expect(ParentObject.find(16_414_889).authoritative_metadata_source_id).to eq 2
-          expect(ParentObject.find(16_854_285).authoritative_metadata_source_id).to eq 1
         end
 
         it 'defaults to ladybird if no metadata source is provided' do
@@ -448,7 +439,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
         describe "with a parent object that had been previously created and user with editor role" do
           let(:admin_set) { FactoryBot.create(:admin_set) }
-          let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: admin_set) }
+          let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: admin_set) }
           before do
             stub_ptiffs_and_manifests
             user.add_role(:editor, admin_set)
@@ -515,8 +506,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         it "succeeds if the user is an editor on the admin set of the parent object" do
           batch_process.file = csv_upload
           batch_process.save
-          expect(ParentObject.count).to eq(5)
-          expect(IngestEvent.count).to eq(456)
+          expect(ParentObject.count).to eq(1)
+          expect(IngestEvent.count).to eq(10)
         end
 
         it "fails if the user is not an editor on the admin set of the parent object" do
@@ -526,7 +517,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.save
           expect(ParentObject.count).to eq(0)
           events = IngestEvent.all.select { |event| event.status == 'Permission Denied' }
-          expect(events.count).to eq(5)
+          expect(events.count).to eq(1)
         end
       end
     end
