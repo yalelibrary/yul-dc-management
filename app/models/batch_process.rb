@@ -14,6 +14,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connectable
   has_many :child_objects, through: :batch_connections, source_type: "ChildObject", source: :connectable
 
+  CSV_MAXIMUM_ENTRIES = 20000
+
   def self.batch_actions
     ['create parent objects', 'update parent objects', 'delete parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
   end
@@ -64,7 +66,16 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def parsed_csv
-    @parsed_csv ||= CSV.parse(csv, headers: true, encoding: "utf-8") if csv.present?
+    @parsed_csv ||= CSV.parse(csv, headers: true, encoding: "utf-8", skip_blanks: true) if csv.present?
+  end
+
+  def validated_csv
+    if parsed_csv.length > CSV_MAXIMUM_ENTRIES
+      error = "CSV contains #{parsed_csv.length} entries, which is more than the maximum number of #{CSV_MAXIMUM_ENTRIES}"
+      batch_processing_event(error, 'Skipped Import')
+      raise error
+    end
+    parsed_csv
   end
 
   def mets_doc
