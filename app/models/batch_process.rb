@@ -14,7 +14,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connectable
   has_many :child_objects, through: :batch_connections, source_type: "ChildObject", source: :connectable
 
-  CSV_MAXIMUM_ENTRIES = 20000
+  CSV_MAXIMUM_ENTRIES = 20_000
 
   def self.batch_actions
     ['create parent objects', 'update parent objects', 'delete parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
