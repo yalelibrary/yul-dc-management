@@ -51,6 +51,17 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       expect(page).not_to have_content("Your job is queued for processing in the background")
     end
 
+    it "errors batch if CSV contains too many entries" do
+      expect(BatchProcess.count).to eq 0
+      stub_const("BatchProcess::CSV_MAXIMUM_ENTRIES", 1)
+      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/short_fixture_ids.csv")
+      click_button("Submit")
+      expect(BatchProcess.count).to eq 1
+      expect(page).to have_content("Your job is queued for processing in the background")
+      expect(BatchProcess.last.batch_connections.last.ingest_events.first.status).to eq 'error'
+      expect(BatchProcess.last.batch_connections.last.ingest_events.first.reason).to start_with 'CSV contains'
+    end
+
     context "re-associating child objects" do
       let(:admin_set) { FactoryBot.create(:admin_set) }
       let(:role) { FactoryBot.create(:role, name: editor) }
