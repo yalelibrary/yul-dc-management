@@ -15,4 +15,13 @@ RSpec.describe SolrIndexJob, type: :job do
       SolrIndexJob.perform_later(parent_object)
     end.to change { Delayed::Job.count }.by(1)
   end
+
+  it 'increments the job queue by just one with multiple calls to solr_index_job' do
+    ActiveJob::Base.queue_adapter = :delayed_job
+    expect do
+      parent_object.solr_index_job
+      parent_object.solr_index_job
+      parent_object.solr_index_job
+    end.to change { Delayed::Job.count }.by(1)
+  end
 end

@@ -26,7 +26,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       FactoryBot.create(
         :batch_process,
         user: user,
-        csv: File.open(fixture_path + '/small_short_fixture_ids.csv').read,
+        csv: File.open(fixture_path + '/csv/small_short_fixture_ids.csv').read,
         file_name: "small_short_fixture_ids.csv",
         created_at: "2020-10-08 14:17:01"
       )
@@ -36,7 +36,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       FactoryBot.create(
         :batch_process,
         user: user,
-        csv: File.open(fixture_path + '/short_fixture_bad_admin_set.csv').read,
+        csv: File.open(fixture_path + '/csv/short_fixture_bad_admin_set.csv').read,
         file_name: "short_fixture_bad_admin_set.csv",
         created_at: "2020-10-08 14:17:01"
       )

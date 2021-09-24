@@ -1,2 +1,1 @@
-child_oid,parent_oid,order,parent_title,label,caption,viewing_hint
-child_oid,parent_oid,order,parent_title,call_number,label,caption,viewing_hint
+child_oid,parent_oid,order,label,caption,viewing_hint

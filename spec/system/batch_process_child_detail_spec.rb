@@ -11,7 +11,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
     FactoryBot.create(
       :batch_process,
       user: user,
-      csv: File.open(fixture_path + '/small_short_fixture_ids.csv').read,
+      csv: File.open(fixture_path + '/csv/small_short_fixture_ids.csv').read,
       file_name: 'small_short_fixture_ids.csv',
       created_at: '2020-10-08 14:17:01'
     )

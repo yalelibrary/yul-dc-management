@@ -9,12 +9,23 @@ module SolrIndexable
   end
 
   def solr_index
-    indexable, child_solr_documents = to_solr_full_text
-    return unless indexable.present?
-    solr = SolrService.connection
-    solr.add([indexable])
-    solr.add(child_solr_documents) unless child_solr_documents.nil?
-    solr.commit
+    begin
+      indexable, child_solr_documents = to_solr_full_text
+      return unless indexable.present?
+      solr = SolrService.connection
+      solr.add([indexable])
+      solr.add(child_solr_documents) unless child_solr_documents.nil?
+      result = solr.commit
+      if (result&.[]("responseHeader")&.[]("status"))&.zero?
+        processing_event("Solr index updated", "solr-indexed")
+      else
+        processing_event("Solr index after manifest generation failed", "failed")
+      end
+    rescue => e
+      processing_event("Solr indexing failed due to #{e.message}", "failed")
+      raise # this reraises the error after we document it
+    end
+    result
   end
 
   def solr_delete
@@ -24,7 +35,8 @@ module SolrIndexable
   end
 
   def solr_index_job
-    SolrIndexJob.perform_later(self)
+    current_batch_connection&.save
+    SolrIndexJob.perform_later(self, current_batch_process, current_batch_connection) if queued_solr_index_jobs.empty?
   end
 
   def to_solr(json_to_index = nil)
@@ -99,7 +111,6 @@ module SolrIndexable
       publisher_tesim: json_to_index["publisher"],
       publisher_ssim: json_to_index["publisher"],
       recordType_ssi: json_to_index["recordType"],
-      repository_ssi: json_to_index["repository"],
       relatedResourceOnline_ssim: json_to_index["relatedResourceOnline"],
       repository_ssim: json_to_index["repository"],
       resourceType_ssim: json_to_index["itemType"],
@@ -222,22 +233,6 @@ module SolrIndexable
     solr_document[:has_fulltext_ssi] = present
 
     solr_document
-  end
-
-  def ancestor_structure(ancestor_title)
-    # Building the hierarchy structure
-    return nil unless ancestor_title&.is_a?(Array)
-    anc_struct = []
-    ancestor_title = ancestor_title.reverse
-    arr_size = 0
-    prev_string = ""
-    ancestor_title.each do |anc|
-      prev_string += (ancestor_title[arr_size - 1]).to_s + " > " unless arr_size.zero?
-      anc = prev_string + anc + " > "
-      anc_struct.push(anc)
-      arr_size += 1
-    end
-    anc_struct
   end
 
   def generate_hash

@@ -14,6 +14,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connectable
   has_many :child_objects, through: :batch_connections, source_type: "ChildObject", source: :connectable
 
+  CSV_MAXIMUM_ENTRIES = 10_000
+
   def self.batch_actions
     ['create parent objects', 'update parent objects', 'delete parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
   end
@@ -64,7 +66,16 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def parsed_csv
-    @parsed_csv ||= CSV.parse(csv, headers: true, encoding: "utf-8") if csv.present?
+    @parsed_csv ||= CSV.parse(csv, headers: true, encoding: "utf-8", skip_blanks: true) if csv.present?
+  end
+
+  def check_csv_size
+    if parsed_csv.length > CSV_MAXIMUM_ENTRIES
+      error = "CSV contains #{parsed_csv.length} entries, which is more than the maximum number of #{CSV_MAXIMUM_ENTRIES}.  The job was not started."
+      batch_processing_event(error, 'error')
+      return false
+    end
+    true
   end
 
   def mets_doc
@@ -144,11 +155,15 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def delete_objects
     parsed_csv.each_with_index do |row, index|
       oid = row['oid']
+      action = row['action']
       metadata_source = row['source']
+      batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}, action value for oid must be 'delete' to complete deletion.", 'Invalid Vocab') if action != "delete"
+      next unless action == 'delete'
       parent_object = deletable_parent_object(oid, index)
       next unless parent_object
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.destroy
+      parent_object.processing_event("Parent #{parent_object.oid} has been deleted", 'deleted')
     end
   end
 
@@ -210,7 +225,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     ParentObject.create(oid: oid) do |parent_object|
       set_values_from_mets(parent_object, metadata_source)
     end
-    PreservicaIngest.create(parent_oid: oid, preservica_id: mets_doc.parent_uuid, batch_process_id: id, ingest_time: Time.current)
+    PreservicaIngest.create(parent_oid: oid, preservica_id: mets_doc.parent_uuid, batch_process_id: id, ingest_time: Time.current) unless mets_doc.parent_uuid.nil?
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -236,7 +251,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # rubocop:disable Metrics/CyclomaticComplexity
   def determine_background_jobs
-    if csv.present?
+    if csv.present? && check_csv_size
       case batch_action
       when 'create parent objects'
         CreateNewParentJob.perform_later(self)
