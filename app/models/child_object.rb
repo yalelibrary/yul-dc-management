@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+# rubocop:disable ClassLength
 class ChildObject < ApplicationRecord
+  # rubocop:enable ClassLength
   has_paper_trail
   include Statable
   include Delayable
