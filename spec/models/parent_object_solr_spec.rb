@@ -77,19 +77,15 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
       expect do
         [
-          '2034600',
-          '2005512',
-          '16414889',
-          '14716192',
-          '16854285'
+          '2005512'
         ].each do |oid|
           stub_metadata_cloud(oid)
           FactoryBot.create(:parent_object, oid: oid)
         end
-      end.to change { ParentObject.count }.by(5)
+      end.to change { ParentObject.count }.by(1)
 
       response = solr.get 'select', params: { q: 'type_ssi:parent' }
-      expect(response["response"]["numFound"]).to eq(5 + existing_solr_count)
+      expect(response["response"]["numFound"]).to eq(1 + existing_solr_count)
 
       expect(SolrService.delete_all).to be
       response = solr.get 'select', params: { q: '*:*' }
@@ -102,19 +98,15 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
       expect do
         [
-          '2034600',
-          '2005512',
-          '16414889',
-          '14716192',
-          '16854285'
+          '2005512'
         ].each do |oid|
           stub_metadata_cloud(oid)
           FactoryBot.create(:parent_object, oid: oid)
         end
-      end.to change { ParentObject.count }.by(5)
+      end.to change { ParentObject.count }.by(1)
       expect(SolrReindexAllJob.perform_now).to be
       response = solr.get 'select', params: { q: 'type_ssi:parent' }
-      expect(response["response"]["numFound"]).to eq 5
+      expect(response["response"]["numFound"]).to eq 1
     end
 
     it 'can remove an item from Solr' do
@@ -254,6 +246,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
           parent_object.viewing_direction = "left to right"
           parent_object.display_layout = "book"
           parent_object.save!
+          parent_object.solr_index_job
           parent_object.reload
         end.to change(parent_object, :visibility).from("Public").to("Yale Community Only")
            .and change(parent_object, :holding).from(nil).to("555555555")

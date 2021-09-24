@@ -6,8 +6,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: brbl) }
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
-  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
-  let(:bad_oid_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "bad_oid.csv")) }
+  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
+  let(:bad_oid_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "bad_oid.csv")) }
   let(:brbl) { AdminSet.find_by_key('brbl') }
 
   before do
@@ -26,11 +26,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     before do
       login_as(:user)
       batch_process.user_id = user.id
-      stub_metadata_cloud("2034600")
       stub_metadata_cloud("2005512")
-      stub_metadata_cloud("16414889")
-      stub_metadata_cloud("14716192")
-      stub_metadata_cloud("16854285")
     end
 
     context "with no metadatacloud record" do
@@ -80,7 +76,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         batch_process.file = csv_upload
         batch_process.save
         batch_process.run_callbacks :create
-        po = ParentObject.find(14_716_192)
+        po = ParentObject.find(2_005_512)
         expect(po.status_for_batch_process(batch_process)).to eq "Complete"
         expect(po.duration_for_batch_process(batch_process)).not_to eq "n/a"
         expect(po.duration_for_batch_process(batch_process)).to be_an_instance_of Float

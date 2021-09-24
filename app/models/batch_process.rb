@@ -14,6 +14,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connectable
   has_many :child_objects, through: :batch_connections, source_type: "ChildObject", source: :connectable
 
+  CSV_MAXIMUM_ENTRIES = 10_000
+
   def self.batch_actions
     ['create parent objects', 'update parent objects', 'delete parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
   end
@@ -64,7 +66,16 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def parsed_csv
-    @parsed_csv ||= CSV.parse(csv, headers: true, encoding: "utf-8") if csv.present?
+    @parsed_csv ||= CSV.parse(csv, headers: true, encoding: "utf-8", skip_blanks: true) if csv.present?
+  end
+
+  def check_csv_size
+    if parsed_csv.length > CSV_MAXIMUM_ENTRIES
+      error = "CSV contains #{parsed_csv.length} entries, which is more than the maximum number of #{CSV_MAXIMUM_ENTRIES}.  The job was not started."
+      batch_processing_event(error, 'error')
+      return false
+    end
+    true
   end
 
   def mets_doc
@@ -240,7 +251,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # rubocop:disable Metrics/CyclomaticComplexity
   def determine_background_jobs
-    if csv.present?
+    if csv.present? && check_csv_size
       case batch_action
       when 'create parent objects'
         CreateNewParentJob.perform_later(self)
