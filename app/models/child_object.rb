@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
+# rubocop:disable ClassLength
 class ChildObject < ApplicationRecord
+  # rubocop:enable ClassLength
   has_paper_trail
   include Statable
   include Delayable
+  include SolrIndexable
   belongs_to :parent_object, foreign_key: 'parent_object_oid', class_name: "ParentObject"
   has_many :batch_connections, as: :connectable
   has_many :batch_processes, through: :batch_connections
@@ -13,6 +16,7 @@ class ChildObject < ApplicationRecord
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
   after_destroy :delayed_jobs_deletion
+  after_destroy :solr_delete
 
   # Does not get called because we use upsert to create children
   # before_create :check_for_size_and_file
