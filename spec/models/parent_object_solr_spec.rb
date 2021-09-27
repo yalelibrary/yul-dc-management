@@ -170,9 +170,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         expect(solr_document[:ancestorTitles_tesim]).to include "Oversize",
                                                                 "Abraham Lincoln collection (GEN MSS 257)",
                                                                 "Beinecke Rare Book and Manuscript Library (BRBL)"
-        expect(solr_document[:ancestor_titles_hierarchy_ssim].first).to eq "Beinecke Rare Book and Manuscript Library (BRBL)"
-        expect(solr_document[:ancestor_titles_hierarchy_ssim][1]).to eq "Beinecke Rare Book and Manuscript Library (BRBL) > Abraham Lincoln collection (GEN MSS 257)"
-        expect(solr_document[:ancestor_titles_hierarchy_ssim].last).to eq "Beinecke Rare Book and Manuscript Library (BRBL) > Abraham Lincoln collection (GEN MSS 257) > Oversize"
+        expect(solr_document[:ancestor_titles_hierarchy_ssim].first).to eq "Beinecke Rare Book and Manuscript Library (BRBL) > "
+        expect(solr_document[:ancestor_titles_hierarchy_ssim][1]).to eq "Beinecke Rare Book and Manuscript Library (BRBL) > Abraham Lincoln collection (GEN MSS 257) > "
+        expect(solr_document[:ancestor_titles_hierarchy_ssim].last).to eq "Beinecke Rare Book and Manuscript Library (BRBL) > Abraham Lincoln collection (GEN MSS 257) > Oversize > "
         expect(solr_document[:collection_title_ssi]).to include "Abraham Lincoln collection (GEN MSS 257)"
         expect(solr_document[:ancestorDisplayStrings_tesim]).to include "Oversize, n.d.",
                                                                         "Abraham Lincoln collection",
