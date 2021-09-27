@@ -241,7 +241,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
           perform_enqueued_jobs
           parent_object.reload
         end.to change(parent_object, :visibility).from("Private").to("Public")
-
+        # rubocop:disable Metrics/LineLength
         expect do
           parent_object.visibility = "Yale Community Only"
           parent_object.bib = "123321xx"
@@ -267,6 +267,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         expect(response["response"]["docs"].first["orbisBarcode_ssi"]).to eq "3200000000000"
         expect(response["response"]["docs"].first["archiveSpaceUri_ssi"]).to eq "/repository/12345/archiveobject/566666"
       end
+      # rubocop:enable Metrics/LineLength
     end
   end
 
