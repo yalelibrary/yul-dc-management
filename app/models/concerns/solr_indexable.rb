@@ -245,8 +245,7 @@ module SolrIndexable
     ancestor_title.each do |anc|
       prev_string += (ancestor_title[arr_size - 1]).to_s + " > " unless arr_size.zero?
       anc = prev_string + anc + " > "
-      formatted = anc[0...-3]
-      anc_struct.push(formatted)
+      anc_struct.push(anc)
       arr_size += 1
     end
     anc_struct
