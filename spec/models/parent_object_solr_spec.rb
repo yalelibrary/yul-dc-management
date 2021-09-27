@@ -165,7 +165,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
       it "can create a Solr document for a record, including visibility" do
         solr_document = parent_object_with_public_visibility.reload.to_solr
-        expect(solr_document[:repository_ssi]).to eq "Beinecke Rare Book and Manuscript Library (BRBL)"
+        expect(solr_document[:repository_ssim]).to eq "Beinecke Rare Book and Manuscript Library (BRBL)"
         expect(solr_document[:archivalSort_ssi]).to include "00002.00000"
         expect(solr_document[:ancestorTitles_tesim]).to include "Oversize",
                                                                 "Abraham Lincoln collection (GEN MSS 257)",
