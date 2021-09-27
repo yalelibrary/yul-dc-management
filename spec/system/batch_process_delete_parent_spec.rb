@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
+RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:user) }
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
   # parent object has four child objects
-  let!(:parent_object) { FactoryBot.create(:parent_object, oid: "16854285", admin_set_id: admin_set.id) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
 
   before do
-    stub_ptiffs_and_manifests
-    stub_metadata_cloud("16854285")
+    stub_manifests
+    stub_metadata_cloud("2005512")
+    parent_object
   end
 
   around do |example|
@@ -28,11 +29,11 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         user.add_role(:editor, admin_set)
       end
 
-      it "deletes the parent and artifacts" do
+      it "deletes the parent and artifacts except for full text" do
         # perform batch delete
         visit batch_processes_path
         select("Delete Parent Objects")
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/delete_sample_fixture_ids.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/delete_sample_fixture_ids.csv")
         click_button("Submit")
         expect(page).to have_content "Your job is queued for processing in the background"
 
@@ -53,12 +54,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # ptiff and pdf deletion checked in spec/requests/batch_processes_request_spec.rb:134
 
         # can still display a show_parent batch process page
-        visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/16854285"
-        expect(page).to have_content "Status 16854285 deleted"
-      end
-
-      # skipping until full text feature merged
-      xit "leaves the full text" do
+        visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/2005512"
+        expect(page).to have_content "Status 2005512 deleted"
       end
     end
   end
@@ -75,7 +72,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
       it "does not permit parent to be deleted" do
         select("Delete Parent Objects")
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/delete_sample_fixture_ids.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/delete_sample_fixture_ids.csv")
         click_button("Submit")
         expect(ParentObject.count).to eq 1
       end
