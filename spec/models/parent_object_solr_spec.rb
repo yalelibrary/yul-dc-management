@@ -77,15 +77,19 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
       expect do
         [
-          '2005512'
+          '2034600',
+          '2005512',
+          '16414889',
+          '14716192',
+          '16854285'
         ].each do |oid|
           stub_metadata_cloud(oid)
           FactoryBot.create(:parent_object, oid: oid)
         end
-      end.to change { ParentObject.count }.by(1)
+      end.to change { ParentObject.count }.by(5)
 
       response = solr.get 'select', params: { q: 'type_ssi:parent' }
-      expect(response["response"]["numFound"]).to eq(1 + existing_solr_count)
+      expect(response["response"]["numFound"]).to eq(5 + existing_solr_count)
 
       expect(SolrService.delete_all).to be
       response = solr.get 'select', params: { q: '*:*' }
@@ -98,15 +102,19 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
       expect do
         [
-          '2005512'
+          '2034600',
+          '2005512',
+          '16414889',
+          '14716192',
+          '16854285'
         ].each do |oid|
           stub_metadata_cloud(oid)
           FactoryBot.create(:parent_object, oid: oid)
         end
-      end.to change { ParentObject.count }.by(1)
+      end.to change { ParentObject.count }.by(5)
       expect(SolrReindexAllJob.perform_now).to be
       response = solr.get 'select', params: { q: 'type_ssi:parent' }
-      expect(response["response"]["numFound"]).to eq 1
+      expect(response["response"]["numFound"]).to eq 5
     end
 
     it 'can remove an item from Solr' do
@@ -162,9 +170,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         expect(solr_document[:ancestorTitles_tesim]).to include "Oversize",
                                                                 "Abraham Lincoln collection (GEN MSS 257)",
                                                                 "Beinecke Rare Book and Manuscript Library (BRBL)"
-        expect(solr_document[:ancestor_titles_hierarchy_ssim].first).to eq "Beinecke Rare Book and Manuscript Library (BRBL)"
-        expect(solr_document[:ancestor_titles_hierarchy_ssim][1]).to eq "Beinecke Rare Book and Manuscript Library (BRBL) > Abraham Lincoln collection (GEN MSS 257)"
-        expect(solr_document[:ancestor_titles_hierarchy_ssim].last).to eq "Beinecke Rare Book and Manuscript Library (BRBL) > Abraham Lincoln collection (GEN MSS 257) > Oversize"
+        expect(solr_document[:ancestor_titles_hierarchy_ssim].first).to eq "Beinecke Rare Book and Manuscript Library (BRBL) > "
+        expect(solr_document[:ancestor_titles_hierarchy_ssim][1]).to eq "Beinecke Rare Book and Manuscript Library (BRBL) > Abraham Lincoln collection (GEN MSS 257) > "
+        expect(solr_document[:ancestor_titles_hierarchy_ssim].last).to eq "Beinecke Rare Book and Manuscript Library (BRBL) > Abraham Lincoln collection (GEN MSS 257) > Oversize > "
         expect(solr_document[:collection_title_ssi]).to include "Abraham Lincoln collection (GEN MSS 257)"
         expect(solr_document[:ancestorDisplayStrings_tesim]).to include "Oversize, n.d.",
                                                                         "Abraham Lincoln collection",
@@ -246,13 +254,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
           parent_object.viewing_direction = "left to right"
           parent_object.display_layout = "book"
           parent_object.save!
-          parent_object.solr_index_job
           parent_object.reload
         end.to change(parent_object, :visibility).from("Public").to("Yale Community Only")
-           .and change(parent_object, :holding).from(nil).to("555555555")
-           .and change(parent_object, :item).from(nil).to("33333333333")
-           .and change(parent_object, :viewing_direction).from(nil).to("left to right")
-           .and change(parent_object, :display_layout).from(nil).to("book")
+                                                 .and change(parent_object, :holding).from(nil).to("555555555")
+                                                                                     .and change(parent_object, :item).from(nil).to("33333333333")
+                                                                                                                      .and change(parent_object, :viewing_direction).from(nil).to("left to right")
+                                                                                                                                                                    .and change(parent_object, :display_layout).from(nil).to("book")
         response = solr.get 'select', params: { q: 'oid_ssi:2034600' }
         expect(response["response"]["docs"].first["visibility_ssi"]).to eq "Yale Community Only"
         expect(response["response"]["docs"].first["orbisBibId_ssi"]).to eq "123321xx"
