@@ -90,6 +90,15 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         expect(page).to have_content("This is a rights statement")
       end
 
+      it "can set the Project ID via the UI" do
+        click_on("Create Parent object")
+        click_on("Edit")
+        expect(page).to have_field("Project ID")
+        fill_in("Project ID", with: "This is the Project ID")
+        click_on(UPDATE_PARENT_OBJECT_BUTTON)
+        expect(page).to have_content("This is the Project ID")
+      end
+
       it "can show the representative thumbnail via the UI" do
         click_on("Create Parent object")
         expect(page).to have_content("Children:")

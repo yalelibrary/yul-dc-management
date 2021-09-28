@@ -101,6 +101,7 @@ module SolrIndexable
       orbisBarcode_ssi: barcode,
       orbisBibId_ssi: bib, # may change to orbisBibId
       preferredCitation_tesim: json_to_index["preferredCitation"],
+      project_identifier_tesi: json_to_index["project_identifier"],
       projection_tesim: json_to_index["projection"],
       public_bsi: true, # TEMPORARY, makes everything public
       publisher_tesim: json_to_index["publisher"],

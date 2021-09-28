@@ -640,6 +640,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     it "has the expected defaults" do
       po = described_class.new
       expect(po.oid).to be nil
+      expect(po.project_identifier).to be nil
       expect(po.bib).to be nil
       expect(po.holding).to be nil
       expect(po.item).to be nil
