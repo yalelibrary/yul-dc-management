@@ -30,24 +30,24 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       batch_process.user_id = user.id
       visit batch_processes_path
       select("Reassociate Child Oids")
-      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_child_object_all_columns.csv")
+      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_child_object_all_columns.csv")
       click_button("Submit")
     end
 
     it "does not update already existing values if column is missing" do
-      # byebug
       expect(page).to have_content "Your job is queued for processing in the background"
       co = parent_object.child_objects.first
       expect(co.order).to eq 1
       expect(co.label).to be_nil
       expect(co.caption).to be_nil
       expect(co.viewing_hint).to be_nil
-      expect(co.parent_object.authoritative_json["title"]).to eq "[The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion]"
+      # parent title and call number should remain same values
+      expect(co.parent_object.authoritative_json["title"]).to eq "The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion"
       expect(co.parent_object.call_number).to eq "GEN MSS 257"
       # csv has only child oid, parent oid, and label
       visit batch_processes_path
       select("Reassociate Child Oids")
-      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_child_object_missing_columns.csv")
+      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_child_object_missing_columns.csv")
       click_button("Submit")
       expect(page).to have_content "Your job is queued for processing in the background"
       co = parent_object.child_objects.first
@@ -55,7 +55,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       expect(co.label).to eq "note"
       expect(co.caption).to be_nil
       expect(co.viewing_hint).to be_nil
-      expect(co.parent_object.authoritative_json["title"]).to eq "[The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion]"
+      expect(co.parent_object.authoritative_json["title"]).to eq "The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion"
       expect(co.parent_object.call_number).to eq "GEN MSS 257"
     end
   end
@@ -67,7 +67,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       batch_process.user_id = user.id
       visit batch_processes_path
       select("Reassociate Child Oids")
-      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_child_object_all_columns.csv")
+      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_child_object_all_columns.csv")
       click_button("Submit")
     end
 
@@ -78,7 +78,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       expect(co.label).to be_nil
       expect(co.caption).to be_nil
       expect(co.viewing_hint).to be_nil
-      expect(co.parent_object.authoritative_json["title"]).to eq "[The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion]"
+      expect(co.parent_object.authoritative_json["title"]).to eq "The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion"
       expect(co.parent_object.call_number).to eq "GEN MSS 257"
     end
   end
@@ -90,7 +90,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       batch_process.user_id = user.id
       visit batch_processes_path
       select("Reassociate Child Oids")
-      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_child_object_invalid_view.csv")
+      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_child_object_invalid_view.csv")
       click_button("Submit")
     end
 

@@ -185,17 +185,16 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         example.run
       end
     end
-    let(:parent_object) { FactoryBot.build(:parent_object, oid: 2_034_600) }
     let(:batch_process) { FactoryBot.create(:batch_process, user: user_one) }
-    let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "short_fixture_ids.csv")) }
+    let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
 
     it 'returns a processing_event message' do
       expect do
         batch_process.file = csv_upload
         batch_process.save
         batch_process.run_callbacks :create
-      end.to change { batch_process.batch_connections.where(connectable_type: "ParentObject").count }.from(0).to(5)
-        .and change { IngestEvent.count }.from(0).to(456)
+      end.to change { batch_process.batch_connections.where(connectable_type: "ParentObject").count }.from(0).to(1)
+        .and change { IngestEvent.count }.from(0).to(13)
       statuses = IngestEvent.all.map(&:status)
       expect(statuses).to include "processing-queued"
       expect(statuses).to include "metadata-fetched"
@@ -208,6 +207,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
     # rubocop:disable RSpec/AnyInstance
     it "checks for solr success" do
+      # TODO: Why not factorybot?
       po_actual = ParentObject.create(oid: 2_034_600, admin_set: FactoryBot.create(:admin_set))
       allow_any_instance_of(ParentObject).to receive(:solr_index).and_return("responseHeader" => { "status" => 404, "QTime" => 106 })
       batch_connection = batch_process.batch_connections.build(connectable: po_actual)
@@ -316,7 +316,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       it "pulls the rights statement from Ladybird" do
-        expect(parent_object.reload.rights_statement).to include "The use of this image may be subject to the "
+        expect(parent_object.reload.rights_statement).to include "The use of this image may be subject to"
       end
 
       it "assigns the call number and container grouping" do
@@ -400,6 +400,19 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.authoritative_json).to eq parent_object.voyager_json
       end
     end
+
+    # rubocop:disable Metrics/LineLength
+    context 'a newly created ParentObject with Ladybird and multiple rights statements' do
+      let(:parent_object) { described_class.create(oid: "17105661", admin_set: FactoryBot.create(:admin_set)) }
+      before do
+        stub_metadata_cloud("17105661", "ladybird")
+      end
+
+      it 'indexes all rights statements and concats with new lines' do
+        expect(parent_object.reload.rights_statement).to include "Copyright Beinecke Rare Book & Manuscript Library.\nThe use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+      end
+    end
+    # rubocop:enable Metrics/LineLength
 
     context "a newly created ParentObject with ArchiveSpace as authoritative_metadata_source" do
       let(:parent_object) do

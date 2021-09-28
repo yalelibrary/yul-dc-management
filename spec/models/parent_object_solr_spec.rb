@@ -165,7 +165,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
       it "can create a Solr document for a record, including visibility" do
         solr_document = parent_object_with_public_visibility.reload.to_solr
-        expect(solr_document[:repository_ssi]).to eq "Beinecke Rare Book and Manuscript Library (BRBL)"
+        expect(solr_document[:repository_ssim]).to eq "Beinecke Rare Book and Manuscript Library (BRBL)"
         expect(solr_document[:archivalSort_ssi]).to include "00002.00000"
         expect(solr_document[:ancestorTitles_tesim]).to include "Oversize",
                                                                 "Abraham Lincoln collection (GEN MSS 257)",
@@ -241,7 +241,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
           perform_enqueued_jobs
           parent_object.reload
         end.to change(parent_object, :visibility).from("Private").to("Public")
-
+        # rubocop:disable Metrics/LineLength
         expect do
           parent_object.visibility = "Yale Community Only"
           parent_object.bib = "123321xx"
@@ -256,10 +256,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
           parent_object.save!
           parent_object.reload
         end.to change(parent_object, :visibility).from("Public").to("Yale Community Only")
-           .and change(parent_object, :holding).from(nil).to("555555555")
-           .and change(parent_object, :item).from(nil).to("33333333333")
-           .and change(parent_object, :viewing_direction).from(nil).to("left to right")
-           .and change(parent_object, :display_layout).from(nil).to("book")
+                                                 .and change(parent_object, :holding).from(nil).to("555555555")
+                                                                                     .and change(parent_object, :item).from(nil).to("33333333333")
+                                                                                                                      .and change(parent_object, :viewing_direction).from(nil).to("left to right")
+                                                                                                                                                                    .and change(parent_object, :display_layout).from(nil).to("book")
         response = solr.get 'select', params: { q: 'oid_ssi:2034600' }
         expect(response["response"]["docs"].first["visibility_ssi"]).to eq "Yale Community Only"
         expect(response["response"]["docs"].first["orbisBibId_ssi"]).to eq "123321xx"
@@ -267,6 +267,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         expect(response["response"]["docs"].first["orbisBarcode_ssi"]).to eq "3200000000000"
         expect(response["response"]["docs"].first["archiveSpaceUri_ssi"]).to eq "/repository/12345/archiveobject/566666"
       end
+      # rubocop:enable Metrics/LineLength
     end
   end
 
