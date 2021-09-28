@@ -288,7 +288,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
             batch_process.file = xml_upload_two
             batch_process.save
           end.to change { ParentObject.count }.from(0).to(1)
-            .and change { ChildObject.count }.from(0).to(3)
+                                              .and change { ChildObject.count }.from(0).to(3)
           po = ParentObject.find(30_000_401)
           co = ChildObject.find(30_000_404)
           # parent object expectations
@@ -401,9 +401,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect do
             batch_process.file = csv_upload
             batch_process.save
-          end.to change { batch_process.batch_connections.size }.from(0).to(218)
+          end.to change { batch_process.batch_connections.size }.from(0).to(3)
 
-          expect(ParentObject.count).to eq 5
+          expect(ParentObject.count).to eq 1
         end
 
         it "can identify the metadata source" do
@@ -412,8 +412,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect(ParentObject.find(2_034_600).authoritative_metadata_source_id).to eq 1
           expect(ParentObject.find(2_030_006).authoritative_metadata_source_id).to eq 2
           expect(ParentObject.find(2_012_036).authoritative_metadata_source_id).to eq 3
-          expect(ParentObject.find(16_414_889).authoritative_metadata_source_id).to eq 2
-          expect(ParentObject.find(16_854_285).authoritative_metadata_source_id).to eq 1
         end
 
         it 'defaults to ladybird if no metadata source is provided' do
@@ -441,7 +439,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
         describe "with a parent object that had been previously created and user with editor role" do
           let(:admin_set) { FactoryBot.create(:admin_set) }
-          let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: admin_set) }
+          let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: admin_set) }
           before do
             stub_ptiffs_and_manifests
             user.add_role(:editor, admin_set)
