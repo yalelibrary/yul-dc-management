@@ -47,6 +47,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # manifest delete
         expect(parent_object.iiif_manifest).to be_nil
 
+        # solr document delete
         response = solr.get 'select', params: { q: '*:*' }
         expect(response["response"]["numFound"]).to eq 0
 

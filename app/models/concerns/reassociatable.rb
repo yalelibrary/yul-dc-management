@@ -49,7 +49,7 @@ module Reassociatable
     values_to_update.each do |h|
       if h == 'viewing_hint'
         co.viewing_hint = valid_view(row[h], co.oid)
-      # should not update parent title or call number
+        # should not update parent title or call number
       elsif values_to_update.include? h
         if h == 'label'
           co.label = row[h]

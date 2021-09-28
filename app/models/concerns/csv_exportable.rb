@@ -7,6 +7,7 @@ module CsvExportable
     ['parent_oid', 'child_oid', 'order', 'parent_title', 'call_number', 'label', 'caption', 'viewing_hint']
   end
 
+  # rubocop:disable Metrics/AbcSize
   def output_csv
     return nil unless batch_action == 'export child oids'
 
@@ -21,6 +22,7 @@ module CsvExportable
     end
   end
 
+  # rubocop:enable Metrics/AbcSize
   def sorted_child_objects
     had_events = batch_ingest_events_count.positive?
     arr = []

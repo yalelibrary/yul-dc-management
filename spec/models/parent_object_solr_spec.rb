@@ -199,6 +199,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         end.to change(parent_object, :visibility).from("Private").to("Public")
 
         expect do
+          # rubocop:disable Metrics/LineLength
           parent_object.visibility = "Yale Community Only"
           parent_object.bib = "123321xx"
           parent_object.call_number = "JWJ A +Eb74"
@@ -213,16 +214,17 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
           parent_object.solr_index_job
           parent_object.reload
         end.to change(parent_object, :visibility).from("Public").to("Yale Community Only")
-           .and change(parent_object, :holding).from(nil).to("555555555")
-           .and change(parent_object, :item).from(nil).to("33333333333")
-           .and change(parent_object, :viewing_direction).from(nil).to("left to right")
-           .and change(parent_object, :display_layout).from(nil).to("book")
+                                                 .and change(parent_object, :holding).from(nil).to("555555555")
+                                                                                     .and change(parent_object, :item).from(nil).to("33333333333")
+                                                                                                                      .and change(parent_object, :viewing_direction).from(nil).to("left to right")
+                                                                                                                                                                    .and change(parent_object, :display_layout).from(nil).to("book")
         response = solr.get 'select', params: { q: 'oid_ssi:2034600' }
         expect(response["response"]["docs"].first["visibility_ssi"]).to eq "Yale Community Only"
         expect(response["response"]["docs"].first["orbisBibId_ssi"]).to eq "123321xx"
         expect(response["response"]["docs"].first["imageCount_isi"]).to eq 985_555
         expect(response["response"]["docs"].first["orbisBarcode_ssi"]).to eq "3200000000000"
         expect(response["response"]["docs"].first["archiveSpaceUri_ssi"]).to eq "/repository/12345/archiveobject/566666"
+        # rubocop:enable Metrics/LineLength
       end
     end
   end
