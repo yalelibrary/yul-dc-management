@@ -1,47 +1,64 @@
 {
-  "jsonModelType": "LadybirdSolrRecord",
-  "source": "ladybird",
-  "recordType": "oid",
+  "oid": 16685691,
   "uri": "/ladybird/oid/16685691",
-  "callNumber": "BrSides Elephant Folio 2018 22",
-  "creator": [
-    "United States. Hydrographic Office"
-  ],
-  "title": [
-    "Tracks for full powered steam vessels with the shortest navigable distances in nautical miles from anchorage to anchorage, New York distances are measures to and from the Battery achorage."
-  ],
-  "extentOfDigitization": [
-    "Complete work digitized."
-  ],
-  "edition": [
-    "16th edition, I '16."
-  ],
-  "creationPlace": [
-    "Washington, D.C. :"
-  ],
-  "publisher": [
-    "Published ... at the Hydrographic Office, "
-  ],
   "date": [
     "Sep., 1914 [that is, 1916]"
+  ],
+  "genre": [
+    "World maps"
+  ],
+  "scale": "Scale approximately 1:50,000,000",
+  "title": [
+    "Tracks for full powered steam vessels with the shortest navigable distances in nautical miles from anchorage to anchorage, New York distances are measures to and from the Battery achorage."
   ],
   "extent": [
     "1 map : color ; 67 x 112 cm"
   ],
+  "format": [
+    "cartographic"
+  ],
+  "partOf": "Beinecke Library",
+  "rights": [
+    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement"
+  ],
+  "source": "ladybird",
+  "creator": [
+    "United States. Hydrographic Office"
+  ],
+  "edition": [
+    "16th edition, I '16."
+  ],
+  "children": [
+    {
+      "oid": 16686253,
+      "uri": "/ladybird/oid/16686253",
+      "title": [
+        "Tracks for full powered steam vessels with the shortest navigable distances in nautical miles from anchorage to anchorage, New York distances are measures to and from the Battery achorage."
+      ],
+      "width": 15104,
+      "height": 9880,
+      "source": "ladybird",
+      "children": [
+
+      ],
+      "callNumber": "BrSides Elephant Folio 2018 22",
+      "recordType": "oid",
+      "dependentUris": [
+        "/ladybird/oid/16686253"
+      ],
+      "jsonModelType": "LadybirdSolrRecord"
+    }
+  ],
+  "itemType": [
+    "Maps, Atlases & Globes"
+  ],
   "language": [
     "English"
   ],
-  "description": [
-    "\"No. 1262.\"",
-    "\"Small corrections from notices to mariners ('15-2, 18, 30, from other sources I '16.\"",
-    "Includes charts: \"Speeds per hour with daily and weekly distances in nautical miles\" and \"Reduction knots on nautical miles to statute miles.\" Also includes 4 distance charts.",
-    "Relief shown by hachures and spot heights."
+  "publisher": [
+    "Published ... at the Hydrographic Office, "
   ],
-  "subjectTopic": [
-    "Steam-navigation--Maps."
-  ],
-  "subjectGeographicCode": "x------",
-  "scale": "Scale approximately 1:50,000,000",
+  "callNumber": "BrSides Elephant Folio 2018 22",
   "coordinate": [
     "(W 180°--E 180°/N 90°--S 90°).",
     "090.000000",
@@ -51,68 +68,51 @@
     "50000000",
     "a"
   ],
-  "genre": [
-    "World maps"
-  ],
-  "format": [
-    "cartographic"
-  ],
-  "itemType": [
-    "Maps, Atlases & Globes"
-  ],
-  "partOf": "Beinecke Library",
-  "rights": [
-    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement"
-  ],
+  "intEndYear": "1916",
   "orbisBibId": "13881242",
-  "orbisBarcode": "39002131329220",
-  "itemPermission": "Public",
-  "dateStructured": [
-    "1914/1916"
+  "recordType": "oid",
+  "repository": "Beinecke Library",
+  "subjectEra": "Steam-navigation--Maps.",
+  "description": [
+    "\"No. 1262.\"",
+    "\"Small corrections from notices to mariners ('15-2, 18, 30, from other sources I '16.\"",
+    "Includes charts: \"Speeds per hour with daily and weekly distances in nautical miles\" and \"Reduction knots on nautical miles to statute miles.\" Also includes 4 distance charts.",
+    "Relief shown by hachures and spot heights."
   ],
-  "illustrativeMatter": "181211s1916    dcudg     a     0   eng d",
-  "coordinateWest": "-180.000000",
-  "coordinateEast": "180.000000",
-  "coordinateNorth": "090.000000",
-  "coordinateSouth": "-090.000000",
+  "collectionId": 1,
+  "intStartYear": "1914",
+  "orbisBarcode": "39002131329220",
+  "subjectTitle": "Steam-navigation--Maps.",
+  "subjectTopic": [
+    "Steam-navigation--Maps."
+  ],
   "copyrightDate": [
     "Sep., 1914 [that is, 1916]"
   ],
-  "intStartYear": "1914",
-  "intEndYear": "1916",
-  "subjectEra": "Steam-navigation--Maps.",
-  "repository": "Beinecke Library",
-  "subjectTitle": "Steam-navigation--Maps.",
-  "subjectTitleDisplay": [
-    "Steam-navigation--Maps."
-  ],
-  "creatorDisplay": [
-    "United States. Hydrographic Office"
+  "creationPlace": [
+    "Washington, D.C. :"
   ],
   "dependentUris": [
     "/ladybird/oid/16685691"
   ],
-  "oid": 16685691,
-  "collectionId": 1,
-  "children": [
-    {
-      "jsonModelType": "LadybirdSolrRecord",
-      "source": "ladybird",
-      "recordType": "oid",
-      "uri": "/ladybird/oid/16686253",
-      "callNumber": "BrSides Elephant Folio 2018 22",
-      "title": [
-        "Tracks for full powered steam vessels with the shortest navigable distances in nautical miles from anchorage to anchorage, New York distances are measures to and from the Battery achorage."
-      ],
-      "dependentUris": [
-        "/ladybird/oid/16686253"
-      ],
-      "oid": 16686253,
-      "width": 15104,
-      "height": 9880,
-      "children": [
-
-      ]
-    }
-  ]
+  "jsonModelType": "LadybirdSolrRecord",
+  "coordinateEast": "180.000000",
+  "coordinateWest": "-180.000000",
+  "creatorDisplay": [
+    "United States. Hydrographic Office"
+  ],
+  "dateStructured": [
+    "1914/1916"
+  ],
+  "itemPermission": "Public",
+  "coordinateNorth": "090.000000",
+  "coordinateSouth": "-090.000000",
+  "illustrativeMatter": "181211s1916    dcudg     a     0   eng d",
+  "subjectTitleDisplay": [
+    "Steam-navigation--Maps."
+  ],
+  "extentOfDigitization": [
+    "Complete work digitized."
+  ],
+  "subjectGeographicCode": "x------"
 }
