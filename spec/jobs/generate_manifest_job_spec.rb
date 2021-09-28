@@ -25,7 +25,7 @@ RSpec.describe GenerateManifestJob, type: :job do
 
       it 'notifies on Solr index failure' do
         allow(parent_object).to receive(:solr_index_job).and_raise('boom!')
-        expect(parent_object).to receive(:processing_event)
+        expect(parent_object).to receive(:processing_event).twice
         expect { generate_manifest_job.perform(parent_object, batch_process) }.to raise_error('boom!')
       end
 
