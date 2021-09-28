@@ -77,19 +77,15 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
       expect do
         [
-          '2034600',
-          '2005512',
-          '16414889',
-          '14716192',
-          '16854285'
+          '2005512'
         ].each do |oid|
           stub_metadata_cloud(oid)
           FactoryBot.create(:parent_object, oid: oid)
         end
-      end.to change { ParentObject.count }.by(5)
+      end.to change { ParentObject.count }.by(1)
 
       response = solr.get 'select', params: { q: 'type_ssi:parent' }
-      expect(response["response"]["numFound"]).to eq(5 + existing_solr_count)
+      expect(response["response"]["numFound"]).to eq(1 + existing_solr_count)
 
       expect(SolrService.delete_all).to be
       response = solr.get 'select', params: { q: '*:*' }
@@ -102,19 +98,15 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
       expect do
         [
-          '2034600',
-          '2005512',
-          '16414889',
-          '14716192',
-          '16854285'
+          '2005512'
         ].each do |oid|
           stub_metadata_cloud(oid)
           FactoryBot.create(:parent_object, oid: oid)
         end
-      end.to change { ParentObject.count }.by(5)
+      end.to change { ParentObject.count }.by(1)
       expect(SolrReindexAllJob.perform_now).to be
       response = solr.get 'select', params: { q: 'type_ssi:parent' }
-      expect(response["response"]["numFound"]).to eq 5
+      expect(response["response"]["numFound"]).to eq 1
     end
 
     it 'can remove an item from Solr' do
@@ -142,42 +134,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
       response = solr.get 'select', params: { q: 'type_ssi:parent' }
       expect(response["response"]["numFound"]).to eq 0
-    end
-  end
-
-  context "with Archival fixture data" do
-    let(:oid) { "2005512" }
-    let(:metadata_source) { "aspace" }
-    let(:id_prefix) { "AS-" }
-
-    context "with a public item" do
-      let(:parent_object_with_public_visibility) { FactoryBot.create(:parent_object, oid: oid, bib: "4113177", barcode: "39002093768050", source_name: metadata_source, visibility: "Public") }
-      around do |example|
-        original_image_url = ENV['IIIF_IMAGE_BASE_URL']
-        ENV['IIIF_IMAGE_BASE_URL'] = "http://localhost:8182/iiif"
-        example.run
-        ENV['IIIF_IMAGE_BASE_URL'] = original_image_url
-      end
-      before do
-        stub_metadata_cloud(oid.to_s)
-        stub_metadata_cloud("AS-#{oid}", "aspace")
-      end
-
-      it "can create a Solr document for a record, including visibility" do
-        solr_document = parent_object_with_public_visibility.reload.to_solr
-        expect(solr_document[:repository_ssim]).to eq "Beinecke Rare Book and Manuscript Library (BRBL)"
-        expect(solr_document[:archivalSort_ssi]).to include "00002.00000"
-        expect(solr_document[:ancestorTitles_tesim]).to include "Oversize",
-                                                                "Abraham Lincoln collection (GEN MSS 257)",
-                                                                "Beinecke Rare Book and Manuscript Library (BRBL)"
-        expect(solr_document[:ancestor_titles_hierarchy_ssim].first).to eq "Beinecke Rare Book and Manuscript Library (BRBL) > "
-        expect(solr_document[:ancestor_titles_hierarchy_ssim][1]).to eq "Beinecke Rare Book and Manuscript Library (BRBL) > Abraham Lincoln collection (GEN MSS 257) > "
-        expect(solr_document[:ancestor_titles_hierarchy_ssim].last).to eq "Beinecke Rare Book and Manuscript Library (BRBL) > Abraham Lincoln collection (GEN MSS 257) > Oversize > "
-        expect(solr_document[:collection_title_ssi]).to include "Abraham Lincoln collection (GEN MSS 257)"
-        expect(solr_document[:ancestorDisplayStrings_tesim]).to include "Oversize, n.d.",
-                                                                        "Abraham Lincoln collection",
-                                                                        "Beinecke Rare Book and Manuscript Library (BRBL)"
-      end
     end
   end
 
@@ -241,7 +197,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
           perform_enqueued_jobs
           parent_object.reload
         end.to change(parent_object, :visibility).from("Private").to("Public")
-        # rubocop:disable Metrics/LineLength
+
         expect do
           parent_object.visibility = "Yale Community Only"
           parent_object.bib = "123321xx"
@@ -254,6 +210,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
           parent_object.viewing_direction = "left to right"
           parent_object.display_layout = "book"
           parent_object.save!
+          parent_object.solr_index_job
           parent_object.reload
         end.to change(parent_object, :visibility).from("Public").to("Yale Community Only")
                                                  .and change(parent_object, :holding).from(nil).to("555555555")
@@ -267,7 +224,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         expect(response["response"]["docs"].first["orbisBarcode_ssi"]).to eq "3200000000000"
         expect(response["response"]["docs"].first["archiveSpaceUri_ssi"]).to eq "/repository/12345/archiveobject/566666"
       end
-      # rubocop:enable Metrics/LineLength
     end
   end
 
