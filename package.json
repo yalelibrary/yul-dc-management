@@ -10,7 +10,7 @@
     "ansi-html": "^0.0.7",
     "autoprefixer": "^10.2.5",
     "bootstrap": "4.3.1",
-    "datatables.net": "^1.10.22",
+    "datatables.net": "^1.11.3",
     "datatables.net-bs4": "^1.10.22",
     "datatables.net-buttons": "^1.6.4",
     "datatables.net-buttons-bs4": "^1.6.4",
