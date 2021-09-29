@@ -28,6 +28,15 @@
        %>
     </div>
 
+    <div class="col-med-9">
+      <%= form.label :project_identifier, "Project ID" %>
+      <%= form.text_field :project_identifier %>
+    </div>
+
+  </div>
+  <br>
+
+  <div class="form-row">
     <div class="col-med-3">
       <%= form.label "Metadata Source" %>
       <%= form.select(:authoritative_metadata_source_id, [['Ladybird', 1], ['Voyager', 2], ['ArchiveSpace', 3]]) %>
