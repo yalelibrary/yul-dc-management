@@ -137,6 +137,42 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     end
   end
 
+  context "with Archival fixture data" do
+    let(:oid) { "2005512" }
+    let(:metadata_source) { "aspace" }
+    let(:id_prefix) { "AS-" }
+
+    context "with a public item" do
+      let(:parent_object_with_public_visibility) { FactoryBot.create(:parent_object, oid: oid, bib: "4113177", barcode: "39002093768050", source_name: metadata_source, visibility: "Public") }
+      around do |example|
+        original_image_url = ENV['IIIF_IMAGE_BASE_URL']
+        ENV['IIIF_IMAGE_BASE_URL'] = "http://localhost:8182/iiif"
+        example.run
+        ENV['IIIF_IMAGE_BASE_URL'] = original_image_url
+      end
+      before do
+        stub_metadata_cloud(oid.to_s)
+        stub_metadata_cloud("AS-#{oid}", "aspace")
+      end
+
+      it "can create a Solr document for a record, including visibility" do
+        solr_document = parent_object_with_public_visibility.reload.to_solr
+        expect(solr_document[:repository_ssi]).to eq "Beinecke Rare Book and Manuscript Library (BRBL)"
+        expect(solr_document[:archivalSort_ssi]).to include "00002.00000"
+        expect(solr_document[:ancestorTitles_tesim]).to include "Oversize",
+                                                                "Abraham Lincoln collection (GEN MSS 257)",
+                                                                "Beinecke Rare Book and Manuscript Library (BRBL)"
+        expect(solr_document[:ancestor_titles_hierarchy_ssim].first).to eq "Beinecke Rare Book and Manuscript Library (BRBL)"
+        expect(solr_document[:ancestor_titles_hierarchy_ssim][1]).to eq "Beinecke Rare Book and Manuscript Library (BRBL) > Abraham Lincoln collection (GEN MSS 257)"
+        expect(solr_document[:ancestor_titles_hierarchy_ssim].last).to eq "Beinecke Rare Book and Manuscript Library (BRBL) > Abraham Lincoln collection (GEN MSS 257) > Oversize"
+        expect(solr_document[:collection_title_ssi]).to include "Abraham Lincoln collection (GEN MSS 257)"
+        expect(solr_document[:ancestorDisplayStrings_tesim]).to include "Oversize, n.d.",
+                                                                        "Abraham Lincoln collection",
+                                                                        "Beinecke Rare Book and Manuscript Library (BRBL)"
+      end
+    end
+  end
+
   context "with Voyager fixture data" do
     let(:oid) { "2012036" }
     let(:metadata_source) { "ils" }
