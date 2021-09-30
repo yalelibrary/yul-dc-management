@@ -232,6 +232,16 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     object.current_batch_connection.save! if object.class == ChildObject
   end
 
+  # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
+  def validate_metadata_source(metadata_source, index)
+    if metadata_source == 'aspace' || metadata_source == 'ils' || metadata_source == 'ladybird'
+      true
+    else
+      batch_processing_event("Skipping row [#{index + 2}] with unknown metadata source: #{metadata_source}.  Accepted values are 'ladybird', 'aspace', or 'ils'.", 'Skipped Row')
+      false
+    end
+  end
+
   # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
 
   # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
