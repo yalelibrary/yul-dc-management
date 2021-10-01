@@ -25,6 +25,7 @@ module Updatable
       metadata_source = row['source'].presence || parent_object.authoritative_metadata_source.metadata_cloud_name
 
       processed_fields = validate_field(parent_object, row)
+      next unless validate_metadata_source(metadata_source, index)
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.update(processed_fields)
       trigger_setup_metadata(parent_object)

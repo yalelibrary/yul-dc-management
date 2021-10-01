@@ -127,6 +127,27 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     end
   end
 
+  context "with a user with edit permissions but with invalid metadata source value", solr: true do
+    context "updating a batch of parent objects" do
+      before do
+        login_as user
+        user.add_role(:editor, admin_set)
+      end
+
+      it "triggers a metadata update" do
+        # perform batch update
+        visit batch_processes_path
+        select("Update Parent Objects")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_invalid_source.csv")
+        click_button("Submit")
+
+        visit "/batch_processes/#{BatchProcess.last.id}/"
+        expect(page).to have_content "Batch status unknown"
+        expect(page).to have_content "Skipping row [2] with unknown metadata source: bird. Accepted values are 'ladybird', 'aspace', or 'ils'."
+      end
+    end
+  end
+
   context "with a user without edit permissions" do
     let(:admin_user) { FactoryBot.create(:sysadmin_user) }
 
