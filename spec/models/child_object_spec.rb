@@ -115,7 +115,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       # rubocop:enable RSpec/AnyInstance
       expect do
         child_object.convert_to_ptiff
-      end.to raise_error
+      end.to raise_error(RuntimeError)
     end
   end
 

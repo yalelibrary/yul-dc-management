@@ -55,7 +55,7 @@ RSpec.describe GeneratePtiffJob, type: :job do
       allow(child_object).to receive(:convert_to_ptiff!).and_return(false)
       expect do
         generate_ptiff_job.perform(child_object, batch_process)
-      end.to raise_error
+      end.to raise_error(RuntimeError)
     end
   end
 end
