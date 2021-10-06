@@ -20,7 +20,7 @@ RSpec.describe BatchProcessParentDatatable, type: :datatable, prep_metadata_sour
   end
 
   describe 'batch process parent details' do
-    let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'short_fixture_ids.csv')) }
+    let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'short_fixture_ids.csv')) }
 
     it 'renders a complete data table' do
       parent_object = FactoryBot.create(:parent_object, oid: 16_057_779)

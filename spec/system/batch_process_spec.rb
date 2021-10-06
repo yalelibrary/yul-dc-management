@@ -31,7 +31,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   context "when uploading a csv" do
     it "uploads and increases csv count and gives a success message" do
       expect(BatchProcess.count).to eq 0
-      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
+      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/short_fixture_ids.csv")
       click_button("Submit")
       expect(BatchProcess.count).to eq 1
       expect(page).to have_content("Your job is queued for processing in the background")
@@ -45,10 +45,21 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       # rubocop:disable RSpec/AnyInstance
       allow_any_instance_of(BatchProcess).to receive(:save).and_return(false)
       # rubocop:enable RSpec/AnyInstance
-      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
+      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/short_fixture_ids.csv")
       click_button("Submit")
       expect(BatchProcess.count).to eq 0
       expect(page).not_to have_content("Your job is queued for processing in the background")
+    end
+
+    it "errors batch if CSV contains too many entries" do
+      expect(BatchProcess.count).to eq 0
+      stub_const("BatchProcess::CSV_MAXIMUM_ENTRIES", 1)
+      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/short_fixture_ids.csv")
+      click_button("Submit")
+      expect(BatchProcess.count).to eq 1
+      expect(page).to have_content("Your job is queued for processing in the background")
+      expect(BatchProcess.last.batch_connections.last.ingest_events.first.status).to eq 'error'
+      expect(BatchProcess.last.batch_connections.last.ingest_events.first.reason).to start_with 'CSV contains'
     end
 
     context "re-associating child objects" do
@@ -75,7 +86,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
       it "uploads a CSV of child oids in order to re-associate them with new parent oids" do
         expect(BatchProcess.count).to eq 0
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_small.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_small.csv")
         select("Reassociate Child Oids")
         click_button("Submit")
         expect(BatchProcess.count).to eq 1
@@ -84,7 +95,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
       it "displays children in batch parent details" do
         expect(ChildObject.find_by_oid(1_021_925).parent_object.oid).to eq(2_004_548)
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_small.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_small.csv")
         select("Reassociate Child Oids")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
@@ -98,7 +109,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
 
       it "displays batch messages on batch show" do
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_small.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_small.csv")
         select("Reassociate Child Oids")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
@@ -108,7 +119,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
 
       it "displays batch messages for invalid order" do
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_invalid_order.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_invalid_order.csv")
         select("Reassociate Child Oids")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
@@ -119,7 +130,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
 
       it "updates all parent object counts" do
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_child_object_counts.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_child_object_counts.csv")
         select("Reassociate Child Oids")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
@@ -133,7 +144,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         co.caption = "TEST LABEL STAY SAME2"
         co.order = 3_445_234
         co.save
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/reassociation_example_missing_column.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_missing_column.csv")
         select("Reassociate Child Oids")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
@@ -165,7 +176,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
       it "uploads a CSV of parent oids in order to create export of child objects oids and orders" do
         expect(BatchProcess.count).to eq 0
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/short_fixture_ids.csv")
         select("Export Child Oids")
         click_button("Submit")
         expect(BatchProcess.count).to eq 1
@@ -198,7 +209,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
       context "round-tripping csv" do
         it "can create the output csv from a csv that has been generated from the application" do
-          page.attach_file("batch_process_file", Rails.root + "spec/fixtures/parents_for_reassociation_as_output.csv")
+          page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/parents_for_reassociation_as_output.csv")
           select("Export Child Oids")
           click_button("Submit")
           expect(BatchProcess.count).to eq 1
@@ -208,7 +219,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         end
 
         it "can create the output csv from a handmade csv" do
-          page.attach_file("batch_process_file", Rails.root + "spec/fixtures/parents_for_reassociation.csv")
+          page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/parents_for_reassociation.csv")
           select("Export Child Oids")
           click_button("Submit")
           expect(BatchProcess.count).to eq 1
@@ -226,7 +237,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         end
       end
       before do
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/short_fixture_ids.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/short_fixture_ids.csv")
         click_button("Submit")
         po = ParentObject.find(16_854_285)
         po.destroy
@@ -253,7 +264,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         parent_object
       end
       it "displays children in batch parent details" do
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/recreate_child_ptiffs.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/recreate_child_ptiffs.csv")
         select("Recreate Child Oid Ptiffs")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
@@ -265,7 +276,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(page).to have_content("Child Batch Process Detail")
       end
       it "displays batch messages on batch details" do
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/recreate_child_ptiffs.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/recreate_child_ptiffs.csv")
         select("Recreate Child Oid Ptiffs")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
@@ -325,6 +336,20 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       pj = PreservicaIngest.find_by_child_oid(30_000_319)
       expect(pj.preservica_child_id).to eq "1234d3360-bf78-4e35-9850-44ef7f832100"
       expect(pj.preservica_id).to eq "b9afab50-9f22-4505-ada6-807dd7d05733"
+    end
+
+    it "does not create preservica ingest if no parent uuid" do
+      # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(SetupMetadataJob).to receive(:check_mets_images).and_return(true)
+      allow_any_instance_of(ParentObject).to receive(:default_fetch).and_return(true)
+      # rubocop:enable RSpec/AnyInstance check_mets_images
+      expect(BatchProcess.count).to eq 0
+      page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/no_uuid.xml')
+      click_button("Submit")
+      pj = PreservicaIngest.find_by_child_oid(30_000_322)
+      expect(pj.nil?).to be_truthy
+      pj_parent = PreservicaIngest.find_by_parent_oid(30_000_321)
+      expect(pj_parent.nil?).to be_truthy
     end
   end
 

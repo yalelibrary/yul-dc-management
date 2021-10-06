@@ -21,12 +21,14 @@ module Updatable
     parsed_csv.each_with_index do |row, index|
       oid = row['oid'] unless ['oid'].nil?
       parent_object = updatable_parent_object(oid, index)
-      metadata_source = row['source'].presence || parent_object.authoritative_metadata_source.metadata_cloud_name
       next unless parent_object
+      metadata_source = row['source'].presence || parent_object.authoritative_metadata_source.metadata_cloud_name
 
       processed_fields = validate_field(parent_object, row)
+      next unless validate_metadata_source(metadata_source, index)
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.update(processed_fields)
+      trigger_setup_metadata(parent_object)
 
       processing_event_for_parent(parent_object)
     end
@@ -91,4 +93,12 @@ module Updatable
     end
   end
   # rubocop:enable Metrics/LineLength
+
+  def trigger_setup_metadata(parent_object)
+    parent_object.current_batch_process = self
+    parent_object.current_batch_connection = batch_connections.find_or_create_by(connectable: parent_object)
+    parent_object.current_batch_connection.save!
+    parent_object.save!
+    SetupMetadataJob.perform_later(parent_object, self, parent_object.current_batch_connection)
+  end
 end
