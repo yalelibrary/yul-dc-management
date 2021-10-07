@@ -50,6 +50,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       expect(page).to have_content("Partially digitized")
     end
   end
+
   context "creating a new ParentObject based on oid" do
     before do
       visit "parent_objects/new"
@@ -88,6 +89,15 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         fill_in("Rights statement", with: "This is a rights statement")
         click_on(UPDATE_PARENT_OBJECT_BUTTON)
         expect(page).to have_content("This is a rights statement")
+      end
+
+      it "can set the Project ID via the UI" do
+        click_on("Create Parent object")
+        click_on("Edit")
+        expect(page).to have_field("Project ID")
+        fill_in("Project ID", with: "This is the Project ID")
+        click_on(UPDATE_PARENT_OBJECT_BUTTON)
+        expect(page).to have_content("This is the Project ID")
       end
 
       it "can show the representative thumbnail via the UI" do
@@ -268,6 +278,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
 
       it 'has functioning Solr Document link' do
+        po = ParentObject.find_by(oid: "2012036")
+        po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
         click_on("Solr Document")
         solr_data = JSON.parse(page.body)
@@ -311,6 +323,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
 
       it 'has functioning Solr Document link' do
+        po = ParentObject.find_by(oid: "2012036")
+        po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
         click_on("Solr Document")
         solr_data = JSON.parse(page.body)

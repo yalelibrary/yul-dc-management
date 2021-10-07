@@ -115,7 +115,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       # rubocop:enable RSpec/AnyInstance
       expect do
         child_object.convert_to_ptiff
-      end.to raise_error
+      end.to raise_error(RuntimeError)
     end
   end
 
@@ -180,11 +180,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       end
 
       it "can determine if a child object has a txt file" do
-        recreate_children(parent_object)
-        child_object = parent_object.child_objects.first
-
         expect(child_object.remote_ocr).to eq(true)
-        expect(child_object.full_text).to eq(true)
       end
     end
 

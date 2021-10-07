@@ -9,12 +9,23 @@ module SolrIndexable
   end
 
   def solr_index
-    indexable, child_solr_documents = to_solr_full_text
-    return unless indexable.present?
-    solr = SolrService.connection
-    solr.add([indexable])
-    solr.add(child_solr_documents) unless child_solr_documents.nil?
-    solr.commit
+    begin
+      indexable, child_solr_documents = to_solr_full_text
+      return unless indexable.present?
+      solr = SolrService.connection
+      solr.add([indexable])
+      solr.add(child_solr_documents) unless child_solr_documents.nil?
+      result = solr.commit
+      if (result&.[]("responseHeader")&.[]("status"))&.zero?
+        processing_event("Solr index updated", "solr-indexed")
+      else
+        processing_event("Solr index after manifest generation failed", "failed")
+      end
+    rescue => e
+      processing_event("Solr indexing failed due to #{e.message}", "failed")
+      raise # this reraises the error after we document it
+    end
+    result
   end
 
   def solr_delete
@@ -24,7 +35,8 @@ module SolrIndexable
   end
 
   def solr_index_job
-    SolrIndexJob.perform_later(self)
+    current_batch_connection&.save
+    SolrIndexJob.perform_later(self, current_batch_process, current_batch_connection) if queued_solr_index_jobs.empty?
   end
 
   def to_solr(json_to_index = nil)
@@ -38,11 +50,16 @@ module SolrIndexable
       accessRestrictions_tesim: json_to_index["accessRestrictions"],
       alternativeTitle_tesim: json_to_index["alternativeTitle"],
       alternativeTitleDisplay_tesim: json_to_index["alternativeTitleDisplay"],
+      ancestorDisplayStrings_tesim: json_to_index["ancestorDisplayStrings"],
+      ancestorTitles_tesim: json_to_index["ancestorTitles"],
+      ancestor_titles_hierarchy_ssim: ancestor_structure(json_to_index["ancestorTitles"]),
+      archivalSort_ssi: json_to_index["archivalSort"],
       archiveSpaceUri_ssi: aspace_uri,
       callNumber_ssim: json_to_index["callNumber"],
       callNumber_tesim: json_to_index["callNumber"],
       caption_tesim: child_captions,
       child_oids_ssim: child_oids,
+      collection_title_ssi: json_to_index["ancestorTitles"]&.[](-2),
       collectionId_ssim: json_to_index["collectionId"],
       collectionId_tesim: json_to_index["collectionId"],
       containerGrouping_ssim: extract_container_information(json_to_index),
@@ -89,12 +106,14 @@ module SolrIndexable
       orbisBarcode_ssi: barcode,
       orbisBibId_ssi: bib, # may change to orbisBibId
       preferredCitation_tesim: json_to_index["preferredCitation"],
+      project_identifier_tesi: json_to_index["project_identifier"],
       projection_tesim: json_to_index["projection"],
       public_bsi: true, # TEMPORARY, makes everything public
       publisher_tesim: json_to_index["publisher"],
       publisher_ssim: json_to_index["publisher"],
       recordType_ssi: json_to_index["recordType"],
       relatedResourceOnline_ssim: json_to_index["relatedResourceOnline"],
+      repository_ssi: json_to_index["repository"],
       repository_ssim: json_to_index["repository"],
       resourceType_ssim: json_to_index["itemType"],
       resourceType_tesim: json_to_index["itemType"],
@@ -215,6 +234,23 @@ module SolrIndexable
     solr_document[:has_fulltext_ssi] = extent_of_full_text
 
     solr_document
+  end
+
+  def ancestor_structure(ancestor_title)
+    # Building the hierarchy structure
+    return nil unless ancestor_title&.is_a?(Array)
+    anc_struct = []
+    ancestor_title = ancestor_title.reverse
+    arr_size = 0
+    prev_string = ""
+    ancestor_title.each do |anc|
+      prev_string += (ancestor_title[arr_size - 1]).to_s + " > " unless arr_size.zero?
+      anc = prev_string + anc + " > "
+      formatted = anc[0...-3]
+      anc_struct.push(formatted)
+      arr_size += 1
+    end
+    anc_struct
   end
 
   def generate_hash

@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
+  # CSV EXPORT CHILD OIDS:
   include CsvExportable
+  # REASSOCIATE CHILD OIDS:
   include Reassociatable
   include Statable
+  # UPDATE PARENT OBJECTS:
   include Updatable
   attr_reader :file
   after_create :determine_background_jobs
@@ -14,10 +17,16 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :parent_objects, through: :batch_connections, source_type: "ParentObject", source: :connectable
   has_many :child_objects, through: :batch_connections, source_type: "ChildObject", source: :connectable
 
+  CSV_MAXIMUM_ENTRIES = 10_000
+
+  # SHARED BY ALL BATCH ACTIONS: ------------------------------------------------------------------- #
+
+  # LISTS AVAILABLE BATCH ACTIONS
   def self.batch_actions
     ['create parent objects', 'update parent objects', 'delete parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status']
   end
 
+  # LOGS BATCH PROCESSING MESSAGES AND SETS STATUSES
   def batch_processing_event(message, status = 'info')
     current_batch_connection = batch_connections.find_or_create_by!(connectable: self)
     IngestEvent.create!(
@@ -27,20 +36,24 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     )
   end
 
+  # PROVIDES ROUTE TO CSV TEMPLATE
   def self.csv_template(batch_action)
     File.read(Rails.root.join("public", "batch_processes", "templates", "#{batch_action.parameterize.underscore}.csv"))
   end
 
+  # GETS LISTS OF INGEST EVENTS
   def batch_ingest_events
     current_batch_connection = batch_connections.find_or_create_by!(connectable: self)
     IngestEvent.where(batch_connection: current_batch_connection)
   end
 
+  # GETS COUNT OF INGEST EVENTS
   def batch_ingest_events_count
     current_batch_connection = batch_connections.find_or_create_by!(connectable: self)
     IngestEvent.where(batch_connection: current_batch_connection).count
   end
 
+  # CHECKS TO SEE IF THE FILE UPLOADED IS A VALID FILE TYPE (CSV or XML)
   def validate_import
     return if file.blank?
     if File.extname(file) == '.csv'
@@ -52,6 +65,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  # READS FILE
   def file=(value)
     @file = value
     self[:file_name] = file.original_filename
@@ -63,53 +77,58 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  # PARSES THE CSV
   def parsed_csv
-    @parsed_csv ||= CSV.parse(csv, headers: true, encoding: "utf-8") if csv.present?
+    @parsed_csv ||= CSV.parse(csv, headers: true, encoding: "utf-8", skip_blanks: true) if csv.present?
   end
 
+  # CHECKS TO SEE IF CSV ROWS EXCEEDS MAXIMUM ENTRIES
+  def check_csv_size
+    if parsed_csv.length > CSV_MAXIMUM_ENTRIES
+      error = "CSV contains #{parsed_csv.length} entries, which is more than the maximum number of #{CSV_MAXIMUM_ENTRIES}.  The job was not started."
+      batch_processing_event(error, 'error')
+      return false
+    end
+    true
+  end
+
+  # CREATES METS DOCUMENT
   def mets_doc
     @mets_doc ||= MetsDocument.new(mets_xml) if mets_xml.present?
   end
 
+  # GETS THE OIDS FROM METS DOCUMENT
   def mets_oid
     self[:oid] = mets_doc&.oid&.to_i unless self[:oid]
   end
 
+  # GETS THE OIDS FROM PARSED CSV
   def oids
     return @oids ||= parsed_csv.entries.map { |r| r['oid'] } unless csv.nil?
     @oids ||= [oid]
   end
 
+  # APPENDS ID TO CSV FILENAME
   def created_file_name
     return nil unless file_name
     "#{file_name.delete_suffix('.csv')}_bp_#{id}.csv"
   end
 
-  def setup_for_background_jobs(object, metadata_source)
-    object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
-    object.current_batch_process = self
-    object.current_batch_connection = batch_connections.build(connectable: object)
-    return unless object.class == ChildObject
-
-    object.full_text = object.remote_ocr
-    object.current_batch_connection.save!
+  # FETCHES USERS ABILITIES
+  def current_ability
+    @current_ability ||= Ability.new(user)
   end
 
-  def editable_admin_set(admin_set_key, oid, index)
-    admin_sets_hash = {}
-    admin_sets_hash[admin_set_key] ||= AdminSet.find_by(key: admin_set_key)
-    admin_set = admin_sets_hash[admin_set_key]
-    if admin_set.blank?
-      batch_processing_event("Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}", 'Skipped Row')
-      return false
-    elsif !current_ability.can?(:add_member, admin_set)
-      batch_processing_event("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{oid}", 'Permission Denied')
-      return false
-    else
-      admin_set
-    end
+  # ASSIGNS PARENT/CHILD OBJECT TO BATCH PROCESS FOR REASSOCIATE/RECREATE CHILD PTIFF
+  def attach_item(connectable)
+    connectable.current_batch_process = self
+    connectable.current_batch_connection = batch_connections.find_or_create_by(connectable: connectable)
+    connectable.current_batch_connection.save!
   end
 
+  # CREATE PARENT OBJECTS: ------------------------------------------------------------------------- #
+
+  # CREATES PARENT OBJECTS FROM INGESTED CSV
   def create_new_parent_csv
     parsed_csv.each_with_index do |row, index|
       oid = row['oid']
@@ -131,6 +150,41 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
+  def editable_admin_set(admin_set_key, oid, index)
+    admin_sets_hash = {}
+    admin_sets_hash[admin_set_key] ||= AdminSet.find_by(key: admin_set_key)
+    admin_set = admin_sets_hash[admin_set_key]
+    if admin_set.blank?
+      batch_processing_event("Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}", 'Skipped Row')
+      return false
+    elsif !current_ability.can?(:add_member, admin_set)
+      batch_processing_event("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{oid}", 'Permission Denied')
+      return false
+    else
+      admin_set
+    end
+  end
+
+  # DELETE PARENT OBJECTS: ------------------------------------------------------------------------ #
+
+  # DELETES PARENT OBJECTS FROM INGESTED CSV
+  def delete_objects
+    parsed_csv.each_with_index do |row, index|
+      oid = row['oid']
+      action = row['action']
+      metadata_source = row['source']
+      batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}, action value for oid must be 'delete' to complete deletion.", 'Invalid Vocab') if action != "delete"
+      next unless action == 'delete'
+      parent_object = deletable_parent_object(oid, index)
+      next unless parent_object
+      setup_for_background_jobs(parent_object, metadata_source)
+      parent_object.destroy
+      parent_object.processing_event("Parent #{parent_object.oid} has been deleted", 'deleted')
+    end
+  end
+
+  # CHECKS TO SEE IF USER HAS ABILITY TO DELETE OBJECTS:
   def deletable_parent_object(oid, index)
     parent_object = ParentObject.find_by(oid: oid)
     if parent_object.blank?
@@ -144,17 +198,32 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def delete_objects
-    parsed_csv.each_with_index do |row, index|
-      oid = row['oid']
-      metadata_source = row['source']
-      parent_object = deletable_parent_object(oid, index)
-      next unless parent_object
-      setup_for_background_jobs(parent_object, metadata_source)
-      parent_object.destroy
+  # SHARED BY DELETE, CREATE, AND UPDATE: --------------------------------------------------------- #
+
+  # ASSIGNS PARENT/CHILD OBJECT TO BATCH PROCESS FOR CREATE/DELETE/UPDATE
+  def setup_for_background_jobs(object, metadata_source)
+    object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
+    object.current_batch_process = self
+    object.current_batch_connection = batch_connections.build(connectable: object)
+    return unless object.class == ChildObject
+
+    object.full_text = object.remote_ocr
+    object.current_batch_connection.save!
+  end
+
+  # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
+  def validate_metadata_source(metadata_source, index)
+    if metadata_source == 'aspace' || metadata_source == 'ils' || metadata_source == 'ladybird'
+      true
+    else
+      batch_processing_event("Skipping row [#{index + 2}] with unknown metadata source: #{metadata_source}.  Accepted values are 'ladybird', 'aspace', or 'ils'.", 'Skipped Row')
+      false
     end
   end
 
+  # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
+
+  # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
   def update_fulltext_status
     oids.each_with_index do |parent_oid, index|
       parent_object = ParentObject.find_by(oid: parent_oid)
@@ -192,17 +261,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def configure_parent_object(child_object, parents)
-    parent_object = child_object.parent_object
-    unless parents.include? parent_object.oid
-      attach_item(parent_object)
-      parent_object.processing_event("Connection to batch created", "parent-connection-created")
-      parents.add parent_object.oid
-    end
-
-    parents
-  end
-
+  # CHECKS TO SEE IF USER HAS THE ABILITY TO UPDATE CHILD OBJECTS:
   def user_update_child_permission(child_object, parent_object)
     user = self.user
     unless current_ability.can? :update, child_object
@@ -215,12 +274,23 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     true
   end
 
-  def attach_item(connectable)
-    connectable.current_batch_process = self
-    connectable.current_batch_connection = batch_connections.find_or_create_by(connectable: connectable)
-    connectable.current_batch_connection.save!
+  # USED BY RECREATE CHILD OID PTIFF BATCH PROCESS: ----------------------------------------------- #
+
+  # CONNECTS CHILD OIDS BATCH PROCESS TO PARENT OBJECT
+  def configure_parent_object(child_object, parents)
+    parent_object = child_object.parent_object
+    unless parents.include? parent_object.oid
+      attach_item(parent_object)
+      parent_object.processing_event("Connection to batch created", "parent-connection-created")
+      parents.add parent_object.oid
+    end
+
+    parents
   end
 
+  # METS METADATA CLOUD: ------------------------------------------------------------------------- #
+
+  # MAKES CALL FOR UPDATED DATA
   def refresh_metadata_cloud_mets
     metadata_source = mets_doc.metadata_source
     if ParentObject.exists?(oid: oid)
@@ -230,9 +300,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     ParentObject.create(oid: oid) do |parent_object|
       set_values_from_mets(parent_object, metadata_source)
     end
-    PreservicaIngest.create(parent_oid: oid, preservica_id: mets_doc.parent_uuid, batch_process_id: id, ingest_time: Time.current)
+    PreservicaIngest.create(parent_oid: oid, preservica_id: mets_doc.parent_uuid, batch_process_id: id, ingest_time: Time.current) unless mets_doc.parent_uuid.nil?
   end
 
+  # SETS VALUES FROM METS METADATA
   # rubocop:disable Metrics/AbcSize
   def set_values_from_mets(parent_object, metadata_source)
     parent_object.bib = mets_doc.bib
@@ -254,10 +325,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Metrics/AbcSize
 
+  # BATCH STATUSES: ------------------------------------------------------------------------------ #
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/MethodLength
   def determine_background_jobs
-    if csv.present?
+    if csv.present? && check_csv_size
       case batch_action
       when 'create parent objects'
         CreateNewParentJob.perform_later(self)
@@ -271,8 +343,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         ReassociateChildOidsJob.perform_later(self)
       when 'recreate child oid ptiffs'
         RecreateChildOidPtiffsJob.perform_later(self)
-      when 'update fulltext status'
-        UpdateFulltextStatusJob.perform_later(self)
       end
     elsif mets_xml.present?
       refresh_metadata_cloud_mets
@@ -281,6 +351,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/MethodLength
 
+  # SETS BATCH STATUS BASED ON CURRENT STATUS
   def batch_status
     current_status = status_hash
     if single_status(current_status)
@@ -294,6 +365,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  # SETS BATCH SINGLE STATUS
   def single_status(current_status)
     if current_status[:in_progress] / current_status[:total] == 1
       "Batch in progress - no failures"
@@ -304,10 +376,12 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  # GETS LIST OF CONNECTED STATUSES
   def connected_statuses
     @connected_statuses ||= batch_connections.where(connectable_type: "ParentObject").map(&:status)
   end
 
+  # COUNTS CURRENT STATUSES
   def status_hash
     @status_hash ||= {
       complete: connected_statuses.count("Complete"),
@@ -322,9 +396,5 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     child_objects.where(parent_object: parent_object).all? do |co|
       co.status_for_batch_process(self) == 'Complete'
     end
-  end
-
-  def current_ability
-    @current_ability ||= Ability.new(user)
   end
 end
