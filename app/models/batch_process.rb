@@ -114,14 +114,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     "#{file_name.delete_suffix('.csv')}_bp_#{id}.csv"
   end
 
-  def setup_for_background_jobs(object, metadata_source)
-    object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
-    object.current_batch_process = self
-    object.current_batch_connection = batch_connections.build(connectable: object)
-    return unless object.class == ChildObject
-
-    object.full_text = object.remote_ocr
-    object.current_batch_connection.save!
   # FETCHES USERS ABILITIES
   def current_ability
     @current_ability ||= Ability.new(user)
@@ -133,30 +125,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     connectable.current_batch_connection = batch_connections.find_or_create_by(connectable: connectable)
     connectable.current_batch_connection.save!
   end
-
-  # ASSIGN JOBS TO BATCH ACTIONS
-  # rubocop:disable Metrics/CyclomaticComplexity
-  def determine_background_jobs
-    if csv.present? && check_csv_size
-      case batch_action
-      when 'create parent objects'
-        CreateNewParentJob.perform_later(self)
-      when 'delete parent objects'
-        DeleteObjectsJob.perform_later(self)
-      when 'export child oids'
-        CreateChildOidCsvJob.perform_later(self)
-      when 'update parent objects'
-        UpdateParentObjectsJob.perform_later(self)
-      when 'reassociate child oids'
-        ReassociateChildOidsJob.perform_later(self)
-      when 'recreate child oid ptiffs'
-        RecreateChildOidPtiffsJob.perform_later(self)
-      end
-    elsif mets_xml.present?
-      refresh_metadata_cloud_mets
-    end
-  end
-  # rubocop:enable Metrics/CyclomaticComplexity
 
   # CREATE PARENT OBJECTS: ------------------------------------------------------------------------- #
 
@@ -237,7 +205,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
     object.current_batch_process = self
     object.current_batch_connection = batch_connections.build(connectable: object)
-    object.current_batch_connection.save! if object.class == ChildObject
+    return unless object.class == ChildObject
+
+    object.full_text = object.remote_ocr
+    object.current_batch_connection.save!
   end
 
   # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
@@ -288,17 +259,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       attach_item(child_object)
       child_object.processing_event("Ptiff Queued", "ptiff-queued")
     end
-  end
-
-  def configure_parent_object(child_object, parents)
-    parent_object = child_object.parent_object
-    unless parents.include? parent_object.oid
-      attach_item(parent_object)
-      parent_object.processing_event("Connection to batch created", "parent-connection-created")
-      parents.add parent_object.oid
-    end
-
-    parents
   end
 
   # CHECKS TO SEE IF USER HAS THE ABILITY TO UPDATE CHILD OBJECTS:
@@ -369,7 +329,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/MethodLength
   def determine_background_jobs
-    if csv.present?
+    if csv.present? && check_csv_size
       case batch_action
       when 'create parent objects'
         CreateNewParentJob.perform_later(self)
@@ -383,8 +343,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         ReassociateChildOidsJob.perform_later(self)
       when 'recreate child oid ptiffs'
         RecreateChildOidPtiffsJob.perform_later(self)
-      when 'update fulltext status'
-        UpdateFulltextStatusJob.perform_later(self)
       end
     elsif mets_xml.present?
       refresh_metadata_cloud_mets
@@ -438,9 +396,5 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     child_objects.where(parent_object: parent_object).all? do |co|
       co.status_for_batch_process(self) == 'Complete'
     end
-  end
-
-  def current_ability
-    @current_ability ||= Ability.new(user)
   end
 end
