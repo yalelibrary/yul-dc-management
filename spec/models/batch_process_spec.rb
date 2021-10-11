@@ -519,6 +519,13 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           events = IngestEvent.all.select { |event| event.status == 'Permission Denied' }
           expect(events.count).to eq(1)
         end
+
+        it "runs full text if that option was chosen" do
+          batch_process.file = csv_upload
+          batch_process.batch_action = 'update fulltext status'
+          expect(batch_process).to receive(:update_fulltext_status).once
+          batch_process.save
+        end
       end
     end
   end
