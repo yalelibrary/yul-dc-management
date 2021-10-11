@@ -523,7 +523,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         it "runs full text if that option was chosen" do
           batch_process.file = csv_upload
           batch_process.batch_action = 'update fulltext status'
+          # rubocop:disable RSpec/SubjectStub
           expect(batch_process).to receive(:update_fulltext_status).once
+          # rubocop:enable RSpec/SubjectStub
           batch_process.save
         end
       end
