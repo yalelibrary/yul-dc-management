@@ -81,7 +81,7 @@ module SolrIndexable
       dependentUris_ssim: json_to_index["dependentUris"],
       description_tesim: json_to_index["description"],
       digital_ssim: json_to_index["digital"],
-      digitization_note_tesi: digitization_note(json_to_index["digitization_note"], oid),
+      digitization_note_tesi: generate_digitization_note(json_to_index["digitization_note"], oid),
       edition_ssim: json_to_index["edition"],
       extent_ssim: json_to_index["extent"],
       extentOfDigitization_ssim: extent_of_digitization,
@@ -258,7 +258,7 @@ module SolrIndexable
     Digest::MD5.hexdigest oid.to_s
   end
 
-  def digitization_note(digitization_note, oid)
+  def generate_digitization_note(digitization_note, oid)
     parent_object = ParentObject.find_by(oid: oid)
     digitization_note.presence || parent_object&.digitization_note || nil
   end
