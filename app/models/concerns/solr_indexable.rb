@@ -260,7 +260,6 @@ module SolrIndexable
 
   def generate_pid(project_identifier, oid)
     parent_object = ParentObject.find_by(oid: oid)
-    # byebug
-    project_identifier.presence || parent_object.project_identifier || " "
+    project_identifier.presence || parent_object.project_identifier || "unspecified"
   end
 end
