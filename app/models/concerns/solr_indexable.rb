@@ -262,5 +262,4 @@ module SolrIndexable
     parent_object = ParentObject.find_by(oid: oid)
     digitization_note.presence || parent_object&.digitization_note || nil
   end
-
 end
