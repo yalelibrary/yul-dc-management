@@ -14,4 +14,9 @@ RSpec.describe SolrIndexable, type: :model do
     expect(solr_document[:languageCode_ssim]).to eq(['eng'])
     expect(solr_document[:language_ssim]).to eq(['English'])
   end
+
+  it "indexes the project identifier" do
+    solr_document = solr_indexable.to_solr('digitization_note' => ['digitization note'])
+    expect(solr_document[:digitization_note_tesi]).to eq(['digitization note'])
+  end
 end

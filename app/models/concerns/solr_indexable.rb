@@ -81,6 +81,7 @@ module SolrIndexable
       dependentUris_ssim: json_to_index["dependentUris"],
       description_tesim: json_to_index["description"],
       digital_ssim: json_to_index["digital"],
+      digitization_note_tesi: digitization_note(json_to_index["digitization_note"], oid),
       edition_ssim: json_to_index["edition"],
       extent_ssim: json_to_index["extent"],
       extentOfDigitization_ssim: extent_of_digitization,
@@ -106,7 +107,6 @@ module SolrIndexable
       orbisBarcode_ssi: barcode,
       orbisBibId_ssi: bib, # may change to orbisBibId
       preferredCitation_tesim: json_to_index["preferredCitation"],
-      project_identifier_tesi: json_to_index["project_identifier"],
       projection_tesim: json_to_index["projection"],
       public_bsi: true, # TEMPORARY, makes everything public
       publisher_tesim: json_to_index["publisher"],
@@ -257,4 +257,10 @@ module SolrIndexable
   def generate_hash
     Digest::MD5.hexdigest oid.to_s
   end
+
+  def digitization_note(digitization_note, oid)
+    parent_object = ParentObject.find_by(oid: oid)
+    digitization_note.presence || parent_object&.digitization_note || nil
+  end
+
 end
