@@ -41,7 +41,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
   context "with four child objects", :has_vcr do
     let(:user) { FactoryBot.create(:user) }
-    let(:parent_of_four) { FactoryBot.create(:parent_object, oid: 16_057_779, project_identifier: "Test") }
+    let(:parent_of_four) { FactoryBot.create(:parent_object, oid: 16_057_779) }
     let(:child_of_four) { FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_of_four) }
     let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
     around do |example|
@@ -66,12 +66,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_of_four).to receive(:needs_a_manifest?).exactly(4).times
         parent_of_four.setup_metadata_job
       end
-    end
-
-    it "indexes project_identifier" do
-      byebug
-      solr_document = parent_of_four.to_solr
-      expect(solr_document[:project_identifier_tesi]).to eq "Test"
     end
 
     # rubocop:enable RSpec/AnyInstance
