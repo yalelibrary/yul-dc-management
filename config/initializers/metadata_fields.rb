@@ -73,6 +73,12 @@ METADATA_FIELDS = {
       'projection_tesim'
     ]
   },
+  project_identifier: {
+    label: 'Project ID',
+    solr_fields: [
+      'project_identifier_tesi'
+    ]
+  },
   scale: {
     label: 'Scale',
     solr_fields: [

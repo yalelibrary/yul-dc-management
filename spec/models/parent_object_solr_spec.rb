@@ -49,6 +49,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       solr_document = parent_object.reload.to_solr
       expect(solr_document[:thumbnail_path_ss]).to eq "http://localhost:8182/iiif/2/1126257/full/!200,200/0/default.jpg"
     end
+
+    it "can index project identifier" do
+      parent_object.project_identifier = "Library"
+      parent_object.save!
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document[:project_identifier_tesi]).to eq "Library"
+    end
   end
 
   describe "changing the authoritative metadata source", solr: true do

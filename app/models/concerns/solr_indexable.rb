@@ -106,7 +106,7 @@ module SolrIndexable
       orbisBarcode_ssi: barcode,
       orbisBibId_ssi: bib, # may change to orbisBibId
       preferredCitation_tesim: json_to_index["preferredCitation"],
-      project_identifier_tesi: json_to_index["project_identifier"],
+      project_identifier_tesi: generate_pid(json_to_index["project_identifier"], oid),
       projection_tesim: json_to_index["projection"],
       public_bsi: true, # TEMPORARY, makes everything public
       publisher_tesim: json_to_index["publisher"],
@@ -256,5 +256,11 @@ module SolrIndexable
 
   def generate_hash
     Digest::MD5.hexdigest oid.to_s
+  end
+
+  def generate_pid(project_identifier, oid)
+    parent_object = ParentObject.find_by(oid: oid)
+    # byebug
+    project_identifier.presence || parent_object.project_identifier || " "
   end
 end
