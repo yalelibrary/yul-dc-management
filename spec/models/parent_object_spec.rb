@@ -41,7 +41,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
   context "with four child objects", :has_vcr do
     let(:user) { FactoryBot.create(:user) }
-    let(:parent_of_four) { FactoryBot.create(:parent_object, oid: 16_057_779) }
+    let(:parent_of_four) { FactoryBot.create(:parent_object, oid: 16_057_779, project_identifier: "Test") }
     let(:child_of_four) { FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_of_four) }
     let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
     around do |example|
@@ -67,6 +67,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_of_four.setup_metadata_job
       end
     end
+
+    it "indexes project_identifier" do
+      byebug
+      solr_document = parent_of_four.to_solr
+      expect(solr_document[:project_identifier_tesi]).to eq "Test"
+    end
+
     # rubocop:enable RSpec/AnyInstance
     context "with full_text? true" do
       around do |example|
@@ -451,7 +458,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
                          "/aspace/repositories/11/archival_objects/555042",
                          "/aspace/repositories/11/archival_objects/554841",
                          "/aspace/repositories/11/resources/1453"].to_set
-        puts(parent_object.reload.dependent_objects.map(&:dependent_uri))
         expect(parent_object.reload.dependent_objects.count).to eq expected_uris.count
         expect(parent_object.dependent_objects.all? { |dobj| dobj.metadata_source == 'aspace' }).to be_truthy
         uris = parent_object.dependent_objects.map(&:dependent_uri).to_set
