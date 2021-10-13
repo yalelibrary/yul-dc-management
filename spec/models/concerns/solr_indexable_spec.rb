@@ -19,4 +19,9 @@ RSpec.describe SolrIndexable, type: :model do
     solr_document = solr_indexable.to_solr('project_identifier' => ['project id'])
     expect(solr_document[:project_identifier_tesi]).to eq(['project id'])
   end
+
+  it "indexes the digitization note" do
+    solr_document = solr_indexable.to_solr('digitization_note' => ['digitization note'])
+    expect(solr_document[:digitization_note_tesi]).to eq(['digitization note'])
+  end
 end
