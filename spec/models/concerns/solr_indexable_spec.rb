@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe SolrIndexable, type: :model do
-  let(:solr_indexable) { ParentObject.new }
+  let(:solr_indexable) { ParentObject.new(admin_set: FactoryBot.create(:admin_set)) }
 
   before do
     allow(solr_indexable).to receive(:manifest_completed?).and_return(true)
