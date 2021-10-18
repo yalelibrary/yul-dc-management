@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:user) }
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
-  # parent object has four child objects
+  # parent object has two child objects
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
 
   before do
