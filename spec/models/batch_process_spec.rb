@@ -7,7 +7,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
   let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids_with_source.csv")) }
-  let(:delete_sample) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_sample_fixture_ids.csv")) }
+  let(:delete_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_parent_fixture_ids.csv")) }
   let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
   let(:xml_upload_two) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml')) }
   let(:aspace_xml_upload) { Rack::Test::UploadedFile.new("spec/fixtures/goobi/metadata/30000317_20201203_140947/good_aspace.xml") }
@@ -343,7 +343,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       context "creating a ParentObject from an import" do
         it "can create a parent_object from an array of oids" do
           expect do
-            batch_process.file = delete_sample
+            batch_process.file = delete_parent
             batch_process.save
             batch_process.create_new_parent_csv
           end.to change { ParentObject.count }.from(0).to(1)
@@ -364,14 +364,14 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         end
         it "can delete a parent_object from an array of oids" do
           expect do
-            batch_process.file = delete_sample
+            batch_process.file = delete_parent
             batch_process.save
             batch_process.create_new_parent_csv
           end.to change { ParentObject.count }.from(0).to(1)
 
           delete_batch_process = described_class.new(batch_action: "delete parent objects", user_id: user.id)
           expect do
-            delete_batch_process.file = delete_sample
+            delete_batch_process.file = delete_parent
             delete_batch_process.save
             delete_batch_process.delete_objects
           end.to change { ParentObject.count }.from(1).to(0)
