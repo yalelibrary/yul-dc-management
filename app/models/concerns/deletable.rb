@@ -48,7 +48,7 @@ module Deletable
       next unless action == 'delete'
       child_object = deletable_child_object(oid, index)
       next unless child_object
-      parents_needing_update << child_object.parent_object
+      parents_needing_update << child_object.parent_object.oid
       setup_for_background_jobs(child_object, metadata_source)
       child_object.destroy
       child_object.parent_object.processing_event("child #{child_object.oid} has been deleted", 'deleted')
