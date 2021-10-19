@@ -32,7 +32,7 @@ class ChildObject < ApplicationRecord
   end
 
   def finished_states
-    ['ptiff-ready-skipped', 'ptiff-ready', 'reassociate-complete']
+    ['deleted', 'ptiff-ready-skipped', 'ptiff-ready', 'reassociate-complete']
   end
 
   def check_for_size_and_file
