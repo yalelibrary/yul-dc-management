@@ -234,3 +234,19 @@ $( document ).on('turbolinks:load', function() {
 function select_all( select ) {
   $(select + ' option').prop('selected', true);
 }
+
+
+// This will refresh this data table every 30 seconds
+$( document ).on('turbolinks:load', function() {
+
+  const table = $('#batch-process-datatable').DataTable( {
+    retrieve: true,
+    ajax: {
+      "url": $('.is-datatable').data('source')
+    }
+  } );
+  setInterval( function () {
+    table.ajax.reload();
+  }, 30000 );
+  
+})
