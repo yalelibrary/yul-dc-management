@@ -206,6 +206,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         expect(solr_document[:title_tsim]).to eq ["Walt Whitman collection, 1842-1949"]
         expect(solr_document[:visibility_ssi]).to include "Public"
       end
+
+      it "can generate ancestor titles" do
+        solr_document = parent_object_with_public_visibility.reload.to_solr
+        expect(solr_document[:ancestorTitles_tesim]).to eq ["MyString"]
+        expect(solr_document[:ancestor_titles_hierarchy_ssim]).to eq ["MyString"]
+      end
     end
 
     context "with mocked items without a metadatacloud equivalent" do
