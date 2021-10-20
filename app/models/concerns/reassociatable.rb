@@ -114,7 +114,7 @@ module Reassociatable
   # rubocop:enable Metrics/LineLength
 
   def update_related_parent_objects(parents_needing_update)
-    return unless batch_action == "reassociate child oids"
+    return unless batch_action == "reassociate child oids" || batch_action == "delete child objects"
     parents_needing_update.uniq.each do |oid|
       po = ParentObject.find(oid)
       # TODO: What do we want to happen if the parent object no longer has any associated child objects?
