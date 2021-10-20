@@ -24,7 +24,7 @@ RSpec.describe SolrIndexable, type: :model do
     solr_document = solr_indexable.to_solr('digitization_note' => ['digitization note'])
     expect(solr_document[:digitization_note_tesi]).to eq(['digitization note'])
   end
-  
+
   it "indexes the ancestor titles" do
     solr_document = solr_indexable.to_solr('ancestorTitles' => ['ancestor title'])
     expect(solr_document[:ancestorTitles_tesim]).to eq(['ancestor title'])
