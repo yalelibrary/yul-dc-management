@@ -51,8 +51,8 @@ module SolrIndexable
       alternativeTitle_tesim: json_to_index["alternativeTitle"],
       alternativeTitleDisplay_tesim: json_to_index["alternativeTitleDisplay"],
       ancestorDisplayStrings_tesim: json_to_index["ancestorDisplayStrings"],
-      ancestorTitles_tesim: json_to_index["ancestorTitles"],
-      ancestor_titles_hierarchy_ssim: ancestor_structure(json_to_index["ancestorTitles"]),
+      ancestorTitles_tesim: generate_ancestor_title(json_to_index["ancestorTitles"]),
+      ancestor_titles_hierarchy_ssim: ancestor_structure(generate_ancestor_title(json_to_index["ancestorTitles"])),
       archivalSort_ssi: json_to_index["archivalSort"],
       archiveSpaceUri_ssi: aspace_uri,
       callNumber_ssim: json_to_index["callNumber"],
@@ -265,5 +265,10 @@ module SolrIndexable
 
   def generate_digitization_note(digitization_note)
     digitization_note.presence || self&.digitization_note || nil
+  end
+
+  # not ASpace records will use the repository value
+  def generate_ancestor_title(ancestor_title)
+    ancestor_title.presence || [self&.admin_set&.label] || nil
   end
 end
