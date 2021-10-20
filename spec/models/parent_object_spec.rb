@@ -326,10 +326,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.container_grouping).to eq "Box 3 | Folder 24"
       end
 
-      it "assigns the project id" do
-        expect(parent_object.project_identifier).to eq "67"
-      end
-
       it "pulls Voyager record from the MetadataCloud when the authoritative_metadata_source is changed to Voyager" do
         expect(parent_object.reload.authoritative_metadata_source_id).to eq ladybird
         parent_object.authoritative_metadata_source_id = voyager
