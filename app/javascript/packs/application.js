@@ -251,7 +251,7 @@ $( document ).on('turbolinks:load', function() {
   
 })
 
-// This will refresh batch process datatable every 30 seconds
+// This will refresh batch process detail table every 30 seconds
 $( document ).on('turbolinks:load', function() {
 
   if ( $('.detail-table').length ) {
