@@ -372,4 +372,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     # end
     # true
   end
+
+  def reload!
+    clear_changes_information
+  end
+
+  def rollback!
+    restore_attributes
+  end
 end
