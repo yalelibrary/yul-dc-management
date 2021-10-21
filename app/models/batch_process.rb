@@ -25,7 +25,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # LISTS AVAILABLE BATCH ACTIONS
   def self.batch_actions
-    ['create parent objects', 'update parent objects', 'delete parent objects', 'delete child objects','export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status']
+    ['create parent objects', 'update parent objects', 'delete parent objects', 'delete child objects',
+     'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status']
   end
 
   # LOGS BATCH PROCESSING MESSAGES AND SETS STATUSES
@@ -194,16 +195,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     else
       admin_set
     end
-  end
-
-  # SHARED BY DELETE, CREATE, AND UPDATE: --------------------------------------------------------- #
-
-  # ASSIGNS PARENT/CHILD OBJECT TO BATCH PROCESS FOR CREATE/DELETE/UPDATE
-  def setup_for_background_jobs(object, metadata_source)
-    object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
-    object.current_batch_process = self
-    object.current_batch_connection = batch_connections.build(connectable: object)
-    object.current_batch_connection.save! if object.class == ChildObject
   end
 
   # DELETE PARENT OBJECTS: ------------------------------------------------------------------------ #
@@ -375,34 +366,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Metrics/AbcSize
 
-  # BATCH STATUSES: ------------------------------------------------------------------------------ #
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/MethodLength
-  def determine_background_jobs
-    if csv.present? && check_csv_size
-      case batch_action
-      when 'create parent objects'
-        CreateNewParentJob.perform_later(self)
-      when 'delete parent objects'
-        DeleteObjectsJob.perform_later(self)
-      when 'export child oids'
-        CreateChildOidCsvJob.perform_later(self)
-      when 'update parent objects'
-        UpdateParentObjectsJob.perform_later(self)
-      when 'reassociate child oids'
-        ReassociateChildOidsJob.perform_later(self)
-      when 'recreate child oid ptiffs'
-        RecreateChildOidPtiffsJob.perform_later(self)
-      when 'update fulltext status'
-        update_fulltext_status
-      end
-    elsif mets_xml.present?
-      refresh_metadata_cloud_mets
-    end
-  end
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/MethodLength
-
   # SETS BATCH STATUS BASED ON CURRENT STATUS
   def batch_status
     current_status = status_hash
@@ -442,11 +405,5 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       unknown: connected_statuses.count("Unknown"),
       total: connected_statuses.count.to_f
     }
-  end
-
-  def are_all_children_complete?(parent_object)
-    child_objects.where(parent_object: parent_object).all? do |co|
-      co.status_for_batch_process(self) == 'Complete'
-    end
   end
 end
