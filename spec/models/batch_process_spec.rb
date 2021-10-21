@@ -7,7 +7,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
   let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids_with_source.csv")) }
-  let(:delete_sample) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_sample_fixture_ids.csv")) }
+  let(:delete_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_parent_fixture_ids.csv")) }
+  let(:delete_child) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_child_fixture_ids.csv")) }
   let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
   let(:xml_upload_two) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml')) }
   let(:aspace_xml_upload) { Rack::Test::UploadedFile.new("spec/fixtures/goobi/metadata/30000317_20201203_140947/good_aspace.xml") }
@@ -343,7 +344,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       context "creating a ParentObject from an import" do
         it "can create a parent_object from an array of oids" do
           expect do
-            batch_process.file = delete_sample
+            batch_process.file = delete_parent
             batch_process.save
             batch_process.create_new_parent_csv
           end.to change { ParentObject.count }.from(0).to(1)
@@ -364,17 +365,40 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         end
         it "can delete a parent_object from an array of oids" do
           expect do
-            batch_process.file = delete_sample
+            batch_process.file = csv_upload
             batch_process.save
             batch_process.create_new_parent_csv
           end.to change { ParentObject.count }.from(0).to(1)
 
           delete_batch_process = described_class.new(batch_action: "delete parent objects", user_id: user.id)
           expect do
-            delete_batch_process.file = delete_sample
+            delete_batch_process.file = delete_parent
             delete_batch_process.save
-            delete_batch_process.delete_objects
+            delete_batch_process.delete_parent_objects
           end.to change { ParentObject.count }.from(1).to(0)
+        end
+      end
+
+      context "deleting a ChildObject from an import" do
+        before do
+          stub_metadata_cloud("2005512")
+          allow(S3Service).to receive(:delete).and_return(true)
+        end
+        it "can delete a parent_object from an array of oids" do
+          expect do
+            batch_process.file = csv_upload
+            batch_process.save
+            batch_process.create_new_parent_csv
+          end.to change { ChildObject.count }.from(0).to(2)
+
+          delete_batch_process = described_class.new(batch_action: "delete child objects", user_id: user.id)
+          expect do
+            delete_batch_process.file = delete_child
+            delete_batch_process.save
+            delete_batch_process.delete_child_objects
+          end.to change { ChildObject.count }.from(2).to(1)
+          po = ParentObject.last
+          expect(po.child_object_count).to eq 1
         end
       end
 
@@ -517,6 +541,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.save
           expect(ParentObject.count).to eq(0)
           events = IngestEvent.all.select { |event| event.status == 'Permission Denied' }
+          expect(events.count).to eq(1)
           expect(events.count).to eq(1)
         end
 

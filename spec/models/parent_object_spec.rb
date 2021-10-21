@@ -67,6 +67,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_of_four.setup_metadata_job
       end
     end
+
     # rubocop:enable RSpec/AnyInstance
     context "with full_text? true" do
       around do |example|
