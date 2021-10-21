@@ -543,7 +543,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           events = IngestEvent.all.select { |event| event.status == 'Permission Denied' }
           expect(events.count).to eq(1)
         end
-
       end
     end
   end
