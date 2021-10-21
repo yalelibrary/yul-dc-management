@@ -745,5 +745,48 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       expect(parent_object.changed).to eq ["aspace_uri"]
       expect(parent_object.changes[:aspace_uri]).to eq ["/repositories/11/archival_objects/666049", "/repositories/11/archival_objects/12345"]
     end
+
+    it "metadata source changes can be tracked" do
+      # asapce changes can be tracked
+      parent_object.authoritative_metadata_source_id = ladybird
+      expect(parent_object.changed?).to eq true
+      expect(parent_object.authoritative_metadata_source_id_changed?).to eq true
+      expect(parent_object.authoritative_metadata_source_id_was).to eq aspace
+
+      # aspace changes can read new and old values
+      expect(parent_object.authoritative_metadata_source_id_change).to eq [aspace, ladybird]
+
+      # aspace changes will persist upon save
+      parent_object.save
+      expect(parent_object.changed?).to eq false
+
+      expect(parent_object.authoritative_metadata_source_id_changed?).to eq false
+
+      # Reset the changes
+      today = Time.zone.now.strftime("%Y-%m-%d")
+      expect(parent_object.previous_changes[:authoritative_metadata_source_id]).to eq [aspace, ladybird]
+      expect(parent_object.previous_changes[:updated_at][0].to_s[0...-13]).to eq today
+      expect(parent_object.previous_changes[:updated_at][1].to_s[0...-13]).to eq today
+      expect(parent_object.authoritative_metadata_source_id_previous_change).to eq [aspace, ladybird]
+      expect(parent_object.authoritative_metadata_source_id_previously_changed?).to eq true
+      parent_object.reload!
+      expect(parent_object.previous_changes[:authoritative_metadata_source_id]).to eq nil
+
+      # Rollbacks
+      parent_object.authoritative_metadata_source_id = voyager
+      parent_object.rollback!
+      expect(parent_object.authoritative_metadata_source_id).to eq ladybird
+      expect(parent_object.authoritative_metadata_source_id_changed?).to eq false
+
+      # Assigning the same value leaves the attribute unchanged:
+      parent_object.authoritative_metadata_source_id = ladybird
+      expect(parent_object.authoritative_metadata_source_id_changed?).to eq false
+      expect(parent_object.authoritative_metadata_source_id_change).to eq nil
+
+      # Which attributes have changed:
+      parent_object.authoritative_metadata_source_id = voyager
+      expect(parent_object.changed).to eq ["authoritative_metadata_source_id"]
+      expect(parent_object.changes[:authoritative_metadata_source_id]).to eq [ladybird, voyager]
+    end
   end
 end

@@ -9,6 +9,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Statable
   include PdfRepresentable
   include Delayable
+  include ActiveModel::Dirty
   has_many :dependent_objects
   has_many :child_objects, -> { order('"order" ASC, oid ASC') }, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
   has_many :batch_connections, as: :connectable
@@ -379,5 +380,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def rollback!
     restore_attributes
+  end
+
+  def representative_thumbnail_url=(val)
+    representative_thumbnail_url_will_change! unless val == @representative_thumbnail_url
+    @representative_thumbnail_url = val
   end
 end
