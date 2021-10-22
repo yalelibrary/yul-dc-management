@@ -17,6 +17,9 @@
   "extentOfDigitization": [
     "Complete work digitized."
   ],
+  "projectIdentifier": [
+    "67"
+  ],
   "date": [
     "n.d."
   ],
@@ -53,6 +56,7 @@
   ],
   "oid": 2005512,
   "collectionId": 1,
+
   "children": [
     {
       "jsonModelType": "LadybirdSolrRecord",

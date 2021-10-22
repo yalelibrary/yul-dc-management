@@ -51,8 +51,8 @@ module SolrIndexable
       alternativeTitle_tesim: json_to_index["alternativeTitle"],
       alternativeTitleDisplay_tesim: json_to_index["alternativeTitleDisplay"],
       ancestorDisplayStrings_tesim: json_to_index["ancestorDisplayStrings"],
-      ancestorTitles_tesim: json_to_index["ancestorTitles"],
-      ancestor_titles_hierarchy_ssim: ancestor_structure(json_to_index["ancestorTitles"]),
+      ancestorTitles_tesim: generate_ancestor_title(json_to_index["ancestorTitles"]),
+      ancestor_titles_hierarchy_ssim: ancestor_structure(generate_ancestor_title(json_to_index["ancestorTitles"])),
       archivalSort_ssi: json_to_index["archivalSort"],
       archiveSpaceUri_ssi: aspace_uri,
       callNumber_ssim: json_to_index["callNumber"],
@@ -81,6 +81,7 @@ module SolrIndexable
       dependentUris_ssim: json_to_index["dependentUris"],
       description_tesim: json_to_index["description"],
       digital_ssim: json_to_index["digital"],
+      digitization_note_tesi: generate_digitization_note(json_to_index["digitization_note"]),
       edition_ssim: json_to_index["edition"],
       extent_ssim: json_to_index["extent"],
       extentOfDigitization_ssim: extent_of_digitization,
@@ -106,15 +107,15 @@ module SolrIndexable
       orbisBarcode_ssi: barcode,
       orbisBibId_ssi: bib, # may change to orbisBibId
       preferredCitation_tesim: json_to_index["preferredCitation"],
-      project_identifier_tesi: json_to_index["project_identifier"],
+      project_identifier_tesi: generate_pid(json_to_index["project_identifier"]),
       projection_tesim: json_to_index["projection"],
       public_bsi: true, # TEMPORARY, makes everything public
       publisher_tesim: json_to_index["publisher"],
       publisher_ssim: json_to_index["publisher"],
       recordType_ssi: json_to_index["recordType"],
       relatedResourceOnline_ssim: json_to_index["relatedResourceOnline"],
-      repository_ssi: json_to_index["repository"],
-      repository_ssim: json_to_index["repository"],
+      repository_ssi: self&.admin_set&.label,
+      repository_ssim: self&.admin_set&.label,
       resourceType_ssim: json_to_index["itemType"],
       resourceType_tesim: json_to_index["itemType"],
       resourceVersionOnline_ssim: json_to_index["resourceVersionOnline"],
@@ -255,5 +256,18 @@ module SolrIndexable
 
   def generate_hash
     Digest::MD5.hexdigest oid.to_s
+  end
+
+  def generate_pid(project_identifier)
+    project_identifier.presence || self&.project_identifier || nil
+  end
+
+  def generate_digitization_note(digitization_note)
+    digitization_note.presence || self&.digitization_note || nil
+  end
+
+  # not ASpace records will use the repository value
+  def generate_ancestor_title(ancestor_title)
+    ancestor_title.presence || [self&.admin_set&.label] || nil
   end
 end
