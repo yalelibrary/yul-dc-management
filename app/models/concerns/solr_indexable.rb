@@ -178,7 +178,7 @@ module SolrIndexable
       subject_topic_tsim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
       title_tsim: json_to_index["title"], # replaced by title_tesim
       type_ssi: 'parent'
-    }.delete_if { |_k, v| !v.present? } # Delete nil and empty values
+    }.delete_if { |_k, v| v.blank? } # Delete nil, [], and empty string values
   end
 
   def to_solr_full_text(json_to_index = nil)
