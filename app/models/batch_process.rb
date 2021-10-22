@@ -25,7 +25,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # LISTS AVAILABLE BATCH ACTIONS
   def self.batch_actions
-    ['create parent objects', 'update parent objects', 'delete parent objects', 'delete child objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
+    ['create parent objects', 'update parent objects', 'delete parent objects', 'delete child objects',
+     'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status']
   end
 
   # LOGS BATCH PROCESSING MESSAGES AND SETS STATUSES
@@ -196,23 +197,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  # SHARED BY DELETE, CREATE, AND UPDATE: --------------------------------------------------------- #
-
-  # ASSIGNS PARENT/CHILD OBJECT TO BATCH PROCESS FOR CREATE/DELETE/UPDATE
-  def setup_for_background_jobs(object, metadata_source)
-    object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
-    object.current_batch_process = self
-    object.current_batch_connection = batch_connections.build(connectable: object)
-    object.current_batch_connection.save! if object.class == ChildObject
-  end
-
-  # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
-  def validate_metadata_source(metadata_source, index)
-    if metadata_source == 'aspace' || metadata_source == 'ils' || metadata_source == 'ladybird'
-      true
-    else
-      batch_processing_event("Skipping row [#{index + 2}] with unknown metadata source: #{metadata_source}.  Accepted values are 'ladybird', 'aspace', or 'ils'.", 'Skipped Row')
-      false
   # DELETE PARENT OBJECTS: ------------------------------------------------------------------------ #
 
   # DELETES PARENT OBJECTS FROM INGESTED CSV
@@ -252,10 +236,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
     object.current_batch_process = self
     object.current_batch_connection = batch_connections.build(connectable: object)
-    return unless object.class == ChildObject
-
-    object.full_text = object.remote_ocr
-    object.current_batch_connection.save!
+    object.current_batch_connection.save! if object.class == ChildObject
   end
 
   # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
@@ -288,9 +269,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
-
-  # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
   def recreate_child_oid_ptiffs
     parents = Set[]
     oids.each_with_index do |oid, index|
@@ -311,7 +289,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  # CHECKS TO SEE IF USER HAS THE ABILITY TO UPDATE CHILD OBJECTS:
   # SETS COMPLETE STATUS FOR RECREATE JOB
   def are_all_children_complete?(parent_object)
     child_objects.where(parent_object: parent_object).all? do |co|
@@ -383,8 +360,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Metrics/AbcSize
 
-  # BATCH STATUSES: ------------------------------------------------------------------------------ #
-
   # SETS BATCH STATUS BASED ON CURRENT STATUS
   def batch_status
     current_status = status_hash
@@ -424,11 +399,5 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       unknown: connected_statuses.count("Unknown"),
       total: connected_statuses.count.to_f
     }
-  end
-
-  def are_all_children_complete?(parent_object)
-    child_objects.where(parent_object: parent_object).all? do |co|
-      co.status_for_batch_process(self) == 'Complete'
-    end
   end
 end
