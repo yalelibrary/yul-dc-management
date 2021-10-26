@@ -25,7 +25,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # LISTS AVAILABLE BATCH ACTIONS
   def self.batch_actions
-    ['create parent objects', 'update parent objects', 'delete parent objects', 'delete child objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status']
+    ['create parent objects', 'update parent objects', 'delete parent objects', 'delete child objects',
+     'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status']
   end
 
   # LOGS BATCH PROCESSING MESSAGES AND SETS STATUSES
@@ -128,34 +129,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     connectable.current_batch_connection.save!
   end
 
-  # ASSIGN JOBS TO BATCH ACTIONS
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/MethodLength
-  def determine_background_jobs
-    if csv.present? && check_csv_size
-      case batch_action
-      when 'create parent objects'
-        CreateNewParentJob.perform_later(self)
-      when 'delete parent objects'
-        DeleteParentObjectsJob.perform_later(self)
-      when 'delete child objects'
-        DeleteChildObjectsJob.perform_later(self)
-      when 'export child oids'
-        CreateChildOidCsvJob.perform_later(self)
-      when 'update parent objects'
-        UpdateParentObjectsJob.perform_later(self)
-      when 'reassociate child oids'
-        ReassociateChildOidsJob.perform_later(self)
-      when 'recreate child oid ptiffs'
-        RecreateChildOidPtiffsJob.perform_later(self)
-      end
-    elsif mets_xml.present?
-      refresh_metadata_cloud_mets
-    end
-  end
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/MethodLength
-
   # CREATE PARENT OBJECTS: ------------------------------------------------------------------------- #
 
   # CREATES PARENT OBJECTS FROM INGESTED CSV
@@ -238,29 +211,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  # SHARED BY DELETE, CREATE, AND UPDATE: --------------------------------------------------------- #
-
-  # ASSIGNS PARENT/CHILD OBJECT TO BATCH PROCESS FOR CREATE/DELETE/UPDATE
-  def setup_for_background_jobs(object, metadata_source)
-    object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
-    object.current_batch_process = self
-    object.current_batch_connection = batch_connections.build(connectable: object)
-    return unless object.class == ChildObject
-
-    object.full_text = object.remote_ocr
-    object.current_batch_connection.save!
-  end
-
-  # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
-  def validate_metadata_source(metadata_source, index)
-    if metadata_source == 'aspace' || metadata_source == 'ils' || metadata_source == 'ladybird'
-      true
-    else
-      batch_processing_event("Skipping row [#{index + 2}] with unknown metadata source: #{metadata_source}.  Accepted values are 'ladybird', 'aspace', or 'ils'.", 'Skipped Row')
-      false
-    end
-  end
-
   # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
 
   # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
@@ -290,7 +240,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       false
     end
   end
-
   # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
 
   # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
