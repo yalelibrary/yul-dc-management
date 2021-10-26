@@ -235,6 +235,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.visibility = lb_record["itemPermission"].nil? ? "Private" : lb_record["itemPermission"]
     self.rights_statement = lb_record["rights"]&.join("\n")
     self.extent_of_digitization = normalize_extent_of_digitization
+    self.project_identifier = lb_record["projectId"]
     self.use_ladybird = false
   end
 

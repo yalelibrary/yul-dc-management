@@ -233,6 +233,20 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
   end
 
+  context do
+    let(:parent_object) { FactoryBot.create(:parent_object) }
+
+    it "will not overwrite the project id set after initial ingest" do
+      json = JSON.parse(File.open("spec/fixtures/ladybird/2004628.json").read)
+      parent_object.ladybird_json = json
+      expect(parent_object.project_identifier).to eq "8"
+      parent_object.project_identifier = 3
+      parent_object.save!
+      parent_object.ladybird_json = json
+      expect(parent_object.project_identifier).to eq "3"
+    end
+  end
+
   context "a newly created ParentObject with different visibilities" do
     let(:parent_object_nil) { described_class.create(visibility: nil) }
     it "nil does not validate" do
