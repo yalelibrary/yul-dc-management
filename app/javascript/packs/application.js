@@ -238,34 +238,9 @@ function select_all( select ) {
 
 // This will refresh batch process datatable every 30 seconds
 $( document ).on('turbolinks:load', function() {
-  // only if the batch is not complete
-  if ( $('.batch-process-details p').text().indexOf("Batch complete") >= 0 ) {
-  } else {
-    const table = $('#batch-process-datatable').DataTable( {
-      retrieve: true,
-      ajax: {
-        "url": $('.is-datatable').data('source')
-      }
-    } );
-    setInterval( function () {
-      table.ajax.reload();
-    }, 30000 );
-  }
-  
-})
-
-// This will refresh batch process detail table every 30 seconds
-$( document ).on('turbolinks:load', function() {
-  // only if the batch is not complete
-  if ( $('.batch-process-details p').text().indexOf("Complete") >= 0 ) {
-  } else {
-    if ( $('.detail-table').length ) {
-      function refresh_page () {
-        location.reload(true);
-      }
-      setInterval( function () {
-        refresh_page();
-      }, 30000 );
+    if ( dataTable && $(".is-datatable").data("refresh")) {
+      setInterval(function () {
+        dataTable.api().ajax.reload(null, false);
+      }, 30000  );
     }
-  }
 })
