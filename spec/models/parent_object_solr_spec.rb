@@ -40,6 +40,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       expect(solr_document.values).not_to include("")
     end
 
+    it "does not have empty arrays in to_solr hash" do
+      parent_object.bib = []
+      parent_object.save!
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document.values).not_to include([])
+    end
+
     it "will index the count of child objects" do
       solr_document = parent_object.reload.to_solr
       expect(solr_document[:imageCount_isi]).to eq 1
@@ -48,6 +55,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     it "can index a thumbnail path to Solr" do
       solr_document = parent_object.reload.to_solr
       expect(solr_document[:thumbnail_path_ss]).to eq "http://localhost:8182/iiif/2/1126257/full/!200,200/0/default.jpg"
+    end
+
+    it "can index project identifier" do
+      parent_object.project_identifier = "Library"
+      parent_object.save!
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document[:project_identifier_tesi]).to eq "Library"
     end
   end
 
@@ -157,7 +171,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
       it "can create a Solr document for a record, including visibility" do
         solr_document = parent_object_with_public_visibility.reload.to_solr
-        expect(solr_document[:repository_ssi]).to eq "Beinecke Rare Book and Manuscript Library (BRBL)"
+        expect(parent_object_with_public_visibility.admin_set.label).to eq "MyString"
+        expect(solr_document[:repository_ssim]).to eq "MyString"
+        expect(solr_document[:repository_ssi]).to eq "MyString"
         expect(solr_document[:archivalSort_ssi]).to include "00002.00000"
         expect(solr_document[:ancestorTitles_tesim]).to include "Oversize",
                                                                 "Abraham Lincoln collection (GEN MSS 257)",
@@ -196,6 +212,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         solr_document = parent_object_with_public_visibility.reload.to_solr
         expect(solr_document[:title_tsim]).to eq ["Walt Whitman collection, 1842-1949"]
         expect(solr_document[:visibility_ssi]).to include "Public"
+      end
+
+      it "can generate ancestor titles" do
+        solr_document = parent_object_with_public_visibility.reload.to_solr
+        expect(solr_document[:ancestorTitles_tesim]).to eq ["MyString"]
+        expect(solr_document[:ancestor_titles_hierarchy_ssim]).to eq ["MyString"]
       end
     end
 

@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:user) }
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
-  # parent object has four child objects
+  # parent object has two child objects
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
 
   before do
@@ -33,7 +33,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         # perform batch delete
         visit batch_processes_path
         select("Delete Parent Objects")
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/delete_sample_fixture_ids.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/delete_parent_fixture_ids.csv")
         click_button("Submit")
         expect(page).to have_content "Your job is queued for processing in the background"
 
@@ -72,7 +72,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
       it "does not permit parent to be deleted" do
         select("Delete Parent Objects")
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/delete_sample_fixture_ids.csv")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/delete_parent_fixture_ids.csv")
         click_button("Submit")
         expect(ParentObject.count).to eq 1
       end

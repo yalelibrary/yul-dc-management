@@ -168,6 +168,13 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       expect(response.body.to_s).to eq("\xEF\xBB\xBFoid,admin_set")
     end
 
+    it "downloads template for delete child objects" do
+      get download_template_batch_processes_url(batch_action: "delete child objects")
+      expect(response).to have_http_status(:success)
+      expect(response.content_type).to eq("text/csv; charset=utf-8")
+      expect(response.body.to_s).to eq("\xEF\xBB\xBFoid,admin_set,action")
+    end
+
     it "downloads templates for reassociate" do
       get download_template_batch_processes_url(batch_action: "reassociate child oids")
       expect(response).to have_http_status(:success)
