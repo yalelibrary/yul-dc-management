@@ -167,14 +167,18 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       ## should we move the file on S3? Probably not.  Image mount is s3 only in dev environments.
       ## S3Service.move_image(File.join(pairtree_path, "#{oid}.tif"), File.join(new_pairtree_path, "#{new_oid}.tif"))
     else
-      directory = format("%02d", pairtree_path.first)
-      parent_access_master_path = File.join(image_mount, directory, pairtree_path, "#{oid}.tif")
+      begin
+        directory = format("%02d", pairtree_path.first)
+        parent_access_master_path = File.join(image_mount, directory, pairtree_path, "#{oid}.tif")
 
-      new_directory = format("%02d", new_pairtree_path.first)
-      FileUtils.mkdir_p(File.join(image_mount, new_directory, new_pairtree_path))
-      child_access_master_path = File.join(image_mount, new_directory, new_pairtree_path, "#{new_oid}.tif")
+        new_directory = format("%02d", new_pairtree_path.first)
+        FileUtils.mkdir_p(File.join(image_mount, new_directory, new_pairtree_path))
+        child_access_master_path = File.join(image_mount, new_directory, new_pairtree_path, "#{new_oid}.tif")
 
-      FileUtils.move parent_access_master_path, child_access_master_path
+        FileUtils.move parent_access_master_path, child_access_master_path
+      rescue => e
+        Rails.logger.error("Unable to rename simple parent access master for parent_oid: #{oid} and new child: #{new_oid}: #{e}")
+      end
     end
 
     new_oid
