@@ -197,7 +197,7 @@ module SolrIndexable
 
         child_object_to_solr(child_object, child_object_full_text) unless child_object_full_text.nil?
       end
-      return full_text_array
+      return full_text_array.compact
     end
     nil
   end
