@@ -163,6 +163,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parsed_csv.each_with_index do |row, index|
       oid = row['oid']
       metadata_source = row['source']
+      simple_object = row['parent_model'] == 'simple'
       admin_set = editable_admin_set(row['admin_set'], oid, index)
       next unless admin_set
 
@@ -172,6 +173,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         batch_processing_event("Skipping row [#{index + 2}] with existing parent oid: #{oid}", 'Skipped Row')
         next
       end
+
+      parent_object.simple_object = simple_object
 
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.admin_set = admin_set
