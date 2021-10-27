@@ -130,6 +130,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def array_of_child_hashes
     return unless ladybird_json
     if parent_model == "simple"
+      raise "Can not import a Parent as simple if it has Children" if ladybird_json["children"].present?
       array_of_child_hashes_for_simple
     else
       ladybird_json["children"].map.with_index(1) do |child_record, index|
