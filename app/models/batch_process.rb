@@ -163,7 +163,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parsed_csv.each_with_index do |row, index|
       oid = row['oid']
       metadata_source = row['source']
-      model = row['parent_model'] | 'complex'
+      model = row['parent_model'] || 'complex'
       admin_set = editable_admin_set(row['admin_set'], oid, index)
       next unless admin_set
 
