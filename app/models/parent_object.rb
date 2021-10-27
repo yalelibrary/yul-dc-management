@@ -151,7 +151,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       oid: new_oid,
       original_oid: oid,
       label: ladybird_json['title'][0],
-      order: 0,
+      order: 1,
       parent_object_oid: oid
     }]
   end
