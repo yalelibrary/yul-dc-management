@@ -73,7 +73,6 @@ ActiveRecord::Schema.define(version: 2021_10_25_231147) do
     t.string "viewing_hint"
     t.datetime "ptiff_conversion_at"
     t.string "mets_access_master_path"
-    t.boolean "full_text", default: false
     t.integer "original_oid"
     t.index ["caption"], name: "index_child_objects_on_caption"
     t.index ["label"], name: "index_child_objects_on_label"
