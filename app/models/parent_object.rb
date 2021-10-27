@@ -94,7 +94,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     else
       return unless ladybird_json
-      return self.child_object_count = 0 if ladybird_json["children"].empty? && !simple_object
+      return self.child_object_count = 0 if ladybird_json["children"].empty? && parent_model != 'simple'
       upsert_child_objects(array_of_child_hashes)
     end
     self.child_object_count = child_objects.size
@@ -129,7 +129,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def array_of_child_hashes
     return unless ladybird_json
-    if simple_object
+    if parent_model == "simple"
       array_of_child_hashes_for_simple
     else
       ladybird_json["children"].map.with_index(1) do |child_record, index|

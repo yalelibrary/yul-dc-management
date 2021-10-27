@@ -162,7 +162,7 @@ ActiveRecord::Schema.define(version: 2021_10_25_231147) do
     t.string "call_number"
     t.string "container_grouping"
     t.string "project_identifier"
-    t.boolean "simple_object"
+    t.string "parent_model"
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true

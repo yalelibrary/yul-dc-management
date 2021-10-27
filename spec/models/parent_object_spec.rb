@@ -493,7 +493,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       context "imported as a simple  object, with parent oid access master tif in place" do
-        let(:parent_object) { described_class.create(oid: "2038133", simple_object: true, admin_set: FactoryBot.create(:admin_set)) }
+        let(:parent_object) { described_class.create(oid: "2038133", parent_model: 'simple', admin_set: FactoryBot.create(:admin_set)) }
 
         around do |example|
           FileUtils.mkdir_p("spec/fixtures/images/access_masters/03/33/20/38/13/")
