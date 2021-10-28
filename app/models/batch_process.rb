@@ -138,7 +138,9 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       when 'create parent objects'
         CreateNewParentJob.perform_later(self)
       when 'delete parent objects'
-        DeleteObjectsJob.perform_later(self)
+        DeleteParentObjectsJob.perform_later(self)
+      when 'delete child objects'
+        DeleteChildObjectsJob.perform_later(self)
       when 'export child oids'
         CreateChildOidCsvJob.perform_later(self)
       when 'update parent objects'
