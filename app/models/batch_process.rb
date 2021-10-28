@@ -129,6 +129,34 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     connectable.current_batch_connection.save!
   end
 
+  # ASSIGN JOBS TO BATCH ACTIONS
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+  def determine_background_jobs
+    if csv.present? && check_csv_size
+      case batch_action
+      when 'create parent objects'
+        CreateNewParentJob.perform_later(self)
+      when 'delete parent objects'
+        DeleteObjectsJob.perform_later(self)
+      when 'export child oids'
+        CreateChildOidCsvJob.perform_later(self)
+      when 'update parent objects'
+        UpdateParentObjectsJob.perform_later(self)
+      when 'reassociate child oids'
+        ReassociateChildOidsJob.perform_later(self)
+      when 'recreate child oid ptiffs'
+        RecreateChildOidPtiffsJob.perform_later(self)
+      when 'update fulltext status'
+        UpdateFulltextStatusJob.perform_later(self)
+      end
+    elsif mets_xml.present?
+      refresh_metadata_cloud_mets
+    end
+  end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
+
   # CREATE PARENT OBJECTS: ------------------------------------------------------------------------- #
 
   # CREATES PARENT OBJECTS FROM INGESTED CSV
@@ -306,34 +334,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/AbcSize
 
   # BATCH STATUSES: ------------------------------------------------------------------------------ #
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/MethodLength
-  def determine_background_jobs
-    if csv.present? && check_csv_size
-      case batch_action
-      when 'create parent objects'
-        CreateNewParentJob.perform_later(self)
-      when 'delete parent objects'
-        DeleteParentObjectsJob.perform_later(self)
-      when 'delete child objects'
-        DeleteChildObjectsJob.perform_later(self)
-      when 'export child oids'
-        CreateChildOidCsvJob.perform_later(self)
-      when 'update parent objects'
-        UpdateParentObjectsJob.perform_later(self)
-      when 'reassociate child oids'
-        ReassociateChildOidsJob.perform_later(self)
-      when 'recreate child oid ptiffs'
-        RecreateChildOidPtiffsJob.perform_later(self)
-      when 'update fulltext status'
-        UpdateFulltextStatusJob.perform_later(self)
-      end
-    elsif mets_xml.present?
-      refresh_metadata_cloud_mets
-    end
-  end
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/MethodLength
 
   # SETS BATCH STATUS BASED ON CURRENT STATUS
   def batch_status
