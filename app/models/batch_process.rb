@@ -241,6 +241,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       false
     end
   end
+
   # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
 
   # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
