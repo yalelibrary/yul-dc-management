@@ -170,7 +170,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
 
     describe "full text availability" do
       before do
-        stub_metadata_cloud("2004628")
+        stub_metadata_cloud("2004628", "ladybird")
         stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/fulltext/89/45/67/89/456789.txt")
         .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
       end

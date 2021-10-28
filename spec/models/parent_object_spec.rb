@@ -90,11 +90,20 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
       context "with full text not found in s3" do
         before do
+          allow(parent_of_four).to receive(:full_text?).and_call_original
           stub_full_text_not_found("16057782")
+          parent_of_four.default_fetch
+          recreate_children parent_of_four
         end
-        it "raises exception" do
-          allow(Rails.logger).to receive(:error) { :logger_mock }
-          expect { parent_of_four.to_solr_full_text }.to raise_error("Missing full text for child object: 16057782, for parent object: 16057779")
+        it "becomes a partial fulltext" do
+          solr_document = parent_of_four.to_solr_full_text.first
+          expect(solr_document).not_to be_nil
+          expect(solr_document[:has_fulltext_ssi].to_s).to eq "Partial"
+        end
+        it "does not include nil in child records" do
+          child_solr_documents = parent_of_four.to_solr_full_text.second
+          expect(child_solr_documents).not_to be_nil
+          expect(child_solr_documents).not_to include(nil)
         end
       end
 
@@ -469,6 +478,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
                          "/aspace/repositories/11/archival_objects/555042",
                          "/aspace/repositories/11/archival_objects/554841",
                          "/aspace/repositories/11/resources/1453"].to_set
+        puts(parent_object.reload.dependent_objects.map(&:dependent_uri))
         expect(parent_object.reload.dependent_objects.count).to eq expected_uris.count
         expect(parent_object.dependent_objects.all? { |dobj| dobj.metadata_source == 'aspace' }).to be_truthy
         uris = parent_object.dependent_objects.map(&:dependent_uri).to_set

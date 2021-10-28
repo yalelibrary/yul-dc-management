@@ -28,11 +28,11 @@ class ChildObject < ApplicationRecord
   end
 
   def start_states
-    ["ptiff-queued"]
+    ["ptiff-queued", "processing-queued"]
   end
 
   def finished_states
-    ['deleted', 'ptiff-ready-skipped', 'ptiff-ready', 'reassociate-complete']
+    ['deleted', 'ptiff-ready-skipped', 'ptiff-ready', 'reassociate-complete', 'update-complete']
   end
 
   def check_for_size_and_file
@@ -109,6 +109,17 @@ class ChildObject < ApplicationRecord
     @remote_ocr_path = File.join('fulltext', pairtree_path, "#{oid}.txt")
   end
 
+  def remote_ocr_exists?
+    return @remote_ocr_exists if @remote_ocr_exists
+    @remote_ocr_exists = ChildObject.remote_ocr_exists?(oid)
+  end
+
+  def self.remote_ocr_exists?(oid)
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    remote_ocr_path = File.join('fulltext', pairtree_path, "#{oid}.txt")
+    S3Service.full_text_exists?(remote_ocr_path)
+  end
+
   def pyramidal_tiff
     @pyramidal_tiff ||= PyramidalTiff.new(self)
   end
@@ -152,4 +163,4 @@ class ChildObject < ApplicationRecord
   def batch_connections_for(batch_process)
     batch_connections.where(batch_process: batch_process)
   end
-end
+end # rubocop:enable  Metrics/ClassLength

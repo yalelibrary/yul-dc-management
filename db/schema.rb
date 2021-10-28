@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2021_10_25_231147) do
     t.integer "original_oid"
     t.index ["caption"], name: "index_child_objects_on_caption"
     t.index ["label"], name: "index_child_objects_on_label"
+    t.boolean "full_text", default: false
     t.index ["oid"], name: "index_child_objects_on_oid", unique: true
     t.index ["order"], name: "index_child_objects_on_order"
     t.index ["original_oid"], name: "index_child_objects_on_original_oid"
