@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
+RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_admin_sets: true, undelayed: true do
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
@@ -513,18 +513,12 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         end
       end
 
-      describe "uploading a csv of oids to create parent objects" do
+      describe "uploading a csv of oids to create parent objects", undelayed: true do
         let(:admin_set) { AdminSet.first }
 
         before do
           stub_ptiffs_and_manifests
           stub_full_text('1032318')
-        end
-
-        around do |example|
-          perform_enqueued_jobs do
-            example.run
-          end
         end
 
         it "succeeds if the user is an editor on the admin set of the parent object" do
@@ -542,6 +536,13 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect(ParentObject.count).to eq(0)
           events = IngestEvent.all.select { |event| event.status == 'Permission Denied' }
           expect(events.count).to eq(1)
+        end
+
+        it "runs full text if that option was chosen" do
+          batch_process.file = csv_upload
+          batch_process.batch_action = 'update fulltext status'
+          expect(UpdateFulltextStatusJob).to receive(:perform_later).once
+          batch_process.save
         end
       end
     end

@@ -65,6 +65,15 @@
             <td>PDF Generated</td>
             <td class='pdf-generated'><%= 'NA' %></td>
           </tr>
+        <% elsif  @batch_process.batch_action == "update fulltext status"  %>
+          <tr>
+            <td>Processing Queued</td>
+            <td class='processing_queued_time'><%= @notes && @notes['processing-queued'] ? @notes['processing-queued'] : 'Pending' %></td>
+          </tr>
+          <tr>
+            <td>Processing Complete</td>
+            <td class='processing_queued_time'><%= @notes && @notes['update-complete'] ? @notes['update-complete'] : 'Pending' %></td>
+          </tr>
         <% else %>
           <tr>
             <td>Processing Queued</td>

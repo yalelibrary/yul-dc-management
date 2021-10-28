@@ -31,6 +31,11 @@
 </div>
 
 <table class='table table-responsive table-bordered table-striped detail-table'>
+<% if @batch_process.batch_action == "update fulltext status"  %>
+  <p>
+    <strong>Current Full Text Status:</strong> <%= @child_object.full_text ? "Available" : "Not Found" %>
+  </p>
+<% else %>
   <thead class='table-head'>
     <tr>
       <th scope='col'>Ingest step</th>
@@ -63,6 +68,7 @@
     <% end %>
   </tbody>
 </table>
+<% end %>
 
 <% if @failure %>
   <table class='table table-responsive table-bordered table-striped'>

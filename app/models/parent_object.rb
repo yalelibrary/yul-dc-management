@@ -97,12 +97,16 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       return self.child_object_count = 0 if ladybird_json["children"].empty? && parent_model != 'simple'
       upsert_child_objects(array_of_child_hashes)
     end
+
     self.child_object_count = child_objects.size
   end
 
   def upsert_child_objects(child_objects_hash)
     raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
-
+    child_objects_hash.map! do |co|
+      co[:full_text] = ChildObject.remote_ocr_exists?(co[:oid])
+      co
+    end
     ChildObject.insert_all(child_objects_hash)
   end
 
@@ -406,16 +410,36 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def full_text?
-    # Iterate over the child objects and check the bucket to see if the first children have a .txt file
     return false unless child_objects.any?
-    child_objects.first.remote_ocr
 
-    # This will iterate over all child objects to check if they have a .txt file in the ocr bucket
-    # If any do not have a .txt file, the loop will exit and return false
+    %w[Partial Yes].include? extent_of_full_text
+  end
 
-    # child_objects.each do |object|
-    #   return false unless object.remote_ocr
-    # end
-    # true
+  def extent_of_full_text
+    children_with_ft = false
+    children_without_ft = false
+
+    child_objects.each do |object|
+      if object.full_text
+        children_with_ft = true
+      else
+        children_without_ft = true
+      end
+
+      break if children_with_ft && children_without_ft
+    end
+
+    return "Partial" if children_with_ft && children_without_ft # if some children have full text and others dont
+    return "No" unless children_with_ft # if none of children have full_text
+    "Yes"
+  end
+
+  def update_fulltext_for_children
+    child_objects.each do |child_object|
+      child_object.processing_event("Child #{child_object.oid} is being processed", 'processing-queued')
+      child_object.full_text = ChildObject.remote_ocr_exists?(child_object.oid)
+      child_object.save!
+      child_object.processing_event("Child #{child_object.oid} has been updated: #{child_object.full_text ? 'YES' : 'NO'}", 'update-complete')
+    end
   end
 end

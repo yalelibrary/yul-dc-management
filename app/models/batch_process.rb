@@ -25,7 +25,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # LISTS AVAILABLE BATCH ACTIONS
   def self.batch_actions
-    ['create parent objects', 'update parent objects', 'delete parent objects', 'delete child objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs']
+    ['create parent objects', 'update parent objects', 'delete parent objects', 'delete child objects',
+     'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status']
   end
 
   # LOGS BATCH PROCESSING MESSAGES AND SETS STATUSES
@@ -148,6 +149,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         ReassociateChildOidsJob.perform_later(self)
       when 'recreate child oid ptiffs'
         RecreateChildOidPtiffsJob.perform_later(self)
+      when 'update fulltext status'
+        UpdateFulltextStatusJob.perform_later(self)
       end
     elsif mets_xml.present?
       refresh_metadata_cloud_mets
@@ -207,6 +210,26 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     object.current_batch_process = self
     object.current_batch_connection = batch_connections.build(connectable: object)
     object.current_batch_connection.save! if object.class == ChildObject
+  end
+
+  # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
+
+  # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
+  def update_fulltext_status
+    oids.each_with_index do |parent_oid, index|
+      parent_object = ParentObject.find_by(oid: parent_oid)
+      if parent_object.nil?
+        batch_processing_event("Skipping row [#{index + 2}] because unknown parent: #{parent_oid}", 'Unknown Parent')
+      elsif current_ability.can?(:update, parent_object)
+        attach_item(parent_object)
+        parent_object.child_objects.each { |co| attach_item(co) }
+        parent_object.processing_event("Parent #{parent_object.oid} is being processed", 'processing-queued')
+        parent_object.update_fulltext_for_children
+        parent_object.processing_event("Parent #{parent_object.oid} has been updated", 'update-complete')
+      else
+        batch_processing_event("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{parent_oid}", 'Permission Denied')
+      end
+    end
   end
 
   # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
