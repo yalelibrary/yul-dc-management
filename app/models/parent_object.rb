@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 # A parent object is the unit of discovery (what is represented as a single record in Blacklight).
 # It is synonymous with a parent oid in Ladybird.
+require 'fileutils'
 
 class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_paper_trail
@@ -93,7 +94,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     else
       return unless ladybird_json
-      return self.child_object_count = 0 if ladybird_json["children"].empty?
+      return self.child_object_count = 0 if ladybird_json["children"].empty? && parent_model != 'simple'
       upsert_child_objects(array_of_child_hashes)
     end
     self.child_object_count = child_objects.size
@@ -128,16 +129,60 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def array_of_child_hashes
     return unless ladybird_json
-    ladybird_json["children"].map.with_index(1) do |child_record, index|
-      {
-        oid: child_record["oid"],
-        # Ladybird has only one field for both order label (7v, etc.), and descriptive captions ("Mozart at the Keyboard")
-        # For the first iteration we will map this field to label
-        label: child_record["caption"],
-        order: index,
-        parent_object_oid: oid
-      }
+    if parent_model == "simple"
+      raise "Can not import a Parent as simple if it has Children" if ladybird_json["children"].present?
+      array_of_child_hashes_for_simple
+    else
+      ladybird_json["children"].map.with_index(1) do |child_record, index|
+        {
+          oid: child_record["oid"],
+          # Ladybird has only one field for both order label (7v, etc.), and descriptive captions ("Mozart at the Keyboard")
+          # For the first iteration we will map this field to label
+          label: child_record["caption"],
+          order: index,
+          parent_object_oid: oid
+        }
+      end
     end
+  end
+
+  def array_of_child_hashes_for_simple
+    new_oid = process_simple_object
+    [{
+      oid: new_oid,
+      original_oid: oid,
+      label: ladybird_json['title'][0],
+      order: 1,
+      parent_object_oid: oid
+    }]
+  end
+
+  # Mint new oid for child, rename access master tif to the new oid filename
+  def process_simple_object
+    image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
+    new_oid = OidMinterService.generate_oids(1)[0]
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
+    new_pairtree_path = Partridge::Pairtree.oid_to_pairtree(new_oid)
+
+    if image_mount == "s3"
+      ## should we move the file on S3? Probably not.  Image mount is s3 only in dev environments.
+      ## S3Service.move_image(File.join(pairtree_path, "#{oid}.tif"), File.join(new_pairtree_path, "#{new_oid}.tif"))
+    else
+      begin
+        directory = format("%02d", pairtree_path.first)
+        parent_access_master_path = File.join(image_mount, directory, pairtree_path, "#{oid}.tif")
+
+        new_directory = format("%02d", new_pairtree_path.first)
+        FileUtils.mkdir_p(File.join(image_mount, new_directory, new_pairtree_path))
+        child_access_master_path = File.join(image_mount, new_directory, new_pairtree_path, "#{new_oid}.tif")
+
+        FileUtils.move parent_access_master_path, child_access_master_path
+      rescue => e
+        Rails.logger.error("Unable to rename simple parent access master for parent_oid: #{oid} and new child: #{new_oid}: #{e}")
+      end
+    end
+
+    new_oid
   end
 
   def assign_dependent_objects(json = authoritative_json)

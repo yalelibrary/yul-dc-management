@@ -22,6 +22,7 @@ class ChildObjectDatatable < AjaxDatatablesRails::ActiveRecord
       height: { source: 'ChildObject.height' },
       order: { source: 'ChildObject.order' },
       parent_object: { source: 'ChildObject.parent_object_oid' },
+      original_oid: { source: 'ChildObject.original_oid' },
       actions: { source: 'ChildObject.oid' }
     }
   end
@@ -37,6 +38,7 @@ class ChildObjectDatatable < AjaxDatatablesRails::ActiveRecord
         height: child_object.height,
         order: child_object.order,
         parent_object: child_object.parent_object_oid,
+        original_oid: child_object.original_oid,
         actions: actions(child_object).html_safe,
         DT_RowId: child_object.oid
       }

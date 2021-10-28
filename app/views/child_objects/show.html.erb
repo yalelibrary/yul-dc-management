@@ -50,6 +50,13 @@
   <%= image_tag @child_object.thumbnail_url %>
 </p>
 
+<% if @child_object.original_oid %>
+<p>
+  <strong>Original OID:</strong><br />
+  <%= @child_object.original_oid %>
+</p>
+<% end %>
+
 
 <% if can? :edit, @child_object %>
   <%= link_to 'Edit', edit_child_object_path(@child_object) %> |

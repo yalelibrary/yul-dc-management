@@ -1,0 +1,102 @@
+{
+  "jsonModelType": "LadybirdSolrRecord",
+  "source": "ladybird",
+  "recordType": "oid",
+  "uri": "/ladybird/oid/2038133",
+  "callNumber": "YCAL MSS 175",
+  "containerGrouping": "Folder 92",
+  "folder": "Folder 92",
+  "sourceCreator": "Jordan, Viola Baxter, 1887-1973",
+  "sourceTitle": "Viola Baxter Jordan Papers",
+  "sourceDate": "1905-1951",
+  "creator": [
+    "Rachewiltz, Mary de"
+  ],
+  "title": [
+    "[Autographed letter signed], 1946 March 29, Gais, Brunico, Bolzano, [Italy] [to] Mrs. Jordan"
+  ],
+  "creationPlace": [
+    "Gais, Brunico, Bolzano, [Italy]"
+  ],
+  "date": [
+    "1946 March 29"
+  ],
+  "extent": [
+    "1 l.",
+    "29 cm."
+  ],
+  "language": [
+    "English"
+  ],
+  "description": [
+    "Preservation photocopy available in library: original material restricted",
+    "Signed: \"Mary Rudge\"",
+    "Verso blank"
+  ],
+  "subjectName": [
+    "Jordan, Viola Baxter, 1887-1973",
+    "Pound, Ezra, 1885-1972",
+    "Rachewiltz, Mary de",
+    "Rudge, Olga"
+  ],
+  "subjectTopic": [
+    "Coffee",
+    "Imprisonment",
+    "World War, 1939-1945--Food supply",
+    "World War, 1939-1945--Personal narratives"
+  ],
+  "genre": [
+    "Autographs",
+    "Correspondence"
+  ],
+  "format": [
+    "text"
+  ],
+  "partOf": "Beinecke Library",
+  "rights": [
+    "The use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
+  ],
+  "orbisBibId": "6296696",
+  "findingAid": [
+    "http://hdl.handle.net/10079/fa/beinecke.jordan"
+  ],
+  "itemPermission": "Public",
+  "dateStructured": [
+    "1946"
+  ],
+  "intStartYear": "1946",
+  "subjectEra": "World War, 1939-1945--Personal narratives",
+  "contributor": [
+    "Jordan, Viola Baxter, 1887-1973",
+    "Pound, Ezra, 1885-1972",
+    "Rachewiltz, Mary de",
+    "Rudge, Olga"
+  ],
+  "repository": "Beinecke Library",
+  "subjectTitle": "World War, 1939-1945--Personal narratives",
+  "subjectGeographic": [
+    "Italy"
+  ],
+  "subjectTitleDisplay": [
+    "Coffee",
+    "Imprisonment",
+    "World War, 1939-1945--Food supply",
+    "World War, 1939-1945--Personal narratives"
+  ],
+  "creatorDisplay": [
+    "Rachewiltz, Mary de"
+  ],
+  "contributorDisplay": [
+    "Jordan, Viola Baxter, 1887-1973",
+    "Pound, Ezra, 1885-1972",
+    "Rachewiltz, Mary de",
+    "Rudge, Olga"
+  ],
+  "dependentUris": [
+    "/ladybird/oid/2038133"
+  ],
+  "oid": 2038133,
+  "collectionId": 1,
+  "projectId": 3,
+  "children": []
+}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_28_204548) do
+ActiveRecord::Schema.define(version: 2021_10_25_231147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,10 +73,12 @@ ActiveRecord::Schema.define(version: 2021_09_28_204548) do
     t.string "viewing_hint"
     t.datetime "ptiff_conversion_at"
     t.string "mets_access_master_path"
+    t.integer "original_oid"
     t.index ["caption"], name: "index_child_objects_on_caption"
     t.index ["label"], name: "index_child_objects_on_label"
     t.index ["oid"], name: "index_child_objects_on_oid", unique: true
     t.index ["order"], name: "index_child_objects_on_order"
+    t.index ["original_oid"], name: "index_child_objects_on_original_oid"
     t.index ["parent_object_oid"], name: "index_child_objects_on_parent_object_oid"
   end
 
@@ -159,6 +161,7 @@ ActiveRecord::Schema.define(version: 2021_09_28_204548) do
     t.string "call_number"
     t.string "container_grouping"
     t.string "project_identifier"
+    t.string "parent_model"
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true

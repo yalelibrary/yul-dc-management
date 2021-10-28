@@ -27,6 +27,7 @@ RSpec.describe ChildObjectDatatable, type: :datatable, prep_metadata_sources: tr
       height: 1,
       order: 1,
       parent_object: 2_004_628,
+      original_oid: nil,
       actions:
       "<a data-confirm=\"Are you sure?\" rel=\"nofollow\" data-method=\"delete\" href=\"/management/child_objects/10736292\"><i class=\"fa fa-trash\"></i></a>",
       DT_RowId: 10_736_292
