@@ -55,6 +55,12 @@ METADATA_FIELDS = {
       'description_tesim'
     ]
   },
+  digitization_note: {
+    label: 'Digitization Note',
+    solr_fields: [
+      'digitization_note_tesi'
+    ]
+  },
   extent: {
     label: 'Extent',
     solr_fields: [
@@ -71,6 +77,12 @@ METADATA_FIELDS = {
     label: 'Projection',
     solr_fields: [
       'projection_tesim'
+    ]
+  },
+  project_identifier: {
+    label: 'Project ID',
+    solr_fields: [
+      'project_identifier_tesi'
     ]
   },
   scale: {

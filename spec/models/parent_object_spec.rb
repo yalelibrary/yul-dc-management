@@ -67,6 +67,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_of_four.setup_metadata_job
       end
     end
+
     # rubocop:enable RSpec/AnyInstance
     context "with full_text? true" do
       around do |example|
@@ -238,6 +239,20 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       parent_object.save!
       expect(parent_object.from_ladybird_for_the_first_time?).to eq false
       expect(parent_object.from_upstream_for_the_first_time?).to eq false
+    end
+  end
+
+  context do
+    let(:parent_object) { FactoryBot.create(:parent_object) }
+
+    it "will not overwrite the project id set after initial ingest" do
+      json = JSON.parse(File.open("spec/fixtures/ladybird/2004628.json").read)
+      parent_object.ladybird_json = json
+      expect(parent_object.project_identifier).to eq "8"
+      parent_object.project_identifier = 3
+      parent_object.save!
+      parent_object.ladybird_json = json
+      expect(parent_object.project_identifier).to eq "3"
     end
   end
 

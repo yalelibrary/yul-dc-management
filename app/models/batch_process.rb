@@ -3,6 +3,8 @@
 class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # CSV EXPORT CHILD OIDS:
   include CsvExportable
+  # DELETE PARENT / CHILD OBJECTS:
+  include Deletable
   # REASSOCIATE CHILD OIDS:
   include Reassociatable
   include Statable
@@ -23,7 +25,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # LISTS AVAILABLE BATCH ACTIONS
   def self.batch_actions
-    ['create parent objects', 'update parent objects', 'delete parent objects', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status']
+    ['create parent objects', 'update parent objects', 'delete parent objects', 'delete child objects',
+     'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status']
   end
 
   # LOGS BATCH PROCESSING MESSAGES AND SETS STATUSES
@@ -166,38 +169,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  # DELETE PARENT OBJECTS: ------------------------------------------------------------------------ #
-
-  # DELETES PARENT OBJECTS FROM INGESTED CSV
-  def delete_objects
-    parsed_csv.each_with_index do |row, index|
-      oid = row['oid']
-      action = row['action']
-      metadata_source = row['source']
-      batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}, action value for oid must be 'delete' to complete deletion.", 'Invalid Vocab') if action != "delete"
-      next unless action == 'delete'
-      parent_object = deletable_parent_object(oid, index)
-      next unless parent_object
-      setup_for_background_jobs(parent_object, metadata_source)
-      parent_object.destroy
-      parent_object.processing_event("Parent #{parent_object.oid} has been deleted", 'deleted')
-    end
-  end
-
-  # CHECKS TO SEE IF USER HAS ABILITY TO DELETE OBJECTS:
-  def deletable_parent_object(oid, index)
-    parent_object = ParentObject.find_by(oid: oid)
-    if parent_object.blank?
-      batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid} because it was not found in local database", 'Skipped Row')
-      return false
-    elsif !current_ability.can?(:destroy, parent_object)
-      batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}, user does not have permission to delete.", 'Permission Denied')
-      return false
-    else
-      parent_object
-    end
-  end
-
   # SHARED BY DELETE, CREATE, AND UPDATE: --------------------------------------------------------- #
 
   # ASSIGNS PARENT/CHILD OBJECT TO BATCH PROCESS FOR CREATE/DELETE/UPDATE
@@ -205,20 +176,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
     object.current_batch_process = self
     object.current_batch_connection = batch_connections.build(connectable: object)
-    return unless object.class == ChildObject
-
-    object.full_text = object.remote_ocr
-    object.current_batch_connection.save!
-  end
-
-  # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
-  def validate_metadata_source(metadata_source, index)
-    if metadata_source == 'aspace' || metadata_source == 'ils' || metadata_source == 'ladybird'
-      true
-    else
-      batch_processing_event("Skipping row [#{index + 2}] with unknown metadata source: #{metadata_source}.  Accepted values are 'ladybird', 'aspace', or 'ils'.", 'Skipped Row')
-      false
-    end
+    object.current_batch_connection.save! if object.class == ChildObject
   end
 
   # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
@@ -241,6 +199,18 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
+  def validate_metadata_source(metadata_source, index)
+    if metadata_source == 'aspace' || metadata_source == 'ils' || metadata_source == 'ladybird'
+      true
+    else
+      batch_processing_event("Skipping row [#{index + 2}] with unknown metadata source: #{metadata_source}.  Accepted values are 'ladybird', 'aspace', or 'ils'.", 'Skipped Row')
+      false
+    end
+  end
+  # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
+
+  # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
   def recreate_child_oid_ptiffs
     parents = Set[]
     oids.each_with_index do |oid, index|
@@ -258,6 +228,13 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       GeneratePtiffJob.perform_later(child_object, self)
       attach_item(child_object)
       child_object.processing_event("Ptiff Queued", "ptiff-queued")
+    end
+  end
+
+  # SETS COMPLETE STATUS FOR RECREATE JOB
+  def are_all_children_complete?(parent_object)
+    child_objects.where(parent_object: parent_object).all? do |co|
+      co.status_for_batch_process(self) == 'Complete'
     end
   end
 
@@ -334,7 +311,9 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       when 'create parent objects'
         CreateNewParentJob.perform_later(self)
       when 'delete parent objects'
-        DeleteObjectsJob.perform_later(self)
+        DeleteParentObjectsJob.perform_later(self)
+      when 'delete child objects'
+        DeleteChildObjectsJob.perform_later(self)
       when 'export child oids'
         CreateChildOidCsvJob.perform_later(self)
       when 'update parent objects'
@@ -392,11 +371,5 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       unknown: connected_statuses.count("Unknown"),
       total: connected_statuses.count.to_f
     }
-  end
-
-  def are_all_children_complete?(parent_object)
-    child_objects.where(parent_object: parent_object).all? do |co|
-      co.status_for_batch_process(self) == 'Complete'
-    end
   end
 end

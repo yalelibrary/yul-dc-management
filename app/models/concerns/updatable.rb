@@ -35,7 +35,7 @@ module Updatable
   end
 
   def validate_field(parent_object, row)
-    fields = ['aspace_uri', 'barcode', 'bib', 'digitization_note', 'holding', 'item', 'rights_statement']
+    fields = ['aspace_uri', 'barcode', 'bib', 'digitization_note', 'holding', 'item', 'project_identifier', 'rights_statement']
     validation_fields = { "display_layout" => 'viewing_hints', "extent_of_digitization" => 'extent_of_digitizations', "viewing_direction" => 'viewing_directions', "visibility" => 'visibilities' }
 
     processed_fields = {}

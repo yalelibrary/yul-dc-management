@@ -35,6 +35,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(p_o.holding).to be_nil
         expect(p_o.item).to be_nil
         expect(p_o.barcode).to eq("39002093768050")
+        expect(p_o.project_identifier).to be_nil
 
         # perform batch update
         visit batch_processes_path
@@ -48,6 +49,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(p_o_a.holding).to eq("temporary")
         expect(p_o_a.item).to eq("reel")
         expect(p_o_a.barcode).to eq("39002102340669")
+        expect(p_o_a.project_identifier).to eq("Beinecke")
 
         visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/2005512"
         expect(page).to have_content "Status Complete"
@@ -69,6 +71,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(p_o.holding).to be_nil
         expect(p_o.item).to be_nil
         expect(p_o.barcode).to eq("39002093768050")
+        # column not present - should not update value
+        expect(p_o.project_identifier).to be_nil
 
         # perform batch update
         visit batch_processes_path
@@ -81,6 +85,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(p_o.holding).to be_nil
         expect(p_o.item).to be_nil
         expect(p_o.barcode).to eq("39002093768050")
+        expect(p_o.project_identifier).to be_nil
 
         visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/2005512"
         expect(page).to have_content "Status Complete"
