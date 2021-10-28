@@ -521,12 +521,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           stub_full_text('1032318')
         end
 
-        around do |example|
-          perform_enqueued_jobs do
-            example.run
-          end
-        end
-
         it "succeeds if the user is an editor on the admin set of the parent object" do
           batch_process.file = csv_upload
           batch_process.save
