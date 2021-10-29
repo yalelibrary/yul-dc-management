@@ -42,7 +42,7 @@ RSpec.describe 'Users', type: :system, js: true do
       ordered_users_in_datatable = []
 
       expect(page).to have_content(user.uid) # add expect to make sure page is loaded before page.all()
-      fill_in("NetId", with: "m")
+      fill_in("NetID", with: "m")
       expect(page).not_to have_content(active_users_without_name_starting_with_m[0]) if active_users_without_name_starting_with_m.count > 0
       expect(page).to have_content(active_sorted_users_name_starting_with_m[0]) if active_sorted_users_name_starting_with_m.count > 0
       page.all('#users-datatable tbody tr').each do |tr|

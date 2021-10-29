@@ -121,7 +121,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       it "can see number of child objects on the index page" do
         click_on("Create Parent object")
         click_on("Back")
-        expect(page).to have_content "Child object count"
+        expect(page).to have_content "Child Object Count"
       end
     end
 
