@@ -31,6 +31,7 @@ class SetupMetadataJob < ApplicationJob
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
   def setup_child_object_jobs(parent_object, current_batch_process)
     parent_object.create_child_records if parent_object.from_upstream_for_the_first_time?
     parent_object.save!
@@ -47,8 +48,11 @@ class SetupMetadataJob < ApplicationJob
         ptiff_jobs_queued = true
       end
     end
-    GenerateManifestJob.perform_later(parent_object, parent_object.current_batch_process, parent_object.current_batch_connection) if parent_object.needs_a_manifest? && !ptiff_jobs_queued
+    unless ptiff_jobs_queued
+      GenerateManifestJob.perform_later(parent_object, parent_object.current_batch_process, parent_object.current_batch_connection) if parent_object.needs_a_manifest?
+    end
   rescue => child_create_error
     parent_object.processing_event(child_create_error.message, "failed")
   end
+  # rubocop:enable Metrics/MethodLength
 end
