@@ -2,7 +2,7 @@
 
 class ReoccurringJobsController < ApplicationController
   def index
-    @reoccuring_jobs = ActivityStreamLog.all
+    @reoccurring_jobs = ActivityStreamLog.all
     respond_to do |format|
       format.html
       format.json { render json: ReoccurringJobDatatable.new(params, view_context: view_context) }
@@ -14,7 +14,7 @@ class ReoccurringJobsController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.json { render json: ReoccuringJobDatatable.new(params, view_context: view_context) }
+      format.json { render json: ReoccurringJobDatatable.new(params, view_context: view_context) }
     end
   end
 

@@ -17,7 +17,7 @@
 
 <div class='row datatable'>
   <div class='col overflow-auto'>
-    <table id='reoccuring-job-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= reoccuring_jobs_path(format: :json) %>' data-refresh="true" >
+    <table id='reoccurring-job-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= reoccurring_jobs_path(format: :json) %>' data-refresh="true" >
       <thead class='table-head'>
         <tr>
           <th scope='col'>Process ID</th>
@@ -35,6 +35,6 @@
   </div>
 </div>
 
-<div id='reoccuring-job-data' class='d-none datatable-data'>
+<div id='reoccurring-job-data' class='d-none datatable-data'>
   <%= ReoccurringJobDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], searchable: value[:searchable], options: value[:options]} }.to_json %>
 </div>
