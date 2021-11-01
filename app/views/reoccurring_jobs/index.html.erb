@@ -1,0 +1,40 @@
+<%= render partial: '/management/flash_messages' %>
+<div class='row datatable-heading'>
+  <div class='col'>
+    <h1>Reoccurring Jobs</h1>
+    <%
+=begin%>
+ <%= render 'form' %> 
+<%
+=end%>
+  </div>
+  <div class='col'>
+    <div class='float-right button-list'>
+      <%= button_to 'Trigger Job Manually', trigger_mets_scan_batch_processes_path, method: 'post', class: 'btn button secondary-button', data:{confirm: 'Are you sure you start a manual update outside of the regular schedule?'} %>
+    </div>
+  </div>
+</div>
+
+<div class='row datatable'>
+  <div class='col overflow-auto'>
+    <table id='reoccuring-job-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= reoccuring_jobs_path(format: :json) %>' data-refresh="true" >
+      <thead class='table-head'>
+        <tr>
+          <th scope='col'>Process ID</th>
+          <th scope='col'>Run Time</th>
+          <th scope='col'>Items</th>
+          <th scope='col'>Status</th>
+          <th scope='col'>Created At</th>
+          <th scope='col'>Updated At</th>
+          <th scope='col'>Retrieved Records</th>
+        </tr>
+      </thead>
+      <tbody class='datatable-body'>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id='reoccuring-job-data' class='d-none datatable-data'>
+  <%= ReoccurringJobDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], searchable: value[:searchable], options: value[:options]} }.to_json %>
+</div>
