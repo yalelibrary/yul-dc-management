@@ -46,6 +46,7 @@ RSpec.describe "Batch Process Parent detail page", type: :system, prep_metadata_
       stub_metadata_cloud("2034600")
       stub_metadata_cloud("16057779")
       stub_metadata_cloud("15234629")
+      allow(S3Service).to receive(:s3_exists?).and_return(true)
       stub_ptiffs_and_manifests
       login_as user
       brbl = AdminSet.find_by_key('brbl')
