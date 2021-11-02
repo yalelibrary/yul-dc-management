@@ -61,11 +61,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
     # rubocop:disable RSpec/AnyInstance
     it "receives a check for whether it's ready for manifests 4 times, one for each child" do
-      parent_of_four.child_objects.each do |child_object|
-        stub_full_text(child_object.oid)
-      end
-      allow_any_instance_of(ChildObject).to receive(:parent_object).and_return(parent_of_four)
       VCR.use_cassette("process csv") do
+        allow(S3Service).to receive(:s3_exists?).and_return(false)
+        parent_of_four.child_objects.each do |child_object|
+          stub_full_text(child_object.oid)
+        end
+        allow_any_instance_of(ChildObject).to receive(:parent_object).and_return(parent_of_four)
         expect(parent_of_four).to receive(:needs_a_manifest?).exactly(4).times
         parent_of_four.setup_metadata_job
       end

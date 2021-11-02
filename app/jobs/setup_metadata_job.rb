@@ -31,16 +31,27 @@ class SetupMetadataJob < ApplicationJob
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
   def setup_child_object_jobs(parent_object, current_batch_process)
     parent_object.create_child_records if parent_object.from_upstream_for_the_first_time?
     parent_object.save!
     parent_object.processing_event("Child object records have been created", "child-records-created")
+    ptiff_jobs_queued = false
     parent_object.child_objects.each do |child|
       parent_object.current_batch_process&.setup_for_background_jobs(child, nil)
-      GeneratePtiffJob.perform_later(child, current_batch_process)
-      child.processing_event("Ptiff Queued", "ptiff-queued")
+      if child.pyramidal_tiff.height_and_width? && S3Service.s3_exists?(child.remote_ptiff_path)
+        child.processing_event("PTIFF exists on S3, not converting: #{child.oid}", 'ptiff-ready-skipped')
+      else
+        GeneratePtiffJob.perform_later(child, current_batch_process)
+        child.processing_event("Ptiff Queued", "ptiff-queued")
+        ptiff_jobs_queued = true
+      end
+    end
+    unless ptiff_jobs_queued
+      GenerateManifestJob.perform_later(parent_object, parent_object.current_batch_process, parent_object.current_batch_connection) if parent_object.needs_a_manifest?
     end
   rescue => child_create_error
     parent_object.processing_event(child_create_error.message, "failed")
   end
+  # rubocop:enable Metrics/MethodLength
 end

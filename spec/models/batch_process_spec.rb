@@ -220,6 +220,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         end
 
         it "creates batch connections for all parent and child objects in the batch process" do
+          allow(S3Service).to receive(:s3_exists?).and_return(false)
           expect(ParentObject.count).to eq 0
           expect(ChildObject.count).to eq 0
           expect do
@@ -383,6 +384,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         before do
           stub_metadata_cloud("2005512")
           allow(S3Service).to receive(:delete).and_return(true)
+          allow(S3Service).to receive(:s3_exists?).and_return(false)
         end
         it "can delete a parent_object from an array of oids" do
           expect do
@@ -405,6 +407,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       describe "csv file import" do
         before do
           stub_ptiffs_and_manifests
+          allow(S3Service).to receive(:s3_exists?).and_return(false)
         end
         it "accepts a csv file as a virtual attribute and read the csv into the csv property" do
           batch_process.file = csv_upload
@@ -517,6 +520,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         let(:admin_set) { AdminSet.first }
 
         before do
+          allow(S3Service).to receive(:s3_exists?).and_return(false)
           stub_ptiffs_and_manifests
           stub_full_text('1032318')
         end
