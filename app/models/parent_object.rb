@@ -161,6 +161,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     }]
   end
 
+  # rubocop:disable Metrics/MethodLength
   # Mint new oid for child, rename access master tif to the new oid filename
   def process_simple_object
     image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
@@ -182,12 +183,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
         FileUtils.move parent_access_master_path, child_access_master_path
       rescue => e
+        processing_event("Moving parent access master to child failed: #{e}", "failed")
         Rails.logger.error("Unable to rename simple parent access master for parent_oid: #{oid} and new child: #{new_oid}: #{e}")
       end
     end
 
     new_oid
   end
+  # rubocop:enable Metrics/MethodLength
 
   def assign_dependent_objects(json = authoritative_json)
     return unless json
