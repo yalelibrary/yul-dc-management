@@ -2,19 +2,16 @@
 <div class='row datatable-heading'>
   <div class='col'>
     <h1>Reoccurring Jobs</h1>
-    <%
-=begin%>
- <%= render 'form' %> 
-<%
-=end%>
   </div>
   <div class='col'>
     <div class='float-right button-list'>
-      <%= button_to 'Trigger Job Manually', trigger_mets_scan_batch_processes_path, method: 'post', class: 'btn button secondary-button', data:{confirm: 'Are you sure you start a manual update outside of the regular schedule?'} %>
+      <%= button_to 'Trigger Job Manually', reoccurring_jobs_path, method: 'post', class: 'btn button secondary-button', data: {confirm: 'Are you sure you start a manual update outside of the regular schedule?'} %>
     </div>
   </div>
 </div>
-
+<div class='reoccurring-notice'>
+  <p>A reoccurring job is set to update metadata from Aspace and Voyager at 2:00am EST</p>
+</div><br />
 <div class='row datatable'>
   <div class='col overflow-auto'>
     <table id='reoccurring-job-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= reoccurring_jobs_path(format: :json) %>' data-refresh="true" >

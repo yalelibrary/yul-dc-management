@@ -18,8 +18,8 @@ class ReoccurringJobsController < ApplicationController
     end
   end
 
-  # GET /reoccuring_jobs/new
-  def new
+  # POST ActivityStreamReader
+  def create
     ActivityStreamReader.update
   end
 

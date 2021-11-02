@@ -14,13 +14,13 @@ class ReoccurringJobDatatable < AjaxDatatablesRails::ActiveRecord
     # Declare strings in this format: ModelName.column_name
     # or in aliased_join_table.column_name format
     @view_columns ||= {
-      process_id: { source:  "ActivityStreamLog.id", cond: :eq, searchable: true, orderable: true },
+      process_id: { source:  "ActivityStreamLog.id", cond: :eq, orderable: true },
       run_time: { source: "ActivityStreamLog.run_time", cond: :start_with, orderable: true },
       items: { source:  "ActivityStreamLog.activity_stream_items", cond: :like, orderable: true },
-      status: { source:  "ActivityStreamLog.status", searchable: false, orderable: false },
-      created: { source:  "ActivityStreamLog.created_at", searchable: false, orderable: false },
-      updated: { source:  "ActivityStreamLog.updated_at", searchable: false, orderable: false },
-      retrieved_records: { source:  "ActivityStreamLog.retrieved_records", searchable: true, orderable: true }
+      status: { source:  "ActivityStreamLog.status", searchable: false, orderable: true },
+      created: { source:  "ActivityStreamLog.created_at", searchable: false, orderable: true },
+      updated: { source:  "ActivityStreamLog.updated_at", searchable: false, orderable: true },
+      retrieved_records: { source:  "ActivityStreamLog.retrieved_records", orderable: true }
     }
   end
 
