@@ -392,6 +392,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.remote_pdf_path).not_to be_nil
       end
 
+      it "generates pdf json with the image ids for each child" do
+        pdf_json = parent_object.pdf_generator_json
+        parent_object.child_objects.each do |child|
+          expect(pdf_json).to include('{"name":"Image ID:","value":"' + child.oid.to_s + '"}')
+        end
+      end
+
       it "returns true from needs_a_manifest? only one time" do
         parent_object.generate_manifest = true
         parent_object.save!
