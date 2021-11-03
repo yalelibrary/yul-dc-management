@@ -69,7 +69,10 @@ module PdfRepresentable
           "caption" => child['label'] || "",
           "file" => S3Service.presigned_url(child.remote_ptiff_path, 24_000)
         }
-        page['properties'] = [{ 'name' => 'Caption:', 'value' => child.caption }] if child.caption.present?
+        properties = []
+        properties << { 'name' => 'Caption:', 'value' => child.caption } if child.caption.present?
+        properties << { 'name' => 'Image ID:', 'value' => child.oid.to_s }
+        page['properties'] = properties if properties.present?
         pages << page
       end
       pages
