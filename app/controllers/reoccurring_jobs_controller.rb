@@ -22,7 +22,7 @@ class ReoccurringJobsController < ApplicationController
   def create
     ActivityStreamReader.update
     respond_to do |format|
-      format.html { redirect_to reoccurring_job_url, notice: 'Metadata update queued.' }
+      format.html { redirect_to reoccurring_jobs_url, notice: 'Metadata update queued.' }
       format.json { head :no_content }
     end
   end
