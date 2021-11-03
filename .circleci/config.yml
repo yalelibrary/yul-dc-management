@@ -42,7 +42,7 @@ jobs:
       - image: yalelibraryit/dc-solr:v1.0.8
         environment:
           SOLR_HEAP: 2g
-        command: bash -c 'precreate-core blacklight-test /opt/config; chown -R solr:solr /var/solr/data/ ; /boot.sh'
+        command: bash -c 'precreate-core blacklight-test /opt/config; chown -R solr:solr /var/solr/data/ ; SOLR_HEAP=2g /boot.sh'
       - image: circleci/postgres:9.5-alpine-ram
         environment:
           POSTGRES_DB: management_yul_test
