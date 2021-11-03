@@ -42,19 +42,19 @@
   "ancestorTitles": [
     "Oversize",
     "Abraham Lincoln collection (GEN MSS 257)",
-    "Beinecke Rare Book and Manuscript Library (BRBL)"
+    "Beinecke Rare Book and Manuscript Library"
   ],
   "ancestorDisplayStrings": [
     "Oversize, n.d.",
     "Abraham Lincoln collection",
-    "Beinecke Rare Book and Manuscript Library (BRBL)"
+    "Beinecke Rare Book and Manuscript Library"
   ],
   "ancestorIdentifiers": [
     "/aspace/repositories/11/archival_objects/214637",
     "/aspace/repositories/11/resources/640",
     "/aspace/repositories/11"
   ],
-  "repository": "Beinecke Rare Book and Manuscript Library (BRBL)",
+  "repository": "Beinecke Rare Book and Manuscript Library",
   "createdBeginDate": [
 
   ],
@@ -76,5 +76,6 @@
   ],
   "abstract": [
     "Correspondence and writings by and about Abraham Lincoln, and a gold pen used by Lincoln. 4 ALS from Lincoln to Benjamin F. James, William M. Dickson, and to an unidentified recipient. Writings by Lincoln include an autograph praecipe issued by Lincoln for writ in his first law case, \"David Woolridge vs. Hawthorne\", and a fragment of a speech on slavery. Also present is a letter by Edwin Booth to Colonel A. Badeau concerning Lincoln's assassination by his brother, John Wilkes Booth, two days earlier; two volumes containing letters and writings by and about members of Lincoln's cabinet, including Andrew Johnson, Edwin M. Stanton, a letter to W. P. Fessenden regarding the attack on Petersburg, and Gideon Welles' autographed manuscript recollections on the formation of Lincoln's cabinet. Accompanied by the gold pen used by Lincoln to sign the Emancipation Proclamation, with accompanying documentation."
-  ]
+  ],
+  "series": "Oversize"
 }
