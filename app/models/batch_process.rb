@@ -215,8 +215,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
 
   # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
-  def update_fulltext_status
-    oids.each_with_index do |parent_oid, index|
+  def update_fulltext_status(offset = 0, limit = -1)
+    job_oids = oids
+    job_oids = job_oids.drop(offset) if offset&.positive?
+    job_oids = job_oids.first(limit) if limit&.positive?
+    job_oids.each_with_index do |parent_oid, index|
       parent_object = ParentObject.find_by(oid: parent_oid)
       if parent_object.nil?
         batch_processing_event("Skipping row [#{index + 2}] because unknown parent: #{parent_oid}", 'Unknown Parent')
