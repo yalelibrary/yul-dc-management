@@ -132,16 +132,7 @@ $( document ).on('turbolinks:load', function() {
             columns: ':visible',
           },
           customize: function (csv) {
-            var lines = csv.split("\n").length;
-            var csvRows = csv.split('\n');
-            var formatted_header = snake_case(csvRows[0])
-            console.log(formatted_header)
-            var csv_content = []
-            for (let i = 1; i < lines; i++) {
-              csv_content += csvRows[i]
-              csv_content += '\n'
-            }
-            return (formatted_header + '\n' + csv_content);
+            return format_csv(csv)
           }
         },
         {
@@ -219,21 +210,25 @@ const columnOrder = (columns) => {
   return columnOrder;
 }
 
-var snake_case = (string) => {
-  // check for consecutive capital letters
-  return string.replace(/\d+/g, ' ')
-    .split(/ |\B(?=[A-Z])/)
-    .map((word) => word.toLowerCase())
-    .join('_');
-};
-
-function snake_case(str) {
-  return str && str.match(
-/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
-      .map(s => s.toLowerCase())
-      .join('_');
+// used to change the styling of the csv
+const format_csv = (csv) => {
+  var lines = csv.split("\n").length;
+  var csvRows = csv.split('\n');
+  var formatted_header = snake_case(csvRows[0])
+  var csv_content = []
+  for (let i = 1; i < lines; i++) {
+    csv_content += csvRows[i]
+    csv_content += '\n'
+  }
+  console.log(formatted_header)
+  return (formatted_header + '\n' + csv_content);
 }
 
+// used to convert csv headers to snake case
+function snake_case(string) {
+  return string.toLowerCase()
+      .replace(/ /g, '_')
+};
 
 $( document ).on('turbolinks:load', function() {
   let show_hide_template_link = function(){
