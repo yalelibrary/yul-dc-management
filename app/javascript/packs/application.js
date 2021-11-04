@@ -41,7 +41,6 @@ $( document ).on('turbolinks:load', function() {
   let initialColumnSearchValues = [];
   if($('.is-datatable').length > 0 && !$('.is-datatable').hasClass('dataTable')){
     let columns = JSON.parse($(".datatable-data").text());
-    // let snake_case = snakeCase(columns)
     // load the information about which columns are visible for this page
     let dataTableStorageKey = "DT-columns-" + btoa(document.location.href);
     let columnInfo = localStorage.getItem(dataTableStorageKey);
