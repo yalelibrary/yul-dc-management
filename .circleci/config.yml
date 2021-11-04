@@ -43,7 +43,7 @@ jobs:
         user: root
         environment:
           SOLR_HEAP: 4G
-        command: bash -c 'precreate-core blacklight-test /opt/config; chown -R solr:solr /var/solr/data/ ; /boot.sh'
+        command: bash -c 'precreate-core blacklight-test /opt/config; chown -R solr:solr /var/solr/data/ ; su - solr -c /boot.sh'
       - image: circleci/postgres:9.5-alpine-ram
         environment:
           POSTGRES_DB: management_yul_test
