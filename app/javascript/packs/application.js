@@ -41,6 +41,7 @@ $( document ).on('turbolinks:load', function() {
   let initialColumnSearchValues = [];
   if($('.is-datatable').length > 0 && !$('.is-datatable').hasClass('dataTable')){
     let columns = JSON.parse($(".datatable-data").text());
+    // let snake_case = snakeCase(columns)
     // load the information about which columns are visible for this page
     let dataTableStorageKey = "DT-columns-" + btoa(document.location.href);
     let columnInfo = localStorage.getItem(dataTableStorageKey);
@@ -97,8 +98,6 @@ $( document ).on('turbolinks:load', function() {
       return colVisibilityMap;
     }
 
-
-
     dataTable = $('.is-datatable').dataTable({
       "deferLoading":true,
       "processing": true,
@@ -130,7 +129,19 @@ $( document ).on('turbolinks:load', function() {
           extend: 'csvHtml5',
           text: "CSV",
           exportOptions: {
-            columns: ':visible'
+            columns: ':visible',
+          },
+          customize: function (csv) {
+            var lines = csv.split("\n").length;
+            var csvRows = csv.split('\n');
+            var formatted_header = snake_case(csvRows[0])
+            console.log(formatted_header)
+            var csv_content = []
+            for (let i = 1; i < lines; i++) {
+              csv_content += csvRows[i]
+              csv_content += '\n'
+            }
+            return (formatted_header + '\n' + csv_content);
           }
         },
         {
@@ -207,6 +218,22 @@ const columnOrder = (columns) => {
   })
   return columnOrder;
 }
+
+var snake_case = (string) => {
+  // check for consecutive capital letters
+  return string.replace(/\d+/g, ' ')
+    .split(/ |\B(?=[A-Z])/)
+    .map((word) => word.toLowerCase())
+    .join('_');
+};
+
+function snake_case(str) {
+  return str && str.match(
+/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+      .map(s => s.toLowerCase())
+      .join('_');
+}
+
 
 $( document ).on('turbolinks:load', function() {
   let show_hide_template_link = function(){
