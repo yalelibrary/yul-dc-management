@@ -39,7 +39,7 @@ jobs:
           POSTGRES_PASSWORD: password
           SOLR_CORE: blacklight-test
           SOLR_BASE_URL: http://localhost:8983/solr
-      - image: yalelibraryit/dc-solr:v1.0.8
+      - image: yalelibraryit/dc-solr:v1.0.9
         environment:
           SOLR_HEAP: 2g
         command: bash -c 'precreate-core blacklight-test /opt/config; chown -R solr:solr /var/solr/data/ ; SOLR_HEAP=2g /boot.sh'
