@@ -31,16 +31,11 @@ RSpec.describe ActivityStreamJob, type: :job do
     end
   
     it "increment job queue once" do
-      byebug
-      # Timecop.free
+      new_time = Time.local(2021, 11, 5, 12, 0, 0)
+      Timecop.travel(new_time)
+      expect(ActivityStreamLog.count).to eq 1
     end
   
   end
-
-  it 'happens at 1am daily' do
-    now = Time.current
-    expect do
-      travel 1.day
-    end.to change { ActivityStreamLog.count }.by(1)
-  end
+  
 end
