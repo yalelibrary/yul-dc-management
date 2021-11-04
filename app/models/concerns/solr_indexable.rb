@@ -123,6 +123,7 @@ module SolrIndexable
       rights_tesim: rights_statement,
       scale_tesim: json_to_index["scale"],
       series_ssi: json_to_index["series"],
+      series_sort_ssi: "#{json_to_index['archivalSort']}|#{json_to_index['series']}",
       source_ssim: json_to_index["source"], # refers to source of metadata, e.g. Ladybird, Voyager, etc.
       sourceCreated_tesim: json_to_index["sourceCreated"],
       sourceDate_tesim: json_to_index["sourceDate"],
