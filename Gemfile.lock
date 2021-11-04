@@ -409,6 +409,7 @@ GEM
     thor (1.1.0)
     thread_safe (0.3.6)
     tilt (2.0.10)
+    timecop (0.9.4)
     tins (1.25.0)
       sync
     travis-release (0.0.4)
@@ -501,6 +502,7 @@ DEPENDENCIES
   shoulda-matchers (~> 4.0)
   spring
   spring-watcher-listen (~> 2.0.0)
+  timecop
   turbolinks (~> 5)
   tzinfo-data
   vcr (~> 6.0)

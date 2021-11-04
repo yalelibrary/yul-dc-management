@@ -21,6 +21,22 @@ RSpec.describe ActivityStreamJob, type: :job do
 
   end
 
+  describe 'time travel tests' do 
+    before do
+      Timecop.freeze(Date.today)
+    end
+  
+    after do
+      Timecop.return
+    end
+  
+    it "increment job queue once" do
+      byebug
+      # Timecop.free
+    end
+  
+  end
+
   it 'happens at 1am daily' do
     now = Time.current
     expect do

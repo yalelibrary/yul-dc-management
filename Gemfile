@@ -88,6 +88,7 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'coveralls', require: false
   gem 'ffaker'
+  gem 'timecop'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'webdrivers'
