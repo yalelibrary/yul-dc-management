@@ -97,8 +97,6 @@ $( document ).on('turbolinks:load', function() {
       return colVisibilityMap;
     }
 
-
-
     dataTable = $('.is-datatable').dataTable({
       "deferLoading":true,
       "processing": true,
@@ -130,7 +128,10 @@ $( document ).on('turbolinks:load', function() {
           extend: 'csvHtml5',
           text: "CSV",
           exportOptions: {
-            columns: ':visible'
+            columns: ':visible',
+          },
+          customize: function (csv) {
+            return format_csv(csv)
           }
         },
         {
@@ -207,6 +208,26 @@ const columnOrder = (columns) => {
   })
   return columnOrder;
 }
+
+// used to change the styling of the csv
+const format_csv = (csv) => {
+  var lines = csv.split("\n").length;
+  var csvRows = csv.split('\n');
+  var formatted_header = snake_case(csvRows[0])
+  var csv_content = []
+  for (let i = 1; i < lines; i++) {
+    csv_content += csvRows[i]
+    csv_content += '\n'
+  }
+  console.log(formatted_header)
+  return (formatted_header + '\n' + csv_content);
+}
+
+// used to convert csv headers to snake case
+function snake_case(string) {
+  return string.toLowerCase()
+      .replace(/ /g, '_')
+};
 
 $( document ).on('turbolinks:load', function() {
   let show_hide_template_link = function(){
