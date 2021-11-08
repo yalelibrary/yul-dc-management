@@ -123,6 +123,7 @@ module SolrIndexable
       rights_tesim: rights_statement,
       scale_tesim: json_to_index["scale"],
       series_ssi: json_to_index["series"],
+      series_sort_ssi: series_sort(json_to_index),
       source_ssim: json_to_index["source"], # refers to source of metadata, e.g. Ladybird, Voyager, etc.
       sourceCreated_tesim: json_to_index["sourceCreated"],
       sourceDate_tesim: json_to_index["sourceDate"],
@@ -270,5 +271,12 @@ module SolrIndexable
   # not ASpace records will use the repository value
   def generate_ancestor_title(ancestor_title)
     ancestor_title.presence || [self&.admin_set&.label] || nil
+  end
+
+  def series_sort(json_to_index)
+    return nil unless json_to_index['series'].present? && json_to_index['archivalSort']
+    # only get the first portion of the sort, that represents the series sort value.
+    sort = json_to_index['archivalSort'].split(".")[0]
+    "#{sort}|#{json_to_index['series']}"
   end
 end
