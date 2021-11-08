@@ -29,5 +29,4 @@ class ReoccurringJobsController < ApplicationController
 
   # GET /reoccuring_jobs/1/edit
   def edit; end
-
 end
