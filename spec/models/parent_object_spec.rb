@@ -95,6 +95,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           stub_full_text_not_found("16057782")
           parent_of_four.default_fetch
           recreate_children parent_of_four
+          parent_of_four.update_fulltext_for_children
         end
         it "becomes a partial fulltext" do
           solr_document = parent_of_four.to_solr_full_text.first
@@ -113,6 +114,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           parent_of_four.child_objects.each do |child_object|
             stub_full_text(child_object.oid)
           end
+          parent_of_four.update_fulltext_for_children
         end
 
         it "indexes the full text" do
@@ -413,6 +415,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         stub_metadata_cloud("2004628")
         stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/fulltext/03/10/42/00/1042003.txt")
         .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
+        parent_object.update_fulltext_for_children
       end
 
       it "can determine if any of it's children have fulltext availability" do
