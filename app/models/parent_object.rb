@@ -103,10 +103,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def upsert_child_objects(child_objects_hash)
     raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
-    child_objects_hash.map! do |co|
-      co[:full_text] = ChildObject.remote_ocr_exists?(co[:oid])
-      co
-    end
     ChildObject.insert_all(child_objects_hash)
   end
 
