@@ -7,23 +7,29 @@ class UpdateFulltextStatusJob < ApplicationJob
     50
   end
 
+  # rubocop:disable Metrics/MethodLength
   def perform(batch_process)
-    # split it up by child count
     child_limit = 10_000
     current_offset = 0
     current_limit = 0
     child_count = 0
+    job_count = 0
     batch_process.oids.each_with_index do |oid, index|
       po = ParentObject.find_by_oid(oid)
       next unless po
       child_count += po.child_objects.count
       current_limit = index - current_offset + 1
       next unless child_count > child_limit
-      # kick off a job from current_offset to index - current_offset
       UpdateFulltextStatusSubJob.perform_later(batch_process, current_offset, current_limit)
+      job_count += 1
       current_offset = index
       child_count = 0
     end
-    UpdateFulltextStatusSubJob.perform_later(batch_process, current_offset, current_limit) if child_count&.positive?
+    if child_count&.positive?
+      UpdateFulltextStatusSubJob.perform_later(batch_process, current_offset, current_limit)
+      job_count += 1
+    end
+    batch_process.batch_processing_event("There were no parents to process.  No work has been completed", "failed") if job_count.zero?
   end
+  # rubocop:enable Metrics/MethodLength
 end
