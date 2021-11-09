@@ -15,10 +15,7 @@ class UpdateFulltextStatusJob < ApplicationJob
     child_count = 0
     batch_process.oids.each_with_index do |oid, index|
       po = ParentObject.find_by_oid(oid)
-      unless po
-        batch_process.batch_processing_event("Skipping row [#{index + 2}] because unknown parent: #{oid}", 'Unknown Parent')
-        next
-      end
+      next unless po
       child_count += po.child_objects.count
       current_limit = index - current_offset + 1
       next unless child_count > child_limit
