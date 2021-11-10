@@ -1,7 +1,7 @@
+# frozen_string_literal: true
+
 class IiifManifestV3 < Hash
-
   def items
-    return self['items']
+    self['items']
   end
-
 end

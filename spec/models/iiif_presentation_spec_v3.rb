@@ -170,8 +170,8 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     it "has canvases with ids and labels" do
       expect(first_canvas["id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188699"
       expect(first_canvas["metadata"]).not_to be_nil
-      expect(first_canvas["metadata"]).to include( "label" => { "en" => [ "Image OID"] }, "value" => {"none" => ["16188699"] })
-      expect(first_canvas["metadata"]).to include("label" => { "en" => ["Image Label"] }, "value" =>  {"none" => ["Swatch 1"] })
+      expect(first_canvas["metadata"]).to include("label" => { "en" => ["Image OID"] }, "value" => { "none" => ["16188699"] })
+      expect(first_canvas["metadata"]).to include("label" => { "en" => ["Image Label"] }, "value" => { "none" => ["Swatch 1"] })
       expect(third_to_last_canvas["id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188700"
       expect(first_canvas["label"]["none"]).to eq "Swatch 1"
       expect(third_to_last_canvas["label"]["none"]).to eq "swatch 2"
@@ -187,8 +187,8 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(first_canvas["label"]["none"]).to eq "swatch 2"
       expect(third_to_last_canvas["id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188699"
       expect(third_to_last_canvas["metadata"]).not_to be_nil
-      expect(third_to_last_canvas["metadata"]).to include("label" => { "en" => [ "Image OID"] }, "value" => {"none" => ["16188699"] })
-      expect(third_to_last_canvas["metadata"]).to include("label" => { "en" => ["Image Label"] }, "value" =>  {"none" => ["Swatch 1"] })
+      expect(third_to_last_canvas["metadata"]).to include("label" => { "en" => ["Image OID"] }, "value" => { "none" => ["16188699"] })
+      expect(third_to_last_canvas["metadata"]).to include("label" => { "en" => ["Image Label"] }, "value" => { "none" => ["Swatch 1"] })
     end
 
     it "has canvases with ids and labels based on order property of child_objects, using oid as tie breaker" do
@@ -208,10 +208,10 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     end
 
     it "has canvases with images" do
-      annotationPages = first_canvas["items"]
-      expect(annotationPages).to be_instance_of Array
-      expect(annotationPages.count).to eq 1
-      annotations = annotationPages.first["items"]
+      annotation_pages = first_canvas["items"]
+      expect(annotation_pages).to be_instance_of Array
+      expect(annotation_pages.count).to eq 1
+      annotations = annotation_pages.first["items"]
       expect(annotations).to be_instance_of Array
       expect(annotations.count).to eq 1
       annotation = annotations.first
@@ -220,10 +220,10 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(annotation["motivation"]).to eq "painting"
       expect(annotation["target"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188699"
 
-      annotationPages = third_to_last_canvas["items"]
-      expect(annotationPages).to be_instance_of Array
-      expect(annotationPages.count).to eq 1
-      annotations = annotationPages.first["items"]
+      annotation_pages = third_to_last_canvas["items"]
+      expect(annotation_pages).to be_instance_of Array
+      expect(annotation_pages.count).to eq 1
+      annotations = annotation_pages.first["items"]
       expect(annotations).to be_instance_of Array
       expect(annotations.count).to eq 1
       annotation = annotations.first
@@ -302,5 +302,4 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       end
     end
   end
-
 end

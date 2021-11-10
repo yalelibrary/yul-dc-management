@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 class IiifPresentationV3
   attr_reader :parent_object, :mets_doc, :oid, :errors
 
@@ -38,23 +39,17 @@ class IiifPresentationV3
   end
 
   # Build the actual manifest object
+  # rubocop:disable Metrics/AbcSize
   def manifest
     return @manifest if @manifest
     @manifest = IiifManifestV3.new
     @manifest["@context"] = "http://iiif.io/api/presentation/3/context.json"
     @manifest['id'] = File.join((ENV['IIIF_MANIFESTS_BASE_URL']).to_s, oid.to_s)
-    @manifest['label'] = {
-        "none" => @parent_object&.authoritative_json&.[]("title")&.first || ''
-    }
+    manifest_descriptive_properties
     # TODO: Add provider
-    @manifest["homepage"] = homepage
-    @manifest["requiredStatement"] = required_statement
-    @manifest["rendering"] = rendering
-    @manifest["seeAlso"] = see_also
-    @manifest["metadata"] = metadata
-    @manifest["viewingDirection"] = [ @parent_object.viewing_direction ] unless @parent_object.viewing_direction.nil? || @parent_object.viewing_direction.empty?
-    @manifest["behavior"] = [ @parent_object.display_layout ] unless @parent_object.display_layout.nil? || @parent_object.display_layout.empty?
-    @manifest["items"] = [ ]
+    @manifest["viewingDirection"] = [@parent_object.viewing_direction] unless @parent_object.viewing_direction.nil? || @parent_object.viewing_direction.empty?
+    @manifest["behavior"] = [@parent_object.display_layout] unless @parent_object.display_layout.nil? || @parent_object.display_layout.empty?
+    @manifest["items"] = []
     add_canvases_to_manifest(@manifest['items'])
     if parent_object.full_text?
       @manifest["service"] ||= []
@@ -62,11 +57,23 @@ class IiifPresentationV3
     end
     @manifest
   end
+  # rubocop:enable Metrics/AbcSize
+
+  def manifest_descriptive_properties
+    @manifest['label'] = {
+      "none" => @parent_object&.authoritative_json&.[]("title")&.first || ''
+    }
+    @manifest["homepage"] = homepage
+    @manifest["requiredStatement"] = required_statement
+    @manifest["rendering"] = rendering
+    @manifest["seeAlso"] = see_also
+    @manifest["metadata"] = metadata
+  end
 
   def required_statement
     {
-      "label" => { "en" => [ "Provider" ] },
-      "value" => { "en" => [ "Yale University Library" ] }
+      "label" => { "en" => ["Provider"] },
+      "value" => { "en" => ["Yale University Library"] }
     }
   end
 
@@ -110,7 +117,7 @@ class IiifPresentationV3
 
   def metadata_pair(label, value)
     value = [value] if value.is_a? String
-    { 'label' => { 'en' => [ label ] }, 'value' => { 'none' =>  value  } }
+    { 'label' => { 'en' => [label] }, 'value' => { 'none' => value } }
   end
 
   def homepage
@@ -119,7 +126,7 @@ class IiifPresentationV3
         "id" => "https://collections.library.yale.edu/catalog/#{@oid}",
         "type" => "Text",
         "format" => "text/html",
-        "label" => { "en" => [ "Yale Digital Collections page" ] }
+        "label" => { "en" => ["Yale Digital Collections page"] }
       }
     ]
   end
@@ -146,20 +153,8 @@ class IiifPresentationV3
     ]
   end
 
-  def add_image_to_canvas(child, canvas)
-    annotationPage = {
-      "id" => File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}/page/1"),
-      "type" => "AnnotationPage",
-      "items" => []
-    }
-    canvas["items"] << annotationPage
-
-    image = {  }
-    image['id'] = File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}/image/1")
-    image['type'] = "Annotation"
-    image["motivation"] = "painting"
-    image["target"] = File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}")
-    image_resource = {
+  def image_resource(child)
+    {
       'id' => image_url(child.oid),
       'type' => "Image",
       'format' => "image/jpeg",
@@ -171,10 +166,23 @@ class IiifPresentationV3
         'profile' => 'level2'
       }
     }
-    image["body"] = image_resource
-    annotationPage["items"] << image
+  end
 
-    @manifest['thumbnail'] = [image_resource] if child_is_thumbnail?(child[:oid])
+  def add_image_to_canvas(child, canvas)
+    annotation_page = {
+      "id" => File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}/page/1"),
+      "type" => "AnnotationPage",
+      "items" => []
+    }
+    canvas["items"] << annotation_page
+    image = {}
+    image['id'] = File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}/image/1")
+    image['type'] = "Annotation"
+    image["motivation"] = "painting"
+    image["target"] = File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}")
+    image["body"] = image_resource(child)
+    annotation_page["items"] << image
+    @manifest['thumbnail'] = [image_resource(child)] if child_is_thumbnail?(child[:oid])
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -191,7 +199,7 @@ class IiifPresentationV3
       image_anno = canvas["items"].first["items"].first["body"]
       canvas['height'] = image_anno["height"]
       canvas['width'] = image_anno["width"]
-      canvas['behavior'] = [ child.viewing_hint ] unless child.viewing_hint == ""
+      canvas['behavior'] = [child.viewing_hint] unless child.viewing_hint == ""
       add_metadata_to_canvas(canvas, child)
 
       @manifest["startCanvas"] = canvas['id'] if child_is_start_canvas? child.oid, index
@@ -241,3 +249,4 @@ class IiifPresentationV3
     @manifest_path ||= "manifests/#{pairtree_path}/#{oid}.json" if pairtree_path && oid
   end
 end
+# rubocop:enable Metrics/ClassLength
