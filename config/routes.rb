@@ -67,6 +67,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   end
 
   # fall back if not authenticated
-  get '/delayed_job', to: redirect('/users/auth/cas')
-  get '/delayed_job_dashboard', to: redirect('/users/auth/cas')
+  get '/delayed_job', to: redirect('users/auth/cas')
+  get '/delayed_job_dashboard', to: redirect('users/auth/cas')
 end
