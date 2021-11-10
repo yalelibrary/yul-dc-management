@@ -1,0 +1,21 @@
+<h1>Job <%= @job.id %></h1>
+<p>
+  [<%= link_to "requeue", requeue_path(@job.id), method: :post %>]
+  [<%= link_to "delete", delete_job_path(@job.id), method: :delete %>]
+</p>
+<%= render partial: '/management/flash_messages' %>
+
+
+<h2>Info</h2>
+<%= @handler.display_name %>
+<h2>Attempts</h2>
+<%= @job.attempts %>
+<h2>Next run</h2> <%= @job.run_at %>
+<% if @job.last_error  %>
+<h2>Full Stack Trace</h2>
+  <pre>
+    <%= @job.last_error %>
+  </pre>
+  <% else %>
+  <pre>No Errors</pre>
+<% end %>

@@ -12,7 +12,7 @@
     <%= link_to 'Batch Process', batch_processes_path, class: 'list-group-item list-group-item-action bg-light' %>
     <%= link_to 'Preservation', preservica_ingests_path, class: 'list-group-item list-group-item-action bg-light' %>
     <% if current_user&.sysadmin %>
-      <%= link_to 'Delayed Job Dashboard', delayed_job_web_path, class: 'list-group-item list-group-item-action bg-light' %>
+      <%= link_to 'Delayed Job Dashboard', dashboard_path, class: 'list-group-item list-group-item-action bg-light' %>
     <% end %>
     <% if current_user %>
       <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'list-group-item list-group-item-action bg-light sign-button' %>

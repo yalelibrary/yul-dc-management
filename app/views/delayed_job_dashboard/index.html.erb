@@ -1,0 +1,9 @@
+<%= render partial: '/management/flash_messages' %>
+<pre>
+  Total Jobs: <%= @all_jobs_count %>
+  <%= link_to "Working Jobs: #{@working}", working_jobs_path %>
+  <%= link_to "Pending Jobs: #{@pending}", pending_jobs_path %>
+  <%= link_to "Failed Jobs: #{@failed}", failed_jobs_path %>
+</pre>
+
+<%= link_to 'Old Delayed Job Dashboard', delayed_job_web_path %>
