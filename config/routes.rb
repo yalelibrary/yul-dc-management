@@ -63,10 +63,16 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       # authenticated user without the sysadmin role
       get '/*delayed_job_dashboard', to: 'application#access_denied'
       get '/*delayed_job', to: 'application#access_denied'
+      get '/delayed_job_dashboard/:all', to: redirect('users/auth/cas')
+      post '/delayed_job_dashboard/requeue/:all', to: redirect('users/auth/cas')
+      delete '/delayed_job_dashboard/delete/:all', to: redirect('users/auth/cas')
     end
   end
 
   # fall back if not authenticated
   get '/delayed_job', to: redirect('users/auth/cas')
   get '/delayed_job_dashboard', to: redirect('users/auth/cas')
+  get '/delayed_job_dashboard/:all', to: redirect('users/auth/cas')
+  post '/delayed_job_dashboard/requeue/:all', to: redirect('users/auth/cas')
+  delete '/delayed_job_dashboard/delete/:all', to: redirect('users/auth/cas')
 end
