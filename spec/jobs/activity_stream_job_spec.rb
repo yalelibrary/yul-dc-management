@@ -36,7 +36,7 @@ RSpec.describe ActivityStreamJob, type: :job do
       # `bundle exec rails activejob:schedule`
       new_time = Time.zone.local(now.year, now.month, now.day + 1, 12, 0, 0)
       Timecop.travel(new_time)
-      expect(ActivityStreamLog.count).to eq 1
+      expect(Delayed::Job.count).to eq 1
     end
   end
 end
