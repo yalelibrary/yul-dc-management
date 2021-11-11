@@ -199,7 +199,7 @@ class IiifPresentationV3
       image_anno = canvas["items"].first["items"].first["body"]
       canvas['height'] = image_anno["height"]
       canvas['width'] = image_anno["width"]
-      canvas['behavior'] = [child.viewing_hint] unless child.viewing_hint == ""
+      canvas['behavior'] = [child.viewing_hint] unless child.viewing_hint.nil? || child.viewing_hint.empty?
       add_metadata_to_canvas(canvas, child)
 
       @manifest["startCanvas"] = canvas['id'] if child_is_start_canvas? child.oid, index
