@@ -81,11 +81,12 @@ class IiifPresentationV3
   def search_service
     base = ENV['BLACKLIGHT_BASE_URL'] || 'http://localhost:3000'
     {
-      "id" => File.join(base, "catalog/#{oid}/iiif_search"),
-      "type" => "SearchService1",
-      "service" => {
-        "id" => File.join(base, "catalog/#{oid}/iiif_suggest"),
-        "type" => "AutoCompleteService1"
+      "@context": "http://iiif.io/api/search/0/context.json",
+      "@id": File.join(base, "catalog/#{oid}/iiif_search"),
+      "profile": "http://iiif.io/api/search/0/search",
+      "service": {
+        "@id": File.join(base, "catalog/#{oid}/iiif_suggest"),
+        "profile": "http://iiif.io/api/search/0/autocomplete"
       }
     }
   end
