@@ -45,6 +45,7 @@ class IiifPresentationV3
     @manifest = IiifManifestV3.new
     @manifest["@context"] = "http://iiif.io/api/presentation/3/context.json"
     @manifest['id'] = File.join((ENV['IIIF_MANIFESTS_BASE_URL']).to_s, oid.to_s)
+    @manifest['type'] = "Manifest"
     manifest_descriptive_properties
     # TODO: Add provider
     @manifest["viewingDirection"] = [@parent_object.viewing_direction] unless @parent_object.viewing_direction.nil? || @parent_object.viewing_direction.empty?
@@ -61,7 +62,7 @@ class IiifPresentationV3
 
   def manifest_descriptive_properties
     @manifest['label'] = {
-      "none" => @parent_object&.authoritative_json&.[]("title")&.first || ''
+      "none" => [@parent_object&.authoritative_json&.[]("title")&.first || '']
     }
     @manifest["homepage"] = homepage
     @manifest["requiredStatement"] = required_statement
@@ -161,9 +162,9 @@ class IiifPresentationV3
       'height' => child.height,
       'width' => child.width,
       'service' => {
-        'id' => image_service_url(child.oid),
+        '@id' => image_service_url(child.oid),
         'type' => 'ImageService2',
-        'profile' => 'level2'
+        'profile' => 'http://iiif.io/api/image/2/level2.json'
       }
     }
   end
@@ -182,6 +183,7 @@ class IiifPresentationV3
     image["target"] = File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}")
     image["body"] = image_resource(child)
     annotation_page["items"] << image
+    canvas['thumbnail'] = [image_resource(child)]
     @manifest['thumbnail'] = [image_resource(child)] if child_is_thumbnail?(child[:oid])
   end
 
@@ -194,7 +196,7 @@ class IiifPresentationV3
         "items" => []
       }
       canvas['id'] = File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}")
-      canvas['label'] = { "none" => child.label || '' }
+      canvas['label'] = { "none" => [child.label || ''] }
       add_image_to_canvas(child, canvas)
       image_anno = canvas["items"].first["items"].first["body"]
       canvas['height'] = image_anno["height"]
@@ -202,7 +204,7 @@ class IiifPresentationV3
       canvas['behavior'] = [child.viewing_hint] unless child.viewing_hint.nil? || child.viewing_hint.empty?
       add_metadata_to_canvas(canvas, child)
 
-      @manifest["startCanvas"] = canvas['id'] if child_is_start_canvas? child.oid, index
+      @manifest["start"] = canvas['id'] if child_is_start_canvas? child.oid, index
       items << canvas
     end
   end

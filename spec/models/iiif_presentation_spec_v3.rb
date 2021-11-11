@@ -68,8 +68,9 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(iiif_presentation.parent_object.class).to eq ParentObject
     end
 
-    it "has the IIIF Presentation API v3 context" do
+    it "has the IIIF Presentation API v3 context and type of Manifest" do
       expect(iiif_presentation.manifest['@context']).to eq "http://iiif.io/api/presentation/3/context.json"
+      expect(iiif_presentation.manifest['type']).to eq "Manifest"
     end
 
     # see also https://github.com/yalelibrary/yul-dc-iiif-manifest/blob/3f96a09d9d5a7b6a49c051d663b5cc2aa5fd8475/templates/webapp.conf.template#L56
@@ -78,7 +79,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     end
 
     it "has a label with the title of the ParentObject" do
-      expect(iiif_presentation.manifest["label"]["none"]).to eq "Strawberry Thief fabric, made by Morris and Company "
+      expect(iiif_presentation.manifest["label"]["none"]).to eq ["Strawberry Thief fabric, made by Morris and Company "]
     end
 
     it "has a requiredStatement" do
@@ -173,8 +174,8 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(first_canvas["metadata"]).to include("label" => { "en" => ["Image OID"] }, "value" => { "none" => ["16188699"] })
       expect(first_canvas["metadata"]).to include("label" => { "en" => ["Image Label"] }, "value" => { "none" => ["Swatch 1"] })
       expect(third_to_last_canvas["id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188700"
-      expect(first_canvas["label"]["none"]).to eq "Swatch 1"
-      expect(third_to_last_canvas["label"]["none"]).to eq "swatch 2"
+      expect(first_canvas["label"]["none"]).to eq ["Swatch 1"]
+      expect(third_to_last_canvas["label"]["none"]).to eq ["swatch 2"]
     end
 
     it "has canvases with ids and labels based on order property of child_objects" do
@@ -183,8 +184,8 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       co = ChildObject.find(16_188_700)
       co.update(order: 1)
       expect(first_canvas["id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188700"
-      expect(third_to_last_canvas["label"]["none"]).to eq "Swatch 1"
-      expect(first_canvas["label"]["none"]).to eq "swatch 2"
+      expect(third_to_last_canvas["label"]["none"]).to eq ["Swatch 1"]
+      expect(first_canvas["label"]["none"]).to eq ["swatch 2"]
       expect(third_to_last_canvas["id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188699"
       expect(third_to_last_canvas["metadata"]).not_to be_nil
       expect(third_to_last_canvas["metadata"]).to include("label" => { "en" => ["Image OID"] }, "value" => { "none" => ["16188699"] })
@@ -198,8 +199,8 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       co.update(order: 1)
       expect(first_canvas["id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188699"
       expect(third_to_last_canvas["id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188700"
-      expect(first_canvas["label"]["none"]).to eq "Swatch 1"
-      expect(third_to_last_canvas["label"]["none"]).to eq "swatch 2"
+      expect(first_canvas["label"]["none"]).to eq ["Swatch 1"]
+      expect(third_to_last_canvas["label"]["none"]).to eq ["swatch 2"]
     end
 
     it "has a canvas with width and height" do
@@ -246,9 +247,9 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       annotation = first_canvas["items"].first["items"].first
       image = annotation['body']
       service = image['service']
-      expect(service["id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/16188699"
+      expect(service["@id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/16188699"
       expect(service['type']).to eq "ImageService2"
-      expect(service['profile']).to eq "level2"
+      expect(service['profile']).to eq "http://iiif.io/api/image/2/level2.json"
     end
 
     it "can output a manifest as json" do
@@ -259,7 +260,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       iiif_presentation_no_labels.manifest.items.each do |canvas|
         expect(canvas['label']).not_to be_nil
       end
-      expect(iiif_presentation_no_labels.manifest.to_json(pretty: true)).to include '"label":{"none":""'
+      expect(iiif_presentation_no_labels.manifest.to_json(pretty: true)).to include '"label":{"none":[""'
     end
   end
 
