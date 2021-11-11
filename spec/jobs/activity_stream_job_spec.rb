@@ -31,9 +31,9 @@ RSpec.describe ActivityStreamJob, type: :job do
       Timecop.return
     end
 
-    xit "increments job queue once per day" do
+    it "increments job queue once per day" do
       now = Time.zone.today
-      # `bundle exec rails activejob:schedule`
+      ActiveJob::Scheduler.start
       new_time = Time.zone.local(now.year, now.month, now.day + 1, 12, 0, 0)
       Timecop.travel(new_time)
       expect(Delayed::Job.count).to eq 1
