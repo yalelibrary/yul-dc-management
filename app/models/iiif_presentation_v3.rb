@@ -42,7 +42,7 @@ class IiifPresentationV3
   # rubocop:disable Metrics/AbcSize
   def manifest
     return @manifest if @manifest
-    @manifest = IiifManifestV3.new
+    @manifest = {}
     @manifest["@context"] = "http://iiif.io/api/presentation/3/context.json"
     @manifest['id'] = File.join((ENV['IIIF_MANIFESTS_BASE_URL']).to_s, oid.to_s)
     @manifest['type'] = "Manifest"

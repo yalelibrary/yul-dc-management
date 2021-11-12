@@ -27,8 +27,8 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
   let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, viewing_direction: "left-to-right", display_layout: "individuals", bib: "12834515") }
   let(:iiif_presentation_no_labels) { described_class.new(parent_object_no_labels) }
   let(:parent_object_no_labels) { FactoryBot.create(:parent_object, oid: oid_no_labels, viewing_direction: "left-to-right", display_layout: "individuals", bib: "16173726") }
-  let(:first_canvas) { iiif_presentation.manifest.items.first }
-  let(:third_to_last_canvas) { iiif_presentation.manifest.items.third_to_last }
+  let(:first_canvas) { iiif_presentation.manifest['items'].first }
+  let(:third_to_last_canvas) { iiif_presentation.manifest['items'].third_to_last }
   before do
     stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/21/16/17/24/21/16172421.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "manifests", "16172421.json")).read)
@@ -98,7 +98,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     # end
 
     it "has a manifest with items array" do
-      expect(iiif_presentation.manifest.items.class).to eq Array
+      expect(iiif_presentation.manifest['items'].class).to eq Array
     end
 
     it "has a homepage in the manifest" do
@@ -164,7 +164,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     end
 
     it "creates a canvas for each file" do
-      canvas_count = iiif_presentation.manifest.items.count
+      canvas_count = iiif_presentation.manifest['items'].count
       expect(canvas_count).to eq 4
     end
 
@@ -257,7 +257,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     end
 
     it "provides labels for all canvases" do
-      iiif_presentation_no_labels.manifest.items.each do |canvas|
+      iiif_presentation_no_labels.manifest['items'].each do |canvas|
         expect(canvas['label']).not_to be_nil
       end
       expect(iiif_presentation_no_labels.manifest.to_json(pretty: true)).to include '"label":{"none":[""'
