@@ -31,6 +31,8 @@ module StubRequestHelper
   def stub_manifests
     allow_any_instance_of(IiifPresentation).to receive(:save).and_return(true)
     allow_any_instance_of(IiifPresentation).to receive(:save).and_return(true)
+    allow_any_instance_of(IiifPresentationV3).to receive(:save).and_return(true)
+    allow_any_instance_of(IiifPresentationV3).to receive(:save).and_return(true)
     allow_any_instance_of(ParentObject).to receive(:manifest_completed?).and_return(true)
   end
 
