@@ -349,7 +349,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def iiif_presentation
-    @iiif_presentation ||= IiifPresentationV3.new(self)
+    @iiif_presentation ||= IiifPresentation.new(self)
   end
 
   def iiif_manifest
