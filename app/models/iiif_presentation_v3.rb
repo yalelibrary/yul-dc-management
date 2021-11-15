@@ -47,7 +47,7 @@ class IiifPresentationV3
     @manifest['id'] = File.join((ENV['IIIF_MANIFESTS_BASE_URL']).to_s, oid.to_s)
     @manifest['type'] = "Manifest"
     manifest_descriptive_properties
-    # TODO: Add provider
+    @manifest['provider'] = [ provider ]
     @manifest["viewingDirection"] = [@parent_object.viewing_direction] unless @parent_object.viewing_direction.nil? || @parent_object.viewing_direction.empty?
     @manifest["behavior"] = [@parent_object.display_layout] unless @parent_object.display_layout.nil? || @parent_object.display_layout.empty?
     @manifest["items"] = []
@@ -120,6 +120,22 @@ class IiifPresentationV3
   def metadata_pair(label, value)
     value = [value] if value.is_a? String
     { 'label' => { 'en' => [label] }, 'value' => { 'none' => value } }
+  end
+
+  def provider
+    {
+      "id" => "https://www.wikidata.org/wiki/Q2583293",
+      "type" => "Agent",
+      "label" => { "en" => [ "Yale Library" ]},
+      "homepage" => [
+        {
+          "id" => "https://library.yale.edu/",
+          "type" => "Text",
+          "label" => { "en" => [ "Yale Library homepage" ] },
+          "format" => "text/html"
+        }
+      ]
+    }
   end
 
   def homepage

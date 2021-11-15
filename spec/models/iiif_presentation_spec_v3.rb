@@ -110,6 +110,22 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["homepage"].first["label"]["en"].first).to eq "Yale Digital Collections page"
     end
 
+    it "has a provider with a label and homepage in the manifest" do
+      provider = iiif_presentation.manifest["provider"].first
+      expect(provider.class).to eq Hash
+      expect(provider["label"].class).to eq Hash
+      expect(provider["label"]["en"].class).to eq Array
+      expect(provider["label"]["en"].first.class).to eq String
+      expect(provider["id"].class).to eq String
+      expect(provider["type"]).to eq "Agent"
+      expect(provider["homepage"].first["id"]).to eq "https://library.yale.edu/"
+      expect(provider["homepage"].first["type"]).to eq "Text"
+      expect(provider["homepage"].first["format"]).to eq "text/html"
+      expect(provider["homepage"].first["label"].class).to eq Hash
+      expect(provider["homepage"].first["label"]["en"].class).to eq Array
+      expect(provider["homepage"].first["label"]["en"].first.class).to eq String
+    end
+
     it "has a rendering in the manifest" do
       expect(iiif_presentation.manifest["rendering"].class).to eq Array
       expect(iiif_presentation.manifest["rendering"].first.class).to eq Hash
