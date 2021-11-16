@@ -70,7 +70,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     end
 
     it "has the IIIF Presentation API v3 context and type of Manifest" do
-      expect(iiif_presentation.manifest['@context']).to eq "http://iiif.io/api/presentation/3/context.json"
+      expect(iiif_presentation.manifest['@context'].last).to eq "http://iiif.io/api/presentation/3/context.json"
       expect(iiif_presentation.manifest['type']).to eq "Manifest"
     end
 
