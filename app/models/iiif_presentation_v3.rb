@@ -43,7 +43,7 @@ class IiifPresentationV3
   def manifest
     return @manifest if @manifest
     @manifest = {}
-    @manifest["@context"] = [ "http://iiif.io/api/search/1/context.json", "http://iiif.io/api/presentation/3/context.json" ]
+    @manifest["@context"] = ["http://iiif.io/api/search/1/context.json", "http://iiif.io/api/presentation/3/context.json"]
     @manifest['id'] = File.join((ENV['IIIF_MANIFESTS_BASE_URL']).to_s, oid.to_s)
     @manifest['type'] = "Manifest"
     manifest_descriptive_properties
