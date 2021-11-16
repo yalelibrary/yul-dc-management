@@ -43,7 +43,7 @@ class IiifPresentationV3
   def manifest
     return @manifest if @manifest
     @manifest = {}
-    @manifest["@context"] = "http://iiif.io/api/presentation/3/context.json"
+    @manifest["@context"] = [ "http://iiif.io/api/search/1/context.json", "http://iiif.io/api/presentation/3/context.json" ]
     @manifest['id'] = File.join((ENV['IIIF_MANIFESTS_BASE_URL']).to_s, oid.to_s)
     @manifest['type'] = "Manifest"
     manifest_descriptive_properties
@@ -81,12 +81,13 @@ class IiifPresentationV3
   def search_service
     base = ENV['BLACKLIGHT_BASE_URL'] || 'http://localhost:3000'
     {
-      "@context": "http://iiif.io/api/search/0/context.json",
       "@id": File.join(base, "catalog/#{oid}/iiif_search"),
-      "profile": "http://iiif.io/api/search/0/search",
+      "@type": "SearchService1",
+      "profile": "http://iiif.io/api/search/1/search",
       "service": {
         "@id": File.join(base, "catalog/#{oid}/iiif_suggest"),
-        "profile": "http://iiif.io/api/search/0/autocomplete"
+        "@type": "AutoCompleteService1",
+        "profile": "http://iiif.io/api/search/1/autocomplete"
       }
     }
   end

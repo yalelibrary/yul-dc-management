@@ -47,11 +47,12 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
   describe 'building a manifest' do
     it "does have the search service section if the parent_object full_text? is true" do
       allow(parent_object_no_labels).to receive(:full_text?).and_return true
-      expect(iiif_presentation_no_labels.manifest["service"].first[:@context]).to eq("http://iiif.io/api/search/0/context.json")
       expect(iiif_presentation_no_labels.manifest["service"].first[:@id]).to eq("http://localhost:3000/catalog/2005512/iiif_search")
-      expect(iiif_presentation_no_labels.manifest["service"].first[:profile]).to eq("http://iiif.io/api/search/0/search")
+      expect(iiif_presentation_no_labels.manifest["service"].first[:@type]).to eq("SearchService1")
+      expect(iiif_presentation_no_labels.manifest["service"].first[:profile]).to eq("http://iiif.io/api/search/1/search")
       expect(iiif_presentation_no_labels.manifest["service"].first[:service][:@id]).to eq("http://localhost:3000/catalog/2005512/iiif_suggest")
-      expect(iiif_presentation_no_labels.manifest["service"].first[:service][:profile]).to eq("http://iiif.io/api/search/0/autocomplete")
+      expect(iiif_presentation_no_labels.manifest["service"].first[:service][:@type]).to eq("AutoCompleteService1")
+      expect(iiif_presentation_no_labels.manifest["service"].first[:service][:profile]).to eq("http://iiif.io/api/search/1/autocomplete")
     end
 
     it "does NOT have the service section if the parent_object full_text? is false" do
