@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+#
 
 class DelayedJobDashboardController < ApplicationController
   def index
@@ -33,7 +34,7 @@ class DelayedJobDashboardController < ApplicationController
 
   def show
     @job = Delayed::Job.find(params[:id])
-    @handler = YAML.safe_load(Delayed::Job.find(params[:id]).handler)
+    @handler = YAML.safe_load(@job.handler, [ActiveJob::QueueAdapters::DelayedJobAdapter::JobWrapper])
   end
 
   def delete_job
