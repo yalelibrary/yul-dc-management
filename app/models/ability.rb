@@ -25,6 +25,7 @@ class Ability
     can :read, ParentObject
     can :read, ChildObject
     can :read, PreservicaIngest
+    can :read, ReoccurringJobDatatable
     can :reindex_all, ParentObject
     can :update_metadata, ParentObject
     can :trigger_mets_scan, ParentObject

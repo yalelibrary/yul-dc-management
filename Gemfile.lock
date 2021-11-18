@@ -1,3 +1,15 @@
+GIT
+  remote: https://github.com/yalelibrary/activejob-scheduler
+  revision: 22850499dd0ab046eff2e1c113261782e7b8d8dc
+  branch: main
+  specs:
+    activejob-scheduler (1.0.0.pre)
+      actionmailer (> 5, < 7)
+      activejob (> 5, < 7)
+      activesupport (> 5, < 7)
+      fugit (~> 1.3)
+      travis-release (~> 0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -141,6 +153,8 @@ GEM
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.10.0)
+    et-orbi (1.2.6)
+      tzinfo
     execjs (2.7.0)
     factory_bot (5.2.0)
       activesupport (>= 4.2.0)
@@ -156,6 +170,9 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
+    fugit (1.5.2)
+      et-orbi (~> 1.1, >= 1.1.8)
+      raabro (~> 1.4)
     github_changelog_generator (1.15.2)
       activesupport
       faraday-http-cache
@@ -258,6 +275,7 @@ GEM
     public_suffix (4.0.6)
     puma (4.3.9)
       nio4r (~> 2.0)
+    raabro (1.4.0)
     racc (1.5.2)
     rack (2.2.3)
     rack-protection (2.0.8.1)
@@ -391,8 +409,12 @@ GEM
     thor (1.1.0)
     thread_safe (0.3.6)
     tilt (2.0.10)
+    timecop (0.9.4)
     tins (1.25.0)
       sync
+    travis-release (0.0.4)
+      bundler
+      rake
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -434,6 +456,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activejob-scheduler!
   activerecord-nulldb-adapter
   ajax-datatables-rails
   amazing_print (>= 1.2.1)
@@ -479,6 +502,7 @@ DEPENDENCIES
   shoulda-matchers (~> 4.0)
   spring
   spring-watcher-listen (~> 2.0.0)
+  timecop
   turbolinks (~> 5)
   tzinfo-data
   vcr (~> 6.0)

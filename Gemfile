@@ -5,6 +5,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'activerecord-nulldb-adapter'
+# Reoccurring jobs
+gem 'activejob-scheduler', git: 'https://github.com/yalelibrary/activejob-scheduler', branch: 'main'
 gem 'ajax-datatables-rails'
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -88,5 +90,6 @@ group :test do
   gem 'ffaker'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.0'
+  gem 'timecop'
   gem 'webdrivers'
 end
