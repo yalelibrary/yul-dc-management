@@ -30,7 +30,19 @@ module DigitalObjectManagement
     ParentObject.update(oid, digital_object_json: new_digital_object)
   end
 
+  def mc_post(mc_url, data)
+    metadata_cloud_username = ENV["MC_USER"]
+    metadata_cloud_password = ENV["MC_PW"]
+    HTTP.basic_auth(user: metadata_cloud_username, pass: metadata_cloud_password).post(mc_url, data)
+  end
+
   def send_digital_object_update(digital_object_update)
-    Rails.logger.info "\n\n\n\n\n*****************************************#{digital_object_update.to_json}\n*****************************************\n\n\n\n\n"
+    full_response = mc_post("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates", digital_object_update)
+    case full_response.status
+    when 200
+      Rails.logger.info "Update sent successfully #{digital_object_update}"
+    else
+      Rails.logger.info "Error sending digital object update: #{full_response.status}, #{digital_object_update}"
+    end
   end
 end
