@@ -33,7 +33,7 @@ module DigitalObjectManagement
   def mc_post(mc_url, data)
     metadata_cloud_username = ENV["MC_USER"]
     metadata_cloud_password = ENV["MC_PW"]
-    HTTP.basic_auth(user: metadata_cloud_username, pass: metadata_cloud_password).post(mc_url, data)
+    HTTP.basic_auth(user: metadata_cloud_username, pass: metadata_cloud_password).post(mc_url, json: data)
   end
 
   def send_digital_object_update(digital_object_update)
