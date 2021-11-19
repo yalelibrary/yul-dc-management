@@ -620,14 +620,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.authoritative_metadata_source_id = aspace
         parent_object.save
       end
-      it "posts digital object changes when source changes" do
-        stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
-            .to_return(status: 200, body: { data: "fake data" }.to_json)
-        expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/16797069?include-children=1"
-        parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
-        parent_object.authoritative_metadata_source_id = aspace
-        parent_object.save
-      end
     end
 
     context 'with a bib but no barcode' do
