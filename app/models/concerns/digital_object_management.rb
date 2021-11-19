@@ -38,7 +38,7 @@ module DigitalObjectManagement
 
   def send_digital_object_update(digital_object_update)
     return unless ENV["VPN"] == "true"
-    full_response = mc_post("http://docker.for.mac.host.internal:8080/api/digital_object_updates", digital_object_update)
+    full_response = mc_post("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates", digital_object_update)
     case full_response.status
     when 200
       Rails.logger.info "Update sent successfully #{digital_object_update}"
