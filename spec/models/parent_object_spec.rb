@@ -613,6 +613,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         ENV['VPN'] = original_vpn
       end
       it "posts digital object changes when source changes" do
+        stub_full_text_not_found('2005512')
         stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1")
             .to_return(status: 200, body: { dummy: "data" }.to_json)
         stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/515305")
