@@ -21,7 +21,7 @@ module DigitalObjectManagement
 
   def digital_object_check
     new_digital_object = generate_digital_object_json
-    return unless digital_object_check != new_digital_object
+    return unless digital_object_json != new_digital_object
     #  There has been a change that needs to be reported to metadata cloud
     send_digital_object_update(
       prior_digital_object: digital_object_json.present? && JSON.parse(digital_object_json) || nil,
