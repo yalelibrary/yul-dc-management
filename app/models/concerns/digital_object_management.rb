@@ -24,8 +24,8 @@ module DigitalObjectManagement
     return unless digital_object_json != new_digital_object
     #  There has been a change that needs to be reported to metadata cloud
     send_digital_object_update(
-      prior_digital_object: digital_object_json.present? && JSON.parse(digital_object_json) || nil,
-      digital_object: new_digital_object.present? && JSON.parse(new_digital_object) || nil
+      priorDigitalObject: digital_object_json.present? && JSON.parse(digital_object_json) || nil,
+      digitalObject: new_digital_object.present? && JSON.parse(new_digital_object) || nil
     )
     ParentObject.update(oid, digital_object_json: new_digital_object)
   end
