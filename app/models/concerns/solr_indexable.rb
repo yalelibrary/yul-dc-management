@@ -150,7 +150,6 @@ module SolrIndexable
       viewing_hint_ssi: display_layout,
       visibility_ssi: visibility,
       type_ssi: 'parent'
-      # fields below this point will be deprecated in a future release
     }.delete_if { |_k, v| v.blank? } # Delete nil, [], and empty string values
   end
 
