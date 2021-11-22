@@ -211,7 +211,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
       it "can create a Solr document for a record, including visibility" do
         solr_document = parent_object_with_public_visibility.reload.to_solr
-        expect(solr_document[:title_tsim]).to eq ["Walt Whitman collection, 1842-1949"]
+        expect(solr_document[:title_tesim]).to eq ["Walt Whitman collection, 1842-1949"]
         expect(solr_document[:visibility_ssi]).to include "Public"
       end
 
@@ -241,7 +241,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
         it "assigns private visibility from Ladybird data" do
           solr_document = parent_object_with_private_visibility.reload.to_solr
-          expect(solr_document[:title_tsim].first).to include "Dai Min kyūhen bankoku jinseki rotei zenzu"
+          expect(solr_document[:title_tesim].first).to include "Dai Min kyūhen bankoku jinseki rotei zenzu"
           expect(solr_document[:visibility_ssi]).to include "Private"
         end
       end
