@@ -4,9 +4,7 @@ METADATA_FIELDS = {
   alternativeTitle: {
     label: 'Alternative Title',
     solr_fields: [
-      'alternativeTitle_tesim',
-      'alternativeTitle_ssim',
-      'alternative_title_tsm'
+      'alternativeTitle_tesim'
     ]
   },
   creator: {
@@ -45,8 +43,7 @@ METADATA_FIELDS = {
   abstract: {
     label: 'Abstract',
     solr_fields: [
-      'abstract_tesim',
-      'abstract_ssim'
+      'abstract_tesim'
     ]
   },
   description: {

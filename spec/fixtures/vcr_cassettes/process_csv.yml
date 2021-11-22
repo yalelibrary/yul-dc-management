@@ -79,13 +79,10 @@ http_interactions:
         bolas : 121 cm.","extentOfDigitization_ssim":null,"findingAid_ssim":null,"folder_ssim":null,"format":"three
         dimensional object","format_tesim":"three dimensional object","genre_ssim":"Bolas
         (projectile weapons)--United States--19th century.","genre_tesim":"Bolas (projectile
-        weapons)--United States--19th century.","geoSubject_ssim":null,"identifierMfhd_ssim":null,"identifierShelfMark_ssim":"WA
-        MSS S-3019","identifierShelfMark_tesim":"WA MSS S-3019","imageCount_isi":4,"indexedBy_tsim":"Nathan
+        weapons)--United States--19th century.","geoSubject_ssim":null,"identifierMfhd_ssim":null,"imageCount_isi":4,"indexedBy_tsim":"Nathan
         Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western
         Americana, Beinecke Rare Book and Manuscript Library.","label_tesim":["Bolas-001","Bolas-002","Bolas-003","Bolas-004"],"language_ssim":null,"localRecordNumber_ssim":null,"material_tesim":null,"number_of_pages_ss":null,"oid_ssi":16057779,"orbisBarcode_ssi":null,"orbisBibId_ssi":"12442385","partOf_tesim":"Beinecke
-        Library","partOf_ssim":"Beinecke Library","projection_tesim":null,"public_bsi":true,"publicationPlace_ssim":null,"publicationPlace_tesim":null,"publisher_tesim":null,"publisher_ssim":null,"recordType_ssi":"oid","references_tesim":"Nathan
-        Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western
-        Americana, Beinecke Rare Book and Manuscript Library.","repository_ssim":"Beinecke
+        Library","projection_tesim":null,"public_bsi":true,"publisher_tesim":null,"publisher_ssim":null,"recordType_ssi":"oid","repository_ssim":"Beinecke
         Library","resourceType_ssim":"Tools, Equipment \u0026 Instruments","resourceType_tesim":"Tools,
         Equipment \u0026 Instruments","rights_ssim":"The use of this image may be
         subject to the copyright law of the United States (Title 17, United States
@@ -104,19 +101,7 @@ http_interactions:
         Bull,--1831-1890."],"subjectTopic_tesim":["Theatrical managers--United States.","Wild
         west shows."],"subjectTopic_ssim":["Theatrical managers--United States.","Wild
         west shows."],"thumbnail_path_ss":"http://localhost:8182/iiif/2/16057781/full/!200,200/0/default.jpg","title_tesim":"Rawhide
-        bolas","title_ssim":"Rawhide bolas","uri_ssim":"/ladybird/oid/16057779","url_suppl_ssim":"http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?\u0026amp;CN=WA_MSS_S-3019","visibility_ssi":"Public","abstract_ssim":["A
-        collection of weapons and costume accessories owned by Nathan Salsbury and
-        associated with colleagues of William F. \"Buffalo Bill\" Cody, including
-        John Burwell \"Texas Jack\" Omohundro and Sitting Bull. Included are a shotgun,
-        a bolas, a pair of moccasins, and a quiver containing a bow and arrows, as
-        well as a revolver owned by Salsbury.","Nathan Salsbury (1846-1902), Civil
-        War veteran, actor, and theatrical entrepreneur; after 1884 co-owner, producer
-        and manager of \"Buffalo Bill''s Wild West Show.\""],"alternativeTitle_ssim":null,"alternative_title_tsm":null,"author_ssim":null,"author_tesim":null,"author_tsim":null,"date_tsim":"[1870]","geo_subject_ssim":null,"material_ssim":null,"oid_ssim":16057779,"orbisBarcode_ssim":null,"orbisBibId_ssim":"12442385","projection_ssim":null,"recordType_ssim":"oid","references_ssim":"Nathan
-        Salsbury, Objects Associated with Buffalo Bill. Yale Collection of Western
-        Americana, Beinecke Rare Book and Manuscript Library.","scale_ssim":null,"sourceCreated_ssim":null,"sourceDate_ssim":"[circa
-        1870-1895]","sourceEdition_ssim":null,"sourceNote_ssim":null,"sourceTitle_ssim":"[Objects
-        associated with Buffalo Bill]","subject_topic_tsim":["Theatrical managers--United
-        States.","Wild west shows."],"title_tsim":"Rawhide bolas"}]'
+        bolas","title_ssim":"Rawhide bolas","uri_ssim":"/ladybird/oid/16057779","url_suppl_ssim":"http://beinecke.library.yale.edu/dl_crosscollex/callnumSRCHXC.asp?\u0026amp;CN=WA_MSS_S-3019","visibility_ssi":"Public",title_tsim":"Rawhide bolas"}]'
     headers:
       User-Agent:
       - Faraday v1.0.1

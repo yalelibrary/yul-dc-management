@@ -55,6 +55,7 @@ module SolrIndexable
       ancestor_titles_hierarchy_ssim: ancestor_structure(generate_ancestor_title(json_to_index["ancestorTitles"])),
       archivalSort_ssi: json_to_index["archivalSort"],
       archiveSpaceUri_ssi: aspace_uri,
+      box_ssim: extract_container_information(json_to_index),
       callNumber_ssim: json_to_index["callNumber"],
       callNumber_tesim: json_to_index["callNumber"],
       caption_tesim: child_captions,
@@ -106,6 +107,7 @@ module SolrIndexable
       oid_ssi: oid,
       orbisBarcode_ssi: barcode,
       orbisBibId_ssi: bib, # may change to orbisBibId
+      partOf_tesim: json_to_index["partOf"],
       preferredCitation_tesim: json_to_index["preferredCitation"],
       project_identifier_tesi: generate_pid(json_to_index["project_identifier"]),
       projection_tesim: json_to_index["projection"],
@@ -147,39 +149,8 @@ module SolrIndexable
       url_suppl_ssim: json_to_index["relatedUrl"],
       viewing_hint_ssi: display_layout,
       visibility_ssi: visibility,
-      # fields below this point will be deprecated in a future release
-      abstract_ssim: json_to_index["abstract"], # replaced by abstract_tesim
-      alternativeTitle_ssim: json_to_index["alternativeTitle"], # replaced by alternativeTitle_tesim
-      alternative_title_tsm: json_to_index["alternativeTitleDisplay"], # replaced by alternativeTitleDisplay_tesim
-      author_ssim: json_to_index["creator"], # replaced by creator_ssim
-      author_tesim: json_to_index["creator"], # replaced by creator_tesim
-      author_tsim: json_to_index["creator"], # replaced by author_tesim
-      box_ssim: extract_container_information(json_to_index), # replaced by containerGrouping
-      date_tsim: json_to_index["date"], # replaced by date_ssim
-      identifierShelfMark_ssim: json_to_index["callNumber"], # replaced by callNumber
-      identifierShelfMark_tesim: json_to_index["callNumber"], # replaced by callNumber
-      geo_subject_ssim: json_to_index["geoSubject"], # replaced by geoSubject_ssim
-      material_ssim: json_to_index["material"], # replaced by material_tesim
-      oid_ssim: oid, # replaced by oid_ssi
-      orbisBarcode_ssim: json_to_index["orbisBarcode"] || json_to_index["barcode"], # replaced by orbisBarcode_ssi
-      orbisBibId_ssim: json_to_index["orbisBibId"], # replaced by orbisBibId_ssi
-      partOf_tesim: json_to_index["partOf"],
-      partOf_ssim: json_to_index["partOf"],
-      projection_ssim: json_to_index["projection"], # replaced by projection_tesim
-      publicationPlace_ssim: json_to_index["creationPlace"],
-      publicationPlace_tesim: json_to_index["creationPlace"],
-      recordType_ssim: json_to_index["recordType"], # replaced by recordType_ssi
-      references_ssim: json_to_index["preferredCitation"], # replaced by references_tesim
-      references_tesim: json_to_index["preferredCitation"], # replaced by preferredCitation_tesim
-      scale_ssim: json_to_index["scale"], # replaced by scale_tesim
-      sourceCreated_ssim: json_to_index["sourceCreated"], # replaced by sourceCreated_tesim
-      sourceDate_ssim: json_to_index["sourceDate"], # replaced by sourceDate_tesim
-      sourceEdition_ssim: json_to_index["sourceEdition"], # replaced by sourceEdition_tesim
-      sourceNote_ssim: json_to_index["sourceNote"], # replaced by sourceNote_tesim
-      sourceTitle_ssim: json_to_index["sourceTitle"], # repleaced by sourceTitle_tesim
-      subject_topic_tsim: json_to_index["subjectTopic"], # replaced by subjectTopic_tesim and subjectTopic_ssim
-      title_tsim: json_to_index["title"], # replaced by title_tesim
       type_ssi: 'parent'
+      # fields below this point will be deprecated in a future release
     }.delete_if { |_k, v| v.blank? } # Delete nil, [], and empty string values
   end
 
