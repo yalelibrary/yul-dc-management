@@ -27,13 +27,19 @@ module DigitalObjectManagement
 
   def digital_object_check
     new_digital_object = generate_digital_object_json
-    return unless digital_object_json != new_digital_object
+    return unless (digital_object_json && digital_object_json.json || nil) != new_digital_object
     #  There has been a change that needs to be reported to metadata cloud
     send_digital_object_update(
       priorDigitalObject: digital_object_json.present? && JSON.parse(digital_object_json) || nil,
       digitalObject: new_digital_object.present? && JSON.parse(new_digital_object) || nil
     )
-    ParentObject.update(oid, digital_object_json: new_digital_object)
+    apply_new_digital_object_json(new_digital_object)
+  end
+
+  def apply_new_digital_object_json(json)
+    self.digital_object_json = DigitalObjectJson.new if digital_object_json.nil?
+    digital_object_json.json = json
+    digital_object_json.save
   end
 
   def mc_post(mc_url, data)

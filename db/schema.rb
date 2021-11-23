@@ -112,6 +112,14 @@ ActiveRecord::Schema.define(version: 2021_11_19_150734) do
     t.index ["parent_object_id"], name: "index_dependent_objects_on_parent_object_id"
   end
 
+  create_table "digital_object_jsons", force: :cascade do |t|
+    t.text "json"
+    t.bigint "parent_object_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["parent_object_id"], name: "index_digital_object_jsons_on_parent_object_id"
+  end
+
   create_table "ingest_events", force: :cascade do |t|
     t.string "reason"
     t.string "status"
@@ -163,7 +171,6 @@ ActiveRecord::Schema.define(version: 2021_11_19_150734) do
     t.string "container_grouping"
     t.string "project_identifier"
     t.string "parent_model"
-    t.text "digital_object_json"
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
