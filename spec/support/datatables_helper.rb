@@ -134,3 +134,8 @@ def admin_set_datatable_view_mock(id, key, homepage) # rubocop:disable Metrics/A
   allow(@datatable_view_mock).to receive(:link_to).with("/admin_sets/#{id}/edit", {}).and_return("<a href='/admin_sets/#{id}/edit'><i class=\"fa fa-pencil-alt></i>\"</a>")
   @datatable_view_mock
 end
+
+def activity_stream_datatable_view_mock(process_id, run_time, items, status, created, updated, retrieved_records)
+  @datatable_view_mock ||= double
+  @datatable_view_mock
+end
