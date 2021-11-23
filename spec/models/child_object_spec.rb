@@ -176,6 +176,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       end
 
       it "can return a the remote ocr path" do
+        expect(child_object.remote_ocr_exists?).to eq(true)
         expect(child_object.remote_ocr_path).to eq "fulltext/89/45/67/89/456789.txt"
       end
 
