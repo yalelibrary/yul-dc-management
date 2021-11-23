@@ -769,10 +769,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     context 'with voyager_json' do
       let(:parent_object) do
         FactoryBot.build(:parent_object, oid: '16797069', bib: '3435140', barcode: '39002075038423',
+                                         authoritative_metadata_source_id: voyager,
                                          voyager_json: JSON.parse(File.read(File.join(fixture_path, "ils", "V-16797069.json"))))
       end
 
       it 'returns a voyager url' do
+        source = MetadataSource.find(parent_object.authoritative_metadata_source_id)
+        expect(source.url_type).to eq 'voyager_cloud_url'
         expect(parent_object.voyager_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ils/barcode/39002075038423?bib=3435140"
       end
     end
@@ -787,11 +790,14 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     context 'with aspace_json' do
       let(:parent_object) do
         FactoryBot.build(:parent_object, oid: '2012036', bib: '3435140', barcode: '39002075038423',
+                                         authoritative_metadata_source_id: aspace,
                                          aspace_uri: '/repositories/11/archival_objects/555049',
                                          aspace_json: JSON.parse(File.read(File.join(fixture_path, "aspace", "AS-2012036.json"))))
       end
 
       it 'returns an aspace url' do
+        source = MetadataSource.find(parent_object.authoritative_metadata_source_id)
+        expect(source.url_type).to eq 'aspace_cloud_url'
         expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/555049"
       end
     end
