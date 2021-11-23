@@ -3,10 +3,15 @@
 module DigitalObjectManagement
   extend ActiveSupport::Concern
 
+  def digital_object_json_available?
+    return false unless child_object_count&.positive?
+    return false unless authoritative_metadata_source && authoritative_metadata_source.metadata_cloud_name == "aspace"
+    return false unless ['Public', 'Yale Community Only'].include? visibility
+    true
+  end
+
   def generate_digital_object_json
-    return nil unless child_object_count > 0
-    return nil unless authoritative_metadata_source && authoritative_metadata_source.metadata_cloud_name == "aspace"
-    return nil unless ['Public', 'Yale Community Only'].include? visibility
+    return nil unless digital_object_json_available?
     # create digital object from data and return JSON
     {   oid: oid,
         title: digital_object_title,
