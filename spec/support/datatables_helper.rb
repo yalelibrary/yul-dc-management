@@ -135,7 +135,9 @@ def admin_set_datatable_view_mock(id, key, homepage) # rubocop:disable Metrics/A
   @datatable_view_mock
 end
 
-def activity_stream_datatable_view_mock(process_id, run_time, items, status, created, updated, retrieved_records)
+# rubocop:disable Metrics/ParameterLists
+def activity_stream_datatable_view_mock(_process_id, _run_time, _items, _status, _created, _updated, _retrieved_records)
   @datatable_view_mock ||= double
   @datatable_view_mock
 end
+# rubocop:enable Metrics/ParameterLists

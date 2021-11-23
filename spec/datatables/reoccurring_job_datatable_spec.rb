@@ -14,7 +14,16 @@ RSpec.describe ReoccurringJobDatatable, type: :datatable, prep_metadata_sources:
     end
 
     it 'can handle a populated set' do
-      output = ReoccurringJobDatatable.new(datatable_sample_params(columns), view_context: activity_stream_datatable_view_mock(activity_stream.id, activity_stream.run_time, activity_stream.activity_stream_items, activity_stream.status, activity_stream.created_at, activity_stream.updated_at, activity_stream.retrieved_records)).data
+      output = ReoccurringJobDatatable.new(datatable_sample_params(columns),
+                                           view_context: activity_stream_datatable_view_mock(
+                                             activity_stream.id,
+                                             activity_stream.run_time,
+                                             activity_stream.activity_stream_items,
+                                             activity_stream.status,
+                                             activity_stream.created_at,
+                                             activity_stream.updated_at,
+                                             activity_stream.retrieved_records
+                                           )).data
 
       expect(output).to include(
 
