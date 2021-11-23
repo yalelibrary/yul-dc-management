@@ -624,7 +624,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
         parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
         parent_object.authoritative_metadata_source_id = aspace
-        parent_object.save
+        parent_object.child_object_count = 1
+        parent_object.visibility = "Public"
+        parent_object.save!
       end
     end
 
