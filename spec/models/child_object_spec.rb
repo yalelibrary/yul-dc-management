@@ -192,7 +192,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
                                              'X-Amz-Meta-Height' => '60',
                                              'Content-Type' => 'image/tiff' })
       end
-      
+
       it "has expected start states" do
         expect(child_object.start_states).to eq ["ptiff-queued", "processing-queued"]
       end
