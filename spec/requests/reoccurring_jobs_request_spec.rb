@@ -26,5 +26,12 @@ RSpec.describe "Reoccurring Jobs", type: :request do
         expect(response).to have_http_status(:success)
       end
     end
+
+    describe "POST /create" do
+      it "correctly responds with invalid attributes" do
+        post reoccurring_jobs_url
+        expect(response).to redirect_to(reoccurring_jobs_url)
+      end
+    end
   end
 end
