@@ -761,7 +761,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
   end
 
   context "a newly created ParentObject with an expected (voyager) authoritative_metadata_source" do
-
     around do |example|
       perform_enqueued_jobs do
         example.run
@@ -780,7 +779,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
   end
 
   context "a newly created ParentObject with an expected (aspace) authoritative_metadata_source" do
-
     around do |example|
       perform_enqueued_jobs do
         example.run
