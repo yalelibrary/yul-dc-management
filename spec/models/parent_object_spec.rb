@@ -628,6 +628,37 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.visibility = "Public"
         parent_object.save!
       end
+      it "posts digital object changes when source changes, and continues with log is post files" do
+        stub_full_text_not_found('2005512')
+        stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1")
+            .to_return(status: 200, body: { dummy: "data" }.to_json)
+        stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/515305")
+            .to_return(status: 200, body: { dummy: "data" }.to_json)
+        allow(S3Service).to receive(:upload_if_changed).and_return(true)
+        expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
+        allow(parent_object).to receive(:mc_post).and_raise("boom!")
+        parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
+        parent_object.authoritative_metadata_source_id = aspace
+        parent_object.child_object_count = 1
+        parent_object.visibility = "Public"
+        parent_object.save!
+      end
+      it "posts digital object changes when source changes, and continues with log is MC fails" do
+        stub_full_text_not_found('2005512')
+        stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
+            .to_return(status: 404, body: { data: "fake data" }.to_json)
+        stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1")
+            .to_return(status: 200, body: { dummy: "data" }.to_json)
+        stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/515305")
+            .to_return(status: 200, body: { dummy: "data" }.to_json)
+        allow(S3Service).to receive(:upload_if_changed).and_return(true)
+        expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
+        parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
+        parent_object.authoritative_metadata_source_id = aspace
+        parent_object.child_object_count = 1
+        parent_object.visibility = "Public"
+        parent_object.save!
+      end
     end
 
     context 'with a bib but no barcode' do
