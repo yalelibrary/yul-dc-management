@@ -192,6 +192,11 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
                                              'X-Amz-Meta-Height' => '60',
                                              'Content-Type' => 'image/tiff' })
       end
+      
+      it "has expected start states" do
+        expect(child_object.start_states).to eq ["ptiff-queued", "processing-queued"]
+      end
+
       it "can receive width and height if they are cached" do
         # expect(StaticChildInfo).to receive(:size_for).and_return(width: 50, height: 60)
         expect(child_object).to receive(:remote_ptiff_exists?).and_return true
