@@ -1,3 +1,7 @@
+version: 2.1
+
+orbs: circleci-orb: samvera/circleci-orb@1.0.0
+
 commands:
   docker-tag:
     description: "Add a new tag to a docker image that has already been pulled"
