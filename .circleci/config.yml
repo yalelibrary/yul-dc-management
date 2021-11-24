@@ -130,5 +130,4 @@ workflows:
     jobs:
       - run-tests
       - done:
-        requires: 
-          - run-tests
+        requires: run-tests
