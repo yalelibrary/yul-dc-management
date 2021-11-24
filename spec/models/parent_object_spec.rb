@@ -609,8 +609,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       around do |example|
         original_vpn = ENV['VPN']
         ENV['VPN'] = "true"
+        original_flags = ENV['FEATURE_FLAGS']
+        ENV['FEATURE_FLAGS'] = "#{ENV['FEATURE_FLAGS']}|DO-SEND|" unless original_flags&.include?("|DO-SEND|")
         example.run
         ENV['VPN'] = original_vpn
+        ENV['FEATURE_FLAGS'] = original_flags
       end
       it "posts digital object changes when source changes" do
         stub_full_text_not_found('2005512')
@@ -628,7 +631,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.visibility = "Public"
         parent_object.save!
       end
-      it "posts digital object changes when source changes, and continues with log is post files" do
+      it "posts digital object changes when source changes, and continues if post fails" do
         stub_full_text_not_found('2005512')
         stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1")
             .to_return(status: 200, body: { dummy: "data" }.to_json)
@@ -643,7 +646,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.visibility = "Public"
         parent_object.save!
       end
-      it "posts digital object changes when source changes, and continues with log is MC fails" do
+      it "posts digital object changes when source changes, and continues if MC doesn't return 200" do
         stub_full_text_not_found('2005512')
         stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
             .to_return(status: 404, body: { data: "fake data" }.to_json)
