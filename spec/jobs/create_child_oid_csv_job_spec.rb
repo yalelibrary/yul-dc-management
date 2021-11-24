@@ -8,12 +8,21 @@ RSpec.describe CreateChildOidCsvJob, type: :job do
 
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
+  let(:create_child_oid_csv_job) { CreateChildOidCsvJob.new }
 
   it 'increments the job queue by one' do
     ActiveJob::Base.queue_adapter = :delayed_job
     expect do
       described_class.perform_later(batch_process)
     end.to change { Delayed::Job.count }.by(1)
+  end
+
+  it "has correct priority" do
+    expect(create_child_oid_csv_job.default_priority).to eq(-100)
+  end
+
+  it "has correct queue" do
+    expect(create_child_oid_csv_job.queue_name).to eq('default')
   end
 
   it 'calls output_csv when performed' do
