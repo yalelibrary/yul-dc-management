@@ -132,7 +132,7 @@ workflows:
               only: /^v\d+\.\d+\.\d+$/
       - test_parallel_then_upload:
         jobs:
-          -  run-tests
+          - run-tests
           - done:
             requires:
               - run-tests
