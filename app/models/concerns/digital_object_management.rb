@@ -32,7 +32,7 @@ module DigitalObjectManagement
     return unless (digital_object_json && digital_object_json.json || nil) != new_digital_object
     #  There has been a change that needs to be reported to metadata cloud
     if send_digital_object_update(
-      priorDigitalObject: digital_object_json.present? && JSON.parse(digital_object_json) || nil,
+      priorDigitalObject: digital_object_json.present? && JSON.parse(digital_object_json.json) || nil,
       digitalObject: new_digital_object.present? && JSON.parse(new_digital_object) || nil
     )
       # Only update the database is the update was sent to MC successfully.
