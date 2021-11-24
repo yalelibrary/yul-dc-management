@@ -104,8 +104,8 @@ jobs:
           tag: $CIRCLE_TAG
 
 orbs:
-  docker: circleci/docker@1.0.1
   circleci-orb: samvera/circleci-orb@1.0.0
+  docker: circleci/docker@1.0.1
 version: 2.1
 workflows:
   commit:
