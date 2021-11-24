@@ -62,9 +62,7 @@ jobs:
           command: |
             mkdir /tmp/test-results
             cd /home/app/webapp && bundle exec rspec --tag ~vpn_only:true $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-      - coveralls/upload:
-        parallel: true
-        flag_name: tests
+      - coveralls/upload
 
   publish-latest:
     executor: docker/docker
@@ -102,10 +100,7 @@ jobs:
       - docker/push:
           image: yalelibraryit/dc-management
           tag: $CIRCLE_TAG
-  done:
-    steps:
-       - coveralls/upload:
-         parallel_finished: true
+
 orbs:
   coveralls: coveralls/coveralls@1.0.6
   docker: circleci/docker@1.0.1
@@ -130,9 +125,4 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v\d+\.\d+\.\d+$/
-      - test_parallel_then_upload:
-        jobs:
-          - run-tests
-          - done:
-            requires:
-              - run-tests
+
