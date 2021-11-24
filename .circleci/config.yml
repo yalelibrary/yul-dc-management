@@ -62,9 +62,9 @@ jobs:
           command: |
             mkdir /tmp/test-results
             cd /home/app/webapp && bundle exec rspec --tag ~vpn_only:true $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-      - run:
-          name: Upload code coverage stats
-          command: curl -k https://coveralls.io/webhook?repo_token=${COVERALLS_REPO_TOKEN} -d "payload[build_num]=${CIRCLE_BUILD_NUM}&payload[status]=done"
+      - coveralls/upload:
+        parallel: true
+        flag_name: tests
 
   publish-latest:
     executor: docker/docker
@@ -102,9 +102,12 @@ jobs:
       - docker/push:
           image: yalelibraryit/dc-management
           tag: $CIRCLE_TAG
-
+  done:
+    steps:
+       - coveralls/upload:
+         parallel_finished: true
 orbs:
-  circleci-orb: samvera/circleci-orb@1.0.0
+  coveralls: coveralls/coveralls@1.0.6
   docker: circleci/docker@1.0.1
 version: 2.1
 workflows:
@@ -127,3 +130,9 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v\d+\.\d+\.\d+$/
+      - test_parallel_then_upload:
+        jobs:
+          -  run-tests
+          - done:
+            requires:
+              - run-tests
