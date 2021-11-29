@@ -219,7 +219,6 @@ const format_csv = (csv) => {
     csv_content += csvRows[i]
     csv_content += '\n'
   }
-  console.log(formatted_header)
   return (formatted_header + '\n' + csv_content);
 }
 
