@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_18_205946) do
+ActiveRecord::Schema.define(version: 2021_11_19_150734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,14 @@ ActiveRecord::Schema.define(version: 2021_11_18_205946) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "metadata_source"
     t.index ["parent_object_id"], name: "index_dependent_objects_on_parent_object_id"
+  end
+
+  create_table "digital_object_jsons", force: :cascade do |t|
+    t.text "json"
+    t.bigint "parent_object_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["parent_object_id"], name: "index_digital_object_jsons_on_parent_object_id"
   end
 
   create_table "ingest_events", force: :cascade do |t|

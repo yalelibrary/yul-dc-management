@@ -10,17 +10,20 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Statable
   include PdfRepresentable
   include Delayable
+  include DigitalObjectManagement
   has_many :dependent_objects
   has_many :child_objects, -> { order('"order" ASC, oid ASC') }, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
   has_many :batch_connections, as: :connectable
   has_many :batch_processes, through: :batch_connections
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   belongs_to :admin_set
+  has_one :digital_object_json
   attr_accessor :metadata_update
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
   self.primary_key = 'oid'
   after_save :setup_metadata_job
+  after_update :digital_object_check
   # after_update :solr_index_job # we index from the fetch job on create
   after_destroy :solr_delete
   after_destroy :note_deletion
