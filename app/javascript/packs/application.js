@@ -172,7 +172,6 @@ $( document ).on('turbolinks:load', function() {
         {
           extend: 'csvHtml5',
           text: "CSV",
-          action: newExportAction,
           exportOptions: {
             columns: ':visible',
           },
@@ -189,6 +188,7 @@ $( document ).on('turbolinks:load', function() {
         },
         {
           extend: 'csvHtml5',
+          action: newExportAction,
           text: "All Matching Entries"
         }
       ],
