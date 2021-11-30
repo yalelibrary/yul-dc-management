@@ -117,7 +117,7 @@ $( document ).on('turbolinks:load', function() {
       dt.one('preXhr', function (e, s, data) {
         // Just this once, load all data from the server...
         data.start = 0;
-        data.length = 2147483647;
+        data.length = 150000;
 
         dt.one('preDraw', function (e, settings) {
           // Call the original action function 
@@ -154,7 +154,7 @@ $( document ).on('turbolinks:load', function() {
       "bAutoWidth": false, // AutoWidth has issues with hiding and showing columns as startup
       "columns": columns,
       "order": columnOrder(columns),
-      "lengthMenu": [[1, 100, 500], [1, 100, 500]],
+      "lengthMenu": [[50, 100, 500], [50, 100, 500]],
       "sDom":hasSearch?'Blrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
       buttons: [
         {
