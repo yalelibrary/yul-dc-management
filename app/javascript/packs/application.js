@@ -140,6 +140,10 @@ $( document ).on('turbolinks:load', function() {
           exportOptions: {
             columns: ':visible'
           }
+        },
+        {
+          extend: 'csvHtml5',
+          text: "All Matching Entries"
         }
       ],
       // pagingType is optional, if you want full pagination controls.
