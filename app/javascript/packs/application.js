@@ -97,6 +97,51 @@ $( document ).on('turbolinks:load', function() {
       return colVisibilityMap;
     }
 
+    var oldExportAction = function (self, e, dt, button, config) {
+      if (button[0].className.indexOf('buttons-csv') >= 0) {
+        if ($.fn.dataTable.ext.buttons.csvHtml5.available(dt, config)) {
+          $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config);
+          }
+        else {
+          $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
+        }
+      } else if (button[0].className.indexOf('buttons-print') >= 0) {
+        $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+      }
+    };
+  
+    var newExportAction = function (e, dt, button, config) {
+      var self = this;
+      var oldStart = dt.settings()[0]._iDisplayStart;
+  
+      dt.one('preXhr', function (e, s, data) {
+        // Just this once, load all data from the server...
+        data.start = 0;
+        data.length = 150000;
+
+        dt.one('preDraw', function (e, settings) {
+          // Call the original action function 
+          oldExportAction(self, e, dt, button, config);
+
+          dt.one('preXhr', function (e, s, data) {
+            // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+            // Set the property to what it was before exporting.
+            settings._iDisplayStart = oldStart;
+            data.start = oldStart;
+          });
+
+          // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+          setTimeout(dt.ajax.reload, 0);
+
+          // Prevent rendering of the full data to the DOM
+          return false;
+        });
+      });
+  
+      // Requery the server with the new one-time export settings
+      dt.ajax.reload();
+    };
+
     dataTable = $('.is-datatable').dataTable({
       "deferLoading":true,
       "processing": true,
@@ -109,7 +154,7 @@ $( document ).on('turbolinks:load', function() {
       "bAutoWidth": false, // AutoWidth has issues with hiding and showing columns as startup
       "columns": columns,
       "order": columnOrder(columns),
-      "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]],
+      "lengthMenu": [[50, 100, 500, -1], [50, 100, 500]],
       "sDom":hasSearch?'Blrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
       buttons: [
         {
@@ -143,7 +188,8 @@ $( document ).on('turbolinks:load', function() {
         },
         {
           extend: 'csvHtml5',
-          text: "All Matching Entries"
+          text: "All Matching Entries",
+          action: newExportAction,
         }
       ],
       // pagingType is optional, if you want full pagination controls.
