@@ -101,7 +101,7 @@ $( document ).on('turbolinks:load', function() {
       if (button[0].className.indexOf('buttons-csv') >= 0) {
         if ($.fn.dataTable.ext.buttons.csvHtml5.available(dt, config)) {
           $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config);
-          }
+        }
         else {
           $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
         }
@@ -109,15 +109,15 @@ $( document ).on('turbolinks:load', function() {
         $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
       }
     };
-  
+
     var newExportAction = function (e, dt, button, config) {
       var self = this;
       var oldStart = dt.settings()[0]._iDisplayStart;
-  
+
       dt.one('preXhr', function (e, s, data) {
         // Just this once, load all data from the server...
         data.start = 0;
-        data.length = 150000;
+        data.length = 2147483647;
 
         dt.one('preDraw', function (e, settings) {
           // Call the original action function 
@@ -137,7 +137,7 @@ $( document ).on('turbolinks:load', function() {
           return false;
         });
       });
-  
+
       // Requery the server with the new one-time export settings
       dt.ajax.reload();
     };
@@ -154,7 +154,7 @@ $( document ).on('turbolinks:load', function() {
       "bAutoWidth": false, // AutoWidth has issues with hiding and showing columns as startup
       "columns": columns,
       "order": columnOrder(columns),
-      "lengthMenu": [[50, 100, 500, -1], [50, 100, 500]],
+      "lengthMenu": [[1, 100, 500], [1, 100, 500]],
       "sDom":hasSearch?'Blrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
       buttons: [
         {
@@ -172,6 +172,7 @@ $( document ).on('turbolinks:load', function() {
         {
           extend: 'csvHtml5',
           text: "CSV",
+          action: newExportAction,
           exportOptions: {
             columns: ':visible',
           },
@@ -188,8 +189,7 @@ $( document ).on('turbolinks:load', function() {
         },
         {
           extend: 'csvHtml5',
-          text: "All Matching Entries",
-          action: newExportAction,
+          text: "All Matching Entries"
         }
       ],
       // pagingType is optional, if you want full pagination controls.
