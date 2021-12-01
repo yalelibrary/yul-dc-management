@@ -15,18 +15,18 @@
   </thead>
   <tr>
     <td> <%= link_to "Working", working_jobs_path %>  </td>
-    <td> <%= "#{@working}" %>  </td>
+    <td> <%= @working %>  </td>
   </tr>
   <tr>
     <td> <%= link_to "Pending", pending_jobs_path %></td>
-     <td> <%=  "#{@pending}" %></td>
+     <td> <%=  @pending %></td>
   </tr>
   <tr>
     <td> <%= link_to "Failed", failed_jobs_path %></td>
-    <td> <%= "#{@failed}" %></td>
+    <td> <%= @failed %></td>
   </tr>
 </table>
 
 <div class="dataTables_info" >
-<%= link_to 'View Old Dashboard', delayed_job_web_path %>
+  <%= link_to 'View Old Dashboard', delayed_job_web_path %>
 </div>
