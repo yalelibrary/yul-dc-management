@@ -812,4 +812,48 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       expect(parent_object.visibility).to eq "Private"
     end
   end
+
+  context "a newly created ParentObject with an expected (voyager) authoritative_metadata_source" do
+    around do |example|
+      perform_enqueued_jobs do
+        example.run
+      end
+    end
+    context 'with voyager_json' do
+      let(:parent_object) do
+        FactoryBot.build(:parent_object, oid: '16797069', bib: '3435140', item: '8114701',
+                                         authoritative_metadata_source_id: voyager,
+                                         voyager_json: JSON.parse(File.read(File.join(fixture_path, "ils", "V-16797069.json"))))
+      end
+
+      it 'returns a voyager url' do
+        source = MetadataSource.find(parent_object.authoritative_metadata_source_id)
+        expect(source.url_type).to eq 'voyager_cloud_url'
+        parent_object.holding = nil
+        expect(parent_object.voyager_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ils/item/8114701?bib=3435140"
+      end
+    end
+  end
+
+  context "a newly created ParentObject with an expected (aspace) authoritative_metadata_source" do
+    around do |example|
+      perform_enqueued_jobs do
+        example.run
+      end
+    end
+    context 'with aspace_json' do
+      let(:parent_object) do
+        FactoryBot.build(:parent_object, oid: '2012036', bib: '3435140', barcode: '39002075038423',
+                                         authoritative_metadata_source_id: aspace,
+                                         aspace_uri: '/repositories/11/archival_objects/555049',
+                                         aspace_json: JSON.parse(File.read(File.join(fixture_path, "aspace", "AS-2012036.json"))))
+      end
+
+      it 'returns an aspace url' do
+        source = MetadataSource.find(parent_object.authoritative_metadata_source_id)
+        expect(source.url_type).to eq 'aspace_cloud_url'
+        expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/555049"
+      end
+    end
+  end
 end

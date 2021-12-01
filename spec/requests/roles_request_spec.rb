@@ -38,6 +38,16 @@ RSpec.describe 'Roles', type: :request do
             post roles_url, params: valid_parameters
           end.to change(user.roles, :count).by(1)
         end
+
+        it 'does not add duplicate role' do
+          expect do
+            post roles_url, params: valid_parameters
+          end.to change(user.roles, :count).by(1)
+          expect do
+            post roles_url, params: valid_parameters
+          end.not_to change(user.roles, :count)
+          expect(response).to have_http_status(302)
+        end
       end
 
       context 'with invalid parameters' do
