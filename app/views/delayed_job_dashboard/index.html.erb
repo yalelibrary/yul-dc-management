@@ -1,9 +1,32 @@
 <%= render partial: '/management/flash_messages' %>
-<pre>
-  Total Jobs: <%= @all_jobs_count %>
-  <%= link_to "Working Jobs: #{@working}", working_jobs_path %>
-  <%= link_to "Pending Jobs: #{@pending}", pending_jobs_path %>
-  <%= link_to "Failed Jobs: #{@failed}", failed_jobs_path %>
-</pre>
+<div class="datatable-heading">
+  <h1>Job Status</h1>
+</div>
+<div class = "JobTotal-subheading">
+  <h3>Total Jobs: <%= @all_jobs_count %></h3>
+</div>
 
-<%= link_to 'Old Delayed Job Dashboard', delayed_job_web_path %>
+<table class="table table-bordered table-responsive table-striped">
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col"> Job Type </th>
+    <th scope="col"> Job Count </th>
+  </tr>
+  </thead>
+  <tr>
+    <td> <%= link_to "Working #{@working}", working_jobs_path %>  </td>
+    <td> <%= link_to {@working} %>  </td>
+  </tr>
+  <tr>
+    <td> <%= link_to "Pending #{@pending}", pending_jobs_path %></td>
+     <td> <%= link_to {@pending} %> </td>
+  </tr>
+  <tr>
+    <td> <%= link_to "Failed #{@failed}", failed_jobs_path %></td>
+    <td> <%= link_to  {@failed} %> </td>
+  </tr>
+</table>
+
+<div class="dataTables_info" >
+<%= link_to 'View Old Dashboard', delayed_job_web_path %>
+</div>
