@@ -14,16 +14,16 @@
   </tr>
   </thead>
   <tr>
-    <td> <%= link_to "Working #{@working}", working_jobs_path %>  </td>
-    <td> <%= link_to {@working} %>  </td>
+    <td> <%= link_to "Working", working_jobs_path %>  </td>
+    <td> <%= link_to "#{@working}" %>  </td>
   </tr>
   <tr>
-    <td> <%= link_to "Pending #{@pending}", pending_jobs_path %></td>
-     <td> <%= link_to {@pending} %> </td>
+    <td> <%= link_to "Pending", pending_jobs_path %></td>
+     <td> <%= link_to "#{@pending}" %></td>
   </tr>
   <tr>
-    <td> <%= link_to "Failed #{@failed}", failed_jobs_path %></td>
-    <td> <%= link_to  {@failed} %> </td>
+    <td> <%= link_to "Failed", failed_jobs_path %></td>
+    <td> <%= link_to  "#{@failed}" %></td>
   </tr>
 </table>
 
