@@ -9,15 +9,6 @@ class ReoccurringJobsController < ApplicationController
     end
   end
 
-  # GET /reoccuring_jobs/1
-  # GET /reoccuring_jobs/1.json
-  def show
-    respond_to do |format|
-      format.html
-      format.json { render json: ReoccurringJobDatatable.new(params, view_context: view_context) }
-    end
-  end
-
   # POST ActivityStreamReader
   def create
     ActivityStreamReader.update
@@ -26,7 +17,4 @@ class ReoccurringJobsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  # GET /reoccuring_jobs/1/edit
-  def edit; end
 end
