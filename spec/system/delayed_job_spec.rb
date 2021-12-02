@@ -33,8 +33,8 @@ RSpec.describe 'Delayed Jobs', type: :system, js: true do
     end
     it 'are inaccessible manually through the delayed jobs endpoint' do
       visit delayed_job_web_path
-      expect(current_path).to eq(delayed_job_web_path)
-      expect(page).to have_content('Access denied')
+      expect(current_path).to eq('/users/auth/cas')
+      expect(page).to have_content('Authentication passthru')
     end
   end
 

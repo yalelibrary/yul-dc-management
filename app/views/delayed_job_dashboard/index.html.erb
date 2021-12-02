@@ -1,0 +1,32 @@
+<%= render partial: '/management/flash_messages' %>
+<div class="datatable-heading">
+  <h1>Job Status</h1>
+</div>
+<div class = "JobTotal-subheading">
+  <h3>Total Jobs: <%= @all_jobs_count %></h3>
+</div>
+
+<table class="table table-bordered table-responsive table-striped">
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col"> Job Type </th>
+    <th scope="col"> Job Count </th>
+  </tr>
+  </thead>
+  <tr>
+    <td> <%= link_to "Working", working_jobs_path %>  </td>
+    <td> <%= @working %>  </td>
+  </tr>
+  <tr>
+    <td> <%= link_to "Pending", pending_jobs_path %></td>
+     <td> <%=  @pending %></td>
+  </tr>
+  <tr>
+    <td> <%= link_to "Failed", failed_jobs_path %></td>
+    <td> <%= @failed %></td>
+  </tr>
+</table>
+
+<div class="dataTables_info" >
+  <%= link_to 'View Old Dashboard', delayed_job_web_path %>
+</div>
