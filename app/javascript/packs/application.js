@@ -96,8 +96,7 @@ $( document ).on('turbolinks:load', function() {
       // store the information about which columns are visible for this page
       return colVisibilityMap;
     }
-
-    dataTable = $('.is-datatable').dataTable({
+    var dataTableConfig = {
       "deferLoading":true,
       "processing": true,
       "serverSide": true,
@@ -140,6 +139,14 @@ $( document ).on('turbolinks:load', function() {
           exportOptions: {
             columns: ':visible'
           }
+        },
+        {
+          text: "Hide Redirected",
+          className: "clear-filters-button",
+          action: () => {
+            dataTable.api().columns().search('').visible( true, true ).order('asc').draw() ;
+            $(".datatable-search-row input").val("");
+          }
         }
       ],
       // pagingType is optional, if you want full pagination controls.
@@ -153,7 +160,12 @@ $( document ).on('turbolinks:load', function() {
         setting.columns.forEach((c) => initialColumnSearchValues.push(c.search.search));
       }
 
-    })
+    }
+    if($('#parent-objects-datatable').length === 1){
+      dataTable = $('.is-datatable').dataTable(dataTableConfig)
+    }else{
+      dataTable = $('.is-datatable').dataTable(dataTableConfig)
+    }
     dataTable.api().draw();
 
     $('.is-datatable').on( 'column-visibility.dt', function ( e, settings, column, state ) {
