@@ -37,6 +37,14 @@
   <br>
 
   <div class="form-row">
+    <div class="col-med-9">
+      <%= form.label :redirect_to %>
+      <%= form.text_field :redirect_to %>
+    </div>
+  </div>
+  <br>
+
+  <div class="form-row">
     <div class="col-med-3">
       <%= form.label "Metadata Source" %>
       <%= form.select(:authoritative_metadata_source_id, [['Ladybird', 1], ['Voyager', 2], ['ArchiveSpace', 3]]) %>

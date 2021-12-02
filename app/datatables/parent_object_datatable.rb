@@ -35,7 +35,8 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
       visibility: { source: "ParentObject.visibility", cond: :string_eq, searchable: true, options: ["Public", "Yale Community Only", "Private"], orderable: true },
       extent_of_digitization: { source: "ParentObject.extent_of_digitization", cond: :string_eq, searchable: true, options: ["Completely digitized", "Partially digitized"], orderable: true },
       digitization_note: { source: "ParentObject.digitization_note", cond: :like, searchable: true, orderable: true },
-      project_identifier: { source: "ParentObject.project_identifier", searchable: true, orderable: true }
+      project_identifier: { source: "ParentObject.project_identifier", searchable: true, orderable: true },
+      redirect_to: { source: "ParentObject.redirect_to", searchable: true, orderable: true }
     }
   end
   # rubocop: enable Metrics/MethodLength
@@ -63,8 +64,8 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
         extent_of_digitization: parent_object.extent_of_digitization,
         digitization_note: parent_object.digitization_note,
         DT_RowId: parent_object.oid,
-        project_identifier: parent_object.project_identifier
-
+        project_identifier: parent_object.project_identifier,
+        redirect_to: parent_object.redirect_to
       }
     end
   end

@@ -62,6 +62,7 @@ class ParentObjectsController < ApplicationController
   def update
     respond_to do |format|
       invalidate_admin_set_edit unless valid_admin_set_edit?
+      invalidate_redirect_to_edit unless valid_redirect_to_edit?
       updated = valid_admin_set_edit? ? @parent_object.update(parent_object_params) : false
 
       if updated
@@ -163,6 +164,14 @@ class ParentObjectsController < ApplicationController
       @parent_object.errors.add :admin_set, :invalid, message: "cannot be assigned to a set the User cannot edit"
     end
 
+    def valid_redirect_to_edit?
+      !parent_object_params[:redirect_to] || (parent_object_params[:redirect_to] && current_user.editor(parent_object_params[:redirect_to]))
+    end
+
+    def invalidate_redirect_to_edit
+      @parent_object.errors.add :redirect_to, :invalid, message: "cannot be assigned to a set the User cannot edit"
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_parent_object
       @parent_object = ParentObject.find(params[:id])
@@ -184,7 +193,7 @@ class ParentObjectsController < ApplicationController
     def parent_object_params
       cur_params = params.require(:parent_object).permit(:oid, :admin_set, :project_identifier, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
                                                          :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction,
-                                                         :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization, :digitization_note)
+                                                         :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization, :digitization_note, :redirect_to)
       cur_params[:admin_set] = AdminSet.find_by(key: cur_params[:admin_set])
       cur_params
     end

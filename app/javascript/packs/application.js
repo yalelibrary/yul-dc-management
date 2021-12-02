@@ -116,7 +116,7 @@ $( document ).on('turbolinks:load', function() {
           text: "Clear Filters",
           className: "clear-filters-button",
           action: () => {
-            dataTable.api().columns().search('').visible( true, true ).order('asc' ).state.clear().draw() ;
+            dataTable.api().columns().search('').visible( true, true ).order('asc').state.clear().draw() ;
             $(".datatable-search-row input").val("");
           }
         },

@@ -15,6 +15,13 @@
   <%= @parent_object&.project_identifier %>
 </p>
 
+<% if @parent_object&.redirect_to.present? %>
+  <p>
+    <strong>Redirected To:</strong>
+    <%= @parent_object&.redirect_to %>
+  </p>
+<% end %>
+
 <p>
   <strong>MetadataCloud url:</strong><br>
   <small>Note: add "&mediaType=json" or "?mediaType=json" to open in your browser</small><br>
@@ -79,11 +86,6 @@
 <p>
   <strong>Rights Statement:</strong>
   <div class='rights-statement'><%= sanitize @parent_object.rights_statement, tags: %w(a), attributes: %w(href) %></div>
-</p>
-
-<p>
-  <strong>Project ID:</strong>
-  <%= @parent_object.project_identifier %>
 </p>
 
 <p>
