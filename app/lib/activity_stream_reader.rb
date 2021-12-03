@@ -22,14 +22,19 @@ class ActivityStreamReader
     @most_recent_update = nil
     log = ActivityStreamLog.create(status: "Running")
     log.save
-    # recursively look at activity stream and add to parent_object_refs
-    process_recursive("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity")
-    refresh_updated_items(parent_object_refs)
-    return unless @most_recent_update
-    log.run_time = @most_recent_update
-    log.activity_stream_items = @tally_activity_stream_items
-    log.retrieved_records = @tally_queued_records
-    log.status = "Success"
+    begin
+      # recursively look at activity stream and add to parent_object_refs
+      process_recursive("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity")
+      refresh_updated_items(parent_object_refs)
+      return unless @most_recent_update
+      log.run_time = @most_recent_update
+      log.activity_stream_items = @tally_activity_stream_items
+      log.retrieved_records = @tally_queued_records
+    rescue => e
+      log.statue = "Failed: #{e}"
+    else
+      log.status = "Success"
+    end
     log.save
   end
 
