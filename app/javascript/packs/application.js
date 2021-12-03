@@ -139,6 +139,42 @@ $( document ).on('turbolinks:load', function() {
           exportOptions: {
             columns: ':visible'
           }
+        }
+      ],
+      // pagingType is optional, if you want full pagination controls.
+      // Check dataTables documentation to learn more about
+      // available options.
+      initComplete: function () {
+        if (hasSearch) onColumnsUpdate(this);
+      },
+      stateLoaded: function (e, setting, data) {
+        // load the search settings when state is loaded by the datatable to fill in the inputs.
+        setting.columns.forEach((c) => initialColumnSearchValues.push(c.search.search));
+      }
+
+    }
+    var parentDataTableConfig = {
+      "deferLoading":true,
+      "processing": true,
+      "serverSide": true,
+      "stateSave": true,
+      "ajax": {
+        "url": $('.is-datatable').data('source')
+      },
+      "pagingType": "full_numbers",
+      "bAutoWidth": false, // AutoWidth has issues with hiding and showing columns as startup
+      "columns": columns,
+      "order": columnOrder(columns),
+      "lengthMenu": [[50, 100, 500, -1], [50, 100, 500, "All"]],
+      "sDom":hasSearch?'Blrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
+      buttons: [
+        {
+          text: "Clear Filters",
+          className: "clear-filters-button",
+          action: () => {
+            dataTable.api().columns().search('').visible( true, true ).order('asc').state.clear().draw() ;
+            $(".datatable-search-row input").val("");
+          }
         },
         {
           text: "Hide Redirected",
@@ -146,6 +182,27 @@ $( document ).on('turbolinks:load', function() {
           action: () => {
             dataTable.api().columns().search('').visible( true, true ).order('asc').draw() ;
             $(".datatable-search-row input").val("");
+          }
+        },
+        {
+          extend: 'colvis',
+          text: "\u25EB"
+        },
+        {
+          extend: 'csvHtml5',
+          text: "CSV",
+          exportOptions: {
+            columns: ':visible',
+          },
+          customize: function (csv) {
+            return format_csv(csv)
+          }
+        },
+        {
+          extend: 'excelHtml5',
+          text: "Excel",
+          exportOptions: {
+            columns: ':visible'
           }
         }
       ],
@@ -161,11 +218,13 @@ $( document ).on('turbolinks:load', function() {
       }
 
     }
-    if($('#parent-objects-datatable').length === 1){
-      dataTable = $('.is-datatable').dataTable(dataTableConfig)
-    }else{
+
+    if ($('#parent-objects-datatable').length === 1) {
+      dataTable = $('.is-datatable').dataTable(parentDataTableConfig)
+    } else {
       dataTable = $('.is-datatable').dataTable(dataTableConfig)
     }
+
     dataTable.api().draw();
 
     $('.is-datatable').on( 'column-visibility.dt', function ( e, settings, column, state ) {
