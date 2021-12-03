@@ -16,6 +16,13 @@ RSpec.describe ActivityStreamJob, type: :job do
     end.to change { Delayed::Job.count }.by(1)
   end
 
+  it 'increments the job queue by one for manual job' do
+    ActiveJob::Base.queue_adapter = :delayed_job
+    expect do
+      ActivityStreamManualJob.perform_later(metadata_job)
+    end.to change { Delayed::Job.count }.by(1)
+  end
+
   it 'job fails when not on VPN' do
     expect do
       ActivityStreamReader.update
