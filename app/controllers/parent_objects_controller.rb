@@ -164,8 +164,9 @@ class ParentObjectsController < ApplicationController
       @parent_object.errors.add :admin_set, :invalid, message: "cannot be assigned to a set the User cannot edit"
     end
 
+    # TODO: validate format of url
     def valid_redirect_to_edit?
-      !parent_object_params[:redirect_to] || (parent_object_params[:redirect_to] && current_user.editor(parent_object_params[:redirect_to]))
+      !parent_object_params[:redirect_to] || (parent_object_params[:redirect_to])
     end
 
     def invalidate_redirect_to_edit
