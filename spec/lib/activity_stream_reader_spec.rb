@@ -307,7 +307,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
         expect(ActivityStreamLog.count).to eq 1
         described_class.update
         expect(ActivityStreamLog.count).to eq 2
-        expect(ActivityStreamLog.last.activity_stream_items).to be > 1000
+        expect(ActivityStreamLog.last.activity_stream_items).to be 6
         expect(ActivityStreamLog.last.retrieved_records).to eq 2
       end
     end

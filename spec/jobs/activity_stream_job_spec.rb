@@ -19,7 +19,7 @@ RSpec.describe ActivityStreamJob, type: :job do
   it 'increments the job queue by one for manual job' do
     ActiveJob::Base.queue_adapter = :delayed_job
     expect do
-      ActivityStreamManualJob.perform_later(metadata_job)
+      ActivityStreamManualJob.perform_later
     end.to change { Delayed::Job.count }.by(1)
   end
 
