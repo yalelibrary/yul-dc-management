@@ -615,14 +615,16 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         ENV['VPN'] = original_vpn
         ENV['FEATURE_FLAGS'] = original_flags
       end
+
       before do
         stub_full_text_not_found('2005512')
         stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1")
-            .to_return(status: 200, body: { dummy: "data" }.to_json)
+            .to_return(status: 200, body: { "title" => ["data"] }.to_json)
         stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/515305")
-            .to_return(status: 200, body: { dummy: "data" }.to_json)
+            .to_return(status: 200, body: { "title" => ["data"] }.to_json)
         allow(S3Service).to receive(:upload_if_changed).and_return(true)
       end
+
       it "posts digital object changes when source changes" do
         stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
             .to_return(status: 200, body: { data: "fake data" }.to_json)
@@ -631,9 +633,46 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.authoritative_metadata_source_id = aspace
         parent_object.child_object_count = 1
         parent_object.visibility = "Public"
-        expect(parent_object).to receive(:mc_post).once
+        expect(parent_object).to receive(:mc_post).once.and_return(OpenStruct.new(status: 200))
+        parent_object.aspace_json = { "title": ["test title"] }
         parent_object.save!
       end
+
+      it "posts digital object changes when parent is deleted" do
+        stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
+            .to_return(status: 200, body: { data: "fake data" }.to_json)
+        expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
+        parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
+        parent_object.authoritative_metadata_source_id = aspace
+        parent_object.child_object_count = 1
+        parent_object.visibility = "Public"
+        expect(parent_object).to receive(:mc_post).twice.and_return(OpenStruct.new(status: 200))
+        parent_object.aspace_json = { "title": ["test title"] }
+        parent_object.save!
+        parent_object.reload
+        parent_object.digital_object_delete
+      end
+
+      it "deletes DigitalObjectJson on delete" do
+        stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
+            .to_return(status: 200, body: { data: "fake data" }.to_json)
+        expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
+        parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
+        parent_object.authoritative_metadata_source_id = aspace
+        parent_object.child_object_count = 1
+        parent_object.visibility = "Public"
+        expect(parent_object).to receive(:mc_post).exactly(2).time.and_return(OpenStruct.new(status: 200))
+        parent_object.aspace_json = { "title": ["test title"] }
+        parent_object.save!
+        parent_object.reload
+        parent_object.authoritative_metadata_source_id = ladybird
+        parent_object.save!
+        parent_object.reload
+        parent_object.digital_object_delete
+        parent_object.reload
+        expect(parent_object.digital_object_json).to be_nil
+      end
+
       it "posts digital object changes when source changes, and continues if post fails" do
         stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
             .to_return(status: 200, body: { data: "fake data" }.to_json)
