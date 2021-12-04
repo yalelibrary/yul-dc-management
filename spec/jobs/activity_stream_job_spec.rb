@@ -7,6 +7,13 @@ RSpec.describe ActivityStreamJob, type: :job do
     ActiveJob::QueueAdapters::DelayedJobAdapter.new
   end
 
+  around do |example|
+    original_mc_host = ENV["METADATA_CLOUD_HOST"]
+    ENV["METADATA_CLOUD_HOST"] = "not-a-real-host"
+    example.run
+    ENV["METADATA_CLOUD_HOST"] = original_mc_host
+  end
+
   let(:metadata_job) { ActivityStreamJob.new }
 
   it 'increments the job queue by one' do
@@ -24,9 +31,8 @@ RSpec.describe ActivityStreamJob, type: :job do
   end
 
   it 'job fails when not on VPN' do
-    expect do
-      ActivityStreamReader.update
-    end.to raise_error HTTP::ConnectionError
+    ActivityStreamReader.update
+    expect(ActivityStreamLog.last.status).to include("Fail")
   end
 
   describe 'automated daily job' do

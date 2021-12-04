@@ -31,7 +31,7 @@ class ActivityStreamReader
       log.activity_stream_items = @tally_activity_stream_items
       log.retrieved_records = @tally_queued_records
     rescue => e
-      log.statue = "Failed: #{e}"
+      log.status = "Failed: #{e}"
     else
       log.status = "Success"
     end
