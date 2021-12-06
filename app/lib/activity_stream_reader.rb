@@ -20,22 +20,22 @@ class ActivityStreamReader
   def process_activity_stream
     @updated_uris = []
     @most_recent_update = nil
-    log = ActivityStreamLog.create(status: "Running")
-    log.save
+    @log = ActivityStreamLog.create(status: "Running")
+    @log.save
     begin
       # recursively look at activity stream and add to parent_object_refs
       process_recursive("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity")
       refresh_updated_items(parent_object_refs)
       return unless @most_recent_update
-      log.run_time = @most_recent_update
-      log.activity_stream_items = @tally_activity_stream_items
-      log.retrieved_records = @tally_queued_records
+      @log.run_time = @most_recent_update
+      @log.activity_stream_items = @tally_activity_stream_items
+      @log.retrieved_records = @tally_queued_records
     rescue => e
-      log.status = "Failed: #{e}"
+      @log.status = "Failed: #{e}"
     else
-      log.status = "Success"
+      @log.status = "Success"
     end
-    log.save
+    @log.save
   end
 
   ##
@@ -54,6 +54,10 @@ class ActivityStreamReader
     @parent_object_refs += parents_for_update_from_dependent_uris(updated_uris)
     @updated_uris = []
     @update_time_uri_map = {}
+    @log.activity_stream_items = @tally_activity_stream_items
+    @log.retrieved_records = @tally_queued_records
+    @log.save
+    Rails.logger.info("Processed activity stream page back to #{earliest_item_on_page}")
     process_recursive(previous_page_link(page)) if (previous_page_link(page) && last_run_time.nil?) || (previous_page_link(page) && earliest_item_on_page.after?(last_run_time))
   end
 
