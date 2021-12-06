@@ -128,7 +128,7 @@ class ActivityStreamReader
 
       po = ParentObject.find_by_oid(oid)
       # skip it if the metadata source does not match (This should never happen after dependent uris are updating properly)
-      next unless po.authoritative_metadata_source.metadata_cloud_name == metadata_source
+      next unless po&.authoritative_metadata_source&.metadata_cloud_name == metadata_source
 
       #  if po was updated after the most recent update of one of all the dependent uris, skip it
       last_update = metadata_source == 'aspace' ? po.last_aspace_update : po.last_voyager_update
