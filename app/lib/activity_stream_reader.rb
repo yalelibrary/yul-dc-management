@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # An ActivityStreamReader reads json formatted activity stream documents from the MetadataCloud
+# rubocop:disable Metrics/ClassLength
 class ActivityStreamReader
   attr_reader :tally_activity_stream_items, :tally_queued_records
 
@@ -17,6 +18,7 @@ class ActivityStreamReader
   end
 
   # Logs and kicks off processing the activity stream from the MetadataCloud
+  # rubocop:disable Metrics/MethodLength
   def process_activity_stream
     @updated_uris = []
     @most_recent_update = nil
@@ -32,11 +34,16 @@ class ActivityStreamReader
       @log.retrieved_records = @tally_queued_records
     rescue => e
       @log.status = "Failed: #{e}"
+    rescue SignalException => sigterm
+      @log.status = "Terminated: #{sigterm}"
+      @log.save
+      raise sigterm
     else
       @log.status = "Success"
     end
     @log.save
   end
+  # rubocop:enable Metrics/MethodLength
 
   ##
   # It takes the url for an Activity Stream page, and if there is a link to a previous page,
@@ -165,3 +172,4 @@ class ActivityStreamReader
     false
   end
 end
+# rubocop:enable Metrics/ClassLength
