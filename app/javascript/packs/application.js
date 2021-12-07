@@ -161,7 +161,7 @@ $( document ).on('turbolinks:load', function() {
           text: "Clear Filters",
           className: "clear-filters-button",
           action: () => {
-            dataTable.api().columns().search('').visible( true, true ).order('asc').state.clear().draw() ;
+            dataTable.api().columns().search('').visible( true, true ).order('asc' ).state.clear().draw() ;
             $(".datatable-search-row input").val("");
           }
         },
@@ -203,8 +203,7 @@ $( document ).on('turbolinks:load', function() {
         setting.columns.forEach((c) => initialColumnSearchValues.push(c.search.search));
       }
 
-    }
-
+    })
     dataTable.api().draw();
 
     $('.is-datatable').on( 'column-visibility.dt', function ( e, settings, column, state ) {
@@ -306,15 +305,14 @@ function select_all( select ) {
   $(select + ' option').prop('selected', true);
 }
 
-
 // This will refresh batch process datatable every 30 seconds
 $( document ).on('turbolinks:load', function() {
-    if ( dataTable && $(".is-datatable").data("refresh")) {
-      let interval = setInterval(function () {
-        dataTable.api().ajax.reload(null, false);
-      }, 30000  );
-      $(document).on('turbolinks:before-cache turbolinks:before-render', function() {
-        clearTimeout(interval);
-      });
-    }
+  if ( dataTable && $(".is-datatable").data("refresh")) {
+    let interval = setInterval(function () {
+      dataTable.api().ajax.reload(null, false);
+    }, 30000  );
+    $(document).on('turbolinks:before-cache turbolinks:before-render', function() {
+      clearTimeout(interval);
+    });
+  }
 })
