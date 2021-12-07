@@ -63,6 +63,12 @@ class ParentObjectsController < ApplicationController
     respond_to do |format|
       invalidate_admin_set_edit unless valid_admin_set_edit?
       invalidate_redirect_to_edit unless valid_redirect_to_edit?
+      # set_parent_object
+      if valid_redirect_to_edit?
+        minify if redirect_attr_changed?
+        @parent_object.save
+        return
+      end
       updated = valid_admin_set_edit? ? @parent_object.update(parent_object_params) : false
 
       if updated
@@ -164,15 +170,6 @@ class ParentObjectsController < ApplicationController
       @parent_object.errors.add :admin_set, :invalid, message: "cannot be assigned to a set the User cannot edit"
     end
 
-    # TODO: validate format of url
-    def valid_redirect_to_edit?
-      !parent_object_params[:redirect_to] || (parent_object_params[:redirect_to])
-    end
-
-    def invalidate_redirect_to_edit
-      @parent_object.errors.add :redirect_to, :invalid, message: "cannot be assigned to a set the User cannot edit"
-    end
-
     # Use callbacks to share common setup or constraints between actions.
     def set_parent_object
       @parent_object = ParentObject.find(params[:id])
@@ -188,6 +185,36 @@ class ParentObjectsController < ApplicationController
       @parent_object.current_batch_connection = @batch_process.batch_connections.build(connectable: @parent_object)
       @batch_process.save!
       @parent_object.current_batch_process = @batch_process
+    end
+
+    def valid_redirect_to_edit?
+      !parent_object_params[:redirect_to] || (parent_object_params[:redirect_to] && parent_object_params[:redirect_to].match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//))
+    end
+
+    def invalidate_redirect_to_edit
+      @parent_object.errors.add :redirect_to, :invalid, message: "must be in format https://collections.library.yale.edu/catalog/1234567"
+    end
+
+    def redirect_attr_changed?
+      set_parent_object
+      @changed = []
+      @changed << :redirect_to if @parent_object.redirect_to != params[:parent_object][:redirect_to]
+      @changed.include? :redirect_to
+    end
+
+    def minify
+      parent_object = ParentObject.find(params[:id])
+      minimal_attr = ['oid', 'use_ladybird', 'generate_manifest', 'from_mets', 'admin_set_id', 'authoritative_metadata_source_id', 'created_at', 'updated_at']
+
+      @parent_object.attributes.keys.each do | key |
+        if key == 'visibility'
+          @parent_object[key.to_sym] = "Redirect"
+        elsif key == 'redirect_to'
+          @parent_object[key.to_sym] = parent_object_params[:redirect_to]
+        else
+          @parent_object[key.to_sym] = nil unless minimal_attr.include? key 
+        end
+      end
     end
 
     # Only allow a list of trusted parameters through.

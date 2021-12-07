@@ -31,15 +31,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_destroy :pdf_deletion
   paginates_per 50
   validates :redirect_to, format: { with: /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//, message: " in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123", allow_blank: true }
-  # before_update :check_for_redirect, if: :redirect_to_changed?
-  # before_update :check_for_redirect
-
-  def check_for_redirect
-    
-  end
 
   def self.visibilities
-    ['Private', 'Public', 'Yale Community Only']
+    ['Private', 'Public', 'Redirect', 'Yale Community Only']
   end
 
   # Options from iiif presentation api 2.1 - see https://iiif.io/api/presentation/2.1/#viewingdirection

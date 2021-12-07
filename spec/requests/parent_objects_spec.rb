@@ -198,6 +198,44 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
     end
   end
 
+  describe '#minify' do
+    let(:redirect_attributes) do
+      {
+        redirect_to: 'https://collections.library.yale.edu/catalog/123'
+      }
+    end
+
+    let(:invalid_redirect_params) do
+      {
+        redirect_to: 'https://collections.library.yale.educcccatalog/123'
+      }
+    end
+
+    it 'reduces the parent record to a smaller record' do
+      parent_object = ParentObject.create! valid_attributes
+      patch parent_object_url(parent_object), params: { parent_object: redirect_attributes }
+      parent_object.reload
+      expect(parent_object.bib).to be_nil
+      expect(parent_object.visibility).to eq 'Redirect'
+      expect(parent_object.redirect_to).to eq 'https://collections.library.yale.edu/catalog/123'
+    end
+
+    it 'redirects to the parent show page' do
+      parent_object = ParentObject.create! valid_attributes
+      patch parent_object_url(parent_object), params: { parent_object: redirect_attributes }
+      parent_object.reload
+      expect(response).to redirect_to(parent_object_url(parent_object))
+    end
+
+    context "with invalid parameters" do
+      it "renders a successful response (i.e. to display the 'edit' template)" do
+        parent_object = ParentObject.create! valid_attributes
+        patch parent_object_url(parent_object), params: { parent_object: invalid_redirect_params }
+        expect(response).to be_successful
+      end
+    end
+  end
+
   context 'without sys admin privileges' do
     let(:user) { FactoryBot.create(:user) }
     before do
