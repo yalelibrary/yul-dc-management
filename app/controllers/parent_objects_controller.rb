@@ -67,7 +67,6 @@ class ParentObjectsController < ApplicationController
       if valid_redirect_to_edit?
         minify if redirect_attr_changed?
         @parent_object.save
-        return
       end
       updated = valid_admin_set_edit? ? @parent_object.update(parent_object_params) : false
 
@@ -188,7 +187,7 @@ class ParentObjectsController < ApplicationController
     end
 
     def valid_redirect_to_edit?
-      !parent_object_params[:redirect_to] || (parent_object_params[:redirect_to] && parent_object_params[:redirect_to].match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//))
+      !parent_object_params[:redirect_to] || (parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//))
     end
 
     def invalidate_redirect_to_edit
@@ -203,16 +202,15 @@ class ParentObjectsController < ApplicationController
     end
 
     def minify
-      parent_object = ParentObject.find(params[:id])
       minimal_attr = ['oid', 'use_ladybird', 'generate_manifest', 'from_mets', 'admin_set_id', 'authoritative_metadata_source_id', 'created_at', 'updated_at']
 
-      @parent_object.attributes.keys.each do | key |
+      @parent_object.attributes.keys.each do |key|
         if key == 'visibility'
           @parent_object[key.to_sym] = "Redirect"
         elsif key == 'redirect_to'
           @parent_object[key.to_sym] = parent_object_params[:redirect_to]
         else
-          @parent_object[key.to_sym] = nil unless minimal_attr.include? key 
+          @parent_object[key.to_sym] = nil unless minimal_attr.include? key
         end
       end
     end
@@ -222,7 +220,7 @@ class ParentObjectsController < ApplicationController
       cur_params = params.require(:parent_object).permit(:oid, :admin_set, :project_identifier, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
                                                          :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction,
                                                          :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization, :digitization_note, :redirect_to)
-      cur_params[:admin_set] = AdminSet.find_by(key: cur_params[:admin_set])
+      cur_params[:admin_set] = AdminSet.find_by(key: cur_params[:admin_set]) if cur_params[:admin_set]
       cur_params
     end
 end

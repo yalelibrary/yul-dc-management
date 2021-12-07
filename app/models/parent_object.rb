@@ -31,7 +31,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_destroy :pdf_deletion
   after_destroy :digital_object_delete
   paginates_per 50
+  # rubocop:disable Metrics/LineLength
   validates :redirect_to, format: { with: /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//, message: " in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123", allow_blank: true }
+  # rubocop:enable Metrics/LineLength
 
   def self.visibilities
     ['Private', 'Public', 'Redirect', 'Yale Community Only']
