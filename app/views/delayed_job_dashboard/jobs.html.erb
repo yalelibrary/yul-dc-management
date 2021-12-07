@@ -1,0 +1,26 @@
+<h1>
+  <%= @job_types %> Jobs
+</h1>
+<%= paginate @jobs %>
+<table border=1>
+  <tr>
+    <th>Id</th>
+    <th>Attempts</th>
+    <th>Error</th>
+    <th>Run at</th>
+    <th>Failed at</th>
+    <th>Queue at</th>
+    <th>Created at at</th>
+  </tr>
+  <% @jobs.each do |f| %>
+    <tr>
+      <td><%= link_to f.id, show_job_path(f.id) %></td>
+      <td><%= f.attempts %></td>
+      <td><%= f.last_error&.split("\n")&.reject { |x| x =~ /bundle/ }&.join("\n") %></td>
+      <td><%= f.run_at %></td>
+      <td><%= f.failed_at %></td>
+      <td><%= f.queue %></td>
+      <td><%= f.created_at %></td>
+    </tr>
+  <% end %>
+</table>

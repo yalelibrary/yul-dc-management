@@ -114,6 +114,10 @@ RSpec.describe S3Service, type: :has_vcr do
     child_object_oid = "1014543"
     remote_path = "fulltext/43/10/14/54/#{child_object_oid}.txt"
     expect(described_class.full_text_exists?(remote_path)).to eq(true)
+
+    child_object_oid_too = "12345678"
+    remote_path_too = "fulltext/78/12/34/56/#{child_object_oid_too}.txt"
+    expect(described_class.full_text_exists?(remote_path_too)).to eq(false)
   end
 
   it 'can delete a PDF' do

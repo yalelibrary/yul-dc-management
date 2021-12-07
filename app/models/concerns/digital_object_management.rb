@@ -7,6 +7,7 @@ module DigitalObjectManagement
     return false unless child_object_count&.positive?
     return false unless authoritative_metadata_source && authoritative_metadata_source.metadata_cloud_name == "aspace"
     return false unless ['Public', 'Yale Community Only'].include? visibility
+    return false unless digital_object_title
     true
   end
 
@@ -42,6 +43,19 @@ module DigitalObjectManagement
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
+
+  def digital_object_delete
+    unless digital_object_json&.json
+      digital_object_json&.delete
+      return
+    end
+    if send_digital_object_update(
+      priorDigitalObject: JSON.parse(digital_object_json.json),
+      digitalObject: nil
+    )
+      digital_object_json.delete
+    end
+  end
 
   def apply_new_digital_object_json(json)
     self.digital_object_json = DigitalObjectJson.new if digital_object_json.nil?

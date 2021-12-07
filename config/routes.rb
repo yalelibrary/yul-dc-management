@@ -51,14 +51,29 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   devise_scope :user do
     authenticated :user, ->(user) { user.sysadmin } do
       mount DelayedJobWeb, at: '/delayed_job'
+      get '/delayed_job_dashboard', to: 'delayed_job_dashboard#index', as: 'dashboard'
+      get '/delayed_job_dashboard/failed', to: 'delayed_job_dashboard#failed_jobs', as: "failed_jobs"
+      get '/delayed_job_dashboard/working', to: 'delayed_job_dashboard#working_jobs', as: "working_jobs"
+      get '/delayed_job_dashboard/pending', to: 'delayed_job_dashboard#pending_jobs', as: "pending_jobs"
+      get '/delayed_job_dashboard/show/:id', to: 'delayed_job_dashboard#show', as: "show_job"
+      post '/delayed_job_dashboard/requeue/:id', to: 'delayed_job_dashboard#requeue', as: "requeue"
+      delete '/delayed_job_dashboard/delete/:id', to: 'delayed_job_dashboard#delete_job', as: "delete_job"
     end
 
-    authenticated :user do
+    authenticated :user, ->(user) { user.sysadmin } do
       # authenticated user without the sysadmin role
+      get '/*delayed_job_dashboard', to: 'application#access_denied'
       get '/*delayed_job', to: 'application#access_denied'
+      get '/delayed_job_dashboard/:all', to: redirect('users/auth/cas')
+      post '/delayed_job_dashboard/requeue/:all', to: redirect('users/auth/cas')
+      delete '/delayed_job_dashboard/delete/:all', to: redirect('users/auth/cas')
     end
   end
 
   # fall back if not authenticated
-  get '/delayed_job', to: redirect('/management/users/auth/cas')
+  get '/delayed_job', to: redirect('users/auth/cas')
+  get '/delayed_job_dashboard', to: redirect('users/auth/cas')
+  get '/delayed_job_dashboard/:all', to: redirect('users/auth/cas')
+  post '/delayed_job_dashboard/requeue/:all', to: redirect('users/auth/cas')
+  delete '/delayed_job_dashboard/delete/:all', to: redirect('users/auth/cas')
 end

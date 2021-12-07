@@ -615,14 +615,16 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         ENV['VPN'] = original_vpn
         ENV['FEATURE_FLAGS'] = original_flags
       end
+
       before do
         stub_full_text_not_found('2005512')
         stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1")
-            .to_return(status: 200, body: { dummy: "data" }.to_json)
+            .to_return(status: 200, body: { "title" => ["data"] }.to_json)
         stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/515305")
-            .to_return(status: 200, body: { dummy: "data" }.to_json)
+            .to_return(status: 200, body: { "title" => ["data"] }.to_json)
         allow(S3Service).to receive(:upload_if_changed).and_return(true)
       end
+
       it "posts digital object changes when source changes" do
         stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
             .to_return(status: 200, body: { data: "fake data" }.to_json)
@@ -631,9 +633,46 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.authoritative_metadata_source_id = aspace
         parent_object.child_object_count = 1
         parent_object.visibility = "Public"
-        expect(parent_object).to receive(:mc_post).once
+        expect(parent_object).to receive(:mc_post).once.and_return(OpenStruct.new(status: 200))
+        parent_object.aspace_json = { "title": ["test title"] }
         parent_object.save!
       end
+
+      it "posts digital object changes when parent is deleted" do
+        stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
+            .to_return(status: 200, body: { data: "fake data" }.to_json)
+        expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
+        parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
+        parent_object.authoritative_metadata_source_id = aspace
+        parent_object.child_object_count = 1
+        parent_object.visibility = "Public"
+        expect(parent_object).to receive(:mc_post).twice.and_return(OpenStruct.new(status: 200))
+        parent_object.aspace_json = { "title": ["test title"] }
+        parent_object.save!
+        parent_object.reload
+        parent_object.digital_object_delete
+      end
+
+      it "deletes DigitalObjectJson on delete" do
+        stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
+            .to_return(status: 200, body: { data: "fake data" }.to_json)
+        expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
+        parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
+        parent_object.authoritative_metadata_source_id = aspace
+        parent_object.child_object_count = 1
+        parent_object.visibility = "Public"
+        expect(parent_object).to receive(:mc_post).exactly(2).time.and_return(OpenStruct.new(status: 200))
+        parent_object.aspace_json = { "title": ["test title"] }
+        parent_object.save!
+        parent_object.reload
+        parent_object.authoritative_metadata_source_id = ladybird
+        parent_object.save!
+        parent_object.reload
+        parent_object.digital_object_delete
+        parent_object.reload
+        expect(parent_object.digital_object_json).to be_nil
+      end
+
       it "posts digital object changes when source changes, and continues if post fails" do
         stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
             .to_return(status: 200, body: { data: "fake data" }.to_json)
@@ -810,6 +849,50 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
     it "will have Private as the default visibility" do
       expect(parent_object.visibility).to eq "Private"
+    end
+  end
+
+  context "a newly created ParentObject with an expected (voyager) authoritative_metadata_source" do
+    around do |example|
+      perform_enqueued_jobs do
+        example.run
+      end
+    end
+    context 'with voyager_json' do
+      let(:parent_object) do
+        FactoryBot.build(:parent_object, oid: '16797069', bib: '3435140', item: '8114701',
+                                         authoritative_metadata_source_id: voyager,
+                                         voyager_json: JSON.parse(File.read(File.join(fixture_path, "ils", "V-16797069.json"))))
+      end
+
+      it 'returns a voyager url' do
+        source = MetadataSource.find(parent_object.authoritative_metadata_source_id)
+        expect(source.url_type).to eq 'voyager_cloud_url'
+        parent_object.holding = nil
+        expect(parent_object.voyager_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ils/item/8114701?bib=3435140"
+      end
+    end
+  end
+
+  context "a newly created ParentObject with an expected (aspace) authoritative_metadata_source" do
+    around do |example|
+      perform_enqueued_jobs do
+        example.run
+      end
+    end
+    context 'with aspace_json' do
+      let(:parent_object) do
+        FactoryBot.build(:parent_object, oid: '2012036', bib: '3435140', barcode: '39002075038423',
+                                         authoritative_metadata_source_id: aspace,
+                                         aspace_uri: '/repositories/11/archival_objects/555049',
+                                         aspace_json: JSON.parse(File.read(File.join(fixture_path, "aspace", "AS-2012036.json"))))
+      end
+
+      it 'returns an aspace url' do
+        source = MetadataSource.find(parent_object.authoritative_metadata_source_id)
+        expect(source.url_type).to eq 'aspace_cloud_url'
+        expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/555049"
+      end
     end
   end
 end
