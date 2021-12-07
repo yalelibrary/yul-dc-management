@@ -52,10 +52,8 @@ class ActivityStreamReader
     page = fetch_and_parse_page(page_url)
     page["orderedItems"].each do |item|
       @most_recent_update = item["endTime"] if @most_recent_update.nil?
-      if relevant?(item)
-        process_item(item)
-        @tally_activity_stream_items += 1
-      end
+      @tally_activity_stream_items += 1
+      process_item(item) if relevant?(item)
     end
     earliest_item_on_page = page["orderedItems"].last["endTime"].to_datetime
     @parent_object_refs += parents_for_update_from_dependent_uris(updated_uris)
