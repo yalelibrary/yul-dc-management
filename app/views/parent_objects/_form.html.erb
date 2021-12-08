@@ -36,13 +36,15 @@
   </div>
   <br>
 
-  <div class="form-row">
-    <div class="col-med-9">
-      <%= form.label :redirect_to %>
-      <%= form.text_field :redirect_to %>
+  <% if parent_object.redirect_to || parent_object.child_object_ids.count < 1 %>
+    <div class="form-row">
+      <div class="col-med-9">
+        <%= form.label :redirect_to %>
+        <%= form.text_field :redirect_to %>
+      </div>
     </div>
-  </div>
-  <br>
+    <br>
+  <% end %>
 
   <div class="form-row">
     <div class="col-med-3">
