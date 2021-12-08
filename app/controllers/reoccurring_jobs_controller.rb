@@ -11,10 +11,17 @@ class ReoccurringJobsController < ApplicationController
 
   # POST ActivityStreamReader
   def create
-    ActivityStreamReader.update
-    respond_to do |format|
-      format.html { redirect_to reoccurring_jobs_url, notice: 'Metadata update queued.' }
-      format.json { head :no_content }
+    if ActivityStreamLog.where(status: "Running").exists?
+      respond_to do |format|
+        format.html { redirect_to reoccurring_jobs_url, notice: 'An update is already in progress.' }
+        format.json { head :no_content }
+      end
+    else
+      ActivityStreamManualJob.perform_later
+      respond_to do |format|
+        format.html { redirect_to reoccurring_jobs_url, notice: 'Metadata update queued.' }
+        format.json { head :no_content }
+      end
     end
   end
 end
