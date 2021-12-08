@@ -26,7 +26,8 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
     {
       oid: "2004628",
       authoritative_metadata_source_id: 1,
-      admin_set: 'brbl'
+      admin_set: 'brbl',
+      visibility: "Private"
     }
   end
 
@@ -43,7 +44,8 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
     {
       oid: "2004628",
       authoritative_metadata_source_id: 1,
-      admin_set: AdminSet.find_by_key('brbl')
+      admin_set: AdminSet.find_by_key('brbl'),
+      bib: "123"
     }
   end
 
@@ -213,10 +215,12 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
 
     it 'reduces the parent record to a smaller record' do
       parent_object = ParentObject.create! valid_attributes
+      expect(parent_object.bib).to eq("123")
       patch parent_object_url(parent_object), params: { parent_object: redirect_attributes }
       parent_object.reload
       expect(parent_object.bib).to be_nil
       expect(parent_object.visibility).to eq 'Redirect'
+      expect(parent_object.admin_set.key).to eq 'brbl'
       expect(parent_object.redirect_to).to eq 'https://collections.library.yale.edu/catalog/123'
     end
 

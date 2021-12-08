@@ -66,8 +66,10 @@ class ParentObjectsController < ApplicationController
       # set_parent_object
       if valid_redirect_to_edit?
         minify if redirect_attr_changed?
+        # byebug
         @parent_object.save
       end
+
       updated = valid_admin_set_edit? ? @parent_object.update(parent_object_params) : false
 
       if updated
@@ -203,7 +205,7 @@ class ParentObjectsController < ApplicationController
 
     def minify
       minimal_attr = ['oid', 'use_ladybird', 'generate_manifest', 'from_mets', 'admin_set_id', 'authoritative_metadata_source_id', 'created_at', 'updated_at']
-
+      # byebug
       @parent_object.attributes.keys.each do |key|
         if key == 'visibility'
           @parent_object[key.to_sym] = "Redirect"
@@ -213,6 +215,7 @@ class ParentObjectsController < ApplicationController
           @parent_object[key.to_sym] = nil unless minimal_attr.include? key
         end
       end
+      # byebug
     end
 
     # Only allow a list of trusted parameters through.
