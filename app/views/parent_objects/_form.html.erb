@@ -1,4 +1,4 @@
-<%= form_with(model: parent_object, local: true) do |form| %>
+<%= form_with(model: parent_object, local: true, class: 'parent-edit') do |form| %>
   <% if parent_object.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(parent_object.errors.count, "error") %> prohibited this parent_object from being saved:</h2>
@@ -130,7 +130,7 @@
     </div>
   </div>
   <br>
-  <div class="actions">
+  <div class="actions" id="submit-parent">
     <%= form.submit(@parent_object.new_record? ? 'Create Parent object' : 'Save Parent Object And Update Metadata') %>
   </div>
 <% end %>
