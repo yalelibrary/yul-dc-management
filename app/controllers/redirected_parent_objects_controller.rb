@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class RedirectedParentObjectsController < ApplicationController
-
   # GET /redirected_parent_objects
   # GET /redirected_parent_objects.json
   def index
