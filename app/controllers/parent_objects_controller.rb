@@ -187,9 +187,8 @@ class ParentObjectsController < ApplicationController
     end
 
     def valid_redirect_to_edit?
-      if !parent_object_params[:redirect_to].blank?
-        !parent_object_params[:redirect_to] || (parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//))
-      end
+      return if parent_object_params[:redirect_to].blank?
+      !parent_object_params[:redirect_to] || (parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//))
     end
 
     def invalidate_redirect_to_edit
