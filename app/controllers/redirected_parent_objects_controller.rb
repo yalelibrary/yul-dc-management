@@ -13,26 +13,4 @@ class RedirectedParentObjectsController < ApplicationController
       format.json { render json: RedirectedParentObjectDatatable.new(params, view_context: view_context, current_ability: current_ability) }
     end
   end
-
-  # GET /redirected_parent_objects/1
-  # GET /redirected_parent_objects/1.json
-  def show; end
-
-  # GET /redirected_parent_objects/new
-  def new; end
-
-  # GET /redirected_parent_objects/1/edit
-  def edit; end
-
-  # POST /redirected_parent_objects
-  # POST /redirected_parent_objects.json
-  def create; end
-
-  # PATCH/PUT /redirected_parent_objects/1
-  # PATCH/PUT /redirected_parent_objects/1.json
-  def update; end
-
-  # DELETE /redirected_parent_objects/1
-  # DELETE /redirected_parent_objects/1.json
-  def destroy; end
 end
