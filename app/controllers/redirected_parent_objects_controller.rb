@@ -19,25 +19,20 @@ class RedirectedParentObjectsController < ApplicationController
   def show; end
 
   # GET /redirected_parent_objects/new
-  def new
-  end
+  def new; end
 
   # GET /redirected_parent_objects/1/edit
   def edit; end
 
   # POST /redirected_parent_objects
   # POST /redirected_parent_objects.json
-  def create
-  end
+  def create; end
 
   # PATCH/PUT /redirected_parent_objects/1
   # PATCH/PUT /redirected_parent_objects/1.json
-  def update
-  end
+  def update; end
 
   # DELETE /redirected_parent_objects/1
   # DELETE /redirected_parent_objects/1.json
-  def destroy
-  end
-
+  def destroy; end
 end
