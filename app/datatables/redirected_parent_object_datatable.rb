@@ -20,7 +20,6 @@ class RedirectedParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
       oid: { source: "ParentObject.oid", cond: :start_with, searchable: true, orderable: true },
       admin_set: { source: "AdminSet.key", cond: :string_eq, searchable: true, options: @set_keys, orderable: true },
       authoritative_source: { source: "MetadataSource.metadata_cloud_name", cond: :string_eq, searchable: true, options: ["ladybird", "aspace", "ils"], orderable: true },
-      updated_at: { source: "ParentObject.updated_at", orderable: true },
       visibility: { source: "ParentObject.visibility", cond: :string_eq, searchable: true, orderable: true },
       redirect_to: { source: "ParentObject.redirect_to", searchable: true, orderable: true }
     }
@@ -34,7 +33,6 @@ class RedirectedParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
         oid: oid_column(parent_object).html_safe,
         admin_set: parent_object.admin_set.key,
         authoritative_source: parent_object.source_name,
-        updated_at: parent_object.updated_at,
         visibility: parent_object.visibility,
         DT_RowId: parent_object.oid,
         redirect_to: parent_object.redirect_to
