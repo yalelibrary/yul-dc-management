@@ -36,7 +36,7 @@
   </div>
   <br>
 
-  <% if parent_object.redirect_to || parent_object.child_object_ids.count < 1 %>
+  <% if parent_object.redirect_to || parent_object.child_object_ids.count < 1 && !parent_object.new_record? %>
     <div class="form-row">
       <div class="col-med-9">
         <%= form.label :redirect_to %>
