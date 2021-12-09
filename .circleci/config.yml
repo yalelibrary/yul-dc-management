@@ -62,7 +62,6 @@ jobs:
           command: |
             mkdir /tmp/test-results
             cd /home/app/webapp && bundle exec rspec --tag ~vpn_only:true $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-            cp -a ./coverage /tmp/test-results
       # collect reports
       - store_test_results:
           path: /tmp/test-results
