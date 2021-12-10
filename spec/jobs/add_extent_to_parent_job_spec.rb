@@ -7,6 +7,8 @@ RSpec.describe AddExtentOfDigitizationToParentObjectsJob, type: :job do
   end
 
   let(:user) { FactoryBot.create(:user) }
+  let(:metadata_source) { FactoryBot.create(:metadata_source) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
   let(:add_extent_job) { AddExtentOfDigitizationToParentObjectsJob.new }
 

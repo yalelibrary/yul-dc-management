@@ -156,6 +156,8 @@ class ParentObjectsController < ApplicationController
   private
 
     def queue_parent_metadata_update
+      # byebug
+      # batch_process_of_one
       authorize!(:update, @parent_object)
       @parent_object.metadata_update = true
       @parent_object.setup_metadata_job
