@@ -37,7 +37,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       expect(page).to have_content("Your job is queued for processing in the background")
       expect(BatchProcess.last.file_name).to eq "short_fixture_ids.csv"
       expect(BatchProcess.last.batch_action).to eq "create parent objects"
-      expect(BatchProcess.last.output_csv).to be nil
+      expect(BatchProcess.last.child_output_csv).to be nil
     end
 
     it "does not create batch if error saving" do
@@ -183,10 +183,10 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(page).to have_content("Your job is queued for processing in the background")
         expect(BatchProcess.last.file_name).to eq "short_fixture_ids.csv"
         expect(BatchProcess.last.batch_action).to eq "export child oids"
-        expect(BatchProcess.last.output_csv).to include "1126257"
-        expect(BatchProcess.last.output_csv).to include "JWJ"
-        expect(BatchProcess.last.output_csv).to include '2005512,,0,Access denied for parent object,"",""'
-        expect(BatchProcess.last.output_csv).not_to include "1030368" # child of 2005512
+        expect(BatchProcess.last.child_output_csv).to include "1126257"
+        expect(BatchProcess.last.child_output_csv).to include "JWJ"
+        expect(BatchProcess.last.child_output_csv).to include '2005512,,0,Access denied for parent object,"",""'
+        expect(BatchProcess.last.child_output_csv).not_to include "1030368" # child of 2005512
         expect(BatchProcess.last.batch_ingest_events.count).to eq 4
         expect(BatchProcess.last.batch_ingest_events.map(&:reason)).to include "Skipping row [3] due to parent permissions: 2005512"
 
