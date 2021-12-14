@@ -67,9 +67,8 @@ class ParentObjectsController < ApplicationController
       updated = valid_admin_set_edit? ? @parent_object.update(parent_object_params) : false
 
       if updated
-        if valid_redirect_to_edit?
-          @parent_object.minify
-        end
+        @parent_object.minify if valid_redirect_to_edit?
+        @parent_object.save
         queue_parent_metadata_update
         format.html { redirect_to @parent_object, notice: 'Parent object was successfully saved, a full update has been queued.' }
         format.json { render :show, status: :ok, location: @parent_object }
@@ -185,11 +184,11 @@ class ParentObjectsController < ApplicationController
       @parent_object.current_batch_process = @batch_process
     end
 
+    # rubocop:disable Metrics/LineLength
     def valid_redirect_to_edit?
-      if !parent_object_params[:redirect_to].blank?
-        !parent_object_params[:redirect_to] || (parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//))
-      end
+      !parent_object_params[:redirect_to] || (parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//)) if parent_object_params[:redirect_to].present?
     end
+    # rubocop:enable Metrics/LineLength
 
     def invalidate_redirect_to_edit
       @parent_object.errors.add :redirect_to, :invalid, message: "must be in format https://collections.library.yale.edu/catalog/1234567"

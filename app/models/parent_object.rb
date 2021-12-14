@@ -37,24 +37,22 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/LineLength
 
   def check_for_redirect
-    if self.redirect_to.present?
-      minify
-    end
+    minify if redirect_to.present?
   end
 
   def minify
     minimal_attr = ['oid', 'use_ladybird', 'generate_manifest', 'from_mets', 'admin_set_id', 'authoritative_metadata_source_id', 'created_at', 'updated_at']
 
-    self.attributes.keys.each do |key|
+    attributes.keys.each do |key|
       if key == 'visibility'
         self[key.to_sym] = "Redirect"
       elsif key == 'redirect_to'
-        self[key.to_sym] = self.redirect_to
+        self[key.to_sym] = redirect_to
       else
         self[key.to_sym] = nil unless minimal_attr.include? key
       end
     end
-    self.solr_index
+    solr_index
   end
 
   def self.visibilities

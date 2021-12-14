@@ -11,7 +11,7 @@ module SolrIndexable
   def solr_index
     begin
       if self&.redirect_to.present?
-        indexable = to_solr(json_to_index = nil)
+        indexable = to_solr
       else
         indexable, child_solr_documents = to_solr_full_text
       end
@@ -44,11 +44,11 @@ module SolrIndexable
   end
 
   def to_solr(json_to_index = nil)
-    if self.redirect_to.present?
+    if redirect_to.present?
       {
-        id: self&.oid, 
+        id: self&.oid,
         visibility_ssi: "Redirect",
-        redirect_to_tesi: self&.redirect_to 
+        redirect_to_tesi: self&.redirect_to
       }
     else
       json_to_index ||= authoritative_json
