@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # An ActivityStreamReader reads json formatted activity stream documents from the MetadataCloud
+# rubocop:disable Metrics/ClassLength
 class ActivityStreamReader
   attr_reader :tally_activity_stream_items, :tally_queued_records
 
@@ -13,23 +14,36 @@ class ActivityStreamReader
   def initialize
     @tally_activity_stream_items = 0
     @tally_queued_records = 0
+    @parent_object_refs = Set.new
   end
 
   # Logs and kicks off processing the activity stream from the MetadataCloud
+  # rubocop:disable Metrics/MethodLength
   def process_activity_stream
     @updated_uris = []
     @most_recent_update = nil
-    # recursively look at activity stream and add to updated_uris
-    process_recursive("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity")
-    parent_object_refs = parents_for_update_from_dependent_uris(updated_uris)
-    refresh_updated_items(parent_object_refs)
-    return unless @most_recent_update
-    log = ActivityStreamLog.create(run_time: @most_recent_update, status: "Running")
-    log.activity_stream_items = @tally_activity_stream_items
-    log.retrieved_records = @tally_queued_records
-    log.status = "Success"
-    log.save
+    @log = ActivityStreamLog.create(status: "Running")
+    @log.save
+    begin
+      # recursively look at activity stream and add to parent_object_refs
+      process_recursive("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity")
+      refresh_updated_items(parent_object_refs)
+      return unless @most_recent_update
+      @log.run_time = @most_recent_update
+      @log.activity_stream_items = @tally_activity_stream_items
+      @log.retrieved_records = @tally_queued_records
+    rescue => e
+      @log.status = "Failed: #{e}"
+    rescue SignalException => sigterm
+      @log.status = "Terminated: #{sigterm}"
+      @log.save
+      raise sigterm
+    else
+      @log.status = "Success"
+    end
+    @log.save
   end
+  # rubocop:enable Metrics/MethodLength
 
   ##
   # It takes the url for an Activity Stream page, and if there is a link to a previous page,
@@ -37,11 +51,18 @@ class ActivityStreamReader
   def process_recursive(page_url)
     page = fetch_and_parse_page(page_url)
     page["orderedItems"].each do |item|
-      @tally_activity_stream_items += 1
       @most_recent_update = item["endTime"] if @most_recent_update.nil?
+      @tally_activity_stream_items += 1
       process_item(item) if relevant?(item)
     end
     earliest_item_on_page = page["orderedItems"].last["endTime"].to_datetime
+    @parent_object_refs += parents_for_update_from_dependent_uris(updated_uris)
+    @updated_uris = []
+    @update_time_uri_map = {}
+    @log.activity_stream_items = @tally_activity_stream_items
+    @log.retrieved_records = @tally_queued_records
+    @log.save
+    Rails.logger.info("Processed activity stream page back to #{earliest_item_on_page}")
     process_recursive(previous_page_link(page)) if (previous_page_link(page) && last_run_time.nil?) || (previous_page_link(page) && earliest_item_on_page.after?(last_run_time))
   end
 
@@ -57,7 +78,7 @@ class ActivityStreamReader
   # It takes an item from the activity stream and returns either true or false depending on whether that object is an update
   def relevant?(item)
     # Don't process changes which occur after last_run_time
-    return false unless item["type"] == "Update" && item['endTime'].to_datetime.after?(last_run_time)
+    return false unless item["type"] == "Update" && (item['endTime'].to_datetime.after?(last_run_time) || item['endTime'].to_datetime == last_run_time)
     true
   end
 
@@ -77,11 +98,20 @@ class ActivityStreamReader
     @update_time_uri_map ||= {}
   end
 
+  def update_time_oid_map
+    @update_time_oid_map ||= {}
+  end
+
+  attr_reader :parent_object_refs
+
   def parents_for_update_from_dependent_uris(updated_uris)
     # See: https://guides.rubyonrails.org/active_record_querying.html#subset-conditions
     dependent_objects = DependentObject.where(dependent_uri: updated_uris)
-    parent_object_refs = dependent_objects.map { |depobj| [depobj.parent_object_id, depobj.metadata_source] }
-    parent_object_refs.to_set
+    parent_object_refs_list = dependent_objects.map do |depobj|
+      update_time_oid_map[depobj.parent_object_id] = update_time_uri_map[depobj.dependent_uri] unless update_time_uri_map[depobj.dependent_uri].nil?
+      [depobj.parent_object_id, depobj.metadata_source]
+    end
+    parent_object_refs_list.to_set
   end
 
   ##
@@ -96,11 +126,11 @@ class ActivityStreamReader
 
       po = ParentObject.find_by_oid(oid)
       # skip it if the metadata source does not match (This should never happen after dependent uris are updating properly)
-      next unless po.authoritative_metadata_source.metadata_cloud_name == metadata_source
+      next unless po&.authoritative_metadata_source&.metadata_cloud_name == metadata_source
 
       #  if po was updated after the most recent update of one of all the dependent uris, skip it
       last_update = metadata_source == 'aspace' ? po.last_aspace_update : po.last_voyager_update
-      most_recent_dependend_object_update = DependentObject.where(parent_object_id: oid).map { |dobj| update_time_uri_map[dobj.dependent_uri] }.compact.map(&:to_datetime).max
+      most_recent_dependend_object_update = update_time_oid_map[oid]
       next if last_update&.after?(most_recent_dependend_object_update)
 
       #  if po has a Metadata Job queued or in progress, skip it.
@@ -140,3 +170,4 @@ class ActivityStreamReader
     false
   end
 end
+# rubocop:enable Metrics/ClassLength

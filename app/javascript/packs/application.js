@@ -189,7 +189,10 @@ $( document ).on('turbolinks:load', function() {
         {
           extend: 'csvHtml5',
           action: newExportAction,
-          text: "All Matching Entries"
+          text: "All Matching Entries",
+          customize: function(){
+            alert("Export of all matching entries is in progress.")
+          }
         }
       ],
       // pagingType is optional, if you want full pagination controls.
