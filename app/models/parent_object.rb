@@ -54,7 +54,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         self[key.to_sym] = nil unless minimal_attr.include? key
       end
     end
-    ParentObject.solr_index
+    self.solr_index
   end
 
   def self.visibilities
