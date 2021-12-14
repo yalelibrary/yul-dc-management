@@ -98,6 +98,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       parent_object.redirect_to = "https://collections.library.yale.edu/catalog/138048"
       parent_object.save!
       solr_document = parent_object.reload.to_solr
+      parent_object.save!
+      expect(solr_document[:redirect_to_tesi]).to eq "https://collections.library.yale.edu/catalog/138048"
       expect(solr_document[:visibility_ssi]).to eq "Redirect"
     end
   end

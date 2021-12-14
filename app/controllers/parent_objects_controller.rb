@@ -68,8 +68,7 @@ class ParentObjectsController < ApplicationController
 
       if updated
         if valid_redirect_to_edit?
-          minify
-          @parent_object.save
+          @parent_object.minify
         end
         queue_parent_metadata_update
         format.html { redirect_to @parent_object, notice: 'Parent object was successfully saved, a full update has been queued.' }
@@ -156,8 +155,6 @@ class ParentObjectsController < ApplicationController
   private
 
     def queue_parent_metadata_update
-      # byebug
-      # batch_process_of_one
       authorize!(:update, @parent_object)
       @parent_object.metadata_update = true
       @parent_object.setup_metadata_job
@@ -196,20 +193,6 @@ class ParentObjectsController < ApplicationController
 
     def invalidate_redirect_to_edit
       @parent_object.errors.add :redirect_to, :invalid, message: "must be in format https://collections.library.yale.edu/catalog/1234567"
-    end
-
-    def minify
-      minimal_attr = ['oid', 'use_ladybird', 'generate_manifest', 'from_mets', 'admin_set_id', 'authoritative_metadata_source_id', 'created_at', 'updated_at']
-
-      @parent_object.attributes.keys.each do |key|
-        if key == 'visibility'
-          @parent_object[key.to_sym] = "Redirect"
-        elsif key == 'redirect_to'
-          @parent_object[key.to_sym] = parent_object_params[:redirect_to]
-        else
-          @parent_object[key.to_sym] = nil unless minimal_attr.include? key
-        end
-      end
     end
 
     # Only allow a list of trusted parameters through.
