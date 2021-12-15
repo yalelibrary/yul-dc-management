@@ -136,6 +136,8 @@ module SolrIndexable
       subjectEra_ssim: json_to_index["subjectEra"],
       subjectGeographic_ssim: json_to_index["subjectGeographic"],
       subjectGeographic_tesim: json_to_index["subjectGeographic"],
+      subjectHeading_ssim: json_to_index["subjectHeadings"],
+      subjectHeadingFacet_ssim: subject_headings_to_facet(json_to_index["subjectHeading"]),
       subjectTitle_tsim: json_to_index["subjectTitle"],
       subjectTitleDisplay_tsim: json_to_index["subjectTitleDisplay"],
       subjectName_ssim: json_to_index["subjectName"],
@@ -248,5 +250,17 @@ module SolrIndexable
     # only get the first portion of the sort, that represents the series sort value.
     sort = json_to_index['archivalSort'].split(".")[0]
     "#{sort}|#{json_to_index['series']}"
+  end
+
+  def subject_headings_to_facet(subject_headings)
+    return nil unless subject_headings
+    facets = []
+    subject_headings.each do |subject_heading|
+      components = subject_heading.split(" > ")
+      components.each_index do |ix|
+        facets << components[0..ix].join(" > ")
+      end
+    end
+    facets
   end
 end
