@@ -4,10 +4,10 @@ module CsvExportable
   extend ActiveSupport::Concern
 
   def parent_headers
-    ['oid', 'admin_set', 'authoritative_source', 'child_object_count', 'call_number', 
-    'container_grouping', 'bib', 'holding', 'item', 'barcode', 'aspace_uri', 'last_ladybird_update', 
-    'last_voyager_update', 'last_aspace_update', 'last_id_update', 'visibility', 
-    'extent_of_digitization', 'digitization_note', 'project_identifier']
+    ['oid', 'admin_set', 'authoritative_source', 'child_object_count', 'call_number',
+     'container_grouping', 'bib', 'holding', 'item', 'barcode', 'aspace_uri', 'last_ladybird_update',
+     'last_voyager_update', 'last_aspace_update', 'last_id_update', 'visibility',
+     'extent_of_digitization', 'digitization_note', 'project_identifier']
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -19,11 +19,11 @@ module CsvExportable
       sorted_parent_objects.each do |po|
         next csv << po if po.is_a?(Array)
 
-        row = [po.oid, po.admin_set_key, po.authoritative_json['title']&.first, 
-        po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item, 
-        po.barcode, po.aspace_uri, po.last_ladybird_update, po.last_voyager_update,
-        po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
-        po.digitization_note, po.project_identifier]
+        row = [po.oid, po.admin_set_key, po.authoritative_json['title']&.first,
+               po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+               po.barcode, po.aspace_uri, po.last_ladybird_update, po.last_voyager_update,
+               po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
+               po.digitization_note, po.project_identifier]
         csv << row
       end
     end
@@ -33,18 +33,36 @@ module CsvExportable
   def sorted_parent_objects
     had_events = batch_ingest_events_count.positive?
     arr = []
-    oids.each_with_index do |oid, index|
+    byebug
+    imported_csv = CSV.parse(csv, headers: true)
+    imported_csv.each_with_index do |key, index|
       begin
-        po = ParentObject.find(oid.to_i)
-        next unless check_can_view(current_ability, index, po, arr, had_events)
-        po.each { |po| arr << po }
+        admin_set = AdminSet.find_by(key: key)
+        next unless admin_check_can_view(current_ability, index, admin_set, arr, had_events)
+        admin_set.each { |admin_set| arr << admin_set }
       rescue ActiveRecord::RecordNotFound
-        parent_not_found(index, oid, arr, had_events)
+        admin_set_not_found(index, key, arr, had_events)
       end
     end
 
-    # sort first by the parent oid, then by the child objects order in the parent grouping
-    arr.sort_by { |po| [po.try(:admin_set_key) || po[0], po.try(:oid) || po[2]] }
+    # sort first by the parent key, then by the child objects order in the parent grouping
+    arr.sort_by { |po| [po.try(:admin_set_key) || po[0], po.try(:key) || po[2]] }
+  end
+
+  def admin_set_not_found(index, key, arr, had_events)
+    row = [key.to_s, nil, 0, 'Admin Set Not Found in database', '', '']
+    batch_processing_event("Skipping row [#{index + 2}] due to Admin Set not found: #{key}", 'Skipped Row') unless had_events
+    arr << row
+  end
+
+
+  def admin_check_can_view(ability, index, admin_set, arr, had_events)
+    return true if ability.can?(:read, admin_set)
+
+    row = [admin_set, nil, 0, 'Access denied for admin set', '', '']
+    batch_processing_event("Skipping row [#{index + 2}] due to admin set permissions: #{admin_set}", 'Skipped Row') unless had_events
+    arr << row
+    false
   end
 
   def child_headers

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe CreateChildOidCsvJob, type: :job do
+RSpec.describe CreateParentOidCsvJob, type: :job do
   def queue_adapter_for_test
     ActiveJob::QueueAdapters::DelayedJobAdapter.new
   end
