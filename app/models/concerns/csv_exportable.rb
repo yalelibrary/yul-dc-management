@@ -58,8 +58,8 @@ module CsvExportable
   def admin_check_can_view(_ability, index, admin_set, arr, had_events)
     return true if user.viewer(admin_set) || user.editor(admin_set)
 
-    row = [admin_set, nil, 0, 'Access denied for admin set', '', '']
-    batch_processing_event("Skipping row [#{index + 2}] due to admin set permissions: #{admin_set}", 'Skipped Row') unless had_events
+    row = [admin_set.key, nil, 0, 'Access denied for admin set', '', '']
+    batch_processing_event("Skipping row [#{index + 2}] due to admin set permissions: #{admin_set.key}", 'Skipped Row') unless had_events
     arr << row
     false
   end
