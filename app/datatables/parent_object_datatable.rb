@@ -64,7 +64,6 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
         digitization_note: parent_object.digitization_note,
         DT_RowId: parent_object.oid,
         project_identifier: parent_object.project_identifier
-
       }
     end
   end
@@ -85,6 +84,6 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    ParentObject.accessible_by(@current_ability, :read).joins(:authoritative_metadata_source, :admin_set)
+    ParentObject.accessible_by(@current_ability, :read).joins(:authoritative_metadata_source, :admin_set).where("visibility != 'Redirect'")
   end
 end

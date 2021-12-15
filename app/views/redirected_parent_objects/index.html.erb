@@ -1,0 +1,28 @@
+<p id='notice'><%= notice %></p>
+<div class='row datatable-heading'>
+  <div class='col'>
+    <h1>Redirected Parent Objects</h1>
+  </div>
+</div>
+
+<div class='row datatable'>
+  <div class='col overflow-auto'>
+    <table id='parent-objects-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= redirected_parent_objects_path(format: :json) %>'>
+      <thead class='table-head'>
+        <tr>
+          <th scope='col'>OID</th>
+          <th scope='col'>Admin Set</th>
+          <th scope='col'>Authoritative Source</th>
+          <th scope='col'>Visibility</th>
+          <th scope='col'>Redirected To</th>
+        </tr>
+      </thead>
+      <tbody class='datatable-body'>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id='parent-objects-data' class='d-none datatable-data'>
+  <%= RedirectedParentObjectDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], searchable: value[:searchable], options: value[:options]} }.to_json %>
+</div>

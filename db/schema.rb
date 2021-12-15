@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_19_150734) do
+ActiveRecord::Schema.define(version: 2021_11_30_233657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 2021_11_19_150734) do
     t.string "container_grouping"
     t.string "project_identifier"
     t.string "parent_model"
+    t.text "redirect_to"
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
     t.index ["aspace_uri"], name: "index_parent_objects_on_aspace_uri"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
@@ -181,6 +182,7 @@ ActiveRecord::Schema.define(version: 2021_11_19_150734) do
     t.index ["item"], name: "index_parent_objects_on_item"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
     t.index ["project_identifier"], name: "index_parent_objects_on_project_identifier"
+    t.index ["redirect_to"], name: "index_parent_objects_on_redirect_to"
   end
 
   create_table "preservica_ingests", force: :cascade do |t|

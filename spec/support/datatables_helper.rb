@@ -84,6 +84,19 @@ def parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
   @datatable_view_mock
 end
 
+def redirected_parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
+  @datatable_view_mock ||= double
+  allow(@datatable_view_mock).to receive(:parent_object_path).and_return('/parent_objects/2034600')
+  allow(@datatable_view_mock).to receive(:edit_parent_object_path).and_return('/parent_objects/2034600/edit')
+  allow(@datatable_view_mock).to receive(:link_to).with(anything, '/parent_objects/2034600')
+                                                  .and_return('<a href="/parent_objects/2034600">2034600</a>')
+  allow(@datatable_view_mock).to receive(:link_to).with('/parent_objects/2034600/edit', {})
+                                                  .and_return('<a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil-alt"></i></a>')
+  allow(@datatable_view_mock).to receive(:link_to).with('http://localhost:3000/catalog/2034600', target: :_blank)
+                                                  .and_return('<a target="_blank" href="http://localhost:3000/catalog/2034600">1</a>')
+  @datatable_view_mock
+end
+
 def child_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
   @datatable_view_mock ||= double
   allow(@datatable_view_mock).to receive(:child_object_path).and_return('/child_objects/1')

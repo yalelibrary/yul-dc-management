@@ -46,7 +46,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       click_on("Create Parent object")
       click_on("Edit")
       page.select("Partially digitized", from: "Extent of digitization")
-      click_on("Update")
+      click_on("Save Parent Object And Update Metadata")
       expect(page).to have_content("Partially digitized")
     end
   end

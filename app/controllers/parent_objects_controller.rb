@@ -62,9 +62,15 @@ class ParentObjectsController < ApplicationController
   def update
     respond_to do |format|
       invalidate_admin_set_edit unless valid_admin_set_edit?
+      invalidate_redirect_to_edit unless valid_redirect_to_edit?
+
       updated = valid_admin_set_edit? ? @parent_object.update(parent_object_params) : false
 
       if updated
+        if valid_redirect_to_edit?
+          minify
+          @parent_object.save
+        end
         queue_parent_metadata_update
         format.html { redirect_to @parent_object, notice: 'Parent object was successfully saved, a full update has been queued.' }
         format.json { render :show, status: :ok, location: @parent_object }
@@ -180,12 +186,35 @@ class ParentObjectsController < ApplicationController
       @parent_object.current_batch_process = @batch_process
     end
 
+    def valid_redirect_to_edit?
+      return if parent_object_params[:redirect_to].blank?
+      !parent_object_params[:redirect_to] || (parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//))
+    end
+
+    def invalidate_redirect_to_edit
+      @parent_object.errors.add :redirect_to, :invalid, message: "must be in format https://collections.library.yale.edu/catalog/1234567"
+    end
+
+    def minify
+      minimal_attr = ['oid', 'use_ladybird', 'generate_manifest', 'from_mets', 'admin_set_id', 'authoritative_metadata_source_id', 'created_at', 'updated_at']
+
+      @parent_object.attributes.keys.each do |key|
+        if key == 'visibility'
+          @parent_object[key.to_sym] = "Redirect"
+        elsif key == 'redirect_to'
+          @parent_object[key.to_sym] = parent_object_params[:redirect_to]
+        else
+          @parent_object[key.to_sym] = nil unless minimal_attr.include? key
+        end
+      end
+    end
+
     # Only allow a list of trusted parameters through.
     def parent_object_params
       cur_params = params.require(:parent_object).permit(:oid, :admin_set, :project_identifier, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
                                                          :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction,
-                                                         :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization, :digitization_note)
-      cur_params[:admin_set] = AdminSet.find_by(key: cur_params[:admin_set])
+                                                         :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization, :digitization_note, :redirect_to)
+      cur_params[:admin_set] = AdminSet.find_by(key: cur_params[:admin_set]) if cur_params[:admin_set]
       cur_params
     end
 end
