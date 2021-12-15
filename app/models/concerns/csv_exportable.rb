@@ -12,18 +12,18 @@ module CsvExportable
 
   # rubocop:disable Metrics/AbcSize
   def parent_output_csv
-    return nil unless batch_action == 'export parent oids'
+    return nil unless batch_action == 'export all parent objects by admin set'
 
     CSV.generate do |csv|
       csv << parent_headers
       sorted_parent_objects.each do |po|
         next csv << po if po.is_a?(Array)
-
-        row = [po.oid, po.admin_set.label, po.authoritative_json['title']&.first,
+        row = [po.oid, po.admin_set.label, po.authoritative_json,
                po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
                po.barcode, po.aspace_uri, po.last_ladybird_update, po.last_voyager_update,
                po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
                po.digitization_note, po.project_identifier]
+        # byebug
         csv << row
       end
     end
@@ -57,7 +57,7 @@ module CsvExportable
   end
 
   def admin_check_can_view(ability, index, admin_set, arr, had_events)
-    return true if user.viewer(admin_set)
+    return true if user.viewer(admin_set) || user.editor(admin_set)
 
     row = [admin_set, nil, 0, 'Access denied for admin set', '', '']
     batch_processing_event("Skipping row [#{index + 2}] due to admin set permissions: #{admin_set}", 'Skipped Row') unless had_events
