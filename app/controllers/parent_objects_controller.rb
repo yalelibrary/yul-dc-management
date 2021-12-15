@@ -105,7 +105,7 @@ class ParentObjectsController < ApplicationController
     if !admin_set_ids
       authorize!(:update_metadata, ParentObject)
     else
-      where[:admin_set_id] = admin_set_ids
+      where[:_id] = admin_set_ids
       unless authorize!(:update_metadata, ParentObject)
         admin_set_ids.map { |id| AdminSet.find_by(id: id) }.compact.each.each do |admin_set|
           raise("Access Denied") unless current_ability.can?(:reindex_admin_set, admin_set)

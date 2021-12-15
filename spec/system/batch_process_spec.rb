@@ -184,6 +184,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.file_name).to eq "export_parent_oids.csv"
         expect(BatchProcess.last.batch_action).to eq "export parent oids"
         expect(BatchProcess.last.parent_output_csv).to include "2034600"
+        expect(BatchProcess.last.parent_output_csv).not_to include "2005512"
       end
 
       it "uploads a CSV of parent oids in order to create export of child objects oids and orders" do
