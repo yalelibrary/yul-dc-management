@@ -1,7 +1,14 @@
 <%= render partial: "/management/flash_messages" %>
-<p>
-<a href="#BatchUpdateMetadata" role="button" class="btn btn-large btn-secondary" data-toggle="modal">Batch Update Metadata</a>
-</p>
+
+<div class='admin-set-button-bar'>
+  <p>
+    <a href="#BatchUpdateMetadata" role="button" class="btn btn-large btn-secondary" data-toggle="modal">Batch Update Metadata</a>
+  </p>
+
+  <%= button_to 'Export Parent Objects', export_parent_objects_path, method: 'post', class: 'btn btn-large btn-secondary',
+          id: 'export_parent', data:{confirm: 'Are you sure you want to proceed?  This action will export parent objects for the entire contents of the admin set.'}
+        %>
+</div>
 
 <p>
   <strong>Key:</strong>

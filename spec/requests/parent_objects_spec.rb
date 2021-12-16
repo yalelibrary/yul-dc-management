@@ -200,6 +200,16 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
     end
   end
 
+  describe '#export' do
+    it 'redirects to the admin set list' do
+      parent_object = ParentObject.create! valid_attributes
+      post export_parent_objects_path
+      # byebug
+      expect(response).to redirect_to(admin_sets_url)
+      expect(flash[:notice]).to eq('Parent Objects have been queued for export.  Please visit Batch Process page for details.')
+    end
+  end
+
   describe '#minify' do
     let(:redirect_attributes) do
       {

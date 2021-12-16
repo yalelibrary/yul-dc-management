@@ -12,6 +12,7 @@ module CsvExportable
 
   # rubocop:disable Metrics/AbcSize
   def parent_output_csv
+    byebug
     return nil unless batch_action == 'export all parent objects by admin set'
 
     CSV.generate do |csv|
@@ -35,6 +36,7 @@ module CsvExportable
     imported_csv = CSV.parse(csv, headers: true)
     imported_csv.each_with_index do |key, index|
       begin
+        byebug
         admin_set = AdminSet.find_by(key: key[0])
         next unless admin_check_can_view(current_ability, index, admin_set, arr, had_events)
         ParentObject.where(admin_set_id: admin_set.id).find_each do |parent|
