@@ -311,6 +311,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
   describe "expand_date_structured" do
     let(:oid) { "2034600" }
     let(:parent_object) { described_class.new }
+    let(:subject_heading) { ["Animals > Canines > Dogs", "Creatures > Four Legged"] }
+    let(:facets) { ["Animals", "Animals > Canines", "Animals > Canines > Dogs", "Creatures", "Creatures > Four Legged"] }
     it "expands dates with explicit ranges" do
       expect(parent_object.expand_date_structured(["2000/2005"])).to eq [2000, 2001, 2002, 2003, 2004, 2005]
     end
@@ -346,6 +348,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       expect(parent_object.expand_date_structured(["9999/1935"])).to eq []
       expect(parent_object.expand_date_structured(["9999/1935", "1955"])).to eq [1955]
       expect(parent_object.expand_date_structured(["1935/2021/1953", "1975"])).to eq [1975]
+    end
+    it "creates subject headings facet by expanding subject headings" do
+      expect(parent_object.subject_headings_to_facet(subject_heading)).to eq facets
+    end
+    it "creates nil facet from nil subject headings" do
+      expect(parent_object.subject_headings_to_facet(nil)).to be_nil
     end
   end
 end

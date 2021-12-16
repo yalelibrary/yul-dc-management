@@ -261,4 +261,16 @@ module SolrIndexable
     sort = json_to_index['archivalSort'].split(".")[0]
     "#{sort}|#{json_to_index['series']}"
   end
+
+  def subject_headings_to_facet(subject_headings)
+    return nil unless subject_headings
+    facets = []
+    subject_headings.each do |subject_heading|
+      components = subject_heading.split(" > ")
+      components.each_index do |ix|
+        facets << components[0..ix].join(" > ")
+      end
+    end
+    facets
+  end
 end
