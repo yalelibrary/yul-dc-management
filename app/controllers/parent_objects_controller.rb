@@ -67,10 +67,8 @@ class ParentObjectsController < ApplicationController
       updated = valid_admin_set_edit? ? @parent_object.update(parent_object_params) : false
 
       if updated
-        if valid_redirect_to_edit?
-          minify
-          @parent_object.save
-        end
+        @parent_object.minify if valid_redirect_to_edit?
+        @parent_object.save
         queue_parent_metadata_update
         format.html { redirect_to @parent_object, notice: 'Parent object was successfully saved, a full update has been queued.' }
         format.json { render :show, status: :ok, location: @parent_object }
@@ -186,27 +184,14 @@ class ParentObjectsController < ApplicationController
       @parent_object.current_batch_process = @batch_process
     end
 
+    # rubocop:disable Metrics/LineLength
     def valid_redirect_to_edit?
-      return if parent_object_params[:redirect_to].blank?
-      !parent_object_params[:redirect_to] || (parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//))
+      !parent_object_params[:redirect_to] || (parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//)) if parent_object_params[:redirect_to].present?
     end
+    # rubocop:enable Metrics/LineLength
 
     def invalidate_redirect_to_edit
       @parent_object.errors.add :redirect_to, :invalid, message: "must be in format https://collections.library.yale.edu/catalog/1234567"
-    end
-
-    def minify
-      minimal_attr = ['oid', 'use_ladybird', 'generate_manifest', 'from_mets', 'admin_set_id', 'authoritative_metadata_source_id', 'created_at', 'updated_at']
-
-      @parent_object.attributes.keys.each do |key|
-        if key == 'visibility'
-          @parent_object[key.to_sym] = "Redirect"
-        elsif key == 'redirect_to'
-          @parent_object[key.to_sym] = parent_object_params[:redirect_to]
-        else
-          @parent_object[key.to_sym] = nil unless minimal_attr.include? key
-        end
-      end
     end
 
     # Only allow a list of trusted parameters through.

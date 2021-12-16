@@ -14,7 +14,6 @@ RSpec.describe 'Delayed Jobs', type: :system, js: true do
     xit 'are inaccessible manually through the delayed jobs endpoint' do
       visit delayed_job_web_path
       # visit delayed_job_path
-      # byebug
       # this spec keeps failing with:
       # ActionController::RoutingError: No route matches [GET] "/management/users/auth/cas"
       expect(current_path).to eq(user_cas_omniauth_authorize_path)
