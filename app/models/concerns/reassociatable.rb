@@ -27,8 +27,7 @@ module Reassociatable
       parents_needing_update << row["parent_oid"].to_i
 
       reassociate_child(co, po)
-
-      values_to_update = check_headers(headers, row)
+      values_to_update = check_headers(child_headers, row)
       update_child_parent_values(values_to_update, co, row, index)
     end
     parents_needing_update
