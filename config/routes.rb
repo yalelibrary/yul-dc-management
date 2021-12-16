@@ -31,7 +31,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     collection do
       post :reindex
       post :all_metadata
-      post :export
+      post 'export/:admin_set_id' => 'parent_objects#export', as: :export
     end
     member do
       post :update_metadata

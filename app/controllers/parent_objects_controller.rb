@@ -125,7 +125,7 @@ class ParentObjectsController < ApplicationController
   end
 
   def all_metadata
-    byebug
+    # byebug
     UpdateAllMetadataJob.perform_later(0, all_metadata_where)
     respond_to do |format|
       format.html { redirect_back fallback_location: parent_objects_url, notice: 'Parent objects have been queued for metadata update.' }
@@ -142,7 +142,7 @@ class ParentObjectsController < ApplicationController
   end
 
   def export
-    byebug
+    # byebug
     CreateParentOidCsvJob.perform_later
     respond_to do |format|
       format.html { redirect_to parent_objects_url, notice: 'Parent Objects have been queued for export.  Please visit Batch Process page for details.' }
