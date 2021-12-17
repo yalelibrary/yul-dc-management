@@ -133,7 +133,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["rendering"].first["id"]).to eq "#{ENV['PDF_BASE_URL']}/#{oid}.pdf"
       expect(iiif_presentation.manifest["rendering"].first["type"]).to eq "Text"
       expect(iiif_presentation.manifest["rendering"].first["format"]).to eq "application/pdf"
-      expect(iiif_presentation.manifest["rendering"].first["label"]).to eq "Download as PDF"
+      expect(iiif_presentation.manifest["rendering"].first["label"]['en'].first).to eq "Download as PDF"
     end
 
     it "has a seeAlso in the manifest" do
@@ -263,7 +263,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     it "has an image resource with a service" do
       annotation = first_canvas["items"].first["items"].first
       image = annotation['body']
-      service = image['service']
+      service = image['service'].first
       expect(service["@id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/16188699"
       expect(service['type']).to eq "ImageService2"
       expect(service['profile']).to eq "http://iiif.io/api/image/2/level2.json"
@@ -297,17 +297,15 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
 
     it 'sets thumbnail to the representative child' do
       iiif_presentation_rep = described_class.new(parent_object_rep)
-
-      expect(iiif_presentation_rep.manifest["thumbnail"][0]["@id"]).to include parent_object_rep.representative_child.oid.to_s
+      expect(iiif_presentation_rep.manifest["thumbnail"][0]["id"]).to include parent_object_rep.representative_child.oid.to_s
     end
 
     context 'representative child is one of the first 10 children' do
       it 'sets startCanvas to representative child' do
         parent_object_rep_edited = parent_object_rep
         parent_object_rep_edited.representative_child_oid = parent_object_rep.child_objects[8].oid
-
         iiif_presentation_rep = described_class.new(parent_object_rep_edited)
-        expect(iiif_presentation_rep.manifest["startCanvas"]).to include parent_object_rep_edited.representative_child_oid.to_s
+        expect(iiif_presentation_rep.manifest["start"]).to include parent_object_rep_edited.representative_child_oid.to_s
       end
     end
     context 'representative child is not one of the first 10 children' do

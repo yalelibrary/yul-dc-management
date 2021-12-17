@@ -156,7 +156,7 @@ class IiifPresentationV3
         "id" => File.join(pdf_base_url.to_s, "#{@oid}.pdf"),
         "type" => "Text",
         "format" => "application/pdf",
-        "label" => "Download as PDF"
+        "label" => { "en" => ["Download as PDF"] }
       }
     ]
   end
@@ -179,11 +179,11 @@ class IiifPresentationV3
       'format' => "image/jpeg",
       'height' => child.height,
       'width' => child.width,
-      'service' => {
+      'service' => [{
         '@id' => image_service_url(child.oid),
         'type' => 'ImageService2',
         'profile' => 'http://iiif.io/api/image/2/level2.json'
-      }
+      }]
     }
   end
 
