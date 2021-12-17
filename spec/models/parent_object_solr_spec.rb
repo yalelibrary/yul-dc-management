@@ -84,6 +84,26 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     end
   end
 
+  describe "changing the parent to redirected", solr: true do
+    let(:oid) { "2034600" }
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
+    before do
+      stub_metadata_cloud(oid)
+      parent_object
+    end
+
+    it "indexes the smaller record" do
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document[:visibility_ssi]).to eq "Public"
+      parent_object.redirect_to = "https://collections.library.yale.edu/catalog/138048"
+      parent_object.save!
+      solr_document = parent_object.reload.to_solr
+      parent_object.save!
+      expect(solr_document[:redirect_to_tesi]).to eq "https://collections.library.yale.edu/catalog/138048"
+      expect(solr_document[:visibility_ssi]).to eq "Redirect"
+    end
+  end
+
   context "indexing to Solr from the database with Ladybird ParentObjects", solr: true do
     it "can index the 5 parent objects in the database to Solr and can remove those items", undelayed: true do
       response = solr.get 'select', params: { q: 'type_ssi:parent' }

@@ -23,6 +23,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   attr_accessor :current_batch_connection
   self.primary_key = 'oid'
   after_save :setup_metadata_job
+  after_update :check_for_redirect
   after_update :digital_object_check
   # after_update :solr_index_job # we index from the fetch job on create
   after_destroy :solr_delete
@@ -34,6 +35,25 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/LineLength
   validates :redirect_to, format: { with: /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//, message: " in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123", allow_blank: true }
   # rubocop:enable Metrics/LineLength
+
+  def check_for_redirect
+    minify if redirect_to.present?
+  end
+
+  def minify
+    minimal_attr = ['oid', 'use_ladybird', 'generate_manifest', 'from_mets', 'admin_set_id', 'authoritative_metadata_source_id', 'created_at', 'updated_at']
+
+    attributes.keys.each do |key|
+      if key == 'visibility'
+        self[key.to_sym] = "Redirect"
+      elsif key == 'redirect_to'
+        self[key.to_sym] = redirect_to
+      else
+        self[key.to_sym] = nil unless minimal_attr.include? key
+      end
+    end
+    solr_index
+  end
 
   def self.visibilities
     ['Private', 'Public', 'Redirect', 'Yale Community Only']
@@ -98,7 +118,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
       upsert_preservica_ingest_child_objects(array_preservica_hashes_from_mets) unless array_preservica_hashes_from_mets.nil?
-
     else
       return unless ladybird_json
       return self.child_object_count = 0 if ladybird_json["children"].empty? && parent_model != 'simple'
