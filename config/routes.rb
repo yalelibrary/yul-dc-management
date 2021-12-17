@@ -24,7 +24,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :child_objects
   resources :admin_sets do
     collection do
-      post :export
+      post '/admin_sets/export/:id', to: 'admin_sets#export', as: :export
     end
   end
   resources :preservica_ingests
