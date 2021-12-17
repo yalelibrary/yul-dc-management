@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateChildOidCsvJob < ApplicationJob
+class CreateParentOidCsvJob < ApplicationJob
   queue_as :default
 
   def default_priority
@@ -8,6 +8,6 @@ class CreateChildOidCsvJob < ApplicationJob
   end
 
   def perform(batch_process)
-    batch_process.child_output_csv
+    batch_process.parent_output_csv
   end
 end

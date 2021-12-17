@@ -34,7 +34,11 @@
 <div class='batch-process-details'>
   <p>
     <strong>Created file:</strong>
-    <%= @batch_process.file_name && @batch_process.batch_action == 'export child oids' ? link_to(@batch_process.created_file_name, download_created_batch_process_path) : 'n/a' %>
+    <% if @batch_process.batch_action == 'export all parent objects by admin set' %>
+      <%= @batch_process.file_name && @batch_process.batch_action == 'export all parent objects by admin set' ? link_to(@batch_process.created_file_name, download_created_batch_process_path) : 'n/a' %>
+    <% else %>
+      <%= @batch_process.file_name && @batch_process.batch_action == 'export child oids' ? link_to(@batch_process.created_file_name, download_created_batch_process_path) : 'n/a' %>
+    <% end %>
   </p>
 </div>
 

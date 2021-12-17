@@ -48,7 +48,7 @@ jobs:
           POSTGRES_DB: management_yul_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
-    parallelism: 5
+    parallelism: 4
     executor: docker/docker
     steps:
       - setup_remote_docker

@@ -25,13 +25,13 @@ RSpec.describe CreateChildOidCsvJob, type: :job do
     expect(create_child_oid_csv_job.queue_name).to eq('default')
   end
 
-  it 'calls output_csv when performed' do
-    expect(batch_process).to receive(:output_csv).once
+  it 'calls child_output_csv when performed' do
+    expect(batch_process).to receive(:child_output_csv).once
     described_class.new.perform(batch_process)
   end
 
-  it 'reports error when output_csv fails' do
-    allow(batch_process).to receive(:output_csv).and_raise('boom!')
+  it 'reports error when child_output_csv fails' do
+    allow(batch_process).to receive(:child_output_csv).and_raise('boom!')
     inst = described_class.new
     expect do
       inst.perform(batch_process)

@@ -25,7 +25,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # LISTS AVAILABLE BATCH ACTIONS
   def self.batch_actions
-    ['create parent objects', 'update parent objects', 'delete parent objects', 'delete child objects',
+    ['create parent objects', 'update parent objects', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set',
      'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status']
   end
 
@@ -141,6 +141,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         DeleteParentObjectsJob.perform_later(self)
       when 'delete child objects'
         DeleteChildObjectsJob.perform_later(self)
+      when 'export all parent objects by admin set'
+        CreateParentOidCsvJob.perform_later(self)
       when 'export child oids'
         CreateChildOidCsvJob.perform_later(self)
       when 'update parent objects'
