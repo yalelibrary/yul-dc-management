@@ -162,7 +162,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       let(:user) { FactoryBot.create(:user) }
 
       before do
-        user.add_role(:viewer, brbl)
+        user.add_role(:editor, brbl)
         login_as user
         parent_object
         parent_object2
@@ -172,6 +172,11 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         perform_enqueued_jobs do
           example.run
         end
+      end
+
+      it "can export admin set arent objects" do
+        visit "/admin_sets/#{brbl.id}"
+        click_button("Export Parent Objects")
       end
 
       it "uploads a CSV of admin set in order to create export of parent object oids" do

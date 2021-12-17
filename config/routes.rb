@@ -22,7 +22,11 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   resources :users, only: [:index, :edit, :update, :show, :new, :create]
   resources :child_objects
-  resources :admin_sets
+  resources :admin_sets do
+    collection do
+      post :export
+    end
+  end
   resources :preservica_ingests
   resources :reoccurring_jobs
   resources :redirected_parent_objects
@@ -31,7 +35,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     collection do
       post :reindex
       post :all_metadata
-      post 'export/:admin_set_id' => 'parent_objects#export', as: :export
     end
     member do
       post :update_metadata

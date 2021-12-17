@@ -71,6 +71,15 @@ class AdminSetsController < ApplicationController
     end
   end
 
+  def export
+    # CreateParentOidCsvJob.perform_later
+    ExportAdminSetCsvJob.perform_later
+    respond_to do |format|
+      format.html { redirect_to admin_sets_url, notice: 'Parent Objects have been queued for export.  Please visit Batch Process page for details.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.

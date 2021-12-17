@@ -5,7 +5,7 @@
     <a href="#BatchUpdateMetadata" role="button" class="btn btn-large btn-secondary" data-toggle="modal">Batch Update Metadata</a>
   </p>
 
-  <%= button_to 'Export Parent Objects', export_parent_objects_path(admin_set_id: @admin_set.id), method: 'post', class: 'btn btn-large btn-secondary',
+  <%= button_to 'Export Parent Objects', export_admin_sets_path(admin_set_id: @admin_set.id), method: 'post', class: 'btn btn-large btn-secondary',
           id: 'export_parent', data:{confirm: 'Are you sure you want to proceed?  This action will export parent objects for the entire contents of the admin set.'}
         %>
 </div>

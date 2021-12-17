@@ -141,15 +141,6 @@ class ParentObjectsController < ApplicationController
     end
   end
 
-  def export
-    # byebug
-    CreateParentOidCsvJob.perform_later
-    respond_to do |format|
-      format.html { redirect_to parent_objects_url, notice: 'Parent Objects have been queued for export.  Please visit Batch Process page for details.' }
-      format.json { head :no_content }
-    end
-  end
-
   def select_thumbnail
     authorize!(:update, @parent_object)
     @child_objects = ChildObject.select([:oid, :parent_object_oid, :order]).where(parent_object: @parent_object).group(:oid, :parent_object_oid, :order).order(:order).page(params[:page]).per(10)
