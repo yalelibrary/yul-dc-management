@@ -143,6 +143,15 @@ RSpec.describe "/admin_sets", type: :request do
         expect(response).to redirect_to(admin_sets_url)
       end
     end
+
+    describe '#export' do
+      it 'redirects to the admin set list' do
+        admin_set = AdminSet.create! valid_attributes
+        post export_admin_sets_path(admin_set.id)
+        expect(response).to redirect_to(admin_sets_url)
+        expect(flash[:notice]).to eq('Parent Objects have been queued for export.  Please visit Batch Process page for details.')
+      end
+    end
   end
 
   context "when user does not permission to Sets" do
