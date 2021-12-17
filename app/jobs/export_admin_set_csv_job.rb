@@ -7,7 +7,7 @@ class ExportAdminSetCsvJob < ApplicationJob
     -100
   end
 
-  def perform(batch_process)
-    batch_process.parent_output_csv
+  def perform(batch_process, admin_set_id)
+    batch_process.parent_output_csv(admin_set_id)
   end
 end

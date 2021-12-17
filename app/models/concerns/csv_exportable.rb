@@ -11,13 +11,13 @@ module CsvExportable
   end
 
   # rubocop:disable Metrics/AbcSize
-  def parent_output_csv
+  def parent_output_csv(*admin_set_id)
     byebug
     return nil unless batch_action == 'export all parent objects by admin set'
 
     CSV.generate do |csv|
       csv << parent_headers
-      sorted_parent_objects.each do |po|
+      sorted_parent_objects(*admin_set_id).each do |po|
         next csv << po if po.is_a?(Array)
         row = [po.oid, po.admin_set.label, po.source_name,
                po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
@@ -33,10 +33,10 @@ module CsvExportable
   def sorted_parent_objects
     had_events = batch_ingest_events_count.positive?
     arr = []
-    imported_csv = CSV.parse(csv, headers: true)
+    imported_csv = CSV.parse(csv, headers: true).presence || admin_set_id
     imported_csv.each_with_index do |key, index|
       begin
-        byebug
+        # byebug
         admin_set = AdminSet.find_by(key: key[0])
         next unless admin_check_can_view(current_ability, index, admin_set, arr, had_events)
         ParentObject.where(admin_set_id: admin_set.id).find_each do |parent|
