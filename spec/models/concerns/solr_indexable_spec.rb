@@ -29,4 +29,10 @@ RSpec.describe SolrIndexable, type: :model do
     solr_document = solr_indexable.to_solr('ancestorTitles' => ['ancestor title'])
     expect(solr_document[:ancestorTitles_tesim]).to eq(['ancestor title'])
   end
+
+  it "indexes the subject headings" do
+    solr_document = solr_indexable.to_solr('subjectHeading' => ['Test > Test2', 'Two > Three > Four'])
+    expect(solr_document[:subjectHeading_ssim]).to eq(['Test > Test2', 'Two > Three > Four'])
+    expect(solr_document[:subjectHeadingFacet_ssim]).to eq(['Test', 'Test > Test2', 'Two', 'Two > Three', 'Two > Three > Four'])
+  end
 end

@@ -147,6 +147,8 @@ module SolrIndexable
         subjectEra_ssim: json_to_index["subjectEra"],
         subjectGeographic_ssim: json_to_index["subjectGeographic"],
         subjectGeographic_tesim: json_to_index["subjectGeographic"],
+        subjectHeading_ssim: json_to_index["subjectHeading"],
+        subjectHeadingFacet_ssim: subject_headings_to_facet(json_to_index["subjectHeading"]),
         subjectTitle_tsim: json_to_index["subjectTitle"],
         subjectTitleDisplay_tsim: json_to_index["subjectTitleDisplay"],
         subjectName_ssim: json_to_index["subjectName"],
