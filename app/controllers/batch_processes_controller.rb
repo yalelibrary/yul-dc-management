@@ -63,17 +63,18 @@ class BatchProcessesController < ApplicationController
     end
   end
 
+  # TODO: get rid of this method...potentially
   def download_created
-    if @batch_process.batch_action == 'export child oids'
-      # Add BOM to force Excel to open correctly
-      send_data "\xEF\xBB\xBF" + @batch_process.child_output_csv,
-                type: 'text/csv; charset=utf-8; header=present',
-                disposition: "attachment; filename=#{@batch_process.created_file_name}"
-    else
+    # if @batch_process.batch_action == 'export child oids'
+    #   # Add BOM to force Excel to open correctly
+    #   send_data "\xEF\xBB\xBF" + @batch_process.child_output_csv,
+    #             type: 'text/csv; charset=utf-8; header=present',
+    #             disposition: "attachment; filename=#{@batch_process.created_file_name}"
+    # else
       send_data "\xEF\xBB\xBF" + @batch_process.parent_output_csv,
                 type: 'text/csv; charset=utf-8; header=present',
                 disposition: "attachment; filename=#{@batch_process.created_file_name}"
-    end
+    # end
   end
 
   def download_csv

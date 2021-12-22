@@ -71,8 +71,7 @@ module CsvExportable
   # rubocop:disable Metrics/AbcSize
   def child_output_csv
     return nil unless batch_action == 'export child oids'
-
-    CSV.generate do |csv|
+    csv = CSV.generate do |csv|
       csv << child_headers
       sorted_child_objects.each do |co|
         next csv << co if co.is_a?(Array)
@@ -81,6 +80,12 @@ module CsvExportable
         csv << row
       end
     end
+    save_to_s3(csv, batch_process)
+    csv
+  end
+
+  def child_csv_url
+    CsvExport.presigned_url(self.output_csv) if self.output_csv
   end
 
   # rubocop:enable Metrics/AbcSize
@@ -114,5 +119,19 @@ module CsvExportable
     batch_processing_event("Skipping row [#{index + 2}] due to parent permissions: #{parent_object.oid}", 'Skipped Row') unless had_events
     arr << row
     false
+  end
+
+  def save_to_s3(csv, batch_process)
+    # generate csv export and save it to s3
+    upload = CsvExport.new(csv, batch_process).save
+    if upload
+      batch_processing_event("CSV saved to S3", "manifest-saved")
+      self.upload_csv = upload.export_path
+    else
+      batch_processing_event("CSV not saved to S3", "failed")
+    end
+  rescue => e
+    batch_processing_event("CSV generation failed due to #{e.message}", "failed")
+    raise # this reraises the error after we document it
   end
 end
