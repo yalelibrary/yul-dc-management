@@ -44,7 +44,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
     end
 
-
     context "with a user with edit permissions" do
       let(:user) { FactoryBot.create(:user) }
 
@@ -91,20 +90,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
           expect(page).to have_content "due to admin set permissions"
         end
       end
-    end
-  end
-
-  context 'from admin set page' do
-    before do
-      user.add_role(:editor, admin_set)
-      login_as user
-      visit "/admin_sets/#{admin_set.id}"
-    end
-    
-    it 'produces a CSV and batch process' do
-      click_button("Export Parent Objects")
-      visit "/batch_processes/#{BatchProcess.last.id}"
-      expect(page).to have_content "Created file: export_parent_oids"
     end
   end
 end
