@@ -25,6 +25,7 @@ module CsvExportable
                po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
                po.digitization_note, po.project_identifier]
         csv << row
+        # byebug
       end
     end
   end
@@ -51,12 +52,12 @@ module CsvExportable
         end
       end
     else
-      admin_set_id.each do |key|
+      admin_set_id.each do |id|
         begin
-          admin_set = AdminSet.find_by(id: key.to_i)
+          admin_set = AdminSet.find_by(id: id.to_i)
           next unless admin_check_can_view(current_ability, index = 0, admin_set, arr, had_events)
 
-          ParentObject.where(admin_set_id: key.to_i).find_each do |parent|
+          ParentObject.where(admin_set_id: id.to_i).find_each do |parent|
             arr << parent
           end
         rescue ActiveRecord::RecordNotFound

@@ -172,6 +172,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
 
       it "can export admin set parent objects" do
+        admin_set = AdminSet.find_by(key: "brbl")
         expect(BatchProcess.count).to eq 0
         visit admin_sets_path
         click_link "brbl"
@@ -181,8 +182,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(page).to have_content("Parent Objects have been queued for export. Please visit Batch Process page for details.")
         expect(BatchProcess.count).to eq 1
         expect(BatchProcess.last.batch_action).to eq "export all parent objects by admin set"
-        expect(BatchProcess.last.parent_output_csv).to include "2034600"
-        expect(BatchProcess.last.parent_output_csv).not_to include "2005512"
+        expect(BatchProcess.last.parent_output_csv(admin_set.id)).to include "2034600"
+        expect(BatchProcess.last.parent_output_csv(admin_set.id)).not_to include "2005512"
         # expect(BatchProcess.last.file_name).to eq "export_parent_oids.csv"
       end
 
