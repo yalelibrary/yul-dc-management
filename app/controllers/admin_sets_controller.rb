@@ -72,11 +72,12 @@ class AdminSetsController < ApplicationController
   end
 
   def export
-    batch_process = BatchProcess.new(user: current_user, batch_action: 'export parent objects by admin set')
+    batch_process = BatchProcess.new(user: current_user, batch_action: 'export all parent objects by admin set')
     batch_process.save
+    # byebug
     ExportAdminSetCsvJob.perform_later(batch_process, params[:id])
     respond_to do |format|
-      format.html { redirect_to admin_sets_url, notice: 'Parent Objects have been queued for export.  Please visit Batch Process page for details.' }
+      format.html { redirect_to admin_sets_url, notice: 'Parent Objects have been queued for export. Please visit Batch Process page for details.' }
       format.json { head :no_content }
     end
   end

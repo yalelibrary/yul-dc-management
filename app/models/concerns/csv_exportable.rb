@@ -12,43 +12,62 @@ module CsvExportable
 
   # rubocop:disable Metrics/AbcSize
   def parent_output_csv(*admin_set_id)
-    byebug
+
     return nil unless batch_action == 'export all parent objects by admin set'
 
     CSV.generate do |csv|
       csv << parent_headers
       sorted_parent_objects(*admin_set_id).each do |po|
-        next csv << po if po.is_a?(Array)
+        byebug
+        next csv << po if po.is_a?(Object) || po.is_a?(Array)
         row = [po.oid, po.admin_set.label, po.source_name,
                po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
                po.barcode, po.aspace_uri, po.last_ladybird_update, po.last_voyager_update,
                po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
                po.digitization_note, po.project_identifier]
         csv << row
+        # byebug
       end
     end
   end
 
   # rubocop:enable Metrics/AbcSize
-  def sorted_parent_objects
-    had_events = batch_ingest_events_count.positive?
-    arr = []
-    imported_csv = CSV.parse(csv, headers: true).presence || admin_set_id
-    imported_csv.each_with_index do |key, index|
-      begin
-        # byebug
-        admin_set = AdminSet.find_by(key: key[0])
-        next unless admin_check_can_view(current_ability, index, admin_set, arr, had_events)
-        ParentObject.where(admin_set_id: admin_set.id).find_each do |parent|
-          arr << parent
+  def sorted_parent_objects(*admin_set_id)
+    
+    if csv.present?
+      had_events = batch_ingest_events_count.positive?
+      arr = []
+      imported_csv = CSV.parse(csv, headers: true).presence
+      imported_csv.each_with_index do |key, index|
+        begin
+          admin_set = AdminSet.find_by(key: key[0])
+          next unless admin_check_can_view(current_ability, index, admin_set, arr, had_events)
+          ParentObject.where(admin_set_id: admin_set.id).find_each do |parent|
+            arr << parent
+          end
+        rescue ActiveRecord::RecordNotFound
+          admin_set_not_found(index, key, arr, had_events)
         end
-      rescue ActiveRecord::RecordNotFound
-        admin_set_not_found(index, key, arr, had_events)
       end
+      # sort first by the admin set key, then by the parent object oid  
+      arr.sort_by { |po| [po.try(:admin_set_key) || po[0], po.try(:oid) || po[2]] }
+    else
+      had_events = batch_ingest_events_count.positive?
+      arr = []
+      admin_set_id.each_with_index do |key, index|
+        begin
+          # next unless admin_check_can_view(current_ability, index, admin_set, arr, had_events)
+          
+          ParentObject.where(admin_set_id: key.to_i).find_each do |parent|
+            arr << parent
+          end
+        # rescue ActiveRecord::RecordNotFound
+        #   admin_set_not_found(index, key, arr, had_events)
+        end
+      end
+      # sort first by the admin set key, then by the parent object oid    
+      arr.sort_by { |po| [po.try(:admin_set_key) || po[0], po.try(:oid) || po[2]] }
     end
-
-    # sort first by the admin set key, then by the parent object oid
-    arr.sort_by { |po| [po.try(:admin_set_key) || po[0], po.try(:oid) || po[2]] }
   end
 
   def admin_set_not_found(index, key, arr, had_events)

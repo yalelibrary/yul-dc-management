@@ -159,11 +159,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       let(:other_admin_set) { FactoryBot.create(:admin_set) }
       let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: brbl) }
       let(:parent_object2) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: other_admin_set) }
-      let(:user) { FactoryBot.create(:user) }
 
       before do
-        user.add_role(:editor, brbl)
-        login_as user
         parent_object
         parent_object2
       end
@@ -174,9 +171,19 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         end
       end
 
-      it "can export admin set arent objects" do
-        visit "/admin_sets/#{brbl.id}"
-        click_button("Export Parent Objects")
+      it "can export admin set parent objects" do
+        expect(BatchProcess.count).to eq 0
+        visit admin_sets_path
+        click_link "brbl"
+        expect(page).to have_button("Export Parent Objects")
+        click_button "Export Parent Objects"
+        page.driver.browser.switch_to.alert.accept
+        expect(page).to have_content("Parent Objects have been queued for export. Please visit Batch Process page for details.")
+        expect(BatchProcess.count).to eq 1
+        expect(BatchProcess.last.batch_action).to eq "export all parent objects by admin set"
+        expect(BatchProcess.last.parent_output_csv).to include "2034600"
+        expect(BatchProcess.last.parent_output_csv).not_to include "2005512"
+        # expect(BatchProcess.last.file_name).to eq "export_parent_oids.csv"
       end
 
       it "uploads a CSV of admin set in order to create export of parent object oids" do
