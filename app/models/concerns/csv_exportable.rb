@@ -25,7 +25,6 @@ module CsvExportable
                po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
                po.digitization_note, po.project_identifier]
         csv << row
-        # byebug
       end
     end
   end
