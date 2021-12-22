@@ -153,7 +153,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         RecreateChildOidPtiffsJob.perform_later(self)
       when 'update fulltext status'
         UpdateFulltextStatusJob.perform_later(self)
-      end 
+      end
     elsif mets_xml.present?
       refresh_metadata_cloud_mets
     end
