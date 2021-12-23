@@ -37,7 +37,7 @@
     <% if @batch_process.batch_action == 'export all parent objects by admin set' %>
       <%= @batch_process.file_name && @batch_process.batch_action == 'export all parent objects by admin set' ? link_to(@batch_process.created_file_name, download_created_batch_process_path) : 'n/a' %>
     <% else %>
-      <%= @batch_process.file_name && @batch_process.batch_action == 'export child oids' ? link_to 'Click to Download', CsvExport.presigned_url(@batch_process.child_csv_url, 600) : 'n/a' %>
+      <%= @batch_process.file_name && @batch_process.batch_action == 'export child oids' ? link_to('Click to Download', CsvExport.presigned_url(@batch_process.child_csv_url, 600)) : 'n/a' %>
     <% end %>
   </p>
 </div>
