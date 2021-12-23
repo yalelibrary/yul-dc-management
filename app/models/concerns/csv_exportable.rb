@@ -84,12 +84,12 @@ module CsvExportable
     save_to_s3(output_csv, batch_process)
     output_csv
   end
+  # rubocop:enable Metrics/AbcSize
 
   def child_csv_url
-    CsvExport.presigned_url(output_csv) if output_csv
+    CsvExport.presigned_url(output_csv, 600) if output_csv
   end
 
-  # rubocop:enable Metrics/AbcSize
   def sorted_child_objects
     had_events = batch_ingest_events_count.positive?
     arr = []
