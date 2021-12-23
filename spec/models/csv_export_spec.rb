@@ -45,6 +45,7 @@ RSpec.describe CsvExport, prep_metadata_sources: true do
   describe "exporting a csv" do
     it "can be instantiated" do
       expect(csv_export.to_json.include?('csv')).to eq(true)
+      expect(csv_export.to_json.include?('jjjjjjjj')).to eq(true)
     end
 
     it "has a batch process with correct batch action" do
@@ -55,11 +56,5 @@ RSpec.describe CsvExport, prep_metadata_sources: true do
     it "can save a csv to S3" do
       expect(csv_export.save).to eq(true)
     end
-
-    # TODO: fix this, it passes when run individually but fails when run with other specs
-    # it "can download a csv from S3" do
-    #   fetch_csv = csv_export.fetch
-    #   expect(fetch_csv.to_json.include?("these are some test words")).to eq(true)
-    # end
   end
 end
