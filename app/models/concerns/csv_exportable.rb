@@ -85,7 +85,7 @@ module CsvExportable
   end
 
   def child_csv_url
-    CsvExport.presigned_url(self.output_csv) if self.output_csv
+    CsvExport.presigned_url(output_csv) if output_csv
   end
 
   # rubocop:enable Metrics/AbcSize

@@ -71,9 +71,9 @@ class BatchProcessesController < ApplicationController
     #             type: 'text/csv; charset=utf-8; header=present',
     #             disposition: "attachment; filename=#{@batch_process.created_file_name}"
     # else
-      send_data "\xEF\xBB\xBF" + @batch_process.parent_output_csv,
-                type: 'text/csv; charset=utf-8; header=present',
-                disposition: "attachment; filename=#{@batch_process.created_file_name}"
+    send_data "\xEF\xBB\xBF" + @batch_process.parent_output_csv,
+              type: 'text/csv; charset=utf-8; header=present',
+              disposition: "attachment; filename=#{@batch_process.created_file_name}"
     # end
   end
 
