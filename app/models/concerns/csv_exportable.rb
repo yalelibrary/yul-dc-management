@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ModuleLength
 module CsvExportable
   extend ActiveSupport::Concern
 
@@ -71,7 +72,7 @@ module CsvExportable
   # rubocop:disable Metrics/AbcSize
   def child_output_csv
     return nil unless batch_action == 'export child oids'
-    csv = CSV.generate do |csv|
+    output_csv = CSV.generate do |csv|
       csv << child_headers
       sorted_child_objects.each do |co|
         next csv << co if co.is_a?(Array)
@@ -80,8 +81,8 @@ module CsvExportable
         csv << row
       end
     end
-    save_to_s3(csv, batch_process)
-    csv
+    save_to_s3(output_csv, batch_process)
+    output_csv
   end
 
   def child_csv_url
@@ -135,3 +136,4 @@ module CsvExportable
     raise # this reraises the error after we document it
   end
 end
+# rubocop:enable Metrics/ModuleLength
