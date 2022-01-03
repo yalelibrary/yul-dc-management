@@ -86,8 +86,8 @@ module CsvExportable
   end
   # rubocop:enable Metrics/AbcSize
 
-  def child_csv_url
-    CsvExport.presigned_url(output_csv, 600) if output_csv
+  def remote_csv_path
+    @remote_csv_path ||= "batch/job/#{id}/#{created_file_name}"
   end
 
   def sorted_child_objects
@@ -127,7 +127,6 @@ module CsvExportable
     upload = CsvExport.new(csv, batch_process).save
     if upload
       batch_processing_event("CSV saved to S3", "manifest-saved")
-      self.upload_csv = upload.export_path
     else
       batch_processing_event("CSV not saved to S3", "failed")
     end

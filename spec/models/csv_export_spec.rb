@@ -42,7 +42,7 @@ RSpec.describe CsvExport, prep_metadata_sources: true do
     parent_object
   end
 
-  describe "exporting a csv" do
+  describe "exporting a CSV" do
     it "can be instantiated" do
       expect(csv_export.to_json.include?('csv')).to eq(true)
       expect(csv_export.to_json.include?('jjjjjjjj')).to eq(true)
