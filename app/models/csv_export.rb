@@ -13,6 +13,6 @@ class CsvExport
   end
 
   def save
-    S3Service.upload_if_changed(@batch_process.remote_csv_path, @csv)
+    S3Service.upload(@batch_process.remote_csv_path, @csv)
   end
 end

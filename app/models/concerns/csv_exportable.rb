@@ -75,13 +75,13 @@ module CsvExportable
     output_csv = CSV.generate do |csv|
       csv << child_headers
       sorted_child_objects.each do |co|
-        next csv << co if co.is_a?(Array)
+        # next csv << co if co.is_a?(Array)
 
-        row = [co.parent_object.oid, co.oid, co.order, co.parent_object.authoritative_json['title']&.first, co.parent_object.call_number, co.label, co.caption, co.viewing_hint]
+        row = [co.parent_object.oid, co.oid, co.order, co.parent_object&.authoritative_json['title']&.first, co.parent_object.call_number, co.label, co.caption, co.viewing_hint]
         csv << row
       end
     end
-    save_to_s3(output_csv, batch_process)
+    save_to_s3(output_csv, self)
     output_csv
   end
   # rubocop:enable Metrics/AbcSize
