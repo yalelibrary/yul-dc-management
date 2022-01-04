@@ -27,7 +27,7 @@ RSpec.describe CsvExport, prep_metadata_sources: true do
     end
   end
   let(:current_user) { FactoryBot.create(:user) }
-  let(:batch_process) { FactoryBot.create(:batch_process, user: current_user, batch_action: 'export child oids') }
+  let(:batch_process) { FactoryBot.create(:batch_process, user: current_user, batch_action: 'export child oids', file_name: 'batch_process') }
   let(:csv_export) { described_class.new(csv, batch_process) }
   let(:logger_mock) { instance_double("Rails.logger").as_null_object }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, viewing_direction: "left-to-right", display_layout: "individuals", bib: "12834515") }
