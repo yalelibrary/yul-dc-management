@@ -54,7 +54,8 @@ RSpec.describe CsvExport, prep_metadata_sources: true do
     end
 
     it "can save a csv to S3" do
-      expect(csv_export.save).to eq(true)
+      csv_export.save
+      expect(batch_process.created_file_name).to eq "batch_process_bp_#{BatchProcess.last.id}.csv"
     end
   end
 end
