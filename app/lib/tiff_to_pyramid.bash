@@ -132,7 +132,7 @@ fi
 # cleanup temp files but leave the outputput file in place
 if [ -z "${savefiles}" ]; then rm -f $tmpprefix*; fi
 if [ -z "${savefiles}" ]; then rm -f $outprefix*; fi
-if [ -f "${tmpfix}" ]; then rm -f $tmpfix; fi
+if [ -z "${savefiles}" ]; then rm -f $tmpfix; fi
 
 # sanity check
 WF=$(vipsheader -f width $outfile)
