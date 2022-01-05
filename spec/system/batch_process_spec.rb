@@ -200,7 +200,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.child_output_csv).to include "JWJ"
         expect(BatchProcess.last.child_output_csv).to include '2005512,,0,Access denied for parent object,"",""'
         expect(BatchProcess.last.child_output_csv).not_to include "1030368" # child of 2005512
-        expect(BatchProcess.last.batch_ingest_events.count).to eq 4
+        expect(BatchProcess.last.batch_ingest_events.count).to eq 9
         expect(BatchProcess.last.batch_ingest_events.map(&:reason)).to include "Skipping row [3] due to parent permissions: 2005512"
 
         sorted_child_objects = BatchProcess.last.sorted_child_objects
@@ -214,7 +214,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
           click_on(BatchProcess.last.id.to_s)
         end
         expect(page).to have_link("short_fixture_ids.csv", href: "/batch_processes/#{BatchProcess.last.id}/download")
-        expect(page).to have_link("short_fixture_ids_bp_#{BatchProcess.last.id}.csv", href: "/batch_processes/#{BatchProcess.last.id}/download_created")
+        expect(page).to have_link("short_fixture_ids_bp_#{BatchProcess.last.id}.csv")
         bp = BatchProcess.last
         expect(bp.oids).to eq ["2034600", "2005512", "16414889", "14716192", "16854285"]
         click_on("short_fixture_ids_bp_#{BatchProcess.last.id}.csv")

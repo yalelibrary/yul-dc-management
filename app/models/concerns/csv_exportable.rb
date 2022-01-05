@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ModuleLength
 module CsvExportable
   extend ActiveSupport::Concern
 
@@ -71,19 +72,28 @@ module CsvExportable
   # rubocop:disable Metrics/AbcSize
   def child_output_csv
     return nil unless batch_action == 'export child oids'
-
-    CSV.generate do |csv|
+    output_csv = CSV.generate do |csv|
       csv << child_headers
       sorted_child_objects.each do |co|
         next csv << co if co.is_a?(Array)
-
-        row = [co.parent_object.oid, co.oid, co.order, co.parent_object.authoritative_json['title']&.first, co.parent_object.call_number, co.label, co.caption, co.viewing_hint]
+        parent_title = if co.parent_object.authoritative_json.is_a?(Hash)
+                         co.parent_object.authoritative_json['title']&.first
+                       else
+                         co.parent_object&.authoritative_json & ['title']&.first
+                       end
+        row = [co.parent_object.oid, co.oid, co.order, parent_title.presence, co.parent_object.call_number, co.label, co.caption, co.viewing_hint]
         csv << row
       end
     end
+    save_to_s3(output_csv, self)
+    output_csv
+  end
+  # rubocop:enable Metrics/AbcSize
+
+  def remote_csv_path
+    @remote_csv_path ||= "batch/job/#{id}/#{created_file_name}"
   end
 
-  # rubocop:enable Metrics/AbcSize
   def sorted_child_objects
     had_events = batch_ingest_events_count.positive?
     arr = []
@@ -115,4 +125,18 @@ module CsvExportable
     arr << row
     false
   end
+
+  def save_to_s3(csv, batch_process)
+    # generate csv export and save it to s3
+    upload = CsvExport.new(csv, batch_process).save
+    if upload
+      batch_processing_event("CSV saved to S3", "csv-saved")
+    else
+      batch_processing_event("CSV not saved to S3", "failed")
+    end
+  rescue => e
+    batch_processing_event("CSV generation failed due to #{e.message}", "failed")
+    raise # this reraises the error after we document it
+  end
 end
+# rubocop:enable Metrics/ModuleLength
