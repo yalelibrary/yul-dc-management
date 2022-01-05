@@ -43,13 +43,19 @@ savefiles=$4
 pid=$$;
 tmpprefix=${tmpdir}/stripped_srgb_${pid}
 outprefix=${tmpdir}/srgb_${pid}
+tmpfix=${tmpdir}/$(basename $input).fixed.tif
 
 # cleanup temp files that might already exist
 if [ -z "${savefiles}" ]; then rm -f $tmpprefix*; fi
 if [ -z "${savefiles}" ]; then rm -f $outprefix*; fi
 
 # first, use vipsheader to read the bands
+set +e
 CHANNELS=$(identify -format "%[channels]\n" ${input}[0] 2>/dev/null)
+status=$?
+[ $status -ne 0 ] && vips tiffsave $input ${tmpfix} && input=${tmpfix}
+set -e
+[ $status -ne 0 ] && CHANNELS=$(identify -format "%[channels]\n" ${input}[0] 2>/dev/null)
 echo "channels: ${CHANNELS}"
 if [ ${CHANNELS} = "srgba" ]; then
     # we have to flatten the image to remove the alpha channel / trasparency before proceeding
@@ -126,6 +132,7 @@ fi
 # cleanup temp files but leave the outputput file in place
 if [ -z "${savefiles}" ]; then rm -f $tmpprefix*; fi
 if [ -z "${savefiles}" ]; then rm -f $outprefix*; fi
+if [ -f "${tmpfix}" ]; then rm -f $tmpfix; fi
 
 # sanity check
 WF=$(vipsheader -f width $outfile)
