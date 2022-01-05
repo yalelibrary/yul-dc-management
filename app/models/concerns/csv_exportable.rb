@@ -15,7 +15,7 @@ module CsvExportable
   def parent_output_csv
     return nil unless batch_action == 'export all parent objects by admin set'
 
-    CSV.generate do |csv|
+    output_csv = CSV.generate do |csv|
       csv << parent_headers
       sorted_parent_objects.each do |po|
         next csv << po if po.is_a?(Array)
@@ -27,6 +27,8 @@ module CsvExportable
         csv << row
       end
     end
+    save_to_s3(output_csv, self)
+    output_csv
   end
 
   # rubocop:enable Metrics/AbcSize
