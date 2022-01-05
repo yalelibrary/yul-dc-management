@@ -76,12 +76,11 @@ module CsvExportable
       csv << child_headers
       sorted_child_objects.each do |co|
         next csv << co if co.is_a?(Array)
-        byebug
-        if co.parent_object.authoritative_json.is_a?(Hash)
-          parent_title = co.parent_object.authoritative_json['title']&.first
-        else
-          parent_title = co.parent_object&.authoritative_json&['title']&.first
-        end
+        parent_title = if co.parent_object.authoritative_json.is_a?(Hash)
+                         co.parent_object.authoritative_json['title']&.first
+                       else
+                         co.parent_object&.authoritative_json & ['title']&.first
+                       end
         row = [co.parent_object.oid, co.oid, co.order, parent_title.presence, co.parent_object.call_number, co.label, co.caption, co.viewing_hint]
         csv << row
       end
