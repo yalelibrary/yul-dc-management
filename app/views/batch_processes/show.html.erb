@@ -35,7 +35,7 @@
   <p>
     <strong>Created file:</strong>
     <% if @batch_process.batch_action == 'export all parent objects by admin set' %>
-      <%= @batch_process.file_name && @batch_process.batch_action == 'export all parent objects by admin set' ? link_to(@batch_process.created_file_name, download_created_batch_process_path) : 'n/a' %>
+      <%= @batch_process.file_name && @batch_process.batch_action == 'export all parent objects by admin set' ? link_to(@batch_process.created_file_name, S3Service.presigned_url(@batch_process.remote_csv_path, 600, bucket = ENV['SAMPLE_BUCKET'])) : 'n/a' %>
     <% else %>
       <%= @batch_process.file_name && @batch_process.batch_action == 'export child oids' ? link_to(@batch_process.created_file_name, S3Service.presigned_url(@batch_process.remote_csv_path, 600, bucket = ENV['SAMPLE_BUCKET'])) : 'n/a' %>
     <% end %>

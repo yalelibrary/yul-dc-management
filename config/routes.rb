@@ -9,7 +9,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
     member do
       get :download
-      get :download_created
       get '/parent_objects/:oid', to: 'batch_processes#show_parent', as: :show_parent
       get '/parent_objects/:oid/child_objects/:child_oid', to: 'batch_processes#show_child', as: :show_child
     end

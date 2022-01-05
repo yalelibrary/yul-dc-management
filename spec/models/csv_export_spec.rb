@@ -29,6 +29,8 @@ RSpec.describe CsvExport, prep_metadata_sources: true do
   let(:current_user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: current_user, batch_action: 'export child oids', file_name: 'batch_process') }
   let(:csv_export) { described_class.new(csv, batch_process) }
+  let(:parent_batch_process) { FactoryBot.create(:batch_process, user: current_user, batch_action: 'export all parent objects by admin set', file_name: 'batch_process') }
+  let(:parent_csv_export) { described_class.new(csv, parent_batch_process) }
   let(:logger_mock) { instance_double("Rails.logger").as_null_object }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, viewing_direction: "left-to-right", display_layout: "individuals", bib: "12834515") }
 
@@ -42,7 +44,7 @@ RSpec.describe CsvExport, prep_metadata_sources: true do
     parent_object
   end
 
-  describe "exporting a CSV" do
+  describe "exporting a CSV of child objects" do
     it "can be instantiated" do
       expect(csv_export.to_json.include?('csv')).to eq(true)
       expect(csv_export.to_json.include?('jjjjjjjj')).to eq(true)
@@ -56,6 +58,23 @@ RSpec.describe CsvExport, prep_metadata_sources: true do
     it "can save a csv to S3" do
       csv_export.save
       expect(batch_process.created_file_name).to eq "batch_process_bp_#{BatchProcess.last.id}.csv"
+    end
+  end
+
+  describe "exporting a CSV of parent objects" do
+    it "can be instantiated" do
+      expect(parent_csv_export.to_json.include?('csv')).to eq(true)
+      expect(parent_csv_export.to_json.include?('jjjjjjjj')).to eq(true)
+    end
+
+    it "has a batch process with correct batch action" do
+      expect(parent_csv_export.to_json.include?('batch_process')).to eq(true)
+      expect(parent_csv_export.to_json.include?('export all parent objects by admin set')).to eq(true)
+    end
+
+    it "can save a csv to S3" do
+      parent_csv_export.save
+      expect(parent_batch_process.created_file_name).to eq "batch_process_bp_#{BatchProcess.last.id}.csv"
     end
   end
 end
