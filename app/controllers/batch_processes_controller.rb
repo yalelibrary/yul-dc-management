@@ -65,18 +65,15 @@ class BatchProcessesController < ApplicationController
 
   def export_parent_objects
     # RETURNS ADMIN SET KEY:
-    # admin_set = params.dig(:admin_set)
+    admin_set = params.dig(:admin_set)
 
     # RETURNS ADMIN SET ID FOR REDIRECTING
     admin_set_id = params.dig(:admin_set_id)
     redirect_to admin_set_path(admin_set_id), notice: "CSV is being generated. Please visit the Batch Process page to download."
 
-    # notice: "test"
-    # redirect_to admin_sets_path(admin_set), notice: "Test"
-    # pull in admin set id
-    # run create_parent_oid_csv job passing in the admin_set_id
-    # redirect to admin_set page
-    # success flash message user that informs the user that they can download the CSV from the Batch Process page 
+    batch_process = BatchProcess.new(batch_action: 'export all parent objects by admin set', user: current_user, file_name: "#{admin_set}_export.csv")
+    batch_process.save
+    CreateParentOidCsvJob.perform_now(batch_process, *admin_set_id)
   end
 
   def download_csv
