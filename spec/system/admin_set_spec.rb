@@ -214,20 +214,4 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       expect(page).to have_content("Access denied")
     end
   end
-
-  context 'test' do
-    let(:user) { FactoryBot.create(:user) }
-    let(:admin_set) { FactoryBot.create(:admin_set, key: "brbl", label: "brbl") }
-
-    before do
-      admin_set
-      login_as user
-      user.add_role(:editor, admin_set)
-      visit admin_sets_path
-    end
-
-    it "hi" do
-      click_link "brbl"
-    end
-  end
 end
