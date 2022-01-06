@@ -230,5 +230,4 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       click_link "brbl"
     end
   end
-
 end

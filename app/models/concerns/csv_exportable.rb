@@ -11,8 +11,6 @@ module CsvExportable
      'extent_of_digitization', 'digitization_note', 'project_identifier']
   end
 
-
-  
   # rubocop:disable Metrics/AbcSize
   def parent_output_csv(*admin_set_id)
     return nil unless batch_action == 'export all parent objects by admin set'
