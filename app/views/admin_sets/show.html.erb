@@ -1,8 +1,9 @@
 <%= render partial: "/management/flash_messages" %>
-<p>
-<a href="#BatchUpdateMetadata" role="button" class="btn btn-large btn-secondary" data-toggle="modal">Batch Update Metadata</a>
-<%= button_to "Export Parent Objects", export_parent_objects_batch_processes_url(admin_set: @admin_set.key, admin_set_id: @admin_set.id), method: :post %>
-</p>
+
+<div id="admin_set_button_row">
+  <a href="#BatchUpdateMetadata" role="button" class="btn btn-large btn-secondary" data-toggle="modal">Batch Update Metadata</a>
+  <%= button_to "Export Parent Objects", export_parent_objects_batch_processes_url(admin_set: @admin_set.key, admin_set_id: @admin_set.id), method: :post, class: "btn btn-large btn-secondary export_button" %>
+</div>
 
 <p>
   <strong>Key:</strong>
