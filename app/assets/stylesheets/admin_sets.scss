@@ -3,6 +3,15 @@ DEFAULT DESKTOP STYLING
 ********************************************************/
 @import 'theme/colors', 'theme/typography', 'theme/breakpoints';
 
+#admin_set_button_row {
+  display: flex;
+  padding-bottom: 18px;
+}
+
+.export_button {
+  margin-left: 5px;
+}
+
 .table.admin-set-show-table {
   display: inline-block;
   width: auto;

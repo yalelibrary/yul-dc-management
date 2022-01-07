@@ -58,6 +58,16 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       end
     end
 
+    it 'can export parent objects' do
+      expect(BatchProcess.count).to eq 0
+      visit admin_sets_path
+      click_link(admin_set.key.to_s)
+      click_on("Export Parent Objects")
+      expect(page).to have_content "CSV is being generated. Please visit the Batch Process page to download."
+      expect(BatchProcess.count).to eq 1
+      expect(BatchProcess.last.created_file_name).to eq "#{admin_set.key}_export_bp_#{BatchProcess.last.id}.csv"
+    end
+
     it 'removes the viewer role from a user when they are given an editor role' do
       visit admin_sets_path
       click_link(admin_set.key.to_s)

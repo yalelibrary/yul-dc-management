@@ -63,6 +63,19 @@ class BatchProcessesController < ApplicationController
     end
   end
 
+  def export_parent_objects
+    # RETURNS ADMIN SET KEY:
+    admin_set = params.dig(:admin_set)
+
+    # RETURNS ADMIN SET ID FOR REDIRECTING
+    admin_set_id = params.dig(:admin_set_id)
+    redirect_to admin_set_path(admin_set_id), notice: "CSV is being generated. Please visit the Batch Process page to download."
+
+    batch_process = BatchProcess.new(batch_action: 'export all parent objects by admin set', user: current_user, file_name: "#{admin_set}_export.csv")
+    batch_process.save
+    CreateParentOidCsvJob.perform_now(batch_process, *admin_set_id)
+  end
+
   def download_csv
     # Add BOM to force Excel to open correctly
     send_data "\xEF\xBB\xBF" + @batch_process.csv,

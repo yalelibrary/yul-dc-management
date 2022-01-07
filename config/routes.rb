@@ -3,6 +3,7 @@
 Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :batch_processes do
     collection do
+      post :export_parent_objects
       post :import
       post :trigger_mets_scan
       get :download_template
