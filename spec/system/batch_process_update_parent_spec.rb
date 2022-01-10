@@ -6,11 +6,12 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
   # parent object has two child objects
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
-
+  let(:parent_no_children) { FactoryBot.create(:parent_object, oid: "2004630", admin_set_id: admin_set.id) }
   before do
     stub_ptiffs_and_manifests
     stub_metadata_cloud("2005512")
     parent_object
+    parent_no_children
   end
 
   around do |example|
@@ -149,6 +150,77 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         visit "/batch_processes/#{BatchProcess.last.id}/"
         expect(page).to have_content "Batch status unknown"
         expect(page).to have_content "Skipping row [2] with unknown metadata source: bird. Accepted values are 'ladybird', 'aspace', or 'ils'."
+      end
+    end
+  end
+
+  context "with a user with edit permissions but with a redirect with correct format", solr: true do
+    context "updating a batch of parent objects" do
+      before do
+        login_as user
+        user.add_role(:editor, admin_set)
+      end
+
+      it "does trigger a metadata update" do
+        p_o = ParentObject.find_by(oid: parent_no_children.oid)
+        # original values
+        expect(p_o.redirect_to).to be_nil
+
+        # perform batch update
+        visit batch_processes_path
+        select("Update Parent Objects")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_redirect.csv")
+        click_button("Submit")
+
+        # updated values
+        p_o_a = ParentObject.find_by(oid: parent_no_children.oid)
+        expect(p_o_a.redirect_to).to eq("https://collections-uat.library.yale.edu/catalog/234567")
+        expect(p_o_a.visibility).to eq("Redirect")
+
+        visit "/batch_processes/#{BatchProcess.last.id}/"
+        expect(page).to have_content "Batch complete"
+      end
+    end
+  end
+
+  context "with a user with edit permissions but with a redirect with incorrect format", solr: true do
+    context "updating a batch of parent objects" do
+      before do
+        login_as user
+        user.add_role(:editor, admin_set)
+      end
+
+      it "does not trigger a metadata update" do
+        # perform batch update
+        visit batch_processes_path
+        select("Update Parent Objects")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_redirect_invalid.csv")
+        click_button("Submit")
+
+        visit "/batch_processes/#{BatchProcess.last.id}/"
+        expect(page).to have_content "Batch status unknown"
+        expect(page).to have_content "Skipping row with redirect to: https://collective-uat.library.yale.edu/catalog/234567. Redirect to must be in format https://collections.library.yale.edu/catalog/1234567."
+      end
+    end
+  end
+
+  context "with a user with edit permissions but with a redirect when child objects are present", solr: true do
+    context "updating a batch of parent objects" do
+      before do
+        login_as user
+        user.add_role(:editor, admin_set)
+      end
+
+      it "does not trigger a metadata update" do
+        # perform batch update
+        visit batch_processes_path
+        select("Update Parent Objects")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_redirect_with_children.csv")
+        click_button("Submit")
+
+        visit "/batch_processes/#{BatchProcess.last.id}/"
+        expect(page).to have_content "Batch status unknown"
+        expect(page).to have_content "Skipped Row Skipping row with parent oid: 2005512 Child objects are attached to parent object. Parent must have no children to be redirected."
       end
     end
   end

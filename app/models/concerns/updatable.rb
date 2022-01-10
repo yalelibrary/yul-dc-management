@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ModuleLength
 module Updatable
   extend ActiveSupport::Concern
 
@@ -16,12 +17,17 @@ module Updatable
     end
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def update_parent_objects
     return unless batch_action == "update parent objects"
     parsed_csv.each_with_index do |row, index|
       oid = row['oid'] unless ['oid'].nil?
+      redirect = row['redirect_to'] unless ['redirect_to'].nil?
       parent_object = updatable_parent_object(oid, index)
       next unless parent_object
+      next if redirect.present? && !validate_redirect(redirect)
+      next unless check_for_children(redirect, parent_object)
       metadata_source = row['source'].presence || parent_object.authoritative_metadata_source.metadata_cloud_name
 
       processed_fields = validate_field(parent_object, row)
@@ -33,9 +39,11 @@ module Updatable
       processing_event_for_parent(parent_object)
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def validate_field(parent_object, row)
-    fields = ['aspace_uri', 'barcode', 'bib', 'digitization_note', 'holding', 'item', 'project_identifier', 'rights_statement']
+    fields = ['aspace_uri', 'barcode', 'bib', 'digitization_note', 'holding', 'item', 'project_identifier', 'rights_statement', 'redirect_to']
     validation_fields = { "display_layout" => 'viewing_hints', "extent_of_digitization" => 'extent_of_digitizations', "viewing_direction" => 'viewing_directions', "visibility" => 'visibilities' }
 
     processed_fields = {}
@@ -101,4 +109,25 @@ module Updatable
     parent_object.save!
     SetupMetadataJob.perform_later(parent_object, self, parent_object.current_batch_connection)
   end
+
+  def check_for_children(redirect, parent_object)
+    if redirect.nil?
+      true
+    elsif redirect && parent_object.child_objects.count.zero?
+      true
+    else
+      batch_processing_event("Skipping row with parent oid: #{parent_object.oid} Child objects are attached to parent object.  Parent must have no children to be redirected.", 'Skipped Row')
+      false
+    end
+  end
+
+  def validate_redirect(redirect)
+    if redirect =~ /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//
+      true
+    else
+      batch_processing_event("Skipping row with redirect to: #{redirect}. Redirect to must be in format https://collections.library.yale.edu/catalog/1234567.", 'Skipped Row')
+      false
+    end
+  end
 end
+# rubocop:enable Metrics/ModuleLength
