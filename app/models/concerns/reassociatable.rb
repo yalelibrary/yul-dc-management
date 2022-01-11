@@ -122,7 +122,7 @@ module Reassociatable
   # rubocop:enable Metrics/LineLength
 
   def update_related_parent_objects(parents_needing_update)
-    byebug
+    # byebug
     return unless batch_action == "reassociate child oids" || batch_action == "delete child objects"
     byebug
     parents_needing_update.uniq.each do |oid|
