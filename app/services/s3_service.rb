@@ -11,6 +11,15 @@ class S3Service
     )
   end
 
+  def self.upload_csv(file_path, data, content_type)
+    @client.put_object(
+      body: data,
+      bucket: ENV['SAMPLE_BUCKET'],
+      key: file_path,
+      content_type: content_type
+    )
+  end
+
   def self.delete(file_path)
     @client.delete_object(
       bucket: ENV['S3_SOURCE_BUCKET_NAME'],
