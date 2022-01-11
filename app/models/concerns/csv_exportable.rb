@@ -88,7 +88,7 @@ module CsvExportable
   end
 
   def child_headers
-    ['parent_oid', 'child_oid', 'order', 'parent_title', 'call_number', 'label', 'caption', 'viewing_hint']
+    ['parent_oid', 'child_oid', 'order', 'parent_title', 'call_number', 'label', 'caption', 'viewing_hint', 'redirect_to']
   end
 
   # rubocop:disable Metrics/AbcSize
