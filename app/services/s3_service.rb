@@ -3,11 +3,12 @@
 class S3Service
   @client ||= Aws::S3::Client.new # for debugging add (http_wire_trace: true)
 
-  def self.upload(file_path, data)
+  def self.upload(file_path, data, content_type)
     @client.put_object(
       body: data,
       bucket: ENV['SAMPLE_BUCKET'],
-      key: file_path
+      key: file_path,
+      content_type: content_type
     )
   end
 
