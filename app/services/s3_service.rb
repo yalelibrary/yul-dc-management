@@ -15,7 +15,8 @@ class S3Service
     @client.put_object(
       body: data,
       bucket: ENV['SAMPLE_BUCKET'],
-      key: file_path
+      key: file_path,
+      content_type: content_type
     )
   end
 
