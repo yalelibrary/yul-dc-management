@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_30_233657) do
+ActiveRecord::Schema.define(version: 2022_01_12_001520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -172,6 +172,8 @@ ActiveRecord::Schema.define(version: 2021_11_30_233657) do
     t.string "project_identifier"
     t.string "parent_model"
     t.text "redirect_to"
+    t.string "preservica_uri"
+    t.string "digital_object_source"
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
     t.index ["aspace_uri"], name: "index_parent_objects_on_aspace_uri"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
