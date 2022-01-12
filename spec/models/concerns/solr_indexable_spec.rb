@@ -35,4 +35,21 @@ RSpec.describe SolrIndexable, type: :model do
     expect(solr_document[:subjectHeading_ssim]).to eq(['Test > Test2', 'Two > Three > Four'])
     expect(solr_document[:subjectHeadingFacet_ssim]).to eq(['Test', 'Test > Test2', 'Two', 'Two > Three', 'Two > Three > Four'])
   end
+
+  it "indexes the collect creators" do
+    solr_document = solr_indexable.to_solr('ancestorCreator' => ['ancestor creator'])
+    expect(solr_document[:collectionCreators_ssim]).to eq(['ancestor creator'])
+  end
+
+  it "indexes the collect creators" do
+    solr_document = solr_indexable.to_solr ({ 'ancestorCreator' => ['ancestor creator'], 'creator' => ['creator', 'creators', 'creatorx'] })
+    expect(solr_document[:creator_ssim]).to eq(['creator', 'creators', 'creatorx', 'ancestor creator'])
+  end
+
+  it "indexes the collect creators" do
+    solr_document = solr_indexable.to_solr ({ 'ancestorCreator' => ['ancestor creator', 'ancestor creator king'], 'creator' => ['creator', 'creators', 'creatorx', 'ancestor creator king'] })
+    expect(solr_document[:creator_ssim]).to eq(['creator', 'creators', 'creatorx', 'ancestor creator king', 'ancestor creator'])
+    expect(solr_document[:collectionCreators_ssim]).to eq(['ancestor creator'])
+  end
+
 end
