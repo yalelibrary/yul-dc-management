@@ -24,4 +24,36 @@ RSpec.describe SolrIndexJob, type: :job do
       parent_object.solr_index_job
     end.to change { Delayed::Job.count }.by(1)
   end
+
+  it 'increments the solr_index job queue when not full text' do
+    ActiveJob::Base.queue_adapter = :delayed_job
+    expect do
+      allow(parent_object).to receive(:full_text?).and_return(false)
+      parent_object.solr_index_job
+    end.to change { Delayed::Job.where(queue: 'solr_index').count }.by(1)
+  end
+
+  it 'does not increment the solr_index job queue when full text' do
+    ActiveJob::Base.queue_adapter = :delayed_job
+    expect do
+      allow(parent_object).to receive(:full_text?).and_return(true)
+      parent_object.solr_index_job
+    end.to change { Delayed::Job.where(queue: 'solr_index').count }.by(0)
+  end
+
+  it 'does not increment the intensive_solr_index job queue when not full text' do
+    ActiveJob::Base.queue_adapter = :delayed_job
+    expect do
+      allow(parent_object).to receive(:full_text?).and_return(false)
+      parent_object.solr_index_job
+    end.to change { Delayed::Job.where(queue: 'intensive_solr_index').count }.by(0)
+  end
+
+  it 'increments the intensive_solr_index job queue when full text' do
+    ActiveJob::Base.queue_adapter = :delayed_job
+    expect do
+      allow(parent_object).to receive(:full_text?).and_return(true)
+      parent_object.solr_index_job
+    end.to change { Delayed::Job.where(queue: 'intensive_solr_index').count }.by(1)
+  end
 end
