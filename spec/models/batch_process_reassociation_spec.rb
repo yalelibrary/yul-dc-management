@@ -9,9 +9,15 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:role) { FactoryBot.create(:role, name: editor) }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_small.csv")) }
   let(:child_object_nil_values) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_child_object_counts.csv")) }
+  let(:redirect) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_redirect.csv")) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
+  let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "2004550", admin_set_id: admin_set.id) }
   let(:parent_object_old_one) { FactoryBot.create(:parent_object, oid: "2004548", admin_set_id: admin_set.id) }
   let(:parent_object_old_two) { FactoryBot.create(:parent_object, oid: "2004549", admin_set_id: admin_set.id) }
+  let(:parent_object_old_three) { FactoryBot.create(:parent_object, oid: "2004551", admin_set_id: admin_set.id) }
+  let(:child_object_1) { FactoryBot.create(:child_object, oid: "12345", parent_object: parent_object_old_three) }
+  let(:child_object_2) { FactoryBot.create(:child_object, oid: "67890", parent_object: parent_object_old_three) }
+  let(:child_object_3) { FactoryBot.create(:child_object, oid: "12", parent_object: parent_object_2) }
 
   around do |example|
     perform_enqueued_jobs do
@@ -30,6 +36,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     parent_object
     parent_object_old_one
     parent_object_old_two
+    child_object_1
+    child_object_2
+    child_object_3
     login_as(:user)
   end
 
@@ -48,6 +57,28 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         expect(co.label).to be_nil
         expect(co.viewing_hint).to be_nil
       end
+    end
+  end
+
+  describe "redirect objects that lose all children during reassociation batch process" do
+    before do
+      parent_object_old_three
+      parent_object_2
+      user.add_role(:editor, admin_set)
+      batch_process.user_id = user.id
+      batch_process.file = redirect
+      batch_process.save
+    end
+
+    it "can add redirect_to to parent objects that have all its children reassociated" do
+      # byebug
+      co = ChildObject.find('12345')
+      expect(co.parent_object).to eq parent_object_2
+      expect(parent_object_old_one.redirect_to).to be_nil
+
+      
+      # end goal:
+      # expect(parent_object_old_one.redirect_to).to eq("https://www.collections.library.yale.edu/catalog/2004550")
     end
   end
 
