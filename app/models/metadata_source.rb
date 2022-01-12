@@ -76,6 +76,6 @@ class MetadataSource < ApplicationRecord
   end
 
   def self.metadata_cloud_host
-    ENV['METADATA_CLOUD_HOST'].present? ? ENV['METADATA_CLOUD_HOST'] : 'metadata-api-uat.library.yale.edu'
+    ENV['METADATA_CLOUD_HOST'].present? ? ENV['METADATA_CLOUD_HOST'] : 'metadata-api-test.library.yale.edu'
   end
 end

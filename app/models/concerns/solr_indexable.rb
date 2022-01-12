@@ -43,6 +43,20 @@ module SolrIndexable
     SolrIndexJob.perform_later(self, current_batch_process, current_batch_connection) if queued_solr_index_jobs.empty?
   end
 
+  def extract_creator(json_to_index)
+    all_creators = []
+    [json_to_index["creator"], json_to_index["ancestorCreator"]].compact.each { |creator | all_creators +=creator }
+    all_creators.uniq
+  end
+
+  def from_the_collections(json_to_index)
+    from_the_collections = json_to_index["ancestorCreator"]
+    if from_the_collections.present? && json_to_index["creator"].present?
+      from_the_collections-= json_to_index["creator"]
+    end
+    from_the_collections.uniq if from_the_collections
+  end
+
   def to_solr(json_to_index = nil)
     if redirect_to.present?
       {
@@ -62,6 +76,8 @@ module SolrIndexable
         alternativeTitle_tesim: json_to_index["alternativeTitle"],
         alternativeTitleDisplay_tesim: json_to_index["alternativeTitleDisplay"],
         ancestorDisplayStrings_tesim: json_to_index["ancestorDisplayStrings"],
+        #collectionCreator name in mdc is ancestorCreator
+        collectionCreators_ssim: from_the_collections(json_to_index),
         ancestorTitles_tesim: generate_ancestor_title(json_to_index["ancestorTitles"]),
         ancestor_titles_hierarchy_ssim: ancestor_structure(generate_ancestor_title(json_to_index["ancestorTitles"])),
         archivalSort_ssi: json_to_index["archivalSort"],
@@ -81,8 +97,8 @@ module SolrIndexable
         contributorDisplay_tsim: json_to_index["contributorDisplay"],
         coordinates_ssim: json_to_index["coordinate"],
         copyrightDate_ssim: json_to_index["copyrightDate"],
-        creator_ssim: json_to_index["creator"],
-        creator_tesim: json_to_index["creator"],
+        creator_ssim: extract_creator(json_to_index),
+        creator_tesim: extract_creator(json_to_index),
         creatorDisplay_tsim: json_to_index["creatorDisplay"],
         creationPlace_ssim: json_to_index["creationPlace"],
         creationPlace_tesim: json_to_index["creationPlace"],
