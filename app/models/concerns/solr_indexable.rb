@@ -40,7 +40,12 @@ module SolrIndexable
 
   def solr_index_job
     current_batch_connection&.save
-    SolrIndexJob.perform_later(self, current_batch_process, current_batch_connection) if queued_solr_index_jobs.empty?
+    return unless queued_solr_index_jobs.empty?
+    if full_text?
+      SolrIndexJob.set(queue: :intensive_solr_index).perform_later(self, current_batch_process, current_batch_connection)
+    else
+      SolrIndexJob.perform_later(self, current_batch_process, current_batch_connection)
+    end
   end
 
   def to_solr(json_to_index = nil)
