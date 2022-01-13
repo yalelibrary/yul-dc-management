@@ -45,16 +45,14 @@ module SolrIndexable
 
   def extract_creator(json_to_index)
     all_creators = []
-    [json_to_index["creator"], json_to_index["ancestorCreator"]].compact.each { |creator | all_creators +=creator }
+    [json_to_index["creator"], json_to_index["ancestorCreator"]].compact.each { |creator| all_creators += creator }
     all_creators.uniq
   end
 
   def from_the_collections(json_to_index)
     from_the_collections = json_to_index["ancestorCreator"]
-    if from_the_collections.present? && json_to_index["creator"].present?
-      from_the_collections-= json_to_index["creator"]
-    end
-    from_the_collections.uniq if from_the_collections
+    from_the_collections -= json_to_index["creator"] if from_the_collections.present? && json_to_index["creator"].present?
+    from_the_collections&.uniq
   end
 
   def to_solr(json_to_index = nil)
