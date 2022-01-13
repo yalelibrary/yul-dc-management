@@ -163,7 +163,16 @@ METADATA_FIELDS = {
     label: 'Finding Aid',
     solr_fields: [
       'findingAid_ssim'
-    ]
+    ],
+    is_url: true
+  },
+  archiveSpaceUri: {
+    label: 'Archives at Yale Item Page',
+    solr_fields: [
+      'archiveSpaceUri_ssi'
+    ],
+    is_url: true,
+    prefix: "https://archives.yale.edu"
   },
   format: {
     label: 'Format',
