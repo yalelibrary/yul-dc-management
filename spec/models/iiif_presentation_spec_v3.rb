@@ -21,10 +21,13 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
   end
   let(:oid) { 16_172_421 }
+  let(:aspace_oid) { 123 }
   let(:oid_no_labels) { 2_005_512 }
-  let(:iiif_presentation) { described_class.new(parent_object) }
   let(:logger_mock) { instance_double("Rails.logger").as_null_object }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, viewing_direction: "left-to-right", display_layout: "individuals", bib: "12834515") }
+  let(:aspace_parent_object) { FactoryBot.create(:parent_object, oid: aspace_oid, bib: "12834515", aspace_uri: "/repositories/11/archival_objects/214638") }
+  let(:aspace_iiif_presentation) { described_class.new(aspace_parent_object) }
+  let(:iiif_presentation) { described_class.new(parent_object) }
   let(:iiif_presentation_no_labels) { described_class.new(parent_object_no_labels) }
   let(:parent_object_no_labels) { FactoryBot.create(:parent_object, oid: oid_no_labels, viewing_direction: "left-to-right", display_layout: "individuals", bib: "16173726") }
   let(:first_canvas) { iiif_presentation.manifest['items'].first }
@@ -42,6 +45,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     # The parent object gets its metadata populated via a background job, and we can't assume that has run,
     # so stub the part of the metadata we need for the iiif_presentation
     allow(parent_object).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{oid}.json"))))
+    allow(aspace_parent_object).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "aspace", "AS-2005512.json"))))
   end
 
   describe 'building a manifest' do
@@ -156,6 +160,27 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["metadata"].last["label"]['en'].first).to eq "OID"
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Orbis ID" }).not_to be_empty
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Container / Volume Information" }).not_to be_empty
+    end
+
+    it "has a ASpace record link in metadata if ASpace record" do
+      expect(aspace_iiif_presentation.manifest["metadata"].class).to eq Array
+      expect(aspace_iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Archives at Yale Item Page" }).not_to be_empty
+      values = aspace_iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Archives at Yale Item Page" }.first["value"]
+      expect(values).not_to be_empty
+      expect(values['none'].first).to include('href="https://archives.yale.edu')
+    end
+
+    it "has a Finding Aid link in metadata if ASpace record" do
+      expect(aspace_iiif_presentation.manifest["metadata"].class).to eq Array
+      expect(aspace_iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Finding Aid" }).not_to be_empty
+      values = aspace_iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Finding Aid" }.first["value"]
+      expect(values).not_to be_empty
+      expect(values['none'].first).to include('href="http://hdl.handle.net')
+    end
+
+    it "does not have a ASpace record link in metadata if Ladybird record" do
+      expect(iiif_presentation.manifest["metadata"].class).to eq Array
+      expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Archives at Yale Item Page" }).to be_empty
     end
 
     it "includes viewingDirection on the manifest when included on parent_object" do
