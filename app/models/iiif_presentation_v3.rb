@@ -115,6 +115,7 @@ class IiifPresentationV3
   end
 
   def metadata_url(url, hash)
+    return unless url
     url = hash[:prefix] + url if hash[:prefix]
     return url unless url.start_with?('http')
     "<span><a href=\"#{url}\">#{url}</a></span>"
@@ -122,7 +123,7 @@ class IiifPresentationV3
 
   def process_metadata_array(value, hash)
     value = value.reverse if hash[:reverse_array]
-    value = value.map { |url| metadata_url(url, hash) } if hash[:is_url]
+    value = value.compact.map { |url| metadata_url(url, hash) } if hash[:is_url]
     value = value.join(hash[:join_char]) if hash[:join_char].present?
 
     value
