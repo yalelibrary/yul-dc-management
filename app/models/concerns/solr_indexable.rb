@@ -74,7 +74,7 @@ module SolrIndexable
         alternativeTitle_tesim: json_to_index["alternativeTitle"],
         alternativeTitleDisplay_tesim: json_to_index["alternativeTitleDisplay"],
         ancestorDisplayStrings_tesim: json_to_index["ancestorDisplayStrings"],
-        #collectionCreator name in mdc is ancestorCreator
+        # collectionCreator name in mdc is ancestorCreator
         collectionCreators_ssim: from_the_collections(json_to_index),
         ancestorTitles_tesim: generate_ancestor_title(json_to_index["ancestorTitles"]),
         ancestor_titles_hierarchy_ssim: ancestor_structure(generate_ancestor_title(json_to_index["ancestorTitles"])),
