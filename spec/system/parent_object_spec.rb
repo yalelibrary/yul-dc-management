@@ -123,6 +123,21 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         click_on("Back")
         expect(page).to have_content "Child Object Count"
       end
+
+      it "validates preservica uri based on digital object source presence" do
+        select('Preservica')
+        click_on("Create Parent object")
+        expect(page).to have_content "Preservica uri can't be blank"
+        expect(page).to have_content "Preservica uri in incorrect format. URI must start with a /"
+      end
+
+      it "validates preservica uri format" do
+        select('Preservica')
+        expect(page).to have_field("Preservica uri")
+        fill_in('Preservica uri', with: "/preservica_uri")
+        click_on("Create Parent object")
+        expect(page).to have_content '/preservica_uri'
+      end
     end
 
     context "with a ParentObject whose authoritative_metadata_source is Ladybird" do
