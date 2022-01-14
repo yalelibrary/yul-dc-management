@@ -4,72 +4,30 @@
 module Reassociatable
   extend ActiveSupport::Concern
 
-  def check_for_redirects
-    # byebug
-    source_parents = []
-    destination_parents = []
-    
-    parsed_csv.each do |row|
-      co = ChildObject.find_by_oid(row["child_oid"].to_i)
-      po = ParentObject.find_by_oid(row["parent_oid"].to_i)
-      source_parents << co.parent_object.oid
-      destination_parents << row["parent_oid"].to_i
-      # byebug
-      # reassociate_child(co, po)
-    end
-    # source_parents.each do |sp_oid|
-    #   sp = ParentObject.find_by_oid(sp_oid)
-    #   # check if there are no child objects
-    #   # & that all children went to the same destination
-    #   if sp.child_objects.count.zero? && destination_parents.uniq.count == 1
-    #     # create the redirect
-    #     # byebug
-    #     sp.redirect_to = "https://collections.library.yale.edu/catalog/#{destination_parents.first}"
-    #     # sp.current_batch_process = self
-    #     # sp.current_batch_connection = batch_connections.find_or_create_by(connectable: sp)
-    #     # sp.current_batch_connection.save!
-    #     sp.save!
-    #     byebug
-    #   end
-    # end
-
-    source_parents
-    destination_parents
-  end
-
-  def create_redirect(source_parents, destination_parents)
-    source_parents.each do |sp_oid|
-      sp = ParentObject.find_by_oid(sp_oid)
-      # check if there are no child objects
-      # & that all children went to the same destination
-      if sp.child_objects.count.zero? && destination_parents.uniq.count == 1
-        # create the redirect
-        # byebug
-        sp.redirect_to = "https://collections.library.yale.edu/catalog/#{destination_parents.first}"
-        # sp.current_batch_process = self
-        # sp.current_batch_connection = batch_connections.find_or_create_by(connectable: sp)
-        # sp.current_batch_connection.save!
-        sp.save!
-        # byebug
-      end
-    end
-
-  end
-  # xx parse csv
-  # look at each row
-  # check the parent destination of the children
-  # track which parent objects (reassociated FROM: old po) that have children removed from them
-  # check old parent object to see if any children remain
-  # if a child remains, do nothing to old parent redirect_to and no message/error
-  # if no children remain and all children go to the same parent, redirect the old parent to the new parent
+  # rubocop:disable Style/MutableConstant
+  SOURCE_PARENTS = []
+  DESTINATION_PARENTS = []
+  # rubocop:enable Style/MutableConstant
 
   # triggers the reassociate process
   def reassociate_child_oids
     return unless batch_action == "reassociate child oids"
     check_for_redirects
     parents_needing_update = update_child_objects
-    byebug
-    update_related_parent_objects(parents_needing_update, source_parents, destination_parents) 
+    update_related_parent_objects(parents_needing_update)
+  end
+
+  # updates constants with source and destination parents
+  def check_for_redirects
+    parsed_csv.each do |row|
+      co = ChildObject.find_by_oid(row["child_oid"].to_i)
+      po = ParentObject.find_by_oid(row["parent_oid"].to_i)
+      # error messaging for user if parent or child object is not found issued from load_child in update_child_objects
+      next unless co.present? && po.present?
+
+      SOURCE_PARENTS << co.parent_object.oid
+      DESTINATION_PARENTS << row["parent_oid"].to_i
+    end
   end
 
   # finds which parents are needed to update
@@ -137,13 +95,12 @@ module Reassociatable
 
   # assigns the child to the new parent
   def reassociate_child(co, po)
-    # byebug
     co.parent_object = po
     processing_event_for_child(co)
     co.save!
   end
 
-  # alerts user of batch event
+  # alerts user of successful reassociation event
   def processing_event_for_child(co)
     co.current_batch_process = self
     co.current_batch_connection = batch_connections.find_or_create_by(connectable: co)
@@ -187,23 +144,32 @@ module Reassociatable
   # rubocop:enable Metrics/LineLength
 
   # updates count of parent objects and regenerates manifest pdf and reindexes solr.
-  def update_related_parent_objects(parents_needing_update, source_parents, destination_parents)
+  def update_related_parent_objects(parents_needing_update)
     return unless batch_action == "reassociate child oids" || batch_action == "delete child objects"
     parents_needing_update.uniq.each do |oid|
       po = ParentObject.find(oid)
-      # TODO: What do we want to happen if the parent object no longer has any associated child objects?
       po.child_object_count = po.child_objects.count
-      # byebug
-      create_redirect(source_parents, destination_parents)
+      create_redirect(SOURCE_PARENTS, DESTINATION_PARENTS)
       # If the child objects have changed, we'll need to re-create the manifest and PDF objects
       # and re-index to Solr
-      
       po.current_batch_process = self
       po.current_batch_connection = batch_connections.find_or_create_by(connectable: po)
       po.current_batch_connection.save!
       po.save!
-      # byebug
       GenerateManifestJob.perform_later(po, self, po.current_batch_connection)
+    end
+  end
+
+  def create_redirect(source_parents, destination_parents)
+    source_parents.each do |sp_oid|
+      sp = ParentObject.find_by_oid(sp_oid)
+      # check if there are no child objects
+      # & that all children went to the same destination
+      next unless sp.child_objects.count.zero? && destination_parents.uniq.count == 1
+      # create the redirect
+      # byebug
+      sp.redirect_to = "https://collections.library.yale.edu/catalog/#{destination_parents.first}"
+      sp.save!
     end
   end
 end
