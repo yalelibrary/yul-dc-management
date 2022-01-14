@@ -95,9 +95,21 @@ module Reassociatable
 
   # assigns the child to the new parent
   def reassociate_child(co, po)
-    co.parent_object = po
-    processing_event_for_child(co)
-    co.save!
+    if po.redirect_to.present?
+      failure_event_for_child(co, po.oid)
+    else
+      co.parent_object = po
+      processing_event_for_child(co)
+      co.save!
+    end
+  end
+
+  # alerts user of unsuccessful reassociation event
+  def failure_event_for_child(co, po_oid)
+    co.current_batch_process = self
+    co.current_batch_connection = batch_connections.find_or_create_by(connectable: co)
+    co.current_batch_connection.save!
+    co.processing_event("Child #{co.oid} cannot be reassociated to redirected parent object: #{po_oid}", 'Skipped Row')
   end
 
   # alerts user of successful reassociation event
