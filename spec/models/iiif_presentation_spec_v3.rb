@@ -330,16 +330,17 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
         parent_object_rep_edited = parent_object_rep
         parent_object_rep_edited.representative_child_oid = parent_object_rep.child_objects[8].oid
         iiif_presentation_rep = described_class.new(parent_object_rep_edited)
-        expect(iiif_presentation_rep.manifest["start"]).to include parent_object_rep_edited.representative_child_oid.to_s
+        expect(iiif_presentation_rep.manifest["start"]["id"]).to include parent_object_rep_edited.representative_child_oid.to_s
       end
     end
+
     context 'representative child is not one of the first 10 children' do
       it 'uses the first child as the startCanvas' do
         parent_object_rep_edited = parent_object_rep
         parent_object_rep_edited.representative_child_oid = parent_object_rep.child_objects[20].oid
 
         iiif_presentation_rep = described_class.new(parent_object_rep_edited)
-        expect(iiif_presentation_rep.manifest["startCanvas"]).to be_nil
+        expect(iiif_presentation_rep.manifest["start"]).to be_nil
       end
     end
   end

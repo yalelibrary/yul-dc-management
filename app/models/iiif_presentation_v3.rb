@@ -232,8 +232,7 @@ class IiifPresentationV3
       canvas['width'] = image_anno["width"]
       canvas['behavior'] = [child.viewing_hint] unless child.viewing_hint.nil? || child.viewing_hint.empty?
       add_metadata_to_canvas(canvas, child)
-
-      @manifest["start"] = canvas['id'] if child_is_start_canvas? child.oid, index
+      @manifest["start"] = { 'id' => canvas['id'], 'type' => 'Canvas' } if child_is_start_canvas? child.oid, index
       items << canvas
     end
   end
