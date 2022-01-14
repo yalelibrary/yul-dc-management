@@ -9,8 +9,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:role) { FactoryBot.create(:role, name: editor) }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_small.csv")) }
   let(:child_object_nil_values) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_child_object_counts.csv")) }
-  let(:redirect) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_redirect.csv")) }
-  let(:do_not_redirect) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_do_not_redirect.csv")) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
   let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "2004550", admin_set_id: admin_set.id) }
   let(:parent_object_old_one) { FactoryBot.create(:parent_object, oid: "2004548", admin_set_id: admin_set.id) }
@@ -62,64 +60,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     end
   end
 
-  describe "redirect objects that lose all children during reassociation batch process" do
-    # Original oid 2004551
-    before do
-      parent_object_old_three
-      parent_object_2
-      user.add_role(:editor, admin_set)
-      batch_process.user_id = user.id
-      batch_process.file = redirect
-      batch_process.save
-    end
-
-    it "can add redirect_to to parent objects that have all its children reassociated" do
-      co = ChildObject.find(child_object_1.oid)
-      # performed the reassociation
-      expect(co.parent_object).to eq parent_object_2
-
-      po_old_three = ParentObject.find(parent_object_old_three.oid)
-      # created redirect
-      expect(po_old_three.redirect_to).to eq("https://collections.library.yale.edu/catalog/2004550")
-      expect(po_old_three.visibility).to eq("Redirect")
-      expect(po_old_three.bib).to be_nil
-      expect(po_old_three.call_number).to be_nil
-      
-      # still has child object
-      po_old_one = ParentObject.find(parent_object_old_one.oid)
-      expect(po_old_one.redirect_to).to be_nil
-    end
-  end
-
-  describe "redirect objects that lose all children during reassociation batch process to different sources" do
-    # Original oid 2004551
-    before do
-      parent_object_old_three
-      parent_object_2
-      user.add_role(:editor, admin_set)
-      batch_process.user_id = user.id
-      batch_process.file = do_not_redirect
-      batch_process.save
-    end
-
-    it "does not create redirect_to from parent objects that have all its children reassociated" do
-      co = ChildObject.find(child_object_1.oid)
-      # performed the reassociation
-      expect(co.parent_object).to eq parent_object_2
-
-      po_old_three = ParentObject.find(parent_object_old_three.oid)
-      # did not create redirect
-      expect(po_old_three.redirect_to).to be_nil
-      expect(po_old_three.visibility).to eq("Private")
-      expect(po_old_three.bib).to eq("34567")
-      expect(po_old_three.call_number).to eq("MSS MS 345")
-      
-      # still has child object
-      po_old_one = ParentObject.find(parent_object_old_one.oid)
-      expect(po_old_one.redirect_to).to be_nil
-    end
-  end
-
   describe "reassociation as a user with an editor role" do
     # Original oids [2002826, 2004548, 2004548, 2004549, 2004549]
     before do
@@ -139,8 +79,12 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         expect(co_one.parent_object).to eq po
         expect(co_three.parent_object).to eq po
         expect(po.child_object_count).to eq 5
-        expect(po_old_one.child_object_count).to eq 0
-        expect(po_old_two.child_object_count).to eq 0
+        # po_old_one had 2 child objects to start with
+        expect(po_old_one.child_object_count).to eq 1
+        # po_old_two loses all it's children so count is nil
+        expect(po_old_two.child_object_count).to be_nil
+        # and po_old_two becomes a redirected parent object
+        expect(po_old_two.redirect_to).to eq "https://collections.library.yale.edu/catalog/#{po.oid}"
         expect(co_one.order).to eq 1
         expect(co_three.order).to eq 3
         expect(co_one.label).to eq "[Portrait of Grace Nail Johnson]"
