@@ -167,7 +167,6 @@ module Reassociatable
       # & that all children went to the same destination
       next unless sp.child_objects.count.zero? && destination_parents.uniq.count == 1
       # create the redirect
-      # byebug
       sp.redirect_to = "https://collections.library.yale.edu/catalog/#{destination_parents.first}"
       sp.save!
     end
