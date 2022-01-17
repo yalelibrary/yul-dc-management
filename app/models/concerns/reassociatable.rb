@@ -110,10 +110,7 @@ module Reassociatable
 
   # alerts user of unsuccessful reassociation event
   def failure_event_for_child(co, po_oid)
-    co.current_batch_process = self
-    co.current_batch_connection = batch_connections.find_or_create_by(connectable: co)
-    co.current_batch_connection.save!
-    co.processing_event("Child #{co.oid} cannot be reassociated to redirected parent object: #{po_oid}", 'Skipped Row')
+    batch_processing_event("Child #{co.oid} cannot be reassociated to redirected parent object: #{po_oid}", 'Skipped Row')
   end
 
   # alerts user of successful reassociation event
