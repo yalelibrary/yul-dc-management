@@ -19,6 +19,10 @@ module Reassociatable
 
   # updates constants with source and destination parents
   def check_for_redirects
+    # reset values
+    SOURCE_PARENTS.clear
+    DESTINATION_PARENTS.clear
+
     parsed_csv.each do |row|
       co = ChildObject.find_by_oid(row["child_oid"].to_i)
       po = ParentObject.find_by_oid(row["parent_oid"].to_i)
@@ -173,7 +177,7 @@ module Reassociatable
   end
 
   def create_redirect(source_parents, destination_parents)
-    source_parents.each do |sp_oid|
+    source_parents.uniq.each do |sp_oid|
       sp = ParentObject.find_by_oid(sp_oid)
       # check if there are no child objects
       # & that all children went to the same destination
@@ -181,6 +185,7 @@ module Reassociatable
       # create the redirect
       sp.redirect_to = "https://collections.library.yale.edu/catalog/#{destination_parents.first}"
       sp.save!
+      # byebug
     end
   end
 end
