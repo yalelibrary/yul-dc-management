@@ -52,6 +52,7 @@ module Reassociatable
       parents_needing_update << co.parent_object.oid
       parents_needing_update << row["parent_oid"].to_i
 
+      # byebug
       reassociate_child(co, po)
 
       values_to_update = check_headers(child_headers, row)
@@ -100,6 +101,7 @@ module Reassociatable
   # assigns the child to the new parent
   def reassociate_child(co, po)
     if po.redirect_to.present?
+      # byebug
       failure_event_for_child(co, po.oid)
     else
       co.parent_object = po
@@ -185,7 +187,6 @@ module Reassociatable
       # create the redirect
       sp.redirect_to = "https://collections.library.yale.edu/catalog/#{destination_parents.first}"
       sp.save!
-      # byebug
     end
   end
 end
