@@ -7,7 +7,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:role) { FactoryBot.create(:role, name: editor) }
-  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_small.csv")) }
   let(:redirect) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_redirect.csv")) }
   let(:do_not_redirect) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_do_not_redirect.csv")) }
   let(:do_not_reassociate) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_do_not_reassociate.csv")) }
@@ -104,7 +103,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   end
 
   describe "reassociation batch process that attempts to reassociate children to a redirected parent object" do
-    # Original oid 
+    # Original oid 2004551
     before do
       parent_object_old_three
       parent_object_redirect.save
@@ -121,7 +120,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       expect(co.parent_object).to eq po_old_three
 
       # did not change the redirect
-      expect(parent_object_redirect.redirect_to).to be_nil
+      expect(parent_object_redirect.redirect_to).to eq "https://collections.library.yale.edu/catalog/#{parent_object_2.oid}"
       expect(parent_object_redirect.visibility).to eq("Redirect")
       expect(parent_object_redirect.child_objects.count).to eq 0
     end
