@@ -4,40 +4,20 @@
 module Reassociatable
   extend ActiveSupport::Concern
 
-  # rubocop:disable Style/MutableConstant
-  SOURCE_PARENTS = []
-  DESTINATION_PARENTS = []
-  # rubocop:enable Style/MutableConstant
-
   # triggers the reassociate process
   def reassociate_child_oids
     return unless batch_action == "reassociate child oids"
-    check_for_redirects
-    parents_needing_update = update_child_objects
-    update_related_parent_objects(parents_needing_update)
+    parents_needing_update, parent_destination_map = update_child_objects
+    update_related_parent_objects(parents_needing_update, parent_destination_map)
   end
 
-  # updates constants with source and destination parents
-  def check_for_redirects
-    # reset values
-    SOURCE_PARENTS.clear
-    DESTINATION_PARENTS.clear
-
-    parsed_csv.each do |row|
-      co = ChildObject.find_by_oid(row["child_oid"].to_i)
-      po = ParentObject.find_by_oid(row["parent_oid"].to_i)
-      # error messaging for user if parent or child object is not found issued from load_child in update_child_objects
-      next unless co.present? && po.present?
-
-      SOURCE_PARENTS << co.parent_object.oid
-      DESTINATION_PARENTS << row["parent_oid"].to_i
-    end
-  end
-
+  # rubocop:disable Metrics/AbcSize
   # finds which parents are needed to update
   def update_child_objects
     return unless batch_action == "reassociate child oids"
     parents_needing_update = []
+
+    parent_destination_map = {}
 
     parsed_csv.each_with_index do |row, index|
       co = load_child(index, row["child_oid"].to_i)
@@ -51,14 +31,16 @@ module Reassociatable
 
       parents_needing_update << co.parent_object.oid
       parents_needing_update << row["parent_oid"].to_i
+      parent_destination_map[co.parent_object.oid] = (parent_destination_map[co.parent_object.oid] || Set.new) << row["parent_oid"].to_i
 
       reassociate_child(co, po)
 
       values_to_update = check_headers(child_headers, row)
       update_child_values(values_to_update, co, row, index)
     end
-    parents_needing_update
+    [parents_needing_update, parent_destination_map]
   end
+  # rubocop:enable Metrics/AbcSize
 
   # verifies headers are included. child headers found in csv_exportable:90
   def check_headers(headers, row)
@@ -156,13 +138,20 @@ module Reassociatable
   end
   # rubocop:enable Metrics/LineLength
 
+  # rubocop:disable Metrics/AbcSize
   # updates count of parent objects and regenerates manifest pdf and reindexes solr.
-  def update_related_parent_objects(parents_needing_update)
+  def update_related_parent_objects(parents_needing_update, parent_destination_map)
     return unless batch_action == "reassociate child oids" || batch_action == "delete child objects"
     parents_needing_update.uniq.each do |oid|
       po = ParentObject.find(oid)
       po.child_object_count = po.child_objects.count
-      create_redirect(SOURCE_PARENTS, DESTINATION_PARENTS)
+      if po.child_object_count.zero?
+        if parent_destination_map[po.oid]&.length == 1
+          po.redirect_to = "https://collections.library.yale.edu/catalog/#{parent_destination_map[po.oid].first}"
+        else
+          batch_processing_event("Unable to redirect parent with 0 children: [Parent #{po.oid} had children moved to #{parent_destination_map[po.oid]}]")
+        end
+      end
       # If the child objects have changed, we'll need to re-create the manifest and PDF objects
       # and re-index to Solr
       po.current_batch_process = self
@@ -172,17 +161,6 @@ module Reassociatable
       GenerateManifestJob.perform_later(po, self, po.current_batch_connection)
     end
   end
-
-  def create_redirect(source_parents, destination_parents)
-    source_parents.uniq.each do |sp_oid|
-      sp = ParentObject.find_by_oid(sp_oid)
-      # check if there are no child objects
-      # & that all children went to the same destination
-      next unless sp.child_objects.count.zero? && destination_parents.uniq.count == 1
-      # create the redirect
-      sp.redirect_to = "https://collections.library.yale.edu/catalog/#{destination_parents.first}"
-      sp.save!
-    end
-  end
+  # rubocop:enable Metrics/AbcSize
 end
 # rubocop:enable Metrics/ModuleLength
