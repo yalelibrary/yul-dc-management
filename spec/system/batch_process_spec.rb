@@ -157,7 +157,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     context "outputting csv" do
       let(:brbl) { AdminSet.find_by_key("brbl") }
       let(:other_admin_set) { FactoryBot.create(:admin_set) }
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: brbl) }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: brbl, digital_object_source: "Preservica", preservica_uri: "/preservica_uri") }
       let(:parent_object2) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: other_admin_set) }
       let(:user) { FactoryBot.create(:user) }
 
@@ -184,6 +184,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.file_name).to eq "export_parent_oids.csv"
         expect(BatchProcess.last.batch_action).to eq "export all parent objects by admin set"
         expect(BatchProcess.last.parent_output_csv).to include "2034600"
+        expect(BatchProcess.last.parent_output_csv).to include "Preservica"
+        expect(BatchProcess.last.parent_output_csv).to include "/preservica_uri"
         expect(BatchProcess.last.parent_output_csv).not_to include "2005512"
       end
 
