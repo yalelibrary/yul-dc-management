@@ -6,7 +6,8 @@ module CsvExportable
 
   def parent_headers
     ['oid', 'admin_set', 'authoritative_source', 'child_object_count', 'call_number',
-     'container_grouping', 'bib', 'holding', 'item', 'barcode', 'aspace_uri', 'last_ladybird_update',
+     'container_grouping', 'bib', 'holding', 'item', 'barcode', 'aspace_uri',
+     'digital_object_source', 'preservica_uri', 'last_ladybird_update',
      'last_voyager_update', 'last_aspace_update', 'last_id_update', 'visibility',
      'extent_of_digitization', 'digitization_note', 'project_identifier']
   end
@@ -20,7 +21,8 @@ module CsvExportable
         next csv << po if po.is_a?(Array)
         row = [po.oid, po.admin_set.label, po.source_name,
                po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
-               po.barcode, po.aspace_uri, po.last_ladybird_update, po.last_voyager_update,
+               po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
+               po.last_ladybird_update, po.last_voyager_update,
                po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
                po.digitization_note, po.project_identifier]
         csv << row
