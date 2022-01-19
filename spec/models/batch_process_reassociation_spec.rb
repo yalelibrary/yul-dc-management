@@ -10,8 +10,14 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_small.csv")) }
   let(:child_object_nil_values) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_child_object_counts.csv")) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
+  let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "2004550", admin_set_id: admin_set.id) }
   let(:parent_object_old_one) { FactoryBot.create(:parent_object, oid: "2004548", admin_set_id: admin_set.id) }
   let(:parent_object_old_two) { FactoryBot.create(:parent_object, oid: "2004549", admin_set_id: admin_set.id) }
+  let(:parent_object_old_three) { FactoryBot.create(:parent_object, oid: "2004551", admin_set_id: admin_set.id, bib: "34567", call_number: "MSS MS 345") }
+  let(:child_object_1) { FactoryBot.create(:child_object, oid: "12345", parent_object: parent_object_old_three) }
+  let(:child_object_2) { FactoryBot.create(:child_object, oid: "67890", parent_object: parent_object_old_three) }
+  let(:child_object_3) { FactoryBot.create(:child_object, oid: "12", parent_object: parent_object_old_one) }
+  let(:child_object_4) { FactoryBot.create(:child_object, oid: "123", parent_object: parent_object_old_one) }
 
   around do |example|
     perform_enqueued_jobs do
@@ -30,6 +36,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     parent_object
     parent_object_old_one
     parent_object_old_two
+    child_object_1
+    child_object_2
+    child_object_3
     login_as(:user)
   end
 
@@ -70,8 +79,12 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         expect(co_one.parent_object).to eq po
         expect(co_three.parent_object).to eq po
         expect(po.child_object_count).to eq 5
-        expect(po_old_one.child_object_count).to eq 0
-        expect(po_old_two.child_object_count).to eq 0
+        # po_old_one had 2 child objects to start with
+        expect(po_old_one.child_object_count).to eq 1
+        # po_old_two loses all it's children so count is nil
+        expect(po_old_two.child_object_count).to be_nil
+        # and po_old_two becomes a redirected parent object
+        expect(po_old_two.redirect_to).to eq "https://collections.library.yale.edu/catalog/#{po.oid}"
         expect(co_one.order).to eq 1
         expect(co_three.order).to eq 3
         expect(co_one.label).to eq "[Portrait of Grace Nail Johnson]"

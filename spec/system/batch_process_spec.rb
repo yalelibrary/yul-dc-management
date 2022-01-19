@@ -134,7 +134,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Reassociate Child Oids")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        expect(parent_object.reload.child_object_count).to eq(0)
+        expect(parent_object.reload.child_objects.count).to eq(0)
         expect(parent_object_old_one.reload.child_object_count).to eq(3)
       end
 

@@ -53,7 +53,7 @@ module Deletable
       child_object.destroy
       child_object.parent_object.processing_event("child #{child_object.oid} has been deleted", 'deleted')
     end
-    update_related_parent_objects(parents_needing_update)
+    update_related_parent_objects(parents_needing_update, {})
   end
 
   # CHECKS TO SEE IF USER HAS ABILITY TO DELETE OBJECTS:
