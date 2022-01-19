@@ -28,7 +28,7 @@ class ParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
       item: { source: "ParentObject.item", cond: :string_eq, searchable: true, orderable: true },
       barcode: { source: "ParentObject.barcode", cond: :string_eq, searchable: true, orderable: true },
       aspace_uri: { source: "ParentObject.aspace_uri", cond: :like, searchable: true, orderable: true },
-      digital_object_source: { source: "ParentObject.digital_object_source", cond: :like, searchable: true, options: ["Preservica"], orderable: true },
+      digital_object_source: { source: "ParentObject.digital_object_source", cond: :like, searchable: true, options: ["None", "Preservica"], orderable: true },
       preservica_uri: { source: "ParentObject.preservica_uri", cond: :like, searchable: true, orderable: true },
       last_ladybird_update: { source: "ParentObject.last_ladybird_update", orderable: true },
       last_voyager_update: { source: "ParentObject.last_voyager_update", orderable: true },
