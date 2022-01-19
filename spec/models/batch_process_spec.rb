@@ -83,7 +83,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       batch_process.save!
       po = ParentObject.find(30_000_557)
       expect(po.aspace_uri).to eq "/repositories/11/archival_objects/329771"
-      expect(po.metadata_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace/repositories/11/archival_objects/329771?mediaType=json"
+      expect(po.metadata_cloud_url).to eq(
+        "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace/repositories/11/archival_objects/329771?mediaType=json"
+      )
     end
 
     it "creates a parent object with admin set from the METs document" do
