@@ -25,7 +25,6 @@
 <% if @parent_object&.metadata_cloud_url.present? %>
 <p>
   <strong>MetadataCloud url:</strong><br>
-  <small>Note: add "&mediaType=json" or "?mediaType=json" to open in your browser</small><br>
   <%= link_to "#{@parent_object.metadata_cloud_url}", "#{@parent_object.metadata_cloud_url}" %>
 </p>
 <% end %>
