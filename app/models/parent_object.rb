@@ -272,14 +272,19 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.container_grouping = authoritative_json["containerGrouping"].is_a?(Array) ? authoritative_json["containerGrouping"].first : authoritative_json["containerGrouping"]
   end
 
+  def add_media_type url
+    return "#{url}&mediaType=json" if url.include?("?")
+    "#{url}?mediaType=json"
+  end
+
   def metadata_cloud_url
     case source_name
     when "ladybird"
-      ladybird_cloud_url
+      add_media_type ladybird_cloud_url
     when "ils"
-      voyager_cloud_url
+      add_media_type voyager_cloud_url
     when "aspace"
-      aspace_cloud_url
+      add_media_type aspace_cloud_url
     else
       raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
