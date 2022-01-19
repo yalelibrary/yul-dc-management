@@ -219,6 +219,8 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
       patch parent_object_url(parent_object), params: { parent_object: redirect_attributes }
       parent_object.reload
       expect(parent_object.bib).to be_nil
+      expect(parent_object.digital_object_source).to be_nil
+      expect(parent_object.preservica_uri).to be_nil
       expect(parent_object.visibility).to eq 'Redirect'
       expect(parent_object.admin_set.key).to eq 'brbl'
       expect(parent_object.redirect_to).to eq 'https://collections.library.yale.edu/catalog/123'
