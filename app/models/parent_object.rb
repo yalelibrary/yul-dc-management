@@ -272,7 +272,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.container_grouping = authoritative_json["containerGrouping"].is_a?(Array) ? authoritative_json["containerGrouping"].first : authoritative_json["containerGrouping"]
   end
 
-  def add_media_type url
+  def add_media_type(url)
     return "#{url}&mediaType=json" if url.include?("?")
     "#{url}?mediaType=json"
   end
