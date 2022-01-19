@@ -224,6 +224,15 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
       expect(parent_object.redirect_to).to eq 'https://collections.library.yale.edu/catalog/123'
     end
 
+    it 'can display redirected non-ladybird parents' do
+      parent_object = ParentObject.create! valid_attributes
+      expect(parent_object.bib).to eq("123")
+      patch parent_object_url(parent_object), params: { parent_object: redirect_attributes.merge(authoritative_metadata_source_id: 2) }
+      parent_object.reload
+      get parent_object_url(parent_object)
+      expect(response).to be_successful
+    end
+
     it 'redirects to the parent show page' do
       parent_object = ParentObject.create! valid_attributes
       patch parent_object_url(parent_object), params: { parent_object: redirect_attributes }

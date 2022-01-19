@@ -283,6 +283,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     else
       raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
+  rescue
+    nil
   end
 
   def json_for(source_name)
