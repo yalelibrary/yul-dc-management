@@ -191,9 +191,6 @@ $( document ).on('turbolinks:load', function() {
           action: newExportAction,
           text: "All Matching Entries",
           className: "export-all"
-          // customize: function (csv) {
-          //   return check_csv(csv)
-          // }
         }
       ],
       // pagingType is optional, if you want full pagination controls.
