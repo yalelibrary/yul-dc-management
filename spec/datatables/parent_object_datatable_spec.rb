@@ -15,7 +15,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
     oid = '2034600'
 
     stub_metadata_cloud(oid)
-    FactoryBot.create(:parent_object, oid: oid, admin_set: admin_set, project_identifier: '67')
+    FactoryBot.create(:parent_object, oid: oid, admin_set: admin_set, project_identifier: '67', digital_object_source: "Preservica", preservica_uri: "/preservica_uri")
 
     output = ParentObjectDatatable.new(datatable_sample_params(columns), view_context: parent_object_datatable_view_mock, current_ability: Ability.new(user)).data
 
@@ -31,6 +31,8 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       child_object_count: 4,
       call_number: nil,
       container_grouping: nil,
+      digital_object_source: "Preservica",
+      preservica_uri: "/preservica_uri",
       digitization_note: nil,
       extent_of_digitization: nil,
       holding: nil,
