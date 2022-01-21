@@ -26,6 +26,11 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       expect(page).to have_css('table', text: 'Editors')
     end
 
+    it 'validates preservica credentials' do
+      visit admin_set_path(admin_set)
+      expect(page).to have_content "Preservica credentials not configured for this Admin Set"
+    end
+
     it 'allows roles to be added to users' do
       visit admin_set_path(admin_set)
       within('table', text: 'Editors') do
