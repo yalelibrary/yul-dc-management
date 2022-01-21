@@ -36,7 +36,7 @@ class AdminSet < ApplicationRecord
 
   def valid_format?(json)
     # valid JSON,
-    parsed_json = JSON.parse(json)
+    parsed_json = JSON.parse(json) unless json.nil?
 
     # exists,
     if ENV['PRESERVICA_CREDENTIALS'].present? &&

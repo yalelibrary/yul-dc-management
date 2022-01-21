@@ -29,6 +29,11 @@
 
 <%= render partial: 'shared/add_role', locals: {item: @admin_set} %>
 
+<% unless !@admin_set.preservica_credentials_verified %> 
+  <p>
+    <%= @admin_set.preservica_credentials_verified %>
+  </p>
+<% end %>
 
 <p>
   <%= link_to 'Edit', edit_admin_set_path(@admin_set) %> |
