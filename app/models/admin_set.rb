@@ -23,4 +23,33 @@ class AdminSet < ApplicationRecord
   def remove_editor(user)
     user.remove_role(:editor, self)
   end
+
+  def preservica_credentials_verified
+    if valid_format?(ENV['PRESERVICA_CREDENTIALS'])
+      # return true
+      true
+    else
+      # if not displays flash message to user
+      'Preservica credentials not configured for this Admin Set'
+    end
+  end
+
+  def valid_format?(json)
+    # valid JSON,
+    parsed_json = JSON.parse(json)
+
+    # exists,
+    if ENV['PRESERVICA_CREDENTIALS'].present? &&
+       # contains admin set key,
+       parsed_json.include?(key) &&
+       # and key references username and password with not blank values
+       parsed_json[key.to_s]['username'].present? &&
+       parsed_json[key.to_s]['password'].present?
+      return true
+    else
+      return false
+    end
+  rescue JSON::ParserError
+    false
+  end
 end
