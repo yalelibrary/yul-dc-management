@@ -334,7 +334,7 @@ $( document ).on('turbolinks:load', function() {
   table.clear()
   table.ajax.url($('.is-datatable').data('source')).load(function() {
 
-    var info = $('#child-objects-datatable_info').text().split(' ')
+    var info = $('#child-objects-datatable_info, #parent-objects-datatable_info, #redirected-parent-objects-datatable_info, #batch-processes-datatable_info, #preservica-ingests-datatable_info').text().split(' ')
     var entries = info[5]
     if ( entries > 12000 ) {
       // Disable the button
