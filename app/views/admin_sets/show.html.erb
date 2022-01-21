@@ -1,5 +1,11 @@
 <%= render partial: "/management/flash_messages" %>
 
+<% unless @admin_set.preservica_credentials_verified %> 
+  <p>
+    <p class="alert alert-warning"><%= "Preservica credentials not configured for this Admin Set" %></p>
+  </p>
+<% end %>
+
 <div id="admin_set_button_row">
   <a href="#BatchUpdateMetadata" role="button" class="btn btn-large btn-secondary" data-toggle="modal">Batch Update Metadata</a>
   <%= button_to "Export Parent Objects", export_parent_objects_batch_processes_url(admin_set: @admin_set.key, admin_set_id: @admin_set.id), method: :post, class: "btn btn-large btn-secondary export_button" %>
@@ -28,12 +34,6 @@
 <%= render partial: "roles_tables" %>
 
 <%= render partial: 'shared/add_role', locals: {item: @admin_set} %>
-
-<% unless !@admin_set.preservica_credentials_verified %> 
-  <p>
-    <%= @admin_set.preservica_credentials_verified %>
-  </p>
-<% end %>
 
 <p>
   <%= link_to 'Edit', edit_admin_set_path(@admin_set) %> |

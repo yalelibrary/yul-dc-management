@@ -25,13 +25,7 @@ class AdminSet < ApplicationRecord
   end
 
   def preservica_credentials_verified
-    if valid_format?(ENV['PRESERVICA_CREDENTIALS'])
-      # return true
-      true
-    else
-      # if not displays flash message to user
-      'Preservica credentials not configured for this Admin Set'
-    end
+    valid_format?(ENV['PRESERVICA_CREDENTIALS']) ? true : false
   end
 
   def valid_format?(json)
