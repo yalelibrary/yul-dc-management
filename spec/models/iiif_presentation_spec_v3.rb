@@ -157,7 +157,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["metadata"].first["label"]["en"].first).to eq "Creator"
       expect(iiif_presentation.manifest["metadata"].first["value"]['none'].first).to include "Morris & Co. (London, England)"
       expect(iiif_presentation.manifest["metadata"].last.class).to eq Hash
-      expect(iiif_presentation.manifest["metadata"].last["label"]['en'].first).to eq "OID"
+      expect(iiif_presentation.manifest["metadata"].last["label"]['en'].first).to eq "Object ID (OID)"
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Orbis ID" }).not_to be_empty
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Container / Volume Information" }).not_to be_empty
     end
@@ -213,7 +213,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     it "has canvases with ids and labels" do
       expect(first_canvas["id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188699"
       expect(first_canvas["metadata"]).not_to be_nil
-      expect(first_canvas["metadata"]).to include("label" => { "en" => ["Image OID"] }, "value" => { "none" => ["16188699"] })
+      expect(first_canvas["metadata"]).to include("label" => { "en" => ["Image ID"] }, "value" => { "none" => ["16188699"] })
       expect(first_canvas["metadata"]).to include("label" => { "en" => ["Image Label"] }, "value" => { "none" => ["Swatch 1"] })
       expect(third_to_last_canvas["id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188700"
       expect(first_canvas["label"]["none"]).to eq ["Swatch 1"]
@@ -230,7 +230,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(first_canvas["label"]["none"]).to eq ["swatch 2"]
       expect(third_to_last_canvas["id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188699"
       expect(third_to_last_canvas["metadata"]).not_to be_nil
-      expect(third_to_last_canvas["metadata"]).to include("label" => { "en" => ["Image OID"] }, "value" => { "none" => ["16188699"] })
+      expect(third_to_last_canvas["metadata"]).to include("label" => { "en" => ["Image ID"] }, "value" => { "none" => ["16188699"] })
       expect(third_to_last_canvas["metadata"]).to include("label" => { "en" => ["Image Label"] }, "value" => { "none" => ["Swatch 1"] })
     end
 
