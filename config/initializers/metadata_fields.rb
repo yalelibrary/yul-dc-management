@@ -261,7 +261,7 @@ METADATA_FIELDS = {
     digital_only: true
   },
   oid: {
-    label: 'OID',
+    label: 'Object ID (OID)',
     solr_fields: [
       'oid_ssi'
     ],

@@ -240,7 +240,7 @@ class IiifPresentationV3
 
   def add_metadata_to_canvas(canvas, child)
     metadata_values = []
-    metadata_values <<  metadata_pair('Image OID', child.oid.to_s) if child.oid
+    metadata_values <<  metadata_pair('Image ID', child.oid.to_s) if child.oid
     metadata_values <<  metadata_pair('Image Label', child.label) if child.label
     metadata_values <<  metadata_pair('Image Caption', child.caption) if child.caption
     canvas['metadata'] = metadata_values
