@@ -8,7 +8,7 @@ RSpec.describe AdminSet, type: :model do
   let(:user) { FactoryBot.create(:user) }
 
   it "returns proper values" do
-    expect(admin_set.key).to eq "key"
+    expect(admin_set.key).to eq "brbl"
     expect(admin_set.label).to eq "label"
     expect(admin_set.homepage).to eq "http://test.com"
   end
@@ -84,7 +84,7 @@ RSpec.describe AdminSet, type: :model do
 
     it "verifies if credentials exist" do
       expect(admin_set.preservica_credentials_verified).to eq true
-      expect(admin_set_two.preservica_credentials_verified).to eq "Preservica credentials not configured for this Admin Set"
+      expect(admin_set_two.preservica_credentials_verified).to eq false
     end
   end
 end
