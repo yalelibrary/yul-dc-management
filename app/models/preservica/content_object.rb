@@ -13,7 +13,7 @@ class ContentObject
     @id = id
   end
 
-  def generations
+  def active_generations
     @generations ||= load_generations
   end
 

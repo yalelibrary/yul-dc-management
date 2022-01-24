@@ -10,8 +10,11 @@ class Bitstream
     @generation_id = generation_id
   end
 
-  def checksum
-    xml.xpath('//FixityValue/text()').text
+  def sha512_checksum
+    xml.xpath('//Fixity').each do |node|
+      return node.xpath("//FixityValue/text()").text if node.xpath("//FixityAlgorithmRef/text()").text == "SHA512"
+    end
+    nil
   end
 
   def size
