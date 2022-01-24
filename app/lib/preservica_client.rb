@@ -46,6 +46,7 @@ class PreservicaClient
   end
 
   def refresh
+    return unless ENV["VPN"] == "true"
     authenticated_post URI("#{@host}/api/accesstoken/refresh") do |http, request|
       request.set_form_data('refreshToken' => @login_info['refresh-token'])
       @login_info = http.request request
@@ -94,56 +95,6 @@ class PreservicaClient
 
   def content_object_generation_bitstream_content(id, generation, bitstream)
     get "/api/entity/content-objects/#{id}/generations/#{generation}/bitstreams/#{bitstream}/content"
-  end
-
-  def structural_object_children_bitstreams(id)
-    structural_object_children = Nokogiri::XML(structural_object_children(id)).remove_namespaces!
-    structural_object_children.xpath('/ChildrenResponse/Children/Child').each do |child_ref|
-      information_object_id = child_ref.xpath('@ref').text
-      bitstream_information_array = information_object_active_bitstream_information(information_object_id)
-      bitstream_information_array.each do |bitstream_info|
-        data = content_object_generation_bitstream_content(bitstream_info[:content_object_id], bitstream_info[:generation_id], bitstream_info[:bitstream_id])
-        raise "Invalid bitstream data" unless data.length == bitstream_info[:file_size]
-        downloaded_sha = Digest::SHA512.hexdigest data
-        raise "Digest does not match" unless downloaded_sha == bitstream_info[:sha512]
-        yield bitstream_info[:content_object_id], data if block_given?
-      end
-    end
-  end
-
-  def information_object_active_bitstream_information(information_object_id)
-    information = []
-    xml = Nokogiri::XML(information_object_representations(information_object_id)).remove_namespaces!
-    representation_names = xml.xpath('//Representation/@name').map(&:text)
-
-    representation_names.each do |representation|
-      xml = Nokogiri::XML(information_object_representation(information_object_id, representation)).remove_namespaces!
-      xml.xpath('/RepresentationResponse/ContentObjects/ContentObject').each do |content_object_node|
-        content_object_id = content_object_node.xpath('@ref').text
-        information = bitstream_info_from_content_id(content_object_id, information_object_id)
-      end
-    end
-    information
-  end
-
-  def bitstream_info_from_content_id(content_object_id, information_object_id)
-    information = []
-    content_object = Nokogiri::XML(content_object_generations(content_object_id)).remove_namespaces!
-    active_generation_id = content_object.xpath("//Generations/Generation[@active='true']").text.split('/').last
-    active_generation = Nokogiri::XML(content_object_generation('90080577-e535-46fb-9efa-ddb94a1a5758', active_generation_id)).remove_namespaces!
-    bitstream_ids = active_generation.xpath('/GenerationResponse/Bitstreams/Bitstream').map(&:content).map { |x| x.split('/').last }
-    bitstream_ids.each do |bitstream_id|
-      bitstream = Nokogiri::XML(content_object_generation_bitstream(content_object_id, active_generation_id, bitstream_id)).remove_namespaces!
-      sha512 = bitstream.xpath('//FixityValue/text()').text
-      file_size = bitstream.xpath('//FileSize/text()').text.to_i
-      information << { information_object_id: information_object_id,
-                       content_object_id: content_object_id,
-                       generation_id: active_generation_id,
-                       bitstream_id: bitstream_id,
-                       sha512: sha512,
-                       file_size: file_size }
-    end
-    information
   end
 
   def get(uri)
