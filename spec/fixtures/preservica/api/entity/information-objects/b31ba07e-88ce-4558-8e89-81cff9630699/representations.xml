@@ -1,1 +1,16 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><RepresentationsResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3"><Representations><Representation type="Access" name="Access-2">https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations/Access/1</Representation></Representations><Paging><TotalResults>1</TotalResults></Paging><AdditionalInformation><Self>https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations</Self></AdditionalInformation></RepresentationsResponse>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RepresentationsResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3">
+  <Representations>
+    <Representation type="Access" name="Access-2">
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations/Access/1
+    </Representation>
+  </Representations>
+  <Paging>
+    <TotalResults>1</TotalResults>
+  </Paging>
+  <AdditionalInformation>
+    <Self>
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations
+    </Self>
+  </AdditionalInformation>
+</RepresentationsResponse>
