@@ -7,7 +7,7 @@
 
 <div class='row datatable'>
   <div class='col overflow-auto'>
-    <table id='parent-objects-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= redirected_parent_objects_path(format: :json) %>'>
+    <table id='redirected-parent-objects-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= redirected_parent_objects_path(format: :json) %>'>
       <thead class='table-head'>
         <tr>
           <th scope='col'>OID</th>
@@ -23,6 +23,6 @@
   </div>
 </div>
 
-<div id='parent-objects-data' class='d-none datatable-data'>
+<div id='redirected-parent-objects-data' class='d-none datatable-data'>
   <%= RedirectedParentObjectDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], searchable: value[:searchable], options: value[:options]} }.to_json %>
 </div>
