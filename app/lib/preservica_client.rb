@@ -1,19 +1,8 @@
 # frozen_string_literal: true
-
-require 'net/http'
-require 'openssl'
-require 'json'
-require 'nokogiri'
-require 'digest'
-
-# Client for archive space.
+#
+# Client for archive space tied to an admin set
 #
 # Uses environment variables: PRESERVICA_HOST and PRESERVICA_CREDENTIALS
-# Usage:
-#     p = PreservicaClient.new(admin_set_key: 'brbl')
-#     p.structural_object_children_bitstreams("7fe35e8c-c21a-444a-a2e2-e3c926b519c4") do |content_id, data|
-#        puts "#{content_id} #{data.length}"
-#     end
 #
 # rubocop:disable Metrics/ClassLength
 class PreservicaClient
