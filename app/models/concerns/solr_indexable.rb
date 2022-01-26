@@ -17,8 +17,14 @@ module SolrIndexable
       end
       return unless indexable.present?
       solr = SolrService.connection
-      solr.add([indexable])
-      solr.add(child_solr_documents) unless child_solr_documents.nil?
+      if indexable[:incomplete].present?
+        solr.delete_by_id(oid.to_s)
+        # deletes children
+        solr.delete_by_query("parent_ssi:#{oid}")
+      else
+        solr.add([indexable])
+        solr.add(child_solr_documents) unless child_solr_documents.nil?
+      end
       result = solr.commit
       if (result&.[]("responseHeader")&.[]("status"))&.zero?
         processing_event("Solr index updated", "solr-indexed")
@@ -69,7 +75,7 @@ module SolrIndexable
       }
     else
       json_to_index ||= authoritative_json
-      return nil if json_to_index.blank? || !manifest_completed?
+      return { id: oid.to_s, incomplete: true } if json_to_index.blank? || !manifest_completed?
       {
         # example_suffix: json_to_index[""],
         id: oid.to_s,
