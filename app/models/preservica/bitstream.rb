@@ -12,13 +12,13 @@ class Bitstream
 
   def sha512_checksum
     xml.xpath('//Fixity').each do |node|
-      return node.xpath("//FixityValue/text()").text if node.xpath("//FixityAlgorithmRef/text()").text == "SHA512"
+      return node.xpath("//FixityValue/text()").text.strip if node.xpath("//FixityAlgorithmRef/text()").text == "SHA512"
     end
     nil
   end
 
   def size
-    xml.xpath('//FileSize/text()').text.to_i
+    xml.xpath('//FileSize/text()').text.strip.to_i
   end
 
   def bits

@@ -23,7 +23,7 @@ class ContentObject
       xml = Nokogiri::XML(@preservica_client.content_object_generations(@id)).remove_namespaces!
       xml.xpath("//Generations/Generation[@active='true']").map do |generation_node|
         generation_id = generation_node.text.split('/').last
-        Generation.new(@preservica_client, @id, generation_id)
+        Generation.new(@preservica_client, @id, generation_id.strip)
       end
     end
 end
