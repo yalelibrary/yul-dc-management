@@ -38,6 +38,7 @@ RSpec.describe PreservicaObject, type: :model do
     structured_object = StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
     information_objects = structured_object.information_objects
     representations = information_objects[0].representations
+    expect(representations[0].type).to eq("Access")
     content_objects = representations[0].content_objects
     generations = content_objects[0].active_generations
     bitstreams = generations[0].bitstreams
