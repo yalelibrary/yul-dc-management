@@ -4,7 +4,7 @@ class InformationObject
   include PreservicaObject
 
   def self.where(options)
-    preservica_client = options[:preservica_client] || PreservicaClient.new(options[:admin_set_key])
+    preservica_client = options[:preservica_client] || PreservicaClient.new(admin_set_key: options[:admin_set_key])
     InformationObject.new(preservica_client, options[:id])
   end
 

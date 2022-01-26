@@ -4,8 +4,8 @@ class ContentObject
   include PreservicaObject
 
   def self.where(options)
-    preservica_client = options[:preservica_client] || PreservicaClient.new(options[:admin_set_key])
-    ContentObjecct.new(preservica_client, options[:id])
+    preservica_client = options[:preservica_client] || PreservicaClient.new(admin_set_key: options[:admin_set_key])
+    ContentObject.new(preservica_client, options[:id])
   end
 
   def initialize(preservica_client, id)

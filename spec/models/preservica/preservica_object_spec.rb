@@ -17,6 +17,7 @@ RSpec.describe PreservicaObject, type: :model do
 
   before do
     stub_request(:post, "https://testpreservica/api/accesstoken/login").to_return(status: 200, body: '{"token":"test"}')
+    stub_request(:post, "https://testpreservica/api/accesstoken/refresh").to_return(status: 200, body: '{"token":"test"}')
     fixtures = %w[preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c4/children
                   preservica/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations
                   preservica/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations/Access-2
@@ -49,5 +50,28 @@ RSpec.describe PreservicaObject, type: :model do
     expect(size).to eq(14_327_985)
 
     expect(bitstreams[0].bits).to eq("IMAGE CONTENT")
+  end
+
+  it 'refreshes credentials' do
+    structured_object = StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
+    structured_object.preservica_client.refresh
+  end
+
+  it 'loads information objects by id' do
+    information_object = InformationObject.where(admin_set_key: 'brbl', id: "test id")
+    expect(information_object).not_to be_nil
+    expect(information_object.id).to eq("test id")
+  end
+
+  it 'loads content objects by id' do
+    content_object = ContentObject.where(admin_set_key: 'brbl', id: "test id")
+    expect(content_object).not_to be_nil
+    expect(content_object.id).to eq("test id")
+  end
+
+  it 'loads representation by information object id and name' do
+    representation = Representation.where(admin_set_key: 'brbl', name: "test name", information_object_id: "info id")
+    expect(representation).not_to be_nil
+    expect(representation.name).to eq("test name")
   end
 end

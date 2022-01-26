@@ -12,9 +12,6 @@ class PreservicaClient
       credentials = JSON.parse(ENV['PRESERVICA_CREDENTIALS'])[args[:admin_set_key]]
       @username = credentials['username']
       @password = credentials['password']
-    else
-      @username = args[:username]
-      @password = args[:password]
     end
     login
   end
@@ -34,7 +31,6 @@ class PreservicaClient
   end
 
   def refresh
-    return unless ENV["VPN"] == "true"
     authenticated_post URI("#{@host}/api/accesstoken/refresh") do |http, request|
       request.set_form_data('refreshToken' => @login_info['refresh-token'])
       @login_info = http.request request
