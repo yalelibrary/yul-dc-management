@@ -174,6 +174,23 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         expect(page.body).to include "Yale Community Only"
       end
 
+      it "can change the visibility to private via the UI" do
+        click_on("Edit")
+        select("Yale Community Only")
+        click_on(UPDATE_PARENT_OBJECT_BUTTON)
+        expect(page.body).to include "Yale Community Only"
+        click_on("Edit")
+        select("Private")
+        click_on(UPDATE_PARENT_OBJECT_BUTTON)
+        expect(page.body).to include "Private"
+        click_on("Back")
+        click_on("Update Metadata")
+        visit parent_object_path(2_012_036)
+        # counts once on page and once in solr document section
+        expect(page.body).to include("Private").twice
+        expect(page.body).to include "visibility_ssi"
+      end
+
       it "can change the Admin Set via the UI", prep_admin_sets: true do
         visit parent_object_path(2_012_036)
         click_on("Edit")
