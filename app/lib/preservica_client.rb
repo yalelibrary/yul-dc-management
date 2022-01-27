@@ -27,6 +27,9 @@ class PreservicaClient
       raise StandardError, 'Unable to login' unless response.is_a? Net::HTTPSuccess
 
       @login_info = JSON.parse(response.body)
+      class << @login_info
+        define_method(:inspect, proc { "Login Info" })
+      end
     end
   end
 
@@ -34,6 +37,9 @@ class PreservicaClient
     authenticated_post URI("#{@host}/api/accesstoken/refresh") do |http, request|
       request.set_form_data('refreshToken' => @login_info['refresh-token'])
       @login_info = http.request request
+      class << @login_info
+        define_method(:inspect, proc { "Login Info" })
+      end
     end
   end
 
@@ -109,6 +115,10 @@ class PreservicaClient
       request['Preservica-Access-Token'] = @login_info['token']
       yield http, request
     end
+  end
+
+  def inspect
+    "Preservica Client"
   end
 end
 # rubocop:enable Metrics/ClassLength
