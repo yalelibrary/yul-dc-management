@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class Generation
-  include PreservicaObject
+class Preservica::Generation
+  include Preservica::PreservicaObject
 
   def initialize(preservica_client, content_id, generation_id)
     @preservica_client = preservica_client
@@ -18,7 +18,7 @@ class Generation
     def load_bitstreams
       bitstream_ids = xml.xpath('/GenerationResponse/Bitstreams/Bitstream').map(&:content).map { |x| x.split('/').last }
       bitstream_ids.map do |bitstream_id|
-        Bitstream.new(@preservica_client, @content_id, @id, bitstream_id.strip)
+        Preservica::Bitstream.new(@preservica_client, @content_id, @id, bitstream_id.strip)
       end
     end
 

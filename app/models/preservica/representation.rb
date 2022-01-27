@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class Representation
-  include PreservicaObject
+class Preservica::Representation
+  include Preservica::PreservicaObject
 
   attr_accessor :name
 
@@ -9,7 +9,7 @@ class Representation
     preservica_client = options[:preservica_client] || PreservicaClient.new(admin_set_key: options[:admin_set_key])
     information_object_id = options[:information_object_id]
     name = options[:name]
-    Representation.new(preservica_client, information_object_id, name)
+    Preservica::Representation.new(preservica_client, information_object_id, name)
   end
 
   def initialize(preservica_client, information_object_id, name)
@@ -31,7 +31,7 @@ class Representation
     def load_content_objects
       xml.xpath('/RepresentationResponse/ContentObjects/ContentObject').map do |content_object_node|
         content_object_id = content_object_node.xpath('@ref').text
-        ContentObject.new(@preservica_client, content_object_id)
+        Preservica::ContentObject.new(@preservica_client, content_object_id)
       end
     end
 

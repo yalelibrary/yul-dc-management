@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class Bitstream
-  include PreservicaObject
+class Preservica::Bitstream
+  include Preservica::PreservicaObject
 
   def initialize(preservica_client, content_id, generation_id, id)
     @preservica_client = preservica_client
