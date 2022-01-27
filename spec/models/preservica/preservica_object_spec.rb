@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe PreservicaObject, type: :model do
+RSpec.describe Preservica::PreservicaObject, type: :model do
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
     preservica_creds = ENV['PRESERVICA_CREDENTIALS']
@@ -36,7 +36,7 @@ RSpec.describe PreservicaObject, type: :model do
   end
 
   it 'traverses hierarcy' do
-    structured_object = StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
+    structured_object = Preservica::StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
     information_objects = structured_object.information_objects
     representations = information_objects[0].representations
     expect(representations[0].type).to eq("Access")
@@ -53,24 +53,24 @@ RSpec.describe PreservicaObject, type: :model do
   end
 
   it 'refreshes credentials' do
-    structured_object = StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
+    structured_object = Preservica::StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
     structured_object.preservica_client.refresh
   end
 
   it 'loads information objects by id' do
-    information_object = InformationObject.where(admin_set_key: 'brbl', id: "test id")
+    information_object = Preservica::InformationObject.where(admin_set_key: 'brbl', id: "test id")
     expect(information_object).not_to be_nil
     expect(information_object.id).to eq("test id")
   end
 
   it 'loads content objects by id' do
-    content_object = ContentObject.where(admin_set_key: 'brbl', id: "test id")
+    content_object = Preservica::ContentObject.where(admin_set_key: 'brbl', id: "test id")
     expect(content_object).not_to be_nil
     expect(content_object.id).to eq("test id")
   end
 
   it 'loads representation by information object id and name' do
-    representation = Representation.where(admin_set_key: 'brbl', name: "test name", information_object_id: "info id")
+    representation = Preservica::Representation.where(admin_set_key: 'brbl', name: "test name", information_object_id: "info id")
     expect(representation).not_to be_nil
     expect(representation.name).to eq("test name")
   end

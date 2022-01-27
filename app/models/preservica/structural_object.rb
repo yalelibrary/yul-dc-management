@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class StructuralObject
-  include PreservicaObject
+class Preservica::StructuralObject
+  include Preservica::PreservicaObject
 
   def self.where(options)
     preservica_client = options[:preservica_client] || PreservicaClient.new(admin_set_key: options[:admin_set_key])
-    StructuralObject.new(preservica_client, options[:id])
+    Preservica::StructuralObject.new(preservica_client, options[:id])
   end
 
   def initialize(preservica_client, id)
@@ -23,7 +23,7 @@ class StructuralObject
       structural_object_children = Nokogiri::XML(@preservica_client.structural_object_children(id)).remove_namespaces!
       structural_object_children.xpath('/ChildrenResponse/Children/Child').map do |child_ref|
         information_object_id = child_ref.xpath('@ref').text
-        InformationObject.new(@preservica_client, information_object_id)
+        Preservica::InformationObject.new(@preservica_client, information_object_id)
       end
     end
 end
