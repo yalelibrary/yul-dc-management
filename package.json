@@ -8,6 +8,7 @@
     "@rails/ujs": "^6.0.3",
     "@rails/webpacker": "^5.2.1",
     "ansi-html": "^0.0.7",
+    "ansi-regex": "5.0.1",
     "autoprefixer": "^10.2.5",
     "bootstrap": "4.3.1",
     "datatables.net": "^1.11.3",
