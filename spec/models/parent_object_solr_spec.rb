@@ -104,7 +104,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     end
   end
 
-  describe "changing the parent to private", solr: true do
+  describe "changing the parent from public to private", solr: true do
     let(:oid) { "2034600" }
     let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
     before do
@@ -120,8 +120,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       solr_document = parent_object.reload.to_solr
       parent_object.save!
       expect(solr_document[:visibility_ssi]).to eq "Private"
-      response = solr.get 'select', params: { q: 'oid_ssi:2034600' }
-      expect(response["response"]["docs"].first["visibility_ssi"]).to eq "Private"
     end
   end
 
