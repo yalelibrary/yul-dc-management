@@ -120,7 +120,7 @@ $( document ).on('turbolinks:load', function() {
         data.length = 150000;
 
         dt.one('preDraw', function (e, settings) {
-          // Call the original action function 
+          // Call the original action function
           oldExportAction(self, e, dt, button, config);
 
           dt.one('preXhr', function (e, s, data) {
@@ -157,21 +157,7 @@ $( document ).on('turbolinks:load', function() {
       "lengthMenu": [[50, 100, 500], [50, 100, 500]],
       // This will disable the export all button when there are more than 12K records
       "fnDrawCallback": function( oSettings ) {
-        var entries = oSettings.fnRecordsDisplay()
-        if ( entries > 12000 ) {
-          // Disable the button
-          $('.export-all').attr('disabled', true)
-          // Tell the user why
-          $('.export-all').hover(
-            function() {
-              $( this ).find( "span" ).last().remove();
-              $( this ).append( $( "<span>Cannot export over 12K records</span>" ) );
-            }, function() {
-              $( this ).find( "span" ).last().remove();
-              $( this ).append( $( "<span>All Matching Entries</span>" ) );
-            }
-          )
-        }
+        $('.export-all').attr('disabled', oSettings.fnRecordsDisplay() > 12000)
       },
       "sDom":hasSearch?'Blrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
       buttons: [
@@ -248,7 +234,23 @@ $( document ).on('turbolinks:load', function() {
       $('.is-datatable').addClass('expanded')
     }
   }
+
+  $('.export-all').hover(
+      function() {
+        if ($(this).attr('disabled')) {
+          $(this).find("span").last().remove();
+          $(this).append($("<span>Cannot export over 12K records</span>"));
+        }
+      }, function() {
+        if ($(this).attr('disabled')) {
+          $( this ).find( "span" ).last().remove();
+          $( this ).append( $( "<span>All Matching Entries</span>" ) );
+        }
+      }
+  )
 });
+
+
 
 //  Delay the redraw so that if more changes trigger a redraw
 //  it will wait and make one request to the server.
