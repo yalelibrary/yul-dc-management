@@ -43,11 +43,13 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
     content_objects = representations[0].content_objects
     generations = content_objects[0].active_generations
     bitstreams = generations[0].bitstreams
+    formats = generations[0].formats
 
     checksum = bitstreams[0].sha512_checksum
     size = bitstreams[0].size
     expect(checksum).to eq("03de43264ec0acf6b9c2599379b7c6035defcf7ac36ec727fd42bde9d27ad351edd3e5131742475e9b01bab683e62bb1a746dc6fd8504120484e13ed2f30d8f8")
     expect(size).to eq(14_327_985)
+    expect(formats).to include("Acrobat PDF 1.7 - Portable Document Format")
 
     expect(bitstreams[0].bits).to eq("IMAGE CONTENT")
   end
