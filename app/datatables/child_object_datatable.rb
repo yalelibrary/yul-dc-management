@@ -23,6 +23,9 @@ class ChildObjectDatatable < AjaxDatatablesRails::ActiveRecord
       order: { source: 'ChildObject.order' },
       parent_object: { source: 'ChildObject.parent_object_oid' },
       original_oid: { source: 'ChildObject.original_oid' },
+      preservica_content_object_uri: { source: 'ChildObject.preservica_content_object_uri' },
+      preservica_generation_uri: { source: 'ChildObject.preservica_generation_uri' },
+      preservica_bitstream_uri: { source: 'ChildObject.preservica_bitstream_uri' },
       actions: { source: 'ChildObject.oid' }
     }
   end
@@ -39,6 +42,9 @@ class ChildObjectDatatable < AjaxDatatablesRails::ActiveRecord
         order: child_object.order,
         parent_object: child_object.parent_object_oid,
         original_oid: child_object.original_oid,
+        preservica_content_object_uri: child_object.preservica_content_object_uri,
+        preservica_generation_uri: child_object.preservica_generation_uri,
+        preservica_bitstream_uri: child_object.preservica_bitstream_uri,
         actions: actions(child_object).html_safe,
         DT_RowId: child_object.oid
       }
