@@ -13,6 +13,10 @@ class Preservica::Generation
     @bitstreams ||= load_bitstreams
   end
 
+  def formats
+    @formats ||= load_formats
+  end
+
   private
 
     def load_bitstreams
@@ -20,6 +24,10 @@ class Preservica::Generation
       bitstream_ids.map do |bitstream_id|
         Preservica::Bitstream.new(@preservica_client, @content_id, @id, bitstream_id.strip)
       end
+    end
+
+    def load_formats
+      xml.xpath('/GenerationResponse/Generation/Formats/Format/FormatName').map(&:content)
     end
 
     def xml
