@@ -75,9 +75,9 @@ ActiveRecord::Schema.define(version: 2022_01_31_212240) do
     t.string "mets_access_master_path"
     t.boolean "full_text", default: false
     t.integer "original_oid"
-    t.string "preservica_content_object_uri"
-    t.string "preservica_generation_uri"
-    t.string "preservica_bitstream_uri"
+    t.text "preservica_content_object_uri"
+    t.text "preservica_generation_uri"
+    t.text "preservica_bitstream_uri"
     t.index ["caption"], name: "index_child_objects_on_caption"
     t.index ["label"], name: "index_child_objects_on_label"
     t.index ["oid"], name: "index_child_objects_on_oid", unique: true
