@@ -155,6 +155,24 @@ $( document ).on('turbolinks:load', function() {
       "columns": columns,
       "order": columnOrder(columns),
       "lengthMenu": [[50, 100, 500], [50, 100, 500]],
+      // This will disable the export all button when there are more than 12K records
+      "fnDrawCallback": function( oSettings ) {
+        var entries = oSettings.fnRecordsDisplay()
+        if ( entries > 12000 ) {
+          // Disable the button
+          $('.export-all').attr('disabled', true)
+          // Tell the user why
+          $('.export-all').hover(
+            function() {
+              $( this ).find( "span" ).last().remove();
+              $( this ).append( $( "<span>Cannot export over 12K records</span>" ) );
+            }, function() {
+              $( this ).find( "span" ).last().remove();
+              $( this ).append( $( "<span>All Matching Entries</span>" ) );
+            }
+          )
+        }
+      },
       "sDom":hasSearch?'Blrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
       buttons: [
         {
@@ -323,32 +341,6 @@ $( document ).on('turbolinks:load', function() {
   $('.parent-edit').on('submit', function() {
     if ( $("#parent_object_redirect_to").val() !== '' && $("#parent_object_redirect_to").length ) {
       return confirm('Adding Redirect To information will remove that object from public view.  Do you wish to continue?');
-    }
-  })
-})
-
-// This will disable the export all button when there are more than 12K records
-$( document ).on('turbolinks:load', function() {
-  // Get count of records
-  var table = $('.is-datatable').DataTable();
-  table.clear()
-  table.ajax.url($('.is-datatable').data('source')).load(function() {
-
-    var info = $('#child-objects-datatable_info, #parent-objects-datatable_info, #redirected-parent-objects-datatable_info, #batch-processes-datatable_info, #preservica-ingests-datatable_info').text().split(' ')
-    var entries = info[5]
-    if ( entries > 12000 ) {
-      // Disable the button
-      $('.export-all').attr('disabled', true)
-      // Tell the user why
-      $('.export-all').hover(
-        function() {
-          $( this ).find( "span" ).last().remove();
-          $( this ).append( $( "<span>Cannot export over 12K records</span>" ) );
-        }, function() {
-          $( this ).find( "span" ).last().remove();
-          $( this ).append( $( "<span>All Matching Entries</span>" ) );
-        }
-      )
     }
   })
 })
