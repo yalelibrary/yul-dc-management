@@ -8,6 +8,7 @@ module SolrIndexable
     end
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def solr_index
     begin
       if self&.redirect_to.present?
@@ -17,8 +18,7 @@ module SolrIndexable
       end
       return unless indexable.present?
       solr = SolrService.connection
-      case indexable
-      when indexable[:incomplete].present?
+      if indexable[:incomplete].present?
         # deletes parent
         solr.delete_by_id(oid.to_s)
         # deletes children
@@ -35,6 +35,7 @@ module SolrIndexable
     end
     result
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def solr_delete
     solr = SolrService.connection
