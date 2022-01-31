@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_19_002832) do
+ActiveRecord::Schema.define(version: 2022_01_31_212240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,12 +75,18 @@ ActiveRecord::Schema.define(version: 2022_01_19_002832) do
     t.string "mets_access_master_path"
     t.boolean "full_text", default: false
     t.integer "original_oid"
+    t.string "preservica_content_object_uri"
+    t.string "preservica_generation_uri"
+    t.string "preservica_bitstream_uri"
     t.index ["caption"], name: "index_child_objects_on_caption"
     t.index ["label"], name: "index_child_objects_on_label"
     t.index ["oid"], name: "index_child_objects_on_oid", unique: true
     t.index ["order"], name: "index_child_objects_on_order"
     t.index ["original_oid"], name: "index_child_objects_on_original_oid"
     t.index ["parent_object_oid"], name: "index_child_objects_on_parent_object_oid"
+    t.index ["preservica_bitstream_uri"], name: "index_child_objects_on_preservica_bitstream_uri"
+    t.index ["preservica_content_object_uri"], name: "index_child_objects_on_preservica_content_object_uri"
+    t.index ["preservica_generation_uri"], name: "index_child_objects_on_preservica_generation_uri"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|

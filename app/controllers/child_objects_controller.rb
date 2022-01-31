@@ -80,6 +80,7 @@ class ChildObjectsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def child_object_params
-      params.require(:child_object).permit(:oid, :caption, :label, :width, :height, :order, :viewing_hint, :parent_object_oid)
+      params.require(:child_object).permit(:oid, :caption, :label, :width, :height, :order, :viewing_hint,
+                                           :parent_object_oid, :preservica_content_object_uri, :preservica_generation_uri, :preservica_bitstream_uri)
     end
 end
