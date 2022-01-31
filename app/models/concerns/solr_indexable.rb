@@ -13,18 +13,11 @@ module SolrIndexable
       if self&.redirect_to.present?
         indexable = to_solr
       else
-        indexable, child_solr_documents = to_solr_full_text
+        indexable, _child_solr_documents = to_solr_full_text
       end
       return unless indexable.present?
       solr = SolrService.connection
-      if indexable[:incomplete].present?
-        solr.delete_by_id(oid.to_s)
-        # deletes children
-        solr.delete_by_query("parent_ssi:#{oid}")
-      else
-        solr.add([indexable])
-        solr.add(child_solr_documents) unless child_solr_documents.nil?
-      end
+      check_for_incomplete
       result = solr.commit
       if (result&.[]("responseHeader")&.[]("status"))&.zero?
         processing_event("Solr index updated", "solr-indexed")
@@ -36,6 +29,18 @@ module SolrIndexable
       raise # this reraises the error after we document it
     end
     result
+  end
+
+  def check_for_incomplete
+    if indexable[:incomplete].present?
+      # deletes parent
+      solr.delete_by_id(oid.to_s)
+      # deletes children
+      solr.delete_by_query("parent_ssi:#{oid}")
+    else
+      solr.add([indexable])
+      solr.add(child_solr_documents) unless child_solr_documents.nil?
+    end
   end
 
   def solr_delete

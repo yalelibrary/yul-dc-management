@@ -6,7 +6,6 @@ RSpec.describe SolrIndexable, type: :model do
   let(:solr_indexable) { ParentObject.new(admin_set: FactoryBot.create(:admin_set)) }
 
   describe "valid solr document" do
-
     before do
       allow(solr_indexable).to receive(:manifest_completed?).and_return(true)
     end
@@ -54,17 +53,5 @@ RSpec.describe SolrIndexable, type: :model do
       expect(solr_document[:collectionCreators_ssim]).to eq(['ancestor creator'])
     end
     # rubocop:enable Lint/ParenthesesAsGroupedExpression
-  end
-
-
-  describe "incomplete solr document" do
-    before do
-      allow(solr_indexable).to receive(:manifest_completed?).and_return(false)
-    end
-
-    it "deletes the incomplete record from solr" do
-      byebug
-    
-    end
   end
 end
