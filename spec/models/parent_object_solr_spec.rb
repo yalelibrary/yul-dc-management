@@ -125,21 +125,35 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
   describe "invalid solr document", prep_metadata_sources: true, solr: true do
     let(:oid) { "2034600" }
+    let(:oid_two) { "100001" }
     let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
+    let(:parent_object_two) { FactoryBot.create(:parent_object, oid: oid_two, source_name: 'ladybird') }
 
     before do
       stub_metadata_cloud(oid)
+      stub_metadata_cloud(oid_two)
       parent_object
+      parent_object_two
       allow(parent_object).to receive(:manifest_completed?).and_return(false)
+      allow(parent_object_two).to receive(:manifest_completed?).and_return(false)
     end
 
     it "does not remove parent with children" do
       parent_response = solr.get 'select', params: { q: 'type_ssi:parent' }
-      expect(parent_response["response"]["numFound"]).to eq 1
+      expect(parent_response["response"]["numFound"]).to eq 2
       expect(parent_object.child_objects.count).to eq 1
       parent_object.reload.to_solr
       parent_response = solr.get 'select', params: { q: 'type_ssi:parent' }
       expect(parent_response["response"]["numFound"]).to eq 1
+    end
+
+    it "does remove parent without children" do
+      parent_response = solr.get 'select', params: { q: 'type_ssi:parent' }
+      expect(parent_response["response"]["numFound"]).to eq 2
+      expect(parent_object_two.child_objects.count).to eq 0
+      parent_object_two.reload.to_solr({})
+      parent_response = solr.get 'select', params: { q: 'type_ssi:parent' }
+      expect(parent_response["response"]["numFound"]).to eq 0
     end
   end
 

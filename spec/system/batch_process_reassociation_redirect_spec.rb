@@ -67,6 +67,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       expect(co.parent_object).to eq parent_object_2
 
       expect(po.redirect_to).to eq "https://collections.library.yale.edu/catalog/#{parent_object_2.oid}"
+      # TODO: fix this
       expect(po.visibility).to eq "Redirect"
       expect(po.call_number).to be_nil
     end

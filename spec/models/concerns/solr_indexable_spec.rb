@@ -59,13 +59,16 @@ RSpec.describe SolrIndexable, type: :model, solr: true do
     # rubocop:enable Lint/ParenthesesAsGroupedExpression
   end
 
-  describe "invalid solr document" do
+  describe "invalid solr document", solr: true do
     before do
-      allow(solr_indexable).to receive(:manifest_completed?).and_return(false)
+      allow(solr_indexable).to receive(:manifest_completed?).and_return(true)
     end
-
+    
     it "removes the incomplete record from solr" do
       # TODO: ensure it is indexed to solr and confirm it's presence before confirming it has been removed
+      parent_response = solr.get 'select', params: { q: 'type_ssi:parent' }
+      expect(parent_response["response"]["numFound"]).to eq 1
+      allow(solr_indexable).to receive(:manifest_completed?).and_return(false)
       solr_document = solr_indexable.to_solr({})
       expect(solr_document[:incomplete]).to eq true
       parent_response = solr.get 'select', params: { q: 'type_ssi:parent' }
