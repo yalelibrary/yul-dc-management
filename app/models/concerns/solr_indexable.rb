@@ -18,7 +18,7 @@ module SolrIndexable
       end
       return unless indexable.present?
       solr = SolrService.connection
-      if indexable[:incomplete].present?
+      if indexable[:incomplete].present? && child_objects.count.zero?
         # deletes parent
         solr.delete_by_id(oid.to_s)
         # deletes children

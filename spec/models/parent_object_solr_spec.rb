@@ -123,6 +123,26 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     end
   end
 
+  describe "invalid solr document", prep_metadata_sources: true, solr: true do
+    let(:oid) { "2034600" }
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
+
+    before do
+      stub_metadata_cloud(oid)
+      parent_object
+      allow(parent_object).to receive(:manifest_completed?).and_return(false)
+    end
+
+    it "does not remove parent with children" do
+      parent_response = solr.get 'select', params: { q: 'type_ssi:parent' }
+      expect(parent_response["response"]["numFound"]).to eq 1
+      expect(parent_object.child_objects.count).to eq 1
+      parent_object.reload.to_solr
+      parent_response = solr.get 'select', params: { q: 'type_ssi:parent' }
+      expect(parent_response["response"]["numFound"]).to eq 1
+    end
+  end
+
   context "indexing to Solr from the database with Ladybird ParentObjects", solr: true do
     it "can index the 5 parent objects in the database to Solr and can remove those items", undelayed: true do
       response = solr.get 'select', params: { q: 'type_ssi:parent' }

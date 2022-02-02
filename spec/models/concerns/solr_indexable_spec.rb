@@ -2,8 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe SolrIndexable, type: :model do
+RSpec.describe SolrIndexable, type: :model, solr: true do
   let(:solr_indexable) { ParentObject.new(admin_set: FactoryBot.create(:admin_set)) }
+
+  before do
+    stub_ptiffs_and_manifests
+  end
 
   describe "valid solr document" do
     before do
@@ -53,5 +57,21 @@ RSpec.describe SolrIndexable, type: :model do
       expect(solr_document[:collectionCreators_ssim]).to eq(['ancestor creator'])
     end
     # rubocop:enable Lint/ParenthesesAsGroupedExpression
+  end
+
+  describe "invalid solr document" do
+    before do
+      allow(solr_indexable).to receive(:manifest_completed?).and_return(false)
+    end
+
+    it "removes the incomplete record from solr" do
+      # TODO: ensure it is indexed to solr and confirm it's presence before confirming it has been removed
+      solr_document = solr_indexable.to_solr({})
+      expect(solr_document[:incomplete]).to eq true
+      parent_response = solr.get 'select', params: { q: 'type_ssi:parent' }
+      expect(parent_response["response"]["numFound"]).to eq 0
+      child_response = solr.get 'select', params: { q: 'type_ssi:child' }
+      expect(child_response["response"]["numFound"]).to eq 0
+    end
   end
 end
