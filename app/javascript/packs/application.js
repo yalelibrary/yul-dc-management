@@ -239,7 +239,7 @@ $( document ).on('turbolinks:load', function() {
       function() {
         if ($(this).attr('disabled')) {
           $(this).find("span").last().remove();
-          $(this).append($("<span>Cannot export over 12K records</span>"));
+          $(this).append($("<span>Please use all parents batch job</span>"));
         }
       }, function() {
         if ($(this).attr('disabled')) {
