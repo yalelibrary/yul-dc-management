@@ -165,7 +165,7 @@ $( document ).on('turbolinks:load', function() {
           $('.export-all').hover(
             function() {
               $( this ).find( "span" ).last().remove();
-              $( this ).append( $( "<span>Cannot export over 12K records</span>" ) );
+              $( this ).append( $( "<span>Please use all parents batch job</span>" ) );
             }, function() {
               $( this ).find( "span" ).last().remove();
               $( this ).append( $( "<span>All Matching Entries</span>" ) );
