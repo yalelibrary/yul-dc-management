@@ -235,16 +235,14 @@ $( document ).on('turbolinks:load', function() {
     }
   }
 
-  $('.export-all').hover(
+  $('.export-all span').hover(
       function() {
-        if ($(this).attr('disabled')) {
-          $(this).find("span").last().remove();
-          $(this).append($("<span>Please use all parents batch job</span>"));
+        if ($(this).parent("button").attr('disabled')) {
+          $(this).html("Please use all parents batch job");
         }
       }, function() {
-        if ($(this).attr('disabled')) {
-          $( this ).find( "span" ).last().remove();
-          $( this ).append( $( "<span>All Matching Entries</span>" ) );
+        if ($(this).parent("button").attr('disabled')) {
+          $( this ).html("All Matching Entries");
         }
       }
   )
