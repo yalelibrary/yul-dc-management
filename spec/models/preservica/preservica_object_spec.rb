@@ -30,9 +30,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
         status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
       )
     end
-    stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content"))
-    )
   end
 
   it 'traverses hierarcy' do
@@ -47,11 +44,45 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
 
     checksum = bitstreams[0].sha512_checksum
     size = bitstreams[0].size
-    expect(checksum).to eq("03de43264ec0acf6b9c2599379b7c6035defcf7ac36ec727fd42bde9d27ad351edd3e5131742475e9b01bab683e62bb1a746dc6fd8504120484e13ed2f30d8f8")
-    expect(size).to eq(14_327_985)
+    expect(checksum).to eq("329f67d6c5cd707e6b7af8dd129e872369351faad8b63b2c80518cc54b386d7ec646e85873d28e6f904e44d9824506d1e055f2f716f0101afb948925e9713cc8")
+    expect(size).to eq(2_274_948)
     expect(formats).to include("Acrobat PDF 1.7 - Portable Document Format")
+  end
 
-    expect(bitstreams[0].bits).to eq("IMAGE CONTENT")
+  context "with the file matching size and checksum" do
+    before do
+      stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content").to_return(
+        status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content"), 'rb')
+      )
+    end
+    it 'downloads bits to file' do
+      structured_object = Preservica::StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
+      information_objects = structured_object.information_objects
+      representations = information_objects[0].representations
+      content_objects = representations[0].content_objects
+      generations = content_objects[0].active_generations
+      bitstreams = generations[0].bitstreams
+      bitstreams[0].download_to_file "tmp/testdownload.file"
+      expect(File.size("tmp/testdownload.file")).to eq(bitstreams[0].size)
+      File.delete("tmp/testdownload.file")
+    end
+  end
+
+  context 'with wrong file' do
+    before do
+      stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content").to_return(
+        status: 200, body: "Not the right data"
+      )
+    end
+    it 'throws exception with file mismatch' do
+      structured_object = Preservica::StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
+      information_objects = structured_object.information_objects
+      representations = information_objects[0].representations
+      content_objects = representations[0].content_objects
+      generations = content_objects[0].active_generations
+      bitstreams = generations[0].bitstreams
+      expect { bitstreams[0].download_to_file "tmp/testdownload.file" }.to raise_error
+    end
   end
 
   it 'refreshes credentials' do
