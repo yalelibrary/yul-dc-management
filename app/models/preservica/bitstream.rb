@@ -25,6 +25,14 @@ class Preservica::Bitstream
     preservica_client.get "/api/entity/content-objects/#{@content_id}/generations/#{@generation_id}/bitstreams/#{@id}/content"
   end
 
+  def download_to_file(file_name)
+    data = bits
+    sha512 = Digest::SHA512.hexdigest(data)
+    raise StandardError, "Checksum mismatch on file (#{sha512} != #{sha512_checksum})" unless sha512 == sha512_checksum
+    raise StandardError, "File sizes do not match (#{data.length} != #{size})" unless data.length == size
+    File.open(file_name, 'wb') { |file| file.write(data) }
+  end
+
   private
 
     def xml
