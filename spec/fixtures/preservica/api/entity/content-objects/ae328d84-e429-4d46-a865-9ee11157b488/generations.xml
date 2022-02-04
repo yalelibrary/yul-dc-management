@@ -4,9 +4,15 @@
     <Generation active="true">
       https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1
     </Generation>
+    <Generation active="false">
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/2
+    </Generation>
+    <Generation active="true">
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/3
+    </Generation>
   </Generations>
   <Paging>
-    <TotalResults>1</TotalResults>
+    <TotalResults>2</TotalResults>
   </Paging>
   <AdditionalInformation>
     <Self>
