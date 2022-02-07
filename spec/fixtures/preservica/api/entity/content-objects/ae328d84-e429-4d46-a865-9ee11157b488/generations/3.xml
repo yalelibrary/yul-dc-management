@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<GenerationResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3">
+  <xip:Generation original="true" active="true">
+    <xip:ContentObject>ae328d84-e429-4d46-a865-9ee11157b488</xip:ContentObject>
+    <xip:FormatGroup>pdf</xip:FormatGroup>
+    <xip:EffectiveDate>2021-12-08T14:56:04.051-05:00</xip:EffectiveDate>
+    <xip:Bitstreams>
+      <xip:Bitstream>mss_29_s03_b092_f0019.pdf</xip:Bitstream>
+    </xip:Bitstreams>
+    <xip:Formats>
+      <xip:Format valid="true">
+        <xip:PUID>fmt/276</xip:PUID>
+        <xip:Priority>2</xip:Priority>
+        <xip:IdentificationMethod>Signature</xip:IdentificationMethod>
+        <xip:FormatName>Acrobat PDF 1.7 - Portable Document Format</xip:FormatName>
+        <xip:FormatVersion>1.7</xip:FormatVersion>
+      </xip:Format>
+    </xip:Formats>
+    <xip:Properties>
+      <xip:Property>
+        <xip:PUID>prp/15</xip:PUID>
+        <xip:PropertyName>Encrypted</xip:PropertyName>
+        <xip:Value>false</xip:Value>
+      </xip:Property>
+      <xip:Property>
+        <xip:PUID>prp/17</xip:PUID>
+        <xip:PropertyName>Number of Pages</xip:PropertyName>
+        <xip:Value>60</xip:Value>
+      </xip:Property>
+      <xip:Property>
+        <xip:PUID>prp/18</xip:PUID>
+        <xip:PropertyName>Number of Images</xip:PropertyName>
+        <xip:Value>60</xip:Value>
+      </xip:Property>
+    </xip:Properties>
+  </xip:Generation>
+  <Bitstreams>
+    <Bitstream filename="mss_29_s03_b092_f0019.pdf">
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1
+    </Bitstream>
+  </Bitstreams>
+  <AdditionalInformation>
+    <Self>
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1
+    </Self>
+  </AdditionalInformation>
+</GenerationResponse>

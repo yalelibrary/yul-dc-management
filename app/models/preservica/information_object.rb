@@ -17,11 +17,33 @@ class Preservica::InformationObject
     @representations ||= load_representations
   end
 
+  def access_representations
+    @access_representations ||= load_access_reps
+  end
+
+  def preservation_representations
+    @preservation_representations ||= load_preservation_reps
+  end
+
   private
 
     def load_representations
       xml = Nokogiri::XML(@preservica_client.information_object_representations(@id)).remove_namespaces!
       xml.xpath('//Representation/@name').map(&:text).map do |name|
+        Preservica::Representation.new(@preservica_client, @id, name)
+      end
+    end
+
+    def load_access_reps
+      xml = Nokogiri::XML(@preservica_client.information_object_representations(@id)).remove_namespaces!
+      xml.xpath('//Representation/@name').map(&:text).select { |name| name.include?("Access") }.map do |name|
+        Preservica::Representation.new(@preservica_client, @id, name)
+      end
+    end
+
+    def load_preservation_reps
+      xml = Nokogiri::XML(@preservica_client.information_object_representations(@id)).remove_namespaces!
+      xml.xpath('//Representation/@name').map(&:text).select { |name| name.include?("Preservation") }.map do |name|
         Preservica::Representation.new(@preservica_client, @id, name)
       end
     end
