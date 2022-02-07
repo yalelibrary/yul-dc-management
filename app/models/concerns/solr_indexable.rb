@@ -69,7 +69,7 @@ module SolrIndexable
       }
     else
       json_to_index ||= authoritative_json
-      return nil if json_to_index.blank?
+      return nil if json_to_index.blank? || !manifest_completed?
       {
         # example_suffix: json_to_index[""],
         id: oid.to_s,
