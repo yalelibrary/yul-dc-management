@@ -104,7 +104,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     end
   end
 
-  describe "changing the parent visibility with no json mocked", solr: true do
+  describe "changing the parent from public to private", solr: true do
     let(:oid) { "2034600" }
     let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
     before do
@@ -112,99 +112,14 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       parent_object
     end
 
-    it "indexes private visibility in solr" do
-      parent_object.visibility = "Public"
-      parent_object.save
-      parent_object.solr_index_job
-      response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
-      solr_document = response['response']['docs'][0]
-      expect(solr_document['visibility_ssi']).to eq "Public"
-
-      parent_object.visibility = "Yale Community Only"
-      parent_object.save
-      parent_object.solr_index_job
-      response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
-      solr_document = response['response']['docs'][0]
-      expect(solr_document['visibility_ssi']).to eq "Yale Community Only"
-
-      # Should return nil with no json, simulating no json with:
-      solr_doc = parent_object.to_solr({})
-      expect(solr_doc).to be_nil
-      # still picks up change in visibility after nil
+    it "indexes the new visibility" do
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document[:visibility_ssi]).to eq "Public"
       parent_object.visibility = "Private"
-      parent_object.save
-      parent_object.solr_index_job
-      response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
-      solr_document = response['response']['docs'][0]
-      expect(solr_document['visibility_ssi']).to eq "Private"
-    end
-
-    it "indexes YCO visibility in solr" do
-      parent_object.visibility = "Public"
-      parent_object.save
-      parent_object.solr_index_job
-      response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
-      solr_document = response['response']['docs'][0]
-      expect(solr_document['visibility_ssi']).to eq "Public"
-
-      # Should return nil with no json, simulating no json with:
-      solr_doc = parent_object.to_solr({})
-      expect(solr_doc).to be_nil
-      # still picks up change in visibility after nil
-      parent_object.visibility = "Yale Community Only"
-      parent_object.save
-      parent_object.solr_index_job
-      response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
-      solr_document = response['response']['docs'][0]
-      expect(solr_document['visibility_ssi']).to eq "Yale Community Only"
-    end
-  end
-
-  describe "changing the parent visibility with no children actual", solr: true do
-    let(:oid) { "100001" }
-    let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
-    before do
-      stub_metadata_cloud(oid)
-      parent_object
-    end
-
-    it "indexes private visibility in solr" do
-      parent_object.visibility = "Public"
-      parent_object.save
-      parent_object.solr_index_job
-      response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
-      solr_document = response['response']['docs'][0]
-      expect(solr_document['visibility_ssi']).to eq "Public"
-
-      parent_object.visibility = "Yale Community Only"
-      parent_object.save
-      parent_object.solr_index_job
-      response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
-      solr_document = response['response']['docs'][0]
-      expect(solr_document['visibility_ssi']).to eq "Yale Community Only"
-
-      parent_object.visibility = "Private"
-      parent_object.save
-      parent_object.solr_index_job
-      response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
-      solr_document = response['response']['docs'][0]
-      expect(solr_document['visibility_ssi']).to eq "Private"
-    end
-
-    it "indexes YCO visibility in solr" do
-      parent_object.visibility = "Public"
-      parent_object.save
-      parent_object.solr_index_job
-      response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
-      solr_document = response['response']['docs'][0]
-      expect(solr_document['visibility_ssi']).to eq "Public"
-
-      parent_object.visibility = "Yale Community Only"
-      parent_object.save
-      parent_object.solr_index_job
-      response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
-      solr_document = response['response']['docs'][0]
-      expect(solr_document['visibility_ssi']).to eq "Yale Community Only"
+      parent_object.save!
+      solr_document = parent_object.reload.to_solr
+      parent_object.save!
+      expect(solr_document[:visibility_ssi]).to eq "Private"
     end
   end
 
