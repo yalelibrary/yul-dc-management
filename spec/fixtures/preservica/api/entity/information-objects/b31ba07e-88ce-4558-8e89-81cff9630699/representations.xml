@@ -4,9 +4,12 @@
     <Representation type="Access" name="Access-2">
       https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations/Access/1
     </Representation>
+    <Representation type="Preservation" name="Preservation-1">
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations/Preservation/1
+    </Representation>
   </Representations>
   <Paging>
-    <TotalResults>1</TotalResults>
+    <TotalResults>2</TotalResults>
   </Paging>
   <AdditionalInformation>
     <Self>

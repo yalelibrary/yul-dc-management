@@ -21,8 +21,11 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
     fixtures = %w[preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c4/children
                   preservica/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations
                   preservica/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations/Access-2
+                  preservica/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations/Preservation-1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/2
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/3
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1]
 
     fixtures.each do |fixture|
@@ -106,5 +109,25 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
     representation = Preservica::Representation.where(admin_set_key: 'brbl', name: "test name", information_object_id: "info id")
     expect(representation).not_to be_nil
     expect(representation.name).to eq("test name")
+  end
+
+  it 'retrieves representations based on type' do
+    structured_object = Preservica::StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
+    information_objects = structured_object.information_objects
+    access_representations = information_objects[0].access_representations
+    expect(access_representations[0].type).to eq "Access"
+    preservation_representations = information_objects[0].preservation_representations
+    expect(preservation_representations[0].type).to eq "Preservation"
+  end
+
+  it 'retrieves generation based on active true' do
+    structured_object = Preservica::StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
+    information_objects = structured_object.information_objects
+    representations = information_objects[0].representations
+    expect(representations[0].type).to eq("Access")
+    content_objects = representations[0].content_objects
+    generations = content_objects[0].active_generations
+    # in fixtures 1 false 2 true
+    expect(generations.count).to eq 2
   end
 end
