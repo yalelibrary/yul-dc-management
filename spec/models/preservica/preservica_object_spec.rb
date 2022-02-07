@@ -121,7 +121,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
     format_group = generations[0].format_group
     expect(format_group.first).to eq("pdf")
   end
-  
+
   it 'retrieves representations based on type' do
     structured_object = Preservica::StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
     information_objects = structured_object.information_objects
