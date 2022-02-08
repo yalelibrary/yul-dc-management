@@ -17,6 +17,10 @@ class Preservica::Generation
     @formats ||= load_formats
   end
 
+  def format_group
+    @format_group ||= load_format_group
+  end
+
   private
 
     def load_bitstreams
@@ -28,6 +32,10 @@ class Preservica::Generation
 
     def load_formats
       xml.xpath('/GenerationResponse/Generation/Formats/Format/FormatName').map(&:content)
+    end
+
+    def load_format_group
+      xml.xpath('/GenerationResponse/Generation/FormatGroup').map(&:content)
     end
 
     def xml
