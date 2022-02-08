@@ -88,6 +88,18 @@ class PreservicaClient
   end
 
   def get(uri)
+    return get_body(uri) unless block_given?
+    authenticated_get URI("#{@host}#{uri}") do |http, request|
+      http.request request do |response|
+        raise StandardError, "Request error #{response.code} #{response.body}" unless response.is_a? Net::HTTPSuccess
+        response.read_body do |chunk|
+          yield chunk
+        end
+      end
+    end
+  end
+
+  def get_body(uri)
     authenticated_get URI("#{@host}#{uri}") do |http, request|
       response = http.request request
       raise StandardError, "Request error #{response.code} #{response.body}" unless response.is_a? Net::HTTPSuccess
