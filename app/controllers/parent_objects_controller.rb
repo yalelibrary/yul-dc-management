@@ -199,7 +199,7 @@ class ParentObjectsController < ApplicationController
       cur_params = params.require(:parent_object).permit(:oid, :admin_set, :project_identifier, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
                                                          :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction,
                                                          :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization,
-                                                         :digitization_note, :redirect_to, :preservica_uri, :digital_object_source)
+                                                         :digitization_note, :redirect_to, :preservica_uri, :digital_object_source, :preservica_representation_name)
       cur_params[:admin_set] = AdminSet.find_by(key: cur_params[:admin_set]) if cur_params[:admin_set]
       cur_params
     end

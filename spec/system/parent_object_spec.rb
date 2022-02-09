@@ -100,6 +100,15 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         expect(page).to have_content("This is the Project ID")
       end
 
+      it "can set the Preservica Representation Name via the UI" do
+        click_on("Create Parent object")
+        click_on("Edit")
+        expect(page).to have_field("Preservica representation name")
+        fill_in("Preservica representation name", with: "Access-1")
+        click_on(UPDATE_PARENT_OBJECT_BUTTON)
+        expect(page).to have_content("Access-1")
+      end
+
       it "can show the representative thumbnail via the UI" do
         click_on("Create Parent object")
         expect(page).to have_content("Children:")
