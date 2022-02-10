@@ -165,27 +165,95 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # CREATES PARENT OBJECTS FROM INGESTED CSV
   def create_new_parent_csv
+    
     parsed_csv.each_with_index do |row, index|
-      oid = row['oid']
-      metadata_source = row['source']
-      model = row['parent_model'] || 'complex'
-      admin_set = editable_admin_set(row['admin_set'], oid, index)
-      next unless admin_set
+      digital_object_source = row['digital_object_source']
+      preservica_uri = row['preservica_uri']
+      if digital_object_source.present? && preservica_uri.present?
+        aspace_uri = row['aspace_uri']
+        bib = row['bib']
+        holding = row['holding']
+        item = row['item']
+        barcode = row['barcode']
+        visibility = row['visibility']
+        digital_object_source = row['digital_object_source']
+        preservica_uri = row['preservica_uri']
+        model = row['parent_model'] || 'complex'
 
-      parent_object = ParentObject.find_or_initialize_by(oid: oid)
-      # Only runs on newly created parent objects
-      unless parent_object.new_record?
-        batch_processing_event("Skipping row [#{index + 2}] with existing parent oid: #{oid}", 'Skipped Row')
-        next
+        # validate admin_set
+        admin_set = editable_admin_set(row['admin_set'], oid, index)
+        # validate metadata_source
+        metadata_source = validate_preservica_metadata_source(row['source'], index)
+        # validate visibility
+        visibility = validate_visibility(row['visibility'], index)
+        # create parent with random oid
+        parent_object = ParentObject.new(oid: randomize_oid, admin_set: admin_set)
+
+        # Assign values after validations:
+        parent_object.visibility = visibility
+        parent_object.bib = bib
+        parent_object.aspace_uri = aspace_uri
+        parent_object.digital_object_source = digital_object_source
+        parent_object.preservica_uri = preservica_uri
+        # optional fields:
+        parent_object.holding = holding
+        parent_object.item = item
+        parent_object.barcode = barcode
+
+        parent_object.parent_model = model
+        setup_for_background_jobs(parent_object, metadata_source)
+        parent_object.admin_set = admin_set
+        parent_object.save
+      else
+        oid = row['oid']
+        metadata_source = row['source']
+        model = row['parent_model'] || 'complex'
+        admin_set = editable_admin_set(row['admin_set'], oid, index)
+        next unless admin_set
+
+        parent_object = ParentObject.find_or_initialize_by(oid: oid)
+        # Only runs on newly created parent objects
+        unless parent_object.new_record?
+          batch_processing_event("Skipping row [#{index + 2}] with existing parent oid: #{oid}", 'Skipped Row')
+          next
+        end
+
+        parent_object.parent_model = model
+
+        setup_for_background_jobs(parent_object, metadata_source)
+        parent_object.admin_set = admin_set
+        parent_object.save
+        # TODO: enable edit action when added to batch actions
       end
-
-      parent_object.parent_model = model
-
-      setup_for_background_jobs(parent_object, metadata_source)
-      parent_object.admin_set = admin_set
-      parent_object.save
-      # TODO: enable edit action when added to batch actions
     end
+  end
+
+  # validate visibility
+  def validate_visibility(visibility, index)
+    visibilities = ['Private', 'Public', 'Redirect', 'Yale Community Only']
+    if visibilities.include?(visibility)
+      visibility
+    else
+      batch_processing_event("Skipping row [#{index + 2}] with unknown visibility: #{visibility}", 'Skipped Row')
+      return false
+    end
+  end
+
+  # validate source is either ils or aspace
+  def validate_preservica_metadata_source(metadata_source, index)
+    if metadata_source != "ils" && metadata_source != "aspace"
+      batch_processing_event("Skipping row [#{index + 2}] with unknown source [#{metadata_source}]. Source must be 'ils' or 'aspace'", 'Skipped Row')
+      return false
+    end
+    metadata_source
+  end
+
+  # create random oid
+  def randomize_oid
+    begin
+      oid = SecureRandom.random_number(1_000_000)
+    end while ParentObject.where(oid: oid).exists?
+    oid
   end
 
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:

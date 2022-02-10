@@ -8,6 +8,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
   let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids_with_source.csv")) }
   let(:delete_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_parent_fixture_ids.csv")) }
+  let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent.csv")) }
   let(:delete_child) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_child_fixture_ids.csv")) }
   let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
   let(:xml_upload_two) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml')) }
@@ -350,6 +351,15 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
             batch_process.file = delete_parent
             batch_process.save
             batch_process.create_new_parent_csv
+          end.to change { ParentObject.count }.from(0).to(1)
+        end
+      end
+
+      context "creating a ParentObject from a Preservica csv" do
+        it "can create a parent_object from an array of oids" do
+          expect do
+            batch_process.file = preservica_parent
+            batch_process.save
           end.to change { ParentObject.count }.from(0).to(1)
         end
       end
