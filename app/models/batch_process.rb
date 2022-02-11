@@ -170,20 +170,27 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       digital_object_source = row['digital_object_source']
       preservica_uri = row['preservica_uri']
       if digital_object_source.present? && preservica_uri.present?
+
+        # TODO:: 
+        # Figure out metadata_source calls
+        # validate preservica_uri
+        # Refactor
+
+        # assign csv values:
         aspace_uri = row['aspace_uri']
         bib = row['bib']
         holding = row['holding']
         item = row['item']
         barcode = row['barcode']
-        visibility = row['visibility']
-        digital_object_source = row['digital_object_source']
-        preservica_uri = row['preservica_uri']
         model = row['parent_model'] || 'complex'
 
         # validate admin_set
         admin_set = editable_admin_set(row['admin_set'], oid, index)
         # validate metadata_source
         metadata_source = validate_preservica_metadata_source(row['source'], index)
+        # validate aspace_uri or bib:
+        bib = validate_bib(bib, metadata_source, index)
+        aspace_uri = validate_aspace_uri(aspace_uri, metadata_source, index)
         # validate visibility
         visibility = validate_visibility(row['visibility'], index)
         # create parent with random oid
@@ -226,6 +233,24 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         # TODO: enable edit action when added to batch actions
       end
     end
+  end
+
+  # validate bib if ils metadata source:
+  def validate_bib(bib, metadata_source, index)
+    if metadata_source == "ils" && !bib.present?
+      batch_processing_event("Skipping row [#{index + 2}]. BIB must be present if 'ils' metadata source", 'Skipped Row')
+      return false
+    end
+    bib
+  end
+
+  # validate aspace_uri if aspace metadata source
+  def validate_aspace_uri(aspace_uri, metadata_source, index)
+    if metadata_source == "aspace" && !aspace_uri.present?
+      batch_processing_event("Skipping row [#{index + 2}]. Aspace URI must be present if 'aspace' metadata source", 'Skipped Row')
+      return false
+    end
+    aspace_uri
   end
 
   # validate visibility

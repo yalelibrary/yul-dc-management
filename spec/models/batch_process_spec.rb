@@ -362,11 +362,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
             batch_process.save
           end.to change { ParentObject.count }.from(0).to(1)
           generated_po = ParentObject.first
-          # expect(generated_po.aspace_uri).to eq "/repositories/11/archival_objects/515305"
           expect(generated_po.barcode).to eq "barcode"
-          # expect(generated_po.bib).to eq "12307100"
           expect(generated_po.holding).to eq "holding"
-          expect(generated_po.item).to eq "item"
           expect(generated_po.visibility).to eq "Public"
         end
       end
