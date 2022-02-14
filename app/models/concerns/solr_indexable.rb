@@ -8,22 +8,28 @@ module SolrIndexable
     end
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def solr_index
     begin
-      if self&.redirect_to.present?
-        indexable = to_solr
+      if self&.should_index?
+        if self&.redirect_to.present?
+          indexable = to_solr
+        else
+          indexable, child_solr_documents = to_solr_full_text
+        end
+        return unless indexable.present?
+        solr = SolrService.connection
+        solr.add([indexable])
+        solr.add(child_solr_documents) unless child_solr_documents.nil?
+        result = solr.commit
+        if (result&.[]("responseHeader")&.[]("status"))&.zero?
+          processing_event("Solr index updated", "solr-indexed")
+        else
+          processing_event("Solr index after manifest generation failed", "failed")
+        end
       else
-        indexable, child_solr_documents = to_solr_full_text
-      end
-      return unless indexable.present?
-      solr = SolrService.connection
-      solr.add([indexable])
-      solr.add(child_solr_documents) unless child_solr_documents.nil?
-      result = solr.commit
-      if (result&.[]("responseHeader")&.[]("status"))&.zero?
-        processing_event("Solr index updated", "solr-indexed")
-      else
-        processing_event("Solr index after manifest generation failed", "failed")
+        result = solr_delete
+        processing_event("Solr record deleted", "solr-indexed")
       end
     rescue => e
       processing_event("Solr indexing failed due to #{e.message}", "failed")
@@ -31,6 +37,7 @@ module SolrIndexable
     end
     result
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def solr_delete
     solr = SolrService.connection

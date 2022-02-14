@@ -112,14 +112,33 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       parent_object
     end
 
-    it "indexes the new visibility" do
-      solr_document = parent_object.reload.to_solr
-      expect(solr_document[:visibility_ssi]).to eq "Public"
+    it "indexes the new visibility in solr" do
+      solr = SolrService.connection
+
+      parent_object.visibility = "Public"
+      parent_object.save
+      parent_object.solr_index_job
+      response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
+      solr_document = response['response']['docs'][0]
+      expect(solr_document['visibility_ssi']).to eq "Public"
+
+      parent_object.visibility = "Yale Community Only"
+      parent_object.save
+      parent_object.solr_index_job
+      response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
+      solr_document = response['response']['docs'][0]
+      expect(solr_document['visibility_ssi']).to eq "Yale Community Only"
+
+      # rubocop:disable RSpec/AnyInstance
+      # ParentObject will return false to manifest_complete if there are no children, so simulating no children with:
+      allow_any_instance_of(ParentObject).to receive(:manifest_completed?).and_return(false)
+      # rubocop:enable RSpec/AnyInstance
       parent_object.visibility = "Private"
-      parent_object.save!
-      solr_document = parent_object.reload.to_solr
-      parent_object.save!
-      expect(solr_document[:visibility_ssi]).to eq "Private"
+      parent_object.save
+      parent_object.solr_index_job
+      response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
+      solr_docs = response['response']['docs']
+      expect(solr_docs.length).to eq 0
     end
   end
 
