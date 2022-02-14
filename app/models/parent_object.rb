@@ -475,4 +475,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       child_object.processing_event("Child #{child_object.oid} has been updated: #{child_object.full_text ? 'YES' : 'NO'}", 'update-complete')
     end
   end
+
+  def should_index?
+    return false if child_object_count&.zero? || child_objects.empty?
+    ['Public', 'Redirect', 'Yale Community Only'].include?(visibility) || redirect_to.present?
+  end
 end
