@@ -29,6 +29,7 @@ module SolrIndexable
         end
       else
         result = solr_delete
+        processing_event("Solr record deleted", "solr-indexed")
       end
     rescue => e
       processing_event("Solr indexing failed due to #{e.message}", "failed")

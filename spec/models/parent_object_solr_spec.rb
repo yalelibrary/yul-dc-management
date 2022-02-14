@@ -141,7 +141,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       expect(solr_docs.length).to eq 0
     end
   end
-  
+
   context "indexing to Solr from the database with Ladybird ParentObjects", solr: true do
     it "can index the 5 parent objects in the database to Solr and can remove those items", undelayed: true do
       response = solr.get 'select', params: { q: 'type_ssi:parent' }
