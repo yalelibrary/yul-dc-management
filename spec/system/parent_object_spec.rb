@@ -283,7 +283,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     end
 
     context "with a ParentObject whose authoritative_metadata_source is Voyager" do
-      let(:child_object) { FactoryBot.create(:child_object, oid: 456_789, parent_object: po) }
+      let(:child_object) { FactoryBot.create(:child_object, oid: 456_789, parent_object: ParentObject.find_by(oid: "2012036")) }
 
       before do
         stub_metadata_cloud("2012036", "ladybird")
