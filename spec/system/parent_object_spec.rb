@@ -283,6 +283,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     end
 
     context "with a ParentObject whose authoritative_metadata_source is Voyager" do
+      let(:child_object) { FactoryBot.create(:child_object, oid: 456_789, parent_object: po) }
+
       before do
         stub_metadata_cloud("2012036", "ladybird")
         stub_metadata_cloud("V-2012036", "ils")
@@ -320,6 +322,10 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
       it 'has functioning Solr Document link' do
         po = ParentObject.find_by(oid: "2012036")
+        po.child_object_count = 1
+        po.visibility = "Public"
+        po.save
+        child_object
         po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
         click_on("Solr Document")
@@ -365,15 +371,15 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
       it 'has functioning Solr Document link' do
         po = ParentObject.find_by(oid: "2012036")
+        po.child_object_count = 1
+        po.visibility = "Public"
+        po.save
         po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
         click_on("Solr Document")
         solr_data = JSON.parse(page.body)
-        expect(solr_data['numFound']).to eq 1
-        expect(solr_data["docs"].count).to eq 1
-        document = solr_data["docs"].first
-        expect(document["id"]).to eq "2012036"
-        expect(document["localRecordNumber_ssim"]).to include "YCAL MSS 202"
+        expect(solr_data['numFound']).to eq 0
+        expect(solr_data["docs"].count).to eq 0
       end
     end
 
