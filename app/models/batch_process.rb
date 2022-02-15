@@ -167,54 +167,13 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def create_new_parent_csv
     
     parsed_csv.each_with_index do |row, index|
-      digital_object_source = row['digital_object_source']
-      preservica_uri = row['preservica_uri']
-      if digital_object_source.present? && preservica_uri.present?
-
-        # TODO:: 
-        # Figure out metadata_source calls
-        # validate preservica_uri
-        # Refactor
-
-        # assign csv values:
-        aspace_uri = row['aspace_uri']
-        bib = row['bib']
-        holding = row['holding']
-        item = row['item']
-        barcode = row['barcode']
-        model = row['parent_model'] || 'complex'
-
-        # validate admin_set
-        admin_set = editable_admin_set(row['admin_set'], oid, index)
-        # validate metadata_source
-        metadata_source = validate_preservica_metadata_source(row['source'], index)
-        # validate aspace_uri or bib:
-        bib = validate_bib(bib, metadata_source, index)
-        aspace_uri = validate_aspace_uri(aspace_uri, metadata_source, index)
-        # validate visibility
-        visibility = validate_visibility(row['visibility'], index)
-        # validate digital_object_source
-        digital_object_source = validate_digital_object_source(digital_object_source, index)
-        # validate preservica_uri
-        preservica_uri = validate_preservica_uri(preservica_uri, index)
-        # create parent with random oid
-        parent_object = ParentObject.new(oid: randomize_oid, admin_set: admin_set)
-
-        # Assign values after validations:
-        parent_object.visibility = visibility
-        parent_object.bib = bib
-        parent_object.aspace_uri = aspace_uri
-        parent_object.digital_object_source = digital_object_source
-        parent_object.preservica_uri = preservica_uri
-        # optional fields:
-        parent_object.holding = holding
-        parent_object.item = item
-        parent_object.barcode = barcode
-        
-        parent_object.parent_model = model
-        setup_for_background_jobs(parent_object, metadata_source)
-        parent_object.admin_set = admin_set
-        parent_object.save
+      if row['digital_object_source'].present? && row['preservica_uri'].present?
+        begin
+          parent_object = CsvRowParentService.new(row, index).parent_object
+        rescue CsvRowParentService::BatchProcessingError => e
+          batch_processing_event(e.message, e.kind)
+        end
+        setup_for_background_jobs(parent_object, row['source'])
       else
         oid = row['oid']
         metadata_source = row['source']
@@ -237,71 +196,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         # TODO: enable edit action when added to batch actions
       end
     end
-  end
-
-  # validate digital_object_source
-  def validate_digital_object_source(digital_object_source, index)
-    if digital_object_source != "Preservica"
-      batch_processing_event("Skipping row [#{index + 2}]. Digital Object Source must be 'Preservica'", 'Skipped Row')
-      return false
-    end
-    digital_object_source
-  end
-
-  # validate preservica_uri:
-  def validate_preservica_uri(preservica_uri, index)
-    if !preservica_uri.start_with?('/')
-      batch_processing_event("Skipping row [#{index + 2}]. Preservica URI must start with a '/'", 'Skipped Row')
-      return false
-    end
-    preservica_uri
-  end
-
-  # validate bib if ils metadata source:
-  def validate_bib(bib, metadata_source, index)
-    if metadata_source == "ils" && !bib.present?
-      batch_processing_event("Skipping row [#{index + 2}]. BIB must be present if 'ils' metadata source", 'Skipped Row')
-      return false
-    else
-      bib
-    end
-  end
-
-  # validate aspace_uri if aspace metadata source
-  def validate_aspace_uri(aspace_uri, metadata_source, index)
-    if metadata_source == "aspace" && !aspace_uri.present?
-      batch_processing_event("Skipping row [#{index + 2}]. Aspace URI must be present if 'aspace' metadata source", 'Skipped Row')
-      return false
-    end
-    aspace_uri
-  end
-
-  # validate visibility
-  def validate_visibility(visibility, index)
-    visibilities = ['Private', 'Public', 'Redirect', 'Yale Community Only']
-    if visibilities.include?(visibility)
-      visibility
-    else
-      batch_processing_event("Skipping row [#{index + 2}] with unknown visibility: #{visibility}", 'Skipped Row')
-      return false
-    end
-  end
-
-  # validate source is either ils or aspace
-  def validate_preservica_metadata_source(metadata_source, index)
-    if metadata_source != "ils" && metadata_source != "aspace"
-      batch_processing_event("Skipping row [#{index + 2}] with unknown source [#{metadata_source}]. Source must be 'ils' or 'aspace'", 'Skipped Row')
-      return false
-    end
-    metadata_source
-  end
-
-  # create random oid
-  def randomize_oid
-    begin
-      random_oid = SecureRandom.random_number(1_000_000)
-    end unless ParentObject.exists?(oid: random_oid)
-    random_oid
   end
 
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:

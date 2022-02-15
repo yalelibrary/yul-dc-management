@@ -357,6 +357,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
       context "creating a ParentObject from a Preservica csv" do
         it "can create a parent_object with preservica values" do
+          allow_any_instance_of(BatchProcess).to receive(:setup_for_background_jobs).and_return(true)
           expect do
             batch_process.file = preservica_parent
             batch_process.save
@@ -365,6 +366,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect(generated_po.barcode).to eq "barcode"
           expect(generated_po.holding).to eq "holding"
           expect(generated_po.visibility).to eq "Public"
+          expect(generated_po.authoritative_metadata_source_id).to eq 1
         end
       end
 
