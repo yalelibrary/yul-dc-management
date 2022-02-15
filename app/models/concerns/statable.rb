@@ -19,7 +19,7 @@ module Statable
   end
 
   def deleted_note(notes)
-    notes["parent-deleted"]
+    notes["deleted"]
   end
 
   def batch_connections_for(_batch_process)
@@ -31,7 +31,7 @@ module Statable
     if notes.empty?
       "Pending"
     elsif deleted_note(notes)
-      "Parent object deleted"
+      "Parent object deleted successfully"
     elsif finished_note(notes)
       "Complete"
     elsif latest_failure(batch_process).nil?
@@ -60,7 +60,7 @@ module Statable
 
   def note_deletion
     batch_connections.each do
-      processing_event("The parent object was deleted", 'parent-deleted')
+      processing_event("The parent object was deleted", 'deleted')
     end
   end
 
