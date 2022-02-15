@@ -193,6 +193,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         aspace_uri = validate_aspace_uri(aspace_uri, metadata_source, index)
         # validate visibility
         visibility = validate_visibility(row['visibility'], index)
+        # validate digital_object_source
+        digital_object_source = validate_digital_object_source(digital_object_source, index)
+        # validate preservica_uri
+        preservica_uri = validate_preservica_uri(preservica_uri, index)
         # create parent with random oid
         parent_object = ParentObject.new(oid: randomize_oid, admin_set: admin_set)
 
@@ -206,7 +210,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         parent_object.holding = holding
         parent_object.item = item
         parent_object.barcode = barcode
-
+        
         parent_object.parent_model = model
         setup_for_background_jobs(parent_object, metadata_source)
         parent_object.admin_set = admin_set
@@ -235,13 +239,32 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  # validate digital_object_source
+  def validate_digital_object_source(digital_object_source, index)
+    if digital_object_source != "Preservica"
+      batch_processing_event("Skipping row [#{index + 2}]. Digital Object Source must be 'Preservica'", 'Skipped Row')
+      return false
+    end
+    digital_object_source
+  end
+
+  # validate preservica_uri:
+  def validate_preservica_uri(preservica_uri, index)
+    if !preservica_uri.start_with?('/')
+      batch_processing_event("Skipping row [#{index + 2}]. Preservica URI must start with a '/'", 'Skipped Row')
+      return false
+    end
+    preservica_uri
+  end
+
   # validate bib if ils metadata source:
   def validate_bib(bib, metadata_source, index)
     if metadata_source == "ils" && !bib.present?
       batch_processing_event("Skipping row [#{index + 2}]. BIB must be present if 'ils' metadata source", 'Skipped Row')
       return false
+    else
+      bib
     end
-    bib
   end
 
   # validate aspace_uri if aspace metadata source
@@ -276,9 +299,9 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # create random oid
   def randomize_oid
     begin
-      oid = SecureRandom.random_number(1_000_000)
-    end while ParentObject.where(oid: oid).exists?
-    oid
+      random_oid = SecureRandom.random_number(1_000_000)
+    end unless ParentObject.exists?(oid: random_oid)
+    random_oid
   end
 
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
