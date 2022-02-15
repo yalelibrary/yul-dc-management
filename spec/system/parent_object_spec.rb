@@ -341,6 +341,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     end
 
     context "with a ParentObject whose authoritative_metadata_source is ArchiveSpace" do
+      let(:child_object) { FactoryBot.create(:child_object, oid: 456_789, parent_object: ParentObject.find_by(oid: "2012036")) }
       around do |example|
         original_vpn = ENV['VPN']
         ENV['VPN'] = 'false'
@@ -373,13 +374,17 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         po = ParentObject.find_by(oid: "2012036")
         po.child_object_count = 1
         po.visibility = "Public"
+        child_object
         po.save
         po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
         click_on("Solr Document")
         solr_data = JSON.parse(page.body)
-        expect(solr_data['numFound']).to eq 0
-        expect(solr_data["docs"].count).to eq 0
+        expect(solr_data['numFound']).to eq 1
+        expect(solr_data["docs"].count).to eq 1
+        document = solr_data["docs"].first
+        expect(document["id"]).to eq "2012036"
+        expect(document["localRecordNumber_ssim"]).to include "YCAL MSS 202"
       end
     end
 
