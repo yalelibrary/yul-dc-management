@@ -169,7 +169,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parsed_csv.each_with_index do |row, index|
       if row['digital_object_source'].present? && row['preservica_uri'].present?
         begin
-          parent_object = CsvRowParentService.new(row, index).parent_object
+          parent_object = CsvRowParentService.new(row, index, current_ability).parent_object
         rescue CsvRowParentService::BatchProcessingError => e
           batch_processing_event(e.message, e.kind)
         end
