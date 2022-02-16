@@ -8,6 +8,7 @@ class GeneratePtiffJob < ApplicationJob
   end
 
   def perform(child_object, batch_process)
+    return if child_object.nil?
     child_object.current_batch_process = batch_process
     child_object.current_batch_connection = batch_process&.batch_connections&.find_or_create_by(connectable: child_object)
     parent_object = child_object.parent_object

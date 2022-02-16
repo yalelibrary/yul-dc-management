@@ -12,7 +12,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Delayable
   include DigitalObjectManagement
   has_many :dependent_objects, dependent: :delete_all
-  has_many :child_objects, -> { order('"order" ASC, oid ASC') }, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
+  has_many :child_objects, -> { order('"order" ASC, oid ASC') }, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :delete_all
   has_many :batch_connections, as: :connectable
   has_many :batch_processes, through: :batch_connections
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"

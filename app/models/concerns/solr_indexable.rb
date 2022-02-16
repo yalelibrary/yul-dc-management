@@ -42,6 +42,7 @@ module SolrIndexable
   def solr_delete
     solr = SolrService.connection
     solr.delete_by_id(oid.to_s)
+    solr.delete_by_query("parent_ssi:#{oid}")
     solr.commit
   end
 

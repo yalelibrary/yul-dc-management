@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+#
+# ChildObjects are _deleted_ when parents are destroyed; expect that ChildObjects will be
+# deleted _without_ any destroy hooks called.
+#
+
 # rubocop:disable ClassLength
 class ChildObject < ApplicationRecord
   # rubocop:enable ClassLength
@@ -15,8 +20,6 @@ class ChildObject < ApplicationRecord
   paginates_per 50
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
-  after_destroy :delayed_jobs_deletion
-  after_destroy :solr_delete
 
   # Does not get called because we use upsert to create children
   # before_create :check_for_size_and_file
