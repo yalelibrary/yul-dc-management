@@ -7,11 +7,12 @@ class CsvRowParentService
     end
   end
 
-  attr_accessor :row, :index
+  attr_accessor :row, :index, :current_ability
   
-  def initialize(row, index)
+  def initialize(row, index, current_ability)
     @row = row
     @index = index
+    @current_ability = current_ability
   end
 
   def self.properties
