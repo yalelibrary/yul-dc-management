@@ -164,17 +164,18 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # CREATE PARENT OBJECTS: ------------------------------------------------------------------------- #
 
   # CREATES PARENT OBJECTS FROM INGESTED CSV
+  # rubocop:disable  Metrics/AbcSize
+  # rubocop:disable  Metrics/MethodLength
+  # rubocop:disable  Metrics/PerceivedComplexity
   def create_new_parent_csv
-    
     parsed_csv.each_with_index do |row, index|
       if row['digital_object_source'].present? && row['preservica_uri'].present?
         begin
-          parent_object = CsvRowParentService.new(row, index, current_ability).parent_object
+          parent_object = CsvRowParentService.new(row, index, current_ability, user).parent_object
         rescue CsvRowParentService::BatchProcessingError => e
           batch_processing_event(e.message, e.kind)
         end
         setup_for_background_jobs(parent_object, row['source'])
-        parent_object.save if parent_object.present?
       else
         oid = row['oid']
         metadata_source = row['source']
@@ -193,11 +194,14 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
         setup_for_background_jobs(parent_object, metadata_source)
         parent_object.admin_set = admin_set
-        parent_object.save
         # TODO: enable edit action when added to batch actions
       end
+      parent_object.save if parent_object.present?
     end
   end
+  # rubocop:enable  Metrics/AbcSize
+  # rubocop:enable  Metrics/MethodLength
+  # rubocop:enable  Metrics/PerceivedComplexity
 
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
   def editable_admin_set(admin_set_key, oid, index)
@@ -219,7 +223,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # ASSIGNS PARENT/CHILD OBJECT TO BATCH PROCESS FOR CREATE/DELETE/UPDATE
   def setup_for_background_jobs(object, metadata_source)
-    byebug
     object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
     object.current_batch_process = self
     object.current_batch_connection = batch_connections.build(connectable: object)

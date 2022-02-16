@@ -358,7 +358,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
       context "creating a ParentObject from a Preservica csv" do
         it "can create a parent_object with preservica values" do
-          allow_any_instance_of(BatchProcess).to receive(:setup_for_background_jobs).and_return(true)
+          # rubocop:disable RSpec/AnyInstance
+          allow_any_instance_of(SetupMetadataJob).to receive(:perform).and_return(true)
+          # rubocop:enable RSpec/AnyInstance
           expect do
             batch_process.file = preservica_parent
             batch_process.save
@@ -366,17 +368,19 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           generated_po = ParentObject.first
           expect(generated_po.admin_set.key).to eq "brbl"
           expect(generated_po.aspace_uri).to eq "/repositories/11/archival_objects/515305"
-          expect(generated_po.bib).to eq "3"
+          expect(generated_po.bib).to eq "36"
           expect(generated_po.digital_object_source).to eq "Preservica"
           expect(generated_po.preservica_uri).to eq "/pre_uri"
           expect(generated_po.barcode).to eq "barcode"
           expect(generated_po.holding).to eq "holding"
           expect(generated_po.visibility).to eq "Public"
-          # expect(generated_po.authoritative_metadata_source_id).to eq 1
+          expect(generated_po.authoritative_metadata_source_id).to eq 3
         end
 
         it "does not create a parent_object with invalid preservica csv values" do
+          # rubocop:disable RSpec/AnyInstance
           allow_any_instance_of(BatchProcess).to receive(:setup_for_background_jobs).and_return(true)
+          # rubocop:enable RSpec/AnyInstance
           batch_process.file = invalid_preservica_parent
           batch_process.save
           expect(ParentObject.count).to eq 0
