@@ -25,11 +25,6 @@ class CsvRowParentService
     end
   end
 
-  # FETCHES USERS ABILITIES
-  def current_ability
-    @current_ability ||= Ability.new(user)
-  end
-
   row_accessor :aspace_uri, :bib, :holding, :item, :barcode, :oid, :admin_set, :preservica_uri, :visibility, :digital_object_source
 
   def parent_object
@@ -92,14 +87,14 @@ class CsvRowParentService
     admin_set = admin_sets_hash[admin_set_key]
     if admin_set.blank?
       raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}", 'Skipped Row')      
-    # elsif !current_ability.can?(:add_member, admin_set)
-    #   raise BatchProcessingError.new("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{oid}", 'Permission Denied')
+    elsif !current_ability.can?(:add_member, admin_set)
+      raise BatchProcessingError.new("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{oid}", 'Permission Denied')
     else
       admin_set
     end
   end
 
-  def metadata_source
+  def source
     ms = row['source']
     if ms != "ils" && ms != "aspace"
       raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown source [#{ms}]. Source must be 'ils' or 'aspace'", 'Skipped Row')
