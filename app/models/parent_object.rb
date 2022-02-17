@@ -166,6 +166,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
           # Ladybird has only one field for both order label (7v, etc.), and descriptive captions ("Mozart at the Keyboard")
           # For the first iteration we will map this field to label
           label: child_record["caption"],
+          caption: child_record["title"],
           order: index,
           parent_object_oid: oid
         }

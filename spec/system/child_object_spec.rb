@@ -10,9 +10,12 @@ RSpec.describe "ChildObjects", type: :system, prep_metadata_sources: true, prep_
     stub_metadata_cloud("2004628")
   end
   around do |example|
+    vpn = ENV['VPN']
+    ENV['VPN'] = "false"
     perform_enqueued_jobs do
       example.run
     end
+    ENV['VPN'] = vpn
   end
 
   it "creates child objects" do
@@ -24,6 +27,8 @@ RSpec.describe "ChildObjects", type: :system, prep_metadata_sources: true, prep_
     click_on("Update Child object")
     expect(page).to have_content("Child object was successfully updated.")
     expect(page).to have_content("non-paged")
+    expect(parent_object.child_objects.first.label).to eq("LB Caption FDID 74")
+    expect(parent_object.child_objects.first.caption).to eq("LB Title FDID 70")
   end
 
   context "when logged in with access to only some admin set roles", js: true do
