@@ -8,6 +8,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
   let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids_with_source.csv")) }
   let(:delete_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_parent_fixture_ids.csv")) }
+  let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent.csv")) }
+  let(:invalid_preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "invalid_preservica_parent.csv")) }
   let(:delete_child) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_child_fixture_ids.csv")) }
   let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
   let(:xml_upload_two) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml')) }
@@ -351,6 +353,37 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
             batch_process.save
             batch_process.create_new_parent_csv
           end.to change { ParentObject.count }.from(0).to(1)
+        end
+      end
+
+      context "creating a ParentObject from a Preservica csv" do
+        it "can create a parent_object with preservica values" do
+          # rubocop:disable RSpec/AnyInstance
+          allow_any_instance_of(SetupMetadataJob).to receive(:perform).and_return(true)
+          # rubocop:enable RSpec/AnyInstance
+          expect do
+            batch_process.file = preservica_parent
+            batch_process.save
+          end.to change { ParentObject.count }.from(0).to(1)
+          generated_po = ParentObject.first
+          expect(generated_po.admin_set.key).to eq "brbl"
+          expect(generated_po.aspace_uri).to eq "/repositories/11/archival_objects/515305"
+          expect(generated_po.bib).to eq "36"
+          expect(generated_po.digital_object_source).to eq "Preservica"
+          expect(generated_po.preservica_uri).to eq "/pre_uri"
+          expect(generated_po.barcode).to eq "barcode"
+          expect(generated_po.holding).to eq "holding"
+          expect(generated_po.visibility).to eq "Public"
+          expect(generated_po.authoritative_metadata_source_id).to eq 3
+        end
+
+        it "does not create a parent_object with invalid preservica csv values" do
+          # rubocop:disable RSpec/AnyInstance
+          allow_any_instance_of(BatchProcess).to receive(:setup_for_background_jobs).and_return(true)
+          # rubocop:enable RSpec/AnyInstance
+          batch_process.file = invalid_preservica_parent
+          batch_process.save
+          expect(ParentObject.count).to eq 0
         end
       end
 

@@ -164,29 +164,44 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # CREATE PARENT OBJECTS: ------------------------------------------------------------------------- #
 
   # CREATES PARENT OBJECTS FROM INGESTED CSV
+  # rubocop:disable  Metrics/AbcSize
+  # rubocop:disable  Metrics/MethodLength
+  # rubocop:disable  Metrics/PerceivedComplexity
   def create_new_parent_csv
     parsed_csv.each_with_index do |row, index|
-      oid = row['oid']
-      metadata_source = row['source']
-      model = row['parent_model'] || 'complex'
-      admin_set = editable_admin_set(row['admin_set'], oid, index)
-      next unless admin_set
+      if row['digital_object_source'].present? && row['preservica_uri'].present?
+        begin
+          parent_object = CsvRowParentService.new(row, index, current_ability, user).parent_object
+        rescue CsvRowParentService::BatchProcessingError => e
+          batch_processing_event(e.message, e.kind)
+        end
+        setup_for_background_jobs(parent_object, row['source'])
+      else
+        oid = row['oid']
+        metadata_source = row['source']
+        model = row['parent_model'] || 'complex'
+        admin_set = editable_admin_set(row['admin_set'], oid, index)
+        next unless admin_set
 
-      parent_object = ParentObject.find_or_initialize_by(oid: oid)
-      # Only runs on newly created parent objects
-      unless parent_object.new_record?
-        batch_processing_event("Skipping row [#{index + 2}] with existing parent oid: #{oid}", 'Skipped Row')
-        next
+        parent_object = ParentObject.find_or_initialize_by(oid: oid)
+        # Only runs on newly created parent objects
+        unless parent_object.new_record?
+          batch_processing_event("Skipping row [#{index + 2}] with existing parent oid: #{oid}", 'Skipped Row')
+          next
+        end
+
+        parent_object.parent_model = model
+
+        setup_for_background_jobs(parent_object, metadata_source)
+        parent_object.admin_set = admin_set
+        # TODO: enable edit action when added to batch actions
       end
-
-      parent_object.parent_model = model
-
-      setup_for_background_jobs(parent_object, metadata_source)
-      parent_object.admin_set = admin_set
-      parent_object.save
-      # TODO: enable edit action when added to batch actions
+      parent_object.save if parent_object.present?
     end
   end
+  # rubocop:enable  Metrics/AbcSize
+  # rubocop:enable  Metrics/MethodLength
+  # rubocop:enable  Metrics/PerceivedComplexity
 
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
   def editable_admin_set(admin_set_key, oid, index)
