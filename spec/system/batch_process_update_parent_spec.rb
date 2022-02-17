@@ -148,7 +148,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         click_button("Submit")
 
         visit "/batch_processes/#{BatchProcess.last.id}/"
-        expect(page).to have_content "Batch status unknown"
+        expect(page).to have_content "View Messages"
         expect(page).to have_content "Skipping row [2] with unknown metadata source: bird. Accepted values are 'ladybird', 'aspace', or 'ils'."
       end
     end
@@ -198,7 +198,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         click_button("Submit")
 
         visit "/batch_processes/#{BatchProcess.last.id}/"
-        expect(page).to have_content "Batch status unknown"
+        expect(page).to have_content "View Messages"
         expect(page).to have_content "Skipping row with redirect to: https://collective-uat.library.yale.edu/catalog/234567. Redirect to must be in format https://collections.library.yale.edu/catalog/1234567."
       end
     end
@@ -219,7 +219,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         click_button("Submit")
 
         visit "/batch_processes/#{BatchProcess.last.id}/"
-        expect(page).to have_content "Batch status unknown"
+        expect(page).to have_content "View Messages"
         expect(page).to have_content "Skipped Row Skipping row with parent oid: 2005512 Child objects are attached to parent object. Parent must have no children to be redirected."
       end
     end
