@@ -83,7 +83,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def from_upstream_for_the_first_time?
-    from_ladybird_for_the_first_time? || from_mets_for_the_first_time?
+    from_ladybird_for_the_first_time? || from_mets_for_the_first_time? || from_preservica_for_the_first_time?
   end
 
   def self.cannot_reindex
@@ -105,6 +105,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     false
   end
 
+  # Returns true if last_preservica_update has changed from nil to some value,
+  # indicating assigning values from the last preservica api call
+  def from_preservica_for_the_first_time?
+    return true if last_preservica_update.nil?
+    false
+  end
+
   def start_states
     ['processing-queued']
   end
@@ -119,6 +126,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
       upsert_preservica_ingest_child_objects(array_preservica_hashes_from_mets) unless array_preservica_hashes_from_mets.nil?
+    elsif digital_object_source.present?
+      upsert_child_objects(array_of_child_hashes_from_preservica) unless array_of_child_hashes_from_preservica.nil?
     else
       return unless ladybird_json
       return self.child_object_count = 0 if ladybird_json["children"].empty? && parent_model != 'simple'
@@ -151,6 +160,25 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         ingest_time: Time.current,
         child_oid: child_hash[:oid],
         preservica_child_id: child_hash[:child_uuid] }
+    end
+  end
+
+  def array_of_child_hashes_from_preservica
+    # byebug
+    structured_object = Preservica::StructuralObject.where(admin_set_key: admin_set.key, id: "#{preservica_uri.split('/')[-1]}")
+
+    information_objects = structured_object.information_objects
+
+    information_objects.each_with_index do |child_hash|
+      # byebug
+      { oid: OidMinterService.generate_oids(1)[0],
+        parent_oid: oid,
+        preservica_id: preservica_uri.split('/')[-1],
+        preservica_child_id: child_hash.id,
+        ingest_time: Time.current,
+        order: index,
+    # byebug
+      }
     end
   end
 
@@ -240,11 +268,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                       self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
                     when "aspace"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless aspace_uri.present?
-                      self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
+                      self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self) unless digital_object_source.present?
+                      self.preservica_xml = Preservica::StructuralObject.where(admin_set_key: admin_set.key, id: "#{preservica_uri}")
                     end
     if fetch_results
       assign_dependent_objects
-      assign_values
+      assign_values unless digital_object_source.present?
       processing_event("Metadata has been fetched", "metadata-fetched")
     end
     fetch_results
@@ -345,6 +374,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.last_aspace_update = DateTime.current if a_record.present?
     self.bib = a_record["orbisBibId"]
     self.barcode = a_record["orbisBarcode"]
+  end
+
+  def preservica_xml=(structural_object)
+    structural_object
   end
 
   def ladybird_cloud_url

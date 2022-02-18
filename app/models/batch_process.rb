@@ -175,6 +175,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         rescue CsvRowParentService::BatchProcessingError => e
           batch_processing_event(e.message, e.kind)
         end
+        
         setup_for_background_jobs(parent_object, row['source'])
       else
         oid = row['oid']
@@ -223,6 +224,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # ASSIGNS PARENT/CHILD OBJECT TO BATCH PROCESS FOR CREATE/DELETE/UPDATE
   def setup_for_background_jobs(object, metadata_source)
+    # byebug
     object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
     object.current_batch_process = self
     object.current_batch_connection = batch_connections.build(connectable: object)
