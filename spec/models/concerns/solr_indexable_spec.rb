@@ -51,5 +51,23 @@ RSpec.describe SolrIndexable, type: :model do
     expect(solr_document[:creator_ssim]).to eq(['creator', 'creators', 'creatorx', 'ancestor creator king', 'ancestor creator'])
     expect(solr_document[:collectionCreators_ssim]).to eq(['ancestor creator'])
   end
+
+  it "distinguishes actual orbis ids from quicksearch ids" do
+    solr_indexable.bib = "557744"
+    solr_document = solr_indexable.to_solr ({ "notblank" => "value" })
+    expect(solr_document[:orbisBibId_ssi]).to eq('557744')
+    expect(solr_document[:quicksearchId_ssi]).to be_nil
+    solr_indexable.bib = "b557744"
+    solr_document = solr_indexable.to_solr ({ "notblank" => "value" })
+    expect(solr_document[:orbisBibId_ssi]).to be_nil
+    expect(solr_document[:quicksearchId_ssi]).to eq("b557744")
+  end
+
+  it "handles nil orbis ids" do
+    solr_indexable.bib = nil
+    solr_document = solr_indexable.to_solr ({ "notblank" => "value" })
+    expect(solr_document[:orbisBibId_ssi]).to be_nil
+    expect(solr_document[:quicksearchId_ssi]).to be_nil
+  end
   # rubocop:enable Lint/ParenthesesAsGroupedExpression
 end

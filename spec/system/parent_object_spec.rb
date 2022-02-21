@@ -100,6 +100,15 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         expect(page).to have_content("This is the Project ID")
       end
 
+      it "can set the Preservica Representation Name via the UI" do
+        click_on("Create Parent object")
+        click_on("Edit")
+        expect(page).to have_field("Preservica representation name")
+        fill_in("Preservica representation name", with: "Access-1")
+        click_on(UPDATE_PARENT_OBJECT_BUTTON)
+        expect(page).to have_content("Access-1")
+      end
+
       it "can show the representative thumbnail via the UI" do
         click_on("Create Parent object")
         expect(page).to have_content("Children:")
@@ -274,6 +283,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     end
 
     context "with a ParentObject whose authoritative_metadata_source is Voyager" do
+      let(:child_object) { FactoryBot.create(:child_object, oid: 456_789, parent_object: ParentObject.find_by(oid: "2012036")) }
+
       before do
         stub_metadata_cloud("2012036", "ladybird")
         stub_metadata_cloud("V-2012036", "ils")
@@ -311,6 +322,10 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
       it 'has functioning Solr Document link' do
         po = ParentObject.find_by(oid: "2012036")
+        po.child_object_count = 1
+        po.visibility = "Public"
+        po.save
+        child_object
         po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
         click_on("Solr Document")
@@ -326,6 +341,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     end
 
     context "with a ParentObject whose authoritative_metadata_source is ArchiveSpace" do
+      let(:child_object) { FactoryBot.create(:child_object, oid: 456_789, parent_object: ParentObject.find_by(oid: "2012036")) }
       around do |example|
         original_vpn = ENV['VPN']
         ENV['VPN'] = 'false'
@@ -356,6 +372,10 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
       it 'has functioning Solr Document link' do
         po = ParentObject.find_by(oid: "2012036")
+        po.child_object_count = 1
+        po.visibility = "Public"
+        child_object
+        po.save
         po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
         click_on("Solr Document")

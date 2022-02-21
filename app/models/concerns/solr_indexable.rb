@@ -8,22 +8,28 @@ module SolrIndexable
     end
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def solr_index
     begin
-      if self&.redirect_to.present?
-        indexable = to_solr
+      if self&.should_index?
+        if self&.redirect_to.present?
+          indexable = to_solr
+        else
+          indexable, child_solr_documents = to_solr_full_text
+        end
+        return unless indexable.present?
+        solr = SolrService.connection
+        solr.add([indexable])
+        solr.add(child_solr_documents) unless child_solr_documents.nil?
+        result = solr.commit
+        if (result&.[]("responseHeader")&.[]("status"))&.zero?
+          processing_event("Solr index updated", "solr-indexed")
+        else
+          processing_event("Solr index after manifest generation failed", "failed")
+        end
       else
-        indexable, child_solr_documents = to_solr_full_text
-      end
-      return unless indexable.present?
-      solr = SolrService.connection
-      solr.add([indexable])
-      solr.add(child_solr_documents) unless child_solr_documents.nil?
-      result = solr.commit
-      if (result&.[]("responseHeader")&.[]("status"))&.zero?
-        processing_event("Solr index updated", "solr-indexed")
-      else
-        processing_event("Solr index after manifest generation failed", "failed")
+        result = solr_delete
+        processing_event("Solr record deleted", "solr-indexed")
       end
     rescue => e
       processing_event("Solr indexing failed due to #{e.message}", "failed")
@@ -31,10 +37,12 @@ module SolrIndexable
     end
     result
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def solr_delete
     solr = SolrService.connection
     solr.delete_by_id(oid.to_s)
+    solr.delete_by_query("parent_ssi:#{oid}")
     solr.commit
   end
 
@@ -136,7 +144,7 @@ module SolrIndexable
         number_of_pages_ss: json_to_index["numberOfPages"],
         oid_ssi: oid,
         orbisBarcode_ssi: barcode,
-        orbisBibId_ssi: bib, # may change to orbisBibId
+        orbisBibId_ssi: generate_orbis_id(bib),
         partOf_tesim: json_to_index["partOf"],
         preferredCitation_tesim: json_to_index["preferredCitation"],
         project_identifier_tesi: generate_pid(json_to_index["project_identifier"]),
@@ -144,6 +152,7 @@ module SolrIndexable
         public_bsi: true, # TEMPORARY, makes everything public
         publisher_tesim: json_to_index["publisher"],
         publisher_ssim: json_to_index["publisher"],
+        quicksearchId_ssi: generate_quicksearch_id(bib),
         recordType_ssi: json_to_index["recordType"],
         relatedResourceOnline_ssim: json_to_index["relatedResourceOnline"],
         repository_ssi: self&.admin_set&.label,
@@ -274,6 +283,14 @@ module SolrIndexable
   # not ASpace records will use the repository value
   def generate_ancestor_title(ancestor_title)
     ancestor_title.presence || [self&.admin_set&.label] || nil
+  end
+
+  def generate_orbis_id(bib)
+    (bib.to_i.positive? && bib.presence) || nil
+  end
+
+  def generate_quicksearch_id(bib)
+    (bib.present? && bib.start_with?("b") && bib) || nil
   end
 
   def series_sort(json_to_index)

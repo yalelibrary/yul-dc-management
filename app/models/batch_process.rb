@@ -370,7 +370,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     elsif current_status[:in_progress] != 0
       "#{current_status[:in_progress]} out of #{current_status[:total].to_i} parent objects are in progress."
     else
-      "Batch status unknown"
+      "View Messages"
     end
   end
 

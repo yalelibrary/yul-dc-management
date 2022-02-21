@@ -121,12 +121,17 @@
   <div class="digital_object_identifiers, form-row">
     <div class="col-med-3">
       <%= form.label :digital_object_source %>
-      <%= form.select(:digital_object_source, ['None', 'Preservica']) %>
+      <%= form.select(:digital_object_source, ['None', 'Preservica'], {}, style: "width:178px;" ) %>
     </div>
 
     <div class="col-med-3">
       <%= form.label :preservica_uri %>
       <%= form.text_field :preservica_uri %>
+    </div>
+
+    <div class="col-med-3">
+      <%= form.label :preservica_representation_name %>
+      <%= form.text_field :preservica_representation_name %>
     </div>
   </div>
   <br>

@@ -35,6 +35,10 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
     end
   end
 
+  after do
+    File.delete("tmp/testdownload.file") if File.exist?("tmp/testdownload.file")
+  end
+
   it 'traverses hierarcy' do
     structured_object = Preservica::StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
     information_objects = structured_object.information_objects
@@ -67,7 +71,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
       bitstreams = generations[0].bitstreams
       bitstreams[0].download_to_file "tmp/testdownload.file"
       expect(File.size("tmp/testdownload.file")).to eq(bitstreams[0].size)
-      File.delete("tmp/testdownload.file")
+      expect(Digest::SHA512.file("tmp/testdownload.file").hexdigest).to eq(bitstreams[0].sha512_checksum)
     end
   end
 
@@ -84,7 +88,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
       content_objects = representations[0].content_objects
       generations = content_objects[0].active_generations
       bitstreams = generations[0].bitstreams
-      expect { bitstreams[0].download_to_file "tmp/testdownload.file" }.to raise_error
+      expect { bitstreams[0].download_to_file "tmp/testdownload.file" }.to raise_error(/Checksum mismatch/)
     end
   end
 
@@ -109,6 +113,17 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
     representation = Preservica::Representation.where(admin_set_key: 'brbl', name: "test name", information_object_id: "info id")
     expect(representation).not_to be_nil
     expect(representation.name).to eq("test name")
+  end
+
+  it 'retrieves generations format group' do
+    structured_object = Preservica::StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
+    expect(structured_object).not_to be_nil
+    information_objects = structured_object.information_objects
+    representations = information_objects[0].representations
+    content_objects = representations[0].content_objects
+    generations = content_objects[0].active_generations
+    format_group = generations[0].format_group
+    expect(format_group.first).to eq("pdf")
   end
 
   it 'retrieves representations based on type' do
