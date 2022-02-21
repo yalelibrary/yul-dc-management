@@ -175,7 +175,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         rescue CsvRowParentService::BatchProcessingError => e
           batch_processing_event(e.message, e.kind)
         end
-        
+
         setup_for_background_jobs(parent_object, row['source'])
       else
         oid = row['oid']

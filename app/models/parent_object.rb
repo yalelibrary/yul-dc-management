@@ -122,6 +122,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Note - the upsert_all method skips ActiveRecord callbacks, and is entirely
   # database driven. This also makes object creation much faster.
+  # rubocop:disable Metrics/PerceivedComplexity
   def create_child_records
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
@@ -133,9 +134,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       return self.child_object_count = 0 if ladybird_json["children"].empty? && parent_model != 'simple'
       upsert_child_objects(array_of_child_hashes)
     end
-
     self.child_object_count = child_objects.size
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def upsert_child_objects(child_objects_hash)
     raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
@@ -164,21 +165,15 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def array_of_child_hashes_from_preservica
-    # byebug
-    structured_object = Preservica::StructuralObject.where(admin_set_key: admin_set.key, id: "#{preservica_uri.split('/')[-1]}")
+    structured_object = Preservica::StructuralObject.where(admin_set_key: admin_set.key, id: (preservica_uri.split('/')[-1]).to_s)
 
     information_objects = structured_object.information_objects
 
-    information_objects.each_with_index do |child_hash|
-      # byebug
+    information_objects.map.with_index(1) do |_child_hash, index|
       { oid: OidMinterService.generate_oids(1)[0],
-        parent_oid: oid,
-        preservica_id: preservica_uri.split('/')[-1],
-        preservica_child_id: child_hash.id,
-        ingest_time: Time.current,
-        order: index,
-    # byebug
-      }
+        parent_object_oid: oid,
+        # ingest_time: Time.current,
+        order: index }
     end
   end
 
@@ -259,6 +254,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   # Fetches the record from the authoritative_metadata_source
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
   def default_fetch(_current_batch_process = current_batch_process, _current_batch_connection = current_batch_connection)
     fetch_results = case authoritative_metadata_source&.metadata_cloud_name
                     when "ladybird"
@@ -269,7 +266,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                     when "aspace"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless aspace_uri.present?
                       self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self) unless digital_object_source.present?
-                      self.preservica_xml = Preservica::StructuralObject.where(admin_set_key: admin_set.key, id: "#{preservica_uri}")
+                      self.preservica_xml = Preservica::StructuralObject.where(admin_set_key: admin_set.key, id: preservica_uri.to_s)
                     end
     if fetch_results
       assign_dependent_objects
@@ -278,6 +275,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
     fetch_results
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
   # OR if the authoritative metaadata source changes

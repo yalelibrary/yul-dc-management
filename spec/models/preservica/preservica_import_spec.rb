@@ -20,7 +20,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     ENV['PRESERVICA_HOST'] = preservica_host
     ENV['PRESERVICA_CREDENTIALS'] = preservica_creds
   end
-  
+
   before do
     user.add_role(:editor, admin_set)
     login_as(:user)
@@ -46,9 +46,9 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
 
   # check : create a parent via csv batch process
   # check : create child objects
-  # An OID is generated
-  # A DCS child object is created
-  # The order is set based on the order in the Preservica object
+  # check : An OID is generated
+  # check : A DCS child object is created
+  # check : The order is set based on the order in the Preservica object
   # The preservica_*_uri fields are populated
   # Identify the representation that corresponds to the preservica_representation_name field of the parent.
   # Identify the active generation is a TIFF, or else throw an error
@@ -56,9 +56,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   # The TIFF Bitstream's Content is downloaded to the pairtrtee
   # Subsequent PTIFF creation job is run
 
-
   # Add method to update last_preservica_update
-
 
   it 'can create parent object via batch process' do
     # rubocop:disable RSpec/AnyInstance
@@ -76,7 +74,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.save
     end.to change { ChildObject.count }.from(0).to(61)
     co = ChildObject.first
-    expect(co.oid).to be '20001'
-
+    expect(co.oid).to be 200_000_062
+    expect(co.parent_object_oid).to be 200_000_000
+    expect(co.order).to be 1
   end
 end
