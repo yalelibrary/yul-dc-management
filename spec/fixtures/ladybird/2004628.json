@@ -59,7 +59,7 @@
         "/ladybird/oid/1042003"
       ],
       "caption": "LB Caption FDID 74",
-      "title": "LB Title FDID 70",
+      "title": ["LB Title FDID 70"],
       "oid": 1042003,
       "width": 10,
       "height": 10,
