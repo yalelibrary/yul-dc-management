@@ -26,6 +26,10 @@ class Preservica::Representation
     xml.xpath('/RepresentationResponse/Representation/Type').text.strip
   end
 
+  def content_object_uri
+    xml.xpath('/RepresentationResponse/ContentObjects/ContentObject').text.strip
+  end
+
   private
 
     def load_content_objects

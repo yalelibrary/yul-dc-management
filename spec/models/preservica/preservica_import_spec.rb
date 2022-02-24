@@ -36,7 +36,19 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/2
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/3
-                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1]
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Access-2
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Preservation-1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1
+                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations
+                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Access-2
+                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Preservation-1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1]
 
     fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
@@ -50,7 +62,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   # check : An OID is generated
   # check : A DCS child object is created
   # check : The order is set based on the order in the Preservica object
-  # The preservica_*_uri fields are populated
+  # check : The preservica_*_uri fields are populated
   # Identify the representation that corresponds to the preservica_representation_name field of the parent.
   # Identify the active generation is a TIFF, or else throw an error
   # The Bitstream's SHA512 checksum is stored in the sha512_checksum field
@@ -73,12 +85,16 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expect do
       batch_process.file = preservica_parent_with_children
       batch_process.save
-    end.to change { ChildObject.count }.from(0).to(61)
+    end.to change { ChildObject.count }.from(0).to(3)
     co_first = ChildObject.first
-    expect(co_first.oid).to be 200_000_062
+    expect(co_first.oid).to be 200_000_004
     expect(co_first.parent_object_oid).to be 200_000_000
     expect(co_first.order).to be 1
     co_last = ChildObject.last
-    expect(co_last.order).to be 61
+    expect(co_last.order).to be 3
+
+    expect(co_first.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488"
+    expect(co_first.preservica_generation_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1"
+    expect(co_first.preservica_bitstream_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1"
   end
 end

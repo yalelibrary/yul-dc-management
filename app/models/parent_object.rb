@@ -164,18 +164,22 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   def array_of_child_hashes_from_preservica
     structured_object = Preservica::StructuralObject.where(admin_set_key: admin_set.key, id: (preservica_uri.split('/')[-1]).to_s)
 
     information_objects = structured_object.information_objects
 
-    information_objects.map.with_index(1) do |_child_hash, index|
+    information_objects.map.with_index(1) do |child_hash, index|
       { oid: OidMinterService.generate_oids(1)[0],
         parent_object_oid: oid,
-        # ingest_time: Time.current,
+        preservica_content_object_uri: child_hash.preservation_representations[0].content_object_uri,
+        preservica_generation_uri: child_hash.preservation_representations[0].content_objects[0].active_generations[0].generation_uri,
+        preservica_bitstream_uri: child_hash.preservation_representations[0].content_objects[0].active_generations[0].bitstream_uri,
         order: index }
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def array_of_child_hashes
     return unless ladybird_json

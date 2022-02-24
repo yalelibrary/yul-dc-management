@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RepresentationResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3">
+  <xip:Representation>
+    <xip:InformationObject>f44ba97e-af2b-498e-b118-ed1247822f44</xip:InformationObject>
+    <xip:Name>Access-2</xip:Name>
+    <xip:Type>Access</xip:Type>
+    <xip:ContentObjects>
+      <xip:ContentObject>ae328d84-e429-4d46-a865-9ee11157b487</xip:ContentObject>
+    </xip:ContentObjects>
+    <xip:RepresentationFormats/>
+    <xip:RepresentationProperties/>
+  </xip:Representation>
+  <ContentObjects>
+    <ContentObject title="mss_29_s03_b092_f0019" ref="ae328d84-e429-4d46-a865-9ee11157b487" type="CO">
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487
+    </ContentObject>
+  </ContentObjects>
+  <AdditionalInformation>
+    <Self>
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Access-2
+    </Self>
+  </AdditionalInformation>
+</RepresentationResponse>
