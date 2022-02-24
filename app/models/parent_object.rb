@@ -255,8 +255,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   # Fetches the record from the authoritative_metadata_source
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/CyclomaticComplexity
   def default_fetch(_current_batch_process = current_batch_process, _current_batch_connection = current_batch_connection)
     fetch_results = case authoritative_metadata_source&.metadata_cloud_name
                     when "ladybird"
@@ -266,18 +264,15 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                       self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
                     when "aspace"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless aspace_uri.present?
-                      self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self) unless digital_object_source.present?
-                      self.preservica_xml = Preservica::StructuralObject.where(admin_set_key: admin_set.key, id: preservica_uri.to_s)
+                      self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
                     end
     if fetch_results
       assign_dependent_objects
-      assign_values unless digital_object_source.present?
+      assign_values
       processing_event("Metadata has been fetched", "metadata-fetched")
     end
     fetch_results
   end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/CyclomaticComplexity
 
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
   # OR if the authoritative metaadata source changes
@@ -374,10 +369,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.last_aspace_update = DateTime.current if a_record.present?
     self.bib = a_record["orbisBibId"]
     self.barcode = a_record["orbisBarcode"]
-  end
-
-  def preservica_xml=(structural_object)
-    structural_object
   end
 
   def ladybird_cloud_url
