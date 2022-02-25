@@ -172,25 +172,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     information_objects = structured_object.information_objects
 
     information_objects.map.with_index(1) do |child_hash, index|
-      if !preservica_representation_name.nil? && preservica_representation_name.include?('Access')
-        {
-          oid: OidMinterService.generate_oids(1)[0],
-          parent_object_oid: oid,
-          preservica_content_object_uri: child_hash.access_representations[0].content_object_uri,
-          preservica_generation_uri: child_hash.access_representations[0].content_objects[0].active_generations[0].generation_uri,
-          preservica_bitstream_uri: child_hash.access_representations[0].content_objects[0].active_generations[0].bitstream_uri,
-          sha512_checksum: child_hash.access_representations[0].content_objects[0].active_generations[0].bitstreams[0].sha512_checksum,
-          order: index
-        }
-      else
-        { oid: OidMinterService.generate_oids(1)[0],
-          parent_object_oid: oid,
-          preservica_content_object_uri: child_hash.preservation_representations[0].content_object_uri,
-          preservica_generation_uri: child_hash.preservation_representations[0].content_objects[0].active_generations[0].generation_uri,
-          preservica_bitstream_uri: child_hash.preservation_representations[0].content_objects[0].active_generations[0].bitstream_uri,
-          sha512_checksum: child_hash.preservation_representations[0].content_objects[0].active_generations[0].bitstreams[0].sha512_checksum,
-          order: index }
-      end
+      # byebug
+      { oid: OidMinterService.generate_oids(1)[0],
+        parent_object_oid: oid,
+        preservica_content_object_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_object_uri,
+        preservica_generation_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].generation_uri,
+        preservica_bitstream_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstream_uri,
+        sha512_checksum: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstreams[0].sha512_checksum,
+        order: index }
     end
   end
   # rubocop:enable Metrics/AbcSize
