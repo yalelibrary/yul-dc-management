@@ -66,7 +66,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   # Identify the representation that corresponds to the preservica_representation_name field of the parent.
   # Identify the active generation is a TIFF, or else throw an error
   # check : The Bitstream's SHA512 checksum is stored in the sha512_checksum field
-  # The TIFF Bitstream's Content is downloaded to the pairtrtee
+  # The TIFF Bitstream's Content is downloaded to the pairtree
   # Subsequent PTIFF creation job is run
 
   # Add method to update last_preservica_update
