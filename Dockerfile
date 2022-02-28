@@ -1,4 +1,4 @@
-FROM yalelibraryit/dc-base:v1.2.1
+FROM yalelibraryit/dc-base:v1.3.0
 
 COPY ops/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 COPY ops/env.conf /etc/nginx/main.d/env.conf
@@ -15,11 +15,11 @@ COPY ops/policy.xml /etc/ImageMagick-6/policy.xml
 
 ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
 BUNDLE_JOBS=4
-RUN gem install bundler -v 2.1.4
-
-COPY vips_8.10.2-1_amd64.deb $APP_HOME
-RUN dpkg -i ./vips_8.10.2-1_amd64.deb
-RUN vips --version
+RUN /sbin/setuser app bash -l -c "gem install bundler -v 2.3.8"
+#
+#COPY vips_8.10.2-1_amd64.deb $APP_HOME
+#RUN dpkg -i ./vips_8.10.2-1_amd64.deb
+#RUN vips --version
 
 COPY jpegs2pdf-1.2.jar $APP_HOME
 
