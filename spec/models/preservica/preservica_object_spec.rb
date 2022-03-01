@@ -51,7 +51,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
 
     checksum = bitstreams[0].sha512_checksum
     size = bitstreams[0].size
-    expect(checksum).to eq("329f67d6c5cd707e6b7af8dd129e872369351faad8b63b2c80518cc54b386d7ec646e85873d28e6f904e44d9824506d1e055f2f716f0101afb948925e9713cc8")
+    expect(checksum).to eq("1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7")
     expect(size).to eq(2_274_948)
     expect(formats).to include("Acrobat PDF 1.7 - Portable Document Format")
   end

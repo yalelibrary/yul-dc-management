@@ -171,14 +171,27 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     information_objects = structured_object.information_objects
 
+    # TODO: download_to_file to temp directory and then copy from there
+    # Or circumvent process to download file straight to copy 
     information_objects.map.with_index(1) do |child_hash, index|
-      { oid: OidMinterService.generate_oids(1)[0],
+      # byebug
+      co_oid = OidMinterService.generate_oids(1)[0]
+
+      pairtree_path = Partridge::Pairtree.oid_to_pairtree(co_oid)
+      # Create path to access master if it doesn't exist
+      image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
+      directory = format("%02d", pairtree_path.first)
+      FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
+      # return @access_master_path if @access_master_path
+      access_master_path = File.join(image_mount, directory, pairtree_path, "#{co_oid}.tif")
+      child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstreams[0].download_to_file(access_master_path)
+      
+      { oid: co_oid,
         parent_object_oid: oid,
         preservica_content_object_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_object_uri,
         preservica_generation_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].generation_uri,
         preservica_bitstream_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstream_uri,
         sha512_checksum: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstreams[0].sha512_checksum,
-        mets_access_master_path: "#{child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstream_uri}/content.tif",
         order: index }
     end
   end
