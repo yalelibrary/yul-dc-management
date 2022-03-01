@@ -175,15 +175,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     # Or circumvent process to download file straight to copy
     information_objects.map.with_index(1) do |child_hash, index|
       co_oid = OidMinterService.generate_oids(1)[0]
-
-      pairtree_path = Partridge::Pairtree.oid_to_pairtree(co_oid)
-      # Create path to access master if it doesn't exist
-      image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
-      directory = format("%02d", pairtree_path.first)
-      FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
-      # return @access_master_path if @access_master_path
-      access_master_path = File.join(image_mount, directory, pairtree_path, "#{co_oid}.tif")
-      child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstreams[0].download_to_file(access_master_path)
+      preservica_copy_to_access(child_hash, co_oid)
 
       { oid: co_oid,
         parent_object_oid: oid,
@@ -196,6 +188,15 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+
+  def preservica_copy_to_access(child_hash, co_oid)
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(co_oid)
+    image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
+    directory = format("%02d", pairtree_path.first)
+    FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
+    access_master_path = File.join(image_mount, directory, pairtree_path, "#{co_oid}.tif")
+    child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstreams[0].download_to_file(access_master_path)
+  end
 
   def array_of_child_hashes
     return unless ladybird_json
