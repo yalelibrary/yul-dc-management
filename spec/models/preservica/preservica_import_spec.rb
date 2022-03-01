@@ -67,12 +67,12 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   # check : The order is set based on the order in the Preservica object
   # check : The preservica_*_uri fields are populated
   # check : Identify the representation that corresponds to the preservica_representation_name field of the parent.
-  # Identify the active generation is a TIFF, or else throw an error
+  # check : Identify the active generation is a TIFF, or else throw an error
   # check : The Bitstream's SHA512 checksum is stored in the sha512_checksum field
   # The TIFF Bitstream's Content is downloaded to the pairtree
   # Subsequent PTIFF creation job is run
 
-  # Add method to update last_preservica_update
+  # check : Add method to update last_preservica_update
 
   it 'can create parent object via batch process' do
     # rubocop:disable RSpec/AnyInstance
@@ -84,6 +84,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     end.to change { ParentObject.count }.from(0).to(1)
     po_first = ParentObject.first
     expect(po_first.preservica_representation_name).to eq "Preservation-1"
+    expect(po_first.last_preservica_update).not_to be nil
   end
 
   it 'can create child objects' do
