@@ -33,8 +33,7 @@ class CsvRowParentService
 
   row_accessor :aspace_uri, :bib, :holding, :item, :barcode, :oid, :admin_set,
                :preservica_uri, :visibility, :digital_object_source,
-               :authoritative_metadata_source_id, :preservica_representation_name,
-               :last_preservica_update
+               :authoritative_metadata_source_id, :preservica_representation_name
 
   def parent_object
     @parent_object ||= ParentObject.create(properties_hash)
@@ -65,10 +64,6 @@ class CsvRowParentService
   def preservica_uri
     raise BatchProcessingError.new("Skipping row [#{index + 2}]. Preservica URI must start with a '/'", 'Skipped Row') unless row['preservica_uri'].start_with?('/')
     row['preservica_uri']
-  end
-
-  def last_preservica_update
-    Time.current
   end
 
   def aspace_uri

@@ -172,9 +172,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     information_objects = structured_object.information_objects
 
     # TODO: download_to_file to temp directory and then copy from there
-    # Or circumvent process to download file straight to copy 
+    # Or circumvent process to download file straight to copy
     information_objects.map.with_index(1) do |child_hash, index|
-      # byebug
       co_oid = OidMinterService.generate_oids(1)[0]
 
       pairtree_path = Partridge::Pairtree.oid_to_pairtree(co_oid)
@@ -185,7 +184,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       # return @access_master_path if @access_master_path
       access_master_path = File.join(image_mount, directory, pairtree_path, "#{co_oid}.tif")
       child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstreams[0].download_to_file(access_master_path)
-      
+
       { oid: co_oid,
         parent_object_oid: oid,
         preservica_content_object_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_object_uri,

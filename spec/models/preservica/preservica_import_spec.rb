@@ -59,14 +59,14 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       )
     end
     stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1/content").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1/content.tif"), 'rb')
-      )
+      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1/content.tif"), 'rb')
+    )
     stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content.tif"), 'rb')
-      )
+      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content.tif"), 'rb')
+    )
     stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1/content").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1/content.tif"), 'rb')
-      )
+      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1/content.tif"), 'rb')
+    )
   end
 
   # check : create a parent via csv batch process
@@ -81,7 +81,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   # check : The TIFF Bitstream's Content is downloaded to the pairtree
   # check : Subsequent PTIFF creation job is run
 
-  # Add method to update last_preservica_update
+  # check : Add method to update last_preservica_update
 
   it 'can create parent object via batch process' do
     # rubocop:disable RSpec/AnyInstance
@@ -105,20 +105,20 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_with_children
       batch_process.save
     end.to change { ChildObject.count }.from(0).to(3)
+    po_first = ParentObject.first
     co_first = ChildObject.first
     expect(co_first.oid).to be 200_000_004
     expect(co_first.parent_object_oid).to be 200_000_000
     expect(co_first.order).to be 1
     co_last = ChildObject.last
     expect(co_last.order).to be 3
-
+    expect(po_first.last_preservica_update).not_to be nil
     expect(co_first.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488"
     expect(co_first.preservica_generation_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1"
     expect(co_first.preservica_bitstream_uri).to eq "/home/app/webapp/spec/fixtures/preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1"
-
     expect(co_first.sha512_checksum).to eq "1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7"
-
-    sleep 5
+    # allows time for the files to be created
+    sleep 2
     expect(File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")).to be true
     expect(File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")).to be true
     expect(File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")).to be true
