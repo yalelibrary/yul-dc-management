@@ -57,7 +57,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       stub_request(:get, "https://test#{fixture}").to_return(
         status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
       )
-    end   
+    end
   end
 
   # check : create a parent via csv batch process
@@ -115,6 +115,5 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     File.delete("spec/fixtures/images/access_masters/00/02/04/00/00/00/200000004.tif")
     File.delete("spec/fixtures/images/access_masters/00/02/05/00/00/00/200000005.tif")
     File.delete("spec/fixtures/images/access_masters/00/02/06/00/00/00/200000006.tif")
-
   end
 end
