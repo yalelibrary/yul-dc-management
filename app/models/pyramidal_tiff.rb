@@ -50,6 +50,9 @@ class PyramidalTiff
     if child_object.parent_object&.from_mets == true
       image_exists = File.exist?(mets_access_master_path)
       errors.add(:base, "Expected file #{mets_access_master_path} not found.") unless image_exists
+    elsif child_object.parent_object&.digital_object_source.present?
+      image_exists = File.exist?(child_object.preservica_bitstream_uri)
+      errors.add(:base, "Expected file #{child_object.preservica_bitstream_uri} not found.") unless image_exists
     elsif ENV['ACCESS_MASTER_MOUNT'] == "s3"
       image_exists = S3Service.s3_exists?(remote_access_master_path)
       errors.add(:base, "Expected file #{remote_access_master_path} not found.") unless image_exists
