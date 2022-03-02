@@ -176,6 +176,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
           batch_processing_event(e.message, e.kind)
         end
         setup_for_background_jobs(parent_object, row['source'])
+        parent_object&.last_preservica_update = Time.current
       else
         oid = row['oid']
         metadata_source = row['source']
