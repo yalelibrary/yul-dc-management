@@ -18,7 +18,7 @@ class GeneratePtiffJob < ApplicationJob
     # TODO: Uncomment the line below to re-implement Goobi ingest and copy to the access master pair-tree.
     # There is a test in spec/models/batch_process_spec.rb that should fail, take out the "pending" and logger
     # mocks there to see if it passes
-    child_object.copy_to_access_master_pairtree if child_object.parent_object.from_mets
+    child_object.copy_to_access_master_pairtree if child_object.parent_object.from_mets || child_object.preservica_bitstream_uri
     is_recreate_job = child_object.current_batch_process&.batch_action == 'recreate child oid ptiffs'
     success = child_object.convert_to_ptiff!(is_recreate_job)
     raise "Unable to convert to PTIFF and save child object: #{child_object.oid}" unless success
