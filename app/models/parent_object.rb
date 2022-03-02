@@ -83,7 +83,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def from_upstream_for_the_first_time?
-    from_ladybird_for_the_first_time? || from_mets_for_the_first_time?
+    from_ladybird_for_the_first_time? || from_mets_for_the_first_time? || (from_preservica_for_the_first_time? && digital_object_source == "Preservica")
   end
 
   def self.cannot_reindex
@@ -102,6 +102,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # indicating assigning values from the mets document
   def from_mets_for_the_first_time?
     return true if last_mets_update_before_last_save.nil? && !last_mets_update.nil?
+    false
+  end
+
+  # Returns true if last_preservica_update has changed from nil to some value,
+  # indicating assigning values from the last preservica api call
+  def from_preservica_for_the_first_time?
+    return true if last_preservica_update.nil?
     false
   end
 
