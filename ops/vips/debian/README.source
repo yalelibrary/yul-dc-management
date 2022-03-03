@@ -7,3 +7,27 @@ https://packaging.ubuntu.com/html/packaging-new-software.html
 
 put the source tarball (not included) above the "vips" directory
 
+# TODO these more detailed instructions are a draft - it is not 100% clear if they work
+# because as of 2022-02-28 breeze (bzr) is broken in Ubuntu 20.04
+
+1.  Comment out all dockerfile lines from `COPY vips_8.10.2-1_amd64.deb $APP_HOME` to the end of tile
+2.  Build the image with `cam build management`
+3.  Run the container in bash `docker run -it docker.io/yalelibraryit/dc-management:main bash`
+4.  In bash inside the container, download the source, make sure it can build
+  ```
+  cd ops
+  wget https://github.com/libvips/libvips/releases/download/v8.10.6/vips-8.10.6.tar.gz
+  tar zxfv vips-8.10.6.tar.gz
+  cd vips-8.10.6
+  ./configure
+  make
+  make install
+  ```
+5. Run the build make
+```
+apt update
+apt-get install -y dh-make bzr-builddeb
+cd ops/vips
+bzr builddeb -- -us -uc
+```
+6. Copy the deb file to the project root

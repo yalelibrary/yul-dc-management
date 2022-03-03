@@ -4,7 +4,7 @@ module Delayable
   extend ActiveSupport::Concern
 
   def delayed_jobs
-    Delayed::Job.where("handler LIKE ?", "%#{self.class}/#{oid}%")
+    Delayed::Job.where("handler LIKE ? or handler LIKE ?", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
   end
 
   def setup_metadata_jobs

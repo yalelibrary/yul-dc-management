@@ -6,11 +6,26 @@
   <div class='col'>
     <div class='float-right button-list'>
       <%= button_to 'Trigger Job Manually', reoccurring_jobs_path, method: 'post', class: 'btn button secondary-button', data: {confirm: 'Are you sure you start a manual update outside of the regular schedule?'} %>
+      <%  if @check_status %>
+        <% if !@scheduled_job_exists %>
+          <%= button_to 'Queue the Recurring Job', reoccurring_jobs_path(queue_recurring: 'true'), method: 'post', class: 'btn button secondary-button' %>
+        <% end %>
+      <% else %>
+        <%= link_to 'Check status of the Recurring Job', reoccurring_jobs_path(check_status:'true'), method: 'get', class: 'btn button secondary-button' %>
+      <% end %>
     </div>
   </div>
 </div>
 <div class='reoccurring-notice'>
-  <p>A reoccurring job is set to update metadata from Aspace and Voyager at 1:00am EST</p>
+  <%  if @check_status %>
+    <p>
+      <% if @scheduled_job_exists %>
+        A reoccurring job is set to update metadata from Aspace and Voyager at 1:00am EST
+      <% else %>
+        <p>The recurring job is <strong>NOT</strong> queued</p>
+      <% end %>
+    </p>
+  <%  end %>
 </div><br />
 <div class='row datatable'>
   <div class='col overflow-auto'>
