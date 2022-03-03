@@ -12,11 +12,11 @@
     </Child>
   </Children>
   <Paging>
-    <TotalResults>61</TotalResults>
+    <TotalResults>3</TotalResults>
   </Paging>
   <AdditionalInformation>
     <Self>
-      https://preservica-dev-v6.library.yale.edu/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c4/children
+      https://preservica-dev-v6.library.yale.edu/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5/children
     </Self>
   </AdditionalInformation>
 </ChildrenResponse>
