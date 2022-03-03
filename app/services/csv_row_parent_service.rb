@@ -31,7 +31,9 @@ class CsvRowParentService
     end
   end
 
-  row_accessor :aspace_uri, :bib, :holding, :item, :barcode, :oid, :admin_set, :preservica_uri, :visibility, :digital_object_source, :authoritative_metadata_source_id, :preservica_representation_name
+  row_accessor :aspace_uri, :bib, :holding, :item, :barcode, :oid, :admin_set,
+               :preservica_uri, :visibility, :digital_object_source,
+               :authoritative_metadata_source_id, :preservica_representation_name
 
   def parent_object
     @parent_object ||= ParentObject.create(properties_hash)

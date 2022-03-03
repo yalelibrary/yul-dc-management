@@ -177,6 +177,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         end
 
         setup_for_background_jobs(parent_object, row['source'])
+        parent_object.last_preservica_update = Time.current
       else
         oid = row['oid']
         metadata_source = row['source']
@@ -332,6 +333,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     ParentObject.create(oid: oid) do |parent_object|
       set_values_from_mets(parent_object, metadata_source)
     end
+
+    # Question - does this still need to be here?
     PreservicaIngest.create(parent_oid: oid, preservica_id: mets_doc.parent_uuid, batch_process_id: id, ingest_time: Time.current) unless mets_doc.parent_uuid.nil?
   end
 
