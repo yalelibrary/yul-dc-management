@@ -1,4 +1,4 @@
-FROM yalelibraryit/dc-base:v1.2.1
+FROM yalelibraryit/dc-base:v1.3.0
 
 COPY ops/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 COPY ops/env.conf /etc/nginx/main.d/env.conf
@@ -13,15 +13,27 @@ RUN apt-get update && apt-get install -y libtiff-tools liblcms2-dev libexif-dev 
 
 COPY ops/policy.xml /etc/ImageMagick-6/policy.xml
 
-ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
-BUNDLE_JOBS=4
-RUN gem install bundler -v 2.1.4
-
-COPY vips_8.10.2-1_amd64.deb $APP_HOME
-RUN dpkg -i ./vips_8.10.2-1_amd64.deb
-RUN vips --version
+# Compile and install vips 8.10.6
+# TODO building new packages is broken in this version of 20.04, once an update is released
+# the faster pre built package version can be brought back
+COPY --chown=app ops/vips $APP_HOME/ops/vips
+RUN bash -l -c " \
+  wget https://github.com/libvips/libvips/releases/download/v8.10.6/vips-8.10.6.tar.gz && \
+  tar zxfv vips-8.10.6.tar.gz && \
+  cd vips-8.10.6 && \
+  ./configure && \
+  make && \
+  make install && \
+  ldconfig"
+# COPY vips_8.10.2-1_amd64.deb $APP_HOME
+# RUN dpkg -i ./vips_8.10.2-1_amd64.deb
+# RUN vips --version
 
 COPY jpegs2pdf-1.2.jar $APP_HOME
+
+ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
+BUNDLE_JOBS=4
+RUN /sbin/setuser app bash -l -c "gem install bundler -v 2.3.8"
 
 COPY --chown=app Gemfile* $APP_HOME/
 RUN /sbin/setuser app bash -l -c "bundle check || bundle install"
