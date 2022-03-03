@@ -83,7 +83,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def from_upstream_for_the_first_time?
-    from_ladybird_for_the_first_time? || from_mets_for_the_first_time? || from_preservica_for_the_first_time?
+    from_ladybird_for_the_first_time? || from_mets_for_the_first_time? || (from_preservica_for_the_first_time? && digital_object_source == "Preservica")
   end
 
   def self.cannot_reindex
@@ -127,7 +127,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
       upsert_preservica_ingest_child_objects(array_preservica_hashes_from_mets) unless array_preservica_hashes_from_mets.nil?
-    elsif digital_object_source.present?
+    elsif digital_object_source == "Preservica"
       upsert_child_objects(array_of_child_hashes_from_preservica) unless array_of_child_hashes_from_preservica.nil?
     else
       return unless ladybird_json
