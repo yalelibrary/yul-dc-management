@@ -1,0 +1,109 @@
+<GenerationResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3">
+  <xip:Generation original="true" active="true">
+    <xip:ContentObject>2e328d84-e429-4d46-a865-9ee11157b504</xip:ContentObject>
+    <xip:FormatGroup>tiff</xip:FormatGroup>
+    <xip:EffectiveDate>2021-12-08T14:56:04.030-05:00</xip:EffectiveDate>
+    <xip:Bitstreams>
+      <xip:Bitstream>mss_29_s03_b092_f0019_0001.tif</xip:Bitstream>
+    </xip:Bitstreams>
+    <xip:Formats>
+      <xip:Format valid="true">
+        <xip:PUID>fmt/353</xip:PUID>
+        <xip:Priority>1</xip:Priority>
+        <xip:IdentificationMethod>Signature</xip:IdentificationMethod>
+        <xip:FormatName>Tagged Image File Format</xip:FormatName>
+        <xip:FormatVersion></xip:FormatVersion>
+      </xip:Format>
+    </xip:Formats>
+    <xip:Properties>
+      <xip:Property>
+        <xip:Group>TIFF Page 0</xip:Group>
+        <xip:PUID>prp/1</xip:PUID>
+        <xip:PropertyName>Compression Type</xip:PropertyName>
+        <xip:Value>Uncompressed</xip:Value>
+      </xip:Property>
+      <xip:Property>
+        <xip:Group>TIFF Page 0</xip:Group>
+        <xip:PUID>prp/3</xip:PUID>
+        <xip:PropertyName>Image Width</xip:PropertyName>
+        <xip:Value>3281</xip:Value>
+      </xip:Property>
+      <xip:Property>
+        <xip:Group>TIFF Page 0</xip:Group>
+        <xip:PUID>prp/4</xip:PUID>
+        <xip:PropertyName>Image Height</xip:PropertyName>
+        <xip:Value>4199</xip:Value>
+      </xip:Property>
+      <xip:Property>
+        <xip:Group>TIFF Page 0</xip:Group>
+        <xip:PUID>prp/7</xip:PUID>
+        <xip:PropertyName>X Sampling Frequency</xip:PropertyName>
+        <xip:Value>400</xip:Value>
+      </xip:Property>
+        <xip:Property>
+        <xip:Group>TIFF Page 0</xip:Group>
+        <xip:PUID>prp/8</xip:PUID>
+        <xip:PropertyName>Y Sampling Frequency</xip:PropertyName>
+      <xip:Value>400</xip:Value>
+      </xip:Property>
+        <xip:Property>
+        <xip:Group>TIFF Page 0</xip:Group>
+        <xip:PUID>prp/6</xip:PUID>
+        <xip:PropertyName>Sampling Frequency Unit</xip:PropertyName>
+        <xip:Value>in.</xip:Value>
+      </xip:Property>
+      <xip:Property>
+        <xip:Group>TIFF Page 0</xip:Group>
+        <xip:PUID>prp/5</xip:PUID>
+        <xip:PropertyName>Colour Space</xip:PropertyName>
+        <xip:Value>RGB</xip:Value>
+      </xip:Property>
+      <xip:Property>
+        <xip:Group>TIFF Page 0</xip:Group>
+        <xip:PUID>prp/13</xip:PUID>
+        <xip:PropertyName>Byte Order</xip:PropertyName>
+        <xip:Value>little endian</xip:Value>
+      </xip:Property>
+      <xip:Property>
+        <xip:Group>TIFF Page 0</xip:Group>
+        <xip:PUID>prp/9</xip:PUID>
+        <xip:PropertyName>Bits Per Sample</xip:PropertyName>
+        <xip:Value>8</xip:Value>
+      </xip:Property>
+      <xip:Property>
+        <xip:Group>TIFF Page 0</xip:Group>
+        <xip:PUID>prp/9</xip:PUID>
+        <xip:PropertyName>Bits Per Sample</xip:PropertyName>
+        <xip:Value>8</xip:Value>
+      </xip:Property>
+      <xip:Property>
+        <xip:Group>TIFF Page 0</xip:Group>
+        <xip:PUID>prp/9</xip:PUID>
+        <xip:PropertyName>Bits Per Sample</xip:PropertyName>
+        <xip:Value>8</xip:Value>
+      </xip:Property>
+      <xip:Property>
+        <xip:Group>TIFF Page 0</xip:Group>
+        <xip:PUID>prp/10</xip:PUID>
+        <xip:PropertyName>Samples Per Pixel</xip:PropertyName>
+        <xip:Value>3</xip:Value>
+      </xip:Property>
+      <xip:Property>
+        <xip:Group>TIFF Page 0</xip:Group>
+        <xip:PUID>TSS-prp/14</xip:PUID>
+        <xip:PropertyName>Camera</xip:PropertyName>
+        <xip:Value>Indus Color Book Scanner 5002</xip:Value>
+      </xip:Property>
+    </xip:Properties>
+  </xip:Generation>
+  <Bitstreams>
+  <Bitstream filename="mss_29_s03_b092_f0019_0001.tif">
+  https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b504/generations/1/bitstreams/1
+  </Bitstream>
+  </Bitstreams>
+  <AdditionalInformation>
+  <Self>
+  https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b504/generations/1
+  </Self>
+  </AdditionalInformation>
+</GenerationResponse>
