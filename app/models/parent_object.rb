@@ -147,24 +147,42 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def array_of_child_hashes_from_preservica
-    structured_object = Preservica::StructuralObject.where(admin_set_key: admin_set.key, id: (preservica_uri.split('/')[-1]).to_s)
+    # Pattern One
+    if preservica_uri.include?('structural')
+      structured_object = Preservica::StructuralObject.where(admin_set_key: admin_set.key, id: (preservica_uri.split('/')[-1]).to_s)
+      information_objects = structured_object.information_objects
+      information_objects.map.with_index(1) do |child_hash, index|
+        co_oid = OidMinterService.generate_oids(1)[0]
+        preservica_copy_to_access(child_hash, co_oid)
 
-    information_objects = structured_object.information_objects
+        { oid: co_oid,
+          parent_object_oid: oid,
+          preservica_content_object_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_object_uri,
+          preservica_generation_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].generation_uri,
+          preservica_bitstream_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstream_uri,
+          sha512_checksum: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstreams[0].sha512_checksum,
+          order: index }
+      end
+    # Pattern Two
+    elsif preservica_uri.include?('information')
+      information_object = Preservica::InformationObject.where(admin_set_key: admin_set.key, id: (preservica_uri.split('/')[-1]).to_s)
+      representation = information_object.fetch_by_representation_name(preservica_representation_name)[0]
+      content_objects = representation.content_objects
+      content_objects.map.with_index(1) do |child_hash, index|
+        co_oid = OidMinterService.generate_oids(1)[0]
+        preservica_copy_to_access(child_hash, co_oid)
 
-    # TODO: download_to_file to temp directory and then copy from there
-    # Or circumvent process to download file straight to copy
-    information_objects.map.with_index(1) do |child_hash, index|
-      co_oid = OidMinterService.generate_oids(1)[0]
-      preservica_copy_to_access(child_hash, co_oid)
-
-      { oid: co_oid,
+        { oid: co_oid,
         parent_object_oid: oid,
-        preservica_content_object_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_object_uri,
-        preservica_generation_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].generation_uri,
-        preservica_bitstream_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstream_uri,
-        sha512_checksum: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstreams[0].sha512_checksum,
+        preservica_content_object_uri: representation.content_object_uri,
+        preservica_generation_uri: child_hash.active_generations[0].generation_uri,
+        preservica_bitstream_uri: child_hash.active_generations[0].bitstream_uri,
+        sha512_checksum: child_hash.active_generations[0].bitstreams[0].sha512_checksum,
         order: index }
-    end
+      end
+    else
+      nil
+    end 
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength

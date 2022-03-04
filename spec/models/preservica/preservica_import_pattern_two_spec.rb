@@ -7,7 +7,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl') }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent.csv")) }
-  let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_with_children.csv")) }
+  let(:preservica_parent_with_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_with_children_pattern_2.csv")) }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -101,10 +101,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   it 'can create child objects' do
     allow(S3Service).to receive(:s3_exists?).and_return(false)
     expect(File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")).to be false
-    expect(File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")).to be false
-    expect(File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")).to be false
     expect do
-      batch_process.file = preservica_parent_with_children
+      batch_process.file = preservica_parent_with_children_pattern_2
       batch_process.save
     end.to change { ChildObject.count }.from(0).to(3)
     po_first = ParentObject.first
@@ -122,11 +120,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     # allows time for the files to be created
     sleep 2
     expect(File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")).to be true
-    expect(File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")).to be true
-    expect(File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")).to be true
     expect(co_first.ptiff_conversion_at.present?).to be_truthy
     File.delete("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")
-    File.delete("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")
-    File.delete("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")
   end
 end
