@@ -171,10 +171,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       content_objects.map.with_index(1) do |child_hash, index|
         co_oid = OidMinterService.generate_oids(1)[0]
         preservica_copy_to_access(child_hash, co_oid)
-
         { oid: co_oid,
           parent_object_oid: oid,
-          preservica_content_object_uri: representation.content_object_uri,
+          preservica_content_object_uri: child_hash.content_object_uri,
           preservica_generation_uri: child_hash.active_generations[0].generation_uri,
           preservica_bitstream_uri: child_hash.active_generations[0].bitstream_uri,
           sha512_checksum: child_hash.active_generations[0].bitstreams[0].sha512_checksum,
