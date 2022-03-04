@@ -173,16 +173,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         preservica_copy_to_access(child_hash, co_oid)
 
         { oid: co_oid,
-        parent_object_oid: oid,
-        preservica_content_object_uri: representation.content_object_uri,
-        preservica_generation_uri: child_hash.active_generations[0].generation_uri,
-        preservica_bitstream_uri: child_hash.active_generations[0].bitstream_uri,
-        sha512_checksum: child_hash.active_generations[0].bitstreams[0].sha512_checksum,
-        order: index }
+          parent_object_oid: oid,
+          preservica_content_object_uri: representation.content_object_uri,
+          preservica_generation_uri: child_hash.active_generations[0].generation_uri,
+          preservica_bitstream_uri: child_hash.active_generations[0].bitstream_uri,
+          sha512_checksum: child_hash.active_generations[0].bitstreams[0].sha512_checksum,
+          order: index }
       end
-    else
-      nil
-    end 
+    end
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
@@ -193,7 +191,15 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     directory = format("%02d", pairtree_path.first)
     FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
     access_master_path = File.join(image_mount, directory, pairtree_path, "#{co_oid}.tif")
-    child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstreams[0].download_to_file(access_master_path)
+    # Pattern One
+    if preservica_uri.include?('structural')
+      # child hash is information object
+      child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstreams[0].download_to_file(access_master_path)
+    # Pattern Two
+    elsif preservica_uri.include?('information')
+      # child hash is content object
+      child_hash.active_generations[0].bitstreams[0].download_to_file(access_master_path)
+    end
   end
 
   def upsert_preservica_ingest_child_objects(preservica_ingest_hash)

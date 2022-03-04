@@ -100,27 +100,25 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
 
   it 'can create child objects' do
     allow(S3Service).to receive(:s3_exists?).and_return(false)
-    expect(File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")).to be false
+    expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be false
     expect do
       batch_process.file = preservica_parent_with_children_pattern_2
       batch_process.save
-    end.to change { ChildObject.count }.from(0).to(3)
+    end.to change { ChildObject.count }.from(0).to(1)
     po_first = ParentObject.first
     co_first = ChildObject.first
-    expect(co_first.oid).to be 200_000_004
+    expect(co_first.oid).to be 200_000_002
     expect(co_first.parent_object_oid).to be 200_000_000
     expect(co_first.order).to be 1
-    co_last = ChildObject.last
-    expect(co_last.order).to be 3
     expect(po_first.last_preservica_update).not_to be nil
-    expect(co_first.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b503"
-    expect(co_first.preservica_generation_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b503/generations/1"
-    expect(co_first.preservica_bitstream_uri).to eq "/home/app/webapp/spec/fixtures/preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b503/generations/1/bitstreams/1"
+    expect(co_first.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b500"
+    expect(co_first.preservica_generation_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b500/generations/1"
+    expect(co_first.preservica_bitstream_uri).to eq "/home/app/webapp/spec/fixtures/preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b500/generations/1/bitstreams/1"
     expect(co_first.sha512_checksum).to eq "1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7"
     # allows time for the files to be created
     sleep 2
-    expect(File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")).to be true
+    expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be true
     expect(co_first.ptiff_conversion_at.present?).to be_truthy
-    File.delete("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")
+    File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
   end
 end

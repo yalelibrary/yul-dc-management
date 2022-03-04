@@ -167,6 +167,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable  Metrics/AbcSize
   # rubocop:disable  Metrics/MethodLength
   # rubocop:disable  Metrics/PerceivedComplexity
+  # rubocop:disable  Metrics/CyclomaticComplexity
   def create_new_parent_csv
     parsed_csv.each_with_index do |row, index|
       if row['digital_object_source'].present? && row['preservica_uri'].present?
@@ -203,6 +204,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable  Metrics/AbcSize
   # rubocop:enable  Metrics/MethodLength
   # rubocop:enable  Metrics/PerceivedComplexity
+  # rubocop:enable  Metrics/CyclomaticComplexity
 
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
   def editable_admin_set(admin_set_key, oid, index)
