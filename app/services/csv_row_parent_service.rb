@@ -84,6 +84,7 @@ class CsvRowParentService
     row['digital_object_source']
   end
 
+  # rubocop:disable Metrics/LineLength
   def admin_set
     admin_sets_hash = {}
     admin_set_key = row['admin_set']
@@ -92,6 +93,8 @@ class CsvRowParentService
 
     raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}", 'Skipped Row') if admin_set.blank?
 
+    raise BatchProcessingError.new("Skipping row [#{index + 2}] with admin set [#{admin_set_key}] for parent: #{oid}. Preservica credentials not set for #{admin_set_key}.", 'Skipped Row') unless admin_set.preservica_credentials_verified
+
     unless current_ability.can?(:add_member, admin_set)
       raise BatchProcessingError.new("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{oid}",
                                      'Permission Denied')
@@ -99,6 +102,7 @@ class CsvRowParentService
 
     admin_set
   end
+  # rubocop:enable Metrics/LineLength
 
   def authoritative_metadata_source_id
     ms = row['source']
