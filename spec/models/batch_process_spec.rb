@@ -24,10 +24,19 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
     ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "images", "access_masters")
     ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
+    preservica_host = ENV['PRESERVICA_HOST']
+    preservica_creds = ENV['PRESERVICA_CREDENTIALS']
+    ENV['PRESERVICA_HOST'] = "testpreservica"
+    ENV['PRESERVICA_CREDENTIALS'] = '{"brbl": {"username":"xxxxx", "password":"xxxxx"}}'
+    access_host = ENV['ACCESS_MASTER_MOUNT']
+    ENV['ACCESS_MASTER_MOUNT'] = File.join("spec", "fixtures", "images", "access_masters")
     example.run
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
     ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
     ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
+    ENV['PRESERVICA_HOST'] = preservica_host
+    ENV['PRESERVICA_CREDENTIALS'] = preservica_creds
+    ENV['ACCESS_MASTER_MOUNT'] = access_host
   end
 
   before do
