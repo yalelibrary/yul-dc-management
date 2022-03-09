@@ -8,7 +8,8 @@ worker_group do |g|
   g.workers = Integer(worker_count)
   worker_queue = (ENV['WORKER_QUEUES'] && ENV['WORKER_QUEUES'].size > 0) ? ENV['WORKER_QUEUES'] : 'default,manifest,ptiff,zeros,metadata,solr_index,pdf,intensive_solr_index'
   g.queues = worker_queue.split(',')
-  g.sleep_delay = ENV['WORKER_SLEEP_DELAY']
+  sleep_delay = (ENV('WORKER_SLEEP_DELAY') && ENV('WORKER_SLEEP_DELAY').size > 0) ? ENV('WORKER_SLEEP_DELAY') : 5
+  g.sleep_delay = Integer(sleep_delay)
   # rubocop:enable Style/TernaryParentheses,Style/ZeroLengthPredicate,Style/NumericPredicate
 end
 
