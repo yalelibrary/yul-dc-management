@@ -394,7 +394,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # COUNTS CURRENT STATUSES
   def status_hash
     @status_hash ||= {
-      complete: connected_statuses.count("Complete"),
+      complete: connected_statuses.count("Complete") + connected_statuses.count("Parent object deleted successfully"),
       in_progress: connected_statuses.count("In progress - no failures"),
       failed: connected_statuses.count("Failed"),
       unknown: connected_statuses.count("Unknown"),
