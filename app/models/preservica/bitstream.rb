@@ -12,7 +12,7 @@ class Preservica::Bitstream
 
   def sha512_checksum
     xml.xpath('//Fixity').each do |node|
-      return node.xpath("//FixityValue/text()").text.strip if node.xpath("//FixityAlgorithmRef/text()").text == "SHA512"
+      return node.at("FixityValue").text.strip if node.at("FixityAlgorithmRef").text == "SHA512"
     end
     nil
   end
