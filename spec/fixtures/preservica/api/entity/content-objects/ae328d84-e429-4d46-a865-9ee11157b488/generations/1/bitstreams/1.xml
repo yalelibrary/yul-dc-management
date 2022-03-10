@@ -5,6 +5,12 @@
     <xip:FileSize>2274948</xip:FileSize>
     <xip:Fixities>
       <xip:Fixity>
+        <xip:FixityAlgorithmRef>SHA256</xip:FixityAlgorithmRef>
+        <xip:FixityValue>
+          28e5828f122c135f37c83f1428dd876dc65e6bddb4dbb6705fabd468540f35c2
+        </xip:FixityValue>
+      </xip:Fixity>
+      <xip:Fixity>
         <xip:FixityAlgorithmRef>SHA512</xip:FixityAlgorithmRef>
         <xip:FixityValue>
           329f67d6c5cd707e6b7af8dd129e872369351faad8b63b2c80518cc54b386d7ec646e85873d28e6f904e44d9824506d1e055f2f716f0101afb948925e9713cc8
