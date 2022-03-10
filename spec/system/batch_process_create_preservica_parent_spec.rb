@@ -26,7 +26,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         user.add_role(:editor, admin_set)
       end
 
-      it "deletes the parent and artifacts except for full text" do
+      it "creates the parent and children" do
         # perform batch create
         visit batch_processes_path
         select("Create Parent Objects")
@@ -36,11 +36,10 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
         # parent/child object create
         expect(ParentObject.count).to eq 1
-        expect(ChildObject.count).to eq 0
+        expect(ChildObject.count).to eq 3
 
         visit "/batch_processes/#{BatchProcess.last.id}"
         expect(page).to have_content "Status: View Messages"
-        expect(page).to have_content "Child Objects not created because tifs were not found at URI provided"
       end
     end
   end

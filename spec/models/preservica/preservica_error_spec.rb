@@ -43,4 +43,13 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with admin set [brbl] for parent: 200000000. Preservica credentials not set for brbl.")
     end.not_to change { ParentObject.count }
   end
+
+  # Potential Errors
+  # loss of connection / authorization
+  # structural object doesn't exist
+  # information object doesn't exist
+  # representation does not have 'Preservation' has only 'Access'
+  # no active generations
+  # bitstream checksum mismatch
+  # if no sha512 is found
 end
