@@ -3,6 +3,11 @@ DEFAULT DESKTOP STYLING
 ********************************************************/
 @import 'theme/colors', 'theme/typography', 'theme/breakpoints';
 
+.table-responsive {
+  overflow-x: -moz-scrollbars-horizontal;
+  overflow-x: scroll;
+}
+
 .delete-item-container,
 .update-item-container {
   display: grid;
