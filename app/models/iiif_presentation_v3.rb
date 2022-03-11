@@ -48,7 +48,7 @@ class IiifPresentationV3
     @manifest['type'] = "Manifest"
     manifest_descriptive_properties
     @manifest['provider'] = [provider]
-    @manifest["viewingDirection"] = [@parent_object.viewing_direction] unless @parent_object.viewing_direction.nil? || @parent_object.viewing_direction.empty?
+    @manifest["viewingDirection"] = @parent_object.viewing_direction unless @parent_object.viewing_direction.nil? || @parent_object.viewing_direction.empty?
     @manifest["behavior"] = [@parent_object.display_layout] unless @parent_object.display_layout.nil? || @parent_object.display_layout.empty?
     @manifest["items"] = []
     add_canvases_to_manifest(@manifest['items'])
