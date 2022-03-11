@@ -173,10 +173,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       if row['digital_object_source'].present? && row['preservica_uri'].present?
         begin
           parent_object = CsvRowParentService.new(row, index, current_ability, user).parent_object
-          if parent_object
-            setup_for_background_jobs(parent_object, row['source']) unless parent_object.nil?
-            attach_item(parent_object)
-          end
+          setup_for_background_jobs(parent_object, row['source'])
+          attach_item(parent_object)
         rescue CsvRowParentService::BatchProcessingError => e
           batch_processing_event(e.message, e.kind)
         end
