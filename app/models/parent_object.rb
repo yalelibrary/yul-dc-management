@@ -128,9 +128,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       upsert_preservica_ingest_child_objects(array_preservica_hashes_from_mets) unless array_preservica_hashes_from_mets.nil?
     elsif digital_object_source == "Preservica"
       child_hashes = array_of_child_hashes_from_preservica # only call array_of_child_hashes_from_preservica once since it causes all images to be downloaded
-      self.last_preservica_update = Time.current
-      save!
-      upsert_child_objects(child_hashes) unless child_hashes.nil?
+      if child_hashes.present?
+        upsert_child_objects(child_hashes)
+        self.last_preservica_update = Time.current
+        save!
+      end
     else
       return unless ladybird_json
       return self.child_object_count = 0 if ladybird_json["children"].empty? && parent_model != 'simple'
