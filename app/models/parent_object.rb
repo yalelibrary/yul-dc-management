@@ -108,8 +108,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Returns true if last_preservica_update has changed from nil to some value,
   # indicating assigning values from the last preservica api call
   def from_preservica_for_the_first_time?
-    return true if last_preservica_update.nil?
-    false
+    last_preservica_update.nil?
   end
 
   def start_states
@@ -128,7 +127,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       upsert_child_objects(array_of_child_hashes_from_mets)
       upsert_preservica_ingest_child_objects(array_preservica_hashes_from_mets) unless array_preservica_hashes_from_mets.nil?
     elsif digital_object_source == "Preservica"
-      upsert_child_objects(array_of_child_hashes_from_preservica) unless array_of_child_hashes_from_preservica.nil?
+      child_hashes = array_of_child_hashes_from_preservica # only call array_of_child_hashes_from_preservica once since it causes all images to be downloaded
+      self.last_preservica_update = Time.current
+      save!
+      upsert_child_objects(child_hashes) unless child_hashes.nil?
     else
       return unless ladybird_json
       return self.child_object_count = 0 if ladybird_json["children"].empty? && parent_model != 'simple'
