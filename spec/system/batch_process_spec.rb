@@ -221,7 +221,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(page).to have_link("sample_fixture_ids.csv", href: "/batch_processes/#{BatchProcess.last.id}/download")
         expect(page).to have_link("sample_fixture_ids_bp_#{BatchProcess.last.id}.csv")
         bp = BatchProcess.last
-        expect(bp.oids).to eq ["2034600", "2005512", "16414889", "14716192", "16854285"]
+        expect(bp.oids).to eq ["2004548", "2005512", "16414889", "14716192", "16854285"]
         click_on("short_fixture_ids_bp_#{BatchProcess.last.id}.csv")
         sleep 1
         File.delete("./short_fixture_ids_bp_#{BatchProcess.last.id}.csv") if File.exist?("./short_fixture_ids_bp_#{BatchProcess.last.id}.csv")
