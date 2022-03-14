@@ -77,21 +77,24 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     end.to change { ParentObject.count }.from(0).to(1)
     po_first = ParentObject.first
     expect(po_first.preservica_representation_name).to eq "Preservation-1"
-    expect(po_first.last_preservica_update).not_to be nil
   end
 
   it 'can create child objects' do
+    File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
+    File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
+    File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
+
     allow(S3Service).to receive(:s3_exists?).and_return(false)
-    expect(File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")).to be false
-    expect(File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")).to be false
-    expect(File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")).to be false
+    expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be false
+    expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be false
+    expect(File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")).to be false
     expect do
       batch_process.file = preservica_parent_with_children
       batch_process.save
     end.to change { ChildObject.count }.from(0).to(3)
     po_first = ParentObject.first
     co_first = ChildObject.first
-    expect(co_first.oid).to be 200_000_004
+    expect(co_first.oid).to be 200_000_001
     expect(co_first.parent_object_oid).to be 200_000_000
     expect(co_first.order).to be 1
     co_last = ChildObject.last
@@ -103,12 +106,12 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expect(co_first.sha512_checksum).to eq "1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7"
     # allows time for the files to be created
     sleep 2
-    expect(File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")).to be true
-    expect(File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")).to be true
-    expect(File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")).to be true
+    expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be true
+    expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be true
+    expect(File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")).to be true
     expect(co_first.ptiff_conversion_at.present?).to be_truthy
-    File.delete("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")
-    File.delete("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")
-    File.delete("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")
+    File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
+    File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
+    File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
   end
 end

@@ -3,6 +3,10 @@ DEFAULT DESKTOP STYLING
 ********************************************************/
 @import 'theme/colors', 'theme/typography', 'theme/breakpoints';
 
+.table-responsive {
+  cursor: all-scroll;
+}
+
 .delete-item-container,
 .update-item-container {
   display: grid;

@@ -184,8 +184,8 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     end
 
     it "includes viewingDirection on the manifest when included on parent_object" do
-      expect(iiif_presentation.manifest["viewingDirection"].class).to eq Array
-      expect(iiif_presentation.manifest["viewingDirection"].first).to eq "left-to-right"
+      expect(iiif_presentation.manifest["viewingDirection"].class).to eq String
+      expect(iiif_presentation.manifest["viewingDirection"]).to eq "left-to-right"
     end
 
     it "includes behavior on the manifest when included on parent_object" do
