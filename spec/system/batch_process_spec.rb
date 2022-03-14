@@ -220,6 +220,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         bp = BatchProcess.last
         expect(bp.oids).to eq ["2034600", "2005512", "16414889", "14716192", "16854285"]
         click_on("short_fixture_ids_bp_#{BatchProcess.last.id}.csv")
+        sleep 1
+        File.delete("./short_fixture_ids_bp_#{BatchProcess.last.id}.csv") if File.exist?("./short_fixture_ids_bp_#{BatchProcess.last.id}.csv")
       end
 
       context "round-tripping csv" do
