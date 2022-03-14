@@ -167,15 +167,17 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable  Metrics/AbcSize
   # rubocop:disable  Metrics/MethodLength
   # rubocop:disable  Metrics/PerceivedComplexity
+  # rubocop:disable  Metrics/CyclomaticComplexity
   def create_new_parent_csv
     parsed_csv.each_with_index do |row, index|
       if row['digital_object_source'].present? && row['preservica_uri'].present?
         begin
           parent_object = CsvRowParentService.new(row, index, current_ability, user).parent_object
+          setup_for_background_jobs(parent_object, row['source'])
+          attach_item(parent_object)
         rescue CsvRowParentService::BatchProcessingError => e
           batch_processing_event(e.message, e.kind)
         end
-        setup_for_background_jobs(parent_object, row['source'])
       else
         oid = row['oid']
         metadata_source = row['source']
@@ -202,6 +204,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable  Metrics/AbcSize
   # rubocop:enable  Metrics/MethodLength
   # rubocop:enable  Metrics/PerceivedComplexity
+  # rubocop:enable  Metrics/CyclomaticComplexity
 
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
   def editable_admin_set(admin_set_key, oid, index)

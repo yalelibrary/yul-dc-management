@@ -21,6 +21,14 @@ class Preservica::Generation
     @format_group ||= load_format_group
   end
 
+  def generation_uri
+    xml.xpath('/GenerationResponse/AdditionalInformation/Self').text.strip
+  end
+
+  def bitstream_uri
+    xml.xpath('/GenerationResponse/Bitstreams/Bitstream').text.strip
+  end
+
   private
 
     def load_bitstreams

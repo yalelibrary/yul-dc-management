@@ -6,7 +6,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
   # parent object has two child objects
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
-  let(:parent_no_children) { FactoryBot.create(:parent_object, oid: "2004630", admin_set_id: admin_set.id) }
+  let(:parent_no_children) { FactoryBot.create(:parent_object, oid: "200463000", admin_set_id: admin_set.id) }
   before do
     stub_ptiffs_and_manifests
     stub_metadata_cloud("2005512")
@@ -159,13 +159,13 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       before do
         login_as user
         user.add_role(:editor, admin_set)
+        parent_no_children
       end
 
       it "does trigger a metadata update" do
         p_o = ParentObject.find_by(oid: parent_no_children.oid)
         # original values
         expect(p_o.redirect_to).to be_nil
-
         # perform batch update
         visit batch_processes_path
         select("Update Parent Objects")

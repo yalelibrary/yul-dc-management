@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RepresentationsResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3">
+  <Representations>
+    <Representation type="Access" name="Access-2">
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Access/1
+    </Representation>
+    <Representation type="Preservation" name="Preservation-1">
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Preservation/1
+    </Representation>
+  </Representations>
+  <Paging>
+    <TotalResults>2</TotalResults>
+  </Paging>
+  <AdditionalInformation>
+    <Self>
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations
+    </Self>
+  </AdditionalInformation>
+</RepresentationsResponse>

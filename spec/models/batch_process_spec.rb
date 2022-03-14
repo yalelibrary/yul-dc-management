@@ -24,10 +24,19 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
     ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "images", "access_masters")
     ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
+    preservica_host = ENV['PRESERVICA_HOST']
+    preservica_creds = ENV['PRESERVICA_CREDENTIALS']
+    ENV['PRESERVICA_HOST'] = "testpreservica"
+    ENV['PRESERVICA_CREDENTIALS'] = '{"brbl": {"username":"xxxxx", "password":"xxxxx"}}'
+    access_host = ENV['ACCESS_MASTER_MOUNT']
+    ENV['ACCESS_MASTER_MOUNT'] = File.join("spec", "fixtures", "images", "access_masters")
     example.run
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
     ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
     ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
+    ENV['PRESERVICA_HOST'] = preservica_host
+    ENV['PRESERVICA_CREDENTIALS'] = preservica_creds
+    ENV['ACCESS_MASTER_MOUNT'] = access_host
   end
 
   before do
@@ -367,10 +376,10 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           end.to change { ParentObject.count }.from(0).to(1)
           generated_po = ParentObject.first
           expect(generated_po.admin_set.key).to eq "brbl"
-          expect(generated_po.aspace_uri).to eq "/repositories/11/archival_objects/515305"
+          expect(generated_po.aspace_uri).to eq "/repositories/11/archival_objects/239964"
           expect(generated_po.bib).to eq "36"
           expect(generated_po.digital_object_source).to eq "Preservica"
-          expect(generated_po.preservica_uri).to eq "/pre_uri"
+          expect(generated_po.preservica_uri).to eq "/structural-objects/b4dbf905-0cff-45f1-90e2-a62b609d6a28"
           expect(generated_po.barcode).to eq "barcode"
           expect(generated_po.holding).to eq "holding"
           expect(generated_po.visibility).to eq "Public"

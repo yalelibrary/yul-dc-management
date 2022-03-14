@@ -83,7 +83,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def from_upstream_for_the_first_time?
-    from_ladybird_for_the_first_time? || from_mets_for_the_first_time?
+    from_ladybird_for_the_first_time? || from_mets_for_the_first_time? || (from_preservica_for_the_first_time? && digital_object_source == "Preservica")
   end
 
   def self.cannot_reindex
@@ -105,6 +105,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     false
   end
 
+  # Returns true if last_preservica_update has changed from nil to some value,
+  # indicating assigning values from the last preservica api call
+  def from_preservica_for_the_first_time?
+    last_preservica_update.nil?
+  end
+
   def start_states
     ['processing-queued']
   end
@@ -115,10 +121,18 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Note - the upsert_all method skips ActiveRecord callbacks, and is entirely
   # database driven. This also makes object creation much faster.
+  # rubocop:disable Metrics/PerceivedComplexity
   def create_child_records
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
       upsert_preservica_ingest_child_objects(array_preservica_hashes_from_mets) unless array_preservica_hashes_from_mets.nil?
+    elsif digital_object_source == "Preservica"
+      child_hashes = array_of_child_hashes_from_preservica # only call array_of_child_hashes_from_preservica once since it causes all images to be downloaded
+      if child_hashes.present?
+        upsert_child_objects(child_hashes)
+        self.last_preservica_update = Time.current
+        save!
+      end
     else
       return unless ladybird_json
       return self.child_object_count = 0 if ladybird_json["children"].empty? && parent_model != 'simple'
@@ -127,10 +141,45 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     self.child_object_count = child_objects.size
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def upsert_child_objects(child_objects_hash)
     raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
     ChildObject.insert_all(child_objects_hash)
+  end
+
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
+  def array_of_child_hashes_from_preservica
+    structured_object = Preservica::StructuralObject.where(admin_set_key: admin_set.key, id: (preservica_uri.split('/')[-1]).to_s)
+
+    information_objects = structured_object.information_objects
+
+    # TODO: download_to_file to temp directory and then copy from there
+    # Or circumvent process to download file straight to copy
+    information_objects.map.with_index(1) do |child_hash, index|
+      co_oid = OidMinterService.generate_oids(1)[0]
+      preservica_copy_to_access(child_hash, co_oid)
+
+      { oid: co_oid,
+        parent_object_oid: oid,
+        preservica_content_object_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_object_uri,
+        preservica_generation_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].generation_uri,
+        preservica_bitstream_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstream_uri,
+        sha512_checksum: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstreams[0].sha512_checksum,
+        order: index }
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
+
+  def preservica_copy_to_access(child_hash, co_oid)
+    pairtree_path = Partridge::Pairtree.oid_to_pairtree(co_oid)
+    image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
+    directory = format("%02d", pairtree_path.first)
+    FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
+    access_master_path = File.join(image_mount, directory, pairtree_path, "#{co_oid}.tif")
+    child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstreams[0].download_to_file(access_master_path)
   end
 
   def upsert_preservica_ingest_child_objects(preservica_ingest_hash)
