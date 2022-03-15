@@ -10,3 +10,8 @@ Delayed::Worker.max_run_time = 2.hours
 Delayed::Worker.default_queue_name = :default
 Delayed::Worker.raise_signal_exceptions = :term
 Delayed::Worker.logger = Rails.logger
+Delayed::Worker.max_attempts = if ENV['RAILS_ENV'] == 'development'
+                                 3
+                               else
+                                 15
+                               end
