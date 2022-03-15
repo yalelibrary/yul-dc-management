@@ -128,7 +128,7 @@ class ChildObject < ApplicationRecord
   end
 
   def thumbnail_url
-    "#{IiifPresentationV3.new(parent_object).image_service_url(oid)}/full/!200,200/0/default.jpg"
+    "#{IiifPresentationV3.new(parent_object).image_service_url(oid)}/full/!1200x630/0/default.jpg"
   end
 
   def width_and_height(size)
