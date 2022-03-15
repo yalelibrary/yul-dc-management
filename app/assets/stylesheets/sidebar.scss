@@ -8,7 +8,7 @@ DEFAULT DESKTOP STYLING
 }
 
 #sidebar-wrapper {
-  min-height: 100vh;
+  min-height: calc(100vh - 60px);
   margin-left: -15rem;
   -webkit-transition: margin .25s ease-out;
   -moz-transition: margin .25s ease-out;
@@ -62,7 +62,7 @@ DEFAULT DESKTOP STYLING
 //Body
 #page-content-wrapper {
   min-width: 100vw;
-  margin: 33px;
+  margin: 8px 33px 0;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -83,4 +83,16 @@ DEFAULT DESKTOP STYLING
   #wrapper.toggled #sidebar-wrapper {
     margin-left: -15rem;
   }
+}
+
+.branch-name {
+  text-transform: none;
+  font-size: 10px;
+  padding: 1rem 2.25rem;
+  line-height: normal;
+  color: lightgrey;
+}
+
+.branch-name:hover {
+  color: $sidebar_links;
 }

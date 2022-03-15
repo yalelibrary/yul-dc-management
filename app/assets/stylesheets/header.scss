@@ -5,8 +5,8 @@ DEFAULT DESKTOP STYLING
 
 .main_yale_management_banner{
   background-color: $yale_blue;
-  height: 70px;
-  padding: 1% 0 0 2%;
+  height: 60px;
+  padding-left: 2%;
   display: flex;
   align-items: center;
 }
@@ -22,9 +22,8 @@ DEFAULT DESKTOP STYLING
   border-color: rgba(4, 54, 105, 0.4);
 }
 
-.sub_yale_management_banner h2{
-  color: $yale_blue;
+span.sub_yale_management_banner {
   font-family: $mallory_light;
   font-size: 24px;
-  padding: 0.75% 0 0 2%;
+  color: white;
 }

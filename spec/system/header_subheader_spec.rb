@@ -20,8 +20,7 @@ RSpec.describe 'header and subheader', type: :system, js: true do
 
   context 'the subheader' do
     it 'has css' do
-      expect(page).to have_css '.sub_yale_management_banner'
-      expect(page).to have_css '.sub_yale_management_banner h2'
+      expect(page).to have_css 'span.sub_yale_management_banner'
     end
 
     it 'has text for Yale branding' do

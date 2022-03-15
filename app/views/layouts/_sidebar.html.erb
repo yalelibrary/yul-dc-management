@@ -23,5 +23,10 @@
           Sign In link *must* use post method, not get -->
       <%= button_to 'Sign In', user_cas_omniauth_authorize_path, class: 'list-group-item list-group-item-action bg-light sign-button' %>
     <% end %>
+    <div class="branch-name">
+      Branch: <span title="SHA:<%=GIT_SHA%>"><%=ENV['MANAGEMENT_VERSION']||GIT_BRANCH%></span>
+      <br>
+      Deployed: <%=DEPLOYED_AT%>
+    </div>
   </div>
 </div>
