@@ -54,7 +54,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
     it "can index a thumbnail path to Solr" do
       solr_document = parent_object.reload.to_solr
-      expect(solr_document[:thumbnail_path_ss]).to eq "http://localhost:8182/iiif/2/1126257/full/!1200x630/0/default.jpg"
+      expect(solr_document[:thumbnail_path_ss]).to eq "http://localhost:8182/iiif/2/1126257/full/!1200,630/0/default.jpg"
     end
 
     it "can index project identifier" do

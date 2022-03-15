@@ -21,7 +21,7 @@ class IiifPresentationV3
   end
 
   def image_url(oid)
-    "#{image_service_url(oid)}/full/!1200x630/0/default.jpg"
+    "#{image_service_url(oid)}/full/!1200,630/0/default.jpg"
   end
 
   def initialize(parent_object)
