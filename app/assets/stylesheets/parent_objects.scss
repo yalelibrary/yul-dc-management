@@ -7,6 +7,10 @@ DEFAULT DESKTOP STYLING
   cursor: all-scroll;
 }
 
+.child-list ol {
+  margin-left: 60px;
+}
+
 .delete-item-container,
 .update-item-container {
   display: grid;
@@ -36,25 +40,27 @@ DEFAULT DESKTOP STYLING
 
 .metadata-block {
   display: flex;
+  flex-flow: row wrap
 }
 
-.metadata-block p {
+.metadata-block dt {
   font-size: 14px;
   color: $medium_grey;
   font-family: $mallory_medium, Arial, Helvetica, sans-serif !important;
   font-weight: 500;
-  padding-left: 20px;
+  float: left;
+  width: 20%;
+  margin-top: 5px;
 }
 
-.metadata-block h1 {
+.metadata-block dd {
   font-size: 14px;
   color: $medium_grey;
   font-family: $mallory_medium, Arial, Helvetica, sans-serif !important;
-  font-weight: 900;
-}
-
-.metadata-block img {
-  margin-top: 15px;
+  font-weight: 500;
+  float: right;
+  width: 80%;
+  margin-top: 5px;
 }
 
 .show-header {
