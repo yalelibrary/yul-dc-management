@@ -342,14 +342,14 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
     context "redirected parent objects" do
       let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, redirect_to: "https://collections.library.yale.edu/catalog/123") }
-      
+
       before do
         stub_metadata_cloud("2012036", "ladybird")
         parent_object
       end
-      
+
       it "will not update metadata" do
-        time_then = Time.now
+        time_then = Time.current
         parent_object.last_ladybird_update = time_then
         visit parent_objects_path
         click_on("Update Metadata")
