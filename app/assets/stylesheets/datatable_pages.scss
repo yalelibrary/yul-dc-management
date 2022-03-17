@@ -37,10 +37,6 @@ DEFAULT DESKTOP STYLING
   padding: 0;
 }
 
-.expanded {
-  //display: table;
-}
-
 .dataTables_length {
   font-family: $standard_font_family;
   font-size: 17px;
@@ -128,19 +124,10 @@ DEFAULT DESKTOP STYLING
   font-size: 18px;
 }
 
-
 table.dataTable {
   max-height: calc(100vh - 360px);
-  //th {
-  //  white-space: nowrap;
-  //}
 }
 
 table#batch-processes-datatable {
   max-height: calc(100vh - 480px);
-  //white-space: nowrap;
-}
-
-table#parent-objects-datatable, table#reoccurring-job-datatable {
-  //white-space: nowrap;
 }
