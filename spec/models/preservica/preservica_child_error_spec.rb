@@ -103,7 +103,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
   end
 
-
   # Potential Errors
   # loss of connection / authorization
   # structural object doesn't exist
@@ -112,4 +111,24 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   # no active generations
   # bitstream checksum mismatch
   # if no sha512 is found
+
+  it 'can send an error when there is no connection' do
+    stub_request(:post, "https://testpreservica/api/accesstoken/login").to_return(status: 403, body: '{"token":"access denied"}')
+    expect do
+      batch_process.file = preservica_parent_with_children
+      batch_process.save
+    end.to change { ChildObject.count }.by(0)
+    parent_object = batch_process.parent_objects.first
+    allow(parent_object).to receive(:processing_event).and_return(
+      IngestEvent.create(
+        status: "failed",
+        reason: "Unable to login",
+        batch_connection: parent_object.batch_connections.first
+      )
+    )
+    batch_process.batch_connections.first.update_status!
+    expect(parent_object.status_for_batch_process(batch_process)).to eq "Failed"
+    expect(parent_object.latest_failure(batch_process)).to be_an_instance_of Hash
+    expect(parent_object.latest_failure(batch_process)[:reason]).to eq "Unable to login"
+  end
 end
