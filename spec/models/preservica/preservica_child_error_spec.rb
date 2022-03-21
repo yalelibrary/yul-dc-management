@@ -9,6 +9,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent.csv")) }
   let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_with_children.csv")) }
   let(:preservica_parent_no_structural) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_no_structural.csv")) }
+  let(:preservica_parent_no_information_pattern_1) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_no_information_pattern_1.csv")) }
+  let(:preservica_parent_no_information_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_no_information_pattern_2.csv")) }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -33,6 +35,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     stub_request(:post, "https://testpreservica/api/accesstoken/login").to_return(status: 200, body: '{"token":"test"}')
     stub_request(:post, "https://testpreservica/api/accesstoken/refresh").to_return(status: 200, body: '{"token":"test"}')
     fixtures = %w[preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5/children
+                  preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e4b/children
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Access-2
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Preservation-1
@@ -129,6 +132,24 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
       expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with structural object id [7fe35e8c-c21a-444a-a2e2-e3c926b519d6]. No matching id found in Preservica.")
+    end.to change { ChildObject.count }.by(0)
+  end
+
+  it 'can send an error when there is no matching information object id with pattern 1' do
+    expect do
+      batch_process.file = preservica_parent_no_information_pattern_1
+      batch_process.save
+      expect(batch_process.batch_ingest_events.count).to eq(1)
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with information object id [1e42a2bb-8953-41b6-bcc3-1a19c86a5e3z]. No matching id found in Preservica.")
+    end.to change { ChildObject.count }.by(0)
+  end
+
+  it 'can send an error when there is no matching information object id with pattern 2' do
+    expect do
+      batch_process.file = preservica_parent_no_information_pattern_2
+      batch_process.save
+      expect(batch_process.batch_ingest_events.count).to eq(1)
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with information object id [2e42a2bb-8953-41b6-bcc3-1a19c86a5e5c]. No matching id found in Preservica.")
     end.to change { ChildObject.count }.by(0)
   end
 end

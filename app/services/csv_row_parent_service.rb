@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 class CsvRowParentService
   class BatchProcessingError < StandardError
     attr_reader :kind
@@ -51,6 +52,7 @@ class CsvRowParentService
   def verify_properties
     check_login
     check_structural_id
+    check_information_id
   end
 
   def check_login
@@ -60,11 +62,43 @@ class CsvRowParentService
   end
 
   def check_structural_id
+    return unless row['preservica_uri'].include?('structural')
     structural_object = Preservica::StructuralObject.where(admin_set_key: row['admin_set'], id: (row['preservica_uri'].split('/')[-1]).to_s)
-    structural_object.information_objects
-    # TODO: connect to preservica test and get error from actual api call
+    begin
+      structural_object.information_objects
+      # TODO: connect to preservica test and get error from actual api call
+    rescue Errno::ECONNREFUSED, Net::OpenTimeout
+      raise BatchProcessingError.new("Skipping row with structural object id [#{(row['preservica_uri'].split('/')[-1])}]. No matching id found in Preservica.", "Skipped Row")
+    end
+  end
+
+  def check_information_id
+    if row['preservica_uri'].include?('structural')
+      info_pattern_one
+    elsif row['preservica_uri'].include?('information')
+      info_pattern_two
+    else
+      raise BatchProcessingError.new("Skipping row with object id [#{row['preservica_uri']}]. Must be an information object or structural object.", "Skipped Row")
+    end
+  end
+
+  def info_pattern_one
+    structural_object = Preservica::StructuralObject.where(admin_set_key: row['admin_set'], id: (row['preservica_uri'].split('/')[-1]).to_s)
+    information_objects = structural_object.information_objects
+    information_objects.each do |io|
+      begin
+        io.fetch_by_representation_name(preservica_representation_name)[0]
+      rescue Errno::ECONNREFUSED, Net::OpenTimeout
+        raise BatchProcessingError.new("Skipping row with information object id [#{io.id}]. No matching id found in Preservica.", "Skipped Row")
+      end
+    end
+  end
+
+  def info_pattern_two
+    information_object = Preservica::InformationObject.where(admin_set_key: row['admin_set'], id: (row['preservica_uri'].split('/')[-1]).to_s)
+    information_object.fetch_by_representation_name(row['preservica_representation_name'])[0]
   rescue Errno::ECONNREFUSED, Net::OpenTimeout
-    raise BatchProcessingError.new("Skipping row with structural object id [#{(row['preservica_uri'].split('/')[-1])}]. No matching id found in Preservica.", "Skipped Row")
+    raise BatchProcessingError.new("Skipping row with information object id [#{information_object.id}]. No matching id found in Preservica.", "Skipped Row")
   end
 
   def parent_model
@@ -135,3 +169,4 @@ class CsvRowParentService
     ms
   end
 end
+# rubocop:enable Metrics/ClassLength
