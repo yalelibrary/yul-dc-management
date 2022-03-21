@@ -44,7 +44,27 @@ class CsvRowParentService
   end
 
   def oid
+    verify_properties
     @oid ||= OidMinterService.generate_oids(1)[0]
+  end
+
+  def verify_properties
+    check_login
+    check_structural_id
+  end
+
+  def check_login
+    Preservica::StructuralObject.where(admin_set_key: row['admin_set'], id: (row['preservica_uri'].split('/')[-1]).to_s)
+  rescue StandardError
+    raise BatchProcessingError.new("Skipping row with structural object id [#{(row['preservica_uri'].split('/')[-1])}]. Unable to log in to Preservica.", "Skipped Row")
+  end
+
+  def check_structural_id
+    structural_object = Preservica::StructuralObject.where(admin_set_key: row['admin_set'], id: (row['preservica_uri'].split('/')[-1]).to_s)
+    structural_object.information_objects
+    # TODO: connect to preservica test and get error from actual api call
+  rescue Errno::ECONNREFUSED, Net::OpenTimeout
+    raise BatchProcessingError.new("Skipping row with structural object id [#{(row['preservica_uri'].split('/')[-1])}]. No matching id found in Preservica.", "Skipped Row")
   end
 
   def parent_model

@@ -8,6 +8,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent.csv")) }
   let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_with_children.csv")) }
+  let(:preservica_parent_no_structural) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_no_structural.csv")) }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -112,23 +113,22 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   # bitstream checksum mismatch
   # if no sha512 is found
 
-  it 'can send an error when there is no connection' do
+  it 'can send an error when not logged in' do
     stub_request(:post, "https://testpreservica/api/accesstoken/login").to_return(status: 403, body: '{"token":"access denied"}')
     expect do
       batch_process.file = preservica_parent_with_children
       batch_process.save
+      expect(batch_process.batch_ingest_events.count).to eq(1)
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with structural object id [7fe35e8c-c21a-444a-a2e2-e3c926b519c5]. Unable to log in to Preservica.")
     end.to change { ChildObject.count }.by(0)
-    parent_object = batch_process.parent_objects.first
-    allow(parent_object).to receive(:processing_event).and_return(
-      IngestEvent.create(
-        status: "failed",
-        reason: "Unable to login",
-        batch_connection: parent_object.batch_connections.first
-      )
-    )
-    batch_process.batch_connections.first.update_status!
-    expect(parent_object.status_for_batch_process(batch_process)).to eq "Failed"
-    expect(parent_object.latest_failure(batch_process)).to be_an_instance_of Hash
-    expect(parent_object.latest_failure(batch_process)[:reason]).to eq "Unable to login"
+  end
+
+  it 'can send an error when there is no matching structural object id' do
+    expect do
+      batch_process.file = preservica_parent_no_structural
+      batch_process.save
+      expect(batch_process.batch_ingest_events.count).to eq(1)
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with structural object id [7fe35e8c-c21a-444a-a2e2-e3c926b519d6]. No matching id found in Preservica.")
+    end.to change { ChildObject.count }.by(0)
   end
 end
