@@ -6,7 +6,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   subject(:batch_process) { BatchProcess.new }
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl') }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
-  let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent.csv")) }
   let(:preservica_parent_with_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_with_children_pattern_2.csv")) }
   let(:preservica_parent_with_2_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_with_2_children_pattern_2.csv")) }
   let(:preservica_parent_with_3_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_with_3_children_pattern_2.csv")) }
@@ -92,7 +91,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     allow_any_instance_of(SetupMetadataJob).to receive(:perform).and_return(true)
     # rubocop:enable RSpec/AnyInstance
     expect do
-      batch_process.file = preservica_parent
+      batch_process.file = preservica_parent_with_children_pattern_2
       batch_process.save
     end.to change { ParentObject.count }.from(0).to(1)
     po_first = ParentObject.first

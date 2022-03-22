@@ -11,6 +11,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:preservica_parent_no_structural) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_no_structural.csv")) }
   let(:preservica_parent_no_information_pattern_1) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_no_information_pattern_1.csv")) }
   let(:preservica_parent_no_information_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_no_information_pattern_2.csv")) }
+  let(:preservica_parent_no_representation_pattern_1) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_no_representation_pattern_1.csv")) }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -111,7 +112,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   # loss of connection / authorization
   # structural object doesn't exist
   # information object doesn't exist
-  # representation does not have 'Preservation' has only 'Access'
+  # representation does not have preservation_representation_name that matches what's provided in the csv
   # no active generations
   # bitstream checksum mismatch
   # if no sha512 is found
@@ -150,6 +151,15 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
       expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with information object id [2e42a2bb-8953-41b6-bcc3-1a19c86a5e5c]. No matching id found in Preservica.")
+    end.to change { ChildObject.count }.by(0)
+  end
+
+  xit 'can send an error when there is no matching representation' do
+    expect do
+      batch_process.file = preservica_parent_no_representation_pattern_1
+      batch_process.save
+      expect(batch_process.batch_ingest_events.count).to eq(1)
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with structural object id [2e42a2bb-8953-41b6-bcc3-1a19c86a5e5c]. No matching id found in Preservica.")
     end.to change { ChildObject.count }.by(0)
   end
 end
