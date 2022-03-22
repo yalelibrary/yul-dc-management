@@ -53,6 +53,7 @@ class CsvRowParentService
     check_login
     check_structural_id
     check_information_id
+    check_representation
   end
 
   def check_login
@@ -100,6 +101,35 @@ class CsvRowParentService
   rescue Errno::ECONNREFUSED, Net::OpenTimeout
     raise BatchProcessingError.new("Skipping row with information object id [#{information_object.id}]. No matching id found in Preservica.", "Skipped Row")
   end
+
+  def check_representation
+    if row['preservica_uri'].include?('structural')
+      representation_pattern_one
+    elsif row['preservica_uri'].include?('information')
+      representation_pattern_two
+    else
+      raise BatchProcessingError.new("Skipping row with object id [#{row['preservica_uri']}]. Must be an information object or structural object.", "Skipped Row")
+    end
+  end
+
+  # rubocop:disable Metrics/LineLength
+  def representation_pattern_one
+    structural_object = Preservica::StructuralObject.where(admin_set_key: row['admin_set'], id: (row['preservica_uri'].split('/')[-1]).to_s)
+    information_objects = structural_object.information_objects
+    information_objects.each do |io|
+      if io.fetch_by_representation_name(row['preservica_representation_name'])[0].nil?
+        raise BatchProcessingError.new("Skipping row with structural object id [#{io.id}]. No matching representation with #{row['preservica_representation_name']} found in Preservica.", "Skipped Row")
+      end
+    end
+  end
+
+  def representation_pattern_two
+    information_object = Preservica::InformationObject.where(admin_set_key: row['admin_set'], id: (row['preservica_uri'].split('/')[-1]).to_s)
+    information_object.fetch_by_representation_name(row['preservica_representation_name'])[0]
+  rescue Errno::ECONNREFUSED, Net::OpenTimeout
+    raise BatchProcessingError.new("Skipping row with information object id [#{information_object.id}]. No matching representation with #{row['preservica_representation_name']} found in Preservica.", "Skipped Row")
+  end
+  # rubocop:enable Metrics/LineLength
 
   def parent_model
     row['parent_model'] || 'complex'

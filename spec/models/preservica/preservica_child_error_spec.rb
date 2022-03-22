@@ -36,7 +36,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     stub_request(:post, "https://testpreservica/api/accesstoken/login").to_return(status: 200, body: '{"token":"test"}')
     stub_request(:post, "https://testpreservica/api/accesstoken/refresh").to_return(status: 200, body: '{"token":"test"}')
     fixtures = %w[preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5/children
-                  preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e4b/children
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Access-2
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Preservation-1
@@ -54,7 +53,12 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
                   preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Preservation-1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1
-                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1]
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1
+                  preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e4b/children
+                  preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a/children
+                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3c/representations
+                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3c/representations/Access-2
+                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3c/representations/Preservation-1]
 
     fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
@@ -154,12 +158,14 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     end.to change { ChildObject.count }.by(0)
   end
 
-  xit 'can send an error when there is no matching representation' do
+  # rubocop:disable Metrics/LineLength
+  it 'can send an error when there is no matching representation' do
     expect do
       batch_process.file = preservica_parent_no_representation_pattern_1
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with structural object id [2e42a2bb-8953-41b6-bcc3-1a19c86a5e5c]. No matching id found in Preservica.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with structural object id [2e42a2bb-8953-41b6-bcc3-1a19c86a5e3c]. No matching representation with Access-1 found in Preservica.")
     end.to change { ChildObject.count }.by(0)
   end
+  # rubocop:enable Metrics/LineLength
 end
