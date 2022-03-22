@@ -54,6 +54,7 @@ class CsvRowParentService
     check_structural_id
     check_information_id
     check_representation
+    check_generation
   end
 
   def check_login
@@ -128,6 +129,35 @@ class CsvRowParentService
     raise BatchProcessingError.new("Skipping row with information object id [#{information_object.id}]. No matching representation with #{row['preservica_representation_name']} found in Preservica.", "Skipped Row") if information_object.fetch_by_representation_name(row['preservica_representation_name'])[0].nil?
   end
   # rubocop:enable Metrics/LineLength
+
+  def check_generation
+    if row['preservica_uri'].include?('structural')
+      generation_pattern_one
+    elsif row['preservica_uri'].include?('information')
+      generation_pattern_two
+    else
+      raise BatchProcessingError.new("Skipping row with object id [#{row['preservica_uri']}]. Must be an information object or structural object.", "Skipped Row")
+    end
+  end
+
+  def generation_pattern_one
+    structural_object = Preservica::StructuralObject.where(admin_set_key: row['admin_set'], id: (row['preservica_uri'].split('/')[-1]).to_s)
+    information_objects = structural_object.information_objects
+    information_objects.each do |io|
+      begin
+        io.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0]
+      rescue Errno::ECONNREFUSED, Net::OpenTimeout
+        raise BatchProcessingError.new("Skipping row with structural object id [#{io.id}]. No active generations found in Preservica.", "Skipped Row")
+      end
+    end
+  end
+
+  def generation_pattern_two
+    information_object = Preservica::InformationObject.where(admin_set_key: row['admin_set'], id: (row['preservica_uri'].split('/')[-1]).to_s)
+    information_object.fetch_by_representation_name(row['preservica_representation_name'])[0].content_objects[0].active_generations[0]
+  rescue Errno::ECONNREFUSED, Net::OpenTimeout
+    raise BatchProcessingError.new("Skipping row with information object id [#{information_object.id}]. No active generations found in Preservica.", "Skipped Row")
+  end
 
   def parent_model
     row['parent_model'] || 'complex'

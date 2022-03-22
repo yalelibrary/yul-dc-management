@@ -13,6 +13,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:preservica_parent_no_information_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_no_information_pattern_2.csv")) }
   let(:preservica_parent_no_representation_pattern_1) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_no_representation_pattern_1.csv")) }
   let(:preservica_parent_no_representation_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_no_representation_pattern_2.csv")) }
+  let(:preservica_parent_no_generation_pattern_1) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_no_generation_pattern_1.csv")) }
+  let(:preservica_parent_no_generation_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_no_generation_pattern_2.csv")) }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -183,4 +185,22 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     end.to change { ChildObject.count }.by(0)
   end
   # rubocop:enable Metrics/LineLength
+
+  it 'can send an error when there is no active generations with pattern 1' do
+    expect do
+      batch_process.file = preservica_parent_no_generation_pattern_1
+      batch_process.save
+      expect(batch_process.batch_ingest_events.count).to eq(1)
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with structural object id [2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e]. No active generations found in Preservica.")
+    end.to change { ChildObject.count }.by(0)
+  end
+
+  it 'can send an error when there is no active generations with pattern 2' do
+    expect do
+      batch_process.file = preservica_parent_no_generation_pattern_2
+      batch_process.save
+      expect(batch_process.batch_ingest_events.count).to eq(1)
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with information object id [2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e]. No active generations found in Preservica.")
+    end.to change { ChildObject.count }.by(0)
+  end
 end
