@@ -125,9 +125,7 @@ class CsvRowParentService
 
   def representation_pattern_two
     information_object = Preservica::InformationObject.where(admin_set_key: row['admin_set'], id: (row['preservica_uri'].split('/')[-1]).to_s)
-    information_object.fetch_by_representation_name(row['preservica_representation_name'])[0]
-  rescue Errno::ECONNREFUSED, Net::OpenTimeout
-    raise BatchProcessingError.new("Skipping row with information object id [#{information_object.id}]. No matching representation with #{row['preservica_representation_name']} found in Preservica.", "Skipped Row")
+    raise BatchProcessingError.new("Skipping row with information object id [#{information_object.id}]. No matching representation with #{row['preservica_representation_name']} found in Preservica.", "Skipped Row") if information_object.fetch_by_representation_name(row['preservica_representation_name'])[0].nil?
   end
   # rubocop:enable Metrics/LineLength
 
