@@ -6,9 +6,9 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   subject(:batch_process) { BatchProcess.new }
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl') }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
-  let(:preservica_parent_with_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_with_children_pattern_2.csv")) }
-  let(:preservica_parent_with_2_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_with_2_children_pattern_2.csv")) }
-  let(:preservica_parent_with_3_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent_with_3_children_pattern_2.csv")) }
+  let(:preservica_parent_with_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_children_pattern_2.csv")) }
+  let(:preservica_parent_with_2_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_2_children_pattern_2.csv")) }
+  let(:preservica_parent_with_3_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_3_children_pattern_2.csv")) }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
