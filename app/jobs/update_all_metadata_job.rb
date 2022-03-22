@@ -7,7 +7,7 @@ class UpdateAllMetadataJob < ApplicationJob
     5000
   end
 
-  def perform(start_position = 0, where = '')
+  def perform(start_position = 0, where = 'redirect_to: nil')
     parent_objects = ParentObject.where(where).order(:oid).offset(start_position).limit(UpdateAllMetadataJob.job_limit)
     last_job = parent_objects.count < UpdateAllMetadataJob.job_limit
     return unless parent_objects.count.positive? # stop if nothing is found
