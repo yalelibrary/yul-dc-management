@@ -4,6 +4,7 @@ class PreservicaImageService
   class PreservicaImageServiceError < StandardError
     attr_reader :id
     def initialize(msg, id)
+      # byebug
       @id = id
       super("#{msg} for #{id}")
     end
@@ -22,6 +23,7 @@ class PreservicaImageService
   # rubocop:disable Metrics/MethodLength
   def image_list(representation_name)
     @images = []
+    # byebug
     begin
       if @pattern == :pattern_one
         structural_object = Preservica::StructuralObject.where(admin_set_key: @admin_set_key, id: (@uri.split('/')[-1]).to_s)
@@ -49,14 +51,15 @@ class PreservicaImageService
   # rubocop:disable Metrics/AbcSize
   def process_information_objects(representation_name)
     @information_objects.each do |information_object|
+      # byebug
       representation = information_object.fetch_by_representation_name(representation_name)[0]
-      PreservicaImageServiceError.new("No matching representation found in Preservica", @uri.to_s) if representation.nil?
+      raise PreservicaImageServiceError.new("No matching representation found in Preservica", @uri.to_s) if representation.nil?
       content_objects = representation.content_objects
-      PreservicaImageServiceError.new("No matching content object found in Preservica", @uri.to_s) if content_objects.empty?
+      raise PreservicaImageServiceError.new("No matching content object found in Preservica", @uri.to_s) if content_objects.empty?
       content_objects.each do |content_object|
-        PreservicaImageServiceError.new("No active generations found in Preservica", content_object.id.to_s) if content_object.active_generations.empty?
-        PreservicaImageServiceError.new("No matching bitstreams found in Preservica", content_object.active_generations[0].id.to_s) if content_object.active_generations[0].bitstreams.empty?
-        PreservicaImageServiceError.new("SHA mismatch found in Preservica", content_object.active_generations[0].bitstream[0].id.to_s) if content_object.active_generations[0].bitstreams[0].sha512_checksum.empty?
+        raise PreservicaImageServiceError.new("No active generations found in Preservica", content_object.id.to_s) if content_object.active_generations.empty?
+        raise PreservicaImageServiceError.new("No matching bitstreams found in Preservica", content_object.active_generations[0].id.to_s) if content_object.active_generations[0].bitstreams.empty?
+        raise PreservicaImageServiceError.new("SHA mismatch found in Preservica", content_object.active_generations[0].bitstream[0].id.to_s) if content_object.active_generations[0].bitstreams[0].sha512_checksum.empty?
         @images << { preservica_content_object_uri: content_object.content_object_uri,
                      preservica_generation_uri: content_object.active_generations[0].generation_uri,
                      preservica_bitstream_uri: content_object.active_generations[0].bitstream_uri,

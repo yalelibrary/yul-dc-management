@@ -178,7 +178,13 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         rescue CsvRowParentService::BatchProcessingError => e
           batch_processing_event(e.message, e.kind)
         rescue PreservicaImageService::PreservicaImageServiceError => e
-          batch_processing_event("Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
+          if e.message.scan(' for ').count > 1
+            parts = e.message.split(' for ')
+            shortened_message = parts[0].concat(' for ').concat(parts[1])
+            batch_processing_event("Skipping row [#{index + 2}] #{shortened_message}.", "Skipped Row")
+          else
+            batch_processing_event("Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
+          end
         end
       else
         oid = row['oid']

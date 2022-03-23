@@ -155,33 +155,31 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] Failed to open TCP connection to testpreservica:443 (Connection refused - connect(2) for \"testpreservica\" port 443) for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e4b.").or eq("Skipping row [2] execution expired for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e4b.")
     end.to change { ChildObject.count }.by(0)
   end
-  # rubocop:enable Metrics/LineLength
 
-  xit 'can send an error when there is no matching information object id with pattern 2' do
+  it 'can send an error when there is no matching information object id with pattern 2' do
     expect do
       batch_process.file = preservica_parent_no_information_pattern_2
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with information object id [2e42a2bb-8953-41b6-bcc3-1a19c86a5e5c]. No matching id found in Preservica.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] execution expired for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e5c.").or eq("Skipping row [2] Failed to open TCP connection to testpreservica:443 (getaddrinfo: Temporary failure in name resolution) for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e5c.").or eq("Skipping row [2] Failed to open TCP connection to testpreservica:443 (Connection refused - connect(2) for \"testpreservica\" port 443) for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e5c.")
     end.to change { ChildObject.count }.by(0)
   end
 
-  # rubocop:disable Metrics/LineLength
-  xit 'can send an error when there is no matching representation with pattern 1' do
+  it 'can send an error when there is no matching representation with pattern 1' do
     expect do
       batch_process.file = preservica_parent_no_representation_pattern_1
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with structural object id [2e42a2bb-8953-41b6-bcc3-1a19c86a5e3c]. No matching representation with Access-1 found in Preservica.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No matching representation found in Preservica for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a.")
     end.to change { ChildObject.count }.by(0)
   end
 
-  xit 'can send an error when there is no matching representation with pattern 2' do
+  it 'can send an error when there is no matching representation with pattern 2' do
     expect do
       batch_process.file = preservica_parent_no_representation_pattern_2
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with information object id [2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e]. No matching representation with Access-1 found in Preservica.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No matching representation found in Preservica for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e.")
     end.to change { ChildObject.count }.by(0)
   end
   # rubocop:enable Metrics/LineLength
