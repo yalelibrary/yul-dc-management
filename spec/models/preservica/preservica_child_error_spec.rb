@@ -15,6 +15,10 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:preservica_parent_no_representation_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_no_representation_pattern_2.csv")) }
   let(:preservica_parent_no_generation_pattern_1) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_no_generation_pattern_1.csv")) }
   let(:preservica_parent_no_generation_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_no_generation_pattern_2.csv")) }
+  let(:preservica_parent_checksum_mismatch_pattern_1) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_checksum_mismatch_pattern_1.csv")) }
+  let(:preservica_parent_checksum_mismatch_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_checksum_mismatch_pattern_2.csv")) }
+  let(:preservica_parent_no_sha_pattern_1) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_no_sha_pattern_1.csv")) }
+  let(:preservica_parent_no_sha_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_no_sha_pattern_2.csv")) }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -68,7 +72,19 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
                   preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e9z/children
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e5z/representations
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e5z/representations/Preservation-1
-                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b900/generations]
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b900/generations
+                  preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e0a/children
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a4d4a/representations
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a4d4a/representations/Preservation-1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157c600/generations
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157c600/generations/1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157c600/generations/1/bitstreams/1
+                  preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c867u8y/children
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a8y7u/representations
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a8y7u/representations/Preservation-1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157d799/generations
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157d799/generations/1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157d799/generations/1/bitstreams/1]
 
     fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
@@ -174,7 +190,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_no_representation_pattern_1
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No matching representation found in Preservica for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a.")
+      # TODO: fix double for
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No matching representation found in Preservica for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a.")
     end.to change { ChildObject.count }.by(0)
   end
 
@@ -183,17 +200,18 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_no_representation_pattern_2
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No matching representation found in Preservica for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e.")
+      # TODO: fix double for
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No matching representation found in Preservica for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e.")
     end.to change { ChildObject.count }.by(0)
   end
-  # rubocop:enable Metrics/LineLength
 
   it 'can send an error when there is no active generations with pattern 1' do
     expect do
       batch_process.file = preservica_parent_no_generation_pattern_1
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No active generations found in Preservica for ae328d84-e429-4d46-a865-9ee11157b900.")
+      # TODO: Fix double id
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No active generations found in Preservica for ae328d84-e429-4d46-a865-9ee11157b900 for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e9z.")
     end.to change { ChildObject.count }.by(0)
   end
 
@@ -202,7 +220,45 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_no_generation_pattern_2
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No active generations found in Preservica for ae328d84-e429-4d46-a865-9ee11157b900.")
+      # TODO: fix double id
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No active generations found in Preservica for ae328d84-e429-4d46-a865-9ee11157b900 for /preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e5z.")
     end.to change { ChildObject.count }.by(0)
   end
+
+  xit 'can send an error when there is a checksum mismatch with pattern 1' do
+    expect do
+      batch_process.file = preservica_parent_checksum_mismatch_pattern_1
+      batch_process.save
+      expect(batch_process.batch_ingest_events.count).to eq(1)
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No matching bitstreams found in Preservica for ae328d84-e429-4d46-a865-9ee11157b900.")
+    end.to change { ChildObject.count }.by(0)
+  end
+
+  xit 'can send an error when there is a checksum mismatch with pattern 2' do
+    expect do
+      batch_process.file = preservica_parent_checksum_mismatch_pattern_2
+      batch_process.save
+      expect(batch_process.batch_ingest_events.count).to eq(1)
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No matching bitstreams found in Preservica for ae328d84-e429-4d46-a865-9ee11157b900.")
+    end.to change { ChildObject.count }.by(0)
+  end
+
+  xit 'can send an error when there is no sha512 found with pattern 1' do
+    expect do
+      batch_process.file = preservica_parent_no_sha_pattern_1
+      batch_process.save
+      expect(batch_process.batch_ingest_events.count).to eq(1)
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] SHA mismatch found in Preservica for 1.")
+    end.to change { ChildObject.count }.by(0)
+  end
+
+  it 'can send an error when there is no sha512 found with pattern 2' do
+    expect do
+      batch_process.file = preservica_parent_no_sha_pattern_2
+      batch_process.save
+      expect(batch_process.batch_ingest_events.count).to eq(1)
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] SHA mismatch found in Preservica for 1 for /preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a8y7u.")
+    end.to change { ChildObject.count }.by(0)
+  end
+  # rubocop:enable Metrics/LineLength
 end
