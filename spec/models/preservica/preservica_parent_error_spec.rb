@@ -40,7 +40,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with structural object id [7fe35e8c-c21a-444a-a2e2-e3c926b519c5]. Unable to log in to Preservica.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with admin set [brbl] for parent: 200000000. Preservica credentials not set for brbl.")
     end.not_to change { ParentObject.count }
   end
 end
