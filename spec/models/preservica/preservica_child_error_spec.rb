@@ -64,7 +64,11 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
                   preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3c/representations/Preservation-1
                   preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e/representations
                   preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e/representations/Access-2
-                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e/representations/Preservation-1]
+                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e/representations/Preservation-1
+                  preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e9z/children
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e5z/representations
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e5z/representations/Preservation-1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b900/generations]
 
     fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
@@ -184,21 +188,21 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   end
   # rubocop:enable Metrics/LineLength
 
-  xit 'can send an error when there is no active generations with pattern 1' do
+  it 'can send an error when there is no active generations with pattern 1' do
     expect do
       batch_process.file = preservica_parent_no_generation_pattern_1
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with structural object id [2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e]. No active generations found in Preservica.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No active generations found in Preservica for ae328d84-e429-4d46-a865-9ee11157b900.")
     end.to change { ChildObject.count }.by(0)
   end
 
-  xit 'can send an error when there is no active generations with pattern 2' do
+  it 'can send an error when there is no active generations with pattern 2' do
     expect do
       batch_process.file = preservica_parent_no_generation_pattern_2
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row with information object id [2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e]. No active generations found in Preservica.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No active generations found in Preservica for ae328d84-e429-4d46-a865-9ee11157b900.")
     end.to change { ChildObject.count }.by(0)
   end
 end

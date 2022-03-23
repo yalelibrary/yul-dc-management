@@ -23,7 +23,6 @@ class PreservicaImageService
   # rubocop:disable Metrics/MethodLength
   def image_list(representation_name)
     @images = []
-    # byebug
     begin
       if @pattern == :pattern_one
         structural_object = Preservica::StructuralObject.where(admin_set_key: @admin_set_key, id: (@uri.split('/')[-1]).to_s)
