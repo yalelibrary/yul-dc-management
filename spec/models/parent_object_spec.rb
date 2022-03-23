@@ -391,6 +391,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.pdf_generator_json).to include('"imageProcessingCommand":"convert -resize 2000x2000 %s[0] %s"')
       end
 
+      it "generated pdf json with Extent of Digitization" do
+        parent_object.digitization_note = "Test Digitization Note"
+        expect(parent_object.pdf_generator_json).to include("{\"name\":\"Digitization Note\",\"value\":\"Test Digitization Note\"}")
+      end
+
       it "pdf path on S3" do
         expect(parent_object.remote_pdf_path).not_to be_nil
       end
