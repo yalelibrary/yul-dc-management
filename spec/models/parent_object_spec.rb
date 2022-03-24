@@ -407,6 +407,20 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         end
       end
 
+      it "pdf json checksum does not change when child has irrelevant changes" do
+        checksum1 = parent_object.pdf_json_checksum
+        parent_object.child_objects[0].viewing_hint = 'different'
+        checksum2 = parent_object.pdf_json_checksum
+        expect(checksum1).to eq(checksum2)
+      end
+
+      it "pdf json checksum does change when child has relevant changes" do
+        checksum1 = parent_object.pdf_json_checksum
+        parent_object.child_objects[0].label = 'different'
+        checksum2 = parent_object.pdf_json_checksum
+        expect(checksum1).to eq(checksum2)
+      end
+
       it "returns true from needs_a_manifest? only one time" do
         parent_object.generate_manifest = true
         parent_object.save!

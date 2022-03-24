@@ -14,8 +14,11 @@ module PdfRepresentable
     extentOfDigitization
   ].freeze
 
+  # rubocop:disable Metrics/MethodLength
   def generate_pdf
     raise "No authoritative_json to create PDF for #{oid}" unless authoritative_json
+    changed_pdf_checksum = new_pdf_checksum # new_pdf_checksum will be false if there were no changes
+    return false unless changed_pdf_checksum
     Dir.mktmpdir do |pdf_tmpdir|
       temp_json_file = File.new("#{pdf_tmpdir}/#{oid}_pdf_json", "w")
       temp_json_file.write(pdf_generator_json)
@@ -26,13 +29,21 @@ module PdfRepresentable
       success = status.success?
       if success
         raise "Java app did not create PDF file for #{oid}" unless File.exist? temp_pdf_file
-        S3Service.upload_image(temp_pdf_file.to_s, remote_pdf_path, "application/pdf", nil)
+        S3Service.upload_image(temp_pdf_file.to_s, remote_pdf_path, "application/pdf", 'pdfchecksum': changed_pdf_checksum)
         File.delete temp_pdf_file
       else
         File.delete temp_pdf_file if File.exist?(temp_pdf_file)
         raise "PDF Java app returned non zero response code for #{oid}: #{stderr} #{stdout}"
       end
     end
+    true
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  def new_pdf_checksum
+    metadata = S3Service.remote_metadata(remote_pdf_path)
+    checksum = pdf_json_checksum
+    return checksum if !metadata || metadata[:pdfchecksum] != checksum
   end
 
   def pdf_deletion
@@ -43,11 +54,18 @@ module PdfRepresentable
     "pdfs/#{Partridge::Pairtree.oid_to_pairtree(oid)}/#{oid}.pdf"
   end
 
+  def pdf_json_checksum
+    Digest::MD5.hexdigest(pdf_json("same", :child_modification))
+  end
+
   def pdf_generator_json
-    generated = Time.now.utc.to_s
+    pdf_json(Time.now.utc.to_s, :s3_presigned_url)
+  end
+
+  def pdf_json(generated, child_page_file = :s3_presigned_url)
     title = extract_flat_field_value(authoritative_json, "title", "No Title")
     properties = pdf_properties title, generated
-    children = child_pages
+    children = child_pages(child_page_file)
     json_hash = {
       "displayCoverPage" => true,
       "title" => title,
@@ -61,13 +79,13 @@ module PdfRepresentable
 
   private
 
-    def child_pages
+    def child_pages(child_page_file)
       pages = []
       child_objects = ChildObject.where(parent_object: self).order(:order)
       child_objects.map do |child|
         page = {
           "caption" => child['label'] || "",
-          "file" => S3Service.presigned_url(child.remote_ptiff_path, 24_000)
+          "file" => send(child_page_file, child)
         }
         properties = []
         properties << { 'name' => 'Caption:', 'value' => child.caption } if child.caption.present?
@@ -76,6 +94,14 @@ module PdfRepresentable
         pages << page
       end
       pages
+    end
+
+    def s3_presigned_url(child)
+      S3Service.presigned_url(child.remote_ptiff_path, 24_000)
+    end
+
+    def child_modification(child)
+      child.updated_at.to_s
     end
 
     def pdf_properties(title, generated)
