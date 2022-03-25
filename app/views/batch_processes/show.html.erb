@@ -34,10 +34,14 @@
 <div class='batch-process-details'>
   <p>
     <strong>Created file:</strong>
-    <% if @batch_process.batch_action == 'export all parent objects by admin set' %>
-      <%= @batch_process.file_name && @batch_process.batch_action == 'export all parent objects by admin set' ? link_to(@batch_process.created_file_name, S3Service.presigned_url(@batch_process.remote_csv_path, 600, bucket = ENV['SAMPLE_BUCKET'])) : 'n/a' %>
+    <% if S3Service.s3_exists?(@batch_process.remote_csv_path, bucket = ENV['SAMPLE_BUCKET']) %>
+      <% if @batch_process.batch_action == 'export all parent objects by admin set' %>
+        <%= @batch_process.file_name && @batch_process.batch_action == 'export all parent objects by admin set' ? link_to(@batch_process.created_file_name, S3Service.presigned_url(@batch_process.remote_csv_path, 600, bucket = ENV['SAMPLE_BUCKET'])) : 'n/a' %>
+      <% else %>
+        <%= @batch_process.file_name && @batch_process.batch_action == 'export child oids' ? link_to(@batch_process.created_file_name, S3Service.presigned_url(@batch_process.remote_csv_path, 600, bucket = ENV['SAMPLE_BUCKET'])) : 'n/a' %>
+      <% end %>
     <% else %>
-      <%= @batch_process.file_name && @batch_process.batch_action == 'export child oids' ? link_to(@batch_process.created_file_name, S3Service.presigned_url(@batch_process.remote_csv_path, 600, bucket = ENV['SAMPLE_BUCKET'])) : 'n/a' %>
+      The file is being generated.
     <% end %>
   </p>
 </div>
@@ -46,7 +50,7 @@
   <div class='row batch-process-subheading'>
     <div class='col'>
       <h1>Batch Messages:</h1>
-    <div>
+    </div>
   </div>
   <table class='table table-bordered table-responsive table-striped'>
     <thead class='table-head'>

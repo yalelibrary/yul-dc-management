@@ -73,7 +73,7 @@ class BatchProcessesController < ApplicationController
 
     batch_process = BatchProcess.new(batch_action: 'export all parent objects by admin set', user: current_user, file_name: "#{admin_set}_export.csv")
     batch_process.save
-    CreateParentOidCsvJob.perform_now(batch_process, *admin_set_id)
+    CreateParentOidCsvJob.perform_later(batch_process, *admin_set_id)
   end
 
   def download_csv
