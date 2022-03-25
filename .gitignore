@@ -42,3 +42,5 @@ yarn-debug.log*
 # Ignore coverage report
 coverage
 *-params.yml
+
+/preservica_export

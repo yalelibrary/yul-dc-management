@@ -30,6 +30,10 @@ class Preservica::Representation
     xml.xpath('/RepresentationResponse/ContentObjects/ContentObject').text.strip
   end
 
+  def xml
+    @xml ||= Nokogiri::XML(@preservica_client.information_object_representation(@id, @name)).remove_namespaces!
+  end
+
   private
 
     def load_content_objects
@@ -37,9 +41,5 @@ class Preservica::Representation
         content_object_id = content_object_node.xpath('@ref').text
         Preservica::ContentObject.new(@preservica_client, content_object_id)
       end
-    end
-
-    def xml
-      @xml ||= Nokogiri::XML(@preservica_client.information_object_representation(@id, @name)).remove_namespaces!
     end
 end

@@ -29,6 +29,10 @@ class Preservica::Generation
     xml.xpath('/GenerationResponse/Bitstreams/Bitstream').text.strip
   end
 
+  def xml
+    @xml ||= Nokogiri::XML(preservica_client.content_object_generation(@content_id, @id)).remove_namespaces!
+  end
+
   private
 
     def load_bitstreams
@@ -44,9 +48,5 @@ class Preservica::Generation
 
     def load_format_group
       xml.xpath('/GenerationResponse/Generation/FormatGroup').map(&:content)
-    end
-
-    def xml
-      @xml ||= Nokogiri::XML(preservica_client.content_object_generation(@content_id, @id)).remove_namespaces!
     end
 end
