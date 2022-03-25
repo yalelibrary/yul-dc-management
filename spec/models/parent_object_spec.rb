@@ -657,6 +657,32 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.save!
       end
 
+      it "posts digital object update when visibility changes from Public to Yale Community Only" do
+        expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
+        parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
+        parent_object.authoritative_metadata_source_id = aspace
+        parent_object.child_object_count = 1
+        parent_object.visibility = "Public"
+        parent_object.aspace_json = { "title": ["test title"] }
+        expect(parent_object).to receive(:mc_post).twice.and_return(OpenStruct.new(status: 200)) # once for first save, again for visibility change
+        parent_object.save!
+        parent_object.visibility = "Yale Community Only"
+        parent_object.save!
+      end
+
+      it "posts digital object update when visibility changes from Yale Community Only to Public" do
+        expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
+        parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
+        parent_object.authoritative_metadata_source_id = aspace
+        parent_object.child_object_count = 1
+        parent_object.visibility = "Yale Community Only"
+        parent_object.aspace_json = { "title": ["test title"] }
+        expect(parent_object).to receive(:mc_post).twice.and_return(OpenStruct.new(status: 200)) # once for first save, again for visibility change
+        parent_object.save!
+        parent_object.visibility = "Public"
+        parent_object.save!
+      end
+
       it "posts digital object changes when parent is deleted" do
         stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
             .to_return(status: 200, body: { data: "fake data" }.to_json)
