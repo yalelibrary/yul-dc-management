@@ -38,8 +38,11 @@ RSpec.describe GeneratePdfJob, type: :job do
       end.to raise_error("No authoritative_json to create PDF for #{parent_object.oid}")
     end
     it 'throws exception with shell failure' do
-      expect(parent_object).to receive(:authoritative_json).and_return({}).at_least(:once)
-      expect(parent_object).to receive(:pdf_generator_json).and_return("")
+      # stub these with some values so that it will get to the point of trying to run the app and get the response
+      # from Open3.capture3 with success = false  (the values don't really matter)
+      expect(parent_object).to receive(:authoritative_json).and_return(true).once
+      expect(parent_object).to receive(:pdf_json_checksum).and_return("some_generic_checksum").once
+      expect(parent_object).to receive(:pdf_generator_json).and_return('{}').once
       status = double
       expect(status).to receive(:success?).and_return(false)
       expect(Open3).to receive(:capture3).and_return(["stdout output", "stderr output", status])
