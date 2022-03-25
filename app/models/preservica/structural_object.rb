@@ -17,6 +17,10 @@ class Preservica::StructuralObject
     @information_objects ||= load_information_objects
   end
 
+  def xml
+    @xml ||= @preservica_client.structural_object(@id)
+  end
+
   private
 
     def load_information_objects

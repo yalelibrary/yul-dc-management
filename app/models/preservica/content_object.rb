@@ -17,6 +17,10 @@ class Preservica::ContentObject
     @generations ||= load_generations
   end
 
+  def xml
+    @xml ||= @preservica_client.content_object(@id)
+  end
+
   private
 
     def load_generations
