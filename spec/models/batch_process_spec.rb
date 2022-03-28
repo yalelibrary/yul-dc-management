@@ -8,7 +8,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
   let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids_with_source.csv")) }
   let(:delete_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_parent_fixture_ids.csv")) }
-  let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent.csv")) }
+  let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent.csv")) }
   let(:invalid_preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "invalid_preservica_parent.csv")) }
   let(:delete_child) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_child_fixture_ids.csv")) }
   let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
