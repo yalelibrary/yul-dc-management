@@ -138,8 +138,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
   it 'retrieves correct representations with fetch' do
     structured_object = Preservica::StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
     information_objects = structured_object.information_objects
-    expect(information_objects[0].fetch_by_representation_name('Access-2')[0].name).to eq("Access-2")
-    expect(information_objects[0].fetch_by_representation_name('Preservation-1')[0].name).to eq("Preservation-1")
+    expect(information_objects[0].fetch_by_representation_name('Access')[0].name).to eq("Access-2")
+    expect(information_objects[0].fetch_by_representation_name('Preservation')[0].name).to eq("Preservation-1")
   end
 
   it 'retrieves generation based on active true' do

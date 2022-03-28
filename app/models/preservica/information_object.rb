@@ -37,10 +37,7 @@ class Preservica::InformationObject
   private
 
     def load_representation(preservica_representation_name)
-      xml = Nokogiri::XML(@preservica_client.information_object_representations(@id)).remove_namespaces!
-      xml.xpath('//Representation/@name').map(&:text).select { |name| name.include?(preservica_representation_name) }.map do |name|
-        Preservica::Representation.new(@preservica_client, @id, name)
-      end
+      load_representations.select { |representation| representation.name.include?(preservica_representation_name) }
     end
 
     def load_representations
@@ -51,16 +48,10 @@ class Preservica::InformationObject
     end
 
     def load_access_reps
-      xml = Nokogiri::XML(@preservica_client.information_object_representations(@id)).remove_namespaces!
-      xml.xpath('//Representation/@name').map(&:text).select { |name| name.include?("Access") }.map do |name|
-        Preservica::Representation.new(@preservica_client, @id, name)
-      end
+      load_representation("Access")
     end
 
     def load_preservation_reps
-      xml = Nokogiri::XML(@preservica_client.information_object_representations(@id)).remove_namespaces!
-      xml.xpath('//Representation/@name').map(&:text).select { |name| name.include?("Preservation") }.map do |name|
-        Preservica::Representation.new(@preservica_client, @id, name)
-      end
+      load_representation("Preservation")
     end
 end
