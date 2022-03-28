@@ -7,7 +7,7 @@
       <xip:Fixity>
         <xip:FixityAlgorithmRef>SHA512</xip:FixityAlgorithmRef>
         <xip:FixityValue>
-        1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7
+        2932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7
         </xip:FixityValue>
       </xip:Fixity>
     </xip:Fixities>

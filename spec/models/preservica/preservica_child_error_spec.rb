@@ -225,30 +225,32 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     end.to change { ChildObject.count }.by(0)
   end
 
-  xit 'can send an error when there is a checksum mismatch with pattern 1' do
+  it 'can send an error when there is a checksum mismatch with pattern 1' do
     expect do
       batch_process.file = preservica_parent_checksum_mismatch_pattern_1
       batch_process.save
-      expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No matching bitstreams found in Preservica for ae328d84-e429-4d46-a865-9ee11157b900.")
+      po = ParentObject.find(200000000)
+      expect(po.events_for_batch_process(batch_process).count).to be > 1
+      expect(po.events_for_batch_process(batch_process)[1].reason).to eq("execution expired").or eq("Failed to open TCP connection to testpreservica:443 (Connection refused - connect(2) for \"testpreservica\" port 443)").or eq("Failed to open TCP connection to testpreservica:443 (getaddrinfo: Name or service not known)")
     end.to change { ChildObject.count }.by(0)
   end
 
-  xit 'can send an error when there is a checksum mismatch with pattern 2' do
+  it 'can send an error when there is a checksum mismatch with pattern 2' do
     expect do
       batch_process.file = preservica_parent_checksum_mismatch_pattern_2
       batch_process.save
-      expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No matching bitstreams found in Preservica for ae328d84-e429-4d46-a865-9ee11157b900.")
+      po = ParentObject.find(200000000)
+      expect(po.events_for_batch_process(batch_process).count).to be > 1
+      expect(po.events_for_batch_process(batch_process)[1].reason).to eq("execution expired").or eq("Failed to open TCP connection to testpreservica:443 (Connection refused - connect(2) for \"testpreservica\" port 443)").or eq("Failed to open TCP connection to testpreservica:443 (getaddrinfo: Name or service not known)")
     end.to change { ChildObject.count }.by(0)
   end
 
-  xit 'can send an error when there is no sha512 found with pattern 1' do
+  it 'can send an error when there is no sha512 found with pattern 1' do
     expect do
       batch_process.file = preservica_parent_no_sha_pattern_1
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] SHA mismatch found in Preservica for 1.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] SHA mismatch found in Preservica for 1.").or eq("Skipping row [2] Unable to log in to Preservica for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a7u8y.")
     end.to change { ChildObject.count }.by(0)
   end
 
