@@ -172,7 +172,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_no_information_pattern_1
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] Failed to open TCP connection to testpreservica:443 (Connection refused - connect(2) for \"testpreservica\" port 443) for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e4b.").or eq("Skipping row [2] execution expired for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e4b.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] Failed to open TCP connection to testpreservica:443 (Connection refused - connect(2) for \"testpreservica\" port 443) for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e4b.").or eq("Skipping row [2] execution expired for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e4b.").or eq("Skipping row [2] Failed to open TCP connection to testpreservica:443 (getaddrinfo: Name or service not known) for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e4b.")
     end.to change { ChildObject.count }.by(0)
   end
 
@@ -181,7 +181,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_no_information_pattern_2
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] execution expired for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e5c.").or eq("Skipping row [2] Failed to open TCP connection to testpreservica:443 (getaddrinfo: Temporary failure in name resolution) for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e5c.").or eq("Skipping row [2] Failed to open TCP connection to testpreservica:443 (Connection refused - connect(2) for \"testpreservica\" port 443) for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e5c.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] execution expired for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e5c.").or eq("Skipping row [2] Failed to open TCP connection to testpreservica:443 (getaddrinfo: Temporary failure in name resolution) for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e5c.").or eq("Skipping row [2] Failed to open TCP connection to testpreservica:443 (Connection refused - connect(2) for \"testpreservica\" port 443) for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e5c.").or eq("Skipping row [2] Failed to open TCP connection to testpreservica:443 (getaddrinfo: Name or service not known) for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e5c.")
     end.to change { ChildObject.count }.by(0)
   end
 
