@@ -26,6 +26,7 @@ class Preservica::InformationObject
     @preservation_representations ||= load_preservation_reps
   end
 
+  # returns all representations with a name containing preservica_representation_name
   def fetch_by_representation_name(preservica_representation_name)
     @representation_hash[preservica_representation_name] ||= load_representation(preservica_representation_name)
   end
