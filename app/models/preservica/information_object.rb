@@ -19,11 +19,11 @@ class Preservica::InformationObject
   end
 
   def access_representations
-    @access_representations ||= load_access_reps
+    @access_representations ||= load_representation("Access")
   end
 
   def preservation_representations
-    @preservation_representations ||= load_preservation_reps
+    @preservation_representations ||= load_representation("Preservation")
   end
 
   # returns all representations with a name containing preservica_representation_name
@@ -46,13 +46,5 @@ class Preservica::InformationObject
       xml.xpath('//Representation/@name').map(&:text).map do |name|
         Preservica::Representation.new(@preservica_client, @id, name)
       end
-    end
-
-    def load_access_reps
-      load_representation("Access")
-    end
-
-    def load_preservation_reps
-      load_representation("Preservation")
     end
 end
