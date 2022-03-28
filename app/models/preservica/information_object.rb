@@ -11,6 +11,7 @@ class Preservica::InformationObject
   def initialize(preservica_client, id)
     @preservica_client = preservica_client
     @id = id
+    @representation_hash = {}
   end
 
   def representations
@@ -26,7 +27,7 @@ class Preservica::InformationObject
   end
 
   def fetch_by_representation_name(preservica_representation_name)
-    @representation ||= load_representation(preservica_representation_name)
+    @representation_hash[preservica_representation_name] ||= load_representation(preservica_representation_name)
   end
 
   def xml
