@@ -43,11 +43,11 @@ class Preservica::Bitstream
     # could also check: Digest::SHA512.file(file_name).hexdigest == sha512_checksum, but probably not necessary
   end
 
-  private
+  def xml
+    @xml ||= Nokogiri::XML(preservica_client.content_object_generation_bitstream(@content_id, @generation_id, @id)).remove_namespaces!
+  end
 
-    def xml
-      @xml ||= Nokogiri::XML(preservica_client.content_object_generation_bitstream(@content_id, @generation_id, @id)).remove_namespaces!
-    end
+  private
 
     def content_uri
       @content_uri ||= "/api/entity/content-objects/#{@content_id}/generations/#{@generation_id}/bitstreams/#{@id}/content"

@@ -226,15 +226,6 @@ $( document ).on('turbolinks:load', function() {
     })
   }
 
-  if (document.getElementsByClassName('is-datatable')[0]) {
-    // Allows all datatables, no matter the amount of columns, to have 100% width
-    const tableWidth = document.getElementsByClassName('is-datatable')[0].clientWidth;
-    const tableHeadWidth = document.getElementsByClassName('table-head')[0].clientWidth;
-    if (tableHeadWidth <= tableWidth) {
-      $('.is-datatable').addClass('expanded')
-    }
-  }
-
   $('.export-all span').hover(
       function() {
         if ($(this).parent("button").attr('disabled')) {

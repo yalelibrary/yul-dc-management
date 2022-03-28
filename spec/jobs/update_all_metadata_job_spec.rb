@@ -48,7 +48,7 @@ RSpec.describe UpdateAllMetadataJob, type: :job, prep_metadata_sources: true, so
     end
 
     it 'processes all parents in batches' do
-      expect(ParentObject).to receive(:where).with('').and_return(parent_object_where).exactly(expected_call_count).times
+      expect(ParentObject).to receive(:where).with('redirect_to: nil').and_return(parent_object_where).exactly(expected_call_count).times
       UpdateAllMetadataJob.perform_later
     end
 

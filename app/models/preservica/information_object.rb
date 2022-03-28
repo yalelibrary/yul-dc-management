@@ -29,6 +29,10 @@ class Preservica::InformationObject
     @representation ||= load_representation(preservica_representation_name)
   end
 
+  def xml
+    @xml ||= @preservica_client.information_object(@id)
+  end
+
   private
 
     def load_representation(preservica_representation_name)

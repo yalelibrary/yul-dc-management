@@ -19,7 +19,8 @@ module DigitalObjectManagement
         thumbnailOid: representative_child && representative_child.oid || nil,
         thumbnailCaption: representative_child && representative_child.label || nil,
         archivesSpaceUri: aspace_uri,
-        childCount: child_object_count }.to_json
+        childCount: child_object_count,
+        visibility: visibility }.to_json
   end
 
   def digital_object_title

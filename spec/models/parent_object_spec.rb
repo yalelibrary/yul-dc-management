@@ -391,6 +391,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.pdf_generator_json).to include('"imageProcessingCommand":"convert -resize 2000x2000 %s[0] %s"')
       end
 
+      it "generated pdf json with Extent of Digitization" do
+        parent_object.digitization_note = "Test Digitization Note"
+        expect(parent_object.pdf_generator_json).to include("{\"name\":\"Digitization Note\",\"value\":\"Test Digitization Note\"}")
+      end
+
       it "pdf path on S3" do
         expect(parent_object.remote_pdf_path).not_to be_nil
       end
@@ -400,6 +405,20 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.child_objects.each do |child|
           expect(pdf_json).to include('{"name":"Image ID:","value":"' + child.oid.to_s + '"}')
         end
+      end
+
+      it "pdf json checksum does not change when child has irrelevant changes" do
+        checksum1 = parent_object.pdf_json_checksum
+        parent_object.child_objects[0].viewing_hint = 'different'
+        checksum2 = parent_object.pdf_json_checksum
+        expect(checksum1).to eq(checksum2)
+      end
+
+      it "pdf json checksum does change when child has relevant changes" do
+        checksum1 = parent_object.pdf_json_checksum
+        parent_object.child_objects[0].label = 'different'
+        checksum2 = parent_object.pdf_json_checksum
+        expect(checksum1).to eq(checksum2)
       end
 
       it "returns true from needs_a_manifest? only one time" do
@@ -635,6 +654,32 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.visibility = "Public"
         expect(parent_object).to receive(:mc_post).once.and_return(OpenStruct.new(status: 200))
         parent_object.aspace_json = { "title": ["test title"] }
+        parent_object.save!
+      end
+
+      it "posts digital object update when visibility changes from Public to Yale Community Only" do
+        expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
+        parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
+        parent_object.authoritative_metadata_source_id = aspace
+        parent_object.child_object_count = 1
+        parent_object.visibility = "Public"
+        parent_object.aspace_json = { "title": ["test title"] }
+        expect(parent_object).to receive(:mc_post).twice.and_return(OpenStruct.new(status: 200)) # once for first save, again for visibility change
+        parent_object.save!
+        parent_object.visibility = "Yale Community Only"
+        parent_object.save!
+      end
+
+      it "posts digital object update when visibility changes from Yale Community Only to Public" do
+        expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
+        parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
+        parent_object.authoritative_metadata_source_id = aspace
+        parent_object.child_object_count = 1
+        parent_object.visibility = "Yale Community Only"
+        parent_object.aspace_json = { "title": ["test title"] }
+        expect(parent_object).to receive(:mc_post).twice.and_return(OpenStruct.new(status: 200)) # once for first save, again for visibility change
+        parent_object.save!
+        parent_object.visibility = "Public"
         parent_object.save!
       end
 

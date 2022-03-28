@@ -38,11 +38,14 @@ RSpec.describe GeneratePdfJob, type: :job do
       end.to raise_error("No authoritative_json to create PDF for #{parent_object.oid}")
     end
     it 'throws exception with shell failure' do
-      expect(parent_object).to receive(:authoritative_json).and_return([]).once
-      expect(parent_object).to receive(:pdf_generator_json).and_return("").once
+      # stub these with some values so that it will get to the point of trying to run the app and get the response
+      # from Open3.capture3 with success = false  (the values don't really matter)
+      expect(parent_object).to receive(:authoritative_json).and_return(true).once
+      expect(parent_object).to receive(:pdf_json_checksum).and_return("some_generic_checksum").once
+      expect(parent_object).to receive(:pdf_generator_json).and_return('{}').once
       status = double
-      expect(status).to receive(:success?).and_return(false).once
-      expect(Open3).to receive(:capture3).and_return(["stdout output", "stderr output", status]).once
+      expect(status).to receive(:success?).and_return(false)
+      expect(Open3).to receive(:capture3).and_return(["stdout output", "stderr output", status])
       expect do
         generate_pdf_job.perform(parent_object, batch_process)
       end.to raise_error("PDF Java app returned non zero response code for #{parent_object.oid}: stderr output stdout output")
@@ -52,6 +55,19 @@ RSpec.describe GeneratePdfJob, type: :job do
     end
     it "can generate a PDF file" do
       generate_pdf_job.perform(parent_object_with_authoritative_json, batch_process)
+    end
+
+    context "when pdf metadata is present with matching checksum" do
+      before do
+        stub_request(:head, "https://not-a-real-bucket.s3.amazonaws.com/pdfs/19/16/71/24/19/16712419.pdf")
+            .to_return(status: 200, headers: { "x-amz-meta-pdfchecksum": parent_object_with_authoritative_json.pdf_json_checksum })
+      end
+      it "generate_pdf returns false because it does not generate pdf" do
+        expect(parent_object_with_authoritative_json.generate_pdf).to be_falsey
+      end
+    end
+
+    it "will not generate the same pdf twice" do
     end
   end
 end

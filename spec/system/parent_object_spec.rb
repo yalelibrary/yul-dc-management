@@ -211,7 +211,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
 
       it "includes the rights statment" do
-        within("div.rights-statement") do
+        within("dl.metadata-block") do
           expect(page).to have_content("The use of this image may be subject to the")
         end
       end
@@ -337,6 +337,23 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         expect(document["callNumber_tesim"]).to include "YCAL MSS 202"
         expect(document["dateStructured_ssim"]).to eq ["1842/1949"]
         expect(document["year_isim"]).to include 1845
+      end
+    end
+
+    context "redirected parent objects" do
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, redirect_to: "https://collections.library.yale.edu/catalog/123") }
+
+      before do
+        stub_metadata_cloud("2012036", "ladybird")
+        parent_object
+      end
+
+      it "will not update metadata" do
+        time_then = Time.current
+        parent_object.last_ladybird_update = time_then
+        visit parent_objects_path
+        click_on("Update Metadata")
+        expect(parent_object.last_ladybird_update).to eq time_then
       end
     end
 

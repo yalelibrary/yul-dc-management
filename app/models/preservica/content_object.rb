@@ -21,6 +21,10 @@ class Preservica::ContentObject
     content_uri = xml.xpath('/GenerationsResponse/AdditionalInformation/Self').text.strip
     content_uri.chomp('/generations')
   end
+  
+  def xml
+    @xml ||= @preservica_client.content_object(@id)
+  end
 
   private
 
