@@ -38,7 +38,7 @@ class Preservica::InformationObject
   private
 
     def load_representation(preservica_representation_name)
-      load_representations.select { |representation| representation.name.include?(preservica_representation_name) }
+      representations.select { |representation| representation.name.include?(preservica_representation_name) }
     end
 
     def load_representations
