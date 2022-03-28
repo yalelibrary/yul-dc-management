@@ -174,7 +174,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         begin
           parent_object = CsvRowParentService.new(row, index, current_ability, user).parent_object
           setup_for_background_jobs(parent_object, row['source'])
-          attach_item(parent_object)
         rescue CsvRowParentService::BatchProcessingError => e
           batch_processing_event(e.message, e.kind)
         rescue PreservicaImageService::PreservicaImageServiceError => e
@@ -200,7 +199,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         parent_object.admin_set = admin_set
         # TODO: enable edit action when added to batch actions
       end
-      parent_object.save if parent_object.present?
+      parent_object.save! if parent_object.present?
     end
   end
   # rubocop:enable  Metrics/AbcSize

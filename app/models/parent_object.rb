@@ -171,6 +171,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
     access_master_path = File.join(image_mount, directory, pairtree_path, "#{co_oid}.tif")
     child_hash[:bitstream].download_to_file(access_master_path)
+  rescue StandardError => e
+    processing_event(e.to_s, "failed")
+    raise e.to_s
   end
 
   def upsert_preservica_ingest_child_objects(preservica_ingest_hash)
@@ -295,6 +298,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # OR if the authoritative metaadata source changes
   # OR if the metadata_update accessor is set
   def setup_metadata_job(current_batch_connection = self.current_batch_connection)
+    if current_batch_connection.nil? && digital_object_source == "Preservica"
+      current_batch_connection = BatchProcess.last&.batch_connections&.find_or_create_by(connectable: self)
+    elsif current_batch_process.nil? && digital_object_source == "Preservica"
+      current_batch_process = BatchProcess.last
+    end
     if (created_at_previously_changed? && ladybird_json.blank?) ||
        previous_changes["authoritative_metadata_source_id"].present? ||
        metadata_update.present?
