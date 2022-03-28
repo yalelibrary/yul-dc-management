@@ -297,6 +297,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
   # OR if the authoritative metaadata source changes
   # OR if the metadata_update accessor is set
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def setup_metadata_job(current_batch_connection = self.current_batch_connection)
     if current_batch_connection.nil? && digital_object_source == "Preservica"
       current_batch_connection = BatchProcess.last&.batch_connections&.find_or_create_by(connectable: self)
@@ -311,6 +313,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       processing_event("Processing has been queued", "processing-queued")
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def authoritative_json
     json_for(authoritative_metadata_source.metadata_cloud_name)

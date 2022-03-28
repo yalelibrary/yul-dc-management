@@ -229,7 +229,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expect do
       batch_process.file = preservica_parent_checksum_mismatch_pattern_1
       batch_process.save
-      po = ParentObject.find(200000000)
+      po = ParentObject.find(200_000_000)
       expect(po.events_for_batch_process(batch_process).count).to be > 1
       expect(po.events_for_batch_process(batch_process)[1].reason).to eq("execution expired").or eq("Failed to open TCP connection to testpreservica:443 (Connection refused - connect(2) for \"testpreservica\" port 443)").or eq("Failed to open TCP connection to testpreservica:443 (getaddrinfo: Name or service not known)")
     end.to change { ChildObject.count }.by(0)
@@ -239,7 +239,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expect do
       batch_process.file = preservica_parent_checksum_mismatch_pattern_2
       batch_process.save
-      po = ParentObject.find(200000000)
+      po = ParentObject.find(200_000_000)
       expect(po.events_for_batch_process(batch_process).count).to be > 1
       expect(po.events_for_batch_process(batch_process)[1].reason).to eq("execution expired").or eq("Failed to open TCP connection to testpreservica:443 (Connection refused - connect(2) for \"testpreservica\" port 443)").or eq("Failed to open TCP connection to testpreservica:443 (getaddrinfo: Name or service not known)")
     end.to change { ChildObject.count }.by(0)
