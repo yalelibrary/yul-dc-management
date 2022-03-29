@@ -300,11 +300,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def setup_metadata_job(current_batch_connection = self.current_batch_connection)
-    if current_batch_connection.nil? && digital_object_source == "Preservica"
-      current_batch_connection = BatchProcess.last&.batch_connections&.find_or_create_by(connectable: self)
-    elsif current_batch_process.nil? && digital_object_source == "Preservica"
-      current_batch_process = BatchProcess.last
-    end
     if (created_at_previously_changed? && ladybird_json.blank?) ||
        previous_changes["authoritative_metadata_source_id"].present? ||
        metadata_update.present?

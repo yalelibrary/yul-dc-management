@@ -199,7 +199,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         parent_object.admin_set = admin_set
         # TODO: enable edit action when added to batch actions
       end
-      parent_object.save! if parent_object.present?
+      parent_object.save if parent_object.present?
     end
   end
   # rubocop:enable  Metrics/AbcSize

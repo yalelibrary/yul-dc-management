@@ -53,11 +53,11 @@ class PreservicaImageService
       raise PreservicaImageServiceError.new("No matching representation found in Preservica", @uri.to_s) if representation.nil?
       content_objects = representation.content_objects
       raise PreservicaImageServiceError.new("No matching content object found in Preservica", @uri.to_s) if content_objects.empty?
-      content_objects.each do |content_object|
+      content_objects.each_with_index do |content_object, index|
         raise PreservicaImageServiceError.new("No active generations found in Preservica", content_object.id.to_s) if content_object.active_generations.empty?
         raise PreservicaImageServiceError.new("No matching bitstreams found in Preservica", content_object.active_generations[0].id.to_s) if content_object.active_generations[0].bitstreams.empty?
         raise PreservicaImageServiceError.new("SHA mismatch found in Preservica", content_object.active_generations[0].bitstreams[0].id.to_s) if content_object.active_generations[0].bitstreams[0].sha512_checksum.nil?
-        @images << { preservica_content_object_uri: content_object.content_object_uri,
+        @images << { preservica_content_object_uri: representation.content_object_uri(index),
                      preservica_generation_uri: content_object.active_generations[0].generation_uri,
                      preservica_bitstream_uri: content_object.active_generations[0].bitstream_uri,
                      sha512_checksum: content_object.active_generations[0].bitstreams[0].sha512_checksum,

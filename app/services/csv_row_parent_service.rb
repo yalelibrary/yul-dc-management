@@ -38,7 +38,7 @@ class CsvRowParentService
 
   def parent_object
     PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_name)
-    @parent_object ||= ParentObject.create(properties_hash)
+    @parent_object ||= ParentObject.new(properties_hash)
   end
 
   def properties_hash
