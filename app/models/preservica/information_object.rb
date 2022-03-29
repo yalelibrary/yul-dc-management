@@ -11,6 +11,7 @@ class Preservica::InformationObject
   def initialize(preservica_client, id)
     @preservica_client = preservica_client
     @id = id
+    @representation_hash = {}
   end
 
   def representations
@@ -18,15 +19,16 @@ class Preservica::InformationObject
   end
 
   def access_representations
-    @access_representations ||= load_access_reps
+    @access_representations ||= load_representation("Access")
   end
 
   def preservation_representations
-    @preservation_representations ||= load_preservation_reps
+    @preservation_representations ||= load_representation("Preservation")
   end
 
+  # returns all representations with a name containing preservica_representation_name
   def fetch_by_representation_name(preservica_representation_name)
-    @representation ||= load_representation(preservica_representation_name)
+    @representation_hash[preservica_representation_name] ||= load_representation(preservica_representation_name)
   end
 
   def xml
@@ -36,29 +38,12 @@ class Preservica::InformationObject
   private
 
     def load_representation(preservica_representation_name)
-      xml = Nokogiri::XML(@preservica_client.information_object_representations(@id)).remove_namespaces!
-      xml.xpath('//Representation/@name').map(&:text).select { |name| name.include?(preservica_representation_name) }.map do |name|
-        Preservica::Representation.new(@preservica_client, @id, name)
-      end
+      representations.select { |representation| representation.name.include?(preservica_representation_name) }
     end
 
     def load_representations
       xml = Nokogiri::XML(@preservica_client.information_object_representations(@id)).remove_namespaces!
       xml.xpath('//Representation/@name').map(&:text).map do |name|
-        Preservica::Representation.new(@preservica_client, @id, name)
-      end
-    end
-
-    def load_access_reps
-      xml = Nokogiri::XML(@preservica_client.information_object_representations(@id)).remove_namespaces!
-      xml.xpath('//Representation/@name').map(&:text).select { |name| name.include?("Access") }.map do |name|
-        Preservica::Representation.new(@preservica_client, @id, name)
-      end
-    end
-
-    def load_preservation_reps
-      xml = Nokogiri::XML(@preservica_client.information_object_representations(@id)).remove_namespaces!
-      xml.xpath('//Representation/@name').map(&:text).select { |name| name.include?("Preservation") }.map do |name|
         Preservica::Representation.new(@preservica_client, @id, name)
       end
     end
