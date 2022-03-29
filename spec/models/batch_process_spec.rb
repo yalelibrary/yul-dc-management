@@ -8,7 +8,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
   let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids_with_source.csv")) }
   let(:delete_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_parent_fixture_ids.csv")) }
-  let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica_parent.csv")) }
+  let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent.csv")) }
   let(:invalid_preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "invalid_preservica_parent.csv")) }
   let(:delete_child) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_child_fixture_ids.csv")) }
   let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
@@ -369,6 +369,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         it "can create a parent_object with preservica values" do
           # rubocop:disable RSpec/AnyInstance
           allow_any_instance_of(SetupMetadataJob).to receive(:perform).and_return(true)
+          allow_any_instance_of(PreservicaImageService).to receive(:image_list).and_return(nil)
           # rubocop:enable RSpec/AnyInstance
           expect do
             batch_process.file = preservica_parent
@@ -376,10 +377,10 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           end.to change { ParentObject.count }.from(0).to(1)
           generated_po = ParentObject.first
           expect(generated_po.admin_set.key).to eq "brbl"
-          expect(generated_po.aspace_uri).to eq "/repositories/11/archival_objects/239964"
+          expect(generated_po.aspace_uri).to eq "/repositories/11/archival_objects/515305"
           expect(generated_po.bib).to eq "36"
           expect(generated_po.digital_object_source).to eq "Preservica"
-          expect(generated_po.preservica_uri).to eq "/structural-objects/b4dbf905-0cff-45f1-90e2-a62b609d6a28"
+          expect(generated_po.preservica_uri).to eq "/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5"
           expect(generated_po.barcode).to eq "barcode"
           expect(generated_po.holding).to eq "holding"
           expect(generated_po.visibility).to eq "Public"

@@ -174,9 +174,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         begin
           parent_object = CsvRowParentService.new(row, index, current_ability, user).parent_object
           setup_for_background_jobs(parent_object, row['source'])
-          attach_item(parent_object)
         rescue CsvRowParentService::BatchProcessingError => e
           batch_processing_event(e.message, e.kind)
+        rescue PreservicaImageService::PreservicaImageServiceError => e
+          batch_processing_event("Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
         end
       else
         oid = row['oid']

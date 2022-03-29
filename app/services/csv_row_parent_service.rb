@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 class CsvRowParentService
   class BatchProcessingError < StandardError
     attr_reader :kind
@@ -36,7 +37,8 @@ class CsvRowParentService
                :authoritative_metadata_source_id, :preservica_representation_name
 
   def parent_object
-    @parent_object ||= ParentObject.create(properties_hash)
+    PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_name)
+    @parent_object ||= ParentObject.new(properties_hash)
   end
 
   def properties_hash
@@ -115,3 +117,4 @@ class CsvRowParentService
     ms
   end
 end
+# rubocop:enable Metrics/ClassLength

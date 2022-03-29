@@ -151,23 +151,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def array_of_child_hashes_from_preservica
-    structured_object = Preservica::StructuralObject.where(admin_set_key: admin_set.key, id: (preservica_uri.split('/')[-1]).to_s)
-
-    information_objects = structured_object.information_objects
-
-    # TODO: download_to_file to temp directory and then copy from there
-    # Or circumvent process to download file straight to copy
-    information_objects.map.with_index(1) do |child_hash, index|
+    PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_name).map.with_index(1) do |child_hash, index|
       co_oid = OidMinterService.generate_oids(1)[0]
       preservica_copy_to_access(child_hash, co_oid)
-
-      { oid: co_oid,
-        parent_object_oid: oid,
-        preservica_content_object_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_object_uri,
-        preservica_generation_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].generation_uri,
-        preservica_bitstream_uri: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstream_uri,
-        sha512_checksum: child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstreams[0].sha512_checksum,
-        order: index }
+      child_hash.delete(:bitstream)
+      child_hash[:oid] = co_oid
+      child_hash[:parent_object_oid] = oid
+      child_hash[:order] = index
+      child_hash
     end
   end
   # rubocop:enable Metrics/AbcSize
@@ -179,7 +170,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     directory = format("%02d", pairtree_path.first)
     FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
     access_master_path = File.join(image_mount, directory, pairtree_path, "#{co_oid}.tif")
-    child_hash.fetch_by_representation_name(preservica_representation_name)[0].content_objects[0].active_generations[0].bitstreams[0].download_to_file(access_master_path)
+    child_hash[:bitstream].download_to_file(access_master_path)
+  rescue StandardError => e
+    processing_event(e.to_s, "failed")
+    raise e.to_s
   end
 
   def upsert_preservica_ingest_child_objects(preservica_ingest_hash)
@@ -303,6 +297,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
   # OR if the authoritative metaadata source changes
   # OR if the metadata_update accessor is set
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def setup_metadata_job(current_batch_connection = self.current_batch_connection)
     if (created_at_previously_changed? && ladybird_json.blank?) ||
        previous_changes["authoritative_metadata_source_id"].present? ||
@@ -312,6 +308,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       processing_event("Processing has been queued", "processing-queued")
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def authoritative_json
     json_for(authoritative_metadata_source.metadata_cloud_name)

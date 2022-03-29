@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ChildrenResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3">
+  <Children>
+    <Child title="mss_29_s03_b092_f0019" ref="1e42a2bb-8953-41b6-bcc3-1a19c86a5e5z" type="IO">
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e5z
+    </Child>
+  </Children>
+  <Paging>
+    <TotalResults>1</TotalResults>
+  </Paging>
+  <AdditionalInformation>
+    <Self>
+      https://preservica-dev-v6.library.yale.edu/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e9z/children
+    </Self>
+  </AdditionalInformation>
+</ChildrenResponse>
