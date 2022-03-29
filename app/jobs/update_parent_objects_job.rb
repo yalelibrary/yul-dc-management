@@ -3,6 +3,8 @@
 class UpdateParentObjectsJob < ApplicationJob
   queue_as :default
 
+  discard_on StandardError, Net::OpenTimeout
+
   def default_priority
     50
   end
