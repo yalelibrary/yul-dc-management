@@ -9,8 +9,9 @@ td.actions {
   min-width: 23em;
 }
 .child-list {
-  max-height: auto;
-  max-width: auto;
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 .child-objects {
   margin-bottom: 15px;
