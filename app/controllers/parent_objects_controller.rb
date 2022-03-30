@@ -118,7 +118,6 @@ class ParentObjectsController < ApplicationController
     end
     metadata_source_ids = params[:metadata_source_ids]
     where[:authoritative_metadata_source_id] = metadata_source_ids if metadata_source_ids
-    where = '' if where.empty?
     where
   end
 
