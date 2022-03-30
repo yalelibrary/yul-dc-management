@@ -96,7 +96,7 @@
   <div class="child-objects">
     <dt>Children:</dt>
     <dd class="child-list">
-      <ol>
+      <ol class="child-list-ol">
         <% @parent_object.child_objects.map do |child| %>
           <p><li><%= link_to( "#{child.label || 'no label'} / #{child.caption || 'no caption'} (#{child.width}, #{child.height})", "#{child_objects_path}/#{child.oid}") %></li></p>
         <% end %>
@@ -105,7 +105,7 @@
   </div>
 
   <% if @parent_object.representative_child %>
-    <dt>Representative thumbnail:</dt>
+    <dt class="represent-thumb">Representative thumbnail:</dt>
     <dd><%= image_tag @parent_object.representative_child.thumbnail_url %></dd>
   <% end %>
   
