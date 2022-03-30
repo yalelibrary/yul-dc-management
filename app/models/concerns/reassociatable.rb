@@ -4,6 +4,8 @@
 module Reassociatable
   extend ActiveSupport::Concern
 
+  BLANK_VALUE = "_blank_"
+
   # triggers the reassociate process
   def reassociate_child_oids
     return unless batch_action == "reassociate child oids"
@@ -52,21 +54,29 @@ module Reassociatable
     values_to_update
   end
 
+  def check_for_blank(value)
+    return nil if value == BLANK_VALUE
+    value
+  end
+
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
   # updates values based on column values for child object
   def update_child_values(values_to_update, co, row, index)
     values_to_update.each do |h|
       if h == 'viewing_hint'
-        co.viewing_hint = valid_view(row[h], co.oid)
+        co.viewing_hint = valid_view(check_for_blank(row[h]), co.oid)
         # should not update parent title or call number
       elsif values_to_update.include? h
         if h == 'label'
-          co.label = row[h]
+          co.label = check_for_blank(row[h])
         elsif h == 'caption'
-          co.caption = row[h]
+          co.caption = check_for_blank(row[h])
         elsif h == 'order'
-          co.order = extract_order(index, row)
+          order = extract_order(index, row)
+          return false if order == :invalid_order # message says skipping row, returning
+          co.order = order
         elsif h == 'child_oid' || h == 'parent_oid'
           next
         end
@@ -78,6 +88,7 @@ module Reassociatable
   end
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   # assigns the child to the new parent
   def reassociate_child(co, po)
