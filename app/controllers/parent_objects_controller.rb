@@ -103,7 +103,7 @@ class ParentObjectsController < ApplicationController
   end
 
   def all_metadata_where
-    where = {}
+    where = { redirect_to: nil }
     admin_set_ids = params[:admin_set]
     admin_set_ids&.compact!
     if !admin_set_ids

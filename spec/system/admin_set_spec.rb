@@ -196,7 +196,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       end
 
       it 'starts job when dialog is submitted' do
-        expect(UpdateAllMetadataJob).to receive(:perform_later).with(0, admin_set_id: ["", admin_set.id.to_s], authoritative_metadata_source_id: ["", metadata_source.id.to_s])
+        expect(UpdateAllMetadataJob).to receive(:perform_later).with(0, admin_set_id: ["", admin_set.id.to_s], redirect_to: nil, authoritative_metadata_source_id: ["", metadata_source.id.to_s])
         expect(page).to have_css('input[value="Update Metadata"]')
         page.find("#metadata_source_ids").set [metadata_source.id.to_s]
         click_on('Update Metadata')
