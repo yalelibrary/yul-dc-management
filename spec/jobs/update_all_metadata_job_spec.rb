@@ -53,7 +53,8 @@ RSpec.describe UpdateAllMetadataJob, type: :job, prep_metadata_sources: true, so
     end
 
     it 'processes parents with where' do
-      expect(ParentObject).to receive(:where).with(admin_set_id: [1, 2, 3], authoritative_metadata_source_id: [2, 3], redirect_to: nil).and_return(parent_object_where).exactly(expected_call_count).times
+      where = { admin_set_id: [1, 2, 3], authoritative_metadata_source_id: [2, 3], redirect_to: nil }
+      expect(ParentObject).to receive(:where).with(where).and_return(parent_object_where).exactly(expected_call_count).times
       UpdateAllMetadataJob.perform_later(0, admin_set_id: [1, 2, 3], authoritative_metadata_source_id: [2, 3], redirect_to: nil)
     end
   end
