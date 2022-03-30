@@ -566,7 +566,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
           allow(offset).to receive(:limit).and_return([])
           allow(order).to receive(:offset).and_return(offset)
           allow(ParentObject).to receive(:where).with({}).and_return(ParentObject.where({}))
-          expect(ParentObject).to receive(:where).with('').and_return(where)
+          expect(ParentObject).to receive(:where).with(redirect_to: nil).and_return(where)
           expect(where).to receive(:order).and_return(order)
           expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.")
           page.driver.browser.switch_to.alert.accept
