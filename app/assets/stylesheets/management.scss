@@ -9,11 +9,12 @@ td.actions {
   min-width: 23em;
 }
 .child-list {
-  max-height: 150px;
-  overflow-y: auto;
+  max-height: auto;
+  max-width: auto;
 }
 .child-objects {
   margin-bottom: 15px;
+  width: 90%;
 }
 
 .dt-buttons {
@@ -38,6 +39,19 @@ td.actions {
 .dt-button.dropdown-item.active::before {
   content: "✓";
   color: inherit;
+}
+dt.represent-thumb{
+  position: relative;
+}
+
+ol.child-list-ol{
+  margin-left: -60px;
+  width: 100%;
+}
+
+dd.child-list{
+    position: relative;
+    left: -7%;
 }
 
 
