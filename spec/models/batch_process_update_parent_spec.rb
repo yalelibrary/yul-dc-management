@@ -9,6 +9,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:csv_small) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example.csv")) }
   let(:csv_missing) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_missing.csv")) }
   let(:csv_invalid) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_invalid.csv")) }
+  let(:csv_blanks) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_blanks.csv")) }
+  let(:csv_invalid_blanks) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_invalid_blanks.csv")) }
 
   before do
     stub_metadata_cloud("2034600")
@@ -163,6 +165,76 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_updated.rights_statement).to be_nil
       expect(po_updated.viewing_direction).to be_nil
       expect(po_updated.visibility).to eq "Private"
+    end
+  end
+
+  context "with a parent_object valid values" do
+    before do # setup po with some valid values
+      batch_process.file = csv_upload
+      batch_process.save
+      batch_process.create_new_parent_csv
+      update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
+      update_batch_process.file = csv_small
+      update_batch_process.save
+      update_batch_process.update_parent_objects
+      po_updated = ParentObject.find_by(oid: 2_034_600)
+      expect(po_updated.aspace_uri).to eq "/repositories/11/archival_objects/515305"
+      expect(po_updated.barcode).to eq "39002102340669"
+      expect(po_updated.bib).to eq "12307100"
+      expect(po_updated.digitization_note).to eq "5678"
+      expect(po_updated.display_layout).to eq "paged"
+      expect(po_updated.extent_of_digitization).to eq "Completely digitized"
+      expect(po_updated.holding).to eq "temporary"
+      expect(po_updated.item).to eq "reel"
+      expect(po_updated.project_identifier).to eq "Beinecke"
+      expect(po_updated.rights_statement).to eq "The use of this image may be subject to the copyright law of the United States"
+      expect(po_updated.viewing_direction).to eq "left-to-right"
+      expect(po_updated.visibility).to eq "Public"
+    end
+
+    it "can blank out some values" do
+      update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
+      update_batch_process.file = csv_blanks
+      update_batch_process.save
+      update_batch_process.update_parent_objects
+
+      po_updated = ParentObject.find_by(oid: 2_034_600)
+      expect(po_updated.aspace_uri).to eq "/repositories/11/archival_objects/515305"
+      expect(po_updated.barcode).to eq "39002102340669"
+      expect(po_updated.bib).to eq "12307100"
+      expect(po_updated.digitization_note).to eq "5678"
+      expect(po_updated.display_layout).to be_nil
+      expect(po_updated.project_identifier).to be_nil
+      expect(po_updated.extent_of_digitization).to eq "Completely digitized"
+      expect(po_updated.holding).to eq "temporary"
+      expect(po_updated.item).to eq "reel"
+      expect(po_updated.rights_statement).to eq "The use of this image may be subject to the copyright law of the United States"
+      expect(po_updated.viewing_direction).to be_nil
+      expect(po_updated.visibility).to eq "Public"
+    end
+
+    it "can not blank out some values" do
+      update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
+      update_batch_process.file = csv_invalid_blanks
+      update_batch_process.save
+      update_batch_process.update_parent_objects
+
+      po_updated = ParentObject.find_by(oid: 2_034_600)
+      expect(po_updated.aspace_uri).to eq "/repositories/11/archival_objects/515305"
+      expect(po_updated.barcode).to eq "39002102340669"
+      expect(po_updated.bib).to eq "12307100"
+      expect(po_updated.digitization_note).to eq "5678"
+      expect(po_updated.display_layout).to be_nil
+      expect(po_updated.project_identifier).to be_nil
+      expect(po_updated.extent_of_digitization).to eq "Completely digitized"
+      expect(po_updated.holding).to eq "temporary"
+      expect(po_updated.item).to eq "reel"
+      expect(po_updated.rights_statement).to eq "The use of this image may be subject to the copyright law of the United States"
+      expect(po_updated.viewing_direction).to be_nil
+      expect(po_updated.visibility).to eq "Public"
+      expect(update_batch_process.batch_ingest_events_count).to eq 2
+      expect(update_batch_process.batch_ingest_events.first.reason).to eq "Parent 2034600 did not update value for source because it can not be blanked."
+      expect(update_batch_process.batch_ingest_events.second.reason).to eq "Parent 2034600 did not update value for visibility because it can not be blanked."
     end
   end
 end
