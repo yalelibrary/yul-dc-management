@@ -123,7 +123,9 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Reassociate Child Oids")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        click_link(BatchProcess.last.id.to_s)
+        within("td:first-child") do
+          click_link(BatchProcess.last.id.to_s)
+        end
         expect(page).to have_content("Batch Messages")
         expect(page).to have_content("Skipped Row").once
         expect(page).to have_content("invalid order").once
