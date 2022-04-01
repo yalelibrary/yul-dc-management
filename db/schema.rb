@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_02_184235) do
+ActiveRecord::Schema.define(version: 2022_04_01_163246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 2022_03_02_184235) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "metadata_source"
+    t.index ["dependent_uri"], name: "index_dependent_objects_on_dependent_uri"
     t.index ["parent_object_id"], name: "index_dependent_objects_on_parent_object_id"
   end
 
