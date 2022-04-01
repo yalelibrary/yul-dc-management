@@ -69,7 +69,7 @@ class ChildObject < ApplicationRecord
     #  2. We assume that there is only one access master at a time - BUT we only have one access master pair-tree
     #     across *all* environments (no separation of dev, test, uat, production)
     #     how do we ensure we don't accidentally overwrite something we want to keep?
-    if access_master_exists?
+    if access_master_exists? && access_master_checksum_matches?
       processing_event("Not copied from Goobi package to access master pair-tree, already exists", 'access-master-exists')
       return true
     end
@@ -79,14 +79,18 @@ class ChildObject < ApplicationRecord
     # Create path to access master if it doesn't exist
     FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
     FileUtils.cp(mets_access_master_path, access_master_path)
-    access_master_checksum = Digest::SHA1.file(access_master_path).to_s
-    if checksum == access_master_checksum
+    if access_master_checksum_matches?
       processing_event("Copied from Goobi package to access master pair-tree", 'goobi-copied')
       true
     else
       processing_event("Copy from Goobi to access master failed checksum check", 'failed')
       false
     end
+  end
+
+  def access_master_checksum_matches?
+    access_master_checksum = Digest::SHA1.file(access_master_path).to_s
+    checksum == access_master_checksum
   end
 
   def access_master_exists?
