@@ -77,8 +77,10 @@ class ChildObject < ApplicationRecord
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
     directory = format("%02d", pairtree_path.first)
     # Create path to access master if it doesn't exist
-    FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
-    FileUtils.cp(mets_access_master_path, access_master_path)
+    if checksum =~ /b([a-f0-9]{40})b/
+      FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
+      FileUtils.cp(mets_access_master_path, access_master_path)
+    end
     if access_master_checksum_matches?
       processing_event("Copied from Goobi package to access master pair-tree", 'goobi-copied')
       true
