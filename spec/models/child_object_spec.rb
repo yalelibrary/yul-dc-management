@@ -98,9 +98,10 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     end
   end
 
-  describe "when access master exist" do
+  describe "when access master exist and checksum matches" do
     let(:child_object) { described_class.new }
     it "copy_to_access_master_pairtree notifies and returns true" do
+      expect(child_object).to receive(:access_master_checksum_matches?).and_return(true).once
       expect(child_object).to receive(:access_master_exists?).and_return(true).once
       expect(child_object).to receive(:processing_event).with("Not copied from Goobi package to access master pair-tree, already exists", 'access-master-exists').once
       child_object.copy_to_access_master_pairtree
