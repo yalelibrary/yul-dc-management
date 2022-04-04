@@ -176,8 +176,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
           setup_for_background_jobs(parent_object, row['source'])
         rescue CsvRowParentService::BatchProcessingError => e
           batch_processing_event(e.message, e.kind)
+          next
         rescue PreservicaImageService::PreservicaImageServiceError => e
           batch_processing_event("Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
+          next
         end
       else
         oid = row['oid']
@@ -199,7 +201,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         parent_object.admin_set = admin_set
         # TODO: enable edit action when added to batch actions
       end
-      parent_object.save if parent_object.present?
+      begin
+        parent_object.save!
+      rescue StandardError => e
+        batch_processing_event("Skipping row [#{index + 2}] Unable to save parent: #{e.message}.", "Skipped Row")
+      end
     end
   end
   # rubocop:enable  Metrics/AbcSize
