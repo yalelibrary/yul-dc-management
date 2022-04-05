@@ -205,7 +205,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.batch_action).to eq "export child oids"
         expect(BatchProcess.last.child_output_csv).to include "1021925"
         expect(BatchProcess.last.child_output_csv).to include "JWJ MSS 49"
-        expect(BatchProcess.last.child_output_csv).to include '2005512,,0,Access denied for parent object,"",""'
+        expect(BatchProcess.last.child_output_csv).to include '2005512,,-,Access denied for parent object,"",""'
         expect(BatchProcess.last.child_output_csv).not_to include "1030368" # child of 2005512
         expect(BatchProcess.last.batch_ingest_events.count).to eq 9
         expect(BatchProcess.last.batch_ingest_events.map(&:reason)).to include "Skipping row [3] due to parent permissions: 2005512"
