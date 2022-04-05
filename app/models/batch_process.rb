@@ -26,7 +26,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # LISTS AVAILABLE BATCH ACTIONS
   def self.batch_actions
     ['create parent objects', 'update parent objects', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set',
-     'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status']
+     'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status', 'sync from preservica']
   end
 
   # LOGS BATCH PROCESSING MESSAGES AND SETS STATUSES
@@ -153,6 +153,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         RecreateChildOidPtiffsJob.perform_later(self)
       when 'update fulltext status'
         UpdateFulltextStatusJob.perform_later(self)
+      when 'sync from preservica'
+        SyncFromPreservicaJob.perform_later(self)
       end
     elsif mets_xml.present?
       refresh_metadata_cloud_mets
@@ -365,6 +367,30 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parent_object.digitization_note = mets_doc.dig_note
   end
   # rubocop:enable Metrics/AbcSize
+
+  # FETCHES CHILD OBJECTS FROM PRESERVICA
+  def sync_from_preservica
+    parsed_csv.each_with_index do |row, _index|
+      # find parent object
+      parent_object = ParentObject.find(row['oid'])
+      # check number of child objects local
+      local_children_count = parent_object.child_objects.count
+      # check number of child objects in preservica
+      preservica_children_count = PreservicaImageService.new(parent_object.preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_name).count
+      # update if different
+      if local_children_count != preservica_children_count
+        # remove old
+        parent_object.child_objects.destroy_all
+        # get new children
+        parent_object.create_child_records
+        setup_for_background_jobs(parent_object, parent_object.source_name)
+      # skip if same
+      else
+        batch_processing_event("Child object count is the same.  No update needed.", "Skipped Row")
+        next
+      end
+    end
+  end
 
   # BATCH STATUSES: ------------------------------------------------------------------------------ #
 
