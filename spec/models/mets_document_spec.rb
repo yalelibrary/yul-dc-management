@@ -34,6 +34,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
   let(:has_test_no_caption_file) { File.open("spec/fixtures/goobi/metadata/16172421/meta_no_logical.xml") }
   let(:has_digitized) { File.open("spec/fixtures/goobi/metadata/eodig.xml") }
   let(:has_digitized_note) { File.open("spec/fixtures/goobi/metadata/digitizationnote.xml") }
+  let(:bad_checksum_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_checksum_mets.xml") }
 
   it "can be instantiated with xml from the DB instead of a file" do
     described_class.new(batch_process.mets_xml)
@@ -77,6 +78,11 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
 
     it "returns false with a unknown admin set ownership" do
       mets_doc = described_class.new(unknown_admin_set_file)
+      expect(mets_doc.valid_mets?).to be_falsey
+    end
+
+    it "returns false with bad checksum(s)" do
+      mets_doc = described_class.new(bad_checksum_file)
       expect(mets_doc.valid_mets?).to be_falsey
     end
   end

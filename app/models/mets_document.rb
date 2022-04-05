@@ -61,6 +61,7 @@ class MetsDocument
     child_img&.[](:oid)&.to_i
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
   def valid_mets?
     return false unless @mets.xml?
     return false unless @mets.collect_namespaces.include?("xmlns:mets")
@@ -69,8 +70,10 @@ class MetsDocument
     return false unless valid_metadata_source_path?
     return false if fixture_images_in_production?
     return false unless admin_set.present?
+    return false unless all_images_have_checksum?
     true
   end
+  # rubocop:enable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
 
   # ensure we don't accidentally upload tiny fixture images in production
   def fixture_images_in_production?
@@ -81,6 +84,12 @@ class MetsDocument
 
   def all_images_present?
     files.all? { |file| File.exist?(file[:mets_access_master_path]) }
+  end
+
+  def all_images_have_checksum?
+    files.all? do |file|
+      file[:checksum] =~ /^([a-f0-9]{40})$/
+    end
   end
 
   # Combines the physical info and file info for a given image
