@@ -98,8 +98,9 @@ module CsvExportable
   def child_output_csv
     return nil unless batch_action == 'export child oids'
     csv_rows = []
+    parent_title_hash = {}
     child_objects_array.each do |co|
-      parent_title = co.parent_object.authoritative_json&.[]('title')&.first
+      parent_title = lookup_parent_title(co, parent_title_hash)
       row = [co.parent_object.oid, co.oid, co.order, parent_title.presence, co.parent_object.call_number, co.label, co.caption, co.viewing_hint]
       csv_rows << row
     end
@@ -113,6 +114,10 @@ module CsvExportable
     output_csv
   end
   # rubocop:enable Metrics/AbcSize
+
+  def lookup_parent_title(co, parent_title_hash)
+    parent_title_hash[co.parent_object.oid] ||= co.parent_object.authoritative_json&.[]('title')&.first
+  end
 
   def remote_csv_path
     @remote_csv_path ||= "batch/job/#{id}/#{created_file_name}"
