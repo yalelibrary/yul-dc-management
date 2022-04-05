@@ -7,6 +7,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl') }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_children.csv")) }
+  let(:preservica_sync_invalid) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_sync_invalid.csv")) }
   let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_sync.csv")) }
 
   around do |example|
@@ -69,10 +70,11 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
 
   # create batch process to sync parent with preservica
   # -- has error reporting for if parent:
-  # is a redirected object
-  # has a digital object source that is not Preservica
-  # does not have a Preservica URI
-  # does not have a Preservica Representation Name
+  # x not found
+  # x is a redirected object
+  # x has a digital object source that is not Preservica
+  # x does not have a Preservica URI
+  # x does not have a Preservica Representation Name
   # -- fetch by preservica uri
   # error if not found
   # retry if connection fails
@@ -82,11 +84,17 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
     File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
     File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
+    File.delete("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif") if File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")
+    File.delete("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif") if File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")
+    File.delete("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif") if File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")
 
     allow(S3Service).to receive(:s3_exists?).and_return(false)
     expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be false
     expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be false
     expect(File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")).to be false
+    expect(File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")).to be false
+    expect(File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")).to be false
+    expect(File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")).to be false
     expect do
       batch_process.file = preservica_parent_with_children
       batch_process.save
@@ -119,6 +127,12 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       sync_batch_process.file = preservica_sync
       sync_batch_process.save!
     end.to change { ChildObject.count }.from(2).to(3)
+    expect(File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")).to be true
+    expect(File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")).to be true
+    expect(File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")).to be true
+    File.delete("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif") if File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")
+    File.delete("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif") if File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")
+    File.delete("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif") if File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")
   end
 
   it 'can recognize when child object count is the same' do
@@ -148,5 +162,90 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     end.not_to change { ChildObject.count }
     expect(sync_batch_process.batch_ingest_events_count).to be 1
     expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Child object count is the same.  No update needed.')
+  end
+
+  it 'can throw an error if parent object is not found' do
+    File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
+    File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
+    File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
+
+    allow(S3Service).to receive(:s3_exists?).and_return(false)
+    expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be false
+    expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be false
+    expect(File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")).to be false
+    expect do
+      batch_process.file = preservica_parent_with_children
+      batch_process.save
+    end.to change { ChildObject.count }.from(0).to(3)
+    expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be true
+    expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be true
+    expect(File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")).to be true
+    File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
+    File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
+    File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
+
+    sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+    expect do
+      sync_batch_process.file = preservica_sync_invalid
+      sync_batch_process.save!
+    end.not_to change { ChildObject.count }
+    expect(sync_batch_process.batch_ingest_events_count).to be 1
+    expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Parent OID: 12345 not found in database')
+  end
+
+  it 'can throw an error if parent object is a redirected parent' do
+    allow(S3Service).to receive(:s3_exists?).and_return(false)
+    parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('brbl'), redirect_to: "https://collections.library.yale.edu/catalog/123")
+    parent_object.save
+
+    sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+    expect do
+      sync_batch_process.file = preservica_sync_invalid
+      sync_batch_process.save!
+    end.not_to change { ChildObject.count }
+    expect(sync_batch_process.batch_ingest_events_count).to be 1
+    expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Parent OID: 12345 is a redirected parent object')
+  end
+
+  it 'can throw an error if parent object does not have a preservica_uri' do
+    allow(S3Service).to receive(:s3_exists?).and_return(false)
+    parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('brbl'))
+    parent_object.save
+
+    sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+    expect do
+      sync_batch_process.file = preservica_sync_invalid
+      sync_batch_process.save!
+    end.not_to change { ChildObject.count }
+    expect(sync_batch_process.batch_ingest_events_count).to be 1
+    expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Parent OID: 12345 does not have a Preservica URI')
+  end
+
+  it 'can throw an error if parent object does not have a digital object source' do
+    allow(S3Service).to receive(:s3_exists?).and_return(false)
+    parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('brbl'), preservica_uri: "/")
+    parent_object.save
+
+    sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+    expect do
+      sync_batch_process.file = preservica_sync_invalid
+      sync_batch_process.save!
+    end.not_to change { ChildObject.count }
+    expect(sync_batch_process.batch_ingest_events_count).to be 1
+    expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Parent OID: 12345 does not have a Preservica digital object source')
+  end
+
+  it 'can throw an error if parent object does not have a preservica representation name' do
+    allow(S3Service).to receive(:s3_exists?).and_return(false)
+    parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('brbl'), preservica_uri: "/", digital_object_source: "Preservica")
+    parent_object.save
+
+    sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+    expect do
+      sync_batch_process.file = preservica_sync_invalid
+      sync_batch_process.save!
+    end.not_to change { ChildObject.count }
+    expect(sync_batch_process.batch_ingest_events_count).to be 1
+    expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Parent OID: 12345 does not have a Preservica representation name')
   end
 end

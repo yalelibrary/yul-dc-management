@@ -369,10 +369,17 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/AbcSize
 
   # FETCHES CHILD OBJECTS FROM PRESERVICA
+  # rubocop:disable Metrics/MethodLength
   def sync_from_preservica
     parsed_csv.each_with_index do |row, _index|
-      # find parent object
-      parent_object = ParentObject.find(row['oid'])
+      begin
+        # find parent object
+        parent_object = ParentObject.find(row['oid'])
+      rescue
+        batch_processing_event("Parent OID: #{row['oid']} not found in database", 'Skipped Import') if parent_object.nil?
+        next
+      end
+      next unless validate_preservica_sync(parent_object, row)
       # check number of child objects local
       local_children_count = parent_object.child_objects.count
       # check number of child objects in preservica
@@ -389,6 +396,23 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         batch_processing_event("Child object count is the same.  No update needed.", "Skipped Row")
         next
       end
+    end
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  def validate_preservica_sync(parent_object, row)
+    if parent_object.redirect_to.present?
+      batch_processing_event("Parent OID: #{row['oid']} is a redirected parent object", 'Skipped Import')
+      false
+    elsif parent_object.preservica_uri.nil?
+      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica URI", 'Skipped Import')
+      false
+    elsif parent_object.digital_object_source != "Preservica"
+      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica digital object source", 'Skipped Import')
+      false
+    elsif parent_object.preservica_representation_name.nil?
+      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation name", 'Skipped Import')
+      false
     end
   end
 
