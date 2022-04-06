@@ -373,33 +373,39 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def sync_from_preservica
     parsed_csv.each_with_index do |row, _index|
       begin
-        # find parent object
         parent_object = ParentObject.find(row['oid'])
       rescue
         batch_processing_event("Parent OID: #{row['oid']} not found in database", 'Skipped Import') if parent_object.nil?
         next
       end
       next unless validate_preservica_sync(parent_object, row)
-      # check number of child objects local
       local_children_count = parent_object.child_objects.count
-      # check number of child objects in preservica
-      preservica_children_count = PreservicaImageService.new(parent_object.preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_name).count
-      # update if different
-      if local_children_count != preservica_children_count
-        # remove old
-        parent_object.child_objects.destroy_all
-        # get new children
-        parent_object.create_child_records
-        setup_for_background_jobs(parent_object, parent_object.source_name)
-      # skip if same
-      else
-        batch_processing_event("Child object count is the same.  No update needed.", "Skipped Row")
+      begin
+        preservica_children_count = PreservicaImageService.new(parent_object.preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_name).count
+      rescue PreservicaImageServiceNetworkError => e
+        batch_processing_event("Parent OID: #{row['oid']} because of #{e.message}", 'Skipped Import')
+        raise
+      rescue PreservicaImageServiceError => e
+        batch_processing_event("Parent OID: #{row['oid']} because of #{e.message}", 'Skipped Import')
         next
       end
+      sync_images_preservica(local_children_count, preservica_children_count, parent_object)
     end
   end
   # rubocop:enable Metrics/MethodLength
 
+  # SYNC IMAGES FROM PRESERVICA
+  def sync_images_preservica(local_children_count, preservica_children_count, parent_object)
+    if local_children_count != preservica_children_count
+      parent_object.child_objects.destroy_all
+      parent_object.create_child_records
+      setup_for_background_jobs(parent_object, parent_object.source_name)
+    else
+      batch_processing_event("Child object count is the same.  No update needed.", "Skipped Row")
+    end
+  end
+
+  # ERROR HANDLING FOR PRESERVICA SYNC
   def validate_preservica_sync(parent_object, row)
     if parent_object.redirect_to.present?
       batch_processing_event("Parent OID: #{row['oid']} is a redirected parent object", 'Skipped Import')
@@ -413,6 +419,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     elsif parent_object.preservica_representation_name.nil?
       batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation name", 'Skipped Import')
       false
+      # TODO: check if user has permission on admin set
+      # TODO: check if admin set has credentials
     else
       true
     end
