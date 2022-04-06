@@ -160,7 +160,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       sync_batch_process.file = preservica_sync
       sync_batch_process.save!
     end.not_to change { ChildObject.count }
-    expect(sync_batch_process.batch_ingest_events_count).to be 1
+    expect(sync_batch_process.batch_ingest_events_count).to eq 1
     expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Child object count is the same.  No update needed.')
   end
 

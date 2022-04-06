@@ -413,6 +413,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     elsif parent_object.preservica_representation_name.nil?
       batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation name", 'Skipped Import')
       false
+    else
+      true
     end
   end
 
