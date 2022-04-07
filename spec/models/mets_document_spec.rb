@@ -22,7 +22,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
   let(:no_admin_set_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/no_admin_set.xml").read }
   let(:unknown_admin_set_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/unknown_admin_set.xml").read }
   let(:no_rights_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/no_rights_mets.xml") }
-  let(:no_image_files_path) { File.join(fixture_path, "goobi", "metadata", "2012315", "no_image_files.xml") }
+  let(:no_image_files_path) { File.join(fixture_path, "goobi", "metadata", "16172421", "no_image_files.xml") }
   let(:bad_bib_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_bib.xml") }
   let(:bad_aspace_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_aspace.xml") }
   let(:bad_voyager_uri_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_voyager_uri.xml") }
@@ -41,49 +41,49 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
   end
 
   describe "discerning between valid and invalid METs" do
-    it "returns false for a valid xml file that is not METs" do
+    it "raise error message for a valid xml file that is not METs" do
       mets_doc = described_class.new(min_valid_xml_file)
-      expect(mets_doc.valid_mets?).to be_falsey
+      expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "no mets namespace in mets file")
     end
 
-    it "returns false for a valid METs file that does not reference any images" do
+    it "return false for a valid METs file that does not reference any images" do
       mets_doc = described_class.new(no_image_files_path)
-      expect(mets_doc.valid_mets?).to be_falsey
+      expect { mets_doc.fixture_images_in_production? }.to be_falsey
     end
 
-    it "returns false when rights statement is not present" do
+    it "raise error message when rights statement is not present" do
       mets_doc = described_class.new(no_rights_file)
-      expect(mets_doc.valid_mets?).to be_falsey
+      expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "no right statement found in the mets xml")
     end
 
-    it "returns false with a bib that contains characters other than numerals or b" do
+    it "raise error message with a bib that contains characters other than numerals or b" do
       mets_doc = described_class.new(bad_bib_file)
-      expect(mets_doc.valid_mets?).to be_falsey
+      expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "not valid metadata source")
     end
 
-    it "returns false with a non-numeric holding/item/barcode" do
+    it "raise error message with a non-numeric holding/item/barcode" do
       mets_doc = described_class.new(bad_voyager_uri_file)
-      expect(mets_doc.valid_mets?).to be_falsey
+      expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "not valid metadata source")
     end
 
-    it "returns false with a malformed archivespace URI" do
+    it "raise error message with a malformed archivespace URI" do
       mets_doc = described_class.new(bad_aspace_file)
-      expect(mets_doc.valid_mets?).to be_falsey
+      expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "not valid metadata source")
     end
 
-    it "returns false with a missing admin set ownership" do
+    it "raise error message with a missing admin set ownership" do
       mets_doc = described_class.new(no_admin_set_file)
-      expect(mets_doc.valid_mets?).to be_falsey
+      expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "no admin set in mets xml")
     end
 
-    it "returns false with a unknown admin set ownership" do
+    it "raise error message with a unknown admin set ownership" do
       mets_doc = described_class.new(unknown_admin_set_file)
-      expect(mets_doc.valid_mets?).to be_falsey
+      expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "no admin set in mets xml")
     end
 
-    it "returns false with bad checksum(s)" do
+    it "raise error message with bad checksum(s)" do
       mets_doc = described_class.new(bad_checksum_file)
-      expect(mets_doc.valid_mets?).to be_falsey
+      expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "4e870f62d9b11c7cd93520d1aa5fe3def9ad, index: 0 invalid checksum, check the checksum in mets xml")
     end
   end
 
@@ -100,7 +100,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
         mets_doc = described_class.new(valid_goobi_xml)
         expect(mets_doc.all_images_present?).to be_truthy
         expect(mets_doc.fixture_images_in_production?).to be_truthy
-        expect(mets_doc.valid_mets?).to be_falsey
+        expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "no image path")
       end
 
       it "returns true with non-fixture paths in non-dev and non-test environments" do
