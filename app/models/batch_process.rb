@@ -405,6 +405,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
   # ERROR HANDLING FOR PRESERVICA SYNC
   def validate_preservica_sync(parent_object, row)
     if parent_object.redirect_to.present?
@@ -419,12 +420,17 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     elsif parent_object.preservica_representation_name.nil?
       batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation name", 'Skipped Import')
       false
-      # TODO: check if user has permission on admin set
-      # TODO: check if admin set has credentials
+    elsif !parent_object.admin_set.preservica_credentials_verified
+      batch_processing_event("Admin set #{parent_object.admin_set.key} does not have Preservica credentials set", 'Skipped Import')
+      false
+    elsif !current_ability.can?(:update, parent_object)
+      batch_processing_event("Skipping row with parent oid: #{parent_object.oid}, user does not have permission to update", 'Permission Denied')
+      false
     else
       true
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   # BATCH STATUSES: ------------------------------------------------------------------------------ #
 
