@@ -205,17 +205,22 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.batch_action).to eq "export child oids"
         expect(BatchProcess.last.child_output_csv).to include "1021925"
         expect(BatchProcess.last.child_output_csv).to include "JWJ MSS 49"
-        expect(BatchProcess.last.child_output_csv).to include '2005512,,0,Access denied for parent object,"",""'
+        expect(BatchProcess.last.child_output_csv).to include '2005512,,-,Access denied for parent object,"",""'
         expect(BatchProcess.last.child_output_csv).not_to include "1030368" # child of 2005512
         expect(BatchProcess.last.batch_ingest_events.count).to eq 9
         expect(BatchProcess.last.batch_ingest_events.map(&:reason)).to include "Skipping row [3] due to parent permissions: 2005512"
 
-        sorted_child_objects = BatchProcess.last.sorted_child_objects
-        expect(sorted_child_objects[0]).to be_a(ChildObject)
-        expect(sorted_child_objects[1]).to be_a(ChildObject)
-        expect(sorted_child_objects[2]).to include 2_005_512
-        expect(sorted_child_objects[3]).to include 14_716_192
-        expect(sorted_child_objects[4]).to include 16_414_889
+        output = BatchProcess.last.child_output_csv.split("\n")
+        expect(output[1]).to include '1021925'
+        expect(output[2]).to include '1021926'
+        expect(output[3]).to include '2005512'
+        expect(output[4]).to include '14716192'
+        expect(output[5]).to include '16414889'
+        expect(output[6]).to include '16854285'
+        expect(output[3]).to include 'Access denied for parent object'
+        expect(output[4]).to include 'Parent Not Found in database'
+        expect(output[5]).to include 'Parent Not Found in database'
+        expect(output[6]).to include 'Parent Not Found in database'
 
         within("td:first-child") do
           click_on(BatchProcess.last.id.to_s)

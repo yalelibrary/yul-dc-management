@@ -4,6 +4,9 @@
 module CsvExportable
   extend ActiveSupport::Concern
 
+  ########################
+  # Parent Object Export
+  ########################
   def parent_headers
     ['oid', 'admin_set', 'authoritative_source', 'child_object_count', 'call_number',
      'container_grouping', 'bib', 'holding', 'item', 'barcode', 'aspace_uri',
@@ -15,16 +18,13 @@ module CsvExportable
   # rubocop:disable Metrics/AbcSize
   def parent_output_csv(*admin_set_id)
     return nil unless batch_action == 'export all parent objects by admin set'
+    csv_rows = parent_object_csv_rows(*admin_set_id)
+    add_error_rows(csv_rows)
+    # sort first by the admin set label, then by the parent object oid
+    csv_rows.sort_by! { |row| [row[1], row[0]&.to_s] }
     output_csv = CSV.generate do |csv|
       csv << parent_headers
-      sorted_parent_objects(*admin_set_id).each do |po|
-        next csv << po if po.is_a?(Array)
-        row = [po.oid, po.admin_set.label, po.source_name,
-               po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
-               po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
-               po.last_ladybird_update, po.last_voyager_update,
-               po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
-               po.digitization_note, po.project_identifier]
+      csv_rows.each do |row|
         csv << row
       end
     end
@@ -33,61 +33,62 @@ module CsvExportable
   end
   # rubocop:enable Metrics/AbcSize
 
+  def parent_object_csv_rows(*admin_set_id)
+    parent_objects_array(*admin_set_id).map do |po|
+      [po.oid, po.admin_set.label, po.source_name,
+       po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+       po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
+       po.last_ladybird_update, po.last_voyager_update,
+       po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
+       po.digitization_note, po.project_identifier]
+    end
+  end
+
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Lint/UselessAssignment
-  def sorted_parent_objects(*admin_set_id)
-    had_events = batch_ingest_events_count.positive?
+  def parent_objects_array(*admin_set_id)
     arr = []
     if csv.present?
       imported_csv = CSV.parse(csv, headers: true).presence
-      imported_csv.each_with_index do |key, index|
+      imported_csv.each_with_index do |row, index|
         begin
-          admin_set = AdminSet.find_by(key: key[0])
-          next unless admin_check_can_view(current_ability, index, admin_set, arr, had_events)
-          ParentObject.where(admin_set_id: admin_set.id).find_each do |parent|
-            arr << parent
+          admin_set = AdminSet.find_by(key: row[0])
+          raise ActiveRecord::RecordNotFound if admin_set.nil?
+          if user.viewer(admin_set) || user.editor(admin_set)
+            ParentObject.where(admin_set_id: admin_set.id).find_each do |parent|
+              arr << parent
+            end
+          else
+            (@error_rows ||= []) << { row2: admin_set.key, csv_message: 'Access denied for admin set', batch_message: "Skipping row [#{index + 2}] due to  admin set permissions: #{admin_set.key}" }
           end
         rescue ActiveRecord::RecordNotFound
-          admin_set_not_found(index, key, arr, had_events)
+          (@error_rows ||= []) << { row2: row[0], csv_message: 'Admin Set not found in database', batch_message: "Skipping row [#{index + 2}]  due to Admin Set not found: #{row[0]}" }
         end
       end
     else
       admin_set_id.each do |id|
-        begin
-          admin_set = AdminSet.find_by(id: id.to_i)
-          next unless admin_check_can_view(current_ability, index = 0, admin_set, arr, had_events)
+        admin_set = AdminSet.find_by(id: id.to_i)
+        if user.viewer(admin_set) || user.editor(admin_set)
           ParentObject.where(admin_set_id: id.to_i).find_each do |parent|
             arr << parent
           end
-        rescue ActiveRecord::RecordNotFound
-          admin_set_not_found(index = 0, admin_set.key, arr, had_events)
+        else
+          (@error_rows ||= []) << { row2: admin_set.key, csv_message: 'Access denied for admin set', batch_message: "Skipping admin set due to admin set permissions: #{admin_set.key}" }
         end
       end
     end
-    # sort first by the admin set key, then by the parent object oid
-    arr.sort_by { |po| [po.try(:admin_set_key) || po[0], po.try(:oid) || po[2]] }
+    arr
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Lint/UselessAssignment
 
-  def admin_set_not_found(index, key, arr, had_events)
-    row = [key.to_s, nil, 0, 'Admin Set not found in database', '', '']
-    batch_processing_event("Skipping row [#{index + 2}] due to Admin Set not found: #{key}", 'Skipped Row') unless had_events
-    arr << row
-  end
-
-  def admin_check_can_view(_ability, index, admin_set, arr, had_events)
-    return true if user.viewer(admin_set) || user.editor(admin_set)
-
-    row = [admin_set.key, nil, 0, 'Access denied for admin set', '', '']
-    batch_processing_event("Skipping row [#{index + 2}] due to admin set permissions: #{admin_set.key}", 'Skipped Row') unless had_events
-    arr << row
-    false
-  end
+  ########################
+  # Child Object Export
+  ########################
 
   def child_headers
     ['parent_oid', 'child_oid', 'order', 'parent_title', 'call_number', 'label', 'caption', 'viewing_hint']
@@ -96,71 +97,69 @@ module CsvExportable
   # rubocop:disable Metrics/AbcSize
   def child_output_csv
     return nil unless batch_action == 'export child oids'
+    csv_rows = []
+    parent_title_hash = {}
+    child_objects_array.each do |co|
+      parent_title = lookup_parent_title(co, parent_title_hash)
+      row = [co.parent_object.oid, co.oid, co.order, parent_title.presence, co.parent_object.call_number, co.label, co.caption, co.viewing_hint]
+      csv_rows << row
+    end
+    add_error_rows(csv_rows)
+    csv_rows.sort_by! { |row| [row[0].to_i, row[2].to_i] }
     output_csv = CSV.generate do |csv|
       csv << child_headers
-      sorted_child_objects.each do |co|
-        next csv << co if co.is_a?(Array)
-        parent_title = if co.parent_object.authoritative_json.is_a?(Hash)
-                         co.parent_object.authoritative_json['title']&.first
-                       else
-                         co.parent_object&.authoritative_json & ['title']&.first
-                       end
-        row = [co.parent_object.oid, co.oid, co.order, parent_title.presence, co.parent_object.call_number, co.label, co.caption, co.viewing_hint]
-        csv << row
-      end
+      csv_rows.each { |row| csv << row }
     end
     save_to_s3(output_csv, self)
     output_csv
   end
   # rubocop:enable Metrics/AbcSize
 
+  def lookup_parent_title(co, parent_title_hash)
+    parent_title_hash[co.parent_object.oid] ||= co.parent_object.authoritative_json&.[]('title')&.first
+  end
+
   def remote_csv_path
     @remote_csv_path ||= "batch/job/#{id}/#{created_file_name}"
   end
 
-  def sorted_child_objects
-    had_events = batch_ingest_events_count.positive?
+  def child_objects_array
     arr = []
     oids.each_with_index do |oid, index|
       begin
         po = ParentObject.find(oid.to_i)
-        next unless check_can_view(current_ability, index, po, arr, had_events)
-        po.child_objects.each { |co| arr << co }
+        if current_ability.can?(:read, po)
+          po.child_objects.each { |co| arr << co }
+        else
+          (@error_rows ||= []) << { id: oid, csv_message: 'Access denied for parent object', batch_message: "Skipping row [#{index + 2}] due to parent permissions: #{oid}" }
+        end
       rescue ActiveRecord::RecordNotFound
-        parent_not_found(index, oid, arr, had_events)
+        (@error_rows ||= []) << { id: oid, csv_message: 'Parent Not Found in database', batch_message: "Skipping row [#{index + 2}] due to parent not found: #{oid}" }
       end
     end
-
-    # sort first by the parent oid, then by the child objects order in the parent grouping
-    arr.sort_by { |co| [co.try(:parent_object_oid) || co[0], co.try(:order) || co[2]] }
+    arr
   end
 
-  def parent_not_found(index, oid, arr, had_events)
-    row = [oid.to_i, nil, 0, 'Parent Not Found in database', '', '']
-    batch_processing_event("Skipping row [#{index + 2}] due to parent not found: #{oid}", 'Skipped Row') unless had_events
-    arr << row
-  end
+  ########################
+  # common
+  ########################
 
-  def check_can_view(ability, index, parent_object, arr, had_events)
-    return true if ability.can?(:read, parent_object)
-
-    row = [parent_object.oid.to_i, nil, 0, 'Access denied for parent object', '', '']
-    batch_processing_event("Skipping row [#{index + 2}] due to parent permissions: #{parent_object.oid}", 'Skipped Row') unless had_events
-    arr << row
-    false
+  def add_error_rows(csv_rows)
+    # only add errors on first run of job
+    had_events = batch_ingest_events_count.positive?
+    @error_rows&.each do |error_row|
+      csv_rows << [error_row[:id], error_row[:row2], '-', error_row[:csv_message], '', '']
+      batch_processing_event(error_row[:batch_message], 'Skipped Row') unless had_events
+    end
   end
 
   def save_to_s3(csv, batch_process)
-    # generate csv export and save it to s3
-    upload = CsvExport.new(csv, batch_process).save
-    if upload
-      batch_processing_event("CSV saved to S3", "csv-saved")
-    else
-      batch_processing_event("CSV not saved to S3", "failed")
-    end
+    # generate csv export and save it to s3, save will return s3 response if successful, or raise error
+    batch_processing_event("CSV saved to S3", "csv-saved") if CsvExport.new(csv, batch_process).save
   rescue => e
     batch_processing_event("CSV generation failed due to #{e.message}", "failed")
-    raise # this reraises the error after we document it
+    # do not re-raise Error so job only runs once and fails if CSV can not be saved to S3
+    # raise # this reraises the error after we document it
   end
 end
 # rubocop:enable Metrics/ModuleLength
