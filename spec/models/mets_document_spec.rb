@@ -48,7 +48,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
 
     it "return false for a valid METs file that does not reference any images" do
       mets_doc = described_class.new(no_image_files_path)
-      expect { mets_doc.fixture_images_in_production? }.to be_falsey
+      expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "no mets namespace in mets file")
     end
 
     it "raise error message when rights statement is not present" do
