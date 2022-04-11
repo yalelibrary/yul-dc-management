@@ -34,6 +34,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
     member do
       post :update_metadata
+      post :sync_from_preservica
       get :select_thumbnail
       get :solr_document
     end

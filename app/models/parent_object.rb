@@ -180,6 +180,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     PreservicaIngest.insert_all(preservica_ingest_hash)
   end
 
+  def sync_from_preservica
+    child_objects.destroy_all
+    create_child_records
+  end
+
   def array_of_child_hashes_from_mets
     return unless current_batch_process&.mets_doc
     current_batch_process.mets_doc.combined.map { |child_hash| child_hash.select { |k| k != :thumbnail_flag && k != :child_uuid && k != :physical_id && k != :logical_id } }

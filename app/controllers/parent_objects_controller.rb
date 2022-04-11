@@ -137,6 +137,14 @@ class ParentObjectsController < ApplicationController
     end
   end
 
+  def sync_from_preservica
+    queue_parent_sync_from_preservica
+    respond_to do |format|
+      format.html { redirect_back fallback_location: parent_object_url(@parent_object), notice: 'This object has been queued for synchronization of child objects from Preservica.' }
+      format.json { head :no_content }
+    end
+  end
+
   def select_thumbnail
     authorize!(:update, @parent_object)
     @child_objects = ChildObject.select([:oid, :parent_object_oid, :order]).where(parent_object: @parent_object).group(:oid, :parent_object_oid, :order).order(:order).page(params[:page]).per(10)
@@ -155,6 +163,12 @@ class ParentObjectsController < ApplicationController
     def queue_parent_metadata_update
       authorize!(:update, @parent_object)
       @parent_object.metadata_update = true
+      @parent_object.setup_metadata_job
+    end
+
+    def queue_parent_sync_from_preservica
+      authorize!(:update, @parent_object)
+      @parent_object.sync_from_preservica
       @parent_object.setup_metadata_job
     end
 

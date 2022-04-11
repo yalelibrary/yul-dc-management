@@ -200,6 +200,15 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
     end
   end
 
+  describe '#sync_from_preservica' do
+    it 'redirects to the parent_objects list' do
+      parent_object = ParentObject.create! valid_attributes
+      post sync_from_preservica_parent_object_url(parent_object)
+      expect(response).to redirect_to(parent_object_url(parent_object))
+      expect(flash[:notice]).to eq('This object has been queued for synchronization of child objects from Preservica.')
+    end
+  end
+
   describe '#minify' do
     let(:redirect_attributes) do
       {

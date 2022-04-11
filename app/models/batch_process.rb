@@ -397,8 +397,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # SYNC IMAGES FROM PRESERVICA
   def sync_images_preservica(local_children_count, preservica_children_count, parent_object)
     if local_children_count != preservica_children_count
-      parent_object.child_objects.destroy_all
-      parent_object.create_child_records
+      parent_object.sync_from_preservica
       setup_for_background_jobs(parent_object, parent_object.source_name)
     else
       batch_processing_event("Child object count is the same.  No update needed.", "Skipped Row")
