@@ -61,16 +61,19 @@ class MetsDocument
     child_img&.[](:oid)&.to_i
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
   def valid_mets?
-    return false unless @mets.xml?
-    return false unless @mets.collect_namespaces.include?("xmlns:mets")
-    return false unless @mets.xpath("//mets:file").count >= 1
-    return false if rights_statement.blank?
-    return false unless valid_metadata_source_path?
-    return false if fixture_images_in_production?
-    return false unless admin_set.present?
+    raise "no mets xml" unless @mets.xml?
+    raise "no mets namespace in mets file" unless @mets.collect_namespaces.include?("xmlns:mets")
+    raise "no mets file in the mets xml" unless @mets.xpath("//mets:file").count >= 1
+    raise "no right statement found in the mets xml" if rights_statement.blank?
+    raise "not valid metadata source" unless valid_metadata_source_path?
+    raise "no image path" if fixture_images_in_production?
+    raise "no admin set in mets xml" unless admin_set.present?
+    all_images_have_checksum?
     true
   end
+  # rubocop:enable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
 
   # ensure we don't accidentally upload tiny fixture images in production
   def fixture_images_in_production?
@@ -81,6 +84,12 @@ class MetsDocument
 
   def all_images_present?
     files.all? { |file| File.exist?(file[:mets_access_master_path]) }
+  end
+
+  def all_images_have_checksum?
+    files.each_with_index do |file, index|
+      raise "#{file[:checksum]}, index: #{index} invalid checksum, check the checksum in mets xml" unless file[:checksum] =~ /^([a-f0-9]{40})$/
+    end
   end
 
   # Combines the physical info and file info for a given image

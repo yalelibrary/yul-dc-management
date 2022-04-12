@@ -155,23 +155,30 @@ module Reassociatable
     return unless batch_action == "reassociate child oids" || batch_action == "delete child objects"
     parents_needing_update.uniq.each do |oid|
       po = ParentObject.find(oid)
-      po.child_object_count = po.child_objects.count
-      if po.child_object_count.zero?
-        if parent_destination_map[po.oid]&.length == 1
-          po.redirect_to = "https://collections.library.yale.edu/catalog/#{parent_destination_map[po.oid].first}"
-        else
-          batch_processing_event("Unable to redirect parent with 0 children: [Parent #{po.oid} had children moved to #{parent_destination_map[po.oid]}]")
-        end
-      end
+      update_child_count(po, parent_destination_map)
       # If the child objects have changed, we'll need to re-create the manifest and PDF objects
       # and re-index to Solr
       po.current_batch_process = self
       po.current_batch_connection = batch_connections.find_or_create_by(connectable: po)
       po.current_batch_connection.save!
       po.save!
-      GenerateManifestJob.perform_later(po, self, po.current_batch_connection)
+      if po.should_create_manifest_and_pdf?
+        GenerateManifestJob.perform_later(po, self, po.current_batch_connection)
+      else
+        po.solr_index_job
+      end
     end
   end
   # rubocop:enable Metrics/AbcSize
+
+  def update_child_count(po, parent_destination_map)
+    po.child_object_count = po.child_objects.count
+    return unless po.child_object_count.zero?
+    if parent_destination_map[po.oid]&.length == 1
+      po.redirect_to = "https://collections.library.yale.edu/catalog/#{parent_destination_map[po.oid].first}"
+    else
+      batch_processing_event("Unable to redirect parent with 0 children: [Parent #{po.oid} had children moved to #{parent_destination_map[po.oid]}]")
+    end
+  end
 end
 # rubocop:enable Metrics/ModuleLength

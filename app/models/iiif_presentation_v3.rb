@@ -243,6 +243,7 @@ class IiifPresentationV3
     metadata_values <<  metadata_pair('Image ID', child.oid.to_s) if child.oid
     metadata_values <<  metadata_pair('Image Label', child.label) if child.label
     metadata_values <<  metadata_pair('Image Caption', child.caption) if child.caption
+    metadata_values <<  metadata_pair('Link to this Image', "https://collections.library.yale.edu/catalog/#{@oid}?child_oid=#{child.oid}") if child.oid
     canvas['metadata'] = metadata_values
     canvas
   end

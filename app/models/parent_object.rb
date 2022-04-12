@@ -23,7 +23,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   attr_accessor :current_batch_connection
   self.primary_key = 'oid'
   after_save :setup_metadata_job
-  after_update :check_for_redirect
+  before_update :check_for_redirect
   after_update :digital_object_check
   # after_update :solr_index_job # we index from the fetch job on create
   after_destroy :solr_delete
@@ -53,7 +53,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         self[key.to_sym] = nil unless minimal_attr.include? key
       end
     end
-    solr_index
   end
 
   def self.visibilities
@@ -532,5 +531,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def should_index?
     return false if redirect_to.blank? && (child_object_count&.zero? || child_objects.empty?)
     ['Public', 'Redirect', 'Yale Community Only'].include?(visibility) || redirect_to.present?
+  end
+
+  def should_create_manifest_and_pdf?
+    !redirect_to.present?
   end
 end
