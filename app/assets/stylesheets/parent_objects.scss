@@ -4,79 +4,79 @@ DEFAULT DESKTOP STYLING
 @import 'theme/colors', 'theme/typography', 'theme/breakpoints';
 
 .table-responsive {
-	cursor: all-scroll;
+  cursor: all-scroll;
 }
 
 .child-list ol {
-	margin-left: 60px;
+  margin-left: 60px;
 }
 
 .delete-item-container,
 .update-item-container {
-	display: grid;
-	padding-top: 10px;
+  display: grid;
+  padding-top: 10px;
 }
 
 .delete-item-container {
-	grid-template-columns: 0.25fr 1fr;
+  grid-template-columns: 0.25fr 1fr;
 }
 
 .delete-item-label {
-	margin-bottom: 6px;
-	font-size: 18px;
-	font-weight: bold;
+  margin-bottom: 6px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .delete-item-button,
 .update-item-button {
-	background-color: $white;
-	border: 2px solid $delete_button_border;
-	border-radius: 7px;
+  background-color: $white;
+  border: 2px solid $delete_button_border;
+  border-radius: 7px;
 }
 
 .delete-item-button {
-	color: $delete_button_text;
+  color: $delete_button_text;
 }
 
 .metadata-block {
-	display: flex;
-	flex-flow: row wrap;
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .metadata-block dt {
-	font-size: 14px;
-	color: $medium_grey;
-	font-family: $mallory_medium, Arial, Helvetica, sans-serif !important;
-	font-weight: 500;
-	float: left;
-	width: 20%;
-	margin-top: 5px;
+  font-size: 14px;
+  color: $medium_grey;
+  font-family: $mallory_medium, Arial, Helvetica, sans-serif !important;
+  font-weight: 500;
+  float: left;
+  width: 20%;
+  margin-top: 5px;
 }
 
 .metadata-block dd {
-	font-size: 14px;
-	color: $medium_grey;
-	font-family: $mallory_medium, Arial, Helvetica, sans-serif !important;
-	font-weight: 500;
-	float: right;
-	width: 80%;
-	margin-top: 5px;
+  font-size: 14px;
+  color: $medium_grey;
+  font-family: $mallory_medium, Arial, Helvetica, sans-serif !important;
+  font-weight: 500;
+  float: right;
+  width: 80%;
+  margin-top: 5px;
 }
 
 .show-header {
-	font-family: $yale_new_roman, 'Times New Roman', Times, serif !important;
-	font-size: 1.5rem;
-	color: $yale_blue;
-	padding-bottom: 1.5%;
-	padding-top: 1.5%;
-	width: 82%;
-	position: relative;
+  font-family: $yale_new_roman, 'Times New Roman', Times, serif !important;
+  font-size: 1.5rem;
+  color: $yale_blue;
+  padding-bottom: 1.5%;
+  padding-top: 1.5%;
+  width: 82%;
+  position: relative;
 }
 
 .update-item-container {
-	grid-template-columns: 0.75fr 1fr;
+  grid-template-columns: 0.75fr 1fr;
 }
 
 .update-item-button {
-	color: $black;
+  color: $black;
 }
