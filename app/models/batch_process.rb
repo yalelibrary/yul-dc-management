@@ -26,7 +26,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # LISTS AVAILABLE BATCH ACTIONS
   def self.batch_actions
     ['create parent objects', 'update parent objects', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set',
-     'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status']
+     'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status', 'sync from preservica']
   end
 
   # LOGS BATCH PROCESSING MESSAGES AND SETS STATUSES
@@ -157,6 +157,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         RecreateChildOidPtiffsJob.perform_later(self)
       when 'update fulltext status'
         UpdateFulltextStatusJob.perform_later(self)
+      when 'sync from preservica'
+        SyncFromPreservicaJob.perform_later(self)
       end
     elsif mets_xml.present?
       refresh_metadata_cloud_mets
@@ -369,6 +371,70 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     parent_object.digitization_note = mets_doc.dig_note
   end
   # rubocop:enable Metrics/AbcSize
+
+  # FETCHES CHILD OBJECTS FROM PRESERVICA
+  # rubocop:disable Metrics/MethodLength
+  def sync_from_preservica
+    parsed_csv.each_with_index do |row, _index|
+      begin
+        parent_object = ParentObject.find(row['oid'])
+      rescue
+        batch_processing_event("Parent OID: #{row['oid']} not found in database", 'Skipped Import') if parent_object.nil?
+        next
+      end
+      next unless validate_preservica_sync(parent_object, row)
+      local_children_count = parent_object.child_objects.count
+      begin
+        preservica_children_count = PreservicaImageService.new(parent_object.preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_name).count
+      rescue PreservicaImageServiceNetworkError => e
+        batch_processing_event("Parent OID: #{row['oid']} because of #{e.message}", 'Skipped Import')
+        raise
+      rescue PreservicaImageServiceError => e
+        batch_processing_event("Parent OID: #{row['oid']} because of #{e.message}", 'Skipped Import')
+        next
+      end
+      sync_images_preservica(local_children_count, preservica_children_count, parent_object)
+    end
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  # SYNC IMAGES FROM PRESERVICA
+  def sync_images_preservica(local_children_count, preservica_children_count, parent_object)
+    if local_children_count != preservica_children_count
+      parent_object.child_objects.destroy_all
+      parent_object.create_child_records
+      setup_for_background_jobs(parent_object, parent_object.source_name)
+    else
+      batch_processing_event("Child object count is the same.  No update needed.", "Skipped Row")
+    end
+  end
+
+  # rubocop:disable Metrics/MethodLength
+  # ERROR HANDLING FOR PRESERVICA SYNC
+  def validate_preservica_sync(parent_object, row)
+    if parent_object.redirect_to.present?
+      batch_processing_event("Parent OID: #{row['oid']} is a redirected parent object", 'Skipped Import')
+      false
+    elsif parent_object.preservica_uri.nil?
+      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica URI", 'Skipped Import')
+      false
+    elsif parent_object.digital_object_source != "Preservica"
+      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica digital object source", 'Skipped Import')
+      false
+    elsif parent_object.preservica_representation_name.nil?
+      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation name", 'Skipped Import')
+      false
+    elsif !parent_object.admin_set.preservica_credentials_verified
+      batch_processing_event("Admin set #{parent_object.admin_set.key} does not have Preservica credentials set", 'Skipped Import')
+      false
+    elsif !current_ability.can?(:update, parent_object)
+      batch_processing_event("Skipping row with parent oid: #{parent_object.oid}, user does not have permission to update", 'Permission Denied')
+      false
+    else
+      true
+    end
+  end
+  # rubocop:enable Metrics/MethodLength
 
   # BATCH STATUSES: ------------------------------------------------------------------------------ #
 

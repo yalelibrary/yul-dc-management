@@ -8,6 +8,11 @@ class PreservicaImageService
       super("#{msg} for #{id}")
     end
   end
+  class PreservicaImageServiceNetworkError < PreservicaImageServiceError
+    def initialize(msg, id)
+      super(msg, id)
+    end
+  end
 
   def initialize(uri, admin_set_key)
     @uri = uri
@@ -28,7 +33,7 @@ class PreservicaImageService
         begin
           @information_objects = structural_object.information_objects
         rescue Net::OpenTimeout, Errno::ECONNREFUSED => e
-          raise PreservicaImageServiceError.new(e.to_s, @uri.to_s)
+          raise PreservicaImageServiceNetworkError.new(e.to_s, @uri.to_s)
         end
       elsif @pattern == :pattern_two
         @information_objects = [Preservica::InformationObject.where(admin_set_key: @admin_set_key, id: (@uri.split('/')[-1]).to_s)]
