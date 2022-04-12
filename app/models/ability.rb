@@ -28,6 +28,7 @@ class Ability
     can :read, ReoccurringJobDatatable
     can :reindex_all, ParentObject
     can :update_metadata, ParentObject
+    can :sync_from_preservica, ParentObject
     can :trigger_mets_scan, ParentObject
   end
 

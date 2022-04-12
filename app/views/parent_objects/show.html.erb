@@ -59,6 +59,11 @@
 
   <dt>Preservica Representation Name:</dt>
   <dd><%= @parent_object.preservica_representation_name %></dd>
+  
+  <% if @parent_object.digital_object_source == 'Preservica' %>
+    <dt>Update from Preservica:</dt>
+    <dd><%= link_to 'Synchronize child objects', sync_from_preservica_parent_object_path(@parent_object), method: :post, class: 'btn button update-item-button'%></dd>
+  <% end %>
 
   <dt>Last ladybird update:</dt>
   <dd><%= @parent_object.last_ladybird_update %></dd>
