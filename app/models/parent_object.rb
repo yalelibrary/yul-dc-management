@@ -121,6 +121,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Note - the upsert_all method skips ActiveRecord callbacks, and is entirely
   # database driven. This also makes object creation much faster.
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def create_child_records
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
@@ -128,6 +131,16 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     elsif digital_object_source == "Preservica"
       child_hashes = array_of_child_hashes_from_preservica # only call array_of_child_hashes_from_preservica once since it causes all images to be downloaded
       if child_hashes.present?
+        # if not found locally add the image
+        preservica_co_uris = child_hashes.pluck(:preservica_content_object_uri)
+        preservica_co_uris.each do |uri|
+          # check if exists
+          co = ChildObject.find_by(preservica_content_object_uri: uri)
+          unless co.nil?
+            # if it does remove it from the child hash
+            child_hashes.delete_if { |h| h[:preservica_content_object_uri] == co.preservica_content_object_uri }
+          end
+        end
         upsert_child_objects(child_hashes)
         self.last_preservica_update = Time.current
         save!
@@ -141,6 +154,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.child_object_count = child_objects.size
   end
   # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def upsert_child_objects(child_objects_hash)
     raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
@@ -180,8 +196,30 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def sync_from_preservica
-    child_objects.destroy_all
-    create_child_records
+    # get list of child preservica_content_object_uri currently associated with parent
+    local_content_uris = []
+    child_objects.map do |co|
+      local_content_uris << co.preservica_content_object_uri
+    end
+    # get list of content object uris from preservica
+    preservica_content_uris = []
+    PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_name).map do |co|
+      preservica_content_uris << co[:preservica_content_object_uri]
+    end
+    local_content_uris.map do |local|
+      # keep child objects that have a match in preservica
+      next if preservica_content_uris.include?(local)
+
+      # delete child objects that don't have a match in preservica
+      co = ChildObject.find_by(preservica_content_object_uri: local)
+      co.destroy
+    end
+
+    # create only the new child records
+    preservica_content_uris.map do |preservica|
+      next if local_content_uris.include?(preservica)
+      create_child_records
+    end
   end
 
   def array_of_child_hashes_from_mets
