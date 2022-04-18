@@ -14,7 +14,7 @@ module PdfRepresentable
     extentOfDigitization
   ].freeze
 
-  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def generate_pdf
     raise "No authoritative_json to create PDF for #{oid}" unless authoritative_json
     changed_pdf_checksum = new_pdf_checksum # new_pdf_checksum will be false if there were no changes
@@ -33,12 +33,16 @@ module PdfRepresentable
         File.delete temp_pdf_file
       else
         File.delete temp_pdf_file if File.exist?(temp_pdf_file)
-        raise "PDF Java app returned non zero response code for #{oid}: #{stderr} #{stdout}"
+        raise "PDF Java app returned non zero response code for #{oid}: #{PdfRepresentable.clean_up_error(stderr)} #{PdfRepresentable.clean_up_error(stdout)}"
       end
     end
     true
   end
-  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+
+  def self.clean_up_error(msg)
+    msg.gsub(/(X-Amz-[^=]*)[^&)]*/, '\1=redacted')
+  end
 
   def new_pdf_checksum
     metadata = S3Service.remote_metadata(remote_pdf_path)
