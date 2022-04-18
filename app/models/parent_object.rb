@@ -121,9 +121,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Note - the upsert_all method skips ActiveRecord callbacks, and is entirely
   # database driven. This also makes object creation much faster.
   # rubocop:disable Metrics/PerceivedComplexity
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
   def create_child_records
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
@@ -131,17 +128,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     elsif digital_object_source == "Preservica"
       child_hashes = array_of_child_hashes_from_preservica # only call array_of_child_hashes_from_preservica once since it causes all images to be downloaded
       if child_hashes.present?
-        # if not found locally add the image
-        preservica_co_uris = child_hashes.pluck(:preservica_content_object_uri)
-        preservica_co_uris.each do |uri|
-          # check if exists
-          co = ChildObject.find_by(preservica_content_object_uri: uri)
-          unless co.nil?
-            # if it does remove it from the child hash
-            child_hashes.delete_if { |h| h[:preservica_content_object_uri] == co.preservica_content_object_uri }
-          end
-        end
-        upsert_child_objects(child_hashes)
+        valid_child_hashes = validate_child_hashes(child_hashes)
+        upsert_child_objects(valid_child_hashes)
         self.last_preservica_update = Time.current
         save!
       end
@@ -154,9 +142,20 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.child_object_count = child_objects.size
   end
   # rubocop:enable Metrics/PerceivedComplexity
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
+
+  def validate_child_hashes(child_hashes)
+    # if not found locally add the image
+    preservica_co_uris = child_hashes.pluck(:preservica_content_object_uri)
+    preservica_co_uris.each do |uri|
+      # check if exists
+      co = ChildObject.find_by(preservica_content_object_uri: uri)
+      unless co.nil?
+        # if it does remove it from the child hash
+        child_hashes.delete_if { |h| h[:preservica_content_object_uri] == co.preservica_content_object_uri }
+      end
+    end
+    child_hashes
+  end
 
   def upsert_child_objects(child_objects_hash)
     raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
