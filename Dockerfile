@@ -29,7 +29,7 @@ RUN bash -l -c " \
 # RUN dpkg -i ./vips_8.10.2-1_amd64.deb
 # RUN vips --version
 
-COPY jpegs2pdf-1.2.jar $APP_HOME
+COPY jpegs2pdf-1.3.jar $APP_HOME
 
 ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
 BUNDLE_JOBS=4
