@@ -114,9 +114,11 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         batch_process.save
       end.to change { ChildObject.count }.from(0).to(3)
       po_first = ParentObject.first
-      co_first = ChildObject.first
+      co_first = po_first.child_objects.first
       expect(po_first.last_preservica_update).not_to be nil
+      expect(co_first.order).to eq 1
       expect(co_first.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486"
+
       expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be true
       expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be true
       expect(File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")).to be true
@@ -135,6 +137,18 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")).to be true
       expect(File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")).to be true
       expect(File.exist?("spec/fixtures/images/access_masters/00/07/20/00/00/00/200000007.tif")).to be true
+      co_first = po_first.child_objects.first
+      expect(co_first.order).to eq 1
+      expect(co_first.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486"
+      co_second = po_first.child_objects[1]
+      expect(co_second.order).to eq 2
+      expect(co_second.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489"
+      co_third = po_first.child_objects[2]
+      expect(co_third.order).to eq 3
+      expect(co_third.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487"
+      co_last = po_first.child_objects.last
+      expect(co_last.order).to eq 4
+      expect(co_last.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b485"
 
       File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
       File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
