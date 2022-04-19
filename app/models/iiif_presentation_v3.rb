@@ -92,14 +92,18 @@ class IiifPresentationV3
     }
   end
 
+  def extract_value(field, hash)
+    if hash[:digital_only] == true
+      @parent_object.send(field.to_s)
+    else
+      @parent_object&.authoritative_json&.[](field.to_s).presence || (hash[:backup_field] && @parent_object&.authoritative_json&.[](hash[:backup_field]).presence)
+    end
+  end
+
   def metadata
     values = []
     METADATA_FIELDS.each do |field, hash|
-      value = if hash[:digital_only] == true
-                @parent_object.send(field.to_s)
-              else
-                @parent_object&.authoritative_json&.[](field.to_s)
-              end
+      value = extract_value(field, hash)
       if value.is_a?(Array)
         value = process_metadata_array value, hash
       else

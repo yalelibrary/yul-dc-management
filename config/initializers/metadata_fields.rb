@@ -88,10 +88,11 @@ METADATA_FIELDS = {
       'scale_tesim'
     ]
   },
-  coordinate: {
+  coordinateDisplay: {
     label: 'Coordinates',
+    backup_field: 'coordinate', # use coordinate from authoritative_metadata in IIIF presentation if coordinateDisplay is not present
     solr_fields: [
-      'coordinates_ssim'
+      'coordinateDisplay_ssim'
     ]
   },
   digital: {
