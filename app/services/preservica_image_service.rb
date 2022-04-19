@@ -25,6 +25,8 @@ class PreservicaImageService
   end
 
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/PerceivedComplexity
   def image_list(representation_name)
     @images = []
     begin
@@ -44,11 +46,16 @@ class PreservicaImageService
     begin
       process_information_objects(representation_name)
     rescue StandardError => e
+      error = e.to_s
+      cleaned_error = error.split(' for /').first
+      raise PreservicaImageServiceError.new(cleaned_error, @uri.to_s) if error.include?(@uri.to_s)
       raise PreservicaImageServiceError.new(e.to_s, @uri.to_s)
     end
     @images
   end
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # rubocop:disable Metrics/LineLength
   # rubocop:disable Metrics/AbcSize
@@ -59,9 +66,9 @@ class PreservicaImageService
       content_objects = representation.content_objects
       raise PreservicaImageServiceError.new("No matching content object found in Preservica", @uri.to_s) if content_objects.empty?
       content_objects.each_with_index do |content_object, index|
-        raise PreservicaImageServiceError.new("No active generations found in Preservica", content_object.id.to_s) if content_object.active_generations.empty?
+        raise PreservicaImageServiceError.new("No active generations found in Preservica", "content object: #{content_object.id}") if content_object.active_generations.empty?
         raise PreservicaImageServiceError.new("No matching bitstreams found in Preservica", content_object.active_generations[0].id.to_s) if content_object.active_generations[0].bitstreams.empty?
-        raise PreservicaImageServiceError.new("SHA mismatch found in Preservica", content_object.active_generations[0].bitstreams[0].id.to_s) if content_object.active_generations[0].bitstreams[0].sha512_checksum.nil?
+        raise PreservicaImageServiceError.new("SHA mismatch found in Preservica", "bitstream: #{content_object.active_generations[0].bitstreams[0].id}") if content_object.active_generations[0].bitstreams[0].sha512_checksum.nil?
         @images << { preservica_content_object_uri: representation.content_object_uri(index),
                      preservica_generation_uri: content_object.active_generations[0].generation_uri,
                      preservica_bitstream_uri: content_object.active_generations[0].bitstream_uri,
