@@ -14,7 +14,7 @@ module PdfRepresentable
     extentOfDigitization
   ].freeze
 
-  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def generate_pdf
     raise "No authoritative_json to create PDF for #{oid}" unless authoritative_json
     changed_pdf_checksum = new_pdf_checksum # new_pdf_checksum will be false if there were no changes
@@ -24,7 +24,7 @@ module PdfRepresentable
       temp_json_file.write(pdf_generator_json)
       temp_json_file.close
       temp_pdf_file = "#{temp_json_file.path}.pdf"
-      cmd = "java -Djava.io.tmpdir=#{pdf_tmpdir} -jar jpegs2pdf-1.2.jar #{temp_json_file.path} #{temp_pdf_file}"
+      cmd = "java -Djava.io.tmpdir=#{pdf_tmpdir} -jar jpegs2pdf-1.3.jar #{temp_json_file.path} #{temp_pdf_file}"
       stdout, stderr, status = Open3.capture3({ "MAGICK_TMPDIR" => pdf_tmpdir }, cmd)
       success = status.success?
       if success
@@ -33,12 +33,16 @@ module PdfRepresentable
         File.delete temp_pdf_file
       else
         File.delete temp_pdf_file if File.exist?(temp_pdf_file)
-        raise "PDF Java app returned non zero response code for #{oid}: #{stderr} #{stdout}"
+        raise "PDF Java app returned non zero response code for #{oid}: #{PdfRepresentable.clean_up_error(stderr)} #{PdfRepresentable.clean_up_error(stdout)}"
       end
     end
     true
   end
-  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+
+  def self.clean_up_error(msg)
+    msg.gsub(/(X-Amz-[^=]*)[^&)]*/, '\1=redacted')
+  end
 
   def new_pdf_checksum
     metadata = S3Service.remote_metadata(remote_pdf_path)
@@ -132,8 +136,8 @@ module PdfRepresentable
       end
 
       container_information = extract_container_information(authoritative_json)
-      properties["Container information"] = container_information if container_information
-      properties["Digitization Note"] = digitization_note if digitization_note
+      properties["Container information"] = container_information if container_information.present?
+      properties["Digitization Note"] = digitization_note if digitization_note.present?
       properties["Generated"] = generated
       properties["Terms of Use"] = "https://guides.library.yale.edu/about/policies/access"
       properties["View in DL"] = "https://collections.library.yale.edu/catalog/#{oid}"
