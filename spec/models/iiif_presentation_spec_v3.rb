@@ -162,6 +162,10 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Container / Volume Information" }).not_to be_empty
     end
 
+    it "has coordinates in metadata" do
+      expect(iiif_presentation.manifest["metadata"].select { |v| v["label"]["en"] == ["Coordinates"] }.first["value"]["none"]).to eq(["(N90 E90 S90 W90)"])
+    end
+
     it "has a ASpace record link in metadata if ASpace record" do
       expect(aspace_iiif_presentation.manifest["metadata"].class).to eq Array
       expect(aspace_iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Archives at Yale Item Page" }).not_to be_empty

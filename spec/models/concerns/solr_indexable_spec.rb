@@ -70,4 +70,19 @@ RSpec.describe SolrIndexable, type: :model do
     expect(solr_document[:quicksearchId_ssi]).to be_nil
   end
   # rubocop:enable Lint/ParenthesesAsGroupedExpression
+
+  it "indexes coordinateDisplay" do
+    solr_document = solr_indexable.to_solr("coordinate" => ["do not index"], "coordinateDisplay" => ["(N90, S90, E90, W90)"])
+    expect(solr_document[:coordinateDisplay_ssim]).to eq(["(N90, S90, E90, W90)"])
+  end
+
+  it "indexes coordinate as coordinateDisplay if coordinateDisplay is nil" do
+    solr_document = solr_indexable.to_solr("coordinate" => ["coordinate"], "coordinateDisplay" => nil)
+    expect(solr_document[:coordinateDisplay_ssim]).to eq(["coordinate"])
+  end
+
+  it "indexes coordinate as coordinateDisplay if coordinateDisplay is an empty array" do
+    solr_document = solr_indexable.to_solr("coordinate" => ["coordinate"], "coordinateDisplay" => [])
+    expect(solr_document[:coordinateDisplay_ssim]).to eq(["coordinate"])
+  end
 end

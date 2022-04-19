@@ -88,10 +88,10 @@ METADATA_FIELDS = {
       'scale_tesim'
     ]
   },
-  coordinate: {
+  coordinateDisplay: {
     label: 'Coordinates',
     solr_fields: [
-      'coordinates_ssim'
+      'coordinateDisplay_ssim'
     ]
   },
   digital: {

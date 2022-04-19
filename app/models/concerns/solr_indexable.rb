@@ -107,6 +107,7 @@ module SolrIndexable
         contributor_tsim: json_to_index["contributor"],
         contributorDisplay_tsim: json_to_index["contributorDisplay"],
         coordinates_ssim: json_to_index["coordinate"],
+        coordinateDisplay_ssim: json_to_index["coordinateDisplay"].presence || json_to_index["coordinate"],
         copyrightDate_ssim: json_to_index["copyrightDate"],
         creator_ssim: extract_creator(json_to_index),
         creator_tesim: extract_creator(json_to_index),
