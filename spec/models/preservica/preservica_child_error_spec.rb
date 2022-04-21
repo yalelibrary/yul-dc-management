@@ -136,15 +136,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
   end
 
-  # Potential Errors
-  # loss of connection / authorization
-  # structural object doesn't exist
-  # information object doesn't exist
-  # representation does not have preservation_representation_name that matches what's provided in the csv
-  # no active generations
-  # bitstream checksum mismatch
-  # if no sha512 is found
-
   it 'can send an error when not logged in' do
     stub_request(:post, "https://testpreservica/api/accesstoken/login").to_return(status: 403, body: '{"token":"access denied"}')
     expect do
@@ -188,8 +179,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_no_representation_pattern_1
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      # TODO: fix double for
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No matching representation found in Preservica for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No matching representation found in Preservica for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a.")
     end.to change { ChildObject.count }.by(0)
   end
 
@@ -198,8 +188,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_no_representation_pattern_2
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      # TODO: fix double for
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No matching representation found in Preservica for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No matching representation found in Preservica for /preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e.")
     end.to change { ChildObject.count }.by(0)
   end
 
@@ -208,8 +197,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_no_generation_pattern_1
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      # TODO: Fix double id
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No active generations found in Preservica for ae328d84-e429-4d46-a865-9ee11157b900 for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e9z.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No active generations found in Preservica for content object: ae328d84-e429-4d46-a865-9ee11157b900 for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e9z.")
     end.to change { ChildObject.count }.by(0)
   end
 
@@ -218,8 +206,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_no_generation_pattern_2
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      # TODO: fix double id
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No active generations found in Preservica for ae328d84-e429-4d46-a865-9ee11157b900 for /preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e5z.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] No active generations found in Preservica for content object: ae328d84-e429-4d46-a865-9ee11157b900 for /preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e5z.")
     end.to change { ChildObject.count }.by(0)
   end
 
@@ -248,7 +235,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_no_sha_pattern_1
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] SHA mismatch found in Preservica for 1.").or eq("Skipping row [2] Unable to log in to Preservica for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a7u8y.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] SHA mismatch found in Preservica for bitstream: 1.").or eq("Skipping row [2] Unable to log in to Preservica for /preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a7u8y.")
     end.to change { ChildObject.count }.by(0)
   end
 
@@ -257,7 +244,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_no_sha_pattern_2
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] SHA mismatch found in Preservica for 1 for /preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a8y7u.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] SHA mismatch found in Preservica for bitstream: 1 for /preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a8y7u.")
     end.to change { ChildObject.count }.by(0)
   end
   # rubocop:enable Metrics/LineLength
