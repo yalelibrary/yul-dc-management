@@ -194,6 +194,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     PreservicaIngest.insert_all(preservica_ingest_hash)
   end
 
+  # rubocop:disable Metrics/MethodLength
   def sync_from_preservica
     # get list of child preservica_content_object_uri currently associated with parent
     local_content_uris = []
@@ -214,12 +215,20 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       co.destroy
     end
 
-    # create only the new child records
-    preservica_content_uris.map do |preservica|
+    preservica_content_uris.each_with_index do |preservica, index|
+      # update order based on preservica ordering
+      co = ChildObject.find_by(preservica_content_object_uri: preservica)
+      unless co.nil?
+        index_plus_one = index + 1
+        co.order = index_plus_one
+        co.save
+      end
+      # create only the new child records
       next if local_content_uris.include?(preservica)
       create_child_records
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def array_of_child_hashes_from_mets
     return unless current_batch_process&.mets_doc

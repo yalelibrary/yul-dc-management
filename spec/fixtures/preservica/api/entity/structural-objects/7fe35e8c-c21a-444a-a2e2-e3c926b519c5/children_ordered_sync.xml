@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ChildrenResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3">
+  <Children>
+    <Child title="mss_29_s03_b092_f0019" ref="f44ba97e-af2b-498e-b118-ed1247822f45" type="IO">
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f45
+    </Child>
+    <Child title="mss_29_s03_b092_f0019_0001" ref="1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r" type="IO">
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r
+    </Child>
+    <Child title="mss_29_s03_b092_f0019_0002" ref="f44ba97e-af2b-498e-b118-ed1247822f44" type="IO">
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44
+    </Child>
+    <Child title="mss_29_s03_b092_f0019_0003" ref="1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d" type="IO">
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d
+    </Child>
+  </Children>
+  <Paging>
+    <TotalResults>4</TotalResults>
+  </Paging>
+  <AdditionalInformation>
+    <Self>
+      https://preservica-dev-v6.library.yale.edu/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5/children
+    </Self>
+  </AdditionalInformation>
+</ChildrenResponse>
