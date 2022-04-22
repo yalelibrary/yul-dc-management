@@ -123,9 +123,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be true
       expect(File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")).to be true
       expect(co_first.ptiff_conversion_at.present?).to be_truthy
-      # File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
-      # File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
-      # File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
       expect(po_first.child_objects.count).to eq 3
 
       sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
