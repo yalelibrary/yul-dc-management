@@ -66,9 +66,9 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
 
     changing_fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
-      ).times(2).then.to_return(
         status: 200, body: File.open(File.join(fixture_path, "#{fixture}_add_sync.xml"))
+      ).times(2).then.to_return(
+        status: 200, body: File.open(File.join(fixture_path, "#{fixture}_ordered_sync.xml"))
       )
     end
 
@@ -92,69 +92,56 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       login_as(:user)
     end
 
-    it 'can recognize when child is added to preservica' do
+    it 'can recognize when child objects are reordered in preservica' do
       File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
       File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
       File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
       File.delete("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif") if File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")
-      File.delete("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif") if File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")
-      File.delete("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif") if File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")
-      File.delete("spec/fixtures/images/access_masters/00/07/20/00/00/00/200000007.tif") if File.exist?("spec/fixtures/images/access_masters/00/07/20/00/00/00/200000007.tif")
 
       allow(S3Service).to receive(:s3_exists?).and_return(false)
       expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be false
       expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be false
       expect(File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")).to be false
       expect(File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")).to be false
-      expect(File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")).to be false
-      expect(File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")).to be false
-      expect(File.exist?("spec/fixtures/images/access_masters/00/07/20/00/00/00/200000007.tif")).to be false
       expect do
         batch_process.file = preservica_parent_with_children
         batch_process.save
-      end.to change { ChildObject.count }.from(0).to(3)
+      end.to change { ChildObject.count }.from(0).to(4)
       po_first = ParentObject.first
       co_first = po_first.child_objects.first
       expect(po_first.last_preservica_update).not_to be nil
       expect(co_first.order).to eq 1
       expect(co_first.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486"
-
-      expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be true
-      expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be true
-      expect(File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")).to be true
       expect(co_first.ptiff_conversion_at.present?).to be_truthy
-      expect(po_first.child_objects.count).to eq 3
+      expect(po_first.child_objects.count).to eq 4
 
       sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
       expect do
         sync_batch_process.file = preservica_sync
         sync_batch_process.save!
-      end.to change { ChildObject.count }.from(3).to(4)
-      # TODO: it should not create all new ones, only one new one
+      end.not_to change { ChildObject.count }
+      expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be true
+      expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be true
+      expect(File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")).to be true
       expect(File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")).to be true
-      expect(File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")).to be true
-      expect(File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")).to be true
-      expect(File.exist?("spec/fixtures/images/access_masters/00/07/20/00/00/00/200000007.tif")).to be true
+
       co_first = po_first.child_objects.first
       expect(co_first.order).to eq 1
-      expect(co_first.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486"
+      expect(co_first.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b485"
       co_second = po_first.child_objects[1]
       expect(co_second.order).to eq 2
-      expect(co_second.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489"
+      expect(co_second.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486"
       co_third = po_first.child_objects[2]
       expect(co_third.order).to eq 3
       expect(co_third.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487"
       co_last = po_first.child_objects.last
       expect(co_last.order).to eq 4
-      expect(co_last.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b485"
+      expect(co_last.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489"
 
       File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
       File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
       File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
       File.delete("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif") if File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")
-      File.delete("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif") if File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")
-      File.delete("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif") if File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")
-      File.delete("spec/fixtures/images/access_masters/00/07/20/00/00/00/200000007.tif") if File.exist?("spec/fixtures/images/access_masters/00/07/20/00/00/00/200000007.tif")
     end
   end
 end

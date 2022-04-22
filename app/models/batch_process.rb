@@ -374,6 +374,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # FETCHES CHILD OBJECTS FROM PRESERVICA
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def sync_from_preservica
     parsed_csv.each_with_index do |row, _index|
       begin
@@ -383,9 +384,17 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         next
       end
       next unless validate_preservica_sync(parent_object, row)
-      local_children_count = parent_object.child_objects.count
+      local_children_hash = {}
+      parent_object.child_objects.each do |local_co|
+        local_children_hash[local_co.order.to_s.to_sym] = local_co.preservica_content_object_uri
+      end
       begin
-        preservica_children_count = PreservicaImageService.new(parent_object.preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_name).count
+        preservica_children_hash = {}
+        PreservicaImageService.new(parent_object.preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_name).each_with_index do |preservica_co, index|
+          # increment by one so index lines up with order
+          index_plus_one = index + 1
+          preservica_children_hash[index_plus_one.to_s.to_sym] = preservica_co[:preservica_content_object_uri]
+        end
       rescue PreservicaImageServiceNetworkError => e
         batch_processing_event("Parent OID: #{row['oid']} because of #{e.message}", 'Skipped Import')
         raise
@@ -393,18 +402,19 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         batch_processing_event("Parent OID: #{row['oid']} because of #{e.message}", 'Skipped Import')
         next
       end
-      sync_images_preservica(local_children_count, preservica_children_count, parent_object)
+      sync_images_preservica(local_children_hash, preservica_children_hash, parent_object)
     end
   end
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   # SYNC IMAGES FROM PRESERVICA
-  def sync_images_preservica(local_children_count, preservica_children_count, parent_object)
-    if local_children_count != preservica_children_count
+  def sync_images_preservica(local_children_hash, preservica_children_hash, parent_object)
+    if local_children_hash != preservica_children_hash
       parent_object.sync_from_preservica
       setup_for_background_jobs(parent_object, parent_object.source_name)
     else
-      batch_processing_event("Child object count is the same.  No update needed.", "Skipped Row")
+      batch_processing_event("Child object count and order is the same.  No update needed.", "Skipped Row")
     end
   end
 
