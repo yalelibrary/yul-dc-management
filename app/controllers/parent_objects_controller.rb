@@ -154,7 +154,7 @@ class ParentObjectsController < ApplicationController
     authorize!(:read, @parent_object)
     solr = SolrService.connection
     oid = params[:id].to_i
-    response = solr.get 'select', params: { q: "oid_ssi:#{oid}" }
+    response = solr.get 'select', params: { q: "id:#{oid}" }
     render json: response["response"]
   end
 
@@ -168,8 +168,16 @@ class ParentObjectsController < ApplicationController
 
     def queue_parent_sync_from_preservica
       authorize!(:update, @parent_object)
-      @parent_object.sync_from_preservica
-      @parent_object.setup_metadata_job
+      @batch_process = BatchProcess.new(user: current_user,
+                                        oid: @parent_object.oid,
+                                        batch_action: 'sync from preservica',
+                                        csv: CSV.generate do |csv|
+                                               csv << ['oid']
+                                               csv << [@parent_object.oid.to_s]
+                                             end)
+      @parent_object.current_batch_connection = @batch_process.batch_connections.build(connectable: @parent_object)
+      @batch_process.save!
+      @parent_object.current_batch_process = @batch_process
     end
 
     def valid_admin_set_edit?

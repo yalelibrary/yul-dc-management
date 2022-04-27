@@ -6,6 +6,7 @@ class SetupMetadataJob < ApplicationJob
   def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
+    return if redirect(parent_object)
     parent_object.generate_manifest = true
     mets_images_present = check_mets_images(parent_object, current_batch_process, current_batch_connection)
     unless mets_images_present
@@ -21,6 +22,16 @@ class SetupMetadataJob < ApplicationJob
   rescue => e
     parent_object.processing_event("Setup job failed to save: #{e.message}", "failed")
     raise # this reraises the error after we document it
+  end
+
+  # index and return true if parent is a redirect
+  def redirect(parent_object)
+    if parent_object.redirect_to.present?
+      parent_object.solr_index
+      true
+    else
+      false
+    end
   end
 
   def check_mets_images(parent_object, current_batch_process, _current_batch_connection)
