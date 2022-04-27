@@ -154,7 +154,7 @@ class ParentObjectsController < ApplicationController
     authorize!(:read, @parent_object)
     solr = SolrService.connection
     oid = params[:id].to_i
-    response = solr.get 'select', params: { q: "oid_ssi:#{oid}" }
+    response = solr.get 'select', params: { q: "id:#{oid}" }
     render json: response["response"]
   end
 
