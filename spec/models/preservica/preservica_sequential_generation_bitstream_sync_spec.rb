@@ -8,6 +8,12 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_children.csv")) }
   let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_sync.csv")) }
+  let(:first_tif) { "spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif" }
+  let(:second_tif) { "spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif" }
+  let(:third_tif) { "spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif" }
+  let(:fourth_tif) { "spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif" }
+  let(:fifth_tif) { "spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif" }
+  let(:sixth_tif) { "spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif" }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -35,7 +41,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Access-2
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Preservation-1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations
-                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Access-2
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Preservation-1
@@ -49,7 +55,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1]
 
-    changing_fixtures = %w[preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1]
+    changing_fixtures = %w[preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1]
 
     fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
@@ -83,25 +89,32 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     end
 
     it 'can recognize when there is a new generation in preservica' do
-      File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
-      File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
-      File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
+      File.delete(first_tif) if File.exist?(first_tif)
+      File.delete(second_tif) if File.exist?(second_tif)
+      File.delete(third_tif) if File.exist?(third_tif)
+      File.delete(fourth_tif) if File.exist?(fourth_tif)
+      File.delete(fifth_tif) if File.exist?(fifth_tif)
+      File.delete(sixth_tif) if File.exist?(sixth_tif)
 
       allow(S3Service).to receive(:s3_exists?).and_return(false)
-      expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be false
-      expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be false
-      expect(File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")).to be false
+      expect(File.exist?(first_tif)).to be false
+      expect(File.exist?(second_tif)).to be false
+      expect(File.exist?(third_tif)).to be false
+      expect(File.exist?(fourth_tif)).to be false
+      expect(File.exist?(fifth_tif)).to be false
+      expect(File.exist?(sixth_tif)).to be false
       expect do
         batch_process.file = preservica_parent_with_children
         batch_process.save
       end.to change { ChildObject.count }.from(0).to(3)
-      expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be true
-      expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be true
-      expect(File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")).to be true
+      expect(File.exist?(first_tif)).to be true
+      expect(File.exist?(second_tif)).to be true
+      expect(File.exist?(third_tif)).to be true
 
       po_first = ParentObject.first
       co_first = po_first.child_objects.first
       expect(po_first.last_preservica_update).not_to be nil
+      expect(co_first.preservica_generation_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1"
       expect(co_first.preservica_bitstream_uri).to eq "/home/app/webapp/spec/fixtures/preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1"
       expect(co_first.ptiff_conversion_at.present?).to be_truthy
       expect(po_first.child_objects.count).to eq 3
@@ -111,18 +124,22 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         sync_batch_process.file = preservica_sync
         sync_batch_process.save!
       end.not_to change { ChildObject.count }
-      # TODO: this should download a new tif
-      expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be true
-      expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be true
-      expect(File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")).to be true
+      # downloads new tif to pairtree
+      expect(File.exist?(fourth_tif)).to be true
+      expect(File.exist?(fifth_tif)).to be true
+      expect(File.exist?(sixth_tif)).to be true
 
       po_first = ParentObject.first
       co_first = po_first.child_objects.first
-      expect(co_first.preservica_bitstream_uri).to eq "/home/app/webapp/spec/fixtures/preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1_new"
+      expect(co_first.preservica_generation_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1_new"
+      expect(co_first.preservica_bitstream_uri).to eq "/home/app/webapp/spec/fixtures/preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1_new/bitstreams/1"
 
-      File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
-      File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
-      File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
+      File.delete(first_tif) if File.exist?(first_tif)
+      File.delete(second_tif) if File.exist?(second_tif)
+      File.delete(third_tif) if File.exist?(third_tif)
+      File.delete(fourth_tif) if File.exist?(fourth_tif)
+      File.delete(fifth_tif) if File.exist?(fifth_tif)
+      File.delete(sixth_tif) if File.exist?(sixth_tif)
     end
   end
 end
