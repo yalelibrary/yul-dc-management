@@ -143,6 +143,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Metrics/PerceivedComplexity
 
+  # rubocop:disable Metrics/LineLength
   def validate_child_hashes(child_hashes)
     # if not found locally add the image
     preservica_co_uris = child_hashes.pluck(:preservica_content_object_uri)
@@ -151,11 +152,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       co = ChildObject.find_by(preservica_content_object_uri: uri)
       next if co.nil?
       # if it does remove it from the child hash
-      # TODO: also check generation uri
-      child_hashes.delete_if { |h| h[:preservica_content_object_uri] == co.preservica_content_object_uri && h[:preservica_generation_uri] == co.preservica_generation_uri }
+      child_hashes.delete_if { |h| h[:preservica_content_object_uri] == co.preservica_content_object_uri && h[:preservica_generation_uri] == co.preservica_generation_uri && h[:preservica_bitstream_uri] == co.preservica_bitstream_uri }
     end
     child_hashes
   end
+  # rubocop:enable Metrics/LineLength
 
   def upsert_child_objects(child_objects_hash)
     raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
@@ -200,7 +201,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       co = ChildObject.find_by(order: value[:order])
       co.destroy unless found_in_preservica(value[:content_uri], preservica_children_hash)
     end
-
     # iterate through preservica and update when local version found
     preservica_children_hash.each_value do |value|
       co = ChildObject.find_by(preservica_content_object_uri: value[:content_uri])
@@ -208,9 +208,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       co.order = value[:order]
       co.preservica_content_object_uri = value[:content_uri]
       co.preservica_generation_uri = value[:generation_uri]
+      co.preservica_bitstream_uri = value[:bitstream_uri]
       co.save
     end
-
     # create child records for any new items in preservica
     create_child_records
   end

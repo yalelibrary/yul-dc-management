@@ -388,7 +388,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       parent_object.child_objects.each do |local_co|
         local_children_hash["hash_#{local_co.order}".to_sym] = { order: local_co.order,
                                                                  content_uri: local_co.preservica_content_object_uri,
-                                                                 generation_uri: local_co.preservica_generation_uri }
+                                                                 generation_uri: local_co.preservica_generation_uri,
+                                                                 bitstream_uri: local_co.preservica_bitstream_uri }
       end
       begin
         preservica_children_hash = {}
@@ -397,7 +398,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
           index_plus_one = index + 1
           preservica_children_hash["hash_#{index_plus_one}".to_sym] = { order: index_plus_one,
                                                                         content_uri: preservica_co[:preservica_content_object_uri],
-                                                                        generation_uri: preservica_co[:preservica_generation_uri] }
+                                                                        generation_uri: preservica_co[:preservica_generation_uri],
+                                                                        bitstream_uri: preservica_co[:preservica_bitstream_uri] }
         end
       rescue PreservicaImageServiceNetworkError => e
         batch_processing_event("Parent OID: #{row['oid']} because of #{e.message}", 'Skipped Import')
