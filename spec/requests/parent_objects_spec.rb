@@ -228,7 +228,7 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
     end
 
     before do
-      stub_metadata_cloud("AS-200000000", "aspace")
+      stub_preservica_aspace_single
       stub_request(:post, "https://testpreservica/api/accesstoken/login").to_return(status: 200, body: '{"token":"test"}')
       stub_request(:post, "https://testpreservica/api/accesstoken/refresh").to_return(status: 200, body: '{"token":"test"}')
       fixtures = %w[preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5/children

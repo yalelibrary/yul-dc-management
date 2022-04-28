@@ -27,9 +27,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     user.add_role(:editor, admin_set)
     login_as(:user)
     batch_process.user_id = user.id
-    stub_metadata_cloud("AS-200000000", "aspace")
-    stub_request(:post, "https://testpreservica/api/accesstoken/login").to_return(status: 200, body: '{"token":"test"}')
-    stub_request(:post, "https://testpreservica/api/accesstoken/refresh").to_return(status: 200, body: '{"token":"test"}')
+    stub_preservica_aspace_single
+    stub_preservica_login
   end
 
   it 'can send an error when Preservica credentials are not set' do
