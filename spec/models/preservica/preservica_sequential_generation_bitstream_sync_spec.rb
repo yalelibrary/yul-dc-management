@@ -82,7 +82,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     )
   end
 
-  context 'user with permission' do
+  context 'user with edit permission' do
     before do
       user.add_role(:editor, admin_set)
       login_as(:user)
