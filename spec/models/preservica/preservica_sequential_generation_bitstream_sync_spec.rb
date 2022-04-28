@@ -33,53 +33,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   before do
     login_as(:user)
     batch_process.user_id = user.id
-    stub_metadata_cloud("AS-200000000", "aspace")
-    stub_request(:post, "https://testpreservica/api/accesstoken/login").to_return(status: 200, body: '{"token":"test"}')
-    stub_request(:post, "https://testpreservica/api/accesstoken/refresh").to_return(status: 200, body: '{"token":"test"}')
-    fixtures = %w[preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5/children
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Access-2
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Preservation-1
-                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations
-                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Access-2
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Preservation-1
-                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations
-                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1
-                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1
-                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations
-                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Access-2
-                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Preservation-1
-                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations
-                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1
-                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1]
-
-    changing_fixtures = %w[preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1]
-
-    fixtures.each do |fixture|
-      stub_request(:get, "https://test#{fixture}").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
-      )
-    end
-
-    changing_fixtures.each do |fixture|
-      stub_request(:get, "https://test#{fixture}").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
-      ).times(2).then.to_return(
-        status: 200, body: File.open(File.join(fixture_path, "#{fixture}_new.xml"))
-      )
-    end
-
-    stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1/content.tif"), 'rb')
-    )
-    stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1/content.tif"), 'rb')
-    )
-    stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1/content.tif"), 'rb')
-    )
+    stub_preservica_set_of_three_changing_generation
   end
 
   context 'user with edit permission' do
@@ -88,7 +42,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       login_as(:user)
     end
 
-    it 'can recognize when there is a new generation in preservica' do
+    it 'can recognize when there is a new generation and bitstream in preservica' do
       File.delete(first_tif) if File.exist?(first_tif)
       File.delete(second_tif) if File.exist?(second_tif)
       File.delete(third_tif) if File.exist?(third_tif)
