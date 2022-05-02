@@ -419,8 +419,29 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     if local_children_hash != preservica_children_hash
       parent_object.sync_from_preservica(local_children_hash, preservica_children_hash)
       setup_for_background_jobs(parent_object, parent_object.source_name)
+    elsif fails_fixity_check(parent_object)
+      batch_processing_event("Checksum mismatch found on parent object: #{parent_object.oid}", "Row Processed")
     else
       batch_processing_event("Child object count and order is the same.  No update needed.", "Skipped Row")
+    end
+  end
+
+  def fails_fixity_check(parent_object)
+    # iterate through images in pairtree and get checksums
+    local_checksums = []
+    parent_object.child_objects.each do |co|
+      local_checksums << co.sha512_checksum
+    end
+    # iterate through preservica images and get checksums
+    preservica_checksums = []
+    PreservicaImageService.new(parent_object.preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_name).each do |preservica_co|
+      preservica_checksums << preservica_co[:sha512_checksum]
+    end
+    # compare and return true if there is a mismatch
+    if local_checksums != preservica_checksums
+      true
+    else
+      false
     end
   end
 
