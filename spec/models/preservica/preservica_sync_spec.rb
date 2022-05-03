@@ -149,6 +149,39 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Child object count and order is the same.  No update needed.')
     end
 
+    it 'can recognize when there is a checksum mismatch' do
+      File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
+      File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
+      File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
+
+      allow(S3Service).to receive(:s3_exists?).and_return(false)
+      expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be false
+      expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be false
+      expect(File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")).to be false
+      expect do
+        batch_process.file = preservica_parent_with_children
+        batch_process.save
+      end.to change { ChildObject.count }.from(0).to(3)
+      expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be true
+      expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be true
+      expect(File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")).to be true
+      po = ParentObject.find(200_000_000)
+      co = po.child_objects.first
+      co.sha512_checksum = "123"
+      co.save
+
+      sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+      expect do
+        sync_batch_process.file = preservica_sync
+        sync_batch_process.save!
+      end.not_to change { ChildObject.count }
+      expect(sync_batch_process.batch_ingest_events_count).to be 1
+      expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Checksum mismatch found on parent object: 200000000')
+      File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
+      File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
+      File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
+    end
+
     it 'can throw an error if parent object is not found' do
       File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
       File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
