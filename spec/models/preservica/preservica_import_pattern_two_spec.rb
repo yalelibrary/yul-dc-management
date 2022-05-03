@@ -29,9 +29,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     user.add_role(:editor, admin_set)
     login_as(:user)
     batch_process.user_id = user.id
-    stub_metadata_cloud("AS-200000000", "aspace")
-    stub_request(:post, "https://testpreservica/api/accesstoken/login").to_return(status: 200, body: '{"token":"test"}')
-    stub_request(:post, "https://testpreservica/api/accesstoken/refresh").to_return(status: 200, body: '{"token":"test"}')
+    stub_preservica_aspace_single
+    stub_preservica_login
     fixtures = %w[preservica/api/entity/structural-objects/2fe35e8c-c21a-444a-a2e2-e3c926b519c6/children
                   preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a/representations
                   preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a/representations/Access-2

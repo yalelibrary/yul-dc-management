@@ -16,8 +16,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
   end
 
   before do
-    stub_request(:post, "https://testpreservica/api/accesstoken/login").to_return(status: 200, body: '{"token":"test"}')
-    stub_request(:post, "https://testpreservica/api/accesstoken/refresh").to_return(status: 200, body: '{"token":"test"}')
+    stub_preservica_login
     fixtures = %w[preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c4/children
                   preservica/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations
                   preservica/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations/Access-2
