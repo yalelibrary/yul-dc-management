@@ -330,6 +330,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       expect(parent_object.dependent_objects.first.dependent_uri).to eq '/ladybird/oid/2005512'
     end
 
+    it "deletes DependentObjects when redirected" do
+      expect(parent_object.reload.dependent_objects.count).to eq 1
+      parent_object.redirect_to = "https://collections.library.yale.edu/catalog/5555"
+      parent_object.save
+      expect(parent_object.dependent_objects.count).to eq 0
+    end
+
     context "a newly created ParentObject with just the oid and default authoritative_metadata_source (Ladybird for now)" do
       let(:parent_object) { described_class.create(oid: "2005512", admin_set: FactoryBot.create(:admin_set)) }
       before do
