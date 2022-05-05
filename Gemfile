@@ -90,6 +90,7 @@ group :test do
   gem 'ffaker'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.0'
+  gem 'simplecov'
   gem 'simplecov-lcov', '~> 0.8.0'
   gem 'timecop'
   gem 'webdrivers'
