@@ -2,6 +2,7 @@
 
 class SetupMetadataJob < ApplicationJob
   queue_as :metadata
+  ONE_GB = 1_073_741_824
 
   def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     parent_object.current_batch_process = current_batch_process
@@ -58,9 +59,8 @@ class SetupMetadataJob < ApplicationJob
       else
         path = Pathname.new(child.access_master_path)
         file_size = File.exist?(path) ? File.size(path) : 0
-        # 1073741824 is 1GB in bytes
-        GeneratePtiffJob.set(queue: :large_ptiff).perform_later(child, current_batch_process) if file_size > 1_073_741_824
-        GeneratePtiffJob.perform_later(child, current_batch_process) if file_size <= 1_073_741_824
+        GeneratePtiffJob.set(queue: :large_ptiff).perform_later(child, current_batch_process) if file_size > ONE_GB
+        GeneratePtiffJob.perform_later(child, current_batch_process) if file_size <= ONE_GB
         child.processing_event("Ptiff Queued", "ptiff-queued")
         ptiff_jobs_queued = true
       end
