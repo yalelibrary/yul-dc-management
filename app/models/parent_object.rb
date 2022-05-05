@@ -53,6 +53,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         self[key.to_sym] = nil unless minimal_attr.include? key
       end
     end
+
+    # clear dependent objects
+    DependentObject.delete(dependent_objects)
   end
 
   def self.visibilities
