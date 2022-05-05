@@ -28,7 +28,7 @@
 
 <div class='row batch-process-subheading'>
   <div class='col'>
-    <table class='table table-responsive table-bordered table-striped detail-table'>
+    <table class='table table-responsive table-bordered table-striped detail-table' aria-label='Parent Batch Process Detail'>
       <thead class='table-head'>
         <tr>
           <th scope='col'>Ingest step</th>
@@ -106,7 +106,7 @@
 </div>
 
 <% if @latest_failure %>
-<table class='table table-responsive table-bordered table-striped'>
+<table class='table table-responsive table-bordered table-striped' aria-label='Parent Batch Process Failure'>
   <thead class='table-head'>
     <tr>
       <th scope='col'>Last Failure Message</th>
@@ -124,7 +124,7 @@
 
 <div class='row batch-process-subheading'>
   <div class='col'>
-    <table id='parent-batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= show_parent_batch_process_path(format: :json) %>'>
+    <table id='parent-batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' aria-label='Parent Batch Process Status' data-source='<%= show_parent_batch_process_path(format: :json) %>'>
       <thead class='table-head'>
         <tr>
           <th scope='col'>Child OID</th>

@@ -30,7 +30,7 @@
   </p>
 </div>
 
-<table class='table table-responsive table-bordered table-striped detail-table'>
+<table class='table table-responsive table-bordered table-striped detail-table' aria-label='Child Batch Process Success'>
 <% if @batch_process.batch_action == "update fulltext status"  %>
   <p>
     <strong>Current Full Text Status:</strong> <%= @child_object.full_text ? "Available" : "Not Found" %>
@@ -71,7 +71,7 @@
 <% end %>
 
 <% if @failure %>
-  <table class='table table-responsive table-bordered table-striped'>
+  <table class='table table-responsive table-bordered table-striped' aria-label='Child Batch Process Failure'>
     <thead class='table-head'>
       <tr>
         <th scope='col'>Message</th>
