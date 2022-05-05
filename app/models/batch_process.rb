@@ -294,8 +294,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       configure_parent_object(child_object, parents)
       attach_item(child_object)
       next unless user_update_child_permission(child_object, child_object.parent_object)
-
-      GeneratePtiffJob.perform_later(child_object, self)
+      path = Pathname.new(child_object.access_master_path)
+      file_size = File.exist?(path) ? File.size(path) : 0
+      # 1073741824 is 1GB in bytes
+      GeneratePtiffJob.set(queue: :large_ptiff).perform_later(child_object, self) if file_size > 1_073_741_824
+      GeneratePtiffJob.perform_later(child_object, self) if file_size <= 1_073_741_824
       attach_item(child_object)
       child_object.processing_event("Ptiff Queued", "ptiff-queued")
     end
