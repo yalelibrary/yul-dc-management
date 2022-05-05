@@ -87,9 +87,9 @@ end
 group :test do
   gem 'capybara', '>= 2.15'
   gem 'coveralls_reborn', '~> 0.24.0', require: false
-  gem 'simplecov-lcov', '~> 0.8.0'
   gem 'ffaker'
   gem 'selenium-webdriver'
+  gem 'simplecov-lcov', '~> 0.8.0'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'timecop'
   gem 'webdrivers'
