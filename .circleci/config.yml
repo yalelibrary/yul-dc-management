@@ -65,12 +65,42 @@ jobs:
       # collect reports
       - store_test_results:
           path: /tmp/test-results
+      - run:
+          name: Stash Coverage Results
+          command: |
+            mkdir coverage_results
+            cp -R coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}.json
+      - persist_to_workspace:
+          root: .
+          paths:
+            - coverage_results
       - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
-      - deploy:
-          name: Upload code coverage stats
-          command: curl -k https://coveralls.io/webhook?repo_token=${COVERALLS_REPO_TOKEN} -d "payload[build_num]=${CIRCLE_BUILD_NUM}&payload[status]=done"
+          path: tmp/test_prof
+
+  coverage:
+    docker:
+      - image: ruby:2.5
+    environment:
+      BUNDLE_JOBS: 2
+      BUNDLE_RETRY: 3
+      BUNDLE_PATH: vendor/bundle
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - restore_cache:
+          keys:
+            - appname-bundle-
+            - appname-bundle-
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+      - run:
+          name: Merge and check coverage
+          command: |
+            bundle exec rake coverage:report
+      - store_artifacts:
+          path: coverage
 
   publish-latest:
     executor: docker/docker
@@ -120,6 +150,9 @@ workflows:
       - run-tests:
           requires:
             - build-and-push
+      - coverage:
+          requires:
+            - run-tests
       - publish-latest:
           context: yul-dc
           requires:

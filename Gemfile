@@ -86,12 +86,11 @@ end
 
 group :test do
   gem 'capybara', '>= 2.15'
-  gem 'coveralls_reborn', '~> 0.24.0', require: false
+  gem 'coveralls', require: false
   gem 'ffaker'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.0'
-  gem 'simplecov'
-  gem 'simplecov-lcov', '~> 0.8.0'
+  gem 'simplecov', require: false
   gem 'timecop'
   gem 'webdrivers'
 end
