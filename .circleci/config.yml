@@ -76,7 +76,6 @@ jobs:
             - coverage_results
       - store_artifacts:
           path: tmp/test_prof
-
   coverage:
     docker:
       - image: yalelibraryit/dc-management:$CIRCLE_SHA1
@@ -97,7 +96,6 @@ jobs:
             bundle exec rake coverage:report
       - store_artifacts:
           path: coverage
-
   publish-latest:
     executor: docker/docker
     steps:
