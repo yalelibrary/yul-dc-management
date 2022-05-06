@@ -39,8 +39,6 @@ yarn-debug.log*
 /config/cas_users.csv
 .secrets
 
-# Ignore coverage report
-coverage
 *-params.yml
 
 /preservica_export
