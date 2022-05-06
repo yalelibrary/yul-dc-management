@@ -52,7 +52,7 @@
       <h1>Batch Messages:</h1>
     </div>
   </div>
-  <table class='table table-bordered table-responsive table-striped'>
+  <table class='table table-bordered table-responsive table-striped' aria-label='Batch Messages'>
     <thead class='table-head'>
       <tr>
         <th scope='col'> Time </th>
@@ -75,7 +75,7 @@
         <h1>Batch Parent Objects:</h1>
       </div>
     </div>
-    <table id='batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' data-source='<%= batch_process_path(format: :json) %>'>
+    <table id='batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' aria-label='Batch Parent Objects' data-source='<%= batch_process_path(format: :json) %>'>
       <thead class='table-head'>
         <tr>
           <th scope='col'> Parent OID </th>
