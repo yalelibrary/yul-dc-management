@@ -119,9 +119,6 @@ workflows:
       - run-tests:
           requires:
             - build-and-push
-      - coverage:
-          requires:
-            - run-tests
       - publish-latest:
           context: yul-dc
           requires:
