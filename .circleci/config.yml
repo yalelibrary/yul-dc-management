@@ -60,7 +60,7 @@ jobs:
           name: rspec
           # Excludes tests that require Yale VPN access
           command: |
-            mkdir -p /tmp/test-results
+            mkdir /tmp/test-results
             cd /home/app/webapp && bundle exec rspec --tag ~vpn_only:true $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
       # collect reports
       - store_test_results:
@@ -70,7 +70,7 @@ jobs:
           destination: test-results
       - deploy:
           name: Upload code coverage stats
-          command: curl -k https://coveralls.io/webhook?repo_token=${COVERALLS_REPO_TOKEN} -d "payload[build_num]=${CIRCLE_BUILD_NUM}&payload[status]=done"
+          command: curl -k https://coveralls.io/webhook?repo_token=${COVERALLS_REPO_TOKEN} -d "payload[build_num]=${CIRCLE_WORKFLOW_ID}&payload[status]=done"
 
   publish-latest:
     executor: docker/docker
