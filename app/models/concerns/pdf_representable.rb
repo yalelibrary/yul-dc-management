@@ -78,8 +78,9 @@ module PdfRepresentable
       "pages" => children,
       "imageProcessingCommand" => "convert -resize 2000x2000 %s[0] %s"
     }
-    # only add color space with :s3_presigned_url so it does not affect the checksum:
-    json_hash["imageProcessingCommand"] = "convert -resize 2000x2000 %s[0] -colorspace sRGB %s" if child_page_file == :s3_presigned_url
+    # Don't adjust the processing command to add color space because it was causing problems.  Adjust and uncomment if
+    # there is a command change for preprocessing needed:
+    #  json_hash["imageProcessingCommand"] = "convert -resize 2000x2000 %s[0] -colorspace sRGB %s" if child_page_file == :s3_presigned_url
     json_hash.to_json
   end
 
