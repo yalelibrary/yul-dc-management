@@ -52,7 +52,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
     size = bitstreams[0].size
     expect(checksum).to eq("329f67d6c5cd707e6b7af8dd129e872369351faad8b63b2c80518cc54b386d7ec646e85873d28e6f904e44d9824506d1e055f2f716f0101afb948925e9713cc8")
     expect(size).to eq(2_274_948)
-    expect(formats).to include("Acrobat PDF 1.7 - Portable Document Format")
+    expect(formats).to include("Tagged Image File Format")
   end
 
   context "with the file matching size and checksum" do
