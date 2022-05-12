@@ -3,11 +3,14 @@
 class Preservica::Bitstream
   include Preservica::PreservicaObject
 
-  def initialize(preservica_client, content_id, generation_id, id)
+  attr_reader :filename
+
+  def initialize(preservica_client, content_id, generation_id, id, filename)
     @preservica_client = preservica_client
     @id = id
     @content_id = content_id
     @generation_id = generation_id
+    @filename = filename
   end
 
   def sha512_checksum
