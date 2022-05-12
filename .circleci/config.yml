@@ -62,16 +62,41 @@ jobs:
           command: |
             mkdir /tmp/test-results
             cd /home/app/webapp && bundle exec rspec --tag ~vpn_only:true $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-            cp -R /home/app/webapp/coverage /tmp/test-results
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
-  coverage:
-    executor: docker/docker
-    steps:
       - run:
-          name: Upload code coverage stats
-          command: curl -k https://coveralls.io/webhook?repo_token=${COVERALLS_REPO_TOKEN} -d "payload[build_num]=${CIRCLE_BUILD_NUM}&payload[status]=done"
+          name: Stash Coverage Results
+          command: |
+            mkdir coverage_results
+            cp -R /home/app/webapp/coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}.json
+      - persist_to_workspace:
+          root: .
+          paths:
+            - coverage_results
+      - store_artifacts:
+          path: /tmp/test_prof
+  coverage:
+    docker:
+      - image: yalelibraryit/dc-management
+    environment:
+      BUNDLE_JOBS: 2
+      BUNDLE_RETRY: 3
+      BUNDLE_PATH: vendor/bundle
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - restore_cache:
+          keys:
+            - appname-bundle-
+            - appname-bundle-
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+      - run:
+          name: Merge and check coverage
+          command: |
+            bundle exec rake coverage:report
+      - store_artifacts:
+          path: coverage
   publish-latest:
     executor: docker/docker
     steps:
