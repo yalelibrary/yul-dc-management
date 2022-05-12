@@ -63,16 +63,15 @@ jobs:
             mkdir /tmp/test-results
             cd /home/app/webapp && bundle exec rspec --tag ~vpn_only:true $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
             cp -R /home/app/webapp/coverage /tmp/test-results
-      # collect reports
-      - store_test_results:
-          path: /tmp/test-results
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
-      - deploy:
-          name: Upload code coverage stats
-          command: curl -k https://coveralls.io/webhook?repo_token=${COVERALLS_REPO_TOKEN} -d "payload[build_num]=${CIRCLE_BUILD_NUM}&payload[status]=done"
-
+  coverage:
+    executor: docker/docker
+    steps:
+      - run:
+        name: Upload code coverage stats
+        command: curl -k https://coveralls.io/webhook?repo_token=${COVERALLS_REPO_TOKEN} -d "payload[build_num]=${CIRCLE_BUILD_NUM}&payload[status]=done"
   publish-latest:
     executor: docker/docker
     steps:
@@ -121,6 +120,9 @@ workflows:
       - run-tests:
           requires:
             - build-and-push
+      - coverage:
+          requires:
+            - run-tests
       - publish-latest:
           context: yul-dc
           requires:
