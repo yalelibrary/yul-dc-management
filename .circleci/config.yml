@@ -90,11 +90,11 @@ jobs:
             - appname-bundle-
       - run:
           name: Bundle Install
-          command: bundle check || bundle install
+          command: cd /home/app/webapp && bundle check || bundle install
       - run:
           name: Merge and check coverage
           command: |
-            bundle exec rake coverage:report
+            cd /home/app/webapp && bundle exec rake coverage:report
       - store_artifacts:
           path: coverage
   publish-latest:
