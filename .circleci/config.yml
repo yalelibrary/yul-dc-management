@@ -72,7 +72,7 @@ jobs:
           paths:
             - coverage_results
       - store_artifacts:
-          path: /tmp/test_prof
+          path: coverage_results
   coverage:
     docker:
       - image: yalelibraryit/dc-management:$CIRCLE_SHA1
