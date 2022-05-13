@@ -74,27 +74,19 @@ jobs:
       - store_artifacts:
           path: /tmp/test_prof
   coverage:
-    docker:
-      - image: yalelibraryit/dc-management
-    environment:
-      BUNDLE_JOBS: 2
-      BUNDLE_RETRY: 3
-      BUNDLE_PATH: vendor/bundle
+    executor: docker/docker
     steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - restore_cache:
-          keys:
-            - appname-bundle-
-            - appname-bundle-
+      - setup_remote_docker
+      - docker/check
+      - docker/pull:
+          images: yalelibraryit/dc-management:$CIRCLE_SHA1
       - run:
           name: Bundle Install
           command: cd /home/app/webapp && bundle check || bundle install
       - run:
           name: Merge and check coverage
           command: |
-            cd /home/app/webapp && bundle exec rake --tasks
+            cd /home/app/webapp && bundle exec rake coverage:report
       - store_artifacts:
           path: coverage
   publish-latest:
