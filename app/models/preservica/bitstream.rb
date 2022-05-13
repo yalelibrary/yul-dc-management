@@ -50,6 +50,10 @@ class Preservica::Bitstream
     @xml ||= Nokogiri::XML(preservica_client.content_object_generation_bitstream(@content_id, @generation_id, @id)).remove_namespaces!
   end
 
+  def uri
+    @bitstream_uri ||= "/api/entity/content-objects/#{@content_id}/generations/#{@generation_id}/bitstreams/#{@id}"
+  end
+
   private
 
     def content_uri

@@ -59,6 +59,7 @@ class PreservicaImageService
 
   # rubocop:disable Metrics/LineLength
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def process_information_objects(representation_name)
     @information_objects.each do |information_object|
       representation = information_object.fetch_by_representation_name(representation_name)[0]
@@ -69,16 +70,20 @@ class PreservicaImageService
         raise PreservicaImageServiceError.new("No active generations found in Preservica", "content object: #{content_object.id}") if content_object.active_generations.empty?
         raise PreservicaImageServiceError.new("No matching bitstreams found in Preservica", content_object.active_generations[0].id.to_s) if content_object.active_generations[0].bitstreams.empty?
         raise PreservicaImageServiceError.new("SHA mismatch found in Preservica", "bitstream: #{content_object.active_generations[0].bitstreams[0].id}") if content_object.active_generations[0].bitstreams[0].sha512_checksum.nil?
-        bitstream_filename = content_object.active_generations[0].bitstreams[0].filename
-        next unless bitstream_filename.end_with?(".tif", ".tiff")
+        next unless content_object.active_generations[0].formats.include? "Tagged Image File Format"
+        tif_bitstream = content_object.active_generations[0].bitstreams.find do |bitstream|
+          bitstream.filename.ends_with?(".tif", ".tiff")
+        end
+        next unless tif_bitstream.present?
         @images << { preservica_content_object_uri: representation.content_object_uri(index),
                      preservica_generation_uri: content_object.active_generations[0].generation_uri,
-                     preservica_bitstream_uri: content_object.active_generations[0].bitstream_uri,
-                     sha512_checksum: content_object.active_generations[0].bitstreams[0].sha512_checksum,
-                     bitstream: content_object.active_generations[0].bitstreams[0] }
+                     preservica_bitstream_uri: tif_bitstream.uri,
+                     sha512_checksum: tif_bitstream.sha512_checksum,
+                     bitstream: tif_bitstream }
       end
     end
   end
+  # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/LineLength
   # rubocop:enable Metrics/AbcSize
 end
