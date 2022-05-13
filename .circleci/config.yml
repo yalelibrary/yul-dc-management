@@ -74,12 +74,11 @@ jobs:
       - store_artifacts:
           path: /tmp/test_prof
   coverage:
+    docker:
+      - image: yalelibraryit/dc-management:$CIRCLE_SHA1
     executor: docker/docker
     steps:
       - setup_remote_docker
-      - docker/check
-      - docker/pull:
-          images: yalelibraryit/dc-management:$CIRCLE_SHA1
       - run:
           name: Bundle Install
           command: cd /home/app/webapp && bundle check || bundle install
