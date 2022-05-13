@@ -73,15 +73,6 @@ jobs:
             - coverage_results
       - store_artifacts:
           path: coverage_results
-  coverage:
-    docker:
-      - image: yalelibraryit/dc-management:$CIRCLE_SHA1
-    executor: docker/docker
-    steps:
-      - setup_remote_docker
-      - run:
-          name: Bundle Install
-          command: cd /home/app/webapp && bundle check || bundle install
       - run:
           name: Merge and check coverage
           command: |
