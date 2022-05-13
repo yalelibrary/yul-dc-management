@@ -51,8 +51,8 @@ class PreservicaClient
     get "/api/entity/structural-objects/#{id}"
   end
 
-  def structural_object_children(id)
-    get "/api/entity/structural-objects/#{id}/children"
+  def structural_object_children(id, start = 0)
+    get "/api/entity/structural-objects/#{id}/children?start=#{start}"
   end
 
   def information_object(id)
