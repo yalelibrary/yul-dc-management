@@ -37,7 +37,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 4.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3'
+gem 'rails', '~> 6.0.4.6'
 gem "rails_semantic_logger", ">=4.4.4"
 # Use rsolr to connect to Solr
 gem 'rsolr', '~> 2.3'
