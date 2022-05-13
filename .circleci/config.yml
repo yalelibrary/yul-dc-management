@@ -94,7 +94,7 @@ jobs:
       - run:
           name: Merge and check coverage
           command: |
-            cd /home/app/webapp && bundle exec rake coverage:report
+            cd /home/app/webapp && bundle exec rake --tasks
       - store_artifacts:
           path: coverage
   publish-latest:
