@@ -34,6 +34,21 @@ RSpec.describe Geojson do
       expect(g.valid).to be_falsey
     end
 
+    it "fails with incorrect NSEW string value" do
+      g = described_class.new(1, "N18FASDF", 1, 2)
+      expect(g.valid).to be_falsey
+    end
+
+    it "is fails with float-like string value" do
+      g = described_class.new(1, "12.34JUNK", 1, 2)
+      expect(g.valid).to be_falsey
+    end
+
+    it "is valid with float-like string value" do
+      g = described_class.new(1, "12.34576", 1, 2)
+      expect(g.valid).to be_truthy
+    end
+
     it "returns type Point with null data in second point" do
       g = described_class.new(1, 2, nil, nil)
       expect(g.valid).to be_truthy

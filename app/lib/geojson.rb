@@ -26,9 +26,9 @@ class Geojson
     p.each_with_index do |v, i|
       if v.class.equal?(String)
         if v.starts_with?('N', 'S', 'E', 'W')
-          p[i] = Float(v[1..3] + '.' + v[4..-1])
+          p[i] = Float(v[1..3] + '.' + v[4..-1], exception: false)
         elsif v =~ /[0-9]+[.]?[0-9]*/
-          p[i] = Float(v)
+          p[i] = Float(v, exception: false)
         end
       end
     end
