@@ -369,10 +369,10 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       coords = nav_place['features'][0]['geometry']['coordinates']
       expect(coords).to eq([[
                              [90.0, 180.0],
-                             [-90.0,180.0],
-                             [-90.0,-180.0],
-                             [90.0,-180.0],
-                             [90.0,180.0]
+                             [-90.0, 180.0],
+                             [-90.0, -180.0],
+                             [90.0, -180.0],
+                             [90.0, 180.0]
                            ]])
     end
 
@@ -381,6 +381,5 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       nav_place = iiif_presentation_no_geojson.manifest['navPlace']
       expect(nav_place).to be_nil
     end
-
   end
 end

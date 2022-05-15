@@ -74,17 +74,14 @@ class IiifPresentationV3
 
   def manifest_navplace
     authoritative_metadata = @parent_object&.authoritative_json
-    if 'ils' == authoritative_metadata&.[]('source')
-      geo = Geojson.new(
-        authoritative_metadata['coordinateNorth'],
-        authoritative_metadata['coordinateEast'],
-        authoritative_metadata['coordinateSouth'],
-        authoritative_metadata['coordinateWest']
-      )
-      if geo.valid
-        @manifest['navPlace'] = geo.as_featurecollection
-      end
-    end
+    return unless 'ils' == authoritative_metadata&.[]('source')
+    geo = Geojson.new(
+      authoritative_metadata['coordinateNorth'],
+      authoritative_metadata['coordinateEast'],
+      authoritative_metadata['coordinateSouth'],
+      authoritative_metadata['coordinateWest']
+    )
+    @manifest['navPlace'] = geo.as_featurecollection if geo.valid
   end
 
   def required_statement

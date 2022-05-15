@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 class Geojson
   attr_reader :valid, :coords, :type
 
   def initialize(n, e, s, w)
-    p1 = convert_point([n,e])
-    p2 = convert_point([s,w])
+    p1 = convert_point([n, e])
+    p2 = convert_point([s, w])
 
     if valid_point?(p1)
       @valid = true
-      if !valid_point?(p2) or (p1 == p2)
+      if !valid_point?(p2) || (p1 == p2)
         @type = "Point"
         @coords = p1
       else
@@ -21,11 +23,11 @@ class Geojson
   end
 
   def convert_point(p)
-    p.each_with_index do |v,i|
+    p.each_with_index do |v, i|
       if v.class.equal?(String)
-        if v.starts_with?('N','S','E','W')
+        if v.starts_with?('N', 'S', 'E', 'W')
           p[i] = Float(v[1..3] + '.' + v[4..-1])
-        elsif v.match(/[0-9]+[.]?[0-9]*/)
+        elsif v =~ /[0-9]+[.]?[0-9]*/
           p[i] = Float(v)
         end
       end
@@ -33,13 +35,15 @@ class Geojson
   end
 
   def valid_point?(p)
-    return false unless p.length == 2
     p.each do |c|
-      return false unless c and (c.class.equal?(Float) or c.class.equal?(Integer))
+      return false unless value_is_numeric(c)
     end
-    return false if p[0] > 90 or p[0] < -90
-    return false if p[1] > 180 or p[1] < -180
+    return false if (p[0] > 90) || (p[0] < -90) || (p[1] > 180) || (p[1] < -180) || p.length != 2
     true
+  end
+
+  def value_is_numeric(v)
+    v && (v.class.equal?(Float) || v.class.equal?(Integer))
   end
 
   def to_polygon(c1, c2)
@@ -68,5 +72,4 @@ class Geojson
       ]
     }
   end
-
 end
