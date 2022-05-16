@@ -69,12 +69,12 @@ class PreservicaImageService
       content_objects.each_with_index do |content_object, index|
         raise PreservicaImageServiceError.new("No active generations found in Preservica", "content object: #{content_object.id}") if content_object.active_generations.empty?
         raise PreservicaImageServiceError.new("No matching bitstreams found in Preservica", content_object.active_generations[0].id.to_s) if content_object.active_generations[0].bitstreams.empty?
-        raise PreservicaImageServiceError.new("SHA mismatch found in Preservica", "bitstream: #{content_object.active_generations[0].bitstreams[0].id}") if content_object.active_generations[0].bitstreams[0].sha512_checksum.nil?
         next unless content_object.active_generations[0].formats.include? "Tagged Image File Format"
         tif_bitstream = content_object.active_generations[0].bitstreams.find do |bitstream|
-          bitstream.filename.ends_with?(".tif", ".tiff")
+          bitstream.filename.ends_with?("tif", "tiff")
         end
         next unless tif_bitstream.present?
+        raise PreservicaImageServiceError.new("SHA mismatch found in Preservica", "bitstream: #{content_object.active_generations[0].bitstreams[0].id}") if tif_bitstream.sha512_checksum.nil?
         @images << { preservica_content_object_uri: representation.content_object_uri(index),
                      preservica_generation_uri: content_object.active_generations[0].generation_uri,
                      preservica_bitstream_uri: tif_bitstream.uri,
