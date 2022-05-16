@@ -12,7 +12,7 @@
         <xip:PUID>fmt/276</xip:PUID>
         <xip:Priority>1</xip:Priority>
         <xip:IdentificationMethod>Signature</xip:IdentificationMethod>
-        <xip:FormatName>Acrobat PDF 1.7 - Portable Document Format</xip:FormatName>
+        <xip:FormatName>Tagged Image File Format</xip:FormatName>
         <xip:FormatVersion>1.7</xip:FormatVersion>
       </xip:Format>
     </xip:Formats>
@@ -35,7 +35,7 @@
     </xip:Properties>
   </xip:Generation>
   <Bitstreams>
-    <Bitstream filename="mss_29_s03_b092_f0019.pdf">
+    <Bitstream filename="mss_29_s03_b092_f0019.tif">
       /home/app/webapp/spec/fixtures/preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1
     </Bitstream>
   </Bitstreams>

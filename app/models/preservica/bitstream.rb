@@ -3,11 +3,14 @@
 class Preservica::Bitstream
   include Preservica::PreservicaObject
 
-  def initialize(preservica_client, content_id, generation_id, id)
+  attr_reader :filename
+
+  def initialize(preservica_client, content_id, generation_id, id, filename)
     @preservica_client = preservica_client
     @id = id
     @content_id = content_id
     @generation_id = generation_id
+    @filename = filename
   end
 
   def sha512_checksum
@@ -45,6 +48,10 @@ class Preservica::Bitstream
 
   def xml
     @xml ||= Nokogiri::XML(preservica_client.content_object_generation_bitstream(@content_id, @generation_id, @id)).remove_namespaces!
+  end
+
+  def uri
+    @bitstream_uri ||= "/api/entity/content-objects/#{@content_id}/generations/#{@generation_id}/bitstreams/#{@id}"
   end
 
   private
