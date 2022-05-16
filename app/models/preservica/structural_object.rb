@@ -24,10 +24,17 @@ class Preservica::StructuralObject
   private
 
     def load_information_objects
+      children = []
       structural_object_children = Nokogiri::XML(@preservica_client.structural_object_children(id)).remove_namespaces!
-      structural_object_children.xpath('/ChildrenResponse/Children/Child').map do |child_ref|
-        information_object_id = child_ref.xpath('@ref').text
-        Preservica::InformationObject.new(@preservica_client, information_object_id)
+      total_results = structural_object_children.at("Paging")&.at("TotalResults")&.text.to_i
+      loop do
+        structural_object_children.xpath('/ChildrenResponse/Children/Child').each do |child_ref|
+          information_object_id = child_ref.xpath('@ref').text
+          children << Preservica::InformationObject.new(@preservica_client, information_object_id)
+        end
+        break if children.count >= total_results || !structural_object_children.xpath('/ChildrenResponse/Children/Child').count.positive?
+        structural_object_children = Nokogiri::XML(@preservica_client.structural_object_children(id, children.count)).remove_namespaces!
       end
+      children
     end
 end

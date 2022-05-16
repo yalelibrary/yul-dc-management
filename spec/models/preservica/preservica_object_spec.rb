@@ -151,4 +151,20 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
     # in fixtures 1 false 2 true
     expect(generations.count).to eq 2
   end
+
+  context 'with paginated information objects' do
+    before do
+      stub_request(:get, "https://testpreservica/api/entity/structural-objects/35713feb-6845-437f-a269-5f2ac09c7e46/children").to_return(
+        status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/structural-objects/35713feb-6845-437f-a269-5f2ac09c7e46/children.xml"))
+      )
+      stub_request(:get, "https://testpreservica/api/entity/structural-objects/35713feb-6845-437f-a269-5f2ac09c7e46/children?start=100").to_return(
+        status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/structural-objects/35713feb-6845-437f-a269-5f2ac09c7e46/children_page_2.xml"))
+      )
+    end
+
+    it 'retrieves all paginated information objects' do
+      structured_object = Preservica::StructuralObject.where(admin_set_key: 'brbl', id: "35713feb-6845-437f-a269-5f2ac09c7e46")
+      expect(structured_object.information_objects.count).to be(134)
+    end
+  end
 end
