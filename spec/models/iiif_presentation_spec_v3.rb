@@ -367,13 +367,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(nav_place).not_to be_nil
       expect(nav_place['type']).to eq 'FeatureCollection'
       coords = nav_place['features'][0]['geometry']['coordinates']
-      expect(coords).to eq([[
-                             [90.0, 180.0],
-                             [-90.0, 180.0],
-                             [-90.0, -180.0],
-                             [90.0, -180.0],
-                             [90.0, 180.0]
-                           ]])
+      expect(coords).to eq([[[180.0, 90.0], [-180.0, 90.0], [-180.0, -90.0], [180.0, -90.0], [180.0, 90.0]]])
     end
 
     it 'is not produced for an ASpace item' do

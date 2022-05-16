@@ -4,8 +4,8 @@ class Geojson
   attr_reader :valid, :coords, :type
 
   def initialize(n, e, s, w)
-    p1 = convert_point([n, e])
-    p2 = convert_point([s, w])
+    p1 = convert_point([e, n])
+    p2 = convert_point([w, s])
 
     if valid_point?(p1)
       @valid = true
@@ -38,7 +38,7 @@ class Geojson
     p.each do |c|
       return false unless value_is_numeric(c)
     end
-    return false if (p[0] > 90) || (p[0] < -90) || (p[1] > 180) || (p[1] < -180) || p.length != 2
+    return false if (p[1] > 90) || (p[1] < -90) || (p[0] > 180) || (p[0] < -180) || p.length != 2
     true
   end
 

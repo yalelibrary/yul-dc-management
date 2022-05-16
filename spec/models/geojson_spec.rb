@@ -88,7 +88,7 @@ RSpec.describe Geojson do
 
   describe "Geojson coordinates" do
     it "returns the correct coordinates for a Polygon" do
-      expected_coords = [[[7.1915, 49.4037], [6.2819, 49.4037], [6.2819, 49.0756], [7.1915, 49.0756], [7.1915, 49.4037]]]
+      expected_coords = [[[49.4037, 7.1915], [49.0756, 7.1915], [49.0756, 6.2819], [49.4037, 6.2819], [49.4037, 7.1915]]]
       g = described_class.new(7.1915, 49.4037, 6.2819, 49.0756)
       expect(g.valid).to be_truthy
       expect(g.type).to eq 'Polygon'
@@ -96,7 +96,7 @@ RSpec.describe Geojson do
     end
 
     it "returns the correct coordinates for a Point" do
-      expected_coords = [12.4663, 41.9031]
+      expected_coords = [41.9031, 12.4663]
       g = described_class.new(12.4663, 41.9031, nil, nil)
       expect(g.valid).to be_truthy
       expect(g.type).to eq 'Point'
@@ -104,7 +104,7 @@ RSpec.describe Geojson do
     end
 
     it "returns correct coordinates with string representation of coordinates" do
-      expected_coords = [55.0, 26.002]
+      expected_coords = [26.002, 55.0]
       g = described_class.new("N0550000", "E0260020", nil, nil)
       expect(g.valid).to be_truthy
       expect(g.type).to eq 'Point'
