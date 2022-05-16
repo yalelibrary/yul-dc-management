@@ -43,7 +43,7 @@ class IiifPresentationV3
   def manifest
     return @manifest if @manifest
     @manifest = {}
-    @manifest["@context"] = ["http://iiif.io/api/search/1/context.json", "http://iiif.io/api/presentation/3/context.json"]
+    @manifest["@context"] = %w[http://iiif.io/api/search/1/context.json http://iiif.io/api/extension/navplace/context.json http://iiif.io/api/presentation/3/context.json]
     @manifest['id'] = File.join((ENV['IIIF_MANIFESTS_BASE_URL']).to_s, oid.to_s)
     @manifest['type'] = "Manifest"
     manifest_descriptive_properties
@@ -56,6 +56,7 @@ class IiifPresentationV3
       @manifest["service"] ||= []
       @manifest["service"] << search_service
     end
+    manifest_navplace
     @manifest
   end
   # rubocop:enable Metrics/AbcSize
@@ -69,6 +70,18 @@ class IiifPresentationV3
     @manifest["rendering"] = rendering
     @manifest["seeAlso"] = see_also
     @manifest["metadata"] = metadata
+  end
+
+  def manifest_navplace
+    authoritative_metadata = @parent_object&.authoritative_json
+    return unless 'ils' == authoritative_metadata&.[]('source')
+    geo = Geojson.new(
+      authoritative_metadata['coordinateNorth'],
+      authoritative_metadata['coordinateEast'],
+      authoritative_metadata['coordinateSouth'],
+      authoritative_metadata['coordinateWest']
+    )
+    @manifest['navPlace'] = geo.as_featurecollection if geo.valid
   end
 
   def required_statement

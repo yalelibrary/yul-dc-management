@@ -348,4 +348,32 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       end
     end
   end
+
+  describe 'IIIF navPlace ' do
+    let(:oid_geojson) { 15_234_629 }
+    let(:parent_object_geojson) { FactoryBot.create(:parent_object, oid: oid_geojson, viewing_direction: "left-to-right", display_layout: "individuals", bib: "12834515") }
+
+    before do
+      stub_metadata_cloud(15_234_629)
+      stub_ptiffs
+      stub_pdfs
+      parent_object_geojson
+      allow(parent_object_geojson).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ils", "V-#{oid_geojson}.json"))))
+    end
+
+    it 'is produced when an ILS item has coordinates' do
+      iiif_presentation_geojson = described_class.new(parent_object_geojson)
+      nav_place = iiif_presentation_geojson.manifest['navPlace']
+      expect(nav_place).not_to be_nil
+      expect(nav_place['type']).to eq 'FeatureCollection'
+      coords = nav_place['features'][0]['geometry']['coordinates']
+      expect(coords).to eq([[[180.0, 90.0], [-180.0, 90.0], [-180.0, -90.0], [180.0, -90.0], [180.0, 90.0]]])
+    end
+
+    it 'is not produced for an ASpace item' do
+      iiif_presentation_no_geojson = described_class.new(aspace_parent_object)
+      nav_place = iiif_presentation_no_geojson.manifest['navPlace']
+      expect(nav_place).to be_nil
+    end
+  end
 end
