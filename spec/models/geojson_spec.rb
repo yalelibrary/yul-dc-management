@@ -49,6 +49,12 @@ RSpec.describe Geojson do
       expect(g.valid).to be_truthy
     end
 
+    it "is valid with zero values" do
+      g = described_class.new(0, "0", 1, 2)
+      expect(g.valid).to be_truthy
+      expect(g.type).to eq 'Polygon'
+    end
+
     it "returns type Point with null data in second point" do
       g = described_class.new(1, 2, nil, nil)
       expect(g.valid).to be_truthy
