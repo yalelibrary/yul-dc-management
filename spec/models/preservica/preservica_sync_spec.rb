@@ -107,7 +107,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       co.delete
       expect(ChildObject.count).to be 2
 
-      sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+      sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
       expect do
         sync_batch_process.file = preservica_sync
         sync_batch_process.save!
@@ -140,7 +140,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
       File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
 
-      sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+      sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
       expect do
         sync_batch_process.file = preservica_sync
         sync_batch_process.save!
@@ -170,7 +170,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       co.sha512_checksum = "123"
       co.save
 
-      sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+      sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
       expect do
         sync_batch_process.file = preservica_sync
         sync_batch_process.save!
@@ -202,7 +202,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
       File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
 
-      sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+      sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
       expect do
         sync_batch_process.file = preservica_sync_invalid
         sync_batch_process.save!
@@ -216,7 +216,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('brbl'), redirect_to: "https://collections.library.yale.edu/catalog/123")
       parent_object.save
 
-      sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+      sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
       expect do
         sync_batch_process.file = preservica_sync_invalid
         sync_batch_process.save!
@@ -230,7 +230,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('brbl'))
       parent_object.save
 
-      sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+      sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
       expect do
         sync_batch_process.file = preservica_sync_invalid
         sync_batch_process.save!
@@ -244,7 +244,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('brbl'), preservica_uri: "/")
       parent_object.save
 
-      sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+      sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
       expect do
         sync_batch_process.file = preservica_sync_invalid
         sync_batch_process.save!
@@ -258,7 +258,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('brbl'), preservica_uri: "/", digital_object_source: "Preservica")
       parent_object.save
 
-      sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+      sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
       expect do
         sync_batch_process.file = preservica_sync_invalid
         sync_batch_process.save!
@@ -272,7 +272,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('sml'), preservica_uri: "/", digital_object_source: "Preservica", preservica_representation_name: "Preservation-1")
       parent_object.save
 
-      sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+      sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
       expect do
         sync_batch_process.file = preservica_sync_invalid
         sync_batch_process.save!
@@ -293,7 +293,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('brbl'), preservica_uri: "/", digital_object_source: "Preservica", preservica_representation_name: "Preservation-1")
       parent_object.save
 
-      sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+      sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
       expect do
         sync_batch_process.file = preservica_sync_invalid
         sync_batch_process.save!

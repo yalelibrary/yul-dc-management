@@ -170,7 +170,7 @@ class ParentObjectsController < ApplicationController
       authorize!(:update, @parent_object)
       @batch_process = BatchProcess.new(user: current_user,
                                         oid: @parent_object.oid,
-                                        batch_action: 'sync from preservica',
+                                        batch_action: 'resync with preservica',
                                         csv: CSV.generate do |csv|
                                                csv << ['oid']
                                                csv << [@parent_object.oid.to_s]
