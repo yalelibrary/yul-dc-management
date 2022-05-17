@@ -2,11 +2,22 @@
 
 # rubocop:disable Rails/Output
 # Rails helpers are not available at this point of loading the application
-worker_group do |g|
+worker_group(:default) do |g|
   # rubocop:disable Style/TernaryParentheses,Style/ZeroLengthPredicate,Style/NumericPredicate
   worker_count = (ENV['WORKER_COUNT'] && ENV['WORKER_COUNT'].size > 0) ? ENV['WORKER_COUNT'] : 1
   g.workers = Integer(worker_count)
-  worker_queue = (ENV['WORKER_QUEUES'] && ENV['WORKER_QUEUES'].size > 0) ? ENV['WORKER_QUEUES'] : 'default,manifest,ptiff,zeros,metadata,solr_index,pdf,intensive_solr_index,large_ptiff'
+  worker_queue = (ENV['WORKER_QUEUES'] && ENV['WORKER_QUEUES'].size > 0) ? ENV['WORKER_QUEUES'] : 'default,manifest,ptiff,zeros,metadata,solr_index,pdf,intensive_solr_index'
+  g.queues = worker_queue.split(',')
+  sleep_delay = (ENV['WORKER_SLEEP_DELAY'] && ENV['WORKER_SLEEP_DELAY'].size > 0) ? ENV['WORKER_SLEEP_DELAY'] : 5
+  g.sleep_delay = Integer(sleep_delay)
+  # rubocop:enable Style/TernaryParentheses,Style/ZeroLengthPredicate,Style/NumericPredicate
+end
+
+worker_group(:intensive) do |g|
+  # rubocop:disable Style/TernaryParentheses,Style/ZeroLengthPredicate,Style/NumericPredicate
+  worker_count = (ENV['WORKER_COUNT'] && ENV['WORKER_COUNT'].size > 0) ? ENV['WORKER_COUNT'] : 1
+  g.workers = Integer(worker_count)
+  worker_queue = (ENV['WORKER_QUEUES'] && ENV['WORKER_QUEUES'].size > 0) ? ENV['WORKER_QUEUES'] : 'large_ptiff'
   g.queues = worker_queue.split(',')
   sleep_delay = (ENV['WORKER_SLEEP_DELAY'] && ENV['WORKER_SLEEP_DELAY'].size > 0) ? ENV['WORKER_SLEEP_DELAY'] : 5
   g.sleep_delay = Integer(sleep_delay)
