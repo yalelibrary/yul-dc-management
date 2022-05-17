@@ -78,8 +78,8 @@ jobs:
     steps:
       - setup_remote_docker
       - attach_workspace:
-        # Must be absolute path or relative path from working_directory
-        at: /home/app/webapp/coverage_results
+          # Must be absolute path or relative path from working_directory
+          at: /home/app/webapp/coverage_results
       - run:
           name: Bundle Install
           command: cd /home/app/webapp && bundle check || bundle install
