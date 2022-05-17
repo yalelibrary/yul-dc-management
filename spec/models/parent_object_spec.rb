@@ -395,7 +395,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       it "generates pdf json with the correct preprocessing command" do
-        expect(parent_object.pdf_generator_json).to include('"imageProcessingCommand":"convert -resize 2000x2000 %s[0] -colorspace sRGB %s"')
+        expect(parent_object.pdf_generator_json).to include('"imageProcessingCommand":"convert -resize 2000x2000 %s[0] %s"')
       end
 
       it "generates pdf json for checksum with the original preprocessing command" do

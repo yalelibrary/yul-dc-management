@@ -26,5 +26,14 @@ DEFAULT DESKTOP STYLING
   color: $yale_blue;
   font-family: $mallory_light;
   font-size: 24px;
-  padding: 0.75% 0 0 2%;
+  padding: 0.5% 0 0 2%;
+}
+
+.sub_yale_management_banner a {
+  color: $yale_blue;
+  font-family: $mallory_light;
+  font-size: 1em;
+  float: right;
+  margin-right: 1%;
+  margin-top: .75%;
 }

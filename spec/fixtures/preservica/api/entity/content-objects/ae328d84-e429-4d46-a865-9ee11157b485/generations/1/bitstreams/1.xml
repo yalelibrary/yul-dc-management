@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <BitstreamResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3">
   <xip:Bitstream>
-    <xip:Filename>mss_29_s03_b092_f0019.pdf</xip:Filename>
+    <xip:Filename>mss_29_s03_b092_f0019.tif</xip:Filename>
     <xip:FileSize>310202</xip:FileSize>
     <xip:Fixities>
       <xip:Fixity>
