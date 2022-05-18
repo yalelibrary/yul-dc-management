@@ -18,7 +18,6 @@ class Preservica::InformationObject
     @representations ||= load_representations
   end
 
-  # TODO: Evaluate the need for these two methods. Potentially redundent
   def access_representations
     @access_representations ||= load_representation("Access")
   end
