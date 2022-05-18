@@ -457,8 +457,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     elsif parent_object.digital_object_source != "Preservica"
       batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica digital object source", 'Skipped Import')
       false
-    elsif parent_object.preservica_representation_name.nil?
-      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation name", 'Skipped Import')
+    elsif parent_object.preservica_representation_type.nil?
+      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation type", 'Skipped Import')
       false
     elsif !parent_object.admin_set.preservica_credentials_verified
       batch_processing_event("Admin set #{parent_object.admin_set.key} does not have Preservica credentials set", 'Skipped Import')

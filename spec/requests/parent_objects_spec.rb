@@ -56,7 +56,7 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
       admin_set: AdminSet.find_by_key('brbl'),
       bib: "123",
       preservica_uri: '/preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5',
-      preservica_representation_name: 'Preservation-1'
+      preservica_representation_type: 'Preservation'
     }
   end
 
