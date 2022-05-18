@@ -60,8 +60,8 @@ module StubRequestHelper
   end
 
   def stub_preservica_login
-    stub_request(:post, "https://testpreservica/api/accesstoken/login").to_return(status: 200, body: '{"token":"test"}')
-    stub_request(:post, "https://testpreservica/api/accesstoken/refresh").to_return(status: 200, body: '{"token":"test"}')
+    stub_request(:post, "https://testpreservica/api/accesstoken/login").to_return(status: 200, body: '{"token":"test", "validFor":15}')
+    stub_request(:post, "https://testpreservica/api/accesstoken/refresh").to_return(status: 200, body: '{"token":"test", "validFor":15}')
   end
 
   # rubocop:disable Metrics/MethodLength
