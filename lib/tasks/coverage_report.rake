@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'simplecov_json_formatter'
+
 namespace :coverage do
   task report: :environment do
     require 'simplecov'
