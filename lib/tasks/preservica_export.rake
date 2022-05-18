@@ -39,11 +39,11 @@ namespace :preservica do
       @file_count = 0
     end
 
-    def write_information_objects(information_objects, representation_name, pattern)
+    def write_information_objects(information_objects, representation_type, pattern)
       information_objects.each_with_index do |information_object, index1|
         index = index1.to_s.rjust(4, '0').to_s
         write_object_to_file(information_object, index)
-        representation = information_object.fetch_by_representation_name(representation_name)[0]
+        representation = information_object.fetch_by_representation_type(representation_type)[0]
         write_object_to_file(representation, index)
         content_objects = representation.content_objects
         Rails.logger.info("Warning!! Multiple content objects found for pattern one for InformationObject #{information_object.id}") if pattern == :pattern_one && content_objects.count > 1

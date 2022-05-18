@@ -67,7 +67,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.save
     end.to change { ParentObject.count }.from(0).to(1)
     po_first = ParentObject.first
-    expect(po_first.preservica_representation_name).to eq "Preservation-1"
+    expect(po_first.preservica_representation_type).to eq "Preservation"
   end
 
   it 'can create child objects' do

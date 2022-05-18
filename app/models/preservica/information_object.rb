@@ -18,6 +18,7 @@ class Preservica::InformationObject
     @representations ||= load_representations
   end
 
+  # TODO: Evaluate the need for these two methods. Potentially redundent
   def access_representations
     @access_representations ||= load_representation("Access")
   end
@@ -26,9 +27,9 @@ class Preservica::InformationObject
     @preservation_representations ||= load_representation("Preservation")
   end
 
-  # returns all representations with a name containing preservica_representation_name
-  def fetch_by_representation_name(preservica_representation_name)
-    @representation_hash[preservica_representation_name] ||= load_representation(preservica_representation_name)
+  # returns all representations with a name containing preservica_representation_type
+  def fetch_by_representation_type(preservica_representation_type)
+    @representation_hash[preservica_representation_type] ||= load_representation(preservica_representation_type)
   end
 
   def xml
@@ -37,8 +38,8 @@ class Preservica::InformationObject
 
   private
 
-    def load_representation(preservica_representation_name)
-      representations.select { |representation| representation.name.include?(preservica_representation_name) }
+    def load_representation(preservica_representation_type)
+      representations.select { |representation| representation.type.include?(preservica_representation_type) }
     end
 
     def load_representations
