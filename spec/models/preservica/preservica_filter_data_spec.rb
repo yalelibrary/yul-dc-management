@@ -27,7 +27,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
   context "when there are non-tiff bitstreams" do
     it "only include the tifs" do
       image_service = PreservicaImageService.new("information-objects/b3ffec3c-bb42-4a72-90ee-3f38bc364f02", "brbl")
-      image_list = image_service.image_list("preservica_preservation")
+      image_list = image_service.image_list("Preservation")
       expect(image_list.count).to be(80)
     end
   end

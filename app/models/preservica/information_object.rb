@@ -26,7 +26,7 @@ class Preservica::InformationObject
     @preservation_representations ||= load_representation("Preservation")
   end
 
-  # returns all representations with a name containing preservica_representation_type
+  # returns all representations with a type matching preservica_representation_type
   def fetch_by_representation_type(preservica_representation_type)
     @representation_hash[preservica_representation_type] ||= load_representation(preservica_representation_type)
   end
@@ -43,8 +43,8 @@ class Preservica::InformationObject
 
     def load_representations
       xml = Nokogiri::XML(@preservica_client.information_object_representations(@id)).remove_namespaces!
-      xml.xpath('//Representation/@name').map(&:text).map do |name|
-        Preservica::Representation.new(@preservica_client, @id, name)
+      xml.xpath('//Representation/@type').map(&:text).map do |type|
+        Preservica::Representation.new(@preservica_client, @id, type)
       end
     end
 end

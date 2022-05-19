@@ -33,14 +33,14 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     stub_preservica_login
     fixtures = %w[preservica/api/entity/structural-objects/2fe35e8c-c21a-444a-a2e2-e3c926b519c6/children
                   preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a/representations
-                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a/representations/Access-2
-                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a/representations/Preservation-1
+                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a/representations/Access
+                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a/representations/Preservation
                   preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b500/generations
                   preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b500/generations/1
                   preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b500/generations/1/bitstreams/1
                   preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3z/representations
-                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3z/representations/Access-2
-                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3z/representations/Preservation-1
+                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3z/representations/Access
+                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3z/representations/Preservation
                   preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b501/generations
                   preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b501/generations/1
                   preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b501/generations/1/bitstreams/1
@@ -48,8 +48,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
                   preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b502/generations/1
                   preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b502/generations/1/bitstreams/1
                   preservica/api/entity/information-objects/244ba97e-af2b-498e-b118-ed1247822f4z/representations
-                  preservica/api/entity/information-objects/244ba97e-af2b-498e-b118-ed1247822f4z/representations/Access-2
-                  preservica/api/entity/information-objects/244ba97e-af2b-498e-b118-ed1247822f4z/representations/Preservation-1
+                  preservica/api/entity/information-objects/244ba97e-af2b-498e-b118-ed1247822f4z/representations/Access
+                  preservica/api/entity/information-objects/244ba97e-af2b-498e-b118-ed1247822f4z/representations/Preservation
                   preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b503/generations
                   preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b503/generations/1
                   preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b503/generations/1/bitstreams/1

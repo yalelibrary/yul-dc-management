@@ -43,44 +43,44 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     stub_preservica_login
     fixtures = %w[preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5/children
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Access-2
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Preservation-1
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Access
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Preservation
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Access-2
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Preservation-1
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Access
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Preservation
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1
                   preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations
-                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Access-2
-                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Preservation-1
+                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Access
+                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Preservation
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1
                   preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e4b/children
                   preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3a/children
                   preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3c/representations
-                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3c/representations/Access-2
-                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3c/representations/Preservation-1
+                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3c/representations/Access
+                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3c/representations/Preservation
                   preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e/representations
-                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e/representations/Access-2
-                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e/representations/Preservation-1
+                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e/representations/Access
+                  preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e7e/representations/Preservation
                   preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e9z/children
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e5z/representations
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e5z/representations/Preservation-1
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e5z/representations/Preservation
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b900/generations
                   preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e0a/children
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a4d4a/representations
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a4d4a/representations/Preservation-1
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a4d4a/representations/Preservation
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157c600/generations
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157c600/generations/1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157c600/generations/1/bitstreams/1
                   preservica/api/entity/structural-objects/2e42a2bb-8953-41b6-bcc3-1a19c867u8y/children
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a8y7u/representations
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a8y7u/representations/Preservation-1
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a8y7u/representations/Preservation
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157d799/generations
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157d799/generations/1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157d799/generations/1/bitstreams/1]
