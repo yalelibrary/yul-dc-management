@@ -1,5 +1,5 @@
 preservica/api/entity/information-objects/b3ffec3c-bb42-4a72-90ee-3f38bc364f02/representations
-preservica/api/entity/information-objects/b3ffec3c-bb42-4a72-90ee-3f38bc364f02/representations/preservica_preservation
+preservica/api/entity/information-objects/b3ffec3c-bb42-4a72-90ee-3f38bc364f02/representations/Preservation
 preservica/api/entity/content-objects/e2d5504f-782b-4834-bc37-e967a62c4127/generations
 preservica/api/entity/content-objects/e2d5504f-782b-4834-bc37-e967a62c4127/generations/1
 preservica/api/entity/content-objects/e2d5504f-782b-4834-bc37-e967a62c4127/generations/1/bitstreams/1

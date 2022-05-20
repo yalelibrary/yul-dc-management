@@ -27,7 +27,7 @@ class PreservicaImageService
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/PerceivedComplexity
-  def image_list(representation_name)
+  def image_list(representation_type)
     @images = []
     begin
       if @pattern == :pattern_one
@@ -44,7 +44,7 @@ class PreservicaImageService
       raise PreservicaImageServiceError.new("Unable to log in to Preservica", @uri.to_s)
     end
     begin
-      process_information_objects(representation_name)
+      process_information_objects(representation_type)
     rescue StandardError => e
       error = e.to_s
       cleaned_error = error.split(' for /').first
@@ -60,9 +60,9 @@ class PreservicaImageService
   # rubocop:disable Metrics/LineLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
-  def process_information_objects(representation_name)
+  def process_information_objects(representation_type)
     @information_objects.each do |information_object|
-      representation = information_object.fetch_by_representation_name(representation_name)[0]
+      representation = information_object.fetch_by_representation_type(representation_type)[0]
       raise PreservicaImageServiceError.new("No matching representation found in Preservica", @uri.to_s) if representation.nil?
       content_objects = representation.content_objects
       raise PreservicaImageServiceError.new("No matching content object found in Preservica", @uri.to_s) if content_objects.empty?

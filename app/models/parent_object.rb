@@ -169,7 +169,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def array_of_child_hashes_from_preservica
-    PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_name).map.with_index(1) do |child_hash, index|
+    PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type).map.with_index(1) do |child_hash, index|
       co_oid = OidMinterService.generate_oids(1)[0]
       preservica_copy_to_access(child_hash, co_oid)
       child_hash.delete(:bitstream)
