@@ -90,6 +90,7 @@ group :test do
   gem 'ffaker'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.0'
+  gem 'simplecov-small-badge', require: false
   gem 'timecop'
   gem 'webdrivers'
 end

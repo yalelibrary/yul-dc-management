@@ -21,7 +21,8 @@ SimpleCov.start 'rails' do
     formatter SimpleCov::Formatter::MultiFormatter.new(
       [
         SimpleCov::Formatter::JSONFormatter,
-        SimpleCov::Formatter::HTMLFormatter
+        SimpleCov::Formatter::HTMLFormatter,
+        SimpleCovSmallBadge::Formatter
       ]
     )
   end
