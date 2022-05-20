@@ -26,7 +26,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # LISTS AVAILABLE BATCH ACTIONS
   def self.batch_actions
     ['create parent objects', 'update parent objects', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set',
-     'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status', 'sync from preservica']
+     'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status', 'resync with preservica']
   end
 
   # LOGS BATCH PROCESSING MESSAGES AND SETS STATUSES
@@ -157,7 +157,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         RecreateChildOidPtiffsJob.perform_later(self)
       when 'update fulltext status'
         UpdateFulltextStatusJob.perform_later(self)
-      when 'sync from preservica'
+      when 'resync with preservica'
         SyncFromPreservicaJob.perform_later(self)
       end
     elsif mets_xml.present?

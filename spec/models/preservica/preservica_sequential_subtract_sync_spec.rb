@@ -119,7 +119,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
       expect(po_first.child_objects.count).to eq 3
 
-      sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+      sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
       expect do
         sync_batch_process.file = preservica_sync
         sync_batch_process.save!
