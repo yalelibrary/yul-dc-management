@@ -6,6 +6,7 @@ ENV["RAILS_RELATIVE_URL_ROOT"] = "/"
 require 'capybara/rspec'
 require 'simplecov'
 require "simplecov_json_formatter"
+require 'simplecov_small_badge'
 require 'vcr'
 require 'webmock/rspec'
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'simplecov_json_formatter'
+require 'simplecov_small_badge'
 
 namespace :coverage do
   task report: :environment do
