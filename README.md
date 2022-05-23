@@ -1,6 +1,6 @@
 # README
 
-[![CircleCI](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/main.svg?style=svg)](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/main) ![Docker Image CI](https://github.com/yalelibrary/yul-dc-management/workflows/Docker%20Image%20CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/yalelibrary/yul-dc-management/badge.svg?branch=main)](https://coveralls.io/github/yalelibrary/yul-dc-management?branch=main)
+[![CircleCI](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/main.svg?style=svg)](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/main) ![Docker Image CI](https://github.com/yalelibrary/yul-dc-management/workflows/Docker%20Image%20CI/badge.svg)
 
 # Table of contents
 
