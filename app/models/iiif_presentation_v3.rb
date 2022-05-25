@@ -73,19 +73,17 @@ class IiifPresentationV3
     @manifest["metadata"] = metadata
   end
 
-  # rubocop:disable Rails/TimeZone
   def manifest_navdate
     date = @parent_object.authoritative_json['dateStructured'] if @parent_object&.authoritative_json
     if date.nil?
       @manifest['navDate'] = nil
     elsif date&.first&.include?('/')
       first_year = date.first.split('/').first
-      @manifest['navDate'] = DateTime.new(first_year.to_i)
+      @manifest['navDate'] = DateTime.new(first_year.to_i).utc.iso8601
     else
-      @manifest['navDate'] = DateTime.new(date.first.to_i)
+      @manifest['navDate'] = DateTime.new(date.first.to_i).utc.iso8601
     end
   end
-  # rubocop:enable Rails/TimeZone
 
   def manifest_navplace
     authoritative_metadata = @parent_object&.authoritative_json
