@@ -376,4 +376,39 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(nav_place).to be_nil
     end
   end
+
+  describe 'IIIF navDate ' do
+    let(:single_date_oid) { oid }
+    let(:parent_object_single_date) { parent_object }
+    let(:split_date_oid) { 16_685_691 }
+    let(:parent_object_split_date) { FactoryBot.create(:parent_object, oid: split_date_oid) }
+    let(:empty_date_oid) { oid_no_labels }
+    let(:parent_object_empty_date) { parent_object_no_labels }
+
+    before do
+      stub_metadata_cloud(single_date_oid)
+      stub_metadata_cloud(split_date_oid)
+      parent_object_single_date
+      parent_object_split_date
+      parent_object_empty_date
+      allow(parent_object_single_date).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{single_date_oid}.json"))))
+      allow(parent_object_split_date).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{split_date_oid}.json"))))
+      allow(parent_object_empty_date).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{empty_date_oid}.json"))))
+    end
+
+    it 'has navDate in the manifest for a single date' do
+      iiif_presentation_single_date = described_class.new(parent_object_single_date)
+      expect(iiif_presentation_single_date.manifest['navDate']).to eq '1883-01-01T00:00:00Z'
+    end
+
+    it 'has navDate in the manifest for a split date' do
+      iiif_presentation_split_date = described_class.new(parent_object_split_date)
+      expect(iiif_presentation_split_date.manifest['navDate']).to eq '1914-01-01T00:00:00Z'
+    end
+
+    it 'does not have navDate when empty date' do
+      iiif_presentation_empty_date = described_class.new(parent_object_empty_date)
+      expect(iiif_presentation_empty_date.manifest['navDate']).to be_nil
+    end
+  end
 end

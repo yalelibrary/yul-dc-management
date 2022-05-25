@@ -56,6 +56,7 @@ class IiifPresentationV3
       @manifest["service"] ||= []
       @manifest["service"] << search_service
     end
+    manifest_navdate
     manifest_navplace
     @manifest
   end
@@ -71,6 +72,20 @@ class IiifPresentationV3
     @manifest["seeAlso"] = see_also
     @manifest["metadata"] = metadata
   end
+
+  # rubocop:disable Rails/TimeZone
+  def manifest_navdate
+    date = @parent_object.authoritative_json['dateStructured'] if @parent_object&.authoritative_json
+    if date.nil?
+      @manifest['navDate'] = nil
+    elsif date&.first&.include?('/')
+      first_year = date.first.split('/').first
+      @manifest['navDate'] = DateTime.new(first_year.to_i)
+    else
+      @manifest['navDate'] = DateTime.new(date.first.to_i)
+    end
+  end
+  # rubocop:enable Rails/TimeZone
 
   def manifest_navplace
     authoritative_metadata = @parent_object&.authoritative_json
