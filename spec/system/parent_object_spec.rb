@@ -169,7 +169,6 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         click_on(UPDATE_PARENT_OBJECT_BUTTON)
         expect(page.body).to include "Yale Community Only"
         click_on("Back")
-        click_on("Update Metadata")
         visit parent_object_path(2_012_036)
         expect(page.body).to include "Yale Community Only"
       end
@@ -184,7 +183,6 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         click_on(UPDATE_PARENT_OBJECT_BUTTON)
         expect(page.body).to include "Private"
         click_on("Back")
-        click_on("Update Metadata")
         visit parent_object_path(2_012_036)
         # counts once on page and once in solr document section
         expect(page.body).to include("Private").twice
@@ -328,23 +326,6 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         expect(document["callNumber_tesim"]).to include "YCAL MSS 202"
         expect(document["dateStructured_ssim"]).to eq ["1842/1949"]
         expect(document["year_isim"]).to include 1845
-      end
-    end
-
-    context "redirected parent objects" do
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, redirect_to: "https://collections.library.yale.edu/catalog/123") }
-
-      before do
-        stub_metadata_cloud("2012036", "ladybird")
-        parent_object
-      end
-
-      it "will not update metadata" do
-        time_then = Time.current
-        parent_object.last_ladybird_update = time_then
-        visit parent_objects_path
-        click_on("Update Metadata")
-        expect(parent_object.last_ladybird_update).to eq time_then
       end
     end
 
@@ -535,46 +516,6 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
           click_on("Reindex")
           expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed? This action will reindex the entire contents of the system.")
           page.driver.browser.switch_to.alert.accept
-        end
-      end
-
-      context "clicking Metadata button" do
-        before do
-          visit parent_objects_path
-        end
-
-        it "does not update metadata without confirmation" do
-          expect(ParentObject).not_to receive(:order)
-          click_on("Update Metadata")
-          expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.")
-        end
-
-        it "does update metadata with confirmation" do
-          click_on("Update Metadata")
-          order = double
-          offset = double
-          where = double
-          allow(offset).to receive(:limit).and_return([])
-          allow(order).to receive(:offset).and_return(offset)
-          allow(ParentObject).to receive(:where).with({}).and_return(ParentObject.where({}))
-          expect(ParentObject).to receive(:where).with(redirect_to: nil).and_return(where)
-          expect(where).to receive(:order).and_return(order)
-          expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.")
-          page.driver.browser.switch_to.alert.accept
-        end
-      end
-
-      context "logged in without sysadmin rights" do
-        let(:user) { FactoryBot.create(:user) }
-
-        before do
-          login_as user
-          visit parent_objects_path
-        end
-
-        it "does not update metadata without confirmation" do
-          expect(page).to have_button('Update Metadata', disabled: true)
-          expect(page).to have_button('Reindex', disabled: true)
         end
       end
 
