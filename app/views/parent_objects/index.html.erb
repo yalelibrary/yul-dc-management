@@ -9,10 +9,6 @@
         data: { confirm: 'Are you sure you want to proceed? This action will reindex the entire contents of the system.' },
         disabled: !(can? :reindex_all, ParentObject)
       %>
-      <%= button_to 'Update Metadata', all_metadata_parent_objects_path, method: 'post', class: 'btn button secondary-button',
-        id: 'update_metadata', data:{confirm: 'Are you sure you want to proceed?  This action will update metadata for the entire contents of the system.'},
-        disabled: !(can? :update_metadata, ParentObject)
-      %>
       <%= button_to 'New Parent', new_parent_object_path, method: 'get', class: 'btn button secondary-button',
                     id: 'new_parent',
                     disabled: !(can? :create_new, ParentObject)
