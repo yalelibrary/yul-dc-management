@@ -36,9 +36,8 @@ class Preservica::Generation
   private
 
     def load_bitstreams
-      bitstream_ids = xml.xpath('/GenerationResponse/Bitstreams/Bitstream').map(&:content).map { |x| x.split('/').last }
-      bitstream_ids.map do |bitstream_id|
-        Preservica::Bitstream.new(@preservica_client, @content_id, @id, bitstream_id.strip)
+      xml.xpath('/GenerationResponse/Bitstreams/Bitstream').map do |bitstream|
+        Preservica::Bitstream.new(@preservica_client, @content_id, @id, bitstream.content.split('/').last.strip, bitstream['filename'])
       end
     end
 

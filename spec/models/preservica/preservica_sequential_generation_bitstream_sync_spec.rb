@@ -72,11 +72,11 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       co_first = po_first.child_objects.first
       expect(po_first.last_preservica_update).not_to be nil
       expect(co_first.preservica_generation_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1"
-      expect(co_first.preservica_bitstream_uri).to eq "/home/app/webapp/spec/fixtures/preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1"
+      expect(co_first.preservica_bitstream_uri).to eq "/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1"
       expect(co_first.ptiff_conversion_at.present?).to be_truthy
       expect(po_first.child_objects.count).to eq 3
 
-      sync_batch_process = BatchProcess.new(batch_action: 'sync from preservica', user: user)
+      sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
       expect do
         sync_batch_process.file = preservica_sync
         sync_batch_process.save!
@@ -89,7 +89,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       po_first = ParentObject.first
       co_first = po_first.child_objects.first
       expect(co_first.preservica_generation_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1_new"
-      expect(co_first.preservica_bitstream_uri).to eq "/home/app/webapp/spec/fixtures/preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1_new/bitstreams/1"
+      expect(co_first.preservica_bitstream_uri).to eq "/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1"
 
       File.delete(first_tif) if File.exist?(first_tif)
       File.delete(second_tif) if File.exist?(second_tif)

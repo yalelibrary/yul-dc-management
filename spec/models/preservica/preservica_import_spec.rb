@@ -32,20 +32,20 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     stub_preservica_login
     fixtures = %w[preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5/children
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Access-2
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Preservation-1
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Access
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Preservation
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Access-2
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Preservation-1
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Access
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Preservation
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1
                   preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations
-                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Access-2
-                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Preservation-1
+                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Access
+                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Preservation
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1]
@@ -67,7 +67,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.save
     end.to change { ParentObject.count }.from(0).to(1)
     po_first = ParentObject.first
-    expect(po_first.preservica_representation_name).to eq "Preservation-1"
+    expect(po_first.preservica_representation_type).to eq "Preservation"
   end
 
   it 'can create child objects' do
@@ -93,7 +93,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expect(po_first.last_preservica_update).not_to be nil
     expect(co_first.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486"
     expect(co_first.preservica_generation_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1"
-    expect(co_first.preservica_bitstream_uri).to eq "/home/app/webapp/spec/fixtures/preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1"
+    expect(co_first.preservica_bitstream_uri).to eq "/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1"
     expect(co_first.sha512_checksum).to eq "1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7"
     expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be true
     expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be true
