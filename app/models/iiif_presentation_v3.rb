@@ -56,6 +56,7 @@ class IiifPresentationV3
       @manifest["service"] ||= []
       @manifest["service"] << search_service
     end
+    manifest_navdate
     manifest_navplace
     @manifest
   end
@@ -70,6 +71,17 @@ class IiifPresentationV3
     @manifest["rendering"] = rendering
     @manifest["seeAlso"] = see_also
     @manifest["metadata"] = metadata
+  end
+
+  def manifest_navdate
+    date = @parent_object.authoritative_json['dateStructured'] if @parent_object&.authoritative_json
+    return unless date
+    if date&.first&.include?('/')
+      first_year = date.first.split('/').first
+      @manifest['navDate'] = DateTime.new(first_year.to_i).utc.iso8601
+    else
+      @manifest['navDate'] = DateTime.new(date.first.to_i).utc.iso8601
+    end
   end
 
   def manifest_navplace
