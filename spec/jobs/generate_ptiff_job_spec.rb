@@ -36,6 +36,20 @@ RSpec.describe GeneratePtiffJob, type: :job do
       end.to change { Delayed::Job.count }.by(1)
     end
 
+    it 'increments the ptiff job queue when file not larger than 1GB' do
+      ActiveJob::Base.queue_adapter = :delayed_job
+      expect do
+        GeneratePtiffJob.perform_later(child_object)
+      end.to change { Delayed::Job.where(queue: 'ptiff').count }.by(1)
+    end
+
+    it 'does not increment the large_ptiff job queue when file is smaller than 1GB' do
+      ActiveJob::Base.queue_adapter = :delayed_job
+      expect do
+        GeneratePtiffJob.perform_later(child_object)
+      end.to change { Delayed::Job.where(queue: 'large_ptiff').count }.by(0)
+    end
+
     it 'increments the job queue by one if needs_a_manifest is true' do
       allow(child_object.parent_object).to receive(:needs_a_manifest?).and_return(true)
       expect do

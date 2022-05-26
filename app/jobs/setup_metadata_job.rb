@@ -2,6 +2,7 @@
 
 class SetupMetadataJob < ApplicationJob
   queue_as :metadata
+  ONE_GB = 1_073_741_824
 
   def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     parent_object.current_batch_process = current_batch_process
@@ -43,6 +44,9 @@ class SetupMetadataJob < ApplicationJob
   end
 
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def setup_child_object_jobs(parent_object, current_batch_process)
     parent_object.create_child_records if parent_object.from_upstream_for_the_first_time?
     parent_object.save!
@@ -53,7 +57,10 @@ class SetupMetadataJob < ApplicationJob
       if child.pyramidal_tiff.height_and_width? && S3Service.s3_exists?(child.remote_ptiff_path)
         child.processing_event("PTIFF exists on S3, not converting: #{child.oid}", 'ptiff-ready-skipped')
       else
-        GeneratePtiffJob.perform_later(child, current_batch_process)
+        path = Pathname.new(child.access_master_path)
+        file_size = File.exist?(path) ? File.size(path) : 0
+        GeneratePtiffJob.set(queue: :large_ptiff).perform_later(child, current_batch_process) if file_size > ONE_GB
+        GeneratePtiffJob.perform_later(child, current_batch_process) if file_size <= ONE_GB
         child.processing_event("Ptiff Queued", "ptiff-queued")
         ptiff_jobs_queued = true
       end
@@ -65,4 +72,7 @@ class SetupMetadataJob < ApplicationJob
     parent_object.processing_event(child_create_error.message, "failed")
   end
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 end
