@@ -408,7 +408,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
 
     it 'does not have navDate when empty date' do
       iiif_presentation_empty_date = described_class.new(parent_object_empty_date)
-      expect(iiif_presentation_empty_date.manifest['navDate']).to be_nil
+      expect(iiif_presentation_empty_date.manifest.key?('navDate')).to eq false
     end
   end
 end

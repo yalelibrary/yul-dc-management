@@ -75,9 +75,8 @@ class IiifPresentationV3
 
   def manifest_navdate
     date = @parent_object.authoritative_json['dateStructured'] if @parent_object&.authoritative_json
-    if date.nil?
-      @manifest['navDate'] = nil
-    elsif date&.first&.include?('/')
+    return unless date
+    if date&.first&.include?('/')
       first_year = date.first.split('/').first
       @manifest['navDate'] = DateTime.new(first_year.to_i).utc.iso8601
     else
