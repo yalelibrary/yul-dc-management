@@ -1,6 +1,6 @@
 # README
 
-[![CircleCI](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/main.svg?style=svg)](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/main) ![Docker Image CI](https://github.com/yalelibrary/yul-dc-management/workflows/Docker%20Image%20CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/yalelibrary/yul-dc-management/badge.svg?branch=main)](https://coveralls.io/github/yalelibrary/yul-dc-management?branch=main)
+[![CircleCI](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/main.svg?style=svg)](https://circleci.com/gh/yalelibrary/yul-dc-management/tree/main) ![Docker Image CI](https://github.com/yalelibrary/yul-dc-management/workflows/Docker%20Image%20CI/badge.svg)
 
 # Table of contents
 
@@ -149,7 +149,7 @@ Refer to the steps in the [Camerata repo](https://github.com/yalelibrary/yul-dc-
 
 ## Test coverage
 
-We use [coveralls](https://coveralls.io/github/yalelibrary/yul-dc-management) to measure test coverage. More details [here](https://github.com/yalelibrary/yul-dc-management/wiki/code-coverage).
+We use [simplecov](https://app.circleci.com/pipelines/github/yalelibrary/yul-dc-management) to measure test coverage. More details [here](https://github.com/yalelibrary/yul-dc-documentation/wiki/Code-Coverage).
 
 
 ## Authorization

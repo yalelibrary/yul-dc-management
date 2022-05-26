@@ -86,7 +86,7 @@ end
 
 group :test do
   gem 'capybara', '>= 2.15'
-  gem 'coveralls', require: false
+  gem 'coveralls_reborn', require: false
   gem 'ffaker'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.0'
