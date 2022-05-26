@@ -33,20 +33,20 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     stub_preservica_login
     fixtures = %w[preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5/children
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Access-2
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Preservation-1
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Access
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Preservation
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Access-2
-                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Preservation-1
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Access
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Preservation
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1
                   preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations
-                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Access-2
-                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Preservation-1
+                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Access
+                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Preservation
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1]
@@ -253,7 +253,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Parent OID: 12345 does not have a Preservica digital object source')
     end
 
-    it 'can throw an error if parent object does not have a preservica representation name' do
+    it 'can throw an error if parent object does not have a preservica representation type' do
       allow(S3Service).to receive(:s3_exists?).and_return(false)
       parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('brbl'), preservica_uri: "/", digital_object_source: "Preservica")
       parent_object.save
@@ -264,12 +264,12 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         sync_batch_process.save!
       end.not_to change { ChildObject.count }
       expect(sync_batch_process.batch_ingest_events_count).to be 1
-      expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Parent OID: 12345 does not have a Preservica representation name')
+      expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Parent OID: 12345 does not have a Preservica representation type')
     end
 
     it 'can throw an error if parent object does not have an admin set with preservica credentials' do
       allow(S3Service).to receive(:s3_exists?).and_return(false)
-      parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('sml'), preservica_uri: "/", digital_object_source: "Preservica", preservica_representation_name: "Preservation-1")
+      parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('sml'), preservica_uri: "/", digital_object_source: "Preservica", preservica_representation_type: "Preservation")
       parent_object.save
 
       sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
@@ -290,7 +290,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
 
     it 'can throw an error if user does not have permission on parent object' do
       allow(S3Service).to receive(:s3_exists?).and_return(false)
-      parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('brbl'), preservica_uri: "/", digital_object_source: "Preservica", preservica_representation_name: "Preservation-1")
+      parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('brbl'), preservica_uri: "/", digital_object_source: "Preservica", preservica_representation_type: "Preservation")
       parent_object.save
 
       sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)

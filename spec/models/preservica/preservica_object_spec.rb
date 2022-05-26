@@ -19,8 +19,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
     stub_preservica_login
     fixtures = %w[preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c4/children
                   preservica/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations
-                  preservica/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations/Access-2
-                  preservica/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations/Preservation-1
+                  preservica/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations/Access
+                  preservica/api/entity/information-objects/b31ba07e-88ce-4558-8e89-81cff9630699/representations/Preservation
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/2
@@ -108,10 +108,10 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
     expect(content_object.id).to eq("test id")
   end
 
-  it 'loads representation by information object id and name' do
-    representation = Preservica::Representation.where(admin_set_key: 'brbl', name: "test name", information_object_id: "info id")
+  it 'loads representation by information object id and type' do
+    representation = Preservica::Representation.where(admin_set_key: 'brbl', type: "test type", information_object_id: "info id")
     expect(representation).not_to be_nil
-    expect(representation.name).to eq("test name")
+    expect(representation.type).to eq("test type")
   end
 
   it 'retrieves generations format group' do
@@ -137,8 +137,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
   it 'retrieves correct representations with fetch' do
     structured_object = Preservica::StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
     information_objects = structured_object.information_objects
-    expect(information_objects[0].fetch_by_representation_name('Access')[0].name).to eq("Access-2")
-    expect(information_objects[0].fetch_by_representation_name('Preservation')[0].name).to eq("Preservation-1")
+    expect(information_objects[0].fetch_by_representation_type('Access')[0].type).to eq("Access")
+    expect(information_objects[0].fetch_by_representation_type('Preservation')[0].type).to eq("Preservation")
   end
 
   it 'retrieves generation based on active true' do

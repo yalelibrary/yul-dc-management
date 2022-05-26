@@ -1,2 +1,2 @@
-oid,admin_set,source,aspace_uri,bib,holding,item,barcode,visibility,digital_object_source,preservica_uri,preservica_representation_name
-,brbl,aspace,/repositories/11/archival_objects/200000000,36,holding,item,barcode,Public,Preservica,/preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3z,Preservation-1
+oid,admin_set,source,aspace_uri,bib,holding,item,barcode,visibility,digital_object_source,preservica_uri,preservica_representation_type
+,brbl,aspace,/repositories/11/archival_objects/200000000,36,holding,item,barcode,Public,Preservica,/preservica/api/entity/information-objects/2e42a2bb-8953-41b6-bcc3-1a19c86a5e3z,Preservation

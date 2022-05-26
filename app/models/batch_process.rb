@@ -395,7 +395,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       end
       begin
         preservica_children_hash = {}
-        PreservicaImageService.new(parent_object.preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_name).each_with_index do |preservica_co, index|
+        PreservicaImageService.new(parent_object.preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_type).each_with_index do |preservica_co, index|
           # increment by one so index lines up with order
           index_plus_one = index + 1
           preservica_children_hash["hash_#{index_plus_one}".to_sym] = { order: index_plus_one,
@@ -436,7 +436,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
     # iterate through preservica images and get checksums
     preservica_checksums = []
-    PreservicaImageService.new(parent_object.preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_name).each do |preservica_co|
+    PreservicaImageService.new(parent_object.preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_type).each do |preservica_co|
       preservica_checksums << preservica_co[:sha512_checksum]
     end
     # compare and return true if there is a mismatch
@@ -459,8 +459,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     elsif parent_object.digital_object_source != "Preservica"
       batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica digital object source", 'Skipped Import')
       false
-    elsif parent_object.preservica_representation_name.nil?
-      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation name", 'Skipped Import')
+    elsif parent_object.preservica_representation_type.nil?
+      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation type", 'Skipped Import')
       false
     elsif !parent_object.admin_set.preservica_credentials_verified
       batch_processing_event("Admin set #{parent_object.admin_set.key} does not have Preservica credentials set", 'Skipped Import')

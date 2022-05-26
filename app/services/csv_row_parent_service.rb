@@ -34,10 +34,10 @@ class CsvRowParentService
 
   row_accessor :aspace_uri, :bib, :holding, :item, :barcode, :oid, :admin_set,
                :preservica_uri, :visibility, :digital_object_source,
-               :authoritative_metadata_source_id, :preservica_representation_name
+               :authoritative_metadata_source_id, :preservica_representation_type
 
   def parent_object
-    PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_name)
+    PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type)
     @parent_object ||= ParentObject.new(properties_hash)
   end
 
@@ -58,9 +58,9 @@ class CsvRowParentService
     row['bib']
   end
 
-  def preservica_representation_name
-    raise BatchProcessingError.new("Skipping row [#{index + 2}]. Preservica Representation Name must be present", 'Skipped Row') if row['preservica_representation_name'].blank?
-    row['preservica_representation_name']
+  def preservica_representation_type
+    raise BatchProcessingError.new("Skipping row [#{index + 2}]. Preservica Representation Type must be present", 'Skipped Row') if row['preservica_representation_type'].blank?
+    row['preservica_representation_type']
   end
 
   def preservica_uri
