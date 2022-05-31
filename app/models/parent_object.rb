@@ -124,6 +124,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Note - the upsert_all method skips ActiveRecord callbacks, and is entirely
   # database driven. This also makes object creation much faster.
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/MethodLength
   def create_child_records
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
@@ -134,6 +135,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         valid_child_hashes = validate_child_hashes(child_hashes)
         upsert_child_objects(valid_child_hashes)
         self.last_preservica_update = Time.current
+        self.metadata_update = true
+        setup_metadata_job
         save!
       end
     else
@@ -145,6 +148,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.child_object_count = child_objects.size
   end
   # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/MethodLength
 
   # rubocop:disable Metrics/LineLength
   def validate_child_hashes(child_hashes)
