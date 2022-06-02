@@ -125,6 +125,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # database driven. This also makes object creation much faster.
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize
   def create_child_records
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
@@ -151,6 +153,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize
 
   # rubocop:disable Metrics/LineLength
   def validate_child_hashes(child_hashes)
