@@ -112,6 +112,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         sync_batch_process.file = preservica_sync
         sync_batch_process.save!
       end.to change { ChildObject.count }.from(2).to(3)
+      expect(po_first.iiif_manifest['items'].count).to eq 3
       expect(File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")).to be true
       expect(File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")).to be true
       expect(File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")).to be true

@@ -66,7 +66,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     changing_fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
         status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
-      ).times(2).then.to_return(
+      ).times(3).then.to_return(
         status: 200, body: File.open(File.join(fixture_path, "#{fixture}_add_sync.xml"))
       )
     end
