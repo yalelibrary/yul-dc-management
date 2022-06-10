@@ -125,6 +125,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # database driven. This also makes object creation much faster.
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize
   def create_child_records
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
@@ -133,11 +135,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       child_hashes = array_of_child_hashes_from_preservica # only call array_of_child_hashes_from_preservica once since it causes all images to be downloaded
       if child_hashes.present?
         valid_child_hashes = validate_child_hashes(child_hashes)
-        upsert_child_objects(valid_child_hashes)
-        self.last_preservica_update = Time.current
-        self.metadata_update = true
-        setup_metadata_job
-        save!
+        unless valid_child_hashes.empty?
+          upsert_child_objects(valid_child_hashes)
+          self.last_preservica_update = Time.current
+          self.metadata_update = true
+          setup_metadata_job
+          save!
+        end
       end
     else
       return unless ladybird_json
@@ -149,25 +153,21 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize
 
   # rubocop:disable Metrics/LineLength
   def validate_child_hashes(child_hashes)
-    # if not found locally add the image
-    preservica_co_uris = child_hashes.pluck(:preservica_content_object_uri)
-    preservica_co_uris.each do |uri|
-      # check if exists
-      co = ChildObject.find_by(preservica_content_object_uri: uri)
-      next if co.nil?
-      # if it does remove it from the child hash
-      child_hashes.delete_if { |h| h[:preservica_content_object_uri] == co.preservica_content_object_uri && h[:preservica_generation_uri] == co.preservica_generation_uri && h[:preservica_bitstream_uri] == co.preservica_bitstream_uri }
+    child_hashes.reject do |h|
+      co = ChildObject.find_by(parent_object_oid: oid, preservica_content_object_uri: h[:preservica_content_object_uri])
+      co.present? && h[:preservica_content_object_uri] == co.preservica_content_object_uri && h[:preservica_generation_uri] == co.preservica_generation_uri && h[:preservica_bitstream_uri] == co.preservica_bitstream_uri
     end
-    child_hashes
   end
   # rubocop:enable Metrics/LineLength
 
   def upsert_child_objects(child_objects_hash)
     raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
-    ChildObject.insert_all(child_objects_hash)
+    ChildObject.insert_all(child_objects_hash) unless child_objects_hash.empty?
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -202,15 +202,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     PreservicaIngest.insert_all(preservica_ingest_hash)
   end
 
-  def sync_from_preservica(local_children_hash, preservica_children_hash)
+  def sync_from_preservica(_local_children_hash, preservica_children_hash)
     # iterate through local hashes and remove any children no longer found on preservica
-    local_children_hash.each_value do |value|
-      co = ChildObject.find_by(order: value[:order])
-      co.destroy unless found_in_preservica(value[:content_uri], preservica_children_hash)
+    child_objects.each do |co|
+      co.destroy unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
     end
     # iterate through preservica and update when local version found
     preservica_children_hash.each_value do |value|
-      co = ChildObject.find_by(preservica_content_object_uri: value[:content_uri])
+      co = ChildObject.find_by(parent_object_oid: oid, preservica_content_object_uri: value[:content_uri])
       next if co.nil?
       co.order = value[:order]
       co.preservica_content_object_uri = value[:content_uri]
@@ -223,9 +222,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def found_in_preservica(local_preservica_content_object_uri, preservica_children_hash)
-    preservica_children_hash.each_value do |value|
-      return true if value[:content_uri] == local_preservica_content_object_uri
-      return false
+    preservica_children_hash.any? do |_, value|
+      value[:content_uri] == local_preservica_content_object_uri
     end
   end
 

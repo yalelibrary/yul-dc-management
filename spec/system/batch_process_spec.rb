@@ -306,7 +306,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Recreate Child Oid Ptiffs")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        click_link(BatchProcess.last.id.to_s.first)
+        click_link(BatchProcess.last.id.to_s)
         expect(page).to have_content("Batch Messages")
         expect(page).to have_content("Skipped Row")
       end
