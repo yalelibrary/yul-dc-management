@@ -139,7 +139,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
           upsert_child_objects(valid_child_hashes)
           self.last_preservica_update = Time.current
           self.metadata_update = true
-          setup_metadata_job
           save!
         end
       end
