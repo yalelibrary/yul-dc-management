@@ -82,7 +82,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       co_first = po_first.child_objects.first
       expect(co_first.preservica_generation_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1_new"
       expect(co_first.preservica_bitstream_uri).to eq "/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1"
-      # get it to stop creating ptifs when it doesn't need to
       File.delete(first_tif) if File.exist?(first_tif)
       File.delete(second_tif) if File.exist?(second_tif)
       File.delete(third_tif) if File.exist?(third_tif)

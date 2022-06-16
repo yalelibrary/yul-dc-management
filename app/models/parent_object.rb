@@ -135,6 +135,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       child_hashes = array_of_child_hashes_from_preservica # only call array_of_child_hashes_from_preservica once since it causes all images to be downloaded
       if child_hashes.present?
         valid_child_hashes = validate_child_hashes(child_hashes)
+        invalid_child_hashes = child_hashes - valid_child_hashes
+        cleanup_child_artifacts(invalid_child_hashes)
         unless valid_child_hashes.empty?
           upsert_child_objects(valid_child_hashes)
           self.last_preservica_update = Time.current
@@ -163,6 +165,17 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
   # rubocop:enable Metrics/LineLength
+
+  def cleanup_child_artifacts(invalid_child_hashes)
+    invalid_child_hashes.each do |child_hash|
+      pairtree_path = Partridge::Pairtree.oid_to_pairtree(child_hash[:oid])
+      image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
+      directory = format("%02d", pairtree_path.first)
+      FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
+      access_master_path = File.join(image_mount, directory, pairtree_path, "#{child_hash[:oid]}.tif")
+      File.delete(access_master_path)
+    end
+  end
 
   def upsert_child_objects(child_objects_hash)
     raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
