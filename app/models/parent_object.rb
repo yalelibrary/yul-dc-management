@@ -214,6 +214,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       co.preservica_content_object_uri = value[:content_uri]
       co.preservica_generation_uri = value[:generation_uri]
       co.preservica_bitstream_uri = value[:bitstream_uri]
+      replace_preservica_tif(co)
       co.save
     end
     # create child records for any new items in preservica
@@ -223,6 +224,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def found_in_preservica(local_preservica_content_object_uri, preservica_children_hash)
     preservica_children_hash.any? do |_, value|
       value[:content_uri] == local_preservica_content_object_uri
+    end
+  end
+
+  def replace_preservica_tif(co)
+    PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type).map.with_index(1) do |child_hash, _index|
+      preservica_copy_to_access(child_hash, co.oid) if co.preservica_content_object_uri == child_hash[:preservica_content_object_uri]
     end
   end
 

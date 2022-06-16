@@ -96,7 +96,7 @@ module StubRequestHelper
     changing_fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
         status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
-      ).times(3).then.to_return(
+      ).times(2).then.to_return(
         status: 200, body: File.open(File.join(fixture_path, "#{fixture}_new.xml"))
       )
     end

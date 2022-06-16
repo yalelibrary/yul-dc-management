@@ -11,9 +11,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:first_tif) { "spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif" }
   let(:second_tif) { "spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif" }
   let(:third_tif) { "spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif" }
-  let(:fourth_tif) { "spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif" }
-  let(:fifth_tif) { "spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif" }
-  let(:sixth_tif) { "spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif" }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -49,17 +46,11 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       File.delete(first_tif) if File.exist?(first_tif)
       File.delete(second_tif) if File.exist?(second_tif)
       File.delete(third_tif) if File.exist?(third_tif)
-      File.delete(fourth_tif) if File.exist?(fourth_tif)
-      File.delete(fifth_tif) if File.exist?(fifth_tif)
-      File.delete(sixth_tif) if File.exist?(sixth_tif)
 
       allow(S3Service).to receive(:s3_exists?).and_return(false)
       expect(File.exist?(first_tif)).to be false
       expect(File.exist?(second_tif)).to be false
       expect(File.exist?(third_tif)).to be false
-      expect(File.exist?(fourth_tif)).to be false
-      expect(File.exist?(fifth_tif)).to be false
-      expect(File.exist?(sixth_tif)).to be false
       expect do
         batch_process.file = preservica_parent_with_children
         batch_process.save
@@ -82,21 +73,19 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         sync_batch_process.save!
       end.not_to change { ChildObject.count }
       # downloads new tif to pairtree
-      expect(File.exist?(fourth_tif)).to be true
-      expect(File.exist?(fifth_tif)).to be true
-      expect(File.exist?(sixth_tif)).to be true
+      expect(po_first.iiif_manifest['items'].count).to eq 3
+      expect(po_first.iiif_manifest['items'][0]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000001"
+      expect(po_first.iiif_manifest['items'][1]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000002"
+      expect(po_first.iiif_manifest['items'][2]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000003"
 
       po_first = ParentObject.first
       co_first = po_first.child_objects.first
       expect(co_first.preservica_generation_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1_new"
       expect(co_first.preservica_bitstream_uri).to eq "/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1"
-
+      # get it to stop creating ptifs when it doesn't need to
       File.delete(first_tif) if File.exist?(first_tif)
       File.delete(second_tif) if File.exist?(second_tif)
       File.delete(third_tif) if File.exist?(third_tif)
-      File.delete(fourth_tif) if File.exist?(fourth_tif)
-      File.delete(fifth_tif) if File.exist?(fifth_tif)
-      File.delete(sixth_tif) if File.exist?(sixth_tif)
     end
   end
 end
