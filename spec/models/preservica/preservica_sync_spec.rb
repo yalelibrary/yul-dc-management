@@ -113,8 +113,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(po_first.iiif_manifest['items'][0]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000001"
       expect(po_first.iiif_manifest['items'][1]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000002"
       expect(po_first.iiif_manifest['items'][2]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000006"
-      expect(File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")).to be true
-      expect(File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")).to be true
       expect(File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")).to be true
       File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
       File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
