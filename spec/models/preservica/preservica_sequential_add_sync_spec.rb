@@ -66,7 +66,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     changing_fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
         status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
-      ).times(3).then.to_return(
+      ).times(2).then.to_return(
         status: 200, body: File.open(File.join(fixture_path, "#{fixture}_add_sync.xml"))
       )
     end
@@ -121,10 +121,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         sync_batch_process.file = preservica_sync
         sync_batch_process.save!
       end.to change { ChildObject.count }.from(3).to(4)
-      # TODO: it should not create all new ones, only one new one
-      expect(File.exist?("spec/fixtures/images/access_masters/00/04/20/00/00/00/200000004.tif")).to be true
-      expect(File.exist?("spec/fixtures/images/access_masters/00/05/20/00/00/00/200000005.tif")).to be true
-      expect(File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")).to be true
       expect(File.exist?("spec/fixtures/images/access_masters/00/07/20/00/00/00/200000007.tif")).to be true
       co_first = po_first.child_objects.first
       expect(co_first.order).to eq 1
