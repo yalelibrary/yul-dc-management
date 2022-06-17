@@ -655,6 +655,28 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         allow(S3Service).to receive(:upload_if_changed).and_return(true)
       end
 
+      it "has digital object json when private" do
+        expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
+        parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
+        parent_object.authoritative_metadata_source_id = aspace
+        parent_object.child_object_count = 1
+        parent_object.visibility = "Private"
+        parent_object.aspace_json = { "title": ["test"] }
+        expect(parent_object.digital_object_json_available?).to be_truthy
+        expect(JSON.parse(parent_object.generate_digital_object_json)["visibility"]).to eq("Private")
+      end
+
+      it "does not have digital object json when redirected" do
+        expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
+        parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
+        parent_object.authoritative_metadata_source_id = aspace
+        parent_object.child_object_count = 1
+        parent_object.visibility = "Public"
+        parent_object.redirect_to = 'https://collections.library.yale.edu/catalog/32432'
+        parent_object.aspace_json = { "title": ["test"] }
+        expect(parent_object.digital_object_json_available?).to be_falsey
+      end
+
       it "posts digital object changes when source changes" do
         stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
             .to_return(status: 200, body: { data: "fake data" }.to_json)

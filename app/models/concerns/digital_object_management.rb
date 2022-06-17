@@ -6,8 +6,9 @@ module DigitalObjectManagement
   def digital_object_json_available?
     return false unless child_object_count&.positive?
     return false unless authoritative_metadata_source && authoritative_metadata_source.metadata_cloud_name == "aspace"
-    return false unless ['Public', 'Yale Community Only'].include? visibility
+    return false unless ['Public', 'Yale Community Only', 'Private'].include? visibility
     return false unless digital_object_title
+    return false if redirect_to.present?
     true
   end
 
