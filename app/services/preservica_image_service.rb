@@ -79,7 +79,8 @@ class PreservicaImageService
                      preservica_generation_uri: content_object.active_generations[0].generation_uri,
                      preservica_bitstream_uri: tif_bitstream.uri,
                      sha512_checksum: tif_bitstream.sha512_checksum,
-                     bitstream: tif_bitstream }
+                     bitstream: tif_bitstream,
+                     caption: tif_bitstream.filename }
       end
     end
   end
