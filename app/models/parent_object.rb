@@ -341,6 +341,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   # Fetches the record from the authoritative_metadata_source
+  # rubocop:disable Metrics/MethodLength
   def default_fetch(_current_batch_process = current_batch_process, _current_batch_connection = current_batch_connection)
     fetch_results = case authoritative_metadata_source&.metadata_cloud_name
                     when "ladybird"
@@ -350,7 +351,19 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                       self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
                     when "aspace"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless aspace_uri.present?
-                      self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
+                      begin
+                        self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
+                      rescue MetadataSource::MetadataCloudNotFoundError
+                        processing_event("Marking this parent as private because record is not found.", "metadata-fetched")
+                        self.visibility = "Private"
+                        save!
+                        false
+                      rescue MetadataSource::MetadataCloudUnpublishedError
+                        processing_event("Marking this parent as private because this record is unpublished.", "metadata-fetched")
+                        self.visibility = "Private"
+                        save!
+                        false
+                      end
                     end
     if fetch_results
       assign_dependent_objects
@@ -359,6 +372,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
     fetch_results
   end
+  # rubocop:enable Metrics/MethodLength
 
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
   # OR if the authoritative metaadata source changes

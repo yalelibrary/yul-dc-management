@@ -75,10 +75,10 @@ class ActivityStreamReader
   end
 
   ##
-  # It takes an item from the activity stream and returns either true or false depending on whether that object is an update
+  # It takes an item from the activity stream and returns either true or false depending on whether that object is an update or deleted
   def relevant?(item)
     # Don't process changes which occur after last_run_time
-    return false unless item["type"] == "Update" && (item['endTime'].to_datetime.after?(last_run_time) || item['endTime'].to_datetime == last_run_time)
+    return false unless (item["type"] == "Update" || item["type"] == "Delete") && (item['endTime'].to_datetime.after?(last_run_time) || item['endTime'].to_datetime == last_run_time)
     true
   end
 

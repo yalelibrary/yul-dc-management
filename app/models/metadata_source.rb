@@ -14,6 +14,18 @@ class MetadataSource < ApplicationRecord
     end
   end
 
+  class MetadataCloudNotFoundError < StandardError
+    def message
+      "Record is not found."
+    end
+  end
+
+  class MetadataCloudUnpublishedError < StandardError
+    def message
+      "You have requested an unpublished object"
+    end
+  end
+
   def fetch_record(parent_object)
     # The environment value has to be set as a string, real booleans do not work
     raw_metadata = if ENV["VPN"] == "true"
@@ -38,7 +50,7 @@ class MetadataSource < ApplicationRecord
       response_text
     when 400...500
       parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body}", "failed")
-      raise MetadataSource::MetadataCloudVersionError if JSON.parse(full_response.body)["ex"].include?("Unable to find retriever")
+      check_response(full_response)
       false
     when 500...600
       parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body}", "failed")
@@ -47,6 +59,12 @@ class MetadataSource < ApplicationRecord
       parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body}", "failed")
       false
     end
+  end
+
+  def check_response(full_response)
+    raise MetadataSource::MetadataCloudVersionError if JSON.parse(full_response.body)["ex"].include?("Unable to find retriever")
+    raise MetadataSource::MetadataCloudNotFoundError if JSON.parse(full_response.body)["ex"].include?("Record is not found.")
+    raise MetadataSource::MetadataCloudUnpublishedError if JSON.parse(full_response.body)["ex"].include?("You have requested an unpublished object.")
   end
 
   def file_name(parent_object)
