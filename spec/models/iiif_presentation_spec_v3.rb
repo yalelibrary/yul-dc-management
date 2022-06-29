@@ -283,7 +283,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     it "has an image with a resource" do
       annotation = first_canvas["items"].first["items"].first
       image = annotation['body']
-      expect(image["id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/16188699/full/!200,200/0/default.jpg"
+      expect(image["id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/16188699/full/full/0/default.jpg"
       expect(image["type"]).to eq "Image"
       expect(image["height"]).to eq 4056
       expect(image["width"]).to eq 2591
@@ -294,7 +294,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       image = annotation['body']
       service = image['service'].first
       expect(service["@id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/16188699"
-      expect(service['type']).to eq "ImageService2"
+      expect(service['@type']).to eq "ImageService2"
       expect(service['profile']).to eq "http://iiif.io/api/image/2/level2.json"
     end
 
@@ -326,7 +326,11 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
 
     it 'sets thumbnail to the representative child' do
       iiif_presentation_rep = described_class.new(parent_object_rep)
-      expect(iiif_presentation_rep.manifest["thumbnail"][0]["id"]).to include parent_object_rep.representative_child.oid.to_s
+      thumb = iiif_presentation_rep.manifest["thumbnail"]
+      expect(thumb[0]["id"]).to include parent_object_rep.representative_child.oid.to_s
+      expect(thumb[0]["id"]).to include "!300,300"
+      expect(thumb[0]['width']).to eq (2591.0 * (300/4056.0)).round
+      expect(thumb[0]['service']).not_to be_nil
     end
 
     context 'representative child is one of the first 10 children' do

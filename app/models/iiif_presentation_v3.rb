@@ -4,6 +4,8 @@
 class IiifPresentationV3
   attr_reader :parent_object, :mets_doc, :oid, :errors
 
+  THUMBNAIL_MAX_WH = 300
+
   def image_base_url
     @image_base_url ||= (ENV["IIIF_IMAGE_BASE_URL"] || "http://localhost:8182/iiif")
   end
@@ -21,7 +23,11 @@ class IiifPresentationV3
   end
 
   def image_url(oid)
-    "#{image_service_url(oid)}/full/!200,200/0/default.jpg"
+    "#{image_service_url(oid)}/full/full/0/default.jpg"
+  end
+
+  def thumbnail_image_url(oid)
+    "#{image_service_url(oid)}/full/!#{THUMBNAIL_MAX_WH},#{THUMBNAIL_MAX_WH}/0/default.jpg"
   end
 
   def initialize(parent_object)
@@ -221,10 +227,24 @@ class IiifPresentationV3
       'width' => child.width,
       'service' => [{
         '@id' => image_service_url(child.oid),
-        'type' => 'ImageService2',
+        '@type' => 'ImageService2',
         'profile' => 'http://iiif.io/api/image/2/level2.json'
       }]
     }
+  end
+
+  def thumbnail_image_resource(child)
+    resource = image_resource(child)
+    resource['id'] = thumbnail_image_url(child.oid)
+    new_dimensions = scaled_image_dimensions(child.width, child.height, THUMBNAIL_MAX_WH)
+    resource['width'] = new_dimensions[:width]
+    resource['height'] = new_dimensions[:height]
+    resource
+  end
+
+  def scaled_image_dimensions(width, height, max_wh)
+    ratio = (height > width) ? max_wh.to_f / height : max_wh.to_f / width
+    { height: (height * ratio).round(), width: (width * ratio).round() }
   end
 
   def add_image_to_canvas(child, canvas)
@@ -241,8 +261,8 @@ class IiifPresentationV3
     image["target"] = File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}")
     image["body"] = image_resource(child)
     annotation_page["items"] << image
-    canvas['thumbnail'] = [image_resource(child)]
-    @manifest['thumbnail'] = [image_resource(child)] if child_is_thumbnail?(child[:oid])
+    canvas['thumbnail'] = [thumbnail_image_resource(child)]
+    @manifest['thumbnail'] = [thumbnail_image_resource(child)] if child_is_thumbnail?(child.oid)
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -285,8 +305,8 @@ class IiifPresentationV3
     child_oids.index(child) < 10 # only set if the rep. child is one of the first 10
   end
 
-  def child_is_thumbnail?(child)
-    @parent_object.representative_child.oid.eql? child # checks if child is the rep
+  def child_is_thumbnail?(child_oid)
+    @parent_object.representative_child.oid == child_oid # checks if child is the rep
   end
 
   def pairtree_path
