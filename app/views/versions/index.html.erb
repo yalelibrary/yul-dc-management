@@ -1,11 +1,13 @@
 <h1>Object Versions for OID <%= params[:parent_object_id] %></h1>
 
 <div id='user-activity-filter'>
-  <%= check_box_tag(:user) %>
-  <%= label_tag(:user, "Show user activity only, hide database activity") %>
+  <%= form_tag(parent_object_versions_path(params[:parent_object_id]), method: :get, remote: true, id: 'user-form', class: "form form-inline") do |f| %>
+    <%= check_box_tag 'user', 1, 'true'%>
+    <%= label_tag(:user, "Show user activity only, hide database activity") %>
+  <% end %>
 </div>
 
-<table id='parent-object-versions-table' class='is-datatable table table-responsive table-bordered table-striped' aria-label='Parent Object Versions'>
+<table id='parent-object-versions-table' class='is-datatable table table-responsive table-striped' aria-label='Parent Object Versions'>
   <thead class='table-head'>
     <tr>
       <th>Date</th>
@@ -16,11 +18,7 @@
     </tr>
   </thead>
   <tbody>
-  <% parent_object = ParentObject.find(params[:parent_object_id]) %>
-  <% batch_connections = parent_object.batch_connections %>
-  <% versions = parent_object.versions %>
-  <% results = batch_connections + versions %>
-  <% results.sort_by(&:created_at).reverse.map do |result| %>
+  <% @results.sort_by(&:created_at).reverse.map do |result| %>
     <tr>
       <td>
         <%= result.created_at %>

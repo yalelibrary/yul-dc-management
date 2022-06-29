@@ -75,7 +75,7 @@
   <dd><%= @parent_object.last_aspace_update %></dd>
 
   <dt></dt>
-  <dd><%= link_to('View version history', parent_object_versions_path(@parent_object)) %></dd>
+  <dd><%= link_to('View version history', parent_object_versions_path(@parent_object, :checked => 'true')) %></dd>
 
   <dt>Visibility:</dt>
   <dd><%= @parent_object.visibility %></dd>
