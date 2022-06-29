@@ -243,8 +243,8 @@ class IiifPresentationV3
   end
 
   def scaled_image_dimensions(width, height, max_wh)
-    ratio = (height > width) ? max_wh.to_f / height : max_wh.to_f / width
-    { height: (height * ratio).round(), width: (width * ratio).round() }
+    ratio = height > width ? max_wh.to_f / height : max_wh.to_f / width
+    { height: (height * ratio).round, width: (width * ratio).round }
   end
 
   def add_image_to_canvas(child, canvas)

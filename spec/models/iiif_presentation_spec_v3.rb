@@ -329,7 +329,8 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       thumb = iiif_presentation_rep.manifest["thumbnail"]
       expect(thumb[0]["id"]).to include parent_object_rep.representative_child.oid.to_s
       expect(thumb[0]["id"]).to include "!300,300"
-      expect(thumb[0]['width']).to eq (2591.0 * (300/4056.0)).round
+      scaled_width = (2591.0 * 300 / 4056.0).round
+      expect(thumb[0]['width']).to eq scaled_width
       expect(thumb[0]['service']).not_to be_nil
     end
 
