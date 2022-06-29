@@ -52,7 +52,7 @@
       </td>
       <td>
         <% if result.class == BatchConnection %>
-          <%= link_to(result.batch_process_id, batch_process_path(result.batch_process_id), target: '_blank') %>
+          <%= link_to(result.batch_process_id, batch_process_path(result.batch_process_id), target: '_blank') %><em class="fa fa-external-link-alt"></em>
         <% else %>
           <%= result.id %>
         <% end %>
