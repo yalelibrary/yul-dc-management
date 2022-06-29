@@ -131,3 +131,13 @@ table.dataTable {
 table#batch-processes-datatable {
   max-height: calc(100vh - 480px);
 }
+
+#user-activity-filter {
+  float: right;
+  display: flex;
+}
+
+#user-activity-filter label {
+  font-size: 18px;
+  margin-left: 10px;
+}

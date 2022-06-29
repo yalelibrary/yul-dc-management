@@ -1,4 +1,9 @@
-<h1>Object Versions for OID <%= params[:parent_object_id] %><h1>
+<h1>Object Versions for OID <%= params[:parent_object_id] %></h1>
+
+<div id='user-activity-filter'>
+  <%= check_box_tag(:user) %>
+  <%= label_tag(:user, "Show user activity only, hide database activity") %>
+</div>
 
 <table id='parent-object-versions-table' class='is-datatable table table-responsive table-bordered table-striped' aria-label='Parent Object Versions'>
   <thead class='table-head'>
