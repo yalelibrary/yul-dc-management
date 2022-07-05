@@ -357,11 +357,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                         processing_event("Marking this parent as private because record is not found.", "metadata-fetched")
                         self.visibility = "Private"
                         save!
+                        solr_index
                         false
                       rescue MetadataSource::MetadataCloudUnpublishedError
                         processing_event("Marking this parent as private because this record is unpublished.", "metadata-fetched")
                         self.visibility = "Private"
                         save!
+                        solr_index
                         false
                       end
                     end
