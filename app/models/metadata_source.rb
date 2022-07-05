@@ -50,7 +50,7 @@ class MetadataSource < ApplicationRecord
       response_text
     when 400...500
       parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body}", "failed")
-      check_response(full_response) if metadata_cloud_name == 'aspace'
+      check_response(full_response)
       false
     when 500...600
       parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body}", "failed")
@@ -63,8 +63,8 @@ class MetadataSource < ApplicationRecord
 
   def check_response(full_response)
     raise MetadataSource::MetadataCloudVersionError if JSON.parse(full_response.body)["ex"].include?("Unable to find retriever")
-    raise MetadataSource::MetadataCloudNotFoundError if JSON.parse(full_response.body)["ex"].include?("Record is not found.")
-    raise MetadataSource::MetadataCloudUnpublishedError if JSON.parse(full_response.body)["ex"].include?("You have requested an unpublished object")
+    raise MetadataSource::MetadataCloudNotFoundError if JSON.parse(full_response.body)["ex"].include?("Record is not found.") && metadata_cloud_name == 'aspace'
+    raise MetadataSource::MetadataCloudUnpublishedError if JSON.parse(full_response.body)["ex"].include?("You have requested an unpublished object") && metadata_cloud_name == 'aspace'
   end
 
   def file_name(parent_object)
