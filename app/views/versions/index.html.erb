@@ -2,7 +2,7 @@
 
 <div id='user-activity-filter'>
   <%= form_tag(parent_object_versions_path(params[:parent_object_id]), method: :get, remote: true, id: 'user-form', class: "form form-inline") do |f| %>
-    <%= check_box_tag 'user', 1, 'true'%>
+    <%= check_box_tag :user %>
     <%= label_tag(:user, "Show user activity only, hide database activity") %>
   <% end %>
 </div>
@@ -59,3 +59,21 @@
   <% end %>
   </tbody>
 </table>
+
+<script>
+  window.addEventListener('load', function(){
+    var url = window.location.href;
+    const checkbox = document.getElementById('user');
+    checkbox.addEventListener('change', (event) => {
+      if (event.currentTarget.checked) {
+        if (url.indexOf('false') !== -1) {
+          some_url = url.replace('checked=false', 'checked=true');
+          window.location.href = some_url;
+        }
+      } else {
+        all_url = url.replace('checked=true', 'checked=false');
+        window.location.href = all_url;
+      }
+    })
+  })
+</script>
