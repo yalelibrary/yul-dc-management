@@ -64,7 +64,7 @@ class MetadataSource < ApplicationRecord
   def check_response(full_response)
     raise MetadataSource::MetadataCloudVersionError if JSON.parse(full_response.body)["ex"].include?("Unable to find retriever")
     raise MetadataSource::MetadataCloudNotFoundError if JSON.parse(full_response.body)["ex"].include?("Record is not found.")
-    raise MetadataSource::MetadataCloudUnpublishedError if JSON.parse(full_response.body)["ex"].include?("You have requested an unpublished object.")
+    raise MetadataSource::MetadataCloudUnpublishedError if JSON.parse(full_response.body)["ex"].include?("You have requested an unpublished object")
   end
 
   def file_name(parent_object)
