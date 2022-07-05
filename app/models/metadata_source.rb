@@ -50,7 +50,7 @@ class MetadataSource < ApplicationRecord
       response_text
     when 400...500
       parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body}", "failed")
-      check_response(full_response)
+      check_response(full_response) if metadata_cloud_name == 'aspace'
       false
     when 500...600
       parent_object.processing_event("Metadata Cloud did not return json. Response was #{full_response.status.code} - #{full_response.body}", "failed")
