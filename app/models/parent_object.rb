@@ -354,16 +354,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                       begin
                         self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
                       rescue MetadataSource::MetadataCloudNotFoundError
-                        processing_event("Marking this parent as private because record is not found.", "metadata-fetched")
-                        self.visibility = "Private"
-                        save!
-                        solr_index
+                        processing_event("Marking #{oid} private because Archives Space record is not found.", "metadata-fetched")
+                        force_private
                         false
                       rescue MetadataSource::MetadataCloudUnpublishedError
-                        processing_event("Marking this parent as private because this record is unpublished.", "metadata-fetched")
-                        self.visibility = "Private"
-                        save!
-                        solr_index
+                        processing_event("Marking #{oid} private because Archives Space record is unpublished.", "metadata-fetched")
+                        force_private
                         false
                       end
                     end
@@ -375,6 +371,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     fetch_results
   end
   # rubocop:enable Metrics/MethodLength
+
+  def force_private
+    self.visibility = "Private"
+    save!
+    solr_index
+  end
 
   # Currently we run this job if the record is new and ladybird json wasn't passed in from create
   # OR if the authoritative metaadata source changes
