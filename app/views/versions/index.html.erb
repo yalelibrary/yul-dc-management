@@ -7,7 +7,7 @@
   <% end %>
 </div>
 
-<table id='parent-object-versions-table' class='is-datatable table table-responsive table-striped' aria-label='Parent Object Versions'>
+<table id='parent-object-versions-table' class='table table-responsive table-striped' aria-label='Parent Object Versions'>
   <thead class='table-head'>
     <tr>
       <th>Date</th>
@@ -59,21 +59,3 @@
   <% end %>
   </tbody>
 </table>
-
-<script>
-  window.addEventListener('load', function(){
-    var url = window.location.href;
-    const checkbox = document.getElementById('user');
-    checkbox.addEventListener('change', (event) => {
-      if (event.currentTarget.checked) {
-        if (url.indexOf('false') !== -1) {
-          some_url = url.replace('checked=false', 'checked=true');
-          window.location.href = some_url;
-        }
-      } else {
-        all_url = url.replace('checked=true', 'checked=false');
-        window.location.href = all_url;
-      }
-    })
-  })
-</script>
