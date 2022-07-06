@@ -43,19 +43,21 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       ENV['VPN'] = original_vpn
     end
 
-    it "marks the parent private if aspace recode is restricted" do
+    it "marks the parent private if aspace record is restricted" do
       stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/aspace/repositories/11/archival_objects/555049")
           .to_return(status: 400, body: File.open(File.join(fixture_path, "metadata_cloud_aspace_restricted.json")))
       allow(MetadataSource).to receive(:metadata_cloud_version).and_return("clearly_fake_version")
+      expect(parent_object).to receive(:solr_index).once
       expect(parent_object.visibility).to eq "Public"
       parent_object.default_fetch
       expect(parent_object.visibility).to eq "Private"
     end
 
-    it "marks the parent private if aspace recode is deleted" do
+    it "marks the parent private if aspace record is deleted" do
       stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/aspace/repositories/11/archival_objects/555049")
           .to_return(status: 400, body: File.open(File.join(fixture_path, "metadata_cloud_aspace_not_found.json")))
       allow(MetadataSource).to receive(:metadata_cloud_version).and_return("clearly_fake_version")
+      expect(parent_object).to receive(:solr_index).once
       expect(parent_object.visibility).to eq "Public"
       parent_object.default_fetch
       expect(parent_object.visibility).to eq "Private"
