@@ -1,0 +1,61 @@
+<h1>Object Versions for OID <%= params[:parent_object_id] %></h1>
+
+<div id='user-activity-filter'>
+  <%= form_tag(parent_object_versions_path(params[:parent_object_id]), method: :get, remote: true, id: 'user-form', class: "form form-inline") do |f| %>
+    <%= check_box_tag :user, 1, params[:checked] == 'true' %>
+    <%= label_tag(:user, "Show user activity only, hide database activity") %>
+  <% end %>
+</div>
+
+<table id='parent-object-versions-table' class='table table-responsive table-striped' aria-label='Parent Object Versions'>
+  <thead class='table-head'>
+    <tr>
+      <th>Date</th>
+      <th>User</th>
+      <th>Job or Event</th>
+      <th>Job Status</th>
+      <th>Job ID</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @results.sort_by(&:created_at).reverse.map do |result| %>
+    <tr>
+      <td>
+        <%= result.created_at %>
+      </td>
+      <td>
+        <% if result.class == BatchConnection %>
+          <% batch_process = BatchProcess.find(result.batch_process_id) %>
+          <%= batch_process.user.first_name + ' ' + batch_process.user.last_name %>
+        <% elsif result.whodunnit %>
+          <% user = User.find(result.whodunnit) %>
+          <%= user.first_name + ' ' + user.last_name %>
+        <% else %>
+          <%= result.whodunnit %>
+        <% end %>
+      </td>
+      <td>
+        <% if result.class == BatchConnection %>
+          <%= batch_process.batch_action %>
+        <% else %>
+          <%= result.event %>
+        <% end %>
+      </td>
+      <td>
+        <% if result.class == BatchConnection %>
+          <%= result.status %>
+        <% else %>
+          <p>Complete</p>
+        <% end %>
+      </td>
+      <td>
+        <% if result.class == BatchConnection %>
+          <%= link_to(result.batch_process_id, batch_process_path(result.batch_process_id), target: '_blank') %><em class="fa fa-external-link-alt"></em>
+        <% else %>
+          <%= result.id %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

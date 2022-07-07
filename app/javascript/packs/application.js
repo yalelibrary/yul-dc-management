@@ -338,3 +338,20 @@ $( document ).on('turbolinks:load', function() {
     }
   })
 })
+
+// This will filter the version table
+$( document ).on('turbolinks:load', function() {
+  var url = window.location.href;
+  var checkbox = $('#user');
+  checkbox.on('change', function() {
+    if ( checkbox.is(":checked") ) {
+      if ( url.indexOf('false') !== -1 ) {
+        var some_url = url.replace('checked=false', 'checked=true');
+        window.location.href = some_url;
+      }
+    } else {
+      var all_url = url.replace('checked=true', 'checked=false');
+      window.location.href = all_url
+    }
+  })
+})
