@@ -65,6 +65,9 @@
     <dd><%= link_to 'Synchronize child objects', sync_from_preservica_parent_object_path(@parent_object), method: :post, class: 'btn button update-item-button'%></dd>
   <% end %>
 
+  <dt>Last Preservica Update:</dt>
+  <dd><%= @parent_object.last_preservica_update %></dd>
+
   <dt>Last Ladybird Update:</dt>
   <dd><%= @parent_object.last_ladybird_update %></dd>
 
