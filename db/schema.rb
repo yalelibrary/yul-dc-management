@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_18_174221) do
+ActiveRecord::Schema.define(version: 2022_07_06_214806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2022_05_18_174221) do
     t.text "preservica_generation_uri"
     t.text "preservica_bitstream_uri"
     t.string "sha512_checksum"
+    t.datetime "last_preservica_update"
     t.index ["caption"], name: "index_child_objects_on_caption"
     t.index ["label"], name: "index_child_objects_on_label"
     t.index ["oid"], name: "index_child_objects_on_oid", unique: true

@@ -103,6 +103,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(co_first.order).to eq 1
       expect(co_first.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486"
       expect(co_first.ptiff_conversion_at.present?).to be_truthy
+      expect(co_first.last_preservica_update).not_to be nil
       expect(po_first.child_objects.count).to eq 4
 
       sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)

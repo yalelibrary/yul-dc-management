@@ -192,6 +192,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       child_hash[:oid] = co_oid
       child_hash[:parent_object_oid] = oid
       child_hash[:order] = index
+      child_hash[:last_preservica_update] = Time.current
       child_hash
     end
   end
@@ -227,6 +228,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       co.preservica_content_object_uri = value[:content_uri]
       co.preservica_generation_uri = value[:generation_uri]
       co.preservica_bitstream_uri = value[:bitstream_uri]
+      co.last_preservica_update = Time.current
       replace_preservica_tif(co)
       co.save
     end
