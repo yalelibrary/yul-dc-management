@@ -2,7 +2,7 @@
 
 <div id='user-activity-filter'>
   <%= form_tag(parent_object_versions_path(params[:parent_object_id]), method: :get, remote: true, id: 'user-form', class: "form form-inline") do |f| %>
-    <%= check_box_tag :user %>
+    <%= check_box_tag :user, 1, params[:checked] == 'true' %>
     <%= label_tag(:user, "Show user activity only, hide database activity") %>
   <% end %>
 </div>
