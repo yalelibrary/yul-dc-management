@@ -35,7 +35,7 @@ class StructureRange < Structure
       type: 'Range',
       label: { "en": [label] },
       items: child_structures_as_iiif,
-      part_of: part_of
+      partOf: part_of
     }
   end
   # rubocop:enable Metrics/MethodLength
