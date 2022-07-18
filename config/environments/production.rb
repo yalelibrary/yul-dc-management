@@ -1,4 +1,7 @@
 # frozen_string_literal: true
+#
+require 'rack'
+require 'rack/cors'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -103,4 +106,11 @@ Rails.application.configure do
   config.oid_sequence_initial_value = 30_000_000
 
   config.active_job.queue_adapter = :delayed_job
+
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins ['https://iiif_tools.collections.library.yale.edu', /\Ahttp.*/]
+      resource '*', headers: :any, methods: [:get, :post], credentials: true
+    end
+  end
 end
