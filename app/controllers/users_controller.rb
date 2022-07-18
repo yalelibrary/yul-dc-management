@@ -43,6 +43,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def show_token
+    info = { user_id: current_user&.id }
+    render inline: jwt_encode(info)
+  end
+
   def show; end
 
   private

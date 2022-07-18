@@ -57,6 +57,8 @@ gem 'delayed_job_active_record'
 gem "delayed_job_web"
 gem 'delayed_job_worker_pool'
 
+gem 'jwt'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
