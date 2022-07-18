@@ -175,6 +175,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable  Metrics/PerceivedComplexity
   # rubocop:disable  Metrics/CyclomaticComplexity
   def create_new_parent_csv
+    self.admin_sets = []
     parsed_csv.each_with_index do |row, index|
       if row['digital_object_source'].present? && row['preservica_uri'].present?
         begin
@@ -192,6 +193,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         metadata_source = row['source']
         model = row['parent_model'] || 'complex'
         admin_set = editable_admin_set(row['admin_set'], oid, index)
+        self.admin_sets << admin_set.key
         next unless admin_set
 
         parent_object = ParentObject.find_or_initialize_by(oid: oid)
