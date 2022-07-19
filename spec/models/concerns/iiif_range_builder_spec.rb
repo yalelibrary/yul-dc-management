@@ -79,11 +79,12 @@ RSpec.describe IiifRangeBuilder, type: :model, prep_metadata_sources: true, prep
       parent = FactoryBot.create(:parent_object, oid: 2_034_600, source_name: 'ladybird', visibility: "Public")
       child = FactoryBot.create(:child_object, parent_object: parent, oid: 23_456_789)
       json = File.read(Rails.root.join(fixture_path, 'v3_spec_manifest.json'))
-      json = format(json, parent_id: parent.id, child_id: child.id)
+      json = format(json, parent_id: parent.oid, child_id: child.oid)
       manifest = JSON.parse(json)
       structures = rb.parse_structures(manifest)
       json = JSON.pretty_generate(structures.first.to_iiif)
       expect(json).to match("\"id\": \"https://collections.library.yale.edu/manifests/oid/#{parent.oid}/canvas/#{child.oid}\"")
+      expect(json).to match("\"id\": \"https://collections.library.yale.edu/manifests/range/r0\"")
     end
   end
 end
