@@ -20,7 +20,7 @@ class RangeController < ApplicationController
   def update
     rb = IiifRangeBuilder.new
     parent = ParentObject.find(params[:parent_object_id])
-    if current_ability.can? :update, parent && parent.visibility != 'Private'
+    if (current_ability.can? :update, parent) && (parent.visibility != 'Private')
       json = JSON.parse(request.raw_post)
       id = rb.uuid_from_uri(json['id'])
       exists = StructureRange.exists?(resource_id: id)
@@ -38,7 +38,7 @@ class RangeController < ApplicationController
   def destroy
     rb = IiifRangeBuilder.new
     parent = ParentObject.find(params[:parent_object_id])
-    if current_ability.can? :update, parent && parent.visibility != 'Private'
+    if (current_ability.can? :update, parent) && (parent.visibility != 'Private')
       json = JSON.parse(request.raw_post)
       range = rb.parse_range(parent, json, nil)
       range.destroy
