@@ -27,4 +27,16 @@ class RangeController < ApplicationController
     status_code = exists ? :ok : :created
     render json: range.to_iiif, status: status_code
   end
+
+  def destroy
+    rb = IiifRangeBuilder.new
+    parent = ParentObject.find(params[:parent_object_id])
+    json = JSON.parse(request.raw_post)
+    range = rb.parse_range(parent, json, nil)
+    range.destroy
+    respond_to do |format|
+      format.html { redirect_to parent_object_range_index_url, notice: 'Range was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
 end
