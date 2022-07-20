@@ -29,7 +29,7 @@ class RangeController < ApplicationController
       render json: range.to_iiif, status: status_code
     else
       respond_to do |format|
-        format.html { redirect_to parent_objects_url, notice: 'User does not have permission to update parent object.' }
+        format.html { redirect_to parent_objects_url, notice: 'User does not have permission to update parent object or parent is Private.' }
         format.json { head :no_content }
       end
     end
@@ -48,7 +48,7 @@ class RangeController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { redirect_to parent_objects_url, notice: 'User does not have permission to update parent object.' }
+        format.html { redirect_to parent_objects_url, notice: 'User does not have permission to update parent object or parent is Private.' }
         format.json { head :no_content }
       end
     end
