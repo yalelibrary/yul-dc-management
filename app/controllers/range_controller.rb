@@ -20,23 +20,37 @@ class RangeController < ApplicationController
   def update
     rb = IiifRangeBuilder.new
     parent = ParentObject.find(params[:parent_object_id])
-    json = JSON.parse(request.raw_post)
-    id = rb.uuid_from_uri(json['id'])
-    exists = StructureRange.exists?(resource_id: id)
-    range = rb.parse_range(parent, json, nil)
-    status_code = exists ? :ok : :created
-    render json: range.to_iiif, status: status_code
+    if current_ability.can? :update, parent
+      json = JSON.parse(request.raw_post)
+      id = rb.uuid_from_uri(json['id'])
+      exists = StructureRange.exists?(resource_id: id)
+      range = rb.parse_range(parent, json, nil)
+      status_code = exists ? :ok : :created
+      render json: range.to_iiif, status: status_code
+    else
+      respond_to do |format|
+        format.html { redirect_to parent_objects_url, notice: 'User does not have permission to update parent object.' }
+        format.json { head :no_content }
+      end
+    end
   end
 
   def destroy
     rb = IiifRangeBuilder.new
     parent = ParentObject.find(params[:parent_object_id])
-    json = JSON.parse(request.raw_post)
-    range = rb.parse_range(parent, json, nil)
-    range.destroy
-    respond_to do |format|
-      format.html { redirect_to parent_object_range_index_url, notice: 'Range was successfully destroyed.' }
-      format.json { head :no_content }
+    if current_ability.can? :update, parent
+      json = JSON.parse(request.raw_post)
+      range = rb.parse_range(parent, json, nil)
+      range.destroy
+      respond_to do |format|
+        format.html { redirect_to parent_object_range_index_url, notice: 'Range was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to parent_objects_url, notice: 'User does not have permission to update parent object.' }
+        format.json { head :no_content }
+      end
     end
   end
 end
