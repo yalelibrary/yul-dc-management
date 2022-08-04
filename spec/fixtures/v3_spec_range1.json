@@ -1,0 +1,22 @@
+{
+  "id": "https://collections.library.yale.edu/manifests/range/r0",
+  "type": "Range",
+  "label": { "en": [ "Table of Contents" ] },
+  "items": [
+    {
+      "id": "https://collections.library.yale.edu/manifests/range/r1",
+      "type": "Range",
+      "label": { "en": [ "Introduction" ] },
+      "supplementary": {
+        "id": "https://example.org/iiif/book1/annocoll/introTexts",
+        "type": "AnnotationCollection"
+      },
+      "items": [
+        {
+          "id": "https://collections.library.yale.edu/manifests/oid/%{parent_id}/canvas/%{child_id}",
+          "type": "Canvas"
+        }
+      ]
+    }
+  ]
+}
