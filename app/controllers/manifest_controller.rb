@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
 class ManifestController < ApplicationController
+  skip_before_action :authenticate_user!
   before_action :set_token_user, :set_parent_object
 
   def index
     @token_ability ||= Ability.new(@token_user)
-    return unless @token_ability.can? :update, @parent_object
-    respond_to do |format|
-      format.html
-      format.json { render json: @parent_object.iiif_manifest }
+    if @token_ability.can? :update, @parent_object
+      respond_to do |format|
+        format.html
+        format.json { render json: @parent_object.iiif_manifest }
+      end
+    else
+      render json: { "message": "Access denied" }, status: 401
     end
   end
 

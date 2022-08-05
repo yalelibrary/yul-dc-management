@@ -44,7 +44,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   end
 
   devise_for :users, skip: [:sessions, :registrations, :passwords], controllers: { omniauth_callbacks: "omniauth_callbacks" }
-  # devise_for :manifest, skip: [:get]
   devise_scope :user do
     delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
   end
