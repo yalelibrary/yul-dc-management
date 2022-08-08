@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable  Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -80,4 +81,12 @@ Rails.application.configure do
   config.active_job.queue_adapter = :delayed_job
 
   config.web_console.whitelisted_ips = ["172.0.0.0/8", '192.168.0.0/16', '127.0.0.1']
+
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins ['https://iiif_tools.collections.library.yale.edu', /\Ahttp.*/]
+      resource '*', headers: :any, methods: [:get, :post, :delete, :options], credentials: true
+    end
+  end
 end
+# rubocop:enable  Metrics/BlockLength
