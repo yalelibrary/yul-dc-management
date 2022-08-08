@@ -200,10 +200,11 @@ class MetsDocument
 
   def file_info(file)
     thumbnail_flag = file.xpath('@USE').inner_text == "banner" ? true : false
+    mets_image_name = file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, '')
     {
       thumbnail_flag: thumbnail_flag,
       checksum: file.xpath('@CHECKSUM').inner_text,
-      mets_access_master_path: file.xpath('mets:FLocat/@xlink:href').to_s.gsub(/file:\/\//, '')
+      mets_access_master_path: mets_image_name || mets_image_name.gsub(".tif", ".TIF")
     }
   end
   # rubocop:enable Metrics/ClassLength
