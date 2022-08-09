@@ -14,6 +14,7 @@ class SetupMetadataJob < ApplicationJob
       parent_object.processing_event("SetupMetadataJob failed to find all images.", "failed")
       return
     end
+    return if metadata_missing(parent_object, current_batch_process, current_batch_connection)
     unless parent_object.default_fetch(current_batch_process, current_batch_connection)
       # Don't retry in this case. default_fetch() will throw an exception if it's a network error and trigger retry
       parent_object.processing_event("SetupMetadataJob failed to retrieve authoritative metadata. [#{parent_object.metadata_cloud_url}]", "failed")
@@ -39,6 +40,15 @@ class SetupMetadataJob < ApplicationJob
     if parent_object.from_mets
       current_batch_process.mets_doc.all_images_present?
     else
+      true
+    end
+  end
+
+  def metadata_missing(parent_object, current_batch_process, current_batch_connection)
+    if parent_object.default_fetch(current_batch_process, current_batch_connection)
+      false
+    else
+      parent_object.solr_index
       true
     end
   end
