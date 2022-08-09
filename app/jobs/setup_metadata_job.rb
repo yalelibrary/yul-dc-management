@@ -14,7 +14,7 @@ class SetupMetadataJob < ApplicationJob
       parent_object.processing_event("SetupMetadataJob failed to find all images.", "failed")
       return
     end
-    return if metadata_missing(parent_object, current_batch_process, current_batch_connection)
+    index_private(parent_object)
     unless parent_object.default_fetch(current_batch_process, current_batch_connection)
       # Don't retry in this case. default_fetch() will throw an exception if it's a network error and trigger retry
       parent_object.processing_event("SetupMetadataJob failed to retrieve authoritative metadata. [#{parent_object.metadata_cloud_url}]", "failed")
@@ -44,13 +44,9 @@ class SetupMetadataJob < ApplicationJob
     end
   end
 
-  def metadata_missing(parent_object, current_batch_process, current_batch_connection)
-    if parent_object.default_fetch(current_batch_process, current_batch_connection)
-      false
-    else
-      parent_object.solr_index
-      true
-    end
+  # even if metadata is missing we want to index data to solr so the object can be removed from blacklight
+  def index_private(parent_object)
+    parent_object.solr_index if parent_object.visibility == "Private"
   end
 
   # rubocop:disable Metrics/MethodLength
