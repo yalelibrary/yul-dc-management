@@ -84,6 +84,22 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     end
   end
 
+  describe "removing the authoritative metadata source", solr: true do
+    let(:oid) { "2034600" }
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
+    before do
+      parent_object
+    end
+    it "indexes the parent when metadata is not found" do
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document[:visibility_ssi]).to eq "Public"
+      parent_object.visibility = "Private"
+      parent_object.save!
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document[:visibility_ssi]).to eq "Private"
+    end
+  end
+
   describe "changing the parent to redirected", solr: true do
     let(:oid) { "2034600" }
     let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
