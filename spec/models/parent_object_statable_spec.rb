@@ -50,6 +50,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         batch_process_with_failure.run_callbacks :create
         batch_process_with_failure.batch_connections.first.update_status!
         parent_object = batch_process_with_failure.parent_objects.first
+        expect(parent_object.status_for_batch_process(batch_process_with_failure)).to eq "Failed"
         expect(parent_object.notes_for_batch_process(batch_process_with_failure)).not_to include "metadata-fetched"
       end
     end
@@ -124,6 +125,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       )
 
       batch_process_with_failure.batch_connections.first.update_status!
+      expect(parent_object.status_for_batch_process(batch_process_with_failure)).to eq "Failed"
       expect(parent_object.latest_failure(batch_process_with_failure)).to be_an_instance_of Hash
       expect(parent_object.latest_failure(batch_process_with_failure)[:reason]).to eq "Fake failure 2"
       expect(parent_object.latest_failure(batch_process_with_failure)[:time]).to be
