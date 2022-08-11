@@ -24,7 +24,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   self.primary_key = 'oid'
   after_save :setup_metadata_job
   before_update :check_for_redirect
-  after_update :digital_object_check
   # after_update :solr_index_job # we index from the fetch job on create
   after_destroy :solr_delete
   after_destroy :note_deletion
