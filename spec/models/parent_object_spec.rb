@@ -687,7 +687,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.visibility = "Public"
         expect(parent_object).to receive(:mc_post).once.and_return(OpenStruct.new(status: 200))
         parent_object.aspace_json = { "title": ["test title"] }
-        parent_object.save!
+        parent_object.solr_index
       end
 
       it "posts digital object update when visibility changes from Public to Yale Community Only" do
@@ -698,9 +698,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.visibility = "Public"
         parent_object.aspace_json = { "title": ["test title"] }
         expect(parent_object).to receive(:mc_post).twice.and_return(OpenStruct.new(status: 200)) # once for first save, again for visibility change
-        parent_object.save!
+        parent_object.solr_index
         parent_object.visibility = "Yale Community Only"
-        parent_object.save!
+        parent_object.solr_index
       end
 
       it "posts digital object update when visibility changes from Yale Community Only to Public" do
@@ -711,9 +711,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.visibility = "Yale Community Only"
         parent_object.aspace_json = { "title": ["test title"] }
         expect(parent_object).to receive(:mc_post).twice.and_return(OpenStruct.new(status: 200)) # once for first save, again for visibility change
-        parent_object.save!
+        parent_object.solr_index
         parent_object.visibility = "Public"
-        parent_object.save!
+        parent_object.solr_index
       end
 
       it "posts digital object changes when parent is deleted" do
@@ -727,8 +727,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object).to receive(:mc_post).twice.and_return(OpenStruct.new(status: 200))
         parent_object.aspace_json = { "title": ["test title"] }
         parent_object.save!
+        parent_object.solr_index
         parent_object.reload
-        parent_object.digital_object_delete
+        parent_object.solr_index
       end
 
       it "deletes DigitalObjectJson on delete" do
@@ -742,9 +743,11 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object).to receive(:mc_post).exactly(2).time.and_return(OpenStruct.new(status: 200))
         parent_object.aspace_json = { "title": ["test title"] }
         parent_object.save!
+        parent_object.solr_index
         parent_object.reload
         parent_object.authoritative_metadata_source_id = ladybird
         parent_object.save!
+        parent_object.solr_index
         parent_object.reload
         parent_object.digital_object_delete
         parent_object.reload
