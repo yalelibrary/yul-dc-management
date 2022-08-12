@@ -91,7 +91,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       po_first = ParentObject.first
       visit "/batch_processes/#{sync_batch_process.id}/parent_objects/#{po_first.oid}"
       expect(page).not_to have_content('Pending').twice
-      expect(page).not_to have_content("#{po_first.oid}").twice
+      expect(page).not_to have_content(po_first.oid.to_s).twice
       co_first = po_first.child_objects.first
       expect(co_first.preservica_generation_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1_new"
       expect(co_first.preservica_bitstream_uri).to eq "/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1"
