@@ -96,6 +96,9 @@
       <mets:div CONTENTIDS="30000319" ID="PHYS_0002" ORDER="2" ORDERLABEL=" - " TYPE="page">
         <mets:fptr FILEID="1234d3360-bf78-4e35-9850-44ef7f832100" />
       </mets:div>
+      <mets:div CONTENTIDS="30000320" ID="PHYS_0003" ORDER="3" ORDERLABEL=" - " TYPE="page">
+        <mets:fptr FILEID="1234d3360-bf78-4e35-9850-44ef7f832200" />
+      </mets:div>
     </mets:div>
   </mets:structMap>
   <mets:structLink>
