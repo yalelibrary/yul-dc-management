@@ -106,7 +106,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
       it "return ture if all images present no mater the captalized extension of image file" do
         mets_doc = described_class.new(valid_goobi_xml)
         expect(mets_doc.files.first[:mets_access_master_path]).to eq "/home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000318.tif"
-        expect(mets_doc.files.last[:mets_access_master_path_capitalized]).to eq "/home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000320.TIF"
+        expect(mets_doc.files.last[:mets_access_master_path]).to eq "/home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000320.tif"
         expect(mets_doc.all_images_present?).to be_truthy
       end
 
