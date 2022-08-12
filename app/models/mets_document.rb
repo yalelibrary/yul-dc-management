@@ -83,7 +83,7 @@ class MetsDocument
   end
 
   def all_images_present?
-    files.all? { |file| File.exist?(file[:mets_access_master_path]) }
+    files.all? { |file| (File.exist?(file[:mets_access_master_path]) || File.exist?(file[:mets_access_master_path_capitalized])) }
   end
 
   def all_images_have_checksum?
@@ -204,7 +204,8 @@ class MetsDocument
     {
       thumbnail_flag: thumbnail_flag,
       checksum: file.xpath('@CHECKSUM').inner_text,
-      mets_access_master_path: mets_image_name || mets_image_name.gsub(".tif", ".TIF")
+      mets_access_master_path: mets_image_name,
+      mets_access_master_path_capitalized: mets_image_name.gsub('.tif', '.TIF').gsub('.jpg', '.JPG')
     }
   end
   # rubocop:enable Metrics/ClassLength

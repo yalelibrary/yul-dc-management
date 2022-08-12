@@ -75,10 +75,11 @@
   <mets:fileSec>
     <mets:fileGrp USE="PRESENTATION" ID="b9afab50-9f22-4505-ada6-807dd7d05733">
       <mets:file ID="444d3360-bf78-4e35-9850-44ef7f832105" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="4e870f62d9b11c7cd93520d1aa5fe3def9ad3565">
-        <mets:FLocat LOCTYPE="URL" xlink:href="file:///home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000318.tif" />
+       <mets:FLocat LOCTYPE="URL" xlink:href="file:///home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000318.tif" />
       </mets:file>
       <mets:file ID="63c82a0c-be28-4b42-ae74-c13922db5c15" MIMETYPE="image/tiff" CHECKSUMTYPE="SHA-1" CHECKSUM="4e870f62d9b11c7cd93520d1aa5fe3def9ad3565">
-        <mets:FLocat LOCTYPE="URL" xlink:href="file:///home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000319.tif" />
+       <mets:FLocat LOCTYPE="URL" xlink:href="file:///home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000320.tif" />
+
       </mets:file>
     </mets:fileGrp>
   </mets:fileSec>

@@ -103,6 +103,13 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
         expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "no image path")
       end
 
+      it "return ture if all images present no mater the captalized extension of image file" do
+        mets_doc = described_class.new(valid_goobi_xml)
+        expect(mets_doc.files.first[:mets_access_master_path]).to eq "/home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000318.tif"
+        expect(mets_doc.files.last[:mets_access_master_path_capitalized]).to eq "/home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000320.TIF"
+        expect(mets_doc.all_images_present?).to be_truthy
+      end
+
       it "returns true with non-fixture paths in non-dev and non-test environments" do
         mets_doc = described_class.new(production_mets_file)
         expect(mets_doc.all_images_present?).to be_falsey
