@@ -136,12 +136,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         valid_child_hashes = validate_child_hashes(child_hashes)
         invalid_child_hashes = child_hashes - valid_child_hashes
         cleanup_child_artifacts(invalid_child_hashes)
-        unless valid_child_hashes.empty?
-          upsert_child_objects(valid_child_hashes)
-          self.last_preservica_update = Time.current
-          self.metadata_update = true
-          save!
-        end
+        upsert_child_objects(valid_child_hashes) unless valid_child_hashes.empty?
+        self.last_preservica_update = Time.current
+        self.metadata_update = true
+        save!
       end
     else
       return unless ladybird_json
@@ -231,9 +229,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       replace_preservica_tif(co)
       co.save
     end
-    # save changes to parent
-    self.metadata_update = true
-    save!
 
     # create child records for any new items in preservica
     create_child_records
