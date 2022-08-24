@@ -56,6 +56,8 @@ module CsvExportable
         begin
           admin_set = AdminSet.find_by(key: row[0])
           raise ActiveRecord::RecordNotFound if admin_set.nil?
+          self.admin_set = admin_set.key
+          save
           if user.viewer(admin_set) || user.editor(admin_set)
             ParentObject.where(admin_set_id: admin_set.id).find_each do |parent|
               arr << parent
@@ -70,6 +72,8 @@ module CsvExportable
     else
       admin_set_id.each do |id|
         admin_set = AdminSet.find_by(id: id.to_i)
+        self.admin_set = admin_set.key
+        save
         if user.viewer(admin_set) || user.editor(admin_set)
           ParentObject.where(admin_set_id: id.to_i).find_each do |parent|
             arr << parent
@@ -95,12 +99,19 @@ module CsvExportable
   end
 
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def child_output_csv
     return nil unless batch_action == 'export child oids'
     csv_rows = []
     parent_title_hash = {}
+    self.admin_set = ''
+    sets = admin_set
     child_objects_array.each do |co|
       parent_title = lookup_parent_title(co, parent_title_hash)
+      sets << ', ' + AdminSet.find(co.parent_object.authoritative_metadata_source_id).key
+      split_sets = sets.split(',').uniq.reject(&:blank?)
+      self.admin_set = split_sets.join(', ')
+      save
       row = [co.parent_object.oid, co.oid, co.order, parent_title.presence, co.parent_object.call_number, co.label, co.caption, co.viewing_hint]
       csv_rows << row
     end
@@ -114,6 +125,7 @@ module CsvExportable
     output_csv
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def lookup_parent_title(co, parent_title_hash)
     parent_title_hash[co.parent_object.oid] ||= co.parent_object.authoritative_json&.[]('title')&.first

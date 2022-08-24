@@ -175,6 +175,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable  Metrics/PerceivedComplexity
   # rubocop:disable  Metrics/CyclomaticComplexity
   def create_new_parent_csv
+    self.admin_set = ''
+    sets = admin_set
     parsed_csv.each_with_index do |row, index|
       if row['digital_object_source'].present? && row['preservica_uri'].present?
         begin
@@ -193,6 +195,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         model = row['parent_model'] || 'complex'
         admin_set = editable_admin_set(row['admin_set'], oid, index)
         next unless admin_set
+        sets << ', ' + admin_set&.key
+        split_sets = sets.split(',').uniq.reject(&:blank?)
+        self.admin_set = split_sets.join(', ')
+        save
 
         parent_object = ParentObject.find_or_initialize_by(oid: oid)
         # Only runs on newly created parent objects
@@ -248,16 +254,26 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
 
   # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def update_fulltext_status(offset = 0, limit = -1)
     job_oids = oids
     job_oids = job_oids.drop(offset) if offset&.positive?
     job_oids = job_oids.first(limit) if limit&.positive?
+    self.admin_set = ''
+    sets = admin_set
     job_oids.each_with_index do |parent_oid, index|
       parent_object = ParentObject.find_by(oid: parent_oid)
       if parent_object.nil?
         batch_processing_event("Skipping row [#{index + 2}] because unknown parent: #{parent_oid}", 'Unknown Parent')
       elsif current_ability.can?(:update, parent_object)
         attach_item(parent_object)
+
+        sets << ', ' + AdminSet.find(parent_object.authoritative_metadata_source_id).key
+        split_sets = sets.split(',').uniq.reject(&:blank?)
+        self.admin_set = split_sets.join(', ')
+        save
+
         parent_object.child_objects.each { |co| attach_item(co) }
         parent_object.processing_event("Parent #{parent_object.oid} is being processed", 'processing-queued')
         parent_object.update_fulltext_for_children
@@ -267,6 +283,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
   def validate_metadata_source(metadata_source, index)
@@ -281,8 +299,12 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
 
   # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def recreate_child_oid_ptiffs
     parents = Set[]
+    self.admin_set = ''
+    sets = admin_set
     oids.each_with_index do |oid, index|
       child_object = ChildObject.find_by_oid(oid.to_i)
       unless child_object
@@ -290,6 +312,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         next
       end
       next unless child_object
+
+      sets << ', ' + AdminSet.find(child_object.parent_object.authoritative_metadata_source_id).key
+      split_sets = sets.split(',').uniq.reject(&:blank?)
+      self.admin_set = split_sets.join(', ')
+      save
 
       configure_parent_object(child_object, parents)
       attach_item(child_object)
@@ -302,6 +329,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       child_object.processing_event("Ptiff Queued", "ptiff-queued")
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   # SETS COMPLETE STATUS FOR RECREATE JOB
   def are_all_children_complete?(parent_object)
@@ -378,9 +407,15 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   def sync_from_preservica
+    self.admin_set = ''
+    sets = admin_set
     parsed_csv.each_with_index do |row, _index|
       begin
         parent_object = ParentObject.find(row['oid'])
+        sets << ', ' + parent_object.admin_set.key
+        split_sets = sets.split(',').uniq.reject(&:blank?)
+        self.admin_set = split_sets.join(', ')
+        save
       rescue
         batch_processing_event("Parent OID: #{row['oid']} not found in database", 'Skipped Import') if parent_object.nil?
         next

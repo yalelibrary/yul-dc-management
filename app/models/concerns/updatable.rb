@@ -21,13 +21,21 @@ module Updatable
 
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def update_parent_objects
+    self.admin_set = ''
+    sets = admin_set
     return unless batch_action == "update parent objects"
     parsed_csv.each_with_index do |row, index|
       oid = row['oid'] unless ['oid'].nil?
       redirect = row['redirect_to'] unless ['redirect_to'].nil?
       parent_object = updatable_parent_object(oid, index)
       next unless parent_object
+      sets << ', ' + AdminSet.find(parent_object.authoritative_metadata_source_id).key
+      split_sets = sets.split(',').uniq.reject(&:blank?)
+      self.admin_set = split_sets.join(', ')
+      save
       next if redirect.present? && !validate_redirect(redirect)
       next unless check_for_children(redirect, parent_object)
 
@@ -44,6 +52,8 @@ module Updatable
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def remove_blanks(row, parent_object)
     blankable = %w[aspace_uri barcode bib digitization_note holding item project_identifier rights_statement redirect_to display_layout extent_of_digitization viewing_direction]
