@@ -32,7 +32,7 @@ module Updatable
       redirect = row['redirect_to'] unless ['redirect_to'].nil?
       parent_object = updatable_parent_object(oid, index)
       next unless parent_object
-      sets << ', ' + AdminSet.find(parent_object.authoritative_metadata_source_id).key
+      sets << ', ' + parent_object.admin_set.key
       split_sets = sets.split(',').uniq.reject(&:blank?)
       self.admin_set = split_sets.join(', ')
       save

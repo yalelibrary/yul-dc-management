@@ -29,7 +29,7 @@ module Reassociatable
       po = load_parent(index, row["parent_oid"].to_i)
       next unless co.present? && po.present?
 
-      sets << ', ' + AdminSet.find(po.authoritative_metadata_source_id).key
+      sets << ', ' + po.admin_set.key
       split_sets = sets.split(',').uniq.reject(&:blank?)
       self.admin_set = split_sets.join(', ')
       save

@@ -108,7 +108,7 @@ module CsvExportable
     sets = admin_set
     child_objects_array.each do |co|
       parent_title = lookup_parent_title(co, parent_title_hash)
-      sets << ', ' + AdminSet.find(co.parent_object.authoritative_metadata_source_id).key
+      sets << ', ' + co.parent_object.admin_set.key
       split_sets = sets.split(',').uniq.reject(&:blank?)
       self.admin_set = split_sets.join(', ')
       save

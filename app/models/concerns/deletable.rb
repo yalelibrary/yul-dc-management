@@ -17,7 +17,7 @@ module Deletable
       next unless action == 'delete'
       parent_object = deletable_parent_object(oid, index)
       next unless parent_object
-      sets << ', ' + AdminSet.find(parent_object.authoritative_metadata_source_id).key
+      sets << ', ' + parent_object.admin_set.key
       split_sets = sets.split(',').uniq.reject(&:blank?)
       self.admin_set = split_sets.join(', ')
       save
@@ -58,7 +58,7 @@ module Deletable
       next unless action == 'delete'
       child_object = deletable_child_object(oid, index)
       next unless child_object
-      sets << ', ' + AdminSet.find(child_object.parent_object.authoritative_metadata_source_id).key
+      sets << ', ' + child_object.parent_object.admin_set.key
       split_sets = sets.split(',').uniq.reject(&:blank?)
       self.admin_set = split_sets.join(', ')
       save

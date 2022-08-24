@@ -313,7 +313,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       end
       next unless child_object
 
-      sets << ', ' + AdminSet.find(child_object.parent_object.authoritative_metadata_source_id).key
+      sets << ', ' + child_object.parent_object.admin_set.key
       split_sets = sets.split(',').uniq.reject(&:blank?)
       self.admin_set = split_sets.join(', ')
       save
