@@ -15,6 +15,7 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
     # or in aliased_join_table.column_name format
     @view_columns ||= {
       process_id: { source: "BatchProcess.id", cond: :eq, searchable: true, orderable: true },
+      admin_set: { source: "BatchProcess.admin_set", cond: :start_with, searchable: true, orderable: true },
       user: { source: "User.uid", cond: :start_with, searchable: true, orderable: true },
       time: { source: "BatchProcess.created_at", cond: :like, orderable: true },
       size: { source: "BatchProcess.oid", searchable: false, orderable: false },
@@ -29,6 +30,7 @@ class BatchProcessDatatable < AjaxDatatablesRails::ActiveRecord
     records.map do |batch_process|
       {
         process_id: link_to(batch_process.id, batch_process_path(batch_process)),
+        admin_set: batch_process.admin_set,
         user: batch_process.user.uid,
         time: batch_process.created_at,
         size: batch_process.oids&.count,
