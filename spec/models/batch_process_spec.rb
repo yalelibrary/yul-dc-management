@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_admin_sets: true, undelayed: true do
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
+  let(:admin_set) { FactoryBot.create(:admin_set, id: 1) }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
   let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids_with_source.csv")) }
   let(:delete_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_parent_fixture_ids.csv")) }
@@ -416,6 +417,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
             batch_process.create_new_parent_csv
           end.to change { ParentObject.count }.from(0).to(1)
 
+          parent_object = ParentObject.first
+          parent_object.admin_set = admin_set
           delete_batch_process = described_class.new(batch_action: "delete parent objects", user_id: user.id)
           expect do
             delete_batch_process.file = delete_parent
@@ -438,6 +441,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
             batch_process.create_new_parent_csv
           end.to change { ChildObject.count }.from(0).to(2)
 
+          parent_object = ParentObject.first
+          parent_object.admin_set = admin_set
           delete_batch_process = described_class.new(batch_action: "delete child objects", user_id: user.id)
           expect do
             delete_batch_process.file = delete_child
