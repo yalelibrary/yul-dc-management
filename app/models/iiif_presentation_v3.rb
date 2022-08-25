@@ -45,6 +45,7 @@ class IiifPresentationV3
   end
 
   # Build the actual manifest object
+  # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   def manifest
     return @manifest if @manifest
@@ -62,14 +63,16 @@ class IiifPresentationV3
       @manifest["service"] ||= []
       @manifest["service"] << search_service
     end
-    @manifest["structures"] = []
-    add_structures_to_manifest(@manifest['structures'])
+    add_structures_to_manifest(@manifest["structures"] = [])
     manifest_navdate
     manifest_navplace
     @manifest
   end
-  # rubocop:enable Metrics/AbcSize
 
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
+  #
+  #
   def manifest_descriptive_properties
     @manifest['label'] = {
       "none" => [@parent_object&.authoritative_json&.[]("title")&.first || '']
@@ -294,23 +297,21 @@ class IiifPresentationV3
     root_structures = []
     parents_to_children = {}
     structs.each do |structure|
-      root_structures << structure if !structure.structure_id
-      if structure.structure_id
-        parents_to_children[structure.structure_id] = (parents_to_children[structure.structure_id] || []) << structure
-      end
+      root_structures << structure unless structure.structure_id
+      parents_to_children[structure.structure_id] = (parents_to_children[structure.structure_id] || []) << structure if structure.structure_id
     end
     structures.concat(add_child_structures(root_structures, parents_to_children))
   end
 
   def add_child_structures(structures, parents_to_children)
-    structures = structures && structures.map do |structure|
+    structures = structures&.map do |structure|
       children = add_child_structures(parents_to_children[structure.id], parents_to_children)
-      r = {"type": structure.type.gsub("Structure", "") , "id": structure.resource_id}
-      r["items"] = children if children && children.length > 0
-      r["label"] = {"en": [structure.label]} if r[:type] == "Range"
+      r = { "type": structure.type.gsub("Structure", ""), "id": structure.resource_id }
+      r["items"] = children if children && !children.empty?
+      r["label"] = { "en": [structure.label] } if r[:type] == "Range"
       r
     end
-    return structures || []
+    structures || []
   end
 
   def add_metadata_to_canvas(canvas, child)

@@ -46,7 +46,6 @@ class ManifestController < ApplicationController
   end
 
   def set_parent_object
-    Rails.logger.info(params)
     @parent_object = ParentObject.find(params[:parent_object_id] || params[:id])
   end
 end

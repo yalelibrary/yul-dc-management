@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class IiifRangeBuilder
-  #PREFIX = 'https://collections.library.yale.edu/manifests'
+  # PREFIX = 'https://collections.library.yale.edu/manifests'
   PREFIX = 'http://localhost/manifests'
 
   def parse_structures(manifest)
@@ -100,5 +100,4 @@ class IiifRangeBuilder
   def destroy_existing_structure_by_parent_oid(parent_oid)
     Structure.where(parent_object_oid: parent_oid).destroy_all
   end
-
 end
