@@ -73,7 +73,7 @@ class IiifRangeBuilder
   end
 
   def parent_oid_from_uri(uri)
-    uri.sub(/.*manifests\//, '')
+    uri.sub("#{PREFIX}/oid/", '').sub(/.*manifests\//, '')
   end
 
   def self.parent_uri_from_id(id)

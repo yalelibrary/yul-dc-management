@@ -293,7 +293,7 @@ class IiifPresentationV3
   # rubocop:enable Metrics/AbcSize
 
   def add_structures_to_manifest(structures)
-    structs = Structure.where(parent_object_oid: oid)
+    structs = Structure.where(parent_object_oid: oid).order(:position)
     root_structures = []
     parents_to_children = {}
     structs.each do |structure|
