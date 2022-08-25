@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class IiifRangeBuilder
-  # PREFIX = 'https://collections.library.yale.edu/manifests'
-  PREFIX = 'http://localhost/manifests'
+  PREFIX = 'https://collections.library.yale.edu/manifests'
 
   def parse_structures(manifest)
     raise 'Not a Manifest' unless manifest['type'] == 'Manifest'
@@ -74,7 +73,7 @@ class IiifRangeBuilder
   end
 
   def parent_oid_from_uri(uri)
-    uri.sub("#{PREFIX}/", '')
+    uri.sub(/.*manifests\//, '')
   end
 
   def self.parent_uri_from_id(id)
@@ -86,7 +85,7 @@ class IiifRangeBuilder
   end
 
   def child_id_from_uri(uri, parent_oid)
-    uri.sub("#{PREFIX}/oid/#{parent_oid}/canvas/", '')
+    uri.sub(/.*oid\/#{parent_oid}\/canvas\//, '')
   end
 
   def self.child_id_to_uri(child_oid, parent_oid)
