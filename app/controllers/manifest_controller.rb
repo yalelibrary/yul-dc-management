@@ -1,14 +1,30 @@
 # frozen_string_literal: true
 
 class ManifestController < ApplicationController
-  skip_before_action :authenticate_user!
+  skip_before_action :authenticate_user!, :verify_authenticity_token
   before_action :set_token_user, :set_parent_object
 
-  def index
+  def manifest
     @token_ability ||= Ability.new(@token_user)
     if @token_ability.can? :update, @parent_object
       respond_to do |format|
-        format.html
+        format.html { render json: @parent_object.iiif_manifest }
+        format.json { render json: @parent_object.iiif_manifest }
+      end
+    else
+      render json: { "message": "Access denied" }, status: 401
+    end
+  end
+
+  def save
+    @token_ability ||= Ability.new(@token_user)
+    if @token_ability.can? :update, @parent_object
+      manifest = JSON.parse(request.raw_post)
+      builder = IiifRangeBuilder.new
+      builder.destroy_existing_structure_by_parent_oid(@parent_object.oid)
+      IiifRangeBuilder.new.parse_structures manifest
+      respond_to do |format|
+        format.html { render json: @parent_object.iiif_manifest }
         format.json { render json: @parent_object.iiif_manifest }
       end
     else
@@ -30,6 +46,7 @@ class ManifestController < ApplicationController
   end
 
   def set_parent_object
-    @parent_object = ParentObject.find(params[:parent_object_id])
+    Rails.logger.info(params)
+    @parent_object = ParentObject.find(params[:parent_object_id] || params[:id])
   end
 end

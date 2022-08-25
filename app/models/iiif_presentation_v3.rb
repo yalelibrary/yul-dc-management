@@ -62,6 +62,8 @@ class IiifPresentationV3
       @manifest["service"] ||= []
       @manifest["service"] << search_service
     end
+    @manifest["structures"] = []
+    add_structures_to_manifest(@manifest['structures'])
     manifest_navdate
     manifest_navplace
     @manifest
@@ -286,6 +288,30 @@ class IiifPresentationV3
     end
   end
   # rubocop:enable Metrics/AbcSize
+
+  def add_structures_to_manifest(structures)
+    structs = Structure.where(parent_object_oid: oid)
+    root_structures = []
+    parents_to_children = {}
+    structs.each do |structure|
+      root_structures << structure if !structure.structure_id
+      if structure.structure_id
+        parents_to_children[structure.structure_id] = (parents_to_children[structure.structure_id] || []) << structure
+      end
+    end
+    structures.concat(add_child_structures(root_structures, parents_to_children))
+  end
+
+  def add_child_structures(structures, parents_to_children)
+    structures = structures && structures.map do |structure|
+      children = add_child_structures(parents_to_children[structure.id], parents_to_children)
+      r = {"type": structure.type.gsub("Structure", "") , "id": structure.resource_id}
+      r["items"] = children if children && children.length > 0
+      r["label"] = {"en": [structure.label]} if r[:type] == "Range"
+      r
+    end
+    return structures || []
+  end
 
   def add_metadata_to_canvas(canvas, child)
     metadata_values = []

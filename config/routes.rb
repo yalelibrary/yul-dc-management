@@ -37,10 +37,11 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       post :sync_from_preservica
       get :select_thumbnail
       get :solr_document
+      get :manifest, :controller => "manifest"
+      post :manifest, :to => "manifest#save"
     end
     resources :versions, only: [:index]
     resources :range
-    resources :manifest, only: [:index]
   end
 
   devise_for :users, skip: [:sessions, :registrations, :passwords], controllers: { omniauth_callbacks: "omniauth_callbacks" }

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class IiifRangeBuilder
-  PREFIX = 'https://collections.library.yale.edu/manifests'
+  #PREFIX = 'https://collections.library.yale.edu/manifests'
+  PREFIX = 'http://localhost/manifests'
 
   def parse_structures(manifest)
     raise 'Not a Manifest' unless manifest['type'] == 'Manifest'
@@ -31,7 +32,7 @@ class IiifRangeBuilder
     destroy_existing_structure(id)
     result = StructureRange.create!(
       resource_id: id,
-      label: range['label']['en'][0],
+      label: range&.[]('label')&.[]('en')&.[](0) || range['label'].to_s,
       position: position,
       parent_object_oid: parent.oid
     )
@@ -55,6 +56,7 @@ class IiifRangeBuilder
     child_id = child_id_from_uri(item['id'], parent.id)
     child = ChildObject.find(child_id)
     StructureCanvas.create!(
+      resource_id: item['id'],
       label: child.label,
       position: position,
       parent_object_oid: parent.oid,
@@ -72,7 +74,7 @@ class IiifRangeBuilder
   end
 
   def parent_oid_from_uri(uri)
-    uri.sub("#{PREFIX}/oid/", '')
+    uri.sub("#{PREFIX}/", '')
   end
 
   def self.parent_uri_from_id(id)
@@ -94,4 +96,9 @@ class IiifRangeBuilder
   def destroy_existing_structure(resource_id)
     Structure.where(resource_id: resource_id).destroy_all
   end
+
+  def destroy_existing_structure_by_parent_oid(parent_oid)
+    Structure.where(parent_object_oid: parent_oid).destroy_all
+  end
+
 end
