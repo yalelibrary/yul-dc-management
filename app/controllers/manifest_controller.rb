@@ -22,7 +22,7 @@ class ManifestController < ApplicationController
       manifest = JSON.parse(request.raw_post)
       builder = IiifRangeBuilder.new
       builder.destroy_existing_structure_by_parent_oid(@parent_object.oid)
-      IiifRangeBuilder.new.parse_structures manifest
+      IiifRangeBuilder.new.parse_structures manifest if manifest["structures"] && !manifest["structures"].empty?
       respond_to do |format|
         format.html { render json: @parent_object.iiif_manifest }
         format.json { render json: @parent_object.iiif_manifest }
