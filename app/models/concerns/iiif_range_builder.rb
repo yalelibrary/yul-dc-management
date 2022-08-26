@@ -31,7 +31,7 @@ class IiifRangeBuilder
     destroy_existing_structure(id)
     result = StructureRange.create!(
       resource_id: id,
-      label: range['label']['en'][0],
+      label: range&.[]('label')&.[]('en')&.[](0) || range['label'].to_s,
       position: position,
       parent_object_oid: parent.oid
     )
@@ -55,6 +55,7 @@ class IiifRangeBuilder
     child_id = child_id_from_uri(item['id'], parent.id)
     child = ChildObject.find(child_id)
     StructureCanvas.create!(
+      resource_id: item['id'],
       label: child.label,
       position: position,
       parent_object_oid: parent.oid,
@@ -72,7 +73,7 @@ class IiifRangeBuilder
   end
 
   def parent_oid_from_uri(uri)
-    uri.sub("#{PREFIX}/oid/", '')
+    uri.sub("#{PREFIX}/oid/", '').sub(/.*manifests\//, '')
   end
 
   def self.parent_uri_from_id(id)
@@ -84,7 +85,7 @@ class IiifRangeBuilder
   end
 
   def child_id_from_uri(uri, parent_oid)
-    uri.sub("#{PREFIX}/oid/#{parent_oid}/canvas/", '')
+    uri.sub(/.*oid\/#{parent_oid}\/canvas\//, '')
   end
 
   def self.child_id_to_uri(child_oid, parent_oid)
@@ -93,5 +94,9 @@ class IiifRangeBuilder
 
   def destroy_existing_structure(resource_id)
     Structure.where(resource_id: resource_id).destroy_all
+  end
+
+  def destroy_existing_structure_by_parent_oid(parent_oid)
+    Structure.where(parent_object_oid: parent_oid).destroy_all
   end
 end
