@@ -31,6 +31,20 @@ RUN bash -l -c " \
 
 COPY jpegs2pdf-1.3.jar $APP_HOME
 
+RUN /sbin/setuser app bash -l -c " \
+     mkdir temp && \
+     rm -rf public/structure-editor && \
+     mkdir -p public/structure-editor && \
+     cd temp && \
+     git clone https://github.com/yalelibrary/yul-dc-structure-editor.git && \
+     cd yul-dc-structure-editor &&  \
+     git checkout auto_load_from_url && \
+     npm install && \
+     npm run build && \
+     mv -v build/* ../../public/structure-editor && \
+     cd ../../ && \
+     rm -rf temp"
+
 ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
 BUNDLE_JOBS=4
 RUN /sbin/setuser app bash -l -c "gem install bundler -v 2.3.8"

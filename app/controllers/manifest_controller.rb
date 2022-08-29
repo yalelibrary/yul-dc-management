@@ -33,6 +33,15 @@ class ManifestController < ApplicationController
     end
   end
 
+  def update_token
+    return unless @token_user&.active_for_authentication?
+    info = { user_id: @token_user&.id }
+    response = {
+      token: jwt_encode(info)
+    }
+    render json: response, status: 200
+  end
+
   def set_token_user
     header = request.headers['Authorization']
     header = header.split(' ').last if header
@@ -47,6 +56,6 @@ class ManifestController < ApplicationController
   end
 
   def set_parent_object
-    @parent_object = ParentObject.find(params[:parent_object_id] || params[:id])
+    @parent_object = (params[:parent_object_id] || params[:id]) && ParentObject.find(params[:parent_object_id] || params[:id])
   end
 end
