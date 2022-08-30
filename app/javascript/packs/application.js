@@ -187,18 +187,18 @@ $( document ).on('turbolinks:load', function() {
           extend: 'excelHtml5',
           text: "Excel",
           exportOptions: {
-						columns: ':visible',
-					},
-					customize: function (xlsx) {
-						return format_excel(xlsx);
-					},
+            columns: ':visible',
+          },
+          customize: function (xlsx) {
+            return format_excel(xlsx);
+          },
         },
         {
           extend: 'csvHtml5',
           action: newExportAction,
           text: "All Matching Entries",
           className: "export-all",
-					customize: function (csv) {
+          customize: function (csv) {
             return format_csv(csv)
           }
         }, 
@@ -290,30 +290,30 @@ const format_csv = (csv) => {
 
 // used to convert csv headers to snake case
 function snake_case(string) {
-	return string.toLowerCase().replace(/ /g, '_')
+  return string.toLowerCase().replace(/ /g, '_')
 }
 
 const format_excel = (xlsx) => {
-	let sheet = xlsx.xl.worksheets['sheet1.xml'];
-	let headerRowData = $('row[r=2] c is t', sheet);
-	let columnHeaderArray = [];
-	let formattedHeaders = [];
+  let sheet = xlsx.xl.worksheets['sheet1.xml'];
+  let headerRowData = $('row[r=2] c is t', sheet);
+  let columnHeaderArray = [];
+  let formattedHeaders = [];
 
-	for (let i = 0; i < headerRowData.length; i++) {
-		columnHeaderArray.push(headerRowData[i].childNodes[0].nodeValue);
-	}
+  for (let i = 0; i < headerRowData.length; i++) {
+    columnHeaderArray.push(headerRowData[i].childNodes[0].nodeValue);
+  }
 
-	columnHeaderArray.map((label) => {
-		formattedHeaders.push(snake_case(label));
-	});
+  columnHeaderArray.map((label) => {
+    formattedHeaders.push(snake_case(label));
+  });
 
-	for (let i = 0; i < formattedHeaders.length; i++) {
-		for (let y = 0; y < headerRowData.length; y++) {
-			if (i === y) {
-				$(headerRowData[y]).text(formattedHeaders[i])
-			}
-		}
-	}
+  for (let i = 0; i < formattedHeaders.length; i++) {
+    for (let y = 0; y < headerRowData.length; y++) {
+      if (i === y) {
+        $(headerRowData[y]).text(formattedHeaders[i])
+      }
+    }
+  }
 };
 
 $( document ).on('turbolinks:load', function() {
