@@ -303,7 +303,7 @@ const format_excel = (xlsx) => {
     columnHeaderArray.push(headerRowData[i].childNodes[0].nodeValue);
   }
 
-  columnHeaderArray.map((label) => {
+  columnHeaderArray.forEach((label) => {
     return formattedHeaders.push(snake_case(label));
   });
 
