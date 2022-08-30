@@ -188,13 +188,7 @@ $( document ).on('turbolinks:load', function() {
           text: "Excel",
           exportOptions: {
 						columns: ':visible',
-						// body: function (data, row, column, node) {
-						// 	return row === 2 ? data.toLowerCase().replace(/ /g, '_') : data;
-						// },
 					},
-					// customize: function (data, row, column, node) {
-					// 	return row === 2 ? data.toLowerCase().replace(/ /g, '_') : data;
-					// },
 					customize: function (xlsx) {
 						return format_excel(xlsx);
 					},
@@ -203,8 +197,11 @@ $( document ).on('turbolinks:load', function() {
           extend: 'csvHtml5',
           action: newExportAction,
           text: "All Matching Entries",
-          className: "export-all"
-        }
+          className: "export-all",
+					customize: function (csv) {
+            return format_csv(csv)
+          }
+        }, 
       ],
       // pagingType is optional, if you want full pagination controls.
       // Check dataTables documentation to learn more about
@@ -298,12 +295,10 @@ function snake_case(string) {
 
 const format_excel = (xlsx) => {
 	let sheet = xlsx.xl.worksheets['sheet1.xml'];
-	// let t = sheet.getElementsByTagName('t');
 	let headerRowData = $('row[r=2] c is t', sheet);
-	let bodyData = $('row[r=3] c', sheet);
 	let columnHeaderArray = [];
 	let formattedHeaders = [];
-	
+
 	for (let i = 0; i < headerRowData.length; i++) {
 		columnHeaderArray.push(headerRowData[i].childNodes[0].nodeValue);
 	}
@@ -312,25 +307,13 @@ const format_excel = (xlsx) => {
 		formattedHeaders.push(snake_case(label));
 	});
 
-  // returns 't' populated in each header
-	// $.each(formattedHeaders, function (i, value) {
-	// 	headerRowData = $('row[r=2] c is t', sheet).text(value[i]);
-	// 	$('#headerRowData').append('.text(' + value + ')');
-	// });
-
-	// returns only the last value
-	// $.each(formattedHeaders, function (index, value) {
-	// 	headerRowData = $('row[r=2] c is t', sheet).text(value);
-	// });
-
-	// returns a comma separated list
-	// $.each(formattedHeaders, function (index, value) {
-	// 	string = value + ',';
-	// 	console.log(string);
-	// });
-
-	// return formattedHeaders + '\n' + bodyData;
-	// return newHeaderData;
+	for (let i = 0; i < formattedHeaders.length; i++) {
+		for (let y = 0; y < headerRowData.length; y++) {
+			if (i === y) {
+				$(headerRowData[y]).text(formattedHeaders[i])
+			}
+		}
+	}
 };
 
 $( document ).on('turbolinks:load', function() {
