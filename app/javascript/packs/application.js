@@ -38,155 +38,155 @@ window.JSZip = JSZip;
 
 let dataTable;
 $( document ).on('turbolinks:load', function() {
-	let initialColumnSearchValues = [];
+  let initialColumnSearchValues = [];
   if($('.is-datatable').length > 0 && !$('.is-datatable').hasClass('dataTable')){
     let columns = JSON.parse($(".datatable-data").text());
-		// load the information about which columns are visible for this page
+    // load the information about which columns are visible for this page
     let dataTableStorageKey = "DT-columns-" + btoa(document.location.href);
-		let columnInfo = localStorage.getItem(dataTableStorageKey);
+    let columnInfo = localStorage.getItem(dataTableStorageKey);
     try { columnInfo = columnInfo && JSON.parse(columnInfo); } catch (e) { columnInfo = null; }
     columns = columns.map(function (col) {if (columnInfo && columnInfo[col.data] && columnInfo[col.data].hidden) col.visible = false; return col } )
     let hasSearch = columns.some(function(col){return col.searchable;});
     const onColumnsUpdate = function(dataTable) {
       let colVisibilityMap = createSearchRow(dataTable);
       localStorage.setItem(dataTableStorageKey, JSON.stringify(colVisibilityMap));
-		}
+    }
     const createSearchRow = function(dataTable) {
-			$('#search-row').remove();
-			let searchRow = $("<tr role='row' id='search-row'></tr>");
-			let index = 0;
+      $('#search-row').remove();
+      let searchRow = $("<tr role='row' id='search-row'></tr>");
+      let index = 0;
       let colVisibilityMap = {}
       dataTable.api().columns().every(function () {
-					let column = this;
-					let searchInit = initialColumnSearchValues[index];
-					let colDef = columns[index++];
+        let column = this;
+        let searchInit = initialColumnSearchValues[index];
+        let colDef = columns[index++];
         colVisibilityMap[colDef.data] = {hidden:!column.visible()};
-					if (!column.visible()) return;
-					if (colDef.searchable) {
-						let th = $("<th class='datatable-search-row'/>");
-						let input = null;
-						if (colDef.options) {
+        if (!column.visible()) return;
+        if (colDef.searchable) {
+          let th = $("<th class='datatable-search-row'/>");
+          let input = null;
+          if (colDef.options) {
             input = $("<select><option>All</option>" + colDef.options.map(function (option) {
               if (typeof option==="string"){
                 option={value:option, label:option}
-										}
-										if (option.selected) {
+              }
+              if (option.selected) {
                 column.search(option.value)
-										}
+              }
               return "<option value='"+ option.value +"' "+ (option.selected ? "selected": '') + ">" + option.label + "</option>"
             }) + "</select>");
-						} else {
+          } else {
             input = $("<input type='text' size='12' placeholder='" + $(column.header()).text() + "' />");
-						}
+          }
           (input).on('keyup change clear', function () {
-							let v = this.value;
+            let v = this.value;
             if (v === "All" && colDef.options) v = "";
-							if (column.search() !== v) {
-								column.search(v);
-								scheduleDraw();
-							}
-						});
-						searchRow.append(th.append(input));
-						input.val(searchInit);
-					} else {
+            if (column.search() !== v) {
+              column.search(v);
+              scheduleDraw();
+            }
+          });
+          searchRow.append(th.append(input));
+          input.val(searchInit);
+        } else {
           searchRow.append("<th />");
-					}
-				});
-			$(dataTable.api().table().header()).append(searchRow);
-			// store the information about which columns are visible for this page
-			return colVisibilityMap;
+        }
+      });
+      $(dataTable.api().table().header()).append(searchRow);
+      // store the information about which columns are visible for this page
+      return colVisibilityMap;
     }
 
-		var oldExportAction = function (self, e, dt, button, config) {
-			if (button[0].className.indexOf('buttons-csv') >= 0) {
-				if ($.fn.dataTable.ext.buttons.csvHtml5.available(dt, config)) {
+    var oldExportAction = function (self, e, dt, button, config) {
+      if (button[0].className.indexOf('buttons-csv') >= 0) {
+        if ($.fn.dataTable.ext.buttons.csvHtml5.available(dt, config)) {
           $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config);
         }
         else {
           $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
-				}
-			} else if (button[0].className.indexOf('buttons-print') >= 0) {
-				$.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
-			}
-		};
+        }
+      } else if (button[0].className.indexOf('buttons-print') >= 0) {
+        $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+      }
+    };
 
-		var newExportAction = function (e, dt, button, config) {
-			var self = this;
-			var oldStart = dt.settings()[0]._iDisplayStart;
+    var newExportAction = function (e, dt, button, config) {
+      var self = this;
+      var oldStart = dt.settings()[0]._iDisplayStart;
 
-			dt.one('preXhr', function (e, s, data) {
-				// Just this once, load all data from the server...
-				data.start = 0;
-				data.length = 150000;
+      dt.one('preXhr', function (e, s, data) {
+        // Just this once, load all data from the server...
+        data.start = 0;
+        data.length = 150000;
 
-				dt.one('preDraw', function (e, settings) {
-					// Call the original action function
-					oldExportAction(self, e, dt, button, config);
+        dt.one('preDraw', function (e, settings) {
+          // Call the original action function
+          oldExportAction(self, e, dt, button, config);
 
-					dt.one('preXhr', function (e, s, data) {
-						// DataTables thinks the first item displayed is index 0, but we're not drawing that.
-						// Set the property to what it was before exporting.
-						settings._iDisplayStart = oldStart;
-						data.start = oldStart;
-					});
+          dt.one('preXhr', function (e, s, data) {
+            // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+            // Set the property to what it was before exporting.
+            settings._iDisplayStart = oldStart;
+            data.start = oldStart;
+          });
 
-					// Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
-					setTimeout(dt.ajax.reload, 0);
+          // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+          setTimeout(dt.ajax.reload, 0);
 
-					// Prevent rendering of the full data to the DOM
-					return false;
-				});
-			});
+          // Prevent rendering of the full data to the DOM
+          return false;
+        });
+      });
 
-			// Requery the server with the new one-time export settings
-			dt.ajax.reload();
-		};
+      // Requery the server with the new one-time export settings
+      dt.ajax.reload();
+    };
 
-		dataTable = $('.is-datatable').dataTable({
+    dataTable = $('.is-datatable').dataTable({
       "deferLoading":true,
       "processing": true,
       "serverSide": true,
       "stateSave": true,
       "ajax": {
         "url": $('.is-datatable').data('source')
-			},
+      },
       "pagingType": "full_numbers",
       "bAutoWidth": false, // AutoWidth has issues with hiding and showing columns as startup
       "columns": columns,
       "order": columnOrder(columns),
       "lengthMenu": [[50, 100, 500], [50, 100, 500]],
-			// This will disable the export all button when there are more than 12K records
+      // This will disable the export all button when there are more than 12K records
       "fnDrawCallback": function( oSettings ) {
         $('.export-all').attr('disabled', oSettings.fnRecordsDisplay() > 12000)
-			},
+      },
       "sDom":hasSearch?'Blrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
-			buttons: [
-				{
+      buttons: [
+        {
           text: "Clear Filters",
           className: "clear-filters-button",
-					action: () => {
+          action: () => {
             dataTable.api().columns().search('').visible( true, true ).order('asc' ).state.clear().draw() ;
             $(".datatable-search-row input").val("");
           }
-				},
-				{
-					extend: 'colvis',
+        },
+        {
+          extend: 'colvis',
           text: "\u25EB"
-				},
-				{
-					extend: 'csvHtml5',
+        },
+        {
+          extend: 'csvHtml5',
           text: "CSV",
-					exportOptions: {
-						columns: ':visible',
-					},
-					customize: function (csv) {
+          exportOptions: {
+            columns: ':visible',
+          },
+          customize: function (csv) {
             return format_csv(csv)
           }
-				},
-				{
-					extend: 'excelHtml5',
+        },
+        {
+          extend: 'excelHtml5',
           text: "Excel",
-					exportOptions: {
+          exportOptions: {
 						columns: ':visible',
 						// body: function (data, row, column, node) {
 						// 	return row === 2 ? data.toLowerCase().replace(/ /g, '_') : data;
@@ -198,52 +198,52 @@ $( document ).on('turbolinks:load', function() {
 					customize: function (xlsx) {
 						return format_excel(xlsx);
 					},
-				},
-				{
-					extend: 'csvHtml5',
-					action: newExportAction,
+        },
+        {
+          extend: 'csvHtml5',
+          action: newExportAction,
           text: "All Matching Entries",
           className: "export-all"
         }
-			],
-			// pagingType is optional, if you want full pagination controls.
-			// Check dataTables documentation to learn more about
-			// available options.
-			initComplete: function () {
-				if (hasSearch) onColumnsUpdate(this);
-			},
-			stateLoaded: function (e, setting, data) {
-				// load the search settings when state is loaded by the datatable to fill in the inputs.
+      ],
+      // pagingType is optional, if you want full pagination controls.
+      // Check dataTables documentation to learn more about
+      // available options.
+      initComplete: function () {
+        if (hasSearch) onColumnsUpdate(this);
+      },
+      stateLoaded: function (e, setting, data) {
+        // load the search settings when state is loaded by the datatable to fill in the inputs.
         setting.columns.forEach((c) => initialColumnSearchValues.push(c.search.search));
       }
 
     })
-		dataTable.api().draw();
+    dataTable.api().draw();
 
     $('.is-datatable').on( 'column-visibility.dt', function ( e, settings, column, state ) {
-				// Check for data-destroying because this gets called after turbo links updates document.location and the
-				// datatable is destroyed in turbolinks:before-cache. In that case, don't create the search row or
-				// write the column information to localStorage using the wrong document.location.href
+      // Check for data-destroying because this gets called after turbo links updates document.location and the
+      // datatable is destroyed in turbolinks:before-cache. In that case, don't create the search row or
+      // write the column information to localStorage using the wrong document.location.href
       if (hasSearch && "true" !== $( '.is-datatable' ).data("destroying")) onColumnsUpdate($( '.is-datatable' ).dataTable());
     } );
 
 
     $(document).on('turbolinks:before-cache', function(){
       $( '.is-datatable' ).data("destroying", "true");
-			dataTable.api().destroy();
-			$('#search-row').remove();
+      dataTable.api().destroy();
+      $('#search-row').remove();
     })
-	}
+  }
 
-	$('.export-all span').hover(
+  $('.export-all span').hover(
       function() {
         if ($(this).parent("button").attr('disabled')) {
           $(this).html("Please use all parents batch job");
-			}
+        }
       }, function() {
         if ($(this).parent("button").attr('disabled')) {
           $( this ).html("All Matching Entries");
-			}
+        }
       }
   )
 });
@@ -254,13 +254,13 @@ $( document ).on('turbolinks:load', function() {
 //  it will wait and make one request to the server.
 let drawTimer = 0;
 let scheduleDraw = function() {
-	if (drawTimer) clearInterval(drawTimer);
-	drawTimer = setInterval(triggerDraw, 500);
+  if (drawTimer) clearInterval(drawTimer);
+  drawTimer = setInterval(triggerDraw, 500);
 }
 let triggerDraw = function() {
-	clearInterval(drawTimer);
-	drawTimer = 0;
-	dataTable.api().draw();
+  clearInterval(drawTimer);
+  drawTimer = 0;
+  dataTable.api().draw();
 }
 
 // This will order all datatables by the first column descending
@@ -273,21 +273,21 @@ const columnOrder = (columns) => {
   columns.forEach((c,ix)=>{
     if ( c.sort_order ) {
       columnOrder.push([ix, c.sort_order])
-		}
+    }
   })
-	return columnOrder;
+  return columnOrder;
 }
 
 // used to change the styling of the csv
 const format_csv = (csv) => {
   var lines = csv.split("\n").length;
-	var csvRows = csv.split('\n');
+  var csvRows = csv.split('\n');
   var formatted_header = snake_case(csvRows[0])
   var csv_content = []
-	for (let i = 1; i < lines; i++) {
+  for (let i = 1; i < lines; i++) {
     csv_content += csvRows[i]
     csv_content += '\n'
-	}
+  }
   return (formatted_header + '\n' + csv_content);
 }
 
@@ -303,8 +303,7 @@ const format_excel = (xlsx) => {
 	let bodyData = $('row[r=3] c', sheet);
 	let columnHeaderArray = [];
 	let formattedHeaders = [];
-	// let string = '';
-
+	
 	for (let i = 0; i < headerRowData.length; i++) {
 		columnHeaderArray.push(headerRowData[i].childNodes[0].nodeValue);
 	}
@@ -330,16 +329,6 @@ const format_excel = (xlsx) => {
 	// 	console.log(string);
 	// });
 
-	// returns error 'h.text is not a function'
-	// for (let i = 0; i < formattedHeaders.length; i++) {
-	// 	headerRowData.each((h) => {
-	// 		h.text(formattedHeaders[i]);
-	// 	});
-	// 	console.log(headerRowData);
-	// 	// headerRowData.text(formattedHeaders[i]);
-	// }
-
-	// console.log(sheet);
 	// return formattedHeaders + '\n' + bodyData;
 	// return newHeaderData;
 };
