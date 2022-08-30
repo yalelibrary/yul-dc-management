@@ -304,8 +304,7 @@ const format_excel = (xlsx) => {
   }
 
   columnHeaderArray.map((label) => {
-    formattedHeaders.push(snake_case(label));
-    return
+    return formattedHeaders.push(snake_case(label));
   });
 
   for (let i = 0; i < formattedHeaders.length; i++) {
