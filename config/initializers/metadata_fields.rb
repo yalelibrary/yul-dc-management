@@ -58,6 +58,12 @@ METADATA_FIELDS = {
       'digitization_note_tesi'
     ]
   },
+  digitization_funding_source: {
+    label: 'Digitization Note',
+    solr_fields: [
+      'digitization_funding_source_tesi'
+    ]
+  },
   extent: {
     label: 'Extent',
     solr_fields: [

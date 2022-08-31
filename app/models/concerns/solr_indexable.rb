@@ -123,6 +123,7 @@ module SolrIndexable
         description_tesim: json_to_index["description"],
         digital_ssim: json_to_index["digital"],
         digitization_note_tesi: generate_digitization_note(json_to_index["digitization_note"]),
+        digitization_funding_source_tesi: generate_digitization_funding_source(json_to_index["digitization_funding_source"]),
         edition_ssim: json_to_index["edition"],
         extent_ssim: json_to_index["extent"],
         extentOfDigitization_ssim: extent_of_digitization,
@@ -280,6 +281,10 @@ module SolrIndexable
 
   def generate_digitization_note(digitization_note)
     digitization_note.presence || self&.digitization_note || nil
+  end
+
+  def generate_digitization_funding_source(digitization_funding_source)
+    digitization_funding_source.presence || self&.digitization_funding_source || nil
   end
 
   # not ASpace records will use the repository value
