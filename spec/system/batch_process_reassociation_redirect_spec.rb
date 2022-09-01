@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
   let(:batch_process) { described_class.new(batch_action: "reassociate child oids") }
   let(:user) { FactoryBot.create(:user) }
-  let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
+  let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl', id: 1) }
   # parent object has two child objects
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
   let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "2004550", admin_set_id: admin_set.id) }

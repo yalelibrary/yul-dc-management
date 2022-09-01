@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_06_214806) do
+ActiveRecord::Schema.define(version: 2022_08_19_214823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 2022_07_06_214806) do
     t.string "batch_status"
     t.string "batch_action", default: "create parent objects"
     t.string "output_csv"
+    t.string "admin_set"
     t.index ["oid"], name: "index_batch_processes_on_oid"
     t.index ["user_id"], name: "index_batch_processes_on_user_id"
   end
