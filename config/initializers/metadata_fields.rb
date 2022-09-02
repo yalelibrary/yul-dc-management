@@ -59,7 +59,7 @@ METADATA_FIELDS = {
     ]
   },
   digitization_funding_source: {
-    label: 'Digitization Note',
+    label: 'Digitization Funding Source',
     solr_fields: [
       'digitization_funding_source_tesi'
     ]
