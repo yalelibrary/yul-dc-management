@@ -69,7 +69,7 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
- config.file_watcher = ActiveSupport::FileUpdateChecker
+  config.file_watcher = ActiveSupport::FileUpdateChecker
 
   # Set the initial value for the OID sequence.
   # The dev and test environments have very high starting values to distinguish from prod

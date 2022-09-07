@@ -15,9 +15,9 @@ capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
 
 Capybara.register_driver :chrome do |app|
   d = Capybara::Selenium::Driver.new(app,
-    browser: :remote,
-    desired_capabilities: capabilities,
-    url: "http://chrome:4444/wd/hub")
+                                     browser: :remote,
+                                     desired_capabilities: capabilities,
+                                     url: "http://chrome:4444/wd/hub")
   # Fix for capybara vs remote files. Selenium handles this for us
   d.browser.file_detector = lambda do |args|
     str = args.first.to_s
@@ -27,36 +27,8 @@ Capybara.register_driver :chrome do |app|
 end
 Capybara.server_host = '0.0.0.0'
 Capybara.server_port = 3007
+Capybara.always_include_port = true
 Capybara.app_host = "http://#{ENV['WEB_HOST']}:#{Capybara.server_port}"
-
-# Capybara.register_driver :chrome_headless do |app|
-#   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-#     chromeOptions: {
-#       args: %w[headless disable-dev-shm-usage disable-gpu no-sandbox whitelisted-ips window-size=1400,1400]
-#     }
-#   )
-
-#   client = Selenium::WebDriver::Remote::Http::Default.new
-#   client.read_timeout = 120
-
-#   d = Capybara::Selenium::Driver.new(app,
-#     browser: :remote,
-#     desired_capabilities: capabilities,
-#     url: "http://chrome:4444/wd/hub",
-#     http_client: client)
-
-#   # Fix for capybara vs remote files. Selenium handles this for us
-#   d.browser.file_detector = lambda do |args|
-#     str = args.first.to_s
-#     str if File.exist?(str)
-#   end
-#   d
-# end
-
-# Capybara.server_host = '0.0.0.0'
-# Capybara.server_port = 3001
-# Capybara.app_host = "http://#{ENV['WEB_HOST']}:#{Capybara.server_port}"
-
 Capybara.javascript_driver = :chrome
 
 # Setup rspec
@@ -66,6 +38,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :system, js: true) do
+    # rails system specs reset app_host each time so needs to be forced on each test
+    Capybara.app_host = "http://#{ENV['WEB_HOST']}:#{Capybara.server_port}"
     driven_by :chrome
   end
 end
