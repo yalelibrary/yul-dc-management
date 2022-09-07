@@ -3,6 +3,7 @@ require 'rails_helper'
 
 RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
   let(:user) { FactoryBot.create(:user, uid: "johnsmith2530") }
+  let(:admin_set) { FactoryBot.create(:admin_set, id: 2) }
   before do
     stub_ptiffs_and_manifests
     stub_metadata_cloud("2004628")
@@ -123,6 +124,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       )
     end
     it "can see the details of the import" do
+      admin_set
       visit batch_process_path(batch_process)
       expect(page).to have_content(batch_process.id.to_s)
       expect(page).to have_content("johnsmith2530")
@@ -143,6 +145,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       )
     end
     it "can see the details of the import" do
+      admin_set
       visit batch_process_path(batch_process)
       expect(page).to have_content(batch_process.id.to_s)
       expect(page).to have_content("johnsmith2530")
