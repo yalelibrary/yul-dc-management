@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe PreservicaIngestDatatable, type: :datatable, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
+  let(:admin_set) { FactoryBot.create(:admin_set, id: 2) }
   columns = ['parent_oid', 'child_oid', 'parent_preservica_id', 'parent_preservica_id', 'batch_process_id', 'timestamp']
 
   it 'can handle an empty model set' do
@@ -25,6 +26,7 @@ RSpec.describe PreservicaIngestDatatable, type: :datatable, prep_metadata_source
     end
 
     it 'renders data with proper permissions' do
+      admin_set
       batch_process_xml
       output = PreservicaIngestDatatable.new(datatable_sample_params(columns), current_ability: Ability.new(user)).data
 
