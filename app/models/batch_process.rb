@@ -369,17 +369,25 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # METS METADATA CLOUD: ------------------------------------------------------------------------- #
 
   # MAKES CALL FOR UPDATED DATA
+  # rubocop:disable Metrics/AbcSize
   def refresh_metadata_cloud_mets
     metadata_source = mets_doc.metadata_source
+    self.admin_set = ''
+    sets = admin_set
     if ParentObject.exists?(oid: oid)
       batch_processing_event("Skipping mets import for existing parent: #{oid}", 'Skipped Import')
       return
     end
     ParentObject.create(oid: oid) do |parent_object|
       set_values_from_mets(parent_object, metadata_source)
+      sets << ', ' + parent_object.admin_set.key
+      split_sets = sets.split(',').uniq.reject(&:blank?)
+      self.admin_set = split_sets.join(', ')
+      save
     end
     PreservicaIngest.create(parent_oid: oid, preservica_id: mets_doc.parent_uuid, batch_process_id: id, ingest_time: Time.current) unless mets_doc.parent_uuid.nil?
   end
+  # rubocop:enable Metrics/AbcSize
 
   # SETS VALUES FROM METS METADATA
   # rubocop:disable Metrics/AbcSize
