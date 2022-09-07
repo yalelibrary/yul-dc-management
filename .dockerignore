@@ -8,5 +8,7 @@ log/*
 tmp
 yarn.lock
 .github
+data
 data_samples
 config/cas_users.csv
+vips_8.10.2-1_amd64.deb

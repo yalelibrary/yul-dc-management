@@ -91,5 +91,5 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'timecop'
-  gem 'webdrivers'
+  gem 'webdrivers', require: false
 end
