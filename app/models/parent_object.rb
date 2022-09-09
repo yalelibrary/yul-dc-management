@@ -141,6 +141,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         self.last_preservica_update = Time.current
         self.metadata_update = true
         save!
+        batch_processes[0].batch_status = "Complete"
       end
     else
       return unless ladybird_json
