@@ -1,5 +1,4 @@
-# TODO put this back FROM yalelibraryit/dc-base:v1.4.0
-FROM registry.gitlab.com/notch8/dev-ops/dc-base:v1.4.0
+FROM yalelibraryit/dc-base:v1.4.0
 
 COPY ops/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 COPY ops/env.conf /etc/nginx/main.d/env.conf
