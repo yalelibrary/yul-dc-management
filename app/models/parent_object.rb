@@ -141,7 +141,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         self.last_preservica_update = Time.current
         self.metadata_update = true
         save!
-        batch_processes[0].batch_status = "Complete"
       end
     else
       return unless ladybird_json
@@ -231,6 +230,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       replace_preservica_tif(co)
       co.save
     end
+    self.metadata_update = true
+    save!
 
     # create child records for any new items in preservica
     create_child_records
