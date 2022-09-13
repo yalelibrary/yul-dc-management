@@ -264,6 +264,7 @@ module SolrIndexable
     ancestor_title.each do |anc|
       prev_string += (ancestor_title[arr_size - 1]).to_s + " > " unless arr_size.zero?
       anc = prev_string + anc + " > "
+      anc.gsub!("&amp;", "&")
       formatted = anc[0...-3]
       anc_struct.push(formatted)
       arr_size += 1
@@ -289,6 +290,11 @@ module SolrIndexable
 
   # not ASpace records will use the repository value
   def generate_ancestor_title(ancestor_title)
+    ancestor_title = if ancestor_title&.is_a?(Array)
+                       ancestor_title.map { |a| a.gsub("&amp;", "&") }
+                     else
+                       ancestor_title.present? ? ancestor_title.gsub("&amp;", "&") : ""
+                     end
     ancestor_title.presence || [self&.admin_set&.label] || nil
   end
 

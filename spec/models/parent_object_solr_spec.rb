@@ -250,11 +250,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         expect(solr_document[:repository_ssi]).to eq "MyString"
         expect(solr_document[:archivalSort_ssi]).to include "00002.00000"
         expect(solr_document[:ancestorTitles_tesim]).to include "Oversize",
+                                                                "Savage & Ottinger",
                                                                 "Abraham Lincoln collection (GEN MSS 257)",
                                                                 "Beinecke Rare Book and Manuscript Library"
         expect(solr_document[:ancestor_titles_hierarchy_ssim].first).to eq "Beinecke Rare Book and Manuscript Library"
         expect(solr_document[:ancestor_titles_hierarchy_ssim][1]).to eq "Beinecke Rare Book and Manuscript Library > Abraham Lincoln collection (GEN MSS 257)"
-        expect(solr_document[:ancestor_titles_hierarchy_ssim].last).to eq "Beinecke Rare Book and Manuscript Library > Abraham Lincoln collection (GEN MSS 257) > Oversize"
+        expect(solr_document[:ancestor_titles_hierarchy_ssim].last).to eq "Beinecke Rare Book and Manuscript Library > Abraham Lincoln collection (GEN MSS 257) > Savage & Ottinger > Oversize"
         expect(solr_document[:collection_title_ssi]).to include "Abraham Lincoln collection (GEN MSS 257)"
         expect(solr_document[:series_ssi]).to include "Oversize"
         expect(solr_document[:ancestorDisplayStrings_tesim]).to include "Oversize, n.d.",
