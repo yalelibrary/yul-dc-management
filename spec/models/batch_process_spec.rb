@@ -181,7 +181,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     describe 'recreating child oid ptiffs' do
-      # let(:admin_set_recreate) { FactoryBot.create(:admin_set) }
       let(:role) { FactoryBot.create(:role, name: editor) }
       let(:parent_object) { ParentObject.find(30_000_317) }
       let(:child_object) { parent_object.child_objects.first }
