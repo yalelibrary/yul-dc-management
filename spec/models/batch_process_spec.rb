@@ -114,6 +114,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       po = ParentObject.find(30_000_557)
       expect(po.admin_set).not_to be_nil
       expect(po.admin_set.key).to eq "brbl"
+      expect(batch_process.admin_set).to eq " brbl"
     end
 
     it "creates a preservica ingest with parent uuid from the METs document" do
@@ -123,6 +124,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       pj = PreservicaIngest.find_by_parent_oid(30_000_557)
       expect(pj.preservica_id).to eq "c91ce4e1-10d2-4e33-8df3-83f081ff0125"
       expect(pj.batch_process_id).to eq batch_process.id
+      expect(batch_process.admin_set).to eq " brbl"
     end
 
     context "when parent object already exists" do
