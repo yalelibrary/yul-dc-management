@@ -124,7 +124,6 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       )
     end
     it "can see the details of the import" do
-      admin_set
       visit batch_process_path(batch_process)
       expect(page).to have_content(batch_process.id.to_s)
       expect(page).to have_content("johnsmith2530")
