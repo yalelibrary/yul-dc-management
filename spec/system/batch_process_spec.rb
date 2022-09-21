@@ -192,6 +192,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.parent_output_csv).to include "2034600"
         expect(BatchProcess.last.parent_output_csv).to include "Preservica"
         expect(BatchProcess.last.parent_output_csv).to include "/preservica_uri"
+        expect(BatchProcess.last.parent_output_csv).to include "brbl"
         expect(BatchProcess.last.parent_output_csv).not_to include "2005512"
       end
 
