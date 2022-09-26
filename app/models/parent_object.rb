@@ -230,8 +230,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       replace_preservica_tif(co)
       co.save
     end
-    self.metadata_update = true
-    save!
 
     # create child records for any new items in preservica
     create_child_records
