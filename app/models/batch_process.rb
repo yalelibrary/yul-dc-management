@@ -448,10 +448,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
                                                                         generation_uri: preservica_co[:preservica_generation_uri],
                                                                         bitstream_uri: preservica_co[:preservica_bitstream_uri] }
         end
-      rescue PreservicaImageServiceNetworkError => e
+      rescue PreservicaImageService::PreservicaImageServiceNetworkError => e
         batch_processing_event("Parent OID: #{row['oid']} because of #{e.message}", 'Skipped Import')
         raise
-      rescue PreservicaImageServiceError => e
+      rescue PreservicaImageService::PreservicaImageServiceError => e
         batch_processing_event("Parent OID: #{row['oid']} because of #{e.message}", 'Skipped Import')
         next
       end
