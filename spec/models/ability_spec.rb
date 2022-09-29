@@ -11,11 +11,17 @@ RSpec.describe Ability, type: :model do
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 16_057_779, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
   let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_object) }
   let(:child_object2) { FactoryBot.create(:child_object, oid: 900_000_000, parent_object: parent_object) }
+  let(:permission_set) { FactoryBot.create(:permission_set) }
 
   describe 'for a sysadmin' do
     it 'grants manage role to User' do
       ability = Ability.new(sysadmin_user)
       assert ability.can?(:manage, User)
+    end
+
+    it 'grants crud roles to Permission Set' do
+      ability = Ability.new(sysadmin_user)
+      assert ability.can?(:crud, PermissionSet)
     end
 
     it 'grants read access to a ParentObject' do
@@ -220,6 +226,38 @@ RSpec.describe Ability, type: :model do
     it "disallows allow add_member on an Admin Set" do
       ability = Ability.new(user)
       assert ability.cannot?(:add_member, admin_set)
+    end
+  end
+
+  describe 'for an approver on Permission Sets' do
+    before do
+      user.add_role :approver, permission_set
+    end
+    it 'allows approver to read Permission Set' do
+      ability = Ability.new(user)
+      assert ability.can?(:read, permission_set)
+    end
+    it 'allows approver to approve Permission Set' do
+      ability = Ability.new(user)
+      assert ability.can?(:approve, permission_set)
+    end
+    it 'does not allow approver to crud Permission Set' do
+      ability = Ability.new(user)
+      assert ability.cannot?(:crud, permission_set)
+    end
+  end
+
+  describe 'for an administrator on Permission Sets' do
+    before do
+      user.add_role :administrator, permission_set
+    end
+    it 'allows administrator to crud Permission Set' do
+      ability = Ability.new(user)
+      assert ability.can?(:crud, permission_set)
+    end
+    it 'allows administrator to approve Permission Set' do
+      ability = Ability.new(user)
+      assert ability.can?(:approve, permission_set)
     end
   end
 end
