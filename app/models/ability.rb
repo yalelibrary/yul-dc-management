@@ -3,6 +3,7 @@
 class Ability
   include CanCan::Ability
 
+  # rubocop:disable Metrics/AbcSize
   def initialize(user)
     alias_action :create, :read, :update, :destroy, to: :crud
     return unless user
@@ -20,6 +21,7 @@ class Ability
     can [:read, :approve], PermissionSet, roles: { name: approver_roles, users: { id: user.id } }
     can [:crud, :approve], PermissionSet, roles: { name: administrator_roles, users: { id: user.id } }
   end
+  # rubocop:enable Metrics/AbcSize
 
   def apply_sysadmin_abilities
     can :manage, User
