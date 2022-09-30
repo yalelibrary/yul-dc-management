@@ -227,7 +227,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_no_sha_pattern_1
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] SHA mismatch found in Preservica for bitstream: 1.").or start_with("Skipping row [2] Failed to open TCP connection to testpreservica:443 (Connection refused")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] SHA mismatch found in Preservica for bitstream: 1.").or start_with("Skipping row [2] Failed to open TCP connection to testpreservica:443")
     end.to change { ChildObject.count }.by(0)
   end
 
