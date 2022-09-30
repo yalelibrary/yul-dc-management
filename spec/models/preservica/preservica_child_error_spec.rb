@@ -134,7 +134,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_with_children
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] Unable to log in to Preservica for /preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5.")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] Unable to log in for /preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5.")
     end.to change { ChildObject.count }.by(0)
   end
 
@@ -143,7 +143,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_no_structural
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] Unable to log in to Preservica for /preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519d6.")
+      expect(batch_process.batch_ingest_events[0].reason).to start_with("Skipping row [2] Failed to open TCP connection to testpreservica:443")
     end.to change { ChildObject.count }.by(0)
   end
 
