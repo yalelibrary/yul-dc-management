@@ -40,8 +40,9 @@ class PreservicaImageService
       elsif @pattern == :pattern_two
         @information_objects = [Preservica::InformationObject.where(admin_set_key: @admin_set_key, id: (@uri.split('/')[-1]).to_s)]
       end
-    rescue StandardError
-      raise PreservicaImageServiceError.new("Unable to log in to Preservica", @uri.to_s)
+    rescue StandardError => e
+      # raise PreservicaImageServiceError.new("Unable to log in to Preservica", @uri.to_s)
+      raise PreservicaImageServiceError.new(e.to_s, @uri.to_s)
     end
     begin
       process_information_objects(representation_type)
