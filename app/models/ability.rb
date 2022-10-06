@@ -18,6 +18,7 @@ class Ability
     can :reindex_admin_set, AdminSet, roles: { name: editor_roles, users: { id: user.id } }
     can [:crud], ChildObject, parent_object: { admin_set: { roles: { name: editor_roles, users: { id: user.id } } } }
     can [:crud], ParentObject, admin_set: { roles: { name: editor_roles, users: { id: user.id } } }
+    can [:view_list], PermissionSet if user.has_role?(:sysadmin) || user.has_role?(:approver, :any) || user.has_role?(:administrator, :any)
     can [:read, :approve], PermissionSet, roles: { name: approver_roles, users: { id: user.id } }
     can [:crud, :approve], PermissionSet, roles: { name: administrator_roles, users: { id: user.id } }
   end
