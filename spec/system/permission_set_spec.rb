@@ -137,8 +137,8 @@ RSpec.describe "PermissionSets", type: :system, prep_metadata_sources: true do
       it 'approvers and administrators' do
         visit "/permission_sets/#{permission_set.id}"
         expect(page).to have_content("set 1")
-        expect(page).to have_content("#{approver_user.first_name}")
-        expect(page).to have_content("#{administrator_user.first_name}")
+        expect(page).to have_content(approver_user.first_name.to_s)
+        expect(page).to have_content(administrator_user.first_name.to_s)
       end
     end
   end
