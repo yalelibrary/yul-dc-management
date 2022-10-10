@@ -9,15 +9,15 @@
 <table class='table table-striped permission-set-index-table' aria-label='Label Permission Set'>
   <thead class='thead-dark'>
     <tr>
+    <th scope='col'> Key </th>
       <th scope='col'> Label </th>
-      <th scope='col'> Key </th>
     </tr>
   </thead>
   <tbody>
     <% @visible_permission_sets.each do |sets| %>
       <tr>
-        <td class='permission-set-label'><%= sets.label %></td>
         <td class='permission-set-label'><%= sets.key %></td>
+        <td class='permission-set-label'><%= link_to sets.label, permission_set_path(sets)  %></td>
       </tr>
     <% end %>
   </tbody>
