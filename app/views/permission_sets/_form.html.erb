@@ -1,0 +1,32 @@
+<%= form_with(model: permission_set, local: true) do |form| %>
+  <% if permission_set.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(permission_set.errors.count, "error") %> prohibited this permission_set from being saved:</h2>
+
+      <ul>
+        <% permission_set.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field form-group">
+    <%= form.label :key %>
+    <%= form.text_field(:key, required: true, class: "form-control") %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :label %>
+    <%= form.text_field(:label, required: true, class: "form-control") %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :max_queue_length %>
+    <%= form.text_field(:max_queue_length, class: "form-control") %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit(@permission_set.persisted? ? "Update Permission Set" : "Create Permission Set", class: "btn-primary btn") %>
+  </div>
+<% end %>
