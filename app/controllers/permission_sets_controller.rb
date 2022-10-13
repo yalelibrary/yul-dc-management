@@ -21,6 +21,36 @@ class PermissionSetsController < ApplicationController
 
   def edit; end
 
+  # PATCH/PUT /permission_sets/1
+  # PATCH/PUT /permission_sets/1.json
+  def update
+    respond_to do |format|
+      if @permission_set.update(permission_set_params)
+        format.html { redirect_to @permission_set, notice: 'Permission set was successfully updated.' }
+        format.json { render :show, status: :ok, location: @permission_set }
+      else
+        format.html { render :edit }
+        format.json { render json: @permission_set.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # POST /permission_sets
+  # POST /permission_sets.json
+  def create
+    @permission_set = PermissionSet.new(permission_set_params)
+
+    respond_to do |format|
+      if @permission_set.save
+        format.html { redirect_to @permission_set, notice: 'Permission set was successfully created.' }
+        format.json { render :show, status: :created, location: @permission_set }
+      else
+        format.html { render :new }
+        format.json { render json: @permission_set.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
@@ -30,6 +60,6 @@ class PermissionSetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def permission_set_params
-      params.require(:permission_set).permit(:key, :label)
+      params.require(:permission_set).permit(:key, :label, :max_queue_length)
     end
 end

@@ -5,19 +5,32 @@
     <h1>Permission Sets (TBD)</h1>
   </div>
 </div>
-
+<div class="heading">
+  <% if can? :create_set, PermissionSet %>
+    <div class='col'>
+      <div class='button-list'>
+        <%= link_to 'Create New Permission Set', new_permission_set_path, class: "btn button primary-button" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<br />
 <table class='table table-striped permission-set-index-table' aria-label='Label Permission Set'>
   <thead class='thead-dark'>
     <tr>
-    <th scope='col'> Key </th>
+      <th scope='col'> Key </th>
       <th scope='col'> Label </th>
+      <th scope='col'> Edit </th>
     </tr>
   </thead>
   <tbody>
-    <% @visible_permission_sets.each do |sets| %>
+    <% @visible_permission_sets.each do |permission_set| %>
       <tr>
-        <td class='permission-set-label'><%= sets.key %></td>
-        <td class='permission-set-label'><%= link_to sets.label, permission_set_path(sets)  %></td>
+        <td class='permission-set-label'><%= permission_set.key %></td>
+        <td class='permission-set-label'><%= link_to permission_set.label, permission_set_path(permission_set)  %></td>
+        <% if can? :edit, permission_set %>
+          <td class='permission-set-label'><%= link_to "Edit", edit_permission_set_path(permission_set)  %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

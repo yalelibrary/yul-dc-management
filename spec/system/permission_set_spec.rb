@@ -142,4 +142,81 @@ RSpec.describe "PermissionSets", type: :system, prep_metadata_sources: true do
       end
     end
   end
+
+  context 'Editing and creating Permission Sets' do
+    describe 'editing and creating permission sets as a sysadmin' do
+      before do
+        user.add_role(:sysadmin)
+      end
+      it 'can be viewed' do
+        visit '/permission_sets'
+        expect(page).to have_content("Create New Permission Set")
+        expect(page).to have_link("Edit", count: 2)
+        expect(page).to have_content("Edit", count: 3)
+      end
+      it 'can be accessed' do
+        visit "/permission_sets/#{permission_set.id}/edit"
+        expect(page).to have_content("Editing Permission Set")
+      end
+      it 'can be created' do
+        visit "/permission_sets/new"
+        expect(page).to have_content("New Permission Set")
+        fill_in('permission_set_key', with: 'key example')
+        fill_in('permission_set_label', with: 'label example')
+        fill_in('permission_set_max_queue_length', with: '10')
+        click_on 'Create Permission Set'
+        expect(page).to have_content("Permission set was successfully created.")
+        expect(page).to have_content("key example")
+        expect(page).to have_content("label example")
+      end
+    end
+
+    describe 'editing and creating permission sets as an administrator' do
+      before do
+        login_as administrator_user
+        permission_set.add_administrator(administrator_user)
+      end
+      it 'can be viewed' do
+        visit '/permission_sets'
+        expect(page).to have_content("Create New Permission Set")
+        expect(page).to have_link("Edit")
+        expect(page).to have_content("Edit").twice
+      end
+      it 'can be accessed' do
+        visit "/permission_sets/#{permission_set.id}/edit"
+        expect(page).to have_content("Editing Permission Set")
+      end
+      it 'can be created' do
+        visit "/permission_sets/new"
+        expect(page).to have_content("New Permission Set")
+        fill_in('permission_set_key', with: 'key example')
+        fill_in('permission_set_label', with: 'label example')
+        fill_in('permission_set_max_queue_length', with: '10')
+        click_on 'Create Permission Set'
+        expect(page).to have_content("Permission set was successfully created.")
+        expect(page).to have_content("key example")
+        expect(page).to have_content("label example")
+      end
+    end
+
+    describe 'editing and creating permission sets as an approver' do
+      before do
+        login_as approver_user
+        permission_set.add_approver(approver_user)
+      end
+      it 'cannot be viewed' do
+        visit '/permission_sets'
+        expect(page).not_to have_content("Create New Permission Set")
+        expect(page).not_to have_link("Edit")
+      end
+      it 'cannot be accessed' do
+        visit "/permission_sets/#{permission_set.id}/edit"
+        expect(page).to have_content("Access denied")
+      end
+      it 'cannot be created' do
+        visit "/permission_sets/new"
+        expect(page).to have_content("Access denied")
+      end
+    end
+  end
 end
