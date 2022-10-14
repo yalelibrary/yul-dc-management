@@ -20,9 +20,9 @@ module Deletable
       sets << ', ' + parent_object.admin_set.key
       split_sets = sets.split(',').uniq.reject(&:blank?)
       self.admin_set = split_sets.join(', ')
-      save
+      save!
       setup_for_background_jobs(parent_object, metadata_source)
-      parent_object.destroy
+      parent_object.destroy!
       parent_object.processing_event("Parent #{parent_object.oid} has been deleted", 'deleted')
     end
   end
@@ -61,10 +61,10 @@ module Deletable
       sets << ', ' + child_object.parent_object.admin_set.key
       split_sets = sets.split(',').uniq.reject(&:blank?)
       self.admin_set = split_sets.join(', ')
-      save
+      save!
       parents_needing_update << child_object.parent_object.oid
       setup_for_background_jobs(child_object, metadata_source)
-      child_object.destroy
+      child_object.destroy!
       child_object.parent_object.processing_event("child #{child_object.oid} has been deleted", 'deleted')
     end
     update_related_parent_objects(parents_needing_update, {})

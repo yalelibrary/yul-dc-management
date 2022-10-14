@@ -38,7 +38,7 @@ class DelayedJobDashboardController < ApplicationController
   end
 
   def delete_job
-    Delayed::Job.find(params[:id]).destroy
+    Delayed::Job.find(params[:id]).destroy!
     flash[:notice] = "Job #{params[:id]} deleted."
     redirect_to dashboard_path
   end

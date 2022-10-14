@@ -198,7 +198,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         sets << ', ' + admin_set&.key
         split_sets = sets.split(',').uniq.reject(&:blank?)
         self.admin_set = split_sets.join(', ')
-        save
+        save!
 
         parent_object = ParentObject.find_or_initialize_by(oid: oid)
         # Only runs on newly created parent objects
@@ -272,7 +272,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         sets << ', ' + AdminSet.find(parent_object.authoritative_metadata_source_id).key
         split_sets = sets.split(',').uniq.reject(&:blank?)
         self.admin_set = split_sets.join(', ')
-        save
+        save!
 
         parent_object.child_objects.each { |co| attach_item(co) }
         parent_object.processing_event("Parent #{parent_object.oid} is being processed", 'processing-queued')
@@ -316,7 +316,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       sets << ', ' + child_object.parent_object.admin_set.key
       split_sets = sets.split(',').uniq.reject(&:blank?)
       self.admin_set = split_sets.join(', ')
-      save
+      save!
 
       configure_parent_object(child_object, parents)
       attach_item(child_object)
@@ -370,6 +370,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # MAKES CALL FOR UPDATED DATA
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Rails/SaveBang
   def refresh_metadata_cloud_mets
     metadata_source = mets_doc.metadata_source
     self.admin_set = ''
@@ -390,6 +391,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     PreservicaIngest.create(parent_oid: oid, preservica_id: mets_doc.parent_uuid, batch_process_id: id, ingest_time: Time.current) unless mets_doc.parent_uuid.nil?
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Rails/SaveBang
 
   # SETS VALUES FROM METS METADATA
   # rubocop:disable Metrics/AbcSize
@@ -425,7 +427,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         sets << ', ' + parent_object.admin_set.key
         split_sets = sets.split(',').uniq.reject(&:blank?)
         self.admin_set = split_sets.join(', ')
-        save
+        save!
       rescue
         batch_processing_event("Parent OID: #{row['oid']} not found in database", 'Skipped Import') if parent_object.nil?
         next

@@ -228,7 +228,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       co.preservica_bitstream_uri = value[:bitstream_uri]
       co.last_preservica_update = Time.current
       replace_preservica_tif(co)
-      co.save
+      co.save!
     end
 
     # create child records for any new items in preservica
