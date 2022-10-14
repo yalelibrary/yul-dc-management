@@ -370,6 +370,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # MAKES CALL FOR UPDATED DATA
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Rails/SaveBang
   def refresh_metadata_cloud_mets
     metadata_source = mets_doc.metadata_source
     self.admin_set = ''
@@ -384,12 +385,13 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         sets << ', ' + parent_object.admin_set.key
         split_sets = sets.split(',').uniq.reject(&:blank?)
         self.admin_set = split_sets.join(', ')
-        save!
+        save
       end
     end
     PreservicaIngest.create!(parent_oid: oid, preservica_id: mets_doc.parent_uuid, batch_process_id: id, ingest_time: Time.current) unless mets_doc.parent_uuid.nil?
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Rails/SaveBang
 
   # SETS VALUES FROM METS METADATA
   # rubocop:disable Metrics/AbcSize
