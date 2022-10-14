@@ -379,7 +379,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       batch_processing_event("Skipping mets import for existing parent: #{oid}", 'Skipped Import')
       return
     end
-    ParentObject.create!(oid: oid) do |parent_object|
+    ParentObject.create(oid: oid) do |parent_object|
       set_values_from_mets(parent_object, metadata_source)
       if parent_object.admin_set.present?
         sets << ', ' + parent_object.admin_set.key
@@ -388,7 +388,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         save
       end
     end
-    PreservicaIngest.create!(parent_oid: oid, preservica_id: mets_doc.parent_uuid, batch_process_id: id, ingest_time: Time.current) unless mets_doc.parent_uuid.nil?
+    PreservicaIngest.create(parent_oid: oid, preservica_id: mets_doc.parent_uuid, batch_process_id: id, ingest_time: Time.current) unless mets_doc.parent_uuid.nil?
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Rails/SaveBang
