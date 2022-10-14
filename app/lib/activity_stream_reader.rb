@@ -22,8 +22,8 @@ class ActivityStreamReader
   def process_activity_stream
     @updated_uris = []
     @most_recent_update = nil
-    @log = ActivityStreamLog.create(status: "Running")
-    @log.save
+    @log = ActivityStreamLog.create!(status: "Running")
+    @log.save!
     begin
       # recursively look at activity stream and add to parent_object_refs
       process_recursive("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity")
@@ -36,12 +36,12 @@ class ActivityStreamReader
       @log.status = "Failed: #{e}"
     rescue SignalException => sigterm
       @log.status = "Terminated: #{sigterm}"
-      @log.save
+      @log.save!
       raise sigterm
     else
       @log.status = "Success"
     end
-    @log.save
+    @log.save!
   end
   # rubocop:enable Metrics/MethodLength
 
@@ -61,7 +61,7 @@ class ActivityStreamReader
     @update_time_uri_map = {}
     @log.activity_stream_items = @tally_activity_stream_items
     @log.retrieved_records = @tally_queued_records
-    @log.save
+    @log.save!
     Rails.logger.info("Processed activity stream page back to #{earliest_item_on_page}")
     process_recursive(previous_page_link(page)) if (previous_page_link(page) && last_run_time.nil?) || (previous_page_link(page) && earliest_item_on_page.after?(last_run_time))
   end
@@ -148,7 +148,7 @@ class ActivityStreamReader
   def queue_parent_object(po)
     po.metadata_update = true
     po.current_batch_connection = batch_process.batch_connections.build(connectable: po)
-    batch_process.save
+    batch_process.save!
     po.current_batch_process = batch_process
     po.save! # save will cause SetupMetadataJob to be queued since metadata_update is true.
   end

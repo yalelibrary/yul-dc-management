@@ -57,7 +57,7 @@ module CsvExportable
           admin_set = AdminSet.find_by(key: row[0])
           raise ActiveRecord::RecordNotFound if admin_set.nil?
           self.admin_set = admin_set.key
-          save
+          save!
           if user.viewer(admin_set) || user.editor(admin_set)
             ParentObject.where(admin_set_id: admin_set.id).find_each do |parent|
               arr << parent
@@ -73,7 +73,7 @@ module CsvExportable
       admin_set_id.each do |id|
         admin_set = AdminSet.find_by(id: id.to_i)
         self.admin_set = admin_set.key
-        save
+        save!
         if user.viewer(admin_set) || user.editor(admin_set)
           ParentObject.where(admin_set_id: id.to_i).find_each do |parent|
             arr << parent
@@ -111,7 +111,7 @@ module CsvExportable
       sets << ', ' + co.parent_object.admin_set.key
       split_sets = sets.split(',').uniq.reject(&:blank?)
       self.admin_set = split_sets.join(', ')
-      save
+      save!
       row = [co.parent_object.oid, co.oid, co.order, parent_title.presence, co.parent_object.call_number, co.label, co.caption, co.viewing_hint]
       csv_rows << row
     end

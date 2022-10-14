@@ -62,7 +62,7 @@ module DigitalObjectManagement
   def apply_new_digital_object_json(json)
     self.digital_object_json = DigitalObjectJson.new if digital_object_json.nil?
     digital_object_json.json = json
-    digital_object_json.save
+    digital_object_json.save!
   end
 
   def mc_post(mc_url, data)

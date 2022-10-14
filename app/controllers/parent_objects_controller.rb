@@ -68,7 +68,7 @@ class ParentObjectsController < ApplicationController
 
       if updated
         @parent_object.minify if valid_redirect_to_edit?
-        @parent_object.save
+        @parent_object.save!
         queue_parent_metadata_update
         format.html { redirect_to @parent_object, notice: 'Parent object was successfully saved, a full update has been queued.' }
         format.json { render :show, status: :ok, location: @parent_object }
@@ -82,7 +82,7 @@ class ParentObjectsController < ApplicationController
   # DELETE /parent_objects/1
   # DELETE /parent_objects/1.json
   def destroy
-    @parent_object.destroy
+    @parent_object.destroy!
     respond_to do |format|
       format.html { redirect_to parent_objects_url, notice: 'Parent object was successfully destroyed.' }
       format.json { head :no_content }

@@ -34,7 +34,7 @@ namespace :child_objects do
       # get child object order
       c.label = "page #{c.order}"
       # and save label to child object
-      c.save
+      c.save!
     end
   end
 end

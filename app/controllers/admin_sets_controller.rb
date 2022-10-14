@@ -64,7 +64,7 @@ class AdminSetsController < ApplicationController
   # DELETE /admin_sets/1
   # DELETE /admin_sets/1.json
   def destroy
-    @admin_set.destroy
+    @admin_set.destroy!
     respond_to do |format|
       format.html { redirect_to admin_sets_url, notice: 'Admin set was successfully destroyed.' }
       format.json { head :no_content }

@@ -32,7 +32,7 @@ module Reassociatable
       sets << ', ' + po.admin_set.key
       split_sets = sets.split(',').uniq.reject(&:blank?)
       self.admin_set = split_sets.join(', ')
-      save
+      save!
 
       attach_item(po)
       attach_item(co)
@@ -92,7 +92,7 @@ module Reassociatable
       else
         next
       end
-      co.save
+      co.save!
     end
   end
   # rubocop:enable Metrics/PerceivedComplexity
