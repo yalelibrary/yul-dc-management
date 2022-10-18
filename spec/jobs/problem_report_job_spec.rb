@@ -22,4 +22,12 @@ RSpec.describe ProblemReportManualJob, type: :job do
     expect(problem_report).to receive(:generate_child_problem_csv).once
     problem_report_job.perform(problem_report)
   end
+
+  it "increments job queue once per day" do
+    now = Time.zone.today
+    ActiveJob::Scheduler.start
+    new_time = now + 1.day
+    Timecop.travel(new_time)
+    expect(Delayed::Job.where('handler LIKE ?', '%job_class: ProblemReportJob%').count).to eq 1
+  end
 end
