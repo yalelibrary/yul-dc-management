@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:user) }
-  let(:admin_set) { FactoryBot.create(:admin_set, id: 3) }
+  let(:admin_set) { FactoryBot.create(:admin_set) }
   before do
     login_as user
   end
