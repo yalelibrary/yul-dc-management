@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_28_165554) do
+ActiveRecord::Schema.define(version: 2022_10_17_195619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -217,6 +217,17 @@ ActiveRecord::Schema.define(version: 2022_09_28_165554) do
     t.bigint "batch_process_id"
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+  end
+
+  create_table "problem_reports", force: :cascade do |t|
+    t.integer "child_count"
+    t.integer "parent_count"
+    t.integer "problem_parent_count"
+    t.integer "problem_child_count"
+    t.text "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["status"], name: "index_problem_reports_on_status"
   end
 
   create_table "roles", force: :cascade do |t|
