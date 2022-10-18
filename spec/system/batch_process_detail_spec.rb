@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
   let(:user) { FactoryBot.create(:user, uid: "johnsmith2530") }
-  let(:admin_set) { FactoryBot.create(:admin_set, id: 2) }
+  let(:admin_set) { FactoryBot.create(:admin_set) }
   before do
     stub_ptiffs_and_manifests
     stub_metadata_cloud("2004628")

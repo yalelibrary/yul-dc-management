@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe UpdateFulltextStatusJob, type: :job, solr: true do
-  let(:admin_set) { FactoryBot.create(:admin_set, id: 1) }
+  let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069', admin_set: admin_set) }
 
   context 'with test active job queue' do
@@ -42,6 +42,7 @@ RSpec.describe UpdateFulltextStatusJob, type: :job, solr: true do
       user.add_role(:editor, admin_set)
       expect(batch_process).to receive(:oids).and_return(['2004628'])
       expect(ParentObject).to receive(:find_by).and_return(parent_object).twice
+      expect(AdminSet).to receive(:find).and_return(admin_set)
       expect(parent_object).to receive(:processing_event).twice # for queued and then completed message
       expect(parent_object).to receive(:update_fulltext_for_children).once # called because permission
       UpdateFulltextStatusJob.perform_now(batch_process)
