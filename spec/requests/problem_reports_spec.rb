@@ -25,9 +25,16 @@ RSpec.describe "/problem_reports", type: :request do
       end
     end
 
-    describe "GET /new" do
+    describe "POST /" do
       it "renders a successful response" do
-        get new_problem_report_url
+        post problem_reports_path
+        expect(response).to redirect_to(problem_reports_url)
+      end
+    end
+
+    describe "POST / with queue_recurring" do
+      it "renders a successful response" do
+        post problem_reports_path(queue_recurring: "true")
         expect(response).to redirect_to(problem_reports_url)
       end
     end
@@ -46,9 +53,9 @@ RSpec.describe "/problem_reports", type: :request do
       end
     end
 
-    describe "GET /new" do
+    describe "POST /" do
       it "returns an unauthorized response" do
-        get new_problem_report_url
+        post problem_reports_path
         expect(response).to be_unauthorized
       end
     end

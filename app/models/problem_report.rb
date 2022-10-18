@@ -5,7 +5,7 @@ class ProblemReport < ApplicationRecord
     ['admin_set', 'parent_oid', 'child_oid', 'last_modified']
   end
 
-  def generate_child_problem_csv
+  def generate_child_problem_csv(send_email = false)
     start_generating
     csv_rows = problem_children_csv
     parent_oids = Set.new
@@ -19,12 +19,19 @@ class ProblemReport < ApplicationRecord
       end
     end
     save_results(parent_oids.count, child_cnt)
-    save_report_to_s3(output_csv)
-    self.status = "Report Uploaded"
-    save!
+    report_complete(output_csv, send_email)
   rescue => e
     report_error("CSV generation failed due to #{e.message}")
   end
+
+  def report_complete(output_csv, send_email)
+    save_report_to_s3(output_csv)
+    self.status = "Report Uploaded"
+    save!
+    send_report_email(output_csv) if send_email
+  end
+
+  def send_report_email(csv); end
 
   def start_generating
     self.status = "Generating Report"

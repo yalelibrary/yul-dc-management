@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
 class ProblemReportJob < ApplicationJob
-  queue_as :default
+  repeat 'every day at 1am'
 
-  def default_priority
-    -100
-  end
-
-  def perform(problem_report)
-    problem_report.generate_child_problem_csv
+  def perform
+    ProblemReport.new.generate_child_problem_csv(true)
   end
 end

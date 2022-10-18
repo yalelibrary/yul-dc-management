@@ -5,16 +5,32 @@ class ProblemReportsController < ApplicationController
   # GET /problem_reports.json
   def index
     authorize!(:read, ProblemReport)
+    if params['check_status']
+      @check_status = true
+      @scheduled_job_exists = Delayed::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ProblemReportJob%').exists?
+      @manual_job_exists = Delayed::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ProblemReportManualJob%').exists?
+    end
     respond_to do |format|
       format.html
       format.json { render json: ProblemReportDatatable.new(params, view_context: view_context, current_ability: current_ability) }
     end
   end
 
-  def new
+  def create
     authorize!(:create, ProblemReport)
-    ProblemReportJob.perform_later(ProblemReport.create(status: "Queued"))
-    redirect_to problem_reports_url
+    if params['queue_recurring']
+      ProblemReportJob.perform_now unless Delayed::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ProblemReportJob%').exists?
+      respond_to do |format|
+        format.html { redirect_to problem_reports_url, notice: 'The daily problem report job has been queued.' }
+        format.json { head :no_content }
+      end
+    else
+      ProblemReportManualJob.perform_later(ProblemReport.create(status: "Queued"))
+      respond_to do |format|
+        format.html { redirect_to problem_reports_url, notice: 'The manual problem report job has been queued.' }
+        format.json { head :no_content }
+      end
+    end
   end
 
   private

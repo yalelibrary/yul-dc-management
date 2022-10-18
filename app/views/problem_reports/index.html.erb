@@ -5,10 +5,28 @@
   </div>
   <div class='col'>
     <div class='float-right button-list'>
-      <%= link_to 'Run Report Now', new_problem_report_url, class: "btn button secondary-button" %>
+      <%= link_to 'Trigger Job Manually', problem_reports_path, method: 'post', class: "btn button secondary-button" %>
+      <%  if @check_status %>
+        <% if !@scheduled_job_exists %>
+          <%= button_to 'Queue the Problem Report Job', problem_reports_path(queue_recurring: 'true'), method: 'post', class: 'btn button secondary-button' %>
+        <% end %>
+      <% else %>
+        <%= link_to 'Check status of the Problem Report Job', problem_reports_path(check_status:'true'), method: 'get', class: 'btn button secondary-button' %>
+      <% end %>
     </div>
   </div>
 </div>
+<div class='reoccurring-notice'>
+  <%  if @check_status %>
+    <p>
+      <% if @scheduled_job_exists %>
+        A problem report job is set to run the report daily.
+      <% else %>
+      <p>The problem report job is <strong>NOT</strong> queued</p>
+    <% end %>
+    </p>
+  <%  end %>
+</div><br />
 <div class='row datatable'>
   <div class='col overflow-auto'>
     <table id='problem-report-datatable' class='is-datatable table table-responsive table-bordered table-striped' aria-label='Reoccurring Jobs' data-source='<%= problem_reports_path(format: :json) %>' data-refresh="true" >
