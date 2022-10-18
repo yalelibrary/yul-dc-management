@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+<div class='row datatable-heading'>
+  <div class='col'>
+    <h1>Problem Reports</h1>
+  </div>
+  <div class='col'>
+    <div class='float-right button-list'>
+      <%= link_to 'Run Report Now', new_problem_report_url, class: "btn button secondary-button" %>
+    </div>
+  </div>
+</div>
+<div class='row datatable'>
+  <div class='col overflow-auto'>
+    <table id='problem-report-datatable' class='is-datatable table table-responsive table-bordered table-striped' aria-label='Reoccurring Jobs' data-source='<%= problem_reports_path(format: :json) %>' data-refresh="true" >
+      <thead class='table-head'>
+      <tr>
+        <th scope='col'>Status</th>
+        <th scope='col'>Child count</th>
+        <th scope='col'>Parent count</th>
+        <th scope='col'>Problem parent count</th>
+        <th scope='col'>Problem child count</th>
+        <th scope='col'>Date</th>
+        <th scope='col'>Report</th>
+      </tr>
+      </thead>
+      <tbody class='datatable-body'>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div id='reoccurring-job-data' class='d-none datatable-data'>
+  <%= ProblemReportDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], searchable: value[:searchable], options: value[:options]} }.to_json %>
+</div>

@@ -24,6 +24,7 @@ class Ability
     can [:create_set, :crud], PermissionSet if user.has_role?(:sysadmin) || user.has_role?(:administrator, :any)
     can [:read, :approve], PermissionSet, roles: { name: approver_roles, users: { id: user.id } }
     can [:crud, :approve], PermissionSet, roles: { name: administrator_roles, users: { id: user.id } }
+    can [:create, :read], ProblemReport if user.has_role?(:sysadmin)
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity
