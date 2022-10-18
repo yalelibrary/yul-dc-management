@@ -19,6 +19,41 @@ module Updatable
     end
   end
 
+  def updatable_child_object(oid, index)
+    child_object = ChildObject.find_by(oid: oid)
+    if child_object.blank?
+      batch_processing_event("Skipping row [#{index + 2}] with child oid: #{oid} because it was not found in local database", 'Skipped Row')
+      return false
+    elsif !current_ability.can?(:update, child_object)
+      batch_processing_event("Skipping row [#{index + 2}] with child oid: #{oid}, user does not have permission to update.", 'Permission Denied')
+      return false
+    else
+      child_object
+    end
+  end
+
+  def update_child_objects_caption
+    return unless batch_action == "update child objects caption and label"
+    po_arr = []
+    parsed_csv.each_with_index do |row, index|
+      oid = row['oid'] unless ['oid'].nil?
+      child_object = updatable_child_object(oid, index)
+      next unless child_object
+      parent_object = child_object.parent_object
+      po_arr << parent_object
+      attach_item(parent_object)
+      child_object.caption = row['caption']
+      child_object.label = row['label']
+      child_object.save!
+      processing_event_for_child(child_object)
+    end
+    unique_po = po_arr.uniq{ |x| x.oid }
+    unique_po.each do |parent_object| 
+      trigger_setup_metadata(parent_object)
+      processing_event_for_parent(parent_object)
+    end
+  end
+
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/AbcSize
@@ -93,6 +128,13 @@ module Updatable
     parent_object.current_batch_connection = batch_connections.find_or_create_by(connectable: parent_object)
     parent_object.current_batch_connection.save!
     parent_object.processing_event("Parent #{parent_object.oid} has been updated", 'update-complete')
+  end
+
+  def processing_event_for_child(child_object)
+    child_object.current_batch_process = self
+    child_object.current_batch_connection = batch_connections.find_or_create_by(connectable: child_object)
+    child_object.current_batch_connection.save!
+    child_object.processing_event("Child #{child_object.oid} has been updated", 'update-complete')
   end
 
   def processing_event_invalid_blank(parent_object, field)
