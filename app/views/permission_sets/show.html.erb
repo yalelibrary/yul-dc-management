@@ -1,0 +1,52 @@
+<%= render partial: "/management/flash_messages" %>
+
+<p>
+  <strong>Key:</strong>
+  <%= @permission_set.key %>
+</p>
+
+<p>
+  <strong>Label:</strong>
+  <%= @permission_set.label %>
+</p>
+
+<p>
+  <strong>Max Request Queue Length:</strong>
+  <%= @permission_set.max_queue_length %>
+</p>
+
+<table class='table table-striped permission-set-show-table' aria-label='Approvers Permission Set'>
+  <thead class='thead-dark'>
+    <tr>
+      <th scope='col'> Approvers </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% User.with_role(:approver, @permission_set).order('last_name ASC').each do |user| %>
+      <tr>
+        <td class='user-role'><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<table class='table table-striped permission-set-show-table' aria-label='Administrators Permission Set'>
+  <thead class='thead-dark'>
+    <tr>
+      <th scope='col'> Administrators </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% User.with_role(:administrator, @permission_set).order('last_name ASC').each do |user| %>
+        <tr>
+          <td class='user-role'><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+<% if can? :edit, @permission_set %>
+  <%= link_to 'Edit', edit_permission_set_path(@permission_set) %> |
+<% end %>
+<%= link_to 'Back', permission_sets_path %>

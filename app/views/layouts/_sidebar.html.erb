@@ -7,6 +7,9 @@
     <% if can? :crud, AdminSet %>
       <%= link_to 'Sets', admin_sets_path, class: 'list-group-item list-group-item-action bg-light' %>
     <% end  %>
+    <% if can? :view_list, PermissionSet %>
+      <%= link_to 'Permission Sets', permission_sets_path, class: 'list-group-item list-group-item-action bg-light' %>
+    <% end  %>
     <%= link_to 'Parent Objects', parent_objects_path, class: 'list-group-item list-group-item-action bg-light' %>
     <%= link_to 'Redirected Parent Objects', redirected_parent_objects_path, class: 'list-group-item list-group-item-action bg-light' %>
     <%= link_to 'Child Objects', child_objects_path, class: 'list-group-item list-group-item-action bg-light' %>
@@ -15,6 +18,7 @@
     <%= link_to 'Preservation', preservica_ingests_path, class: 'list-group-item list-group-item-action bg-light' %>
     <% if current_user&.sysadmin %>
       <%= link_to 'Delayed Job Dashboard', dashboard_path, class: 'list-group-item list-group-item-action bg-light' %>
+      <%= link_to 'Problem Reports', problem_reports_path, class: 'list-group-item list-group-item-action bg-light' %>
     <% end %>
     <% if current_user %>
       <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'list-group-item list-group-item-action bg-light sign-button' %>

@@ -49,7 +49,7 @@ RSpec.describe ActivityStreamJob, type: :job do
       ActiveJob::Scheduler.start
       new_time = now + 1.day
       Timecop.travel(new_time)
-      expect(Delayed::Job.count).to eq 1
+      expect(Delayed::Job.where('handler LIKE ?', '%job_class: ActivityStreamJob%').count).to eq 1
     end
   end
 end

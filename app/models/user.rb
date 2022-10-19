@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include JwtWebToken
   rolify
   devise :timeoutable, :omniauthable, omniauth_providers: [:cas]
 
@@ -28,6 +29,11 @@ class User < ApplicationRecord
     self.deactivated = true
   end
 
+  def token
+    info = { user_id: id }
+    jwt_encode(info)
+  end
+
   def sysadmin=(value)
     if value.present? && value && value != '0'
       add_role :sysadmin
@@ -46,6 +52,14 @@ class User < ApplicationRecord
 
   def editor(admin_set)
     has_role?(:editor, admin_set)
+  end
+
+  def administrator(permission_set)
+    has_role?(:administrator, permission_set)
+  end
+
+  def approver(permission_set)
+    has_role?(:approver, permission_set)
   end
 
   def viewer(admin_set)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable  Metrics/BlockLength
+# rubocop:disable Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -70,9 +70,7 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
-  # Use an evented file watcher to asynchronously detect changes in source code,
-  # routes, locales, etc. This feature depends on the listen gem.
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  config.file_watcher = ActiveSupport::FileUpdateChecker
 
   # Set the initial value for the OID sequence.
   # The dev and test environments have very high starting values to distinguish from prod
@@ -88,5 +86,10 @@ Rails.application.configure do
       resource '*', headers: :any, methods: [:get, :post, :delete, :options], credentials: true
     end
   end
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.perform_deliveries = false
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.preview_path = Rails.root.join("spec", "mailers", "previews")
+  config.action_mailer.deliver_later_queue_name = 'default'
 end
-# rubocop:enable  Metrics/BlockLength
+# rubocop:enable Metrics/BlockLength

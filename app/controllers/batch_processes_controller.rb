@@ -72,7 +72,7 @@ class BatchProcessesController < ApplicationController
     redirect_to admin_set_path(admin_set_id), notice: "CSV is being generated. Please visit the Batch Process page to download."
 
     batch_process = BatchProcess.new(batch_action: 'export all parent objects by admin set', user: current_user, file_name: "#{admin_set}_export.csv")
-    batch_process.save
+    batch_process.save!
     CreateParentOidCsvJob.perform_later(batch_process, *admin_set_id)
   end
 

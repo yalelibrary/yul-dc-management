@@ -59,7 +59,7 @@ class ChildObjectsController < ApplicationController
   # DELETE /child_objects/1
   # DELETE /child_objects/1.json
   def destroy
-    @child_object.destroy
+    @child_object.destroy!
     respond_to do |format|
       format.html { redirect_to child_objects_url, notice: 'Child object was successfully destroyed.' }
       format.json { head :no_content }

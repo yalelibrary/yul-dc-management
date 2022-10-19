@@ -31,6 +31,7 @@ module SolrIndexable
         result = solr_delete
         processing_event("Solr record deleted", "solr-indexed")
       end
+      digital_object_check
     rescue => e
       processing_event("Solr indexing failed due to #{e.message}", "failed")
       raise # this reraises the error after we document it
@@ -122,6 +123,7 @@ module SolrIndexable
         description_tesim: json_to_index["description"],
         digital_ssim: json_to_index["digital"],
         digitization_note_tesi: generate_digitization_note(json_to_index["digitization_note"]),
+        digitization_funding_source_tesi: generate_digitization_funding_source(json_to_index["digitization_funding_source"]),
         edition_ssim: json_to_index["edition"],
         extent_ssim: json_to_index["extent"],
         extentOfDigitization_ssim: extent_of_digitization,
@@ -262,6 +264,7 @@ module SolrIndexable
     ancestor_title.each do |anc|
       prev_string += (ancestor_title[arr_size - 1]).to_s + " > " unless arr_size.zero?
       anc = prev_string + anc + " > "
+      anc.gsub!("&amp;", "&")
       formatted = anc[0...-3]
       anc_struct.push(formatted)
       arr_size += 1
@@ -281,8 +284,17 @@ module SolrIndexable
     digitization_note.presence || self&.digitization_note || nil
   end
 
+  def generate_digitization_funding_source(digitization_funding_source)
+    digitization_funding_source.presence || self&.digitization_funding_source || nil
+  end
+
   # not ASpace records will use the repository value
   def generate_ancestor_title(ancestor_title)
+    ancestor_title = if ancestor_title&.is_a?(Array)
+                       ancestor_title.map { |a| a.gsub("&amp;", "&") }
+                     else
+                       ancestor_title.present? ? ancestor_title.gsub("&amp;", "&") : ""
+                     end
     ancestor_title.presence || [self&.admin_set&.label] || nil
   end
 

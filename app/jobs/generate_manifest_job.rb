@@ -12,7 +12,7 @@ class GenerateManifestJob < ApplicationJob
     parent_object.current_batch_connection = current_batch_connection
     if parent_object.should_create_manifest_and_pdf?
       generate_manifest(parent_object)
-      parent_object.save
+      parent_object.save!
     end
     parent_object.solr_index_job
     GeneratePdfJob.perform_later(parent_object, current_batch_process, current_batch_connection) if parent_object.should_create_manifest_and_pdf?

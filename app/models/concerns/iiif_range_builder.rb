@@ -15,7 +15,7 @@ class IiifRangeBuilder
       structures.each_with_index do |structure, index|
         top_level_range = parse_range(parent, structure, index)
         top_level_range.top_level = true
-        top_level_range.save
+        top_level_range.save!
         results.push top_level_range
       end
     end
@@ -46,7 +46,7 @@ class IiifRangeBuilder
         raise 'Unexpected type for item in Range'
       end
     end
-    result.save
+    result.save!
     result
   end
   # rubocop:enable Metrics/MethodLength

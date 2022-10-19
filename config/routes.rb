@@ -23,9 +23,11 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :users, only: [:index, :edit, :update, :show, :new, :create]
   resources :child_objects
   resources :admin_sets
+  resources :permission_sets
   resources :preservica_ingests
   resources :reoccurring_jobs
   resources :redirected_parent_objects
+  resources :problem_reports, only: [:index, :create]
 
   resources :parent_objects do
     collection do
@@ -55,6 +57,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get 'api/oid/new(/:number)', to: 'oid_minter#generate_oids', as: :new_oid
 
   get '/show_token', to: 'users#show_token', as: :show_token
+  get '/update_token', to: 'manifest#update_token', as: :update_token
 
   devise_scope :user do
     authenticated :user, ->(user) { user.sysadmin } do

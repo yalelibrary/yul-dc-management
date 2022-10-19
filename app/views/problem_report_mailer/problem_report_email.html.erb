@@ -1,0 +1,16 @@
+<h1>This is the Digital Collections Daily Report</h1>
+<p>
+  This report is for the DCS site: <%= ENV['BLACKLIGHT_BASE_URL'] %>.
+</p>
+<p>
+  The report is attached as a CSV.<br /><br />
+  <strong>Generated:</strong> <%= @problem_report.updated_at %><br />
+  <strong>Total Parent Count:</strong> <%= @problem_report.parent_count %><br />
+  <strong>Total Child Count:</strong> <%= @problem_report.child_count %><br />
+  <strong>Problem Parent Count:</strong> <%= @problem_report.problem_parent_count %><br />
+  <strong>Problem Child Count:</strong> <%= @problem_report.problem_child_count %><br />
+</p>
+<p>Have a great day!</p>
+<small>
+  <pre>This is an automated message.  You are receiving this message because DSC is configured to use your email address.</pre>
+</small>

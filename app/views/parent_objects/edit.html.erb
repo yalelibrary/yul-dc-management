@@ -4,4 +4,5 @@
 
 <%= link_to("Select different representative thumbnail", select_thumbnail_parent_object_path) %><br><br>
 <%= link_to 'Show', @parent_object %> |
+<%= link_to 'Manifest Structure', "#{structure_editor_url}?manifest=#{parent_object_url(@parent_object.id)}/manifest&token=#{current_user.token}", {target: "_blank"} %> |
 <%= link_to 'Back', parent_objects_path %>

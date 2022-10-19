@@ -5,6 +5,9 @@ require 'rails_helper'
 RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_admin_sets: true, undelayed: true do
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
+  let(:admin_set_one) { FactoryBot.create(:admin_set) }
+  let(:admin_set_two) { FactoryBot.create(:admin_set) }
+  let(:admin_set_three) { FactoryBot.create(:admin_set) }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
   let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids_with_source.csv")) }
   let(:delete_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_parent_fixture_ids.csv")) }
@@ -46,6 +49,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
   describe "not running the background jobs" do
     it "creates a parent object with values only from the METs document" do
+      admin_set_two
       expect(batch_process.batch_action).to eq "create parent objects"
       expect do
         batch_process.file = xml_upload_two
@@ -69,6 +73,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     it "creates a parent object with extent of digitization empty" do
+      admin_set_two
       batch_process.file = xml_upload_three
       batch_process.save!
       po = ParentObject.find(30_000_401)
@@ -76,6 +81,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     it "creates a parent object with extent of digitization note" do
+      admin_set_two
       batch_process.file = xml_upload_four
       batch_process.save!
       po = ParentObject.find(30_000_401)
@@ -83,6 +89,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     it "creates a parent object with barcode from the METs document" do
+      admin_set_two
       batch_process.file = xml_upload
       batch_process.save!
       po = ParentObject.find(30_000_317)
@@ -90,6 +97,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     it "creates a parent object with aspace uri from the METs document" do
+      admin_set_three
       batch_process.file = aspace_xml_upload
       batch_process.save!
       po = ParentObject.find(30_000_557)
@@ -100,19 +108,23 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     it "creates a parent object with admin set from the METs document" do
+      admin_set_three
       batch_process.file = aspace_xml_upload
       batch_process.save!
       po = ParentObject.find(30_000_557)
       expect(po.admin_set).not_to be_nil
       expect(po.admin_set.key).to eq "brbl"
+      expect(batch_process.admin_set).to eq " brbl"
     end
 
     it "creates a preservica ingest with parent uuid from the METs document" do
+      admin_set_three
       batch_process.file = aspace_xml_upload
       batch_process.save!
       pj = PreservicaIngest.find_by_parent_oid(30_000_557)
       expect(pj.preservica_id).to eq "c91ce4e1-10d2-4e33-8df3-83f081ff0125"
       expect(pj.batch_process_id).to eq batch_process.id
+      expect(batch_process.admin_set).to eq " brbl"
     end
 
     context "when parent object already exists" do
@@ -171,17 +183,17 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     describe 'recreating child oid ptiffs' do
-      let(:admin_set) { FactoryBot.create(:admin_set) }
       let(:role) { FactoryBot.create(:role, name: editor) }
       let(:parent_object) { ParentObject.find(30_000_317) }
       let(:child_object) { parent_object.child_objects.first }
 
       before do
+        admin_set_two
         stub_metadata_cloud("V-30000317", "ils")
         stub_ptiffs_and_manifests
         batch_process.file = xml_upload
         batch_process.save!
-        parent_object.admin_set_id = admin_set.id
+        parent_object.admin_set_id = admin_set_two.id
         parent_object.save!
       end
 
@@ -206,7 +218,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       it 'calls the user_update_child_permission method and returns true if the user does have editor permission on the admin set' do
-        user.add_role(:editor, admin_set)
+        user.add_role(:editor, admin_set_two)
         expect(batch_process.user_update_child_permission(child_object, parent_object)).to eq(true)
       end
     end
@@ -256,6 +268,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       it "has an oid associated with it" do
+        admin_set_two
         batch_process.file = xml_upload
         batch_process.save!
         expect(batch_process.oid).to eq 30_000_317
@@ -295,6 +308,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
         # Doing one large test here, because with copying images, etc., it is an expensive one
         it "creates a parent object with the expected values and child objects with expected values" do
+          admin_set_two
           expect(File.exist?("spec/fixtures/images/access_masters/00/02/30/00/04/02/30000402.tif")).to be false
           expect(File.exist?("spec/fixtures/images/access_masters/00/03/30/00/04/03/30000403.tif")).to be false
           expect(File.exist?("spec/fixtures/images/access_masters/00/04/30/00/04/04/30000404.tif")).to be false
@@ -416,6 +430,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
             batch_process.create_new_parent_csv
           end.to change { ParentObject.count }.from(0).to(1)
 
+          parent_object = ParentObject.first
+          parent_object.admin_set = admin_set_one
           delete_batch_process = described_class.new(batch_action: "delete parent objects", user_id: user.id)
           expect do
             delete_batch_process.file = delete_parent
@@ -438,6 +454,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
             batch_process.create_new_parent_csv
           end.to change { ChildObject.count }.from(0).to(2)
 
+          parent_object = ParentObject.first
+          parent_object.admin_set = admin_set_one
           delete_batch_process = described_class.new(batch_action: "delete child objects", user_id: user.id)
           expect do
             delete_batch_process.file = delete_child
@@ -510,11 +528,11 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         end
 
         describe "with a parent object that had been previously created and user with editor role" do
-          let(:admin_set) { FactoryBot.create(:admin_set) }
-          let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: admin_set) }
+          let(:admin_set_parent_test) { FactoryBot.create(:admin_set) }
+          let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: admin_set_parent_test) }
           before do
             stub_ptiffs_and_manifests
-            user.add_role(:editor, admin_set)
+            user.add_role(:editor, admin_set_parent_test)
           end
 
           around do |example|
@@ -535,14 +553,14 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         end
 
         describe "with a child object that had been previously created and user with editor role" do
-          let(:admin_set) { FactoryBot.create(:admin_set) }
-          let(:parent_object) { FactoryBot.create(:parent_object, oid: 1002, admin_set: admin_set) }
+          let(:admin_set_child_test) { FactoryBot.create(:admin_set) }
+          let(:parent_object) { FactoryBot.create(:parent_object, oid: 1002, admin_set: admin_set_child_test) }
           let(:child_object) { FactoryBot.create(:child_object, oid: 1_030_368, parent_object: parent_object) }
           let(:logger_mock) { instance_double("Rails.logger").as_null_object }
           before do
             child_object
             stub_ptiffs_and_manifests
-            user.add_role(:editor, admin_set)
+            user.add_role(:editor, admin_set_child_test)
           end
 
           around do |example|
@@ -562,7 +580,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       describe "uploading a csv of oids to create parent objects", undelayed: true do
-        let(:admin_set) { AdminSet.first }
+        let(:admin_set_upload) { AdminSet.first }
 
         before do
           allow(S3Service).to receive(:s3_exists?).and_return(false)
@@ -574,11 +592,11 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.file = csv_upload
           batch_process.save
           expect(ParentObject.count).to eq(1)
-          expect(IngestEvent.count).to eq(10)
+          expect(IngestEvent.count).to eq(11)
         end
 
         it "fails if the user is not an editor on the admin set of the parent object" do
-          user.remove_role(:editor, admin_set)
+          user.remove_role(:editor, admin_set_upload)
 
           batch_process.file = csv_upload
           batch_process.save

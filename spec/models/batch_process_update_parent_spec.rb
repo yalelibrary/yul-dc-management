@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
+  let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids.csv")) }
   let(:csv_small) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example.csv")) }
   let(:csv_missing) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_missing.csv")) }
@@ -60,6 +61,12 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_original.viewing_direction).to be_nil
       expect(po_original.visibility).to eq "Private"
 
+      pos = ParentObject.all
+      pos[0].admin_set = admin_set
+      pos[1].admin_set = admin_set
+      pos[2].admin_set = admin_set
+      pos[3].admin_set = admin_set
+      pos[4].admin_set = admin_set
       update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
       expect do
         update_batch_process.file = csv_small
@@ -102,6 +109,12 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_original.rights_statement).to be_nil
       expect(po_original.viewing_direction).to be_nil
       expect(po_original.visibility).to eq "Private"
+      pos = ParentObject.all
+      pos[0].admin_set = admin_set
+      pos[1].admin_set = admin_set
+      pos[2].admin_set = admin_set
+      pos[3].admin_set = admin_set
+      pos[4].admin_set = admin_set
 
       update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
       expect do
@@ -145,6 +158,12 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_original.rights_statement).to be_nil
       expect(po_original.viewing_direction).to be_nil
       expect(po_original.visibility).to eq "Private"
+      pos = ParentObject.all
+      pos[0].admin_set = admin_set
+      pos[1].admin_set = admin_set
+      pos[2].admin_set = admin_set
+      pos[3].admin_set = admin_set
+      pos[4].admin_set = admin_set
 
       update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
       expect do
@@ -173,6 +192,12 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       batch_process.file = csv_upload
       batch_process.save
       batch_process.create_new_parent_csv
+      pos = ParentObject.all
+      pos[0].admin_set = admin_set
+      pos[1].admin_set = admin_set
+      pos[2].admin_set = admin_set
+      pos[3].admin_set = admin_set
+      pos[4].admin_set = admin_set
       update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
       update_batch_process.file = csv_small
       update_batch_process.save

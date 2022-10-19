@@ -45,3 +45,8 @@ RSpec/MessageSpies:
 Layout/MultilineMethodCallIndentation:
   Exclude:
     - 'spec/**/*.rb'
+
+Rails/SaveBang:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*.rb'

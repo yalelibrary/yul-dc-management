@@ -25,7 +25,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # LISTS AVAILABLE BATCH ACTIONS
   def self.batch_actions
-    ['create parent objects', 'update parent objects', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set',
+    ['create parent objects', 'update parent objects', 'update child objects caption and label', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set',
      'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status', 'resync with preservica']
   end
 
@@ -151,6 +151,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         CreateChildOidCsvJob.perform_later(self)
       when 'update parent objects'
         UpdateParentObjectsJob.perform_later(self)
+      when 'update child objects caption and label'
+        UpdateChildObjectsJob.perform_later(self)
       when 'reassociate child oids'
         ReassociateChildOidsJob.perform_later(self)
       when 'recreate child oid ptiffs'
@@ -175,6 +177,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable  Metrics/PerceivedComplexity
   # rubocop:disable  Metrics/CyclomaticComplexity
   def create_new_parent_csv
+    self.admin_set = ''
+    sets = admin_set
     parsed_csv.each_with_index do |row, index|
       if row['digital_object_source'].present? && row['preservica_uri'].present?
         begin
@@ -193,6 +197,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         model = row['parent_model'] || 'complex'
         admin_set = editable_admin_set(row['admin_set'], oid, index)
         next unless admin_set
+        sets << ', ' + admin_set&.key
+        split_sets = sets.split(',').uniq.reject(&:blank?)
+        self.admin_set = split_sets.join(', ')
+        save!
 
         parent_object = ParentObject.find_or_initialize_by(oid: oid)
         # Only runs on newly created parent objects
@@ -241,23 +249,33 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def setup_for_background_jobs(object, metadata_source)
     object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
     object.current_batch_process = self
-    object.current_batch_connection = batch_connections.build(connectable: object)
-    object.current_batch_connection.save! if object.class == ChildObject
+    object.current_batch_connection = batch_connections.find_by(connectable: object) || batch_connections.build(connectable: object)
+    object.current_batch_connection.save!
   end
 
   # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
 
   # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def update_fulltext_status(offset = 0, limit = -1)
     job_oids = oids
     job_oids = job_oids.drop(offset) if offset&.positive?
     job_oids = job_oids.first(limit) if limit&.positive?
+    self.admin_set = ''
+    sets = admin_set
     job_oids.each_with_index do |parent_oid, index|
       parent_object = ParentObject.find_by(oid: parent_oid)
       if parent_object.nil?
         batch_processing_event("Skipping row [#{index + 2}] because unknown parent: #{parent_oid}", 'Unknown Parent')
       elsif current_ability.can?(:update, parent_object)
         attach_item(parent_object)
+
+        sets << ', ' + AdminSet.find(parent_object.authoritative_metadata_source_id).key
+        split_sets = sets.split(',').uniq.reject(&:blank?)
+        self.admin_set = split_sets.join(', ')
+        save!
+
         parent_object.child_objects.each { |co| attach_item(co) }
         parent_object.processing_event("Parent #{parent_object.oid} is being processed", 'processing-queued')
         parent_object.update_fulltext_for_children
@@ -267,6 +285,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
   def validate_metadata_source(metadata_source, index)
@@ -281,8 +301,12 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
 
   # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def recreate_child_oid_ptiffs
     parents = Set[]
+    self.admin_set = ''
+    sets = admin_set
     oids.each_with_index do |oid, index|
       child_object = ChildObject.find_by_oid(oid.to_i)
       unless child_object
@@ -290,6 +314,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         next
       end
       next unless child_object
+
+      sets << ', ' + child_object.parent_object.admin_set.key
+      split_sets = sets.split(',').uniq.reject(&:blank?)
+      self.admin_set = split_sets.join(', ')
+      save!
 
       configure_parent_object(child_object, parents)
       attach_item(child_object)
@@ -302,6 +331,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       child_object.processing_event("Ptiff Queued", "ptiff-queued")
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   # SETS COMPLETE STATUS FOR RECREATE JOB
   def are_all_children_complete?(parent_object)
@@ -340,17 +371,29 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # METS METADATA CLOUD: ------------------------------------------------------------------------- #
 
   # MAKES CALL FOR UPDATED DATA
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Rails/SaveBang
   def refresh_metadata_cloud_mets
     metadata_source = mets_doc.metadata_source
+    self.admin_set = ''
+    sets = admin_set
     if ParentObject.exists?(oid: oid)
       batch_processing_event("Skipping mets import for existing parent: #{oid}", 'Skipped Import')
       return
     end
     ParentObject.create(oid: oid) do |parent_object|
       set_values_from_mets(parent_object, metadata_source)
+      if parent_object.admin_set.present?
+        sets << ', ' + parent_object.admin_set.key
+        split_sets = sets.split(',').uniq.reject(&:blank?)
+        self.admin_set = split_sets.join(', ')
+        save
+      end
     end
     PreservicaIngest.create(parent_oid: oid, preservica_id: mets_doc.parent_uuid, batch_process_id: id, ingest_time: Time.current) unless mets_doc.parent_uuid.nil?
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Rails/SaveBang
 
   # SETS VALUES FROM METS METADATA
   # rubocop:disable Metrics/AbcSize
@@ -378,9 +421,15 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   def sync_from_preservica
+    self.admin_set = ''
+    sets = admin_set
     parsed_csv.each_with_index do |row, _index|
       begin
         parent_object = ParentObject.find(row['oid'])
+        sets << ', ' + parent_object.admin_set.key
+        split_sets = sets.split(',').uniq.reject(&:blank?)
+        self.admin_set = split_sets.join(', ')
+        save!
       rescue
         batch_processing_event("Parent OID: #{row['oid']} not found in database", 'Skipped Import') if parent_object.nil?
         next
@@ -403,10 +452,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
                                                                         generation_uri: preservica_co[:preservica_generation_uri],
                                                                         bitstream_uri: preservica_co[:preservica_bitstream_uri] }
         end
-      rescue PreservicaImageServiceNetworkError => e
+      rescue PreservicaImageService::PreservicaImageServiceNetworkError => e
         batch_processing_event("Parent OID: #{row['oid']} because of #{e.message}", 'Skipped Import')
         raise
-      rescue PreservicaImageServiceError => e
+      rescue PreservicaImageService::PreservicaImageServiceError => e
         batch_processing_event("Parent OID: #{row['oid']} because of #{e.message}", 'Skipped Import')
         next
       end

@@ -24,12 +24,12 @@ class FixtureParsingService
     hash = fixture_file_to_hash(oid, metadata_source)
     return unless hash
     hash["dependentUris"].each do |uri|
-      dep_obj = DependentObject.find_or_create_by(
+      dep_obj = DependentObject.find_or_create_by!(
         dependent_uri: uri,
         metadata_source: metadata_source,
         parent_object_id: oid
       )
-      dep_obj.save
+      dep_obj.save!
     end
   end
 
