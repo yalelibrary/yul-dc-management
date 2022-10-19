@@ -103,4 +103,14 @@ Rails.application.configure do
   config.oid_sequence_initial_value = 30_000_000
 
   config.active_job.queue_adapter = :delayed_job
+
+  config.action_mailer.delivery_method = :sendmail
+  # Defaults to:
+  # config.action_mailer.sendmail_settings = {
+  #   location: '/usr/sbin/sendmail',
+  #   arguments: '-i'
+  # }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.deliver_later_queue_name = 'default'
 end

@@ -16,8 +16,8 @@ class ProblemReportDatatable < AjaxDatatablesRails::ActiveRecord
     # or in aliased_join_table.column_name format
     @view_columns ||= {
       status: { source: "ProblemReport.status", searchable: true, orderable: true },
-      child_count: { source: "ProblemReport.child_count", searchable: false, orderable: false },
       parent_count: { source: "ProblemReport.parent_count", searchable: false, orderable: false },
+      child_count: { source: "ProblemReport.child_count", searchable: false, orderable: false },
       problem_parent_count: { source: "ProblemReport.problem_parent_count", searchable: false, orderable: false },
       problem_child_count: { source: "ProblemReport.problem_child_count", searchable: false, orderable: false },
       date: { source: "ProblemReport.created_at", searchable: false, orderable: true },

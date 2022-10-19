@@ -5,7 +5,7 @@ class ProblemReport < ApplicationRecord
     ['admin_set', 'parent_oid', 'child_oid', 'last_modified']
   end
 
-  def generate_child_problem_csv
+  def generate_child_problem_csv(send_email = false)
     start_generating
     csv_rows = problem_children_csv
     parent_oids = Set.new
@@ -19,11 +19,21 @@ class ProblemReport < ApplicationRecord
       end
     end
     save_results(parent_oids.count, child_cnt)
+    report_complete(output_csv, send_email)
+  rescue => e
+    report_error("CSV generation failed due to #{e.message}")
+  end
+
+  def report_complete(output_csv, send_email)
     save_report_to_s3(output_csv)
     self.status = "Report Uploaded"
     save!
-  rescue => e
-    report_error("CSV generation failed due to #{e.message}")
+    send_report_email(output_csv) if send_email
+  end
+
+  def send_report_email(csv)
+    email_address = ENV['INGEST_ERROR_EMAIL'].presence
+    ProblemReportMailer.with(problem_report: self).problem_report_email(email_address, csv).deliver_later
   end
 
   def start_generating
@@ -49,7 +59,7 @@ class ProblemReport < ApplicationRecord
   end
 
   def problem_children_csv
-    ChildObject.where('height is NULL or height = 0 or width is NULL or width = 0').map do |co|
+    ChildObject.includes(:parent_object).where('height is NULL or height = 0 or width is NULL or width = 0').order("parent_objects.admin_set_id", :parent_object_oid, :oid).map do |co|
       [co.parent_object.admin_set.key, co.parent_object.oid, co.oid, co.updated_at]
     end
   end
