@@ -10,6 +10,7 @@ class ProblemReportsController < ApplicationController
       @scheduled_job_exists = Delayed::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ProblemReportJob%').exists?
       @manual_job_exists = Delayed::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ProblemReportManualJob%').exists?
     end
+    @email_address = ENV['INGEST_ERROR_EMAIL'].presence
     respond_to do |format|
       format.html
       format.json { render json: ProblemReportDatatable.new(params, view_context: view_context, current_ability: current_ability) }

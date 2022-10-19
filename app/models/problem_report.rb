@@ -31,7 +31,10 @@ class ProblemReport < ApplicationRecord
     send_report_email(output_csv) if send_email
   end
 
-  def send_report_email(csv); end
+  def send_report_email(csv)
+    email_address = ENV['INGEST_ERROR_EMAIL'].presence
+    ProblemReportMailer.with(problem_report: self).problem_report_email(email_address, csv).deliver_later
+  end
 
   def start_generating
     self.status = "Generating Report"

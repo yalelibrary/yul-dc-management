@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -78,4 +79,11 @@ Rails.application.configure do
   config.active_job.queue_adapter = :delayed_job
 
   config.web_console.whitelisted_ips = ["172.0.0.0/8", '192.168.0.0/16', '127.0.0.1']
+
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.perform_deliveries = false
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.preview_path = Rails.root.join("spec", "mailers", "previews")
+  config.action_mailer.deliver_later_queue_name = 'default'
 end
+# rubocop:enable Metrics/BlockLength
