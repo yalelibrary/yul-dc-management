@@ -59,7 +59,7 @@ class ProblemReport < ApplicationRecord
   end
 
   def problem_children_csv
-    ChildObject.where('height is NULL or height = 0 or width is NULL or width = 0').map do |co|
+    ChildObject.includes(:parent_object).where('height is NULL or height = 0 or width is NULL or width = 0').order("parent_objects.admin_set_id", :parent_object_oid, :oid).map do |co|
       [co.parent_object.admin_set.key, co.parent_object.oid, co.oid, co.updated_at]
     end
   end
