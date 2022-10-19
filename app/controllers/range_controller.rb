@@ -41,7 +41,7 @@ class RangeController < ApplicationController
     if (current_ability.can? :update, parent) && (parent.visibility != 'Private')
       json = JSON.parse(request.raw_post)
       range = rb.parse_range(parent, json, nil)
-      range.destroy
+      range.destroy!
       respond_to do |format|
         format.html { redirect_to parent_object_range_index_url, notice: 'Range was successfully destroyed.' }
         format.json { head :no_content }
