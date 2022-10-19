@@ -46,8 +46,8 @@ module Updatable
       parent_object = child_object.parent_object
       po_arr << parent_object
       attach_item(parent_object)
-      child_object.caption = row['caption']
-      child_object.label = row['label']
+      child_object.caption = row['caption'] unless row['caption'].nil?
+      child_object.label = row['label'] unless row['label'].nil?
       child_object.save!
       processing_event_for_child(child_object)
     end
