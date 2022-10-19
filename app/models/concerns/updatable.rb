@@ -32,6 +32,10 @@ module Updatable
     end
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def update_child_objects_caption
     return unless batch_action == "update child objects caption and label"
     po_arr = []
@@ -47,17 +51,13 @@ module Updatable
       child_object.save!
       processing_event_for_child(child_object)
     end
-    unique_po = po_arr.uniq{ |x| x.oid }
-    unique_po.each do |parent_object| 
+    unique_po = po_arr.uniq(&:oid)
+    unique_po.each do |parent_object|
       trigger_setup_metadata(parent_object)
       processing_event_for_parent(parent_object)
     end
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
   def update_parent_objects
     self.admin_set = ''
     sets = admin_set

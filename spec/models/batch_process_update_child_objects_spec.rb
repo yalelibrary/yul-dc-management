@@ -51,15 +51,15 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         expect(child_object_3.label).to eq "co3 label"
         batch_process.file = csv_upload
         batch_process.save
-        updated_child_object = ChildObject.find(10736292)
-        updated_child_object_2 = ChildObject.find(67890)
-        updated_child_object_3 = ChildObject.find(12)
+        updated_child_object = ChildObject.find(10_736_292)
+        updated_child_object_two = ChildObject.find(67_890)
+        updated_child_object_three = ChildObject.find(12)
         expect(updated_child_object.caption).to eq "caption 2"
         expect(updated_child_object.label).to eq "label 2"
-        expect(updated_child_object_2.caption).to eq "new caption"
-        expect(updated_child_object_2.label).to eq "new label"
-        expect(updated_child_object_3.caption).to eq "another caption"
-        expect(updated_child_object_3.label).to eq "another label"
+        expect(updated_child_object_two.caption).to eq "new caption"
+        expect(updated_child_object_two.label).to eq "new label"
+        expect(updated_child_object_three.caption).to eq "another caption"
+        expect(updated_child_object_three.label).to eq "another label"
       end
     end
   end
@@ -74,7 +74,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
 
     with_versioning do
       it "can't update child objects based on csv import" do
-        child_object = ChildObject.find(10736292)
+        child_object = ChildObject.find(10_736_292)
         expect(child_object.caption).to eq "caption"
         expect(child_object.label).to eq "label"
       end
