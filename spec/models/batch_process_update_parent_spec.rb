@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
-  let(:admin_set) { FactoryBot.create(:admin_set, id: 1) }
+  let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids.csv")) }
   let(:csv_small) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example.csv")) }
   let(:csv_missing) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_missing.csv")) }

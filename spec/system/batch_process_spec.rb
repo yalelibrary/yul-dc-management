@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
-  let(:admin_set_two) { FactoryBot.create(:admin_set, id: 2) }
+  let(:admin_set_two) { FactoryBot.create(:admin_set) }
 
   around do |example|
     original_path = ENV["GOOBI_MOUNT"]

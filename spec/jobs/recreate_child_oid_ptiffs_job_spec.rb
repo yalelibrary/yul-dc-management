@@ -8,7 +8,7 @@ RSpec.describe RecreateChildOidPtiffsJob, type: :job do
   end
   let(:user) { FactoryBot.create(:user) }
   let(:role) { FactoryBot.create(:role, name: editor) }
-  let(:admin_set) { FactoryBot.create(:admin_set, id: 1) }
+  let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user, batch_action: 'recreate child oid ptiffs') }
   let(:other_batch_process) { FactoryBot.create(:batch_process, user: user, batch_action: 'other recreate child oid ptiffs') }
   let(:metadata_source) { FactoryBot.create(:metadata_source) }
