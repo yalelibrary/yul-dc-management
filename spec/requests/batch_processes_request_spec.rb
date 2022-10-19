@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:user) }
+  let(:admin_set) { FactoryBot.create(:admin_set) }
   before do
     login_as user
   end
@@ -25,6 +26,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       )
     end
     it "returns http success" do
+      admin_set
       get "/batch_processes/#{batch_process_xml.id}/download"
       expect(response).to have_http_status(:success)
       expect(response.content_type).to eq("application/xml")

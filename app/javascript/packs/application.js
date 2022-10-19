@@ -187,15 +187,21 @@ $( document ).on('turbolinks:load', function() {
           extend: 'excelHtml5',
           text: "Excel",
           exportOptions: {
-            columns: ':visible'
-          }
+            columns: ':visible',
+          },
+          customize: function (xlsx) {
+            return format_excel(xlsx);
+          },
         },
         {
           extend: 'csvHtml5',
           action: newExportAction,
           text: "All Matching Entries",
-          className: "export-all"
-        }
+          className: "export-all",
+          customize: function (csv) {
+            return format_csv(csv)
+          }
+        }, 
       ],
       // pagingType is optional, if you want full pagination controls.
       // Check dataTables documentation to learn more about
@@ -284,8 +290,30 @@ const format_csv = (csv) => {
 
 // used to convert csv headers to snake case
 function snake_case(string) {
-  return string.toLowerCase()
-      .replace(/ /g, '_')
+  return string.toLowerCase().replace(/ /g, '_')
+}
+
+const format_excel = (xlsx) => {
+  let sheet = xlsx.xl.worksheets['sheet1.xml'];
+  let headerRowData = $('row[r=2] c is t', sheet);
+  let columnHeaderArray = [];
+  let formattedHeaders = [];
+
+  for (let i = 0; i < headerRowData.length; i++) {
+    columnHeaderArray.push(headerRowData[i].childNodes[0].nodeValue);
+  }
+
+  columnHeaderArray.forEach((label) => {
+    return formattedHeaders.push(snake_case(label));
+  });
+
+  for (let i = 0; i < formattedHeaders.length; i++) {
+    for (let y = 0; y < headerRowData.length; y++) {
+      if (i === y) {
+        $(headerRowData[y]).text(formattedHeaders[i])
+      }
+    }
+  }
 };
 
 $( document ).on('turbolinks:load', function() {

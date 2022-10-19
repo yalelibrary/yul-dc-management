@@ -68,7 +68,7 @@ class ParentObjectsController < ApplicationController
 
       if updated
         @parent_object.minify if valid_redirect_to_edit?
-        @parent_object.save
+        @parent_object.save!
         queue_parent_metadata_update
         format.html { redirect_to @parent_object, notice: 'Parent object was successfully saved, a full update has been queued.' }
         format.json { render :show, status: :ok, location: @parent_object }
@@ -82,7 +82,7 @@ class ParentObjectsController < ApplicationController
   # DELETE /parent_objects/1
   # DELETE /parent_objects/1.json
   def destroy
-    @parent_object.destroy
+    @parent_object.destroy!
     respond_to do |format|
       format.html { redirect_to parent_objects_url, notice: 'Parent object was successfully destroyed.' }
       format.json { head :no_content }
@@ -220,7 +220,7 @@ class ParentObjectsController < ApplicationController
       cur_params = params.require(:parent_object).permit(:oid, :admin_set, :project_identifier, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
                                                          :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction,
                                                          :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization,
-                                                         :digitization_note, :redirect_to, :preservica_uri, :digital_object_source, :preservica_representation_type)
+                                                         :digitization_note, :digitization_funding_source, :redirect_to, :preservica_uri, :digital_object_source, :preservica_representation_type)
       cur_params[:admin_set] = AdminSet.find_by(key: cur_params[:admin_set]) if cur_params[:admin_set]
       cur_params
     end

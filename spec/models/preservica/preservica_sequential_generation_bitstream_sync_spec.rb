@@ -30,6 +30,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   before do
     login_as(:user)
     batch_process.user_id = user.id
+    stub_pdfs
     stub_preservica_aspace_single
     stub_preservica_login
     stub_preservica_fixtures_set_of_three_changing_generation

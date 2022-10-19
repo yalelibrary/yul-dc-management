@@ -18,8 +18,7 @@ jobs:
   build-and-push:
     executor: docker/docker
     steps:
-      - setup_remote_docker:
-          version: 19.03.13
+      - setup_remote_docker
       - checkout
       - docker/check
       - docker/build:
@@ -48,6 +47,8 @@ jobs:
           POSTGRES_DB: management_yul_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
+      - image: seleniarm/standalone-chromium:latest
+        name: chrome    
     parallelism: 4
     executor: docker/docker
     steps:

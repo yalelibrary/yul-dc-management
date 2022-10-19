@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_12_220305) do
+ActiveRecord::Schema.define(version: 2022_10_17_195619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 2022_07_12_220305) do
     t.string "batch_status"
     t.string "batch_action", default: "create parent objects"
     t.string "output_csv"
+    t.string "admin_set"
     t.index ["oid"], name: "index_batch_processes_on_oid"
     t.index ["user_id"], name: "index_batch_processes_on_user_id"
   end
@@ -185,6 +186,7 @@ ActiveRecord::Schema.define(version: 2022_07_12_220305) do
     t.string "digital_object_source", default: "None"
     t.string "preservica_representation_type"
     t.datetime "last_preservica_update"
+    t.string "digitization_funding_source"
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
     t.index ["aspace_uri"], name: "index_parent_objects_on_aspace_uri"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
@@ -198,6 +200,14 @@ ActiveRecord::Schema.define(version: 2022_07_12_220305) do
     t.index ["redirect_to"], name: "index_parent_objects_on_redirect_to"
   end
 
+  create_table "permission_sets", force: :cascade do |t|
+    t.text "label"
+    t.text "key"
+    t.integer "max_queue_length", default: 10
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "preservica_ingests", force: :cascade do |t|
     t.datetime "ingest_time"
     t.bigint "parent_oid"
@@ -207,6 +217,17 @@ ActiveRecord::Schema.define(version: 2022_07_12_220305) do
     t.bigint "batch_process_id"
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+  end
+
+  create_table "problem_reports", force: :cascade do |t|
+    t.integer "child_count"
+    t.integer "parent_count"
+    t.integer "problem_parent_count"
+    t.integer "problem_child_count"
+    t.text "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["status"], name: "index_problem_reports_on_status"
   end
 
   create_table "roles", force: :cascade do |t|

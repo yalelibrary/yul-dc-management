@@ -1,0 +1,29 @@
+.table.permission-set-show-table {
+  display: inline-block;
+  width: auto;
+  vertical-align: top;
+
+  th {
+    width: 300px;
+  }
+
+  .user-role {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.table.permission-set-index-table {
+  display: inline-block;
+  width: auto;
+  vertical-align: top;
+
+  th {
+    width: 300px;
+  }
+
+  .user-role {
+    display: flex;
+    justify-content: space-between;
+  }
+}

@@ -34,6 +34,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       digital_object_source: "Preservica",
       preservica_uri: "/preservica_uri",
       digitization_note: nil,
+      digitization_funding_source: nil,
       extent_of_digitization: nil,
       holding: nil,
       item: nil,

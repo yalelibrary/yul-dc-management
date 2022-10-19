@@ -19,15 +19,58 @@ module Updatable
     end
   end
 
+  def updatable_child_object(oid, index)
+    child_object = ChildObject.find_by(oid: oid)
+    if child_object.blank?
+      batch_processing_event("Skipping row [#{index + 2}] with child oid: #{oid} because it was not found in local database", 'Skipped Row')
+      return false
+    elsif !current_ability.can?(:update, child_object)
+      batch_processing_event("Skipping row [#{index + 2}] with child oid: #{oid}, user does not have permission to update.", 'Permission Denied')
+      return false
+    else
+      child_object
+    end
+  end
+
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
+  def update_child_objects_caption
+    return unless batch_action == "update child objects caption and label"
+    po_arr = []
+    parsed_csv.each_with_index do |row, index|
+      oid = row['oid'] unless ['oid'].nil?
+      child_object = updatable_child_object(oid, index)
+      next unless child_object
+      parent_object = child_object.parent_object
+      po_arr << parent_object
+      attach_item(parent_object)
+      child_object.caption = row['caption'] unless row['caption'].nil?
+      child_object.label = row['label'] unless row['label'].nil?
+      child_object.save!
+      processing_event_for_child(child_object)
+    end
+    unique_po = po_arr.uniq(&:oid)
+    unique_po.each do |parent_object|
+      trigger_setup_metadata(parent_object)
+      processing_event_for_parent(parent_object)
+    end
+  end
+
   def update_parent_objects
+    self.admin_set = ''
+    sets = admin_set
     return unless batch_action == "update parent objects"
     parsed_csv.each_with_index do |row, index|
       oid = row['oid'] unless ['oid'].nil?
       redirect = row['redirect_to'] unless ['redirect_to'].nil?
       parent_object = updatable_parent_object(oid, index)
       next unless parent_object
+      sets << ', ' + parent_object.admin_set.key
+      split_sets = sets.split(',').uniq.reject(&:blank?)
+      self.admin_set = split_sets.join(', ')
+      save!
       next if redirect.present? && !validate_redirect(redirect)
       next unless check_for_children(redirect, parent_object)
 
@@ -36,7 +79,7 @@ module Updatable
       metadata_source = row['source'].presence || parent_object.authoritative_metadata_source.metadata_cloud_name
       next unless validate_metadata_source(metadata_source, index)
       setup_for_background_jobs(parent_object, metadata_source)
-      parent_object.update(processed_fields)
+      parent_object.update!(processed_fields)
       trigger_setup_metadata(parent_object)
 
       processing_event_for_parent(parent_object)
@@ -44,6 +87,8 @@ module Updatable
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def remove_blanks(row, parent_object)
     blankable = %w[aspace_uri barcode bib digitization_note holding item project_identifier rights_statement redirect_to display_layout extent_of_digitization viewing_direction]
@@ -64,7 +109,7 @@ module Updatable
   end
 
   def validate_field(parent_object, row)
-    fields = ['aspace_uri', 'barcode', 'bib', 'digitization_note', 'holding', 'item', 'project_identifier', 'rights_statement', 'redirect_to']
+    fields = ['aspace_uri', 'barcode', 'bib', 'digitization_note', 'holding', 'item', 'project_identifier', 'rights_statement', 'redirect_to', 'digitization_funding_source']
     validation_fields = { "display_layout" => 'viewing_hints', "extent_of_digitization" => 'extent_of_digitizations', "viewing_direction" => 'viewing_directions', "visibility" => 'visibilities' }
     row, blanks = remove_blanks(row, parent_object)
     processed_fields = {}
@@ -83,6 +128,13 @@ module Updatable
     parent_object.current_batch_connection = batch_connections.find_or_create_by(connectable: parent_object)
     parent_object.current_batch_connection.save!
     parent_object.processing_event("Parent #{parent_object.oid} has been updated", 'update-complete')
+  end
+
+  def processing_event_for_child(child_object)
+    child_object.current_batch_process = self
+    child_object.current_batch_connection = batch_connections.find_or_create_by(connectable: child_object)
+    child_object.current_batch_connection.save!
+    child_object.processing_event("Child #{child_object.oid} has been updated", 'update-complete')
   end
 
   def processing_event_invalid_blank(parent_object, field)

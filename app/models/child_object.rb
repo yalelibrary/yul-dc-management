@@ -63,6 +63,7 @@ class ChildObject < ApplicationRecord
   end
 
   # rubocop:disable  Metrics/MethodLength
+  # rubocop:disable  Metrics/LineLength
   def copy_to_access_master_pairtree
     # Don't copy over existing access masters if they already exist
     # TODO: Determine what happens if it's an intentional re-shoot of a child image
@@ -83,7 +84,7 @@ class ChildObject < ApplicationRecord
     directory = format("%02d", pairtree_path.first)
     # Create path to access master if it doesn't exist
     FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
-    FileUtils.cp(mets_access_master_path, access_master_path)
+    File.exist?(mets_access_master_path) ? FileUtils.cp(mets_access_master_path, access_master_path) : FileUtils.cp(mets_access_master_path.gsub('.tif', '.TIF').gsub('.jpg', '.JPG'), access_master_path)
     if access_master_checksum_matches?
       processing_event("Copied from Goobi package to access master pair-tree", 'goobi-copied')
       true
@@ -93,6 +94,7 @@ class ChildObject < ApplicationRecord
     end
   end
   # rubocop:enable  Metrics/MethodLength
+  # rubocop:enable  Metrics/LineLength
 
   def access_master_checksum_matches?
     access_master_checksum = Digest::SHA1.file(access_master_path).to_s

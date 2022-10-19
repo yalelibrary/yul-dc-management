@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe UpdateFulltextStatusJob, type: :job, solr: true do
-  let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
+  let(:admin_set) { FactoryBot.create(:admin_set) }
+  let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069', admin_set: admin_set) }
 
   context 'with test active job queue' do
     def queue_adapter_for_test
@@ -22,7 +23,6 @@ RSpec.describe UpdateFulltextStatusJob, type: :job, solr: true do
   context 'batch process' do
     let(:user) { FactoryBot.create(:user) }
     let(:role) { FactoryBot.create(:role, name: editor) }
-    let(:admin_set) { FactoryBot.create(:admin_set) }
     let(:batch_process) { FactoryBot.create(:batch_process, user: user, batch_action: 'update fulltext status') }
     let(:metadata_source) { FactoryBot.create(:metadata_source) }
     let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source, admin_set_id: admin_set.id) }
@@ -42,6 +42,7 @@ RSpec.describe UpdateFulltextStatusJob, type: :job, solr: true do
       user.add_role(:editor, admin_set)
       expect(batch_process).to receive(:oids).and_return(['2004628'])
       expect(ParentObject).to receive(:find_by).and_return(parent_object).twice
+      expect(AdminSet).to receive(:find).and_return(admin_set)
       expect(parent_object).to receive(:processing_event).twice # for queued and then completed message
       expect(parent_object).to receive(:update_fulltext_for_children).once # called because permission
       UpdateFulltextStatusJob.perform_now(batch_process)

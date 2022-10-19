@@ -13,9 +13,12 @@ module Reassociatable
     update_related_parent_objects(parents_needing_update, parent_destination_map)
   end
 
-  # rubocop:disable Metrics/AbcSize
   # finds which parents are needed to update
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def update_child_objects
+    self.admin_set = ''
+    sets = admin_set
     return unless batch_action == "reassociate child oids"
     parents_needing_update = []
 
@@ -25,6 +28,11 @@ module Reassociatable
       co = load_child(index, row["child_oid"].to_i)
       po = load_parent(index, row["parent_oid"].to_i)
       next unless co.present? && po.present?
+
+      sets << ', ' + po.admin_set.key
+      split_sets = sets.split(',').uniq.reject(&:blank?)
+      self.admin_set = split_sets.join(', ')
+      save!
 
       attach_item(po)
       attach_item(co)
@@ -43,6 +51,7 @@ module Reassociatable
     [parents_needing_update, parent_destination_map]
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   # verifies headers are included. child headers found in csv_exportable:90
   def check_headers(headers, row)
@@ -83,7 +92,7 @@ module Reassociatable
       else
         next
       end
-      co.save
+      co.save!
     end
   end
   # rubocop:enable Metrics/PerceivedComplexity

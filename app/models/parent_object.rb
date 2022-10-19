@@ -24,7 +24,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   self.primary_key = 'oid'
   after_save :setup_metadata_job
   before_update :check_for_redirect
-  after_update :digital_object_check
   # after_update :solr_index_job # we index from the fetch job on create
   after_destroy :solr_delete
   after_destroy :note_deletion
@@ -32,6 +31,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_destroy :pdf_deletion
   after_destroy :digital_object_delete
   paginates_per 50
+  validates :digitization_funding_source, length: { maximum: 255 }
   # rubocop:disable Metrics/LineLength
   validates :redirect_to, format: { with: /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//, message: " in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123", allow_blank: true }
   # rubocop:enable Metrics/LineLength
@@ -137,12 +137,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         valid_child_hashes = validate_child_hashes(child_hashes)
         invalid_child_hashes = child_hashes - valid_child_hashes
         cleanup_child_artifacts(invalid_child_hashes)
-        unless valid_child_hashes.empty?
-          upsert_child_objects(valid_child_hashes)
-          self.last_preservica_update = Time.current
-          self.metadata_update = true
-          save!
-        end
+        upsert_child_objects(valid_child_hashes) unless valid_child_hashes.empty?
+        self.last_preservica_update = Time.current
+        self.metadata_update = true
+        save!
       end
     else
       return unless ladybird_json
@@ -230,8 +228,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       co.preservica_bitstream_uri = value[:bitstream_uri]
       co.last_preservica_update = Time.current
       replace_preservica_tif(co)
-      co.save
+      co.save!
     end
+
     # create child records for any new items in preservica
     create_child_records
   end

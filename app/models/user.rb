@@ -54,6 +54,14 @@ class User < ApplicationRecord
     has_role?(:editor, admin_set)
   end
 
+  def administrator(permission_set)
+    has_role?(:administrator, permission_set)
+  end
+
+  def approver(permission_set)
+    has_role?(:approver, permission_set)
+  end
+
   def viewer(admin_set)
     has_role?(:viewer, admin_set)
   end

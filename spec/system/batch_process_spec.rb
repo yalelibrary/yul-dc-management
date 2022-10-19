@@ -3,6 +3,7 @@ require 'rails_helper'
 
 RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
+  let(:admin_set_two) { FactoryBot.create(:admin_set) }
 
   around do |example|
     original_path = ENV["GOOBI_MOUNT"]
@@ -191,6 +192,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.parent_output_csv).to include "2034600"
         expect(BatchProcess.last.parent_output_csv).to include "Preservica"
         expect(BatchProcess.last.parent_output_csv).to include "/preservica_uri"
+        expect(BatchProcess.last.parent_output_csv).to include "brbl"
         expect(BatchProcess.last.parent_output_csv).not_to include "2005512"
       end
 
@@ -314,6 +316,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   end
   context "when uploading an xml" do
     it "uploads and increases xml count and gives a success message" do
+      admin_set_two
       expect(BatchProcess.count).to eq 0
       page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
       click_button("Submit")
@@ -324,6 +327,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
     context "deleting a parent object" do
       before do
+        admin_set_two
         page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
         click_button("Submit")
       end
@@ -352,6 +356,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     end
 
     it "create preservica ingest for the parent and children objects" do
+      admin_set_two
       # rubocop:disable RSpec/AnyInstance
       allow_any_instance_of(SetupMetadataJob).to receive(:check_mets_images).and_return(true)
       allow_any_instance_of(ParentObject).to receive(:default_fetch).and_return(true)
@@ -365,6 +370,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     end
 
     it "does not create preservica ingest if no parent uuid" do
+      admin_set_two
       # rubocop:disable RSpec/AnyInstance
       allow_any_instance_of(SetupMetadataJob).to receive(:check_mets_images).and_return(true)
       allow_any_instance_of(ParentObject).to receive(:default_fetch).and_return(true)
