@@ -3,6 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe ProblemReportJob, type: :job do
+
+  def queue_adapter_for_test
+    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+  end
+
   describe "jumping ahead one day" do
     before do
       Timecop.freeze(Time.zone.today)
