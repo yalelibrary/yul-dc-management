@@ -38,6 +38,8 @@ module Updatable
   # rubocop:disable Metrics/MethodLength
   def update_child_objects_caption
     return unless batch_action == "update child objects caption and label"
+    self.admin_set = ''
+    sets = admin_set
     po_arr = []
     parsed_csv.each_with_index do |row, index|
       oid = row['oid'] unless ['oid'].nil?
@@ -46,6 +48,10 @@ module Updatable
       parent_object = child_object.parent_object
       po_arr << parent_object
       attach_item(parent_object)
+      sets << ', ' + parent_object.admin_set.key
+      split_sets = sets.split(',').uniq.reject(&:blank?)
+      self.admin_set = split_sets.join(', ')
+      save!
       child_object.caption = row['caption'] unless row['caption'].nil?
       child_object.label = row['label'] unless row['label'].nil?
       child_object.save!
