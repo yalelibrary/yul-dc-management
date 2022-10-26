@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProblemReportDatatable < AjaxDatatablesRails::ActiveRecord
+class ProblemReportDatatable < ApplicationDatatable
   extend Forwardable
 
   def_delegators :@view, :content_tag, :link_to

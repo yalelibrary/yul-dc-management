@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AdminSetDatatable < AjaxDatatablesRails::ActiveRecord
+class AdminSetDatatable < ApplicationDatatable
   extend Forwardable
 
   def_delegators :@view, :link_to, :admin_set_path, :edit_admin_set_path, :content_tag
