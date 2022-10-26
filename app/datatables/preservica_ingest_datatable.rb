@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PreservicaIngestDatatable < AjaxDatatablesRails::ActiveRecord
+class PreservicaIngestDatatable < ApplicationDatatable
   extend Forwardable
 
   def_delegators :@view

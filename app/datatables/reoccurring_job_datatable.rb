@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ReoccurringJobDatatable < AjaxDatatablesRails::ActiveRecord
+class ReoccurringJobDatatable < ApplicationDatatable
   extend Forwardable
 
   def_delegators :@view, :link_to, :reoccurring_jobs_path
