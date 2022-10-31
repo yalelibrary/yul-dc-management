@@ -36,6 +36,8 @@ gem 'partridge', '~> 0.1.2'
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 4.3'
+# cors support or rack
+gem 'rack-cors'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.5.1'
 gem "rails_semantic_logger", ">=4.4.4"
@@ -54,6 +56,8 @@ gem 'daemons'
 gem 'delayed_job_active_record'
 gem "delayed_job_web"
 gem 'delayed_job_worker_pool'
+
+gem 'jwt'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'

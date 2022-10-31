@@ -39,8 +39,11 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       post :sync_from_preservica
       get :select_thumbnail
       get :solr_document
+      get :manifest, controller: "manifest"
+      post :manifest, to: "manifest#save"
     end
     resources :versions, only: [:index]
+    resources :range
   end
 
   devise_for :users, skip: [:sessions, :registrations, :passwords], controllers: { omniauth_callbacks: "omniauth_callbacks" }
@@ -52,6 +55,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   root to: 'management#index'
 
   get 'api/oid/new(/:number)', to: 'oid_minter#generate_oids', as: :new_oid
+
+  get '/show_token', to: 'users#show_token', as: :show_token
+  get '/update_token', to: 'manifest#update_token', as: :update_token
 
   devise_scope :user do
     authenticated :user, ->(user) { user.sysadmin } do

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include JwtWebToken
   rolify
   devise :timeoutable, :omniauthable, omniauth_providers: [:cas]
 
@@ -26,6 +27,11 @@ class User < ApplicationRecord
 
   def deactivate
     self.deactivated = true
+  end
+
+  def token
+    info = { user_id: id }
+    jwt_encode(info)
   end
 
   def sysadmin=(value)
