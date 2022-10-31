@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RedirectedParentObjectDatatable < AjaxDatatablesRails::ActiveRecord
+class RedirectedParentObjectDatatable < ApplicationDatatable
   extend Forwardable
 
   def_delegators :@view, :link_to, :parent_object_path, :edit_parent_object_path, :content_tag

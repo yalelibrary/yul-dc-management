@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe RedirectedParentObjectDatatable, type: :datatable, prep_metadata_sources: true, prep_admin_sets: true do
-  columns = ['oid', 'authoritative_source', 'bib']
+  columns = ['oid', 'authoritative_source', 'admin_set']
   let(:user) { FactoryBot.create(:sysadmin_user) }
 
   it 'can handle an empty model set' do

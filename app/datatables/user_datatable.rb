@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserDatatable < AjaxDatatablesRails::ActiveRecord
+class UserDatatable < ApplicationDatatable
   extend Forwardable
 
   def_delegators :@view, :link_to, :user_path, :edit_user_path, :content_tag

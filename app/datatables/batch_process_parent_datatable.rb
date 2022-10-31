@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BatchProcessParentDatatable < AjaxDatatablesRails::ActiveRecord
+class BatchProcessParentDatatable < ApplicationDatatable
   extend Forwardable
 
   def_delegators :@view, :link_to, :show_child_batch_process_path
