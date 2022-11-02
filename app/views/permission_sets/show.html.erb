@@ -24,7 +24,7 @@
   <tbody>
     <% User.with_role(:approver, @permission_set).order('last_name ASC').each do |user| %>
       <tr>
-        <td class='user-role'><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %></td>
+        <td class='user-role'><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %><%= link_to 'X', remove_roles_path(uid: user.uid, item_class: 'PermissionSet', item_id: @permission_set.id, role: :approver), method: :delete unless current_user.has_role?(:approver, @permission_set)%></td>
       </tr>
     <% end %>
   </tbody>
@@ -39,11 +39,15 @@
   <tbody>
     <% User.with_role(:administrator, @permission_set).order('last_name ASC').each do |user| %>
         <tr>
-          <td class='user-role'><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %></td>
+          <td class='user-role'><%= "#{user.last_name}, #{user.first_name} (#{user.uid})" %><%= link_to 'X', remove_roles_path(uid: user.uid, item_class: 'PermissionSet', item_id: @permission_set.id, role: :administrator), method: :delete unless current_user.has_role?(:approver, @permission_set)%></td>
         </tr>
     <% end %>
   </tbody>
 </table>
+
+<% if can? :edit, @permission_set %>
+  <%= render partial: 'shared/add_role', locals: {item: @permission_set} %>
+<% end %>
 
 <br />
 <% if can? :edit, @permission_set %>

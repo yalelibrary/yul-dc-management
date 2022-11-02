@@ -4,8 +4,9 @@ require 'rails_helper'
 
 RSpec.describe "PermissionSets", type: :system, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:user) }
+  let(:user_2) { FactoryBot.create(:user) }
   let(:approver_user) { FactoryBot.create(:user) }
-  let(:administrator_user) { FactoryBot.create(:user) }
+  let(:administrator_user) { FactoryBot.create(:user, uid: 'admin') }
   let(:permission_set) { FactoryBot.create(:permission_set, label: "set 1") }
   let(:permission_set_2) { FactoryBot.create(:permission_set, label: "set 2") }
 
@@ -144,8 +145,9 @@ RSpec.describe "PermissionSets", type: :system, prep_metadata_sources: true do
   end
 
   context 'Editing and creating Permission Sets' do
-    describe 'editing and creating permission sets as a sysadmin' do
+    describe 'editing, creating, and adding/removing user roles to permission sets as a sysadmin' do
       before do
+        user_2
         user.add_role(:sysadmin)
       end
       it 'can be viewed' do
@@ -169,11 +171,20 @@ RSpec.describe "PermissionSets", type: :system, prep_metadata_sources: true do
         expect(page).to have_content("key example")
         expect(page).to have_content("label example")
       end
+      it 'can add and remove user roles to permission set' do
+        visit "/permission_sets/#{permission_set.id}/"
+        fill_in('uid', with: user_2.uid.to_s)
+        click_on 'Save'
+        expect(page).to have_content("User: #{user_2.uid} added as approver")
+        all('a', text: 'X')[0].click
+        expect(page).to have_content("User: #{user_2.uid} removed as approver")
+      end
     end
 
-    describe 'editing and creating permission sets as an administrator' do
+    describe 'editing, creating, and adding/removing user roles to permission sets as an administrator' do
       before do
         login_as administrator_user
+        user
         permission_set.add_administrator(administrator_user)
       end
       it 'can be viewed' do
@@ -185,6 +196,14 @@ RSpec.describe "PermissionSets", type: :system, prep_metadata_sources: true do
       it 'can be accessed' do
         visit "/permission_sets/#{permission_set.id}/edit"
         expect(page).to have_content("Editing Permission Set")
+      end
+      it 'can add and remove user roles to permission set' do
+        visit "/permission_sets/#{permission_set.id}/"
+        fill_in('uid', with: user.uid.to_s)
+        click_on 'Save'
+        expect(page).to have_content("User: #{user.uid} added as approver")
+        all('a', text: 'X')[0].click
+        expect(page).to have_content("User: #{user.uid} removed as approver")
       end
       it 'can be created' do
         visit "/permission_sets/new"
@@ -201,13 +220,22 @@ RSpec.describe "PermissionSets", type: :system, prep_metadata_sources: true do
 
     describe 'editing and creating permission sets as an approver' do
       before do
+        administrator_user
         login_as approver_user
         permission_set.add_approver(approver_user)
+        permission_set.add_administrator(administrator_user)
       end
       it 'cannot be viewed' do
         visit '/permission_sets'
         expect(page).not_to have_content("Create New Permission Set")
         expect(page).not_to have_link("Edit")
+      end
+      it 'cannot remove or add users from a permission set' do
+        visit "/permission_sets/#{permission_set.id}"
+        expect(page).to have_content("(admin)")
+        expect(page).not_to have_link("X")
+        expect(page).not_to have_content("NetID")
+        expect(page).not_to have_content("Save")
       end
       it 'cannot be accessed' do
         visit "/permission_sets/#{permission_set.id}/edit"

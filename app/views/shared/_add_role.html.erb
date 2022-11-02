@@ -2,7 +2,7 @@
   <p>Add</p>
   <%= text_field_tag(:uid, "", required: true, class: 'form-control', placeholder: 'NetID') %>
   <p>as</p>
-  <%= select_tag(:role, options_for_select(['viewer', 'editor']), { :class => 'form-control', required: true }) %>
+  <%= select_tag(:role, options_for_select(item == @admin_set ? ['viewer', 'editor'] : ['approver', 'administrator']), { :class => 'form-control', required: true }) %>
   <%= hidden_field_tag :item_class, item.class.to_s %>
   <%= hidden_field_tag :item_id, item.id %>
   <div class='actions'>

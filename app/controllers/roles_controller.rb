@@ -29,7 +29,7 @@ class RolesController < ApplicationController
   private
 
     def verify_user
-      authorize!(current_ability, :manage, @item) unless current_user.has_role? :sysadmin
+      authorize!(current_ability, :manage, @item) unless current_user.has_role?(:sysadmin) || current_user.has_role?(:administrator, @item)
     end
 
     def set_user
