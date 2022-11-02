@@ -173,7 +173,7 @@ RSpec.describe "PermissionSets", type: :system, prep_metadata_sources: true do
       end
       it 'can add and remove user roles to permission set' do
         visit "/permission_sets/#{permission_set.id}/"
-        fill_in('uid', with: "#{user_2.uid}")
+        fill_in('uid', with: user_2.uid.to_s)
         click_on 'Save'
         expect(page).to have_content("User: #{user_2.uid} added as approver")
         all('a', text: 'X')[0].click
@@ -199,7 +199,7 @@ RSpec.describe "PermissionSets", type: :system, prep_metadata_sources: true do
       end
       it 'can add and remove user roles to permission set' do
         visit "/permission_sets/#{permission_set.id}/"
-        fill_in('uid', with: "#{user.uid}")
+        fill_in('uid', with: user.uid.to_s)
         click_on 'Save'
         expect(page).to have_content("User: #{user.uid} added as approver")
         all('a', text: 'X')[0].click
