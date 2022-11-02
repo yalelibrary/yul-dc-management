@@ -145,7 +145,7 @@ RSpec.describe "PermissionSets", type: :system, prep_metadata_sources: true do
   end
 
   context 'Editing and creating Permission Sets' do
-    describe 'editing and creating permission sets as a sysadmin' do
+    describe 'editing, creating, and adding/removing user roles to permission sets as a sysadmin' do
       before do
         user_2
         user.add_role(:sysadmin)
