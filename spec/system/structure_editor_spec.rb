@@ -5,42 +5,54 @@ RSpec.describe "Structure Editor", type: :system, prep_metadata_sources: true, p
   let(:user) { FactoryBot.create(:sysadmin_user) }
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
   # parent object has two child objects
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: '2012036', admin_set_id: admin_set.id) }
-  let(:child_object) { FactoryBot.create(:child_object, oid: '1234567', parent_object: parent_object, caption: 'bola') }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: '16172421', admin_set_id: admin_set.id) }
+  let(:child_object) { FactoryBot.create(:child_object, oid: '100001', parent_object: parent_object, caption: 'bola') }
+  let(:iiif_presentation) { IiifPresentationV3.new(parent_object) }
+  
+  around do |example|
+    original_manifests_base_url = ENV['IIIF_MANIFESTS_BASE_URL']
+    original_image_base_url = ENV["IIIF_IMAGE_BASE_URL"]
+    original_pdf_url = ENV["PDF_BASE_URL"]
+    original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+    ENV['IIIF_MANIFESTS_BASE_URL'] = "http://localhost/manifests"
+    ENV['IIIF_IMAGE_BASE_URL'] = "http://localhost:8182/iiif"
+    ENV["PDF_BASE_URL"] = "http://localhost/pdfs"
+    ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
+    perform_enqueued_jobs do
+      example.run
+    end
+    ENV['IIIF_MANIFESTS_BASE_URL'] = original_manifests_base_url
+    ENV['IIIF_IMAGE_BASE_URL'] = original_image_base_url
+    ENV["PDF_BASE_URL"] = original_pdf_url
+    ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
+  end
 
   before do
-    stub_ptiffs_and_manifests
+    stub_ptiffs
+    stub_pdfs
     user.add_role(:editor, admin_set)
     login_as user
     parent_object
-    stub_metadata_cloud("2012036")
+    stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/21/16/17/24/21/16172421.json")
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "manifests", "16172421.json")).read)
+    stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/21/16/17/24/21/16172421.json")
+      .to_return(status: 200)
+    stub_metadata_cloud("16172421")
+    stub_metadata_cloud("100001")
   end
 
-  describe 'can access the structure editor' do
-    it 'can visit the homepage' do
-      visit "/parent_objects/#{parent_object.oid}/edit"
-      expect(page).to have_content('Manifest Structure')
-      click_on 'Manifest Structure'
-      # new_window = page.window_opened_by do
-        # click_on 'Manifest Structure'
-      # end
-      # new_window = page.driver.browser.window_handles.last
-      # page.within_window new_window do
-      # session.driver.browser.switch_to.window(page.driver.browser.window_handles.last)
-      # page.driver.browser.switch_to_window page.driver.browser.window_handles.last do
-      # page.within_window(new_window) do
-      #   expect(page).to have_content('Manifest downloaded')
-      # end
-      # new_window.close
-      visit "structure-editor/?manifest=#{root_path}%2Fparent_objects%2F#{parent_object.oid}%2Fmanifest"
-      expect(page).to have_content('bola')
+  # manifest loads in structure editor
+  describe 'can access the homepage' do
+    it 'can render a manifest' do
+      visit "structure-editor/?manifest=#{parent_object_url(parent_object.oid)}/manifest&token=#{user.token}"
+      expect(page).to have_content("#{child_object.oid}")
     end
   end
 
 end
 
 
-# manifest loads in structure editor
+
 
 # can add range
 
