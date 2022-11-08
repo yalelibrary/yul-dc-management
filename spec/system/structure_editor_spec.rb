@@ -111,23 +111,5 @@ RSpec.describe "Structure Editor", type: :system, prep_metadata_sources: true, p
       visit '/parent_objects/16172421/manifest.json'
       expect(page).to have_content('New Range')
     end
-
-    it 'can drag a canvas' do
-      click_on 'Range +'
-      # finds first range label
-      find('.ant-tree-title').click
-      find('.item-label', match: :first).click
-      click_on 'Canvas +'
-      click_on 'Range +'
-      # finds second range label
-      find(:xpath, '(//html/body/div/section/section/aside/div/div/div[3]/div/div/div/div[3]/span[4]/span/span/span[2]/span)').click
-      find('.item-label', match: :first).click
-      click_on 'Canvas +'
-      second_canvas = find(:xpath, '(//html/body/div/section/section/aside/div/div/div[3]/div/div/div/div[4]/span[4]/span/span/span[1]/img)')
-      second_canvas.drag_by(0, 5)
-      within('.ant-tree-list') do
-        expect(page).to have_content('16188699').twice
-      end
-    end
   end
 end
