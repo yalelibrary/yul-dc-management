@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_17_195619) do
+ActiveRecord::Schema.define(version: 2022_11_08_212311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -198,6 +198,16 @@ ActiveRecord::Schema.define(version: 2022_10_17_195619) do
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
     t.index ["project_identifier"], name: "index_parent_objects_on_project_identifier"
     t.index ["redirect_to"], name: "index_parent_objects_on_redirect_to"
+  end
+
+  create_table "permission_request_users", force: :cascade do |t|
+    t.string "sub"
+    t.string "name"
+    t.string "email"
+    t.boolean "email_verified"
+    t.datetime "oidc_updated_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "permission_sets", force: :cascade do |t|
