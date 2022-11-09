@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-# TODO  Webdrivers.cache_time = 3
+Webdrivers.cache_time = 3
 Capybara.default_max_wait_time = 8
 Capybara.default_driver = :rack_test
 
@@ -15,7 +15,7 @@ capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
 
 Capybara.register_driver :chrome do |app|
   d = Capybara::Selenium::Driver.new(app,
-                                     browser: :chrome,
+                                     browser: :remote,
                                      desired_capabilities: capabilities,
                                      url: "http://chrome:4444/wd/hub")
   # Fix for capybara vs remote files. Selenium handles this for us
@@ -29,7 +29,7 @@ Capybara.server_host = '0.0.0.0'
 Capybara.server_port = 3007
 Capybara.always_include_port = true
 Capybara.app_host = "http://#{ENV['WEB_HOST']}:#{Capybara.server_port}"
-Capybara.javascript_driver = :headless_chrome
+Capybara.javascript_driver = :chrome
 
 # Setup rspec
 RSpec.configure do |config|
