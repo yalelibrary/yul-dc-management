@@ -49,7 +49,7 @@ jobs:
           POSTGRES_PASSWORD: password
       - image: seleniarm/standalone-chromium:latest
         name: chrome    
-    parallelism: 5
+    parallelism: 4
     executor: docker/docker
     steps:
       - setup_remote_docker
