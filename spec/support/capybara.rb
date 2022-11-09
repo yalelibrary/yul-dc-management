@@ -29,7 +29,7 @@ Capybara.server_host = '0.0.0.0'
 Capybara.server_port = 3007
 Capybara.always_include_port = true
 Capybara.app_host = "http://#{ENV['WEB_HOST']}:#{Capybara.server_port}"
-Capybara.javascript_driver = :chrome
+Capybara.javascript_driver = :headless_chrome
 
 # Setup rspec
 RSpec.configure do |config|
