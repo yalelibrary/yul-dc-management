@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-Webdrivers.cache_time = 3
+# TODO  Webdrivers.cache_time = 3
 Capybara.default_max_wait_time = 8
 Capybara.default_driver = :rack_test
 
@@ -9,7 +9,7 @@ ENV['WEB_HOST'] ||= `hostname -s`.strip
 
 capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
   chromeOptions: {
-    args: %w[disable-gpu no-sandbox whitelisted-ips window-size=1400,1400]
+    args: %w[disable-gpu headless no-sandbox whitelisted-ips window-size=1400,1400]
   }
 )
 
