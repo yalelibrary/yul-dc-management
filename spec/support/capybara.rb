@@ -9,7 +9,7 @@ ENV['WEB_HOST'] ||= `hostname -s`.strip
 
 capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
   chromeOptions: {
-    args: %w[disable-gpu headless no-sandbox whitelisted-ips window-size=1400,1400]
+    args: %w[disable-gpu no-sandbox whitelisted-ips window-size=1400,1400]
   }
 )
 
@@ -29,7 +29,7 @@ Capybara.server_host = '0.0.0.0'
 Capybara.server_port = 3007
 Capybara.always_include_port = true
 Capybara.app_host = "http://#{ENV['WEB_HOST']}:#{Capybara.server_port}"
-Capybara.javascript_driver = :headless_chrome
+Capybara.javascript_driver = :chrome
 
 # Setup rspec
 RSpec.configure do |config|
