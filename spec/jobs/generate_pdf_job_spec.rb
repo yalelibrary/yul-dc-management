@@ -37,8 +37,8 @@ RSpec.describe GeneratePdfJob, type: :job do
         generate_pdf_job.perform(parent_object, batch_process)
       end.to raise_error("No authoritative_json to create PDF for #{parent_object.oid}")
     end
-    xit 'throws exception with shell failure' do
-      # allow(S3Service).to receive(:remote_metadata).and_return(parent_object)
+    it 'throws exception with shell failure' do
+      allow(S3Service).to receive(:remote_metadata).and_return(parent_object)
       # stub these with some values so that it will get to the point of trying to run the app and get the response
       # from Open3.capture3 with success = false  (the values don't really matter)
       expect(parent_object).to receive(:authoritative_json).and_return(true).once
@@ -54,8 +54,8 @@ RSpec.describe GeneratePdfJob, type: :job do
     it "has correct priority" do
       expect(generate_pdf_job.default_priority).to eq(50)
     end
-    xit "can generate a PDF file" do
-      # allow(S3Service).to receive(:remote_metadata).and_return(parent_object_with_authoritative_json)
+    it "can generate a PDF file" do
+      allow(S3Service).to receive(:remote_metadata).and_return(parent_object_with_authoritative_json)
       generate_pdf_job.perform(parent_object_with_authoritative_json, batch_process)
     end
 
