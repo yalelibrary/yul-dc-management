@@ -13,9 +13,15 @@ capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
   }
 )
 
+options = Selenium::WebDriver::Chrome::Options.new(args: ["headless"])
+options.add_argument(
+  "--enable-features=NetworkService,NetworkServiceInProcess"
+)
+
 Capybara.register_driver :chrome do |app|
   d = Capybara::Selenium::Driver.new(app,
                                      browser: :remote,
+                                     options: options,
                                      desired_capabilities: capabilities,
                                      url: "http://chrome:4444/wd/hub")
   # Fix for capybara vs remote files. Selenium handles this for us
