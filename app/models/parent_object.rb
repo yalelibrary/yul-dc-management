@@ -15,6 +15,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :child_objects, -> { order('"order" ASC, oid ASC') }, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :delete_all
   has_many :batch_connections, as: :connectable
   has_many :batch_processes, through: :batch_connections
+  has_many :permission_requests
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   belongs_to :admin_set
   has_one :digital_object_json

@@ -976,4 +976,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
     end
   end
+
+  describe ParentObject do
+    it { is_expected.to have_many(:permission_requests) }
+  end
+
 end
