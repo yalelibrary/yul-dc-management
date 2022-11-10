@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 # TODO  Webdrivers.cache_time = 3
-Capybara.default_max_wait_time = 10
+Capybara.default_max_wait_time = 8
 Capybara.default_driver = :rack_test
 
 # Setup chrome headless driver
@@ -9,7 +9,7 @@ ENV['WEB_HOST'] ||= `hostname -s`.strip
 
 capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
   chromeOptions: {
-    args: %w[disable-gpu no-sandbox whitelisted-ips window-size=1400,1400]
+    args: %w[headless enable-features=NetworkService,NetworkServiceInProcess disable-gpu no-sandbox whitelisted-ips window-size=1400,1400]
   }
 )
 
