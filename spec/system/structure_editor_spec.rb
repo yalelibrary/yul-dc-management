@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe "Structure Editor", type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
-  # parent object has two child objects
+  # parent object has three child objects
   let(:parent_object) { FactoryBot.create(:parent_object, oid: '16172421', admin_set_id: admin_set.id) }
   let(:iiif_presentation) { IiifPresentationV3.new(parent_object) }
 
@@ -35,7 +35,7 @@ RSpec.describe "Structure Editor", type: :system, prep_metadata_sources: true, p
     stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/21/16/17/24/21/16172421.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "manifests", "16172421.json")).read)
     stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/21/16/17/24/21/16172421.json")
-      .to_return(status: 200)
+      .to_return(status: 200, body: File.open(File.join(fixture_path, "manifests", "16172421.json")).read)
     stub_metadata_cloud("16172421")
   end
 
@@ -53,7 +53,7 @@ RSpec.describe "Structure Editor", type: :system, prep_metadata_sources: true, p
     end
   end
 
-  describe 'can perform actions' do
+  describe 'can perform actions and' do
     before do
       visit '/structure-editor/'
       click_on 'Get Manifest'
