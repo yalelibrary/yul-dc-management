@@ -55,5 +55,4 @@ RSpec.describe PermissionSet, type: :model do
   describe PermissionSet do
     it { is_expected.to have_many(:permission_requests) }
   end
-  
 end

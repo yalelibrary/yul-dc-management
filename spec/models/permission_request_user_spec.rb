@@ -41,5 +41,4 @@ RSpec.describe PermissionRequestUser, type: :model, prep_metadata_sources: true,
   describe PermissionRequestUser do
     it { is_expected.to have_many(:permission_requests) }
   end
-  
 end
