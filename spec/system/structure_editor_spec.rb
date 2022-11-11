@@ -35,8 +35,11 @@ RSpec.describe "Structure Editor", type: :system, prep_metadata_sources: true, p
     stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/21/16/17/24/21/16172421.json")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "manifests", "16172421.json")).read)
     stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/21/16/17/24/21/16172421.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "manifests", "16172421.json")).read)
+      .to_return(status: 200)
     stub_metadata_cloud("16172421")
+    # The parent object gets its metadata populated via a background job, and we can't assume that has run,
+    # so stub the part of the metadata we need for the iiif_presentation
+    allow(parent_object).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "16172421.json"))))
   end
 
   describe 'can access the homepage' do
