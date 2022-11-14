@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class PermissionRequestUser < ApplicationRecord
+  has_many :permission_requests
   validates :sub, presence: true
   validates :name, presence: true
   validates :email, presence: true

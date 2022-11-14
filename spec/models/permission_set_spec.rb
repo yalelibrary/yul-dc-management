@@ -51,4 +51,8 @@ RSpec.describe PermissionSet, type: :model do
       expect(user.roles.first.name).to eq("administrator")
     end
   end
+
+  describe PermissionSet do
+    it { is_expected.to have_many(:permission_requests) }
+  end
 end

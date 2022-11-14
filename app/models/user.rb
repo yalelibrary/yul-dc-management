@@ -11,6 +11,7 @@ class User < ApplicationRecord
 
   has_many :batch_processes
   has_many :users_roles
+  has_many :permission_requests
 
   def self.system_user
     system_user = User.find_by_uid('System')
