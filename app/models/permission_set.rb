@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class PermissionSet < ApplicationRecord
+  has_many :permission_requests
   resourcify
   validates :key, presence: true
   validates :label, presence: true

@@ -61,4 +61,8 @@ RSpec.describe User, type: :model do
       expect(user2.errors.messages[:last_name]).to eq ["can't be blank"]
     end
   end
+
+  describe User do
+    it { is_expected.to have_many(:permission_requests) }
+  end
 end

@@ -37,4 +37,8 @@ RSpec.describe PermissionRequestUser, type: :model, prep_metadata_sources: true,
       expect(permission_request.errors.messages[:oidc_updated_at]).to eq ["can't be blank"]
     end
   end
+
+  describe PermissionRequestUser do
+    it { is_expected.to have_many(:permission_requests) }
+  end
 end

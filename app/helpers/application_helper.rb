@@ -2,6 +2,6 @@
 
 module ApplicationHelper
   def structure_editor_url
-    "/management/structure-editor/"
+    File.join(root_path, "structure-editor/")
   end
 end
