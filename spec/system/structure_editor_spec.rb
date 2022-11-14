@@ -44,28 +44,21 @@ RSpec.describe "Structure Editor", type: :system, prep_metadata_sources: true, p
 
   describe 'can access the homepage' do
     it 'can render a manifest' do
-      visit '/structure-editor/'
-      click_on 'Get Manifest'
-      fill_in 'API Key', with: user.token
-      fill_in 'Manifest', with: "#{root_path}parent_objects/16172421/manifest.json"
-      click_on 'OK'
-      # loads manifest
-      expect(page).to have_content('Manifest Downloaded')
-      # loads child objects
+      visit edit_parent_object_path(16_172_421)
+      expect(page).to have_content('Manifest Structure')
+      click_on 'Manifest Structure'
+      page.driver.browser.switch_to.window(page.driver.browser.window_handles.last)
       expect(page).to have_content('16188699')
     end
   end
 
   describe 'can perform actions and' do
     before do
-      visit '/structure-editor/'
-      click_on 'Get Manifest'
-      fill_in 'API Key', with: user.token
-      fill_in 'Manifest', with: "#{root_path}parent_objects/16172421/manifest.json"
-      # submit dialogue
-      click_on 'OK'
-      # acknowledge manifest loaded
-      click_on 'OK'
+      visit edit_parent_object_path(16_172_421)
+      expect(page).to have_content('Manifest Structure')
+      click_on 'Manifest Structure'
+      page.driver.browser.switch_to.window(page.driver.browser.window_handles.last)
+      click_on "OK"
     end
 
     it 'can add a range' do
