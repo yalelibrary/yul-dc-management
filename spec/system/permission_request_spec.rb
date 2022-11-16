@@ -30,6 +30,8 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true 
     end
 
     it 'can view a permission request' do
+      visit '/'
+      expect(page).to have_content("Permission Requests")
       visit '/permission_requests'
       expect(page).to have_content('Permission Requests')
       expect(page).to have_content("#{permission_request.id}")
@@ -50,6 +52,8 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true 
     end
     
     it 'can view a permission request from a set they are an admin for' do
+      visit '/'
+      expect(page).to have_content("Permission Requests")
       visit '/permission_requests'
       expect(page).to have_content('Permission Requests')
       expect(page).to have_content("#{permission_request_2.id}")
@@ -76,6 +80,8 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true 
     end
     
     it 'can view a permission request from a set they are an admin for' do
+      visit '/'
+      expect(page).to have_content("Permission Requests")
       visit '/permission_requests'
       expect(page).to have_content('Permission Requests')
       expect(page).to have_content("#{permission_request_2.id}")
