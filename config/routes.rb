@@ -24,6 +24,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :child_objects
   resources :admin_sets
   resources :permission_sets
+  resources :permission_requests
   resources :preservica_ingests
   resources :reoccurring_jobs
   resources :redirected_parent_objects

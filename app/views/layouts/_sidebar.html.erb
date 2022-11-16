@@ -9,6 +9,7 @@
     <% end  %>
     <% if can? :view_list, PermissionSet %>
       <%= link_to 'Permission Sets', permission_sets_path, class: 'list-group-item list-group-item-action bg-light' %>
+      <%= link_to 'Permission Requests', permission_requests_path, class: 'list-group-item list-group-item-action bg-light' %>
     <% end  %>
     <%= link_to 'Parent Objects', parent_objects_path, class: 'list-group-item list-group-item-action bg-light' %>
     <%= link_to 'Redirected Parent Objects', redirected_parent_objects_path, class: 'list-group-item list-group-item-action bg-light' %>

@@ -210,6 +210,23 @@ ActiveRecord::Schema.define(version: 2022_11_09_225037) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "permission_requests", force: :cascade do |t|
+    t.boolean "request_status"
+    t.text "approver_note"
+    t.boolean "terms_approved"
+    t.datetime "access_until"
+    t.bigint "permission_set_id"
+    t.bigint "permission_request_user_id"
+    t.bigint "parent_object_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["parent_object_id"], name: "index_permission_requests_on_parent_object_id"
+    t.index ["permission_request_user_id"], name: "index_permission_requests_on_permission_request_user_id"
+    t.index ["permission_set_id"], name: "index_permission_requests_on_permission_set_id"
+    t.index ["user_id"], name: "index_permission_requests_on_user_id"
+  end
+
   create_table "permission_sets", force: :cascade do |t|
     t.text "label"
     t.text "key"
