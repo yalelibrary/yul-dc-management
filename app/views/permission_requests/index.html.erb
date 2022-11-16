@@ -1,0 +1,36 @@
+<%= render partial: "/management/flash_messages" %>
+
+<div class='permission-set-heading'>
+  <div class='col'>
+    <h1>Permission Requests</h1>
+  </div>
+</div>
+
+<table class='table table-striped permission-set-index-table' aria-label='Label Permission Set'>
+  <thead class='thead-dark'>
+    <tr>
+      <th scope='col'> Request ID </th>
+      <th scope='col'> Permission Set Label </th>
+      <th scope='col'> Request Date </th>
+      <th scope='col'> OID </th>
+      <th scope='col'> User name </th>
+      <th scope='col'> User ID </th>
+      <th scope='col'> Request Status </th>
+      <th scope='col'> Approver </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @visible_permission_requests.each do |permission_request| %>
+      <tr>
+        <td class='permission-set-label'><%= permission_request.id %></td>
+        <td class='permission-set-label'><%= permission_request.permission_set.label %></td>
+        <td class='permission-set-label'><%= permission_request.created_at %></td>
+        <td class='permission-set-label'><%= permission_request.parent_object.oid %></td>
+        <td class='permission-set-label'><%= permission_request.permission_request_user.name %></td>
+        <td class='permission-set-label'><%= permission_request.permission_request_user.sub %></td>
+        <td class='permission-set-label'><%= permission_request.request_status %></td>
+        <td class='permission-set-label'><%= "TODO" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
