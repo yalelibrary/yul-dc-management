@@ -10,7 +10,6 @@ class PermissionRequestsController < ApplicationController
     authorize!(:view_list, PermissionRequest)
 
     permission_requests = PermissionRequest.all
-    # byebug
     @visible_permission_requests = permission_requests.select do |sets|
       User.with_role(:approver, sets.permission_set).include?(current_user) ||
         User.with_role(:administrator, sets.permission_set).include?(current_user) ||
