@@ -33,7 +33,6 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true 
       expect(page).to have_content("Permission Requests")
       visit '/permission_requests'
       expect(page).to have_content('Permission Requests')
-      expect(page).to have_content(permission_request.id.to_s)
       expect(page).to have_content(permission_request.permission_set.label.to_s)
       expect(page).to have_content(permission_request.created_at.to_s)
       expect(page).to have_content(permission_request.parent_object.oid.to_s)
@@ -54,7 +53,6 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true 
       expect(page).to have_content("Permission Requests")
       visit '/permission_requests'
       expect(page).to have_content('Permission Requests')
-      expect(page).to have_content(permission_request_2.id.to_s)
       expect(page).to have_content(permission_request_2.permission_set.label.to_s)
       expect(page).to have_content(permission_request_2.created_at.to_s)
       expect(page).to have_content(permission_request_2.parent_object.oid.to_s)
@@ -62,7 +60,6 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true 
       expect(page).to have_content(permission_request_2.permission_request_user.name.to_s)
       expect(page).to have_content(permission_request_2.request_status.to_s)
 
-      expect(page).not_to have_content(permission_request.id.to_s)
       expect(page).not_to have_content(permission_request.permission_set.label.to_s)
       expect(page).not_to have_content(permission_request.parent_object.oid.to_s)
       expect(page).not_to have_content(permission_request.permission_request_user.sub.to_s)
@@ -81,7 +78,6 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true 
       expect(page).to have_content("Permission Requests")
       visit '/permission_requests'
       expect(page).to have_content('Permission Requests')
-      expect(page).to have_content(permission_request_2.id.to_s)
       expect(page).to have_content(permission_request_2.permission_set.label.to_s)
       expect(page).to have_content(permission_request_2.created_at.to_s)
       expect(page).to have_content(permission_request_2.parent_object.oid.to_s)
@@ -89,7 +85,6 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true 
       expect(page).to have_content(permission_request_2.permission_request_user.name.to_s)
       expect(page).to have_content(permission_request_2.request_status.to_s)
 
-      expect(page).not_to have_content(permission_request.id.to_s)
       expect(page).not_to have_content(permission_request.permission_set.label.to_s)
       expect(page).not_to have_content(permission_request.parent_object.oid.to_s)
       expect(page).not_to have_content(permission_request.permission_request_user.sub.to_s)
