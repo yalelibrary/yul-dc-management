@@ -99,6 +99,15 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     true
   end
 
+  def check_csv_row_data
+    if parsed_csv.empty?
+      error = "Process failed. The CSV does not contain any data."
+      batch_processing_event(error, 'error')
+      return false
+    end
+    true
+  end
+
   # CREATES METS DOCUMENT
   def mets_doc
     @mets_doc ||= MetsDocument.new(mets_xml) if mets_xml.present?
@@ -135,9 +144,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # ASSIGN JOBS TO BATCH ACTIONS
   # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/MethodLength
   def determine_background_jobs
-    if csv.present? && check_csv_size
+    if csv.present? && check_csv_size && check_csv_row_data
       case batch_action
       when 'create parent objects'
         CreateNewParentJob.perform_later(self)
@@ -168,6 +178,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # CREATE PARENT OBJECTS: ------------------------------------------------------------------------- #
 

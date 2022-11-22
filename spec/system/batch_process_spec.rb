@@ -63,6 +63,13 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       expect(BatchProcess.last.batch_connections.last.ingest_events.first.reason).to start_with 'CSV contains'
     end
 
+    it "errors batch if CSV does not contain any row data" do
+      page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/no_data.csv")
+      click_button("Submit")
+      click_link(BatchProcess.last.id.to_s)
+      expect(page).to have_content("Process failed. The CSV does not contain any data.")
+    end
+
     context "re-associating child objects" do
       let(:admin_set) { FactoryBot.create(:admin_set) }
       let(:role) { FactoryBot.create(:role, name: editor) }
