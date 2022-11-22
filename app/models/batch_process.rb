@@ -100,7 +100,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def check_csv_row_data
-    if parsed_csv.length == 0
+    if parsed_csv.empty?
       error = "Process failed. The CSV does not contain any data."
       batch_processing_event(error, 'error')
       return false
@@ -144,6 +144,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # ASSIGN JOBS TO BATCH ACTIONS
   # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/MethodLength
   def determine_background_jobs
     if csv.present? && check_csv_size && check_csv_row_data
@@ -177,6 +178,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # CREATE PARENT OBJECTS: ------------------------------------------------------------------------- #
 
