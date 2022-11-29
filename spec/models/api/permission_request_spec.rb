@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe PermissionRequest, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
+RSpec.describe Api::PermissionRequest, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:user) }
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:request_user) { FactoryBot.create(:permission_request_user) }
@@ -10,29 +10,25 @@ RSpec.describe PermissionRequest, type: :model, prep_metadata_sources: true, pre
   let(:parent_object) { FactoryBot.create(:parent_object, admin_set: admin_set) }
   let(:approver_user) { FactoryBot.create(:user, uid: 'approver') }
 
-  before do
-    permission_set
-  end
-
   describe 'with valid attributes' do
     it 'is valid' do
-      expect(PermissionRequest.new(permission_set: permission_set, permission_request_user: request_user, parent_object: parent_object, user: approver_user, user_note: "Note")).to be_valid
+      expect(Api::PermissionRequest.new(permission_set_id: permission_set, permission_request_user_id: request_user, parent_object_id: parent_object, user_id: approver_user, user_note: "Note")).to be_valid
     end
 
     it 'has the expected fields' do
       u = described_class.new
-      u.parent_object = parent_object
-      u.permission_set = permission_set
-      u.permission_request_user = request_user
-      u.user = user
+      u.parent_object_id = parent_object.id
+      u.permission_set_id = permission_set.id
+      u.permission_request_user_id = request_user.id
+      u.user_id = user.id
       u.user_note = "Note"
       u.save!
 
       expect(u.errors).to be_empty
-      expect(u.parent_object).to eq parent_object
-      expect(u.permission_set).to eq permission_set
-      expect(u.permission_request_user).to eq request_user
-      expect(u.user).to eq user
+      expect(u.parent_object_id).to eq parent_object.id
+      expect(u.permission_set_id).to eq permission_set.id
+      expect(u.permission_request_user_id).to eq request_user.id
+      expect(u.user_id).to eq user.id
       expect(u.user_note).to eq "Note"
     end
   end
