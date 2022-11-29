@@ -7,6 +7,11 @@
   <dt>Set:</dt>
   <dd><%= @parent_object.admin_set&.label %></dd>
 
+  <% if @parent_object.permission_set_id.present? %>
+    <dt>Permission Set:</dt>
+    <dd><%= PermissionSet.find(@parent_object.permission_set_id).label %></dd>
+  <% end %>
+
   <dt>Project ID:</dt>
   <dd><%= @parent_object&.project_identifier %></dd>
 

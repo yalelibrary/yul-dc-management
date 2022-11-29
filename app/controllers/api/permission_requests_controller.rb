@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::PermissionRequestsController < ApplicationController
   def create
     request = JSON.parse(request.raw_post)
@@ -9,13 +11,13 @@ class Api::PermissionRequestsController < ApplicationController
     pr_user.email = request['user']['email']
     pr_user.email_verified = request['user']['email_verified']
     pr_user.oidc_updated_at = request['user']['oidc_updated_at']
-    pr_user.save
+    pr_user.save!
     # find permission set
     permission_set = PermissionSet.find(parent_object.permission_set_id)
     # find approver
     approver = permission_set.approver
     # create new request
-    new_request = PermissionRequest.new(permission_set: permission_set, permission_request_user: pr_user, parent_object: parent_object, user: approver)
-    new_request.save
+    new_request = PermissionRequest.new(permission_set: permission_set, permission_request_user: pr_user, parent_object: parent_object, user: approver, user_note: request['note'])
+    new_request.save!
   end
 end
