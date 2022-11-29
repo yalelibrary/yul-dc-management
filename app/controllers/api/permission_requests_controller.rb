@@ -15,7 +15,7 @@ class Api::PermissionRequestsController < ApplicationController
     # find permission set
     permission_set = PermissionSet.find(parent_object.permission_set_id)
     # find approver
-    approver = permission_set.approver
+    approver = User.with_role(:approver, permission_set).first
     # create new request
     new_request = PermissionRequest.new(permission_set: permission_set, permission_request_user: pr_user, parent_object: parent_object, user: approver, user_note: request['note'])
     new_request.save!
