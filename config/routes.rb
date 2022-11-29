@@ -57,6 +57,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   get 'api/oid/new(/:number)', to: 'oid_minter#generate_oids', as: :new_oid
 
+  namespace :api do
+    resources :permission_requests, only: [:create]
+  end
+
   get '/show_token', to: 'users#show_token', as: :show_token
   get '/update_token', to: 'manifest#update_token', as: :update_token
 
