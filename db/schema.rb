@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_29_223535) do
+ActiveRecord::Schema.define(version: 2022_11_30_170837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -236,6 +236,8 @@ ActiveRecord::Schema.define(version: 2022_11_29_223535) do
     t.integer "max_queue_length", default: 10
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "parent_object_id"
+    t.index ["parent_object_id"], name: "index_permission_sets_on_parent_object_id"
   end
 
   create_table "preservica_ingests", force: :cascade do |t|
