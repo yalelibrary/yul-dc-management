@@ -1,0 +1,11 @@
+{
+  "oid": "2034600",
+  "note": "Requesting access to this resource.",
+  "user": { 
+    "sub": "netid",
+    "name": "First Last",
+    "email": "example@yale.edu",
+    "email_verified": "true",
+    "oidc_updated_at": "2001-02-03T04:05:06+00:00"
+  }
+}
