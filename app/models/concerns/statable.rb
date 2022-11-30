@@ -18,10 +18,6 @@ module Statable
     @finished_note ||= finished_states.map { |state| notes[state] }.compact.first
   end
 
-  def deleted_note(notes)
-    notes["deleted"]
-  end
-
   def batch_connections_for(_batch_process)
     raise 'Must be implemented'
   end
@@ -30,8 +26,6 @@ module Statable
     notes = notes_for_batch_process(batch_process)
     if notes.empty?
       "Pending"
-    elsif deleted_note(notes)
-      "Parent object deleted successfully"
     elsif finished_note(notes)
       "Complete"
     elsif latest_failure(batch_process).nil?
@@ -84,6 +78,6 @@ module Statable
       reason: message,
       batch_connection: current_batch_connection
     )
-    current_batch_connection&.update_status!
+    current_batch_connection&.update_status
   end
 end

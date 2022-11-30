@@ -8,10 +8,7 @@ class BatchConnection < ApplicationRecord
 
   def update_status
     self.status = connectable.status_for_batch_process(batch_process)
-  end
-
-  def update_status!
-    update_status && save!
+    save!
   end
 
   def batch_connections_for(_batch_process)
