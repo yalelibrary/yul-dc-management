@@ -12,7 +12,11 @@ RSpec.describe Api::PermissionRequest, type: :model, prep_metadata_sources: true
 
   describe 'with valid attributes' do
     it 'is valid' do
-      expect(Api::PermissionRequest.new(permission_set_id: permission_set, permission_request_user_id: request_user, parent_object_id: parent_object, user_id: approver_user, user_note: "Note")).to be_valid
+      expect(Api::PermissionRequest.new(permission_set_id: permission_set,
+                                        permission_request_user_id: request_user,
+                                        parent_object_id: parent_object,
+                                        user_id: approver_user,
+                                        user_note: "Note")).to be_valid
     end
 
     it 'has the expected fields' do
@@ -30,6 +34,7 @@ RSpec.describe Api::PermissionRequest, type: :model, prep_metadata_sources: true
       expect(u.permission_request_user_id).to eq request_user.id
       expect(u.user_id).to eq user.id
       expect(u.user_note).to eq "Note"
+      expect(u.request_status).to eq nil
     end
   end
 end
