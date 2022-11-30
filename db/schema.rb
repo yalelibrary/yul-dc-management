@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_09_225037) do
+ActiveRecord::Schema.define(version: 2022_11_30_170837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -187,6 +187,7 @@ ActiveRecord::Schema.define(version: 2022_11_09_225037) do
     t.string "preservica_representation_type"
     t.datetime "last_preservica_update"
     t.string "digitization_funding_source"
+    t.bigint "permission_set_id"
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
     t.index ["aspace_uri"], name: "index_parent_objects_on_aspace_uri"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
@@ -196,6 +197,7 @@ ActiveRecord::Schema.define(version: 2022_11_09_225037) do
     t.index ["holding"], name: "index_parent_objects_on_holding"
     t.index ["item"], name: "index_parent_objects_on_item"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
+    t.index ["permission_set_id"], name: "index_parent_objects_on_permission_set_id"
     t.index ["project_identifier"], name: "index_parent_objects_on_project_identifier"
     t.index ["redirect_to"], name: "index_parent_objects_on_redirect_to"
   end
@@ -221,6 +223,7 @@ ActiveRecord::Schema.define(version: 2022_11_09_225037) do
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "user_note"
     t.index ["parent_object_id"], name: "index_permission_requests_on_parent_object_id"
     t.index ["permission_request_user_id"], name: "index_permission_requests_on_permission_request_user_id"
     t.index ["permission_set_id"], name: "index_permission_requests_on_permission_set_id"
@@ -233,6 +236,8 @@ ActiveRecord::Schema.define(version: 2022_11_09_225037) do
     t.integer "max_queue_length", default: 10
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "parent_object_id"
+    t.index ["parent_object_id"], name: "index_permission_sets_on_parent_object_id"
   end
 
   create_table "preservica_ingests", force: :cascade do |t|
@@ -318,4 +323,5 @@ ActiveRecord::Schema.define(version: 2022_11_09_225037) do
   add_foreign_key "batch_processes", "users"
   add_foreign_key "child_objects", "parent_objects", column: "parent_object_oid", primary_key: "oid"
   add_foreign_key "ingest_events", "batch_connections"
+  add_foreign_key "parent_objects", "permission_sets"
 end

@@ -18,6 +18,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :permission_requests
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   belongs_to :admin_set
+  has_one :permission_set
   has_one :digital_object_json
   attr_accessor :metadata_update
   attr_accessor :current_batch_process
