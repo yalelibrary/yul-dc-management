@@ -78,6 +78,6 @@ module Statable
       reason: message,
       batch_connection: current_batch_connection
     )
-    current_batch_connection&.update_status!
+    current_batch_connection&.update_status
   end
 end
