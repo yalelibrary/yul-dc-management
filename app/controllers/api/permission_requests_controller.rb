@@ -6,13 +6,12 @@ class Api::PermissionRequestsController < ApplicationController
     parent_object = ParentObject.find(request['oid'].to_i)
     pr_user = find_or_create_user(request)
     permission_set = PermissionSet.find(parent_object.permission_set_id)
-    approver = User.with_role(:approver, permission_set).first
 
     current_requests_count = PermissionRequest.where(permission_request_user: pr_user, request_status: nil, permission_set: permission_set).count
     if current_requests_count >= permission_set.max_queue_length
       render json: { "title": "Too many pending requests" }, status: 403
     else
-      new_request = PermissionRequest.new(permission_set: permission_set, permission_request_user: pr_user, parent_object: parent_object, user: approver, user_note: request['note'])
+      new_request = PermissionRequest.new(permission_set: permission_set, permission_request_user: pr_user, parent_object: parent_object, user_note: request['note'])
       new_request.save!
       render json: { "title": "New request created" }, status: 201
     end
