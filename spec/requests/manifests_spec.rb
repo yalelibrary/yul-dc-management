@@ -6,7 +6,7 @@ class MockToken
   include JwtWebToken
 end
 
-RSpec.describe 'Ranges', type: :request, prep_metadata_sources: true, prep_admin_sets: true do
+RSpec.describe 'Manifests', type: :request, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:user) }
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:oid) { 2_034_600 }
