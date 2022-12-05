@@ -3,10 +3,15 @@
 class Api::PermissionRequestsController < ApplicationController
   def create
     request = params
-    parent_object = ParentObject.find(request['oid'].to_i)
+    begin
+      parent_object = ParentObject.find(request['oid'].to_i)
+    rescue ActiveRecord::RecordNotFound
+      render json: { "title": "Invalid Parent OID" }, status: 400 and return false
+    end
+    return unless check_parent_visibility(parent_object)
+    return unless valid_json_request(request)
     pr_user = find_or_create_user(request)
     permission_set = PermissionSet.find(parent_object.permission_set_id)
-
     current_requests_count = PermissionRequest.where(permission_request_user: pr_user, request_status: nil, permission_set: permission_set).count
     if current_requests_count >= permission_set.max_queue_length
       render json: { "title": "Too many pending requests" }, status: 403
@@ -15,6 +20,26 @@ class Api::PermissionRequestsController < ApplicationController
       new_request.save!
       render json: { "title": "New request created" }, status: 201
     end
+  end
+
+  def check_parent_visibility(parent_object)
+    if parent_object.visibility == "Private"
+      render json: { "title": "Parent Object is private" }, status: 400 and return false
+    elsif parent_object.visibility == "Public"
+      render json: { "title": "Parent Object is public, permission not required" }, status: 400 and return false
+    end
+    true
+  end
+
+  def valid_json_request(request)
+    if request['user']['sub'].blank?
+      render json: { "title": "User subject is missing" }, status: 400 and return false
+    elsif request['user']['name'].blank?
+      render json: { "title": "User name is missing" }, status: 400 and return false
+    elsif request['user']['email'].blank?
+      render json: { "title": "User email is missing" }, status: 400 and return false
+    end
+    true
   end
 
   def find_or_create_user(request)
