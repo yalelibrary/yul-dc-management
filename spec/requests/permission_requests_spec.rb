@@ -21,6 +21,9 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
   let(:invalid_name_json) { File.read(Rails.root.join(fixture_path, 'invalid_name_permission_request.json')) }
   let(:invalid_email_json) { File.read(Rails.root.join(fixture_path, 'invalid_email_permission_request.json')) }
   let(:invalid_user_json) { File.read(Rails.root.join(fixture_path, 'invalid_user_permission_request.json')) }
+  let(:oid) { 2_034_600 }
+  let(:parent) { FactoryBot.create(:parent_object, oid: oid, admin_set: admin_set, visibility: "Public", permission_set_id: permission_set.id) }
+  let(:json) { File.read(Rails.root.join(fixture_path, 'permission_request.json')) }
   let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
 
   before do
@@ -30,6 +33,7 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
     parent
     parent_2
     parent_3
+    parent
     login_as user
     user.add_role(:editor, admin_set)
     user.add_role(:approver, permission_set)
