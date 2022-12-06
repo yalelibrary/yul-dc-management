@@ -6,7 +6,7 @@ class Api::PermissionRequestsController < ApplicationController
     begin
       parent_object = ParentObject.find(request['oid'].to_i)
     rescue ActiveRecord::RecordNotFound
-      render json: { "title": "Invalid Parent OID" }, status: 400 and return false
+      render(json: { "title": "Invalid Parent OID" }, status: 400) && (return false)
     end
     return unless check_parent_visibility(parent_object)
     return unless valid_json_request(request)
@@ -24,23 +24,29 @@ class Api::PermissionRequestsController < ApplicationController
 
   def check_parent_visibility(parent_object)
     if parent_object.visibility == "Private"
-      render json: { "title": "Parent Object is private" }, status: 400 and return false
+      render(json: { "title": "Parent Object is private" }, status: 400) && (return false)
     elsif parent_object.visibility == "Public"
-      render json: { "title": "Parent Object is public, permission not required" }, status: 400 and return false
+      render(json: { "title": "Parent Object is public, permission not required" }, status: 400) && (return false)
     end
     true
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def valid_json_request(request)
-    if request['user']['sub'].blank?
-      render json: { "title": "User subject is missing" }, status: 400 and return false
+    if request['user'].blank?
+      render(json: { "title": "User object is missing" }, status: 400) && (return false)
+    elsif request['user']['sub'].blank?
+      render(json: { "title": "User subject is missing" }, status: 400) && (return false)
     elsif request['user']['name'].blank?
-      render json: { "title": "User name is missing" }, status: 400 and return false
+      render(json: { "title": "User name is missing" }, status: 400) && (return false)
     elsif request['user']['email'].blank?
-      render json: { "title": "User email is missing" }, status: 400 and return false
+      render(json: { "title": "User email is missing" }, status: 400) && (return false)
     end
     true
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def find_or_create_user(request)
     pr_user = PermissionRequestUser.find_or_initialize_by(sub: request['user']['sub'])
