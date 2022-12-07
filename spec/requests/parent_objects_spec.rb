@@ -319,10 +319,11 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
     end
 
     context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
+      it "does not save an improperly formatted url" do
         parent_object = ParentObject.create! valid_attributes
-        patch parent_object_url(parent_object), params: { parent_object: invalid_redirect_params }
-        expect(response).to be_successful
+        expect do
+          patch parent_object_url(parent_object), params: { parent_object: invalid_redirect_params }
+        end.to raise_exception(ActiveRecord::RecordInvalid)
       end
     end
   end
