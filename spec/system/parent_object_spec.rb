@@ -449,6 +449,14 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     it "can see non-editable fields" do
       expect(page).to have_field("Oid", disabled: true)
     end
+
+    it "validates redirect presence" do
+      po = ParentObject.find_by(oid: "2012036")
+      po.child_object_count = 0
+      select('Redirect')
+      click_on("Save Parent Object And Update Metadata")
+      expect(page).to have_content 'Redirect to in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123'
+    end
   end
 
   describe "index page", js: true do
