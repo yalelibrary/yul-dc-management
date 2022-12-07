@@ -35,7 +35,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   paginates_per 50
   validates :digitization_funding_source, length: { maximum: 255 }
   # rubocop:disable Metrics/LineLength
-  validates :redirect_to, format: { with: /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//, message: " in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123", presence: true, if: proc { self.visibility == "Redirect" }}
+  validates :redirect_to, format: { with: /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//, message: " in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123", presence: true, if: proc { visibility == "Redirect" } }
   # rubocop:enable Metrics/LineLength
   validates :preservica_uri, presence: true, format: { with: %r{\A/}, message: " in incorrect format. URI must start with a /" }, if: proc { digital_object_source == "Preservica" }
 

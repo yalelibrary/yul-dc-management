@@ -453,7 +453,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     end
 
     it "validates redirect presence" do
-      visit edit_parent_object_path(12345)
+      visit edit_parent_object_path(12_345)
       select('Redirect')
       click_on("Save Parent Object And Update Metadata")
       expect(page).to have_content 'Redirect to in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123'
