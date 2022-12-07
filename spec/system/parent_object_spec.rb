@@ -440,19 +440,20 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
   context "editing a ParentObject" do
     let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl')) }
+    let(:parent_object_no_children) { FactoryBot.create(:parent_object, oid: "12345", admin_set: AdminSet.find_by_key('brbl')) }
     before do
       stub_metadata_cloud("2012036")
       parent_object
-      visit edit_parent_object_path(2_012_036)
+      parent_object_no_children
     end
 
     it "can see non-editable fields" do
+      visit edit_parent_object_path(2_012_036)
       expect(page).to have_field("Oid", disabled: true)
     end
 
     it "validates redirect presence" do
-      po = ParentObject.find_by(oid: "2012036")
-      po.child_object_count = 0
+      visit edit_parent_object_path(12345)
       select('Redirect')
       click_on("Save Parent Object And Update Metadata")
       expect(page).to have_content 'Redirect to in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123'
