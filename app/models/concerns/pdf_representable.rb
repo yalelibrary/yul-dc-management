@@ -155,6 +155,11 @@ module PdfRepresentable
 
     def extract_flat_field_value(json, field_name, default)
       return default unless json && json[field_name].present?
-      Array(json[field_name]).join(", ")
+      Array(json[field_name]).reject { |value| !keep_value?(value) }.join(", ")
+    end
+
+    def keep_value?(value)
+      @direction_detector ||= StringDirection::Detector.new
+      !value.empty? && @direction_detector.direction(value) == "ltr" # rtl and bidi will be rejected
     end
 end

@@ -45,6 +45,8 @@ gem "rails_semantic_logger", ">=4.4.4"
 gem 'rsolr', '~> 2.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
+gem 'string-direction'
+
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
