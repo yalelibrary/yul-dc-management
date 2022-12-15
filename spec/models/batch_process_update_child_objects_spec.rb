@@ -8,6 +8,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:role) { FactoryBot.create(:role, name: editor) }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_child_object_caption.csv")) }
+  let(:csv_blank_value_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_child_object_blank.csv")) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
   let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "2004548", admin_set_id: admin_set.id) }
   let(:child_object_2) { FactoryBot.create(:child_object, oid: "67890", caption: "co2 caption", label: "co2 label", parent_object: parent_object_2) }
@@ -60,6 +61,16 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
         expect(updated_child_object_two.label).to eq "new label"
         expect(updated_child_object_three.caption).to eq "another caption"
         expect(updated_child_object_three.label).to eq "another label"
+      end
+
+      it "can update child with _blank_ values" do
+        expect(child_object_2.caption).to eq "co2 caption"
+        expect(child_object_2.label).to eq "co2 label"
+        batch_process.file = csv_blank_value_upload
+        batch_process.save
+        updated_child_object_two = ChildObject.find(67_890)
+        expect(updated_child_object_two.caption).to eq nil
+        expect(updated_child_object_two.label).to eq "label"
       end
     end
   end
