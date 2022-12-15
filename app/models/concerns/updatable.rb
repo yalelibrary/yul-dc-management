@@ -54,7 +54,8 @@ module Updatable
       save!
       child_object.caption = row['caption'] unless row['caption'].nil?
       child_object.label = row['label'] unless row['label'].nil?
-      child_object.save!
+      processed_fields = validate_child_field(child_object, row)
+      child_object.update!(processed_fields)
       processing_event_for_child(child_object)
     end
     unique_po = po_arr.uniq(&:oid)
@@ -95,6 +96,35 @@ module Updatable
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+
+  def remove_child_blanks(row, child_object)
+    blankable = %w[caption label]
+    blanks = {}
+    row.delete_if do |k, v|
+      if v == BLANK_VALUE
+        if blankable.include?(k)
+          blanks[k.to_sym] = nil
+        else
+          processing_event_invalid_child_blank(child_object, k)
+        end
+        true
+      else
+        false
+      end
+    end
+    [row, blanks]
+  end
+
+  def validate_child_field(child_object, row)
+    fields = ['caption', 'label']
+    row, blanks = remove_child_blanks(row, child_object)
+    processed_fields = {}
+    fields.each do |f|
+      processed_fields[f.to_sym] = valid_regular_child_fields(row, f, child_object)
+    end
+    processed_fields.merge!(blanks)
+    processed_fields
+  end
 
   def remove_blanks(row, parent_object)
     blankable = %w[aspace_uri barcode bib digitization_note holding item project_identifier rights_statement redirect_to display_layout extent_of_digitization viewing_direction]
@@ -147,6 +177,10 @@ module Updatable
     batch_processing_event("Parent #{parent_object.oid} did not update value for #{field} because it can not be blanked.", 'Invalid Blank')
   end
 
+  def processing_event_invalid_child_blank(child_object, field)
+    batch_processing_event("Child #{child_object.oid} did not update value for #{field} because it can not be blanked.", 'Invalid Blank')
+  end
+
   def remote_po_path(oid, metadata_source)
     "#{metadata_source}/#{oid}.json"
   end
@@ -156,6 +190,14 @@ module Updatable
       row[field_value]
     else
       parent_object.send(field_value)
+    end
+  end
+
+  def valid_regular_child_fields(row, field_value, child_object)
+    if row[field_value].present? && row[field_value] != child_object.send(field_value)
+      row[field_value]
+    else
+      child_object.send(field_value)
     end
   end
 
