@@ -15,11 +15,13 @@ class SaveOriginalToS3Job < ApplicationJob
       raise "Not copying image from #{parent_object.oid}. Parent object must have Public or Yale Community Only visibility."
     end
     # check if file already exists on S3
-    downloads_path = 'download/tiff/'
-    childs_path = Partridge::Pairtree.oid_to_pairtree(child_object_oid)
-    if S3Service.s3_exists?(File.join(downloads_path, childs_path))
+    if S3Service.s3_exists?(remote_download_path(child_object_oid))
       raise "Not copying image. Child object #{child_object_oid} already exists on S3."
     end
     # copy original to downloads bucket
+  end
+
+  def remote_download_path(oid)
+    "download/tiff/#{Partridge::Pairtree.oid_to_pairtree(oid)}/#{oid}.tif"
   end
 end
