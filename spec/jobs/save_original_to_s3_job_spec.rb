@@ -22,22 +22,25 @@ RSpec.describe SaveOriginalToS3Job, type: :job do
 
   around do |example|
     original_image_bucket = ENV['S3_SOURCE_BUCKET_NAME']
+    original_download_bucket = ENV['S3_DOWNLOAD_BUCKET_NAME']
     original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
     ENV['S3_SOURCE_BUCKET_NAME'] = 'not-a-real-bucket'
+    ENV['S3_DOWNLOAD_BUCKET_NAME'] = 'fake-download-bucket'
     ENV["ACCESS_MASTER_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
     example.run
     ENV['S3_SOURCE_BUCKET_NAME'] = original_image_bucket
+    ENV['S3_DOWNLOAD_BUCKET_NAME'] = original_download_bucket
     ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
   end
 
   before do
-    stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/download/tiff/78/34/56/78/345678.tif')
+    stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/78/34/56/78/345678.tif')
         .to_return(status: 200, body: '', headers: {})
     stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/originals/78/34/56/78/345678.tif')
         .to_return(status: 200, body: '', headers: {})
     stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/ptiffs/78/34/56/78/345678.tif')
         .to_return(status: 200, body: '', headers: {})
-    stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/download/tiff/89/45/67/89/456789.tif')
+    stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/89/45/67/89/456789.tif')
         .to_return(status: 404, body: '', headers: {}).times(1).then.to_return(status: 200, body: '', headers: {})
     stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/originals/89/45/67/89/456789.tif')
         .to_return(status: 200, body: '', headers: {})

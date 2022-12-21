@@ -18,7 +18,7 @@ class SaveOriginalToS3Job < ApplicationJob
     raise "Not copying image. Child object #{child_object_oid} already exists on S3." if S3Service.s3_exists?(remote_download_path(child_object_oid))
     # copy original to downloads bucket
     metadata = { 'width': child_object.width.to_s, 'height': child_object.height.to_s }
-    S3Service.upload_image(Pathname.new(child_object.access_master_path), remote_download_path(child_object_oid), "image/tiff", metadata)
+    S3Service.upload_image_for_download(Pathname.new(child_object.access_master_path), remote_download_path(child_object_oid), "image/tiff", metadata)
   end
 
   def remote_download_path(oid)
