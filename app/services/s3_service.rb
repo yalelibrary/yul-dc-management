@@ -108,6 +108,11 @@ class S3Service
     object.exists?
   end
 
+  def self.s3_exists_for_download?(remote_path, bucket = ENV['S3_DOWNLOAD_BUCKET_NAME'])
+    object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
+    object.exists?
+  end
+
   def self.full_text_exists?(remote_path, bucket = ENV['OCR_DOWNLOAD_BUCKET'])
     object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
     begin
