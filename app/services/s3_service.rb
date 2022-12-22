@@ -84,6 +84,12 @@ class S3Service
     object.presigned_url('get', expires_in: seconds, response_content_disposition: 'attachment')
   end
 
+  def self.presigned_url_for_download(remote_path, seconds, bucket = ENV['S3_DOWNLOAD_BUCKET_NAME'])
+    return remote_path unless bucket
+    object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
+    object.presigned_url('get', expires_in: seconds, response_content_disposition: 'attachment')
+  end
+
   def self.remote_metadata(remote_path, bucket = ENV['S3_SOURCE_BUCKET_NAME'])
     object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
     return false unless object.exists?
