@@ -13,6 +13,9 @@ RSpec.describe S3Service, type: :has_vcr do
   let(:etag_data) { Time.current.to_s }
   let(:etag_digest) { "\"#{Digest::MD5.hexdigest(etag_data)}\"" }
   let(:etag_manifest_url) { "https://yul-test-samples.s3.amazonaws.com/manifests/etag.tif" }
+  let(:metadata_source) { FactoryBot.create(:metadata_source) }
+  let(:parent_object_private) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source, visibility: 'Private') }
+  let(:child_object) { FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object_private) }
 
   before do
     stub_request(:put, "https://yul-test-samples.s3.amazonaws.com/testing_test/test.txt")
@@ -40,20 +43,41 @@ RSpec.describe S3Service, type: :has_vcr do
       .to_return(status: 404, body: "")
     stub_request(:head, etag_manifest_url).to_return(status: 200, body: "", headers: { 'etag' => etag_digest })
     stub_request(:put, etag_manifest_url).to_return(status: 200, body: "")
+
+    stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/78/34/56/78/345678.tif')
+    .to_return(status: 200, body: '', headers: {})
+    stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/89/45/67/89/456789.tif')
+    .to_return(status: 200, body: '', headers: {}).times(1).then.to_return(status: 200, body: '', headers: {})
+    child_object
   end
 
   around do |example|
     original_metadata_sample_bucket = ENV['SAMPLE_BUCKET']
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
+    original_download_bucket = ENV['S3_DOWNLOAD_BUCKET_NAME']
+    original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
     original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
     ENV['SAMPLE_BUCKET'] = "yul-test-samples"
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
     ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
+    ENV['S3_DOWNLOAD_BUCKET_NAME'] = 'fake-download-bucket'
     example.run
     ENV['SAMPLE_BUCKET'] = original_metadata_sample_bucket
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
     ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
+    ENV['S3_DOWNLOAD_BUCKET_NAME'] = original_download_bucket
+    ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
   end
+  # original_image_bucket = ENV['S3_SOURCE_BUCKET_NAME']
+  # original_download_bucket = ENV['S3_DOWNLOAD_BUCKET_NAME']
+  # original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
+  # ENV['S3_SOURCE_BUCKET_NAME'] = 'not-a-real-bucket'
+  # ENV['S3_DOWNLOAD_BUCKET_NAME'] = 'fake-download-bucket'
+  # ENV["ACCESS_MASTER_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
+  # example.run
+  # ENV['S3_SOURCE_BUCKET_NAME'] = original_image_bucket
+  # ENV['S3_DOWNLOAD_BUCKET_NAME'] = original_download_bucket
+  # ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
 
   it "can upload metadata to a given bucket" do
     expect(described_class.upload("testing_test/test.txt", "these are some test words").successful?).to eq true
@@ -87,6 +111,11 @@ RSpec.describe S3Service, type: :has_vcr do
     child_object_oid = "1014543"
     remote_path = "originals/#{child_object_oid}.tif"
     expect(described_class.s3_exists?(remote_path)).to be_truthy
+  end
+
+  it "can tell that a download image exists" do
+    remote_path = "download/tiff/89/45/67/89/456789.tif"
+    expect(described_class.s3_exists_for_download?(remote_path)).to be_truthy
   end
 
   it "can tell that an image doesn't exist" do
