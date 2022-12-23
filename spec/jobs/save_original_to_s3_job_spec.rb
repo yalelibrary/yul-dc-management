@@ -64,10 +64,15 @@ RSpec.describe SaveOriginalToS3Job, type: :job do
       expect(save_to_s3_job.default_priority).to eq(100)
     end
     it 'can save a file to S3' do
+      s3 = Aws::S3::Client.new(stub_responses: true)
+      s3.stub_responses(:put_object, -> (context) {
+        bucket[context.params[:key]] = { body: context.params[:body] }
+        {}
+      })
       parent_object_private.visibility = 'Public'
       parent_object_private.save
       save_to_s3_job.perform(child_object.oid)
-      expect(S3Service.s3_exists?('https://not-a-real-bucket.s3.amazonaws.com/download/tiff/89/45/67/89/456789.tif'))
+      expect(S3Service.s3_exists_for_download?('https://fake-download-bucket.s3.amazonaws.com/download/tiff/89/45/67/89/456789.tif')).to be_truthy
     end
   end
 end
