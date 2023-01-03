@@ -153,4 +153,9 @@ def activity_stream_datatable_view_mock(_process_id, _run_time, _items, _status,
   @datatable_view_mock ||= double
   @datatable_view_mock
 end
+
+def problem_report_datatable_view_mock(_status, _parent_count, _child_count, _problem_parent_count, _problem_child_count, _date, _report)
+  @datatable_view_mock ||= double
+  @datatable_view_mock
+end
 # rubocop:enable Metrics/ParameterLists
