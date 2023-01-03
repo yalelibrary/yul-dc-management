@@ -16,5 +16,12 @@ RSpec.describe "Reoccurring Jobs", type: :request do
         expect(response).to have_http_status(:success)
       end
     end
+
+    describe 'create' do
+      it 'redirects to index with success notice' do
+        post reoccurring_jobs_path(queue_recurring: 'true')
+        expect(response).to have_http_status(302)
+      end
+    end
   end
 end
