@@ -65,7 +65,7 @@ RSpec.describe SaveOriginalToS3Job, type: :job do
     end
     it 'can save a file to S3' do
       s3 = Aws::S3::Client.new(stub_responses: true)
-      s3.stub_responses(:put_object, -> (context) {
+      s3.stub_responses(:put_object, lambda { |context|
         bucket[context.params[:key]] = { body: context.params[:body] }
         {}
       })
