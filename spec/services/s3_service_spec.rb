@@ -17,6 +17,8 @@ RSpec.describe S3Service, type: :has_vcr do
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source) }
   let(:child_object) { FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object) }
   let(:child_object) { FactoryBot.create(:child_object, oid: '345678', parent_object: parent_object) }
+  let(:width) { 'X-Amz-Meta-Width' }
+  let(:height) { 'X-Amz-Meta-Height' }
 
   before do
     stub_request(:put, "https://yul-test-samples.s3.amazonaws.com/testing_test/test.txt")
@@ -27,14 +29,14 @@ RSpec.describe S3Service, type: :has_vcr do
       .to_return(status: 200, body: File.open("spec/fixtures/images/access_masters/test_image.tif"))
     stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/1014543.tif")
       .with do |request|
-        expect(request.headers).to include('X-Amz-Meta-Width' => '100',
-                                           'X-Amz-Meta-Height' => '200',
+        expect(request.headers).to include(width => '100',
+                                           height => '200',
                                            'Content-Type' => 'image/tiff')
       end
       .to_return(status: 200, body: "")
     stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/tests/fake_ptiff.tif")
-      .to_return(status: 200, headers: { 'X-Amz-Meta-Width' => '100',
-                                         'X-Amz-Meta-Height' => '200',
+      .to_return(status: 200, headers: { width => '100',
+                                         height => '200',
                                          'Content-Type' => 'image/tiff' })
     stub_request(:head, "https://yul-dc-ocr-test.s3.amazonaws.com/fulltext/43/10/14/54/1014543.txt")
       .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
@@ -47,8 +49,8 @@ RSpec.describe S3Service, type: :has_vcr do
     stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/89/45/67/89/456789.tif')
     .to_return(status: 200, body: '', headers: {})
     stub_request(:put, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/78/34/56/78/345678.tif')
-        .to_return(status: 200, body: '', headers: { 'X-Amz-Meta-Width' => '100',
-                                                     'X-Amz-Meta-Height' => '200',
+        .to_return(status: 200, body: '', headers: { width => '100',
+                                                     height => '200',
                                                      'Content-Type' => 'image/tiff' })
     child_object
   end
