@@ -16,6 +16,8 @@ RSpec.describe ActivityStreamJob, type: :job do
   end
 
   let(:metadata_job) { ActivityStreamJob.new }
+  let(:handler) { 'handler LIKE ?' }
+  let(:job_class) { '%job_class: ActivityStreamJob%' }
 
   it 'increments the job queue by one' do
     expect do
@@ -48,7 +50,7 @@ RSpec.describe ActivityStreamJob, type: :job do
       ActiveJob::Scheduler.start
       new_time = now + 1.day
       Timecop.travel(new_time)
-      expect(Delayed::Job.where('handler LIKE ?', '%job_class: ActivityStreamJob%').count).to eq 1
+      expect(Delayed::Job.where(handler, job_class).count).to eq 1
     end
 
     it 'automatic does not add another job when one is already running' do
@@ -56,7 +58,7 @@ RSpec.describe ActivityStreamJob, type: :job do
       ActiveJob::Scheduler.start
       new_time = now + 1.day
       Timecop.travel(new_time)
-      expect(Delayed::Job.where('handler LIKE ?', '%job_class: ActivityStreamJob%').count).to eq 1
+      expect(Delayed::Job.where(handler, job_class).count).to eq 1
       ActivityStreamJob.perform_now
       expect(ActivityStreamLog.last.status).to include('Fail')
     end
@@ -66,7 +68,7 @@ RSpec.describe ActivityStreamJob, type: :job do
       ActiveJob::Scheduler.start
       new_time = now + 1.day
       Timecop.travel(new_time)
-      expect(Delayed::Job.where('handler LIKE ?', '%job_class: ActivityStreamJob%').count).to eq 1
+      expect(Delayed::Job.where(handler, job_class).count).to eq 1
       ActivityStreamManualJob.perform_now
       expect(ActivityStreamLog.last.status).to include('Fail')
     end
