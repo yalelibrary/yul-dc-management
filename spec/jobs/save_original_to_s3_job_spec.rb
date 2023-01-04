@@ -40,6 +40,8 @@ RSpec.describe SaveOriginalToS3Job, type: :job do
         .to_return(status: 200, body: '', headers: {})
     stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/ptiffs/78/34/56/78/345678.tif')
         .to_return(status: 200, body: '', headers: {})
+    stub_request(:put, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/89/45/67/89/456789.tif')
+        .to_return(status: 200, body: '', headers: {})
     stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/89/45/67/89/456789.tif')
         .to_return(status: 404, body: '', headers: {}).times(1).then.to_return(status: 200, body: '', headers: {})
     stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/originals/89/45/67/89/456789.tif')
@@ -64,15 +66,10 @@ RSpec.describe SaveOriginalToS3Job, type: :job do
       expect(save_to_s3_job.default_priority).to eq(100)
     end
     it 'can save a file to S3' do
-      s3 = Aws::S3::Client.new(stub_responses: true)
-      s3.stub_responses(:put_object, lambda { |context|
-        bucket[context.params[:key]] = { body: context.params[:body] }
-        {}
-      })
       parent_object_private.visibility = 'Public'
       parent_object_private.save
       save_to_s3_job.perform(child_object.oid)
-      expect(S3Service.s3_exists_for_download?('https://fake-download-bucket.s3.amazonaws.com/download/tiff/89/45/67/89/456789.tif')).to be_truthy
+      expect(S3Service.s3_exists_for_download?('download/tiff/89/45/67/89/456789.tif')).to be_truthy
     end
   end
 end

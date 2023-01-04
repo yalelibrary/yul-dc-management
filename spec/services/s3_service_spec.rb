@@ -46,8 +46,10 @@ RSpec.describe S3Service, type: :has_vcr do
     stub_request(:put, etag_manifest_url).to_return(status: 200, body: "")
     stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/89/45/67/89/456789.tif')
     .to_return(status: 200, body: '', headers: {})
-    stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/78/34/56/78/345678.tif')
-        .to_return(status: 200, body: '', headers: {})
+    stub_request(:put, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/78/34/56/78/345678.tif')
+        .to_return(status: 200, body: '', headers: { 'X-Amz-Meta-Width' => '100',
+                                                     'X-Amz-Meta-Height' => '200',
+                                                     'Content-Type' => 'image/tiff' })
     child_object
   end
 
