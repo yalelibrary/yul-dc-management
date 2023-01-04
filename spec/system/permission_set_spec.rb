@@ -160,6 +160,21 @@ RSpec.describe "PermissionSets", type: :system, prep_metadata_sources: true do
         visit "/permission_sets/#{permission_set.id}/edit"
         expect(page).to have_content("Editing Permission Set")
       end
+      it 'can be edited' do
+        visit "/permission_sets/#{permission_set.id}/edit"
+        fill_in('permission_set_key', with: 'key example')
+        fill_in('permission_set_label', with: 'label example')
+        click_on 'Update Permission Set'
+        expect(page).to have_content('Permission set was successfully updated.')
+      end
+      it 'can reject invalid params' do
+        visit "/permission_sets/#{permission_set.id}/edit"
+        fill_in('permission_set_key', with: 'key example')
+        # permission set must also have label - this leaves that out making the request invalid and causing a render of the edit page
+        fill_in('permission_set_label', with: '')
+        click_on 'Update Permission Set'
+        expect(page).to have_content("Editing Permission Set")
+      end
       it 'can be created' do
         visit "/permission_sets/new"
         expect(page).to have_content("New Permission Set")
@@ -170,6 +185,16 @@ RSpec.describe "PermissionSets", type: :system, prep_metadata_sources: true do
         expect(page).to have_content("Permission set was successfully created.")
         expect(page).to have_content("key example")
         expect(page).to have_content("label example")
+      end
+      it 'can reject invalid params upon creation' do
+        visit "/permission_sets/new"
+        expect(page).to have_content("New Permission Set")
+        fill_in('permission_set_key', with: 'key example')
+        # permission set must also have label - this leaves that out making the request invalid and causing a render of the new page
+        fill_in('permission_set_label', with: '')
+        fill_in('permission_set_max_queue_length', with: '10')
+        click_on 'Create Permission Set'
+        expect(page).to have_content("New Permission Set")
       end
       it 'can add and remove user roles to permission set' do
         visit "/permission_sets/#{permission_set.id}/"
