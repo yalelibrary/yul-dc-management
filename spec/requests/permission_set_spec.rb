@@ -3,15 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, prep_admin_sets: true do
-  let(:user) { FactoryBot.create(:sysadmin_user) }
-
-  before do
-    login_as user
-  end
-
   let(:valid_attributes) do
     {
       key: "New Key",
+      label: "New Label"
+    }
+  end
+
+  let(:invalid_attributes) do
+    {
+      key: "",
       label: "New Label"
     }
   end
