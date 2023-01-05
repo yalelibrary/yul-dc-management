@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe SolrService, solr: true, prep_metadata_sources: true do
+RSpec.describe SolrService, solr: true do
   index_analyzer = {
     'tokenizer': {
       class: 'solr.WhitespaceTokenizerFactory'
