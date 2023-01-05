@@ -7,19 +7,11 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
 
   before do
     login_as user
-    # permission_set
   end
 
   let(:valid_attributes) do
     {
       key: "New Key",
-      label: "New Label"
-    }
-  end
-
-  let(:invalid_attributes) do
-    {
-      key: "",
       label: "New Label"
     }
   end
@@ -42,13 +34,5 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
         expect(response).to have_http_status(302)
       end
     end
-
-    # context 'with invalid attributes' do
-    #   it 'updates permission set' do
-    #     permission_set = PermissionSet.create(valid_attributes)
-    #     patch permission_set_url(permission_set), params: { permission_set: invalid_attributes }
-    #     expect(response).to have_http_status(:unprocessable_entity)
-    #   end
-    # end
   end
 end
