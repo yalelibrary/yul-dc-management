@@ -16,8 +16,10 @@ class SaveOriginalToS3Job < ApplicationJob
     end
     # check if file already exists on S3
     raise "Not copying image. Child object #{child_object_oid} already exists on S3." if S3Service.s3_exists_for_download?(remote_download_path(child_object_oid))
+    # check if file has a va
+    raise "Not copying image. Child object #{child_object_oid} does not have a valid width or height." if child_object.width.nil? || child_object.height.nil?
     # copy original to downloads bucket
-    metadata = { 'width': child_object.width.to_s.presence || 'unknown', 'height': child_object.height.to_s.presence || 'unknown' }
+    metadata = { 'width': child_object.width.to_s, 'height': child_object.height.to_s }
     S3Service.upload_image_for_download(Pathname.new(child_object.access_master_path), remote_download_path(child_object_oid), "image/tiff", metadata)
   end
 

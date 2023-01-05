@@ -19,6 +19,7 @@ RSpec.describe SaveOriginalToS3Job, type: :job do
                      ladybird_json: JSON.parse(File.read(File.join(fixture_path, 'ladybird', '16712419.json'))))
   end
   let(:child_object_with_authoritative_json) { FactoryBot.create(:child_object, oid: '345678', parent_object: parent_object_with_authoritative_json) }
+  let(:child_object_without_width) { FactoryBot.create(:child_object, oid: '234567', parent_object: parent_object_with_authoritative_json, width: nil) }
 
   around do |example|
     original_image_bucket = ENV['S3_SOURCE_BUCKET_NAME']
@@ -48,6 +49,8 @@ RSpec.describe SaveOriginalToS3Job, type: :job do
         .to_return(status: 200, body: '', headers: {})
     stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/ptiffs/89/45/67/89/456789.tif')
         .to_return(status: 200, body: '', headers: {})
+    stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/67/23/45/67/234567.tif')
+        .to_return(status: 404, body: '', headers: {})
     child_object
   end
 
@@ -61,6 +64,11 @@ RSpec.describe SaveOriginalToS3Job, type: :job do
       expect do
         save_to_s3_job.perform(child_object_with_authoritative_json.oid)
       end.to raise_error(an_instance_of(RuntimeError).and(having_attributes(message: "Not copying image. Child object #{child_object_with_authoritative_json.oid} already exists on S3.")))
+    end
+    it 'throws exception when file does not have a width or height' do
+      expect do
+        save_to_s3_job.perform(child_object_without_width.oid)
+      end.to raise_error(an_instance_of(RuntimeError).and(having_attributes(message: "Not copying image. Child object #{child_object_without_width.oid} does not have a valid width or height.")))
     end
     it 'has correct priority' do
       expect(save_to_s3_job.default_priority).to eq(100)
