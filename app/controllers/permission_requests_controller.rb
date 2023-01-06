@@ -21,6 +21,36 @@ class PermissionRequestsController < ApplicationController
 
   def edit; end
 
+    # PATCH/PUT /permission_request/1
+  # PATCH/PUT /permission_request/1.json
+  def update
+    respond_to do |format|
+      if @permission_request.update(permission_request_params)
+        format.html { redirect_to @permission_request, notice: 'Permission request was successfully updated.' }
+        format.json { render :show, status: :ok, location: @permission_request }
+      else
+        format.html { render :edit }
+        format.json { render json: @permission_request.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # POST /permission_request
+  # POST /permission_request.json
+  def create
+    @permission_request = PermissionRequest.new(permission_request_params)
+
+    respond_to do |format|
+      if @permission_request.save
+        format.html { redirect_to @permission_request, notice: 'Permission request was successfully created.' }
+        format.json { render :show, status: :created, location: @permission_request }
+      else
+        format.html { render :new }
+        format.json { render json: @permission_request.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.

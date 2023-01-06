@@ -104,16 +104,4 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
       expect(response.body).to match("{\"title\":\"User object is missing\"}")
     end
   end
-
-  describe 'update /api/permission_requests' do
-    it 'updates permission request' do
-      initial_request = JSON.parse(json)
-      post "/api/permission_requests", params: JSON.pretty_generate(initial_request), headers: headers
-      expect(response).to have_http_status(:created)
-      updated_request = JSON.parse(updated_json)
-      patch "/api/permission_requests/#{PermissionRequest.first.id}", params: JSON.pretty_generate(updated_request), headers: headers
-      expect(response).to have_http_status(200)
-      expect(PermissionRequest.all.count).to eq 1
-    end
-  end
 end

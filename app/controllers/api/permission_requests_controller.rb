@@ -22,24 +22,6 @@ class Api::PermissionRequestsController < ApplicationController
     end
   end
 
-  def update
-    request = params
-    begin
-      parent_object = ParentObject.find(request['oid'].to_i)
-    rescue ActiveRecord::RecordNotFound
-      render(json: { "title": "Invalid Parent OID" }, status: 400) && (return false)
-    end
-    return unless check_parent_visibility(parent_object)
-    return unless valid_json_request(request)
-    pr_user = find_or_create_user(request)
-    permission_set = PermissionSet.find(parent_object.permission_set_id)
-    if PermissionRequest.update(permission_set: permission_set, permission_request_user: pr_user, parent_object: parent_object, user_note: request['note'])
-      render json: { "title": "Request updated successfully." }, status: 200
-    else
-      render json: { "title": "Update not processed." }, status: 422
-    end
-  end
-
   def check_parent_visibility(parent_object)
     if parent_object.visibility == "Private"
       render(json: { "title": "Parent Object is private" }, status: 400) && (return false)
