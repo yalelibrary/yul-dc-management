@@ -14,7 +14,6 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
   let(:parent_2) { FactoryBot.create(:parent_object, oid: oid_2, admin_set: admin_set, visibility: "Public", permission_set_id: permission_set.id) }
   let(:parent_3) { FactoryBot.create(:parent_object, oid: oid_3, admin_set: admin_set, visibility: "Private", permission_set_id: permission_set.id) }
   let(:json) { File.read(Rails.root.join(fixture_path, 'permission_request.json')) }
-  let(:updated_json) { File.read(Rails.root.join(fixture_path, 'updated_permission_request.json')) }
   let(:invalid_oid_json) { File.read(Rails.root.join(fixture_path, 'invalid_oid_permission_request.json')) }
   let(:public_visibility_json) { File.read(Rails.root.join(fixture_path, 'public_visibility_permission_request.json')) }
   let(:private_visibility_json) { File.read(Rails.root.join(fixture_path, 'private_visibility_permission_request.json')) }
