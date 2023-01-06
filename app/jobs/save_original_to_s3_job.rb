@@ -12,12 +12,16 @@ class SaveOriginalToS3Job < ApplicationJob
     child_object = ChildObject.find(child_object_oid)
     parent_object = child_object.parent_object
     if parent_object.visibility == "Private" || parent_object.visibility == "Redirect"
-      raise "Not copying image from #{parent_object.oid}. Parent object must have Public or Yale Community Only visibility."
+      Rails.logger.error "Not copying image from #{parent_object.oid}. Parent object must have Public or Yale Community Only visibility."
+      return
     end
     # check if file already exists on S3
-    raise "Not copying image. Child object #{child_object_oid} already exists on S3." if S3Service.s3_exists_for_download?(remote_download_path(child_object_oid))
-    # check if file has a va
-    raise "Not copying image. Child object #{child_object_oid} does not have a valid width or height." if child_object.width.nil? || child_object.height.nil?
+    return if S3Service.s3_exists_for_download?(remote_download_path(child_object_oid))
+    # check if file has a valid width and height
+    if child_object.width.nil? || child_object.height.nil?
+      Rails.logger.error "Not copying image. Child object #{child_object_oid} does not have a valid width or height."
+      return
+    end
     # copy original to downloads bucket
     metadata = { 'width': child_object.width.to_s, 'height': child_object.height.to_s }
     S3Service.upload_image_for_download(Pathname.new(child_object.access_master_path), remote_download_path(child_object_oid), "image/tiff", metadata)

@@ -20,6 +20,7 @@ RSpec.describe SaveOriginalToS3Job, type: :job do
   end
   let(:child_object_with_authoritative_json) { FactoryBot.create(:child_object, oid: '345678', parent_object: parent_object_with_authoritative_json) }
   let(:child_object_without_width) { FactoryBot.create(:child_object, oid: '234567', parent_object: parent_object_with_authoritative_json, width: nil) }
+  let(:logger_mock) { instance_double("Rails.logger").as_null_object }
 
   around do |example|
     original_image_bucket = ENV['S3_SOURCE_BUCKET_NAME']
@@ -35,6 +36,7 @@ RSpec.describe SaveOriginalToS3Job, type: :job do
   end
 
   before do
+    allow(Rails.logger).to receive(:error) { :logger_mock }
     stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/78/34/56/78/345678.tif')
         .to_return(status: 200, body: '', headers: {})
     stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/originals/78/34/56/78/345678.tif')
@@ -55,20 +57,19 @@ RSpec.describe SaveOriginalToS3Job, type: :job do
   end
 
   describe 'save to S3 job' do
-    it 'throws exception with Private or Redirect visibility' do
-      expect do
-        save_to_s3_job.perform(child_object.oid)
-      end.to raise_error(an_instance_of(RuntimeError).and(having_attributes(message: 'Not copying image from 2004628. Parent object must have Public or Yale Community Only visibility.')))
+    it 'logs an error with Private or Redirect visibility' do
+      save_to_s3_job.perform(child_object.oid)
+      expect(Rails.logger).to have_received(:error)
+        .with('Not copying image from 2004628. Parent object must have Public or Yale Community Only visibility.')
     end
-    it 'throws exception when file is already in S3' do
-      expect do
-        save_to_s3_job.perform(child_object_with_authoritative_json.oid)
-      end.to raise_error(an_instance_of(RuntimeError).and(having_attributes(message: "Not copying image. Child object #{child_object_with_authoritative_json.oid} already exists on S3.")))
+    it 'does not log an error when file is already in S3' do
+      save_to_s3_job.perform(child_object_with_authoritative_json.oid)
+      expect(Rails.logger).not_to have_received(:error)
     end
-    it 'throws exception when file does not have a width or height' do
-      expect do
-        save_to_s3_job.perform(child_object_without_width.oid)
-      end.to raise_error(an_instance_of(RuntimeError).and(having_attributes(message: "Not copying image. Child object #{child_object_without_width.oid} does not have a valid width or height.")))
+    it 'logs an error when file does not have a width or height' do
+      save_to_s3_job.perform(child_object_without_width.oid)
+      expect(Rails.logger).to have_received(:error)
+        .with("Not copying image. Child object #{child_object_without_width.oid} does not have a valid width or height.")
     end
     it 'has correct priority' do
       expect(save_to_s3_job.default_priority).to eq(100)
