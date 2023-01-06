@@ -21,7 +21,7 @@ class PermissionRequestsController < ApplicationController
 
   def edit; end
 
-    # PATCH/PUT /permission_request/1
+  # PATCH/PUT /permission_request/1
   # PATCH/PUT /permission_request/1.json
   def update
     respond_to do |format|
