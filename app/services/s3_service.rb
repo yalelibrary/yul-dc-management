@@ -64,9 +64,27 @@ class S3Service
     end
   end
 
+  def self.upload_image_for_download(local_path, remote_path, content_type, metadata)
+    File.open(local_path, 'r') do |f|
+      @client.put_object(
+        bucket: ENV['S3_DOWNLOAD_BUCKET_NAME'],
+        key: remote_path,
+        body: f,
+        content_type: content_type,
+        metadata: metadata
+      )
+    end
+  end
+
   # Returns String which is a pre-signed URL that a client can use to access the
   # object from S3 without needing other credentials.
   def self.presigned_url(remote_path, seconds, bucket = ENV['S3_SOURCE_BUCKET_NAME'])
+    return remote_path unless bucket
+    object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
+    object.presigned_url('get', expires_in: seconds, response_content_disposition: 'attachment')
+  end
+
+  def self.presigned_url_for_download(remote_path, seconds, bucket = ENV['S3_DOWNLOAD_BUCKET_NAME'])
     return remote_path unless bucket
     object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
     object.presigned_url('get', expires_in: seconds, response_content_disposition: 'attachment')
@@ -92,6 +110,11 @@ class S3Service
   end
 
   def self.s3_exists?(remote_path, bucket = ENV['S3_SOURCE_BUCKET_NAME'])
+    object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
+    object.exists?
+  end
+
+  def self.s3_exists_for_download?(remote_path, bucket = ENV['S3_DOWNLOAD_BUCKET_NAME'])
     object = Aws::S3::Object.new(bucket_name: bucket, key: remote_path)
     object.exists?
   end
