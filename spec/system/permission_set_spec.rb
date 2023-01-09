@@ -12,6 +12,10 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
   let(:edit_set) { 'Editing Permission Set' }
   let(:new_set) { 'New Permission Set' }
   let(:create_set) { 'Create Permission Set' }
+  let(:sets) { 'Permission Sets' }
+  let(:denied) { 'Access denied' }
+  let(:create_new_set) { 'Create New Permission Set' }
+  let(:new_set_url) { '/permission_sets/new' }
 
   before do
     login_as user
@@ -23,11 +27,11 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
     describe 'a regular user' do
       it 'cannot view the Permission Sets link' do
         visit '/'
-        expect(page).not_to have_content('Permission Sets')
+        expect(page).not_to have_content(sets)
       end
       it 'cannot visit the Permission Sets route' do
         visit '/permission_sets'
-        expect(page).to have_content('Access denied')
+        expect(page).to have_content(denied)
       end
     end
 
@@ -37,11 +41,11 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'can view the Permission Sets link' do
         visit '/'
-        expect(page).to have_content('Permission Sets')
+        expect(page).to have_content(sets)
       end
       it 'can view the Permission Sets index' do
         visit '/permission_sets'
-        expect(page).to have_content('Permission Sets')
+        expect(page).to have_content(sets)
       end
     end
 
@@ -51,11 +55,11 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'can view the Permission Sets link' do
         visit '/'
-        expect(page).to have_content('Permission Sets')
+        expect(page).to have_content(sets)
       end
       it 'can view the Permission Sets index' do
         visit '/permission_sets'
-        expect(page).to have_content('Permission Sets')
+        expect(page).to have_content(sets)
       end
     end
 
@@ -65,11 +69,11 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'can view the Permission Sets link' do
         visit '/'
-        expect(page).to have_content('Permission Sets')
+        expect(page).to have_content(sets)
       end
       it 'can view the Permission Sets index' do
         visit '/permission_sets'
-        expect(page).to have_content('Permission Sets')
+        expect(page).to have_content(sets)
       end
     end
   end
@@ -81,7 +85,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'can only see sets they are approvers for' do
         visit '/permission_sets'
-        expect(page).to have_content('Permission Sets')
+        expect(page).to have_content(sets)
         expect(page).to have_content('set 1')
         expect(page).not_to have_content('set 2')
       end
@@ -93,7 +97,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'can only see sets they are administrators for' do
         visit '/permission_sets'
-        expect(page).to have_content('Permission Sets')
+        expect(page).to have_content(sets)
         expect(page).to have_content('set 2')
         expect(page).not_to have_content('set 1')
       end
@@ -105,7 +109,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'can see all of the permission sets' do
         visit '/permission_sets'
-        expect(page).to have_content('Permission Sets')
+        expect(page).to have_content(sets)
         expect(page).to have_content('set 2')
         expect(page).to have_content('set 1')
       end
@@ -122,7 +126,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'cannot access permission set showpage theyre not approved for' do
         visit "/permission_sets/#{permission_set_2.id}"
-        expect(page).to have_content('Access denied')
+        expect(page).to have_content(denied)
       end
     end
 
@@ -155,7 +159,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'can be viewed' do
         visit '/permission_sets'
-        expect(page).to have_content('Create New Permission Set')
+        expect(page).to have_content(create_new_set)
         expect(page).to have_link('Edit', count: 2)
         expect(page).to have_content('Edit', count: 3)
       end
@@ -179,24 +183,24 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         expect(page).to have_content(edit_set)
       end
       it 'can be created' do
-        visit '/permission_sets/new'
+        visit new_set_url
         expect(page).to have_content(new_set)
         fill_in('permission_set_key', with: 'key example')
         fill_in('permission_set_label', with: 'label example')
         fill_in('permission_set_max_queue_length', with: '10')
-        click_on 'Create Permission Set'
+        click_on create_set
         expect(page).to have_content('Permission set was successfully created.')
         expect(page).to have_content('key example')
         expect(page).to have_content('label example')
       end
       it 'can reject invalid params upon creation' do
-        visit '/permission_sets/new'
+        visit new_set_url
         expect(page).to have_content(new_set)
         fill_in('permission_set_key', with: 'key example')
         # permission set must also have label - this leaves that out making the request invalid and causing a render of the new page
         fill_in('permission_set_label', with: '')
         fill_in('permission_set_max_queue_length', with: '10')
-        click_on 'Create Permission Set'
+        click_on create_set
         expect(page).to have_content(new_set)
       end
       it 'can add and remove user roles to permission set' do
@@ -217,7 +221,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'can be viewed' do
         visit '/permission_sets'
-        expect(page).to have_content('Create New Permission Set')
+        expect(page).to have_content(create_new_set)
         expect(page).to have_link('Edit')
         expect(page).to have_content('Edit').twice
       end
@@ -234,12 +238,12 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         expect(page).to have_content("User: #{user.uid} removed as approver")
       end
       it 'can be created' do
-        visit '/permission_sets/new'
+        visit new_set_url
         expect(page).to have_content(new_set)
         fill_in('permission_set_key', with: 'key example')
         fill_in('permission_set_label', with: 'label example')
         fill_in('permission_set_max_queue_length', with: '10')
-        click_on 'Create Permission Set'
+        click_on create_set
         expect(page).to have_content('Permission set was successfully created.')
         expect(page).to have_content('key example')
         expect(page).to have_content('label example')
@@ -255,7 +259,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'cannot be viewed' do
         visit '/permission_sets'
-        expect(page).not_to have_content('Create New Permission Set')
+        expect(page).not_to have_content(create_new_set)
         expect(page).not_to have_link('Edit')
       end
       it 'cannot remove or add users from a permission set' do
@@ -267,11 +271,11 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'cannot be accessed' do
         visit "/permission_sets/#{permission_set.id}/edit"
-        expect(page).to have_content('Access denied')
+        expect(page).to have_content(denied)
       end
       it 'cannot be created' do
-        visit '/permission_sets/new'
-        expect(page).to have_content('Access denied')
+        visit new_set_url
+        expect(page).to have_content(denied)
       end
     end
   end

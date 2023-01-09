@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class RangeController < ApplicationController
-  def index; end
+  def index
+    # page not yet designed
+  end
 
   def show
     render json: StructureRange.where(resource_id: params[:id]).first.to_iiif
