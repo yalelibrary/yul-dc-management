@@ -61,6 +61,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     resources :permission_requests, only: [:create]
   end
 
+  get '/api/download/stage/child/:oid', to: 'download#stage'
+
   get '/show_token', to: 'users#show_token', as: :show_token
   get '/update_token', to: 'manifest#update_token', as: :update_token
 
