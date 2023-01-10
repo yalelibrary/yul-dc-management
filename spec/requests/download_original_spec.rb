@@ -2,13 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Download Original API', type: :request, prep_metadata_sources: true, prep_admin_sets: true do
+RSpec.describe 'Download Original API', type: :request, prep_admin_sets: true do
+  let(:source) { FactoryBot.create(:metadata_source) }
   let(:user) { FactoryBot.create(:sysadmin_user) }
-  let(:admin_set) { FactoryBot.create(:admin_set) }
+  let(:admin_set) { AdminSet.first }
   let(:oid) { 2_034_600 }
-  let(:oid_2) { 17_105_661 }
-  let(:parent) { FactoryBot.create(:parent_object, oid: oid, admin_set: admin_set, visibility: 'Yale Community Only') }
-  let(:parent_2) { FactoryBot.create(:parent_object, oid: oid_2, admin_set: admin_set, visibility: 'Private') }
+  let(:oid_2) { 137_105_661 }
+  let(:parent) { FactoryBot.create(:parent_object, oid: oid, admin_set: admin_set, visibility: 'Yale Community Only', authoritative_metadata_source_id: source.id) }
+  let(:parent_2) { FactoryBot.create(:parent_object, oid: oid_2, admin_set: admin_set, visibility: 'Private', authoritative_metadata_source_id: source.id) }
   let(:child_object) { FactoryBot.create(:child_object, oid: '123456', parent_object: parent) }
   let(:child_object_2) { FactoryBot.create(:child_object, oid: '2345678', parent_object: parent_2) }
   let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
@@ -24,11 +25,12 @@ RSpec.describe 'Download Original API', type: :request, prep_metadata_sources: t
     ENV['S3_SOURCE_BUCKET_NAME'] = original_image_bucket
     ENV['S3_DOWNLOAD_BUCKET_NAME'] = original_download_bucket
     ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
+    perform_enqueued_jobs do
+      example.run
+    end
   end
 
   before do
-    stub_metadata_cloud(oid)
-    stub_metadata_cloud(oid_2)
     stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/56/12/34/56/123456.tif')
         .to_return(status: 200, body: '', headers: {})
     parent
@@ -41,16 +43,14 @@ RSpec.describe 'Download Original API', type: :request, prep_metadata_sources: t
 
   describe 'POST /api/download/stage/child/:oid' do
     it 'creates a new job to copy to s3' do
-      expect do
-        get "/api/download/stage/child/#{child_object.oid}", params: {oid: child_object.oid}, headers: headers
-      end.to change {Delayed::Job.count}.by(1)
-      # expect(SaveOriginalToS3Job).to receive(:perform_later).once
-      # expect(response).to have_http_status(:ok) # 200
+      expect(SaveOriginalToS3Job).to receive(:perform_later).once
+      get "/api/download/stage/child/#{child_object.oid}", params: { oid: child_object.oid }, headers: headers
+      expect(response).to have_http_status(:ok) # 200
     end
 
     it 'errors if object is not YCO or Public' do
-      get "/api/download/stage/child/#{child_object_2.oid}", params: {oid: child_object_2.oid}, headers: headers
       expect(SaveOriginalToS3Job).not_to receive(:perform_later)
+      get "/api/download/stage/child/#{child_object_2.oid}", params: { oid: child_object_2.oid }, headers: headers
       expect(response).to have_http_status(:forbidden) # 403
     end
   end

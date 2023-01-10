@@ -2,7 +2,6 @@
 
 class DownloadOriginalController < ApplicationController
   def stage
-    byebug
     request = params
     begin
       child_object = ChildObject.find(request['oid'].to_i)
@@ -14,11 +13,8 @@ class DownloadOriginalController < ApplicationController
     render(json: { "title": "Child object staged for download." }, status: 200)
   end
 
-
   def check_child_visibility(child_object)
-    if child_object.parent_object.visibility == "Private" || child_object.parent_object.visibility == "Redirect"
-      render(json: { "title": "Child Object is restricted." }, status: 403) && (return false)
-    end
+    render(json: { "title": "Child Object is restricted." }, status: 403) && (return false) if child_object.parent_object.visibility == "Private" || child_object.parent_object.visibility == "Redirect"
     true
   end
 
