@@ -36,7 +36,7 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
     user.add_role(:approver, permission_set)
   end
 
-  describe 'POST /api/permission_requests' do
+  describe 'index /api/permission_requests' do
     it 'creates a new permission request' do
       request = JSON.parse(json)
       post "/api/permission_requests", params: JSON.pretty_generate(request), headers: headers

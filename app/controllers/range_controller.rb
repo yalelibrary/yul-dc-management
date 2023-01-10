@@ -2,7 +2,7 @@
 
 class RangeController < ApplicationController
   def index
-    text 'Range controller'
+    # page not yet designed
   end
 
   def show
