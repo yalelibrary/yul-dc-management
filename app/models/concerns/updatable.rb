@@ -97,6 +97,26 @@ module Updatable
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
 
+  def update_iiif_manifests
+    return unless batch_action == 'update IIIF manifests'
+    parsed_csv.each_with_index do |row, index|
+      begin
+        admin_set = AdminSet.find_by(key: row['admin_set']) unless ['admin_set'].nil?
+        next unless admin_set
+        if user.viewer(admin_set) || user.editor(admin_set)
+          parent_object = ParentObject.find_by(admin_set: admin_set)
+          if parent_object.visibility != 'Private'
+            GenerateManifestJob.perform_later(parent_object)
+          else
+            # processing event for invalid parent object visibility
+          end
+        else
+          # processing event for admin set access denied
+        end
+      end
+    end
+  end
+
   def remove_child_blanks(row, child_object)
     blankable = %w[caption label]
     blanks = {}
