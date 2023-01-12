@@ -14,7 +14,8 @@ class DownloadOriginalController < ApplicationController
   end
 
   def check_child_visibility(child_object)
-    render(json: { "title": "Child Object is restricted." }, status: 403) && (return false) if child_object.parent_object.visibility == "Private" || child_object.parent_object.visibility == "Redirect"
+    render(json: { "title": "Child Object is restricted." }, status: 403) && (return false) unless
+    child_object.parent_object.visibility == "Public" || child_object.parent_object.visibility == "Yale Community Only"
     true
   end
 
