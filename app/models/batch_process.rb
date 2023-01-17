@@ -25,7 +25,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # LISTS AVAILABLE BATCH ACTIONS
   def self.batch_actions
-    ['create parent objects', 'update parent objects', 'update child objects caption and label', 'update IIIF manifests', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set',
+    ['create parent objects', 'update parent objects', 'update child objects caption and label', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set',
      'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status', 'resync with preservica']
   end
 
@@ -163,8 +163,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         UpdateParentObjectsJob.perform_later(self)
       when 'update child objects caption and label'
         UpdateChildObjectsJob.perform_later(self)
-      when 'update IIIF manifests'
-        UpdateManifestsJob.perform_later(self)
       when 'reassociate child oids'
         ReassociateChildOidsJob.perform_later(self)
       when 'recreate child oid ptiffs'
