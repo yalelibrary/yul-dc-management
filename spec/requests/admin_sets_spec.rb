@@ -13,9 +13,12 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/admin_sets", type: :request do
+RSpec.describe "/admin_sets", type: :request, prep_metadata_sources: true, prep_admin_sets: true do
   let(:sysadmin_user) { FactoryBot.create(:sysadmin_user, uid: 'johnsmith2530') }
   let(:user) { FactoryBot.create(:user, uid: 'martinsmith2530') }
+  let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl') }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", visibility: "Public", admin_set_id: admin_set.id) }
+  let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "200200", visibility: "Public", admin_set_id: admin_set.id) }
 
   # AdminSet. As you add validations to AdminSet, be sure to
   # adjust the attributes here as well.
@@ -141,6 +144,20 @@ RSpec.describe "/admin_sets", type: :request do
         admin_set = AdminSet.create! valid_attributes
         delete admin_set_url(admin_set)
         expect(response).to redirect_to(admin_sets_url)
+      end
+    end
+  end
+
+  context "Update IIIF Manifests" do
+    before do
+      login_as sysadmin_user
+      admin_set
+      parent_object
+      parent_object_2
+    end
+    describe "with valid attributes" do
+      it "can start the Update Manifests Job" do
+        post update_manifests_admin_sets_url(admin_set_id: admin_set.id)
       end
     end
   end

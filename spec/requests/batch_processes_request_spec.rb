@@ -4,7 +4,11 @@ require 'rails_helper'
 
 RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:user) }
+  let(:sysadmin_user) { FactoryBot.create(:sysadmin_user, uid: 'johnsmith2530') }
   let(:admin_set) { FactoryBot.create(:admin_set) }
+  let(:admin_set_2) { FactoryBot.create(:admin_set, key: 'brbl') }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", visibility: "Public", admin_set_id: admin_set_2.id) }
+  let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "200200", visibility: "Public", admin_set_id: admin_set_2.id) }
   before do
     login_as user
   end
@@ -13,6 +17,27 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
     it "returns http success" do
       get "/batch_processes/new"
       expect(response).to have_http_status(:success)
+    end
+  end
+
+  context "Update IIIF Manifests" do
+    before do
+      login_as sysadmin_user
+      admin_set_2
+      parent_object
+      parent_object_2
+    end
+
+    around do |example|
+      perform_enqueued_jobs do
+        example.run
+      end
+    end
+
+    describe "with valid attributes" do
+      it "can start the Update Manifests Job" do
+        post update_manifests_batch_processes_url(admin_set_id: admin_set_2.id)
+      end
     end
   end
 

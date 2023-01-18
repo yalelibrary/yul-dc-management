@@ -71,14 +71,6 @@ class AdminSetsController < ApplicationController
     end
   end
 
-  def update_manifests(admin_set_id)
-    UpdateManifestsJob.perform_later(0, admin_set_id)
-    respond_to do |format|
-      format.html { redirect_to admin_sets_url(admin_set_id), notice: 'IIIF Manifests queued for update' }
-      format.json { head :no_content }
-    end
-  end
-
   private
 
     # Use callbacks to share common setup or constraints between actions.

@@ -4,6 +4,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :batch_processes do
     collection do
       post :export_parent_objects
+      post :update_manifests
       post :import
       post :trigger_mets_scan
       get :download_template
@@ -22,11 +23,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   resources :users, only: [:index, :edit, :update, :show, :new, :create]
   resources :child_objects
-  resources :admin_sets do
-    collection do
-      post :update_manifests
-    end
-  end
+  resources :admin_sets
   resources :permission_sets
   resources :permission_requests
   resources :preservica_ingests

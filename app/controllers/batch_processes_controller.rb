@@ -76,6 +76,17 @@ class BatchProcessesController < ApplicationController
     CreateParentOidCsvJob.perform_later(batch_process, *admin_set_id)
   end
 
+  def update_manifests
+    admin_set_id = params.dig(:admin_set_id)
+    batch_process = BatchProcess.new(batch_action: 'update iiif manifests', user: current_user)
+    batch_process.save!
+    UpdateManifestsJob.perform_later(0, admin_set_id, batch_process)
+    respond_to do |format|
+      format.html { redirect_to admin_sets_url(admin_set_id), notice: 'IIIF Manifests queued for update' }
+      format.json { head :no_content }
+    end
+  end
+
   def download_csv
     # Add BOM to force Excel to open correctly
     send_data "\xEF\xBB\xBF" + @batch_process.csv,
