@@ -97,20 +97,6 @@ module Updatable
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
 
-  def update_iiif_manifests
-    parsed_csv.each_with_index do |row, index|
-      begin
-        admin_set = AdminSet.find_by(key: row['admin_set']) unless ['admin_set'].nil?
-        next unless admin_set
-        if user.viewer(admin_set) || user.editor(admin_set)
-          UpdateManifestsJob.perform_later(admin_set)
-        else
-          # processing event for admin set access denied
-        end
-      end
-    end
-  end
-
   def remove_child_blanks(row, child_object)
     blankable = %w[caption label]
     blanks = {}
