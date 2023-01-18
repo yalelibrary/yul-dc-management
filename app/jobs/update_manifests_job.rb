@@ -7,7 +7,8 @@ class UpdateManifestsJob < ApplicationJob
   end
 
   def perform(start_position = 0, admin_set_id, batch_process)
-    parent_objects = ParentObject.where(admin_set_id: admin_set_id).order(:oid).offset(start_position).limit(UpdateManifestsJob.job_limit)
+    visibilities = ["Public", "Redirect", "Yale Community Only"]
+    parent_objects = ParentObject.where(admin_set_id: admin_set_id, visibility: visibilities).order(:oid).offset(start_position).limit(UpdateManifestsJob.job_limit)
     last_job = parent_objects.count < UpdateManifestsJob.job_limit
     return unless parent_objects.count.positive? # stop if nothing is found
     parent_objects.each do |po|
