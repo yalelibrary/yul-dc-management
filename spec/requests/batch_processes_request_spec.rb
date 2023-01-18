@@ -10,6 +10,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", visibility: "Public", admin_set_id: admin_set_2.id) }
   let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "200200", visibility: "Public", admin_set_id: admin_set_2.id) }
   let(:parent_object_3) { FactoryBot.create(:parent_object, oid: "200300", visibility: "Private", admin_set_id: admin_set_2.id) }
+
   before do
     login_as user
   end
@@ -23,6 +24,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
 
   context "Update IIIF Manifests" do
     before do
+      stub_metadata_cloud("2002826")
       login_as sysadmin_user
       admin_set_2
       parent_object
@@ -38,8 +40,8 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
 
     describe "with valid attributes" do
       it "can start the Update Manifests Job" do
+        expect(GenerateManifestJob).to receive(:perform_later).exactly(1).times
         post update_manifests_batch_processes_url(admin_set_id: admin_set_2.id)
-        expect(response).to have_http_status(:success)
       end
     end
   end

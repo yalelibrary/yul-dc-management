@@ -78,13 +78,12 @@ class BatchProcessesController < ApplicationController
 
   def update_manifests
     admin_set_id = params.dig(:admin_set_id)
-    batch_process = BatchProcess.new(batch_action: 'update iiif manifests', user: current_user)
+    # admin_set = AdminSet.find(admin_set_id)
+    # redirect_to root_path, notice: "User does not have the ability to edit admin set." unless current_user.viewer(admin_set) || current_user.editor(admin_set)
+    redirect_to admin_set_path(admin_set_id), notice: "IIIF Manifests queued for update. Please check Batch Process for status."
+    batch_process = BatchProcess.new(batch_action: 'update parent objects', user: current_user)
     batch_process.save!
     UpdateManifestsJob.perform_later(0, admin_set_id, batch_process)
-    respond_to do |format|
-      format.html { redirect_to admin_sets_url(admin_set_id), notice: 'IIIF Manifests queued for update' }
-      format.json { head :no_content }
-    end
   end
 
   def download_csv
