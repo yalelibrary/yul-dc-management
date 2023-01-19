@@ -9,7 +9,7 @@
 <div id="admin_set_button_row">
   <a href="#BatchUpdateMetadata" role="button" class="btn btn-large btn-secondary" data-toggle="modal">Batch Update Metadata</a>
   <%= button_to "Export Parent Objects", export_parent_objects_batch_processes_url(admin_set: @admin_set.key, admin_set_id: @admin_set.id), method: :post, class: "btn btn-large btn-secondary export_button" %>
-  <%= button_to "Update IIIF Manifests", update_manifests_batch_processes_url(admin_set_id: @admin_set.id), method: :post, class: "btn btn-large btn-secondary export_button" %>
+  <%= button_to "Update IIIF Manifests", update_manifests_batch_processes_url(admin_set_id: @admin_set.id), method: :post, class: "btn btn-large btn-secondary update_manifest" %>
 </div>
 
 <p>

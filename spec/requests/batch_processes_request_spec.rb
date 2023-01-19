@@ -8,8 +8,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:admin_set_2) { FactoryBot.create(:admin_set, key: 'brbl') }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", visibility: "Public", admin_set_id: admin_set_2.id) }
-  let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "200200", visibility: "Public", admin_set_id: admin_set_2.id) }
-  let(:parent_object_3) { FactoryBot.create(:parent_object, oid: "200300", visibility: "Private", admin_set_id: admin_set_2.id) }
+  let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "200300", visibility: "Private", admin_set_id: admin_set_2.id) }
 
   before do
     login_as user
@@ -27,9 +26,9 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       stub_metadata_cloud("2002826")
       login_as sysadmin_user
       admin_set_2
+      admin_set_2.add_editor(sysadmin_user)
       parent_object
       parent_object_2
-      parent_object_3
     end
 
     around do |example|
@@ -41,6 +40,14 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
     describe "with valid attributes" do
       it "can start the Update Manifests Job" do
         expect(GenerateManifestJob).to receive(:perform_later).exactly(1).times
+        post update_manifests_batch_processes_url(admin_set_id: admin_set_2.id)
+      end
+    end
+
+    describe "without edit access to admin set" do
+      it "does not queue a iiif manifest update" do
+        admin_set_2.remove_editor(sysadmin_user)
+        expect(GenerateManifestJob).to receive(:perform_later).exactly(0).times
         post update_manifests_batch_processes_url(admin_set_id: admin_set_2.id)
       end
     end
