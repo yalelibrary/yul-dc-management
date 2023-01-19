@@ -91,11 +91,6 @@ class BatchProcessesController < ApplicationController
     UpdateManifestsJob.perform_later(0, admin_set_id, batch_process)
   end
 
-  def check_for_admin_set_permission(admin_set_id)
-    admin_set = AdminSet.find(admin_set_id)
-    return unless current_user.viewer(admin_set) || current_user.editor(admin_set)
-  end
-
   def download_csv
     # Add BOM to force Excel to open correctly
     send_data "\xEF\xBB\xBF" + @batch_process.csv,

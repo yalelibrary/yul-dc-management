@@ -7,7 +7,7 @@ class UpdateManifestsJob < ApplicationJob
     5000
   end
 
-  def perform(admin_set_id, batch_process, start_position = 0)
+  def perform(start_position = 0, admin_set_id, batch_process)
     visibilities = ["Public", "Yale Community Only"]
     parent_objects = ParentObject.where(admin_set_id: admin_set_id, visibility: visibilities).where.not(child_object_count: 0).order(:oid).offset(start_position).limit(UpdateManifestsJob.job_limit)
     last_job = parent_objects.count < UpdateManifestsJob.job_limit
