@@ -7,6 +7,7 @@ class UpdateManifestsJob < ApplicationJob
     5000
   end
 
+  # rubocop:disable Style/OptionalArguments
   def perform(start_position = 0, admin_set_id, batch_process)
     visibilities = ["Public", "Yale Community Only"]
     parent_objects = ParentObject.where(admin_set_id: admin_set_id, visibility: visibilities).where.not(child_object_count: 0).order(:oid).offset(start_position).limit(UpdateManifestsJob.job_limit)
@@ -18,4 +19,5 @@ class UpdateManifestsJob < ApplicationJob
     end
     UpdateManifestsJob.perform_later(start_position + parent_objects.count, admin_set_id) unless last_job
   end
+  # rubocop:enable Style/OptionalArguments
 end
