@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 class BatchProcessesController < ApplicationController
   before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml, :download_created, :show_parent, :show_child]
   before_action :set_parent_object, only: [:show_parent, :show_child]
@@ -78,7 +79,7 @@ class BatchProcessesController < ApplicationController
 
   def update_manifests
     admin_set_id = params.dig(:admin_set_id)
-    admin_set = AdminSet.find(admin_set_id) 
+    admin_set = AdminSet.find(admin_set_id)
     if current_user.viewer(admin_set) || current_user.editor(admin_set)
       redirect_to admin_set_path(admin_set_id), notice: "IIIF Manifests queued for update. Please check Batch Process for status."
     else
@@ -91,7 +92,7 @@ class BatchProcessesController < ApplicationController
   end
 
   def check_for_admin_set_permission(admin_set_id)
-    admin_set = AdminSet.find(admin_set_id) 
+    admin_set = AdminSet.find(admin_set_id)
     return unless current_user.viewer(admin_set) || current_user.editor(admin_set)
   end
 
@@ -156,3 +157,4 @@ class BatchProcessesController < ApplicationController
       params.require(:batch_process).permit(:file, :batch_action)
     end
 end
+# rubocop:enable Metrics/ClassLength

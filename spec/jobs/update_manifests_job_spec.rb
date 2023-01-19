@@ -23,7 +23,6 @@ RSpec.describe UpdateManifestsJob, type: :job, prep_metadata_sources: true, solr
 
   context 'when parent object count is udner limit' do
     it 'does things' do
-    
     end
   end
 end
