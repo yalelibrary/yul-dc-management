@@ -73,6 +73,16 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       expect(BatchProcess.last.created_file_name).to eq "#{admin_set.key}_export_bp_#{BatchProcess.last.id}.csv"
     end
 
+    it 'can update iiif manifests' do
+      admin_set.add_editor(sysadmin_user)
+      expect(BatchProcess.count).to eq 0
+      visit admin_sets_path
+      click_link(admin_set.key.to_s)
+      click_on("Update IIIF Manifests")
+      expect(page).to have_content "IIIF Manifests queued for update. Please check Batch Process for status."
+      expect(BatchProcess.count).to eq 1
+    end
+
     it 'removes the viewer role from a user when they are given an editor role' do
       visit admin_sets_path
       click_link(admin_set.key.to_s)
@@ -208,6 +218,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
 
   context "when user does not have permission to Sets" do
     before do
+      admin_set
       login_as user
     end
     it "the label does not appear on the slide bar" do
@@ -217,6 +228,15 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
     it "cannot access admin sets directly" do
       visit admin_sets_path
       expect(page).to have_content("Access denied")
+    end
+    it 'cannot update iiif manifests' do
+      login_as sysadmin_user
+      expect(BatchProcess.count).to eq 0
+      visit admin_sets_path
+      click_link(admin_set.key.to_s)
+      click_on("Update IIIF Manifests")
+      expect(page).to have_content "User does not have permission to update Admin Set."
+      expect(BatchProcess.count).to eq 0
     end
   end
 end
