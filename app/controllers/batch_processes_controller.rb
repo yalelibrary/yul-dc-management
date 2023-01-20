@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 class BatchProcessesController < ApplicationController
   before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml, :download_created, :show_parent, :show_child]
   before_action :set_parent_object, only: [:show_parent, :show_child]
@@ -76,6 +77,20 @@ class BatchProcessesController < ApplicationController
     CreateParentOidCsvJob.perform_later(batch_process, *admin_set_id)
   end
 
+  def update_manifests
+    admin_set_id = params.dig(:admin_set_id)
+    admin_set = AdminSet.find(admin_set_id)
+    if current_user.viewer(admin_set) || current_user.editor(admin_set)
+      redirect_to admin_set_path(admin_set_id), notice: "IIIF Manifests queued for update. Please check Batch Process for status."
+    else
+      redirect_to admin_set_path(admin_set), alert: "User does not have permission to update Admin Set."
+      return false
+    end
+    batch_process = BatchProcess.new(batch_action: 'update parent objects', user: current_user)
+    batch_process.save!
+    UpdateManifestsJob.perform_later(0, admin_set_id, batch_process)
+  end
+
   def download_csv
     # Add BOM to force Excel to open correctly
     send_data "\xEF\xBB\xBF" + @batch_process.csv,
@@ -137,3 +152,4 @@ class BatchProcessesController < ApplicationController
       params.require(:batch_process).permit(:file, :batch_action)
     end
 end
+# rubocop:enable Metrics/ClassLength
