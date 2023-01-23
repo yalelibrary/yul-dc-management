@@ -137,6 +137,18 @@ class ParentObjectsController < ApplicationController
     end
   end
 
+  def update_manifests
+    admin_set_id = params.dig(:admin_set_id)
+    admin_set = AdminSet.find(admin_set_id)
+    if current_user.viewer(admin_set) || current_user.editor(admin_set)
+      redirect_to admin_set_path(admin_set_id), notice: "IIIF Manifests queued for update. Please check Batch Process for status."
+    else
+      redirect_to admin_set_path(admin_set), alert: "User does not have permission to update Admin Set."
+      return false
+    end
+    UpdateManifestsJob.perform_later(admin_set_id)
+  end
+
   def sync_from_preservica
     queue_parent_sync_from_preservica
     respond_to do |format|
