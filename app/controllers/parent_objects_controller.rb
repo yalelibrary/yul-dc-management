@@ -142,7 +142,7 @@ class ParentObjectsController < ApplicationController
     admin_set = AdminSet.find(admin_set_id)
     if current_user.viewer(admin_set) || current_user.editor(admin_set)
       UpdateManifestsJob.perform_later(admin_set_id)
-      redirect_to admin_set_path(admin_set_id), notice: "IIIF Manifests queued for update. Please check Batch Process for status."
+      redirect_to admin_set_path(admin_set_id), notice: "IIIF Manifests queued for update."
     else
       redirect_to admin_set_path(admin_set), alert: "User does not have permission to update Admin Set."
       return false

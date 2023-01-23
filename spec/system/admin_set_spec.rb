@@ -78,7 +78,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       visit admin_sets_path
       click_link(admin_set.key.to_s)
       click_on("Update IIIF Manifests")
-      expect(page).to have_content "IIIF Manifests queued for update. Please check Batch Process for status."
+      expect(page).to have_content "IIIF Manifests queued for update."
     end
 
     it 'removes the viewer role from a user when they are given an editor role' do
@@ -231,6 +231,13 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       visit admin_sets_path(admin_set)
       expect(page).to have_content("Access denied")
       expect(page).not_to have_content "Update IIIF Manifests"
+    end
+    it 'cannot update iiif manifests without edit permission' do
+      login_as sysadmin_user
+      visit admin_sets_path
+      click_link(admin_set.key.to_s)
+      click_on("Update IIIF Manifests")
+      expect(page).to have_content "User does not have permission to update Admin Set."
     end
   end
 end
