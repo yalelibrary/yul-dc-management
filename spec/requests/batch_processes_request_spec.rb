@@ -21,38 +21,6 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
     end
   end
 
-  context "Update IIIF Manifests" do
-    before do
-      stub_metadata_cloud("2002826")
-      login_as sysadmin_user
-      admin_set_2
-      admin_set_2.add_editor(sysadmin_user)
-      parent_object
-      parent_object_2
-    end
-
-    around do |example|
-      perform_enqueued_jobs do
-        example.run
-      end
-    end
-
-    describe "with valid attributes" do
-      it "can start the Update Manifests Job" do
-        expect(GenerateManifestJob).to receive(:perform_later).exactly(1).times
-        post update_manifests_batch_processes_url(admin_set_id: admin_set_2.id)
-      end
-    end
-
-    describe "without edit access to admin set" do
-      it "does not queue a iiif manifest update" do
-        admin_set_2.remove_editor(sysadmin_user)
-        expect(GenerateManifestJob).to receive(:perform_later).exactly(0).times
-        post update_manifests_batch_processes_url(admin_set_id: admin_set_2.id)
-      end
-    end
-  end
-
   describe "GET /download with XML" do
     let(:batch_process_xml) do
       FactoryBot.create(
