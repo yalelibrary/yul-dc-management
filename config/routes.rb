@@ -4,7 +4,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :batch_processes do
     collection do
       post :export_parent_objects
-      post :update_manifests
       post :import
       post :trigger_mets_scan
       get :download_template
@@ -35,6 +34,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     collection do
       post :reindex
       post :all_metadata
+      post :update_manifests
     end
     member do
       post :update_metadata

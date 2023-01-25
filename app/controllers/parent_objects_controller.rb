@@ -3,7 +3,7 @@
 class ParentObjectsController < ApplicationController
   before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata, :select_thumbnail, :solr_document]
   before_action :set_paper_trail_whodunnit
-  load_and_authorize_resource except: [:solr_document, :new, :create, :update_metadata, :all_metadata, :reindex, :select_thumbnail]
+  load_and_authorize_resource except: [:solr_document, :new, :create, :update_metadata, :all_metadata, :reindex, :select_thumbnail, :update_manifests]
 
   # GET /parent_objects
   # GET /parent_objects.json
@@ -134,6 +134,18 @@ class ParentObjectsController < ApplicationController
     respond_to do |format|
       format.html { redirect_back fallback_location: parent_object_url(@parent_object), notice: 'This object has been queued for a metadata update.' }
       format.json { head :no_content }
+    end
+  end
+
+  def update_manifests
+    admin_set_id = params.dig(:admin_set_id)
+    admin_set = AdminSet.find(admin_set_id)
+    if current_user.viewer(admin_set) || current_user.editor(admin_set)
+      UpdateManifestsJob.perform_later(admin_set_id)
+      redirect_to admin_set_path(admin_set_id), notice: "IIIF Manifests queued for update."
+    else
+      redirect_to admin_set_path(admin_set), alert: "User does not have permission to update Admin Set."
+      return false
     end
   end
 
