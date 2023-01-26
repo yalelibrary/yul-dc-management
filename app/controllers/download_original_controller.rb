@@ -4,7 +4,7 @@ class DownloadOriginalController < ApplicationController
   def stage
     request = params
     begin
-      child_object = ChildObject.find(request['oid'].to_i)
+      child_object = ChildObject.find(request['child_oid'].to_i)
     rescue ActiveRecord::RecordNotFound
       render(json: { "title": "Invalid Child OID" }, status: 400) && (return false)
     end
