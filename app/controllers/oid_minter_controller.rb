@@ -11,7 +11,7 @@ class OidMinterController < ActionController::Base
       respond_to do |format|
         format.json { render json: { oids: oids } }
         format.text { render plain: oids.join("\n") }
-        format.any(:html)  { render plain: "Please request text/plain or application/json content types.", status: :not_acceptable }
+        format.any(:html) { render plain: "Please request text/plain or application/json content types.", status: :not_acceptable }
       end
       oid_request_info = { ip_address: request.remote_ip.to_s, oids: oids.to_s }
       Rails.logger.info("OIDs Created: #{oid_request_info.to_json}")
