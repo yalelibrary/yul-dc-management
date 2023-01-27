@@ -55,9 +55,12 @@ dd.child-list{
     left: -7%;
 }
 
-
 @media (min-width: 768px) {
   .dt-button-collection .dropdown-menu {
     margin-left: -175px;
   }
+}
+
+.bottom-spacer {
+  margin-bottom: 80px
 }
