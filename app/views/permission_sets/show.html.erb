@@ -1,19 +1,33 @@
 <%= render partial: "/management/flash_messages" %>
+<div class="bottom-spacer">
 
-<p>
-  <strong>Key:</strong>
-  <%= @permission_set.key %>
-</p>
+  <p>
+    <strong>Key:</strong>
+    <%= @permission_set.key %>
+  </p>
 
-<p>
-  <strong>Label:</strong>
-  <%= @permission_set.label %>
-</p>
+  <p>
+    <strong>Label:</strong>
+    <%= @permission_set.label %>
+  </p>
 
-<p>
-  <strong>Max Request Queue Length:</strong>
-  <%= @permission_set.max_queue_length %>
-</p>
+  <p>
+    <strong>Max Request Queue Length:</strong>
+    <%= @permission_set.max_queue_length %>
+  </p>
+
+  <p class="permission-set-terms">
+    <strong>Terms and Conditions:</strong>
+    <% if @permission_set.active_permission_set_terms %>
+      <%= @permission_set.active_permission_set_terms&.title %>
+      [<%= @permission_set.active_permission_set_terms&.activated_at %>]
+    <% else %>
+      None
+    <% end %>
+    <%= link_to 'Manage Terms and Conditions', "/", class: "float-right" %>
+  </p>
+
+</div>
 
 <table class='table table-striped permission-set-show-table' aria-label='Approvers Permission Set'>
   <thead class='thead-dark'>

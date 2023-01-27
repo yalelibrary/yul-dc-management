@@ -1,16 +1,12 @@
 <%= render partial: "/management/flash_messages" %>
 
 <div class='permission-set-heading'>
-  <div class='col'>
-    <h1>Permission Sets (TBD)</h1>
-  </div>
+  <h1>Permission Sets (TBD)</h1>
 </div>
 <div class="heading">
   <% if can? :create_set, PermissionSet %>
-    <div class='col'>
-      <div class='button-list'>
-        <%= link_to 'Create New Permission Set', new_permission_set_path, class: "btn button primary-button" %>
-      </div>
+    <div class='button-list'>
+      <%= link_to 'Create New Permission Set', new_permission_set_path, class: "btn button primary-button" %>
     </div>
   <% end %>
 </div>
@@ -29,7 +25,7 @@
       <tr>
         <td class='permission-set-label'><%= permission_set.key %></td>
         <td class='permission-set-label'><%= link_to permission_set.label, permission_set_path(permission_set)  %></td>
-        <td class='permission-set-label'>
+        <td class='permission-set-label permission-set-terms'>
           <% if permission_set.active_permission_set_terms %>
             <%= permission_set.active_permission_set_terms&.activated_at %>
             [<%= permission_set.active_permission_set_terms&.activated_by.uid %>]

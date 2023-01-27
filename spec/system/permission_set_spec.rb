@@ -279,4 +279,73 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
     end
   end
+
+  describe 'active permission set terms display' do
+    before do
+      administrator_user
+      login_as approver_user
+      permission_set.add_approver(approver_user)
+      permission_set.add_administrator(administrator_user)
+    end
+
+    it "index displays None where there are no terms" do
+      visit "/permission_sets"
+      expect(page).to have_content("Permission Sets")
+      within("td.permission-set-terms") do
+        expect(page).to have_content("None")
+      end
+    end
+
+    it "index displays activation date an user when there are active terms" do
+      terms = permission_set.activate_terms!(administrator_user, "Test Title", "Test Body")
+      visit "/permission_sets"
+      expect(page).to have_content("Permission Sets")
+      within("td.permission-set-terms") do
+        expect(page).to have_content(terms.activated_at.to_s)
+        expect(page).to have_content(administrator_user.uid.to_s)
+      end
+    end
+
+    it "index displays None when there are no active terms" do
+      terms = permission_set.activate_terms!(administrator_user, "Test Title", "Test Body")
+      permission_set.inactivate_terms_by!(administrator_user)
+      visit "/permission_sets"
+      expect(page).to have_content("Permission Sets")
+      within("td.permission-set-terms") do
+        expect(page).to have_content("None")
+        expect(page).not_to have_content(terms.activated_at.to_s)
+        expect(page).not_to have_content(administrator_user.uid.to_s)
+      end
+    end
+
+    it "show page displays None where there are no terms" do
+      visit "/permission_sets/#{permission_set.id}"
+      expect(page).to have_content("Permission Sets")
+      within("p.permission-set-terms") do
+        expect(page).to have_content("None")
+      end
+    end
+
+    it "show page displays activation date and user when there are active terms" do
+      terms = permission_set.activate_terms!(administrator_user, "Test Title", "Test Body")
+      visit "/permission_sets/#{permission_set.id}"
+      expect(page).to have_content(permission_set.label)
+      within("p.permission-set-terms") do
+        expect(page).to have_content(terms.activated_at.to_s)
+        expect(page).to have_content(terms.title.to_s)
+      end
+    end
+
+    it "show page displays None when there are no active terms" do
+      terms = permission_set.activate_terms!(administrator_user, "Test Title", "Test Body")
+      permission_set.inactivate_terms_by!(administrator_user)
+      visit "/permission_sets/#{permission_set.id}"
+      expect(page).to have_content(permission_set.label)
+      within("p.permission-set-terms") do
+        expect(page).to have_content("None")
+        expect(page).not_to have_content(terms.activated_at.to_s)
+        expect(page).not_to have_content(terms.title.to_s)
+      end
+    end
+  end
 end
