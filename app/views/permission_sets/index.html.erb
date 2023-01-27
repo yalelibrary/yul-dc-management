@@ -20,6 +20,8 @@
     <tr>
       <th scope='col'> Key </th>
       <th scope='col'> Label </th>
+      <th scope='col'> Terms Title </th>
+      <th scope='col'> Terms Activated </th>
       <th scope='col'> Edit </th>
     </tr>
   </thead>
@@ -28,6 +30,8 @@
       <tr>
         <td class='permission-set-label'><%= permission_set.key %></td>
         <td class='permission-set-label'><%= link_to permission_set.label, permission_set_path(permission_set)  %></td>
+        <td class='permission-set-label'><%= permission_set.active_permission_set_terms&.title || "None"  %></td>
+        <td class='permission-set-label'><%= permission_set.active_permission_set_terms&.activated_by&.uid || "n/a"  %></td>
         <% if can? :edit, permission_set %>
           <td class='permission-set-label'><%= link_to "Edit", edit_permission_set_path(permission_set)  %></td>
         <% end %>
