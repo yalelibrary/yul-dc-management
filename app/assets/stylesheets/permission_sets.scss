@@ -13,7 +13,7 @@
   }
 }
 
-.table.permission-set-index-table {
+.table.permission-set-index-table, .table.permission-set-terms-index-table {
   display: inline-block;
   width: auto;
   vertical-align: top;
@@ -25,5 +25,18 @@
   .user-role {
     display: flex;
     justify-content: space-between;
+  }
+}
+.permission-set-actions {
+  padding-top: 20px;
+  div.row {
+    padding-bottom: 20px
+  }
+  .btn-width {
+    flex-grow: 0;
+    min-width: 110px
+  }
+  .btn-width input {
+    min-width: 100px
   }
 }
