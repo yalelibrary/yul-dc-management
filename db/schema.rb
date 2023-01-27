@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_01_212207) do
+ActiveRecord::Schema.define(version: 2023_01_26_211951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -228,6 +228,18 @@ ActiveRecord::Schema.define(version: 2022_12_01_212207) do
     t.index ["permission_request_user_id"], name: "index_permission_requests_on_permission_request_user_id"
     t.index ["permission_set_id"], name: "index_permission_requests_on_permission_set_id"
     t.index ["user_id"], name: "index_permission_requests_on_user_id"
+  end
+
+  create_table "permission_set_terms", force: :cascade do |t|
+    t.integer "permission_set_id"
+    t.integer "activated_by_id"
+    t.datetime "activated_at"
+    t.integer "inactivated_by_id"
+    t.datetime "inactivated_at"
+    t.string "title"
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "permission_sets", force: :cascade do |t|
