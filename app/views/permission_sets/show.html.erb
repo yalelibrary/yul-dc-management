@@ -24,7 +24,9 @@
     <% else %>
       None
     <% end %>
-    <%= link_to 'Manage Terms and Conditions', permission_set_terms_permission_set_url(@permission_set), class: "float-right" %>
+    <% if current_ability.can?(:update, @permission_set) %>
+      <%= link_to 'Manage Terms and Conditions', permission_set_terms_permission_set_url(@permission_set), class: "float-right" %>
+    <% end %>
   </p>
 
 </div>
