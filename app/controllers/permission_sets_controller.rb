@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class PermissionSetsController < ApplicationController
-  load_and_authorize_resource
-  before_action :set_permission_set, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource except: [:permission_set_terms]
+  before_action :set_permission_set, only: [:show, :edit, :update, :destroy, :permission_set_terms]
 
   # GET /permission_sets
   # GET /permission_sets.json
@@ -48,6 +48,13 @@ class PermissionSetsController < ApplicationController
         format.html { render :new }
         format.json { render json: @permission_set.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def permission_set_terms
+    authorize!(:update, @permission_set)
+    respond_to do |format|
+      format.html { render :terms }
     end
   end
 
