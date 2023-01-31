@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe UpdateManifestsJob, type: :job, prep_metadata_sources: true, solr: true do
   let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
   let(:user) { FactoryBot.create(:user) }
-  let(:batch_process) { FactoryBot.create(:batch_process, user: user, batch_action: 'update parent objects') }
   let(:admin_set_1) { FactoryBot.create(:admin_set) }
 
   before do
@@ -26,9 +25,9 @@ RSpec.describe UpdateManifestsJob, type: :job, prep_metadata_sources: true, solr
   end
 
   context 'with more than limit parent objects' do
-    let(:po1) { FactoryBot.build(:parent_object, oid: '000000001', admin_set_id: admin_set_1.id) }
-    let(:po2) { FactoryBot.build(:parent_object, oid: '000000002', admin_set_id: admin_set_1.id) }
-    let(:po3) { FactoryBot.build(:parent_object, oid: '000000003', admin_set_id: admin_set_1.id) }
+    let(:po1) { FactoryBot.create(:parent_object, oid: '000000001', admin_set_id: admin_set_1.id) }
+    let(:po2) { FactoryBot.create(:parent_object, oid: '000000002', admin_set_id: admin_set_1.id) }
+    let(:po3) { FactoryBot.create(:parent_object, oid: '000000003', admin_set_id: admin_set_1.id) }
     let(:total_records) { 3 }
     let(:limit) { UpdateManifestsJob.job_limit }
     let(:expected_call_count) { (total_records.to_f / limit).ceil }
@@ -48,7 +47,7 @@ RSpec.describe UpdateManifestsJob, type: :job, prep_metadata_sources: true, solr
 
     it 'processes all parents in batches' do
       expect(UpdateManifestsJob).to receive(:perform_later).exactly(expected_call_count).times
-      UpdateManifestsJob.perform_later(0, 1, batch_process)
+      UpdateManifestsJob.perform_later(admin_set_1.id)
     end
   end
 end
