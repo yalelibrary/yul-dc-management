@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class DownloadOriginalController < ApplicationController
+  skip_before_action :authenticate_user!
+
   def stage
     request = params
     begin
