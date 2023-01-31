@@ -9,13 +9,6 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
 
   before do
     admin_set
-    metadata_source
-  end
-
-  around do |example|
-    perform_enqueued_jobs do
-      example.run
-    end
   end
 
   context "when user has permission to Sets" do
