@@ -65,7 +65,7 @@ class ParentObjectDatatable < ApplicationDatatable
         last_aspace_update: parent_object.last_aspace_update,
         last_id_update: parent_object.last_id_update,
         visibility: parent_object.visibility,
-        extent_of_digitization: parent_object.extent_of_digitization,
+        extent_of_digitization: digitization(parent_object),
         digitization_note: parent_object.digitization_note,
         digitization_funding_source: parent_object.digitization_funding_source,
         DT_RowId: parent_object.oid,
@@ -74,6 +74,16 @@ class ParentObjectDatatable < ApplicationDatatable
     end
   end
   # rubocop:enable Rails/OutputSafety,Metrics/MethodLength
+
+  def digitization(parent_object)
+    if parent_object.extent_of_digitization == "Completely digitized"
+      "This object has been completely digitized."
+    elsif parent_object.extent_of_digitization == "Partially digitized"
+      "This object has been partially digitized."
+    else
+      parent_object.extent_of_digitization
+    end
+  end
 
   def oid_column(parent_object)
     result = []

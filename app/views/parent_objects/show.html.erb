@@ -92,8 +92,14 @@
   <dd><%= sanitize @parent_object.rights_statement, tags: %w(a), attributes: %w(href) %></dd>
 
   <dt>Extent of Digitization:</dt>
-  <dd><%= @parent_object.extent_of_digitization %></dd>
-
+  <% if @parent_object.extent_of_digitization == "Completely digitized" %>
+    <dd>This object has been completely digitized.</dd>
+  <% elsif @parent_object.extent_of_digitization == "Partially digitized" %>
+    <dd>This object has been partially digitized.</dd>
+  <% else %>
+    <dd><%= @parent_object.extent_of_digitization %></dd>
+  <% end %>
+  
   <dt>Digitization Note:</dt>
   <dd><%= @parent_object.digitization_note %></dd>
 
