@@ -1,12 +1,12 @@
 GIT
   remote: https://github.com/yalelibrary/activejob-scheduler
-  revision: 22850499dd0ab046eff2e1c113261782e7b8d8dc
+  revision: 7f02cb96fca366255b1d77d3c74cb89eb683a983
   branch: main
   specs:
     activejob-scheduler (1.0.0.pre)
-      actionmailer (> 5, < 7)
-      activejob (> 5, < 7)
-      activesupport (> 5, < 7)
+      actionmailer (> 5, <= 7)
+      activejob (> 5, <= 7)
+      activesupport (> 5, <= 7)
       fugit (~> 1.3)
       travis-release (~> 0)
 
@@ -157,7 +157,7 @@ GEM
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.12.0)
-    et-orbi (1.2.6)
+    et-orbi (1.2.7)
       tzinfo
     execjs (2.7.0)
     factory_bot (5.2.0)
@@ -174,8 +174,8 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
-    fugit (1.5.2)
-      et-orbi (~> 1.1, >= 1.1.8)
+    fugit (1.8.1)
+      et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     github_changelog_generator (1.15.2)
       activesupport
