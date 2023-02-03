@@ -73,12 +73,19 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       expect(BatchProcess.last.created_file_name).to eq "#{admin_set.key}_export_bp_#{BatchProcess.last.id}.csv"
     end
 
-    it 'can update iiif manifests' do
+    it 'can update iiif manifests as an admin set editor' do
       admin_set.add_editor(sysadmin_user)
       visit admin_sets_path
       click_link(admin_set.key.to_s)
       click_on("Update IIIF Manifests")
-      expect(page).to have_content "IIIF Manifests queued for update."
+      expect(page).to have_content "IIIF Manifests queued for update. Please check Delayed Job dashboard for status"
+    end
+
+    it 'cannot update iiif manifests if not an editor of the admin set' do
+      visit admin_sets_path
+      click_link(admin_set.key.to_s)
+      click_on("Update IIIF Manifests")
+      expect(page).to have_content "User does not have permission to update Admin Set."
     end
 
     it 'removes the viewer role from a user when they are given an editor role' do
