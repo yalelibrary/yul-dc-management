@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class PermissionSetsController < ApplicationController
-  load_and_authorize_resource except: [:permission_set_terms]
-  before_action :set_permission_set, only: [:show, :edit, :update, :destroy, :permission_set_terms]
+  load_and_authorize_resource except: [:permission_set_terms, :new_term, :post_permission_set_terms]
+  before_action :set_permission_set, only: [:show, :edit, :update, :destroy, :permission_set_terms, :post_permission_set_terms, :new_term]
 
   # GET /permission_sets
   # GET /permission_sets.json
@@ -58,6 +58,16 @@ class PermissionSetsController < ApplicationController
     end
   end
 
+  def new_term
+    authorize!(:update, @permission_set)
+  end
+
+  def post_permission_set_terms
+    authorize!(:update, @permission_set)
+    @permission_set.activate_terms!(current_user, params[:title], params[:body])
+    redirect_to permission_set_terms_permission_set_url(@permission_set)
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
@@ -67,6 +77,6 @@ class PermissionSetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def permission_set_params
-      params.require(:permission_set).permit(:key, :label, :max_queue_length)
+      params.require(:permission_set).permit(:key, :label, :max_queue_length, permission_set_terms_attributes: [:id, :title, :body])
     end
 end

@@ -1,0 +1,22 @@
+<p>
+  <h2>Terms and Conditions for <%= @permission_set.label %></h2>
+</p>
+
+<%= form_with url: "post_permission_set_terms", method: :post do |form| %>
+    <div class="field form-group">
+      <%= form.label :title %>
+      <%= form.text_field(:title, required: true, class: "form-control") %>
+    </div>
+
+    <div class="field form-group">
+      <%= form.label :body %>
+      <%= form.text_area(:body, required: true, class: "form-control") %>
+    </div>
+  <div class="actions">
+    <br />
+    <%= form.submit("Create Terms and Conditions", data: (@permission_set.permission_set_terms&.last&.activated_at.present?  ?  { confirm:  "Create new Terms and Conditions? This will replace the existing terms."} : { confirm:  "Create new Terms and Conditions? Users will be required to agree to these terms."}), class: "btn-primary btn") %>
+    <br />
+    <br />
+    <%= link_to 'Back', permission_sets_path(@permission_set) %>
+  </div>
+<% end %>
