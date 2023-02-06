@@ -395,7 +395,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
 
       it "show page displays None" do
         visit "/permission_sets/#{permission_set.id}"
-        expect(page).to have_content("Key: Permission Key")
+        expect(page).to have_content(sets)
         within(permission_set_terms_element) do
           expect(page).to have_content("None")
         end
