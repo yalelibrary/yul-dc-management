@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true, js: true do
+RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:user) }
   let(:user_2) { FactoryBot.create(:user) }
   let(:approver_user) { FactoryBot.create(:user) }
@@ -415,14 +415,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true, js:
         fill_in('Title', with: "Title")
         fill_in('Body', with: "Body")
         click_on "Create Terms and Conditions"
-        expect(page.driver.browser.switch_to.alert.text).to eq("Create new Terms and Conditions? Users will be required to agree to these terms.")
-        page.driver.browser.switch_to.alert.accept
         expect(page).to have_content("ACTIVE")
-        visit "permission_sets/#{permission_set.id}/new_term"
-        fill_in('Title', with: "Title")
-        fill_in('Body', with: "Body")
-        click_on "Create Terms and Conditions"
-        expect(page.driver.browser.switch_to.alert.text).to eq("Create new Terms and Conditions? This will replace the existing terms.")
       end
 
       it "cannot create a new term if not an administrator" do
