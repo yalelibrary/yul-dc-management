@@ -406,6 +406,23 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         visit permission_set_terms_permission_set_url(permission_set)
         expect(page).not_to have_content("Remove")
       end
+
+      it "can create a new term from form" do
+        login_as administrator_user
+        permission_set.add_administrator(administrator_user)
+        visit "permission_sets/#{permission_set.id}/new_term"
+        expect(page).to have_content("Terms and Conditions for #{permission_set.label}")
+        fill_in('Title', with: "Title")
+        fill_in('Body', with: "Body")
+        click_on "Create Terms and Conditions"
+        expect(page).to have_content("ACTIVE")
+      end
+
+      it "cannot create a new term if not an administrator" do
+        login_as user
+        visit "permission_sets/#{permission_set.id}/new_term"
+        expect(page).to have_content("Access denied")
+      end
     end
   end
 end
