@@ -1,0 +1,16 @@
+<h1><%= "Terms and Conditions for #{@permission_set.label}" %></h1>
+<dl class='terms-block'>
+  <dt>Activated:</dt>
+  <dd><%= "#{@term.activated_at} by #{@term.activated_by&.first_name} #{@term.activated_by&.last_name}"  %></dd>
+
+  <dt>Inactivated:</dt>
+  <dd><%=  @term.inactivated_at.present? ? "#{@term.inactivated_at} by #{@term.inactivated_by&.first_name} #{@term.inactivated_by&.last_name}" : "n/a"   %></dd>
+
+  <dt>Title:</dt>
+  <dd><%= @term.title %></dd>
+
+  <dt>Body:</dt>
+  <dd><%= @term.body %></dd>
+</dl>
+<br />
+<%= link_to 'Back', permission_set_terms_permission_set_path(@permission_set) %>
