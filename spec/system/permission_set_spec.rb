@@ -26,7 +26,6 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
     login_as user
     permission_set
     permission_set_2
-    term
   end
 
   context 'PermissionSets page access' do
@@ -411,6 +410,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
 
       it "can create a new term from form" do
         login_as administrator_user
+        term
         permission_set.add_administrator(administrator_user)
         visit "permission_sets/#{permission_set.id}/new_term"
         expect(page).to have_content("Terms and Conditions for #{permission_set.label}")
