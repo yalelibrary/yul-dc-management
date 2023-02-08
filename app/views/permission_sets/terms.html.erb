@@ -35,7 +35,7 @@
 </div>
 <% if @permission_set.active_permission_set_terms %>
 <div class="row">
-  <div class="col btn-width"><%= button_to "Remove", "/", method: :get, class: "btn btn-large btn-secondary" %></div>
+  <div class="col btn-width"><%= button_to "Remove", deactivate_permission_set_terms_permission_set_path, method: :post, data: {confirm: "Are you sure you want to deactivate the active Terms and Conditions?"}, class: "btn btn-large btn-secondary" %></div>
   <div class="col">Remove the requirement for users to agree to the Terms and Conditions when accessing content in this Permission Set.</div>
 </div>
 <% end %>

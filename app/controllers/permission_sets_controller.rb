@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class PermissionSetsController < ApplicationController
-  load_and_authorize_resource except: [:permission_set_terms, :new_term, :post_permission_set_terms]
-  before_action :set_permission_set, only: [:show, :edit, :update, :destroy, :permission_set_terms, :post_permission_set_terms, :new_term]
+  load_and_authorize_resource except: [:permission_set_terms, :new_term, :post_permission_set_terms, :deactivate_permission_set_terms]
+  before_action :set_permission_set, only: [:show, :edit, :update, :destroy, :permission_set_terms, :post_permission_set_terms, :new_term, :deactivate_permission_set_terms]
 
   # GET /permission_sets
   # GET /permission_sets.json
@@ -65,6 +65,12 @@ class PermissionSetsController < ApplicationController
   def post_permission_set_terms
     authorize!(:update, @permission_set)
     @permission_set.activate_terms!(current_user, params[:title], params[:body])
+    redirect_to permission_set_terms_permission_set_url(@permission_set)
+  end
+
+  def deactivate_permission_set_terms
+    authorize!(:update, @permission_set)
+    @permission_set.inactivate_terms_by!(current_user)
     redirect_to permission_set_terms_permission_set_url(@permission_set)
   end
 
