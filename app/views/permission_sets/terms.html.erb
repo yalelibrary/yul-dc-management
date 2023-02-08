@@ -22,7 +22,7 @@
     <td><%= permission_set_term.activated_at %></td>
     <td><%= permission_set_term.inactivated_at || 'ACTIVE' %></td>
     <td><%= permission_set_term.activated_by&.full_name || "None" %></td>
-    <td><%= link_to "View" %></td>
+    <td><%= link_to "View", "permission_set_terms/#{permission_set_term.id}" %></td>
   </tr>
   <% end %>
   </tbody>

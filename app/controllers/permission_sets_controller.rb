@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PermissionSetsController < ApplicationController
-  load_and_authorize_resource except: [:permission_set_terms, :new_term, :post_permission_set_terms, :deactivate_permission_set_terms]
+  load_and_authorize_resource except: [:permission_set_terms, :new_term, :post_permission_set_terms, :show_term, :deactivate_permission_set_terms]
   before_action :set_permission_set, only: [:show, :edit, :update, :destroy, :permission_set_terms, :post_permission_set_terms, :new_term, :deactivate_permission_set_terms]
 
   # GET /permission_sets
@@ -49,6 +49,12 @@ class PermissionSetsController < ApplicationController
         format.json { render json: @permission_set.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def show_term
+    @term = PermissionSetTerm.find(params[:id])
+    @permission_set = PermissionSet.find(@term.permission_set_id)
+    authorize!(:update, @permission_set)
   end
 
   def permission_set_terms
