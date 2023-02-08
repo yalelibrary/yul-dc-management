@@ -427,6 +427,16 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         expect(page).to have_content("Active Version")
       end
 
+      it "can deactivate a current term and condition" do
+        login_as administrator_user
+        term
+        permission_set.add_administrator(administrator_user)
+        visit "permission_sets/#{permission_set.id}/permission_set_terms/"
+        expect(page).to have_content("Remove")
+        click_button "Remove"
+        expect(page).not_to have_content("Remove")
+      end
+
       it "cannot create a new term if not an administrator" do
         login_as user
         visit "permission_sets/#{permission_set.id}/new_term"
