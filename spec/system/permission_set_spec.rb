@@ -9,6 +9,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
   let(:administrator_user) { FactoryBot.create(:user, uid: 'admin') }
   let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
   let(:permission_set_2) { FactoryBot.create(:permission_set, label: 'set 2') }
+  let(:term) { FactoryBot.create(:permission_set_term, activated_at: Time.zone.now, permission_set_id: permission_set.id) }
   let(:edit_set) { 'Editing Permission Set' }
   let(:new_set) { 'New Permission Set' }
   let(:create_set) { 'Create Permission Set' }
@@ -409,6 +410,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
 
       it "can create a new term from form" do
         login_as administrator_user
+        term
         permission_set.add_administrator(administrator_user)
         visit "permission_sets/#{permission_set.id}/new_term"
         expect(page).to have_content("Terms and Conditions for #{permission_set.label}")
@@ -416,11 +418,20 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         fill_in('Body', with: "Body")
         click_on "Create Terms and Conditions"
         expect(page).to have_content("ACTIVE")
+        visit "permission_sets/#{permission_set.id}/permission_set_terms/#{permission_set.permission_set_terms.first.id}"
+        expect(page).to have_content("Terms and Conditions for #{permission_set.label}")
+        expect(page).to have_content("Title")
+        expect(page).to have_content("Body")
+        click_on 'Back'
+        expect(page).to have_content("Terms and Conditions for #{permission_set.label}")
+        expect(page).to have_content("Active Version")
       end
 
       it "cannot create a new term if not an administrator" do
         login_as user
         visit "permission_sets/#{permission_set.id}/new_term"
+        expect(page).to have_content("Access denied")
+        visit "permission_sets/#{permission_set.id}/permission_set_terms/#{term.id}"
         expect(page).to have_content("Access denied")
       end
     end

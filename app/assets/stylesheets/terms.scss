@@ -1,0 +1,20 @@
+@import 'theme/colors', 'theme/typography', 'theme/breakpoints';
+
+.terms-block {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.terms-block dt {
+  font-size: 14px;
+  float: left;
+  width: 20%;
+  margin-top: 5px;
+}
+
+.terms-block dd {
+  font-size: 14px;
+  float: right;
+  width: 80%;
+  margin-top: 5px;
+}
