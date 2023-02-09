@@ -27,6 +27,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     get 'permission_set_terms', on: :member
     get 'new_term', on: :member
     post 'post_permission_set_terms', on: :member
+    post 'deactivate_permission_set_terms', on: :member
     get 'permission_set_terms/:id', to: 'permission_sets#show_term', on: :member
   end
   resources :permission_requests
