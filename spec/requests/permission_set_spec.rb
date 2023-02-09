@@ -70,7 +70,7 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
     it 'can display terms not found' do
       get terms_api_path(permission_set_2)
       expect(response).to have_http_status(200)
-      expect(response.body).to eq("{\"title\":\"Permission Set does not have any terms and conditions\"}")
+      expect(response.body).to eq("{\"title\":\"Permission Set does not have any active terms and conditions\"}")
     end
     it 'displays permission set not found' do
       get terms_api_path(12)
@@ -80,7 +80,7 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
     it 'displays permission set without an active term and condition' do
       get terms_api_path(permission_set_3)
       expect(response).to have_http_status(200)
-      expect(response.body).to eq("{\"title\":\"This permission set does not have any active Terms and Conditions\"}")
+      expect(response.body).to eq("{\"title\":\"Permission Set does not have any terms and conditions\"}")
     end
   end
 end
