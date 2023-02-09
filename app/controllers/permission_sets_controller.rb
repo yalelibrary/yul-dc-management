@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PermissionSetsController < ApplicationController
-  load_and_authorize_resource except: [:permission_set_terms, :new_term, :post_permission_set_terms, :show_term, :deactivate_permission_set_terms]
+  load_and_authorize_resource except: [:permission_set_terms, :new_term, :post_permission_set_terms, :show_term, :deactivate_permission_set_terms, :terms_api]
   before_action :set_permission_set, only: [:show, :edit, :update, :destroy, :permission_set_terms, :post_permission_set_terms, :new_term, :deactivate_permission_set_terms]
 
   # GET /permission_sets
@@ -66,6 +66,29 @@ class PermissionSetsController < ApplicationController
 
   def new_term
     authorize!(:update, @permission_set)
+  end
+
+  def terms_api
+    # check for valid permission set
+    begin
+      permission_set = PermissionSet.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render(json: { "title": "Permission Set not found" }, status: 400) && (return false)
+    end
+    # check for terms on set
+    if permission_set.permission_set_terms.blank?
+      render(json: { "title": "Permission Set does not have any terms and conditions" }, status: 200)
+    else
+      term = permission_set.permission_set_terms.last
+      # check for active term
+      if term.inactivated_at.present?
+        render(json: { "title": "This permission set does not have any active Terms and Conditions" }, status: 200)
+      else
+        # render current active term
+        term.slice(:id, :title, :body)
+        render json: term.to_json
+      end
+    end
   end
 
   def post_permission_set_terms
