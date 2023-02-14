@@ -27,7 +27,7 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
   let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
   let(:permission_set_2) { FactoryBot.create(:permission_set, label: 'set 2') }
   let(:permission_set_3) { FactoryBot.create(:permission_set, label: 'set 3') }
-  let(:terms) { FactoryBot.create(:permission_set_term, permission_set_id: permission_set.id) }
+  let(:terms) { FactoryBot.create(:permission_set_term, activated_at: Time.zone.now, permission_set_id: permission_set.id) }
   let(:terms_2) { FactoryBot.create(:permission_set_term, inactivated_at: Time.zone.now, permission_set_id: permission_set_3.id) }
 
   before do

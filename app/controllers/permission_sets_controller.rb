@@ -76,10 +76,10 @@ class PermissionSetsController < ApplicationController
       render(json: { "title": "Permission Set not found" }, status: 400) && (return false)
     end
     # check for terms on set
-    if permission_set.permission_set_terms.blank? || permission_set.permission_set_terms.last.inactivated_at.present?
+    if permission_set.permission_set_terms.blank? || !permission_set.active_permission_set_terms
       render(json: {}, status: 204)
     else
-      term = permission_set.permission_set_terms.last
+      term = permission_set.active_permission_set_terms
       active_term = term.slice(:id, :title, :body)
       render json: active_term.to_json
     end
