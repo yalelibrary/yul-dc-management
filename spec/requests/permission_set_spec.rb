@@ -24,9 +24,19 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
     }
   end
   let(:user) { FactoryBot.create(:sysadmin_user) }
+  let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
+  let(:permission_set_2) { FactoryBot.create(:permission_set, label: 'set 2') }
+  let(:permission_set_3) { FactoryBot.create(:permission_set, label: 'set 3') }
+  let(:terms) { FactoryBot.create(:permission_set_term, activated_at: Time.zone.now, permission_set_id: permission_set.id) }
+  let(:terms_2) { FactoryBot.create(:permission_set_term, inactivated_at: Time.zone.now, permission_set_id: permission_set_3.id) }
 
   before do
     login_as user
+    permission_set
+    permission_set_2
+    permission_set_3
+    terms
+    terms_2
   end
 
   describe 'update /permission_sets' do
@@ -48,6 +58,27 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
         expect(permission_set.key).to eq "New Key"
         expect(response).to have_http_status(200)
       end
+    end
+  end
+
+  describe 'get /api/permission_sets/id/terms' do
+    it 'can display the active permission set term' do
+      get terms_api_path(permission_set)
+      expect(response).to have_http_status(200)
+      expect(response.body).to match("[{\"id\":3,\"title\":\"Permission Set Terms\",\"body\":\"These are some terms\"}]")
+    end
+    it 'can display terms not found' do
+      get terms_api_path(permission_set_2)
+      expect(response).to have_http_status(204)
+    end
+    it 'displays permission set not found' do
+      get terms_api_path(12)
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq("{\"title\":\"Permission Set not found\"}")
+    end
+    it 'displays permission set without an active term and condition' do
+      get terms_api_path(permission_set_3)
+      expect(response).to have_http_status(204)
     end
   end
 end
