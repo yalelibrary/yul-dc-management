@@ -39,7 +39,7 @@ gem 'puma', '~> 4.3'
 # cors support or rack
 gem 'rack-cors'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.5.1'
+gem 'rails', '~> 6.1'
 gem "rails_semantic_logger", ">=4.4.4"
 # Use rsolr to connect to Solr
 gem 'rsolr', '~> 2.3'
