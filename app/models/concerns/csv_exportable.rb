@@ -36,7 +36,7 @@ module CsvExportable
   def parent_object_csv_rows(*admin_set_id)
     parent_objects_array(*admin_set_id).map do |po|
       [po.oid, po.admin_set.key, po.source_name,
-       po.child_objects.count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+       po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
        po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
        po.last_ladybird_update, po.last_voyager_update,
        po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,

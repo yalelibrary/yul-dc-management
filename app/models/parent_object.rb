@@ -157,6 +157,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/AbcSize
 
+  def child_object_count
+    self.child_objects.count
+  end
+
   # rubocop:disable Metrics/LineLength
   def validate_child_hashes(child_hashes)
     child_hashes.reject do |h|
