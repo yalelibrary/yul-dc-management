@@ -360,6 +360,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
           within(active_version_element) do
             expect(page).to have_content(terms.activated_at.to_s)
           end
+          expect(page).to have_link("Back")
         end
 
         it "terms page displays None when terms are inactivated" do
