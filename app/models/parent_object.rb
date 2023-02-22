@@ -158,7 +158,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/AbcSize
 
   def child_object_count
-    self.child_objects.count
+    child_objects.count
   end
 
   # rubocop:disable Metrics/LineLength
