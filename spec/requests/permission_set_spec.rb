@@ -31,7 +31,6 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
   let(:terms_2) { FactoryBot.create(:permission_set_term, inactivated_at: Time.zone.now, permission_set_id: permission_set_3.id) }
 
   before do
-    login_as user
     permission_set
     permission_set_2
     permission_set_3
@@ -40,45 +39,61 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
   end
 
   describe 'update /permission_sets' do
-    context 'with valid attributes' do
-      it 'updates permission set' do
-        permission_set = PermissionSet.create! valid_attributes
-        patch permission_set_url(permission_set), params: { permission_set: updated_attributes }
-        permission_set.reload
-        expect(permission_set.key).to eq "Newer Key"
-        expect(response).to have_http_status(302)
-      end
+    before do
+      login_as user
+    end
+    it 'updates permission set with valid attributes' do
+      login_as user
+      permission_set = PermissionSet.create! valid_attributes
+      patch permission_set_url(permission_set), params: { permission_set: updated_attributes }
+      permission_set.reload
+      expect(permission_set.key).to eq "Newer Key"
+      expect(response).to have_http_status(302)
     end
 
-    context 'with invalid attributes' do
-      it 'does not update permission set' do
-        permission_set = PermissionSet.create(valid_attributes)
-        patch permission_set_url(permission_set), params: { permission_set: invalid_attributes }
-        permission_set.reload
-        expect(permission_set.key).to eq "New Key"
-        expect(response).to have_http_status(200)
-      end
+    it 'does not update permission set with invalid attributes' do
+      login_as user
+      permission_set = PermissionSet.create(valid_attributes)
+      patch permission_set_url(permission_set), params: { permission_set: invalid_attributes }
+      permission_set.reload
+      expect(permission_set.key).to eq "New Key"
+      expect(response).to have_http_status(200)
     end
   end
 
   describe 'get /api/permission_sets/id/terms' do
+    before do
+      login_as user
+    end
     it 'can display the active permission set term' do
+      login_as user
       get terms_api_path(permission_set)
       expect(response).to have_http_status(200)
       expect(response.body).to match("[{\"id\":3,\"title\":\"Permission Set Terms\",\"body\":\"These are some terms\"}]")
     end
     it 'can display terms not found' do
+      login_as user
       get terms_api_path(permission_set_2)
       expect(response).to have_http_status(204)
     end
     it 'displays permission set not found' do
+      login_as user
       get terms_api_path(12)
       expect(response).to have_http_status(400)
       expect(response.body).to eq("{\"title\":\"Permission Set not found\"}")
     end
     it 'displays permission set without an active term and condition' do
+      login_as user
       get terms_api_path(permission_set_3)
       expect(response).to have_http_status(204)
+    end
+  end
+
+  describe 'get /api/permission_sets/id/terms' do
+    it "a non-user can access the permission set terms" do
+      get terms_api_path(permission_set)
+      expect(response).to have_http_status(200)
+      expect(response.body).to match("[{\"id\":3,\"title\":\"Permission Set Terms\",\"body\":\"These are some terms\"}]")
     end
   end
 end
