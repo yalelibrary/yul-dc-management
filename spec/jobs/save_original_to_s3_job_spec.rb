@@ -37,21 +37,21 @@ RSpec.describe SaveOriginalToS3Job, type: :job do
 
   before do
     allow(Rails.logger).to receive(:error) { :logger_mock }
-    stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/78/34/56/78/345678.tif')
+    stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/78/34/56/78/345678.tiff')
         .to_return(status: 200, body: '', headers: {})
-    stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/originals/78/34/56/78/345678.tif')
+    stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/originals/78/34/56/78/345678.tiff')
         .to_return(status: 200, body: '', headers: {})
-    stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/ptiffs/78/34/56/78/345678.tif')
+    stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/ptiffs/78/34/56/78/345678.tiff')
         .to_return(status: 200, body: '', headers: {})
-    stub_request(:put, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/89/45/67/89/456789.tif')
+    stub_request(:put, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/89/45/67/89/456789.tiff')
         .to_return(status: 200, body: '', headers: {})
-    stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/89/45/67/89/456789.tif')
+    stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/89/45/67/89/456789.tiff')
         .to_return(status: 404, body: '', headers: {}).times(1).then.to_return(status: 200, body: '', headers: {})
-    stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/originals/89/45/67/89/456789.tif')
+    stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/originals/89/45/67/89/456789.tiff')
         .to_return(status: 200, body: '', headers: {})
-    stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/ptiffs/89/45/67/89/456789.tif')
+    stub_request(:head, 'https://not-a-real-bucket.s3.amazonaws.com/ptiffs/89/45/67/89/456789.tiff')
         .to_return(status: 200, body: '', headers: {})
-    stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/67/23/45/67/234567.tif')
+    stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/67/23/45/67/234567.tiff')
         .to_return(status: 404, body: '', headers: {})
     child_object
   end
@@ -78,7 +78,7 @@ RSpec.describe SaveOriginalToS3Job, type: :job do
       parent_object_private.visibility = 'Public'
       parent_object_private.save
       save_to_s3_job.perform(child_object.oid)
-      expect(S3Service.s3_exists_for_download?('download/tiff/89/45/67/89/456789.tif')).to be_truthy
+      expect(S3Service.s3_exists_for_download?('download/tiff/89/45/67/89/456789.tiff')).to be_truthy
     end
   end
 end

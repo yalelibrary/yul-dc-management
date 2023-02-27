@@ -31,7 +31,7 @@ RSpec.describe 'Download Original API', type: :request, prep_admin_sets: true do
   end
 
   before do
-    stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/56/12/34/56/123456.tif')
+    stub_request(:head, 'https://fake-download-bucket.s3.amazonaws.com/download/tiff/56/12/34/56/123456.tiff')
         .to_return(status: 200, body: '', headers: {})
     parent
     parent_2

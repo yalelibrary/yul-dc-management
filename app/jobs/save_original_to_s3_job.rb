@@ -28,6 +28,6 @@ class SaveOriginalToS3Job < ApplicationJob
   end
 
   def remote_download_path(oid)
-    "download/tiff/#{Partridge::Pairtree.oid_to_pairtree(oid)}/#{oid}.tif"
+    "download/tiff/#{Partridge::Pairtree.oid_to_pairtree(oid)}/#{oid}.tiff"
   end
 end
