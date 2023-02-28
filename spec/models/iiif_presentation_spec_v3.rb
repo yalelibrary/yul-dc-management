@@ -4,10 +4,12 @@ require 'rails_helper'
 
 RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
   around do |example|
+    original_blacklight_base_url = ENV['BLACKLIGHT_BASE_URL']
     original_manifests_base_url = ENV['IIIF_MANIFESTS_BASE_URL']
     original_image_base_url = ENV["IIIF_IMAGE_BASE_URL"]
     original_pdf_url = ENV["PDF_BASE_URL"]
     original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+    ENV['BLACKLIGHT_BASE_URL'] = "http://localhost:3000"
     ENV['IIIF_MANIFESTS_BASE_URL'] = "http://localhost/manifests"
     ENV['IIIF_IMAGE_BASE_URL'] = "http://localhost:8182/iiif"
     ENV["PDF_BASE_URL"] = "http://localhost/pdfs"
@@ -15,6 +17,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     perform_enqueued_jobs do
       example.run
     end
+    ENV['BLACKLIGHT_BASE_URL'] = original_blacklight_base_url
     ENV['IIIF_MANIFESTS_BASE_URL'] = original_manifests_base_url
     ENV['IIIF_IMAGE_BASE_URL'] = original_image_base_url
     ENV["PDF_BASE_URL"] = original_pdf_url
@@ -222,6 +225,13 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(third_to_last_canvas["id"]).to eq "#{ENV['IIIF_MANIFESTS_BASE_URL']}/oid/16172421/canvas/16188700"
       expect(first_canvas["label"]["none"]).to eq ["Swatch 1"]
       expect(third_to_last_canvas["label"]["none"]).to eq ["swatch 2"]
+    end
+
+    it "has canvases with rendering property" do
+      expect(first_canvas["rendering"].first["id"]).to eq "#{ENV['BLACKLIGHT_BASE_URL']}/download/tiff/16188699"
+      expect(first_canvas["rendering"].first["label"]).to eq "Full size original"
+      expect(first_canvas["rendering"].first["type"]).to eq "Image"
+      expect(first_canvas["rendering"].first["format"]).to eq "image/tiff"
     end
 
     it "has canvases with ids and labels based on order property of child_objects" do
