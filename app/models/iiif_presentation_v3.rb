@@ -18,6 +18,10 @@ class IiifPresentationV3
     @pdf_base_url ||= (ENV["PDF_BASE_URL"] || "http://localhost/pdfs")
   end
 
+  def blacklight_url
+    @blacklight_url ||= (ENV["BLACKLIGHT_BASE_URL"] || "http://localhost")
+  end
+
   def image_service_url(oid)
     "#{image_base_url}/2/#{oid}"
   end
@@ -270,6 +274,15 @@ class IiifPresentationV3
     @manifest['thumbnail'] = [thumbnail_image_resource(child)] if child_is_thumbnail?(child.oid)
   end
 
+  def add_rendering_to_canvas(child, canvas)
+    canvas["rendering"] = [{
+      "id" => File.join(blacklight_url.to_s, "download", "tiff", child.oid.to_s),
+      "label" => "Full size original",
+      "type" => "Image",
+      "format" => "image/tiff"
+    }]
+  end
+
   # rubocop:disable Metrics/AbcSize
   def add_canvases_to_manifest(items)
     child_objects = parent_object.child_objects
@@ -281,6 +294,7 @@ class IiifPresentationV3
       canvas['id'] = File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}")
       canvas['label'] = { "none" => [child.label || ''] }
       add_image_to_canvas(child, canvas)
+      add_rendering_to_canvas(child, canvas)
       image_anno = canvas["items"].first["items"].first["body"]
       canvas['height'] = image_anno["height"]
       canvas['width'] = image_anno["width"]
