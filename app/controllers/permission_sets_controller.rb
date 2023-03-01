@@ -100,10 +100,11 @@ class PermissionSetsController < ApplicationController
   end
 
   def agreement_term
-    request_user = PermissionRequestUser.where(sub: params[:sub])
-    term = PermissionSetTerm.find(permission_set_term_id: params[:permission_set_terms_id])
-    byebug
-    TermsAgreement.new(permission_set_term_id: term, permission_request_user_id: request_user.id, agreement_ts: Time.zone.now)
+    #TODO error handling
+    request_user = PermissionRequestUser.where(sub: params[:sub]).first
+    term = PermissionSetTerm.find(params[:permission_set_terms_id])
+    TermsAgreement.new(permission_set_terms_id: term.id, permission_request_users_id: request_user.id, agreement_ts: Time.zone.now)
+
   end
 
   private
