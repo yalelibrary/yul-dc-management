@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class PermissionSetsController < ApplicationController
-  load_and_authorize_resource except: [:permission_set_terms, :new_term, :post_permission_set_terms, :show_term, :deactivate_permission_set_terms, :terms_api]
+  load_and_authorize_resource except: [:permission_set_terms, :new_term, :post_permission_set_terms, :show_term, :deactivate_permission_set_terms, :terms_api, :agreement_term]
   before_action :set_permission_set, only: [:show, :edit, :update, :destroy, :permission_set_terms, :post_permission_set_terms, :new_term, :deactivate_permission_set_terms]
 
-  skip_before_action :authenticate_user!, only: :terms_api
+  skip_before_action :authenticate_user!, only: [:terms_api, :agreement_term]
 
   # GET /permission_sets
   # GET /permission_sets.json
@@ -97,6 +97,13 @@ class PermissionSetsController < ApplicationController
     authorize!(:update, @permission_set)
     @permission_set.inactivate_terms_by!(current_user)
     redirect_to permission_set_terms_permission_set_url(@permission_set)
+  end
+
+  def agreement_term
+    request_user = PermissionRequestUser.where(sub: params[:sub])
+    term = PermissionSetTerm.find(permission_set_term_id: params[:permission_set_terms_id])
+    byebug
+    TermsAgreement.new(permission_set_term_id: term, permission_request_user_id: request_user.id, agreement_ts: Time.zone.now)
   end
 
   private

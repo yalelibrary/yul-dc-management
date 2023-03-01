@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :permission_request_user do
-    sub { "subject" }
+    sub { "id123" }
     name { "User Name" }
     email { "user@example.com" }
     email_verified { true }
