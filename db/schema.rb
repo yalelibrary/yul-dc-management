@@ -210,8 +210,6 @@ ActiveRecord::Schema.define(version: 2023_02_27_230334) do
     t.datetime "oidc_updated_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "terms_agreements_id"
-    t.index ["terms_agreements_id"], name: "index_permission_request_users_on_terms_agreements_id"
   end
 
   create_table "permission_requests", force: :cascade do |t|
@@ -242,8 +240,6 @@ ActiveRecord::Schema.define(version: 2023_02_27_230334) do
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "terms_agreements_id"
-    t.index ["terms_agreements_id"], name: "index_permission_set_terms_on_terms_agreements_id"
   end
 
   create_table "permission_sets", force: :cascade do |t|
@@ -306,10 +302,10 @@ ActiveRecord::Schema.define(version: 2023_02_27_230334) do
     t.datetime "agreement_ts"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "permission_set_terms_id"
-    t.bigint "permission_request_users_id"
-    t.index ["permission_request_users_id"], name: "index_terms_agreements_on_permission_request_users_id"
-    t.index ["permission_set_terms_id"], name: "index_terms_agreements_on_permission_set_terms_id"
+    t.bigint "permission_set_term_id"
+    t.bigint "permission_request_user_id"
+    t.index ["permission_request_user_id"], name: "index_terms_agreements_on_permission_request_user_id"
+    t.index ["permission_set_term_id"], name: "index_terms_agreements_on_permission_set_term_id"
   end
 
   create_table "users", force: :cascade do |t|

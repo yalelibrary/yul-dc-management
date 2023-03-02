@@ -107,10 +107,9 @@ class PermissionSetsController < ApplicationController
     end
     request_user = PermissionRequestUser.where(sub: params[:sub]).first
     if request_user.nil?
-      byebug
       render(json: { "title": "User not found." }, status: 400) && (return false)
     else
-      term_agreement = TermsAgreement.new(permission_set_term: term, permission_request_user: request_user, agreement_ts: Time.zone.now)
+      term_agreement = TermsAgreement.new(permission_set_term_id: term.id, permission_request_user_id: request_user.id, agreement_ts: Time.zone.now)
       term_agreement.save!
       render json: { "title": "Success." }, status: 201
     end
