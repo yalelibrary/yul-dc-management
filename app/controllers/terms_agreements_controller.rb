@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TermsAgreementsController < ApplicationController
-  load_and_authorize_resource
+  # load_and_authorize_resource
 
   def index; end
 

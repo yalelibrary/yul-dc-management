@@ -100,11 +100,20 @@ class PermissionSetsController < ApplicationController
   end
 
   def agreement_term
-    #TODO error handling
+    begin
+      term = PermissionSetTerm.find(params[:permission_set_terms_id])
+    rescue ActiveRecord::RecordNotFound
+      render(json: { "title": "Term not found" }, status: 400) && (return false)
+    end
     request_user = PermissionRequestUser.where(sub: params[:sub]).first
-    term = PermissionSetTerm.find(params[:permission_set_terms_id])
-    TermsAgreement.new(permission_set_terms_id: term.id, permission_request_users_id: request_user.id, agreement_ts: Time.zone.now)
-
+    if request_user.nil?
+      byebug
+      render(json: { "title": "User not found." }, status: 400) && (return false)
+    else
+      term_agreement = TermsAgreement.new(permission_set_term: term, permission_request_user: request_user, agreement_ts: Time.zone.now)
+      term_agreement.save!
+      render json: { "title": "Success." }, status: 201
+    end
   end
 
   private
