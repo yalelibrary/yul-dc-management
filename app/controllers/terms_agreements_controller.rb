@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class TermsAgreementsController < ApplicationController
-  # load_and_authorize_resource
-
   def create
     @terms_agreement = TermsAgreement.new(terms_agreement_params)
 
