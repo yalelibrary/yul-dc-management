@@ -3,14 +3,6 @@
 class TermsAgreementsController < ApplicationController
   # load_and_authorize_resource
 
-  def index; end
-
-  def show; end
-
-  def edit; end
-
-  def update; end
-
   def create
     @terms_agreement = TermsAgreement.new(terms_agreement_params)
 
