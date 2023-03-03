@@ -32,6 +32,4 @@ RSpec.describe TermsAgreement, type: :model, prep_metadata_sources: true, prep_a
       expect(u.agreement_ts).to eq time
     end
   end
-
-
 end
