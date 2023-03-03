@@ -103,7 +103,7 @@ class PermissionSetsController < ApplicationController
     begin
       term = PermissionSetTerm.find(params[:permission_set_terms_id])
     rescue ActiveRecord::RecordNotFound
-      render(json: { "title": "Term not found" }, status: 400) && (return false)
+      render(json: { "title": "Term not found." }, status: 400) && (return false)
     end
     request_user = PermissionRequestUser.where(sub: params[:sub]).first
     if request_user.nil?
