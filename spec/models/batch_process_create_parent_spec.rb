@@ -7,6 +7,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:admin_set_one) { FactoryBot.create(:admin_set, key: 'jss') }
   let(:no_oid_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "parent_no_oid.csv")) }
+  let(:no_admin_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "parent_no_admin_set.csv")) }
+  let(:no_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "parent_no_source.csv")) }
 
   around do |example|
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
@@ -28,18 +30,32 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
   describe "with the metadata cloud mocked" do
     before do
-      stub_metadata_cloud("AS-781086", "aspace")
+      # stub_metadata_cloud("AS-781086", "aspace")
     end
 
     context "Create Parent Object batch process with a csv" do
       it "can create a parent_object" do
-        # byebug
         expect do
           batch_process.file = no_oid_parent
           batch_process.save
         end.to change { ParentObject.count }.from(0).to(1)
         po = ParentObject.first
+        byebug
         expect(po.oid).not_to be_nil
+      end
+      it "can fails when csv has no admin set" do
+        expect do
+          batch_process.file = no_admin_set
+          batch_process.save
+        end.not_to change { ParentObject.count }
+        expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with unknown admin set [] for parent: 200000000")
+      end
+      it "can fails when csv has no source" do
+        expect do
+          batch_process.file = no_source
+          batch_process.save
+        end.not_to change { ParentObject.count }
+        expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2]. Source cannot be blank.")
       end
     end
   end
