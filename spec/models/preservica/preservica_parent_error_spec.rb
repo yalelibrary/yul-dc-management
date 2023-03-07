@@ -23,6 +23,13 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     ENV['PRESERVICA_HOST'] = preservica_host
     ENV['PRESERVICA_CREDENTIALS'] = preservica_creds
     ENV['ACCESS_MASTER_MOUNT'] = access_host
+    fixtures = %w[preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5/children]
+
+    fixtures.each do |fixture|
+      stub_request(:get, "https://test#{fixture}").to_return(
+        status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
+      )
+    end
   end
 
   before do
