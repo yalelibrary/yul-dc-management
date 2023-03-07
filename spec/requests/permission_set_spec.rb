@@ -25,6 +25,7 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
   end
   let(:user) { FactoryBot.create(:sysadmin_user) }
   let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
+  let(:request_user) { FactoryBot.create(:permission_request_user) }
   let(:permission_set_2) { FactoryBot.create(:permission_set, label: 'set 2') }
   let(:permission_set_3) { FactoryBot.create(:permission_set, label: 'set 3') }
   let(:terms) { FactoryBot.create(:permission_set_term, activated_at: Time.zone.now, permission_set_id: permission_set.id) }
@@ -34,6 +35,7 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
     permission_set
     permission_set_2
     permission_set_3
+    request_user
     terms
     terms_2
   end
@@ -80,6 +82,28 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
     it 'displays permission set without an active term and condition' do
       get terms_api_path(permission_set_3)
       expect(response).to have_http_status(204)
+    end
+  end
+
+  describe 'POST /api/permission_sets/id/permission_set_terms/id/agree/sub' do
+    it 'can POST a user agreement' do
+      expect(TermsAgreement.count).to eq 0
+      post "/api/permission_sets/#{permission_set.id}/permission_set_terms/#{terms.id}/agree/#{request_user.sub}"
+      expect(response).to have_http_status(201)
+      term = TermsAgreement.first
+      expect(TermsAgreement.count).to eq 1
+      expect(term.permission_request_user).to eq request_user
+      expect(term.permission_set_term).to eq terms
+    end
+    it 'throws error if user not found' do
+      post "/api/permission_sets/#{permission_set.id}/permission_set_terms/#{terms.id}/agree/123"
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq("{\"title\":\"User not found.\"}")
+    end
+    it 'throws error if permission set term not found' do
+      post "/api/permission_sets/#{permission_set.id}/permission_set_terms/123/agree/#{request_user.sub}"
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq("{\"title\":\"Term not found.\"}")
     end
   end
 
