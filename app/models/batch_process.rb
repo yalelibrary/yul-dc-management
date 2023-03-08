@@ -206,6 +206,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       else
         oid = row['oid']
         metadata_source = row['source']
+        # How would this work with csv's that only have oid and admin_set? Check if the csv ONLY has oid and admin_set first?
+        if metadata_source.blank? && (row.count != 1 && row.count != 2)
+          batch_processing_event("Skipping row [#{index + 2}]. Source cannot be blank.", 'Skipped Row')
+          next
+        end
         model = row['parent_model'] || 'complex'
         admin_set = editable_admin_set(row['admin_set'], oid, index)
         next unless admin_set
