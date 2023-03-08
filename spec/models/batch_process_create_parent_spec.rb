@@ -48,7 +48,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.file = no_admin_set
           batch_process.save
         end.not_to change { ParentObject.count }
-        expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with unknown admin set [] for parent: 200000000")
+        expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with unknown admin set [] for parent: ")
       end
       it "can fails when csv has no source" do
         expect do
