@@ -16,7 +16,10 @@ class SaveOriginalToS3Job < ApplicationJob
       return
     end
     # check if file already exists on S3
-    return if S3Service.s3_exists_for_download?(remote_download_path(child_object_oid))
+    if S3Service.s3_exists_for_download?(remote_download_path(child_object_oid))
+      Rails.logger.error "Not copying image.  Image already present on S3."
+      return
+    end
     # check if file has a valid width and height
     if child_object.width.nil? || child_object.height.nil?
       Rails.logger.error "Not copying image. Child object #{child_object_oid} does not have a valid width or height."

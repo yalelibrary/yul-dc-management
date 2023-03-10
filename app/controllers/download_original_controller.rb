@@ -8,6 +8,7 @@ class DownloadOriginalController < ApplicationController
     begin
       child_object = ChildObject.find(request['oid'].to_i)
     rescue ActiveRecord::RecordNotFound
+      Rails.logger.error "Child object with oid: #{request['oid']} not found."
       render(json: { "title": "Invalid Child OID" }, status: 400) && (return false)
     end
     return unless check_child_visibility(child_object)
