@@ -62,9 +62,10 @@ RSpec.describe SaveOriginalToS3Job, type: :job do
       expect(Rails.logger).to have_received(:error)
         .with('Not copying image from 2004628. Parent object must have Public or Yale Community Only visibility.')
     end
-    it 'does not log an error when file is already in S3' do
+    it 'logs an error when file is already in S3' do
       save_to_s3_job.perform(child_object_with_authoritative_json.oid)
-      expect(Rails.logger).not_to have_received(:error)
+      expect(Rails.logger).to have_received(:error)
+        .with('Not copying image.  Image already present on S3.')
     end
     it 'logs an error when file does not have a width or height' do
       save_to_s3_job.perform(child_object_without_width.oid)
