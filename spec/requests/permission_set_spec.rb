@@ -85,8 +85,8 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
     end
   end
 
-  describe 'POST /api/permission_sets/id/permission_set_terms/id/agree/sub' do
-    it 'can POST a user agreement' do
+  describe 'GET /api/permission_sets/id/permission_set_terms/id/agree/sub' do
+    it 'can GET and create a user agreement' do
       expect(TermsAgreement.count).to eq 0
       get "/api/permission_sets/#{permission_set.id}/permission_set_terms/#{terms.id}/agree/#{request_user.sub}"
       expect(response).to have_http_status(201)
