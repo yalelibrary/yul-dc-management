@@ -79,11 +79,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     [nil, "Completely digitized", "Partially digitized"]
   end
 
-  # validates :visibility, inclusion: { in: visibilities, allow_nil: true,
-  #                                     message: "%{value} is not a valid value" }
-
   def validate_visibility
-    return true if ['Private', 'Public', 'Redirect', 'Yale Community Only'].include?(self.visibility)
+    return true if ['Private', 'Public', 'Redirect', 'Yale Community Only'].include?(visibility)
 
     self.visibility = 'Private'
   end
