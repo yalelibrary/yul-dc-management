@@ -80,7 +80,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def validate_visibility
-    return true if ['Private', 'Public', 'Redirect', 'Yale Community Only'].include?(visibility)
+    return true if ParentObject.visibilities.include?(visibility)
 
     self.visibility = 'Private'
   end
