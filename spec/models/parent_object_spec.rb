@@ -269,10 +269,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       expect(parent_object_nil.valid?).to eq false
     end
 
-    let(:parent_object_restricted) { described_class.create(visibility: "Restricted Access") }
-    it "other visibility does not validate" do
-      expect(parent_object_restricted.valid?).to eq false
-      expect(parent_object_restricted.visibility).to eq "Restricted Access"
+    let(:parent_object) { described_class.create(oid: 123, admin_set: FactoryBot.create(:admin_set), visibility: "Restricted Access") }
+    it "visibility defaults to Private if not a valid visibility" do
+      expect(parent_object.valid?).to eq true
+      expect(parent_object.visibility).to eq "Private"
     end
 
     let(:parent_object_public) { described_class.create(oid: "2005512", visibility: "Public", admin_set: FactoryBot.create(:admin_set)) }
