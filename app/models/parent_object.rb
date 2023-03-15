@@ -38,6 +38,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :redirect_to, format: { with: /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//, message: " in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123", presence: true, if: proc { visibility == "Redirect" } }
   # rubocop:enable Metrics/LineLength
   validates :preservica_uri, presence: true, format: { with: %r{\A/}, message: " in incorrect format. URI must start with a /" }, if: proc { digital_object_source == "Preservica" }
+  before_save :validate_visibility
 
   def check_for_redirect
     minify if redirect_to.present?
@@ -78,8 +79,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     [nil, "Completely digitized", "Partially digitized"]
   end
 
-  validates :visibility, inclusion: { in: visibilities, allow_nil: true,
-                                      message: "%{value} is not a valid value" }
+  def validate_visibility
+    return true if ParentObject.visibilities.include?(visibility)
+
+    self.visibility = 'Private'
+  end
 
   def initialize(attributes = nil)
     super
