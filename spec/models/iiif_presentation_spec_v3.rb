@@ -445,5 +445,4 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(scaled_rendering["id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/#{oid}/full/7071,/0/default.jpg"
     end
   end
-
 end

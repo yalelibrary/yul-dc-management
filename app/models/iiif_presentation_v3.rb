@@ -288,11 +288,11 @@ class IiifPresentationV3
     id = image_service_url(oid)
     aspect = (height / width)
     label = "Image (jpg)"
-    if (width * height <= MAX_PIXELS)
+    if width * height <= MAX_PIXELS
       id = "#{id}/full/full/0/default.jpg"
       label = "Full size"
     else
-      scaled_width = Math.sqrt( (MAX_PIXELS / aspect) ).to_i
+      scaled_width = Math.sqrt((MAX_PIXELS / aspect)).to_i
       scaled_height = (scaled_width * aspect).round
       id = "#{id}/full/#{scaled_width},/0/default.jpg"
       label = "Reduced size #{scaled_width} x #{scaled_height}"
