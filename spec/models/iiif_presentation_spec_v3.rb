@@ -227,11 +227,20 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(third_to_last_canvas["label"]["none"]).to eq ["swatch 2"]
     end
 
-    it "has canvases with rendering property" do
-      expect(first_canvas["rendering"].first["id"]).to eq "#{ENV['BLACKLIGHT_BASE_URL']}/download/tiff/16188699"
-      expect(first_canvas["rendering"].first["label"]).to eq "Full size original"
+    it "has canvases with JPEG rendering property" do
+      expect(first_canvas["rendering"].first["id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/16188699/full/full/0/default.jpg"
+      expect(first_canvas["rendering"].first["label"]["en"].first).to eq "Full size"
       expect(first_canvas["rendering"].first["type"]).to eq "Image"
-      expect(first_canvas["rendering"].first["format"]).to eq "image/tiff"
+      expect(first_canvas["rendering"].first["format"]).to eq "image/jpeg"
+    end
+
+    it "has canvases with TIFF rendering property" do
+      expect(first_canvas["rendering"].length).to eq 2
+      tiff_rendering = first_canvas["rendering"][1]
+      expect(tiff_rendering["id"]).to eq "#{ENV['BLACKLIGHT_BASE_URL']}/download/tiff/16188699"
+      expect(tiff_rendering["label"]["en"].first).to eq "Full size original"
+      expect(tiff_rendering["type"]).to eq "Image"
+      expect(tiff_rendering["format"]).to eq "image/tiff"
     end
 
     it "has canvases with ids and labels based on order property of child_objects" do
@@ -424,6 +433,16 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     it 'does not have navDate when empty date' do
       iiif_presentation_empty_date = described_class.new(parent_object_empty_date)
       expect(iiif_presentation_empty_date.manifest.key?('navDate')).to eq false
+    end
+  end
+
+  describe "IIIF rendering" do
+    it "downscales the JPEG rendering to MAX_PIXELS" do
+      iiif_presentation = described_class.new(parent_object)
+      oid = 123
+      scaled_rendering = iiif_presentation.jpeg_rendering(oid, 100_000, 200_000)
+      expect(scaled_rendering["label"]["en"].first).to eq "Reduced size 7071 x 14142"
+      expect(scaled_rendering["id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/#{oid}/full/7071,/0/default.jpg"
     end
   end
 end

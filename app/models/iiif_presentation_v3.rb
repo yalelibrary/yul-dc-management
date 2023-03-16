@@ -5,6 +5,7 @@ class IiifPresentationV3
   attr_reader :parent_object, :mets_doc, :oid, :errors
 
   THUMBNAIL_MAX_WH = 300
+  MAX_PIXELS = 100_000_000
 
   def image_base_url
     @image_base_url ||= (ENV["IIIF_IMAGE_BASE_URL"] || "http://localhost:8182/iiif")
@@ -274,13 +275,41 @@ class IiifPresentationV3
     @manifest['thumbnail'] = [thumbnail_image_resource(child)] if child_is_thumbnail?(child.oid)
   end
 
-  def add_rendering_to_canvas(child, canvas)
-    canvas["rendering"] = [{
-      "id" => File.join(blacklight_url.to_s, "download", "tiff", child.oid.to_s),
-      "label" => "Full size original",
+  def tiff_rendering(oid)
+    {
+      "id" => File.join(blacklight_url.to_s, "download", "tiff", oid.to_s),
+      "label" => { "en" => ["Full size original"] },
       "type" => "Image",
       "format" => "image/tiff"
-    }]
+    }
+  end
+
+  def jpeg_rendering(oid, width, height)
+    id = image_service_url(oid)
+    aspect = (height / width)
+    label = "Image (jpg)"
+    if width * height <= MAX_PIXELS
+      id = "#{id}/full/full/0/default.jpg"
+      label = "Full size"
+    else
+      scaled_width = Math.sqrt((MAX_PIXELS / aspect)).to_i
+      scaled_height = (scaled_width * aspect).round
+      id = "#{id}/full/#{scaled_width},/0/default.jpg"
+      label = "Reduced size #{scaled_width} x #{scaled_height}"
+    end
+    {
+      "id" => id,
+      "label" => { "en" => [label] },
+      "type" => "Image",
+      "format" => "image/jpeg"
+    }
+  end
+
+  def add_renderings_to_canvas(child, canvas)
+    renderings = []
+    renderings << jpeg_rendering(child.oid, child.width, child.height)
+    renderings << tiff_rendering(child.oid)
+    canvas['rendering'] = renderings
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -294,7 +323,7 @@ class IiifPresentationV3
       canvas['id'] = File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}")
       canvas['label'] = { "none" => [child.label || ''] }
       add_image_to_canvas(child, canvas)
-      add_rendering_to_canvas(child, canvas)
+      add_renderings_to_canvas(child, canvas)
       image_anno = canvas["items"].first["items"].first["body"]
       canvas['height'] = image_anno["height"]
       canvas['width'] = image_anno["width"]
