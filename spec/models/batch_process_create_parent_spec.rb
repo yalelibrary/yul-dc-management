@@ -30,7 +30,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
   describe "with the metadata cloud mocked" do
     before do
-      # stub_metadata_cloud("AS-781086", "aspace")
+      stub_metadata_cloud("AS-781086", "aspace")
     end
 
     context "Create Parent Object batch process with a csv" do
@@ -40,7 +40,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.save
         end.to change { ParentObject.count }.from(0).to(1)
         po = ParentObject.first
-        byebug
         expect(po.oid).not_to be_nil
       end
       it "can fails when csv has no admin set" do
