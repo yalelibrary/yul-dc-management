@@ -444,5 +444,12 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(scaled_rendering["label"]["en"].first).to eq "Reduced size 7071 x 14142"
       expect(scaled_rendering["id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/#{oid}/full/7071,/0/default.jpg"
     end
+    it "does not divide by zero" do
+      iiif_presentation = described_class.new(parent_object)
+      oid = 123
+      scaled_rendering = iiif_presentation.jpeg_rendering(oid, 90_345, 2908)
+      expect(scaled_rendering["label"]["en"].first).to eq "Reduced size 55738 x 1794"
+      expect(scaled_rendering["id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/#{oid}/full/55738,/0/default.jpg"
+    end
   end
 end

@@ -286,7 +286,7 @@ class IiifPresentationV3
 
   def jpeg_rendering(oid, width, height)
     id = image_service_url(oid)
-    aspect = (height / width)
+    aspect = (height.to_f / width.to_f)
     label = "Image (jpg)"
     if width * height <= MAX_PIXELS
       id = "#{id}/full/full/0/default.jpg"
