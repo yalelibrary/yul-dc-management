@@ -187,11 +187,12 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable  Metrics/MethodLength
   # rubocop:disable  Metrics/PerceivedComplexity
   # rubocop:disable  Metrics/CyclomaticComplexity
+  # rubocop:disable  Metrics/BlockLength
   def create_new_parent_csv
     self.admin_set = ''
     sets = admin_set
     parsed_csv.each_with_index do |row, index|
-      if row['digital_object_source'].present? && row['preservica_uri'].present?
+      if row['digital_object_source'].present? && row['preservica_uri'].present? && !row['preservica_uri'].blank?
         begin
           parent_object = CsvRowParentService.new(row, index, current_ability, user).parent_object
           setup_for_background_jobs(parent_object, row['source'])
@@ -204,7 +205,13 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         end
       else
         oid = row['oid']
+        set = row['admin_set']
         metadata_source = row['source']
+        # Check if the csv ONLY has oid and admin_set
+        if metadata_source.blank? && (set.present? && oid.present? && row.count > 2)
+          batch_processing_event("Skipping row [#{index + 2}]. Source cannot be blank.", 'Skipped Row')
+          next
+        end
         model = row['parent_model'] || 'complex'
         admin_set = editable_admin_set(row['admin_set'], oid, index)
         next unless admin_set
@@ -213,7 +220,12 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         self.admin_set = split_sets.join(', ')
         save!
 
-        parent_object = ParentObject.find_or_initialize_by(oid: oid)
+        if oid.blank?
+          oid = OidMinterService.generate_oids(1)[0]
+          parent_object = ParentObject.new(oid: oid)
+        else
+          parent_object = ParentObject.find_or_initialize_by(oid: oid)
+        end
         # Only runs on newly created parent objects
         unless parent_object.new_record?
           batch_processing_event("Skipping row [#{index + 2}] with existing parent oid: #{oid}", 'Skipped Row')
@@ -237,6 +249,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable  Metrics/MethodLength
   # rubocop:enable  Metrics/PerceivedComplexity
   # rubocop:enable  Metrics/CyclomaticComplexity
+  # rubocop:enable  Metrics/BlockLength
 
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
   def editable_admin_set(admin_set_key, oid, index)
