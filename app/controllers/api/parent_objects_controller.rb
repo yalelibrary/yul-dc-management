@@ -10,7 +10,7 @@ class Api::ParentObjectsController < ApplicationController
       "dcs": {
           "oid": "#{@parent_object.oid}",
           "visibility": "#{@parent_object.visibility}",
-          "metadata_source": "#{@parent_object.authoritative_metadata_source_id}",
+          "metadata_source": metadata_source(@parent_object),
           "bib":  "#{@parent_object.bib}",
           "holding":  "#{@parent_object.holding}",
           "item":  "#{@parent_object.item}",
@@ -43,6 +43,17 @@ class Api::ParentObjectsController < ApplicationController
     render(json: { "title": "Parent Object is restricted." }, status: 403) && (return false) unless
     parent_object.visibility == "Public" || parent_object.visibility == "Yale Community Only"
     true
+  end
+
+  def metadata_source(parent_object)
+    if parent_object.authoritative_metadata_source_id == 1
+      return "ils"
+    elsif parent_object.authoritative_metadata_source_id == 2
+      return "Voyager"
+    elsif parent_object.authoritative_metadata_source_id == 3
+      return "ArchiveSpace"
+    end
+    return "Metadata Source not found"
   end
 
   private
