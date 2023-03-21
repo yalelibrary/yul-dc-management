@@ -224,7 +224,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         else
           parent_object = ParentObject.find_or_initialize_by(oid: oid)
         end
-        parent_object = ParentObject.find_or_initialize_by(oid: oid)
 
         # Only runs on newly created parent objects
         unless parent_object.new_record?
