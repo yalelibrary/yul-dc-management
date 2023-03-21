@@ -45,5 +45,4 @@ RSpec.describe '/api/parent/oid', type: :request, prep_metadata_sources: true, p
       expect(response.body).to eq("{\"title\":\"Parent Object is restricted.\"}")
     end
   end
-
 end
