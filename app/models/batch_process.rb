@@ -187,6 +187,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable  Metrics/MethodLength
   # rubocop:disable  Metrics/PerceivedComplexity
   # rubocop:disable  Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/BlockLength
   def create_new_parent_csv
     self.admin_set = ''
     sets = admin_set
@@ -248,6 +249,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable  Metrics/MethodLength
   # rubocop:enable  Metrics/PerceivedComplexity
   # rubocop:enable  Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/BlockLength
 
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
   def editable_admin_set(admin_set_key, oid, index)
