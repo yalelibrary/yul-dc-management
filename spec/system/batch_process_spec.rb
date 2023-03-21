@@ -15,12 +15,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
   end
 
-  # around do |example|
-  #   perform_enqueued_jobs do
-  #     example.run
-  #   end
-  # end
-
   before do
     stub_ptiffs_and_manifests
     stub_metadata_cloud("2034600")
