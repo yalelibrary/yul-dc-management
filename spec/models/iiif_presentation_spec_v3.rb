@@ -4,10 +4,12 @@ require 'rails_helper'
 
 RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
   around do |example|
+    original_blacklight_base_url = ENV['BLACKLIGHT_BASE_URL']
     original_manifests_base_url = ENV['IIIF_MANIFESTS_BASE_URL']
     original_image_base_url = ENV["IIIF_IMAGE_BASE_URL"]
     original_pdf_url = ENV["PDF_BASE_URL"]
     original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+    ENV['BLACKLIGHT_BASE_URL'] = "http://localhost:3000"
     ENV['IIIF_MANIFESTS_BASE_URL'] = "http://localhost/manifests"
     ENV['IIIF_IMAGE_BASE_URL'] = "http://localhost:8182/iiif"
     ENV["PDF_BASE_URL"] = "http://localhost/pdfs"
@@ -15,6 +17,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     perform_enqueued_jobs do
       example.run
     end
+    ENV['BLACKLIGHT_BASE_URL'] = original_blacklight_base_url
     ENV['IIIF_MANIFESTS_BASE_URL'] = original_manifests_base_url
     ENV['IIIF_IMAGE_BASE_URL'] = original_image_base_url
     ENV["PDF_BASE_URL"] = original_pdf_url
@@ -224,6 +227,22 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(third_to_last_canvas["label"]["none"]).to eq ["swatch 2"]
     end
 
+    it "has canvases with JPEG rendering property" do
+      expect(first_canvas["rendering"].first["id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/16188699/full/full/0/default.jpg"
+      expect(first_canvas["rendering"].first["label"]["en"].first).to eq "Full size"
+      expect(first_canvas["rendering"].first["type"]).to eq "Image"
+      expect(first_canvas["rendering"].first["format"]).to eq "image/jpeg"
+    end
+
+    it "has canvases with TIFF rendering property" do
+      expect(first_canvas["rendering"].length).to eq 2
+      tiff_rendering = first_canvas["rendering"][1]
+      expect(tiff_rendering["id"]).to eq "#{ENV['BLACKLIGHT_BASE_URL']}/download/tiff/16188699"
+      expect(tiff_rendering["label"]["en"].first).to eq "Full size original"
+      expect(tiff_rendering["type"]).to eq "Image"
+      expect(tiff_rendering["format"]).to eq "image/tiff"
+    end
+
     it "has canvases with ids and labels based on order property of child_objects" do
       co = ChildObject.find(16_188_699)
       co.update(order: 2)
@@ -414,6 +433,23 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     it 'does not have navDate when empty date' do
       iiif_presentation_empty_date = described_class.new(parent_object_empty_date)
       expect(iiif_presentation_empty_date.manifest.key?('navDate')).to eq false
+    end
+  end
+
+  describe "IIIF rendering" do
+    it "downscales the JPEG rendering to MAX_PIXELS" do
+      iiif_presentation = described_class.new(parent_object)
+      oid = 123
+      scaled_rendering = iiif_presentation.jpeg_rendering(oid, 100_000, 200_000)
+      expect(scaled_rendering["label"]["en"].first).to eq "Reduced size 7071 x 14142"
+      expect(scaled_rendering["id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/#{oid}/full/7071,/0/default.jpg"
+    end
+    it "does not divide by zero" do
+      iiif_presentation = described_class.new(parent_object)
+      oid = 123
+      scaled_rendering = iiif_presentation.jpeg_rendering(oid, 90_345, 2908)
+      expect(scaled_rendering["label"]["en"].first).to eq "Reduced size 55738 x 1794"
+      expect(scaled_rendering["id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/#{oid}/full/55738,/0/default.jpg"
     end
   end
 end
