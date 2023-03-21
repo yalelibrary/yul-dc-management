@@ -191,7 +191,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.admin_set = ''
     sets = admin_set
     parsed_csv.each_with_index do |row, index|
-      if row['digital_object_source'].present? && row['preservica_uri'].present?
+      if row['digital_object_source'].present? && row['preservica_uri'].present? && !row['preservica_uri'].blank?
         begin
           parent_object = CsvRowParentService.new(row, index, current_ability, user).parent_object
           setup_for_background_jobs(parent_object, row['source'])
@@ -205,6 +205,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       else
         oid = row['oid']
         metadata_source = row['source']
+        set = row['admin_set']
+        if metadata_source.blank? && (set.present? && row.count > 2)
+          batch_processing_event("Skipping row [#{index + 2}]. Source cannot be blank.", 'Skipped Row')
+          next
+        end
         model = row['parent_model'] || 'complex'
         admin_set = editable_admin_set(row['admin_set'], oid, index)
         next unless admin_set
@@ -213,7 +218,14 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         self.admin_set = split_sets.join(', ')
         save!
 
+        if oid.blank?
+          oid = OidMinterService.generate_oids(1)[0]
+          parent_object = ParentObject.new(oid: oid)
+        else
+          parent_object = ParentObject.find_or_initialize_by(oid: oid)
+        end
         parent_object = ParentObject.find_or_initialize_by(oid: oid)
+
         # Only runs on newly created parent objects
         unless parent_object.new_record?
           batch_processing_event("Skipping row [#{index + 2}] with existing parent oid: #{oid}", 'Skipped Row')
