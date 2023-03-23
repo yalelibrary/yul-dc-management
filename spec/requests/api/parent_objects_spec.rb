@@ -55,7 +55,7 @@ RSpec.describe '/api/parent/oid', type: :request, prep_metadata_sources: true, p
     it 'displays objects metadata' do
       ParentObject.create! valid_attributes
       get "/api/parent/#{valid_attributes[:oid]}"
-      expect(response.body).to match("[{\"dcs\":{\"oid\":\"2004628\",\"visibility\":\"Public\",\"metadata_source\":\"ils\",\"bib\":\"123\",...tp://localhost:3000/manifests/2004628\"},\"metadata\":{\"oid\":\"12345\",\"uri\":\"/uri_example\"}}]")
+      expect(response.body).to match("[{\"dcs\":{\"oid\":\"2004628\",\"visibility\":\"Public\",\"metadata_source\":\"Ladybird\",\"bib\":\"123\",...tp://localhost:3000/manifests/2004628\"},\"metadata\":{\"oid\":\"12345\",\"uri\":\"/uri_example\"}}]")
     end
   end
   # rubocop:enable Metrics/LineLength

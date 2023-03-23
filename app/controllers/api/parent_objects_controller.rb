@@ -51,9 +51,9 @@ class Api::ParentObjectsController < ApplicationController
   end
 
   def metadata_source(parent_object)
-    return "ils" if parent_object.authoritative_metadata_source_id == 1
+    return "Ladybird" if parent_object.authoritative_metadata_source_id == 1
     return "Voyager" if parent_object.authoritative_metadata_source_id == 2
-    return "ArchiveSpace" if parent_object.authoritative_metadata_source_id == 3
+    return "ArchivesSpace" if parent_object.authoritative_metadata_source_id == 3
     "Metadata Source not found"
   end
 
