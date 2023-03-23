@@ -8,7 +8,11 @@ RSpec.describe '/api/parent/oid', type: :request, prep_metadata_sources: true, p
       authoritative_metadata_source_id: 1,
       admin_set: AdminSet.find_by_key('brbl'),
       bib: '123',
-      visibility: 'Public'
+      visibility: 'Public',
+      ladybird_json: {
+        oid: '12345',
+        uri: '/uri_example'
+      }
     }
   end
   let(:invalid_visibility) do
@@ -45,4 +49,14 @@ RSpec.describe '/api/parent/oid', type: :request, prep_metadata_sources: true, p
       expect(response.body).to eq("{\"title\":\"Parent Object is restricted.\"}")
     end
   end
+
+  # rubocop:disable Metrics/LineLength
+  describe 'GET metadata from parent object' do
+    it 'displays objects metadata' do
+      ParentObject.create! valid_attributes
+      get "/api/parent/#{valid_attributes[:oid]}"
+      expect(response.body).to match("[{\"dcs\":{\"oid\":\"2004628\",\"visibility\":\"Public\",\"metadata_source\":\"Ladybird\",\"bib\":\"123\",...tp://localhost:3000/manifests/2004628\"},\"metadata\":{\"oid\":\"12345\",\"uri\":\"/uri_example\"}}]")
+    end
+  end
+  # rubocop:enable Metrics/LineLength
 end

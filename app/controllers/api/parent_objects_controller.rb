@@ -28,7 +28,8 @@ class Api::ParentObjectsController < ApplicationController
         "container_grouping": @parent_object.container_grouping.to_s,
         "redirect_to": @parent_object.redirect_to.to_s,
         "iiif_manifest": "#{ENV['BLACKLIGHT_BASE_URL']}/manifests/#{@parent_object.oid}"
-      }
+      },
+      "metadata": metadata_json(@parent_object)
     }, status: 200
   end
   # rubocop:enable Metrics/MethodLength
@@ -50,10 +51,17 @@ class Api::ParentObjectsController < ApplicationController
   end
 
   def metadata_source(parent_object)
-    return "ils" if parent_object.authoritative_metadata_source_id == 1
+    return "Ladybird" if parent_object.authoritative_metadata_source_id == 1
     return "Voyager" if parent_object.authoritative_metadata_source_id == 2
-    return "ArchiveSpace" if parent_object.authoritative_metadata_source_id == 3
+    return "ArchivesSpace" if parent_object.authoritative_metadata_source_id == 3
     "Metadata Source not found"
+  end
+
+  def metadata_json(parent_object)
+    return parent_object.ladybird_json if parent_object.authoritative_metadata_source_id == 1
+    return parent_object.voyager_json if parent_object.authoritative_metadata_source_id == 2
+    return parent_object.aspace_json if parent_object.authoritative_metadata_source_id == 3
+    "Metadata not found"
   end
 
   private
