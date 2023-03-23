@@ -27,7 +27,8 @@ class Api::ParentObjectsController < ApplicationController
         "call_number": @parent_object.call_number.to_s,
         "container_grouping": @parent_object.container_grouping.to_s,
         "redirect_to": @parent_object.redirect_to.to_s,
-        "iiif_manifest": "#{ENV['BLACKLIGHT_BASE_URL']}/manifests/#{@parent_object.oid}"
+        "iiif_manifest": "#{ENV['BLACKLIGHT_BASE_URL']}/manifests/#{@parent_object.oid}",
+        "children": child_info(@parent_object)
       },
       "metadata": metadata_json(@parent_object)
     }, status: 200
@@ -62,6 +63,16 @@ class Api::ParentObjectsController < ApplicationController
     return parent_object.voyager_json if parent_object.authoritative_metadata_source_id == 2
     return parent_object.aspace_json if parent_object.authoritative_metadata_source_id == 3
     "Metadata not found"
+  end
+
+  def child_info(parent_object)
+    parent_object.child_objects.map do |co|
+      {
+        "oid": co.oid,
+        "label": co.label,
+        "caption": co.caption
+      }
+    end
   end
 
   private

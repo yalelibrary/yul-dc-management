@@ -24,6 +24,9 @@ RSpec.describe '/api/parent/oid', type: :request, prep_metadata_sources: true, p
       visibility: 'Private'
     }
   end
+  let(:admin_set){FactoryBot.create(:admin_set)}
+  let(:parent_object){FactoryBot.create(:parent_object, oid: 123, admin_set: admin_set, visibility: "Public")}
+  let(:child_object){FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_object, caption: 'caption', label: 'label')}
 
   describe 'GET with valid oid' do
     it 'renders a successful response' do
@@ -55,7 +58,15 @@ RSpec.describe '/api/parent/oid', type: :request, prep_metadata_sources: true, p
     it 'displays objects metadata' do
       ParentObject.create! valid_attributes
       get "/api/parent/#{valid_attributes[:oid]}"
-      expect(response.body).to match("[{\"dcs\":{\"oid\":\"2004628\",\"visibility\":\"Public\",\"metadata_source\":\"ils\",\"bib\":\"123\",...tp://localhost:3000/manifests/2004628\"},\"metadata\":{\"oid\":\"12345\",\"uri\":\"/uri_example\"}}]")
+      expect(response.body).to eq("{\"dcs\":{\"oid\":\"2004628\",\"visibility\":\"Public\",\"metadata_source\":\"ils\",\"bib\":\"123\",\"holding\":\"\",\"item\":\"\",\"barcode\":\"\",\"aspace_uri\":\"\",\"admin_set\":\"Beinecke Library\",\"child_object_count\":\"\",\"representative_child_oid\":\"\",\"rights_statement\":\"\",\"extent_of_digitization\":\"\",\"digitization_note\":\"\",\"call_number\":\"\",\"container_grouping\":\"\",\"redirect_to\":\"\",\"iiif_manifest\":\"http://localhost:3000/manifests/2004628\",\"children\":[]},\"metadata\":{\"oid\":\"12345\",\"uri\":\"/uri_example\"}}")
+    end
+
+    it 'displays child information' do
+      admin_set
+      parent_object
+      child_object
+      get "/api/parent/123"
+      expect(response.body).to eq("{\"dcs\":{\"oid\":\"123\",\"visibility\":\"Public\",\"metadata_source\":\"ils\",\"bib\":\"\",\"holding\":\"\",\"item\":\"\",\"barcode\":\"\",\"aspace_uri\":\"\",\"admin_set\":\"MyString\",\"child_object_count\":\"\",\"representative_child_oid\":\"\",\"rights_statement\":\"\",\"extent_of_digitization\":\"\",\"digitization_note\":\"\",\"call_number\":\"\",\"container_grouping\":\"\",\"redirect_to\":\"\",\"iiif_manifest\":\"http://localhost:3000/manifests/123\",\"children\":[{\"oid\":456789,\"label\":\"label\",\"caption\":\"caption\"}]},\"metadata\":null}")
     end
   end
   # rubocop:enable Metrics/LineLength
