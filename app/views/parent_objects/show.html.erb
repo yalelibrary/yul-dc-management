@@ -1,135 +1,162 @@
 <p id="notice"><%= notice %></p>
 
 <dl class='metadata-block'>
-  <dt>Oid:</dt>
-  <dd><%= @parent_object.oid %></dd>
-
-  <dt>Set:</dt>
-  <dd><%= @parent_object.admin_set&.label %></dd>
-
+  <tr>
+    <dt>Oid:</dt>
+    <dd><%= @parent_object.oid %></dd>
+  </tr>
+  <tr>
+    <dt>Set:</dt>
+    <dd><%= @parent_object.admin_set&.label %></dd>
+  </tr>
   <% if @parent_object.permission_set_id.present? %>
-    <dt>Permission Set:</dt>
-    <dd><%= PermissionSet.find(@parent_object.permission_set_id).label %></dd>
+    <tr>
+      <dt>Permission Set:</dt>
+      <dd><%= PermissionSet.find(@parent_object.permission_set_id).label %></dd>
+    </tr>
   <% end %>
-
-  <dt>Project ID:</dt>
-  <dd><%= @parent_object&.project_identifier %></dd>
-
+  <tr>
+    <dt>Call Number:</dt>
+    <dd><%= @parent_object.call_number %></dd>
+  </tr>
+  <tr>
+    <dt>Project ID:</dt>
+    <dd><%= @parent_object&.project_identifier %></dd>
+  </tr>
   <% if @parent_object&.redirect_to.present? %>
-    <dt>Redirected To:</dt>
-    <dd><%= @parent_object&.redirect_to %></dd>
+    <tr>
+      <dt>Redirected To:</dt>
+      <dd><%= @parent_object&.redirect_to %></dd>
+    </tr>
   <% end %>
-
-  <dt>Authoritative Metadata source:</dt>
-  <dd><%= @parent_object.authoritative_metadata_source.display_name %></dd>
-
-  <% if can? :update, @parent_object %>
-      <dt>Update Metadata for this Object from the Authoritative Metadata Source:</dt>
-      <dd>
-        <%= link_to 'Update this item', update_metadata_parent_object_path(@parent_object), method: :post, class: 'btn button update-item-button' %>
+  <tr>
+    <dt>Authoritative Metadata source:</dt>
+    <dd><%= @parent_object.authoritative_metadata_source.display_name %></dd>
+  </tr>
+  <tr>
+    <dt>Bib:</dt>
+    <dd><%= @parent_object.bib %></dd>
+  </tr>
+  <tr>
+    <dt>Holding:</dt>
+    <dd><%= @parent_object.holding %></dd>
+  </tr>
+  <tr>
+    <dt>Item:</dt>
+    <dd><%= @parent_object.item %></dd>
+  </tr>
+  <tr>
+    <dt>Container Grouping:</dt>
+    <dd><%= @parent_object.container_grouping %></dd>
+  </tr>
+  <tr>
+    <dt>Barcode:</dt>
+    <dd><%= @parent_object.barcode %></dd>
+  </tr>
+  <tr>
+    <dt>Aspace uri:</dt>
+    <dd><%= @parent_object.aspace_uri %></dd>
+  </tr>
+  <tr>
+    <dt>Child Count:</dt>
+    <dd><%= @parent_object.child_object_ids.count %></dd>
+  </tr>
+  <tr>
+    <div class="child-objects">
+      <dt>Children:</dt>
+      <dd class="child-list">
+        <ol class="child-list-ol">
+          <% @parent_object.child_objects.map do |child| %>
+            <p><li><%= link_to( "#{child.label || 'no label'} / #{child.caption || 'no caption'} (#{child.width}, #{child.height})", "#{child_objects_path}/#{child.oid}") %></li></p>
+          <% end %>
+        </ol>
       </dd>
-  <% end %>
-
+    </div>
+  </tr>
+  <tr>
+    <dt>Visibility:</dt>
+    <dd><%= @parent_object.visibility %></dd>
+  </tr>
+  <tr>
+    <dt>Rights Statement:</dt>
+    <dd><%= sanitize @parent_object.rights_statement, tags: %w(a), attributes: %w(href) %></dd>
+  </tr>
+  <tr>
+    <% if @parent_object.representative_child %>
+      <dt class="represent-thumb">Representative thumbnail:</dt>
+      <dd><%= image_tag @parent_object.representative_child.thumbnail_url %></dd>
+    <% end %>
+    
+    <dt></dt><dd><%= link_to("Select different representative thumbnail", select_thumbnail_parent_object_path) %></dd>
+  </tr>
+  <tr>
+    <dt>Extent of Digitization:</dt>
+    <dd><%= @parent_object.extent_of_digitization %></dd>
+  </tr>
+  <tr>
+    <dt>Digitization Note:</dt>
+    <dd><%= @parent_object.digitization_note %></dd>
+  </tr>
+  <tr>
+    <dt>Digitization Funding Source:</dt>
+    <dd><%= @parent_object.digitization_funding_source %></dd>
+  </tr>
+  <tr>
+    <dt>Viewing Direction:</dt>
+    <dd><%= @parent_object.viewing_direction %></dd>
+  </tr>
+  <tr>
+    <dt>Display Layout / Viewing Hint:</dt>
+    <dd><%= @parent_object.display_layout %></dd>
+  </tr>
+  <tr>
+    <dt>Full Text Available:</dt>
+    <dd><%= @parent_object.extent_of_full_text %></dd>
+  </tr>
+  <tr>
+    <dt>Digital Object Source:</dt>
+    <dd><%= @parent_object.digital_object_source %></dd>
+  </tr>
   <% if @parent_object&.metadata_cloud_url.present? %>
-    <dt>MetadataCloud url:</dt>
-    <dd><%= link_to "#{@parent_object.metadata_cloud_url}", "#{@parent_object.metadata_cloud_url}" %></dd>
+    <tr>
+      <dt>MetadataCloud url:</dt>
+      <dd><%= link_to "#{@parent_object.metadata_cloud_url}", "#{@parent_object.metadata_cloud_url}" %></dd>
+    </tr>
   <% end %>
-
-  <dt>Call Number:</dt>
-  <dd><%= @parent_object.call_number %></dd>
-
-  <dt>Container Grouping:</dt>
-  <dd><%= @parent_object.container_grouping %></dd>
-
-  <dt>Bib:</dt>
-  <dd><%= @parent_object.bib %></dd>
-
-  <dt>Holding:</dt>
-  <dd><%= @parent_object.holding %></dd>
-
-  <dt>Item:</dt>
-  <dd><%= @parent_object.item %></dd>
-
-  <dt>Barcode:</dt>
-  <dd><%= @parent_object.barcode %></dd>
-
-  <dt>Aspace uri:</dt>
-  <dd><%= @parent_object.aspace_uri %></dd>
-
-  <dt>Digital Object Source:</dt>
-  <dd><%= @parent_object.digital_object_source %></dd>
-
-  <dt>Preservica URI:</dt>
-  <dd><%= @parent_object.preservica_uri %></dd>
-
-  <dt>Preservica Representation Type:</dt>
-  <dd><%= @parent_object.preservica_representation_type %></dd>
-  
+  <tr>
+    <dt>Preservica URI:</dt>
+    <dd><%= @parent_object.preservica_uri %></dd>
+  </tr>
+  <tr>
+    <dt>Preservica Representation Type:</dt>
+    <dd><%= @parent_object.preservica_representation_type %></dd>
+  </tr>
   <% if @parent_object.digital_object_source == 'Preservica' %>
-    <dt>Update from Preservica:</dt>
-    <dd><%= link_to 'Synchronize child objects', sync_from_preservica_parent_object_path(@parent_object), method: :post, class: 'btn button update-item-button'%></dd>
+    <tr>
+      <dt>Update from Preservica:</dt>
+      <dd><%= link_to 'Synchronize child objects', sync_from_preservica_parent_object_path(@parent_object), method: :post, class: 'btn button update-item-button'%></dd>
+    </tr>
   <% end %>
-
-  <dt>Last Preservica Update:</dt>
-  <dd><%= @parent_object.last_preservica_update %></dd>
-
-  <dt>Last Ladybird Update:</dt>
-  <dd><%= @parent_object.last_ladybird_update %></dd>
-
-  <dt>Last Voyager Update:</dt>
-  <dd><%= @parent_object.last_voyager_update %></dd>
-
-  <dt>Last Aspace Update:</dt>
-  <dd><%= @parent_object.last_aspace_update %></dd>
-
-  <dt></dt>
-  <dd><%= link_to('View version history', parent_object_versions_path(@parent_object, :checked => 'true')) %></dd>
-
-  <dt>Visibility:</dt>
-  <dd><%= @parent_object.visibility %></dd>
-
-  <dt>Rights Statement:</dt>
-  <dd><%= sanitize @parent_object.rights_statement, tags: %w(a), attributes: %w(href) %></dd>
-
-  <dt>Extent of Digitization:</dt>
-  <dd><%= @parent_object.extent_of_digitization %></dd>
-
-  <dt>Digitization Note:</dt>
-  <dd><%= @parent_object.digitization_note %></dd>
-
-  <dt>Digitization Funding Source:</dt>
-  <dd><%= @parent_object.digitization_funding_source %></dd>
-
-  <dt>Viewing Direction:</dt>
-  <dd><%= @parent_object.viewing_direction %></dd>
-
-  <dt>Full Text Available:</dt>
-  <dd><%= @parent_object.extent_of_full_text %></dd>
-
-  <dt>Display Layout / Viewing Hint:</dt>
-  <dd><%= @parent_object.display_layout %></dd>
-
-  <dt>Child Count:</dt>
-  <dd><%= @parent_object.child_object_ids.count %></dd>
-
-  <div class="child-objects">
-    <dt>Children:</dt>
-    <dd class="child-list">
-      <ol class="child-list-ol">
-        <% @parent_object.child_objects.map do |child| %>
-          <p><li><%= link_to( "#{child.label || 'no label'} / #{child.caption || 'no caption'} (#{child.width}, #{child.height})", "#{child_objects_path}/#{child.oid}") %></li></p>
-        <% end %>
-      </ol>
-    </dd>
-  </div>
-
-  <% if @parent_object.representative_child %>
-    <dt class="represent-thumb">Representative thumbnail:</dt>
-    <dd><%= image_tag @parent_object.representative_child.thumbnail_url %></dd>
-  <% end %>
-  
-   <dt><%= link_to("Select different representative thumbnail", select_thumbnail_parent_object_path) %><br><br></dt>
-
+  <tr>
+    <dt>Last Aspace Update:</dt>
+    <dd><%= @parent_object.last_aspace_update %></dd>
+  </tr>
+  <tr>
+    <dt>Last Voyager Update:</dt>
+    <dd><%= @parent_object.last_voyager_update %></dd>
+  </tr>
+  <tr>
+    <dt>Last Preservica Update:</dt>
+    <dd><%= @parent_object.last_preservica_update %></dd>
+  </tr>
+  <tr>
+    <dt>Last Ladybird Update:</dt>
+    <dd><%= @parent_object.last_ladybird_update %></dd>
+  </tr>
+  <tr>
+    <dt><%= link_to('View version history', parent_object_versions_path(@parent_object, :checked => 'true')) %></dt>
+    <dd></dd>
+  </tr>
 </dl>
 
 <p class='show-header'>
@@ -142,6 +169,17 @@
   <%= render 'solr_document', parent_object: @parent_object %>
 </p>
 
+<% if can? :update, @parent_object %>
+  <div class='update-item-container'>
+    <div>
+      <p class='update-item-label'>Update this Item</p>
+      <p>Update metadata for this object from the authoritative metadata source.</p>
+    </div>
+    <div>
+      <%= link_to 'Update this item', update_metadata_parent_object_path(@parent_object), method: :post, class: 'btn button update-item-button' %>
+    </div>
+  </div>
+<% end %>
 <% if can? :destroy, @parent_object %>
   <div class='delete-item-container'>
     <div>

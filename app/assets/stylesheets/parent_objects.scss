@@ -17,11 +17,13 @@ DEFAULT DESKTOP STYLING
   padding-top: 10px;
 }
 
-.delete-item-container {
+.delete-item-container,
+.update-item-container {
   grid-template-columns: 0.25fr 1fr;
 }
 
-.delete-item-label {
+.delete-item-label,
+.update-item-label {
   margin-bottom: 6px;
   font-size: 18px;
   font-weight: bold;
@@ -41,6 +43,15 @@ DEFAULT DESKTOP STYLING
 .metadata-block {
   display: flex;
   flex-flow: row wrap;
+  border: 2px solid $light_grey;
+}
+
+.metadata-block tr.even {
+  background-color: $white;
+}
+
+.metadata-block tr.odd {
+  background-color: $lighter_grey;
 }
 
 .metadata-block dt {
@@ -71,10 +82,6 @@ DEFAULT DESKTOP STYLING
   padding-top: 1.5%;
   width: 82%;
   position: relative;
-}
-
-.update-item-container {
-  grid-template-columns: 0.75fr 1fr;
 }
 
 .update-item-button {
