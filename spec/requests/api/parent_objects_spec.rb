@@ -58,7 +58,7 @@ RSpec.describe '/api/parent/oid', type: :request, prep_metadata_sources: true, p
     it 'displays objects metadata' do
       ParentObject.create! valid_attributes
       get "/api/parent/#{valid_attributes[:oid]}"
-      expect(response.body).to match("{\"dcs\":{\"oid\":\"2004628\",\"visibility\":\"Public\",\"metadata_source\":\"Ladybird\",\"bib\":\"123\",\"holding\":\"\",\"item\":\"\",\"barcode\":\"\",\"aspace_uri\":\"\",\"admin_set\":\"Beinecke Library\",\"child_object_count\":\"\",\"representative_child_oid\":\"\",\"rights_statement\":\"\",\"extent_of_digitization\":\"\",\"digitization_note\":\"\",\"call_number\":\"\",\"container_grouping\":\"\",\"redirect_to\":\"\",\"iiif_manifest\":\"http://localhost:3000/manifests/2004628\",\"children\":[]},\"metadata\":{\"oid\":\"12345\",\"uri\":\"/uri_example\"}}")
+      expect(response.body).to match("[{\"dcs\":{\"oid\":\"2004628\",\"visibility\":\"Public\",\"metadata_source\":\"Ladybird\",\"bib\":\"123\",...tp://localhost:3000/manifests/2004628\"},\"metadata\":{\"oid\":\"12345\",\"uri\":\"/uri_example\"}}]")
     end
 
     it 'displays child information' do
@@ -66,7 +66,7 @@ RSpec.describe '/api/parent/oid', type: :request, prep_metadata_sources: true, p
       parent_object
       child_object
       get "/api/parent/123"
-      expect(response.body).to match("{\"dcs\":{\"oid\":\"123\",\"visibility\":\"Public\",\"metadata_source\":\"Ladybird\",\"bib\":\"\",\"holding\":\"\",\"item\":\"\",\"barcode\":\"\",\"aspace_uri\":\"\",\"admin_set\":\"MyString\",\"child_object_count\":\"\",\"representative_child_oid\":\"\",\"rights_statement\":\"\",\"extent_of_digitization\":\"\",\"digitization_note\":\"\",\"call_number\":\"\",\"container_grouping\":\"\",\"redirect_to\":\"\",\"iiif_manifest\":\"http://localhost:3000/manifests/123\",\"children\":[{\"oid\":456789,\"label\":\"label\",\"caption\":\"caption\"}]},\"metadata\":null}")
+      expect(response.body).to match("[{\"dcs\":{\"oid\":\"123\",\"visibility\":\"Public\",\"metadata_source\":\"Ladybird\",\"bib\":\"\",\"...3\",\"children\":[{\"oid\":456789,\"label\":\"label\",\"caption\":\"caption\"}]},\"metadata\":null}]")
     end
   end
   # rubocop:enable Metrics/LineLength
