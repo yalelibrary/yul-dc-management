@@ -24,9 +24,9 @@ RSpec.describe '/api/parent/oid', type: :request, prep_metadata_sources: true, p
       visibility: 'Private'
     }
   end
-  let(:admin_set){FactoryBot.create(:admin_set)}
-  let(:parent_object){FactoryBot.create(:parent_object, oid: 123, admin_set: admin_set, visibility: "Public")}
-  let(:child_object){FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_object, caption: 'caption', label: 'label')}
+  let(:admin_set) { FactoryBot.create(:admin_set) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: 123, admin_set: admin_set, visibility: "Public") }
+  let(:child_object) { FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_object, caption: 'caption', label: 'label') }
 
   describe 'GET with valid oid' do
     it 'renders a successful response' do
