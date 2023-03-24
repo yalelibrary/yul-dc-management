@@ -46,6 +46,21 @@ DEFAULT DESKTOP STYLING
   color: $delete_button_text;
 }
 
+.fa {
+  color: $dark_grey;
+  padding: 5px;
+  border: 5px solid $light_medium_grey;
+  border-radius: 5px;
+}
+
+.fa-filter {
+  font-size: 28px;
+}
+
+.fa-filter-circle-xmark {
+  font-size: 27px;
+}
+
 .metadata-block {
   display: flex;
   flex-flow: row wrap;
@@ -56,24 +71,24 @@ DEFAULT DESKTOP STYLING
   background-color: $lighter_grey;
 }
 
-.metadata-block dt {
+.metadata-block td {
   font-size: 14px;
   color: $medium_grey;
   font-family: $mallory_medium, Arial, Helvetica, sans-serif !important;
-  font-weight: 500;
-  float: left;
-  width: 20%;
-  margin-top: 5px;
 }
 
-.metadata-block dd {
-  font-size: 14px;
-  color: $medium_grey;
-  font-family: $mallory_medium, Arial, Helvetica, sans-serif !important;
-  font-weight: 500;
-  float: right;
-  width: 80%;
-  margin-top: 5px;
+#parent-show {
+  display: grid;
+  grid-template: 'a b' auto;
+}
+
+#parent-show em {
+  grid-area: a;
+}
+
+#parent-show table {
+  grid-area: b;
+  margin-left: 5px;
 }
 
 .show-header {

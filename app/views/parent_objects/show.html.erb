@@ -1,168 +1,171 @@
 <p id="notice"><%= notice %></p>
 
-<table class='metadata-block'>
-  <tr>
-    <td>Oid:</td>
-    <td><%= @parent_object.oid %></td>
-  </tr>
-  <tr>
-    <td>Set:</td>
-    <td><%= @parent_object.admin_set&.label %></td>
-  </tr>
-  <% if @parent_object.permission_set_id.present? %>
-    <tr>
-      <td>Permission Set:</td>
-      <td><%= PermissionSet.find(@parent_object.permission_set_id).label %></td>
-    </tr>
-  <% end %>
-  <tr>
-    <td>Call Number:</td>
-    <td><%= @parent_object.call_number %></td>
-  </tr>
-  <tr>
-    <td>Project ID:</td>
-    <td><%= @parent_object&.project_identifier %></td>
-  </tr>
-  <% if @parent_object&.redirect_to.present? %>
-    <tr>
-      <td>Redirected To:</td>
-      <td><%= @parent_object&.redirect_to %></td>
-    </tr>
-  <% end %>
-  <tr>
-    <td>Authoritative Metadata Source:</td>
-    <td><%= @parent_object.authoritative_metadata_source.display_name %></td>
-  </tr>
-  <tr>
-    <td>Bib:</td>
-    <td><%= @parent_object.bib %></td>
-  </tr>
-  <tr>
-    <td>Holding:</td>
-    <td><%= @parent_object.holding %></td>
-  </tr>
-  <tr>
-    <td>Item:</td>
-    <td><%= @parent_object.item %></td>
-  </tr>
-  <tr>
-    <td>Container Grouping:</td>
-    <td><%= @parent_object.container_grouping %></td>
-  </tr>
-  <tr>
-    <td>Barcode:</td>
-    <td><%= @parent_object.barcode %></td>
-  </tr>
-  <tr>
-    <td>Aspace uri:</td>
-    <td><%= @parent_object.aspace_uri %></td>
-  </tr>
-  <tr>
-    <td>Child Count:</td>
-    <td><%= @parent_object.child_object_ids.count %></td>
-  </tr>
-  <tr>
-    <div class="child-objects">
-      <td>Children:</td>
-      <td>
-        <div class="child-list">
-          <ol class="child-list-ol">
-            <% @parent_object.child_objects.map do |child| %>
-              <p><li><%= link_to( "#{child.label || 'no label'} / #{child.caption || 'no caption'} (#{child.width}, #{child.height})", "#{child_objects_path}/#{child.oid}") %></li></p>
-            <% end %>
-          </ol>
-        </div>
-      </td>
-    </div>
-  </tr>
-  <tr>
-    <td>Visibility:</td>
-    <td><%= @parent_object.visibility %></td>
-  </tr>
-  <tr>
-    <td>Rights Statement:</td>
-    <td><%= sanitize @parent_object.rights_statement, tags: %w(a), attributes: %w(href) %></td>
-  </tr>
-  <% if @parent_object.representative_child %>
-    <tr>
-      <td class="represent-thumb">Representative thumbnail:</td>
-      <td><%= image_tag @parent_object.representative_child.thumbnail_url %></td>
-    </tr>
-  <% end %>
-  <tr>
-    <td></td>
-    <td><%= link_to("Select different representative thumbnail", select_thumbnail_parent_object_path) %></td>
-  </tr>
-  <tr>
-    <td>Extent of Digitization:</td>
-    <td><%= @parent_object.extent_of_digitization %></td>
-  </tr>
-  <tr>
-    <td>Digitization Note:</td>
-    <td><%= @parent_object.digitization_note %></td>
-  </tr>
-  <tr>
-    <td>Digitization Funding Source:</td>
-    <td><%= @parent_object.digitization_funding_source %></td>
-  </tr>
-  <tr>
-    <td>Viewing Direction:</td>
-    <td><%= @parent_object.viewing_direction %></td>
-  </tr>
-  <tr>
-    <td>Display Layout / Viewing Hint:</td>
-    <td><%= @parent_object.display_layout %></td>
-  </tr>
-  <tr>
-    <td>Full Text Available:</td>
-    <td><%= @parent_object.extent_of_full_text %></td>
-  </tr>
-  <tr>
-    <td>Digital Object Source:</td>
-    <td><%= @parent_object.digital_object_source %></td>
-  </tr>
-  <% if @parent_object&.metadata_cloud_url.present? %>
-    <tr>
-      <td>MetadataCloud url:</td>
-      <td><%= link_to "#{@parent_object.metadata_cloud_url}", "#{@parent_object.metadata_cloud_url}" %></td>
-    </tr>
-  <% end %>
-  <tr>
-    <td>Preservica URI:</td>
-    <td><%= @parent_object.preservica_uri %></td>
-  </tr>
-  <tr>
-    <td>Preservica Representation Type:</td>
-    <td><%= @parent_object.preservica_representation_type %></td>
-  </tr>
-  <% if @parent_object.digital_object_source == 'Preservica' %>
-    <tr>
-      <td>Update from Preservica:</td>
-      <td><%= link_to 'Synchronize child objects', sync_from_preservica_parent_object_path(@parent_object), method: :post, class: 'btn button update-item-button'%></td>
-    </tr>
-  <% end %>
-  <tr>
-    <td>Last Aspace Update:</td>
-    <td><%= @parent_object.last_aspace_update %></td>
-  </tr>
-  <tr>
-    <td>Last Voyager Update:</td>
-    <td><%= @parent_object.last_voyager_update %></td>
-  </tr>
-  <tr>
-    <td>Last Preservica Update:</td>
-    <td><%= @parent_object.last_preservica_update %></td>
-  </tr>
-  <tr>
-    <td>Last Ladybird Update:</td>
-    <td><%= @parent_object.last_ladybird_update %></td>
-  </tr>
-  <tr>
-    <td><%= link_to('View version history', parent_object_versions_path(@parent_object, :checked => 'true')) %></td>
-    <td></td>
-  </tr>
-</table>
+<div id='parent-show'>
+  <em class="fa fa-filter"></em>
 
+  <table class='metadata-block'>
+    <tr>
+      <td>Oid:</td>
+      <td><%= @parent_object.oid %></td>
+    </tr>
+    <tr>
+      <td>Set:</td>
+      <td><%= @parent_object.admin_set&.label %></td>
+    </tr>
+    <% if @parent_object.permission_set_id.present? %>
+      <tr>
+        <td>Permission Set:</td>
+        <td><%= PermissionSet.find(@parent_object.permission_set_id).label %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td>Call Number:</td>
+      <td><%= @parent_object.call_number %></td>
+    </tr>
+    <tr>
+      <td>Project ID:</td>
+      <td><%= @parent_object&.project_identifier %></td>
+    </tr>
+    <% if @parent_object&.redirect_to.present? %>
+      <tr>
+        <td>Redirected To:</td>
+        <td><%= @parent_object&.redirect_to %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td>Authoritative Metadata Source:</td>
+      <td><%= @parent_object.authoritative_metadata_source.display_name %></td>
+    </tr>
+    <tr>
+      <td>Bib:</td>
+      <td><%= @parent_object.bib %></td>
+    </tr>
+    <tr>
+      <td>Holding:</td>
+      <td><%= @parent_object.holding %></td>
+    </tr>
+    <tr>
+      <td>Item:</td>
+      <td><%= @parent_object.item %></td>
+    </tr>
+    <tr>
+      <td>Container Grouping:</td>
+      <td><%= @parent_object.container_grouping %></td>
+    </tr>
+    <tr>
+      <td>Barcode:</td>
+      <td><%= @parent_object.barcode %></td>
+    </tr>
+    <tr>
+      <td>Aspace uri:</td>
+      <td><%= @parent_object.aspace_uri %></td>
+    </tr>
+    <tr>
+      <td>Child Count:</td>
+      <td><%= @parent_object.child_object_ids.count %></td>
+    </tr>
+    <tr>
+      <div class="child-objects">
+        <td>Children:</td>
+        <td>
+          <div class="child-list">
+            <ol class="child-list-ol">
+              <% @parent_object.child_objects.map do |child| %>
+                <p><li><%= link_to( "#{child.label || 'no label'} / #{child.caption || 'no caption'} (#{child.width}, #{child.height})", "#{child_objects_path}/#{child.oid}") %></li></p>
+              <% end %>
+            </ol>
+          </div>
+        </td>
+      </div>
+    </tr>
+    <tr>
+      <td>Visibility:</td>
+      <td><%= @parent_object.visibility %></td>
+    </tr>
+    <tr>
+      <td>Rights Statement:</td>
+      <td><%= sanitize @parent_object.rights_statement, tags: %w(a), attributes: %w(href) %></td>
+    </tr>
+    <% if @parent_object.representative_child %>
+      <tr>
+        <td class="represent-thumb">Representative thumbnail:</td>
+        <td><%= image_tag @parent_object.representative_child.thumbnail_url %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td></td>
+      <td><%= link_to("Select different representative thumbnail", select_thumbnail_parent_object_path) %></td>
+    </tr>
+    <tr>
+      <td>Extent of Digitization:</td>
+      <td><%= @parent_object.extent_of_digitization %></td>
+    </tr>
+    <tr>
+      <td>Digitization Note:</td>
+      <td><%= @parent_object.digitization_note %></td>
+    </tr>
+    <tr>
+      <td>Digitization Funding Source:</td>
+      <td><%= @parent_object.digitization_funding_source %></td>
+    </tr>
+    <tr>
+      <td>Viewing Direction:</td>
+      <td><%= @parent_object.viewing_direction %></td>
+    </tr>
+    <tr>
+      <td>Display Layout / Viewing Hint:</td>
+      <td><%= @parent_object.display_layout %></td>
+    </tr>
+    <tr>
+      <td>Full Text Available:</td>
+      <td><%= @parent_object.extent_of_full_text %></td>
+    </tr>
+    <tr>
+      <td>Digital Object Source:</td>
+      <td><%= @parent_object.digital_object_source %></td>
+    </tr>
+    <% if @parent_object&.metadata_cloud_url.present? %>
+      <tr>
+        <td>MetadataCloud url:</td>
+        <td><%= link_to "#{@parent_object.metadata_cloud_url}", "#{@parent_object.metadata_cloud_url}" %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td>Preservica URI:</td>
+      <td><%= @parent_object.preservica_uri %></td>
+    </tr>
+    <tr>
+      <td>Preservica Representation Type:</td>
+      <td><%= @parent_object.preservica_representation_type %></td>
+    </tr>
+    <% if @parent_object.digital_object_source == 'Preservica' %>
+      <tr>
+        <td>Update from Preservica:</td>
+        <td><%= link_to 'Synchronize child objects', sync_from_preservica_parent_object_path(@parent_object), method: :post, class: 'btn button update-item-button'%></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td>Last Aspace Update:</td>
+      <td><%= @parent_object.last_aspace_update %></td>
+    </tr>
+    <tr>
+      <td>Last Voyager Update:</td>
+      <td><%= @parent_object.last_voyager_update %></td>
+    </tr>
+    <tr>
+      <td>Last Preservica Update:</td>
+      <td><%= @parent_object.last_preservica_update %></td>
+    </tr>
+    <tr>
+      <td>Last Ladybird Update:</td>
+      <td><%= @parent_object.last_ladybird_update %></td>
+    </tr>
+    <tr>
+      <td><%= link_to('View version history', parent_object_versions_path(@parent_object, :checked => 'true')) %></td>
+      <td></td>
+    </tr>
+  </table>
+</div>
 <p class='show-header'>
   <strong>Authoritative JSON:</strong>
   <%= render 'authoritative_json', parent_object: @parent_object %>
