@@ -7,8 +7,14 @@ DEFAULT DESKTOP STYLING
   cursor: all-scroll;
 }
 
+.child-list {
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
 .child-list ol {
-  margin-left: 60px;
+  margin-left: -22px;
 }
 
 .delete-item-container,
@@ -46,11 +52,7 @@ DEFAULT DESKTOP STYLING
   border: 2px solid $light_grey;
 }
 
-.metadata-block tr.even {
-  background-color: $white;
-}
-
-.metadata-block tr.odd {
+.metadata-block tr:nth-child(even) {
   background-color: $lighter_grey;
 }
 

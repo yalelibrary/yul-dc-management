@@ -1,163 +1,167 @@
 <p id="notice"><%= notice %></p>
 
-<dl class='metadata-block'>
+<table class='metadata-block'>
   <tr>
-    <dt>Oid:</dt>
-    <dd><%= @parent_object.oid %></dd>
+    <td>Oid:</td>
+    <td><%= @parent_object.oid %></td>
   </tr>
   <tr>
-    <dt>Set:</dt>
-    <dd><%= @parent_object.admin_set&.label %></dd>
+    <td>Set:</td>
+    <td><%= @parent_object.admin_set&.label %></td>
   </tr>
   <% if @parent_object.permission_set_id.present? %>
     <tr>
-      <dt>Permission Set:</dt>
-      <dd><%= PermissionSet.find(@parent_object.permission_set_id).label %></dd>
+      <td>Permission Set:</td>
+      <td><%= PermissionSet.find(@parent_object.permission_set_id).label %></td>
     </tr>
   <% end %>
   <tr>
-    <dt>Call Number:</dt>
-    <dd><%= @parent_object.call_number %></dd>
+    <td>Call Number:</td>
+    <td><%= @parent_object.call_number %></td>
   </tr>
   <tr>
-    <dt>Project ID:</dt>
-    <dd><%= @parent_object&.project_identifier %></dd>
+    <td>Project ID:</td>
+    <td><%= @parent_object&.project_identifier %></td>
   </tr>
   <% if @parent_object&.redirect_to.present? %>
     <tr>
-      <dt>Redirected To:</dt>
-      <dd><%= @parent_object&.redirect_to %></dd>
+      <td>Redirected To:</td>
+      <td><%= @parent_object&.redirect_to %></td>
     </tr>
   <% end %>
   <tr>
-    <dt>Authoritative Metadata source:</dt>
-    <dd><%= @parent_object.authoritative_metadata_source.display_name %></dd>
+    <td>Authoritative Metadata Source:</td>
+    <td><%= @parent_object.authoritative_metadata_source.display_name %></td>
   </tr>
   <tr>
-    <dt>Bib:</dt>
-    <dd><%= @parent_object.bib %></dd>
+    <td>Bib:</td>
+    <td><%= @parent_object.bib %></td>
   </tr>
   <tr>
-    <dt>Holding:</dt>
-    <dd><%= @parent_object.holding %></dd>
+    <td>Holding:</td>
+    <td><%= @parent_object.holding %></td>
   </tr>
   <tr>
-    <dt>Item:</dt>
-    <dd><%= @parent_object.item %></dd>
+    <td>Item:</td>
+    <td><%= @parent_object.item %></td>
   </tr>
   <tr>
-    <dt>Container Grouping:</dt>
-    <dd><%= @parent_object.container_grouping %></dd>
+    <td>Container Grouping:</td>
+    <td><%= @parent_object.container_grouping %></td>
   </tr>
   <tr>
-    <dt>Barcode:</dt>
-    <dd><%= @parent_object.barcode %></dd>
+    <td>Barcode:</td>
+    <td><%= @parent_object.barcode %></td>
   </tr>
   <tr>
-    <dt>Aspace uri:</dt>
-    <dd><%= @parent_object.aspace_uri %></dd>
+    <td>Aspace uri:</td>
+    <td><%= @parent_object.aspace_uri %></td>
   </tr>
   <tr>
-    <dt>Child Count:</dt>
-    <dd><%= @parent_object.child_object_ids.count %></dd>
+    <td>Child Count:</td>
+    <td><%= @parent_object.child_object_ids.count %></td>
   </tr>
   <tr>
     <div class="child-objects">
-      <dt>Children:</dt>
-      <dd class="child-list">
-        <ol class="child-list-ol">
-          <% @parent_object.child_objects.map do |child| %>
-            <p><li><%= link_to( "#{child.label || 'no label'} / #{child.caption || 'no caption'} (#{child.width}, #{child.height})", "#{child_objects_path}/#{child.oid}") %></li></p>
-          <% end %>
-        </ol>
-      </dd>
+      <td>Children:</td>
+      <td>
+        <div class="child-list">
+          <ol class="child-list-ol">
+            <% @parent_object.child_objects.map do |child| %>
+              <p><li><%= link_to( "#{child.label || 'no label'} / #{child.caption || 'no caption'} (#{child.width}, #{child.height})", "#{child_objects_path}/#{child.oid}") %></li></p>
+            <% end %>
+          </ol>
+        </div>
+      </td>
     </div>
   </tr>
   <tr>
-    <dt>Visibility:</dt>
-    <dd><%= @parent_object.visibility %></dd>
+    <td>Visibility:</td>
+    <td><%= @parent_object.visibility %></td>
   </tr>
   <tr>
-    <dt>Rights Statement:</dt>
-    <dd><%= sanitize @parent_object.rights_statement, tags: %w(a), attributes: %w(href) %></dd>
+    <td>Rights Statement:</td>
+    <td><%= sanitize @parent_object.rights_statement, tags: %w(a), attributes: %w(href) %></td>
+  </tr>
+  <% if @parent_object.representative_child %>
+    <tr>
+      <td class="represent-thumb">Representative thumbnail:</td>
+      <td><%= image_tag @parent_object.representative_child.thumbnail_url %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td></td>
+    <td><%= link_to("Select different representative thumbnail", select_thumbnail_parent_object_path) %></td>
   </tr>
   <tr>
-    <% if @parent_object.representative_child %>
-      <dt class="represent-thumb">Representative thumbnail:</dt>
-      <dd><%= image_tag @parent_object.representative_child.thumbnail_url %></dd>
-    <% end %>
-    
-    <dt></dt><dd><%= link_to("Select different representative thumbnail", select_thumbnail_parent_object_path) %></dd>
+    <td>Extent of Digitization:</td>
+    <td><%= @parent_object.extent_of_digitization %></td>
   </tr>
   <tr>
-    <dt>Extent of Digitization:</dt>
-    <dd><%= @parent_object.extent_of_digitization %></dd>
+    <td>Digitization Note:</td>
+    <td><%= @parent_object.digitization_note %></td>
   </tr>
   <tr>
-    <dt>Digitization Note:</dt>
-    <dd><%= @parent_object.digitization_note %></dd>
+    <td>Digitization Funding Source:</td>
+    <td><%= @parent_object.digitization_funding_source %></td>
   </tr>
   <tr>
-    <dt>Digitization Funding Source:</dt>
-    <dd><%= @parent_object.digitization_funding_source %></dd>
+    <td>Viewing Direction:</td>
+    <td><%= @parent_object.viewing_direction %></td>
   </tr>
   <tr>
-    <dt>Viewing Direction:</dt>
-    <dd><%= @parent_object.viewing_direction %></dd>
+    <td>Display Layout / Viewing Hint:</td>
+    <td><%= @parent_object.display_layout %></td>
   </tr>
   <tr>
-    <dt>Display Layout / Viewing Hint:</dt>
-    <dd><%= @parent_object.display_layout %></dd>
+    <td>Full Text Available:</td>
+    <td><%= @parent_object.extent_of_full_text %></td>
   </tr>
   <tr>
-    <dt>Full Text Available:</dt>
-    <dd><%= @parent_object.extent_of_full_text %></dd>
-  </tr>
-  <tr>
-    <dt>Digital Object Source:</dt>
-    <dd><%= @parent_object.digital_object_source %></dd>
+    <td>Digital Object Source:</td>
+    <td><%= @parent_object.digital_object_source %></td>
   </tr>
   <% if @parent_object&.metadata_cloud_url.present? %>
     <tr>
-      <dt>MetadataCloud url:</dt>
-      <dd><%= link_to "#{@parent_object.metadata_cloud_url}", "#{@parent_object.metadata_cloud_url}" %></dd>
+      <td>MetadataCloud url:</td>
+      <td><%= link_to "#{@parent_object.metadata_cloud_url}", "#{@parent_object.metadata_cloud_url}" %></td>
     </tr>
   <% end %>
   <tr>
-    <dt>Preservica URI:</dt>
-    <dd><%= @parent_object.preservica_uri %></dd>
+    <td>Preservica URI:</td>
+    <td><%= @parent_object.preservica_uri %></td>
   </tr>
   <tr>
-    <dt>Preservica Representation Type:</dt>
-    <dd><%= @parent_object.preservica_representation_type %></dd>
+    <td>Preservica Representation Type:</td>
+    <td><%= @parent_object.preservica_representation_type %></td>
   </tr>
   <% if @parent_object.digital_object_source == 'Preservica' %>
     <tr>
-      <dt>Update from Preservica:</dt>
-      <dd><%= link_to 'Synchronize child objects', sync_from_preservica_parent_object_path(@parent_object), method: :post, class: 'btn button update-item-button'%></dd>
+      <td>Update from Preservica:</td>
+      <td><%= link_to 'Synchronize child objects', sync_from_preservica_parent_object_path(@parent_object), method: :post, class: 'btn button update-item-button'%></td>
     </tr>
   <% end %>
   <tr>
-    <dt>Last Aspace Update:</dt>
-    <dd><%= @parent_object.last_aspace_update %></dd>
+    <td>Last Aspace Update:</td>
+    <td><%= @parent_object.last_aspace_update %></td>
   </tr>
   <tr>
-    <dt>Last Voyager Update:</dt>
-    <dd><%= @parent_object.last_voyager_update %></dd>
+    <td>Last Voyager Update:</td>
+    <td><%= @parent_object.last_voyager_update %></td>
   </tr>
   <tr>
-    <dt>Last Preservica Update:</dt>
-    <dd><%= @parent_object.last_preservica_update %></dd>
+    <td>Last Preservica Update:</td>
+    <td><%= @parent_object.last_preservica_update %></td>
   </tr>
   <tr>
-    <dt>Last Ladybird Update:</dt>
-    <dd><%= @parent_object.last_ladybird_update %></dd>
+    <td>Last Ladybird Update:</td>
+    <td><%= @parent_object.last_ladybird_update %></td>
   </tr>
   <tr>
-    <dt><%= link_to('View version history', parent_object_versions_path(@parent_object, :checked => 'true')) %></dt>
-    <dd></dd>
+    <td><%= link_to('View version history', parent_object_versions_path(@parent_object, :checked => 'true')) %></td>
+    <td></td>
   </tr>
-</dl>
+</table>
 
 <p class='show-header'>
   <strong>Authoritative JSON:</strong>
