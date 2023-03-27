@@ -1,10 +1,12 @@
-<p id="notice"><%= notice %></p>
+<p id='notice'><%= notice %></p>
 
 <div id='parent-show'>
-  <em class="fa fa-filter"></em>
+  <div id='filter-icon'>
+    <em class='fa fa-filter'></em>
+  </div>
 
   <table class='metadata-block'>
-    <tr>
+    <tr class='visible'>
       <td>Oid:</td>
       <td><%= @parent_object.oid %></td>
     </tr>
@@ -18,7 +20,7 @@
         <td><%= PermissionSet.find(@parent_object.permission_set_id).label %></td>
       </tr>
     <% end %>
-    <tr>
+    <tr class='visible'>
       <td>Call Number:</td>
       <td><%= @parent_object.call_number %></td>
     </tr>
@@ -32,15 +34,15 @@
         <td><%= @parent_object&.redirect_to %></td>
       </tr>
     <% end %>
-    <tr>
+    <tr class='visible'>
       <td>Authoritative Metadata Source:</td>
       <td><%= @parent_object.authoritative_metadata_source.display_name %></td>
     </tr>
-    <tr>
+    <tr class='visible'>
       <td>Bib:</td>
       <td><%= @parent_object.bib %></td>
     </tr>
-    <tr>
+    <tr class='visible'>
       <td>Holding:</td>
       <td><%= @parent_object.holding %></td>
     </tr>

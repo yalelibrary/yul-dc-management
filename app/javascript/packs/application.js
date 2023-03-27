@@ -383,3 +383,25 @@ $( document ).on('turbolinks:load', function() {
     }
   })
 })
+
+// This will change the filter icon on the parent object show page
+$( document ).on('turbolinks:load', function() {
+  $('#filter-icon').click(function() {
+    $(this).find('svg').toggleClass('fa-filter fa-filter-circle-xmark');
+    var visibleValues = $('.visible').find('td:eq(1)');
+    var hiddenValues = $('hidden').find('td:eq(1)');
+    var values = $.merge(visibleValues, hiddenValues);
+    values.each(function(index) {
+      var value = $(this).text()
+      if (value == '') {
+        $(this).closest('tr').toggleClass('visible hidden')
+      }
+    })
+  })
+})
+
+$( document ).on('turbolinks:load', function() {
+  $('.fa-filter-circle-xmark').click(function() {
+    location.reload(true);
+  })
+})

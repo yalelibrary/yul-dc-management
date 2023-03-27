@@ -46,7 +46,8 @@ DEFAULT DESKTOP STYLING
   color: $delete_button_text;
 }
 
-.fa {
+.fa-filter,
+.fa-filter-circle-xmark {
   color: $dark_grey;
   padding: 5px;
   border: 5px solid $light_medium_grey;
@@ -59,6 +60,10 @@ DEFAULT DESKTOP STYLING
 
 .fa-filter-circle-xmark {
   font-size: 27px;
+}
+
+.hidden {
+  display: none;
 }
 
 .metadata-block {
@@ -75,6 +80,7 @@ DEFAULT DESKTOP STYLING
   font-size: 14px;
   color: $medium_grey;
   font-family: $mallory_medium, Arial, Helvetica, sans-serif !important;
+  padding-top: 10px;
 }
 
 #parent-show {
