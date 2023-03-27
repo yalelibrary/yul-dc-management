@@ -391,8 +391,10 @@ $( document ).on('turbolinks:load', function() {
     var visibleValues = $('.visible').find('td:eq(1)');
     var hiddenValues = $('hidden').find('td:eq(1)');
     var values = $.merge(visibleValues, hiddenValues);
+    console.log('values:', values)
     values.each(function(index) {
       var value = $(this).text()
+      console.log( index + ": " + value );
       if (value == '') {
         $(this).closest('tr').toggleClass('visible hidden')
       }
