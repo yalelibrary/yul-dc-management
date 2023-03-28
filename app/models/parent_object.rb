@@ -11,6 +11,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include PdfRepresentable
   include Delayable
   include DigitalObjectManagement
+  include DcsActivityStreamManagement
   has_many :dependent_objects, dependent: :delete_all
   has_many :child_objects, -> { order('"order" ASC, oid ASC') }, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :delete_all
   has_many :batch_connections, as: :connectable

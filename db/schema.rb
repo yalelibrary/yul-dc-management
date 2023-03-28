@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_27_230334) do
+ActiveRecord::Schema.define(version: 2023_03_27_231942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,6 +90,13 @@ ActiveRecord::Schema.define(version: 2023_02_27_230334) do
     t.index ["preservica_bitstream_uri"], name: "index_child_objects_on_preservica_bitstream_uri"
     t.index ["preservica_content_object_uri"], name: "index_child_objects_on_preservica_content_object_uri"
     t.index ["preservica_generation_uri"], name: "index_child_objects_on_preservica_generation_uri"
+  end
+
+  create_table "dcs_activity_stream_updates", force: :cascade do |t|
+    t.bigint "oid"
+    t.string "md5_metadata_hash"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "delayed_jobs", force: :cascade do |t|

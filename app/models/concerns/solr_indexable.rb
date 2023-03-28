@@ -32,6 +32,7 @@ module SolrIndexable
         processing_event("Solr record deleted", "solr-indexed")
       end
       digital_object_check
+      mc_activity_stream_check
     rescue => e
       processing_event("Solr indexing failed due to #{e.message}", "failed")
       raise # this reraises the error after we document it
