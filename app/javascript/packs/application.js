@@ -386,8 +386,7 @@ $( document ).on('turbolinks:load', function() {
 
 // This will change the filter icon on the parent object show page
 $( document ).on('turbolinks:load', function() {
-  $('#filter-icon').click(function() {
-    $("#filter-icon").attr("id", "clear-filter");   
+  $('#filter-icon').click(function() {  
     $(this).find('svg').toggleClass('fa-filter fa-filter-circle-xmark');
     var visibleValues = $('.visible').find('td:eq(1)');
     var hiddenValues = $('hidden').find('td:eq(1)');
@@ -397,12 +396,8 @@ $( document ).on('turbolinks:load', function() {
       var value = $(this).text()
       console.log( index + ": " + value );
       if (value == '') {
-        $(this).closest('tr').toggleClass('visible hidden')
+        $(this).closest('tr').toggle('fast')
       }
-    })
-    $('#clear-filter').click(function() {
-      $('.hidden').removeClass('hidden')
-      $("#clear-filter").attr("id", "filter-icon");
     })
   })
 })

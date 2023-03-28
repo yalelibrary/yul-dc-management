@@ -89,7 +89,7 @@
       <td><%= sanitize @parent_object.rights_statement, tags: %w(a), attributes: %w(href) %></td>
     </tr>
     <% if @parent_object.representative_child %>
-      <tr class='visible'>
+      <tr>
         <td class="represent-thumb">Representative thumbnail:</td>
         <td><%= image_tag @parent_object.representative_child.thumbnail_url %></td>
       </tr>
