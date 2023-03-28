@@ -386,15 +386,13 @@ $( document ).on('turbolinks:load', function() {
 
 // This will change the filter icon on the parent object show page
 $( document ).on('turbolinks:load', function() {
-  $('#filter-icon').click(function() {  
+  $('#filter-icon').click(function() {
     $(this).find('svg').toggleClass('fa-filter fa-filter-circle-xmark');
     var visibleValues = $('.visible').find('td:eq(1)');
     var hiddenValues = $('hidden').find('td:eq(1)');
     var values = $.merge(visibleValues, hiddenValues);
-    console.log('values:', values)
     values.each(function(index) {
       var value = $(this).text()
-      console.log( index + ": " + value );
       if (value == '') {
         $(this).closest('tr').toggle('fast')
       }
