@@ -387,18 +387,15 @@ $( document ).on('turbolinks:load', function() {
 // This will change the filter icon on the parent object show page
 $( document ).on('turbolinks:load', function() {
   $('#filter-icon').click(function() {
-    var hid = $(".table-row[display='none']");
-    console.log(hid)
-    $('.hidden').remove();
-    $('tr:odd').css('background-color', '#F2F2F2');
-    $('tr:even').css('background-color', '#FFFFFF');
     $(this).find('svg').toggleClass('fa-filter fa-filter-circle-xmark');
     var values = $('.table-row').find('td:eq(1)');
     values.each(function() {
       var value = $(this).text()
       if (value == '') {
-        $(this).closest('tr').toggle('fast')
+        $(this).closest('tr').toggleClass('hidden');
       }
+      $('tr:not(.hidden):odd').css('background-color', '#F2F2F2');
+      $('tr:not(.hidden):even').css('background-color', '#FFFFFF');
     })
   })
 })
