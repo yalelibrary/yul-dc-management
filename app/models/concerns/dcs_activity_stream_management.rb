@@ -26,7 +26,7 @@ module DcsActivityStreamManagement
         "container_grouping": container_grouping.to_s,
         "redirect_to": redirect_to.to_s,
         "iiif_manifest": "#{ENV['BLACKLIGHT_BASE_URL']}/manifests/#{oid}",
-        "children": child_info
+        "children": !child_objects.empty? && child_info
       },
       "metadata": authoritative_json
     }
