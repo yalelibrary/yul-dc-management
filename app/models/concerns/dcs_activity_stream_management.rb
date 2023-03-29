@@ -36,7 +36,7 @@ module DcsActivityStreamManagement
 
   def mc_activity_stream_check
     md5_metadata_hash = Digest::MD5.hexdigest(dcs_metadata.to_json)
-    dcs_activity_stream_update = DcsActivityStreamUpdate.where(oid:self.oid).first
+    dcs_activity_stream_update = DcsActivityStreamUpdate.find_by(oid: oid).first
     action_type = dcs_activity_stream_update.nil? ? "Create" : "Update"
     return if !dcs_activity_stream_update.nil? && dcs_activity_stream_update.md5_metadata_hash == md5_metadata_hash
 
