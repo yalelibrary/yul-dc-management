@@ -47,6 +47,7 @@ module DcsActivityStreamManagement
   end
 
   def send_dcs_activity_stream_update(action_type)
+    return false unless ENV["VPN"] == "true" && ENV["FEATURE_FLAGS"]&.include?("|ACTIVITY-SEND|")
     full_response = MetadataSource.new.mc_get "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity/dcs/oid/#{oid}/#{action_type}"
     case full_response.status
     when 200
