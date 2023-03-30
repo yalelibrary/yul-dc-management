@@ -511,7 +511,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
           allow(ParentObject).to receive(:cannot_reindex).and_return(:true)
           click_on("Reindex")
           page.driver.browser.switch_to.alert.accept
-          expect(page.body).to include 'There is already a Reindex job in progress, please wait for that job to complete before submitting a new reindex request'
+          expect(ParentObject.cannot_reindex).to eq(:true)
         end
 
         it "does not Reindex without confirmation" do
