@@ -42,7 +42,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       last_id_update: nil,
       last_ladybird_update: nil,
       last_voyager_update: nil,
-      oid: '<a href="/parent_objects/2034600">2034600</a> <a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil-alt"></i></a> <a target="_blank" href="http://localhost:3000/catalog/2034600">1</a>',
+      oid: '<a href="/parent_objects/2034600">2034600</a> <a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil"></i></a> <a target="_blank" href="http://localhost:3000/catalog/2034600">1</a>',
       project_identifier: '67',
       visibility: 'Private'
     )

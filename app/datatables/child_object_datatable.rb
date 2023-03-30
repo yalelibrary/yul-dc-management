@@ -34,7 +34,7 @@ class ChildObjectDatatable < ApplicationDatatable
   def data
     records.map do |child_object|
       {
-        oid: link_to(child_object.oid, child_object_path(child_object)) + (with_icon('fa fa-pencil-alt', edit_child_object_path(child_object)) if @current_ability.can? :edit, child_object),
+        oid: link_to(child_object.oid, child_object_path(child_object)) + (with_icon('fa fa-pencil', edit_child_object_path(child_object)) if @current_ability.can? :edit, child_object),
         label: child_object.label,
         caption: child_object.caption,
         width: child_object.width,

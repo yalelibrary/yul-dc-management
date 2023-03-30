@@ -19,7 +19,7 @@ RSpec.describe AdminSetDatatable, type: :datatable, prep_metadata_sources: true 
       expect(output).to include(
         DT_RowId: "admin_set_#{admin_set.id}",
         homepage: "<a href=#{admin_set.homepage}>#{admin_set.homepage}</a>",
-        key: "<a href='/admin_sets/#{admin_set.id}'>#{admin_set.key}</a><a href='/admin_sets/#{admin_set.id}/edit'><i class=\"fa fa-pencil-alt></i>\"</a>",
+        key: "<a href='/admin_sets/#{admin_set.id}'>#{admin_set.key}</a><a href='/admin_sets/#{admin_set.id}/edit'><i class=\"fa fa-pencil></i>\"</a>",
         label: admin_set.key.to_s
       )
     end

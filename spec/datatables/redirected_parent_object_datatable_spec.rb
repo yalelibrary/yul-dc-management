@@ -26,7 +26,7 @@ RSpec.describe RedirectedParentObjectDatatable, type: :datatable, prep_metadata_
       DT_RowId: 2_034_600,
       admin_set: 'brbl',
       authoritative_source: 'ladybird',
-      oid: '<a href="/parent_objects/2034600">2034600</a> <a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil-alt"></i></a> <a target="_blank" href="http://localhost:3000/catalog/2034600">1</a>',
+      oid: '<a href="/parent_objects/2034600">2034600</a> <a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil"></i></a> <a target="_blank" href="http://localhost:3000/catalog/2034600">1</a>',
       redirect_to: redirect_to,
       visibility: 'Redirect'
     )
