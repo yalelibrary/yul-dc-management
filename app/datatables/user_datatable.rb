@@ -26,7 +26,7 @@ class UserDatatable < ApplicationDatatable
   def data
     records.map do |user|
       {
-        netid: link_to(user.uid, user_path(user)) + with_icon('fa fa-pencil-alt', edit_user_path(user)),
+        netid: link_to(user.uid, user_path(user)) + with_icon('fa fa-pencil', edit_user_path(user)),
         email: user.email,
         first_name: user.first_name,
         last_name: user.last_name,

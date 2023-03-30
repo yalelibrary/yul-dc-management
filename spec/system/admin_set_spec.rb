@@ -111,7 +111,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
     it "display admin edit form" do
       visit admin_sets_path
       within "tr#admin_set_#{admin_set.id}" do
-        page.find(:css, 'svg.fa-pencil-alt').click
+        page.find(:css, 'svg.fa-pencil').click
       end
       expect(find_field('Key').value).to eq('admin-set-key')
       expect(find_field('Label').value).to eq('admin-set-label')

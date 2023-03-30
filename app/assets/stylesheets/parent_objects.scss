@@ -7,8 +7,14 @@ DEFAULT DESKTOP STYLING
   cursor: all-scroll;
 }
 
+.child-list {
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
 .child-list ol {
-  margin-left: 60px;
+  margin-left: -22px;
 }
 
 .delete-item-container,
@@ -17,11 +23,13 @@ DEFAULT DESKTOP STYLING
   padding-top: 10px;
 }
 
-.delete-item-container {
+.delete-item-container,
+.update-item-container {
   grid-template-columns: 0.25fr 1fr;
 }
 
-.delete-item-label {
+.delete-item-label,
+.update-item-label {
   margin-bottom: 6px;
   font-size: 18px;
   font-weight: bold;
@@ -38,29 +46,55 @@ DEFAULT DESKTOP STYLING
   color: $delete_button_text;
 }
 
+.fa-filter,
+.fa-filter-circle-xmark {
+  color: $dark_grey;
+  padding: 5px;
+  border: 5px solid $light_medium_grey;
+  border-radius: 5px;
+}
+
+.fa-filter {
+  font-size: 28px;
+}
+
+.fa-filter-circle-xmark {
+  font-size: 27px;
+}
+
+.hidden {
+  display: none;
+}
+
 .metadata-block {
   display: flex;
   flex-flow: row wrap;
+  border: 2px solid $light_grey;
 }
 
-.metadata-block dt {
+.metadata-block tr:nth-child(even) {
+  background-color: $lighter_grey;
+}
+
+.metadata-block td {
   font-size: 14px;
   color: $medium_grey;
   font-family: $mallory_medium, Arial, Helvetica, sans-serif !important;
-  font-weight: 500;
-  float: left;
-  width: 20%;
-  margin-top: 5px;
+  padding-top: 10px;
 }
 
-.metadata-block dd {
-  font-size: 14px;
-  color: $medium_grey;
-  font-family: $mallory_medium, Arial, Helvetica, sans-serif !important;
-  font-weight: 500;
-  float: right;
-  width: 80%;
-  margin-top: 5px;
+#parent-show {
+  display: grid;
+  grid-template: 'a b' auto;
+}
+
+#parent-show em {
+  grid-area: a;
+}
+
+#parent-show table {
+  grid-area: b;
+  margin-left: 5px;
 }
 
 .show-header {
@@ -71,10 +105,6 @@ DEFAULT DESKTOP STYLING
   padding-top: 1.5%;
   width: 82%;
   position: relative;
-}
-
-.update-item-container {
-  grid-template-columns: 0.75fr 1fr;
 }
 
 .update-item-button {

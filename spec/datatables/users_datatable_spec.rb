@@ -19,7 +19,7 @@ RSpec.describe UserDatatable, type: :datatable do
       output = UserDatatable.new(datatable_sample_params(columns), view_context: user_datatable_view_mock(user.id, user.uid)).data
       expect(output.size).to eq(1)
       expect(output[0]).to include(
-        netid: "<a href='/management/users/#{user.id}'>#{user.uid}</a><a href='/management/users/#{user.id}/edit'><i class=\"fa fa-pencil-alt\"></i></a>",
+        netid: "<a href='/management/users/#{user.id}'>#{user.uid}</a><a href='/management/users/#{user.id}/edit'><i class=\"fa fa-pencil\"></i></a>",
         email: user.email.to_s,
         first_name: user.first_name.to_s,
         last_name: user.last_name.to_s,
@@ -41,7 +41,7 @@ RSpec.describe UserDatatable, type: :datatable do
       output = UserDatatable.new(datatable_sample_params(columns), view_context: user_datatable_view_mock(user.id, user.uid)).data
       expect(output.size).to eq(1)
       expect(output[0]).to include(
-        netid: "<a href='/management/users/#{user.id}'>#{user.uid}</a><a href='/management/users/#{user.id}/edit'><i class=\"fa fa-pencil-alt\"></i></a>",
+        netid: "<a href='/management/users/#{user.id}'>#{user.uid}</a><a href='/management/users/#{user.id}/edit'><i class=\"fa fa-pencil\"></i></a>",
         email: user.email.to_s,
         first_name: user.first_name.to_s,
         last_name: user.last_name.to_s,

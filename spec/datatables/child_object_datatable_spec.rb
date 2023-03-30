@@ -24,7 +24,7 @@ RSpec.describe ChildObjectDatatable, type: :datatable, prep_metadata_sources: tr
 
     expect(output.size).to eq(1)
     expect(output).to include(
-      oid: "<a href=\"/child_objects/1\">1</a><a href=\"/management/child_objects/10736292/edit\"><i class=\"fa fa-pencil-alt\"></i></a>",
+      oid: "<a href=\"/child_objects/1\">1</a><a href=\"/management/child_objects/10736292/edit\"><i class=\"fa fa-pencil\"></i></a>",
       label: nil,
       caption: 'MyString',
       width: 1,
