@@ -200,7 +200,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
 
       it "includes the rights statment" do
-        within("dl.metadata-block") do
+        within(".metadata-block") do
           expect(page).to have_content("The use of this image may be subject to the")
         end
       end
