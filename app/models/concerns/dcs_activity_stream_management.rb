@@ -36,14 +36,22 @@ module DcsActivityStreamManagement
 
   def mc_activity_stream_check
     md5_metadata_hash = Digest::MD5.hexdigest(dcs_metadata.to_json)
-    dcs_activity_stream_update = DcsActivityStreamUpdate.find_by(oid: oid)&.first
+
+    dcs_activity_stream_update = DcsActivityStreamUpdate.find_by(oid: oid)
     action_type = dcs_activity_stream_update.nil? ? "Create" : "Update"
+
     return if !dcs_activity_stream_update.nil? && dcs_activity_stream_update.md5_metadata_hash == md5_metadata_hash
 
     dcs_activity_stream_update = dcs_activity_stream_update.nil? ? DcsActivityStreamUpdate.new : dcs_activity_stream_update
+
     dcs_activity_stream_update.md5_metadata_hash = md5_metadata_hash
     dcs_activity_stream_update.oid = oid unless dcs_activity_stream_update.nil?
     dcs_activity_stream_update.save! if send_dcs_activity_stream_update(action_type)
+  end
+
+  def mc_activity_stream_delete
+    dcs_activity_stream_delete = DcsActivityStreamUpdate.find_by(oid: oid)
+    dcs_activity_stream_delete.delete if !dcs_activity_stream_delete.nil? && send_dcs_activity_stream_update("Delete")
   end
 
   def send_dcs_activity_stream_update(action_type)

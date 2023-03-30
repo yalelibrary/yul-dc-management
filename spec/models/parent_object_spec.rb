@@ -777,6 +777,45 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
     end
 
+    context "with vpn true" do
+      around do |example|
+        original_vpn = ENV['VPN']
+        ENV['VPN'] = "true"
+        original_flags = ENV['FEATURE_FLAGS']
+        ENV['FEATURE_FLAGS'] = "#{ENV['FEATURE_FLAGS']}|ACTIVITY-SEND|" unless original_flags&.include?("|ACTIVITY-SEND|")
+        example.run
+        ENV['VPN'] = original_vpn
+        ENV['FEATURE_FLAGS'] = original_flags
+      end
+
+      before do
+        stub_full_text_not_found('2005512')
+        stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1")
+            .to_return(status: 200, body: { "title" => ["data"] }.to_json)
+        stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/515305")
+            .to_return(status: 200, body: { "title" => ["data"] }.to_json)
+        allow(S3Service).to receive(:upload_if_changed).and_return(true)
+      end
+
+      it "get dcs activity changes when parent changes" do
+        stub_full_text_not_found('2005512')
+        stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity/dcs/oid/2005512/Create")
+            .to_return(status: 200)
+        parent_object.extent_of_digitization = 'dcs test'
+        parent_object.save!
+        expect(DcsActivityStreamUpdate.exists?(oid: 2_005_512)).to eq true
+      end
+
+      it "get dcs activity changes when get failed" do
+        stub_full_text_not_found('2005512')
+        stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity/dcs/oid/2005512/Create")
+            .to_return(status: 404)
+        parent_object.extent_of_digitization = 'dcs test'
+        parent_object.save!
+        expect(DcsActivityStreamUpdate.exists?(oid: 2_005_512)).to eq false
+      end
+    end
+
     context 'with a bib but no barcode' do
       let(:parent_object) { FactoryBot.build(:parent_object, oid: '16712419', bib: '1289001') }
 

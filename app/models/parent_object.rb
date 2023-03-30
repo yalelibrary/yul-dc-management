@@ -33,6 +33,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_destroy :delayed_jobs_deletion
   after_destroy :pdf_deletion
   after_destroy :digital_object_delete
+  after_destroy :mc_activity_stream_delete
   paginates_per 50
   validates :digitization_funding_source, length: { maximum: 255 }
   # rubocop:disable Metrics/LineLength
