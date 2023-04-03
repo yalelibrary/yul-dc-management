@@ -38,7 +38,8 @@ class ParentObjectDatatable < ApplicationDatatable
       extent_of_digitization: { source: "ParentObject.extent_of_digitization", cond: :string_eq, searchable: true, options: ["Completely digitized", "Partially digitized"], orderable: true },
       digitization_note: { source: "ParentObject.digitization_note", cond: :like, searchable: true, orderable: true },
       digitization_funding_source: { source: "ParentObject.digitization_funding_source", cond: :like, searchable: true, orderable: true },
-      project_identifier: { source: "ParentObject.project_identifier", searchable: true, orderable: true }
+      project_identifier: { source: "ParentObject.project_identifier", searchable: true, orderable: true },
+      created_at: { source: "ParentObject.created_at", searchable: true, orderable: true }
     }
   end
   # rubocop: enable Metrics/MethodLength
@@ -69,7 +70,8 @@ class ParentObjectDatatable < ApplicationDatatable
         digitization_note: parent_object.digitization_note,
         digitization_funding_source: parent_object.digitization_funding_source,
         DT_RowId: parent_object.oid,
-        project_identifier: parent_object.project_identifier
+        project_identifier: parent_object.project_identifier,
+        created_at: parent_object.created_at
       }
     end
   end
