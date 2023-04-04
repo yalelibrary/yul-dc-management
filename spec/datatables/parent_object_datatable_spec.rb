@@ -15,8 +15,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
     oid = '2034600'
 
     stub_metadata_cloud(oid)
-    FactoryBot.create(:parent_object, oid: oid, admin_set: admin_set, project_identifier: '67', digital_object_source: "Preservica", preservica_uri: "/preservica_uri")
-
+    po = FactoryBot.create(:parent_object, oid: oid, admin_set: admin_set, project_identifier: '67', digital_object_source: "Preservica", preservica_uri: "/preservica_uri")
     output = ParentObjectDatatable.new(datatable_sample_params(columns), view_context: parent_object_datatable_view_mock, current_ability: Ability.new(user)).data
 
     expect(output.size).to eq(1)
@@ -44,7 +43,8 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       last_voyager_update: nil,
       oid: '<a href="/parent_objects/2034600">2034600</a> <a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil"></i></a> <a target="_blank" href="http://localhost:3000/catalog/2034600">1</a>',
       project_identifier: '67',
-      visibility: 'Private'
+      visibility: 'Private',
+      created_at: po.created_at
     )
     # rubocop:enable Metrics/LineLength
   end

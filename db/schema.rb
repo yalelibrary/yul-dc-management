@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_27_231942) do
+ActiveRecord::Schema.define(version: 2023_04_03_212042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -201,6 +201,7 @@ ActiveRecord::Schema.define(version: 2023_03_27_231942) do
     t.index ["barcode"], name: "index_parent_objects_on_barcode"
     t.index ["bib"], name: "index_parent_objects_on_bib"
     t.index ["call_number"], name: "index_parent_objects_on_call_number"
+    t.index ["created_at"], name: "index_parent_objects_on_created_at"
     t.index ["holding"], name: "index_parent_objects_on_holding"
     t.index ["item"], name: "index_parent_objects_on_item"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
