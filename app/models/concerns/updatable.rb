@@ -76,7 +76,7 @@ module Updatable
       next unless parent_object
       sets << ', ' + parent_object.admin_set.key
       split_sets = sets.split(',').uniq.reject(&:blank?)
-      admin_set = editable_admin_set(row['admin_set'], oid, index)
+      admin_set = editable_admin_set(row['admin_set'], oid, index) unless row['admin_set'].blank?
       self.admin_set = split_sets.join(', ')
       save!
       next if redirect.present? && !validate_redirect(redirect)
@@ -87,7 +87,7 @@ module Updatable
       metadata_source = row['source'].presence || parent_object.authoritative_metadata_source.metadata_cloud_name
       next unless validate_metadata_source(metadata_source, index)
       setup_for_background_jobs(parent_object, metadata_source)
-      parent_object.admin_set = admin_set
+      parent_object.admin_set = admin_set unless admin_set.nil?
       parent_object.update!(processed_fields)
       trigger_setup_metadata(parent_object)
 
