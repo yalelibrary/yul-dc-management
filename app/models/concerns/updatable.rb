@@ -99,21 +99,21 @@ module Updatable
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
 
-    # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
-    def editable_admin_set(admin_set_key, oid, index)
-      admin_sets_hash = {}
-      admin_sets_hash[admin_set_key] ||= AdminSet.find_by(key: admin_set_key)
-      admin_set = admin_sets_hash[admin_set_key]
-      if admin_set.blank?
-        batch_processing_event("Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}", 'Skipped Row')
-        return false
-      elsif !current_ability.can?(:add_member, admin_set)
-        batch_processing_event("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{oid}", 'Permission Denied')
-        return false
-      else
-        admin_set
-      end
+  # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
+  def editable_admin_set(admin_set_key, oid, index)
+    admin_sets_hash = {}
+    admin_sets_hash[admin_set_key] ||= AdminSet.find_by(key: admin_set_key)
+    admin_set = admin_sets_hash[admin_set_key]
+    if admin_set.blank?
+      batch_processing_event("Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}", 'Skipped Row')
+      return false
+    elsif !current_ability.can?(:add_member, admin_set)
+      batch_processing_event("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{oid}", 'Permission Denied')
+      return false
+    else
+      admin_set
     end
+  end
 
   def remove_child_blanks(row, child_object)
     blankable = %w[caption label]
