@@ -77,6 +77,7 @@ module Updatable
       sets << ', ' + parent_object.admin_set.key
       split_sets = sets.split(',').uniq.reject(&:blank?)
       admin_set = editable_admin_set(row['admin_set'], oid, index) unless row['admin_set'].nil?
+      next if admin_set == false
       self.admin_set = split_sets.join(', ')
       save!
       next if redirect.present? && !validate_redirect(redirect)
