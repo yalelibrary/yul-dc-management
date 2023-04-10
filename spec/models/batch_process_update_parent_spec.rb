@@ -5,13 +5,14 @@ require 'rails_helper'
 RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
-  let(:admin_set) { FactoryBot.create(:admin_set) }
+  let(:admin_set) { FactoryBot.create(:admin_set, key: "brbl") }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids.csv")) }
   let(:csv_small) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example.csv")) }
   let(:csv_missing) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_missing.csv")) }
   let(:csv_invalid) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_invalid.csv")) }
   let(:csv_blanks) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_blanks.csv")) }
   let(:csv_invalid_blanks) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_invalid_blanks.csv")) }
+  let(:csv_new_admin_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_new_admin_set.csv")) }
 
   before do
     stub_metadata_cloud("2034600")
@@ -135,6 +136,25 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_updated.rights_statement).to be_nil
       expect(po_updated.viewing_direction).to be_nil
       expect(po_updated.visibility).to eq "Yale Community Only"
+    end
+    it 'can update a parent objects admin set' do
+      expect do
+        batch_process.file = csv_upload
+        batch_process.save
+        batch_process.create_new_parent_csv
+      end.to change { ParentObject.count }.from(0).to(5)
+      po_original = ParentObject.find_by(oid: 2_034_600)
+      expect(po_original.visibility).to eq "Private"
+      expect(po_original.admin_set.key).to eq "brbl"
+      update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
+      expect do
+        update_batch_process.file = csv_new_admin_set
+        update_batch_process.save
+        update_batch_process.update_parent_objects
+      end.not_to change { ParentObject.count }.from(5)
+      po_updated = ParentObject.find_by(oid: 2_034_600)
+      expect(po_updated.visibility).to eq "Public"
+      expect(po_updated.admin_set.key).to eq "sml"
     end
   end
 
