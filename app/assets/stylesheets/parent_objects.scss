@@ -13,8 +13,13 @@ DEFAULT DESKTOP STYLING
   overflow-x: auto;
 }
 
-.child-list ol {
-  margin-left: -22px;
+.child-list-ol{
+  list-style-position: inside;
+}
+
+.child-list-ol li {
+  position: relative;
+  margin-left: -40px;
 }
 
 .delete-item-container,
