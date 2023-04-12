@@ -106,14 +106,6 @@ DEFAULT DESKTOP STYLING
   display: flex;
 }
 
-#parent-show em {
-  grid-area: a;
-}
-
-#parent-show table {
-  grid-area: b;
-}
-
 .show-header {
   font-family: $yale_new_roman, 'Times New Roman', Times, serif !important;
   font-size: 1.5rem;
