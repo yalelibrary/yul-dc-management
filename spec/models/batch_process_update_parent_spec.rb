@@ -13,6 +13,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:csv_blanks) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_blanks.csv")) }
   let(:csv_invalid_blanks) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_invalid_blanks.csv")) }
   let(:csv_new_admin_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_new_admin_set.csv")) }
+  let(:pre_preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_pre_preservica.csv")) }
+  let(:csv_preservica) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_preservica.csv")) }
 
   before do
     stub_metadata_cloud("2034600")
@@ -20,12 +22,44 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     stub_metadata_cloud("16414889")
     stub_metadata_cloud("14716192")
     stub_metadata_cloud("16854285")
+    stub_preservica_aspace_single # oid: 200000000
+    stub_preservica_login
     stub_ptiffs_and_manifests
     login_as(:user)
     batch_process.user_id = user.id
+    fixtures = %w[preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5/children
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Access
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Preservation
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Access
+                  preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Preservation
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1
+                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations
+                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Access
+                  preservica/api/entity/information-objects/f44ba97e-af2b-498e-b118-ed1247822f44/representations/Preservation
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1]
+
+    fixtures.each do |fixture|
+      stub_request(:get, "https://test#{fixture}").to_return(
+        status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
+      )
+    end
+    stub_preservica_tifs_set_of_three
   end
 
   around do |example|
+    preservica_host = ENV['PRESERVICA_HOST']
+    preservica_creds = ENV['PRESERVICA_CREDENTIALS']
+    ENV['PRESERVICA_HOST'] = "testpreservica"
+    ENV['PRESERVICA_CREDENTIALS'] = '{"brbl": {"username":"xxxxx", "password":"xxxxx"}}'
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
     original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
@@ -33,6 +67,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     example.run
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
     ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
+    ENV['PRESERVICA_HOST'] = preservica_host
+    ENV['PRESERVICA_CREDENTIALS'] = preservica_creds
   end
 
   describe "batch update parent" do
@@ -53,11 +89,14 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_original.aspace_uri).to be_nil
       expect(po_original.barcode).to be_nil
       expect(po_original.bib).to be_nil
+      expect(po_original.digital_object_source).to eq "None"
       expect(po_original.digitization_note).to be_nil
       expect(po_original.display_layout).to be_nil
       expect(po_original.extent_of_digitization).to be_nil
       expect(po_original.holding).to be_nil
       expect(po_original.item).to be_nil
+      expect(po_original.preservica_representation_type).to be_nil
+      expect(po_original.preservica_uri).to be_nil
       expect(po_original.rights_statement).to be_nil
       expect(po_original.viewing_direction).to be_nil
       expect(po_original.visibility).to eq "Private"
@@ -79,11 +118,14 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_updated.aspace_uri).to eq "/repositories/11/archival_objects/515305"
       expect(po_updated.barcode).to eq "39002102340669"
       expect(po_updated.bib).to eq "12307100"
+      expect(po_updated.digital_object_source).to eq "None"
       expect(po_updated.digitization_note).to eq "5678"
       expect(po_updated.display_layout).to eq "paged"
       expect(po_updated.extent_of_digitization).to eq "Completely digitized"
       expect(po_updated.holding).to eq "temporary"
       expect(po_updated.item).to eq "reel"
+      expect(po_original.preservica_representation_type).to be_nil
+      expect(po_original.preservica_uri).to be_nil
       expect(po_updated.rights_statement).to eq "The use of this image may be subject to the copyright law of the United States"
       expect(po_updated.viewing_direction).to eq "left-to-right"
       expect(po_updated.visibility).to eq "Public"
@@ -207,7 +249,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     end
   end
 
-  context "with a parent_object valid values" do
+  context "updating to blank a ParentObject with valid fields" do
     before do # setup po with some valid values
       batch_process.file = csv_upload
       batch_process.save
@@ -280,6 +322,31 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(update_batch_process.batch_ingest_events_count).to eq 2
       expect(update_batch_process.batch_ingest_events.first.reason).to eq "Parent 2034600 did not update value for source because it can not be blanked."
       expect(update_batch_process.batch_ingest_events.second.reason).to eq "Parent 2034600 did not update value for visibility because it can not be blanked."
+    end
+  end
+
+  context "updating a ParentObject from an import with valid preservica fields" do
+    it "can update preservica fields and get new children from preservica" do
+      expect do
+        batch_process.file = pre_preservica_parent
+        batch_process.save
+        batch_process.create_new_parent_csv
+      end.to change { ParentObject.count }.from(0).to(1)
+      po_original = ParentObject.find_by(oid: 200_000_000)
+      expect(po_original.digital_object_source).to eq "None"
+      expect(po_original.preservica_representation_type).to be_nil
+      expect(po_original.preservica_uri).to be_nil
+      expect(po_original.child_objects.count).to eq 0
+
+      update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
+      update_batch_process.file = csv_preservica
+      update_batch_process.save
+      update_batch_process.update_parent_objects
+      po_updated = ParentObject.find_by(oid: 200_000_000)
+      expect(po_updated.digital_object_source).to eq "Preservica"
+      expect(po_updated.preservica_representation_type).to eq "Preservation"
+      expect(po_updated.preservica_uri).to eq "/preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5"
+      expect(po_updated.child_objects.count).to eq 3
     end
   end
 end
