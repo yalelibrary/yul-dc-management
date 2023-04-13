@@ -91,6 +91,7 @@ module Updatable
       parent_object.admin_set = admin_set unless admin_set.nil?
       parent_object.update!(processed_fields)
       trigger_setup_metadata(parent_object)
+      parent_object.create_child_records if row['preservica_uri'].present?
 
       processing_event_for_parent(parent_object)
     end
@@ -164,7 +165,8 @@ module Updatable
   end
 
   def validate_field(parent_object, row)
-    fields = ['aspace_uri', 'barcode', 'bib', 'digitization_note', 'holding', 'item', 'project_identifier', 'rights_statement', 'redirect_to', 'digitization_funding_source']
+    fields = ['aspace_uri', 'barcode', 'bib', 'digital_object_source', 'digitization_funding_source', 'digitization_note', 'holding', 'item',
+              'preservica_representation_type', 'preservica_uri', 'project_identifier', 'rights_statement', 'redirect_to']
     validation_fields = { "display_layout" => 'viewing_hints', "extent_of_digitization" => 'extent_of_digitizations', "viewing_direction" => 'viewing_directions', "visibility" => 'visibilities' }
     row, blanks = remove_blanks(row, parent_object)
     processed_fields = {}
