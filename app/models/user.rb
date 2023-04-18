@@ -8,7 +8,7 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates_uniqueness_of :uid, message: "already exists."
+  validates :uid, uniqueness: { message: "already exists." }
 
   has_many :batch_processes
   has_many :users_roles
