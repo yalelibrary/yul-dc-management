@@ -60,7 +60,7 @@ class SetupMetadataJob < ApplicationJob
     ptiff_jobs_queued = false
     parent_object.child_objects.each do |child|
       parent_object.current_batch_process&.setup_for_background_jobs(child, nil)
-      if child.pyramidal_tiff.height_and_width? && S3Service.s3_exists?(child.remote_ptiff_path)
+      if child.pyramidal_tiff.height_and_width? && !child.pyramidal_tiff.force_update && S3Service.s3_exists?(child.remote_ptiff_path)
         child.processing_event("PTIFF exists on S3, not converting: #{child.oid}", 'ptiff-ready-skipped')
       else
         path = Pathname.new(child.access_master_path)
