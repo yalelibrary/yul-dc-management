@@ -91,6 +91,55 @@ module CsvExportable
   # rubocop:enable Lint/UselessAssignment
 
   ########################
+  # Parent Metadata Export
+  ########################
+
+  def export_parent_metadata
+    return nil unless batch_action == 'export parent metadata'
+    csv_rows = []
+    self.admin_set = ''
+    sets = admin_set
+    parent_objects_array.each do |po|
+      sets << ', ' + po.admin_set.key
+      split_sets = sets.split(',').uniq.reject(&:blank?)
+      self.admin_set = split_sets.join(', ')
+      save!
+      row = [po.oid, po.admin_set.key, po.source_name,
+        po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+        po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
+        po.last_ladybird_update, po.last_voyager_update,
+        po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
+        po.digitization_note, po.digitization_funding_source, po.project_identifier]
+      csv_rows << row
+    end
+    add_error_rows(csv_rows)
+    csv_rows.sort_by! { |row| [row[0].to_i, row[2].to_i] }
+    output_csv = CSV.generate do |csv|
+      csv << parent_headers
+      csv_rows.each { |row| csv << row }
+    end
+    save_to_s3(output_csv, self)
+    output_csv
+  end
+
+  def parent_objects_array
+    arr = []
+    oids.each_with_index do |oid, index|
+      begin
+        po = ParentObject.find(oid.to_i)
+        if current_ability.can?(:read, po)
+          arr << po
+        else
+          (@error_rows ||= []) << { id: oid, csv_message: 'Access denied for parent object', batch_message: "Skipping row [#{index + 2}] due to parent permissions: #{oid}" }
+        end
+      rescue ActiveRecord::RecordNotFound
+        (@error_rows ||= []) << { id: oid, csv_message: 'Parent Not Found in database', batch_message: "Skipping row [#{index + 2}] due to parent not found: #{oid}" }
+      end
+    end
+    arr
+  end
+
+  ########################
   # Child Object Export
   ########################
 

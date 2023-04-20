@@ -37,8 +37,10 @@
     <% if S3Service.s3_exists?(@batch_process.remote_csv_path, bucket = ENV['SAMPLE_BUCKET']) %>
       <% if @batch_process.batch_action == 'export all parent objects by admin set' %>
         <%= @batch_process.file_name && @batch_process.batch_action == 'export all parent objects by admin set' ? link_to(@batch_process.created_file_name, S3Service.presigned_url(@batch_process.remote_csv_path, 600, bucket = ENV['SAMPLE_BUCKET'])) : 'n/a' %>
-      <% else %>
+      <% elsif @batch_process.batch_action == 'export child oids' %>
         <%= @batch_process.file_name && @batch_process.batch_action == 'export child oids' ? link_to(@batch_process.created_file_name, S3Service.presigned_url(@batch_process.remote_csv_path, 600, bucket = ENV['SAMPLE_BUCKET'])) : 'n/a' %>
+      <% elsif @batch_process.batch_action == 'export parent metadata' %>
+        <%= @batch_process.file_name && @batch_process.batch_action == 'export parent metadata' ? link_to(@batch_process.created_file_name, S3Service.presigned_url(@batch_process.remote_csv_path, 600, bucket = ENV['SAMPLE_BUCKET'])) : 'n/a' %>
       <% end %>
     <% else %>
       The file is being generated.
