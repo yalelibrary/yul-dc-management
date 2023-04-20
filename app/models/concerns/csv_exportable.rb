@@ -94,22 +94,25 @@ module CsvExportable
   # Parent Metadata Export
   ########################
 
+  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def export_parent_metadata
     return nil unless batch_action == 'export parent metadata'
     csv_rows = []
     self.admin_set = ''
     sets = admin_set
-    parent_objects_array.each do |po|
+    parent_objects_export_array.each do |po|
       sets << ', ' + po.admin_set.key
       split_sets = sets.split(',').uniq.reject(&:blank?)
       self.admin_set = split_sets.join(', ')
       save!
       row = [po.oid, po.admin_set.key, po.source_name,
-        po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
-        po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
-        po.last_ladybird_update, po.last_voyager_update,
-        po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
-        po.digitization_note, po.digitization_funding_source, po.project_identifier]
+             po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+             po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
+             po.last_ladybird_update, po.last_voyager_update,
+             po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
+             po.digitization_note, po.digitization_funding_source, po.project_identifier]
       csv_rows << row
     end
     add_error_rows(csv_rows)
@@ -121,8 +124,11 @@ module CsvExportable
     save_to_s3(output_csv, self)
     output_csv
   end
+  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
-  def parent_objects_array
+  def parent_objects_export_array
     arr = []
     oids.each_with_index do |oid, index|
       begin

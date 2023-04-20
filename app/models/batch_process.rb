@@ -24,9 +24,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # SHARED BY ALL BATCH ACTIONS: ------------------------------------------------------------------- #
 
   # LISTS AVAILABLE BATCH ACTIONS
+  # rubocop:disable Metrics/LineLength
   def self.batch_actions
     ['create parent objects', 'update parent objects', 'update child objects caption and label', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set', 'export parent metadata', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status', 'resync with preservica']
   end
+  # rubocop:enable Metrics/LineLength
 
   # LOGS BATCH PROCESSING MESSAGES AND SETS STATUSES
   def batch_processing_event(message, status = 'info')
