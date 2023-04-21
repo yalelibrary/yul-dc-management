@@ -8,6 +8,7 @@ gem 'activerecord-nulldb-adapter'
 # Reoccurring jobs
 gem 'activejob-scheduler', git: 'https://github.com/yalelibrary/activejob-scheduler', branch: 'main'
 gem 'ajax-datatables-rails'
+gem "aws-sdk-cloudwatch"
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap', '~> 4.5'
