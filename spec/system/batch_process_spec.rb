@@ -187,6 +187,31 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         end
       end
 
+      it "uploads a CSV of parent objects in order to create export of parent objects metadata" do
+        expect(BatchProcess.count).to eq 0
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/export_parent_objects.csv")
+        select("Export Parent Metadata")
+        click_button("Submit")
+        expect(BatchProcess.count).to eq 1
+        expect(BatchProcess.last.export_parent_metadata).to include "2034600"
+        expect(BatchProcess.last.export_parent_metadata).to include "Preservica"
+        expect(BatchProcess.last.export_parent_metadata).to include "/preservica_uri"
+        expect(BatchProcess.last.export_parent_metadata).to include "brbl"
+      end
+
+      it "uploads a CSV of parent objects in order to create export of parent objects metadata fails 2005512 row due to admin set permissions" do
+        expect(BatchProcess.count).to eq 0
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/export_parent_objects_invalid_admin_set.csv")
+        select("Export Parent Metadata")
+        click_button("Submit")
+        expect(BatchProcess.count).to eq 1
+        expect(BatchProcess.last.export_parent_metadata).to include "2034600"
+        expect(BatchProcess.last.export_parent_metadata).to include "Preservica"
+        expect(BatchProcess.last.export_parent_metadata).to include "/preservica_uri"
+        expect(BatchProcess.last.export_parent_metadata).to include "brbl"
+        expect(BatchProcess.last.batch_ingest_events.map(&:reason)).to include "Skipping row [3] due to parent permissions: 2005512"
+      end
+
       it "uploads a CSV of admin set in order to create export of parent object oids" do
         expect(BatchProcess.count).to eq 0
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/export_parent_oids.csv")
