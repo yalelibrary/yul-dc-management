@@ -2,7 +2,6 @@
 
 # Sends metrics to AWS
 class AwsMetrics
-
   METRIC_NAMESPACE = 'DCS'
   METRIC_NAME = 'ActiveJob'
   METRIC_DIMENSION_CLUSTER = 'Cluster'
@@ -10,7 +9,7 @@ class AwsMetrics
   METRIC_DIMENSION_EVENT = 'JobEvent'
   METRIC_FEATURE_FLAG = '|AWS_METRICS|'
   # Class names of jobs allowed to generate metrics
-  LOGGABLE_JOBS = %w[GeneratePdfJob GeneratePtiffJob]
+  LOGGABLE_JOBS = %w[GeneratePdfJob GeneratePtiffJob].freeze
 
   def initialize
     @cloudwatch_client = Aws::CloudWatch::Client.new
@@ -18,6 +17,7 @@ class AwsMetrics
     @cluster_name = ENV['CLUSTER_NAME'] || "unknown"
   end
 
+  # rubocop:disable Metrics/MethodLength
   def publish_active_job_metric_data(job_name, event_name)
     unless @metrics_enabled
       Rails.logger.debug "[AwsMetrics] Cloudwatch logging feature flag is not enabled."
@@ -27,7 +27,7 @@ class AwsMetrics
       Rails.logger.debug "[AwsMetrics] #{job_name} not loggable to Cloudwatch"
       return
     end
-    Rails.logger.debug "[AwsMetrics] #{Time.now} #{job_name} #{event_name}"
+    Rails.logger.debug "[AwsMetrics] #{Time.now.utc} #{job_name} #{event_name}"
     @cloudwatch_client.put_metric_data(
       namespace: METRIC_NAMESPACE,
       metric_data: [
@@ -53,4 +53,5 @@ class AwsMetrics
       ]
     )
   end
+  # rubocop:enable Metrics/MethodLength
 end

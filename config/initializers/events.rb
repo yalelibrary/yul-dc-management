@@ -6,7 +6,7 @@ require './app/lib/aws_metrics'
 # enqueue_retry.active_job
 # discard.active_job
 # perform.active_job        ALWAYS FIRED
-ActiveSupport::Notifications.subscribe /active_job/ do |event|
+ActiveSupport::Notifications.subscribe(/active_job/) do |event|
   logger = Rails.logger
   begin
     job_name = event.payload[:job].class.to_s
