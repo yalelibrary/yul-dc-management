@@ -9,6 +9,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:no_oid_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "parent_no_oid.csv")) }
   let(:no_admin_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "parent_no_admin_set.csv")) }
   let(:no_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "parent_no_source.csv")) }
+  let(:aspace_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "aspace_parent.csv")) }
 
   around do |example|
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
@@ -34,6 +35,15 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     context "Create Parent Object batch process with a csv" do
+      it "can create a parent object from aspace" do
+        expect do
+          batch_process.file = aspace_parent
+          batch_process.save
+        end.to change { ParentObject.count }.from(0).to(1)
+        po = ParentObject.first
+        expect(po.bib).to eq('4320085')
+        expect(po.aspace_uri).to eq('/repositories/12/archival_objects/781086')
+      end
       it "can create a parent_object" do
         expect do
           batch_process.file = no_oid_parent

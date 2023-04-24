@@ -210,6 +210,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         oid = row['oid']
         metadata_source = row['source']
         set = row['admin_set']
+
         if metadata_source.blank? && (set.present? && row.count > 2)
           batch_processing_event("Skipping row [#{index + 2}]. Source cannot be blank.", 'Skipped Row')
           next
@@ -228,6 +229,16 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         else
           parent_object = ParentObject.find_or_initialize_by(oid: oid)
         end
+
+        aspace_uri = row['aspace_uri']
+        bib = row['bib']
+        holding = row['holding']
+        item = row['item']
+
+        parent_object.aspace_uri = aspace_uri
+        parent_object.bib = bib
+        parent_object.holding = holding
+        parent_object.item = item
 
         # Only runs on newly created parent objects
         unless parent_object.new_record?
