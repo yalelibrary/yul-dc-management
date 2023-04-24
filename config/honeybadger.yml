@@ -1,2 +1,8 @@
 ---
 api_key: <%= ENV.fetch('HONEYBADGER_API_KEY_MANAGEMENT', '') %>
+env:  <%= ENV.fetch('CLUSTER_NAME', 'local') %>
+development_environments:
+  - development
+  - test
+  - cucumber
+  - local
