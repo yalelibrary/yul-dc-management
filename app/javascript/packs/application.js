@@ -386,6 +386,13 @@ $( document ).on('turbolinks:load', function() {
 
 // This will change the filter icon on the parent object show page
 $( document ).on('turbolinks:load', function() {
+  var values = $('.table-row').find('td:eq(1)');
+  values.each(function() {
+    var value = $(this).text()
+    if (value == '') {
+      $(this).closest('tr').toggleClass('hidden');
+    }
+  })
   $('#filter-icon').click(function() {
     $(this).find('svg').toggleClass('fa-filter fa-filter-circle-xmark');
     var values = $('.table-row').find('td:eq(1)');
