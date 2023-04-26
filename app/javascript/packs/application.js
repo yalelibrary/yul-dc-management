@@ -392,9 +392,11 @@ $( document ).on('turbolinks:load', function() {
     if (value == '') {
       $(this).closest('tr').toggleClass('hidden');
     }
+    $('tr:not(.hidden):odd').css('background-color', '#F2F2F2');
+    $('tr:not(.hidden):even').css('background-color', '#FFFFFF');
   })
   $('#filter-icon').click(function() {
-    $(this).find('svg').toggleClass('fa-filter-circle-xmark fa-filter');
+    $(this).find('svg').toggleClass('fa-filter-circle-xmark fa-filter ');
     var values = $('.table-row').find('td:eq(1)');
     values.each(function() {
       var value = $(this).text()
