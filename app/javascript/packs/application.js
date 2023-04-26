@@ -394,7 +394,7 @@ $( document ).on('turbolinks:load', function() {
     }
   })
   $('#filter-icon').click(function() {
-    $(this).find('svg').toggleClass('fa-filter fa-filter-circle-xmark');
+    $(this).find('svg').toggleClass('fa-filter-circle-xmark fa-filter');
     var values = $('.table-row').find('td:eq(1)');
     values.each(function() {
       var value = $(this).text()
