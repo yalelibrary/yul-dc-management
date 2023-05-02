@@ -70,12 +70,6 @@ METADATA_FIELDS = {
       'extent_ssim'
     ]
   },
-  extentOfDigitization: {
-    label: 'Extent of Digitization',
-    solr_fields: [
-      'extentOfDigitization_ssim'
-    ]
-  },
   projection: {
     label: 'Projection',
     solr_fields: [
@@ -165,6 +159,12 @@ METADATA_FIELDS = {
       'containerGrouping_ssim'
     ],
     digital_only: true
+  },
+  extentOfDigitization: {
+    label: 'Extent of Digitization',
+    solr_fields: [
+      'extentOfDigitization_ssim'
+    ]
   },
   findingAid: {
     label: 'Finding Aid',
