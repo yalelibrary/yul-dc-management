@@ -45,6 +45,7 @@ class ParentObjectDatatable < ApplicationDatatable
   end
   # rubocop: enable Metrics/MethodLength
 
+  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Rails/OutputSafety,Metrics/MethodLength
   def data
     records.map do |parent_object|
@@ -78,6 +79,7 @@ class ParentObjectDatatable < ApplicationDatatable
     end
   end
   # rubocop:enable Rails/OutputSafety,Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   def extent_of_full_text(parent_object)
     children_with_ft = false
