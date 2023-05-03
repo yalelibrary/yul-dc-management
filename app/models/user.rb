@@ -29,6 +29,11 @@ class User < ApplicationRecord
 
   def deactivate
     self.deactivated = true
+    remove_role :administrator
+    remove_role :approver
+    remove_role :editor
+    remove_role :sysadmin
+    remove_role :viewer
   end
 
   def token
