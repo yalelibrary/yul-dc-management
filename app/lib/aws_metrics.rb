@@ -9,7 +9,7 @@ class AwsMetrics
   METRIC_DIMENSION_EVENT = 'JobEvent'
   METRIC_FEATURE_FLAG = '|AWS_METRICS|'
   # Class names of jobs allowed to generate metrics
-  LOGGABLE_JOBS = %w[GeneratePdfJob GeneratePtiffJob].freeze
+  LOGGABLE_JOBS = %w[SolrIndexJob SyncFromPreservicaJob GeneratePdfJob GeneratePtiffJob GenerateManifestJob ActivityStreamJob ProblemReportJob].freeze
 
   def initialize
     @cloudwatch_client = Aws::CloudWatch::Client.new
