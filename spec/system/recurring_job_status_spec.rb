@@ -4,14 +4,13 @@ require 'rails_helper'
 RSpec.describe 'Recurring Jobs', type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
   let(:running_activity_stream_log) { FactoryBot.create(:running_activity_stream_log) }
-  let(:running_activity_stream_log_active) { FactoryBot.create(:running_activity_stream_log, run_time: DateTime.now - 8.hours) }
+  let(:running_activity_stream_log_active) { FactoryBot.create(:running_activity_stream_log, run_time: DateTime.current - 8.hours) }
 
   def queue_adapter_for_test
     ActiveJob::QueueAdapters::DelayedJobAdapter.new
   end
 
   context 'Reoccuring Job page' do
-
     before do
       login_as user
       visit reoccurring_jobs_path

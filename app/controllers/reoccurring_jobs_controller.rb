@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 class ReoccurringJobsController < ApplicationController
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable SafeNavigationChain
   def index
     if params['check_status']
       @check_status = true
       @scheduled_job_exists = Delayed::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ActivityStreamJob%').exists?
       @manual_job_exists = Delayed::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ActivityStreamManualJob%').exists?
-      @run_time = ActivityStreamLog.where(status: "Running").last&.run_time&.to_datetime <= DateTime.now - 12.hours
+      @run_time = ActivityStreamLog.where(status: "Running").last&.run_time&.to_datetime <= DateTime.current - 12.hours
     end
     @reoccurring_jobs = ActivityStreamLog.all
     respond_to do |format|
@@ -14,6 +16,8 @@ class ReoccurringJobsController < ApplicationController
       format.json { render json: ReoccurringJobDatatable.new(params, view_context: view_context) }
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable SafeNavigationChain
 
   # POST ActivityStreamReader
   def create_recurring
@@ -31,7 +35,7 @@ class ReoccurringJobsController < ApplicationController
     elsif params['reset_log']
       logger = ActivityStreamLog.where(status: "Running").last
       logger.status = "Manually Reset"
-      logger.save
+      logger.save!
     elsif ActivityStreamLog.where(status: "Running").exists?
       respond_to do |format|
         format.html { redirect_to reoccurring_jobs_url, notice: 'An update is already in progress.' }
