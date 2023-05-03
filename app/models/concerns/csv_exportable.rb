@@ -150,7 +150,7 @@ module CsvExportable
   ########################
 
   def child_headers
-    ['parent_oid', 'child_oid', 'order', 'parent_title', 'call_number', 'label', 'caption', 'viewing_hint']
+    ['parent_oid', 'child_oid', 'order', 'parent_title', 'call_number', 'label', 'caption', 'viewing_hint', 'full_text']
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -167,7 +167,7 @@ module CsvExportable
       split_sets = sets.split(',').uniq.reject(&:blank?)
       self.admin_set = split_sets.join(', ')
       save!
-      row = [co.parent_object.oid, co.oid, co.order, parent_title.presence, co.parent_object.call_number, co.label, co.caption, co.viewing_hint]
+      row = [co.parent_object.oid, co.oid, co.order, parent_title.presence, co.parent_object.call_number, co.label, co.caption, co.viewing_hint, full_text_status(co)]
       csv_rows << row
     end
     add_error_rows(csv_rows)
@@ -181,6 +181,10 @@ module CsvExportable
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+
+  def full_text_status(child_object)
+    child_object.full_text == true ? "Yes" : "No"
+  end
 
   def lookup_parent_title(co, parent_title_hash)
     parent_title_hash[co.parent_object.oid] ||= co.parent_object.authoritative_json&.[]('title')&.first

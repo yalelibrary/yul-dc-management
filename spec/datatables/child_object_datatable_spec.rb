@@ -32,6 +32,7 @@ RSpec.describe ChildObjectDatatable, type: :datatable, prep_metadata_sources: tr
       order: 1,
       parent_object: 2_004_628,
       original_oid: nil,
+      full_text: 'No',
       preservica_content_object_uri: '/content_object_uri',
       preservica_generation_uri: '/generation_uri',
       preservica_bitstream_uri: '/bitstream_uri',

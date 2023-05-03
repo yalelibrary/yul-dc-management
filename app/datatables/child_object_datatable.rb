@@ -23,6 +23,7 @@ class ChildObjectDatatable < ApplicationDatatable
       order: { source: 'ChildObject.order' },
       parent_object: { source: 'ChildObject.parent_object_oid' },
       original_oid: { source: 'ChildObject.original_oid' },
+      full_text: { source: 'ChildObject.full_text' },
       preservica_content_object_uri: { source: 'ChildObject.preservica_content_object_uri' },
       preservica_generation_uri: { source: 'ChildObject.preservica_generation_uri' },
       preservica_bitstream_uri: { source: 'ChildObject.preservica_bitstream_uri' },
@@ -42,6 +43,7 @@ class ChildObjectDatatable < ApplicationDatatable
         order: child_object.order,
         parent_object: child_object.parent_object_oid,
         original_oid: child_object.original_oid,
+        full_text: full_text_status(child_object).html_safe,
         preservica_content_object_uri: child_object.preservica_content_object_uri,
         preservica_generation_uri: child_object.preservica_generation_uri,
         preservica_bitstream_uri: child_object.preservica_bitstream_uri,
@@ -51,6 +53,10 @@ class ChildObjectDatatable < ApplicationDatatable
     end
   end
   # rubocop:enable Rails/OutputSafety
+
+  def full_text_status(child_object)
+    child_object.full_text == true ? "Yes" : "No"
+  end
 
   def actions(child_object)
     actions = []
