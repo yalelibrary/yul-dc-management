@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user) { FactoryBot.create(:user) }
+  let(:admin_set) { FactoryBot.create(:admin_set) }
+  let(:permission_set) { FactoryBot.create(:permission_set) }
 
   it "has the expected fields" do
     u = described_class.new
@@ -22,10 +24,20 @@ RSpec.describe User, type: :model do
   end
 
   describe 'deactivate!' do
-    it 'deactivates a user' do
+    it 'deactivates a user and removes all roles' do
+      user.add_role :sysadmin
+      user.add_role :viewer, admin_set
+      user.add_role :editor, admin_set
+      user.add_role :administrator, permission_set
+      user.add_role :approver, permission_set
       expect(user.deactivated).to eq(false)
       user.deactivate!
       expect(user.deactivated).to eq(true)
+      expect(user.has_role?(:sysadmin)).to eq(false)
+      expect(user.has_role?(:editor, admin_set)).to eq(false)
+      expect(user.has_role?(:viewer, admin_set)).to eq(false)
+      expect(user.has_role?(:administrator, permission_set)).to eq(false)
+      expect(user.has_role?(:approver, permission_set)).to eq(false)
     end
   end
 
