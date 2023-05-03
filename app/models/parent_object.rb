@@ -235,6 +235,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       co.preservica_content_object_uri = value[:content_uri]
       co.preservica_generation_uri = value[:generation_uri]
       co.preservica_bitstream_uri = value[:bitstream_uri]
+      co.sha512_checksum = value[:sha512_checksum]
       co.last_preservica_update = Time.current
       replace_preservica_tif(co)
       co.save!

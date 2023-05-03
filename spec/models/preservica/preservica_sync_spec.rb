@@ -152,7 +152,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Child object count and order is the same.  No update needed.')
     end
 
-    it 'can recognize when there is a checksum mismatch' do
+    it 'can recognize when there is a checksum mismatch and will pull the new checksum' do
       File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
       File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
       File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
@@ -178,8 +178,9 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         sync_batch_process.file = preservica_sync
         sync_batch_process.save!
       end.not_to change { ChildObject.count }
-      expect(sync_batch_process.batch_ingest_events_count).to be 1
-      expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Checksum mismatch found on parent object: 200000000')
+      po = ParentObject.find(200_000_000)
+      co = po.child_objects.first
+      expect(co.sha512_checksum).not_to eq '123'
       File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
       File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
       File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
