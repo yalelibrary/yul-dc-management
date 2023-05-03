@@ -6,6 +6,8 @@ class ReoccurringJobsController < ApplicationController
       @check_status = true
       @scheduled_job_exists = Delayed::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ActivityStreamJob%').exists?
       @manual_job_exists = Delayed::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ActivityStreamManualJob%').exists?
+      byebug
+      @run_time = ActivityStreamLog.where(status: "Running").last&.run_time&.to_datetime <= DateTime.now - 12.hours
     end
     @reoccurring_jobs = ActivityStreamLog.all
     respond_to do |format|
@@ -27,6 +29,10 @@ class ReoccurringJobsController < ApplicationController
   def create
     if params['queue_recurring']
       create_recurring
+    elsif params['reset_log']
+      logger = ActivityStreamLog.where(status: "Running").last
+      logger.status = "Manual Reset"
+      logger.save
     elsif ActivityStreamLog.where(status: "Running").exists?
       respond_to do |format|
         format.html { redirect_to reoccurring_jobs_url, notice: 'An update is already in progress.' }
