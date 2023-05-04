@@ -8,7 +8,7 @@ class ReoccurringJobsController < ApplicationController
       @check_status = true
       @scheduled_job_exists = Delayed::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ActivityStreamJob%').exists?
       @manual_job_exists = Delayed::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ActivityStreamManualJob%').exists?
-      @run_time = ActivityStreamLog.where(status: "Running").last&.run_time&.to_datetime <= DateTime.current - 12.hours
+      @run_time = true if ActivityStreamLog.last&.status == "Running" && ActivityStreamLog.last&.run_time&.to_datetime <= DateTime.current - 12.hours
     end
     @reoccurring_jobs = ActivityStreamLog.all
     respond_to do |format|
