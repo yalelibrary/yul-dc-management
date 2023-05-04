@@ -230,7 +230,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     preservica_children_hash.each_value do |value|
       co = ChildObject.find_by(parent_object_oid: oid, preservica_content_object_uri: value[:content_uri])
       next if co.nil?
-      co.pyramidal_tiff.force_update = true if co.preservica_generation_uri != value[:generation_uri]
+      co.pyramidal_tiff.force_update = true
       co.order = value[:order]
       co.preservica_content_object_uri = value[:content_uri]
       co.preservica_generation_uri = value[:generation_uri]

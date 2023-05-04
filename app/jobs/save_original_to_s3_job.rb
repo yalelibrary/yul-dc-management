@@ -15,8 +15,8 @@ class SaveOriginalToS3Job < ApplicationJob
       Rails.logger.error "Not copying image from #{parent_object.oid}. Parent object must have Public or Yale Community Only visibility."
       return
     end
-    # check if file already exists on S3
-    if S3Service.s3_exists_for_download?(remote_download_path(child_object_oid))
+    # check if file already exists on S3 and if it is a replacement
+    if S3Service.s3_exists_for_download?(remote_download_path(child_object_oid)) && !child_object.pyramidal_tiff.force_update
       Rails.logger.error "Not copying image.  Image already present on S3."
       return
     end
