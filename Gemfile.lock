@@ -84,6 +84,9 @@ GEM
       execjs
     aws-eventstream (1.1.1)
     aws-partitions (1.349.0)
+    aws-sdk-cloudwatch (1.44.0)
+      aws-sdk-core (~> 3, >= 3.99.0)
+      aws-sigv4 (~> 1.1)
     aws-sdk-core (3.104.4)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
@@ -483,6 +486,7 @@ DEPENDENCIES
   activerecord-nulldb-adapter
   ajax-datatables-rails
   amazing_print (>= 1.2.1)
+  aws-sdk-cloudwatch
   aws-sdk-s3
   bixby
   bootsnap (>= 1.4.2)
