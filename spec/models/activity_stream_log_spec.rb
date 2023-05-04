@@ -8,7 +8,7 @@ RSpec.describe ActivityStreamLog, type: :model do
   it "has all expected fields" do
     asl
 
-    expect(asl.run_time).to eq "2020-06-12 18:27:44"
+    expect(asl.run_time).to eq "2023-05-01 18:27:44"
     expect(asl.activity_stream_items).to eq 673
     expect(asl.retrieved_records).to eq 4
     expect(asl.status).to eq "Success"
