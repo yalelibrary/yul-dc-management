@@ -5,7 +5,6 @@ RSpec.describe 'Recurring Jobs', type: :system, prep_metadata_sources: true, pre
   let(:user) { FactoryBot.create(:sysadmin_user) }
   let(:running_logger) { FactoryBot.create(:running_activity_stream_log) }
   let(:running_activity_stream_log_active) { FactoryBot.create(:running_activity_stream_log, run_time: DateTime.current - 8.hours) }
-  # let(:running_logger) { FactoryBot.build(:running_activity_stream_log, status: 'Running') }
 
   def queue_adapter_for_test
     ActiveJob::QueueAdapters::DelayedJobAdapter.new

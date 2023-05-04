@@ -14,7 +14,7 @@
         <%= link_to 'Check status of the Recurring Job', reoccurring_jobs_path(check_status:'true'), method: 'get', class: 'btn button secondary-button' %>
       <% end %>
       <% if @check_status %>
-        <% if @run_time %>
+        <% if @expired_logger %>
           <% if current_user.has_role?(:sysadmin)%>
             <%= button_to 'Manually Reset', reoccurring_jobs_path(reset_log: 'true'), method: 'post', class: 'btn button secondary-button' %>
           <% end %>
