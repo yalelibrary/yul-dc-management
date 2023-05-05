@@ -75,7 +75,7 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
       expect(response).to have_http_status(204)
     end
     it 'displays permission set not found' do
-      get terms_api_path(12)
+      get terms_api_path(8765432)
       expect(response).to have_http_status(400)
       expect(response.body).to eq("{\"title\":\"Permission Set not found\"}")
     end
