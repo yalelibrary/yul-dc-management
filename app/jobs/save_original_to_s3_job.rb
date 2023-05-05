@@ -7,6 +7,7 @@ class SaveOriginalToS3Job < ApplicationJob
     100
   end
 
+  # rubocop:disable Metrics/AbcSize
   def perform(child_object_oid)
     # check parent visibility is either public or YCO
     child_object = ChildObject.find(child_object_oid)
@@ -15,8 +16,8 @@ class SaveOriginalToS3Job < ApplicationJob
       Rails.logger.error "Not copying image from #{parent_object.oid}. Parent object must have Public or Yale Community Only visibility."
       return
     end
-    # check if file already exists on S3
-    if S3Service.s3_exists_for_download?(remote_download_path(child_object_oid))
+    # check if file already exists on S3 and if it is a replacement
+    if S3Service.s3_exists_for_download?(remote_download_path(child_object_oid)) && !child_object.pyramidal_tiff.force_update
       Rails.logger.error "Not copying image.  Image already present on S3."
       return
     end
@@ -29,6 +30,7 @@ class SaveOriginalToS3Job < ApplicationJob
     metadata = { 'width': child_object.width.to_s, 'height': child_object.height.to_s }
     S3Service.upload_image_for_download(Pathname.new(child_object.access_master_path), remote_download_path(child_object_oid), "image/tiff", metadata)
   end
+  # rubocop:enable Metrics/AbcSize
 
   def remote_download_path(oid)
     "download/tiff/#{Partridge::Pairtree.oid_to_pairtree(oid)}/#{oid}.tif"
