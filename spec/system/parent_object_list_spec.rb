@@ -44,9 +44,9 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       find("input[placeholder='OID']").set("2002")
       expect(page).to have_content("2002826")
       expect(page).not_to have_content("2004548")
-      # click_on("Clear Filters")
-      # expect(page).to have_content("2002826")
-      # expect(page).to have_content("2004548")
+      click_on("Clear Filters")
+      expect(page).to have_content("2002826")
+      expect(page).to have_content("2004548")
     end
   end
 end
