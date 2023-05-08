@@ -65,7 +65,7 @@ RSpec.describe 'Users', type: :system, js: true do
     it 'displays the users roles' do
       expect(page).to have_content('User Details')
 
-      within('table', text: 'Admin Set') do
+      within('table', text: 'Set') do
         expect(page).to have_css('td', text: admin_set.label.to_s)
         expect(page).to have_css('td', text: "editor")
       end
