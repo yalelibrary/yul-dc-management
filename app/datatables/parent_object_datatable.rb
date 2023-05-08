@@ -38,7 +38,7 @@ class ParentObjectDatatable < ApplicationDatatable
       extent_of_digitization: { source: "ParentObject.extent_of_digitization", cond: :string_eq, searchable: true, options: ["Completely digitized", "Partially digitized"], orderable: true },
       digitization_note: { source: "ParentObject.digitization_note", cond: :like, searchable: true, orderable: true },
       digitization_funding_source: { source: "ParentObject.digitization_funding_source", cond: :like, searchable: true, orderable: true },
-      full_text: { source: "ParentObject.full_text", searchable: true, orderable: true },
+      full_text: { source: "ChildObject.full_text", searchable: true, orderable: true },
       project_identifier: { source: "ParentObject.project_identifier", searchable: true, orderable: true },
       created_at: { source: "ParentObject.created_at", searchable: true, orderable: true }
     }
@@ -115,6 +115,6 @@ class ParentObjectDatatable < ApplicationDatatable
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    ParentObject.accessible_by(@current_ability, :read).joins(:authoritative_metadata_source, :admin_set).where("visibility != 'Redirect'")
+    ParentObject.includes(:child_objects).accessible_by(@current_ability, :read).joins(:authoritative_metadata_source, :admin_set).where("visibility != 'Redirect'").references(:child_objects)
   end
 end
