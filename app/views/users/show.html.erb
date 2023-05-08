@@ -29,14 +29,14 @@
 <table class='table table-striped user-roles-table table-bordered' aria-label='User Details'>
   <thead class='thead-dark'>
     <tr>
-      <th scope='col'> Admin Set </th>
+      <th scope='col'> Set </th>
       <th scope='col'> Role </th>
     </tr>
   </thead>
   <tbody>
     <% @user.roles.excluding(@user.roles.where(name: 'sysadmin')).each do |role| %>
       <tr>
-        <td><%= link_to role.resource.label, admin_set_path(role.resource)  %></td>
+        <td><%= link_to role.resource.label, role.resource_type == 'AdminSet' ? admin_set_path(role.resource) : permission_set_path(role.resource) %></td>
         <td><%= role.name %></td>
       </tr>
     <% end %>
