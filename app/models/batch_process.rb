@@ -363,8 +363,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       next unless user_update_child_permission(child_object, child_object.parent_object)
       path = Pathname.new(child_object.access_master_path)
       file_size = File.exist?(path) ? File.size(path) : 0
-      GeneratePtiffJob.set(queue: :large_ptiff).perform_later(child_object, self) if file_size > SetupMetadataJob::ONE_GB
-      GeneratePtiffJob.perform_later(child_object, self) if file_size <= SetupMetadataJob::ONE_GB
+      GeneratePtiffJob.set(queue: :large_ptiff).perform_later(child_object, self) if file_size > SetupMetadataJob::FIVE_HUNDRED_MB
+      GeneratePtiffJob.perform_later(child_object, self) if file_size <= SetupMetadataJob::FIVE_HUNDRED_MB
       attach_item(child_object)
       child_object.processing_event("Ptiff Queued", "ptiff-queued")
     end
