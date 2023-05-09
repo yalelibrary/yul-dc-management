@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :users_roles
   has_many :permission_requests
 
+  after_update :remove_roles
+
   def self.system_user
     system_user = User.find_by_uid('System')
     unless system_user
@@ -29,7 +31,10 @@ class User < ApplicationRecord
 
   def deactivate
     self.deactivated = true
-    # roles = self.roles
+  end
+
+  def remove_roles
+    return unless deactivated
     roles.each do |role|
       if role.name == 'sysadmin'
         remove_role :sysadmin
