@@ -197,6 +197,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.export_parent_metadata).to include "Preservica"
         expect(BatchProcess.last.export_parent_metadata).to include "/preservica_uri"
         expect(BatchProcess.last.export_parent_metadata).to include "brbl"
+        expect(BatchProcess.last.export_parent_metadata).to include "full_text"
       end
 
       it "uploads a CSV of parent objects in order to create export of parent objects metadata fails 2005512 row due to admin set permissions" do
@@ -225,6 +226,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.parent_output_csv).to include "Preservica"
         expect(BatchProcess.last.parent_output_csv).to include "/preservica_uri"
         expect(BatchProcess.last.parent_output_csv).to include "brbl"
+        expect(BatchProcess.last.parent_output_csv).to include "full_text"
         expect(BatchProcess.last.parent_output_csv).not_to include "2005512"
       end
 

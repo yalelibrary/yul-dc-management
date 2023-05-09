@@ -12,7 +12,7 @@ module CsvExportable
      'container_grouping', 'bib', 'holding', 'item', 'barcode', 'aspace_uri',
      'digital_object_source', 'preservica_uri', 'last_ladybird_update',
      'last_voyager_update', 'last_aspace_update', 'last_id_update', 'visibility',
-     'extent_of_digitization', 'digitization_note', 'digitization_funding_source', 'project_identifier']
+     'extent_of_digitization', 'digitization_note', 'digitization_funding_source', 'project_identifier', 'full_text']
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -40,8 +40,27 @@ module CsvExportable
        po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
        po.last_ladybird_update, po.last_voyager_update,
        po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
-       po.digitization_note, po.digitization_funding_source, po.project_identifier]
+       po.digitization_note, po.digitization_funding_source, po.project_identifier, extent_of_full_text(po)]
     end
+  end
+
+  def extent_of_full_text(parent_object)
+    children_with_ft = false
+    children_without_ft = false
+
+    parent_object.child_objects.each do |object|
+      if object.full_text
+        children_with_ft = true
+      else
+        children_without_ft = true
+      end
+
+      break if children_with_ft && children_without_ft
+    end
+
+    return "Partial" if children_with_ft && children_without_ft # if some children have full text and others dont
+    return "None" unless children_with_ft # if none of children have full_text
+    "Yes"
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -112,7 +131,7 @@ module CsvExportable
              po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
              po.last_ladybird_update, po.last_voyager_update,
              po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
-             po.digitization_note, po.digitization_funding_source, po.project_identifier]
+             po.digitization_note, po.digitization_funding_source, po.project_identifier, extent_of_full_text(po)]
       csv_rows << row
     end
     add_error_rows(csv_rows)

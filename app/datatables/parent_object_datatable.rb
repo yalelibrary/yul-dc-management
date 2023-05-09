@@ -38,12 +38,14 @@ class ParentObjectDatatable < ApplicationDatatable
       extent_of_digitization: { source: "ParentObject.extent_of_digitization", cond: :string_eq, searchable: true, options: ["Completely digitized", "Partially digitized"], orderable: true },
       digitization_note: { source: "ParentObject.digitization_note", cond: :like, searchable: true, orderable: true },
       digitization_funding_source: { source: "ParentObject.digitization_funding_source", cond: :like, searchable: true, orderable: true },
+      full_text: { source: "ChildObject.full_text", searchable: true, orderable: true },
       project_identifier: { source: "ParentObject.project_identifier", searchable: true, orderable: true },
       created_at: { source: "ParentObject.created_at", searchable: true, orderable: true }
     }
   end
   # rubocop: enable Metrics/MethodLength
 
+  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Rails/OutputSafety,Metrics/MethodLength
   def data
     records.map do |parent_object|
@@ -70,12 +72,33 @@ class ParentObjectDatatable < ApplicationDatatable
         digitization_note: parent_object.digitization_note,
         digitization_funding_source: parent_object.digitization_funding_source,
         DT_RowId: parent_object.oid,
+        full_text: extent_of_full_text(parent_object),
         project_identifier: parent_object.project_identifier,
         created_at: parent_object.created_at
       }
     end
   end
   # rubocop:enable Rails/OutputSafety,Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
+
+  def extent_of_full_text(parent_object)
+    children_with_ft = false
+    children_without_ft = false
+
+    parent_object.child_objects.each do |object|
+      if object.full_text
+        children_with_ft = true
+      else
+        children_without_ft = true
+      end
+
+      break if children_with_ft && children_without_ft
+    end
+
+    return "Partial" if children_with_ft && children_without_ft # if some children have full text and others dont
+    return "None" unless children_with_ft # if none of children have full_text
+    "Yes"
+  end
 
   def oid_column(parent_object)
     result = []
@@ -92,6 +115,6 @@ class ParentObjectDatatable < ApplicationDatatable
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    ParentObject.accessible_by(@current_ability, :read).joins(:authoritative_metadata_source, :admin_set).where("visibility != 'Redirect'")
+    ParentObject.includes(:child_objects).accessible_by(@current_ability, :read).joins(:authoritative_metadata_source, :admin_set).where("visibility != 'Redirect'").references(:child_objects)
   end
 end
