@@ -2,7 +2,7 @@
 
 class SetupMetadataJob < ApplicationJob
   queue_as :metadata
-  FIVE_HUNDRED_MB = 65_536_000
+  FIVE_HUNDRED_MB = 524_288_000
 
   def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     parent_object.current_batch_process = current_batch_process
