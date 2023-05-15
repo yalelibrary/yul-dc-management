@@ -252,8 +252,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def replace_preservica_tif(co)
-    PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type).map.with_index(1) do |child_hash, _index|
-      preservica_copy_to_access(child_hash, co.oid) if co.preservica_content_object_uri == child_hash[:preservica_content_object_uri]
+    PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type).map do |child_hash|
+      preservica_copy_to_access(child_hash, co.oid)
     end
   end
 
