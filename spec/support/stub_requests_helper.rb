@@ -70,8 +70,10 @@ module StubRequestHelper
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Access
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3r/representations/Preservation
-                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/2
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1
+                  preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/2/bitstreams/1
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Access
                   preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a5e3d/representations/Preservation
@@ -85,21 +87,18 @@ module StubRequestHelper
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1
                   preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1]
 
-    changing_fixtures = %w[preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1]
-
     fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
         status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
       )
     end
 
-    changing_fixtures.each do |fixture|
-      stub_request(:get, "https://test#{fixture}").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
-      ).times(2).then.to_return(
-        status: 200, body: File.open(File.join(fixture_path, "#{fixture}_new.xml"))
-      )
-    end
+    # changing fixtures
+    stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations").to_return(
+      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations.xml"))
+    ).times(2).then.to_return(
+      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations_2.xml"))
+    )
   end
   # rubocop:enable Metrics/MethodLength
 

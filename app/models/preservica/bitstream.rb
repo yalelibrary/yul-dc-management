@@ -51,7 +51,7 @@ class Preservica::Bitstream
   end
 
   def uri
-    @bitstream_uri ||= "/api/entity/content-objects/#{@content_id}/generations/#{@generation_id}/bitstreams/#{@id}"
+    @bitstream_uri ||= xml.xpath('/BitstreamResponse/AdditionalInformation/Self').text.strip
   end
 
   private
