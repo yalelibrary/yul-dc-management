@@ -11,7 +11,7 @@ module PdfRepresentable
     date
     sourceTitle
     rights
-    extentOfDigitization
+    extent_of_digitization
   ].freeze
 
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize

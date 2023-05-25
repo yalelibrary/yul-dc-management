@@ -160,11 +160,12 @@ METADATA_FIELDS = {
     ],
     digital_only: true
   },
-  extentOfDigitization: {
+  extent_of_digitization: {
     label: 'Extent of Digitization',
     solr_fields: [
       'extentOfDigitization_ssim'
-    ]
+    ],
+    digital_only: true
   },
   findingAid: {
     label: 'Finding Aid',
