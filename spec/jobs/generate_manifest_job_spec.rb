@@ -21,6 +21,7 @@ RSpec.describe GenerateManifestJob, type: :job do
       let(:user) { FactoryBot.create(:user) }
       let(:metadata_source) { FactoryBot.create(:metadata_source) }
       let(:parent_object) { FactoryBot.create(:parent_object, authoritative_metadata_source: metadata_source) }
+      let(:child_object) { FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object) }
       let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
 
       it 'notifies on Solr index failure' do
@@ -31,7 +32,7 @@ RSpec.describe GenerateManifestJob, type: :job do
 
       it 'notifies when save fails' do
         allow(parent_object.iiif_presentation).to receive(:save).and_return(false)
-        expect(parent_object).to receive(:processing_event).with("IIIF Manifest not saved to S3", "failed")
+        expect(parent_object).to receive(:processing_event).with('IIIF Manifest not saved to S3', 'failed')
         generate_manifest_job.perform(parent_object, batch_process)
       end
 
@@ -39,6 +40,14 @@ RSpec.describe GenerateManifestJob, type: :job do
         allow(parent_object.iiif_presentation).to receive(:save).and_raise('boom!')
         expect(parent_object).to receive(:processing_event)
         expect { generate_manifest_job.perform(parent_object, batch_process) }.to raise_error('boom!')
+      end
+
+      it 'notifies when child does not have dimensions' do
+        child_object.width = nil
+        child_object.height = nil
+        child_object.save
+        expect(parent_object).to receive(:processing_event).with('IIIF Manifest not created.  Child object: 456789 does not have valid dimensions.', 'failed')
+        generate_manifest_job.perform(parent_object, batch_process)
       end
     end
   end
