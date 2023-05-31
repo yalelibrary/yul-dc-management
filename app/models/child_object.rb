@@ -185,6 +185,6 @@ class ChildObject < ApplicationRecord
   end
 
   def extent_of_full_text
-    child_object.full_text == true ? "Yes" : "No"
+    full_text == true ? "Yes" : "No"
   end
 end # rubocop:enable  Metrics/ClassLength

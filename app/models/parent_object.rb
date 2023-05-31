@@ -606,7 +606,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
 
     return "Partial" if children_with_ft && children_without_ft # if some children have full text and others dont
-    return "No" unless children_with_ft # if none of children have full_text
+    return "None" unless children_with_ft # if none of children have full_text
     "Yes"
   end
 
