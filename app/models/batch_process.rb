@@ -235,10 +235,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         parent_object.holding = row['holding']
         parent_object.item = row['item']
 
-        if row['aspace_uri'].present? && row['extent_of_digitization'].blank?
+        if metadata_source == 'aspace' && row['extent_of_digitization'].blank?
           batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}.  Parent objects with ASpace as a source must have an Extent of Digitization value.", 'Skipped Row')
           next
-        elsif row['aspace_uri'].present? && row['extent_of_digitization'].present?
+        elsif metadata_source == 'aspace' && row['extent_of_digitization'].present?
           if row['extent_of_digitization'] == 'Completely digitized' || row['extent_of_digitization'] == 'Partially digitized'
             parent_object.extent_of_digitization = row['extent_of_digitization']
           else
