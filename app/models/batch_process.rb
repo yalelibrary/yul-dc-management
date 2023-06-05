@@ -26,7 +26,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # LISTS AVAILABLE BATCH ACTIONS
   # rubocop:disable Metrics/LineLength
   def self.batch_actions
-    ['create parent objects', 'update parent objects', 'update child objects caption and label', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set', 'export parent metadata', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status', 'resync with preservica']
+    ['create parent objects', 'update parent objects', 'update child objects caption and label', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set', 'export parent metadata', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status', 'reingest with preservica', 'resync with preservica']
   end
   # rubocop:enable Metrics/LineLength
 
@@ -172,6 +172,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         RecreateChildOidPtiffsJob.perform_later(self)
       when 'update fulltext status'
         UpdateFulltextStatusJob.perform_later(self)
+      when 'reingest with preservica'
+        SyncFromPreservicaJob.perform_later(self)
       when 'resync with preservica'
         SyncFromPreservicaJob.perform_later(self)
       end
@@ -479,6 +481,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         batch_processing_event("Parent OID: #{row['oid']} not found in database", 'Skipped Import') if parent_object.nil?
         next
       end
+      update_parent_during_reingest(parent_object)
       next unless validate_preservica_sync(parent_object, row)
       local_children_hash = {}
       parent_object.child_objects.each do |local_co|
@@ -512,11 +515,20 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
 
+  # UPDATE PARENT OBJECT IF REINGEST
+  def update_parent_during_reingest(parent_object)
+    return unless batch_action == 'reingest with preservica'
+    parent_object.digital_object_source = row['digital_object_source']
+    parent_object.preservica_uri = row['preservica_uri']
+    parent_object.preservica_representation_type = row['preservica_representation_type']
+    parent_object.save!
+  end
+
   # SYNC IMAGES FROM PRESERVICA
   def sync_images_preservica(local_children_hash, preservica_children_hash, parent_object)
     if local_children_hash != preservica_children_hash
       setup_for_background_jobs(parent_object, parent_object.source_name)
-      parent_object.sync_from_preservica(local_children_hash, preservica_children_hash)
+      parent_object.sync_from_preservica(local_children_hash, preservica_children_hash, batch_action)
     else
       batch_processing_event("Child object count and order is the same.  No update needed.", "Skipped Row")
     end

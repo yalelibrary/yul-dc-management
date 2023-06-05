@@ -221,21 +221,18 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     PreservicaIngest.insert_all(preservica_ingest_hash)
   end
 
-  def sync_from_preservica(_local_children_hash, preservica_children_hash)
-    # iterate through local hashes and remove any children no longer found on preservica
-    child_objects.each do |co|
-      co.destroy unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
-    end
+  def sync_from_preservica(_local_children_hash, preservica_children_hash, batch_action)
+    clean_from_preservica_sync(batch_action, preservica_children_hash)
     # iterate through preservica and update when local version found
     preservica_children_hash.each_value do |value|
-      co = ChildObject.find_by(parent_object_oid: oid, preservica_content_object_uri: value[:content_uri])
+      co = find_child_for_sync(batch_action)
       next if co.nil?
       co.pyramidal_tiff.force_update = true
       co.order = value[:order]
       co.preservica_content_object_uri = value[:content_uri]
       co.preservica_generation_uri = value[:generation_uri]
       co.preservica_bitstream_uri = value[:bitstream_uri]
-      co.sha512_checksum = value[:sha512_checksum]
+      co.sha512_checksum = value[:checksum]
       co.last_preservica_update = Time.current
       replace_preservica_tif(co)
       co.save!
@@ -245,9 +242,25 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     create_child_records
   end
 
+  def clean_from_preservica_sync(batch_action, preservica_children_hash)
+    return unless batch_action == 'sync with preservica'
+    # iterate through local hashes and remove any children no longer found on preservica
+    child_objects.each do |co|
+      co.destroy unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
+    end
+  end
+
   def found_in_preservica(local_preservica_content_object_uri, preservica_children_hash)
     preservica_children_hash.any? do |_, value|
       value[:content_uri] == local_preservica_content_object_uri
+    end
+  end
+
+  def find_child_for_sync(batch_action)
+    if batch_action == 'sync with preservica'
+      ChildObject.find_by(parent_object_oid: oid, preservica_content_object_uri: value[:content_uri])
+    else # reingest
+      ChildObject.find_by(parent_object_oid: oid, order: value[:order])
     end
   end
 
