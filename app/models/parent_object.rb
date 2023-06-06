@@ -225,7 +225,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     clean_from_preservica_sync(batch_action, preservica_children_hash)
     # iterate through preservica and update when local version found
     preservica_children_hash.each_value do |value|
-      co = find_child_for_sync(batch_action)
+      co = find_child_for_sync(batch_action, value)
       next if co.nil?
       co.pyramidal_tiff.force_update = true
       co.order = value[:order]
@@ -256,11 +256,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def find_child_for_sync(batch_action)
-    if batch_action == 'sync with preservica'
-      ChildObject.find_by(parent_object_oid: oid, preservica_content_object_uri: value[:content_uri])
-    else # reingest
+  def find_child_for_sync(batch_action, value)
+    if batch_action == 'reingest with preservica'
       ChildObject.find_by(parent_object_oid: oid, order: value[:order])
+    else # sync
+      ChildObject.find_by(parent_object_oid: oid, preservica_content_object_uri: value[:content_uri])
     end
   end
 
