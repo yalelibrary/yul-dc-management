@@ -481,7 +481,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         batch_processing_event("Parent OID: #{row['oid']} not found in database", 'Skipped Import') if parent_object.nil?
         next
       end
-      update_parent_during_reingest(parent_object)
+      update_parent_during_reingest(parent_object, row)
       next unless validate_preservica_sync(parent_object, row)
       local_children_hash = {}
       parent_object.child_objects.each do |local_co|
@@ -516,7 +516,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/AbcSize
 
   # UPDATE PARENT OBJECT IF REINGEST
-  def update_parent_during_reingest(parent_object)
+  def update_parent_during_reingest(parent_object, row)
     return unless batch_action == 'reingest with preservica'
     parent_object.digital_object_source = row['digital_object_source']
     parent_object.preservica_uri = row['preservica_uri']
