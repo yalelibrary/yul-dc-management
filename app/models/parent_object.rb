@@ -222,7 +222,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def sync_from_preservica(_local_children_hash, preservica_children_hash, batch_action)
-    clean_from_preservica_sync(batch_action, preservica_children_hash)
+    clean_resync(batch_action, preservica_children_hash)
     # iterate through preservica and update when local version found
     preservica_children_hash.each_value do |value|
       co = find_child_for_sync(batch_action, value)
@@ -237,12 +237,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       replace_preservica_tif(co)
       co.save!
     end
-
+    clean_reingest(batch_action)
     # create child records for any new items in preservica
     create_child_records
   end
 
-  def clean_from_preservica_sync(batch_action, preservica_children_hash)
+  def clean_resync(batch_action, preservica_children_hash)
     return unless batch_action == 'resync with preservica'
     # iterate through local hashes and remove any children no longer found on preservica
     child_objects.each do |co|
@@ -267,6 +267,15 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def replace_preservica_tif(co)
     PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type).map do |child_hash|
       preservica_copy_to_access(child_hash, co.oid)
+    end
+  end
+
+  def clean_reingest(batch_action)
+    return unless batch_action == 'reingest with preservica'
+    # use cos instead of child_objects here because data was not updating on parent object but was updated on child object
+    cos = ChildObject.where(parent_object_oid: oid)
+    cos.each do |co|
+      co.destroy if co.preservica_content_object_uri.nil?
     end
   end
 
