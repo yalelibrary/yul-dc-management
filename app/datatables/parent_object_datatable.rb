@@ -19,7 +19,7 @@ class ParentObjectDatatable < ApplicationDatatable
     @view_columns ||= {
       oid: { source: "ParentObject.oid", cond: :start_with, searchable: true, orderable: true },
       admin_set: { source: "AdminSet.key", cond: :string_eq, searchable: true, options: @set_keys, orderable: true },
-      authoritative_source: { source: "MetadataSource.metadata_cloud_name", cond: :string_eq, searchable: true, options: ["ladybird", "aspace", "ils", "sierra"], orderable: true },
+      authoritative_source: { source: "MetadataSource.metadata_cloud_name", cond: :string_eq, searchable: true, options: metadata_sources, orderable: true },
       child_object_count: { source: "ParentObject.child_object_count", orderable: true },
       call_number: { source: "ParentObject.call_number", searchable: true, orderable: true },
       container_grouping: { source: "ParentObject.container_grouping", searchable: true, orderable: true },
@@ -98,6 +98,10 @@ class ParentObjectDatatable < ApplicationDatatable
     return "Partial" if children_with_ft && children_without_ft # if some children have full text and others dont
     return "None" unless children_with_ft # if none of children have full_text
     "Yes"
+  end
+
+  def metadata_sources
+    ["ladybird", "aspace", "ils", "sierra"]
   end
 
   def oid_column(parent_object)
