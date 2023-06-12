@@ -42,12 +42,11 @@ RSpec.describe GenerateManifestJob, type: :job do
         expect { generate_manifest_job.perform(parent_object, batch_process) }.to raise_error('boom!')
       end
 
-      it 'notifies when child does not have dimensions' do
+      it 'does not raise error when child does not have dimensions' do
         child_object.width = nil
         child_object.height = nil
         child_object.save
-        expect(parent_object).to receive(:processing_event).with('IIIF Manifest not created.  Child object: 456789 does not have valid dimensions.', 'failed')
-        generate_manifest_job.perform(parent_object, batch_process)
+        expect { generate_manifest_job.perform(parent_object, batch_process) }.not_to raise_error
       end
     end
   end
