@@ -183,8 +183,4 @@ class ChildObject < ApplicationRecord
   def batch_connections_for(batch_process)
     batch_connections.where(batch_process: batch_process)
   end
-
-  def extent_of_full_text
-    full_text == true ? "Yes" : "No"
-  end
 end # rubocop:enable  Metrics/ClassLength
