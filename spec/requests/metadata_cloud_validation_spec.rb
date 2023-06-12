@@ -15,9 +15,8 @@ RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources
     ENV['METADATA_CLOUD_HOST'] = original_metadata_cloud_host
   end
 
-
   let(:wrong_version_url) { "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/ladybird/oid/#{oid}?include-children=1" }
-  
+
   let(:oid) { "16371272" }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: '16371272') }
   let(:oid_url) { "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/ladybird/oid/#{oid}?include-children=1" }
@@ -56,10 +55,13 @@ RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources
                                   "children", "abstract", "uri", "recordType"].sort
   end
 
-  it "has the expected fields" do
+  # rubocop:disable Metrics/LineLength
+  it "has the expected sierra fields" do
     data = JSON.parse(sierra_response.body.to_s)
-    expect(data.keys.sort).to eq ["bibId", "callNumber", "children", "creationPlace", "creator", "creatorDisplay", "date", "dateStructured", "dependentUris", "description", "extent", "illustrativeMatter", "itemType", "jsonModelType", "language", "languageCode", "libraryOfCongressClassificationNumber", "orbisBibId", "publisher", "recordType", "source", "subjectHeading", "subjectTopic", "title", "titleStatement", "uri"].sort
+    expect(data.keys.sort).to eq ["bibId", "callNumber", "children", "creationPlace", "creator", "creatorDisplay", "date",
+                                  "dateStructured", "dependentUris", "description", "extent", "illustrativeMatter", "itemType", "jsonModelType", "language", "languageCode", "libraryOfCongressClassificationNumber", "orbisBibId", "publisher", "recordType", "source", "subjectHeading", "subjectTopic", "title", "titleStatement", "uri"].sort
   end
+  # rubocop:enable Metrics/LineLength
 
   it "gets a successful response from the Metadata Cloud" do
     expect(ladybird_source.fetch_record_on_vpn(parent_object)).to include "Manuscript, on parchment, of the books of the Bible from Proverbs through"
