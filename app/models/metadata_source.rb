@@ -79,6 +79,8 @@ class MetadataSource < ApplicationRecord
       "voyager_cloud_url"
     when "aspace"
       "aspace_cloud_url"
+    when "sierra"
+      "sierra_cloud_url"
     end
   end
 

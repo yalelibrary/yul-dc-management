@@ -335,10 +335,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
   def validate_metadata_source(metadata_source, index)
-    if metadata_source == 'aspace' || metadata_source == 'ils' || metadata_source == 'ladybird'
+    if metadata_source == 'aspace' || metadata_source == 'ils' || metadata_source == 'ladybird' || metadata_source == 'sierra'
       true
     else
-      batch_processing_event("Skipping row [#{index + 2}] with unknown metadata source: #{metadata_source}.  Accepted values are 'ladybird', 'aspace', or 'ils'.", 'Skipped Row')
+      batch_processing_event("Skipping row [#{index + 2}] with unknown metadata source: #{metadata_source}.  Accepted values are 'ladybird', 'aspace', 'siera', or 'ils'.", 'Skipped Row')
       false
     end
   end

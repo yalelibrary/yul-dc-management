@@ -48,6 +48,8 @@ class FixtureParsingService
       "V-"
     when "aspace"
       "AS-"
+    when "sierra"
+      "S-"
     end
   end
 end

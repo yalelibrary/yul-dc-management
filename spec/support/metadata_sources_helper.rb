@@ -7,6 +7,7 @@ module MetdataSourcesHelper
       FactoryBot.create(:metadata_source)
       FactoryBot.create(:metadata_source_voyager)
       FactoryBot.create(:metadata_source_aspace)
+      FactoryBot.create(:metadata_source_sierra)
     end
   end
 end
