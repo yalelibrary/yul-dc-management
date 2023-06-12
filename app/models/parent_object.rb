@@ -508,7 +508,17 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def sierra_cloud_url
-    "https://metadata-api-test.library.yale.edu/metadatacloud/api/sierra/bib/#{bib}"
+    raise StandardError, "Bib id required to build Sierra url" unless bib.present?
+    identifier_block = if barcode.present?
+                         "/barcode/#{barcode}?bib=#{bib}"
+                       elsif holding.present?
+                         "/holding/#{holding}?bib=#{bib}"
+                       elsif item.present?
+                         "/item/#{item}?bib=#{bib}"
+                       else
+                         "/bib/#{bib}"
+                       end
+    "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/sierra#{identifier_block}"
   end
 
   def voyager_cloud_url
