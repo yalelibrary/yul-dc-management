@@ -588,7 +588,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def full_text?
     return false unless child_objects.any?
 
-    %w[Partial Yes].include? self.extent_of_full_text
+    %w[Partial Yes].include? extent_of_full_text
   end
 
   def update_fulltext
