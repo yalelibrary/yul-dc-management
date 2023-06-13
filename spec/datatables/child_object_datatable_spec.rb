@@ -16,6 +16,7 @@ RSpec.describe ChildObjectDatatable, type: :datatable, prep_metadata_sources: tr
     parent_object = FactoryBot.create(:parent_object, admin_set: admin_set)
 
     FactoryBot.create(:child_object, parent_object: parent_object,
+                                     extent_of_full_text: 'No',
                                      preservica_content_object_uri: '/content_object_uri',
                                      preservica_generation_uri: '/generation_uri',
                                      preservica_bitstream_uri: '/bitstream_uri')
