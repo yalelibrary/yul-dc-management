@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_18_211745) do
+ActiveRecord::Schema.define(version: 2023_05_31_180611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 2023_04_18_211745) do
     t.text "preservica_bitstream_uri"
     t.string "sha512_checksum"
     t.datetime "last_preservica_update"
+    t.text "extent_of_full_text"
     t.index ["caption"], name: "index_child_objects_on_caption"
     t.index ["label"], name: "index_child_objects_on_label"
     t.index ["oid"], name: "index_child_objects_on_oid", unique: true
@@ -195,6 +196,7 @@ ActiveRecord::Schema.define(version: 2023_04_18_211745) do
     t.datetime "last_preservica_update"
     t.string "digitization_funding_source"
     t.bigint "permission_set_id"
+    t.text "extent_of_full_text"
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
     t.index ["aspace_uri"], name: "index_parent_objects_on_aspace_uri"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"

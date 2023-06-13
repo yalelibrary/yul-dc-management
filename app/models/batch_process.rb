@@ -323,7 +323,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
         parent_object.child_objects.each { |co| attach_item(co) }
         parent_object.processing_event("Parent #{parent_object.oid} is being processed", 'processing-queued')
-        parent_object.update_fulltext_for_children
+        parent_object.update_fulltext
         parent_object.processing_event("Parent #{parent_object.oid} has been updated", 'update-complete')
       else
         batch_processing_event("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{parent_oid}", 'Permission Denied')
