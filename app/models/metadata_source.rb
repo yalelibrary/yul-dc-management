@@ -71,6 +71,10 @@ class MetadataSource < ApplicationRecord
     "#{file_prefix}#{parent_object.oid}.json"
   end
 
+  def self.all_metadata_cloud_names 
+    MetadataSource.distinct.pluck(:metadata_cloud_name) 
+  end
+
   def url_type
     case metadata_cloud_name
     when "ladybird"

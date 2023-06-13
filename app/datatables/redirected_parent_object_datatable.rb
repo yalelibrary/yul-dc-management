@@ -19,7 +19,7 @@ class RedirectedParentObjectDatatable < ApplicationDatatable
     @view_columns ||= {
       oid: { source: "ParentObject.oid", cond: :start_with, searchable: true, orderable: true },
       admin_set: { source: "AdminSet.key", cond: :string_eq, searchable: true, options: @set_keys, orderable: true },
-      authoritative_source: { source: "MetadataSource.metadata_cloud_name", cond: :string_eq, searchable: true, options: metadata_sources, orderable: true },
+      authoritative_source: { source: "MetadataSource.metadata_cloud_name", cond: :string_eq, searchable: true, options: MetadataSource.all_metadata_cloud_names, orderable: true },
       visibility: { source: "ParentObject.visibility", cond: :string_eq, searchable: true, orderable: true },
       redirect_to: { source: "ParentObject.redirect_to", searchable: true, orderable: true }
     }

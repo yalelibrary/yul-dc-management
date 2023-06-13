@@ -503,6 +503,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def sierra_json=(s_record)
     super(s_record)
     return s_record if s_record.blank?
+    self.item = s_record["itemId"] unless s_record["itemId"].zero? 
+    self.last_id_update = DateTime.current
     self.bib = s_record["bibId"]
     self.last_sierra_update = DateTime.current
   end
