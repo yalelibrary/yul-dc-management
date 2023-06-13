@@ -41,10 +41,6 @@ class RedirectedParentObjectDatatable < ApplicationDatatable
   end
   # rubocop:enable Rails/OutputSafety,Metrics/MethodLength
 
-  def metadata_sources
-    ["ladybird", "aspace", "ils", "sierra"]
-  end
-
   def oid_column(parent_object)
     result = []
     result << link_to(parent_object.oid, parent_object_path(parent_object))
