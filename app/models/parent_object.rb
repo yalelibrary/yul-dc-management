@@ -609,6 +609,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
     self.extent_of_full_text = "Partial" if children_with_ft && children_without_ft # if some children have full text and others dont
     self.extent_of_full_text = "None" unless children_with_ft # if none of children have full_text
+    save!
   end
 
   def should_index?
