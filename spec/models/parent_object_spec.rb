@@ -102,6 +102,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           solr_document = parent_of_four.to_solr_full_text.first
           expect(solr_document).not_to be_nil
           expect(solr_document[:has_fulltext_ssi].to_s).to eq "Partial"
+          expect(parent_of_four.extent_of_full_text).to eq "Partial"
         end
         it "does not include nil in child records" do
           child_solr_documents = parent_of_four.to_solr_full_text.second
@@ -123,6 +124,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           expect(solr_document).not_to be_nil
           expect(solr_document[:fulltext_tesim].to_s).to include("много трудившейся")
           expect(solr_document[:has_fulltext_ssi].to_s).to eq "Yes"
+          expect(parent_of_four.extent_of_full_text).to eq "Yes"
         end
       end
     end
