@@ -5,7 +5,7 @@ module DigitalObjectManagement
 
   def digital_object_json_available?
     return false unless child_object_count&.positive?
-    return false unless authoritative_metadata_source && authoritative_metadata_source.metadata_cloud_name == "aspace"
+    return false unless authoritative_metadata_source
     return false unless ['Public', 'Yale Community Only', 'Private'].include? visibility
     return false unless digital_object_title
     return false if redirect_to.present?
@@ -20,7 +20,12 @@ module DigitalObjectManagement
         thumbnailOid: representative_child && representative_child.oid || nil,
         thumbnailCaption: representative_child && representative_child.label || nil,
         archivesSpaceUri: aspace_uri,
+        barcode: barcode,
+        bibId: bib,
         childCount: child_object_count,
+        holdingId: holding,
+        itemId: item,
+        source: authoritative_metadata_source.metadata_cloud_name,
         visibility: visibility }.to_json
   end
 
