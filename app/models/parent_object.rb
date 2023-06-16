@@ -360,7 +360,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                     when "ladybird"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
                     when "sierra"
-                      self.siera_json = MetadataSource.find_by(metadata_cloud_name: "sierra").fetch_record(self)
+                      self.sierra_json = MetadataSource.find_by(metadata_cloud_name: "sierra").fetch_record(self)
                     when "ils"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless bib.present?
                       self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
