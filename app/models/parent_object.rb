@@ -477,8 +477,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def voyager_json=(v_record)
     super(v_record)
     return v_record if v_record.blank?
-    self.holding = v_record["holdingId"] unless v_record["holdingId"].zero?
-    self.item = v_record["itemId"] unless v_record["itemId"].zero?
+    self.holding = v_record["holdingId"] unless v_record["holdingId"].nil?
+    self.item = v_record["itemId"] unless v_record["itemId"].nil?
     self.last_id_update = DateTime.current
     self.last_voyager_update = DateTime.current
   end
