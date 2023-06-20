@@ -28,9 +28,14 @@ RSpec.describe DigitalObjectManagement, type: :model, prep_metadata_sources: tru
   end
 
   describe "with VPN true and FEATURE_FLAG enabled for ILS/Voyager" do
-    before do
+    around do |example|
+      original_vpn = ENV['VPN']
       ENV['VPN'] = "true"
-      ENV['FEATURE_FLAGS'] = "#{ENV['FEATURE_FLAGS']}|DO-ENABLE-ILS|"
+      original_flags = ENV['FEATURE_FLAGS']
+      ENV['FEATURE_FLAGS'] = "#{ENV['FEATURE_FLAGS']}|DO-ENABLE-ILS|" unless original_flags&.include?("|DO-ENABLE-ILS|")
+      example.run
+      ENV['VPN'] = original_vpn
+      ENV['FEATURE_FLAGS'] = original_flags
     end
 
     it "can send digital object updates" do
