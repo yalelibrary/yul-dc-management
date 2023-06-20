@@ -18,7 +18,6 @@ RSpec.describe DigitalObjectManagement, type: :model, prep_metadata_sources: tru
     full_parent_object.bib = '123456789'
     full_parent_object.barcode = '98765432'
     full_parent_object.save!
-    byebug
     expect(full_parent_object.digital_object_json_available?).to be_truthy
     expect(JSON.parse(full_parent_object.generate_digital_object_json)["source"]).to eq("aspace")
     expect(JSON.parse(full_parent_object.generate_digital_object_json)["bibId"]).to eq("123456789")

@@ -4,7 +4,6 @@ module DigitalObjectManagement
   extend ActiveSupport::Concern
 
   def digital_object_json_available?
-    byebug
     return false unless child_object_count&.positive?
     return false unless authoritative_metadata_source && authoritative_metadata_source.metadata_cloud_name == "aspace"
     return false unless ['Public', 'Yale Community Only', 'Private'].include? visibility
