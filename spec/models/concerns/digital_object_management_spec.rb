@@ -3,22 +3,24 @@
 require 'rails_helper'
 
 RSpec.describe DigitalObjectManagement, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
-  let(:ladybird) { 1 }
+  let(:aspace) { 3 }
 
   it "has digital object json with expected fields" do
     full_parent_object = FactoryBot.build(:parent_object,
                                           oid: '45678',
-                                          authoritative_metadata_source_id: ladybird,
+                                          authoritative_metadata_source_id: aspace,
+                                          aspace_uri: '/aspace_uri',
                                           holding: '987654321',
                                           item: '23456789',
                                           child_object_count: 1,
                                           visibility: "Private",
-                                          ladybird_json: { "title": ["test"] })
+                                          aspace_json: { "title": ["test"] })
     full_parent_object.bib = '123456789'
     full_parent_object.barcode = '98765432'
     full_parent_object.save!
+    byebug
     expect(full_parent_object.digital_object_json_available?).to be_truthy
-    expect(JSON.parse(full_parent_object.generate_digital_object_json)["source"]).to eq("ladybird")
+    expect(JSON.parse(full_parent_object.generate_digital_object_json)["source"]).to eq("aspace")
     expect(JSON.parse(full_parent_object.generate_digital_object_json)["bibId"]).to eq("123456789")
     expect(JSON.parse(full_parent_object.generate_digital_object_json)["holdingId"]).to eq("987654321")
     expect(JSON.parse(full_parent_object.generate_digital_object_json)["itemId"]).to eq("23456789")
