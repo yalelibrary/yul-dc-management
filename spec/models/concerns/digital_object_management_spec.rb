@@ -42,13 +42,13 @@ RSpec.describe DigitalObjectManagement, type: :model, prep_metadata_sources: tru
       full_parent_object = FactoryBot.build(:parent_object,
                                             oid: '45678',
                                             authoritative_metadata_source_id: voyager,
-                                            holding: '987654321',
-                                            item: '23456789',
                                             child_object_count: 1,
                                             visibility: "Private",
                                             voyager_json: { "title": ["test"] })
       full_parent_object.bib = '123456789'
       full_parent_object.barcode = '98765432'
+      full_parent_object.holding = '987654321'
+      full_parent_object.item = '23456789'
       full_parent_object.save!
       expect(full_parent_object.digital_object_json_available?).to be_truthy
       expect(JSON.parse(full_parent_object.generate_digital_object_json)["source"]).to eq("ils")
