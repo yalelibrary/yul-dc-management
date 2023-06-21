@@ -3,14 +3,22 @@
 module DigitalObjectManagement
   extend ActiveSupport::Concern
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def digital_object_json_available?
+    if ENV["VPN"] == "true" && ENV["FEATURE_FLAGS"]&.include?("|DO-ENABLE-ILS|")
+      return false unless authoritative_metadata_source && authoritative_metadata_source.metadata_cloud_name == "ils"
+    else
+      return false unless authoritative_metadata_source && authoritative_metadata_source.metadata_cloud_name == "aspace"
+    end
     return false unless child_object_count&.positive?
-    return false unless authoritative_metadata_source && authoritative_metadata_source.metadata_cloud_name == "aspace"
     return false unless ['Public', 'Yale Community Only', 'Private'].include? visibility
     return false unless digital_object_title
     return false if redirect_to.present?
     true
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def generate_digital_object_json
     return nil unless digital_object_json_available?
@@ -77,7 +85,7 @@ module DigitalObjectManagement
   end
 
   def send_digital_object_update(digital_object_update)
-    return false unless ENV["VPN"] == "true" && ENV["FEATURE_FLAGS"]&.include?("|DO-SEND|")
+    return false unless ENV["VPN"] == "true" && (ENV["FEATURE_FLAGS"]&.include?("|DO-SEND|") || ENV["FEATURE_FLAGS"]&.include?("|DO-ENABLE-ILS|"))
     full_response = mc_post("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates", digital_object_update)
     case full_response.status
     when 200
