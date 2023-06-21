@@ -72,7 +72,7 @@ class PreservicaImageService
         raise PreservicaImageServiceError.new("No matching bitstreams found in Preservica", content_object.active_generations[0].id.to_s) if content_object.active_generations[0].bitstreams.empty?
         next unless content_object.active_generations[0].formats.include? "Tagged Image File Format"
         tif_bitstream = content_object.active_generations[0].bitstreams.find do |bitstream|
-          bitstream.filename.ends_with?("tif", "tiff")
+          bitstream.filename.ends_with?("tif", "TIF", "tiff")
         end
         next unless tif_bitstream.present?
         raise PreservicaImageServiceError.new("SHA mismatch found in Preservica", "bitstream: #{content_object.active_generations[0].bitstreams[0].id}") if tif_bitstream.sha512_checksum.nil?
