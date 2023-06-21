@@ -58,7 +58,6 @@ RSpec.describe DigitalObjectManagement, type: :model, prep_metadata_sources: tru
       expect(JSON.parse(full_parent_object.generate_digital_object_json)["barcode"]).to eq("98765432")
     end
 
-
     it "can send aspace digital object updates with ILS enabled" do
       full_parent_object = FactoryBot.build(:parent_object,
                                             oid: '45678',

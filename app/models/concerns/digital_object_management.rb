@@ -5,6 +5,7 @@ module DigitalObjectManagement
 
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/LineLength
   def digital_object_json_available?
     return false unless authoritative_metadata_source && (authoritative_metadata_source.metadata_cloud_name == "aspace" || (authoritative_metadata_source.metadata_cloud_name == "ils" && ENV["FEATURE_FLAGS"]&.include?("|DO-ENABLE-ILS|")))
     return false unless child_object_count&.positive?
@@ -15,6 +16,7 @@ module DigitalObjectManagement
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/LineLength
 
   def generate_digital_object_json
     return nil unless digital_object_json_available?
