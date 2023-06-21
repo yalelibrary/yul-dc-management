@@ -78,6 +78,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       visit admin_sets_path
       click_link(admin_set.key.to_s)
       click_on("Update IIIF Manifests")
+      page.driver.browser.switch_to.alert.accept
       expect(page).to have_content "IIIF Manifests queued for update. Please check Delayed Job dashboard for status"
     end
 
@@ -85,6 +86,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       visit admin_sets_path
       click_link(admin_set.key.to_s)
       click_on("Update IIIF Manifests")
+      page.driver.browser.switch_to.alert.accept
       expect(page).to have_content "User does not have permission to update Admin Set."
     end
 
@@ -244,6 +246,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       visit admin_sets_path
       click_link(admin_set.key.to_s)
       click_on("Update IIIF Manifests")
+      page.driver.browser.switch_to.alert.accept
       expect(page).to have_content "User does not have permission to update Admin Set."
     end
   end

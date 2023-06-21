@@ -487,8 +487,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def voyager_json=(v_record)
     super(v_record)
     return v_record if v_record.blank?
-    self.holding = v_record["holdingId"] unless v_record["holdingId"].zero?
-    self.item = v_record["itemId"] unless v_record["itemId"].zero?
+    self.holding = v_record["holdingId"] unless v_record["holdingId"]&.zero?
+    self.item = v_record["itemId"] unless v_record["itemId"]&.zero?
     self.last_id_update = DateTime.current
     self.last_voyager_update = DateTime.current
   end
@@ -624,32 +624,25 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     %w[Partial Yes].include? extent_of_full_text
   end
 
-  def extent_of_full_text
+  def update_fulltext
+    self.extent_of_full_text = "Yes"
     children_with_ft = false
     children_without_ft = false
-
-    child_objects.each do |object|
-      if object.full_text
+    child_objects.each do |child_object|
+      child_object.processing_event("Child #{child_object.oid} is being processed", 'processing-queued')
+      child_object.full_text = ChildObject.remote_ocr_exists?(child_object.oid)
+      if child_object.full_text
         children_with_ft = true
       else
         children_without_ft = true
       end
-
-      break if children_with_ft && children_without_ft
-    end
-
-    return "Partial" if children_with_ft && children_without_ft # if some children have full text and others dont
-    return "No" unless children_with_ft # if none of children have full_text
-    "Yes"
-  end
-
-  def update_fulltext_for_children
-    child_objects.each do |child_object|
-      child_object.processing_event("Child #{child_object.oid} is being processed", 'processing-queued')
-      child_object.full_text = ChildObject.remote_ocr_exists?(child_object.oid)
+      child_object.extent_of_full_text = child_object.full_text == true ? "Yes" : "No"
       child_object.save!
       child_object.processing_event("Child #{child_object.oid} has been updated: #{child_object.full_text ? 'YES' : 'NO'}", 'update-complete')
     end
+    self.extent_of_full_text = "Partial" if children_with_ft && children_without_ft # if some children have full text and others dont
+    self.extent_of_full_text = "None" unless children_with_ft # if none of children have full_text
+    save!
   end
 
   def should_index?

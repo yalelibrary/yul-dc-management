@@ -44,7 +44,7 @@ RSpec.describe UpdateFulltextStatusJob, type: :job, solr: true do
       expect(ParentObject).to receive(:find_by).and_return(parent_object).twice
       expect(AdminSet).to receive(:find).and_return(admin_set)
       expect(parent_object).to receive(:processing_event).twice # for queued and then completed message
-      expect(parent_object).to receive(:update_fulltext_for_children).once # called because permission
+      expect(parent_object).to receive(:update_fulltext).once # called because permission
       UpdateFulltextStatusJob.perform_now(batch_process)
     end
 
@@ -53,7 +53,7 @@ RSpec.describe UpdateFulltextStatusJob, type: :job, solr: true do
       expect(BatchProcess).to receive(:find).and_return(batch_process)
       expect(batch_process).to receive(:batch_processing_event).once # for skipped row
       expect(ParentObject).to receive(:find_by).and_return(parent_object).twice
-      expect(parent_object).not_to receive(:update_fulltext_for_children) # should not update
+      expect(parent_object).not_to receive(:update_fulltext) # should not update
       UpdateFulltextStatusJob.perform_now(batch_process)
     end
 
@@ -61,7 +61,7 @@ RSpec.describe UpdateFulltextStatusJob, type: :job, solr: true do
       expect(batch_process).to receive(:oids).and_return(['0101010']).once
       expect(batch_process).to receive(:batch_processing_event).once # for skipped row
       expect(ParentObject).to receive(:find_by).and_return(nil).once
-      expect(parent_object).not_to receive(:update_fulltext_for_children) # should not update
+      expect(parent_object).not_to receive(:update_fulltext) # should not update
       UpdateFulltextStatusJob.perform_now(batch_process)
     end
   end
