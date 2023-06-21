@@ -38,7 +38,7 @@ RSpec.describe DigitalObjectManagement, type: :model, prep_metadata_sources: tru
       ENV['FEATURE_FLAGS'] = original_flags
     end
 
-    it "can send digital object updates" do
+    it "can send ils digital object updates" do
       full_parent_object = FactoryBot.build(:parent_object,
                                             oid: '45678',
                                             authoritative_metadata_source_id: voyager,
@@ -52,6 +52,27 @@ RSpec.describe DigitalObjectManagement, type: :model, prep_metadata_sources: tru
       full_parent_object.save!
       expect(full_parent_object.digital_object_json_available?).to be_truthy
       expect(JSON.parse(full_parent_object.generate_digital_object_json)["source"]).to eq("ils")
+      expect(JSON.parse(full_parent_object.generate_digital_object_json)["bibId"]).to eq("123456789")
+      expect(JSON.parse(full_parent_object.generate_digital_object_json)["holdingId"]).to eq("987654321")
+      expect(JSON.parse(full_parent_object.generate_digital_object_json)["itemId"]).to eq("23456789")
+      expect(JSON.parse(full_parent_object.generate_digital_object_json)["barcode"]).to eq("98765432")
+    end
+
+
+    it "can send aspace digital object updates with ILS enabled" do
+      full_parent_object = FactoryBot.build(:parent_object,
+                                            oid: '45678',
+                                            authoritative_metadata_source_id: aspace,
+                                            child_object_count: 1,
+                                            visibility: "Private",
+                                            aspace_json: { "title": ["test"] })
+      full_parent_object.bib = '123456789'
+      full_parent_object.barcode = '98765432'
+      full_parent_object.holding = '987654321'
+      full_parent_object.item = '23456789'
+      full_parent_object.save!
+      expect(full_parent_object.digital_object_json_available?).to be_truthy
+      expect(JSON.parse(full_parent_object.generate_digital_object_json)["source"]).to eq("aspace")
       expect(JSON.parse(full_parent_object.generate_digital_object_json)["bibId"]).to eq("123456789")
       expect(JSON.parse(full_parent_object.generate_digital_object_json)["holdingId"]).to eq("987654321")
       expect(JSON.parse(full_parent_object.generate_digital_object_json)["itemId"]).to eq("23456789")
