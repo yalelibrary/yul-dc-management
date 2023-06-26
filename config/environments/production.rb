@@ -121,7 +121,7 @@ Rails.application.configure do
     address: "mail.yale.edu",
     port: 587,
     domain: "library.yale.edu"
-}
+  }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.deliver_later_queue_name = 'default'
