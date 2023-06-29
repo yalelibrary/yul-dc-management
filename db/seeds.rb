@@ -25,7 +25,7 @@ puts "Oid Minter Initialized, initialization was #{sequence}, current value is #
   },
   {
     metadata_cloud_name: "aspace",
-    display_name: "ArchiveSpace",
+    display_name: "ArchivesSpace",
     file_prefix: "AS-"
   }
 ].each do |obj|
