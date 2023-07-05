@@ -96,6 +96,6 @@ class ParentObjectDatatable < ApplicationDatatable
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    ParentObject.includes(:child_objects).accessible_by(@current_ability, :read).joins(:authoritative_metadata_source, :admin_set).where("visibility != 'Redirect'").references(:child_objects)
+    ParentObject.accessible_by(@current_ability, :read).joins(:authoritative_metadata_source, :admin_set).where("visibility != 'Redirect'")
   end
 end
