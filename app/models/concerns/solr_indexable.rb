@@ -95,6 +95,7 @@ module SolrIndexable
         ancestor_titles_hierarchy_ssim: ancestor_structure(generate_ancestor_title(json_to_index["ancestorTitles"])),
         archivalSort_ssi: json_to_index["archivalSort"],
         archiveSpaceUri_ssi: aspace_uri,
+        bibId_ssi: generate_orbis_id(bib),
         box_ssim: extract_container_information(json_to_index),
         callNumber_ssim: json_to_index["callNumber"],
         callNumber_tesim: json_to_index["callNumber"],
@@ -300,6 +301,10 @@ module SolrIndexable
   end
 
   def generate_orbis_id(bib)
+    (bib.to_i.positive? && bib.presence) || nil
+  end
+
+  def generate_morris_id(bib)
     (bib.to_i.positive? && bib.presence) || nil
   end
 
