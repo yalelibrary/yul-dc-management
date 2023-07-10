@@ -15,7 +15,7 @@ FactoryBot.define do
     factory :metadata_source_aspace do
       id { 3 }
       metadata_cloud_name { "aspace" }
-      display_name { "ArchiveSpace" }
+      display_name { "ArchivesSpace" }
       file_prefix { "AS-" }
     end
   end

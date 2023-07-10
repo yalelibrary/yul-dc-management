@@ -307,7 +307,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     it 'returns an aspace url' do
-      expect { parent_object.aspace_cloud_url }.to raise_error(StandardError, "ArchiveSpace uri required to build ArchiveSpace url")
+      expect { parent_object.aspace_cloud_url }.to raise_error(StandardError, "ArchivesSpace uri required to build ArchivesSpace url")
     end
   end
 
