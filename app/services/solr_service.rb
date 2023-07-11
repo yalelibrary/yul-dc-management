@@ -102,6 +102,30 @@ class SolrService
     )
   end
 
+  # Creates a new copy field type to update managed schema
+  def self.add_copy_field(source, dest)
+    post_to_schema(
+      "add-copy-field": {
+        "source": source,
+        "dest": dest
+      }
+    )
+  end
+
+  # Deletes a copy field type to update managed schema
+  def self.delete_copy_field(source, dest)
+    post_to_schema(
+      "delete-copy-field": {
+        "source": source,
+        "dest": dest
+      }
+    )
+  end
+
+  def self.get_file(file)
+    connection.connection.get("admin/file?file=#{file}")
+  end
+
   def self.post_to_schema(data)
     connection.connection.post('schema') do |req|
       req.body = data.to_json
