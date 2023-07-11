@@ -33,6 +33,7 @@ class ParentObjectDatatable < ApplicationDatatable
       last_ladybird_update: { source: "ParentObject.last_ladybird_update", orderable: true },
       last_voyager_update: { source: "ParentObject.last_voyager_update", orderable: true },
       last_aspace_update: { source: "ParentObject.last_aspace_update", orderable: true },
+      last_sierra_update: { source: "ParentObject.last_sierra_update", orderable: true },
       last_id_update: { source: "ParentObject.last_id_update", orderable: true },
       visibility: { source: "ParentObject.visibility", cond: :string_eq, searchable: true, options: ["Public", "Yale Community Only", "Private"], orderable: true },
       extent_of_digitization: { source: "ParentObject.extent_of_digitization", cond: :string_eq, searchable: true, options: ["Completely digitized", "Partially digitized"], orderable: true },
@@ -66,6 +67,7 @@ class ParentObjectDatatable < ApplicationDatatable
         last_ladybird_update: parent_object.last_ladybird_update,
         last_voyager_update: parent_object.last_voyager_update,
         last_aspace_update: parent_object.last_aspace_update,
+        last_sierra_update: parent_object.last_sierra_update,
         last_id_update: parent_object.last_id_update,
         visibility: parent_object.visibility,
         extent_of_digitization: parent_object.extent_of_digitization,
@@ -96,6 +98,6 @@ class ParentObjectDatatable < ApplicationDatatable
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    ParentObject.includes(:child_objects).accessible_by(@current_ability, :read).joins(:authoritative_metadata_source, :admin_set).where("visibility != 'Redirect'").references(:child_objects)
+    ParentObject.accessible_by(@current_ability, :read).joins(:authoritative_metadata_source, :admin_set).where("visibility != 'Redirect'")
   end
 end

@@ -52,7 +52,7 @@ namespace :parent_oids do
     end
   end
 
-  desc "Update ArchiveSpace fixtures"
+  desc "Update ArchivesSpace fixtures"
   task update_aspace_fixtures: :environment do
     metadata_source = MetadataSource.find_by(metadata_cloud_name: "aspace")
     oids.each do |oid|
@@ -65,9 +65,9 @@ namespace :parent_oids do
         S3Service.upload("aspace/AS-#{oid}.json", response_text)
         response_text = JSON.parse(response_text)
         File.write("spec/fixtures/aspace/AS-#{oid}.json", JSON.pretty_generate(response_text))
-        puts "ArchiveSpace fixture for #{oid} saved"
+        puts "ArchivesSpace fixture for #{oid} saved"
       else
-        puts "ArchiveSpace record not retrieved for #{oid}"
+        puts "ArchivesSpace record not retrieved for #{oid}"
       end
     end
   end
