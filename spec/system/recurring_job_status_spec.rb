@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe 'Recurring Jobs', type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
-  let(:running_logger) { FactoryBot.create(:running_activity_stream_log) }
+  let(:running_logger) { FactoryBot.create(:running_activity_stream_log, created_at: DateTime.current - 24.hours) }
   let(:running_activity_stream_log_active) { FactoryBot.create(:running_activity_stream_log, run_time: DateTime.current - 8.hours) }
 
   def queue_adapter_for_test
@@ -47,6 +47,8 @@ RSpec.describe 'Recurring Jobs', type: :system, prep_metadata_sources: true, pre
     end
 
     it 'can see the Manually Reset button and manually reset the status if the Log is older than 12 hours with a Running status' do
+      # running_logger.created_at = "2023-07-08 14:59:47.016376000 +0000"
+      # running_logger.save
       expect(running_logger.status).to eq("Running")
       click_on "Check status of the Recurring Job"
       expect(page).to have_button('Manually Reset')
