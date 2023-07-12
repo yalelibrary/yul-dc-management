@@ -542,7 +542,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def aspace_cloud_url
-    raise StandardError, "ArchiveSpace uri required to build ArchiveSpace url" unless aspace_uri.present?
+    raise StandardError, "ArchivesSpace uri required to build ArchivesSpace url" unless aspace_uri.present?
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace#{aspace_uri}"
   end
 

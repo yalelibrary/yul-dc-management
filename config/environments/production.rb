@@ -111,12 +111,17 @@ Rails.application.configure do
     end
   end
 
-  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.delivery_method = :smtp
   # Defaults to:
   # config.action_mailer.sendmail_settings = {
   #   location: '/usr/sbin/sendmail',
   #   arguments: '-i'
   # }
+  config.action_mailer.smtp_settings = {
+    address: "mail.yale.edu",
+    port: 587,
+    domain: "library.yale.edu"
+  }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.deliver_later_queue_name = 'default'

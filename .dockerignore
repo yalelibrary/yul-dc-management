@@ -6,7 +6,7 @@ node_modules
 #.git
 log/*
 tmp
-yarn.lock
+#yarn.lock
 .github
 data
 data_samples

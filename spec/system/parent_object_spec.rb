@@ -343,14 +343,14 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         stub_metadata_cloud("AS-2012036", "aspace")
         fill_in('Oid', with: "2012036")
         fill_in('parent_object_aspace_uri', with: "/repositories/11/archival_objects/555049")
-        select('ArchiveSpace')
+        select('ArchivesSpace')
         select('Beinecke Library')
         click_on("Create Parent object")
       end
 
       it "can create a new parent object" do
         expect(page.body).to include "Parent object was successfully created"
-        expect(page.body).to include "ArchiveSpace"
+        expect(page.body).to include "ArchivesSpace"
       end
 
       it "fetches the ArchiveSpace record when applicable" do
