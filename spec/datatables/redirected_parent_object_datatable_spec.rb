@@ -21,7 +21,7 @@ RSpec.describe RedirectedParentObjectDatatable, type: :datatable, prep_metadata_
     output = RedirectedParentObjectDatatable.new(datatable_sample_params(columns), view_context: redirected_parent_object_datatable_view_mock, current_ability: Ability.new(user)).data
 
     expect(output.size).to eq(1)
-    # rubocop:disable Metrics/LineLength
+    # rubocop:disable Layout/LineLength
     expect(output).to include(
       DT_RowId: 2_034_600,
       admin_set: 'brbl',
@@ -30,6 +30,6 @@ RSpec.describe RedirectedParentObjectDatatable, type: :datatable, prep_metadata_
       redirect_to: redirect_to,
       visibility: 'Redirect'
     )
-    # rubocop:enable Metrics/LineLength
+    # rubocop:enable Layout/LineLength
   end
 end

@@ -42,7 +42,7 @@ class CsvRowParentService
   end
 
   def properties_hash
-    self.class.properties.each_with_object({}) { |p, h| h[p] = send(p); }
+    self.class.properties.index_with { |p| send(p); }
   end
 
   def oid
@@ -54,7 +54,7 @@ class CsvRowParentService
   end
 
   def bib
-    raise BatchProcessingError.new("Skipping row [#{index + 2}]. BIB must be present if 'ils' metadata source", 'Skipped Row') if row['source'] == "ils" && !row['bib'].present?
+    raise BatchProcessingError.new("Skipping row [#{index + 2}]. BIB must be present if 'ils' metadata source", 'Skipped Row') if row['source'] == "ils" && row['bib'].blank?
     row['bib']
   end
 
@@ -69,7 +69,7 @@ class CsvRowParentService
   end
 
   def aspace_uri
-    raise BatchProcessingError.new("Skipping row [#{index + 2}]. Aspace URI must be present if 'aspace' metadata source", 'Skipped Row') if row['source'] == "aspace" && !row['aspace_uri'].present?
+    raise BatchProcessingError.new("Skipping row [#{index + 2}]. Aspace URI must be present if 'aspace' metadata source", 'Skipped Row') if row['source'] == "aspace" && row['aspace_uri'].blank?
     row['aspace_uri']
   end
 
@@ -86,7 +86,7 @@ class CsvRowParentService
     row['digital_object_source']
   end
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   def admin_set
     admin_sets_hash = {}
     admin_set_key = row['admin_set']
@@ -104,7 +104,7 @@ class CsvRowParentService
 
     admin_set
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 
   def authoritative_metadata_source_id
     ms = row['source']

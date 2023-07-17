@@ -146,9 +146,9 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     it "has a seeAlso in the manifest" do
       expect(iiif_presentation.manifest["seeAlso"].class).to eq Array
       expect(iiif_presentation.manifest["seeAlso"].first.class).to eq Hash
-      # rubocop:disable Metrics/LineLength
+      # rubocop:disable Layout/LineLength
       expect(iiif_presentation.manifest["seeAlso"].first["id"]).to eq "https://collections.library.yale.edu/catalog/oai?verb=GetRecord&metadataPrefix=oai_mods&identifier=oai:collections.library.yale.edu:#{oid}"
-      # rubocop:enable Metrics/LineLength
+      # rubocop:enable Layout/LineLength
       expect(iiif_presentation.manifest["seeAlso"].first["type"]).to eq "Dataset"
       expect(iiif_presentation.manifest["seeAlso"].first["format"]).to eq "application/mods+xml"
       expect(iiif_presentation.manifest["seeAlso"].first["profile"]).to eq "http://www.loc.gov/mods/v3"
@@ -166,13 +166,13 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     end
 
     it "has coordinates in metadata" do
-      expect(iiif_presentation.manifest["metadata"].select { |v| v["label"]["en"] == ["Coordinates"] }.first["value"]["none"]).to eq(["(N90 E90 S90 W90)"])
+      expect(iiif_presentation.manifest["metadata"].find { |v| v["label"]["en"] == ["Coordinates"] }["value"]["none"]).to eq(["(N90 E90 S90 W90)"])
     end
 
     it "has a ASpace record link in metadata if ASpace record" do
       expect(aspace_iiif_presentation.manifest["metadata"].class).to eq Array
       expect(aspace_iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Archives at Yale Item Page" }).not_to be_empty
-      values = aspace_iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Archives at Yale Item Page" }.first["value"]
+      values = aspace_iiif_presentation.manifest["metadata"].find { |k| true if k["label"]["en"].first == "Archives at Yale Item Page" }["value"]
       expect(values).not_to be_empty
       expect(values['none'].first).to include('href="https://archives.yale.edu')
     end
@@ -180,7 +180,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     it "has a Finding Aid link in metadata if ASpace record" do
       expect(aspace_iiif_presentation.manifest["metadata"].class).to eq Array
       expect(aspace_iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Finding Aid" }).not_to be_empty
-      values = aspace_iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Finding Aid" }.first["value"]
+      values = aspace_iiif_presentation.manifest["metadata"].find { |k| true if k["label"]["en"].first == "Finding Aid" }["value"]
       expect(values).not_to be_empty
       expect(values['none'].first).to include('href="http://hdl.handle.net')
     end

@@ -36,7 +36,7 @@ class MetsDocument
 
   def dig_note
     dig_note = @mets.xpath("//mods:note[@type='admin']").inner_text
-    return nil unless dig_note.present?
+    return nil if dig_note.blank?
     dig_note
   end
 
@@ -69,7 +69,7 @@ class MetsDocument
     raise "no right statement found in the mets xml" if rights_statement.blank?
     raise "not valid metadata source" unless valid_metadata_source_path?
     raise "no image path" if fixture_images_in_production?
-    raise "no admin set in mets xml" unless admin_set.present?
+    raise "no admin set in mets xml" if admin_set.blank?
     all_images_have_checksum?
     true
   end
@@ -88,7 +88,7 @@ class MetsDocument
 
   def all_images_have_checksum?
     files.each_with_index do |file, index|
-      raise "#{file[:checksum]}, index: #{index} invalid checksum, check the checksum in mets xml" unless file[:checksum] =~ /^([a-f0-9]{40})$/
+      raise "#{file[:checksum]}, index: #{index} invalid checksum, check the checksum in mets xml" unless /^([a-f0-9]{40})$/.match?(file[:checksum])
     end
   end
 

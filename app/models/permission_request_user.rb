@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class PermissionRequestUser < ApplicationRecord
-  has_many :permission_requests
-  has_many :terms_agreements
+  has_many :permission_requests, dependent: :delete_all
+  has_many :terms_agreements, dependent: :nullify
   validates :sub, presence: true
   validates :name, presence: true
   validates :email, presence: true

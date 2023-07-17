@@ -36,8 +36,8 @@ class ProblemReportsController < ApplicationController
 
   private
 
-    # Only allow a list of trusted parameters through.
-    def problem_report_params
-      params.require(:problem_report).permit(:child_count, :parent_count, :problem_parent_count, :problem_child_count)
-    end
+  # Only allow a list of trusted parameters through.
+  def problem_report_params
+    params.require(:problem_report).permit(:child_count, :parent_count, :problem_parent_count, :problem_child_count)
+  end
 end

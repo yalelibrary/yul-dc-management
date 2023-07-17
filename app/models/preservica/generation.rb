@@ -35,17 +35,17 @@ class Preservica::Generation
 
   private
 
-    def load_bitstreams
-      xml.xpath('/GenerationResponse/Bitstreams/Bitstream').map do |bitstream|
-        Preservica::Bitstream.new(@preservica_client, @content_id, @id, bitstream.content.split('/').last.strip, bitstream['filename'])
-      end
+  def load_bitstreams
+    xml.xpath('/GenerationResponse/Bitstreams/Bitstream').map do |bitstream|
+      Preservica::Bitstream.new(@preservica_client, @content_id, @id, bitstream.content.split('/').last.strip, bitstream['filename'])
     end
+  end
 
-    def load_formats
-      xml.xpath('/GenerationResponse/Generation/Formats/Format/FormatName').map(&:content)
-    end
+  def load_formats
+    xml.xpath('/GenerationResponse/Generation/Formats/Format/FormatName').map(&:content)
+  end
 
-    def load_format_group
-      xml.xpath('/GenerationResponse/Generation/FormatGroup').map(&:content)
-    end
+  def load_format_group
+    xml.xpath('/GenerationResponse/Generation/FormatGroup').map(&:content)
+  end
 end

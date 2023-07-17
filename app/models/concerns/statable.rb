@@ -68,7 +68,7 @@ module Statable
   end
 
   def current_batch_connection
-    @current_batch_connection ||= current_batch_process&.batch_connections&.find_or_create_by(connectable: self)
+    @current_batch_connection ||= current_batch_process&.batch_connections&.find_or_create_by!(connectable: self)
   end
 
   def processing_event(message, status = 'info')

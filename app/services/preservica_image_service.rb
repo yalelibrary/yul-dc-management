@@ -8,6 +8,7 @@ class PreservicaImageService
       super("#{msg} for #{id}")
     end
   end
+
   class PreservicaImageServiceNetworkError < PreservicaImageServiceError
     def initialize(msg, id)
       super(msg, id)
@@ -58,9 +59,11 @@ class PreservicaImageService
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/PerceivedComplexity
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def process_information_objects(representation_type)
     @information_objects.each do |information_object|
       representation = information_object.fetch_by_representation_type(representation_type)[0]
@@ -74,7 +77,7 @@ class PreservicaImageService
         tif_bitstream = content_object.active_generations[0].bitstreams.find do |bitstream|
           bitstream.filename.ends_with?("tif", "TIF", "tiff")
         end
-        next unless tif_bitstream.present?
+        next if tif_bitstream.blank?
         raise PreservicaImageServiceError.new("SHA mismatch found in Preservica", "bitstream: #{content_object.active_generations[0].bitstreams[0].id}") if tif_bitstream.sha512_checksum.nil?
         @images << { preservica_content_object_uri: representation.content_object_uri(index),
                      preservica_generation_uri: content_object.active_generations[0].generation_uri,
@@ -86,6 +89,8 @@ class PreservicaImageService
     end
   end
   # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 end

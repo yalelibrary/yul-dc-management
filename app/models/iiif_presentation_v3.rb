@@ -60,8 +60,8 @@ class IiifPresentationV3
     @manifest['type'] = "Manifest"
     manifest_descriptive_properties
     @manifest['provider'] = [provider]
-    @manifest["viewingDirection"] = @parent_object.viewing_direction unless @parent_object.viewing_direction.nil? || @parent_object.viewing_direction.empty?
-    @manifest["behavior"] = [@parent_object.display_layout] unless @parent_object.display_layout.nil? || @parent_object.display_layout.empty?
+    @manifest["viewingDirection"] = @parent_object.viewing_direction if @parent_object.viewing_direction.present?
+    @manifest["behavior"] = [@parent_object.display_layout] if @parent_object.display_layout.present?
     @manifest["items"] = []
     add_canvases_to_manifest(@manifest['items'])
     if parent_object.full_text?
@@ -133,6 +133,7 @@ class IiifPresentationV3
     }
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def extract_value(field, hash)
     if hash[:digital_only] == true
       @parent_object.send(field.to_s)
@@ -140,6 +141,7 @@ class IiifPresentationV3
       @parent_object&.authoritative_json&.[](field.to_s).presence || (hash[:backup_field] && @parent_object&.authoritative_json&.[](hash[:backup_field]).presence)
     end
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def metadata
     values = []
@@ -257,6 +259,7 @@ class IiifPresentationV3
     { height: (height * ratio).round, width: (width * ratio).round }
   end
 
+  # rubocop:disable Metrics/AbcSize
   def add_image_to_canvas(child, canvas)
     annotation_page = {
       "id" => File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}/page/1"),
@@ -274,6 +277,7 @@ class IiifPresentationV3
     canvas['thumbnail'] = [thumbnail_image_resource(child)]
     @manifest['thumbnail'] = [thumbnail_image_resource(child)] if child_is_thumbnail?(child.oid)
   end
+  # rubocop:enable Metrics/AbcSize
 
   def tiff_rendering(oid)
     {
@@ -327,7 +331,7 @@ class IiifPresentationV3
       image_anno = canvas["items"].first["items"].first["body"]
       canvas['height'] = image_anno["height"]
       canvas['width'] = image_anno["width"]
-      canvas['behavior'] = [child.viewing_hint] unless child.viewing_hint.nil? || child.viewing_hint.empty?
+      canvas['behavior'] = [child.viewing_hint] if child.viewing_hint.present?
       add_metadata_to_canvas(canvas, child)
       @manifest["start"] = { 'id' => canvas['id'], 'type' => 'Canvas' } if child_is_start_canvas? child.oid, index
       items << canvas
@@ -350,7 +354,7 @@ class IiifPresentationV3
     structures = structures&.map do |structure|
       children = add_child_structures(parents_to_children[structure.id], parents_to_children)
       r = { "type": structure.type.gsub("Structure", ""), "id": structure.resource_id }
-      r["items"] = children if children && !children.empty?
+      r["items"] = children if children.present?
       r["label"] = { "en": [structure.label] } if r[:type] == "Range"
       r
     end

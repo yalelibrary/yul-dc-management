@@ -46,6 +46,7 @@ class PyramidalTiff
     end
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def original_file_exists?
     if child_object.parent_object&.from_mets == true
       image_exists = File.exist?(mets_access_master_path) || File.exist?(mets_access_master_path.gsub('.tif', '.TIF').gsub('.jpg', '.JPG'))
@@ -59,6 +60,7 @@ class PyramidalTiff
     end
     image_exists
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   ##
   # Create a temp copy of the input file in TEMP_IMAGE_WORKSPACE

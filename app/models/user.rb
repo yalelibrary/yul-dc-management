@@ -10,9 +10,9 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   validates :uid, uniqueness: { message: "already exists." }
 
-  has_many :batch_processes
-  has_many :users_roles
-  has_many :permission_requests
+  has_many :batch_processes, , dependent: :nullify
+  has_many :users_roles, dependent: :delete_all
+  has_many :permission_requests, dependent: :delete_all
 
   after_update :remove_roles
 

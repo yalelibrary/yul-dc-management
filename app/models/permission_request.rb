@@ -4,5 +4,5 @@ class PermissionRequest < ApplicationRecord
   belongs_to :permission_set
   belongs_to :permission_request_user
   belongs_to :parent_object
-  has_one :user
+  has_one :user, dependent: :nullify
 end

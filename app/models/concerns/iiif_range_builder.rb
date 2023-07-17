@@ -5,7 +5,7 @@ class IiifRangeBuilder
 
   def parse_structures(manifest)
     raise 'Not a Manifest' unless manifest['type'] == 'Manifest'
-    raise 'No structures property' unless manifest['structures'] && !manifest['structures'].empty?
+    raise 'No structures property' if manifest['structures'].blank?
 
     results = []
     manifest_uri = manifest['id']
@@ -22,6 +22,8 @@ class IiifRangeBuilder
     results
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/MethodLength
   def parse_range(parent, range, position)
     raise 'Not a Range' unless range['type'] == 'Range'
@@ -50,6 +52,8 @@ class IiifRangeBuilder
     result
   end
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def parse_canvas(parent, item, position)
     child_id = child_id_from_uri(item['id'], parent.id)

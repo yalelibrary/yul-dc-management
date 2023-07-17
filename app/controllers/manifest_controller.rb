@@ -12,7 +12,7 @@ class ManifestController < ApplicationController
         format.json { render json: @parent_object.iiif_manifest }
       end
     else
-      render json: { "message": "Access denied" }, status: 401
+      render json: { "message": "Access denied" }, status: :unauthorized
     end
   end
 
@@ -22,14 +22,14 @@ class ManifestController < ApplicationController
       manifest = JSON.parse(request.raw_post)
       builder = IiifRangeBuilder.new
       builder.destroy_existing_structure_by_parent_oid(@parent_object.oid)
-      IiifRangeBuilder.new.parse_structures manifest if manifest["structures"] && !manifest["structures"].empty?
+      IiifRangeBuilder.new.parse_structures manifest if manifest["structures"].present?
       GenerateManifestJob.perform_later(@parent_object, nil, nil)
       respond_to do |format|
         format.html { render json: @parent_object.iiif_manifest }
         format.json { render json: @parent_object.iiif_manifest }
       end
     else
-      render json: { "message": "Access denied" }, status: 401
+      render json: { "message": "Access denied" }, status: :unauthorized
     end
   end
 
@@ -39,7 +39,7 @@ class ManifestController < ApplicationController
     response = {
       token: jwt_encode(info)
     }
-    render json: response, status: 200
+    render json: response, status: :ok
   end
 
   def set_token_user

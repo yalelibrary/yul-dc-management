@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 class PermissionSet < ApplicationRecord
-  has_many :permission_requests
-  has_many :parent_objects
-  has_many :permission_set_terms
+  has_many :permission_requests, dependent: :delete_all
+  has_many :parent_objects, dependent: :nullify
+  has_many :permission_set_terms, dependent: :delete_all
   resourcify
   validates :key, presence: true
   validates :label, presence: true

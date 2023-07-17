@@ -14,13 +14,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include DcsActivityStreamManagement
   has_many :dependent_objects, dependent: :delete_all
   has_many :child_objects, -> { order('"order" ASC, oid ASC') }, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :delete_all
-  has_many :batch_connections, as: :connectable
+  has_many :batch_connections, as: :connectable, dependent: :delete_all
   has_many :batch_processes, through: :batch_connections
-  has_many :permission_requests
+  has_many :permission_requests, dependent: :delete_all
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   belongs_to :admin_set
-  has_one :permission_set
-  has_one :digital_object_json
+  has_one :permission_set, dependent: :nullify
+  has_one :digital_object_json, dependent: :delete_all
   attr_accessor :metadata_update
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
@@ -36,9 +36,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_destroy :mc_activity_stream_delete
   paginates_per 50
   validates :digitization_funding_source, length: { maximum: 255 }
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   validates :redirect_to, format: { with: /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//, message: " in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123", presence: true, if: proc { visibility == "Redirect" } }
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
   validates :preservica_uri, presence: true, format: { with: %r{\A/}, message: " in incorrect format. URI must start with a /" }, if: proc { digital_object_source == "Preservica" }
   before_save :validate_visibility
 
@@ -163,14 +163,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/AbcSize
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   def validate_child_hashes(child_hashes)
     child_hashes.reject do |h|
       co = ChildObject.find_by(parent_object_oid: oid, preservica_content_object_uri: h[:preservica_content_object_uri])
       co.present? && h[:preservica_content_object_uri] == co.preservica_content_object_uri && h[:preservica_generation_uri] == co.preservica_generation_uri && h[:preservica_bitstream_uri] == co.preservica_bitstream_uri
     end
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 
   def cleanup_child_artifacts(invalid_child_hashes)
     invalid_child_hashes.each do |child_hash|
@@ -183,10 +183,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  # rubocop:disable Rails/SkipsModelValidations
   def upsert_child_objects(child_objects_hash)
     raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
     ChildObject.insert_all(child_objects_hash) unless child_objects_hash.empty?
   end
+  # rubocop:enable Rails/SkipsModelValidations
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
@@ -217,14 +219,16 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     raise e.to_s
   end
 
+  # rubocop:disable Rails/SkipsModelValidations
   def upsert_preservica_ingest_child_objects(preservica_ingest_hash)
     PreservicaIngest.insert_all(preservica_ingest_hash)
   end
+  # rubocop:enable Rails/SkipsModelValidations
 
   def sync_from_preservica(_local_children_hash, preservica_children_hash)
     # iterate through local hashes and remove any children no longer found on preservica
     child_objects.each do |co|
-      co.destroy unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
+      co.destroy! unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
     end
     # iterate through preservica and update when local version found
     preservica_children_hash.each_value do |value|
@@ -353,15 +357,16 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Fetches the record from the authoritative_metadata_source
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
   def default_fetch(_current_batch_process = current_batch_process, _current_batch_connection = current_batch_connection)
     fetch_results = case authoritative_metadata_source&.metadata_cloud_name
                     when "ladybird"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
                     when "ils"
-                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless bib.present?
+                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) if bib.blank?
                       self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
                     when "aspace"
-                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless aspace_uri.present?
+                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) if aspace_uri.blank?
                       begin
                         self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
                       rescue MetadataSource::MetadataCloudNotFoundError
@@ -382,6 +387,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     fetch_results
   end
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def force_private
     self.visibility = "Private"
@@ -495,7 +501,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def voyager_cloud_url
-    raise StandardError, "Bib id required to build Voyager url" unless bib.present?
+    raise StandardError, "Bib id required to build Voyager url" if bib.blank?
     identifier_block = if barcode.present?
                          "/barcode/#{barcode}?bib=#{bib}"
                        elsif holding.present?
@@ -509,7 +515,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def aspace_cloud_url
-    raise StandardError, "ArchivesSpace uri required to build ArchivesSpace url" unless aspace_uri.present?
+    raise StandardError, "ArchivesSpace uri required to build ArchivesSpace url" if aspace_uri.blank?
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace#{aspace_uri}"
   end
 
@@ -571,7 +577,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def extract_container_information(json = authoritative_json)
     return nil unless json
-    return json["containerGrouping"] unless json["containerGrouping"].nil? || json["containerGrouping"].empty?
+    return json["containerGrouping"] if json["containerGrouping"].present?
     return [(json["box"] && (json['box']).to_s), (json["folder"] && (json['folder']).to_s)].join(", ") if json["box"] || json["folder"]
     json["volumeEnumeration"]
   end
@@ -591,6 +597,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     %w[Partial Yes].include? extent_of_full_text
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def update_fulltext
     self.extent_of_full_text = "Yes"
     children_with_ft = false
@@ -611,6 +618,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.extent_of_full_text = "None" unless children_with_ft # if none of children have full_text
     save!
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def should_index?
     return false if redirect_to.blank? && (child_object_count&.zero? || child_objects.empty?)
@@ -618,6 +626,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def should_create_manifest_and_pdf?
-    !redirect_to.present?
+    redirect_to.blank?
   end
 end

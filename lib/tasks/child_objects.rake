@@ -27,7 +27,7 @@ namespace :child_objects do
     all_child_oids.flatten.each do |o|
       co = ChildObject.find_by(oid: o)
       # put those missing labels into an array
-      not_labeled_children << co unless co.label.present?
+      not_labeled_children << co if co.label.blank?
     end
     # map over them
     not_labeled_children.each do |c|

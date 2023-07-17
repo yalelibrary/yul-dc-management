@@ -32,10 +32,10 @@ class Preservica::Representation
 
   private
 
-    def load_content_objects
-      xml.xpath('/RepresentationResponse/ContentObjects/ContentObject').map do |content_object_node|
-        content_object_id = content_object_node.xpath('@ref').text
-        Preservica::ContentObject.new(@preservica_client, content_object_id)
-      end
+  def load_content_objects
+    xml.xpath('/RepresentationResponse/ContentObjects/ContentObject').map do |content_object_node|
+      content_object_id = content_object_node.xpath('@ref').text
+      Preservica::ContentObject.new(@preservica_client, content_object_id)
     end
+  end
 end

@@ -472,7 +472,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
     end
 
-    # rubocop:disable Metrics/LineLength
+    # rubocop:disable Layout/LineLength
     context 'a newly created ParentObject with Ladybird and multiple rights statements' do
       let(:parent_object) { described_class.create(oid: "17105661", admin_set: FactoryBot.create(:admin_set)) }
       before do
@@ -483,7 +483,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.reload.rights_statement).to include "Copyright Beinecke Rare Book & Manuscript Library.\nThe use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
       end
     end
-    # rubocop:enable Metrics/LineLength
+    # rubocop:enable Layout/LineLength
 
     context "a newly created ParentObject with ArchiveSpace as authoritative_metadata_source" do
       let(:parent_object) do

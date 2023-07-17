@@ -6,7 +6,7 @@ class Api::PermissionRequestsController < ApplicationController
     begin
       parent_object = ParentObject.find(request['oid'].to_i)
     rescue ActiveRecord::RecordNotFound
-      render(json: { "title": "Invalid Parent OID" }, status: 400) && (return false)
+      render(json: { "title": "Invalid Parent OID" }, status: :bad_request) && (return false)
     end
     return unless check_parent_visibility(parent_object)
     return unless valid_json_request(request)
@@ -14,19 +14,19 @@ class Api::PermissionRequestsController < ApplicationController
     permission_set = PermissionSet.find(parent_object.permission_set_id)
     current_requests_count = PermissionRequest.where(permission_request_user: pr_user, request_status: nil, permission_set: permission_set).count
     if current_requests_count >= permission_set.max_queue_length
-      render json: { "title": "Too many pending requests" }, status: 403
+      render json: { "title": "Too many pending requests" }, status: :forbidden
     else
       new_request = PermissionRequest.new(permission_set: permission_set, permission_request_user: pr_user, parent_object: parent_object, user_note: request['note'])
       new_request.save!
-      render json: { "title": "New request created" }, status: 201
+      render json: { "title": "New request created" }, status: :created
     end
   end
 
   def check_parent_visibility(parent_object)
     if parent_object.visibility == "Private"
-      render(json: { "title": "Parent Object is private" }, status: 400) && (return false)
+      render(json: { "title": "Parent Object is private" }, status: :bad_request) && (return false)
     elsif parent_object.visibility == "Public"
-      render(json: { "title": "Parent Object is public, permission not required" }, status: 400) && (return false)
+      render(json: { "title": "Parent Object is public, permission not required" }, status: :bad_request) && (return false)
     end
     true
   end
@@ -35,13 +35,13 @@ class Api::PermissionRequestsController < ApplicationController
   # rubocop:disable Metrics/PerceivedComplexity
   def valid_json_request(request)
     if request['user'].blank?
-      render(json: { "title": "User object is missing" }, status: 400) && (return false)
+      render(json: { "title": "User object is missing" }, status: :bad_request) && (return false)
     elsif request['user']['sub'].blank?
-      render(json: { "title": "User subject is missing" }, status: 400) && (return false)
+      render(json: { "title": "User subject is missing" }, status: :bad_request) && (return false)
     elsif request['user']['name'].blank?
-      render(json: { "title": "User name is missing" }, status: 400) && (return false)
+      render(json: { "title": "User name is missing" }, status: :bad_request) && (return false)
     elsif request['user']['email'].blank?
-      render(json: { "title": "User email is missing" }, status: 400) && (return false)
+      render(json: { "title": "User email is missing" }, status: :bad_request) && (return false)
     end
     true
   end

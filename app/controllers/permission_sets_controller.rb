@@ -75,11 +75,11 @@ class PermissionSetsController < ApplicationController
     begin
       permission_set = PermissionSet.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      render(json: { "title": "Permission Set not found" }, status: 400) && (return false)
+      render(json: { "title": "Permission Set not found" }, status: :bad_request) && (return false)
     end
     # check for terms on set
     if permission_set.permission_set_terms.blank? || !permission_set.active_permission_set_terms
-      render(json: {}, status: 204)
+      render(json: {}, status: :no_content)
     else
       term = permission_set.active_permission_set_terms
       active_term = term.slice(:id, :title, :body)
@@ -103,31 +103,31 @@ class PermissionSetsController < ApplicationController
     begin
       term = PermissionSetTerm.find(params[:permission_set_terms_id])
     rescue ActiveRecord::RecordNotFound
-      render(json: { "title": "Term not found." }, status: 400) && (return false)
+      render(json: { "title": "Term not found." }, status: :bad_request) && (return false)
     end
     request_user = PermissionRequestUser.where(sub: params[:sub]).first
     if request_user.nil?
-      render(json: { "title": "User not found." }, status: 400) && (return false)
+      render(json: { "title": "User not found." }, status: :bad_request) && (return false)
     else
       begin
         term_agreement = TermsAgreement.new(permission_set_term: term, permission_request_user: request_user, agreement_ts: Time.zone.now)
         term_agreement.save!
-        render json: { "title": "Success." }, status: 201
+        render json: { "title": "Success." }, status: :created
       rescue StandardError => e
-        render json: { "title": e.to_s }, status: 500
+        render json: { "title": e.to_s }, status: :internal_server_error
       end
     end
   end
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_permission_set
-      @permission_set = PermissionSet.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_permission_set
+    @permission_set = PermissionSet.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def permission_set_params
-      params.require(:permission_set).permit(:key, :label, :max_queue_length, permission_set_terms_attributes: [:id, :title, :body])
-    end
+  # Only allow a list of trusted parameters through.
+  def permission_set_params
+    params.require(:permission_set).permit(:key, :label, :max_queue_length, permission_set_terms_attributes: [:id, :title, :body])
+  end
 end

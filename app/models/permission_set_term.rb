@@ -2,9 +2,9 @@
 
 class PermissionSetTerm < ApplicationRecord
   belongs_to :permission_set
-  has_many :terms_agreements
-  belongs_to :inactivated_by, foreign_key: 'inactivated_by_id', primary_key: 'id', class_name: 'User', optional: true
-  belongs_to :activated_by, foreign_key: 'activated_by_id', primary_key: 'id', class_name: 'User', optional: true
+  has_many :terms_agreements, dependent: :delete_all
+  belongs_to :inactivated_by, primary_key: 'id', class_name: 'User', optional: true
+  belongs_to :activated_by, primary_key: 'id', class_name: 'User', optional: true
 
   attr_readonly :title, :body
 

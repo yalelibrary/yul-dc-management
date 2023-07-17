@@ -7,6 +7,8 @@ class GeneratePtiffJob < ApplicationJob
     10
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def perform(child_object, batch_process)
     return if child_object.nil?
     child_object.current_batch_process = batch_process
@@ -29,4 +31,6 @@ class GeneratePtiffJob < ApplicationJob
 
     parent_object.processing_event('Ptiffs recreated', 'ptiffs-recreated') if is_recreate_job && batch_process.are_all_children_complete?(parent_object)
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 end
