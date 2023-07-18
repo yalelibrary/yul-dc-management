@@ -90,6 +90,11 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["label"]["none"]).to eq ["Strawberry Thief fabric, made by Morris and Company "]
     end
 
+    it "includes all creators" do
+      creator = aspace_iiif_presentation.manifest["metadata"].select { |v| v["label"]["en"] == ["Creator"] }.first["value"]["none"]
+      expect(creator.find { |c| c.include? "<em>From the Collection:</em> The Parent Creator" })
+    end
+
     it "has a requiredStatement" do
       expect(iiif_presentation.manifest["requiredStatement"].class).to eq Hash
       expect(iiif_presentation.manifest["requiredStatement"]["label"]["en"].first).to eq "Provider"
