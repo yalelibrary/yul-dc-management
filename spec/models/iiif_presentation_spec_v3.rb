@@ -327,6 +327,11 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       end
       expect(iiif_presentation_no_labels.manifest.to_json(pretty: true)).to include '"label":{"none":[""'
     end
+
+    it "wraps values with HTML with spans" do
+      parent_object.extent_of_digitization = 'This is <img src="image" />a <a href="test">Test</a>.'
+      expect(iiif_presentation.manifest["metadata"].select { |v| v["label"]["en"] == ["Extent of Digitization"] }.first["value"]["none"]).to eq(['<span>This is a <a href="test">Test</a>.</span>'])
+    end
   end
 
   describe 'iiif presentation representative children', :vpn_only do
