@@ -79,9 +79,9 @@ module Reassociatable
         # should not update parent title or call number
       elsif values_to_update.include? h
         if h == 'label'
-          co.label = check_for_blank(row[h])
+          co.label = check_for_blank(row[h]) unless row[h].nil?
         elsif h == 'caption'
-          co.caption = check_for_blank(row[h])
+          co.caption = check_for_blank(row[h]) unless row[h].nil?
         elsif h == 'order'
           order = extract_order(index, row)
           return false if order == :invalid_order # message says skipping row, returning
