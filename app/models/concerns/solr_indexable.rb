@@ -70,6 +70,14 @@ module SolrIndexable
     from_the_collections&.uniq
   end
 
+  # Putting this here since it uses from_the_collection from this concern
+  def all_creators
+    return unless authoritative_json
+    all_creators = authoritative_json["creator"] || []
+    all_creators += from_the_collections(authoritative_json)&.map { |v| "<em>From the Collection:</em> #{v}" } || []
+    all_creators.presence
+  end
+
   def to_solr(json_to_index = nil)
     if redirect_to.present?
       {

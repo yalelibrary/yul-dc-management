@@ -7,12 +7,13 @@ METADATA_FIELDS = {
       'alternativeTitle_tesim'
     ]
   },
-  creator: {
+  all_creators: {
     label: 'Creator',
     solr_fields: [
       'creator_ssim',
       'creator_tesim'
-    ]
+    ],
+    digital_only: true
   },
   date: {
     label: 'Published/Created Date',
