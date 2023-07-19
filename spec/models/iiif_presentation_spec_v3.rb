@@ -27,7 +27,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
   let(:aspace_oid) { 123 }
   let(:oid_no_labels) { 2_005_512 }
   let(:logger_mock) { instance_double("Rails.logger").as_null_object }
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, viewing_direction: "left-to-right", display_layout: "individuals", bib: "12834515") }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, viewing_direction: "left-to-right", display_layout: "individuals", bib: "12834515", rights_statement: "This is a test") }
   let(:aspace_parent_object) { FactoryBot.create(:parent_object, oid: aspace_oid, bib: "12834515", aspace_uri: "/repositories/11/archival_objects/214638") }
   let(:aspace_iiif_presentation) { described_class.new(aspace_parent_object) }
   let(:iiif_presentation) { described_class.new(parent_object) }
@@ -163,6 +163,11 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["metadata"].last["label"]['en'].first).to eq "Object ID (OID)"
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Orbis ID" }).not_to be_empty
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Container / Volume Information" }).not_to be_empty
+    end
+
+    it "uses database field for right statement in the manifest" do
+      expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Rights" }).not_to be_empty
+      expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Rights" }.first["value"]["none"]&.first).to eq("This is a test")
     end
 
     it "has coordinates in metadata" do

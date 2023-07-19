@@ -10,7 +10,7 @@ module PdfRepresentable
     creator
     date
     sourceTitle
-    rights
+    rights_statement
     extent_of_digitization
   ].freeze
 

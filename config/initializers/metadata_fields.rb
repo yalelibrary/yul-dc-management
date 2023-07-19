@@ -248,12 +248,13 @@ METADATA_FIELDS = {
       'caption_tesim'
     ]
   },
-  rights: {
+  rights_statement: {
     label: 'Rights',
     solr_fields: [
       'rights_ssim',
       'rights_tesim'
-    ]
+    ],
+    digital_only: true
   },
   preferredCitation: {
     label: 'Citation',
