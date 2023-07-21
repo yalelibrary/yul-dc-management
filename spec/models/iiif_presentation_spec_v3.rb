@@ -93,7 +93,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     it "includes all creators" do
       creators = aspace_iiif_presentation.manifest["metadata"].select { |v| v["label"]["en"] == ["Creator"] }.first["value"]["none"]
       expect(creators.length).to eq(2)
-      expect(creators.find { |c| c.include? "<em>From the Collection:</em> The Parent Creator" })
+      expect(creators.find { |c| c == "<span><i>From the Collection:</i> The Parent Creator</span>" })
     end
 
     it "has a requiredStatement" do
