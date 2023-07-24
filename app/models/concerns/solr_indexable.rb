@@ -74,7 +74,7 @@ module SolrIndexable
   def all_creators
     return unless authoritative_json
     all_creators = authoritative_json["creator"] || []
-    all_creators += from_the_collections(authoritative_json)&.map { |v| "<em>From the Collection:</em> #{v}" } || []
+    all_creators += from_the_collections(authoritative_json)&.map { |v| "<i>From the Collection:</i> #{v}" } || []
     all_creators.presence
   end
 
