@@ -78,6 +78,16 @@ module SolrIndexable
     all_creators.presence
   end
 
+  def all_contributors
+    return unless authoritative_json
+    contributors = authoritative_json["contributor"] || []
+    if authoritative_json["source"] == "aspace"
+      contributors&.map { |v| "<i>From the Collection:</i> #{v}" } || []
+    else
+      contributors.presence
+    end
+  end
+
   def to_solr(json_to_index = nil)
     if redirect_to.present?
       {
