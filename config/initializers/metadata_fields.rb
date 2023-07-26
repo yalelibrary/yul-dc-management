@@ -15,6 +15,13 @@ METADATA_FIELDS = {
     ],
     digital_only: true
   },
+  all_contributors: {
+    label: 'Contributor',
+    solr_fields: [
+      'contributor_tsim'
+    ],
+    digital_only: true
+  },
   date: {
     label: 'Published/Created Date',
     solr_fields: [
