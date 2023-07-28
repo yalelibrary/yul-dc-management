@@ -417,8 +417,8 @@ class IiifPresentationV3
 
   private
 
-  def skip_field(field)
-    field == :repository && @parent_object.authoritative_metadata_source&.metadata_cloud_name == 'aspace'
-  end
+    def skip_field(field)
+      field == :repository && @parent_object.authoritative_metadata_source&.metadata_cloud_name == 'aspace'
+    end
 end
 # rubocop:enable Metrics/ClassLength
