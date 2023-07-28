@@ -121,6 +121,12 @@ METADATA_FIELDS = {
       'language_ssim'
     ]
   },
+  repository: {
+    label: "Repository",
+    solr_fields: [
+      'repository_ssi'
+    ]
+  },
   callNumber: {
     label: 'Call Number',
     solr_fields: [
