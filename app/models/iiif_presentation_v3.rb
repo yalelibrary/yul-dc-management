@@ -159,6 +159,7 @@ class IiifPresentationV3
   def metadata
     values = []
     METADATA_FIELDS.each do |field, hash|
+      next if skip_field(field)
       value = extract_value(field, hash)
       if value.is_a?(Array)
         value = process_metadata_array value, hash
@@ -413,5 +414,11 @@ class IiifPresentationV3
   def manifest_path
     @manifest_path ||= "manifests/#{pairtree_path}/#{oid}.json" if pairtree_path && oid
   end
+
+  private
+
+    def skip_field(field)
+      field == :repository && @parent_object.authoritative_metadata_source&.metadata_cloud_name == 'aspace'
+    end
 end
 # rubocop:enable Metrics/ClassLength
