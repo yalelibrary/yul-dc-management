@@ -72,6 +72,24 @@ module SolrIndexable
     from_the_collections&.uniq
   end
 
+  # Putting this here since it uses from_the_collection from this concern
+  def all_creators
+    return unless authoritative_json
+    all_creators = authoritative_json["creator"] || []
+    all_creators += from_the_collections(authoritative_json)&.map { |v| "<i>From the Collection:</i> #{v}" } || []
+    all_creators.presence
+  end
+
+  def all_contributors
+    return unless authoritative_json
+    contributors = authoritative_json["contributor"] || []
+    if authoritative_json["source"] == "aspace"
+      contributors&.map { |v| "<i>From the Collection:</i> #{v}" } || []
+    else
+      contributors.presence
+    end
+  end
+
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def to_solr(json_to_index = nil)
@@ -131,7 +149,7 @@ module SolrIndexable
         digitization_funding_source_tesi: generate_digitization_funding_source(json_to_index["digitization_funding_source"]),
         edition_ssim: json_to_index["edition"],
         extent_ssim: json_to_index["extent"],
-        extentOfDigitization_ssim: extent_of_digitization,
+        extentOfDigitization_ssim: extent_of_digitization || "No",
         findingAid_ssim: json_to_index["findingAid"],
         folder_ssim: json_to_index["folder"],
         format: json_to_index["format"],
@@ -140,7 +158,7 @@ module SolrIndexable
         genre_tesim: json_to_index["genre"],
         geoSubject_ssim: json_to_index["geoSubject"],
         hashed_id_ssi: generate_hash,
-        has_fulltext_ssi: "No",
+        has_fulltext_ssi: extent_of_full_text,
         identifierMfhd_ssim: json_to_index["identifierMfhd"],
         imageCount_isi: child_object_count,
         indexedBy_tsim: json_to_index["indexedBy"],
@@ -209,7 +227,6 @@ module SolrIndexable
     solr_document = to_solr(json_to_index)
     child_solr_documents = child_object_solr_documents
     solr_document[:fulltext_tesim] = child_solr_documents.map { |child_solr_document| child_solr_document.try(:[], :child_fulltext_tesim) } unless solr_document.nil? || child_solr_documents.nil?
-    solr_document = append_full_text_status(solr_document)
 
     [solr_document, child_solr_documents]
   end
@@ -255,13 +272,6 @@ module SolrIndexable
     end.to_a
   end
   # rubocop:enable Metrics/PerceivedComplexity
-
-  def append_full_text_status(solr_document)
-    return unless solr_document
-    solr_document[:has_fulltext_ssi] = extent_of_full_text
-
-    solr_document
-  end
 
   def ancestor_structure(ancestor_title)
     # Building the hierarchy structure

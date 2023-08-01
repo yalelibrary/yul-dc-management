@@ -7,12 +7,20 @@ METADATA_FIELDS = {
       'alternativeTitle_tesim'
     ]
   },
-  creator: {
+  all_creators: {
     label: 'Creator',
     solr_fields: [
       'creator_ssim',
       'creator_tesim'
-    ]
+    ],
+    digital_only: true
+  },
+  all_contributors: {
+    label: 'Contributor',
+    solr_fields: [
+      'contributor_tsim'
+    ],
+    digital_only: true
   },
   date: {
     label: 'Published/Created Date',
@@ -111,6 +119,12 @@ METADATA_FIELDS = {
     label: 'Language',
     solr_fields: [
       'language_ssim'
+    ]
+  },
+  repository: {
+    label: "Repository",
+    solr_fields: [
+      'repository_ssi'
     ]
   },
   callNumber: {
@@ -248,12 +262,13 @@ METADATA_FIELDS = {
       'caption_tesim'
     ]
   },
-  rights: {
+  rights_statement: {
     label: 'Rights',
     solr_fields: [
       'rights_ssim',
       'rights_tesim'
-    ]
+    ],
+    digital_only: true
   },
   preferredCitation: {
     label: 'Citation',
