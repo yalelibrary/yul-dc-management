@@ -224,6 +224,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def sync_from_preservica(_local_children_hash, preservica_children_hash)
     # iterate through local hashes and remove any children no longer found on preservica
     child_objects.each do |co|
+      co.destroy if co.preservica_content_object_uri.nil?
       co.destroy unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
     end
     # iterate through preservica and update when local version found
