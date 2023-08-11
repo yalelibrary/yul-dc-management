@@ -570,9 +570,21 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     child_objects.map(&:oid)
   end
 
-  def related_resource_online_links(filters = [], json = authoritative_json)
-    return nil unless json && json["relatedResourceOnline"].present?
-    links_and_text = json["relatedResourceOnline"]
+  def related_resource_online_links(_json = authoritative_json)
+    extract_links_with_labels("relatedResourceOnline", [])
+  end
+
+  def related_version_online_links(_json = authoritative_json)
+    ils_filters = %w[brbl-archive.library.yale.edu
+                     divinity-adhoc.library.yale.edu/FosterPapers digital.library.yale.edu
+                     beinecke.library.yale.edu beinecke1.library.yale.edu collections.library.yale.edu
+                     hdl.handle.net/10079/digcoll/]
+    extract_links_with_labels("relatedVersionOnline", ils_filters)
+  end
+
+  def extract_links_with_labels(field_name, filters = [], json = authoritative_json)
+    return nil unless json && json[field_name].present?
+    links_and_text = json[field_name]
 
     links = links_and_text.map do |value|
       link_part = value.split('|')
