@@ -585,7 +585,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       end
       return nil if ils_filters
       label = labels[0] || urls[0]
-      "<a href='#{urls[0]}'>#{label}</a>"
+      ActionController::Base.helpers.sanitize("<a href='#{urls[0]}'>#{label}</a>", tags: ["a", "i", "b"], attributes: %w[href])
     end.compact
     return nil if links.empty?
     links
