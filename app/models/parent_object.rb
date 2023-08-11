@@ -570,6 +570,27 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     child_objects.map(&:oid)
   end
 
+  def related_resource_online_links(filters = [], json = authoritative_json)
+    return nil unless json && json["relatedResourceOnline"].present?
+    links_and_text = json["relatedResourceOnline"]
+
+    links = links_and_text.map do |value|
+      link_part = value.split('|')
+      next unless link_part.count <= 2
+      urls = link_part.select { |s| s.start_with? 'http' }
+      labels = link_part.select { |s| !s.start_with? 'http' }
+      next unless urls.count == 1
+      ils_filters = filters.any? do |ils|
+        urls[0].include?(ils)
+      end
+      return nil if ils_filters
+      label = labels[0] || urls[0]
+      "<a href='#{urls[0]}'>#{label}</a>"
+    end.compact
+    return nil if links.empty?
+    links
+  end
+
   def extract_container_information(json = authoritative_json)
     return nil unless json
     return json["containerGrouping"] unless json["containerGrouping"].nil? || json["containerGrouping"].empty?

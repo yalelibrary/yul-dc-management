@@ -203,6 +203,13 @@ METADATA_FIELDS = {
       'format'
     ]
   },
+  related_resource_online_links: {
+    label: 'Related Resources Online',
+    solr_fields: [
+      'relatedResourceOnline_ssim'
+    ],
+    digital_only: true
+  },
   genre: {
     label: 'Genre',
     solr_fields: [
