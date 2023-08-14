@@ -16,4 +16,15 @@ class ApplicationJob < ActiveJob::Base
   def priority
     @priority || default_priority
   end
+
+  # limit to 3 attempts for local but 15 in production
+  if ENV['RAILS_ENV'] == 'development'
+    retry_on StandardError, wait: :exponentially_longer, attempts: 3 do |_job, _exception|
+      # Log error, do nothing, etc.
+    end
+  else
+    retry_on StandardError, wait: :exponentially_longer, attempts: 15 do |_job, _exception|
+      # Log error, do nothing, etc.
+    end
+  end
 end

@@ -6,8 +6,8 @@ class ReoccurringJobsController < ApplicationController
   def index
     if params['check_status']
       @check_status = true
-      @scheduled_job_exists = Delayed::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ActivityStreamJob%').exists?
-      @manual_job_exists = Delayed::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ActivityStreamManualJob%').exists?
+      @scheduled_job_exists = GoodJob::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ActivityStreamJob%').exists?
+      @manual_job_exists = GoodJob::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ActivityStreamManualJob%').exists?
       @expired_logger = true if ActivityStreamLog.last&.status == "Running" && ActivityStreamLog.last&.created_at&.to_datetime <= DateTime.current - 12.hours
     end
     @reoccurring_jobs = ActivityStreamLog.all
@@ -21,7 +21,7 @@ class ReoccurringJobsController < ApplicationController
 
   # POST ActivityStreamReader
   def create_recurring
-    ActivityStreamJob.perform_later unless Delayed::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ActivityStreamJob%').exists?
+    ActivityStreamJob.perform_later unless GoodJob::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ActivityStreamJob%').exists?
     respond_to do |format|
       format.html { redirect_to reoccurring_jobs_url, notice: 'The recurring job has been queued.' }
       format.json { head :no_content }

@@ -405,7 +405,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
        previous_changes["authoritative_metadata_source_id"].present? ||
        metadata_update.present?
       current_batch_connection&.save! unless current_batch_connection&.persisted?
-      SetupMetadataJob.perform_later(self, current_batch_process, current_batch_connection)
+      SetupMetadataJob.perform_later(self, current_batch_process, current_batch_connection: current_batch_connection)
       processing_event("Processing has been queued", "processing-queued")
     end
   end
