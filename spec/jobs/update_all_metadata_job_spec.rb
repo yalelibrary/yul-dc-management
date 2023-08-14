@@ -12,10 +12,10 @@ RSpec.describe UpdateAllMetadataJob, type: :job, prep_metadata_sources: true, so
 
     it 'increments the job queue by one' do
       parent_object
-      ActiveJob::Base.queue_adapter = :delayed_job
+      ActiveJob::Base.queue_adapter = :good_job
       expect do
         UpdateAllMetadataJob.perform_later
-      end.to change { Delayed::Job.count }.by(1)
+      end.to change { GoodJob::Job.count }.by(1)
     end
   end
 

@@ -17,10 +17,10 @@ RSpec.describe UpdateManifestsJob, type: :job, prep_metadata_sources: true, solr
     end
 
     it 'increments the job queue by one' do
-      ActiveJob::Base.queue_adapter = :delayed_job
+      ActiveJob::Base.queue_adapter = :good_job
       expect do
         UpdateManifestsJob.perform_later
-      end.to change { Delayed::Job.count }.by(1)
+      end.to change { GoodJob::Job.count }.by(1)
     end
   end
 

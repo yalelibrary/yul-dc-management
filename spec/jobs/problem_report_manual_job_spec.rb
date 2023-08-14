@@ -12,10 +12,10 @@ RSpec.describe ProblemReportManualJob, type: :job do
   let(:problem_report_job) { described_class.new }
 
   it 'increments the job queue by one' do
-    ActiveJob::Base.queue_adapter = :delayed_job
+    ActiveJob::Base.queue_adapter = :good_job
     expect do
       described_class.perform_later(problem_report)
-    end.to change { Delayed::Job.count }.by(1)
+    end.to change { GoodJob::Job.count }.by(1)
   end
 
   it 'generates the report when run' do

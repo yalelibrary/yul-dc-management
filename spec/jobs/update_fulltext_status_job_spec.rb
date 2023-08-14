@@ -13,10 +13,10 @@ RSpec.describe UpdateFulltextStatusJob, type: :job, solr: true do
 
     it 'increments the job queue by one' do
       parent_object
-      ActiveJob::Base.queue_adapter = :delayed_job
+      ActiveJob::Base.queue_adapter = :good_job
       expect do
         UpdateFulltextStatusJob.perform_later
-      end.to change { Delayed::Job.count }.by(1)
+      end.to change { GoodJob::Job.count }.by(1)
     end
   end
 

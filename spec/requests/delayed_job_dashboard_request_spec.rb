@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Delayed Jobs Dashboard', type: :request do
+RSpec.describe 'GoodJob Jobs Dashboard', type: :request do
   let(:authorized_user) { FactoryBot.create(:sysadmin_user) }
   let(:user) { FactoryBot.create(:user) }
   let(:delayed_job) { FactoryBot.create(:job) }
 
   after do
-    Delayed::Job.delete_all
+    GoodJob::Job.delete_all
   end
 
   describe 'with authorized user' do

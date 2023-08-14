@@ -79,7 +79,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       click_link(admin_set.key.to_s)
       click_on("Update IIIF Manifests")
       page.driver.browser.switch_to.alert.accept
-      expect(page).to have_content "IIIF Manifests queued for update. Please check Delayed Job dashboard for status"
+      expect(page).to have_content "IIIF Manifests queued for update. Please check GoodJob Job dashboard for status"
     end
 
     it 'cannot update iiif manifests if not an editor of the admin set' do

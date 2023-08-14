@@ -33,36 +33,36 @@ RSpec.describe GeneratePtiffJob, type: :job do
     it 'increments the job queue by one' do
       expect do
         GeneratePtiffJob.perform_later(child_object)
-      end.to change { Delayed::Job.count }.by(1)
+      end.to change { GoodJob::Job.count }.by(1)
     end
 
     it 'increments the ptiff job queue when file not larger than 1GB' do
-      ActiveJob::Base.queue_adapter = :delayed_job
+      ActiveJob::Base.queue_adapter = :good_job
       expect do
         GeneratePtiffJob.perform_later(child_object)
-      end.to change { Delayed::Job.where(queue: 'ptiff').count }.by(1)
+      end.to change { GoodJob::Job.where(queue: 'ptiff').count }.by(1)
     end
 
     it 'does not increment the large_ptiff job queue when file is smaller than 1GB' do
-      ActiveJob::Base.queue_adapter = :delayed_job
+      ActiveJob::Base.queue_adapter = :good_job
       expect do
         GeneratePtiffJob.perform_later(child_object)
-      end.to change { Delayed::Job.where(queue: 'large_ptiff').count }.by(0)
+      end.to change { GoodJob::Job.where(queue: 'large_ptiff').count }.by(0)
     end
 
     it 'increments the job queue by one if needs_a_manifest is true' do
       allow(child_object.parent_object).to receive(:needs_a_manifest?).and_return(true)
       expect do
         generate_ptiff_job.perform(child_object, batch_process)
-      end.to change { Delayed::Job.count }.by(1)
-      expect(Delayed::Job.last.handler).to match(/GenerateManifestJob/)
+      end.to change { GoodJob::Job.count }.by(1)
+      expect(GoodJob::Job.last.handler).to match(/GenerateManifestJob/)
     end
 
     it 'does not increment the job queue if ready_for_manifest is false' do
       allow(child_object.parent_object).to receive(:ready_for_manifest?).and_return(false)
       expect do
         generate_ptiff_job.perform(child_object, batch_process)
-      end.to change { Delayed::Job.count }.by(0)
+      end.to change { GoodJob::Job.count }.by(0)
     end
 
     it 'raises an exception if convert to ptiff fails' do

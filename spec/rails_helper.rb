@@ -77,16 +77,16 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 end
 
-class ActiveJob::QueueAdapters::DelayedJobAdapter
+class ActiveJob::QueueAdapters::GoodJobAdapter
   class EnqueuedJobs
     def clear
-      Delayed::Job.where(failed_at: nil).map(&:destroy)
+      GoodJob::Job.where(failed_at: nil).map(&:destroy)
     end
   end
 
   class PerformedJobs
     def clear
-      Delayed::Job.where.not(failed_at: nil).map(&:destroy)
+      GoodJob::Job.where.not(failed_at: nil).map(&:destroy)
     end
   end
 

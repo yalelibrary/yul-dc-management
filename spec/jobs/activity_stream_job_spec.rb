@@ -10,7 +10,7 @@ RSpec.describe ActivityStreamJob, type: :job do
   around do |example|
     original_mc_host = ENV['METADATA_CLOUD_HOST']
     ENV['METADATA_CLOUD_HOST'] = 'not-a-real-host'
-    ActiveJob::Base.queue_adapter = :delayed_job
+    ActiveJob::Base.queue_adapter = :good_job
     example.run
     ENV['METADATA_CLOUD_HOST'] = original_mc_host
   end
@@ -22,13 +22,13 @@ RSpec.describe ActivityStreamJob, type: :job do
   it 'increments the job queue by one' do
     expect do
       ActivityStreamJob.perform_later(metadata_job)
-    end.to change { Delayed::Job.count }.by(1)
+    end.to change { GoodJob::Job.count }.by(1)
   end
 
   it 'increments the job queue by one for manual job' do
     expect do
       ActivityStreamManualJob.perform_later
-    end.to change { Delayed::Job.count }.by(1)
+    end.to change { GoodJob::Job.count }.by(1)
   end
 
   it 'job fails when not on VPN' do
@@ -50,7 +50,7 @@ RSpec.describe ActivityStreamJob, type: :job do
       ActiveJob::Scheduler.start
       new_time = now + 1.day
       Timecop.travel(new_time)
-      expect(Delayed::Job.where(handler, job_class).count).to eq 1
+      expect(GoodJob::Job.where(handler, job_class).count).to eq 1
     end
 
     it 'automatic does not add another job when one is already running' do
@@ -58,7 +58,7 @@ RSpec.describe ActivityStreamJob, type: :job do
       ActiveJob::Scheduler.start
       new_time = now + 1.day
       Timecop.travel(new_time)
-      expect(Delayed::Job.where(handler, job_class).count).to eq 1
+      expect(GoodJob::Job.where(handler, job_class).count).to eq 1
       ActivityStreamJob.perform_now
       expect(ActivityStreamLog.last.status).to include('Fail')
     end
@@ -68,7 +68,7 @@ RSpec.describe ActivityStreamJob, type: :job do
       ActiveJob::Scheduler.start
       new_time = now + 1.day
       Timecop.travel(new_time)
-      expect(Delayed::Job.where(handler, job_class).count).to eq 1
+      expect(GoodJob::Job.where(handler, job_class).count).to eq 1
       ActivityStreamManualJob.perform_now
       expect(ActivityStreamLog.last.status).to include('Fail')
     end

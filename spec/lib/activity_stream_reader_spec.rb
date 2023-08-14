@@ -258,7 +258,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
       parent_object_with_aspace_uri.default_fetch
       parent_object_with_aspace_uri.last_aspace_update = 5.years.ago
       parent_object_with_aspace_uri.save!
-      Delayed::Job.delete(parent_object_with_aspace_uri.setup_metadata_jobs)
+      GoodJob::Job.delete(parent_object_with_aspace_uri.setup_metadata_jobs)
 
       relevant_parent_object.default_fetch
       relevant_parent_object.metadata_update = false
@@ -266,7 +266,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
       relevant_parent_object.default_fetch
       relevant_parent_object.last_voyager_update = 5.years.ago
       relevant_parent_object.save!
-      Delayed::Job.delete(relevant_parent_object.setup_metadata_jobs)
+      GoodJob::Job.delete(relevant_parent_object.setup_metadata_jobs)
 
       asl_old_success
     end

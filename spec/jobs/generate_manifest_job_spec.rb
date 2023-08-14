@@ -14,7 +14,7 @@ RSpec.describe GenerateManifestJob, type: :job do
     it 'increments the job queue by one' do
       expect do
         GenerateManifestJob.perform_later(parent_object)
-      end.to change { Delayed::Job.count }.by(1)
+      end.to change { GoodJob::Job.count }.by(1)
     end
 
     context 'job fails' do

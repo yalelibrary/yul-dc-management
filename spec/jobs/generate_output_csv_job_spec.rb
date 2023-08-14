@@ -10,10 +10,10 @@ RSpec.describe GenerateOutputCsvJob, type: :job do
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
 
   it 'increments the job queue by one' do
-    ActiveJob::Base.queue_adapter = :delayed_job
+    ActiveJob::Base.queue_adapter = :good_job
     expect do
       described_class.perform_later(batch_process)
-    end.to change { Delayed::Job.count }.by(1)
+    end.to change { GoodJob::Job.count }.by(1)
   end
 
   it 'calls child_output_csv when performed' do

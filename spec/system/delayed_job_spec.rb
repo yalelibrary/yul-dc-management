@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe 'Delayed Jobs', type: :system, js: true do
+RSpec.describe 'GoodJob Jobs', type: :system, js: true do
   let(:sysadmin_user) { FactoryBot.create(:sysadmin_user) }
   let(:user) { FactoryBot.create(:user) }
 
   context 'as a logged out visitor' do
     it 'are inaccessible through the delayed jobs dashboard menu item' do
       visit root_path
-      expect(page).not_to have_content('Delayed Job Dashboard')
+      expect(page).not_to have_content('GoodJob Job Dashboard')
     end
     # TODO(alishaevn): figure out why this spec is failing
     xit 'are inaccessible manually through the delayed jobs endpoint' do
@@ -28,7 +28,7 @@ RSpec.describe 'Delayed Jobs', type: :system, js: true do
 
     it 'are inaccessible through the delayed jobs dashboard menu item' do
       visit root_path
-      expect(page).not_to have_content('Delayed Job Dashboard')
+      expect(page).not_to have_content('GoodJob Job Dashboard')
     end
     it 'are inaccessible manually through the delayed jobs endpoint' do
       visit delayed_job_web_path

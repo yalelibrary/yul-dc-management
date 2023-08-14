@@ -11,10 +11,10 @@ RSpec.describe CreateParentOidCsvJob, type: :job do
   let(:create_parent_oid_csv_job) { CreateParentOidCsvJob.new }
 
   it 'increments the job queue by one' do
-    ActiveJob::Base.queue_adapter = :delayed_job
+    ActiveJob::Base.queue_adapter = :good_job
     expect do
       described_class.perform_later(batch_process)
-    end.to change { Delayed::Job.count }.by(1)
+    end.to change { GoodJob::Job.count }.by(1)
   end
 
   it "has correct priority" do

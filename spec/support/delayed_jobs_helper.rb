@@ -4,9 +4,9 @@ module DelayedJobsHelper
   # Setup rspec
   RSpec.configure do |config|
     config.around(undelayed: true) do |example|
-      Delayed::Worker.delay_jobs = false
+      GoodJob::Worker.delay_jobs = false
       example.run
-      Delayed::Worker.delay_jobs = true
+      GoodJob::Worker.delay_jobs = true
     end
   end
 end
