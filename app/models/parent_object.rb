@@ -570,6 +570,39 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     child_objects.map(&:oid)
   end
 
+  def related_resource_online_links(_json = authoritative_json)
+    extract_links_with_labels("relatedResourceOnline", [])
+  end
+
+  def related_version_online_links(_json = authoritative_json)
+    ils_filters = %w[brbl-archive.library.yale.edu
+                     divinity-adhoc.library.yale.edu/FosterPapers digital.library.yale.edu
+                     beinecke.library.yale.edu beinecke1.library.yale.edu collections.library.yale.edu
+                     hdl.handle.net/10079/digcoll/]
+    extract_links_with_labels("relatedVersionOnline", ils_filters)
+  end
+
+  def extract_links_with_labels(field_name, filters = [], json = authoritative_json)
+    return nil unless json && json[field_name].present?
+    links_and_text = json[field_name]
+
+    links = links_and_text.map do |value|
+      link_part = value.split('|')
+      next unless link_part.count <= 2
+      urls = link_part.select { |s| s.start_with? 'http' }
+      labels = link_part.select { |s| !s.start_with? 'http' }
+      next unless urls.count == 1
+      ils_filters = filters.any? do |ils|
+        urls[0].include?(ils)
+      end
+      return nil if ils_filters
+      label = labels[0] || urls[0]
+      ActionController::Base.helpers.sanitize("<a href='#{urls[0]}'>#{label}</a>", tags: ["a", "i", "b"], attributes: %w[href])
+    end.compact
+    return nil if links.empty?
+    links
+  end
+
   def extract_container_information(json = authoritative_json)
     return nil unless json
     return json["containerGrouping"] unless json["containerGrouping"].nil? || json["containerGrouping"].empty?
