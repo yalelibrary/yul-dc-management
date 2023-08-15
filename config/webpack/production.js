@@ -4,7 +4,4 @@ const environment = require('./environment')
 
 const config = environment.toWebpackConfig()
 
-// remove config.devtool when upgrading to webpack v5
-config.devtool = 'none'
-
 module.exports = config
