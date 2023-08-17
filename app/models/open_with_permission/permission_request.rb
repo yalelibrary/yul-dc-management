@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class PermissionRequest < ApplicationRecord
+class OpenWithPermission::PermissionRequest < ApplicationRecord
   resourcify
   belongs_to :permission_set
   belongs_to :permission_request_user

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class PermissionSet < ApplicationRecord
+class OpenWithPermission::PermissionSet < ApplicationRecord
   has_many :permission_requests
   has_many :parent_objects
   has_many :permission_set_terms
@@ -35,7 +35,7 @@ class PermissionSet < ApplicationRecord
   end
 
   def activate_terms!(user, title, body)
-    new_terms = PermissionSetTerm.create!(permission_set: self, title: title, body: body)
+    new_terms = OpenWithPermission::PermissionSetTerm.create!(permission_set: self, title: title, body: body)
     new_terms.activate_by!(user)
     new_terms
   end

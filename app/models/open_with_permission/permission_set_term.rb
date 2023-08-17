@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PermissionSetTerm < ApplicationRecord
+class OpenWithPermission::PermissionSetTerm < ApplicationRecord
   belongs_to :permission_set
   has_many :terms_agreements
   belongs_to :inactivated_by, foreign_key: 'inactivated_by_id', primary_key: 'id', class_name: 'User', optional: true
@@ -11,7 +11,7 @@ class PermissionSetTerm < ApplicationRecord
   def activate_by!(user)
     raise "Unable to activate previously activated permission set" unless activated_at.nil?
     raise "User cannot be nil" unless user
-    PermissionSetTerm.transaction do
+    OpenWithPermission::PermissionSetTerm.transaction do
       time = Time.zone.now
       prior_active_terms = permission_set.active_permission_set_terms
       if prior_active_terms && prior_active_terms != self

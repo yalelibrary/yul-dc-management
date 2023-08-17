@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe PermissionRequestUser, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
+RSpec.describe OpenWithPermission::PermissionRequestUser, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   describe 'with valid attributes' do
     it 'is valid' do
-      expect(PermissionRequestUser.new(sub: 'subject', name: 'user name', email: 'email@example.com', email_verified: true, oidc_updated_at: Time.zone.now)).to be_valid
+      expect(OpenWithPermission::PermissionRequestUser.new(sub: 'subject', name: 'user name', email: 'email@example.com', email_verified: true, oidc_updated_at: Time.zone.now)).to be_valid
     end
 
     it 'has the expected fields' do
@@ -38,7 +38,7 @@ RSpec.describe PermissionRequestUser, type: :model, prep_metadata_sources: true,
     end
   end
 
-  describe PermissionRequestUser do
+  describe OpenWithPermission::PermissionRequestUser do
     it { is_expected.to have_many(:permission_requests) }
   end
 end
