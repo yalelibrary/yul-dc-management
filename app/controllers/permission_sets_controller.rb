@@ -11,7 +11,7 @@ class PermissionSetsController < ApplicationController
   def index
     authorize!(:view_list, OpenWithPermission::PermissionSet)
 
-    permission_sets = PermissionSet.all
+    permission_sets = OpenWithPermission::PermissionSet.all
     @visible_permission_sets = permission_sets.order('label ASC').select do |sets|
       User.with_role(:approver, sets).include?(current_user) ||
         User.with_role(:administrator, sets).include?(current_user) ||
@@ -40,7 +40,7 @@ class PermissionSetsController < ApplicationController
   # POST /permission_sets
   # POST /permission_sets.json
   def create
-    @permission_set = PermissionSet.new(permission_set_params)
+    @permission_set = OpenWithPermission::PermissionSet.new(permission_set_params)
 
     respond_to do |format|
       if @permission_set.save
@@ -54,8 +54,8 @@ class PermissionSetsController < ApplicationController
   end
 
   def show_term
-    @term = PermissionSetTerm.find(params[:id])
-    @permission_set = PermissionSet.find(@term.permission_set_id)
+    @term = OpenWithPermission::PermissionSetTerm.find(params[:id])
+    @permission_set = OpenWithPermission::PermissionSet.find(@term.permission_set_id)
     authorize!(:update, @permission_set)
   end
 
@@ -73,7 +73,7 @@ class PermissionSetsController < ApplicationController
   def terms_api
     # check for valid permission set
     begin
-      permission_set = PermissionSet.find(params[:id])
+      permission_set = OpenWithPermission::PermissionSet.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       render(json: { "title": "Permission Set not found" }, status: 400) && (return false)
     end
@@ -101,16 +101,16 @@ class PermissionSetsController < ApplicationController
 
   def agreement_term
     begin
-      term = PermissionSetTerm.find(params[:permission_set_terms_id])
+      term = OpenWithPermission::PermissionSetTerm.find(params[:permission_set_terms_id])
     rescue ActiveRecord::RecordNotFound
       render(json: { "title": "Term not found." }, status: 400) && (return false)
     end
-    request_user = PermissionRequestUser.where(sub: params[:sub]).first
+    request_user = OpenWithPermission::PermissionRequestUser.where(sub: params[:sub]).first
     if request_user.nil?
       render(json: { "title": "User not found." }, status: 400) && (return false)
     else
       begin
-        term_agreement = TermsAgreement.new(permission_set_term: term, permission_request_user: request_user, agreement_ts: Time.zone.now)
+        term_agreement = OpenWithPermission::TermsAgreement.new(permission_set_term: term, permission_request_user: request_user, agreement_ts: Time.zone.now)
         term_agreement.save!
         render json: { "title": "Success." }, status: 201
       rescue StandardError => e
@@ -123,7 +123,7 @@ class PermissionSetsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_permission_set
-      @permission_set = PermissionSet.find(params[:id])
+      @permission_set = OpenWithPermission::PermissionSet.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
