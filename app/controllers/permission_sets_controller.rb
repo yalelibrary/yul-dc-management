@@ -9,7 +9,7 @@ class PermissionSetsController < ApplicationController
   # GET /permission_sets
   # GET /permission_sets.json
   def index
-    authorize!(:view_list, PermissionSet)
+    authorize!(:view_list, OpenWithPermission::PermissionSet)
 
     permission_sets = PermissionSet.all
     @visible_permission_sets = permission_sets.order('label ASC').select do |sets|

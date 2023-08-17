@@ -33,8 +33,8 @@ class Ability
   def apply_sysadmin_abilities
     can :manage, User
     can :crud, AdminSet
-    can :crud, PermissionSet
-    can :crud, PermissionRequest
+    can :crud, OpenWithPermission::PermissionSet
+    can :crud, OpenWithPermission::PermissionRequest
     can :read, ParentObject
     can :read, ChildObject
     can :read, PreservicaIngest
