@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 class OpenWithPermission::PermissionSet < ApplicationRecord
-  has_many :permission_requests
+  has_many :permission_requests, class_name: "OpenWithPermission::PermissionRequest"
   has_many :parent_objects
-  has_many :permission_set_terms
+  has_many :permission_set_terms, class_name: "OpenWithPermission::PermissionSetTerm"
   resourcify
   validates :key, presence: true
   validates :label, presence: true

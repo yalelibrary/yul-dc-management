@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   has_many :batch_processes
   has_many :users_roles
-  has_many :permission_requests
+  has_many :permission_requests, class_name: "OpenWithPermission::PermissionRequest"
 
   after_update :remove_roles
 

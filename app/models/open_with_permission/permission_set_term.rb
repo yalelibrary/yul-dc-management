@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class OpenWithPermission::PermissionSetTerm < ApplicationRecord
-  belongs_to :permission_set
-  has_many :terms_agreements
+  belongs_to :permission_set, class_name: "OpenWithPermission::PermissionSet"
+  has_many :terms_agreements, class_name: "OpenWithPermission::TermsAgreement"
   belongs_to :inactivated_by, foreign_key: 'inactivated_by_id', primary_key: 'id', class_name: 'User', optional: true
   belongs_to :activated_by, foreign_key: 'activated_by_id', primary_key: 'id', class_name: 'User', optional: true
 
