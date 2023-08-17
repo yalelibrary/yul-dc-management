@@ -35,7 +35,7 @@ class ChildObjectDatatable < ApplicationDatatable
   def data
     records.map do |child_object|
       {
-        oid: link_to(child_object.oid, child_object_path(child_object)) + (with_icon('fa fa-pencil', edit_child_object_path(child_object)) if @current_ability.can? :edit, child_object),
+        oid: link_to(child_object.oid, child_object_path(child_object)) + (with_icon('fa fa-pencil', edit_child_object_path(child_object), {}) if @current_ability.can? :edit, child_object),
         label: child_object.label,
         caption: child_object.caption,
         width: child_object.width,
@@ -56,11 +56,11 @@ class ChildObjectDatatable < ApplicationDatatable
 
   def actions(child_object)
     actions = []
-    actions << with_icon('fa fa-trash', child_object_path(child_object), method: :delete, data: { confirm: 'Are you sure?' }) if @current_ability.can? :destroy, child_object
+    actions << with_icon('fa fa-trash', child_object_path(child_object), { method: :delete, data: { confirm: 'Are you sure?' } }) if @current_ability.can? :destroy, child_object
     actions.join(' | ')
   end
 
-  def with_icon(class_name, path, options = {})
+  def with_icon(class_name, path, options)
     link_to(path, options) do
       content_tag(:i, '', class: class_name)
     end

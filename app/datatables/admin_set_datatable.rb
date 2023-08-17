@@ -23,7 +23,7 @@ class AdminSetDatatable < ApplicationDatatable
   def data
     records.map do |admin_set|
       {
-        key: link_to(admin_set.key, admin_set_path(admin_set)) + with_icon('fa fa-pencil', edit_admin_set_path(admin_set)),
+        key: link_to(admin_set.key, admin_set_path(admin_set)) + with_icon('fa fa-pencil', edit_admin_set_path(admin_set), {}),
         label: admin_set.label,
         homepage: link_to(admin_set.homepage, admin_set.homepage),
         DT_RowId: "admin_set_#{admin_set.id}"
@@ -31,7 +31,7 @@ class AdminSetDatatable < ApplicationDatatable
     end
   end
 
-  def with_icon(class_name, path, options = {})
+  def with_icon(class_name, path, options)
     link_to(path, options) do
       content_tag(:i, '', class: class_name)
     end

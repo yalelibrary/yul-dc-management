@@ -2,9 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe BatchProcessParentDatatable, type: :datatable, prep_metadata_sources: true do
+RSpec.describe BatchProcessParentDatatable, type: :datatable, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:user, uid: 'johnsmith2530') }
   columns = ['child_oid', 'time', 'status']
+  let(:admin_set) { AdminSet.find_by(key: 'brbl') }
 
   before do
     stub_metadata_cloud('16057779')
@@ -23,7 +24,7 @@ RSpec.describe BatchProcessParentDatatable, type: :datatable, prep_metadata_sour
     let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'short_fixture_ids.csv')) }
 
     it 'renders a complete data table' do
-      parent_object = FactoryBot.create(:parent_object, oid: 16_057_779)
+      parent_object = FactoryBot.create(:parent_object, oid: 16_057_779, admin_set: admin_set)
       child_object = FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_object)
       batch_process = FactoryBot.create(:batch_process, user: user, child_objects: [child_object])
 

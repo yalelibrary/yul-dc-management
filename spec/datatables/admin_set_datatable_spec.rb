@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe AdminSetDatatable, type: :datatable, prep_metadata_sources: true do
+RSpec.describe AdminSetDatatable, type: :datatable, prep_metadata_sources: true, prep_admin_sets: true do
   columns = ['key', 'label', 'homepage']
-  let(:admin_set) { FactoryBot.create(:admin_set) }
+  let(:admin_set) { AdminSet.find_by(key: 'brbl') }
 
   describe 'admin set data tables' do
     it 'can handle an empty model set' do
