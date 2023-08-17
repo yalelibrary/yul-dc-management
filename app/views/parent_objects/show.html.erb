@@ -17,7 +17,7 @@
       <% if @parent_object.permission_set_id.present? %>
         <tr class='table-row'>
           <td class="key">Permission Set:</td>
-          <td><%= PermissionSet.find(@parent_object.permission_set_id).label %></td>
+          <td><%= OpenWithPermission::PermissionSet.find(@parent_object.permission_set_id).label %></td>
         </tr>
       <% end %>
       <tr class='table-row'>

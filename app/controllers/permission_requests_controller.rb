@@ -7,7 +7,7 @@ class PermissionRequestsController < ApplicationController
   # GET /permission_requests
   # GET /permission_requests.json
   def index
-    authorize!(:view_list, PermissionRequest)
+    authorize!(:view_list, OpenWithPermission::PermissionRequest)
 
     permission_requests = OpenWithPermission::PermissionRequest.all
     @visible_permission_requests = permission_requests.select do |sets|

@@ -39,7 +39,7 @@ class User < ApplicationRecord
       if role.name == 'sysadmin'
         remove_role :sysadmin
       else
-        remove_role(role.name, role.resource_type == 'AdminSet' ? AdminSet.find(role.resource_id) : PermissionSet.find(role.resource_id))
+        remove_role(role.name, role.resource_type == 'AdminSet' ? AdminSet.find(role.resource_id) : OpenWithPermission::PermissionSet.find(role.resource_id))
       end
     end
   end
