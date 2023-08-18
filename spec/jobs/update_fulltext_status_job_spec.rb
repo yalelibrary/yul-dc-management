@@ -2,18 +2,19 @@
 
 require 'rails_helper'
 
-RSpec.describe UpdateFulltextStatusJob, type: :job, solr: true do
-  let(:admin_set) { FactoryBot.create(:admin_set) }
-  let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069', admin_set: admin_set) }
+RSpec.describe UpdateFulltextStatusJob, type: :job, prep_metadata_sources: true, prep_admin_sets: true, solr: true do
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
+  end
+
+  let(:admin_set) { AdminSet.first }
+  let(:metadata_source) { MetadataSource.first }
+  let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
 
   context 'with test active job queue' do
-    def queue_adapter_for_test
-      ActiveJob::QueueAdapters::DelayedJobAdapter.new
-    end
-
     it 'increments the job queue by one' do
       parent_object
-      ActiveJob::Base.queue_adapter = :good_job
       expect do
         UpdateFulltextStatusJob.perform_later
       end.to change { GoodJob::Job.count }.by(1)
@@ -24,8 +25,7 @@ RSpec.describe UpdateFulltextStatusJob, type: :job, solr: true do
     let(:user) { FactoryBot.create(:user) }
     let(:role) { FactoryBot.create(:role, name: editor) }
     let(:batch_process) { FactoryBot.create(:batch_process, user: user, batch_action: 'update fulltext status') }
-    let(:metadata_source) { FactoryBot.create(:metadata_source) }
-    let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source, admin_set_id: admin_set.id) }
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
     let(:child_object) { FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_object) }
 
     before do

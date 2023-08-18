@@ -2,14 +2,14 @@
 require 'rails_helper'
 
 RSpec.describe MetsDirectoryScanJob, type: :job do
-  def queue_adapter_for_test
-    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
 
   let(:mets_directory_scan_job) { MetsDirectoryScanJob.new }
 
   it 'increments the job queue by one' do
-    ActiveJob::Base.queue_adapter = :good_job
     expect do
       described_class.perform_later
     end.to change { GoodJob::Job.count }.by(1)

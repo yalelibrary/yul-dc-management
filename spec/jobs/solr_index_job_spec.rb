@@ -2,8 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe SolrIndexJob, type: :job do
-  let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
+RSpec.describe SolrIndexJob, type: :job, prep_metadata_sources: true, prep_admin_sets: true do
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
+  end
+
+  let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069', authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
 
   it 'increments the job queue by one' do
     expect do

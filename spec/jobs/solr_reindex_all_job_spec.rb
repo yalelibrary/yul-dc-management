@@ -4,12 +4,12 @@ require 'rails_helper'
 
 RSpec.describe SolrReindexAllJob, type: :job, prep_metadata_sources: true, solr: true do
   context 'with tests active job queue' do
-    def queue_adapter_for_test
-      ActiveJob::QueueAdapters::DelayedJobAdapter.new
+    before do
+      allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+      ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
     end
 
     it 'increments the job queue by one' do
-      ActiveJob::Base.queue_adapter = :good_job
       expect do
         SolrReindexAllJob.perform_later
       end.to change { GoodJob::Job.count }.by(1)

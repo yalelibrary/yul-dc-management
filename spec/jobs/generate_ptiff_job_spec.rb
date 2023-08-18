@@ -2,14 +2,15 @@
 
 require 'rails_helper'
 
-RSpec.describe GeneratePtiffJob, type: :job do
-  def queue_adapter_for_test
-    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+RSpec.describe GeneratePtiffJob, type: :job, prep_metadata_sources: true, prep_admin_sets: true do
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
+
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
-  let(:metadata_source) { FactoryBot.create(:metadata_source) }
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
   let(:child_object) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object) }
   let(:generate_ptiff_job) { GeneratePtiffJob.new }
 
@@ -37,14 +38,12 @@ RSpec.describe GeneratePtiffJob, type: :job do
     end
 
     it 'increments the ptiff job queue when file not larger than 1GB' do
-      ActiveJob::Base.queue_adapter = :good_job
       expect do
         GeneratePtiffJob.perform_later(child_object)
       end.to change { GoodJob::Job.where(queue: 'ptiff').count }.by(1)
     end
 
     it 'does not increment the large_ptiff job queue when file is smaller than 1GB' do
-      ActiveJob::Base.queue_adapter = :good_job
       expect do
         GeneratePtiffJob.perform_later(child_object)
       end.to change { GoodJob::Job.where(queue: 'large_ptiff').count }.by(0)

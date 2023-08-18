@@ -2,8 +2,9 @@
 require 'rails_helper'
 
 RSpec.describe GenerateOutputCsvJob, type: :job do
-  def queue_adapter_for_test
-    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
 
   let(:user) { FactoryBot.create(:user) }

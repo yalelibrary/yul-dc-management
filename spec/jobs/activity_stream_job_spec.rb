@@ -3,14 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe ActivityStreamJob, type: :job do
-  def queue_adapter_for_test
-    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
 
   around do |example|
     original_mc_host = ENV['METADATA_CLOUD_HOST']
     ENV['METADATA_CLOUD_HOST'] = 'not-a-real-host'
-    ActiveJob::Base.queue_adapter = :good_job
     example.run
     ENV['METADATA_CLOUD_HOST'] = original_mc_host
   end

@@ -2,8 +2,9 @@
 require 'rails_helper'
 
 RSpec.describe CreateChildOidCsvJob, type: :job do
-  def queue_adapter_for_test
-    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
 
   let(:user) { FactoryBot.create(:user) }
@@ -11,7 +12,6 @@ RSpec.describe CreateChildOidCsvJob, type: :job do
   let(:create_child_oid_csv_job) { CreateChildOidCsvJob.new }
 
   it 'increments the job queue by one' do
-    ActiveJob::Base.queue_adapter = :good_job
     expect do
       described_class.perform_later(batch_process)
     end.to change { GoodJob::Job.count }.by(1)
