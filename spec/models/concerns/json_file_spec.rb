@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-RSpec.describe JsonFile, prep_metadata_sources: true do
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: '16685691') }
+RSpec.describe JsonFile, prep_metadata_sources: true, prep_admin_sets: true do
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: '16685691', admin_set: AdminSet.find_by(key: 'brbl')) }
   let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "16685691.json") }
   around do |example|
     original_ocr_path = ENV['OCR_DOWNLOAD_BUCKET']

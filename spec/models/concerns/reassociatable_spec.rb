@@ -2,10 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Reassociatable, type: :model do
+RSpec.describe Reassociatable, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   let(:reassociatable) { BatchProcess.new }
-  let(:metadata_source) { FactoryBot.create(:metadata_source) }
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: '222', authoritative_metadata_source: metadata_source) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: '222', authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
   let(:child_object) { FactoryBot.create(:child_object, oid: "1", label: "original label", caption: "original caption", viewing_hint: "original viewing hint", order: 5, parent_object: parent_object) }
 
   it "blanks out fields which can be blanked" do

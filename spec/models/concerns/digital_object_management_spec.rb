@@ -5,11 +5,13 @@ require 'rails_helper'
 RSpec.describe DigitalObjectManagement, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   let(:aspace) { 3 }
   let(:voyager) { 2 }
+  let(:admin_set) { AdminSet.first }
 
   it "has digital object json with expected fields" do
     full_parent_object = FactoryBot.build(:parent_object,
                                           oid: '45678',
                                           authoritative_metadata_source_id: aspace,
+                                          admin_set: admin_set,
                                           aspace_uri: '/aspace_uri',
                                           holding: '987654321',
                                           item: '23456789',
@@ -42,6 +44,7 @@ RSpec.describe DigitalObjectManagement, type: :model, prep_metadata_sources: tru
       full_parent_object = FactoryBot.build(:parent_object,
                                             oid: '45678',
                                             authoritative_metadata_source_id: voyager,
+                                            admin_set: admin_set,
                                             child_object_count: 1,
                                             visibility: "Private",
                                             voyager_json: { "title": ["test"] })
@@ -62,6 +65,7 @@ RSpec.describe DigitalObjectManagement, type: :model, prep_metadata_sources: tru
       full_parent_object = FactoryBot.build(:parent_object,
                                             oid: '45678',
                                             authoritative_metadata_source_id: aspace,
+                                            admin_set: admin_set,
                                             child_object_count: 1,
                                             visibility: "Private",
                                             aspace_json: { "title": ["test"] })
