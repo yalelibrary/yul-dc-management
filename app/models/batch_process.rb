@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'csv'
 
 class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # CSV EXPORT CHILD OIDS:
