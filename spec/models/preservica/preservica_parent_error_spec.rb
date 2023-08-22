@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   subject(:batch_process) { BatchProcess.new }
-  let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl') }
+  let(:admin_set) { AdminSet.find_by(key: 'brbl') }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent.csv")) }
   let(:preservica_parent_no_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_no_source.csv")) }
