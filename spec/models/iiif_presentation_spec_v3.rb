@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
+RSpec.describe IiifPresentationV3, prep_metadata_sources: true, prep_admin_sets: true do
   around do |example|
     original_blacklight_base_url = ENV['BLACKLIGHT_BASE_URL']
     original_manifests_base_url = ENV['IIIF_MANIFESTS_BASE_URL']
