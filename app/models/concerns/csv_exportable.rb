@@ -16,6 +16,7 @@ module CsvExportable
   end
 
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def parent_output_csv(*admin_set_id)
     return nil unless batch_action == 'export all parent objects by admin set'
     output_csv = CSV.generate do |csv|
@@ -23,22 +24,23 @@ module CsvExportable
       with_each_parent_object(*admin_set_id) do |po|
         case po
         when ParentObject
-        csv << [po.oid, po.admin_set.key, po.source_name,
-          po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
-          po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
-          po.last_ladybird_update, po.last_voyager_update,
-          po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
-          po.digitization_note, po.digitization_funding_source, po.project_identifier, extent_of_full_text(po)]
+          csv << [po.oid, po.admin_set.key, po.source_name,
+                  po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+                  po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
+                  po.last_ladybird_update, po.last_voyager_update,
+                  po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
+                  po.digitization_note, po.digitization_funding_source, po.project_identifier, extent_of_full_text(po)]
         else
           csv << [po[:id], po[:row2], '-', po[:csv_message], '', '']
-          batch_processing_event(po[:batch_message], 'Skipped Row') unless batch_ingest_events_count.positive?   
-        end  
+          batch_processing_event(po[:batch_message], 'Skipped Row') unless batch_ingest_events_count.positive?
+        end
       end
     end
     save_to_s3(output_csv, self)
     output_csv
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def extent_of_full_text(parent_object)
     children_with_ft = false
