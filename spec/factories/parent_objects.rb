@@ -3,11 +3,10 @@
 FactoryBot.define do
   # byebug
   factory :parent_object do
-    # admin_set { FactoryBot.create(:admin_set) }
+    admin_set { AdminSet.first.presence || FactoryBot.create(:admin_set) }
     oid { "2004628" }
     created_at { Time.zone.now }
     updated_at { Time.zone.now }
-    # authoritative_metadata_source_id { admin_set.id }
     factory :parent_object_with_bib do
       oid { "2004628" }
       bib { "3163155" }
