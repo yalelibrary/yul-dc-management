@@ -72,7 +72,7 @@ git clone git@github.com:yalelibrary/yul-dc-management.git
 
 ## Camerata
 
-Camerata is a gem which is used to orchestrate and deploy the Yale DC suite of applications
+Camerata is a gem which is used to orchestrate and deploy the Yale DC suite of applications.
 
 ### Install Camerata
 
