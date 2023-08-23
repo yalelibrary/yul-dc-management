@@ -30,7 +30,7 @@ class PermissionSetsController < ApplicationController
   def update
     respond_to do |format|
       if @permission_set.update(permission_set_params)
-        format.html { redirect_to @permission_set, notice: 'Permission set was successfully updated.' }
+        format.html { redirect_to permission_set_path(@permission_set), notice: 'Permission set was successfully updated.' }
         format.json { render :show, status: :ok, location: @permission_set }
       else
         format.html { render :edit }
@@ -46,7 +46,7 @@ class PermissionSetsController < ApplicationController
 
     respond_to do |format|
       if @permission_set.save
-        format.html { redirect_to @permission_set, notice: 'Permission set was successfully created.' }
+        format.html { redirect_to permission_set_path(@permission_set), notice: 'Permission set was successfully created.' }
         format.json { render :show, status: :created, location: @permission_set }
       else
         format.html { render :new }
@@ -130,6 +130,6 @@ class PermissionSetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def permission_set_params
-      params.require(:permission_set).permit(:key, :label, :max_queue_length, permission_set_terms_attributes: [:id, :title, :body])
+      params.require(:open_with_permission_permission_set).permit(:key, :label, :max_queue_length, permission_set_terms_attributes: [:id, :title, :body])
     end
 end
