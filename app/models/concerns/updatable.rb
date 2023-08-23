@@ -91,7 +91,7 @@ module Updatable
       parent_object.admin_set = admin_set unless admin_set.nil?
       parent_object.update!(processed_fields)
       trigger_setup_metadata(parent_object)
-      self.sync_from_preservica if parent_object.digital_object_source == 'Preservica'
+      sync_from_preservica if parent_object.digital_object_source == 'Preservica'
 
       processing_event_for_parent(parent_object)
     end
