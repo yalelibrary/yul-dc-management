@@ -83,6 +83,10 @@
         <td><%= @parent_object.visibility %></td>
       </tr>
       <tr class='table-row'>
+        <td class="key">Permission Set:</td>
+        <td><%= @parent_object&.permission_set&.label %></td>
+      </tr>
+      <tr class='table-row'>
         <td class="key">Rights Statement:</td>
         <td><%= sanitize @parent_object.rights_statement, tags: %w(a), attributes: %w(href) %></td>
       </tr>
