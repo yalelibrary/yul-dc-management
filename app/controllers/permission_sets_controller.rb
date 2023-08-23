@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PermissionSetsController < ApplicationController
-  load_and_authorize_resource except: [:permission_set_terms, :new_term, :post_permission_set_terms, :show_term, :deactivate_permission_set_terms, :terms_api, :agreement_term]
+  load_and_authorize_resource class: OpenWithPermission::PermissionSet, except: [:permission_set_terms, :new_term, :post_permission_set_terms, :show_term, :deactivate_permission_set_terms, :terms_api, :agreement_term]
   before_action :set_permission_set, only: [:show, :edit, :update, :destroy, :permission_set_terms, :post_permission_set_terms, :new_term, :deactivate_permission_set_terms]
 
   skip_before_action :authenticate_user!, only: [:terms_api, :agreement_term]
