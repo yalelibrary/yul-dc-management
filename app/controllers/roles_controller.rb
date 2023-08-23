@@ -45,7 +45,12 @@ class RolesController < ApplicationController
     end
 
     def set_item
-      @item = params[:item_class]&.constantize&.find(params[:item_id]) if params[:item_id]
+      if params[:item_class] == "PermissionSet"
+        params[:item_class] = "OpenWithPermission::PermissionSet"
+        @item = params[:item_class]&.constantize&.find(params[:item_id]) if params[:item_id]
+      else
+        @item = params[:item_class]&.constantize&.find(params[:item_id]) if params[:item_id]
+      end
     end
 
     def show_notice(user, role)
