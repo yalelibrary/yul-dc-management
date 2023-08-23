@@ -78,7 +78,7 @@
     <div class="col-med-3">
       <%= form.label "Permission Set" %>
       <%= form.select(:permission_set_id,
-                  PermissionSet.all.map { |permission_set|
+                  OpenWithPermission::PermissionSet.all.map { |permission_set|
                     [permission_set.label, permission_set.id]
                   } << ["None",nil],
                   selected: parent_object.permission_set&.key || ["None", nil],
