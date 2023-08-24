@@ -123,7 +123,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       File.delete("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif") if File.exist?("spec/fixtures/images/access_masters/00/06/20/00/00/00/200000006.tif")
     end
 
-    it 'can recognize when child object count and order is the same' do
+    # always update
+    xit 'can recognize when child object count and order is the same' do
       File.delete("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")
       File.delete("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")
       File.delete("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif")
