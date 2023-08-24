@@ -58,11 +58,15 @@ set -e
 [ $status -ne 0 ] && CHANNELS=$(identify -format "%[channels]\n" ${input}[0] 2>/dev/null)
 echo "channels: ${CHANNELS}"
 if [ ${CHANNELS} = "srgba" ]; then
-    # we have to flatten the image to remove the alpha channel / trasparency before proceeding
+    # we have to flatten the image to remove the alpha channel / transparency before proceeding
     echo "removing alpha channel from $input"
     vips im_extract_bands $input ${input}.noalpha.tif 0 3   2>&1
     if [ -z "${savefiles}" ]; then rm $input; fi
     mv ${input}.noalpha.tif $input
+elif [ ${CHANNELS} = "cmyk" ]; then
+    vips icc_transform $input.tif  $input.srgb.tif[compression=none,strip] sRGB.icc --input-profile=cmyk
+    if [ -z "${savefiles}" ]; then rm $input; fi
+    mv ${input}.srgb.tif $input
 elif [[ ${CHANNELS} != "srgb" && ${CHANNELS} != "gray" && ${CHANNELS} != "cmyk" ]]; then
     echo "Image ${input} has color channels ${CHANNELS} which is not supported at this time."
     exit 1;
