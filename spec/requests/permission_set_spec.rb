@@ -46,7 +46,8 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
     end
     it 'updates permission set with valid attributes' do
       permission_set = OpenWithPermission::PermissionSet.create! valid_attributes
-      patch permission_set_url(permission_set), params: { permission_set: updated_attributes }
+      byebug
+      patch permission_set_url(permission_set), params: { open_with_permission_permission_set: updated_attributes }
       permission_set.reload
       expect(permission_set.key).to eq "Newer Key"
       expect(response).to have_http_status(302)
@@ -54,7 +55,7 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
 
     it 'does not update permission set with invalid attributes' do
       permission_set = OpenWithPermission::PermissionSet.create(valid_attributes)
-      patch permission_set_url(permission_set), params: { permission_set: invalid_attributes }
+      patch permission_set_url(permission_set), params: { open_with_permission_permission_set: invalid_attributes }
       permission_set.reload
       expect(permission_set.key).to eq "New Key"
       expect(response).to have_http_status(200)

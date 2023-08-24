@@ -130,6 +130,6 @@ class PermissionSetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def permission_set_params
-      params.require(:permission_set).permit(:key, :label, :max_queue_length, permission_set_terms_attributes: [:id, :title, :body])
+      params.require(:open_with_permission_permission_set).permit(:key, :label, :max_queue_length, permission_set_terms_attributes: [:id, :title, :body])
     end
 end
