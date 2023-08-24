@@ -42,11 +42,13 @@ outfile=$3
 savefiles=$4
 pid=$$;
 tmpprefix=${tmpdir}/stripped_srgb_${pid}
+tmpcmykprefix=${tmpdir}/cmyk_srgb_${pid}
 outprefix=${tmpdir}/srgb_${pid}
 tmpfix=${tmpdir}/$(basename $input).fixed.tif
 
 # cleanup temp files that might already exist
 if [ -z "${savefiles}" ]; then rm -f $tmpprefix*; fi
+if [ -z "${savefiles}" ]; then rm -f $tmpcmykprefix*; fi
 if [ -z "${savefiles}" ]; then rm -f $outprefix*; fi
 
 # first, use vipsheader to read the bands
@@ -64,9 +66,9 @@ if [ ${CHANNELS} = "srgba" ]; then
     if [ -z "${savefiles}" ]; then rm $input; fi
     mv ${input}.noalpha.tif $input
 elif [ ${CHANNELS} = "cmyk" ]; then
-    vips icc_transform $input.tif  $input.srgb.tif[compression=none,strip] sRGB.icc --input-profile=cmyk
+    vips icc_transform $input  ${tmpcmykprefix}.tif[compression=none,strip] sRGB.icc --input-profile=cmyk
     if [ -z "${savefiles}" ]; then rm $input; fi
-    mv ${input}.srgb.tif $input
+    mv ${tmpcmykprefix}.tif $input
 elif [[ ${CHANNELS} != "srgb" && ${CHANNELS} != "gray" && ${CHANNELS} != "cmyk" ]]; then
     echo "Image ${input} has color channels ${CHANNELS} which is not supported at this time."
     exit 1;
