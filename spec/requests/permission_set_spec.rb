@@ -46,7 +46,6 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
     end
     it 'updates permission set with valid attributes' do
       permission_set = OpenWithPermission::PermissionSet.create! valid_attributes
-      byebug
       patch permission_set_url(permission_set), params: { open_with_permission_permission_set: updated_attributes }
       permission_set.reload
       expect(permission_set.key).to eq "Newer Key"
