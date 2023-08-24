@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 class PermissionRequestsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource class: OpenWithPermission::PermissionRequest
   before_action :set_permission_request, only: [:show, :edit, :update, :destroy]
 
   # GET /permission_requests
   # GET /permission_requests.json
   def index
-    authorize!(:view_list, PermissionRequest)
+    authorize!(:view_list, OpenWithPermission::PermissionRequest)
 
-    permission_requests = PermissionRequest.all
+    permission_requests = OpenWithPermission::PermissionRequest.all
     @visible_permission_requests = permission_requests.select do |sets|
       User.with_role(:approver, sets.permission_set).include?(current_user) ||
         User.with_role(:administrator, sets.permission_set).include?(current_user) ||
@@ -38,7 +38,7 @@ class PermissionRequestsController < ApplicationController
   # POST /permission_request
   # POST /permission_request.json
   def create
-    @permission_request = PermissionRequest.new(permission_request_params)
+    @permission_request = OpenWithPermission::PermissionRequest.new(permission_request_params)
 
     respond_to do |format|
       if @permission_request.save
@@ -55,11 +55,11 @@ class PermissionRequestsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_permission_request
-      @permission_request = PermissionRequest.find(params[:id])
+      @permission_request = OpenWithPermission::PermissionRequest.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def permission_request_params
-      params.require(:permission_set).permit(:permission_set, :permission_request_user, :parent_object, :user)
+      params.require(:open_with_permission_permission_set).permit(:permission_set, :permission_request_user, :parent_object, :user)
     end
 end
