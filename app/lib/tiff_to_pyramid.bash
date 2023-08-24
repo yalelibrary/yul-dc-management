@@ -66,7 +66,7 @@ if [ ${CHANNELS} = "srgba" ]; then
     if [ -z "${savefiles}" ]; then rm $input; fi
     mv ${input}.noalpha.tif $input
 elif [ ${CHANNELS} = "cmyk" ]; then
-    vips icc_transform $input  ${tmpcmykprefix}.tif[compression=none,strip] sRGB.icc --input-profile=cmyk
+    vips icc_transform $input  ${tmpcmykprefix}.tif[compression=none,strip] app/lib/sRGB.icc --input-profile=cmyk
     if [ -z "${savefiles}" ]; then rm $input; fi
     mv ${tmpcmykprefix}.tif $input
 elif [[ ${CHANNELS} != "srgb" && ${CHANNELS} != "gray" && ${CHANNELS} != "cmyk" ]]; then
