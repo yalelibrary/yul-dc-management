@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class OpenWithPermission::PermissionRequestUser < ApplicationRecord
-  has_many :permission_requests, class_name: "OpenWithPermission::PermissionRequests"
+  has_many :permission_requests, class_name: "OpenWithPermission::PermissionRequest"
   has_many :terms_agreements, class_name: "OpenWithPermission::TermsAgreement"
   validates :sub, presence: true
   validates :name, presence: true
