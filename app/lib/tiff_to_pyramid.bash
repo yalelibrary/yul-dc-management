@@ -85,10 +85,18 @@ fi
 
 # if we haven't already transformed color profile to sRGB like in above operation for a missing or incompatible image then do it now
 if [ -z "${W2}" ]; then
-    # next, run an icc_transform to convert the original to sRGB (assume sRGB if no profile and otherwise use the embedded one)
-    # and strip all metadata from the file; --embedded intructs vips to use embedded and --input-profile is only used as a fallback
-    # if a profile isn't embedded
-    vips icc_transform $input ${tmpprefix}.tif[compression=none,strip] app/lib/sRGB.icc --embedded --input-profile app/lib/sRGB.icc --intent perceptual 2>&1 || echo "icc_transform failed, continuing..." && cp $input ${tmpprefix}.tif
+    if [[ ${CHANNELS} == "cmyk" ]]; then
+      status=`vips icc_transform $input ${tmpprefix}.tif[compression=none] app/lib/sRGB.icc  --input-profile tmp/cmyk.icm`
+      if [[ $status =~ ^\ +$ || ! -e ${tmpprefix}.tif ]]; then
+         echo "icc_transform cmyk failed, continuing..."
+         cp $input ${tmpprefix}.tif
+      fi
+    else
+      # next, run an icc_transform to convert the original to sRGB (assume sRGB if no profile and otherwise use the embedded one)
+      # and strip all metadata from the file; --embedded intructs vips to use embedded and --input-profile is only used as a fallback
+      # if a profile isn't embedded
+      vips icc_transform $input ${tmpprefix}.tif[compression=none,strip] app/lib/sRGB.icc --embedded --input-profile app/lib/sRGB.icc --intent perceptual 2>&1 || echo "icc_transform failed, continuing..." && cp $input ${tmpprefix}.tif
+    fi
 fi
 
 # now, embed an sRGB ICC profile in the resulting uncompressed tiff since we stripped out the profile above using the strip metadata directive
@@ -124,9 +132,12 @@ done
 # chroma subsampling so by default it produces JPEGs about 3x smaller with ycbcr
 # vs. when photometric interpretation is set to rgb
 # e.g. -c jpeg:r:90 vs. -c jpeg:90
-if ! tiffcp -a -c jpeg:90 -t -w 256 -l 256 -M ${outprefix}_*.tif ${outfile}; then
+
+if [[ ${CHANNELS} == "cmyk" ]]; then
+  tiffcp -a -t -w 256 -l 256 -M ${outprefix}_*.tif ${outfile}
+elif ! tiffcp -a -c jpeg:90 -t -w 256 -l 256 -M ${outprefix}_*.tif ${outfile}; then
   rm -f ${outfile}
-  tiffcp -a -c zip -t -w 256 -l 256 -M ${outprefix}_*.tif ${outfile}
+  tiffcp -a -t -w 256 -l 256 -M ${outprefix}_*.tif ${outfile}
 fi
 
 # cleanup temp files but leave the outputput file in place
