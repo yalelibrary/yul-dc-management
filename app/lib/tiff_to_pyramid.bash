@@ -86,7 +86,7 @@ fi
 # if we haven't already transformed color profile to sRGB like in above operation for a missing or incompatible image then do it now
 if [ -z "${W2}" ]; then
     if [[ ${CHANNELS} == "cmyk" ]]; then
-      status=`vips icc_transform $input ${tmpprefix}.tif[compression=none] app/lib/sRGB.icc  --input-profile tmp/cmyk.icm`
+      status=`vips icc_transform $input ${tmpprefix}.tif[compression=none] app/lib/sRGB.icc  --input-profile app/lib/cmyk.icm`
       if [[ $status =~ ^\ +$ || ! -e ${tmpprefix}.tif ]]; then
          echo "icc_transform cmyk failed, continuing..."
          cp $input ${tmpprefix}.tif
