@@ -174,25 +174,25 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'can be edited' do
         visit "/permission_sets/#{permission_set.id}/edit"
-        fill_in('permission_set_key', with: 'key example')
-        fill_in('permission_set_label', with: 'label example')
+        fill_in('open_with_permission_permission_set_key', with: 'key example')
+        fill_in('open_with_permission_permission_set_label', with: 'label example')
         click_on 'Update Permission Set'
         expect(page).to have_content('Permission set was successfully updated.')
       end
       it 'can reject invalid params' do
         visit "/permission_sets/#{permission_set.id}/edit"
-        fill_in('permission_set_key', with: 'key example')
+        fill_in('open_with_permission_permission_set_key', with: 'key example')
         # permission set must also have label - this leaves that out making the request invalid and causing a render of the edit page
-        fill_in('permission_set_label', with: '')
+        fill_in('open_with_permission_permission_set_label', with: '')
         click_on 'Update Permission Set'
         expect(page).to have_content(edit_set)
       end
       it 'can be created' do
         visit new_set_url
         expect(page).to have_content(new_set)
-        fill_in('permission_set_key', with: 'key example')
-        fill_in('permission_set_label', with: 'label example')
-        fill_in('permission_set_max_queue_length', with: '10')
+        fill_in('open_with_permission_permission_set_key', with: 'key example')
+        fill_in('open_with_permission_permission_set_label', with: 'label example')
+        fill_in('open_with_permission_permission_set_max_queue_length', with: '10')
         click_on create_set
         expect(page).to have_content('Permission set was successfully created.')
         expect(page).to have_content('key example')
@@ -201,10 +201,10 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       it 'can reject invalid params upon creation' do
         visit new_set_url
         expect(page).to have_content(new_set)
-        fill_in('permission_set_key', with: 'key example')
+        fill_in('open_with_permission_permission_set_key', with: 'key example')
         # permission set must also have label - this leaves that out making the request invalid and causing a render of the new page
-        fill_in('permission_set_label', with: '')
-        fill_in('permission_set_max_queue_length', with: '10')
+        fill_in('open_with_permission_permission_set_label', with: '')
+        fill_in('open_with_permission_permission_set_max_queue_length', with: '10')
         click_on create_set
         expect(page).to have_content(new_set)
       end
@@ -249,9 +249,9 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       it 'can be created' do
         visit new_set_url
         expect(page).to have_content(new_set)
-        fill_in('permission_set_key', with: 'key example')
-        fill_in('permission_set_label', with: 'label example')
-        fill_in('permission_set_max_queue_length', with: '10')
+        fill_in('open_with_permission_permission_set_key', with: 'key example')
+        fill_in('open_with_permission_permission_set_label', with: 'label example')
+        fill_in('open_with_permission_permission_set_max_queue_length', with: '10')
         click_on create_set
         expect(page).to have_content('Permission set was successfully created.')
         expect(page).to have_content('key example')

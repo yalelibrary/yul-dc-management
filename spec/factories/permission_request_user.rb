@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :permission_request_user do
+  factory :permission_request_user, class: OpenWithPermission::PermissionRequestUser do
     sub { "id123" }
     name { "User Name" }
     email { "user@example.com" }

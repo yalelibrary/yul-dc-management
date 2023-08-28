@@ -11,12 +11,12 @@ class Api::PermissionRequestsController < ApplicationController
     return unless check_parent_visibility(parent_object)
     return unless valid_json_request(request)
     pr_user = find_or_create_user(request)
-    permission_set = PermissionSet.find(parent_object.permission_set_id)
-    current_requests_count = PermissionRequest.where(permission_request_user: pr_user, request_status: nil, permission_set: permission_set).count
+    permission_set = OpenWithPermission::PermissionSet.find(parent_object.permission_set_id)
+    current_requests_count = OpenWithPermission::PermissionRequest.where(permission_request_user: pr_user, request_status: nil, permission_set: permission_set).count
     if current_requests_count >= permission_set.max_queue_length
       render json: { "title": "Too many pending requests" }, status: 403
     else
-      new_request = PermissionRequest.new(permission_set: permission_set, permission_request_user: pr_user, parent_object: parent_object, user_note: request['note'])
+      new_request = OpenWithPermission::PermissionRequest.new(permission_set: permission_set, permission_request_user: pr_user, parent_object: parent_object, user_note: request['note'])
       new_request.save!
       render json: { "title": "New request created" }, status: 201
     end
@@ -49,7 +49,7 @@ class Api::PermissionRequestsController < ApplicationController
   # rubocop:enable Metrics/PerceivedComplexity
 
   def find_or_create_user(request)
-    pr_user = PermissionRequestUser.find_or_initialize_by(sub: request['user']['sub'])
+    pr_user = OpenWithPermission::PermissionRequestUser.find_or_initialize_by(sub: request['user']['sub'])
     pr_user.name = request['user']['name']
     pr_user.email = request['user']['email']
     pr_user.email_verified = request['user']['email_verified']

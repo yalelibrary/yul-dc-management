@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe PermissionSetTerm, type: :model do
+RSpec.describe OpenWithPermission::PermissionSetTerm, type: :model do
   let(:user) { FactoryBot.create(:user, id: 33) }
   let(:permission_set) { FactoryBot.create(:permission_set) }
   let(:permission_set_terms) { FactoryBot.create(:permission_set_term, permission_set: permission_set) }
