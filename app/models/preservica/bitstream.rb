@@ -40,9 +40,9 @@ class Preservica::Bitstream
     end
     data_sha512 = sha512.hexdigest
     file_size = File.size?(file_name)
-    raise StandardError, "Checksum mismatch (#{data_sha512} != #{sha512_checksum})" unless data_sha512 == sha512_checksum
-    raise StandardError, "Data size did not match (#{data_length} != #{size})" unless data_length == size
-    raise StandardError, "File sizes do not match (#{file_size} != #{size})" unless file_size == size
+    raise StandardError, "Checksum mismatch (#{data_sha512} != #{sha512_checksum}) for child: #{oid}" unless data_sha512 == sha512_checksum
+    raise StandardError, "Data size did not match (#{data_length} != #{size}) for child: #{oid}" unless data_length == size
+    raise StandardError, "File sizes do not match (#{file_size} != #{size}) for child: #{oid}" unless file_size == size
     # could also check: Digest::SHA512.file(file_name).hexdigest == sha512_checksum, but probably not necessary
   end
 
