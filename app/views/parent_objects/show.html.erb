@@ -14,12 +14,6 @@
         <td class="key">Set:</td>
         <td><%= @parent_object.admin_set&.label %></td>
       </tr>
-      <% if @parent_object.permission_set_id.present? %>
-        <tr class='table-row'>
-          <td class="key">Permission Set:</td>
-          <td><%= OpenWithPermission::PermissionSet.find(@parent_object.permission_set_id).label %></td>
-        </tr>
-      <% end %>
       <tr class='table-row'>
         <td class="key">Call Number:</td>
         <td><%= @parent_object.call_number %></td>
@@ -82,10 +76,16 @@
         <td class="key">Visibility:</td>
         <td><%= @parent_object.visibility %></td>
       </tr>
+      <% if @parent_object.permission_set_id.present? %>
+        <tr class='table-row'>
+          <td class="key">Permission Set:</td>
+          <td><%= OpenWithPermission::PermissionSet.find(@parent_object.permission_set_id).label %></td>
+        </tr>
+      <% end %>
       <tr class='table-row'>
-        <td class="key">Permission Set:</td>
-        <td><%= @parent_object&.permission_set&.label %></td>
-      </tr>
+          <td class="key">Permission Set:</td>
+          <td><%= @permission_set.label %></td>
+        </tr>
       <tr class='table-row'>
         <td class="key">Rights Statement:</td>
         <td><%= sanitize @parent_object.rights_statement, tags: %w(a), attributes: %w(href) %></td>

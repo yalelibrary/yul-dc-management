@@ -74,7 +74,7 @@ class CsvRowParentService
   end
 
   def visibility
-    visibilities = ['Private', 'Public', 'Redirect', 'Yale Community Only']
+    visibilities = ['Open with Permission', 'Private', 'Public', 'Redirect', 'Yale Community Only']
 
     return row['visibility'] if visibilities.include?(row['visibility'])
 

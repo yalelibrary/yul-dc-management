@@ -60,7 +60,7 @@
     <% else %>
       <div class="col-med-3">
         <%= form.label :visibility %>
-        <%= form.select(:visibility, ["Private", "Public", "Yale Community Only"]) %>
+        <%= form.select(:visibility, ["Open with Permission", "Private", "Public", "Yale Community Only"]) %>
       </div>
     <% end %>
     <div class="col-med-3">
@@ -69,7 +69,7 @@
                   OpenWithPermission::PermissionSet.all.map { |permission_set|
                     [permission_set.label, permission_set.id]
                   } << ["None",nil],
-                  selected: parent_object.permission_set&.key || ["None", nil],
+                  selected: parent_object.permission_set_id || ["None", nil],
                   required: false
           )
        %>

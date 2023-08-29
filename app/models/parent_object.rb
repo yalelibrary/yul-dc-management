@@ -64,7 +64,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def self.visibilities
-    ['Private', 'Public', 'Redirect', 'Yale Community Only']
+    ['Open with Permission', 'Private', 'Public', 'Redirect', 'Yale Community Only']
   end
 
   # Options from iiif presentation api 2.1 - see https://iiif.io/api/presentation/2.1/#viewingdirection
@@ -82,8 +82,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def validate_visibility
-    return true if ParentObject.visibilities.include?(visibility)
-
+    if self.visibility == "Open with Permission" && self.permission_set_id.nil?
+      self.errors.add(:open_with_permisson, "objects must have a Permission Set")
+      throw :abort
+    elsif ParentObject.visibilities.include?(visibility)
+      return true
+    end
     self.visibility = 'Private'
   end
 
