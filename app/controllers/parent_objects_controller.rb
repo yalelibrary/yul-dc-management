@@ -16,7 +16,7 @@ class ParentObjectsController < ApplicationController
 
   # GET /parent_objects/1
   # GET /parent_objects/1.json
-  def show; 
+  def show
     @permission_set = OpenWithPermission::PermissionSet.find(@parent_object&.permission_set_id) unless @parent_object&.permission_set_id.nil?
   end
 

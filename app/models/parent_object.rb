@@ -82,8 +82,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def validate_visibility
-    if self.visibility == "Open with Permission" && self.permission_set_id.nil?
-      self.errors.add(:open_with_permisson, "objects must have a Permission Set")
+    if visibility == "Open with Permission" && permission_set_id.nil?
+      errors.add(:open_with_permisson, "objects must have a Permission Set")
       throw :abort
     elsif ParentObject.visibilities.include?(visibility)
       return true
