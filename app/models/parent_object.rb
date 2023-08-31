@@ -19,7 +19,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :permission_requests, class_name: "OpenWithPermission::PermissionRequest"
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   belongs_to :admin_set
-  has_one :permission_set, class_name: "OpenWithPermission::PermissionSet"
+  belongs_to :permission_set, class_name: "OpenWithPermission::PermissionSet", required: false
   has_one :digital_object_json
   attr_accessor :metadata_update
   attr_accessor :current_batch_process
@@ -40,7 +40,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :redirect_to, format: { with: /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//, message: " in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123", presence: true, if: proc { visibility == "Redirect" } }
   # rubocop:enable Metrics/LineLength
   validates :preservica_uri, presence: true, format: { with: %r{\A/}, message: " in incorrect format. URI must start with a /" }, if: proc { digital_object_source == "Preservica" }
-  before_save :validate_visibility
+  validate :validate_visibility
 
   def check_for_redirect
     minify if redirect_to.present?
@@ -64,7 +64,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def self.visibilities
-    ['Private', 'Public', 'Redirect', 'Yale Community Only']
+    ['Open with Permission', 'Private', 'Public', 'Redirect', 'Yale Community Only']
   end
 
   # Options from iiif presentation api 2.1 - see https://iiif.io/api/presentation/2.1/#viewingdirection
@@ -82,8 +82,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def validate_visibility
-    return true if ParentObject.visibilities.include?(visibility)
-
+    if visibility == "Open with Permission" && permission_set_id.nil?
+      errors.add(:open_with_permisson, "objects must have a Permission Set")
+      throw :abort
+    elsif ParentObject.visibilities.include?(visibility)
+      return true
+    end
     self.visibility = 'Private'
   end
 
