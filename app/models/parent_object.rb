@@ -93,9 +93,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def check_permission_set
-    if visibility != "Open with Permission"
-      self.permission_set = nil
-    end
+    self.permission_set = nil if visibility != "Open with Permission"
   end
 
   def initialize(attributes = nil)
