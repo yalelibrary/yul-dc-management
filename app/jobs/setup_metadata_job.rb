@@ -72,7 +72,7 @@ class SetupMetadataJob < ApplicationJob
       end
     end
     unless ptiff_jobs_queued
-      GenerateManifestJob.perform_later(parent_object, parent_object.current_batch_process, parent_object.current_batch_connection) if parent_object.needs_a_manifest?
+      GenerateManifestJob.perform_later(parent_object, parent_object.current_batch_process, current_batch_connection: parent_object.current_batch_connection) if parent_object.needs_a_manifest?
     end
   rescue => child_create_error
     parent_object.processing_event(child_create_error.message, "failed")

@@ -172,7 +172,7 @@ module Reassociatable
       po.current_batch_connection.save!
       po.save!
       if po.should_create_manifest_and_pdf?
-        GenerateManifestJob.perform_later(po, self, po.current_batch_connection)
+        GenerateManifestJob.perform_later(po, self, current_batch_connection: po.current_batch_connection)
       else
         po.solr_index_job
       end

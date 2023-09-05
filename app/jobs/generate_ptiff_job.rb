@@ -27,7 +27,7 @@ class GeneratePtiffJob < ApplicationJob
     success = child_object.convert_to_ptiff!(is_recreate_job)
     raise "Unable to convert to PTIFF and save child object: #{child_object.oid}" unless success
     # Only generate manifest if all children are ready
-    GenerateManifestJob.perform_later(parent_object, parent_object.current_batch_process, parent_object.current_batch_connection) if parent_object.needs_a_manifest?
+    GenerateManifestJob.perform_later(parent_object, parent_object.current_batch_process, current_batch_connection: parent_object.current_batch_connection) if parent_object.needs_a_manifest?
 
     parent_object.processing_event('Ptiffs recreated', 'ptiffs-recreated') if is_recreate_job && batch_process.are_all_children_complete?(parent_object)
   end

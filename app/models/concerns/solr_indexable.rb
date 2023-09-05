@@ -54,9 +54,9 @@ module SolrIndexable
     current_batch_connection&.save!
     return unless queued_solr_index_jobs.empty?
     if full_text?
-      SolrIndexJob.set(queue: :intensive_solr_index).perform_later(self, current_batch_process, current_batch_connection)
+      SolrIndexJob.set(queue: :intensive_solr_index).perform_later(self, current_batch_process: current_batch_process, current_batch_connection: current_batch_connection)
     else
-      SolrIndexJob.perform_later(self, current_batch_process, current_batch_connection)
+      SolrIndexJob.perform_later(self, current_batch_process: current_batch_process, current_batch_connection: current_batch_connection)
     end
   end
 

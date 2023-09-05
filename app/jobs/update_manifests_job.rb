@@ -15,7 +15,7 @@ class UpdateManifestsJob < ApplicationJob
     last_job = parent_objects.count < UpdateManifestsJob.job_limit
     return unless parent_objects.count.positive? # stop if nothing is found
     parent_objects.each do |po|
-      GenerateManifestJob.perform_later(po, batch_process = nil)
+      GenerateManifestJob.perform_later(po, nil, current_batch_connection: nil)
     end
     UpdateManifestsJob.perform_later(admin_set_id, start_position + parent_objects.count) unless last_job
   end

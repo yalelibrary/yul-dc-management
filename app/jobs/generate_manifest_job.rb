@@ -7,7 +7,7 @@ class GenerateManifestJob < ApplicationJob
     -30
   end
 
-  def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
+  def perform(parent_object, current_batch_process, current_batch_connection: parent_object.current_batch_connection)
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
     return if parent_has_children_without_dimensions(parent_object)
@@ -16,7 +16,7 @@ class GenerateManifestJob < ApplicationJob
       parent_object.save!
     end
     parent_object.solr_index_job
-    GeneratePdfJob.perform_later(parent_object, current_batch_process, current_batch_connection) if parent_object.should_create_manifest_and_pdf?
+    GeneratePdfJob.perform_later(parent_object, current_batch_process: current_batch_process, current_batch_connection: current_batch_connection) if parent_object.should_create_manifest_and_pdf?
   end
 
   def generate_manifest(parent_object)

@@ -253,7 +253,7 @@ module Updatable
     parent_object.current_batch_connection = batch_connections.find_or_create_by(connectable: parent_object)
     parent_object.current_batch_connection.save!
     parent_object.save!
-    SetupMetadataJob.perform_later(parent_object, self, parent_object.current_batch_connection)
+    SetupMetadataJob.perform_later(parent_object, self, current_batch_connection: parent_object.current_batch_connection)
   end
 
   def check_for_children(redirect, parent_object)
