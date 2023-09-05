@@ -16,19 +16,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :child_objects, -> { order('"order" ASC, oid ASC') }, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :destroy
   has_many :batch_connections, as: :connectable, dependent: :destroy
   has_many :batch_processes, through: :batch_connections
-<<<<<<< HEAD
-  has_many :permission_requests, dependent: :destroy
+  has_many :permission_requests, class_name: "OpenWithPermission::PermissionRequest", dependent: :destroy
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   belongs_to :admin_set
-  has_one :permission_set, dependent: :nullify
+  belongs_to :permission_set, class_name: "OpenWithPermission::PermissionSet", required: false, dependent: :nullify
+  
   has_one :digital_object_json, dependent: :destroy
-=======
-  has_many :permission_requests, class_name: "OpenWithPermission::PermissionRequest"
-  belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
-  belongs_to :admin_set
-  belongs_to :permission_set, class_name: "OpenWithPermission::PermissionSet", required: false
-  has_one :digital_object_json
->>>>>>> main
   attr_accessor :metadata_update
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
