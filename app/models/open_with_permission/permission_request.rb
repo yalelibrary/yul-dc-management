@@ -4,5 +4,5 @@ class OpenWithPermission::PermissionRequest < ApplicationRecord
   belongs_to :permission_set, class_name: "OpenWithPermission::PermissionSet"
   belongs_to :permission_request_user, class_name: "OpenWithPermission::PermissionRequestUser"
   belongs_to :parent_object
-  has_one :user
+  has_one :user, dependent: :nullify
 end

@@ -97,7 +97,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true, prep_admin_sets:
     end
 
     it "includes related resources online" do
-      related_resources = iiif_presentation.manifest["metadata"].select { |v| v["label"]["en"] == ["Related Resources Online"] }.first["value"]["none"]
+      related_resources = iiif_presentation.manifest["metadata"].find { |v| v["label"]["en"] == ["Related Resources Online"] }["value"]["none"]
       expect(related_resources.length).to eq(2)
       expect(related_resources.find { |r| r == "<span><a href=\"https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms314.htm\">View a detailed description.</a></span>" })
     end
