@@ -45,16 +45,16 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
       login_as user
     end
     it 'updates permission set with valid attributes' do
-      permission_set = PermissionSet.create! valid_attributes
-      patch permission_set_url(permission_set), params: { permission_set: updated_attributes }
+      permission_set = OpenWithPermission::PermissionSet.create! valid_attributes
+      patch permission_set_url(permission_set), params: { open_with_permission_permission_set: updated_attributes }
       permission_set.reload
       expect(permission_set.key).to eq "Newer Key"
       expect(response).to have_http_status(302)
     end
 
     it 'does not update permission set with invalid attributes' do
-      permission_set = PermissionSet.create(valid_attributes)
-      patch permission_set_url(permission_set), params: { permission_set: invalid_attributes }
+      permission_set = OpenWithPermission::PermissionSet.create(valid_attributes)
+      patch permission_set_url(permission_set), params: { open_with_permission_permission_set: invalid_attributes }
       permission_set.reload
       expect(permission_set.key).to eq "New Key"
       expect(response).to have_http_status(200)
@@ -87,11 +87,11 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
 
   describe 'GET /api/permission_sets/id/permission_set_terms/id/agree/sub' do
     it 'can GET and create a user agreement' do
-      expect(TermsAgreement.count).to eq 0
+      expect(OpenWithPermission::TermsAgreement.count).to eq 0
       get "/api/permission_sets/#{permission_set.id}/permission_set_terms/#{terms.id}/agree/#{request_user.sub}"
       expect(response).to have_http_status(201)
-      term = TermsAgreement.first
-      expect(TermsAgreement.count).to eq 1
+      term = OpenWithPermission::TermsAgreement.first
+      expect(OpenWithPermission::TermsAgreement.count).to eq 1
       expect(term.permission_request_user).to eq request_user
       expect(term.permission_set_term).to eq terms
     end

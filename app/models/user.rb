@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   has_many :batch_processes, dependent: :nullify
   has_many :users_roles, dependent: :delete_all
-  has_many :permission_requests, dependent: :delete_all
+  has_many :permission_requests, class_name: "OpenWithPermission::PermissionRequest", dependent: :delete_all
 
   after_update :remove_roles
 
@@ -39,7 +39,7 @@ class User < ApplicationRecord
       if role.name == 'sysadmin'
         remove_role :sysadmin
       else
-        remove_role(role.name, role.resource_type == 'AdminSet' ? AdminSet.find(role.resource_id) : PermissionSet.find(role.resource_id))
+        remove_role(role.name, role.resource_type == 'AdminSet' ? AdminSet.find(role.resource_id) : OpenWithPermission::PermissionSet.find(role.resource_id))
       end
     end
   end

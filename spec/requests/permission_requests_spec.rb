@@ -41,17 +41,17 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
       request = JSON.parse(json)
       post "/api/permission_requests", params: JSON.pretty_generate(request), headers: headers
       expect(response).to have_http_status(:created)
-      expect(PermissionRequest.all.count).to eq 1
+      expect(OpenWithPermission::PermissionRequest.all.count).to eq 1
     end
 
     it 'errors if requests go over max' do
       request = JSON.parse(json)
       post "/api/permission_requests", params: JSON.pretty_generate(request), headers: headers
       expect(response).to have_http_status(:created)
-      expect(PermissionRequest.all.count).to eq 1
+      expect(OpenWithPermission::PermissionRequest.all.count).to eq 1
       post "/api/permission_requests", params: JSON.pretty_generate(request), headers: headers
       expect(response).to have_http_status(403)
-      expect(PermissionRequest.all.count).to eq 1
+      expect(OpenWithPermission::PermissionRequest.all.count).to eq 1
     end
 
     it 'errors if a parent OID is invalid' do

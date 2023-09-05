@@ -96,6 +96,12 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true, prep_admin_sets:
       expect(creators.find { |c| c == "<span><i>From the Collection:</i> The Parent Creator</span>" })
     end
 
+    it "includes related resources online" do
+      related_resources = iiif_presentation.manifest["metadata"].select { |v| v["label"]["en"] == ["Related Resources Online"] }.first["value"]["none"]
+      expect(related_resources.length).to eq(2)
+      expect(related_resources.find { |r| r == "<span><a href=\"https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms314.htm\">View a detailed description.</a></span>" })
+    end
+
     it "has a requiredStatement" do
       expect(iiif_presentation.manifest["requiredStatement"].class).to eq Hash
       expect(iiif_presentation.manifest["requiredStatement"]["label"]["en"].first).to eq "Provider"

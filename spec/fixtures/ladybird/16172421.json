@@ -65,6 +65,10 @@
   "dependentUris": [
     "/ladybird/oid/16172421"
   ],
+  "relatedResourceOnline": [
+    "View a detailed description.|https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms314.htm",
+    "2nd related resource test.|https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms314.htm_2"
+  ],
   "oid": 16172421,
   "collectionId": 1,
   "children": [

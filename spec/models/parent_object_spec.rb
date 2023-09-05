@@ -292,6 +292,18 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       expect(parent_object_public.valid?).to eq true
       expect(parent_object_public.visibility).to eq "Public"
     end
+
+    let(:parent_object_invalid_owp) { described_class.create(oid: "12345", visibility: "Open with Permission", admin_set: FactoryBot.create(:admin_set)) }
+    it "open with Permission visibility does not validate without a permission set" do
+      expect(parent_object_invalid_owp.valid?).to eq false
+    end
+
+    let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
+    let(:parent_object_owp) { described_class.create(oid: "54321", visibility: "Open with Permission", admin_set: FactoryBot.create(:admin_set), permission_set_id: permission_set.id) }
+    it "open with Permission visibility validates with a permission set" do
+      expect(parent_object_owp.valid?).to eq true
+      expect(parent_object_owp.visibility).to eq "Open with Permission"
+    end
   end
 
   context "When trying to create a ParentObject" do

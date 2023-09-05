@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe TermsAgreement, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
+RSpec.describe OpenWithPermission::TermsAgreement, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   let(:request_user) { FactoryBot.create(:permission_request_user) }
   let(:terms) { FactoryBot.create(:permission_set_term, activated_at: Time.zone.now, permission_set_id: permission_set.id) }
   let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
@@ -15,7 +15,7 @@ RSpec.describe TermsAgreement, type: :model, prep_metadata_sources: true, prep_a
 
   describe 'with valid attributes' do
     it 'is valid' do
-      expect(TermsAgreement.new(permission_request_user: request_user, permission_set_term: terms, agreement_ts: Time.zone.now)).to be_valid
+      expect(OpenWithPermission::TermsAgreement.new(permission_request_user: request_user, permission_set_term: terms, agreement_ts: Time.zone.now)).to be_valid
     end
 
     it 'has the expected fields' do
