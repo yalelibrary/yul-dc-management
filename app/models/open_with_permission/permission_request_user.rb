@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class OpenWithPermission::PermissionRequestUser < ApplicationRecord
   has_many :permission_requests, class_name: "OpenWithPermission::PermissionRequest", dependent: :delete_all
-  has_many :terms_agreements, class_name: "OpenWithPermission::TermsAgreement", dependent: :nullify
+  has_many :terms_agreements, class_name: "OpenWithPermission::TermsAgreement", dependent: :destroy
   validates :sub, presence: true
   validates :name, presence: true
   validates :email, presence: true

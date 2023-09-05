@@ -19,8 +19,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :permission_requests, class_name: "OpenWithPermission::PermissionRequest", dependent: :destroy
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   belongs_to :admin_set
-  belongs_to :permission_set, class_name: "OpenWithPermission::PermissionSet", required: false, dependent: :nullify
-  
+  belongs_to :permission_set, class_name: "OpenWithPermission::PermissionSet", optional: true, dependent: :destroy
   has_one :digital_object_json, dependent: :destroy
   attr_accessor :metadata_update
   attr_accessor :current_batch_process
@@ -230,11 +229,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Rails/SkipsModelValidations
 
+  # rubocop:disable Metrics/AbcSize
   def sync_from_preservica(_local_children_hash, preservica_children_hash)
     # iterate through local hashes and remove any children no longer found on preservica
     child_objects.each do |co|
-      co.destroy if co.preservica_content_object_uri.nil?
-      co.destroy unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
+      co.destroy! if co.preservica_content_object_uri.nil?
+      co.destroy! unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
     end
     # iterate through preservica and update when local version found
     preservica_children_hash.each_value do |value|
@@ -254,6 +254,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     # create child records for any new items in preservica
     create_child_records
   end
+  # rubocop:enable Metrics/AbcSize
 
   def found_in_preservica(local_preservica_content_object_uri, preservica_children_hash)
     preservica_children_hash.any? do |_, value|
@@ -593,6 +594,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     extract_links_with_labels("relatedVersionOnline", ils_filters)
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def extract_links_with_labels(field_name, filters = [], json = authoritative_json)
     return nil unless json && json[field_name].present?
     links_and_text = json[field_name]
@@ -613,6 +616,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return nil if links.empty?
     links
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def extract_container_information(json = authoritative_json)
     return nil unless json
