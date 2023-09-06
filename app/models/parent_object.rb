@@ -41,6 +41,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/LineLength
   validates :preservica_uri, presence: true, format: { with: %r{\A/}, message: " in incorrect format. URI must start with a /" }, if: proc { digital_object_source == "Preservica" }
   validate :validate_visibility
+  before_save :check_permission_set
 
   def check_for_redirect
     minify if redirect_to.present?
@@ -89,6 +90,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       return true
     end
     self.visibility = 'Private'
+  end
+
+  def check_permission_set
+    self.permission_set = nil if visibility != "Open with Permission"
   end
 
   def initialize(attributes = nil)
