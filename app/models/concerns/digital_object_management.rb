@@ -21,18 +21,23 @@ module DigitalObjectManagement
   def generate_digital_object_json
     return nil unless digital_object_json_available?
     # create digital object from data and return JSON
-    {   oid: oid,
-        title: digital_object_title,
-        thumbnailOid: representative_child && representative_child.oid || nil,
-        thumbnailCaption: representative_child && representative_child.label || nil,
-        archivesSpaceUri: aspace_uri,
-        barcode: barcode,
-        bibId: bib,
-        childCount: child_object_count,
-        holdingId: holding,
-        itemId: item,
-        source: authoritative_metadata_source.metadata_cloud_name,
-        visibility: visibility }.to_json
+    json = {   oid: oid,
+               title: digital_object_title,
+               thumbnailOid: representative_child&.oid || nil,
+               thumbnailCaption: representative_child&.label || nil,
+               archivesSpaceUri: aspace_uri,
+               barcode: barcode,
+               bibId: bib,
+               childCount: child_object_count,
+               holdingId: holding,
+               itemId: item,
+               source: authoritative_metadata_source.metadata_cloud_name,
+               visibility: visibility }
+    if json[:source] == "ils" && authoritative_json
+      json[:volumeEnumeration] = authoritative_json["volumeEnumeration"]
+      json[:callNumber] = authoritative_json["callNumber"]
+    end
+    json.to_json
   end
 
   def digital_object_title
