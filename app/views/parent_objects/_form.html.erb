@@ -57,23 +57,35 @@
         <%= form.label :visibility %>
         <%= form.select(:visibility, ParentObject.visibilities) %>
       </div>
+    <% elsif current_ability.can?(:owp_access, parent_object.permission_set) || current_user.has_role?(:sysadmin) %>
+      <div class="col-med-3">
+        <%= form.label :visibility %>
+        <%= form.select(:visibility, ["Open with Permission", "Private", "Public", "Yale Community Only"],
+        {},
+        disabled: !current_user.has_role?(:administrator, parent_object.permission_set) && !current_user.has_role?(:sysadmin) ) %>
+      </div>
     <% else %>
       <div class="col-med-3">
         <%= form.label :visibility %>
-        <%= form.select(:visibility, ["Open with Permission", "Private", "Public", "Yale Community Only"]) %>
+        <%= form.select(:visibility, ["Private", "Public", "Yale Community Only"],
+        {},
+        disabled: !current_user.has_role?(:administrator, parent_object.permission_set) && !current_user.has_role?(:sysadmin) ) %>
       </div>
     <% end %>
-    <div class="col-med-3">
-      <%= form.label "Permission Set" %>
-      <%= form.select(:permission_set_id,
-                  OpenWithPermission::PermissionSet.all.map { |permission_set|
-                    [permission_set.label, permission_set.id]
-                  } << ["None",nil],
-                  selected: parent_object.permission_set_id || ["None", nil],
-                  required: false
-          )
-       %>
-    </div>
+      <div class="col-med-3">
+        <%= form.label "Permission Set" %>
+        <%= form.select(:permission_set_id,
+                    @visible_permission_sets.map { |permission_set|
+                      [permission_set.label, permission_set.id]
+                    } << ["None",nil],
+                    {
+                    selected: parent_object.permission_set_id || ["None", nil],
+                    required: false
+                    },
+                    disabled: !current_user.has_role?(:administrator, parent_object.permission_set) && !current_user.has_role?(:sysadmin) 
+            )
+        %>
+      </div>
   </div>
   <br>
 
