@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  # byebug
   factory :parent_object do
     admin_set { AdminSet.first.presence || FactoryBot.create(:admin_set) }
     oid { "2004628" }
