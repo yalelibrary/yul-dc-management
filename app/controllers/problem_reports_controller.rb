@@ -7,8 +7,8 @@ class ProblemReportsController < ApplicationController
     authorize!(:read, ProblemReport)
     if params['check_status']
       @check_status = true
-      @scheduled_job_exists = GoodJob::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ProblemReportJob%').exists?
-      @manual_job_exists = GoodJob::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ProblemReportManualJob%').exists?
+      @scheduled_job_exists = GoodJob::Job.page(params[:page]).where('job_class LIKE ?', '%ProblemReportJob%').exists?
+      @manual_job_exists = GoodJob::Job.page(params[:page]).where('job_class LIKE ?', '%ProblemReportManualJob%').exists?
     end
     @email_address = ENV['INGEST_ERROR_EMAIL'].presence
     respond_to do |format|
@@ -20,7 +20,7 @@ class ProblemReportsController < ApplicationController
   def create
     authorize!(:create, ProblemReport)
     if params['queue_recurring']
-      ProblemReportJob.perform_now unless GoodJob::Job.page(params[:page]).where('handler LIKE ?', '%job_class: ProblemReportJob%').exists?
+      ProblemReportJob.perform_now unless GoodJob::Job.page(params[:page]).where('job_class LIKE ?', '%ProblemReportJob%').exists?
       respond_to do |format|
         format.html { redirect_to problem_reports_url, notice: 'The daily problem report job has been queued.' }
         format.json { head :no_content }

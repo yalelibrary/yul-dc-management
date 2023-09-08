@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe GeneratePtiffJob, type: :job, prep_metadata_sources: true, prep_admin_sets: true do
   before do
     allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :external)
   end
 
   let(:user) { FactoryBot.create(:user) }
@@ -40,13 +40,13 @@ RSpec.describe GeneratePtiffJob, type: :job, prep_metadata_sources: true, prep_a
     it 'increments the ptiff job queue when file not larger than 1GB' do
       expect do
         GeneratePtiffJob.perform_later(child_object)
-      end.to change { GoodJob::Job.where(queue: 'ptiff').count }.by(1)
+      end.to change { GoodJob::Job.where(queue_name: 'ptiff').count }.by(1)
     end
 
     it 'does not increment the large_ptiff job queue when file is smaller than 1GB' do
       expect do
         GeneratePtiffJob.perform_later(child_object)
-      end.to change { GoodJob::Job.where(queue: 'large_ptiff').count }.by(0)
+      end.to change { GoodJob::Job.where(queue_name: 'large_ptiff').count }.by(0)
     end
 
     it 'increments the job queue by one if needs_a_manifest is true' do
@@ -54,7 +54,7 @@ RSpec.describe GeneratePtiffJob, type: :job, prep_metadata_sources: true, prep_a
       expect do
         generate_ptiff_job.perform(child_object, batch_process)
       end.to change { GoodJob::Job.count }.by(1)
-      expect(GoodJob::Job.last.handler).to match(/GenerateManifestJob/)
+      expect(GoodJob::Job.last.job_class).to match(/GenerateManifestJob/)
     end
 
     it 'does not increment the job queue if ready_for_manifest is false' do

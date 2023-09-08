@@ -3,9 +3,9 @@ require "rails_helper"
 
 RSpec.describe Delayable, prep_metadata_sources: true, prep_admin_sets: true do
   let(:parent_object) { FactoryBot.build(:parent_object, oid: '16685691', admin_set: AdminSet.first) }
-  let!(:job) { GoodJob::Job.create(handler: parent_object.to_gid) }
-  let!(:setup_job) { GoodJob::Job.create(handler: "job_class: SetupMetadataJob\n#{parent_object.to_gid}") }
-  let!(:reindex_job) { GoodJob::Job.create(handler: "job_class: SolrReindexAllJob\n") }
+  let!(:job) { GoodJob::Job.create(job_class: "CreateParentOidCsvJob\n#{parent_object.to_gid}") }
+  let!(:setup_job) { GoodJob::Job.create(job_class: "SetupMetadataJob\n#{parent_object.to_gid}") }
+  let!(:reindex_job) { GoodJob::Job.create(job_class: "SolrReindexAllJob\n") }
 
   describe 'delayed_jobs' do
     it 'returns delayed jobs associated with the parent object' do

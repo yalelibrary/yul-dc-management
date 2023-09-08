@@ -34,7 +34,7 @@ class DelayedJobDashboardController < ApplicationController
 
   def show
     @job = GoodJob::Job.find(params[:id])
-    @handler = YAML.safe_load(@job.handler, [ActiveJob::QueueAdapters::DelayedJobAdapter::JobWrapper])
+    @job_class = YAML.safe_load(@job.job_class, [ActiveJob::QueueAdapters::GoodJobAdapter::JobWrapper])
   end
 
   def delete_job

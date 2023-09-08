@@ -5,6 +5,6 @@ FactoryBot.define do
   # The only field we get is uid. All user objects are given the
   # provider "cas"
   factory :job, class: GoodJob::Job do
-    handler { "Test Handler" }
+    job_class { "TestJob" }
   end
 end
