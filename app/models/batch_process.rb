@@ -32,7 +32,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Layout/LineLength
 
   # LOGS BATCH PROCESSING MESSAGES AND SETS STATUSES
-  def batch_processing_event(message, status = 'info')
+  def batch_processing_event(message, _status)
+    status = 'info' if status.nil?
     current_batch_connection = batch_connections.find_or_create_by!(connectable: self)
     IngestEvent.create!(
       status: status,
