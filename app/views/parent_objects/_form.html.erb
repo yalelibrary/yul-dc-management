@@ -51,25 +51,30 @@
       <%= form.label "Metadata Source" %>
       <%= form.select(:authoritative_metadata_source_id, [['Ladybird', 1], ['Voyager', 2], ['ArchivesSpace', 3]]) %>
     </div>
-
+    <%= current_ability.can?(:owp_access, OpenWithPermission::PermissionSet) %>
     <% if parent_object.child_object_ids.count == 0 %>
       <div class="col-med-3">
         <%= form.label :visibility %>
         <%= form.select(:visibility, ParentObject.visibilities) %>
       </div>
-    <% elsif current_ability.can?(:owp_access, parent_object.permission_set) || current_user.has_role?(:sysadmin) %>
+    <% elsif current_ability.can?(:owp_access, OpenWithPermission::PermissionSet) || current_user.has_role?(:sysadmin) %>
       <div class="col-med-3">
         <%= form.label :visibility %>
         <%= form.select(:visibility, ["Open with Permission", "Private", "Public", "Yale Community Only"],
         {},
-        disabled: !current_user.has_role?(:administrator, parent_object.permission_set) && !current_user.has_role?(:sysadmin) ) %>
+        disabled: !current_user.has_role?(:administrator, parent_object.permission_set) && !current_user.has_role?(:sysadmin)) %>
+      </div>
+    <% elsif parent_object.visibility == "Open with Permission" %>
+      <div class="col-med-3">
+        <%= form.label :visibility %>
+        <%= form.select(:visibility, ["Open with Permission"],
+        {},
+        disabled: parent_object.visibility == "Open with Permission" ) %>
       </div>
     <% else %>
       <div class="col-med-3">
         <%= form.label :visibility %>
-        <%= form.select(:visibility, ["Private", "Public", "Yale Community Only"],
-        {},
-        disabled: !current_user.has_role?(:administrator, parent_object.permission_set) && !current_user.has_role?(:sysadmin) ) %>
+        <%= form.select(:visibility, ["Private", "Public", "Yale Community Only"]) %>
       </div>
     <% end %>
       <div class="col-med-3">
