@@ -499,7 +499,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       let(:user) { FactoryBot.create(:user) }
       let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), permission_set: permission_set) }
       let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
-      
+
       before do
         stub_metadata_cloud("2012036")
         parent_object
