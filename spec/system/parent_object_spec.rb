@@ -439,7 +439,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   end
 
   context "editing a ParentObject" do
-    let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), visibility: "Public") }
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl')) }
     let(:parent_object_no_children) { FactoryBot.create(:parent_object, oid: "12345", admin_set: AdminSet.find_by_key('brbl')) }
     before do
       stub_metadata_cloud("2012036")
@@ -457,11 +457,6 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       select('Redirect')
       click_on("Save Parent Object And Update Metadata")
       expect(page).to have_content 'Redirect to in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123'
-    end
-
-    it "has the permission set disabled if the visibility is not Open with Permission" do
-      visit edit_parent_object_path(2_012_036)
-      expect(page).to have_select("parent_object_permission_set_id", options: ["None"])
     end
   end
 
