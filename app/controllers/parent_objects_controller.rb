@@ -3,6 +3,7 @@
 class ParentObjectsController < ApplicationController
   before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata, :select_thumbnail, :solr_document]
   before_action :set_paper_trail_whodunnit
+  before_action :set_permission_set, only: [:edit, :update]
   load_and_authorize_resource except: [:solr_document, :new, :create, :update_metadata, :all_metadata, :reindex, :select_thumbnail, :update_manifests]
 
   # GET /parent_objects
@@ -213,6 +214,14 @@ class ParentObjectsController < ApplicationController
       respond_to do |format|
         format.html { redirect_to parent_objects_url, notice: "Parent object, oid: #{params[:id]}, was not found in local database." }
         format.json { head :no_content }
+      end
+    end
+
+    def set_permission_set
+      permission_sets = OpenWithPermission::PermissionSet.all
+      @visible_permission_sets = permission_sets.order('label ASC').select do |sets|
+        User.with_role(:administrator, sets).include?(current_user) ||
+          User.with_role(:sysadmin, sets).include?(current_user)
       end
     end
 
