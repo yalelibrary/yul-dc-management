@@ -466,7 +466,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   end
 
   describe "editing a ParentObject with a Permission Set" do
-    context "as a non-admin user" do
+    context "as a non-admin user", js: true do
       let(:user) { FactoryBot.create(:user) }
       let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), visibility: "Public") }
       let(:parent_object_owp) { FactoryBot.create(:parent_object, oid: "12345", admin_set: AdminSet.find_by_key('brbl'), visibility: "Open with Permission", permission_set: permission_set) }
