@@ -29,10 +29,9 @@ class ParentObjectsController < ApplicationController
   def edit
     permission_sets = OpenWithPermission::PermissionSet.all
     @visible_permission_sets = permission_sets.order('label ASC').select do |sets|
-        User.with_role(:administrator, sets).include?(current_user) ||
+      User.with_role(:administrator, sets).include?(current_user) ||
         User.with_role(:sysadmin, sets).include?(current_user)
     end
-  
   end
 
   # POST /parent_objects
