@@ -65,7 +65,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def self.visibilities
-    ['Private', 'Public', 'Redirect', 'Yale Community Only']
+    ['Open with Permission', 'Private', 'Public', 'Redirect', 'Yale Community Only']
   end
 
   # Options from iiif presentation api 2.1 - see https://iiif.io/api/presentation/2.1/#viewingdirection
