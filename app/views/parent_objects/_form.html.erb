@@ -78,7 +78,7 @@
       </div>
     <% end %>
       <div class="col-med-3">
-        <% if @visible_permission_sets %>
+        <% if @visible_permission_sets.present? %>
           <%= form.label "Permission Set" %>
           <%= form.select(:permission_set_id,
             @visible_permission_sets.map { |permission_set|
@@ -92,11 +92,11 @@
           %>
         <% else %>
           <%= form.label "Permission Set" %>
-          <%= form.select(:permission_set_id, ["None", nil],
+          <%= form.select(:permission_set_id, [@parent_object.permission_set.label],
             {
-            selected: parent_object.permission_set_id || ["None", nil],
             required: false
-            }) 
+            },
+            disabled: true) 
           %>
         <% end %>
       </div>
