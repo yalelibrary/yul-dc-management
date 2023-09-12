@@ -92,7 +92,7 @@
           %>
         <% else %>
           <%= form.label "Permission Set" %>
-          <%= form.select(:permission_set_id, [@parent_object.permission_set.label],
+          <%= form.select(:permission_set_id, [@parent_object&.permission_set&.label || "None"],
             {
             required: false
             },
