@@ -62,6 +62,21 @@ class ParentObjectsController < ApplicationController
   # PATCH/PUT /parent_objects/1.json
   def update
     respond_to do |format|
+      parent_object = ParentObject.find(params[:id]) 
+      permission_set = parent_object&.permission_set
+
+      if parent_object.visibility == "Open with Permission" && parent_object.visibility != parent_object_params[:visibility]
+        authorize!(:owp_access, permission_set)
+      end
+
+      if permission_set.present? && parent_object_params[:permission_set_id].nil?
+        authorize!(:owp_access, permission_set)
+      end
+
+      if permission_set.nil? && parent_object_params[:permission_set_id].present?
+        authorize!(:owp_access, OpenWithPermission::PermissionSet)
+      end
+
       invalidate_admin_set_edit unless valid_admin_set_edit?
       invalidate_redirect_to_edit unless valid_redirect_to_edit?
 
