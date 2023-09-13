@@ -211,10 +211,10 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
       let(:parent_object_owp) { FactoryBot.create(:parent_object, oid: "12345", admin_set: AdminSet.find_by_key('brbl'), visibility: "Open with Permission", permission_set: permission_set) }
       let(:child_object) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object_owp) }
       let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), visibility: "Open with Permission", permission_set: permission_set) }
-      let(:valid_owp_visibility) do
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), visibility: "Public") }
+      let(:public_visibility) do
         {
-          oid: "2012036",
+          oid: "12345",
           authoritative_metadata_source_id: 1,
           admin_set: 'brbl',
           visibility: "Public"
@@ -241,15 +241,14 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
       it "can change parent visibility away from OwP as a permission_set admin" do
         login_as regular_user
         regular_user.add_role(:administrator, permission_set)
-        patch parent_object_url(parent_object), params: { parent_object: valid_owp_visibility }
-        byebug
+        patch parent_object_url(parent_object_owp), params: { parent_object: public_visibility }
         expect(response).to be_successful
       end
 
       it "can change a parent away from a permission set as a permission_set admin" do
         login_as regular_user
         regular_user.add_role(:administrator, permission_set)
-        patch parent_object_url(parent_object_owp), params: { parent_object: valid_owp_visibility }
+        patch parent_object_url(parent_object_owp), params: { parent_object: public_visibility }
         expect(response).to be_successful
       end
 
@@ -257,6 +256,7 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
         login_as regular_user
         regular_user.add_role(:administrator, permission_set)
         patch parent_object_url(parent_object), params: { parent_object: valid_permission_set }
+        parent_object.reload
         expect(response).to be_successful
       end
     
