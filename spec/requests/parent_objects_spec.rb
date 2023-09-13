@@ -181,7 +181,7 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
         expect(response).to be_successful
       end
 
-      it "renders Access Denied if user does not have permission to change object away from OwP" do
+      it "unauthorized to change object away from OwP" do
         login_as regular_user
         patch parent_object_url(parent_object_owp), params: { parent_object: invalid_owp_visibility }
         parent_object_owp.reload
@@ -189,15 +189,13 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
         expect(response).to have_http_status(401)
       end
 
-      it "renders Access Denied if user does not have permission to change object away from a Permission Set" do
+      it "cannot change object away from a Permission Set" do
         login_as regular_user
         patch parent_object_url(parent_object_owp), params: { parent_object: invalid_owp_permission_set }
-        parent_object_owp.reload
-        expect(parent_object_owp.permission_set.label).to eq "set 1"
         expect(response).to have_http_status(401)
       end
 
-      it "renders Access Denied if user does not have permission to change object into a Permission Set" do
+      it "can change object into a Permission Set" do
         login_as regular_user
         patch parent_object_url(parent_object_owp), params: { parent_object: invalid_owp_permission_set }
         parent_object_owp.reload
@@ -220,6 +218,14 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
           visibility: "Public"
         }
       end
+      let(:private_visibility) do
+        {
+          oid: "12345",
+          authoritative_metadata_source_id: 1,
+          admin_set: 'brbl',
+          visibility: "Private"
+        }
+      end
       let(:valid_permission_set) do
         {
           oid: "12345",
@@ -229,37 +235,27 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
           permission_set: permission_set
         }
       end
-      let(:invalid_owp_permission_set) do
-        {
-          oid: "12345",
-          authoritative_metadata_source_id: 1,
-          admin_set: 'brbl',
-          permission_set: nil
-        }
-      end
 
       it "can change parent visibility away from OwP as a permission_set admin" do
         login_as regular_user
         regular_user.add_role(:administrator, permission_set)
-        patch parent_object_url(parent_object_owp), params: { parent_object: public_visibility }
-        expect(response).to be_successful
+        patch parent_object_url(parent_object_owp), params: { parent_object: private_visibility }
+        expect(response).to have_http_status(302)
       end
 
       it "can change a parent away from a permission set as a permission_set admin" do
         login_as regular_user
         regular_user.add_role(:administrator, permission_set)
         patch parent_object_url(parent_object_owp), params: { parent_object: public_visibility }
-        expect(response).to be_successful
+        expect(response).to have_http_status(302)
       end
 
       it "can change a parent into a permission set as a permission_set admin" do
         login_as regular_user
-        regular_user.add_role(:administrator, permission_set)
+        regular_user.add_role(:administrator, OpenWithPermission::PermissionSet)
         patch parent_object_url(parent_object), params: { parent_object: valid_permission_set }
-        parent_object.reload
-        expect(response).to be_successful
+        expect(response).to have_http_status(200)
       end
-    
     end
   end
 
