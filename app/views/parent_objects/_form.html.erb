@@ -78,7 +78,7 @@
       </div>
     <% end %>
       <div class="col-med-3">
-        <% if @visible_permission_sets.present? %>
+        <% if @visible_permission_sets.present? && (current_user.has_role?(:administrator, parent_object.permission_set) || parent_object.permission_set.nil?) %>
           <%= form.label "Permission Set" %>
           <%= form.select(:permission_set_id,
             @visible_permission_sets.map { |permission_set|
