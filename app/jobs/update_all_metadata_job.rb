@@ -13,7 +13,7 @@ class UpdateAllMetadataJob < ApplicationJob
     return unless parent_objects.count.positive? # stop if nothing is found
     parent_objects.each do |po|
       po.metadata_update = true
-      po.setup_metadata_job(current_batch_connection: @parent_object.current_batch_connection)
+      po.setup_metadata_job
     end
     UpdateAllMetadataJob.perform_later(start_position + parent_objects.count, where) unless last_job
   end
