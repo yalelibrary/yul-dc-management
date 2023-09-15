@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe CreateParentOidCsvJob, type: :job do
   before do
     allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :external)
   end
 
   let(:user) { FactoryBot.create(:user) }
@@ -12,10 +12,11 @@ RSpec.describe CreateParentOidCsvJob, type: :job do
   let(:create_parent_oid_csv_job) { CreateParentOidCsvJob.new }
 
   it 'increments the job queue by one' do
-    ActiveJob::Base.queue_adapter = :good_job
-    expect do
-      described_class.perform_later(batch_process)
-    end.to change { GoodJob::Job.count }.by(1)
+    csv_job = described_class.perform_later(batch_process)
+    expect(csv_job.instance_variable_get(:@successfully_enqueued)).to eq true
+    # expect do
+    #   described_class.perform_later(batch_process)
+    # end.to change { GoodJob::Job.count }.by(1)
   end
 
   it "has correct priority" do

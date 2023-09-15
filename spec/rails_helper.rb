@@ -37,7 +37,6 @@ end
 RSpec.configure do |config|
   config.include(ActiveJob::TestHelper)
   config.include(MetdataSourcesHelper)
-  config.include(DelayedJobsHelper)
   config.include(AdminSetsHelper)
   config.include(SolrHelper)
   config.include(StubRequestHelper)

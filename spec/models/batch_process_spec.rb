@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_admin_sets: true, undelayed: true do
+RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:admin_set_one) { FactoryBot.create(:admin_set) }
@@ -579,7 +579,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         end
       end
 
-      describe "uploading a csv of oids to create parent objects", undelayed: true do
+      describe "uploading a csv of oids to create parent objects" do
         let(:admin_set_upload) { AdminSet.first }
 
         before do

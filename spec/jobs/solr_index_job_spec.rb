@@ -28,27 +28,27 @@ RSpec.describe SolrIndexJob, type: :job, prep_metadata_sources: true, prep_admin
     expect do
       allow(parent_object).to receive(:full_text?).and_return(false)
       parent_object.solr_index_job
-    end.to change { GoodJob::Job.where(queue: 'solr_index').count }.by(1)
+    end.to change { GoodJob::Job.where(queue_name: 'solr_index').count }.by(1)
   end
 
   it 'does not increment the solr_index job queue when full text' do
     expect do
       allow(parent_object).to receive(:full_text?).and_return(true)
       parent_object.solr_index_job
-    end.to change { GoodJob::Job.where(queue: 'solr_index').count }.by(0)
+    end.to change { GoodJob::Job.where(queue_name: 'solr_index').count }.by(0)
   end
 
   it 'does not increment the intensive_solr_index job queue when not full text' do
     expect do
       allow(parent_object).to receive(:full_text?).and_return(false)
       parent_object.solr_index_job
-    end.to change { GoodJob::Job.where(queue: 'intensive_solr_index').count }.by(0)
+    end.to change { GoodJob::Job.where(queue_name: 'intensive_solr_index').count }.by(0)
   end
 
   it 'increments the intensive_solr_index job queue when full text' do
     expect do
       allow(parent_object).to receive(:full_text?).and_return(true)
       parent_object.solr_index_job
-    end.to change { GoodJob::Job.where(queue: 'intensive_solr_index').count }.by(1)
+    end.to change { GoodJob::Job.where(queue_name: 'intensive_solr_index').count }.by(1)
   end
 end
