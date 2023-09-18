@@ -52,7 +52,6 @@ class Api::PermissionRequestsController < ApplicationController
     pr_user = OpenWithPermission::PermissionRequestUser.find_or_initialize_by(sub: request['user']['sub'])
     pr_user.name = request['user']['name']
     pr_user.email = request['user']['email']
-    pr_user.netid = request['user']['netid']
     pr_user.email_verified = request['user']['email_verified']
     pr_user.oidc_updated_at = request['user']['oidc_updated_at']
     pr_user.save!
