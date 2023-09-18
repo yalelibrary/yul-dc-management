@@ -72,7 +72,7 @@ class ParentObjectsController < ApplicationController
 
       authorize!(:owp_access, permission_set) if parent_object.visibility == "Open with Permission" && parent_object.visibility != parent_object_params[:visibility]
 
-      authorize!(:owp_access, permission_set) if permission_set.present? && permission_set_param.nil?
+      authorize!(:owp_access, permission_set) if permission_set.present? &&  permission_set != permission_set_param
 
       authorize!(:owp_access, permission_set_param) if permission_set_param.present?
 
