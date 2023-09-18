@@ -35,15 +35,16 @@ class Preservica::Generation
 
   private
 
+    # rubocop:disable Metrics/AbcSize
     def load_bitstreams
       xml.xpath('/GenerationResponse/Bitstreams/Bitstream').map do |bitstream|
         last_section = bitstream['filename'].split('_').last
         if last_section.include?('.pdf')
-          last_numbers = bitstream['filename'].split('_').last.tr('.pdf','')
+          last_numbers = bitstream['filename'].split('_').last.tr('.pdf', '')
         elsif last_section.include?('.tif')
-          last_numbers = bitstream['filename'].split('_').last.tr('.tif','')
+          last_numbers = bitstream['filename'].split('_').last.tr('.tif', '')
         elsif last_section.include?('.tiff')
-          last_numbers = bitstream['filename'].split('_').last.tr('.tiff','')
+          last_numbers = bitstream['filename'].split('_').last.tr('.tiff', '')
         end
         # if the last section is a single integer
         if last_numbers.to_i < 10
@@ -55,6 +56,7 @@ class Preservica::Generation
         Preservica::Bitstream.new(@preservica_client, @content_id, @id, bitstream.content.split('/').last.strip, file_name)
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def load_formats
       xml.xpath('/GenerationResponse/Generation/Formats/Format/FormatName').map(&:content)
