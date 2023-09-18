@@ -37,7 +37,22 @@ class Preservica::Generation
 
     def load_bitstreams
       xml.xpath('/GenerationResponse/Bitstreams/Bitstream').map do |bitstream|
-        Preservica::Bitstream.new(@preservica_client, @content_id, @id, bitstream.content.split('/').last.strip, bitstream['filename'])
+        last_section = bitstream['filename'].split('_').last
+        if last_section.include?('.pdf')
+          last_numbers = bitstream['filename'].split('_').last.tr('.pdf','')
+        elsif last_section.include?('.tif')
+          last_numbers = bitstream['filename'].split('_').last.tr('.tif','')
+        elsif last_section.include?('.tiff')
+          last_numbers = bitstream['filename'].split('_').last.tr('.tiff','')
+        end
+        # if the last section is a single integer
+        if last_numbers.to_i < 10
+          first_section = bitstream['filename'].split('_')[0...-1]
+          file_name = first_section.join('_') + '_' + last_section.prepend('0')
+        else
+          file_name = bitstream['filename']
+        end
+        Preservica::Bitstream.new(@preservica_client, @content_id, @id, bitstream.content.split('/').last.strip, file_name)
       end
     end
 
