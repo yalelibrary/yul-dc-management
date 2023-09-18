@@ -3,6 +3,7 @@
 class ParentObjectsController < ApplicationController
   before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata, :select_thumbnail, :solr_document]
   before_action :set_paper_trail_whodunnit
+  before_action :set_permission_set, only: [:edit, :update]
   load_and_authorize_resource except: [:solr_document, :new, :create, :update_metadata, :all_metadata, :reindex, :select_thumbnail, :update_manifests]
 
   # GET /parent_objects
@@ -59,8 +60,22 @@ class ParentObjectsController < ApplicationController
 
   # PATCH/PUT /parent_objects/1
   # PATCH/PUT /parent_objects/1.json
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
   def update
     respond_to do |format|
+      parent_object = ParentObject.find(params[:id])
+      permission_set = parent_object&.permission_set
+      permission_set_param = OpenWithPermission::PermissionSet.find(parent_object_params[:permission_set_id]) if parent_object_params[:permission_set_id].present?
+
+      authorize!(:owp_access, permission_set) if parent_object.visibility == "Open with Permission" && parent_object.visibility != parent_object_params[:visibility]
+
+      authorize!(:owp_access, permission_set) if permission_set.present? &&  permission_set != permission_set_param
+
+      authorize!(:owp_access, permission_set_param) if permission_set_param.present?
+
       invalidate_admin_set_edit unless valid_admin_set_edit?
       invalidate_redirect_to_edit unless valid_redirect_to_edit?
 
@@ -78,6 +93,10 @@ class ParentObjectsController < ApplicationController
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # DELETE /parent_objects/1
   # DELETE /parent_objects/1.json
@@ -207,6 +226,14 @@ class ParentObjectsController < ApplicationController
       respond_to do |format|
         format.html { redirect_to parent_objects_url, notice: "Parent object, oid: #{params[:id]}, was not found in local database." }
         format.json { head :no_content }
+      end
+    end
+
+    def set_permission_set
+      permission_sets = OpenWithPermission::PermissionSet.all
+      @visible_permission_sets = permission_sets.order('label ASC').select do |sets|
+        User.with_role(:administrator, sets).include?(current_user) ||
+          User.with_role(:sysadmin, sets).include?(current_user)
       end
     end
 

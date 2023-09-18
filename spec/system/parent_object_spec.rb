@@ -460,6 +460,59 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     end
   end
 
+  describe "editing a ParentObject with a Permission Set" do
+    context "as a non-admin user" do
+      let(:user) { FactoryBot.create(:user) }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), visibility: "Public") }
+      let(:child_object) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object_owp) }
+      let(:parent_object_owp) { FactoryBot.create(:parent_object, oid: "12345", admin_set: AdminSet.find_by_key('brbl'), visibility: "Open with Permission", permission_set: permission_set) }
+      let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
+      before do
+        login_as user
+        stub_metadata_cloud("2012036")
+        child_object
+        parent_object
+        parent_object_owp
+        permission_set
+      end
+
+      it "cannot see OwP visibility if not an admin of a permission set" do
+        visit edit_parent_object_path(2_012_036)
+        expect(page).to have_select("parent_object_visibility", options: ["Public", "Yale Community Only", "Private"])
+      end
+
+      it "cannot edit visibility or permission set if Parent Object is an OwP object" do
+        visit edit_parent_object_path(12_345)
+        expect(page).to have_select("parent_object_visibility", disabled: true)
+      end
+
+      it "has the permission set disabled if the visibility is not Open with Permission" do
+        visit edit_parent_object_path(2_012_036)
+        expect(page).to have_select("parent_object_permission_set_id", disabled: true)
+      end
+    end
+
+    context "as a permission set admin" do
+      let(:user) { FactoryBot.create(:user) }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), permission_set: permission_set) }
+      let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
+
+      before do
+        stub_metadata_cloud("2012036")
+        parent_object
+        permission_set
+        login_as user
+        user.add_role(:administrator, parent_object.permission_set)
+      end
+
+      it "can set the parent objects visibility to OwP" do
+        visit edit_parent_object_path(2_012_036)
+        expect(page).to have_select("parent_object_visibility", options: ["Open with Permission", "Public", "Yale Community Only", "Private"])
+        expect(page).to have_select("parent_object_permission_set_id", options: ["set 1", "None"])
+      end
+    end
+  end
+
   describe "index page", js: true do
     context 'datatable' do
       let(:parent_object1) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: AdminSet.find_by_key('brbl')) }
