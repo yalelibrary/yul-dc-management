@@ -47,7 +47,6 @@ RSpec.describe ActivityStreamJob, type: :job do
 
     it 'increments job queue once per day' do
       now = Time.zone.today
-      ActiveJob::Scheduler.start
       new_time = now + 1.day
       Timecop.travel(new_time)
       expect(GoodJob::Job.where(like, job_class).count).to eq 1
@@ -55,7 +54,6 @@ RSpec.describe ActivityStreamJob, type: :job do
 
     it 'automatic does not add another job when one is already running' do
       now = Time.zone.today
-      ActiveJob::Scheduler.start
       new_time = now + 1.day
       Timecop.travel(new_time)
       expect(GoodJob::Job.where(like, job_class).count).to eq 1
@@ -65,7 +63,6 @@ RSpec.describe ActivityStreamJob, type: :job do
 
     it 'manual does not add another job when one is already running' do
       now = Time.zone.today
-      ActiveJob::Scheduler.start
       new_time = now + 1.day
       Timecop.travel(new_time)
       expect(GoodJob::Job.where(like, job_class).count).to eq 1

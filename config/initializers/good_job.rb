@@ -9,6 +9,16 @@ Rails.application.configure do
   # config.good_job.queues = '*'
   config.good_job.shutdown_timeout = 60 # seconds
   config.good_job.poll_interval = 5
-  # config.good_job.enable_cron = true
-  # config.good_job.cron = { example: { cron: '0 * * * *', class: 'ExampleJob'  } }
+  config.good_job.enable_cron = true
+  config.good_job.cron = {
+    activity: {
+      # 15 minutes after midnight every day
+      cron: '15 0 * * *',
+      class: 'ActivityStreamJob'
+    },
+    problem: {
+      cron: '15 0 * * *',
+      class: 'ProblemReportJob'
+    }
+  }
 end

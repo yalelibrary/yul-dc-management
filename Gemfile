@@ -5,8 +5,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'activerecord-nulldb-adapter'
-# Reoccurring jobs
-gem 'activejob-scheduler', git: 'https://github.com/yalelibrary/activejob-scheduler', branch: 'main'
 gem 'ajax-datatables-rails'
 gem "aws-sdk-cloudwatch"
 gem 'aws-sdk-s3'

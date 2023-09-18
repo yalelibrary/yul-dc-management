@@ -1,15 +1,3 @@
-GIT
-  remote: https://github.com/yalelibrary/activejob-scheduler
-  revision: f33a9201c9bf60074d8dd1c91d0048ec4f39689d
-  branch: main
-  specs:
-    activejob-scheduler (1.0.0.pre)
-      actionmailer (> 5, <= 7.5)
-      activejob (> 5, <= 7.5)
-      activesupport (> 5, <= 7.5)
-      fugit (~> 1.3)
-      travis-release (~> 0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -485,9 +473,6 @@ GEM
     tins (1.32.1)
       sync
     traces (0.11.1)
-    travis-release (0.0.4)
-      bundler
-      rake
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -531,7 +516,6 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  activejob-scheduler!
   activerecord-nulldb-adapter
   ajax-datatables-rails
   amazing_print (>= 1.2.1)
