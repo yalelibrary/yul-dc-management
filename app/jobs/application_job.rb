@@ -19,11 +19,11 @@ class ApplicationJob < ActiveJob::Base
 
   # limit to 3 attempts for local but 15 in production
   if ENV['RAILS_ENV'] == 'development'
-    retry_on StandardError, wait: :exponentially_longer, attempts: 3 do |_job, _exception|
+    retry_on StandardError, wait: :exponentially_longer, attempts: 1 do |_job, _exception|
       # Log error, do nothing, etc.
     end
   else
-    retry_on StandardError, wait: :exponentially_longer, attempts: 15 do |_job, _exception|
+    retry_on StandardError, wait: :exponentially_longer, attempts: 3 do |_job, _exception|
       # Log error, do nothing, etc.
     end
   end

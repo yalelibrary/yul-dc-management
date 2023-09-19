@@ -67,7 +67,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expect do
       batch_process.file = preservica_parent
       batch_process.save
-      expect(batch_process.batch_ingest_events.count).to eq(15)
+      expect(batch_process.batch_ingest_events.count).to eq(3)
       expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with admin set [brbl] for parent: 200000000. Preservica credentials not set for brbl.")
     end.not_to change { ParentObject.count }
   end
@@ -79,7 +79,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expect do
       batch_process.file = preservica_parent_no_source
       batch_process.save
-      expect(batch_process.batch_ingest_events.count).to eq(15)
+      expect(batch_process.batch_ingest_events.count).to eq(3)
       expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with unknown source []. Source must be 'ils' or 'aspace'")
     end.not_to change { ParentObject.count }
   end
@@ -91,7 +91,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expect do
       batch_process.file = preservica_parent_no_admin_set
       batch_process.save
-      expect(batch_process.batch_ingest_events.count).to eq(15)
+      expect(batch_process.batch_ingest_events.count).to eq(3)
       expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with unknown admin set [] for parent: 200000000")
     end.not_to change { ParentObject.count }
   end
