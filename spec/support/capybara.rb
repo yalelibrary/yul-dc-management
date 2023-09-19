@@ -7,17 +7,11 @@ Capybara.default_driver = :rack_test
 # Capybara.server = :puma, { Silent: false }
 ENV['WEB_HOST'] ||= `hostname -s`.strip
 
-capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-  chromeOptions: {
-    args: %w[disable-gpu no-sandbox whitelisted-ips window-size=1400,1400]
-  }
-)
-
 Capybara.register_driver :chrome do |app|
   d = Capybara::Selenium::Driver.new(app,
-                                     browser: :remote,
-                                     desired_capabilities: capabilities,
-                                     url: "http://chrome:4444/wd/hub")
+  browser: :remote,
+  options: Selenium::WebDriver::Options.chrome,
+  url: "http://chrome:4444/wd/hub")
   # Fix for capybara vs remote files. Selenium handles this for us
   d.browser.file_detector = lambda do |args|
     str = args.first.to_s
