@@ -15,6 +15,7 @@
       <th scope='col'> OID </th>
       <th scope='col'> User name </th>
       <th scope='col'> User ID </th>
+      <th scope='col'> Net ID </th>
       <th scope='col'> Request Status </th>
       <th scope='col'> Approver </th>
     </tr>
@@ -28,6 +29,7 @@
         <td class='permission-set-label'><%= permission_request.parent_object.oid %></td>
         <td class='permission-set-label'><%= permission_request.permission_request_user.name %></td>
         <td class='permission-set-label'><%= permission_request.permission_request_user.sub %></td>
+        <td class='permission-set-label'><%= permission_request.permission_request_user.netid %></td>
         <td class='permission-set-label'><%= permission_request.request_status %></td>
         <td class='permission-set-label'><%= "TODO" %></td>
       </tr>
