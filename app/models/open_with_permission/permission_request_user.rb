@@ -7,4 +7,5 @@ class OpenWithPermission::PermissionRequestUser < ApplicationRecord
   validates :email, presence: true
   validates :email_verified, inclusion: { in: [true, false] }
   validates :oidc_updated_at, presence: true
+  validates :netid, uniqueness: true
 end
