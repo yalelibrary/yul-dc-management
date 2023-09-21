@@ -80,7 +80,7 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
       get terms_api_path(parent_object_no_terms)
       expect(response).to have_http_status(204)
     end
-    it 'displays parent object set not found' do
+    it 'displays parent object not found' do
       get terms_api_path(9_765_431)
       expect(response).to have_http_status(400)
       expect(response.body).to eq("{\"title\":\"Parent Object not found\"}")
