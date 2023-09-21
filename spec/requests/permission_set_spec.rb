@@ -23,16 +23,6 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
       label: "Newer Label"
     }
   end
-  let(:valid_po_attributes) do
-    {
-      oid: "2004628",
-      authoritative_metadata_source_id: 1,
-      admin_set: AdminSet.find_by_key('brbl'),
-      bib: "123",
-      visibility: "Open with Permission",
-      permission_set_id: permission_set.id
-    }
-  end
   let(:user) { FactoryBot.create(:sysadmin_user) }
   let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
   let(:request_user) { FactoryBot.create(:permission_request_user) }
