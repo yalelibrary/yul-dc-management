@@ -23,6 +23,16 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
       label: "Newer Label"
     }
   end
+  let(:valid_po_attributes) do
+    {
+      oid: "2004628",
+      authoritative_metadata_source_id: 1,
+      admin_set: AdminSet.find_by_key('brbl'),
+      bib: "123",
+      visibility: "Open with Permission",
+      permission_set_id: permission_set.id
+    }
+  end
   let(:user) { FactoryBot.create(:sysadmin_user) }
   let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
   let(:request_user) { FactoryBot.create(:permission_request_user) }
@@ -30,8 +40,14 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
   let(:permission_set_3) { FactoryBot.create(:permission_set, label: 'set 3') }
   let(:terms) { FactoryBot.create(:permission_set_term, activated_at: Time.zone.now, permission_set_id: permission_set.id) }
   let(:terms_2) { FactoryBot.create(:permission_set_term, inactivated_at: Time.zone.now, permission_set_id: permission_set_3.id) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), permission_set: permission_set, visibility: "Open with Permission") }
+  let(:parent_object_no_ps) { FactoryBot.create(:parent_object, oid: 2_012_033, admin_set: AdminSet.find_by_key('brbl')) }
+  let(:permission_set_po) { FactoryBot.create(:permission_set, label: 'set 1') }
+  let(:parent_object_no_terms) { FactoryBot.create(:parent_object, oid: 2_012_037, admin_set: AdminSet.find_by_key('brbl'), permission_set: permission_set_2, visibility: "Open with Permission") }
 
   before do
+    parent_object
+    parent_object_no_ps
     permission_set
     permission_set_2
     permission_set_3
@@ -66,22 +82,23 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
       login_as user
     end
     it 'can display the active permission set term' do
-      get terms_api_path(permission_set)
+      get terms_api_path(parent_object)
       expect(response).to have_http_status(200)
       expect(response.body).to match("[{\"id\":3,\"title\":\"Permission Set Terms\",\"body\":\"These are some terms\"}]")
     end
     it 'can display terms not found' do
-      get terms_api_path(permission_set_2)
+      get terms_api_path(parent_object_no_terms)
       expect(response).to have_http_status(204)
+    end
+    it 'displays parent object set not found' do
+      get terms_api_path(9_765_431)
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq("{\"title\":\"Parent Object not found\"}")
     end
     it 'displays permission set not found' do
-      get terms_api_path(8_765_432)
+      get terms_api_path(2_012_033)
       expect(response).to have_http_status(400)
       expect(response.body).to eq("{\"title\":\"Permission Set not found\"}")
-    end
-    it 'displays permission set without an active term and condition' do
-      get terms_api_path(permission_set_3)
-      expect(response).to have_http_status(204)
     end
   end
 
@@ -109,7 +126,7 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
 
   describe 'get /api/permission_sets/id/terms' do
     it "a non-user can access the permission set terms" do
-      get terms_api_path(permission_set)
+      get terms_api_path(parent_object)
       expect(response).to have_http_status(200)
       expect(response.body).to match("[{\"id\":3,\"title\":\"Permission Set Terms\",\"body\":\"These are some terms\"}]")
     end
