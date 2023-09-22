@@ -231,40 +231,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def sync_from_preservica(_local_children_hash, preservica_children_hash)
-    # iterate through local hashes and remove any children no longer found on preservica
+    # iterate through local hashes and remove any children
     child_objects.each do |co|
-      co.destroy if co.preservica_content_object_uri.nil?
-      co.destroy unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
-    end
-    # iterate through preservica and update when local version found
-    preservica_children_hash.each_value do |value|
-      co = ChildObject.find_by(parent_object_oid: oid, preservica_content_object_uri: value[:content_uri])
-      next if co.nil?
-      co.pyramidal_tiff.force_update = true
-      co.order = value[:order]
-      co.preservica_content_object_uri = value[:content_uri]
-      co.preservica_generation_uri = value[:generation_uri]
-      co.preservica_bitstream_uri = value[:bitstream_uri]
-      co.sha512_checksum = value[:sha512_checksum]
-      co.last_preservica_update = Time.current
-      replace_preservica_tif(co)
-      co.save!
+      co.destroy!
     end
 
-    # create child records for any new items in preservica
+    # create child records for any items in preservica
     create_child_records
-  end
-
-  def found_in_preservica(local_preservica_content_object_uri, preservica_children_hash)
-    preservica_children_hash.any? do |_, value|
-      value[:content_uri] == local_preservica_content_object_uri
-    end
-  end
-
-  def replace_preservica_tif(co)
-    PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type).map do |child_hash|
-      preservica_copy_to_access(child_hash, co.oid)
-    end
   end
 
   def array_of_child_hashes_from_mets
