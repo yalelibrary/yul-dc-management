@@ -73,14 +73,18 @@ class PermissionSetsController < ApplicationController
   end
 
   def terms_api
-    # check for valid permission set
+    # check for valid parent object
     begin
-      permission_set = OpenWithPermission::PermissionSet.find(params[:id])
+      parent_object = ParentObject.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      render(json: { "title": "Permission Set not found" }, status: 400) && (return false)
+      render(json: { "title": "Parent Object not found" }, status: 400) && (return false)
     end
+    # check for permission set
+    permission_set = parent_object&.permission_set
+    if permission_set.nil?
+      render(json: { "title": "Permission Set not found" }, status: 400) && (return false)
     # check for terms on set
-    if permission_set.permission_set_terms.blank? || !permission_set.active_permission_set_terms
+    elsif permission_set.permission_set_terms.blank? || !permission_set.active_permission_set_terms
       render(json: {}, status: 204)
     else
       term = permission_set.active_permission_set_terms
