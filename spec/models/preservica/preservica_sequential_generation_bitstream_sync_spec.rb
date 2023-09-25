@@ -12,6 +12,9 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:new_first_tif) { "spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif" }
   let(:second_tif) { "spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif" }
   let(:third_tif) { "spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif" }
+  let(:forth_tif) { "spec/fixtures/images/access_masters/00/03/20/00/00/00/200000004.tif" }
+  let(:fifth_tif) { "spec/fixtures/images/access_masters/00/03/20/00/00/00/200000005.tif" }
+  let(:sixth_tif) { "spec/fixtures/images/access_masters/00/03/20/00/00/00/200000006.tif" }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -51,6 +54,9 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       File.delete(first_tif) if File.exist?(first_tif)
       File.delete(second_tif) if File.exist?(second_tif)
       File.delete(third_tif) if File.exist?(third_tif)
+      File.delete(forth_tif) if File.exist?(forth_tif)
+      File.delete(fifth_tif) if File.exist?(fifth_tif)
+      File.delete(sixth_tif) if File.exist?(sixth_tif)
 
       allow(S3Service).to receive(:s3_exists?).and_return(false)
       expect(File.exist?(first_tif)).to be false
@@ -81,9 +87,9 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       end.not_to change { ChildObject.count }
       # downloads new tif to pairtree
       expect(po_first.iiif_manifest['items'].count).to eq 3
-      expect(po_first.iiif_manifest['items'][0]['id']).to eq 'http://localhost/manifests/oid/200000000/canvas/200000001'
-      expect(po_first.iiif_manifest['items'][1]['id']).to eq 'http://localhost/manifests/oid/200000000/canvas/200000002'
-      expect(po_first.iiif_manifest['items'][2]['id']).to eq 'http://localhost/manifests/oid/200000000/canvas/200000003'
+      expect(po_first.iiif_manifest['items'][0]['id']).to eq 'http://localhost/manifests/oid/200000000/canvas/200000004'
+      expect(po_first.iiif_manifest['items'][1]['id']).to eq 'http://localhost/manifests/oid/200000000/canvas/200000005'
+      expect(po_first.iiif_manifest['items'][2]['id']).to eq 'http://localhost/manifests/oid/200000000/canvas/200000006'
 
       po_first = ParentObject.first
       co_first = po_first.child_objects.first
@@ -95,6 +101,9 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       File.delete(new_first_tif) if File.exist?(new_first_tif)
       File.delete(second_tif) if File.exist?(second_tif)
       File.delete(third_tif) if File.exist?(third_tif)
+      File.delete(forth_tif) if File.exist?(forth_tif)
+      File.delete(fifth_tif) if File.exist?(fifth_tif)
+      File.delete(sixth_tif) if File.exist?(sixth_tif)
     end
   end
 end
