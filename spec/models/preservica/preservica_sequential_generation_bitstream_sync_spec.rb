@@ -95,7 +95,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       co_first = po_first.child_objects.first
       expect(co_first.preservica_generation_uri).to eq 'https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/2'
       expect(co_first.preservica_bitstream_uri).to eq 'https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/2/bitstreams/1'
-      expect(co_first.caption).to eq 'test1'
+      expect(co_first.caption).to eq 'mss_29_s03_b092_f0019.TIF'
       expect(File.exist?(new_first_tif)).to be true
       File.delete(first_tif) if File.exist?(first_tif)
       File.delete(new_first_tif) if File.exist?(new_first_tif)
