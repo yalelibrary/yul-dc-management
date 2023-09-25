@@ -232,7 +232,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def sync_from_preservica(_local_children_hash, _preservica_children_hash)
     # iterate through local hashes and remove any children
-    child_objects.each.destroy!
+    child_objects.each(&:destroy!)
 
     # create child records for any items in preservica
     create_child_records
