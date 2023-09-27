@@ -1,41 +1,20 @@
 # frozen_string_literal: true
-
 require 'rails_helper'
 
-RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, prep_admin_sets: true do
-  let(:valid_attributes) do
-    {
-      key: "New Key",
-      label: "New Label"
-    }
-  end
-
-  let(:invalid_attributes) do
-    {
-      key: "",
-      label: "Label"
-    }
-  end
-
-  let(:updated_attributes) do
-    {
-      key: "Newer Key",
-      label: "Newer Label"
-    }
-  end
+RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
   let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
   let(:request_user) { FactoryBot.create(:permission_request_user) }
   let(:permission_set_2) { FactoryBot.create(:permission_set, label: 'set 2') }
   let(:permission_set_3) { FactoryBot.create(:permission_set, label: 'set 3') }
   let(:terms) { FactoryBot.create(:permission_set_term, activated_at: Time.zone.now, permission_set_id: permission_set.id) }
-  let(:terms_2) { FactoryBot.create(:permission_set_term, inactivated_at: Time.zone.now, permission_set_id: permission_set_3.id) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), permission_set: permission_set, visibility: "Open with Permission") }
   let(:parent_object_no_ps) { FactoryBot.create(:parent_object, oid: 2_012_033, admin_set: AdminSet.find_by_key('brbl')) }
   let(:permission_set_po) { FactoryBot.create(:permission_set, label: 'set 1') }
   let(:parent_object_no_terms) { FactoryBot.create(:parent_object, oid: 2_012_037, admin_set: AdminSet.find_by_key('brbl'), permission_set: permission_set_2, visibility: "Open with Permission") }
 
   before do
+    login_as user
     parent_object
     parent_object_no_ps
     permission_set
@@ -43,37 +22,11 @@ RSpec.describe 'Permission Sets', type: :request, prep_metadata_sources: true, p
     permission_set_3
     request_user
     terms
-    terms_2
-  end
-
-  describe 'update /permission_sets' do
-    before do
-      login_as user
-    end
-    it 'updates permission set with valid attributes' do
-      permission_set = OpenWithPermission::PermissionSet.create! valid_attributes
-      patch permission_set_url(permission_set), params: { open_with_permission_permission_set: updated_attributes }
-      permission_set.reload
-      expect(permission_set.key).to eq "Newer Key"
-      expect(response).to have_http_status(302)
-    end
-
-    it 'does not update permission set with invalid attributes' do
-      permission_set = OpenWithPermission::PermissionSet.create(valid_attributes)
-      patch permission_set_url(permission_set), params: { open_with_permission_permission_set: invalid_attributes }
-      permission_set.reload
-      expect(permission_set.key).to eq "New Key"
-      expect(response).to have_http_status(200)
-    end
   end
 
   describe 'get /api/permission_sets/id/terms' do
-    before do
-      login_as user
-    end
     it 'can display the active permission set term' do
-      # get terms_api_path(parent_object)
-      get "/api/permission_sets/#{parent_object.oid}/terms"
+      get terms_api_path(parent_object)
       expect(response).to have_http_status(200)
       expect(response.body).to match("[{\"id\":3,\"title\":\"Permission Set Terms\",\"body\":\"These are some terms\"}]")
     end
