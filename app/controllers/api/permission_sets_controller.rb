@@ -23,16 +23,13 @@ class Api::PermissionSetsController < ApplicationController
   end
 
   def agreement_term
-    # byebug
     begin
       term = OpenWithPermission::PermissionSetTerm.find(params[:permission_set_terms_id])
     rescue ActiveRecord::RecordNotFound
-      # byebug
       render(json: { "title": "Term not found." }, status: 400) && (return false)
     end
     request_user = OpenWithPermission::PermissionRequestUser.where(sub: params[:sub]).first
     if request_user.nil?
-      # byebug
       render(json: { "title": "User not found." }, status: 400) && (return false)
     else
       begin
