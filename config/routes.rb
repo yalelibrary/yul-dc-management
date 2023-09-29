@@ -66,9 +66,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   get 'api/parent/:oid', to: 'api/parent_objects#retrieve_metadata'
 
-  get 'api/permission_sets/:id/terms', to: 'permission_sets#terms_api', as: :terms_api
+  get 'api/permission_sets/:id/terms', to: 'api/permission_sets#terms_api', as: :terms_api
 
-  get 'api/permission_sets/:permission_set_id/permission_set_terms/:permission_set_terms_id/agree/:sub', to: 'permission_sets#agreement_term'
+  get 'api/permission_sets/:permission_set_id/permission_set_terms/:permission_set_terms_id/agree/:sub', to: 'api/permission_sets#agreement_term', as: :agreement_term
 
   namespace :api do
     resources :permission_requests, only: [:create]
