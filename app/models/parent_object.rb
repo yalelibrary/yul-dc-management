@@ -508,10 +508,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     raise StandardError, "Bib id required to build Voyager url" unless bib.present?
     identifier_block = if barcode.present?
                          "/barcode/#{barcode}?bib=#{bib}"
-                       elsif holding.present?
-                         "/holding/#{holding}?bib=#{bib}"
                        elsif item.present?
                          "/item/#{item}?bib=#{bib}"
+                       elsif holding.present?
+                         "/holding/#{holding}?bib=#{bib}"
                        else
                          "/bib/#{bib}"
                        end
