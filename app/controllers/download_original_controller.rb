@@ -4,11 +4,11 @@ class DownloadOriginalController < ApplicationController
   skip_before_action :authenticate_user!
 
   def stage
-    request = params
+    child_oid = download_original_params.dig('oid')
     begin
-      child_object = ChildObject.find(request['oid'].to_i)
+      child_object = ChildObject.find(child_oid.to_i)
     rescue ActiveRecord::RecordNotFound
-      Rails.logger.error "Child object with oid: #{request['oid']} not found."
+      Rails.logger.error "Child object with oid: #{child_oid} not found."
       render(json: { "title": "Invalid Child OID" }, status: :bad_request) && (return false)
     end
     return unless check_child_visibility(child_object)

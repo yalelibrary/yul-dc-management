@@ -22,13 +22,12 @@ RSpec.describe 'Download Original API', type: :request, prep_admin_sets: true do
     ENV['S3_SOURCE_BUCKET_NAME'] = 'not-a-real-bucket'
     ENV['S3_DOWNLOAD_BUCKET_NAME'] = 'fake-download-bucket'
     ENV['ACCESS_MASTER_MOUNT'] = File.join(fixture_path, 'images/ptiff_images')
-    example.run
-    ENV['S3_SOURCE_BUCKET_NAME'] = original_image_bucket
-    ENV['S3_DOWNLOAD_BUCKET_NAME'] = original_download_bucket
-    ENV['ACCESS_MASTER_MOUNT'] = original_access_master_mount
     perform_enqueued_jobs do
       example.run
     end
+    ENV['S3_SOURCE_BUCKET_NAME'] = original_image_bucket
+    ENV['S3_DOWNLOAD_BUCKET_NAME'] = original_download_bucket
+    ENV['ACCESS_MASTER_MOUNT'] = original_access_master_mount
   end
 
   before do
@@ -46,19 +45,22 @@ RSpec.describe 'Download Original API', type: :request, prep_admin_sets: true do
   describe 'POST /api/download/stage/child/:oid' do
     it 'creates a new job to copy to s3' do
       expect(SaveOriginalToS3Job).to receive(:perform_later).once
-      get "/api/download/stage/child/#{child_object.oid}", params: { oid: child_object.oid }, headers: headers
-      expect(response).to have_http_status(:ok) # 200
+      valid_params = { oid: child_object.oid }
+      get "/api/download/stage/child/#{child_object.oid}", params: { download_original: valid_params }, headers: headers
+      expect(response.status).to eq(200)
     end
 
     it 'errors if object is not YCO or Public' do
       expect(SaveOriginalToS3Job).not_to receive(:perform_later)
-      get "/api/download/stage/child/#{child_object_2.oid}", params: { oid: child_object_2.oid }, headers: headers
+      private_visibility_params = { oid: child_object_2.oid }
+      get "/api/download/stage/child/#{child_object_2.oid}", params: { download_original: private_visibility_params }, headers: headers
       expect(response).to have_http_status(:forbidden) # 403
     end
 
     it 'errors if child oid is not found' do
       expect(SaveOriginalToS3Job).not_to receive(:perform_later)
-      get '/api/download/stage/child/4545454545', params: { oid: 4_545_454_545 }, headers: headers
+      made_up_oid_params = { oid: 4_545_454_545 }
+      get '/api/download/stage/child/4545454545', params: { download_original: made_up_oid_params }, headers: headers
       expect(Rails.logger).to have_received(:error)
         .with('Child object with oid: 4545454545 not found.')
       expect(response).to have_http_status(:bad_request) # 400
