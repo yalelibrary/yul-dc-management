@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class OidMinterController < ApplicationController
-  # Allowing unauthenticated access
-  # before_action :authenticate_user!
+  skip_before_action :authenticate_user!
 
   def generate_oids
     number = params[:number]
