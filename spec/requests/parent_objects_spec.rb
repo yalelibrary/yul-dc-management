@@ -321,9 +321,8 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
     context "with invalid parameters" do
       it "does not save an improperly formatted url" do
         parent_object = ParentObject.create! valid_attributes
-        expect do
-          patch parent_object_url(parent_object), params: { parent_object: invalid_redirect_params }
-        end.to raise_exception(ActiveRecord::RecordInvalid)
+        patch parent_object_url(parent_object), params: { parent_object: invalid_redirect_params }
+        expect(response.parsed_body).to include "Redirect to must be in format https://collections.library.yale.edu/catalog/1234567"
       end
     end
   end

@@ -59,12 +59,16 @@ class ParentObjectsController < ApplicationController
 
   # PATCH/PUT /parent_objects/1
   # PATCH/PUT /parent_objects/1.json
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def update
     respond_to do |format|
-      invalidate_admin_set_edit unless valid_admin_set_edit?
+      invalidate_permission_admin_set_edit unless valid_permission_admin_set_edit?
+      invalidate_presence_admin_set_edit unless valid_presence_admin_set_edit?
+      invalidate_metadata_source_edit unless valid_metadata_source_edit?
       invalidate_redirect_to_edit unless valid_redirect_to_edit?
 
-      updated = valid_admin_set_edit? ? @parent_object.update!(parent_object_params) : false
+      updated = (valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_metadata_source_edit?) || valid_redirect_to_edit? ? @parent_object.update!(parent_object_params) : false
 
       if updated
         @parent_object.minify if valid_redirect_to_edit?
@@ -78,6 +82,8 @@ class ParentObjectsController < ApplicationController
       end
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # DELETE /parent_objects/1
   # DELETE /parent_objects/1.json
@@ -194,12 +200,30 @@ class ParentObjectsController < ApplicationController
     @parent_object.current_batch_process = @batch_process
   end
 
-  def valid_admin_set_edit?
+  def valid_permission_admin_set_edit?
     !parent_object_params[:admin_set] || (parent_object_params[:admin_set] && current_user.editor(parent_object_params[:admin_set]))
   end
 
-  def invalidate_admin_set_edit
+  def invalidate_permission_admin_set_edit
     @parent_object.errors.add :admin_set, :invalid, message: "cannot be assigned to a set the User cannot edit"
+  end
+
+  def valid_presence_admin_set_edit?
+    parent_object_params[:admin_set] && parent_object_params[:admin_set] != ""
+  end
+
+  def invalidate_presence_admin_set_edit
+    @parent_object.errors.add :admin_set, :invalid, message: "cannot be assigned to a nonexistent Admin set"
+  end
+
+  # rubocop:disable Layout/LineLength
+  def valid_metadata_source_edit?
+    !parent_object_params[:authoritative_metadata_source_id] || (parent_object_params[:authoritative_metadata_source_id] && MetadataSource.exists?(id: parent_object_params[:authoritative_metadata_source_id]))
+  end
+  # rubocop:enable Layout/LineLength
+
+  def invalidate_metadata_source_edit
+    @parent_object.errors.add :authoritative_metadata_source_id, :invalid, message: "cannot be assigned to a nonexistant Metadata Source"
   end
 
   # Use callbacks to share common setup or constraints between actions.
