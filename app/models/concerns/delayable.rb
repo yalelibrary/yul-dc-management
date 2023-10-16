@@ -4,7 +4,7 @@ module Delayable
   extend ActiveSupport::Concern
 
   def delayed_jobs
-    GoodJob::Job.where("serialized_params['arguments'] => 'parent_object' LIKE ? or serialized_params['arguments'] => 'parent_object' LIKE ?", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
+    GoodJob::Job.where("serialized_params->'arguments'->0->>'_aj_globalid' LIKE ? or serialized_params->'arguments'->0->>'_aj_globalid' LIKE ?", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
   end
 
   def setup_metadata_jobs
