@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
   let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
-  let(:request_user) { FactoryBot.create(:permission_request_user) }
+  let(:request_user) { FactoryBot.create(:permission_request_user, sub: '1234') }
   let(:permission_set_2) { FactoryBot.create(:permission_set, label: 'set 2') }
   let(:permission_set_3) { FactoryBot.create(:permission_set, label: 'set 3') }
   let(:terms) { FactoryBot.create(:permission_set_term, activated_at: Time.zone.now, permission_set_id: permission_set.id) }
@@ -12,6 +12,8 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
   let(:parent_object_no_ps) { FactoryBot.create(:parent_object, oid: 2_012_033, admin_set: AdminSet.find_by_key('brbl')) }
   let(:permission_set_po) { FactoryBot.create(:permission_set, label: 'set 1') }
   let(:parent_object_no_terms) { FactoryBot.create(:parent_object, oid: 2_012_037, admin_set: AdminSet.find_by_key('brbl'), permission_set: permission_set_2, visibility: "Open with Permission") }
+  let(:request) { FactoryBot.create(:permission_request, permission_request_user: request_user, permission_set: permission_set, parent_object: parent_object) }
+  let(:term_agreement) { OpenWithPermission::TermsAgreement.create!(permission_request_user: request_user, permission_set_term: terms) }
 
   before do
     login_as user
@@ -22,6 +24,8 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
     permission_set_3
     request_user
     terms
+    request
+    term_agreement
   end
 
   describe 'get /api/permission_sets/id/terms' do
@@ -73,6 +77,17 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
       get terms_api_path(parent_object)
       expect(response).to have_http_status(200)
       expect(response.body).to match("[{\"id\":3,\"title\":\"Permission Set Terms\",\"body\":\"These are some terms\"}]")
+    end
+  end
+
+  describe 'get /api/permission_sets/:sub' do
+    it "can find a user from sub" do
+      get '/api/permission_sets/1234'
+      expect(response).to have_http_status(200)
+    end
+    it "throws error if user is not found" do
+      get '/api/permission_sets/123456'
+      expect(response).to have_http_status(404)
     end
   end
 end
