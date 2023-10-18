@@ -4,16 +4,15 @@ require 'rails_helper'
 RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
   let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
-  let(:request_user) { FactoryBot.create(:permission_request_user, sub: '1234') }
   let(:permission_set_2) { FactoryBot.create(:permission_set, label: 'set 2') }
   let(:permission_set_3) { FactoryBot.create(:permission_set, label: 'set 3') }
-  let(:terms) { FactoryBot.create(:permission_set_term, activated_at: Time.zone.now, permission_set_id: permission_set.id) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), permission_set: permission_set, visibility: "Open with Permission") }
   let(:parent_object_no_ps) { FactoryBot.create(:parent_object, oid: 2_012_033, admin_set: AdminSet.find_by_key('brbl')) }
-  let(:permission_set_po) { FactoryBot.create(:permission_set, label: 'set 1') }
   let(:parent_object_no_terms) { FactoryBot.create(:parent_object, oid: 2_012_037, admin_set: AdminSet.find_by_key('brbl'), permission_set: permission_set_2, visibility: "Open with Permission") }
   let(:request) { FactoryBot.create(:permission_request, permission_request_user: request_user, permission_set: permission_set, parent_object: parent_object) }
-  let(:term_agreement) { OpenWithPermission::TermsAgreement.create!(permission_request_user: request_user, permission_set_term: terms) }
+  let(:term_agreement) { FactoryBot.create(:term_agreement, permission_request_user: request_user, permission_set_term: terms) }
+  let(:terms) { FactoryBot.create(:permission_set_term, activated_by: user, activated_at: Time.zone.now, permission_set: permission_set) }
+  let(:request_user) { FactoryBot.create(:permission_request_user, sub: '1234') }
 
   before do
     login_as user
@@ -80,14 +79,18 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
     end
   end
 
+  # rubocop:disable Metrics/LineLength
   describe 'get /api/permission_sets/:sub' do
     it "can find a user from sub" do
       get '/api/permission_sets/1234'
       expect(response).to have_http_status(200)
+      expect(response.body).to match("[{\"user\":{\"sub\":\"#{request_user.sub}\"},\"permission_set_terms_agreed\":[#{term_agreement.id}],\"permissions\":[{\"oid\":2012036,\"permission_set\":#{permission_set.id},\"permission_set_terms\":#{terms.id},\"request_status\":null,\"request_date\":\"#{request.created_at}\",\"access_until\":null}]}]")
     end
     it "throws error if user is not found" do
       get '/api/permission_sets/123456'
       expect(response).to have_http_status(404)
+      expect(response.body).to eq("{\"title\":\"User not found\"}")
     end
   end
+  # rubocop:enable Metrics/LineLength
 end
