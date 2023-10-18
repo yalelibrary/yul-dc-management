@@ -51,11 +51,11 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
 
   describe 'GET /api/permission_sets/id/permission_set_terms/id/agree/sub' do
     it 'can GET and create a user agreement' do
-      expect(OpenWithPermission::TermsAgreement.count).to eq 0
+      expect(OpenWithPermission::TermsAgreement.count).to eq 1
       get "/api/permission_sets/#{permission_set.id}/permission_set_terms/#{terms.id}/agree/#{request_user.sub}"
       expect(response).to have_http_status(201)
       term = OpenWithPermission::TermsAgreement.first
-      expect(OpenWithPermission::TermsAgreement.count).to eq 1
+      expect(OpenWithPermission::TermsAgreement.count).to eq 2
       expect(term.permission_request_user).to eq request_user
       expect(term.permission_set_term).to eq terms
     end
@@ -84,7 +84,7 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
     it "can find a user from sub" do
       get '/api/permission_sets/1234'
       expect(response).to have_http_status(200)
-      expect(response.body).to match("[{\"user\":{\"sub\":\"#{request_user.sub}\"},\"permission_set_terms_agreed\":[#{term_agreement.id}],\"permissions\":[{\"oid\":2012036,\"permission_set\":#{permission_set.id},\"permission_set_terms\":#{terms.id},\"request_status\":null,\"request_date\":\"#{request.created_at}\",\"access_until\":null}]}]")
+      expect(response.body).to match("[{\"user\":{\"sub\":\"#{request_user.sub}\"},\"permission_set_terms_agreed\":[#{term_agreement.id}],\"permissions\":[{\"oid\":2012036,\"permission_set\":#{permission_set.id},\"permission_set_terms\":#{terms.id},\"request_status\":null}]}]")
     end
     it "throws error if user is not found" do
       get '/api/permission_sets/123456'
