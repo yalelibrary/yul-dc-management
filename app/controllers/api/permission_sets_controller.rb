@@ -67,7 +67,7 @@ class Api::PermissionSetsController < ApplicationController
         "request_date": permission.created_at,
         "access_until": permission.access_until }
     end
-    
+
     render(json: { "timestamp": timestamp, "user": { "sub": request_user.sub }, "permission_set_terms_agreed": terms_agreed, "permissions": set.reverse })
   end
   # rubocop:enable Metrics/MethodLength
