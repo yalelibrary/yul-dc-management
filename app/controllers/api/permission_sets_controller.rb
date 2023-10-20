@@ -41,4 +41,34 @@ class Api::PermissionSetsController < ApplicationController
       end
     end
   end
+
+  # rubocop:disable Metrics/MethodLength
+  def retrieve_permissions_data
+    # check for valid user
+    begin
+      request_user = OpenWithPermission::PermissionRequestUser.find_by!(sub: params[:sub])
+    rescue ActiveRecord::RecordNotFound
+      render(json: { "title": "User not found" }, status: 404) && (return false)
+    end
+
+    timestamp = Time.zone.today
+    term_agreements = OpenWithPermission::TermsAgreement.includes(:permission_set_term).where(permission_request_user: request_user).where.not(agreement_ts: nil)
+
+    terms_agreed = term_agreements.map do |term_agreement|
+      term_agreement.permission_set_term.id
+    end
+    permissions = OpenWithPermission::PermissionRequest.where(permission_request_user: request_user)
+
+    set = permissions.map do |permission|
+      { "oid": permission.parent_object_id,
+        "permission_set": permission.permission_set_id,
+        "permission_set_terms": OpenWithPermission::PermissionSetTerm.find_by!(permission_set: permission.permission_set).id,
+        "request_status": permission.request_status,
+        "request_date": permission.created_at,
+        "access_until": permission.access_until }
+    end
+
+    render(json: { "timestamp": timestamp, "user": { "sub": request_user.sub }, "permission_set_terms_agreed": terms_agreed, "permissions": set.reverse })
+  end
+  # rubocop:enable Metrics/MethodLength
 end
