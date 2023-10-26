@@ -407,3 +407,16 @@ $( document ).on('turbolinks:load', function() {
     })
   })
 })
+
+$( document ).on('turbolinks:load', function() {
+  if($('#parent_object_visibility').val() != 'Open with Permission') {
+    $('#parent_object_permission_set_id').prop('disabled', true);
+  }
+  $('#parent_object_visibility').on('input change', function() {
+    if($(this).val() != 'Open with Permission') {
+      $('#parent_object_permission_set_id').prop('disabled', true);
+    } else {
+      $('#parent_object_permission_set_id').prop('disabled', false);
+    }
+  });
+});

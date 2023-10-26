@@ -3,6 +3,7 @@
 class ParentObjectsController < ApplicationController
   before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata, :select_thumbnail, :solr_document]
   before_action :set_paper_trail_whodunnit
+  before_action :set_permission_set, only: [:edit, :update]
   load_and_authorize_resource except: [:solr_document, :new, :create, :update_metadata, :all_metadata, :reindex, :select_thumbnail, :update_manifests]
 
   # GET /parent_objects
@@ -59,8 +60,22 @@ class ParentObjectsController < ApplicationController
 
   # PATCH/PUT /parent_objects/1
   # PATCH/PUT /parent_objects/1.json
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
   def update
     respond_to do |format|
+      parent_object = ParentObject.find(params[:id])
+      permission_set = parent_object&.permission_set
+      permission_set_param = OpenWithPermission::PermissionSet.find(parent_object_params[:permission_set_id]) if parent_object_params[:permission_set_id].present?
+
+      authorize!(:owp_access, permission_set) if parent_object.visibility == "Open with Permission" && parent_object.visibility != parent_object_params[:visibility]
+
+      authorize!(:owp_access, permission_set) if permission_set.present? &&  permission_set != permission_set_param
+
+      authorize!(:owp_access, permission_set_param) if permission_set_param.present?
+
       invalidate_admin_set_edit unless valid_admin_set_edit?
       invalidate_redirect_to_edit unless valid_redirect_to_edit?
 
@@ -78,6 +93,10 @@ class ParentObjectsController < ApplicationController
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # DELETE /parent_objects/1
   # DELETE /parent_objects/1.json
@@ -210,6 +229,14 @@ class ParentObjectsController < ApplicationController
       end
     end
 
+    def set_permission_set
+      permission_sets = OpenWithPermission::PermissionSet.all
+      @visible_permission_sets = permission_sets.order('label ASC').select do |sets|
+        User.with_role(:administrator, sets).include?(current_user) ||
+          User.with_role(:sysadmin, sets).include?(current_user)
+      end
+    end
+
     def batch_process_of_one
       @batch_process = BatchProcess.new(user: current_user, oid: @parent_object.oid)
       @parent_object.current_batch_connection = @batch_process.batch_connections.build(connectable: @parent_object)
@@ -230,7 +257,9 @@ class ParentObjectsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def parent_object_params
       cur_params = params.require(:parent_object).permit(:oid, :admin_set, :project_identifier, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
-                                                         :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id, :viewing_direction,
+                                                         :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id,
+                                                         :viewing_direction,
+                                                         :permission_set_id,
                                                          :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization,
                                                          :digitization_note, :digitization_funding_source, :redirect_to, :preservica_uri, :digital_object_source, :preservica_representation_type)
       cur_params[:admin_set] = AdminSet.find_by(key: cur_params[:admin_set]) if cur_params[:admin_set]

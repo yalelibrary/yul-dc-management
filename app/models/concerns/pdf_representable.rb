@@ -7,10 +7,10 @@ module PdfRepresentable
 
   NORMALIZED_COVER_FIELDS = %w[
     callNumber
-    creator
+    all_creators
     date
     sourceTitle
-    rights
+    rights_statement
     extent_of_digitization
   ].freeze
 
@@ -133,7 +133,7 @@ module PdfRepresentable
       # for normalized fields
       NORMALIZED_COVER_FIELDS.each do |field|
         hash = METADATA_FIELDS[field.to_sym]
-        properties = add_field_if_present(authoritative_json, field, hash[:label], properties)
+        properties = add_field_if_present(authoritative_json, field, hash, properties)
       end
 
       container_information = extract_container_information(authoritative_json)
@@ -146,11 +146,17 @@ module PdfRepresentable
       properties
     end
 
-    def add_field_if_present(json, field_name, hash_field, hash)
-      value = extract_flat_field_value(json, field_name, nil)
-      hash[hash_field] = value if value
+    def add_field_if_present(json, field_name, hash, properties)
+      if hash[:digital_only]
+        value = send(field_name)
+        value = Array(value).reject { |v| !keep_value?(v) }.join(", ")
+      else
+        value = extract_flat_field_value(json, field_name, nil)
+      end
+      value = ActionController::Base.helpers.sanitize(value, tags: [], attributes: []) if value
+      properties[hash[:label]] = value if value
 
-      hash
+      properties
     end
 
     def extract_flat_field_value(json, field_name, default)

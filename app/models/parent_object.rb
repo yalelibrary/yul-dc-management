@@ -16,10 +16,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :child_objects, -> { order('"order" ASC, oid ASC') }, primary_key: 'oid', foreign_key: 'parent_object_oid', dependent: :delete_all
   has_many :batch_connections, as: :connectable
   has_many :batch_processes, through: :batch_connections
-  has_many :permission_requests
+  has_many :permission_requests, class_name: "OpenWithPermission::PermissionRequest"
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   belongs_to :admin_set
-  has_one :permission_set
+  belongs_to :permission_set, class_name: "OpenWithPermission::PermissionSet", required: false
   has_one :digital_object_json
   attr_accessor :metadata_update
   attr_accessor :current_batch_process
@@ -40,7 +40,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :redirect_to, format: { with: /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//, message: " in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123", presence: true, if: proc { visibility == "Redirect" } }
   # rubocop:enable Metrics/LineLength
   validates :preservica_uri, presence: true, format: { with: %r{\A/}, message: " in incorrect format. URI must start with a /" }, if: proc { digital_object_source == "Preservica" }
-  before_save :validate_visibility
+  validate :validate_visibility
+  before_save :check_permission_set
 
   def check_for_redirect
     minify if redirect_to.present?
@@ -64,7 +65,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def self.visibilities
-    ['Private', 'Public', 'Redirect', 'Yale Community Only']
+    ['Open with Permission', 'Private', 'Public', 'Redirect', 'Yale Community Only']
   end
 
   # Options from iiif presentation api 2.1 - see https://iiif.io/api/presentation/2.1/#viewingdirection
@@ -82,9 +83,17 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def validate_visibility
-    return true if ParentObject.visibilities.include?(visibility)
-
+    if visibility == "Open with Permission" && permission_set_id.nil?
+      errors.add(:open_with_permisson, "objects must have a Permission Set")
+      throw :abort
+    elsif ParentObject.visibilities.include?(visibility)
+      return true
+    end
     self.visibility = 'Private'
+  end
+
+  def check_permission_set
+    self.permission_set = nil if visibility != "Open with Permission"
   end
 
   def initialize(attributes = nil)
@@ -224,6 +233,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def sync_from_preservica(_local_children_hash, preservica_children_hash)
     # iterate through local hashes and remove any children no longer found on preservica
     child_objects.each do |co|
+      co.destroy if co.preservica_content_object_uri.nil?
       co.destroy unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
     end
     # iterate through preservica and update when local version found
@@ -529,10 +539,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     raise StandardError, "Bib id required to build Voyager url" unless bib.present?
     identifier_block = if barcode.present?
                          "/barcode/#{barcode}?bib=#{bib}"
-                       elsif holding.present?
-                         "/holding/#{holding}?bib=#{bib}"
                        elsif item.present?
                          "/item/#{item}?bib=#{bib}"
+                       elsif holding.present?
+                         "/holding/#{holding}?bib=#{bib}"
                        else
                          "/bib/#{bib}"
                        end
@@ -598,6 +608,39 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def child_oids
     child_objects.map(&:oid)
+  end
+
+  def related_resource_online_links(_json = authoritative_json)
+    extract_links_with_labels("relatedResourceOnline", [])
+  end
+
+  def related_version_online_links(_json = authoritative_json)
+    ils_filters = %w[brbl-archive.library.yale.edu
+                     divinity-adhoc.library.yale.edu/FosterPapers digital.library.yale.edu
+                     beinecke.library.yale.edu beinecke1.library.yale.edu collections.library.yale.edu
+                     hdl.handle.net/10079/digcoll/]
+    extract_links_with_labels("relatedVersionOnline", ils_filters)
+  end
+
+  def extract_links_with_labels(field_name, filters = [], json = authoritative_json)
+    return nil unless json && json[field_name].present?
+    links_and_text = json[field_name]
+
+    links = links_and_text.map do |value|
+      link_part = value.split('|')
+      next unless link_part.count <= 2
+      urls = link_part.select { |s| s.start_with? 'http' }
+      labels = link_part.select { |s| !s.start_with? 'http' }
+      next unless urls.count == 1
+      ils_filters = filters.any? do |ils|
+        urls[0].include?(ils)
+      end
+      return nil if ils_filters
+      label = labels[0] || urls[0]
+      ActionController::Base.helpers.sanitize("<a href='#{urls[0]}'>#{label}</a>", tags: ["a", "i", "b"], attributes: %w[href])
+    end.compact
+    return nil if links.empty?
+    links
   end
 
   def extract_container_information(json = authoritative_json)

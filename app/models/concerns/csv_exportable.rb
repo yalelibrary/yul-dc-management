@@ -16,33 +16,31 @@ module CsvExportable
   end
 
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def parent_output_csv(*admin_set_id)
     return nil unless batch_action == 'export all parent objects by admin set'
-    csv_rows = parent_object_csv_rows(*admin_set_id)
-    add_error_rows(csv_rows)
-    # sort first by the admin set label, then by the parent object oid
-    csv_rows.sort_by! { |row| [row[1], row[0]&.to_s] }
     output_csv = CSV.generate do |csv|
       csv << parent_headers
-      csv_rows.each do |row|
-        csv << row
+      with_each_parent_object(*admin_set_id) do |po|
+        case po
+        when ParentObject
+          csv << [po.oid, po.admin_set.key, po.source_name,
+                  po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+                  po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
+                  po.last_ladybird_update, po.last_voyager_update,
+                  po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
+                  po.digitization_note, po.digitization_funding_source, po.project_identifier, extent_of_full_text(po)]
+        else
+          csv << [po[:id], po[:row2], '-', po[:csv_message], '', '']
+          batch_processing_event(po[:batch_message], 'Skipped Row') unless batch_ingest_events_count.positive?
+        end
       end
     end
     save_to_s3(output_csv, self)
     output_csv
   end
   # rubocop:enable Metrics/AbcSize
-
-  def parent_object_csv_rows(*admin_set_id)
-    parent_objects_array(*admin_set_id).map do |po|
-      [po.oid, po.admin_set.key, po.source_name,
-       po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
-       po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
-       po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
-       po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
-       po.digitization_note, po.digitization_funding_source, po.project_identifier, extent_of_full_text(po)]
-    end
-  end
+  # rubocop:enable Metrics/MethodLength
 
   def extent_of_full_text(parent_object)
     children_with_ft = false
@@ -67,38 +65,38 @@ module CsvExportable
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Lint/UselessAssignment
-  def parent_objects_array(*admin_set_id)
+  def with_each_parent_object(*admin_set_id)
     arr = []
     if csv.present?
       imported_csv = CSV.parse(csv, headers: true).presence
       imported_csv.each_with_index do |row, index|
         begin
-          admin_set = AdminSet.find_by(key: row[0])
-          raise ActiveRecord::RecordNotFound if admin_set.nil?
+          admin_set = AdminSet.find_by!(key: row[0])
           self.admin_set = admin_set.key
           save!
           if user.viewer(admin_set) || user.editor(admin_set)
-            ParentObject.where(admin_set_id: admin_set.id).find_each do |parent|
-              arr << parent
+            ParentObject.where(admin_set_id: admin_set.id).order(:oid).find_each do |parent|
+              # gives most reuse of find_each
+              yield parent
             end
           else
-            (@error_rows ||= []) << { row2: admin_set.key, csv_message: 'Access denied for admin set', batch_message: "Skipping row [#{index + 2}] due to  admin set permissions: #{admin_set.key}" }
+            yield({ row2: admin_set.key, csv_message: 'Access denied for admin set', batch_message: "Skipping row [#{index + 2}] due to  admin set permissions: #{admin_set.key}" })
           end
         rescue ActiveRecord::RecordNotFound
-          (@error_rows ||= []) << { row2: row[0], csv_message: 'Admin Set not found in database', batch_message: "Skipping row [#{index + 2}]  due to Admin Set not found: #{row[0]}" }
+          yield({ row2: row[0], csv_message: 'Admin Set not found in database', batch_message: "Skipping row [#{index + 2}]  due to Admin Set not found: #{row[0]}" })
         end
       end
     else
       admin_set_id.each do |id|
-        admin_set = AdminSet.find_by(id: id.to_i)
+        admin_set = AdminSet.find_by!(id: id.to_i)
         self.admin_set = admin_set.key
         save!
         if user.viewer(admin_set) || user.editor(admin_set)
-          ParentObject.where(admin_set_id: id.to_i).find_each do |parent|
-            arr << parent
+          ParentObject.where(admin_set_id: id.to_i).order(:oid).find_each do |parent|
+            yield parent
           end
         else
-          (@error_rows ||= []) << { row2: admin_set.key, csv_message: 'Access denied for admin set', batch_message: "Skipping admin set due to admin set permissions: #{admin_set.key}" }
+          yield({ row2: admin_set.key, csv_message: 'Access denied for admin set', batch_message: "Skipping admin set due to admin set permissions: #{admin_set.key}" })
         end
       end
     end

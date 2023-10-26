@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe PermissionSet, type: :model do
+RSpec.describe OpenWithPermission::PermissionSet, type: :model do
   let(:user) { FactoryBot.create(:user) }
   let(:user2) { FactoryBot.create(:user) }
   let(:permission_set) { FactoryBot.create(:permission_set) }
@@ -111,7 +111,7 @@ RSpec.describe PermissionSet, type: :model do
     end
   end
 
-  describe PermissionSet do
+  describe OpenWithPermission::PermissionSet do
     it { is_expected.to have_many(:permission_requests) }
   end
 end

@@ -135,15 +135,31 @@ class IiifPresentationV3
 
   def extract_value(field, hash)
     if hash[:digital_only] == true
-      @parent_object.send(field.to_s)
+      sanitize_and_wrap(@parent_object.send(field.to_s))
     else
-      @parent_object&.authoritative_json&.[](field.to_s).presence || (hash[:backup_field] && @parent_object&.authoritative_json&.[](hash[:backup_field]).presence)
+      sanitize_and_wrap(@parent_object&.authoritative_json&.[](field.to_s).presence || (hash[:backup_field] && @parent_object&.authoritative_json&.[](hash[:backup_field]).presence))
     end
+  end
+
+  def sanitize_and_wrap(value)
+    if value.is_a?(Array)
+      value&.map { |v| wrap_if_html(ActionController::Base.helpers.sanitize(v, tags: ["a", "i", "b"], attributes: %w[href])) }
+    elsif value.is_a?(String)
+      wrap_if_html(ActionController::Base.helpers.sanitize(value, tags: ["a", "i", "b"], attributes: %w[href]))
+    else
+      value
+    end
+  end
+
+  def wrap_if_html(value)
+    return "<span>#{value}</span>" if /<(.|\n)*?>/.match? value
+    value
   end
 
   def metadata
     values = []
     METADATA_FIELDS.each do |field, hash|
+      next if skip_field(field)
       value = extract_value(field, hash)
       if value.is_a?(Array)
         value = process_metadata_array value, hash
@@ -398,5 +414,11 @@ class IiifPresentationV3
   def manifest_path
     @manifest_path ||= "manifests/#{pairtree_path}/#{oid}.json" if pairtree_path && oid
   end
+
+  private
+
+    def skip_field(field)
+      field == :repository && @parent_object.authoritative_metadata_source&.metadata_cloud_name == 'aspace'
+    end
 end
 # rubocop:enable Metrics/ClassLength
