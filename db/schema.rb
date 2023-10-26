@@ -196,6 +196,8 @@ ActiveRecord::Schema.define(version: 2023_09_18_173349) do
     t.datetime "last_preservica_update"
     t.string "digitization_funding_source"
     t.bigint "permission_set_id"
+    t.jsonb "sierra_json"
+    t.datetime "last_sierra_update"
     t.text "extent_of_full_text", default: "None"
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
     t.index ["aspace_uri"], name: "index_parent_objects_on_aspace_uri"

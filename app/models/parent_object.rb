@@ -363,10 +363,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Fetches the record from the authoritative_metadata_source
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
   def default_fetch(_current_batch_process = current_batch_process, _current_batch_connection = current_batch_connection)
     fetch_results = case authoritative_metadata_source&.metadata_cloud_name
                     when "ladybird"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
+                    when "sierra"
+                      self.sierra_json = MetadataSource.find_by(metadata_cloud_name: "sierra").fetch_record(self)
                     when "ils"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless bib.present?
                       self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
@@ -392,6 +396,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     fetch_results
   end
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def force_private
     self.visibility = "Private"
@@ -438,6 +444,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       add_media_type voyager_cloud_url
     when "aspace"
       add_media_type aspace_cloud_url
+    when "sierra"
+      add_media_type sierra_cloud_url
     else
       raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
@@ -453,6 +461,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       voyager_json
     when "aspace"
       aspace_json
+    when "sierra"
+      sierra_json
     else
       raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
@@ -500,8 +510,29 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.barcode = a_record["orbisBarcode"]
   end
 
+  def sierra_json=(s_record)
+    super(s_record)
+    return s_record if s_record.blank?
+    self.item = s_record["itemId"] unless s_record["itemId"]&.zero?
+    self.last_id_update = DateTime.current
+    self.bib = s_record["bibId"]
+    self.last_sierra_update = DateTime.current
+  end
+
   def ladybird_cloud_url
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/ladybird/oid/#{oid}?include-children=1"
+  end
+
+  def sierra_cloud_url
+    raise StandardError, "Bib id required to build Sierra url" unless bib.present?
+    identifier_block = if barcode.present?
+                         "/barcode/#{barcode}?bib=#{bib}"
+                       elsif item.present?
+                         "/item/#{item}?bib=#{bib}"
+                       else
+                         "/bib/#{bib}"
+                       end
+    "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/sierra#{identifier_block}"
   end
 
   def voyager_cloud_url

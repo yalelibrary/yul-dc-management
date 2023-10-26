@@ -116,6 +116,8 @@ module SolrIndexable
         box_ssim: extract_container_information(json_to_index),
         callNumber_ssim: json_to_index["callNumber"],
         callNumber_tesim: json_to_index["callNumber"],
+        callNumberWithPublicNote_ssim: json_to_index["source"] == "sierra" ? json_to_index["callNumberWithPublicNote"] : nil,
+        callNumberWithPublicNote_tsim: json_to_index["source"] == "sierra" ? json_to_index["callNumberWithPublicNote"] : nil,
         caption_tesim: child_captions,
         child_oids_ssim: child_oids,
         collection_title_ssi: json_to_index["ancestorTitles"]&.[](-2),
