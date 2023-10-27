@@ -17,7 +17,7 @@ RSpec.describe DigitalObjectManagement, type: :model, prep_metadata_sources: tru
                                           item: '23456789',
                                           child_object_count: 1,
                                           visibility: "Private",
-                                          aspace_json: { "title": ["test"] })
+                                          aspace_json: { "title": ["test"], "volumeEnumeration": "v. 59", "callNumber": "MSS GQT" })
     full_parent_object.bib = '123456789'
     full_parent_object.barcode = '98765432'
     full_parent_object.save!
@@ -27,6 +27,8 @@ RSpec.describe DigitalObjectManagement, type: :model, prep_metadata_sources: tru
     expect(JSON.parse(full_parent_object.generate_digital_object_json)["holdingId"]).to eq("987654321")
     expect(JSON.parse(full_parent_object.generate_digital_object_json)["itemId"]).to eq("23456789")
     expect(JSON.parse(full_parent_object.generate_digital_object_json)["barcode"]).to eq("98765432")
+    expect(JSON.parse(full_parent_object.generate_digital_object_json)["volumeEnumeration"]).to eq(nil)
+    expect(JSON.parse(full_parent_object.generate_digital_object_json)["callNumber"]).to eq(nil)
   end
 
   describe "with VPN true and FEATURE_FLAG enabled for ILS/Voyager" do
@@ -47,7 +49,7 @@ RSpec.describe DigitalObjectManagement, type: :model, prep_metadata_sources: tru
                                             admin_set: admin_set,
                                             child_object_count: 1,
                                             visibility: "Private",
-                                            voyager_json: { "title": ["test"] })
+                                            voyager_json: { "title": ["test"], "volumeEnumeration": "v. 59", "callNumber": "MSS GQT" })
       full_parent_object.bib = '123456789'
       full_parent_object.barcode = '98765432'
       full_parent_object.holding = '987654321'
@@ -59,6 +61,8 @@ RSpec.describe DigitalObjectManagement, type: :model, prep_metadata_sources: tru
       expect(JSON.parse(full_parent_object.generate_digital_object_json)["holdingId"]).to eq("987654321")
       expect(JSON.parse(full_parent_object.generate_digital_object_json)["itemId"]).to eq("23456789")
       expect(JSON.parse(full_parent_object.generate_digital_object_json)["barcode"]).to eq("98765432")
+      expect(JSON.parse(full_parent_object.generate_digital_object_json)["volumeEnumeration"]).to eq("v. 59")
+      expect(JSON.parse(full_parent_object.generate_digital_object_json)["callNumber"]).to eq("MSS GQT")
     end
 
     it "can send aspace digital object updates with ILS enabled" do

@@ -113,6 +113,8 @@ class CsvRowParentService
       ms = 2
     elsif ms == "aspace"
       ms = 3
+    elsif ms == "sierra"
+      ms = 4
     end
     ms
   end

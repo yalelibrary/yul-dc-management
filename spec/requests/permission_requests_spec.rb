@@ -10,7 +10,7 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
   let(:oid) { 2_034_600 }
   let(:oid_2) { "17105661" }
   let(:oid_3) { "30000016189097" }
-  let(:parent) { FactoryBot.create(:parent_object, oid: oid, admin_set: admin_set, visibility: "Yale Community Only", permission_set_id: permission_set.id) }
+  let(:parent) { FactoryBot.create(:parent_object, oid: oid, admin_set: admin_set, visibility: "Open with Permission", permission_set_id: permission_set.id) }
   let(:parent_2) { FactoryBot.create(:parent_object, oid: oid_2, admin_set: admin_set, visibility: "Public", permission_set_id: permission_set.id) }
   let(:parent_3) { FactoryBot.create(:parent_object, oid: oid_3, admin_set: admin_set, visibility: "Private", permission_set_id: permission_set.id) }
   let(:json) { File.read(Rails.root.join(fixture_path, 'permission_request.json')) }

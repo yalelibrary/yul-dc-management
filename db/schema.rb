@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_14_154739) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_18_173349) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -273,6 +274,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_14_154739) do
     t.datetime "last_preservica_update", precision: nil
     t.string "digitization_funding_source"
     t.bigint "permission_set_id"
+    t.jsonb "sierra_json"
+    t.datetime "last_sierra_update"
     t.text "extent_of_full_text", default: "None"
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
     t.index ["aspace_uri"], name: "index_parent_objects_on_aspace_uri"
@@ -294,9 +297,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_14_154739) do
     t.string "name"
     t.string "email"
     t.boolean "email_verified"
-    t.datetime "oidc_updated_at", precision: nil
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "oidc_updated_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "netid"
   end
 
   create_table "permission_requests", force: :cascade do |t|

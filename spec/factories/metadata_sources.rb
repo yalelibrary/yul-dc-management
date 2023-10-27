@@ -18,5 +18,11 @@ FactoryBot.define do
       display_name { "ArchivesSpace" }
       file_prefix { "AS-" }
     end
+    factory :metadata_source_sierra do
+      id { 4 }
+      metadata_cloud_name { "sierra" }
+      display_name { "Sierra" }
+      file_prefix { "S-" }
+    end
   end
 end
