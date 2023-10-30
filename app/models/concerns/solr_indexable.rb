@@ -173,6 +173,7 @@ module SolrIndexable
         preferredCitation_tesim: json_to_index["preferredCitation"],
         project_identifier_tesi: generate_pid(json_to_index["project_identifier"]),
         projection_tesim: json_to_index["projection"],
+        provenanceUncontrolled: json_to_index["provenanceUncontrolled"],
         public_bsi: true, # TEMPORARY, makes everything public
         publisher_tesim: json_to_index["publisher"],
         publisher_ssim: json_to_index["publisher"],
