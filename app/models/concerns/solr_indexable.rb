@@ -259,7 +259,7 @@ module SolrIndexable
   # rubocop:disable Metrics/PerceivedComplexity
   def expand_date_structured(date_structured)
     return nil unless date_structured&.is_a?(Array)
-    date_structured.each_with_object(SortedSet.new) do |date, set|
+    date_structured.each_with_object(Set.new) do |date, set|
       if date.include? '/'
         dates = date.split('/')
         if dates.count == 2
@@ -271,7 +271,7 @@ module SolrIndexable
       else
         set << date.to_i
       end
-    end.to_a
+    end.sort.to_a
   end
   # rubocop:enable Metrics/PerceivedComplexity
 
