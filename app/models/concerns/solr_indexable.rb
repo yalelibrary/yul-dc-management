@@ -88,6 +88,7 @@ module SolrIndexable
     end
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def to_solr(json_to_index = nil)
     if redirect_to.present?
       {
@@ -219,6 +220,7 @@ module SolrIndexable
       }.delete_if { |_k, v| v.blank? } # Delete nil, [], and empty string values
     end
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def to_solr_full_text(json_to_index = nil)
     solr_document = to_solr(json_to_index)
