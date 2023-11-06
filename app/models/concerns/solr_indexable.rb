@@ -148,7 +148,7 @@ module SolrIndexable
         digitization_funding_source_tesi: generate_digitization_funding_source(json_to_index["digitization_funding_source"]),
         edition_ssim: json_to_index["edition"],
         extent_ssim: json_to_index["extent"],
-        extentOfDigitization_ssim: extent_of_digitization || "Unspecified",
+        extentOfDigitization_ssim: extent_of_digitization.presence || "Unspecified",
         findingAid_ssim: json_to_index["findingAid"],
         folder_ssim: json_to_index["folder"],
         format: json_to_index["format"],
