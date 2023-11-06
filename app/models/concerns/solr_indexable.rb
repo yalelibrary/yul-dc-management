@@ -88,6 +88,7 @@ module SolrIndexable
     end
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def to_solr(json_to_index = nil)
     if redirect_to.present?
       {
@@ -147,7 +148,7 @@ module SolrIndexable
         digitization_funding_source_tesi: generate_digitization_funding_source(json_to_index["digitization_funding_source"]),
         edition_ssim: json_to_index["edition"],
         extent_ssim: json_to_index["extent"],
-        extentOfDigitization_ssim: extent_of_digitization,
+        extentOfDigitization_ssim: extent_of_digitization || "Unspecified",
         findingAid_ssim: json_to_index["findingAid"],
         folder_ssim: json_to_index["folder"],
         format: json_to_index["format"],
@@ -219,6 +220,7 @@ module SolrIndexable
       }.delete_if { |_k, v| v.blank? } # Delete nil, [], and empty string values
     end
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def to_solr_full_text(json_to_index = nil)
     solr_document = to_solr(json_to_index)
