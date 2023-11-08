@@ -10,7 +10,7 @@ class UpdateManifestsJob < ApplicationJob
   # rubocop:disable Style/OptionalArguments
   # rubocop:disable Lint/UselessAssignment
   def perform(admin_set_id, start_position = 0)
-    visibilities = ["Public", "Yale Community Only"]
+    visibilities = ["Public", "Yale Community Only", "Open with Permission"]
     parent_objects = ParentObject.where(admin_set_id: admin_set_id, visibility: visibilities).where.not(child_object_count: 0).order(:oid).offset(start_position).limit(UpdateManifestsJob.job_limit)
     last_job = parent_objects.count < UpdateManifestsJob.job_limit
     return unless parent_objects.count.positive? # stop if nothing is found

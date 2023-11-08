@@ -688,7 +688,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def should_index?
     return false if redirect_to.blank? && (child_object_count&.zero? || child_objects.empty?)
-    ['Public', 'Redirect', 'Yale Community Only'].include?(visibility) || redirect_to.present?
+    ['Public', 'Redirect', 'Yale Community Only', 'Open with Permission'].include?(visibility) || redirect_to.present?
   end
 
   def should_create_manifest_and_pdf?
