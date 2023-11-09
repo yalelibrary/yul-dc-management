@@ -174,7 +174,7 @@ METADATA_FIELDS = {
     ],
     digital_only: true
   },
-  extent_of_digitization: {
+  extent_of_digitization_text: {
     label: 'Extent of Digitization',
     solr_fields: [
       'extentOfDigitization_ssim'

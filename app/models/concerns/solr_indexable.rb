@@ -148,7 +148,7 @@ module SolrIndexable
         digitization_funding_source_tesi: generate_digitization_funding_source(json_to_index["digitization_funding_source"]),
         edition_ssim: json_to_index["edition"],
         extent_ssim: json_to_index["extent"],
-        extentOfDigitization_ssim: extent_of_digitization.presence || "Unspecified",
+        extentOfDigitization_ssim: extent_of_digitization_text,
         findingAid_ssim: json_to_index["findingAid"],
         folder_ssim: json_to_index["folder"],
         format: json_to_index["format"],
@@ -302,6 +302,10 @@ module SolrIndexable
 
   def generate_digitization_funding_source(digitization_funding_source)
     digitization_funding_source.presence || self&.digitization_funding_source || nil
+  end
+
+  def extent_of_digitization_text
+    extent_of_digitization.presence || "Unspecified"
   end
 
   # not ASpace records will use the repository value
