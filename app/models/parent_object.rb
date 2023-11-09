@@ -497,8 +497,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def voyager_json=(v_record)
     super(v_record)
     return v_record if v_record.blank?
-    self.holding = v_record["holdingId"] unless v_record["holdingId"]&.zero?
-    self.item = v_record["itemId"] unless v_record["itemId"]&.zero?
+    self.holding = v_record["holdingId"].to_s unless v_record["holdingId"].to_i.zero?
+    self.item = v_record["itemId"].to_s unless v_record["itemId"].to_i.zero?
     self.last_id_update = DateTime.current
     self.last_voyager_update = DateTime.current
   end
@@ -513,9 +513,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def sierra_json=(s_record)
     super(s_record)
     return s_record if s_record.blank?
-    self.item = s_record["itemId"] unless s_record["itemId"]&.zero?
+    self.item = s_record["itemId"].to_s unless s_record["itemId"].to_i.zero?
     self.last_id_update = DateTime.current
-    self.bib = s_record["bibId"]
+    self.bib = s_record["bibId"].to_s
     self.last_sierra_update = DateTime.current
   end
 
