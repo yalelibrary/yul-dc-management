@@ -1040,6 +1040,48 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
   end
 
+  context "a parent_object handles json" do
+    let(:parent_object) do
+      FactoryBot.build(:parent_object, oid: nil, bib: '500', item: nil,
+                                       authoritative_metadata_source_id: voyager)
+    end
+    let(:json_integers) { { "bibId" => 500, "holdingId" => 10, "itemId" => 30 } }
+    let(:json_integers_0_item) { { "bibId" => 500, "holdingId" => 10, "itemId" => 0 } }
+    let(:json_strings) { { "bibId" => "500", "holdingId" => "10", "itemId" => "30" } }
+    let(:json_strings_0_item) { { "bibId" => "500", "holdingId" => "10", "itemId" => "0" } }
+    it 'accepts integer ids for sierra' do
+      parent_object.sierra_json = json_integers
+      expect(parent_object.item).to eq('30')
+    end
+    it 'accepts string ids for sierra' do
+      parent_object.sierra_json = json_strings
+      expect(parent_object.item).to eq('30')
+    end
+    it 'accepts string ids with 0 item for sierra' do
+      parent_object.sierra_json = json_strings_0_item
+      expect(parent_object.item).to be_nil
+    end
+    it 'accepts integer ids with 0 item for sierra' do
+      parent_object.sierra_json = json_integers_0_item
+      expect(parent_object.item).to be_nil
+    end
+    it 'accepts integer ids for ils' do
+      parent_object.voyager_json = json_integers
+      expect(parent_object.holding).to eq('10')
+      expect(parent_object.item).to eq('30')
+    end
+    it 'accepts string ids with 0 item for ils' do
+      parent_object.voyager_json = json_strings_0_item
+      expect(parent_object.holding).to eq('10')
+      expect(parent_object.item).to be_nil
+    end
+    it 'accepts integer ids with 0 item for ils' do
+      parent_object.voyager_json = json_integers_0_item
+      expect(parent_object.holding).to eq('10')
+      expect(parent_object.item).to be_nil
+    end
+  end
+
   describe ParentObject do
     it { is_expected.to have_many(:permission_requests) }
   end
