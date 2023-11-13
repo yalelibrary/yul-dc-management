@@ -423,7 +423,7 @@ class IiifPresentationV3
     end
 
     def skip_extent(field)
-      field == :extent_of_digitization && @parent_object.extent_of_digitization == ''
+      field == :extent_of_digitization && (@parent_object.extent_of_digitization == '' || @parent_object.extent_of_digitization == 'Unspecified')
     end
 end
 # rubocop:enable Metrics/ClassLength
