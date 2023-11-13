@@ -138,6 +138,13 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         click_on("Create Parent object")
         expect(page).to have_content '/preservica_uri'
       end
+
+      it 'validates preservica representation type based on digital object source' do
+        select('Preservica')
+        fill_in('Preservica uri', with: "/preservica_uri")
+        click_on("Create Parent object")
+        expect(page).to have_content "Preservica representation type can't be None when Digital Object Source is Preservica"
+      end
     end
 
     context "with a ParentObject whose authoritative_metadata_source is Ladybird" do
