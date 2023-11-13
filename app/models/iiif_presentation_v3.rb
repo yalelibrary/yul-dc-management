@@ -159,7 +159,8 @@ class IiifPresentationV3
   def metadata
     values = []
     METADATA_FIELDS.each do |field, hash|
-      next if skip_field(field)
+      # next if skip_field(field)
+      next if skip_extent(field)
       value = extract_value(field, hash)
       if value.is_a?(Array)
         value = process_metadata_array value, hash
@@ -419,6 +420,11 @@ class IiifPresentationV3
 
     def skip_field(field)
       field == :repository && @parent_object.authoritative_metadata_source&.metadata_cloud_name == 'aspace'
+    end
+
+    def skip_extent(field)
+      Rails.logger.info("extent: #{@parent_object.extent_of_digitization}")
+      field == :extent_of_digitization && @parent_object.extent_of_digitization == ''
     end
 end
 # rubocop:enable Metrics/ClassLength
