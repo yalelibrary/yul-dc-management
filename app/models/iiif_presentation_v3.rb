@@ -159,7 +159,7 @@ class IiifPresentationV3
   def metadata
     values = []
     METADATA_FIELDS.each do |field, hash|
-      # next if skip_field(field)
+      next if skip_field(field)
       next if skip_extent(field)
       value = extract_value(field, hash)
       if value.is_a?(Array)
@@ -423,7 +423,6 @@ class IiifPresentationV3
     end
 
     def skip_extent(field)
-      Rails.logger.info("extent: #{@parent_object.extent_of_digitization}")
       field == :extent_of_digitization && @parent_object.extent_of_digitization == ''
     end
 end
