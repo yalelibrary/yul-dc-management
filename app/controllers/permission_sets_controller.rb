@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PermissionSetsController < ApplicationController
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   load_and_authorize_resource class: OpenWithPermission::PermissionSet, except: [:permission_set_terms, :new_term, :post_permission_set_terms, :show_term, :deactivate_permission_set_terms]
   before_action :set_permission_set, only: [:show, :edit, :update, :destroy, :permission_set_terms, :post_permission_set_terms, :new_term, :deactivate_permission_set_terms]
   # rubocop:enable Layout/LineLength

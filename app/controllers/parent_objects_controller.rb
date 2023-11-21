@@ -264,13 +264,6 @@ class ParentObjectsController < ApplicationController
     end
   end
 
-  def batch_process_of_one
-    @batch_process = BatchProcess.new(user: current_user, oid: @parent_object.oid)
-    @parent_object.current_batch_connection = @batch_process.batch_connections.build(connectable: @parent_object)
-    @batch_process.save!
-    @parent_object.current_batch_process = @batch_process
-  end
-
   # rubocop:disable Layout/LineLength
   def valid_redirect_to_edit?
     !parent_object_params[:redirect_to] || parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//) if parent_object_params[:redirect_to].present?
