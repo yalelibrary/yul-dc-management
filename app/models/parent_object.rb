@@ -4,6 +4,7 @@
 require 'fileutils'
 
 class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
+  FIVE_HUNDRED_MB = 524_288_000
   has_paper_trail
   include JsonFile
   include SolrIndexable
@@ -156,8 +157,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         cleanup_child_artifacts(invalid_child_hashes)
         upsert_child_objects(valid_child_hashes) unless valid_child_hashes.empty?
         self.last_preservica_update = Time.current
-        self.metadata_update = true
-        save!
       end
     else
       return unless ladybird_json
@@ -237,6 +236,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       co.destroy unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
     end
     # iterate through preservica and update when local version found
+    sync_from_preservica_update_existing_children(preservica_children_hash)
+
+    # create child records for any new items in preservica
+    create_child_records
+    sync_from_preservica_update_all_ptiffs
+  end
+
+  def sync_from_preservica_update_existing_children(preservica_children_hash)
     preservica_children_hash.each_value do |value|
       co = ChildObject.find_by(parent_object_oid: oid, preservica_content_object_uri: value[:content_uri])
       next if co.nil?
@@ -250,9 +257,17 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       replace_preservica_tif(co)
       co.save!
     end
+  end
 
-    # create child records for any new items in preservica
-    create_child_records
+  def sync_from_preservica_update_all_ptiffs
+    save! # save last update time
+    reload # reload to get the upserted children
+    child_objects.each do |child|
+      path = Pathname.new(child.access_master_path)
+      file_size = File.exist?(path) ? File.size(path) : 0
+      GeneratePtiffJob.set(queue: :large_ptiff).perform_later(child, current_batch_process) if file_size > FIVE_HUNDRED_MB
+      GeneratePtiffJob.perform_later(child, current_batch_process) if file_size <= FIVE_HUNDRED_MB
+    end
   end
 
   def found_in_preservica(local_preservica_content_object_uri, preservica_children_hash)
