@@ -73,7 +73,7 @@ RSpec.describe SaveOriginalToS3Job, type: :job do
         .with("Not copying image. Child object #{child_object_without_width.oid} does not have a valid width or height.")
     end
     it 'has correct priority' do
-      expect(save_to_s3_job.default_priority).to eq(100)
+      expect(save_to_s3_job.default_priority).to eq(-125)
     end
     it 'can save a file to S3' do
       parent_object_private.visibility = 'Public'
