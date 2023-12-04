@@ -5,7 +5,6 @@ class Api::PermissionRequestsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    # byebug
     request = params
     begin
       parent_object = ParentObject.find(request['oid'].to_i)
