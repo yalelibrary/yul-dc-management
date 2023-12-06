@@ -526,7 +526,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/MethodLength
   # ERROR HANDLING FOR PRESERVICA SYNC
   def validate_preservica_sync(parent_object, row)
-    byebug
     if parent_object.redirect_to.present?
       batch_processing_event("Parent OID: #{row['oid']} is a redirected parent object", 'Skipped Import')
       false
