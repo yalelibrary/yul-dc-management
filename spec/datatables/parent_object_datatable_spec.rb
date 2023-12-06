@@ -21,6 +21,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
                            extent_of_full_text: 'None',
                            project_identifier: '67',
                            digital_object_source: "Preservica",
+                           preservica_representation_type: "Access",
                            preservica_uri: "/preservica_uri")
     output = ParentObjectDatatable.new(datatable_sample_params(columns), view_context: parent_object_datatable_view_mock, current_ability: Ability.new(user)).data
 
