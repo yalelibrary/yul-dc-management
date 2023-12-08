@@ -60,6 +60,12 @@ METADATA_FIELDS = {
       'description_tesim'
     ]
   },
+  provenanceUncontrolled: {
+    label: 'Provenance',
+    solr_fields: [
+      'provenanceUncontrolled_tesi'
+    ]
+  },
   digitization_note: {
     label: 'Digitization Note',
     solr_fields: [
