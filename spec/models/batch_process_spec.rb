@@ -601,7 +601,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.file = csv_upload
           batch_process.save
           expect(ParentObject.count).to eq(0)
-          events = IngestEvent.all.select { |event| event.status == 'Permission Denied' }
+          events = IngestEvent.all.select { |event| event.reason == 'Skipping row [2] because mk2525 does not have permission to create or update parent: 2005512' }
           expect(events.count).to eq(1)
         end
 
