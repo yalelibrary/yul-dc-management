@@ -19,7 +19,7 @@ class Api::PermissionRequestsController < ApplicationController
     if current_requests_count >= permission_set.max_queue_length
       render json: { "title": "Too many pending requests" }, status: 403
     else
-      new_request = OpenWithPermission::PermissionRequest.new(permission_set: permission_set, permission_request_user: pr_user, parent_object: parent_object, user_note: request['note'])
+      new_request = OpenWithPermission::PermissionRequest.new(permission_set: permission_set, permission_request_user: pr_user, parent_object: parent_object, user_note: request['user_note'])
       new_request.save!
       render json: { "title": "New request created" }, status: 201
     end
