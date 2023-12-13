@@ -245,9 +245,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
       it "can create a Solr document for a record, including visibility" do
         solr_document = parent_object_with_public_visibility.reload.to_solr
-        expect(parent_object_with_public_visibility.admin_set.label).to eq "MyString"
-        expect(solr_document[:repository_ssim]).to eq "MyString"
-        expect(solr_document[:repository_ssi]).to eq "MyString"
+        expect(parent_object_with_public_visibility.admin_set.label).to eq "Beinecke Library"
+        expect(solr_document[:repository_ssim]).to eq "Beinecke Library"
+        expect(solr_document[:repository_ssi]).to eq "Beinecke Library"
         expect(solr_document[:archivalSort_ssi]).to include "00002.00000"
         expect(solr_document[:ancestorTitles_tesim]).to include "Oversize",
                                                                 "Savage & Ottinger",
@@ -292,8 +292,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
       it "can generate ancestor titles" do
         solr_document = parent_object_with_public_visibility.reload.to_solr
-        expect(solr_document[:ancestorTitles_tesim]).to eq ["MyString"]
-        expect(solr_document[:ancestor_titles_hierarchy_ssim]).to eq ["MyString"]
+        expect(solr_document[:ancestorTitles_tesim]).to eq ["Beinecke Library"]
+        expect(solr_document[:ancestor_titles_hierarchy_ssim]).to eq ["Beinecke Library"]
       end
     end
 
