@@ -530,7 +530,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def sierra_cloud_url
-    raise StandardError, "Bib id required to build Sierra url" unless bib.present?
+    raise StandardError, "Bib id required to build Sierra url" if bib.blank?
     identifier_block = if barcode.present?
                          "/barcode/#{barcode}?bib=#{bib}"
                        elsif item.present?

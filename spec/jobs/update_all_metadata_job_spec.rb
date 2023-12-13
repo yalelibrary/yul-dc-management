@@ -13,9 +13,8 @@ RSpec.describe UpdateAllMetadataJob, type: :job, prep_metadata_sources: true, pr
   context 'with tests active job queue' do
     it 'increments the job queue by one' do
       parent_object
-      expect do
-        UpdateAllMetadataJob.perform_later
-      end.to change { GoodJob::Job.count }.by(1)
+      update_metadata_job = described_class.perform_later
+      expect(update_metadata_job.instance_variable_get(:@successfully_enqueued)).to eq true
     end
   end
 

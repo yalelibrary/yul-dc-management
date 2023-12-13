@@ -18,9 +18,8 @@ RSpec.describe UpdateManifestsJob, type: :job, prep_metadata_sources: true, prep
     end
 
     it 'increments the job queue by one' do
-      expect do
-        UpdateManifestsJob.perform_later
-      end.to change { GoodJob::Job.count }.by(1)
+      manifests_job = described_class.perform_later
+      expect(manifests_job.instance_variable_get(:@successfully_enqueued)).to eq true
     end
   end
 

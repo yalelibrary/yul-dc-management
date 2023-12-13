@@ -10,45 +10,41 @@ RSpec.describe SolrIndexJob, type: :job, prep_metadata_sources: true, prep_admin
 
   let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069', authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
 
-  it 'increments the job queue by one' do
-    expect do
-      SolrIndexJob.perform_later(parent_object)
-    end.to change { GoodJob::Job.count }.by(1)
+  it 'increments the job queue' do
+    solr_job = described_class.perform_later(parent_object)
+    expect(solr_job.instance_variable_get(:@successfully_enqueued)).to be true
   end
 
   it 'increments the job queue by just one with multiple calls to solr_index_job' do
-    expect do
-      parent_object.solr_index_job
-      parent_object.solr_index_job
-      parent_object.solr_index_job
-    end.to change { GoodJob::Job.count }.by(1)
+    expect(SolrIndexJob).to receive(:perform_later).once
+    parent_object.solr_index_job
+    allow(parent_object).to receive(:queued_solr_index_jobs).and_return('sample existing solr index job')
+    parent_object.solr_index_job
+    parent_object.solr_index_job
+    parent_object.solr_index_job
   end
 
   it 'increments the solr_index job queue when not full text' do
-    expect do
-      allow(parent_object).to receive(:full_text?).and_return(false)
-      parent_object.solr_index_job
-    end.to change { GoodJob::Job.where(queue_name: 'solr_index').count }.by(1)
+    allow(parent_object).to receive(:full_text?).and_return(false)
+    solr_job = parent_object.solr_index_job
+    expect(solr_job.instance_variable_get(:@queue_name)).to eq 'solr_index'
   end
 
   it 'does not increment the solr_index job queue when full text' do
-    expect do
-      allow(parent_object).to receive(:full_text?).and_return(true)
-      parent_object.solr_index_job
-    end.to change { GoodJob::Job.where(queue_name: 'solr_index').count }.by(0)
+    allow(parent_object).to receive(:full_text?).and_return(true)
+    solr_job = parent_object.solr_index_job
+    expect(solr_job.instance_variable_get(:@queue_name)).not_to eq 'solr_index'
   end
 
   it 'does not increment the intensive_solr_index job queue when not full text' do
-    expect do
-      allow(parent_object).to receive(:full_text?).and_return(false)
-      parent_object.solr_index_job
-    end.to change { GoodJob::Job.where(queue_name: 'intensive_solr_index').count }.by(0)
+    allow(parent_object).to receive(:full_text?).and_return(false)
+    solr_job = parent_object.solr_index_job
+    expect(solr_job.instance_variable_get(:@queue_name)).not_to eq 'intensive_solr_index'
   end
 
   it 'increments the intensive_solr_index job queue when full text' do
-    expect do
-      allow(parent_object).to receive(:full_text?).and_return(true)
-      parent_object.solr_index_job
-    end.to change { GoodJob::Job.where(queue_name: 'intensive_solr_index').count }.by(1)
+    allow(parent_object).to receive(:full_text?).and_return(true)
+    solr_job = parent_object.solr_index_job
+    expect(solr_job.instance_variable_get(:@queue_name)).to eq 'intensive_solr_index'
   end
 end

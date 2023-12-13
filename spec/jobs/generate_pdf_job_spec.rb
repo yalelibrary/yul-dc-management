@@ -35,7 +35,7 @@ RSpec.describe GeneratePdfJob, type: :job, prep_metadata_sources: true, prep_adm
   describe 'generate pdf job' do
     it 'throws exception with no authoritative_json' do
       expect do
-        generate_pdf_job.perform(parent_object, batch_process)
+        generate_pdf_job.perform(parent_object)
       end.to raise_error("No authoritative_json to create PDF for #{parent_object.oid}")
     end
     it 'throws exception with shell failure' do
@@ -49,7 +49,7 @@ RSpec.describe GeneratePdfJob, type: :job, prep_metadata_sources: true, prep_adm
       expect(status).to receive(:success?).and_return(false)
       expect(Open3).to receive(:capture3).and_return(["stdout output", "stderr output", status])
       expect do
-        generate_pdf_job.perform(parent_object, batch_process)
+        generate_pdf_job.perform(parent_object)
       end.to raise_error("PDF Java app returned non zero response code for #{parent_object.oid}: stderr output stdout output")
     end
     it "has correct priority" do
@@ -57,7 +57,7 @@ RSpec.describe GeneratePdfJob, type: :job, prep_metadata_sources: true, prep_adm
     end
     it "can generate a PDF file" do
       allow(S3Service).to receive(:remote_metadata).and_return(parent_object_with_authoritative_json)
-      generate_pdf_job.perform(parent_object_with_authoritative_json, batch_process)
+      generate_pdf_job.perform(parent_object_with_authoritative_json)
     end
 
     context "when pdf metadata is present with matching checksum" do

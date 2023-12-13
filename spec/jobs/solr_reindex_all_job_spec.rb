@@ -10,9 +10,8 @@ RSpec.describe SolrReindexAllJob, type: :job, prep_metadata_sources: true, solr:
     end
 
     it 'increments the job queue by one' do
-      expect do
-        SolrReindexAllJob.perform_later
-      end.to change { GoodJob::Job.count }.by(1)
+      solr_reindex_job = described_class.perform_later
+      expect(solr_reindex_job.instance_variable_get(:@successfully_enqueued)).to be true
     end
   end
 

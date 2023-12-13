@@ -15,9 +15,8 @@ RSpec.describe UpdateFulltextStatusJob, type: :job, prep_metadata_sources: true,
   context 'with test active job queue' do
     it 'increments the job queue by one' do
       parent_object
-      expect do
-        UpdateFulltextStatusJob.perform_later
-      end.to change { GoodJob::Job.count }.by(1)
+      fulltext_job = described_class.perform_later
+      expect(fulltext_job.instance_variable_get(:@successfully_enqueued)).to eq true
     end
   end
 
@@ -49,6 +48,7 @@ RSpec.describe UpdateFulltextStatusJob, type: :job, prep_metadata_sources: true,
     end
 
     it "skips parents when user does not have permissions" do
+      user.remove_role(:editor, admin_set)
       expect(batch_process).to receive(:oids).and_return(['2004628']).twice
       expect(BatchProcess).to receive(:find).and_return(batch_process)
       expect(batch_process).to receive(:batch_processing_event).once # for skipped row

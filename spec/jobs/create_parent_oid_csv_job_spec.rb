@@ -14,9 +14,6 @@ RSpec.describe CreateParentOidCsvJob, type: :job do
   it 'increments the job queue by one' do
     csv_job = described_class.perform_later(batch_process)
     expect(csv_job.instance_variable_get(:@successfully_enqueued)).to eq true
-    # expect do
-    #   described_class.perform_later(batch_process)
-    # end.to change { GoodJob::Job.count }.by(1)
   end
 
   it "has correct priority" do

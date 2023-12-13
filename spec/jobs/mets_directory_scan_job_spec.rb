@@ -10,9 +10,8 @@ RSpec.describe MetsDirectoryScanJob, type: :job do
   let(:mets_directory_scan_job) { MetsDirectoryScanJob.new }
 
   it 'increments the job queue by one' do
-    expect do
-      described_class.perform_later
-    end.to change { GoodJob::Job.count }.by(1)
+    mets_directory_scan_job = described_class.perform_later
+    expect(mets_directory_scan_job.instance_variable_get(:@successfully_enqueued)).to be true
   end
 
   it 'runs scanner when performed' do

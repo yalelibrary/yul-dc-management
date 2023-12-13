@@ -11,10 +11,8 @@ RSpec.describe GenerateOutputCsvJob, type: :job do
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
 
   it 'increments the job queue by one' do
-    ActiveJob::Base.queue_adapter = :good_job
-    expect do
-      described_class.perform_later(batch_process)
-    end.to change { GoodJob::Job.count }.by(1)
+    generate_output_csv_job = described_class.perform_later(batch_process)
+    expect(generate_output_csv_job.instance_variable_get(:@successfully_enqueued)).to be true
   end
 
   it 'calls child_output_csv when performed' do

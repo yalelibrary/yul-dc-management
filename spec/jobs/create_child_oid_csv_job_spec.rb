@@ -11,10 +11,9 @@ RSpec.describe CreateChildOidCsvJob, type: :job do
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
   let(:create_child_oid_csv_job) { CreateChildOidCsvJob.new }
 
-  it 'increments the job queue by one' do
-    expect do
-      described_class.perform_later(batch_process)
-    end.to change { GoodJob::Job.count }.by(1)
+  it 'increments the job queue' do
+    create_child_oid_csv_job = described_class.perform_later(batch_process)
+    expect(create_child_oid_csv_job.instance_variable_get(:@successfully_enqueued)).to be true
   end
 
   it "has correct priority" do

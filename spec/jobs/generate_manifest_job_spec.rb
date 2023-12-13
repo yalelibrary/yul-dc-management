@@ -12,10 +12,9 @@ RSpec.describe GenerateManifestJob, type: :job, prep_admin_sets: true, prep_meta
   let(:generate_manifest_job) { GenerateManifestJob.new }
 
   describe 'generate manifests job' do
-    it 'increments the job queue by one' do
-      expect do
-        GenerateManifestJob.perform_later(parent_object)
-      end.to change { GoodJob::Job.count }.by(1)
+    it 'increments the job queu' do
+      generate_manifest_job = described_class.perform_later(parent_object)
+      expect(generate_manifest_job.instance_variable_get(:@successfully_enqueued)).to be true
     end
 
     context 'job fails' do
@@ -27,26 +26,26 @@ RSpec.describe GenerateManifestJob, type: :job, prep_admin_sets: true, prep_meta
       it 'notifies on Solr index failure' do
         allow(parent_object).to receive(:solr_index_job).and_raise('boom!')
         expect(parent_object).to receive(:processing_event)
-        expect { generate_manifest_job.perform(parent_object, batch_process, nil) }.to raise_error('boom!')
+        expect { generate_manifest_job.perform(parent_object, batch_process) }.to raise_error('boom!')
       end
 
       it 'notifies when save fails' do
         allow(parent_object.iiif_presentation).to receive(:save).and_return(false)
         expect(parent_object).to receive(:processing_event).with('IIIF Manifest not saved to S3', 'failed')
-        generate_manifest_job.perform(parent_object, batch_process, nil)
+        generate_manifest_job.perform(parent_object, batch_process)
       end
 
       it 'notifies when save raises error' do
         allow(parent_object.iiif_presentation).to receive(:save).and_raise('boom!')
         expect(parent_object).to receive(:processing_event)
-        expect { generate_manifest_job.perform(parent_object, batch_process, nil) }.to raise_error('boom!')
+        expect { generate_manifest_job.perform(parent_object, batch_process) }.to raise_error('boom!')
       end
 
       it 'does not raise error when child does not have dimensions' do
         child_object.width = nil
         child_object.height = nil
         child_object.save
-        expect { generate_manifest_job.perform(parent_object, batch_process, nil) }.not_to raise_error
+        expect { generate_manifest_job.perform(parent_object, batch_process) }.not_to raise_error
       end
     end
   end

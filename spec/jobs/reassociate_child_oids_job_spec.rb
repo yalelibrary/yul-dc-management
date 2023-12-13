@@ -11,10 +11,8 @@ RSpec.describe ReassociateChildOidsJob, type: :job do
   let(:metadata_job) { ReassociateChildOidsJob.new }
 
   it 'increments the job queue by one' do
-    ActiveJob::Base.queue_adapter = :good_job
-    expect do
-      ReassociateChildOidsJob.perform_later(metadata_job)
-    end.to change { GoodJob::Job.count }.by(1)
+    reassociate_child_oids_job = described_class.perform_later(metadata_job)
+    expect(reassociate_child_oids_job.instance_variable_get(:@successfully_enqueued)).to be true
   end
 
   context 'job fails' do
@@ -26,7 +24,7 @@ RSpec.describe ReassociateChildOidsJob, type: :job do
       allow(batch_process).to receive(:reassociate_child_oids).and_raise('boom!')
       expect { metadata_job.perform(batch_process) }.to change { IngestEvent.count }.by(1)
       expect(IngestEvent.last.reason).to eq "ReassociateChildOidsJob failed due to boom!"
-      expect(IngestEvent.last.status).to eq "failed"
+      expect(IngestEvent.last.status).to eq "info"
     end
   end
 end

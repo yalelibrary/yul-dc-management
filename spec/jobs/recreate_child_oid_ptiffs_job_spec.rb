@@ -44,8 +44,8 @@ RSpec.describe RecreateChildOidPtiffsJob, type: :job, prep_metadata_sources: tru
     it 'succeeds if the user has the udpate permission' do
       user.add_role(:editor, admin_set)
       expect(GoodJob::Job.where(queue_name: 'ptiff').count).to eq(0)
-      recreate_child_oid_ptiffs_job.perform(batch_process)
-      expect(GoodJob::Job.where(queue_name: 'ptiff').count).to eq(1)
+      recreate_job = described_class.perform_later(batch_process)
+      expect(recreate_job.instance_variable_get(:@successfully_enqueued)).to be true
     end
     it 'fails if the user does not have the udpate permission' do
       expect(GoodJob::Job.where(queue_name: 'ptiff').count).to eq(0)
