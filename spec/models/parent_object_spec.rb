@@ -241,7 +241,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       allow_any_instance_of(ParentObject).to receive(:solr_index).and_return("responseHeader" => { "status" => 404, "QTime" => 106 })
       batch_connection = batch_process.batch_connections.build(connectable: po_actual)
       gn = GenerateManifestJob.new
-      gn.perform(po_actual, batch_process, batch_connection)
+      gn.perform(po_actual, batch_process)
       statuses = IngestEvent.where(batch_connection: po_actual.batch_connections.first).map(&:status)
       expect(statuses).not_to include "solr-indexed"
     end

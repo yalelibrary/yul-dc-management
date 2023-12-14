@@ -71,7 +71,7 @@ module Statable
     @current_batch_connection ||= current_batch_process&.batch_connections&.find_or_create_by!(connectable: self)
   end
 
-  def processing_event(message, _status)
+  def processing_event(message, status = nil)
     status = 'info' if status.nil?
     return "no batch connection" unless current_batch_connection
     IngestEvent.create!(
