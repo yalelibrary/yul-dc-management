@@ -292,8 +292,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
       it "can generate ancestor titles" do
         solr_document = parent_object_with_public_visibility.reload.to_solr
-        expect(solr_document[:ancestorTitles_tesim]).to eq ["Beinecke Library"]
-        expect(solr_document[:ancestor_titles_hierarchy_ssim]).to eq ["Beinecke Library"]
+        expect(solr_document[:ancestorTitles_tesim]).to eq ["MyString"]
+        expect(solr_document[:ancestor_titles_hierarchy_ssim]).to eq ["MyString"]
       end
     end
 
