@@ -8,15 +8,18 @@ module Delayable
   end
 
   def setup_metadata_jobs
-    GoodJob::Job.where("job_class LIKE ? AND (job_class LIKE ? or job_class LIKE ?)", "%SetupMetadataJob%", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
+    GoodJob::Job.where("job_class LIKE ? AND (serialized_params->'arguments'->0->>'_aj_globalid' LIKE ? or serialized_params->'arguments'->0->>'_aj_globalid' LIKE ?)", "%SetupMetadataJob%",
+"%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
   end
 
   def solr_index_jobs
-    GoodJob::Job.where("job_class LIKE ? AND (job_class LIKE ? or job_class LIKE ?)", "%SolrIndexJob%", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
+    GoodJob::Job.where("job_class LIKE ? AND (serialized_params->'arguments'->0->>'_aj_globalid' LIKE ? or serialized_params->'arguments'->0->>'_aj_globalid' LIKE ?)", "%SolrIndexJob%",
+"%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
   end
 
   def queued_solr_index_jobs
-    GoodJob::Job.where("finished_at IS NULL AND job_class LIKE ? AND (job_class LIKE ? or job_class LIKE ?)", "%SolrIndexJob%", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
+    GoodJob::Job.where("finished_at IS NULL AND job_class LIKE ? AND (serialized_params->'arguments'->0->>'_aj_globalid' LIKE ? or serialized_params->'arguments'->0->>'_aj_globalid' LIKE ?)",
+"%SolrIndexJob%", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
   end
 
   def solr_reindex_jobs

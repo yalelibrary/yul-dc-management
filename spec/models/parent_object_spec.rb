@@ -239,7 +239,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       # TODO: Why not factorybot?
       po_actual = ParentObject.create(oid: 2_034_600, admin_set: FactoryBot.create(:admin_set))
       allow_any_instance_of(ParentObject).to receive(:solr_index).and_return("responseHeader" => { "status" => 404, "QTime" => 106 })
-      batch_connection = batch_process.batch_connections.build(connectable: po_actual)
       gn = GenerateManifestJob.new
       gn.perform(po_actual, batch_process)
       statuses = IngestEvent.where(batch_connection: po_actual.batch_connections.first).map(&:status)
