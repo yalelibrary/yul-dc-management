@@ -2,7 +2,7 @@
 
 class Api::PermissionSetsController < ApplicationController
   skip_before_action :authenticate_user!
-  
+
   # rubocop:disable Metrics/PerceivedComplexity
   def terms_api
     # check for valid parent object

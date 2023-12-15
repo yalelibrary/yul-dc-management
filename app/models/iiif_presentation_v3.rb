@@ -158,6 +158,7 @@ class IiifPresentationV3
     value
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def metadata
     values = []
     METADATA_FIELDS.each do |field, hash|
@@ -177,6 +178,7 @@ class IiifPresentationV3
     end
     values
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def metadata_url(url, hash)
     return unless url
@@ -422,12 +424,12 @@ class IiifPresentationV3
 
   private
 
-    def skip_field(field)
-      field == :repository && @parent_object.authoritative_metadata_source&.metadata_cloud_name == 'aspace'
-    end
+  def skip_field(field)
+    field == :repository && @parent_object.authoritative_metadata_source&.metadata_cloud_name == 'aspace'
+  end
 
-    def skip_extent(field)
-      field == :extent_of_digitization && (@parent_object.extent_of_digitization == '' || @parent_object.extent_of_digitization == 'Unspecified')
-    end
+  def skip_extent(field)
+    field == :extent_of_digitization && (@parent_object.extent_of_digitization == '' || @parent_object.extent_of_digitization == 'Unspecified')
+  end
 end
 # rubocop:enable Metrics/ClassLength
