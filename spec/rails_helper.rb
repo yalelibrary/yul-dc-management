@@ -60,12 +60,12 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:each) do
-    DatabaseCleaner.start
+  config.before(:each) do |example|
+    DatabaseCleaner.start unless example.metadata[:skip_db_cleaner]
   end
 
-  config.append_after(:each) do
-    DatabaseCleaner.clean
+  config.append_after(:each) do |example|
+    DatabaseCleaner.clean unless example.metadata[:skip_db_cleaner]
   end
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
