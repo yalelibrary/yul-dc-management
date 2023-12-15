@@ -60,6 +60,12 @@ METADATA_FIELDS = {
       'description_tesim'
     ]
   },
+  provenanceUncontrolled: {
+    label: 'Provenance',
+    solr_fields: [
+      'provenanceUncontrolled_tesi'
+    ]
+  },
   digitization_note: {
     label: 'Digitization Note',
     solr_fields: [
@@ -174,7 +180,7 @@ METADATA_FIELDS = {
     ],
     digital_only: true
   },
-  extent_of_digitization: {
+  extent_of_digitization_text: {
     label: 'Extent of Digitization',
     solr_fields: [
       'extentOfDigitization_ssim'

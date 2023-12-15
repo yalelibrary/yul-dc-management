@@ -27,7 +27,7 @@ module CsvExportable
           csv << [po.oid, po.admin_set.key, po.source_name,
                   po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
                   po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
-                  po.last_ladybird_update, po.last_voyager_update,
+                  po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
                   po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
                   po.digitization_note, po.digitization_funding_source, po.project_identifier, extent_of_full_text(po)]
         else

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Api::PermissionSetsController < ApplicationController
+  skip_before_action :authenticate_user!
+  
   # rubocop:disable Metrics/PerceivedComplexity
   def terms_api
     # check for valid parent object
@@ -45,6 +47,7 @@ class Api::PermissionSetsController < ApplicationController
   end
 
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def retrieve_permissions_data
     # check for valid user
     begin
@@ -67,10 +70,13 @@ class Api::PermissionSetsController < ApplicationController
         "permission_set_terms": OpenWithPermission::PermissionSetTerm.find_by!(permission_set: permission.permission_set).id,
         "request_status": permission.request_status,
         "request_date": permission.created_at,
-        "access_until": permission.access_until }
+        "access_until": permission.access_until,
+        "user_note": permission.user_note,
+        "user_full_name": request_user.name }
     end
 
     render(json: { "timestamp": timestamp, "user": { "sub": request_user.sub }, "permission_set_terms_agreed": terms_agreed, "permissions": set.reverse })
   end
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 end

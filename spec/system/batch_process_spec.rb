@@ -66,7 +66,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     it "errors batch if CSV does not contain any row data" do
       page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/no_data.csv")
       click_button("Submit")
-      click_link(BatchProcess.last.id.to_s)
+      click_link(BatchProcess.last.id.to_s, match: :first)
       expect(page).to have_content("Process failed. The CSV does not contain any data.")
     end
 
@@ -107,7 +107,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Reassociate Child Oids")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        click_link(BatchProcess.last.id.to_s)
+        click_link(BatchProcess.last.id.to_s, match: :first)
         expect(page).to have_link("2002826")
         click_link("2002826")
         expect(page).to have_link("1021925")
@@ -121,7 +121,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Reassociate Child Oids")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        click_link(BatchProcess.last.id.to_s)
+        click_link(BatchProcess.last.id.to_s, match: :first)
         expect(page).to have_content("Batch Messages")
         expect(page).to have_content("Skipped Row").twice
       end
@@ -132,7 +132,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
         within("td:first-child") do
-          click_link(BatchProcess.last.id.to_s)
+          click_link(BatchProcess.last.id.to_s, match: :first)
         end
         expect(page).to have_content("Batch Messages")
         expect(page).to have_content("Skipped Row").once
@@ -332,7 +332,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Recreate Child Oid Ptiffs")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        click_link(BatchProcess.last.id.to_s)
+        click_link(BatchProcess.last.id.to_s, match: :first)
         expect(page).to have_link("2002826")
         click_link("2002826")
         expect(page).to have_link("1011398")
@@ -344,7 +344,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Recreate Child Oid Ptiffs")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        click_link(BatchProcess.last.id.to_s)
+        click_link(BatchProcess.last.id.to_s, match: :first)
         expect(page).to have_content("Batch Messages")
         expect(page).to have_content("Skipped Row")
       end

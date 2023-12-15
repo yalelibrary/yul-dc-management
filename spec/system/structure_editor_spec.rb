@@ -104,6 +104,7 @@ RSpec.describe "Structure Editor", type: :system, prep_metadata_sources: true, p
     it 'can submit structure back to management' do
       click_on 'Range +'
       click_on 'Submit'
+      expect(page).to have_content('Manifest Saved')
       visit '/parent_objects/16172421/manifest.json'
       expect(page).to have_content('New Range')
     end

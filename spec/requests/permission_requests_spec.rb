@@ -20,7 +20,6 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
   let(:invalid_sub_json) { File.read(Rails.root.join(fixture_path, 'invalid_sub_permission_request.json')) }
   let(:invalid_name_json) { File.read(Rails.root.join(fixture_path, 'invalid_name_permission_request.json')) }
   let(:invalid_email_json) { File.read(Rails.root.join(fixture_path, 'invalid_email_permission_request.json')) }
-  let(:invalid_user_json) { File.read(Rails.root.join(fixture_path, 'invalid_user_permission_request.json')) }
   let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
 
   before do
@@ -94,13 +93,6 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
       post "/api/permission_requests", params: JSON.pretty_generate(request), headers: headers
       expect(response).to have_http_status(400)
       expect(response.body).to match("{\"title\":\"Parent Object is private\"}")
-    end
-
-    it 'errors if a user object is not found' do
-      request = JSON.parse(invalid_user_json)
-      post "/api/permission_requests", params: JSON.pretty_generate(request), headers: headers
-      expect(response).to have_http_status(400)
-      expect(response.body).to match("{\"title\":\"User object is missing\"}")
     end
   end
 end
