@@ -75,13 +75,16 @@ class ParentObjectsController < ApplicationController
       authorize!(:owp_access, permission_set) if permission_set.present? &&  permission_set != permission_set_param
 
       authorize!(:owp_access, permission_set_param) if permission_set_param.present?
-
-      invalidate_admin_set_edit unless valid_permission_admin_set_edit?
+      
+      invalidate_permission_admin_set_edit unless valid_permission_admin_set_edit?
+      invalidate_presence_admin_set_edit unless valid_presence_admin_set_edit?
+      invalidate_metadata_source_edit unless valid_metadata_source_edit?
       invalidate_redirect_to_edit unless valid_redirect_to_edit?
 
-      updated = (valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_metadata_source_edit?) || valid_redirect_to_edit? ? @parent_object.update!(parent_object_params) : false
+      updated = valid_to_edit? ? @parent_object.update!(parent_object_params) : false
 
       if updated
+        byebug
         @parent_object.minify if valid_redirect_to_edit?
         @parent_object.save!
         queue_parent_metadata_update
@@ -266,12 +269,20 @@ class ParentObjectsController < ApplicationController
 
   # rubocop:disable Layout/LineLength
   def valid_redirect_to_edit?
-    !parent_object_params[:redirect_to] || parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//) if parent_object_params[:redirect_to].present?
+    !parent_object_params[:redirect_to] || parent_object_params[:redirect_to]&.match?(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//) if !parent_object_params[:redirect_to].nil?
   end
   # rubocop:enable Layout/LineLength
 
   def invalidate_redirect_to_edit
     @parent_object.errors.add :redirect_to, :invalid, message: "must be in format https://collections.library.yale.edu/catalog/1234567"
+  end
+
+  def valid_to_edit?
+    if !parent_object_params[:redirect_to].nil?
+      valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_metadata_source_edit? && valid_redirect_to_edit?
+    else
+      valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_metadata_source_edit?
+    end
   end
 
   # Only allow a list of trusted parameters through.
