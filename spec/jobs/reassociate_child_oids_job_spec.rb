@@ -24,7 +24,7 @@ RSpec.describe ReassociateChildOidsJob, type: :job do
       allow(batch_process).to receive(:reassociate_child_oids).and_raise('boom!')
       expect { metadata_job.perform(batch_process) }.to change { IngestEvent.count }.by(1)
       expect(IngestEvent.last.reason).to eq "ReassociateChildOidsJob failed due to boom!"
-      expect(IngestEvent.last.status).to eq "info"
+      expect(IngestEvent.last.status).to eq "failed"
     end
   end
 end
