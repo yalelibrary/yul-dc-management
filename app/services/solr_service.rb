@@ -21,6 +21,8 @@ class SolrService
   # ==== Returns
   #
   # Array:: Collection of IDs that exist in Solr but not in the database
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def self.solr_index_orphans(opts = {})
     batch_size = opts[:batch_size] || 500
 
@@ -35,6 +37,8 @@ class SolrService
 
     solr_ids - ParentObject.pluck(:oid)
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # Heavily influenced by https://github.com/sunspot/sunspot
   # Find IDs of records of this class that are indexed in Solr but do not

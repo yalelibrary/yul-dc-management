@@ -28,32 +28,34 @@ class RolesController < ApplicationController
 
   private
 
-    def verify_user
-      authorize!(current_ability, :manage, @item) unless current_user.has_role?(:sysadmin) || current_user.has_role?(:administrator, @item)
-    end
+  def verify_user
+    authorize!(current_ability, :manage, @item) unless current_user.has_role?(:sysadmin) || current_user.has_role?(:administrator, @item)
+  end
 
-    def set_user
-      @user = User.find_by(uid: params[:uid])
-      return true if @user
+  def set_user
+    @user = User.find_by(uid: params[:uid])
+    return true if @user
 
-      redirect_back(fallback_location: root_path, flash: { alert: "User: #{params[:uid]} not found" })
-      false
-    end
+    redirect_back(fallback_location: root_path, flash: { alert: "User: #{params[:uid]} not found" })
+    false
+  end
 
-    def set_role
-      @role = params[:role]
-    end
+  def set_role
+    @role = params[:role]
+  end
 
-    def set_item
-      if params[:item_class] == "PermissionSet" && params[:item_id]
-        params[:item_class] = "OpenWithPermission::PermissionSet"
-        @item = params[:item_class]&.constantize&.find(params[:item_id])
-      elsif params[:item_id]
-        @item = params[:item_class]&.constantize&.find(params[:item_id])
-      end
+  # rubocop:disable Metrics/PerceivedComplexity
+  def set_item
+    if params[:item_class] == "PermissionSet" && params[:item_id]
+      params[:item_class] = "OpenWithPermission::PermissionSet"
+      @item = params[:item_class]&.constantize&.find(params[:item_id])
+    elsif params[:item_id]
+      @item = params[:item_class]&.constantize&.find(params[:item_id])
     end
+  end
+  # rubocop:enable Metrics/PerceivedComplexity
 
-    def show_notice(user, role)
-      user.deactivated ? "User: #{user.uid} added as #{role}, but is deactivated" : "User: #{user.uid} added as #{role}"
-    end
+  def show_notice(user, role)
+    user.deactivated ? "User: #{user.uid} added as #{role}, but is deactivated" : "User: #{user.uid} added as #{role}"
+  end
 end

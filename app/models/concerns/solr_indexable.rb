@@ -8,6 +8,7 @@ module SolrIndexable
     end
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def solr_index
     begin
@@ -22,7 +23,7 @@ module SolrIndexable
         solr.add([indexable])
         solr.add(child_solr_documents) unless child_solr_documents.nil?
         result = solr.commit
-        if (result&.[]("responseHeader")&.[]("status"))&.zero?
+        if result&.[]("responseHeader")&.[]("status")&.zero?
           processing_event("Solr index updated", "solr-indexed")
         else
           processing_event("Solr index after manifest generation failed", "failed")
@@ -39,6 +40,7 @@ module SolrIndexable
     end
     result
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
 
   def solr_delete
@@ -49,7 +51,7 @@ module SolrIndexable
   end
 
   def solr_index_job
-    current_batch_connection&.save
+    current_batch_connection&.save!
     return unless queued_solr_index_jobs.empty?
     if full_text?
       SolrIndexJob.set(queue: :intensive_solr_index).perform_later(self, current_batch_process, current_batch_connection)
@@ -88,6 +90,7 @@ module SolrIndexable
     end
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def to_solr(json_to_index = nil)
     if redirect_to.present?
@@ -220,6 +223,7 @@ module SolrIndexable
       }.delete_if { |_k, v| v.blank? } # Delete nil, [], and empty string values
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
 
   def to_solr_full_text(json_to_index = nil)
@@ -253,6 +257,7 @@ module SolrIndexable
     }
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def expand_date_structured(date_structured)
     return nil unless date_structured&.is_a?(Array)
     date_structured.each_with_object(SortedSet.new) do |date, set|
@@ -269,6 +274,7 @@ module SolrIndexable
       end
     end.to_a
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def ancestor_structure(ancestor_title)
     # Building the hierarchy structure
@@ -309,6 +315,8 @@ module SolrIndexable
   end
 
   # not ASpace records will use the repository value
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def generate_ancestor_title(ancestor_title)
     ancestor_title = if ancestor_title&.is_a?(Array)
                        ancestor_title.map { |a| a.gsub("&amp;", "&") }
@@ -317,6 +325,8 @@ module SolrIndexable
                      end
     ancestor_title.presence || [self&.admin_set&.label] || nil
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def generate_orbis_id(bib)
     (bib.to_i.positive? && bib.presence) || nil

@@ -24,11 +24,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # SHARED BY ALL BATCH ACTIONS: ------------------------------------------------------------------- #
 
   # LISTS AVAILABLE BATCH ACTIONS
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   def self.batch_actions
     ['create parent objects', 'update parent objects', 'update child objects caption and label', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set', 'export parent metadata', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'update fulltext status', 'resync with preservica']
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 
   # LOGS BATCH PROCESSING MESSAGES AND SETS STATUSES
   def batch_processing_event(message, status = 'info')
@@ -66,10 +66,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       begin
           mets_doc.valid_mets?
       rescue => error
-        return errors.add(:file, error)
+        errors.add(:file, error)
         end
     else
-      return errors.add(:file, 'not a valid file type. Must be a CSV or XML.')
+      errors.add(:file, 'not a valid file type. Must be a CSV or XML.')
     end
   end
 
@@ -279,10 +279,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     admin_set = admin_sets_hash[admin_set_key]
     if admin_set.blank?
       batch_processing_event("Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}", 'Skipped Row')
-      return false
+      false
     elsif !current_ability.can?(:add_member, admin_set)
       batch_processing_event("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{oid}", 'Permission Denied')
-      return false
+      false
     else
       admin_set
     end
@@ -303,6 +303,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def update_fulltext_status(offset = 0, limit = -1)
     job_oids = oids
     job_oids = job_oids.drop(offset) if offset&.positive?
@@ -332,6 +334,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
   def validate_metadata_source(metadata_source, index)
@@ -348,6 +352,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def recreate_child_oid_ptiffs
     parents = Set[]
     self.admin_set = ''
@@ -378,6 +384,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
 
   # SETS COMPLETE STATUS FOR RECREATE JOB
   def are_all_children_complete?(parent_object)
@@ -465,6 +473,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # FETCHES CHILD OBJECTS FROM PRESERVICA
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def sync_from_preservica
     self.admin_set = ''
     sets = admin_set
@@ -511,6 +521,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
 
   # SYNC IMAGES FROM PRESERVICA
   def sync_images_preservica(local_children_hash, preservica_children_hash, parent_object)

@@ -32,7 +32,7 @@ module DcsActivityStreamManagement
       "metadata": authoritative_json
     }
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
   # rubocop:enable Metrics/AbcSize
 
   def mc_activity_stream_check

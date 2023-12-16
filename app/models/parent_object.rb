@@ -20,7 +20,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :permission_requests, class_name: "OpenWithPermission::PermissionRequest"
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   belongs_to :admin_set
-  belongs_to :permission_set, class_name: "OpenWithPermission::PermissionSet", required: false
+  belongs_to :permission_set, class_name: "OpenWithPermission::PermissionSet", optional: true
   has_one :digital_object_json
   attr_accessor :metadata_update
   attr_accessor :current_batch_process
@@ -37,9 +37,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_destroy :mc_activity_stream_delete
   paginates_per 50
   validates :digitization_funding_source, length: { maximum: 255 }
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   validates :redirect_to, format: { with: /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//, message: " in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123", presence: true, if: proc { visibility == "Redirect" } }
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
   validates :preservica_uri, presence: true, format: { with: %r{\A/}, message: " in incorrect format. URI must start with a /" }, if: proc { digital_object_source == "Preservica" }
   validate :validate_visibility
   before_save :check_permission_set
@@ -171,14 +171,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/AbcSize
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   def validate_child_hashes(child_hashes)
     child_hashes.reject do |h|
       co = ChildObject.find_by(parent_object_oid: oid, preservica_content_object_uri: h[:preservica_content_object_uri])
       co.present? && h[:preservica_content_object_uri] == co.preservica_content_object_uri && h[:preservica_generation_uri] == co.preservica_generation_uri && h[:preservica_bitstream_uri] == co.preservica_bitstream_uri
     end
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 
   def cleanup_child_artifacts(invalid_child_hashes)
     invalid_child_hashes.each do |child_hash|
@@ -191,10 +191,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  # rubocop:disable Rails/SkipsModelValidations
   def upsert_child_objects(child_objects_hash)
     raise "One or more of the child objects exists, Unable to create children" if ChildObject.where(oid: child_objects_hash.map { |co| co[:oid] }).exists?
     ChildObject.insert_all(child_objects_hash) unless child_objects_hash.empty?
   end
+  # rubocop:enable Rails/SkipsModelValidations
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
@@ -225,15 +227,17 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     raise e.to_s
   end
 
+  # rubocop:disable Rails/SkipsModelValidations
   def upsert_preservica_ingest_child_objects(preservica_ingest_hash)
     PreservicaIngest.insert_all(preservica_ingest_hash)
   end
+  # rubocop:enable Rails/SkipsModelValidations
 
   def sync_from_preservica(_local_children_hash, preservica_children_hash)
     # iterate through local hashes and remove any children no longer found on preservica
     child_objects.each do |co|
-      co.destroy if co.preservica_content_object_uri.nil?
-      co.destroy unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
+      co.destroy! if co.preservica_content_object_uri.nil?
+      co.destroy! unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
     end
     # iterate through preservica and update when local version found
     sync_from_preservica_update_existing_children(preservica_children_hash)
@@ -637,6 +641,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     extract_links_with_labels("relatedVersionOnline", ils_filters)
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def extract_links_with_labels(field_name, filters = [], json = authoritative_json)
     return nil unless json && json[field_name].present?
     links_and_text = json[field_name]
@@ -657,6 +663,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return nil if links.empty?
     links
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def extract_container_information(json = authoritative_json)
     return nil unless json
@@ -680,6 +688,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     %w[Partial Yes].include? extent_of_full_text
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def update_fulltext
     self.extent_of_full_text = "Yes"
     children_with_ft = false
@@ -700,6 +709,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.extent_of_full_text = "None" unless children_with_ft # if none of children have full_text
     save!
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def should_index?
     return false if redirect_to.blank? && (child_object_count&.zero? || child_objects.empty?)

@@ -24,7 +24,7 @@ class DownloadOriginalController < ApplicationController
 
   private
 
-    def download_original_params
-      params.require(:download_original).permit(:oid)
-    end
+  def download_original_params
+    params.require(:download_original).permit(:oid)
+  end
 end

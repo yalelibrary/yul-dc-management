@@ -37,7 +37,6 @@ end
 RSpec.configure do |config|
   config.include(ActiveJob::TestHelper)
   config.include(MetdataSourcesHelper)
-  config.include(DelayedJobsHelper)
   config.include(AdminSetsHelper)
   config.include(SolrHelper)
   config.include(StubRequestHelper)
@@ -51,7 +50,23 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each) do |example|
+    DatabaseCleaner.start unless example.metadata[:skip_db_cleaner]
+  end
+
+  config.append_after(:each) do |example|
+    DatabaseCleaner.clean unless example.metadata[:skip_db_cleaner]
+  end
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
@@ -77,16 +92,16 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 end
 
-class ActiveJob::QueueAdapters::DelayedJobAdapter
+class ActiveJob::QueueAdapters::GoodJobAdapter
   class EnqueuedJobs
     def clear
-      Delayed::Job.where(failed_at: nil).map(&:destroy)
+      GoodJob::Job.where(failed_at: nil).map(&:destroy)
     end
   end
 
   class PerformedJobs
     def clear
-      Delayed::Job.where.not(failed_at: nil).map(&:destroy)
+      GoodJob::Job.where.not(failed_at: nil).map(&:destroy)
     end
   end
 

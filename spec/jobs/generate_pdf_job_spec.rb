@@ -2,15 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe GeneratePdfJob, type: :job do
-  def queue_adapter_for_test
-    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+RSpec.describe GeneratePdfJob, type: :job, prep_metadata_sources: true, prep_admin_sets: true do
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
-  let(:metadata_source) { FactoryBot.create(:metadata_source) }
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source) }
-  let(:child_object) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }  let(:child_object) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object) }
   let(:generate_pdf_job) { GeneratePdfJob.new }
   let(:parent_object_with_authoritative_json) { FactoryBot.build(:parent_object, oid: '16712419', ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16712419.json")))) }
 

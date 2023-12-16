@@ -2,25 +2,24 @@
 
 require 'rails_helper'
 
-RSpec.describe GenerateManifestJob, type: :job do
-  def queue_adapter_for_test
-    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+RSpec.describe GenerateManifestJob, type: :job, prep_admin_sets: true, prep_metadata_sources: true do
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
 
-  let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
+  let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069', authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
   let(:generate_manifest_job) { GenerateManifestJob.new }
 
   describe 'generate manifests job' do
-    it 'increments the job queue by one' do
-      expect do
-        GenerateManifestJob.perform_later(parent_object)
-      end.to change { Delayed::Job.count }.by(1)
+    it 'increments the job queu' do
+      generate_manifest_job = described_class.perform_later(parent_object)
+      expect(generate_manifest_job.instance_variable_get(:@successfully_enqueued)).to be true
     end
 
     context 'job fails' do
       let(:user) { FactoryBot.create(:user) }
-      let(:metadata_source) { FactoryBot.create(:metadata_source) }
-      let(:parent_object) { FactoryBot.create(:parent_object, authoritative_metadata_source: metadata_source) }
+      let(:parent_object) { FactoryBot.create(:parent_object, authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
       let(:child_object) { FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object) }
       let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
 

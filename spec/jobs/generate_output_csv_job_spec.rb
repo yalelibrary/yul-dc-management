@@ -2,18 +2,17 @@
 require 'rails_helper'
 
 RSpec.describe GenerateOutputCsvJob, type: :job do
-  def queue_adapter_for_test
-    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
 
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
 
   it 'increments the job queue by one' do
-    ActiveJob::Base.queue_adapter = :delayed_job
-    expect do
-      described_class.perform_later(batch_process)
-    end.to change { Delayed::Job.count }.by(1)
+    generate_output_csv_job = described_class.perform_later(batch_process)
+    expect(generate_output_csv_job.instance_variable_get(:@successfully_enqueued)).to be true
   end
 
   it 'calls child_output_csv when performed' do

@@ -5,8 +5,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'activerecord-nulldb-adapter'
-# Reoccurring jobs
-gem 'activejob-scheduler', git: 'https://github.com/yalelibrary/activejob-scheduler', branch: 'main'
 gem 'ajax-datatables-rails'
 gem "aws-sdk-cloudwatch"
 gem 'aws-sdk-s3'
@@ -15,6 +13,7 @@ gem 'bootstrap', '~> 4.5'
 gem 'coderay', '~> 1.1', '>= 1.1.3'
 gem 'devise'
 gem 'github_changelog_generator'
+gem 'good_job', '~> 3.17'
 gem 'honeybadger', '~> 4.0'
 gem 'http', '~> 4.4', '>= 4.4.1'
 gem 'iiif-presentation', '~> 1.0'
@@ -40,12 +39,13 @@ gem 'puma', '~> 5.6'
 # cors support or rack
 gem 'rack-cors'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 7.0.1'
 gem "rails_semantic_logger", ">=4.4.4"
 # Use rsolr to connect to Solr
 gem 'rsolr', '~> 2.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
+gem 'sprockets-rails'
 gem 'string-direction'
 
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -56,9 +56,6 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'webpacker'
 
 gem 'daemons'
-gem 'delayed_job_active_record'
-gem "delayed_job_web"
-gem 'delayed_job_worker_pool'
 
 gem 'jwt'
 
@@ -94,6 +91,7 @@ end
 group :test do
   gem 'capybara', '>= 2.15'
   gem 'coveralls_reborn', require: false
+  gem 'database_cleaner-active_record'
   gem 'ffaker'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.0'

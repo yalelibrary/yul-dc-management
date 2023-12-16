@@ -68,19 +68,19 @@ class ChildObjectsController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_child_object
-      @child_object = ChildObject.find(params[:id]) if params[:id]
-    rescue ActiveRecord::RecordNotFound
-      respond_to do |format|
-        format.html { redirect_to child_objects_url, notice: "Child object, oid: #{params[:id]}, was not found in local database." }
-        format.json { head :no_content }
-      end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_child_object
+    @child_object = ChildObject.find(params[:id]) if params[:id]
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to child_objects_url, notice: "Child object, oid: #{params[:id]}, was not found in local database." }
+      format.json { head :no_content }
     end
+  end
 
-    # Only allow a list of trusted parameters through.
-    def child_object_params
-      params.require(:child_object).permit(:oid, :caption, :label, :width, :height, :order, :viewing_hint,
-                                           :parent_object_oid, :preservica_content_object_uri, :preservica_generation_uri, :preservica_bitstream_uri)
-    end
+  # Only allow a list of trusted parameters through.
+  def child_object_params
+    params.require(:child_object).permit(:oid, :caption, :label, :width, :height, :order, :viewing_hint,
+                                         :parent_object_oid, :preservica_content_object_uri, :preservica_generation_uri, :preservica_bitstream_uri)
+  end
 end

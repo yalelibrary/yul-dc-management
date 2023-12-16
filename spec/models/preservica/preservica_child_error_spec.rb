@@ -147,7 +147,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     end.to change { ChildObject.count }.by(0)
   end
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   it 'can send an error when there is no matching information object id with pattern 1' do
     expect do
       batch_process.file = preservica_parent_no_information_pattern_1
@@ -239,5 +239,5 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] SHA mismatch found in Preservica for bitstream: 1 for /preservica/api/entity/information-objects/1e42a2bb-8953-41b6-bcc3-1a19c86a8y7u.")
     end.to change { ChildObject.count }.by(0)
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 end

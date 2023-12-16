@@ -133,6 +133,7 @@ class IiifPresentationV3
     }
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def extract_value(field, hash)
     if hash[:digital_only] == true
       sanitize_and_wrap(@parent_object.send(field.to_s))
@@ -140,6 +141,7 @@ class IiifPresentationV3
       sanitize_and_wrap(@parent_object&.authoritative_json&.[](field.to_s).presence || (hash[:backup_field] && @parent_object&.authoritative_json&.[](hash[:backup_field]).presence))
     end
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def sanitize_and_wrap(value)
     if value.is_a?(Array)
@@ -156,6 +158,7 @@ class IiifPresentationV3
     value
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def metadata
     values = []
     METADATA_FIELDS.each do |field, hash|
@@ -175,6 +178,7 @@ class IiifPresentationV3
     end
     values
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def metadata_url(url, hash)
     return unless url
@@ -274,6 +278,7 @@ class IiifPresentationV3
     { height: (height * ratio).round, width: (width * ratio).round }
   end
 
+  # rubocop:disable Metrics/AbcSize
   def add_image_to_canvas(child, canvas)
     annotation_page = {
       "id" => File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}/page/1"),
@@ -291,6 +296,7 @@ class IiifPresentationV3
     canvas['thumbnail'] = [thumbnail_image_resource(child)]
     @manifest['thumbnail'] = [thumbnail_image_resource(child)] if child_is_thumbnail?(child.oid)
   end
+  # rubocop:enable Metrics/AbcSize
 
   def tiff_rendering(oid)
     {
@@ -418,12 +424,12 @@ class IiifPresentationV3
 
   private
 
-    def skip_field(field)
-      field == :repository && @parent_object.authoritative_metadata_source&.metadata_cloud_name == 'aspace'
-    end
+  def skip_field(field)
+    field == :repository && @parent_object.authoritative_metadata_source&.metadata_cloud_name == 'aspace'
+  end
 
-    def skip_extent(field)
-      field == :extent_of_digitization && (@parent_object.extent_of_digitization == '' || @parent_object.extent_of_digitization == 'Unspecified')
-    end
+  def skip_extent(field)
+    field == :extent_of_digitization && (@parent_object.extent_of_digitization == '' || @parent_object.extent_of_digitization == 'Unspecified')
+  end
 end
 # rubocop:enable Metrics/ClassLength

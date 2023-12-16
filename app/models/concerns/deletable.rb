@@ -32,10 +32,10 @@ module Deletable
     parent_object = ParentObject.find_by(oid: oid)
     if parent_object.blank?
       batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid} because it was not found in local database", 'Skipped Row')
-      return false
+      false
     elsif !current_ability.can?(:destroy, parent_object)
       batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}, user does not have permission to delete.", 'Permission Denied')
-      return false
+      false
     else
       parent_object
     end
@@ -77,10 +77,10 @@ module Deletable
     child_object = ChildObject.find_by(oid: oid)
     if child_object.blank?
       batch_processing_event("Skipping row [#{index + 2}] with child oid: #{oid} because it was not found in local database", 'Skipped Row')
-      return false
+      false
     elsif !current_ability.can?(:destroy, child_object)
       batch_processing_event("Skipping row [#{index + 2}] with child oid: #{oid}, user does not have permission to delete.", 'Permission Denied')
-      return false
+      false
     else
       child_object
     end

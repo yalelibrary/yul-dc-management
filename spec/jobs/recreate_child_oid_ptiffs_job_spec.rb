@@ -2,17 +2,18 @@
 
 require 'rails_helper'
 
-RSpec.describe RecreateChildOidPtiffsJob, type: :job do
-  def queue_adapter_for_test
-    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+RSpec.describe RecreateChildOidPtiffsJob, type: :job, prep_metadata_sources: true, prep_admin_sets: true do
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
+
   let(:user) { FactoryBot.create(:user) }
   let(:role) { FactoryBot.create(:role, name: editor) }
-  let(:admin_set) { FactoryBot.create(:admin_set) }
+  let(:admin_set) { AdminSet.first }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user, batch_action: 'recreate child oid ptiffs') }
   let(:other_batch_process) { FactoryBot.create(:batch_process, user: user, batch_action: 'other recreate child oid ptiffs') }
-  let(:metadata_source) { FactoryBot.create(:metadata_source) }
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source, admin_set_id: admin_set.id) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: MetadataSource.first, admin_set: admin_set) }
   let(:child_object) { FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_object) }
   let(:recreate_child_oid_ptiffs_job) { RecreateChildOidPtiffsJob.new }
   let(:generate_ptiff_job) { GeneratePtiffJob.new }
@@ -42,14 +43,14 @@ RSpec.describe RecreateChildOidPtiffsJob, type: :job do
     end
     it 'succeeds if the user has the udpate permission' do
       user.add_role(:editor, admin_set)
-      expect(Delayed::Job.where(queue: 'ptiff').count).to eq(0)
-      recreate_child_oid_ptiffs_job.perform(batch_process)
-      expect(Delayed::Job.where(queue: 'ptiff').count).to eq(1)
+      expect(GoodJob::Job.where(queue_name: 'ptiff').count).to eq(0)
+      recreate_job = described_class.perform_later(batch_process)
+      expect(recreate_job.instance_variable_get(:@successfully_enqueued)).to be true
     end
     it 'fails if the user does not have the udpate permission' do
-      expect(Delayed::Job.where(queue: 'ptiff').count).to eq(0)
+      expect(GoodJob::Job.where(queue_name: 'ptiff').count).to eq(0)
       recreate_child_oid_ptiffs_job.perform(batch_process)
-      expect(Delayed::Job.where(queue: 'ptiff').count).to eq(0)
+      expect(GoodJob::Job.where(queue_name: 'ptiff').count).to eq(0)
     end
     it "with recreate batch, will force ptiff creation" do
       expect(child_object.pyramidal_tiff).to receive(:original_file_exists?).and_return(true).once

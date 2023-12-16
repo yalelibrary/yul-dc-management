@@ -79,7 +79,7 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
     end
   end
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   describe 'get /api/permission_sets/:sub' do
     it "can find a user from sub" do
       get '/api/permission_sets/1234'
@@ -92,5 +92,5 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
       expect(response.body).to eq("{\"title\":\"User not found\"}")
     end
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 end

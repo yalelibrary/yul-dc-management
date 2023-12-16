@@ -53,7 +53,7 @@ RSpec.describe '/api/parent/oid', type: :request, prep_metadata_sources: true, p
     end
   end
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   describe 'GET metadata from parent object' do
     it 'displays objects metadata' do
       ParentObject.create! valid_attributes
@@ -69,5 +69,5 @@ RSpec.describe '/api/parent/oid', type: :request, prep_metadata_sources: true, p
       expect(response.body).to match("[{\"dcs\":{\"oid\":\"123\",\"visibility\":\"Public\",\"metadata_source\":\"Ladybird\",\"bib\":\"\",\"...3\",\"children\":[{\"oid\":456789,\"label\":\"label\",\"caption\":\"caption\"}]},\"metadata\":null}]")
     end
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 end

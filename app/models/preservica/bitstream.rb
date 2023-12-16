@@ -56,7 +56,7 @@ class Preservica::Bitstream
 
   private
 
-    def content_uri
-      @content_uri ||= "/api/entity/content-objects/#{@content_id}/generations/#{@generation_id}/bitstreams/#{@id}/content"
-    end
+  def content_uri
+    @content_uri ||= "/api/entity/content-objects/#{@content_id}/generations/#{@generation_id}/bitstreams/#{@id}/content"
+  end
 end
