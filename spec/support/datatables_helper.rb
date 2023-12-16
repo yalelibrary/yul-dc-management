@@ -79,7 +79,7 @@ def parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
                                                   .and_return('<a href="/parent_objects/2034600">2034600</a>')
   allow(@datatable_view_mock).to receive(:link_to).with('/parent_objects/2034600/edit', {})
                                                   .and_return('<a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil"></i></a>')
-  allow(@datatable_view_mock).to receive(:link_to).with('http://localhost:3000/catalog/2034600', {target: :_blank})
+  allow(@datatable_view_mock).to receive(:link_to).with('http://localhost:3000/catalog/2034600', { target: :_blank })
                                                   .and_return('<a target="_blank" href="http://localhost:3000/catalog/2034600">1</a>')
   @datatable_view_mock
 end
@@ -92,7 +92,7 @@ def redirected_parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSi
                                                   .and_return('<a href="/parent_objects/2034600">2034600</a>')
   allow(@datatable_view_mock).to receive(:link_to).with('/parent_objects/2034600/edit', {})
                                                   .and_return('<a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil"></i></a>')
-  allow(@datatable_view_mock).to receive(:link_to).with('http://localhost:3000/catalog/2034600', {target: :_blank})
+  allow(@datatable_view_mock).to receive(:link_to).with('http://localhost:3000/catalog/2034600', { target: :_blank })
                                                   .and_return('<a target="_blank" href="http://localhost:3000/catalog/2034600">1</a>')
   @datatable_view_mock
 end
@@ -103,7 +103,7 @@ def child_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
   allow(@datatable_view_mock).to receive(:edit_child_object_path).and_return('/child_objects/1/edit')
   allow(@datatable_view_mock).to receive(:link_to).with('/child_objects/1/edit', {})
   .and_return('<a href="/management/child_objects/10736292/edit"><i class="fa fa-pencil"></i></a>')
-  allow(@datatable_view_mock).to receive(:link_to).with('/child_objects/1', { method: :delete, data: { confirm: 'Are you sure?' }} )
+  allow(@datatable_view_mock).to receive(:link_to).with('/child_objects/1', { method: :delete, data: { confirm: 'Are you sure?' } })
   .and_return('<a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/management/child_objects/10736292"><i class="fa fa-trash"></i></a>')
   allow(@datatable_view_mock).to receive(:link_to).with(anything, '/child_objects/1')
                                                   .and_return('<a href="/child_objects/1">1</a>')
