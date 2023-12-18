@@ -38,7 +38,6 @@ class Ability
     can :read, ParentObject
     can :read, ChildObject
     can :read, PreservicaIngest
-    can :read, ReoccurringJobDatatable
     can :reindex_all, ParentObject
     can :update_metadata, ParentObject
     can :sync_from_preservica, ParentObject
