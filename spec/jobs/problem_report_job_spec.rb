@@ -19,7 +19,6 @@ RSpec.describe ProblemReportJob, type: :job do
 
     it "increments job queue once per day" do
       now = Time.zone.today
-      ActiveJob::Scheduler.start
       new_time = now + 1.day
       Timecop.travel(new_time)
       expect(GoodJob::CronEntry.all.last.instance_variable_get(:@params)).to eq({ cron: "15 0 * * *", class: "ProblemReportJob", key: :problem })
