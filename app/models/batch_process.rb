@@ -237,8 +237,18 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         parent_object.digitization_note = row['digitization_note']
         parent_object.digitization_funding_source = row['digitization_funding_source']
         parent_object.rights_statement = row['rights_statement']
-        parent_object.viewing_direction = row['viewing_direction']
-        parent_object.display_layout = row['display_layout']
+
+        if valid_viewing_directions.include?(row['viewing_direction'])
+          parent_object.viewing_direction = row['viewing_direction']
+        else
+          batch_processing_event("Parent #{oid} did not update value for Viewing Directions. Value: #{row['viewing_direction']} is invalid. For field Viewing Direction please use: left-to-right, right-to-left, top-to-bottom, bottom-to-top, or leave column empty", 'Invalid Vocabulary')
+        end
+
+        if valid_display_layouts.include?(row['display_layout'])
+          parent_object.display_layout = row['display_layout']
+        else
+          batch_processing_event("Parent #{oid} did not update value for Display Layout. Value: #{row['display_layout']} is invalid. For field Display Layout / Viewing Hint please use: individuals, paged, continuous, or leave column empty", 'Invalid Vocabulary')
+        end
 
         if metadata_source == 'aspace' && row['extent_of_digitization'].blank?
           batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}.  Parent objects with ASpace as a source must have an Extent of Digitization value.", 'Skipped Row')
@@ -276,6 +286,14 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable  Metrics/PerceivedComplexity
   # rubocop:enable  Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/BlockLength
+
+  def valid_viewing_directions
+    ['left-to-right', 'right-to-left', 'top-to-bottom', 'bottom-to-top', nil]
+  end
+
+  def valid_display_layouts
+    ['individuals', 'paged', 'continuous', nil]
+  end
 
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
   def editable_admin_set(admin_set_key, oid, index)

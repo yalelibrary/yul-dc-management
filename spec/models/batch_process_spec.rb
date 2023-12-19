@@ -604,8 +604,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect(parent_object.digitization_note).to eq "dig note"
           expect(parent_object.digitization_funding_source).to eq "dig funding source"
           expect(parent_object.rights_statement).to eq "rights statement"
-          expect(parent_object.viewing_direction).to eq "viewing direction"
-          expect(parent_object.display_layout).to eq "display layout"
+          expect(parent_object.viewing_direction).to eq "left-to-right"
+          expect(parent_object.display_layout).to eq "paged"
         end
 
         it "fails if the user is not an editor on the admin set of the parent object" do
