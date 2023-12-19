@@ -26,9 +26,6 @@ RSpec.describe 'Download Original API', type: :request, prep_admin_sets: true do
     ENV['S3_SOURCE_BUCKET_NAME'] = original_image_bucket
     ENV['S3_DOWNLOAD_BUCKET_NAME'] = original_download_bucket
     ENV['ACCESS_MASTER_MOUNT'] = original_access_master_mount
-    perform_enqueued_jobs do
-      example.run
-    end
   end
 
   before do
