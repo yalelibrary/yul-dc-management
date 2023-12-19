@@ -234,6 +234,11 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         parent_object.bib = row['bib']
         parent_object.holding = row['holding']
         parent_object.item = row['item']
+        parent_object.digitization_note = row['digitization_note']
+        parent_object.digitization_funding_source = row['digitization_funding_source']
+        parent_object.rights_statement = row['rights_statement']
+        parent_object.viewing_direction = row['viewing_direction']
+        parent_object.display_layout = row['display_layout']
 
         if metadata_source == 'aspace' && row['extent_of_digitization'].blank?
           batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}.  Parent objects with ASpace as a source must have an Extent of Digitization value.", 'Skipped Row')

@@ -9,6 +9,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:admin_set_two) { FactoryBot.create(:admin_set) }
   let(:admin_set_three) { FactoryBot.create(:admin_set) }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
+  let(:create_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_parent.csv")) }
   let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids_with_source.csv")) }
   let(:delete_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_parent_fixture_ids.csv")) }
   let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent.csv")) }
@@ -595,6 +596,18 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect(IngestEvent.count).to eq(11)
         end
 
+        it "succeeds if the user is an editor on the admin set of the parent object" do
+          batch_process.file = create_parent
+          batch_process.save
+          expect(ParentObject.count).to eq(1)
+          parent_object = ParentObject.first
+          expect(parent_object.digitization_note).to eq "dig note"
+          expect(parent_object.digitization_funding_source).to eq "dig funding source"
+          expect(parent_object.rights_statement).to eq "rights statement"
+          expect(parent_object.viewing_direction).to eq "viewing direction"
+          expect(parent_object.display_layout).to eq "display layout"
+        end
+        
         it "fails if the user is not an editor on the admin set of the parent object" do
           user.remove_role(:editor, admin_set_upload)
 
