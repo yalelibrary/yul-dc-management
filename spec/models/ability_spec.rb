@@ -7,7 +7,7 @@ RSpec.describe Ability, type: :model, prep_admin_sets: true, prep_metadata_sourc
   let(:viewer_user) { FactoryBot.create(:user) }
   let(:sysadmin_user) { FactoryBot.create(:sysadmin_user) }
   let(:metadata_source) { MetadataSource.first }
-  let(:admin_set) { AdminSet.first }
+  let(:admin_set) { FactoryBot.create(:admin_set, key: 'test') }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 16_057_779, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
   let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_object) }
   let(:child_object2) { FactoryBot.create(:child_object, oid: 900_000_000, parent_object: parent_object) }
