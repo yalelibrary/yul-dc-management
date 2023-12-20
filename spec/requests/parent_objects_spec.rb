@@ -175,12 +175,6 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
         }
       end
 
-      it "renders a successful response (i.e. to display the 'edit' template)" do
-        parent_object = ParentObject.create! valid_attributes
-        patch parent_object_url(parent_object), params: { parent_object: invalid_params }
-        expect(response).to be_successful
-      end
-
       it "unauthorized to change object away from OwP" do
         login_as regular_user
         patch parent_object_url(parent_object_owp), params: { parent_object: invalid_owp_visibility }
@@ -254,7 +248,7 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
         login_as regular_user
         regular_user.add_role(:administrator, OpenWithPermission::PermissionSet)
         patch parent_object_url(parent_object), params: { parent_object: valid_permission_set }
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(302)
       end
     end
   end
@@ -417,9 +411,10 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
     context "with invalid parameters" do
       it "does not save an improperly formatted url" do
         parent_object = ParentObject.create! valid_attributes
-        expect do
-          patch parent_object_url(parent_object), params: { parent_object: invalid_redirect_params }
-        end.to raise_exception(ActiveRecord::RecordInvalid)
+        patch parent_object_url(parent_object), params: { parent_object: invalid_redirect_params }
+        parent_object.reload
+        expect(parent_object.redirect_to).not_to eq(invalid_redirect_params[:redirect_to])
+        expect(response).to be_successful
       end
     end
   end

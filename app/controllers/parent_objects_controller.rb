@@ -71,15 +71,16 @@ class ParentObjectsController < ApplicationController
       permission_set_param = OpenWithPermission::PermissionSet.find(parent_object_params[:permission_set_id]) if parent_object_params[:permission_set_id].present?
 
       authorize!(:owp_access, permission_set) if parent_object.visibility == "Open with Permission" && parent_object.visibility != parent_object_params[:visibility]
-
       authorize!(:owp_access, permission_set) if permission_set.present? &&  permission_set != permission_set_param
-
       authorize!(:owp_access, permission_set_param) if permission_set_param.present?
 
-      invalidate_admin_set_edit unless valid_admin_set_edit?
+      # TODO: refactor this
+      invalidate_permission_admin_set_edit unless valid_permission_admin_set_edit?
+      invalidate_presence_admin_set_edit unless valid_presence_admin_set_edit?
+      invalidate_metadata_source_edit unless valid_metadata_source_edit?
       invalidate_redirect_to_edit unless valid_redirect_to_edit?
 
-      updated = valid_admin_set_edit? ? @parent_object.update!(parent_object_params) : false
+      updated = valid_to_edit? ? @parent_object.update!(parent_object_params) : false
 
       if updated
         @parent_object.minify if valid_redirect_to_edit?
@@ -213,12 +214,67 @@ class ParentObjectsController < ApplicationController
     @parent_object.current_batch_process = @batch_process
   end
 
-  def valid_admin_set_edit?
+  def valid_permission_admin_set_edit?
     !parent_object_params[:admin_set] || (parent_object_params[:admin_set] && current_user.editor(parent_object_params[:admin_set]))
   end
 
-  def invalidate_admin_set_edit
+  def invalidate_permission_admin_set_edit
     @parent_object.errors.add :admin_set, :invalid, message: "cannot be assigned to a set the User cannot edit"
+  end
+
+  def valid_presence_admin_set_edit?
+    parent_object_params[:admin_set] && parent_object_params[:admin_set] != ""
+  end
+
+  def invalidate_presence_admin_set_edit
+    @parent_object.errors.add :admin_set, :invalid, message: "cannot be assigned to a nonexistent Admin set"
+  end
+
+  # rubocop:disable Layout/LineLength
+  def valid_metadata_source_edit?
+    !parent_object_params[:authoritative_metadata_source_id] || (parent_object_params[:authoritative_metadata_source_id] && MetadataSource.exists?(id: parent_object_params[:authoritative_metadata_source_id]))
+  end
+  # rubocop:enable Layout/LineLength
+
+  def invalidate_metadata_source_edit
+    @parent_object.errors.add :authoritative_metadata_source_id, :invalid, message: "cannot be assigned to a nonexistant Metadata Source"
+  end
+
+  # rubocop:disable Layout/LineLength
+  def valid_redirect_to_edit?
+    !parent_object_params[:redirect_to] || parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//) if parent_object_params[:redirect_to].present?
+  end
+  # rubocop:enable Layout/LineLength
+
+  def invalidate_redirect_to_edit
+    @parent_object.errors.add :redirect_to, :invalid, message: "must be in format https://collections.library.yale.edu/catalog/1234567"
+  end
+
+  def valid_visibility_edit?
+    if parent_object_params[:visibility] == "Open with Permission" && parent_object_params[:permission_set].nil?
+      @parent_object.errors.add(:open_with_permisson, "objects must have a Permission Set")
+      return false
+    elsif ParentObject.visibilities.include?(parent_object_params[:visibility])
+      return true
+    else
+      parent_object_params[:visibility] = 'Private'
+      return true
+    end
+  end
+
+  def valid_to_edit?
+    if (parent_object_params[:visibility].present? && valid_visibility_edit?) && (valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_metadata_source_edit?)
+      validity = true
+    elsif parent_object_params[:redirect_to].present? && valid_redirect_to_edit?
+      validity = true
+    elsif parent_object_params[:admin_set].present? && valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_metadata_source_edit?
+      validity = true
+    elsif parent_object_params[:authoritative_metadata_source_id].present? && valid_metadata_source_edit?
+      validity = true
+    else
+      validity = false
+    end
+    validity
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -244,16 +300,6 @@ class ParentObjectsController < ApplicationController
     @parent_object.current_batch_connection = @batch_process.batch_connections.build(connectable: @parent_object)
     @batch_process.save!
     @parent_object.current_batch_process = @batch_process
-  end
-
-  # rubocop:disable Layout/LineLength
-  def valid_redirect_to_edit?
-    !parent_object_params[:redirect_to] || parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//) if parent_object_params[:redirect_to].present?
-  end
-  # rubocop:enable Layout/LineLength
-
-  def invalidate_redirect_to_edit
-    @parent_object.errors.add :redirect_to, :invalid, message: "must be in format https://collections.library.yale.edu/catalog/1234567"
   end
 
   # Only allow a list of trusted parameters through.
