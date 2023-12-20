@@ -173,7 +173,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       let(:parent_object3) { FactoryBot.create(:parent_object, oid: 2_004_548, admin_set: brbl) }
       let(:user) { FactoryBot.create(:user) }
       # rubocop:enable Metrics/LineLength
-      
+
       before do
         stub_metadata_cloud("2004548")
         user.add_role(:viewer, brbl)
