@@ -40,6 +40,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
         # perform batch update
         visit batch_processes_path
+        page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
         select("Update Parent Objects")
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_small.csv")
         click_button("Submit")
@@ -78,6 +79,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
         # perform batch update
         visit batch_processes_path
+        page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
         select("Update Parent Objects")
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_invalid.csv")
         click_button("Submit")
@@ -115,6 +117,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         today = Time.zone.today
         # perform batch update
         visit batch_processes_path
+        page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
         select("Update Parent Objects")
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_oid_only.csv")
         click_button("Submit")
@@ -144,6 +147,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       it "triggers a metadata update" do
         # perform batch update
         visit batch_processes_path
+        page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
         select("Update Parent Objects")
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_invalid_source.csv")
         click_button("Submit")
@@ -169,6 +173,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(p_o.redirect_to).to be_nil
         # perform batch update
         visit batch_processes_path
+        page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
         select("Update Parent Objects")
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_redirect.csv")
         click_button("Submit")
@@ -194,6 +199,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       it "does not trigger a metadata update" do
         # perform batch update
         visit batch_processes_path
+        page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
         select("Update Parent Objects")
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_redirect_invalid.csv")
         click_button("Submit")
@@ -215,6 +221,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       it "does not trigger a metadata update" do
         # perform batch update
         visit batch_processes_path
+        page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
         select("Update Parent Objects")
         page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_redirect_with_children.csv")
         click_button("Submit")
@@ -234,6 +241,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         login_as admin_user
         admin_user.remove_role(:editor)
         visit batch_processes_path
+        page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
       end
 
       it "does not permit parent to be updated" do

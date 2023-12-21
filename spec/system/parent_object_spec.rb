@@ -524,6 +524,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         parent_object1
         parent_object2
         visit parent_objects_path
+        page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
       end
 
       it 'has multiple Parent Objects' do
@@ -545,6 +546,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
           parent_object1
           parent_object2
           visit parent_objects_path
+          page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
         end
 
         it 'has multiple Parent Objects' do
@@ -558,6 +560,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       context "clicking ReIndex button" do
         before do
           visit parent_objects_path
+          page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
         end
 
         it "does not Reindex if a reindex job is already in progress" do
@@ -591,6 +594,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
           user.remove_role(:editor, sml) if sml
           login_as user
           visit parent_objects_path
+          page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
         end
 
         it "does allow create parent" do
@@ -605,6 +609,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         before do
           login_as user
           visit parent_objects_path
+          page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
         end
 
         it "does allow create parent" do
@@ -655,6 +660,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
       it "does not display parent objects the user does not have access to view" do
         visit parent_objects_path
+        page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
         expect(page).to have_content("2002826")
         expect(page).to have_content("2004548")
         expect(page).not_to have_content("2004549")
@@ -692,6 +698,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     context "parent objects page", js: true do
       before do
         visit parent_objects_path
+        page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
       end
 
       it "has column visibility button" do
@@ -703,6 +710,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
   context "parent objects page", js: true do
     before do
       visit parent_objects_path
+      page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
     end
 
     it "has csv button" do

@@ -7,9 +7,9 @@ Capybara.default_driver = :rack_test
 # Capybara.server = :puma, { Silent: false }
 ENV['WEB_HOST'] ||= `hostname -s`.strip
 
-options = Selenium::WebDriver::Chrome::Options.new(:args => %w[headless disable-gpu no-sandbox whitelisted-ips window-size=1400,1400])
+options = Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu no-sandbox whitelisted-ips window-size=1400,1400])
 options.add_argument(
-  "--enable-features=NetworkService,NetworkServiceInProcess",
+  "--enable-features=NetworkService,NetworkServiceInProcess"
 )
 
 Capybara.register_driver :chrome do |app|

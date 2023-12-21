@@ -2,24 +2,21 @@
 require 'rails_helper'
 
 RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
-  let(:user) { FactoryBot.create(:user, uid: 'johnsmith2530') }
-  let(:brbl) { AdminSet.find_by_key('brbl') }
-  let(:sml) { AdminSet.find_by_key('sml') }
-  # let(:parent_object) { FactoryBot.create(:parent_object, oid: 16_057_779, admin_set: brbl) }
-  # let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_object) }
-  let(:batch_process) do
-    FactoryBot.create(
-      :batch_process,
-      user: user,
-      csv: File.open(fixture_path + '/csv/small_short_fixture_ids.csv').read,
-      file_name: 'small_short_fixture_ids.csv',
-      created_at: '2020-10-08 14:17:01'
-    )
-  end
-
-  describe 'with expected success' do
-    let(:child_oid) { batch_process.parent_objects.last.child_objects.first.oid }
+  context 'with expected success with a csv import', skip_db_cleaner: true do
+    let(:user) { FactoryBot.create(:user, uid: 'johnsmith2530') }
+    let(:brbl) { AdminSet.find_by_key('brbl')  }
+    let(:sml) { AdminSet.find_by_key('sml') }
+    let(:batch_process) do
+      FactoryBot.create(
+        :batch_process,
+        user_id: user.id,
+        csv: File.open(fixture_path + '/csv/shorter_fixture_ids.csv').read,
+        file_name: 'shorter_fixture_ids.csv',
+        created_at: '2020-10-08 14:17:01'
+      )
+    end
     let(:parent_oid) { batch_process.parent_objects.last.oid }
+    let(:child_oid) { batch_process.parent_objects.last.child_objects.first.oid }
 
     around do |example|
       access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
@@ -39,30 +36,19 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       batch_process.save!
     end
 
-    describe 'with a csv import' do
-      before do
-        visit show_child_batch_process_path(child_oid: child_oid, id: batch_process.id, oid: parent_oid)
-      end
-
-      it 'has a link to the batch process detail page' do
-        expect(page).to have_link(batch_process&.id&.to_s, href: "/batch_processes/#{batch_process.id}")
-      end
-
-      it 'has a link to the parent object page' do
-        expect(page).to have_link(parent_oid.to_s, href: "/batch_processes/#{batch_process.id}/parent_objects/#{parent_oid}")
-      end
-
-      it 'has a link to the child object page' do
-        expect(page).to have_link("#{child_oid} (current record)", href: "/child_objects/#{child_oid}")
-      end
-
-      it 'shows the status of the child object' do
-        expect(page).to have_content('Complete')
-      end
-
-      it 'shows the duration of the batch process' do
-        expect(page).to have_content('seconds')
-      end
+    it 'has a link to the batch process detail page' do
+      expect(BatchProcess.all.count).to eq 1
+      visit show_child_batch_process_path(child_oid: child_oid, id: batch_process.id, oid: parent_oid)
+      # has a link to the batch process detail page
+      expect(page).to have_link(batch_process&.id&.to_s, href: "/batch_processes/#{batch_process.id}")
+      # has a link to the parent object page
+      expect(page).to have_link(parent_oid.to_s, href: "/batch_processes/#{batch_process.id}/parent_objects/#{parent_oid}")
+      # has a link to the child object page
+      expect(page).to have_link("#{child_oid} (current record)", href: "/child_objects/#{child_oid}")
+      # shows the status of the child object
+      expect(page).to have_content('Complete')
+      # shows the duration of the batch process
+      expect(page).to have_content('seconds')
     end
   end
 end

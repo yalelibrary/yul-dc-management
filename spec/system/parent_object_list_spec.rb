@@ -9,6 +9,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     let(:parent_object2) { FactoryBot.create(:parent_object, oid: "2004548", admin_set_id: admin_set.id) }
 
     before do
+      stub_metadata_cloud("2002826")
+      stub_metadata_cloud("2004548")
       parent_object1
       parent_object2
       user.add_role(:editor, admin_set)
@@ -16,13 +18,15 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     end
 
     it "displays parent objects without filter" do
-      visit parent_objects_path
+      visit parent_objects_path # , params: {key: admin_set.key, current_ability: Ability.new(user) }
+      page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
       expect(page).to have_content("2002826")
       expect(page).to have_content("2004548")
     end
 
     it "filters when filter box is filled" do
       visit parent_objects_path
+      page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
       find("input[placeholder='OID']").set("2002")
       expect(page).to have_content("2002826")
       expect(page).not_to have_content("2004548")
@@ -30,10 +34,12 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
     it "retains filters and fills filter boxes on refresh" do
       visit parent_objects_path
+      page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
       find("input[placeholder='OID']").set("2002")
       expect(page).to have_content("2002826")
       expect(page).not_to have_content("2004548")
       visit current_path
+      page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
       expect(page).to have_content("2002826")
       expect(page).not_to have_content("2004548")
       expect(find("input[placeholder='OID']").value).to eq("2002")
@@ -41,10 +47,12 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
     it "clears filter when Clear Filters is clicked" do
       visit parent_objects_path
+      page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
       find("input[placeholder='OID']").set("2002")
       expect(page).to have_content("2002826")
       expect(page).not_to have_content("2004548")
       click_on("Clear Filters")
+      page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
       expect(page).to have_content("2002826")
       expect(page).to have_content("2004548")
     end

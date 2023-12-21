@@ -253,29 +253,37 @@ class ParentObjectsController < ApplicationController
   def valid_visibility_edit?
     if parent_object_params[:visibility] == "Open with Permission" && parent_object_params[:permission_set].nil?
       @parent_object.errors.add(:open_with_permisson, "objects must have a Permission Set")
-      return false
+      false
     elsif ParentObject.visibilities.include?(parent_object_params[:visibility])
-      return true
+      true
     else
       parent_object_params[:visibility] = 'Private'
-      return true
+      true
     end
   end
 
+  # rubocop:disable Layout/LineLength
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def valid_to_edit?
-    if (parent_object_params[:visibility].present? && valid_visibility_edit?) && (valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_metadata_source_edit?)
+    if (!parent_object_params[:visibility].nil? && valid_visibility_edit?) && (valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_metadata_source_edit?) && parent_object_params[:redirect_to].nil?
       validity = true
-    elsif parent_object_params[:redirect_to].present? && valid_redirect_to_edit?
+    elsif !parent_object_params[:redirect_to].nil? && valid_redirect_to_edit?
       validity = true
-    elsif parent_object_params[:admin_set].present? && valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_metadata_source_edit?
+    elsif !parent_object_params[:admin_set].nil? && valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_metadata_source_edit?
       validity = true
-    elsif parent_object_params[:authoritative_metadata_source_id].present? && valid_metadata_source_edit?
+    elsif !parent_object_params[:authoritative_metadata_source_id].nil? && valid_metadata_source_edit?
       validity = true
     else
       validity = false
     end
     validity
   end
+  # rubocop:enable Layout/LineLength
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # Use callbacks to share common setup or constraints between actions.
   def set_parent_object
