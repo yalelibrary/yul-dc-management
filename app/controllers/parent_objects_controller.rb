@@ -252,12 +252,12 @@ class ParentObjectsController < ApplicationController
 
   def valid_visibility_edit?
     if parent_object_params[:visibility] == "Open with Permission" && parent_object_params[:permission_set].nil?
-      @parent_object.errors.add(:open_with_permisson, "objects must have a Permission Set")
+      @parent_object.errors.add(:visibility, "objects must have a Permission Set if they are set to Open with Permission")
       false
     elsif ParentObject.visibilities.include?(parent_object_params[:visibility])
       true
     else
-      parent_object_params[:visibility] = 'Private'
+      parent_object_params.merge(visibility: 'Private')
       true
     end
   end
@@ -271,9 +271,9 @@ class ParentObjectsController < ApplicationController
       validity = true
     elsif !parent_object_params[:redirect_to].nil? && valid_redirect_to_edit?
       validity = true
-    elsif !parent_object_params[:admin_set].nil? && valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_metadata_source_edit?
+    elsif !parent_object_params[:admin_set].nil? && valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_metadata_source_edit? && valid_visibility_edit?
       validity = true
-    elsif !parent_object_params[:authoritative_metadata_source_id].nil? && valid_metadata_source_edit?
+    elsif !parent_object_params[:authoritative_metadata_source_id].nil? && valid_metadata_source_edit? && valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_visibility_edit?
       validity = true
     else
       validity = false

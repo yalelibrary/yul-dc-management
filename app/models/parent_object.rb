@@ -41,6 +41,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Layout/LineLength
   validates :redirect_to, format: { with: /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//, message: " in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123", presence: true, if: proc { visibility == "Redirect" } }
   # rubocop:enable Layout/LineLength
+  validate :validate_visibility
   before_save :check_permission_set
 
   def check_for_redirect
@@ -80,6 +81,16 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def self.extent_of_digitizations
     [nil, "Completely digitized", "Partially digitized"]
+  end
+
+  def validate_visibility
+    if visibility == "Open with Permission" && permission_set_id.nil?
+      errors.add(:open_with_permisson, "objects must have a Permission Set")
+      throw :abort
+    elsif ParentObject.visibilities.include?(visibility)
+      return true
+    end
+    self.visibility = 'Private'
   end
 
   def check_permission_set
