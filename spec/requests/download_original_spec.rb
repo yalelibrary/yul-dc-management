@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Download Original API', type: :request, prep_admin_sets: true do
-  let(:source) { FactoryBot.create(:metadata_source) }
+RSpec.describe 'Download Original API', type: :request, prep_admin_sets: true, prep_metadata_sources: true do
+  let(:source) { MetadataSource.first }
   let(:user) { FactoryBot.create(:sysadmin_user) }
   let(:admin_set) { AdminSet.first }
   let(:oid) { 2_034_600 }

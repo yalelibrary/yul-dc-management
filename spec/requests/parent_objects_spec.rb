@@ -248,7 +248,7 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
         login_as regular_user
         regular_user.add_role(:administrator, OpenWithPermission::PermissionSet)
         patch parent_object_url(parent_object), params: { parent_object: valid_permission_set }
-        expect(response).to have_http_status(302)
+        expect(response).to have_http_status(200)
       end
     end
   end

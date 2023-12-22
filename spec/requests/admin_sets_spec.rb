@@ -21,8 +21,8 @@ RSpec.describe "/admin_sets", type: :request do
   # adjust the attributes here as well.
   let(:valid_attributes) do
     {
-      id: 1,
-      key: "brbl",
+      id: 100,
+      key: "key1",
       label: "Beinecke Library",
       homepage: "https://beinecke.library.yale.edu/"
     }
