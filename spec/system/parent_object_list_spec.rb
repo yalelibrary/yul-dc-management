@@ -18,7 +18,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     end
 
     it "displays parent objects without filter" do
-      visit parent_objects_path 
+      visit parent_objects_path
       expect(page).to have_content("2002826")
       expect(page).to have_content("2004548")
       # filters when filter box is filled
