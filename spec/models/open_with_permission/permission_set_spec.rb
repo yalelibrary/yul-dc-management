@@ -8,6 +8,15 @@ RSpec.describe OpenWithPermission::PermissionSet, type: :model do
   let(:permission_set) { FactoryBot.create(:permission_set) }
   let(:permission_set_terms) { FactoryBot.create(:permission_set_term, permission_set: permission_set) }
 
+  before do
+    brbl = AdminSet.find_by(key: 'brbl').presence || nil
+    sml = AdminSet.find_by(key: 'sml').presence || nil
+    user.remove_editor(brbl) unless brbl.nil?
+    user.remove_editor(sml) unless sml.nil?
+    user2.remove_editor(brbl) unless brbl.nil?
+    user2.remove_editor(sml) unless sml.nil?
+  end
+
   describe "user permission set roles" do
     it "adds an approver" do
       expect(user.roles).to be_empty
