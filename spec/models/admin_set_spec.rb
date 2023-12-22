@@ -3,14 +3,21 @@
 require 'rails_helper'
 
 RSpec.describe AdminSet, type: :model do
-  let(:admin_set) { FactoryBot.create(:admin_set, key: "brbl", label: "label", homepage: "http://test.com") }
-  let(:admin_set_two) { FactoryBot.create(:admin_set, key: "key", label: "label", homepage: "http://test.com") }
+  let(:admin_set) { FactoryBot.create(:admin_set, key: "key1", label: "label1", homepage: "http://test1.com") }
+  let(:admin_set_two) { FactoryBot.create(:admin_set, key: "key2", label: "label2", homepage: "http://test2.com") }
   let(:user) { FactoryBot.create(:user) }
 
+  before do
+    brbl = AdminSet.find_by(key: 'brbl').presence || nil
+    sml = AdminSet.find_by(key: 'sml').presence || nil
+    user.remove_editor(brbl) unless brbl.nil?
+    user.remove_editor(sml) unless sml.nil?
+  end
+
   it "returns proper values" do
-    expect(admin_set.key).to eq "brbl"
-    expect(admin_set.label).to eq "label"
-    expect(admin_set.homepage).to eq "http://test.com"
+    expect(admin_set.key).to eq "key1"
+    expect(admin_set.label).to eq "label1"
+    expect(admin_set.homepage).to eq "http://test1.com"
   end
 
   it "is invalid without all properties set" do
@@ -69,7 +76,7 @@ RSpec.describe AdminSet, type: :model do
     around do |example|
       original_preservica_cred = ENV['PRESERVICA_CREDENTIALS']
       ENV['PRESERVICA_CREDENTIALS'] = '{
-        "brbl": {
+        "key1": {
           "username": "foo",
           "password": "bar"
          },
