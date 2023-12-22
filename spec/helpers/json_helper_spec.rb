@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe JsonHelper, type: :helper do
-  let(:admin_set) { FactoryBot.create(:admin_set) }
-  let(:metadata_source) { FactoryBot.create(:metadata_source) }
+RSpec.describe JsonHelper, type: :helper, prep_admin_sets: true, prep_metadata_sources: true do
+  let(:admin_set) { AdminSet.first }
+  let(:metadata_source) { MetadataSource.first }
   let(:parent_object_with_authoritative_json) do
     FactoryBot.create(
       :parent_object,

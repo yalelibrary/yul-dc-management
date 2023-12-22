@@ -314,7 +314,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
   end
 
   context "a newly created ParentObject with an unexpected authoritative_metadata_source" do
-    let(:unexpected_metadata_source) { FactoryBot.create(:metadata_source, id: 4, metadata_cloud_name: "foo", display_name: "Foo", file_prefix: "F-") }
+    let(:unexpected_metadata_source) { FactoryBot.create(:metadata_source, id: 45, metadata_cloud_name: "foo", display_name: "Foo", file_prefix: "F-") }
     let(:parent_object) { FactoryBot.create(:parent_object, oid: "2004628", authoritative_metadata_source: unexpected_metadata_source) }
     it "raises an error when trying to get the authoritative_json for an unexpected metadata source" do
       expect { parent_object.authoritative_json }.to raise_error(StandardError)
@@ -618,7 +618,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       context "with the wrong metadata_cloud_version set" do
-        let(:ladybird_source) { FactoryBot.build(:metadata_source) }
+        let(:ladybird_source) { MetadataSource.first }
         around do |example|
           original_vpn = ENV['VPN']
           ENV['VPN'] = "true"

@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe 'Admin Sets', type: :system, js: true do
-  let(:admin_set) { FactoryBot.create(:admin_set, key: "admin-set-key", label: "admin-set-label", homepage: "http://admin-set-homepage.com") }
+RSpec.describe 'Admin Sets', type: :system, prep_admin_sets: true, prep_metadata_sources: true do
+  let(:admin_set) { AdminSet.first }
   let(:sysadmin_user) { FactoryBot.create(:sysadmin_user, uid: 'johnsmith2530') }
   let(:user) { FactoryBot.create(:user, uid: 'martinsmith2530') }
-  let(:metadata_source) { FactoryBot.create(:metadata_source, display_name: "test source") }
+  let(:metadata_source) { MetadataSource.first }
 
   before do
     admin_set
+    sysadmin_user.add_role(:editor, admin_set)
   end
 
   context "when user has permission to Sets" do
@@ -17,7 +18,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
     end
     it "display admin sets" do
       visit admin_sets_path
-      expect(page).to have_content("admin-set-key")
+      expect(page).to have_content("brbl")
     end
 
     it 'displays the user roles tables' do
