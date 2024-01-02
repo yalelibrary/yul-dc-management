@@ -1,0 +1,30 @@
+<h1>Permission Request</h1>
+
+<dl>
+  <dt>Request ID:</dt>
+  <dd><%= @permission_request.id %></dd>
+
+  <dt>Permission Set Label:</dt>
+  <dd><%= @permission_request.permission_set.label %></dd>
+
+  <dt>Request Date:</dt>
+  <dd><%= @permission_request.created_at %></dd>
+
+  <dt>OID:</dt>
+  <dd><%= @permission_request.parent_object.oid %></dd>
+
+  <dt>User Name:</dt>
+  <dd><%= @permission_request.permission_request_user.name %></dd>
+  
+  <dt>User ID:</dt>
+  <dd><%= @permission_request.permission_request_user.sub %></dd>
+  
+  <dt>User Note:</dt>
+  <dd><%= @permission_request.user_note %></dd>
+  
+  <dt>Request Status:</dt>
+  <dd><%= @permission_request.request_status %></dd>
+  
+  <dt>Approver:</dt>
+  <dd><%= "#{@permission_request.user&.first_name} #{@permission_request.user&.last_name}" %></dd>
+</dl>
