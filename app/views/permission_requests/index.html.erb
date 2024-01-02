@@ -6,7 +6,7 @@
   </div>
 </div>
 
-<table class='table table-striped permission-set-index-table' aria-label='Label Permission Set'>
+<table class='table table-striped permission-set-index-table' aria-label='Permission Set Table'>
   <thead class='thead-dark'>
     <tr>
       <th scope='col'> Request ID </th>
@@ -23,7 +23,7 @@
   <tbody>
     <% @visible_permission_requests.each do |permission_request| %>
       <tr>
-        <td class='permission-set-label'><%= permission_request.id %></td>
+        <td class='permission-set-label'><%= link_to(permission_request.id, permission_request_path(permission_request.id)) %></td>
         <td class='permission-set-label'><%= permission_request.permission_set.label %></td>
         <td class='permission-set-label'><%= permission_request.created_at %></td>
         <td class='permission-set-label'><%= permission_request.parent_object.oid %></td>

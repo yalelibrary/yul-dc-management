@@ -41,6 +41,8 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
       post "/api/permission_requests", params: JSON.pretty_generate(request), headers: headers
       expect(response).to have_http_status(:created)
       expect(OpenWithPermission::PermissionRequest.all.count).to eq 1
+      pr = OpenWithPermission::PermissionRequest.first
+      expect(pr.user_note).not_to be nil
     end
 
     it 'errors if requests go over max' do
