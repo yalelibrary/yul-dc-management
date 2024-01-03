@@ -29,6 +29,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     user.add_role(:editor, admin_set_one)
     login_as(:user)
     batch_process.user_id = user.id
+    ParentObject.all.destroy if ParentObject.all.count > 0
   end
 
   describe 'with the metadata cloud mocked' do

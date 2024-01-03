@@ -11,10 +11,8 @@ RSpec.describe OpenWithPermission::PermissionSet, type: :model do
   before do
     brbl = AdminSet.find_by(key: 'brbl').presence || nil
     sml = AdminSet.find_by(key: 'sml').presence || nil
-    user.remove_editor(brbl) unless brbl.nil?
-    user.remove_editor(sml) unless sml.nil?
-    user2.remove_editor(brbl) unless brbl.nil?
-    user2.remove_editor(sml) unless sml.nil?
+    brbl&.destroy
+    sml&.destroy
   end
 
   describe "user permission set roles" do
