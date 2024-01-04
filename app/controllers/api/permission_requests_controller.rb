@@ -24,7 +24,7 @@ class Api::PermissionRequestsController < ApplicationController
         permission_set: permission_set,
         permission_request_user: pr_user,
         parent_object: parent_object,
-        user_note: request['permission_request']['user_note'].presence || request['user_note']
+        user_note: request['user_note'].presence || request['permission_request']['user_note']
       )
       new_request.save!
       render json: { "title": "New request created" }, status: 201
@@ -62,7 +62,7 @@ class Api::PermissionRequestsController < ApplicationController
 
   def find_or_create_user(request)
     pr_user = OpenWithPermission::PermissionRequestUser.find_or_initialize_by(sub: request['user_sub'])
-    pr_user.name = request['user_full_name'].presence || request['permission_request']['user_full_name']
+    pr_user.name = request['user_full_name']
     pr_user.email = request['user_email']
     pr_user.netid = request['user_netid']
     pr_user.email_verified = true
