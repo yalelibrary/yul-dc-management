@@ -1,8 +1,11 @@
 {
   "oid": "2034600",
   "user_email": "example@yale.edu",
-  "user_full_name": "First Last",
   "user_netid": "netid",
-  "user_note": "Requesting access to this resource.",
-  "user_sub": ""
+  "user_sub": "",
+  "permission_request":
+  {
+    "user_full_name": "First Last",
+    "user_note": "Requesting access to this resource."
+  }
 }
