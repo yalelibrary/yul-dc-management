@@ -46,11 +46,11 @@ class Api::PermissionRequestsController < ApplicationController
   def valid_json_request(request)
     if request['user_email'].blank?
       render(json: { "title": "User email is missing" }, status: 400) && (return false)
-    elsif request['user_full_name'].blank?
+    elsif request["permission_request"]['user_full_name'].blank?
       render(json: { "title": "User name is missing" }, status: 400) && (return false)
     elsif request['user_netid'].blank?
       render(json: { "title": "User netid is missing" }, status: 400) && (return false)
-    elsif request['user_note'].blank?
+    elsif request["permission_request"]['user_note'].blank?
       render(json: { "title": "User reason for request is missing" }, status: 400) && (return false)
     elsif request['user_sub'].blank?
       render(json: { "title": "User subject is missing" }, status: 400) && (return false)
@@ -62,7 +62,7 @@ class Api::PermissionRequestsController < ApplicationController
 
   def find_or_create_user(request)
     pr_user = OpenWithPermission::PermissionRequestUser.find_or_initialize_by(sub: request['user_sub'])
-    pr_user.name = request['user_full_name']
+    pr_user.name = request["permission_request"]['user_full_name']
     pr_user.email = request['user_email']
     pr_user.netid = request['user_netid']
     pr_user.email_verified = true
