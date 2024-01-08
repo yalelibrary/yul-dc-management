@@ -24,7 +24,7 @@ class Api::PermissionRequestsController < ApplicationController
         permission_set: permission_set,
         permission_request_user: pr_user,
         parent_object: parent_object,
-        user_note: request['user_note'].presence || request['permission_request']['user_note']
+        user_note: request['permission_request']['user_note']
       )
       new_request.save!
       render json: { "title": "New request created" }, status: 201
