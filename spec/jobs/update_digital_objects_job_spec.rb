@@ -37,20 +37,44 @@ RSpec.describe UpdateDigitalObjectsJob, type: :job, prep_metadata_sources: true,
     around do |example|
       original_vpn = ENV['VPN']
       ENV['VPN'] = 'true'
-      original_ff = ENV['FEATURE_FLAGS']
-      ENV['FEATURE_FLAGS'] = '|DO-SEND|'
       perform_enqueued_jobs do
         example.run
       end
       ENV['VPN'] = original_vpn
-      ENV['FEATURE_FLAGS'] = original_ff
     end
 
-    it 'processes all parents in batches' do
-      http = double
-      expect(http).to receive(:post).exactly(3).times
-      expect(HTTP).to receive(:basic_auth).exactly(3).times.and_return(http)
-      UpdateDigitalObjectsJob.perform_later(admin_set_1.id)
+    context 'feature flag is set' do
+      around do |example|
+        original_ff = ENV['FEATURE_FLAGS']
+        ENV['FEATURE_FLAGS'] = '|DO-SEND|'
+        perform_enqueued_jobs do
+          example.run
+        end
+        ENV['FEATURE_FLAGS'] = original_ff
+      end
+
+      it 'sends all digital object updates' do
+        http = double
+        expect(http).to receive(:post).exactly(3).times
+        expect(HTTP).to receive(:basic_auth).exactly(3).times.and_return(http)
+        UpdateDigitalObjectsJob.perform_later(admin_set_1.id)
+      end
+    end
+
+    context 'when feature flag is not set' do
+      around do |example|
+        original_ff = ENV['FEATURE_FLAGS']
+        ENV['FEATURE_FLAGS'] = '|x|'
+        perform_enqueued_jobs do
+          example.run
+        end
+        ENV['FEATURE_FLAGS'] = original_ff
+      end
+
+      it 'does not send updates' do
+        expect(HTTP).not_to receive(:basic_auth)
+        UpdateDigitalObjectsJob.perform_later(admin_set_1.id)
+      end
     end
   end
 end
