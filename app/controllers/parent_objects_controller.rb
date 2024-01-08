@@ -175,8 +175,7 @@ class ParentObjectsController < ApplicationController
       UpdateDigitalObjectsJob.perform_later(admin_set_id)
       redirect_to admin_set_path(admin_set_id), notice: "Digital Objects queued for update for #{admin_set.label}. Please check Delayed Job dashboard for status"
     else
-      redirect_to admin_set_path(admin_set), alert: "User does not have permission to update digital objects."
-      return false
+      access_denied
     end
   end
 

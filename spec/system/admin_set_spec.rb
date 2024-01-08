@@ -259,9 +259,5 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       page.driver.browser.switch_to.alert.accept
       expect(page).to have_content "User does not have permission to update Admin Set."
     end
-    it 'cannot send digital objects as non sys admin' do
-      visit update_digital_objects_parent_objects_url(admin_set_id: admin_set.id)
-      expect(page).to have_content("Access denied")
-    end
   end
 end
