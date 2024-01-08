@@ -10,6 +10,11 @@ require 'rspec/rails'
 require 'paper_trail/frameworks/rspec'
 
 # Add additional requires below this line. Rails is not loaded until this point!
+require 'database_cleaner/active_record'
+
+# require 'capybara/rspec'
+# require 'capybara/rails'
+# require 'capybara/webkit'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -40,6 +45,8 @@ RSpec.configure do |config|
   config.include(AdminSetsHelper)
   config.include(SolrHelper)
   config.include(StubRequestHelper)
+  # config.include(SystemHelper)
+  # config.include(AjaxHelper)
   config.include(Devise::Test::IntegrationHelpers)
   config.include Warden::Test::Helpers
   config.include(ParentChildObjectHelper)
@@ -60,12 +67,26 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
 
+  config.before(:each, type: :system) do
+    # :rack_test driver's Rack app under test shares database connection
+    # with the specs, so continue to use transaction strategy for speed.
+    driver_shares_db_connection_with_specs = Capybara.current_driver == :rack_test
+
+    unless driver_shares_db_connection_with_specs
+      # Driver is probably for an external browser with an app
+      # under test that does *not* share a database connection with the
+      # specs, so use truncation strategy.
+      DatabaseCleaner.strategy = :deletion
+    end
+  end
+
   config.before(:each) do |example|
     DatabaseCleaner.start unless example.metadata[:skip_db_cleaner]
   end
 
   config.append_after(:each) do |example|
     DatabaseCleaner.clean unless example.metadata[:skip_db_cleaner]
+    Warden.test_reset!
   end
 
   # You can uncomment this line to turn off ActiveRecord support entirely.

@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe 'Admin Sets', type: :system, prep_admin_sets: true, prep_metadata_sources: true do
-  let(:admin_set) { AdminSet.first }
-  let(:sysadmin_user) { FactoryBot.create(:sysadmin_user, uid: 'johnsmith2530') }
-  let(:user) { FactoryBot.create(:user, uid: 'martinsmith2530') }
-  let(:metadata_source) { MetadataSource.first }
+RSpec.describe 'Admin Sets', type: :system, js: true do
+  let(:admin_set) { FactoryBot.create(:admin_set, key: 'admin-set-key', label: 'admin-set-label', homepage: "http://admin-set-homepage.com") }
+  let(:sysadmin_user) { FactoryBot.create(:sysadmin_user, uid: 'johnsmith2730') }
+  let(:user) { FactoryBot.create(:user, uid: 'martinsmith2730') }
+  let(:metadata_source) { FactoryBot.create(:metadata_source, display_name: "test source") }
 
   before do
     admin_set
-    sysadmin_user.add_role(:editor, admin_set)
+    # sysadmin_user.add_role(:editor, admin_set)
   end
 
   context "when user has permission to Sets" do
     before do
-      login_as sysadmin_user
+      login_as(sysadmin_user)
     end
     it "display admin sets" do
       visit admin_sets_path
-      expect(page).to have_content("brbl")
+      expect(page).to have_content("admin-set-key")
     end
 
     it 'displays the user roles tables' do
@@ -57,7 +57,7 @@ RSpec.describe 'Admin Sets', type: :system, prep_admin_sets: true, prep_metadata
       within('table', text: 'Viewers') do
         expect(page).to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
       end
-      click_on('X')
+      click_on('X', match: :first)
       expect(page).to have_content("User: #{user.uid} removed as viewer")
       within('table', text: 'Viewers') do
         expect(page).not_to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
@@ -214,7 +214,7 @@ RSpec.describe 'Admin Sets', type: :system, prep_admin_sets: true, prep_metadata
       end
 
       it 'starts job when dialog is submitted' do
-        expect(UpdateAllMetadataJob).to receive(:perform_later).with(0, admin_set_id: ["", admin_set.id.to_s], redirect_to: nil, authoritative_metadata_source_id: ["", metadata_source.id.to_s])
+        expect(UpdateAllMetadataJob).to receive(:perform_later).with(0, { admin_set_id: ["", admin_set.id.to_s], redirect_to: nil, authoritative_metadata_source_id: ["", metadata_source.id.to_s] })
         expect(page).to have_css('input[value="Update Metadata"]')
         page.find("#metadata_source_ids").set [metadata_source.id.to_s]
         click_on('Update Metadata')

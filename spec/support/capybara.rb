@@ -33,7 +33,7 @@ Capybara.javascript_driver = :chrome
 # Setup rspec
 RSpec.configure do |config|
   config.before(:each, type: :system) do
-    driven_by :rack_test
+    driven_by :chrome
   end
 
   config.before(:each, type: :system, js: true) do
