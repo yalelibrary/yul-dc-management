@@ -82,6 +82,16 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       expect(page).to have_content "IIIF Manifests queued for update. Please check Delayed Job dashboard for status"
     end
 
+    it 'can send digital objects as sys admin' do
+      admin_set.add_editor(sysadmin_user)
+      visit admin_sets_path
+      click_link(admin_set.key.to_s)
+      expect(page).not_to have_content("Send Digital Objects")
+      click_on("Send Digital Objects")
+      page.driver.browser.switch_to.alert.accept
+      expect(page).to have_content "Digital Objects queued for update for #{admin_set.label}. Please check Delayed Job dashboard for status"
+    end
+
     it 'cannot update iiif manifests if not an editor of the admin set' do
       visit admin_sets_path
       click_link(admin_set.key.to_s)
@@ -248,6 +258,10 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       click_on("Update IIIF Manifests")
       page.driver.browser.switch_to.alert.accept
       expect(page).to have_content "User does not have permission to update Admin Set."
+    end
+    it 'cannot send digital objects as non sys admin' do
+      visit update_digital_objects_parent_objects_url(admin_set_id: admin_set.id)
+      expect(page).to have_content("Access denied")
     end
   end
 end
