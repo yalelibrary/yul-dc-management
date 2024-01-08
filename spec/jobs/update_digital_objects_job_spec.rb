@@ -28,7 +28,7 @@ RSpec.describe UpdateDigitalObjectsJob, type: :job, prep_metadata_sources: true,
 
     before do
       allow(UpdateDigitalObjectsJob).to receive(:job_limit).and_return(2)
-      allow(GeneratePtiffJob).to receive(:perform_later) # this is just to prevent errors trying to generate the ptiffs
+      allow(SetupMetadataJob).to receive(:perform_later) # this is just to prevent errors trying to get metadata
       po1
       po2
       po3

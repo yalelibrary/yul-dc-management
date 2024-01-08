@@ -14,7 +14,7 @@ class UpdateDigitalObjectsJob < ApplicationJob
     last_job = parent_objects.count < UpdateDigitalObjectsJob.job_limit
     return unless parent_objects.count.positive? # stop if nothing is found
     parent_objects.each do |po|
-      po.digital_object_check(true)
+      po.digital_object_check(true) if po.to_solr.present? || po.visibility == 'Private' # only force digital_object_check if a solr document is generated, or if it's private
     end
     UpdateDigitalObjectsJob.perform_later(admin_set_id, start_position + parent_objects.count) unless last_job
   end
