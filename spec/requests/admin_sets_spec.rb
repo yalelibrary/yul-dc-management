@@ -129,7 +129,7 @@ RSpec.describe "/admin_sets", type: :request do
       end
 
       describe "POST /send_digital_objects" do
-        it 'cannot send digital objects as non sys admin' do
+        it 'can send digital objects as sys admin' do
           admin_set = AdminSet.create! valid_attributes
           post update_digital_objects_parent_objects_url(admin_set_id: admin_set.id)
           expect(response).to redirect_to(admin_set_url(admin_set))
