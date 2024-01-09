@@ -1,0 +1,56 @@
+<p id="notice"><%= notice %></p>
+<div class='row datatable-heading'>
+  <div class='col'>
+    <h1>Problem Reports</h1>
+    <% if @email_address %>
+      The report will be emailed to: <%= @email_address %>
+    <% else %>
+      The email address is not set for this environment.  No email will be sent.
+    <% end %>
+  </div>
+  <div class='col'>
+    <div class='float-right button-list'>
+      <%= link_to 'Trigger Job Manually', problem_reports_path, method: 'post', class: "btn button secondary-button" %>
+      <%  if @check_status %>
+        <% if !@scheduled_job_exists %>
+          <%= button_to 'Queue the Problem Report Job', problem_reports_path(queue_recurring: 'true'), method: 'post', class: 'btn button secondary-button' %>
+        <% end %>
+      <% else %>
+        <%= link_to 'Check status of the Problem Report Job', problem_reports_path(check_status:'true'), method: 'get', class: 'btn button secondary-button' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class='reoccurring-notice'>
+  <%  if @check_status %>
+    <p>
+      <% if @scheduled_job_exists %>
+        A problem report job is set to run the report daily.
+      <% else %>
+      <p>The problem report job is <strong>NOT</strong> queued</p>
+    <% end %>
+    </p>
+  <%  end %>
+</div><br />
+<div class='row datatable'>
+  <div class='col overflow-auto'>
+    <table id='problem-report-datatable' class='is-datatable table table-responsive table-bordered table-striped' aria-label='Reoccurring Jobs' data-source='<%= problem_reports_path(format: :json) %>' data-refresh="true" >
+      <thead class='table-head'>
+      <tr>
+        <th scope='col'>Status</th>
+        <th scope='col'>Total Parent count</th>
+        <th scope='col'>Total Child count</th>
+        <th scope='col'>Problem parent count</th>
+        <th scope='col'>Problem child count</th>
+        <th scope='col'>Date</th>
+        <th scope='col'>Report</th>
+      </tr>
+      </thead>
+      <tbody class='datatable-body'>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div id='reoccurring-job-data' class='d-none datatable-data'>
+  <%= ProblemReportDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], searchable: value[:searchable], options: value[:options]} }.to_json %>
+</div>

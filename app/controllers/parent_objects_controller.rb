@@ -71,16 +71,15 @@ class ParentObjectsController < ApplicationController
       permission_set_param = OpenWithPermission::PermissionSet.find(parent_object_params[:permission_set_id]) if parent_object_params[:permission_set_id].present?
 
       authorize!(:owp_access, permission_set) if parent_object.visibility == "Open with Permission" && parent_object.visibility != parent_object_params[:visibility]
+
       authorize!(:owp_access, permission_set) if permission_set.present? &&  permission_set != permission_set_param
+
       authorize!(:owp_access, permission_set_param) if permission_set_param.present?
 
-      # TODO: refactor this
-      invalidate_permission_admin_set_edit unless valid_permission_admin_set_edit?
-      invalidate_presence_admin_set_edit unless valid_presence_admin_set_edit?
-      invalidate_metadata_source_edit unless valid_metadata_source_edit?
+      invalidate_admin_set_edit unless valid_admin_set_edit?
       invalidate_redirect_to_edit unless valid_redirect_to_edit?
 
-      updated = valid_to_edit? ? @parent_object.update!(parent_object_params) : false
+      updated = valid_admin_set_edit? ? @parent_object.update!(parent_object_params) : false
 
       if updated
         @parent_object.minify if valid_redirect_to_edit?
@@ -141,7 +140,7 @@ class ParentObjectsController < ApplicationController
     where[:authoritative_metadata_source_id] = metadata_source_ids if metadata_source_ids
     where
   end
-  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
 
   def all_metadata
     UpdateAllMetadataJob.perform_later(0, all_metadata_where)
@@ -164,7 +163,7 @@ class ParentObjectsController < ApplicationController
     admin_set = AdminSet.find(admin_set_id)
     if current_user.viewer(admin_set) || current_user.editor(admin_set)
       UpdateManifestsJob.perform_later(admin_set_id)
-      redirect_to admin_set_path(admin_set_id), notice: "IIIF Manifests queued for update. Please check GoodJob Job dashboard for status"
+      redirect_to admin_set_path(admin_set_id), notice: "IIIF Manifests queued for update. Please check Delayed Job dashboard for status"
     else
       redirect_to admin_set_path(admin_set), alert: "User does not have permission to update Admin Set."
       false
@@ -214,76 +213,13 @@ class ParentObjectsController < ApplicationController
     @parent_object.current_batch_process = @batch_process
   end
 
-  def valid_permission_admin_set_edit?
+  def valid_admin_set_edit?
     !parent_object_params[:admin_set] || (parent_object_params[:admin_set] && current_user.editor(parent_object_params[:admin_set]))
   end
 
-  def invalidate_permission_admin_set_edit
+  def invalidate_admin_set_edit
     @parent_object.errors.add :admin_set, :invalid, message: "cannot be assigned to a set the User cannot edit"
   end
-
-  def valid_presence_admin_set_edit?
-    parent_object_params[:admin_set] && parent_object_params[:admin_set] != ""
-  end
-
-  def invalidate_presence_admin_set_edit
-    @parent_object.errors.add :admin_set, :invalid, message: "cannot be assigned to a nonexistent Admin set"
-  end
-
-  # rubocop:disable Layout/LineLength
-  def valid_metadata_source_edit?
-    !parent_object_params[:authoritative_metadata_source_id] || (parent_object_params[:authoritative_metadata_source_id] && MetadataSource.exists?(id: parent_object_params[:authoritative_metadata_source_id]))
-  end
-  # rubocop:enable Layout/LineLength
-
-  def invalidate_metadata_source_edit
-    @parent_object.errors.add :authoritative_metadata_source_id, :invalid, message: "cannot be assigned to a nonexistant Metadata Source"
-  end
-
-  # rubocop:disable Layout/LineLength
-  def valid_redirect_to_edit?
-    !parent_object_params[:redirect_to] || parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//) if parent_object_params[:redirect_to].present?
-  end
-  # rubocop:enable Layout/LineLength
-
-  def invalidate_redirect_to_edit
-    @parent_object.errors.add :redirect_to, :invalid, message: "must be in format https://collections.library.yale.edu/catalog/1234567"
-  end
-
-  def valid_visibility_edit?
-    if parent_object_params[:visibility] == "Open with Permission" && parent_object_params[:permission_set].nil?
-      @parent_object.errors.add(:visibility, "objects must have a Permission Set if they are set to Open with Permission")
-      false
-    elsif ParentObject.visibilities.include?(parent_object_params[:visibility])
-      true
-    else
-      parent_object_params.merge(visibility: 'Private')
-      true
-    end
-  end
-
-  # rubocop:disable Layout/LineLength
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
-  def valid_to_edit?
-    if (!parent_object_params[:visibility].nil? && valid_visibility_edit?) && (valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_metadata_source_edit?) && parent_object_params[:redirect_to].nil?
-      validity = true
-    elsif !parent_object_params[:redirect_to].nil? && valid_redirect_to_edit?
-      validity = true
-    elsif !parent_object_params[:admin_set].nil? && valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_metadata_source_edit? && valid_visibility_edit?
-      validity = true
-    elsif !parent_object_params[:authoritative_metadata_source_id].nil? && valid_metadata_source_edit? && valid_permission_admin_set_edit? && valid_presence_admin_set_edit? && valid_visibility_edit?
-      validity = true
-    else
-      validity = false
-    end
-    validity
-  end
-  # rubocop:enable Layout/LineLength
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
 
   # Use callbacks to share common setup or constraints between actions.
   def set_parent_object
@@ -308,6 +244,16 @@ class ParentObjectsController < ApplicationController
     @parent_object.current_batch_connection = @batch_process.batch_connections.build(connectable: @parent_object)
     @batch_process.save!
     @parent_object.current_batch_process = @batch_process
+  end
+
+  # rubocop:disable Metrics/LineLength
+  def valid_redirect_to_edit?
+    !parent_object_params[:redirect_to] || parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//) if parent_object_params[:redirect_to].present?
+  end
+  # rubocop:enable Metrics/LineLength
+
+  def invalidate_redirect_to_edit
+    @parent_object.errors.add :redirect_to, :invalid, message: "must be in format https://collections.library.yale.edu/catalog/1234567"
   end
 
   # Only allow a list of trusted parameters through.

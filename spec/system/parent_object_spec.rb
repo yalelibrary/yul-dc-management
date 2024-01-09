@@ -494,21 +494,22 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
     context "as a permission set admin" do
       let(:user) { FactoryBot.create(:user) }
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), permission_set: permission_set) }
-      let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
+      let(:permission_set_two) { FactoryBot.create(:permission_set, label: 'set 2') }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), permission_set: permission_set_two) }
 
       before do
         stub_metadata_cloud("2012036")
         parent_object
-        permission_set
+        permission_set_two
         login_as user
         user.add_role(:administrator, parent_object.permission_set)
       end
 
       it "can set the parent objects visibility to OwP" do
         visit edit_parent_object_path(2_012_036)
+        # byebug
         expect(page).to have_select("parent_object_visibility", options: ["Open with Permission", "Public", "Yale Community Only", "Private"])
-        expect(page).to have_select("parent_object_permission_set_id", options: ["set 1", "None"])
+        expect(page).to have_select("parent_object_permission_set_id", options: "set 2\nNone")
       end
     end
   end
