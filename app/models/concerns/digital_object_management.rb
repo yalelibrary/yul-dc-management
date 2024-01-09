@@ -46,15 +46,15 @@ module DigitalObjectManagement
 
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
-  def digital_object_check
+  def digital_object_check(force = false)
     new_digital_object = generate_digital_object_json
-    return unless (digital_object_json && digital_object_json.json || nil) != new_digital_object
+    return unless force || (digital_object_json&.json || nil) != new_digital_object
     #  There has been a change that needs to be reported to metadata cloud
     if send_digital_object_update(
       priorDigitalObject: digital_object_json&.json.present? && JSON.parse(digital_object_json.json) || nil,
       digitalObject: new_digital_object.present? && JSON.parse(new_digital_object) || nil
     )
-      # Only update the database is the update was sent to MC successfully.
+      # Only update the database if the update was sent to MC successfully.
       # This will cause unsuccessful sends to MC to be resent when the ParentObject is next updated.
       apply_new_digital_object_json(new_digital_object)
     end

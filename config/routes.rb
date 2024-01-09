@@ -41,6 +41,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       post :reindex
       post :all_metadata
       post :update_manifests
+      post :update_digital_objects
     end
     member do
       post :update_metadata
