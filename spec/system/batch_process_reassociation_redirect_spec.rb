@@ -34,7 +34,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       user.add_role(:editor, admin_set)
       batch_process.user_id = user.id
       visit batch_processes_path
-      page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
       select("Reassociate Child Oids")
       page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_redirect_system.csv")
       click_button("Submit")
@@ -56,7 +55,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       user.add_role(:editor, admin_set)
       batch_process.user_id = user.id
       visit batch_processes_path
-      page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
       select("Reassociate Child Oids")
       page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/reassociation_example_do_not_reassociate.csv")
       click_button("Submit")

@@ -26,7 +26,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     stub_full_text('1032318')
     login_as user
     visit batch_processes_path
-    page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
     select("Create Parent Objects")
   end
 
@@ -373,7 +372,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         po.delete
         expect(po.destroyed?).to be true
         visit batch_processes_path
-        page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
         click_on(BatchProcess.last.id.to_s)
         expect(page.body).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
       end
@@ -425,7 +423,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
   it "triggers directory scan" do
     visit batch_processes_path
-    page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
     expect(MetsDirectoryScanJob).to receive(:perform_later).and_return(nil).once
     click_on("Start Goobi Scan")
     expect(page.driver.browser.switch_to.alert.text).to eq("Are you sure you start a Goobi Scan?")
@@ -438,7 +435,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     before do
       login_as user
       visit batch_processes_path
-      page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
     end
 
     it "triggers directory scan is disabled" do
@@ -451,7 +447,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     before do
       login_as user
       visit batch_processes_path
-      page.driver.browser.switch_to.alert.dismiss if Selenium::WebDriver::Error::UnexpectedAlertOpenError
     end
 
     it "has csv button" do
