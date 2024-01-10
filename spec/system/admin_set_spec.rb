@@ -86,10 +86,10 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       admin_set.add_editor(sysadmin_user)
       visit admin_sets_path
       click_link(admin_set.key.to_s)
-      expect(page).not_to have_content("Send Digital Objects")
-      click_on("Send Digital Objects")
+      expect(page).not_to have_content("Resend Digital Objects")
+      click_on("Resend Digital Objects")
       page.driver.browser.switch_to.alert.accept
-      expect(page).to have_content "Digital Objects queued for update for #{admin_set.label}. Please check Delayed Job dashboard for status"
+      expect(page).to have_content "Digital Objects requests have been queued for #{admin_set.label}. Please check Delayed Job dashboard for status"
     end
 
     it 'cannot update iiif manifests if not an editor of the admin set' do
