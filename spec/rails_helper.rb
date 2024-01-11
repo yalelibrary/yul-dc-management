@@ -12,10 +12,6 @@ require 'paper_trail/frameworks/rspec'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'database_cleaner/active_record'
 
-# require 'capybara/rspec'
-# require 'capybara/rails'
-# require 'capybara/webkit'
-
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -76,7 +72,7 @@ RSpec.configure do |config|
       # Driver is probably for an external browser with an app
       # under test that does *not* share a database connection with the
       # specs, so use truncation strategy.
-      DatabaseCleaner.strategy = :deletion
+      DatabaseCleaner.strategy = :truncation
     end
   end
 
