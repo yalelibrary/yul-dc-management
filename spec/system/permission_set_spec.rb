@@ -285,7 +285,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         expect(page).to have_content(denied)
       end
       it 'cannot manage terms' do
-        visit permission_set_terms_permission_set_url(permission_set)
+        visit "/permission_sets/#{permission_set.id}/permission_set_terms"
         expect(page).to have_content(denied)
       end
       it 'cannot be created' do
@@ -356,7 +356,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         end
 
         it "terms page displays active term" do
-          visit permission_set_terms_permission_set_url(permission_set)
+          visit "/permission_sets/#{permission_set.id}/permission_set_terms"
           expect(page).to have_content(permission_set.label)
           within(active_version_element) do
             expect(page).to have_content(terms.activated_at.to_s)
@@ -366,7 +366,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
 
         it "terms page displays None when terms are inactivated" do
           permission_set.inactivate_terms_by!(administrator_user)
-          visit permission_set_terms_permission_set_url(permission_set)
+          visit "/permission_sets/#{permission_set.id}/permission_set_terms"
           expect(page).to have_content(permission_set.label)
           within(active_version_element) do
             expect(page).to have_content("None")
@@ -375,13 +375,13 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         end
 
         it "terms page displays Remove button" do
-          visit permission_set_terms_permission_set_url(permission_set)
+          visit "/permission_sets/#{permission_set.id}/permission_set_terms"
           expect(page).to have_content("Remove")
         end
 
         it "terms page does not display Remove button when inactivated" do
           permission_set.inactivate_terms_by!(administrator_user)
-          visit permission_set_terms_permission_set_url(permission_set)
+          visit "/permission_sets/#{permission_set.id}/permission_set_terms"
           expect(page).not_to have_content("Remove")
         end
       end
@@ -406,7 +406,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
 
       it "terms page does not display Remove button" do
         permission_set.inactivate_terms_by!(administrator_user)
-        visit permission_set_terms_permission_set_url(permission_set)
+        visit "/permission_sets/#{permission_set.id}/permission_set_terms"
         expect(page).not_to have_content("Remove")
       end
 
