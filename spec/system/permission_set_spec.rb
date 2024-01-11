@@ -13,6 +13,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
   let(:edit_set) { 'Editing Permission Set' }
   let(:new_set) { 'New Permission Set' }
   let(:create_set) { 'Create Permission Set' }
+  let(:sets_all_caps) { 'PERMISSION SETS' }
   let(:sets) { 'Permission Sets' }
   let(:denied) { 'Access denied' }
   let(:create_new_set) { 'Create New Permission Set' }
@@ -32,7 +33,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
     describe 'a regular user' do
       it 'cannot view the Permission Sets link' do
         visit '/'
-        expect(page).not_to have_content(sets)
+        expect(page).not_to have_content(sets_all_caps)
       end
       it 'cannot visit the Permission Sets route' do
         visit '/permission_sets'
@@ -46,7 +47,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'can view the Permission Sets link' do
         visit '/'
-        expect(page).to have_content(sets)
+        expect(page).to have_content(sets_all_caps)
       end
       it 'can view the Permission Sets index' do
         visit '/permission_sets'
@@ -60,7 +61,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'can view the Permission Sets link' do
         visit '/'
-        expect(page).to have_content(sets)
+        expect(page).to have_content(sets_all_caps)
       end
       it 'can view the Permission Sets index' do
         visit '/permission_sets'
@@ -74,7 +75,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'can view the Permission Sets link' do
         visit '/'
-        expect(page).to have_content(sets)
+        expect(page).to have_content(sets_all_caps)
       end
       it 'can view the Permission Sets index' do
         visit '/permission_sets'
@@ -397,7 +398,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
 
       it "show page displays None" do
         visit "/permission_sets/#{permission_set.id}"
-        expect(page).to have_content(sets)
+        expect(page).to have_content(permission_set.label)
         within(permission_set_terms_element) do
           expect(page).to have_content("None")
         end
@@ -418,6 +419,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         fill_in('Title', with: "Title")
         fill_in('Body', with: "Body")
         click_on "Create Terms and Conditions"
+        page.driver.browser.switch_to.alert.accept
         expect(page).to have_content("ACTIVE")
         visit "permission_sets/#{permission_set.id}/permission_set_terms/#{permission_set.permission_set_terms.first.id}"
         expect(page).to have_content("Terms and Conditions for #{permission_set.label}")
@@ -435,6 +437,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         visit "permission_sets/#{permission_set.id}/permission_set_terms/"
         expect(page).to have_content("Remove")
         click_button "Remove"
+        page.driver.browser.switch_to.alert.accept
         expect(page).not_to have_content("Remove")
       end
 
