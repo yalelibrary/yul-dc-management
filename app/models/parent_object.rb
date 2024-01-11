@@ -525,6 +525,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def aspace_json=(a_record)
     # TODO: resolve why a_record is nil
+    # called on line 400
     # undefined method `[]' for nil:NilClass
     # cause of failure for /spec/system/batch_process_preservica_spec.rb:70
     # in batch_process_preservica_spec the oid created used to be 200000000 now it's 200000045 which is not what the csv has

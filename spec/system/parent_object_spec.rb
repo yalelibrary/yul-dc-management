@@ -507,7 +507,6 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
       it "can set the parent objects visibility to OwP" do
         visit edit_parent_object_path(2_012_036)
-        # byebug
         # TODO: expected to find visible select box "parent_object_permission_set_id" that is not disabled with options "set 2\nNone" but there were no matches.
         # Also found "set 2\nNone", which matched the selector but not all filters. Expected disabled false but it wasn't
         expect(page).to have_select("parent_object_visibility", options: ["Open with Permission", "Public", "Yale Community Only", "Private"])

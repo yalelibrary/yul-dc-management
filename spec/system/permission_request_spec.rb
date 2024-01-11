@@ -25,7 +25,6 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true 
   context 'as a sysadmin' do
     before do
       login_as sysadmin
-      # byebug
     end
 
     it 'can view a permission request' do
