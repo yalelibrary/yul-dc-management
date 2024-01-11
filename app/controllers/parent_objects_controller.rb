@@ -79,7 +79,11 @@ class ParentObjectsController < ApplicationController
       invalidate_admin_set_edit unless valid_admin_set_edit?
       invalidate_redirect_to_edit unless valid_redirect_to_edit?
 
-      updated = valid_admin_set_edit? ? @parent_object.update!(parent_object_params) : false
+      updated = if !parent_object_params[:redirect_to].nil? && !valid_redirect_to_edit?
+                  false
+                else
+                  valid_admin_set_edit? ? @parent_object.update!(parent_object_params) : false
+                end
 
       if updated
         @parent_object.minify if valid_redirect_to_edit?
@@ -163,7 +167,7 @@ class ParentObjectsController < ApplicationController
     admin_set = AdminSet.find(admin_set_id)
     if current_user.viewer(admin_set) || current_user.editor(admin_set)
       UpdateManifestsJob.perform_later(admin_set_id)
-      redirect_to admin_set_path(admin_set_id), notice: "IIIF Manifests queued for update. Please check Delayed Job dashboard for status"
+      redirect_to admin_set_path(admin_set_id), notice: "IIIF Manifests queued for update. Please check GoodJob Job dashboard for status"
     else
       redirect_to admin_set_path(admin_set), alert: "User does not have permission to update Admin Set."
       false
@@ -246,11 +250,14 @@ class ParentObjectsController < ApplicationController
     @parent_object.current_batch_process = @batch_process
   end
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   def valid_redirect_to_edit?
-    !parent_object_params[:redirect_to] || parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//) if parent_object_params[:redirect_to].present?
+    parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//).present? if parent_object_params[:redirect_to].present?
+    # if parent_object_params[:redirect_to].present?
+    #   parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//).present?
+    # end
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 
   def invalidate_redirect_to_edit
     @parent_object.errors.add :redirect_to, :invalid, message: "must be in format https://collections.library.yale.edu/catalog/1234567"

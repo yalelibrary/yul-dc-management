@@ -456,7 +456,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       visit edit_parent_object_path(12_345)
       select('Redirect')
       click_on("Save Parent Object And Update Metadata")
-      expect(page).to have_content 'Redirect to in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123'
+      expect(page).to have_content 'Redirect to must be in format https://collections.library.yale.edu/catalog/1234567'
     end
   end
 
@@ -508,6 +508,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       it "can set the parent objects visibility to OwP" do
         visit edit_parent_object_path(2_012_036)
         # byebug
+        # TODO: expected to find visible select box "parent_object_permission_set_id" that is not disabled with options "set 2\nNone" but there were no matches.
+        # Also found "set 2\nNone", which matched the selector but not all filters. Expected disabled false but it wasn't
         expect(page).to have_select("parent_object_visibility", options: ["Open with Permission", "Public", "Yale Community Only", "Private"])
         expect(page).to have_select("parent_object_permission_set_id", options: "set 2\nNone")
       end

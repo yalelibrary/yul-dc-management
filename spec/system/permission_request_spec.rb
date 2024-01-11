@@ -25,11 +25,12 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true 
   context 'as a sysadmin' do
     before do
       login_as sysadmin
+      # byebug
     end
 
     it 'can view a permission request' do
       visit '/'
-      expect(page).to have_content("Permission Requests")
+      expect(page).to have_content("PERMISSION REQUESTS")
       visit '/permission_requests'
       expect(page).to have_content('Permission Requests')
       expect(page).to have_content(permission_request.permission_set.label.to_s)
@@ -50,7 +51,7 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true 
 
     it 'can view a permission request from a set they are an admin for' do
       visit '/'
-      expect(page).to have_content("Permission Requests")
+      expect(page).to have_content("PERMISSION REQUESTS")
       visit '/permission_requests'
       expect(page).to have_content('Permission Requests')
       expect(page).to have_content(permission_request_2.permission_set.label.to_s)
@@ -76,7 +77,7 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true 
 
     it 'can view a permission request from a set they are an admin for' do
       visit '/'
-      expect(page).to have_content("Permission Requests")
+      expect(page).to have_content("PERMISSION REQUESTS")
       visit '/permission_requests'
       expect(page).to have_content('Permission Requests')
       expect(page).to have_content(permission_request_2.permission_set.label.to_s)
@@ -101,7 +102,7 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true 
     end
     it 'cannot view or access the Permission Requests page' do
       visit '/'
-      expect(page).not_to have_content("Permission Requests")
+      expect(page).not_to have_content("PERMISSION REQUESTS")
       visit '/permission_requests'
       expect(page).to have_content("Access denied")
     end

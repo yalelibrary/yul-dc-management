@@ -6,7 +6,7 @@ RSpec.describe AdminSetDatatable, type: :datatable, prep_metadata_sources: true 
   columns = ['key', 'label', 'homepage']
 
   before do
-    AdminSet.all.destroy if AdminSet.all.count > 0
+    AdminSet.all&.each { |a| a.destroy! } if AdminSet.all.count > 0
   end
 
   describe 'admin set data tables' do

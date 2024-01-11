@@ -45,6 +45,9 @@ module SolrIndexable
 
   def solr_delete
     solr = SolrService.connection
+    # TODO: if I interrupt with a byebug here the oid is present but during test it is "" and I'm not sure why it is dissappearing
+    # cause of failure for /spec/models/parent_object_spec.rb (64, 101, 107, 122, 132)
+    # and /spec/system/parent_object_spec.rb (227, 312, 362)
     solr.delete_by_id(oid.to_s)
     solr.delete_by_query("parent_ssi:#{oid}")
     solr.commit

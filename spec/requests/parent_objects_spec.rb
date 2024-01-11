@@ -206,49 +206,46 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
       let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), visibility: "Public") }
       let(:public_visibility) do
         {
-          oid: "12345",
-          authoritative_metadata_source_id: 1,
-          admin_set: 'brbl',
           visibility: "Public"
         }
       end
       let(:private_visibility) do
         {
-          oid: "12345",
-          authoritative_metadata_source_id: 1,
-          admin_set: 'brbl',
           visibility: "Private"
         }
       end
       let(:valid_permission_set) do
         {
-          oid: "12345",
-          authoritative_metadata_source_id: 1,
-          admin_set: 'brbl',
           visibility: "Open with Permission",
-          permission_set: permission_set
+          permission_set_id: permission_set.id
         }
       end
 
-      it "can change parent visibility away from OwP as a permission_set admin" do
+      it "can change parent visibility to Private from OwP as a permission_set admin" do
         login_as regular_user
         regular_user.add_role(:administrator, permission_set)
         patch parent_object_url(parent_object_owp), params: { parent_object: private_visibility }
         expect(response).to have_http_status(302)
+        parent_object_owp.reload
+        expect(parent_object_owp.visibility).to eq "Private"
       end
 
-      it "can change a parent away from a permission set as a permission_set admin" do
+      it "can change a parent visibility to Public from OwP as a permission_set admin" do
         login_as regular_user
         regular_user.add_role(:administrator, permission_set)
         patch parent_object_url(parent_object_owp), params: { parent_object: public_visibility }
         expect(response).to have_http_status(302)
+        parent_object_owp.reload
+        expect(parent_object_owp.visibility).to eq "Public"
       end
 
-      it "can change a parent into a permission set as a permission_set admin" do
+      it "can change a parent visibility to OwP from Public as a permission_set admin" do
         login_as regular_user
-        regular_user.add_role(:administrator, OpenWithPermission::PermissionSet)
+        regular_user.add_role(:administrator, permission_set)
         patch parent_object_url(parent_object), params: { parent_object: valid_permission_set }
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(302)
+        parent_object.reload
+        expect(parent_object.visibility).to eq "Open with Permission"
       end
     end
   end
