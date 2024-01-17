@@ -173,7 +173,7 @@ class ParentObjectsController < ApplicationController
     admin_set = AdminSet.find(admin_set_id)
     if current_user.sysadmin
       UpdateDigitalObjectsJob.perform_later(admin_set_id)
-      redirect_to admin_set_path(admin_set_id), notice: "Digital Objects queued for update for #{admin_set.label}. Please check Delayed Job dashboard for status"
+      redirect_to admin_set_path(admin_set_id), notice: "Digital Objects requests have been queued for #{admin_set.label}. Please check Delayed Job dashboard for status"
     else
       access_denied
     end
