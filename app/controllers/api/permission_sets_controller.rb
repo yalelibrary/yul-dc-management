@@ -75,6 +75,7 @@ class Api::PermissionSetsController < ApplicationController
 
     render(json: { "timestamp": timestamp, "user": { "sub": request_user.sub }, "permission_set_terms_agreed": terms_agreed, "permissions": set.reverse })
   end
+
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
   def find_or_create_user(request)
@@ -87,5 +88,4 @@ class Api::PermissionSetsController < ApplicationController
     pr_user.save!
     pr_user
   end
-
 end
