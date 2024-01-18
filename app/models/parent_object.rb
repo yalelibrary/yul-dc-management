@@ -396,7 +396,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                     when "aspace"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless aspace_uri.present?
                       begin
-                        # byebug
                         self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
                       rescue MetadataSource::MetadataCloudNotFoundError
                         processing_event("Marking #{oid} private because Archives Space record is not found.", "metadata-fetched")
@@ -524,12 +523,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def aspace_json=(a_record)
-    # TODO: resolve why a_record is nil
-    # called on line 400
-    # undefined method `[]' for nil:NilClass
-    # cause of failure for /spec/system/batch_process_preservica_spec.rb:70
-    # in batch_process_preservica_spec the oid created used to be 200000000 now it's 200000045 which is not what the csv has
-    # byebug
     super(a_record)
     self.last_aspace_update = DateTime.current if a_record.present?
     self.bib = a_record["orbisBibId"]

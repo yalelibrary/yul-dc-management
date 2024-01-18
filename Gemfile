@@ -15,7 +15,7 @@ gem 'devise'
 gem 'github_changelog_generator'
 gem 'good_job', '~> 3.17'
 gem 'honeybadger', '~> 4.0'
-gem 'http', '~> 4.4', '>= 4.4.1'
+gem 'http', '~> 5.1'
 gem 'iiif-presentation', '~> 1.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'

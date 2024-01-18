@@ -226,8 +226,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
       it 'has functioning Solr Document link' do
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
-        click_on("Solr Document")
-        solr_data = JSON.parse(page.body)
+        visit '/parent_objects/2012036/solr_document'
+        solr_data = JSON.parse(find('pre').text)
         expect(solr_data['numFound']).to eq 1
         expect(solr_data["docs"].count).to eq 1
         document = solr_data["docs"].first
@@ -317,8 +317,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         child_object
         po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
-        click_on("Solr Document")
-        solr_data = JSON.parse(page.body)
+        visit '/parent_objects/2012036/solr_document'
+        solr_data = JSON.parse(find('pre').text)
         expect(solr_data['numFound']).to eq 1
         expect(solr_data["docs"].count).to eq 1
         document = solr_data["docs"].first
@@ -367,8 +367,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         po.save
         po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
-        click_on("Solr Document")
-        solr_data = JSON.parse(page.body)
+        visit '/parent_objects/2012036/solr_document'
+        solr_data = JSON.parse(find('pre').text)
         expect(solr_data['numFound']).to eq 1
         expect(solr_data["docs"].count).to eq 1
         document = solr_data["docs"].first
@@ -507,10 +507,9 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
       it "can set the parent objects visibility to OwP" do
         visit edit_parent_object_path(2_012_036)
-        # TODO: expected to find visible select box "parent_object_permission_set_id" that is not disabled with options "set 2\nNone" but there were no matches.
-        # Also found "set 2\nNone", which matched the selector but not all filters. Expected disabled false but it wasn't
         expect(page).to have_select("parent_object_visibility", options: ["Open with Permission", "Public", "Yale Community Only", "Private"])
-        expect(page).to have_select("parent_object_permission_set_id", options: "set 2\nNone")
+        select "Open with Permission"
+        expect(page).to have_select("parent_object_permission_set_id", options: ["set 2", "None"])
       end
     end
   end
