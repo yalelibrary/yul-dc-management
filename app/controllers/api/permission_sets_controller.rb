@@ -30,7 +30,7 @@ class Api::PermissionSetsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       render(json: { "title": "Term not found." }, status: 400) && (return false)
     end
-    request_user = OpenWithPermission::PermissionRequestUser.where(sub: params[:sub]).first
+    request_user = find_or_create_user(params)
     if request_user.nil?
       render(json: { "title": "User not found." }, status: 400) && (return false)
     else
@@ -77,4 +77,15 @@ class Api::PermissionSetsController < ApplicationController
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
+  def find_or_create_user(request)
+    pr_user = OpenWithPermission::PermissionRequestUser.find_or_initialize_by(sub: request['user_sub'])
+    pr_user.name = request['user_full_name']
+    pr_user.email = request['user_email']
+    pr_user.netid = request['user_netid']
+    pr_user.email_verified = true
+    pr_user.oidc_updated_at = Time.zone.now
+    pr_user.save!
+    pr_user
+  end
+
 end
