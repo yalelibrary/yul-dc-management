@@ -31,17 +31,17 @@ class Api::PermissionSetsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       render(json: { "title": "Term not found." }, status: 400) && (return false)
     end
-    request_user = find_or_create_user(params) unless params['user_netid'].nil?
-    if request_user.nil?
+    begin
+      request_user = find_or_create_user(params)
+    rescue ActiveRecord::RecordInvalid
       render(json: { "title": "User not found." }, status: 400) && (return false)
-    else
-      begin
-        term_agreement = OpenWithPermission::TermsAgreement.new(permission_set_term: term, permission_request_user: request_user, agreement_ts: Time.zone.now)
-        term_agreement.save!
-        render json: { "title": "Success." }, status: 201
-      rescue StandardError => e
-        render json: { "title": e.to_s }, status: 500
-      end
+    end
+    begin
+      term_agreement = OpenWithPermission::TermsAgreement.new(permission_set_term: term, permission_request_user: request_user, agreement_ts: Time.zone.now)
+      term_agreement.save!
+      render json: { "title": "Success." }, status: 201
+    rescue StandardError => e
+      render json: { "title": e.to_s }, status: 500
     end
   end
 

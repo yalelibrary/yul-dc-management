@@ -37,7 +37,6 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
     {
       'oid': '123',
       'user_email': 'email',
-      'user_sub': 'sub',
       'user_full_name': "new",
       'permission_set_terms_id': terms.id
     }
