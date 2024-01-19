@@ -2,6 +2,7 @@
 
 class Api::PermissionSetsController < ApplicationController
   skip_before_action :authenticate_user!
+  skip_before_action :verify_authenticity_token
 
   def terms_api
     # check for valid parent object
@@ -30,7 +31,7 @@ class Api::PermissionSetsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       render(json: { "title": "Term not found." }, status: 400) && (return false)
     end
-    request_user = find_or_create_user(params)
+    request_user = find_or_create_user(params) unless params['user_netid'].nil?
     if request_user.nil?
       render(json: { "title": "User not found." }, status: 400) && (return false)
     else
