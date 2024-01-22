@@ -2,6 +2,7 @@
 
 class Api::PermissionSetsController < ApplicationController
   skip_before_action :authenticate_user!
+  skip_before_action :verify_authenticity_token
 
   def terms_api
     # check for valid parent object
@@ -30,17 +31,17 @@ class Api::PermissionSetsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       render(json: { "title": "Term not found." }, status: 400) && (return false)
     end
-    request_user = OpenWithPermission::PermissionRequestUser.where(sub: params[:sub]).first
-    if request_user.nil?
+    begin
+      request_user = find_or_create_user(params)
+    rescue ActiveRecord::RecordInvalid
       render(json: { "title": "User not found." }, status: 400) && (return false)
-    else
-      begin
-        term_agreement = OpenWithPermission::TermsAgreement.new(permission_set_term: term, permission_request_user: request_user, agreement_ts: Time.zone.now)
-        term_agreement.save!
-        render json: { "title": "Success." }, status: 201
-      rescue StandardError => e
-        render json: { "title": e.to_s }, status: 500
-      end
+    end
+    begin
+      term_agreement = OpenWithPermission::TermsAgreement.new(permission_set_term: term, permission_request_user: request_user, agreement_ts: Time.zone.now)
+      term_agreement.save!
+      render json: { "title": "Success." }, status: 201
+    rescue StandardError => e
+      render json: { "title": e.to_s }, status: 500
     end
   end
 
@@ -75,6 +76,17 @@ class Api::PermissionSetsController < ApplicationController
 
     render(json: { "timestamp": timestamp, "user": { "sub": request_user.sub }, "permission_set_terms_agreed": terms_agreed, "permissions": set.reverse })
   end
+
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
+  def find_or_create_user(request)
+    pr_user = OpenWithPermission::PermissionRequestUser.find_or_initialize_by(sub: request['user_sub'])
+    pr_user.name = request['user_full_name']
+    pr_user.email = request['user_email']
+    pr_user.netid = request['user_netid']
+    pr_user.email_verified = true
+    pr_user.oidc_updated_at = Time.zone.now
+    pr_user.save!
+    pr_user
+  end
 end
