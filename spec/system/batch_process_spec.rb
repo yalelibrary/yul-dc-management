@@ -372,7 +372,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         po.delete
         expect(po.destroyed?).to be true
         visit batch_processes_path
-        click_on(BatchProcess.last.id.to_s)
+        click_on(BatchProcess.last.id.to_s), match: :first
         expect(page.body).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
       end
     end
