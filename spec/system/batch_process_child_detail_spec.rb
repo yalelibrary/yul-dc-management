@@ -15,8 +15,6 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
         created_at: '2020-10-08 14:17:01'
       )
     end
-    let(:parent_oid) { batch_process.parent_objects.last.oid }
-    let(:child_oid) { batch_process.parent_objects.last.child_objects.first.oid }
 
     around do |example|
       access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
@@ -37,6 +35,9 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
     end
 
     it 'has a link to the batch process detail page' do
+      parent_oid = batch_process.parent_objects.last.oid
+      child_oid = batch_process.parent_objects.last.child_objects.first.oid
+  
       expect(BatchProcess.all.count).to eq 1
       visit show_child_batch_process_path(child_oid: child_oid, id: batch_process.id, oid: parent_oid)
       # has a link to the batch process detail page
