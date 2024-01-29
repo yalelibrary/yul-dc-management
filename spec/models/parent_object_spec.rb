@@ -45,7 +45,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
   context "with four child objects", :has_vcr do
     let(:user) { FactoryBot.create(:user) }
-    let(:parent_of_four) { FactoryBot.create(:parent_object, oid: 16_057_779) }
+    let(:parent_of_four) { FactoryBot.create(:parent_object, oid: 16_057_779, visibility: 'Public') }
     let(:child_of_four) { FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_of_four) }
     let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
     around do |example|
@@ -223,7 +223,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         batch_process.save
         batch_process.run_callbacks :create
       end.to change { batch_process.batch_connections.where(connectable_type: "ParentObject").count }.from(0).to(1)
-        .and change { IngestEvent.count }.from(0).to(11)
+        .and change { IngestEvent.count }.from(0).to(25)
       statuses = IngestEvent.all.map(&:status)
       expect(statuses).to include "processing-queued"
       expect(statuses).to include "metadata-fetched"
