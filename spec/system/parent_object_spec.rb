@@ -135,6 +135,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         select('Preservica')
         expect(page).to have_field("Preservica uri")
         fill_in('Preservica uri', with: "/preservica_uri")
+        select("Access")
         click_on("Create Parent object")
         expect(page).to have_content '/preservica_uri'
       end

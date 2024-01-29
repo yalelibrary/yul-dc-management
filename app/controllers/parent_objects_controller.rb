@@ -4,7 +4,7 @@ class ParentObjectsController < ApplicationController
   before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata, :select_thumbnail, :solr_document]
   before_action :set_paper_trail_whodunnit
   before_action :set_permission_set, only: [:edit, :update]
-  load_and_authorize_resource except: [:solr_document, :new, :create, :update_metadata, :all_metadata, :reindex, :select_thumbnail, :update_manifests]
+  load_and_authorize_resource except: [:solr_document, :new, :create, :update_metadata, :all_metadata, :reindex, :select_thumbnail, :update_manifests, :update_digital_objects]
 
   # GET /parent_objects
   # GET /parent_objects.json
@@ -171,6 +171,17 @@ class ParentObjectsController < ApplicationController
     else
       redirect_to admin_set_path(admin_set), alert: "User does not have permission to update Admin Set."
       false
+    end
+  end
+
+  def update_digital_objects
+    admin_set_id = params.dig(:admin_set_id)
+    admin_set = AdminSet.find(admin_set_id)
+    if current_user.sysadmin
+      UpdateDigitalObjectsJob.perform_later(admin_set_id)
+      redirect_to admin_set_path(admin_set_id), notice: "Digital Objects requests have been queued for #{admin_set.label}. Please check Delayed Job dashboard for status"
+    else
+      access_denied
     end
   end
 

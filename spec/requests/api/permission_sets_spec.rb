@@ -13,6 +13,34 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
   let(:term_agreement) { FactoryBot.create(:term_agreement, permission_request_user: request_user, permission_set_term: terms) }
   let(:terms) { FactoryBot.create(:permission_set_term, activated_by: user, activated_at: Time.zone.now, permission_set: permission_set) }
   let(:request_user) { FactoryBot.create(:permission_request_user, sub: '1234') }
+  let(:params) do
+    {
+      'oid': '123',
+      'user_email': 'email',
+      'user_netid': 'netid',
+      'user_sub': 'sub',
+      'user_full_name': "new",
+      'permission_set_terms_id': terms.id
+    }
+  end
+  let(:invalid_term_params) do
+    {
+      'oid': '123',
+      'user_email': 'email',
+      'user_netid': 'netid',
+      'user_sub': 'sub',
+      'user_full_name': "new",
+      'permission_set_terms_id': '1'
+    }
+  end
+  let(:invalid_user_params) do
+    {
+      'oid': '123',
+      'user_email': 'email',
+      'user_full_name': "new",
+      'permission_set_terms_id': terms.id
+    }
+  end
 
   before do
     login_as user
@@ -49,10 +77,10 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
     end
   end
 
-  describe 'GET /api/permission_sets/id/permission_set_terms/id/agree/sub' do
-    it 'can GET and create a user agreement' do
+  describe 'POST /agreement_term' do
+    it 'can POST and create a user agreement' do
       expect(OpenWithPermission::TermsAgreement.count).to eq 1
-      get "/api/permission_sets/#{permission_set.id}/permission_set_terms/#{terms.id}/agree/#{request_user.sub}"
+      post agreement_term_url(params)
       expect(response).to have_http_status(201)
       term = OpenWithPermission::TermsAgreement.first
       expect(OpenWithPermission::TermsAgreement.count).to eq 2
@@ -60,12 +88,12 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
       expect(term.permission_set_term).to eq terms
     end
     it 'throws error if user not found' do
-      get "/api/permission_sets/#{permission_set.id}/permission_set_terms/#{terms.id}/agree/123"
+      post agreement_term_url(invalid_user_params)
       expect(response).to have_http_status(400)
       expect(response.body).to eq("{\"title\":\"User not found.\"}")
     end
     it 'throws error if permission set term not found' do
-      get "/api/permission_sets/#{permission_set.id}/permission_set_terms/123/agree/#{request_user.sub}"
+      post agreement_term_url(invalid_term_params)
       expect(response).to have_http_status(400)
       expect(response.body).to eq("{\"title\":\"Term not found.\"}")
     end
