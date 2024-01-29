@@ -83,6 +83,9 @@ RSpec.configure do |config|
   config.append_after(:each) do |example|
     DatabaseCleaner.clean unless example.metadata[:skip_db_cleaner]
     Warden.test_reset!
+    # Set initial oid # to 200_000_000
+    ActiveRecord::Base.connection.execute("DROP SEQUENCE IF EXISTS OID_SEQUENCE;")
+    OidMinterService.initialize_sequence!
   end
 
   # You can uncomment this line to turn off ActiveRecord support entirely.

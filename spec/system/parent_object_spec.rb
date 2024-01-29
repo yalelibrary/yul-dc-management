@@ -168,10 +168,10 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         select("Yale Community Only")
         click_on(UPDATE_PARENT_OBJECT_BUTTON)
         # counts once on page and once in solr document section
-        expect(page.html).to include("Yale Community Only").twice
+        expect(page).to have_content("Yale Community Only")
         click_on("Back")
         visit parent_object_path(2_012_036)
-        expect(page.html).to include("Yale Community Only").twice
+        expect(page).to have_content("Yale Community Only")
       end
 
       it "can change the visibility to private via the UI" do
@@ -179,15 +179,15 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         select("Yale Community Only")
         click_on(UPDATE_PARENT_OBJECT_BUTTON)
         # counts once on page and once in solr document section
-        expect(page.html).to include("Yale Community Only").twice
+        expect(page).to have_content("Yale Community Only")
         click_on("Edit")
         select("Private")
         click_on(UPDATE_PARENT_OBJECT_BUTTON)
-        expect(page.html).to include("Private").twice
+        expect(page).to have_content("Private")
         click_on("Back")
         visit parent_object_path(2_012_036)
-        expect(page.html).to include("Private").twice
-        expect(page.html).to include "visibility_ssi"
+        expect(page).to have_content("Private")
+        expect(page).to have_content "visibility_ssi"
       end
 
       it "can change the Admin Set via the UI", prep_admin_sets: true do
@@ -288,9 +288,9 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
 
       it "can create a new parent object" do
-        expect(page.html).to include "Parent object was successfully created"
-        expect(page.html).to include "Voyager"
-        expect(page.html).to include "Public"
+        expect(page).to have_content "Parent object was successfully created"
+        expect(page).to have_content "Voyager"
+        expect(page).to have_content "Public"
       end
 
       it "has the correct authoritative_metadata_source in the database" do
@@ -350,8 +350,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
 
       it "can create a new parent object" do
-        expect(page.html).to include "Parent object was successfully created"
-        expect(page.html).to include "ArchivesSpace"
+        expect(page).to have_content "Parent object was successfully created"
+        expect(page).to have_content "ArchivesSpace"
       end
 
       it "fetches the ArchiveSpace record when applicable" do
@@ -389,7 +389,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
 
       it "can create a new parent object" do
-        expect(page.body).to include "Parent object was successfully created"
+        expect(page).to have_content "Parent object was successfully created"
       end
 
       it "leaves empty values as nil" do
