@@ -9,6 +9,8 @@ class UpdateDigitalObjectsJob < ApplicationJob
 
   # rubocop:disable Style/OptionalArguments
   # rubocop:disable Lint/UselessAssignment
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def perform(admin_set_id, start_position = 0)
     parent_objects = ParentObject.where(admin_set_id: admin_set_id).order(:oid).offset(start_position).limit(UpdateDigitalObjectsJob.job_limit)
     last_job = parent_objects.count < UpdateDigitalObjectsJob.job_limit
@@ -21,4 +23,6 @@ class UpdateDigitalObjectsJob < ApplicationJob
   end
   # rubocop:enable Style/OptionalArguments
   # rubocop:enable Lint/UselessAssignment
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
 end

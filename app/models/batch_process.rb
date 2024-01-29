@@ -238,7 +238,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         parent_object.digitization_funding_source = row['digitization_funding_source']
         parent_object.rights_statement = row['rights_statement']
 
-        # rubocop:disable Metrics/LineLength
+        # rubocop:disable Layout/LineLength
         if ParentObject.viewing_directions.include?(row['viewing_direction'])
           parent_object.viewing_direction = row['viewing_direction']
         else
@@ -250,7 +250,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         else
           batch_processing_event("Parent #{oid} did not update value for Display Layout. Value: #{row['display_layout']} is invalid. For field Display Layout / Viewing Hint please use: individuals, paged, continuous, or leave column empty", 'Invalid Vocabulary')
         end
-        # rubocop:enable Metrics/LineLength
+        # rubocop:enable Layout/LineLength
 
         if metadata_source == 'aspace' && row['extent_of_digitization'].blank?
           batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}.  Parent objects with ASpace as a source must have an Extent of Digitization value.", 'Skipped Row')
