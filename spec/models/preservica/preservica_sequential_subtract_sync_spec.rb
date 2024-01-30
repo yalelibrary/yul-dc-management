@@ -109,7 +109,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       end.to change { ChildObject.count }.from(0).to(3)
       po_first = ParentObject.first
       co_first = ChildObject.first
-      expect(po_first.last_preservica_update).not_to be nil
+      expect(po_first.last_preservica_update).not_to eq nil
       expect(co_first.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486"
       expect(File.exist?("spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif")).to be true
       expect(File.exist?("spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif")).to be true
