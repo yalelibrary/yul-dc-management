@@ -28,7 +28,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
     end
     before do
-      stub_metadata_cloud('16057779')
+      stub_metadata_cloud('2005512')
       stub_ptiffs_and_manifests
       login_as user
       batch_process.save!
