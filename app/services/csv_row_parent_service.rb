@@ -34,7 +34,7 @@ class CsvRowParentService
 
   row_accessor :aspace_uri, :bib, :holding, :item, :barcode, :oid, :admin_set,
                :preservica_uri, :visibility, :digital_object_source,
-               :authoritative_metadata_source_id, :preservica_representation_type
+               :authoritative_metadata_source_id, :preservica_representation_type, :extent_of_digitization
 
   def parent_object
     PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type)
@@ -84,6 +84,14 @@ class CsvRowParentService
   def digital_object_source
     raise BatchProcessingError.new("Skipping row [#{index + 2}]. Digital Object Source must be 'Preservica'", 'Skipped Row') if row['digital_object_source'] != "Preservica"
     row['digital_object_source']
+  end
+
+  def extent_of_digitization
+    valid_extents = [nil, "Completely digitized", "Partially digitized"]
+
+    return row['extent_of_digitization'] if valid_extents.include?(row['extent_of_digitization'])
+
+    raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown extent of digitization: #{row['extent_of_digitization']}. For field Extent of Digitization please use: Completely digitizied, Partially digitizied, or leave column empty", 'Skipped Row')
   end
 
   # rubocop:disable Layout/LineLength

@@ -69,6 +69,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     end.to change { ParentObject.count }.from(0).to(1)
     po_first = ParentObject.first
     expect(po_first.preservica_representation_type).to eq "Preservation"
+    expect(po_first.extent_of_digitization).to eq "Completely digitized"
   end
 
   it 'can create child objects' do
