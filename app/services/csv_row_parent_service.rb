@@ -34,7 +34,7 @@ class CsvRowParentService
 
   row_accessor :aspace_uri, :bib, :holding, :item, :barcode, :oid, :admin_set,
                :preservica_uri, :visibility, :digital_object_source,
-               :authoritative_metadata_source_id, :preservica_representation_type
+               :authoritative_metadata_source_id, :preservica_representation_type, :extent_of_digitization
 
   def parent_object
     PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type)
@@ -87,6 +87,14 @@ class CsvRowParentService
   end
 
   # rubocop:disable Metrics/LineLength
+  def extent_of_digitization
+    valid_extents = [nil, "Completely digitized", "Partially digitized"]
+
+    return row['extent_of_digitization'] if valid_extents.include?(row['extent_of_digitization'])
+
+    raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown extent of digitization: #{row['extent_of_digitization']}. For field Extent of Digitization please use: Completely digitizied, Partially digitizied, or leave column empty", 'Skipped Row')
+  end
+  
   def admin_set
     admin_sets_hash = {}
     admin_set_key = row['admin_set']
