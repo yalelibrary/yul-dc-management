@@ -86,6 +86,7 @@ class CsvRowParentService
     row['digital_object_source']
   end
 
+  # rubocop:disable Layout/LineLength
   def extent_of_digitization
     valid_extents = [nil, "Completely digitized", "Partially digitized"]
 
@@ -94,7 +95,6 @@ class CsvRowParentService
     raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown extent of digitization: #{row['extent_of_digitization']}. For field Extent of Digitization please use: Completely digitizied, Partially digitizied, or leave column empty", 'Skipped Row')
   end
 
-  # rubocop:disable Layout/LineLength
   def admin_set
     admin_sets_hash = {}
     admin_set_key = row['admin_set']
