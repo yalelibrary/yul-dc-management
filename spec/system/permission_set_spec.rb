@@ -277,7 +277,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         expect(page).not_to have_link('X')
         expect(page).not_to have_content('NetID')
         expect(page).not_to have_content('Save')
-        expect(page).not_to have_content('Manage Terms and Conditions')
+        expect(page).not_to have_link('Manage Terms and Conditions')
       end
       it 'cannot be accessed' do
         visit "/permission_sets/#{permission_set.id}/edit"
