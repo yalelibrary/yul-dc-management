@@ -2,6 +2,7 @@
 
 class UpdateDigitalObjectsJob < ApplicationJob
   queue_as :metadata
+  VOYAGER_AUTHORITATIVE_SOURCE_ID = 2
 
   def self.job_limit
     5000
@@ -10,7 +11,7 @@ class UpdateDigitalObjectsJob < ApplicationJob
   # rubocop:disable Style/OptionalArguments
   # rubocop:disable Lint/UselessAssignment
   def perform(admin_set_id, start_position = 0)
-    parent_objects = ParentObject.where(admin_set_id: admin_set_id).order(:oid).offset(start_position).limit(UpdateDigitalObjectsJob.job_limit)
+    parent_objects = ParentObject.where(admin_set_id: admin_set_id, authoritative_metadata_source_id: VOYAGER_AUTHORITATIVE_SOURCE_ID).order(:oid).offset(start_position).limit(UpdateDigitalObjectsJob.job_limit)
     last_job = parent_objects.count < UpdateDigitalObjectsJob.job_limit
     return unless parent_objects.count.positive? # stop if nothing is found
     parent_objects.each do |po|
