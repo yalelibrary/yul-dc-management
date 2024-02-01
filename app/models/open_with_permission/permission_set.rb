@@ -39,4 +39,8 @@ class OpenWithPermission::PermissionSet < ApplicationRecord
     new_terms.activate_by!(user)
     new_terms
   end
+
+  def terms_and_conditions_warning
+    active_permission_set_terms.present? ? true : false
+  end
 end
