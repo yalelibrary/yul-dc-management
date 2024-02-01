@@ -94,7 +94,7 @@ class CsvRowParentService
 
     raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown extent of digitization: #{row['extent_of_digitization']}. For field Extent of Digitization please use: Completely digitizied, Partially digitizied, or leave column empty", 'Skipped Row')
   end
-  
+
   def admin_set
     admin_sets_hash = {}
     admin_set_key = row['admin_set']
