@@ -278,7 +278,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         expect(page).not_to have_link('X')
         expect(page).not_to have_content('NetID')
         expect(page).not_to have_content('Save')
-        expect(page).not_to have_content('Manage Terms and Conditions')
+        expect(page).not_to have_link('Manage Terms and Conditions')
       end
       it 'cannot be accessed' do
         visit "/permission_sets/#{permission_set.id}/edit"
@@ -339,10 +339,11 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         end
       end
 
-      it "show page displays None when terms are inactivated" do
+      it "show page displays None and terms warning message when terms are inactivated" do
         permission_set.inactivate_terms_by!(administrator_user)
         visit "/permission_sets/#{permission_set.id}"
         expect(page).to have_content(permission_set.label)
+        expect(page).to have_content("No Terms and Conditions are applied. Please select ‘Manage Terms and Conditions’ to apply Terms and Conditions to this Permission Set.")
         within(permission_set_terms_element) do
           expect(page).to have_content("None")
           expect(page).not_to have_content(terms.activated_at.to_s)
