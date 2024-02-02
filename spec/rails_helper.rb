@@ -83,6 +83,8 @@ RSpec.configure do |config|
   config.append_after(:each) do |example|
     DatabaseCleaner.clean unless example.metadata[:skip_db_cleaner]
     Warden.test_reset!
+    # ensure no parent object straglers
+    ParentObject.all&.each { |x| x.destroy! } if ParentObject.all.count > 0
     # Set initial oid # to 200_000_000
     ActiveRecord::Base.connection.execute("DROP SEQUENCE IF EXISTS OID_SEQUENCE;")
     OidMinterService.initialize_sequence!

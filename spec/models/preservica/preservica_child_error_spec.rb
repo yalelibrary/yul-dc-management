@@ -36,7 +36,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   end
 
   before do
-    ParentObject.all&.each { |x| x.destroy! } if ParentObject.all.count > 0
     user.add_role(:editor, admin_set)
     login_as(:user)
     batch_process.user_id = user.id

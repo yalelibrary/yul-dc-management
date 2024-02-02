@@ -28,7 +28,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   end
 
   before do
-    ParentObject.all&.each { |x| x.destroy! } if ParentObject.all.count > 0
     login_as user
     batch_process.user_id = user.id
     stub_preservica_aspace_single

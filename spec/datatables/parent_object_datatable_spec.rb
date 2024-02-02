@@ -3,10 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: true, prep_admin_sets: true do
-  before do
-    ParentObject.all&.each { |x| x.destroy! } if ParentObject.all.count > 0
-  end
-
   columns = ['oid', 'authoritative_source', 'bib']
   let(:user) { FactoryBot.create(:sysadmin_user) }
 

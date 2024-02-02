@@ -8,7 +8,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
 
   before do
-    ParentObject.all&.each { |x| x.destroy! } if ParentObject.all.count > 0
     stub_manifests
     stub_metadata_cloud("2005512")
     parent_object
