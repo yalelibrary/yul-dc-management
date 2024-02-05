@@ -632,7 +632,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
       it "does not allow creation of new parent with wrong admin set" do
         click_on("Create Parent object")
-        expect(page.body).to include 'Access denied'
+        expect(page).to have_content 'Access denied'
       end
     end
 
