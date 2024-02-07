@@ -89,6 +89,20 @@ module Updatable
       next unless validate_metadata_source(metadata_source, index)
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.admin_set = admin_set unless admin_set.nil?
+      if processed_fields[:visibility] == "Open with Permission"
+        permission_set = OpenWithPermission::PermissionSet.where(key: row['permission_set_id']).first
+        if permission_set.nil?
+          batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing or nonexistent.", 'Skipped Row')
+          next
+        elsif user.has_role?(:administrator, permission_set) || user.has_role?(:sysadmin)
+          processed_fields.each do |key, value|
+            processed_fields[:permission_set_id] = permission_set.id
+          end
+        else
+          batch_processing_event("Skipping row [#{index + 2}] because user does not have edit permissions for this Permission Set: #{permission_set.key}", 'Permission Denied')
+          next
+        end
+      end
       parent_object.update!(processed_fields)
       trigger_setup_metadata(parent_object)
       sync_from_preservica if parent_object.digital_object_source == 'Preservica'
@@ -166,7 +180,7 @@ module Updatable
 
   def validate_field(parent_object, row)
     fields = ['aspace_uri', 'barcode', 'bib', 'digital_object_source', 'digitization_funding_source', 'digitization_note', 'holding', 'item',
-              'preservica_representation_type', 'preservica_uri', 'project_identifier', 'rights_statement', 'redirect_to']
+              'preservica_representation_type', 'preservica_uri', 'project_identifier', 'rights_statement', 'redirect_to', 'permission_set_id']
     validation_fields = { "display_layout" => 'viewing_hints', "extent_of_digitization" => 'extent_of_digitizations', "viewing_direction" => 'viewing_directions', "visibility" => 'visibilities' }
     row, blanks = remove_blanks(row, parent_object)
     processed_fields = {}
@@ -243,7 +257,7 @@ module Updatable
     when 'viewing_direction'
       batch_processing_event("Parent #{oid} did not update value for Viewing Directions. Value: #{row_value} is invalid. For field Viewing Direction please use: left-to-right, right-to-left, top-to-bottom, bottom-to-top, or leave column empty", 'Invalid Vocabulary')
     when 'visibility'
-      batch_processing_event("Parent #{oid} did not update value for Visibility. Value: #{row_value} is invalid. For field Visibility please use: Private, Public, or Yale Community Only", 'Invalid Vocabulary')
+      batch_processing_event("Parent #{oid} did not update value for Visibility. Value: #{row_value} is invalid. For field Visibility please use: Private, Public, Open with Permission, or Yale Community Only", 'Invalid Vocabulary')
     end
   end
   # rubocop:enable Metrics/LineLength
