@@ -241,7 +241,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         # rubocop:disable Metrics/LineLength
         if ParentObject.visibilities.include?(row['visibility'])
           if row['visibility'] == 'Open with Permission'
-            permission_set = OpenWithPermission::PermissionSet.where(key: row['permission_set_key']).first
+            permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_key'])
             if permission_set.nil?
               batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing or nonexistent.", 'Skipped Row')
               next

@@ -90,12 +90,12 @@ module Updatable
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.admin_set = admin_set unless admin_set.nil?
       if processed_fields[:visibility] == "Open with Permission"
-        permission_set = OpenWithPermission::PermissionSet.where(key: row['permission_set_id']).first
+        permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_id'])
         if permission_set.nil?
           batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing or nonexistent.", 'Skipped Row')
           next
         elsif user.has_role?(:administrator, permission_set) || user.has_role?(:sysadmin)
-          processed_fields.each do |key, value|
+          processed_fields.each do
             processed_fields[:permission_set_id] = permission_set.id
           end
         else
