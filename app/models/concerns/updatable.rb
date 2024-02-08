@@ -90,9 +90,13 @@ module Updatable
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.admin_set = admin_set unless admin_set.nil?
 
-      if row['permission_set_key'].present?
+      if row['permission_set_key'].present? && row['permission_set_key'] != parent_object&.permission_set&.key
         permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_key'])
-        if user.has_role?(:administrator, permission_set) || user.has_role?(:sysadmin)
+        if permission_set.nil?
+          batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing or nonexistent.", 'Skipped Row')
+          next
+        elsif user.has_role?(:administrator, permission_set) || user.has_role?(:sysadmin)
+          next if parent_object.permission_set && !(user.has_role?(:administrator, parent_object.permission_set) || user.has_role?(:sysadmin))
           parent_object.permission_set = permission_set
         else
           batch_processing_event("Skipping row [#{index + 2}] because user does not have edit permissions for this Permission Set: #{permission_set.key}", 'Permission Denied')
@@ -100,14 +104,6 @@ module Updatable
         end
       end
 
-      if processed_fields[:visibility] == "Open with Permission"
-        permission_set = parent_object.permission_set
-        if permission_set.nil?
-          batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing or nonexistent.", 'Skipped Row')
-          next
-        end
-      end
-      
       parent_object.update!(processed_fields)
       trigger_setup_metadata(parent_object)
       sync_from_preservica if parent_object.digital_object_source == 'Preservica'
