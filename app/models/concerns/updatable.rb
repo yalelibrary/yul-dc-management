@@ -89,20 +89,25 @@ module Updatable
       next unless validate_metadata_source(metadata_source, index)
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.admin_set = admin_set unless admin_set.nil?
-      if processed_fields[:visibility] == "Open with Permission"
-        permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_id'])
-        if permission_set.nil?
-          batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing or nonexistent.", 'Skipped Row')
-          next
-        elsif user.has_role?(:administrator, permission_set) || user.has_role?(:sysadmin)
-          processed_fields.each do
-            processed_fields[:permission_set_id] = permission_set.id
-          end
+
+      if row['permission_set_key'].present?
+        permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_key'])
+        if user.has_role?(:administrator, permission_set) || user.has_role?(:sysadmin)
+          parent_object.permission_set = permission_set
         else
           batch_processing_event("Skipping row [#{index + 2}] because user does not have edit permissions for this Permission Set: #{permission_set.key}", 'Permission Denied')
           next
         end
       end
+
+      if processed_fields[:visibility] == "Open with Permission"
+        permission_set = parent_object.permission_set
+        if permission_set.nil?
+          batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing or nonexistent.", 'Skipped Row')
+          next
+        end
+      end
+      
       parent_object.update!(processed_fields)
       trigger_setup_metadata(parent_object)
       sync_from_preservica if parent_object.digital_object_source == 'Preservica'
@@ -180,7 +185,7 @@ module Updatable
 
   def validate_field(parent_object, row)
     fields = ['aspace_uri', 'barcode', 'bib', 'digital_object_source', 'digitization_funding_source', 'digitization_note', 'holding', 'item',
-              'preservica_representation_type', 'preservica_uri', 'project_identifier', 'rights_statement', 'redirect_to', 'permission_set_id']
+              'preservica_representation_type', 'preservica_uri', 'project_identifier', 'rights_statement', 'redirect_to']
     validation_fields = { "display_layout" => 'viewing_hints', "extent_of_digitization" => 'extent_of_digitizations', "viewing_direction" => 'viewing_directions', "visibility" => 'visibilities' }
     row, blanks = remove_blanks(row, parent_object)
     processed_fields = {}
