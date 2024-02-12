@@ -11,7 +11,7 @@ module CsvExportable
     ['oid', 'admin_set', 'authoritative_source', 'child_object_count', 'call_number',
      'container_grouping', 'bib', 'holding', 'item', 'barcode', 'aspace_uri',
      'digital_object_source', 'preservica_uri', 'last_ladybird_update',
-     'last_voyager_update', 'last_sierra_update', 'last_aspace_update', 'last_id_update', 'visibility',
+     'last_voyager_update', 'last_sierra_update', 'last_aspace_update', 'last_id_update', 'visibility', 'permission_set_key',
      'extent_of_digitization', 'digitization_note', 'digitization_funding_source', 'project_identifier', 'full_text']
   end
 
@@ -28,7 +28,7 @@ module CsvExportable
                   po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
                   po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
                   po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
-                  po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
+                  po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po.extent_of_digitization,
                   po.digitization_note, po.digitization_funding_source, po.project_identifier, extent_of_full_text(po)]
         else
           csv << [po[:id], po[:row2], '-', po[:csv_message], '', '']
@@ -128,7 +128,7 @@ module CsvExportable
              po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
              po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
              po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
-             po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
+             po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po.extent_of_digitization,
              po.digitization_note, po.digitization_funding_source, po.project_identifier, extent_of_full_text(po)]
       csv_rows << row
     end
