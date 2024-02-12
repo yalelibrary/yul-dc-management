@@ -96,8 +96,12 @@ module Updatable
           batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing or nonexistent.", 'Skipped Row')
           next
         elsif user.has_role?(:administrator, permission_set) || user.has_role?(:sysadmin)
-          next if parent_object.permission_set && !(user.has_role?(:administrator, parent_object.permission_set) || user.has_role?(:sysadmin))
-          parent_object.permission_set = permission_set
+          if parent_object.permission_set && !(user.has_role?(:administrator, parent_object.permission_set) || user.has_role?(:sysadmin))
+            batch_processing_event("Skipping row [#{index + 2}] because user does not have edit permissions for the currently assigned Permission Set", 'Permission Denied')
+            next
+          else
+            parent_object.permission_set = permission_set
+          end
         else
           batch_processing_event("Skipping row [#{index + 2}] because user does not have edit permissions for this Permission Set: #{permission_set.key}", 'Permission Denied')
           next
