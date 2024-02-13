@@ -39,6 +39,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   describe 'with the metadata cloud mocked' do
     before do
       stub_metadata_cloud('AS-781086', 'aspace')
+      stub_metadata_cloud('2002826', 'ladybird')
     end
 
     context 'Create Parent Object batch process with a csv' do
@@ -67,6 +68,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         end.to change { ParentObject.count }.from(0).to(1)
         po = ParentObject.first
         expect(po.visibility).to eq('Open with Permission')
+        expect(po.permission_set).to eq(permission_set)
       end
       it 'fails creating an OwP parent_object with invalid Permission Set key' do
         permission_set.add_administrator(user)
