@@ -40,6 +40,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     collection do
       post :reindex
       post :all_metadata
+      post :export_parents
       post :update_manifests
       post :update_digital_objects
     end

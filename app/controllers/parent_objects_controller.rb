@@ -148,6 +148,14 @@ class ParentObjectsController < ApplicationController
     end
   end
 
+  def export_parents
+    ExportAllParentsJob.perform_later(0, all_metadata_where)
+    respond_to do |format|
+      format.html { redirect_back fallback_location: parent_objects_url, notice: 'Parent objects have been queued for metadata update.' }
+      format.json { head :no_content }
+    end
+  end
+
   def update_metadata
     queue_parent_metadata_update
     respond_to do |format|
