@@ -66,6 +66,8 @@ class BatchProcessesController < ApplicationController
 
   def export_parent_sources
     sources = params[:metadata_source_ids]
+    admin_set = params.dig(:admin_set_id)
+    redirect_to admin_set_path(admin_set), notice: "CSV is being generated. Please visit the Batch Process page to download."
     batch_process = BatchProcess.new(batch_action: 'export all parents by source', user: current_user, file_name: "exported_parent_objects_source.csv")
     batch_process.save!
     ExportAllParentSourcesCsvJob.perform_later(batch_process, sources)

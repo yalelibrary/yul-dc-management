@@ -25,12 +25,12 @@ RSpec.describe ExportAllParentSourcesCsvJob, type: :job do
     expect(export_all_parent_sources_csv_job.queue_name).to eq('default')
   end
 
-  it 'calls parent_output_csv when performed' do
+  it 'calls export_all_parents_source_csv when performed' do
     expect(batch_process).to receive(:export_all_parents_source_csv).once
     described_class.new.perform(batch_process, ["1"])
   end
 
-  it 'reports error when parent_output_csv fails' do
+  it 'reports error when export_all_parents_source_csv fails' do
     allow(batch_process).to receive(:export_all_parents_source_csv).and_raise('boom!')
     inst = described_class.new
     expect do
