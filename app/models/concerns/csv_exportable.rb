@@ -15,6 +15,10 @@ module CsvExportable
      'extent_of_digitization', 'digitization_note', 'digitization_funding_source', 'project_identifier', 'full_text']
   end
 
+  def parent_source_headers
+    ['oid', 'archives_space_uri', 'bib_id', 'holding_id', 'item_id', 'barcode', 'visibility']
+  end
+
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def parent_output_csv(*admin_set_id)
@@ -160,6 +164,34 @@ module CsvExportable
       end
     end
     arr
+  end
+
+  def export_all_parents_source_csv(sources)
+    return nil unless batch_action == 'export all parents by source'
+    output_csv = CSV.generate do |csv|
+      csv << parent_source_headers
+      find_parent_by_source(sources) do |po|
+        case po
+        when ParentObject
+          csv << [po.oid, po.aspace_uri, po.bib,
+                  po.holding, po.item, po.barcode, po.visibility]
+        else
+          csv << [po[:id], po[:row2], '-', po[:csv_message], '', '']
+          batch_processing_event(po[:batch_message], 'Skipped Row') unless batch_ingest_events_count.positive?
+        end
+      end
+    end
+    save_to_s3(output_csv, self)
+    output_csv
+  end
+
+  def find_parent_by_source(sources)
+    sources.reject(&:blank?).each do |source_id|
+      source = MetadataSource.find(source_id)
+      ParentObject.where(authoritative_metadata_source_id: source).order(:oid).find_each do |parent|
+        yield parent
+      end
+    end
   end
 
   ########################

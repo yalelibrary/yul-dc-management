@@ -64,6 +64,13 @@ class BatchProcessesController < ApplicationController
     end
   end
 
+  def export_parent_sources
+    sources = params[:metadata_source_ids]
+    batch_process = BatchProcess.new(batch_action: 'export all parents by source', user: current_user, file_name: "exported_parent_objects_source.csv")
+    batch_process.save!
+    ExportAllParentSourcesCsvJob.perform_later(batch_process, sources)
+  end
+
   def export_parent_objects
     # RETURNS ADMIN SET KEY:
     admin_set = params.dig(:admin_set)

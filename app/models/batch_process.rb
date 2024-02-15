@@ -160,6 +160,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         ExportParentMetadataCsvJob.perform_later(self)
       when 'export all parent objects by admin set'
         CreateParentOidCsvJob.perform_later(self)
+      when 'export all parents by source'
+        ExportAllParentSourcesCsvJob.perform_later(self)
       when 'export child oids'
         CreateChildOidCsvJob.perform_later(self)
       when 'update parent objects'
