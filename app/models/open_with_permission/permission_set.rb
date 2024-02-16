@@ -4,7 +4,7 @@ class OpenWithPermission::PermissionSet < ApplicationRecord
   has_many :parent_objects
   has_many :permission_set_terms, class_name: "OpenWithPermission::PermissionSetTerm"
   resourcify
-  validates :key, presence: true
+  validates :key, presence: true, uniqueness: true
   validates :label, presence: true
 
   def add_approver(user)
