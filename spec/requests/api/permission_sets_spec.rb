@@ -3,9 +3,9 @@ require 'rails_helper'
 
 RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
-  let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
-  let(:permission_set_2) { FactoryBot.create(:permission_set, label: 'set 2') }
-  let(:permission_set_3) { FactoryBot.create(:permission_set, label: 'set 3') }
+  let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1', key: 'key 1') }
+  let(:permission_set_2) { FactoryBot.create(:permission_set, label: 'set 2', key: 'key 2') }
+  let(:permission_set_3) { FactoryBot.create(:permission_set, label: 'set 3', key: 'key 3') }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), permission_set: permission_set, visibility: "Open with Permission") }
   let(:parent_object_no_ps) { FactoryBot.create(:parent_object, oid: 2_012_033, admin_set: AdminSet.find_by_key('brbl')) }
   let(:parent_object_no_terms) { FactoryBot.create(:parent_object, oid: 2_012_037, admin_set: AdminSet.find_by_key('brbl'), permission_set: permission_set_2, visibility: "Open with Permission") }

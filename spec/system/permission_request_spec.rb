@@ -7,8 +7,8 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true 
   let(:user) { FactoryBot.create(:user) }
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:request_user_2) { FactoryBot.create(:permission_request_user, sub: "sub 2", name: "name 2", netid: "net id") }
-  let(:permission_set) { FactoryBot.create(:permission_set, label: "set 1") }
-  let(:permission_set_2) { FactoryBot.create(:permission_set, label: "set 2") }
+  let(:permission_set) { FactoryBot.create(:permission_set, label: "set 1", key: 'key 1') }
+  let(:permission_set_2) { FactoryBot.create(:permission_set, label: "set 2", key: 'key 2') }
   let(:parent_object) { FactoryBot.create(:parent_object) }
   let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "12345", admin_set: admin_set) }
   let(:permission_request) { FactoryBot.create(:permission_request, request_status: true) }
