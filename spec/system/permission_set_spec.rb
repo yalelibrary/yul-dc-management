@@ -7,8 +7,8 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
   let(:user_2) { FactoryBot.create(:user) }
   let(:approver_user) { FactoryBot.create(:user) }
   let(:administrator_user) { FactoryBot.create(:user, uid: 'admin') }
-  let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
-  let(:permission_set_2) { FactoryBot.create(:permission_set, label: 'set 2') }
+  let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1', key: "key 1") }
+  let(:permission_set_2) { FactoryBot.create(:permission_set, label: 'set 2', key: "key 2") }
   let(:term) { FactoryBot.create(:permission_set_term, activated_at: Time.zone.now, permission_set_id: permission_set.id) }
   let(:edit_set) { 'Editing Permission Set' }
   let(:new_set) { 'New Permission Set' }
@@ -144,7 +144,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       it 'metadata' do
         visit "/permission_sets/#{permission_set.id}"
         expect(page).to have_content('set 1')
-        expect(page).to have_content('Permission Key')
+        expect(page).to have_content('key 1')
         expect(page).to have_content('Max Request Queue Length: 1')
       end
       it 'approvers and administrators' do
@@ -174,14 +174,12 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'can be edited' do
         visit "/permission_sets/#{permission_set.id}/edit"
-        fill_in('open_with_permission_permission_set_key', with: 'key example')
         fill_in('open_with_permission_permission_set_label', with: 'label example')
         click_on 'Update Permission Set'
         expect(page).to have_content('Permission set was successfully updated.')
       end
       it 'can reject invalid params' do
         visit "/permission_sets/#{permission_set.id}/edit"
-        fill_in('open_with_permission_permission_set_key', with: 'key example')
         # permission set must also have label - this leaves that out making the request invalid and causing a render of the edit page
         fill_in('open_with_permission_permission_set_label', with: '')
         click_on 'Update Permission Set'
