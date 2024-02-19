@@ -445,7 +445,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def assign_values
     self.call_number = authoritative_json["callNumber"].is_a?(Array) ? authoritative_json["callNumber"].first : authoritative_json["callNumber"]
     self.container_grouping = authoritative_json["containerGrouping"].is_a?(Array) ? authoritative_json["containerGrouping"].first : authoritative_json["containerGrouping"]
-    self.visibility = visibility_was && self.permission_set = permission_set_was if visibility_was == 'Open with Permission'
+    self.visibility = visibility_was && self.permission_set_id = permission_set_id_was if visibility_was == 'Open with Permission'
   end
 
   def add_media_type(url)
