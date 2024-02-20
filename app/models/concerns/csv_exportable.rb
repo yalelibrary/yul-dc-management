@@ -125,11 +125,11 @@ module CsvExportable
       self.admin_set = split_sets.join(', ')
       save!
       row = [po.oid, po.admin_set.key, po.source_name,
-        po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
-        po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
-        po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
-        po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po.extent_of_digitization,
-        po.digitization_note, po.digitization_funding_source, po.rights_statement, po.project_identifier, extent_of_full_text(po)]
+             po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+             po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
+             po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
+             po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po.extent_of_digitization,
+             po.digitization_note, po.digitization_funding_source, po.rights_statement, po.project_identifier, extent_of_full_text(po)]
       csv_rows << row
     end
     add_error_rows(csv_rows)
@@ -150,11 +150,11 @@ module CsvExportable
         case po
         when ParentObject
           csv << [po.oid, po.admin_set.key, po.source_name,
-            po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
-            po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
-            po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
-            po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po.extent_of_digitization,
-            po.digitization_note, po.digitization_funding_source, po.rights_statement, po.project_identifier, extent_of_full_text(po)]
+                  po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+                  po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
+                  po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
+                  po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po.extent_of_digitization,
+                  po.digitization_note, po.digitization_funding_source, po.rights_statement, po.project_identifier, extent_of_full_text(po)]
         else
           csv << [po[:id], po[:row2], '-', po[:csv_message], '', '']
           batch_processing_event(po[:batch_message], 'Skipped Row') unless batch_ingest_events_count.positive?
