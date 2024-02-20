@@ -15,10 +15,6 @@ module CsvExportable
      'extent_of_digitization', 'digitization_note', 'digitization_funding_source', 'project_identifier', 'full_text']
   end
 
-  def parent_source_headers
-    ['oid', 'archives_space_uri', 'bib_id', 'holding_id', 'item_id', 'barcode', 'visibility']
-  end
-
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def parent_output_csv(*admin_set_id)
