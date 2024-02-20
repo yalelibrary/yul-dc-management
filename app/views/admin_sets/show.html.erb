@@ -12,7 +12,6 @@
   <%= button_to "Update IIIF Manifests", update_manifests_parent_objects_url(admin_set_id: @admin_set.id), method: :post, class: "btn btn-large btn-secondary update_manifest", data: { confirm: 'Are you sure you want to update the IIIF manifests for this entire set?' } %>
   <% if current_user&.sysadmin %>
     <%= button_to "Resend Digital Objects", update_digital_objects_parent_objects_url(admin_set_id: @admin_set.id), method: :post, class: "btn btn-large btn-secondary update_manifest", data: { confirm: 'Are you sure you want to resend the digital objects to ILS and ArchivesSpace for this entire set?' } %>
-    <a href="#ExportAllParents" role="button" class="export-parents-source btn btn-large btn-secondary" data-toggle="modal">Export all parents</a>
   <% end %>
 </div>
 
@@ -46,4 +45,3 @@
 </p>
 
 <%= render partial: "update_metadata_dialog" %>
-<%= render partial: "export_all_parents_dialog" %>
