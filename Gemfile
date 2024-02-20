@@ -95,6 +95,7 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'coveralls_reborn', require: false
   gem 'ffaker'
+  gem 'rspec_junit_formatter'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'timecop'
