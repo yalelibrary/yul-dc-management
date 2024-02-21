@@ -106,6 +106,9 @@ module Updatable
           batch_processing_event("Skipping row [#{index + 2}] because user does not have edit permissions for this Permission Set: #{permission_set.key}", 'Permission Denied')
           next
         end
+      elsif row['visibility'] == "Open with Permission" && row['permission_set_key'].blank?
+        batch_processing_event("Skipping row [#{index + 2}] because Open with Permission objects must have a Permission Set Key assigned.", 'Skipped Row')
+          next
       end
 
       parent_object.update!(processed_fields)
