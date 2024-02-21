@@ -50,7 +50,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         end.to change { ParentObject.count }.from(0).to(1)
         po = ParentObject.first
         expect(po.bib).to eq('4320085')
-        expect(po.aspace_uri).to eq('/repositories/12/archival_objects/781086')
+        expect(po.aspace_uri).to eq('/repositories/12/archival_objects/781086qqqqqqqqqqqqqqq')
       end
       it 'can create a parent_object' do
         expect do
