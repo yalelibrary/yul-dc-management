@@ -108,7 +108,7 @@ module Updatable
           next
         end
       elsif row['visibility'] == "Open with Permission" && row['permission_set_key'].blank?
-        batch_processing_event("Skipping row [#{index + 2}] because Open with Permission objects must have a Permission Set Key assigned.", 'Skipped Row')
+        batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing.", 'Skipped Row')
         next
       end
 
