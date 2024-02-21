@@ -65,6 +65,7 @@ module Updatable
     end
   end
 
+  # rubocop:disable Metrics/BlockLength
   def update_parent_objects
     self.admin_set = ''
     sets = admin_set
@@ -108,7 +109,7 @@ module Updatable
         end
       elsif row['visibility'] == "Open with Permission" && row['permission_set_key'].blank?
         batch_processing_event("Skipping row [#{index + 2}] because Open with Permission objects must have a Permission Set Key assigned.", 'Skipped Row')
-          next
+        next
       end
 
       parent_object.update!(processed_fields)
@@ -121,6 +122,7 @@ module Updatable
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/BlockLength
   # rubocop:enable Metrics/MethodLength
 
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
