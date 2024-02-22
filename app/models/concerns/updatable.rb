@@ -65,6 +65,7 @@ module Updatable
     end
   end
 
+  # rubocop:disable Metrics/BlockLength
   def update_parent_objects
     self.admin_set = ''
     sets = admin_set
@@ -90,7 +91,10 @@ module Updatable
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.admin_set = admin_set unless admin_set.nil?
 
-      if row['permission_set_key'].present? && row['permission_set_key'] != parent_object&.permission_set&.key
+      if row['visibility'] == "Open with Permission" && row['permission_set_key'].blank?
+        batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing from CSV.", 'Skipped Row')
+        next
+      elsif row['visibility'] == "Open with Permission" && row['permission_set_key'] != parent_object&.permission_set&.key
         permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_key'])
         if permission_set.nil?
           batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing or nonexistent.", 'Skipped Row')
@@ -118,6 +122,7 @@ module Updatable
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/BlockLength
   # rubocop:enable Metrics/MethodLength
 
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
