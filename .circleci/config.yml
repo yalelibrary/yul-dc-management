@@ -63,6 +63,8 @@ jobs:
           command: |
             mkdir /tmp/test-results
             cd /home/app/webapp && circleci tests glob "spec/**/*_spec.rb" | circleci tests run --command="xargs bundle exec rspec --tag ~vpn_only:true --format RspecJunitFormatter -o ~/tmp/test-results/rspec.xml" --verbose --split-by=timings
+      - store_test_results:
+          path: /tmp/test-results
       - run:
           name: Stash Coverage Results
           command: |
@@ -72,8 +74,6 @@ jobs:
           root: .
           paths:
             - coverage_results
-      - store_test_results:
-          path: /tmp/test-results
   coverage:
     docker:
       - image: yalelibraryit/dc-management:$CIRCLE_SHA1
