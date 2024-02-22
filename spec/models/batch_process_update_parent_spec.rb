@@ -247,7 +247,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_updated.rights_statement).to be_nil
       expect(po_updated.viewing_direction).to be_nil
       expect(po_updated.visibility).to eq "Private"
-      expect(update_batch_process.batch_ingest_events.first.reason).to eq "Skipping row [2]. Process failed. Permission Set missing."
+      expect(update_batch_process.batch_ingest_events.first.reason).to eq "Skipping row [2]. Process failed. Permission Set missing from CSV."
       expect(update_batch_process.batch_ingest_events_count).to eq 1
     end
 

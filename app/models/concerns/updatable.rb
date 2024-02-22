@@ -91,7 +91,10 @@ module Updatable
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.admin_set = admin_set unless admin_set.nil?
 
-      if row['visibility'] == "Open with Permission" && row['permission_set_key'] != parent_object&.permission_set&.key
+      if row['visibility'] == "Open with Permission" && row['permission_set_key'].blank?
+        batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing from CSV.", 'Skipped Row')
+        next
+      elsif row['visibility'] == "Open with Permission" && row['permission_set_key'] != parent_object&.permission_set&.key
         permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_key'])
         if permission_set.nil?
           batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing or nonexistent.", 'Skipped Row')
@@ -107,9 +110,6 @@ module Updatable
           batch_processing_event("Skipping row [#{index + 2}] because user does not have edit permissions for this Permission Set: #{permission_set.key}", 'Permission Denied')
           next
         end
-      elsif row['visibility'] == "Open with Permission" && row['permission_set_key'].blank?
-        batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing.", 'Skipped Row')
-        next
       end
 
       parent_object.update!(processed_fields)
