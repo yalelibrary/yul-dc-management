@@ -61,7 +61,8 @@ jobs:
           name: rspec
           # ~vpn_only:true - excludes tests that require Yale VPN access
           command: |
-            mkdir /tmp/test-results | cd /home/app/webapp | circleci tests glob "spec/**/*_spec.rb" | circleci tests run --command="xargs bundle exec rspec --tag ~vpn_only:true --format RspecJunitFormatter -o ~/tmp/test-results/rspec.xml" --verbose --split-by=timings
+            mkdir /tmp/test-results
+            cd /home/app/webapp && circleci tests glob "spec/**/*_spec.rb" | circleci tests run --command="xargs bundle exec rspec --tag ~vpn_only:true --format RspecJunitFormatter -o ~/tmp/test-results/rspec.xml" --verbose --split-by=timings
       - run:
           name: Stash Coverage Results
           command: |
