@@ -30,7 +30,7 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
       'user_netid': 'netid',
       'user_sub': 'sub',
       'user_full_name': "new",
-      'permission_set_terms_id': '1'
+      'permission_set_terms_id': '555'
     }
   end
   let(:invalid_user_params) do
