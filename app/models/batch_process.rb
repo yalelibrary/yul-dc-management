@@ -349,7 +349,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       elsif current_ability.can?(:update, parent_object)
         attach_item(parent_object)
 
-        sets << ', ' + AdminSet.find(parent_object.authoritative_metadata_source_id).key
+        sets << ', ' + AdminSet.find(parent_object.admin_set_id).key
         split_sets = sets.split(',').uniq.reject(&:blank?)
         self.admin_set = split_sets.join(', ')
         save!
