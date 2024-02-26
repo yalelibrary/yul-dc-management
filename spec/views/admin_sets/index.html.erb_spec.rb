@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe "admin_sets/index", type: :view do
+  include Devise::Test::ControllerHelpers
   it "renders admin_sets table" do
     render
     assert_select "tr>th", text: "Key".to_s, count: 1

@@ -160,6 +160,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         ExportParentMetadataCsvJob.perform_later(self)
       when 'export all parent objects by admin set'
         CreateParentOidCsvJob.perform_later(self)
+      when 'export all parents by source'
+        ExportAllParentSourcesCsvJob.perform_later(self)
       when 'export child oids'
         CreateChildOidCsvJob.perform_later(self)
       when 'update parent objects'
@@ -186,10 +188,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # CREATE PARENT OBJECTS: ------------------------------------------------------------------------- #
 
   # CREATES PARENT OBJECTS FROM INGESTED CSV
-  # rubocop:disable  Metrics/AbcSize
-  # rubocop:disable  Metrics/MethodLength
-  # rubocop:disable  Metrics/PerceivedComplexity
-  # rubocop:disable  Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/BlockLength
   def create_new_parent_csv
     self.admin_set = ''
@@ -239,6 +241,20 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         parent_object.rights_statement = row['rights_statement']
 
         # rubocop:disable Layout/LineLength
+        if row['visibility'] == 'Open with Permission'
+          permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_key'])
+          if permission_set.nil?
+            batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing or nonexistent.", 'Skipped Row')
+            next
+          elsif user.has_role?(:administrator, permission_set) || user.has_role?(:sysadmin)
+            parent_object.visibility = row['visibility']
+            parent_object.permission_set_id = permission_set.id
+          else
+            batch_processing_event("Skipping row [#{index + 2}] because user does not have edit permissions for this Permission Set: #{permission_set.key}", 'Permission Denied')
+            next
+          end
+        end
+
         if ParentObject.viewing_directions.include?(row['viewing_direction'])
           parent_object.viewing_direction = row['viewing_direction']
         else
@@ -283,10 +299,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       end
     end
   end
-  # rubocop:enable  Metrics/AbcSize
-  # rubocop:enable  Metrics/MethodLength
-  # rubocop:enable  Metrics/PerceivedComplexity
-  # rubocop:enable  Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/BlockLength
 
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
@@ -335,7 +351,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       elsif current_ability.can?(:update, parent_object)
         attach_item(parent_object)
 
-        sets << ', ' + AdminSet.find(parent_object.authoritative_metadata_source_id).key
+        sets << ', ' + AdminSet.find(parent_object.admin_set_id).key
         split_sets = sets.split(',').uniq.reject(&:blank?)
         self.admin_set = split_sets.join(', ')
         save!

@@ -8,11 +8,11 @@ module CsvExportable
   # Parent Object Export
   ########################
   def parent_headers
-    ['oid', 'admin_set', 'authoritative_source', 'child_object_count', 'call_number',
+    ['oid', 'admin_set', 'authoritative_source', 'child_object_count', 'title', 'call_number',
      'container_grouping', 'bib', 'holding', 'item', 'barcode', 'aspace_uri',
      'digital_object_source', 'preservica_uri', 'last_ladybird_update',
-     'last_voyager_update', 'last_sierra_update', 'last_aspace_update', 'last_id_update', 'visibility',
-     'extent_of_digitization', 'digitization_note', 'digitization_funding_source', 'project_identifier', 'full_text']
+     'last_voyager_update', 'last_sierra_update', 'last_aspace_update', 'last_id_update', 'visibility', 'permission_set_key',
+     'extent_of_digitization', 'digitization_note', 'digitization_funding_source', 'rights_statement', 'project_identifier', 'full_text']
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -25,11 +25,11 @@ module CsvExportable
         case po
         when ParentObject
           csv << [po.oid, po.admin_set.key, po.source_name,
-                  po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+                  po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
                   po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
                   po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
-                  po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
-                  po.digitization_note, po.digitization_funding_source, po.project_identifier, extent_of_full_text(po)]
+                  po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po.extent_of_digitization,
+                  po.digitization_note, po.digitization_funding_source, po.rights_statement, po.project_identifier, extent_of_full_text(po)]
         else
           csv << [po[:id], po[:row2], '-', po[:csv_message], '', '']
           batch_processing_event(po[:batch_message], 'Skipped Row') unless batch_ingest_events_count.positive?
@@ -116,6 +116,8 @@ module CsvExportable
   # rubocop:disable Layout/LineLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def export_parent_metadata
     return nil unless batch_action == 'export parent metadata'
     csv_rows = []
@@ -127,11 +129,11 @@ module CsvExportable
       self.admin_set = split_sets.join(', ')
       save!
       row = [po.oid, po.admin_set.key, po.source_name,
-             po.child_object_count, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+             po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
              po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
              po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
-             po.last_aspace_update, po.last_id_update, po.visibility, po.extent_of_digitization,
-             po.digitization_note, po.digitization_funding_source, po.project_identifier, extent_of_full_text(po)]
+             po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po.extent_of_digitization,
+             po.digitization_note, po.digitization_funding_source, po.rights_statement, po.project_identifier, extent_of_full_text(po)]
       csv_rows << row
     end
     add_error_rows(csv_rows)
@@ -143,9 +145,34 @@ module CsvExportable
     save_to_s3(output_csv, self)
     output_csv
   end
+
+  def export_all_parents_source_csv(sources)
+    return nil unless batch_action == 'export all parents by source'
+    output_csv = CSV.generate do |csv|
+      csv << parent_headers
+      find_parent_by_source(sources) do |po|
+        case po
+        when ParentObject
+          csv << [po.oid, po.admin_set.key, po.source_name,
+                  po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+                  po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
+                  po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
+                  po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po.extent_of_digitization,
+                  po.digitization_note, po.digitization_funding_source, po.rights_statement, po.project_identifier, extent_of_full_text(po)]
+        else
+          csv << [po[:id], po[:row2], '-', po[:csv_message], '', '']
+          batch_processing_event(po[:batch_message], 'Skipped Row') unless batch_ingest_events_count.positive?
+        end
+      end
+    end
+    save_to_s3(output_csv, self)
+    output_csv
+  end
   # rubocop:enable Layout/LineLength
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
 
   def parent_objects_export_array
     arr = []
@@ -160,6 +187,15 @@ module CsvExportable
       (@error_rows ||= []) << { id: oid, csv_message: 'Parent Not Found in database', batch_message: "Skipping row [#{index + 2}] due to parent not found: #{oid}" }
     end
     arr
+  end
+
+  def find_parent_by_source(sources)
+    sources.reject(&:blank?).each do |source_id|
+      source = MetadataSource.find(source_id)
+      ParentObject.where(authoritative_metadata_source_id: source).order(:oid).find_each do |parent|
+        yield parent
+      end
+    end
   end
 
   ########################

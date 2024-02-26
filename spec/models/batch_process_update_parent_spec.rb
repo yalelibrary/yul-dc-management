@@ -6,8 +6,15 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:admin_set) { FactoryBot.create(:admin_set, key: "brbl") }
+  let(:create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_owp_parent.csv")) }
+  let(:create_invalid_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_invalid_owp_parent.csv")) }
+  let(:permission_set) { FactoryBot.create(:permission_set, key: "PS Key") }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids.csv")) }
   let(:csv_small) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example.csv")) }
+  let(:csv_small_owp) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_owp.csv")) }
+  let(:invalid_ps) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_invalid_ps.csv")) }
+  let(:blank_ps) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_blank_ps.csv")) }
+  let(:invalid_user_csv) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_invalid_user.csv")) }
   let(:csv_missing) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_missing.csv")) }
   let(:csv_invalid) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_invalid.csv")) }
   let(:csv_blanks) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_blanks.csv")) }
@@ -25,6 +32,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     stub_preservica_aspace_single # oid: 200000000
     stub_preservica_login
     stub_ptiffs_and_manifests
+    permission_set
     login_as(:user)
     batch_process.user_id = user.id
     fixtures = %w[preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5/children
@@ -80,6 +88,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
   context "updating a ParentObject from an import with all columns" do
     it "can update a parent_object from a csv" do
+      permission_set.add_administrator(user)
       expect do
         batch_process.file = csv_upload
         batch_process.save
@@ -109,7 +118,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       pos[4].admin_set = admin_set
       update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
       expect do
-        update_batch_process.file = csv_small
+        update_batch_process.file = csv_small_owp
         update_batch_process.save
         update_batch_process.update_parent_objects
       end.not_to change { ParentObject.count }.from(5)
@@ -128,7 +137,172 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_original.preservica_uri).to be_nil
       expect(po_updated.rights_statement).to eq "The use of this image may be subject to the copyright law of the United States"
       expect(po_updated.viewing_direction).to eq "left-to-right"
-      expect(po_updated.visibility).to eq "Public"
+      expect(po_updated.visibility).to eq "Open with Permission"
+      expect(po_updated.permission_set_id).to eq permission_set.id
+    end
+
+    it "does not update successfully if permission set is invalid" do
+      permission_set.add_administrator(user)
+      expect do
+        batch_process.file = csv_upload
+        batch_process.save
+        batch_process.create_new_parent_csv
+      end.to change { ParentObject.count }.from(0).to(5)
+      po_original = ParentObject.find_by(oid: 2_034_600)
+      expect(po_original.aspace_uri).to be_nil
+      expect(po_original.barcode).to be_nil
+      expect(po_original.bib).to be_nil
+      expect(po_original.digital_object_source).to eq "None"
+      expect(po_original.digitization_note).to be_nil
+      expect(po_original.display_layout).to be_nil
+      expect(po_original.extent_of_digitization).to be_nil
+      expect(po_original.holding).to be_nil
+      expect(po_original.item).to be_nil
+      expect(po_original.preservica_representation_type).to be_nil
+      expect(po_original.preservica_uri).to be_nil
+      expect(po_original.rights_statement).to be_nil
+      expect(po_original.viewing_direction).to be_nil
+      expect(po_original.visibility).to eq "Private"
+
+      pos = ParentObject.all
+      pos[0].admin_set = admin_set
+      pos[1].admin_set = admin_set
+      pos[2].admin_set = admin_set
+      pos[3].admin_set = admin_set
+      pos[4].admin_set = admin_set
+      update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
+      expect do
+        update_batch_process.file = invalid_ps
+        update_batch_process.save
+        update_batch_process.update_parent_objects
+      end.not_to change { ParentObject.count }.from(5)
+      po_updated = ParentObject.find_by(oid: 2_034_600)
+
+      expect(po_updated.aspace_uri).to be_nil
+      expect(po_updated.barcode).to be_nil
+      expect(po_updated.bib).to be_nil
+      expect(po_updated.digital_object_source).to eq "None"
+      expect(po_updated.digitization_note).to be_nil
+      expect(po_updated.display_layout).to be_nil
+      expect(po_updated.extent_of_digitization).to be_nil
+      expect(po_updated.holding).to be_nil
+      expect(po_updated.item).to be_nil
+      expect(po_updated.preservica_representation_type).to be_nil
+      expect(po_updated.preservica_uri).to be_nil
+      expect(po_updated.rights_statement).to be_nil
+      expect(po_updated.viewing_direction).to be_nil
+      expect(po_updated.visibility).to eq "Private"
+      expect(update_batch_process.batch_ingest_events.first.reason).to eq "Skipping row [2]. Process failed. Permission Set missing or nonexistent."
+      expect(update_batch_process.batch_ingest_events_count).to eq 1
+    end
+
+    it "does not update successfully if permission set is blank" do
+      permission_set.add_administrator(user)
+      expect do
+        batch_process.file = csv_upload
+        batch_process.save
+        batch_process.create_new_parent_csv
+      end.to change { ParentObject.count }.from(0).to(5)
+      po_original = ParentObject.find_by(oid: 2_034_600)
+      expect(po_original.aspace_uri).to be_nil
+      expect(po_original.barcode).to be_nil
+      expect(po_original.bib).to be_nil
+      expect(po_original.digital_object_source).to eq "None"
+      expect(po_original.digitization_note).to be_nil
+      expect(po_original.display_layout).to be_nil
+      expect(po_original.extent_of_digitization).to be_nil
+      expect(po_original.holding).to be_nil
+      expect(po_original.item).to be_nil
+      expect(po_original.preservica_representation_type).to be_nil
+      expect(po_original.preservica_uri).to be_nil
+      expect(po_original.rights_statement).to be_nil
+      expect(po_original.viewing_direction).to be_nil
+      expect(po_original.visibility).to eq "Private"
+
+      pos = ParentObject.all
+      pos[0].admin_set = admin_set
+      pos[1].admin_set = admin_set
+      pos[2].admin_set = admin_set
+      pos[3].admin_set = admin_set
+      pos[4].admin_set = admin_set
+      update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
+      expect do
+        update_batch_process.file = blank_ps
+        update_batch_process.save
+        update_batch_process.update_parent_objects
+      end.not_to change { ParentObject.count }.from(5)
+      po_updated = ParentObject.find_by(oid: 2_034_600)
+
+      expect(po_updated.aspace_uri).to be_nil
+      expect(po_updated.barcode).to be_nil
+      expect(po_updated.bib).to be_nil
+      expect(po_updated.digital_object_source).to eq "None"
+      expect(po_updated.digitization_note).to be_nil
+      expect(po_updated.display_layout).to be_nil
+      expect(po_updated.extent_of_digitization).to be_nil
+      expect(po_updated.holding).to be_nil
+      expect(po_updated.item).to be_nil
+      expect(po_updated.preservica_representation_type).to be_nil
+      expect(po_updated.preservica_uri).to be_nil
+      expect(po_updated.rights_statement).to be_nil
+      expect(po_updated.viewing_direction).to be_nil
+      expect(po_updated.visibility).to eq "Private"
+      expect(update_batch_process.batch_ingest_events.first.reason).to eq "Skipping row [2]. Process failed. Permission Set missing from CSV."
+      expect(update_batch_process.batch_ingest_events_count).to eq 1
+    end
+
+    it "does not update successfully if user does not have admin permission to permission set" do
+      expect do
+        batch_process.file = csv_upload
+        batch_process.save
+        batch_process.create_new_parent_csv
+      end.to change { ParentObject.count }.from(0).to(5)
+      po_original = ParentObject.find_by(oid: 2_034_600)
+      expect(po_original.aspace_uri).to be_nil
+      expect(po_original.barcode).to be_nil
+      expect(po_original.bib).to be_nil
+      expect(po_original.digital_object_source).to eq "None"
+      expect(po_original.digitization_note).to be_nil
+      expect(po_original.display_layout).to be_nil
+      expect(po_original.extent_of_digitization).to be_nil
+      expect(po_original.holding).to be_nil
+      expect(po_original.item).to be_nil
+      expect(po_original.preservica_representation_type).to be_nil
+      expect(po_original.preservica_uri).to be_nil
+      expect(po_original.rights_statement).to be_nil
+      expect(po_original.viewing_direction).to be_nil
+      expect(po_original.visibility).to eq "Private"
+
+      pos = ParentObject.all
+      pos[0].admin_set = admin_set
+      pos[1].admin_set = admin_set
+      pos[2].admin_set = admin_set
+      pos[3].admin_set = admin_set
+      pos[4].admin_set = admin_set
+      update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
+      expect do
+        update_batch_process.file = invalid_user_csv
+        update_batch_process.save
+        update_batch_process.update_parent_objects
+      end.not_to change { ParentObject.count }.from(5)
+      po_updated = ParentObject.find_by(oid: 2_034_600)
+
+      expect(po_updated.aspace_uri).to be_nil
+      expect(po_updated.barcode).to be_nil
+      expect(po_updated.bib).to be_nil
+      expect(po_updated.digital_object_source).to eq "None"
+      expect(po_updated.digitization_note).to be_nil
+      expect(po_updated.display_layout).to be_nil
+      expect(po_updated.extent_of_digitization).to be_nil
+      expect(po_updated.holding).to be_nil
+      expect(po_updated.item).to be_nil
+      expect(po_updated.preservica_representation_type).to be_nil
+      expect(po_updated.preservica_uri).to be_nil
+      expect(po_updated.rights_statement).to be_nil
+      expect(po_updated.viewing_direction).to be_nil
+      expect(po_updated.visibility).to eq "Private"
+      expect(update_batch_process.batch_ingest_events_count).to eq 1
+      expect(update_batch_process.batch_ingest_events.first.reason).to eq "Skipping row [2] because user does not have edit permissions for this Permission Set: PS Key"
     end
   end
 
@@ -284,7 +458,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       update_batch_process.file = csv_blanks
       update_batch_process.save
       update_batch_process.update_parent_objects
-
       po_updated = ParentObject.find_by(oid: 2_034_600)
       expect(po_updated.aspace_uri).to eq "/repositories/11/archival_objects/515305"
       expect(po_updated.barcode).to eq "39002102340669"

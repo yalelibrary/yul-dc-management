@@ -13,7 +13,7 @@
 
   <div class="field form-group">
     <%= form.label :key %>
-    <%= form.text_field(:key, required: true, class: "form-control") %>
+    <%= form.text_field(:key, required: true, class: "form-control", disabled: !form.object.new_record?) %>
   </div>
 
   <div class="field form-group">
