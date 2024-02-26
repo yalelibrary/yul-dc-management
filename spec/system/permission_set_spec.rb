@@ -255,6 +255,14 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         expect(page).to have_content('key example')
         expect(page).to have_content('label example')
       end
+      it 'can validate uniqueness of key and label' do
+        visit new_set_url
+        fill_in('open_with_permission_permission_set_key', with: 'key 1')
+        fill_in('open_with_permission_permission_set_label', with: 'set 1')
+        click_on create_set
+        expect(page).to have_content('Key has already been taken')
+        expect(page).to have_content('Label has already been taken')
+      end
     end
 
     describe 'editing and creating permission sets as an approver' do
