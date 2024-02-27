@@ -4,6 +4,7 @@ class Ability
   include CanCan::Ability
 
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def initialize(user)
@@ -18,15 +19,18 @@ class Ability
     end
     can :add_member, AdminSet, roles: { name: editor_roles, users: { id: user.id } }
     can :reindex_admin_set, AdminSet, roles: { name: editor_roles, users: { id: user.id } }
-    can [:crud], ChildObject, parent_object: { admin_set: { roles: { name: editor_roles, users: { id: user.id } } } }
-    can [:crud], ParentObject, admin_set: { roles: { name: editor_roles, users: { id: user.id } } }
-    can [:view_list], [OpenWithPermission::PermissionSet, OpenWithPermission::PermissionRequest] if user.has_role?(:sysadmin) || user.has_role?(:approver, :any) || user.has_role?(:administrator, :any)
+    can :crud, ChildObject, parent_object: { admin_set: { roles: { name: editor_roles, users: { id: user.id } } } }
+    can :crud, ParentObject, admin_set: { roles: { name: editor_roles, users: { id: user.id } } }
+    can :view_list, [OpenWithPermission::PermissionSet, OpenWithPermission::PermissionRequest] if user.has_role?(:sysadmin) || user.has_role?(:approver, :any) || user.has_role?(:administrator, :any)
     can [:create_set, :crud, :owp_access], OpenWithPermission::PermissionSet if user.has_role?(:sysadmin) || user.has_role?(:administrator, :any)
-    can [:read, :approve], [OpenWithPermission::PermissionSet, OpenWithPermission::PermissionRequest], roles: { name: approver_roles, users: { id: user.id } }
-    can [:crud, :approve], OpenWithPermission::PermissionSet, roles: { name: administrator_roles, users: { id: user.id } }
+    can :read, OpenWithPermission::PermissionSet, roles: { name: approver_roles, users: { id: user.id } }
+    can :crud, OpenWithPermission::PermissionSet, roles: { name: administrator_roles, users: { id: user.id } }
+    can [:read, :approve], OpenWithPermission::PermissionRequest, permission_set: { roles: { name: approver_roles, users: { id: user.id } } }
+    can [:crud, :approve], OpenWithPermission::PermissionRequest, permission_set: { roles: { name: administrator_roles, users: { id: user.id } } }
     can [:create, :read], ProblemReport if user.has_role?(:sysadmin)
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
 

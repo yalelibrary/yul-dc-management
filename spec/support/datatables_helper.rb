@@ -148,6 +148,19 @@ def admin_set_datatable_view_mock(id, key, homepage) # rubocop:disable Metrics/A
   @datatable_view_mock
 end
 
+def pr_datatable_view_mock(pr_id, ps_id) # rubocop:disable Metrics/AbcSize
+  @datatable_view_mock ||= double
+  allow(@datatable_view_mock).to receive(:permission_request_path).and_return("/permission_requests/#{pr_id}")
+  allow(@datatable_view_mock).to receive(:link_to).with(anything, "/permission_requests/#{pr_id}").and_return("<a href='/permission_requests/#{pr_id}'>#{pr_id}</a>")
+  allow(@datatable_view_mock).to receive(:link_to).with("/permission_requests/#{pr_id}", {}).and_return("<a href='/permission_requests/#{pr_id}'>#{pr_id}</a>")
+  allow(@datatable_view_mock).to receive(:permission_set_path).and_return("/permission_sets/#{ps_id}")
+  allow(@datatable_view_mock).to receive(:link_to).with(anything, "/permission_sets/#{ps_id}")
+    .and_return("<a href='/permission_sets/#{ps_id}'>#{OpenWithPermission::PermissionSet.find(ps_id).label}</a>")
+  allow(@datatable_view_mock).to receive(:link_to).with("/permission_sets/#{ps_id}", {})
+    .and_return("<a href='/permission_sets/#{ps_id}'>#{OpenWithPermission::PermissionSet.find(ps_id).label}</a>")
+  @datatable_view_mock
+end
+
 # rubocop:disable Metrics/ParameterLists
 def activity_stream_datatable_view_mock(_process_id, _run_time, _items, _status, _created, _updated, _retrieved_records)
   @datatable_view_mock ||= double
