@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_sources: true, prep_admin_sets: true, js: true do
   context 'with expected success with a csv import', skip_db_cleaner: true do
-    let(:user) { FactoryBot.create(:user, uid: 'johnsmith2530') }
+    let(:user) { FactoryBot.create(:user, uid: 'johnsmith2531') }
     let(:brbl) { AdminSet.find_by_key('brbl')  }
     let(:sml) { AdminSet.find_by_key('sml') }
     let(:batch_process) do
