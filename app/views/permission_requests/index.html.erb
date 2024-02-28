@@ -6,33 +6,28 @@
   </div>
 </div>
 
-<table class='table table-striped permission-set-index-table' aria-label='Permission Set Table'>
-  <thead class='thead-dark'>
-    <tr>
-      <th scope='col'> Request ID </th>
-      <th scope='col'> Permission Set Label </th>
-      <th scope='col'> Request Date </th>
-      <th scope='col'> OID </th>
-      <th scope='col'> User name </th>
-      <th scope='col'> User ID </th>
-      <th scope='col'> Net ID </th>
-      <th scope='col'> Request Status </th>
-      <th scope='col'> Approver </th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @visible_permission_requests.each do |permission_request| %>
-      <tr>
-        <td class='permission-set-label'><%= link_to(permission_request.id, permission_request_path(permission_request.id)) %></td>
-        <td class='permission-set-label'><%= permission_request.permission_set.label %></td>
-        <td class='permission-set-label'><%= permission_request.created_at %></td>
-        <td class='permission-set-label'><%= permission_request.parent_object.oid %></td>
-        <td class='permission-set-label'><%= permission_request.permission_request_user.name %></td>
-        <td class='permission-set-label'><%= permission_request.permission_request_user.sub %></td>
-        <td class='permission-set-label'><%= permission_request.permission_request_user.netid %></td>
-        <td class='permission-set-label'><%= permission_request.request_status %></td>
-        <td class='permission-set-label'><%= "TODO" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class='row datatable'>
+  <div class='col overflow-auto'>
+    <table id='permission-requests-datatable' class='is-datatable table table-responsive table-bordered table-striped' aria-label='Permission Requests' data-source='<%= permission_requests_path(format: :json) %>'>
+      <thead class='thead-dark'>
+        <tr>
+          <th scope='col'> Request ID </th>
+          <th scope='col'> Permission Set Label </th>
+          <th scope='col'> Request Date </th>
+          <th scope='col'> OID </th>
+          <th scope='col'> User Name </th>
+          <th scope='col'> User ID </th>
+          <th scope='col'> Net ID </th>
+          <th scope='col'> Request Status </th>
+          <th scope='col'> Approver </th>
+        </tr>
+      </thead>
+      <tbody class='datatable-body'>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id='permission-request-data' class='d-none datatable-data'>
+  <%= PermissionRequestDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], searchable: value[:searchable], options: value[:options]} }.to_json %>
+</div>

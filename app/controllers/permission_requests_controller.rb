@@ -8,12 +8,10 @@ class PermissionRequestsController < ApplicationController
   # GET /permission_requests.json
   def index
     authorize!(:view_list, OpenWithPermission::PermissionRequest)
-
-    permission_requests = OpenWithPermission::PermissionRequest.all
-    @visible_permission_requests = permission_requests.select do |sets|
-      User.with_role(:approver, sets.permission_set).include?(current_user) ||
-        User.with_role(:administrator, sets.permission_set).include?(current_user) ||
-        User.with_role(:sysadmin, sets.permission_set).include?(current_user)
+    @permission_requests = OpenWithPermission::PermissionRequest.all
+    respond_to do |format|
+      format.html
+      format.json { render json: PermissionRequestDatatable.new(params, view_context: view_context, current_ability: current_ability) }
     end
   end
 

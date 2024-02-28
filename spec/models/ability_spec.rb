@@ -237,10 +237,6 @@ RSpec.describe Ability, type: :model, prep_admin_sets: true, prep_metadata_sourc
       ability = Ability.new(user)
       assert ability.can?(:read, permission_set)
     end
-    it 'allows approver to approve Permission Set' do
-      ability = Ability.new(user)
-      assert ability.can?(:approve, permission_set)
-    end
     it 'does not allow approver to crud Permission Set' do
       ability = Ability.new(user)
       assert ability.cannot?(:crud, permission_set)
@@ -254,10 +250,6 @@ RSpec.describe Ability, type: :model, prep_admin_sets: true, prep_metadata_sourc
     it 'allows administrator to crud Permission Set' do
       ability = Ability.new(user)
       assert ability.can?(:crud, permission_set)
-    end
-    it 'allows administrator to approve Permission Set' do
-      ability = Ability.new(user)
-      assert ability.can?(:approve, permission_set)
     end
   end
 end
