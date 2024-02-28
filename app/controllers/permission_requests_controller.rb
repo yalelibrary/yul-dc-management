@@ -51,13 +51,13 @@ class PermissionRequestsController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_permission_request
-      @permission_request = OpenWithPermission::PermissionRequest.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_permission_request
+    @permission_request = OpenWithPermission::PermissionRequest.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def permission_request_params
-      params.require(:open_with_permission_permission_set).permit(:permission_set, :permission_request_user, :parent_object, :user)
-    end
+  # Only allow a list of trusted parameters through.
+  def permission_request_params
+    params.require(:open_with_permission_permission_set).permit(:permission_set, :permission_request_user, :parent_object, :user)
+  end
 end

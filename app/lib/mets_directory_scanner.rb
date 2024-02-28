@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require 'find'
+require 'fcntl'
 
 # performs scans on directories for XML files and processes them if they are not already done or in progress
 class MetsDirectoryScanner

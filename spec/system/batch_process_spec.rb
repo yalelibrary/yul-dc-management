@@ -167,12 +167,12 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     context "outputting csv" do
       let(:brbl) { AdminSet.find_by_key("brbl") }
       let(:other_admin_set) { FactoryBot.create(:admin_set) }
-      # rubocop:disable Metrics/LineLength
+      # rubocop:disable Layout/LineLength
       let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: brbl, digital_object_source: "Preservica", preservica_uri: "/preservica_uri", preservica_representation_type: "Access") }
       let(:parent_object2) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: other_admin_set) }
       let(:parent_object3) { FactoryBot.create(:parent_object, oid: 2_004_548, admin_set: brbl) }
       let(:user) { FactoryBot.create(:user) }
-      # rubocop:enable Metrics/LineLength
+      # rubocop:enable Layout/LineLength
 
       before do
         stub_metadata_cloud("2004548")
@@ -374,7 +374,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         po.delete
         expect(po.destroyed?).to be true
         visit batch_processes_path
-        click_on(BatchProcess.last.id.to_s)
+        click_on(BatchProcess.last.id.to_s, match: :first)
         expect(page.body).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
       end
     end

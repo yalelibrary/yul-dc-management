@@ -26,7 +26,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
     output = ParentObjectDatatable.new(datatable_sample_params(columns), view_context: parent_object_datatable_view_mock, current_ability: Ability.new(user)).data
 
     expect(output.size).to eq(1)
-    # rubocop:disable Metrics/LineLength
+    # rubocop:disable Layout/LineLength
     expect(output).to include(
       DT_RowId: 2_034_600,
       admin_set: 'brbl',
@@ -55,6 +55,6 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       visibility: 'Private',
       created_at: po.created_at
     )
-    # rubocop:enable Metrics/LineLength
+    # rubocop:enable Layout/LineLength
   end
 end

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe BatchProcessParentDatatable, type: :datatable, prep_metadata_sources: true do
-  let(:user) { FactoryBot.create(:user, uid: 'johnsmith2530') }
+  let(:user) { FactoryBot.create(:user, uid: 'handsomerdan2530') }
   columns = ['child_oid', 'time', 'status']
 
   before do

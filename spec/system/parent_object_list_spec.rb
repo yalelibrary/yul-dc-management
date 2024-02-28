@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep_admin_sets: true do
+RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep_admin_sets: true, skip_db_cleaner: true do
   context "parent objects datatable page", js: true do
     let(:user) { FactoryBot.create(:user) }
     let(:admin_set) { FactoryBot.create(:admin_set, key: "adminset") }
@@ -9,6 +9,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     let(:parent_object2) { FactoryBot.create(:parent_object, oid: "2004548", admin_set_id: admin_set.id) }
 
     before do
+      stub_metadata_cloud("2002826")
+      stub_metadata_cloud("2004548")
       parent_object1
       parent_object2
       user.add_role(:editor, admin_set)
@@ -19,17 +21,11 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       visit parent_objects_path
       expect(page).to have_content("2002826")
       expect(page).to have_content("2004548")
-    end
-
-    it "filters when filter box is filled" do
-      visit parent_objects_path
+      # filters when filter box is filled
       find("input[placeholder='OID']").set("2002")
       expect(page).to have_content("2002826")
       expect(page).not_to have_content("2004548")
-    end
-
-    it "retains filters and fills filter boxes on refresh" do
-      visit parent_objects_path
+      # retains filters and fills filter boxes on refresh
       find("input[placeholder='OID']").set("2002")
       expect(page).to have_content("2002826")
       expect(page).not_to have_content("2004548")
@@ -37,9 +33,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       expect(page).to have_content("2002826")
       expect(page).not_to have_content("2004548")
       expect(find("input[placeholder='OID']").value).to eq("2002")
-    end
-
-    it "clears filter when Clear Filters is clicked" do
+      # clears filter when Clear Filters is clicked" do
       visit parent_objects_path
       find("input[placeholder='OID']").set("2002")
       expect(page).to have_content("2002826")

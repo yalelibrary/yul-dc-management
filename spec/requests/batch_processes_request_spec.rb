@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:user) }
-  let(:sysadmin_user) { FactoryBot.create(:sysadmin_user, uid: 'johnsmith2530') }
+  let(:sysadmin_user) { FactoryBot.create(:sysadmin_user, uid: 'sysadminsmith2530') }
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:admin_set_2) { FactoryBot.create(:admin_set, key: 'brbl') }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", visibility: "Public", admin_set_id: admin_set_2.id) }
@@ -168,14 +168,14 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       login_as user
     end
 
-    # rubocop:disable Metrics/LineLength
+    # rubocop:disable Layout/LineLength
     it "downloads template for parent objects" do
       get download_template_batch_processes_url(batch_action: "create parent objects")
       expect(response).to have_http_status(:success)
       expect(response.content_type).to eq("text/csv; charset=utf-8")
       expect(response.body.to_s).to eq("\xEF\xBB\xBFoid,admin_set,source,aspace_uri,bib,holding,item,barcode,visibility,permission_set_key,digital_object_source,preservica_uri,preservica_representation_type,extent_of_digitization,digitization_note,digitization_funding_source,rights_statement,viewing_direction,display_layout")
     end
-    # rubocop:enable Metrics/LineLength
+    # rubocop:enable Layout/LineLength
 
     it "downloads template for delete child objects" do
       get download_template_batch_processes_url(batch_action: "delete child objects")

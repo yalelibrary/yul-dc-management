@@ -10,10 +10,10 @@ module Updatable
     parent_object = ParentObject.find_by(oid: oid)
     if parent_object.blank?
       batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid} because it was not found in local database", 'Skipped Row')
-      return false
+      false
     elsif !current_ability.can?(:update, parent_object)
       batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}, user does not have permission to update.", 'Permission Denied')
-      return false
+      false
     else
       parent_object
     end
@@ -23,10 +23,10 @@ module Updatable
     child_object = ChildObject.find_by(oid: oid)
     if child_object.blank?
       batch_processing_event("Skipping row [#{index + 2}] with child oid: #{oid} because it was not found in local database", 'Skipped Row')
-      return false
+      false
     elsif !current_ability.can?(:update, child_object)
       batch_processing_event("Skipping row [#{index + 2}] with child oid: #{oid}, user does not have permission to update.", 'Permission Denied')
-      return false
+      false
     else
       child_object
     end
@@ -132,10 +132,10 @@ module Updatable
     admin_set = admin_sets_hash[admin_set_key]
     if admin_set.blank?
       batch_processing_event("Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}", 'Skipped Row')
-      return false
+      false
     elsif !current_ability.can?(:add_member, admin_set)
       batch_processing_event("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{oid}", 'Permission Denied')
-      return false
+      false
     else
       admin_set
     end
@@ -257,7 +257,7 @@ module Updatable
     end
   end
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   def process_invalid_vocab_event(column_name, row_value, oid)
     case column_name
     when 'display_layout'
@@ -270,7 +270,7 @@ module Updatable
       batch_processing_event("Parent #{oid} did not update value for Visibility. Value: #{row_value} is invalid. For field Visibility please use: Private, Public, Open with Permission, or Yale Community Only", 'Invalid Vocabulary')
     end
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 
   def trigger_setup_metadata(parent_object)
     parent_object.current_batch_process = self
@@ -292,7 +292,7 @@ module Updatable
   end
 
   def validate_redirect(redirect)
-    if redirect =~ /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//
+    if /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//.match?(redirect)
       true
     else
       batch_processing_event("Skipping row with redirect to: #{redirect}. Redirect to must be in format https://collections.library.yale.edu/catalog/1234567.", 'Skipped Row')

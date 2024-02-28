@@ -23,6 +23,8 @@ class IiifRangeBuilder
   end
 
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def parse_range(parent, range, position)
     raise 'Not a Range' unless range['type'] == 'Range'
 
@@ -50,6 +52,8 @@ class IiifRangeBuilder
     result
   end
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def parse_canvas(parent, item, position)
     child_id = child_id_from_uri(item['id'], parent.id)

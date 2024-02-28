@@ -6,16 +6,16 @@ RSpec.describe UpdateDigitalObjectsJob, type: :job, prep_metadata_sources: true,
   let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
   let(:admin_set_1) { FactoryBot.create(:admin_set) }
 
-  context 'with tests active job queue' do
-    def queue_adapter_for_test
-      ActiveJob::QueueAdapters::DelayedJobAdapter.new
-    end
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
+  end
 
+  context 'with tests active job queue' do
     it 'increments the job queue by one' do
-      ActiveJob::Base.queue_adapter = :delayed_job
-      expect do
-        UpdateDigitalObjectsJob.perform_later
-      end.to change { Delayed::Job.count }.by(1)
+      parent_object
+      digital_job = described_class.perform_later
+      expect(digital_job.instance_variable_get(:@successfully_enqueued)).to eq true
     end
   end
 

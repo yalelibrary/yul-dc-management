@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 namespace :parent_oids do
+  # rubocop:disable Rails/RakeEnvironment
   desc "Create list of random selection of parent oids"
   task :random, [:samples] do |_t, args|
     oid_path = Rails.root.join("spec", "fixtures", "csv", "public_oids_comma.csv")
@@ -12,6 +13,7 @@ namespace :parent_oids do
       random_parent_oids.each { |oid| csv << [oid] }
     end
   end
+  # rubocop:enable Rails/RakeEnvironment
 
   desc "Update Ladybird fixtures"
   task update_ladybird_fixtures: :environment do

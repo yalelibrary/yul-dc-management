@@ -42,6 +42,7 @@ module CsvExportable
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def extent_of_full_text(parent_object)
     children_with_ft = false
     children_without_ft = false
@@ -60,9 +61,11 @@ module CsvExportable
     return "None" unless children_with_ft # if none of children have full_text
     "Yes"
   end
+  # rubocop:disable Metrics/PerceivedComplexity
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Lint/UselessAssignment
   def with_each_parent_object(*admin_set_id)
@@ -70,21 +73,19 @@ module CsvExportable
     if csv.present?
       imported_csv = CSV.parse(csv, headers: true).presence
       imported_csv.each_with_index do |row, index|
-        begin
-          admin_set = AdminSet.find_by!(key: row[0])
-          self.admin_set = admin_set.key
-          save!
-          if user.viewer(admin_set) || user.editor(admin_set)
-            ParentObject.where(admin_set_id: admin_set.id).order(:oid).find_each do |parent|
-              # gives most reuse of find_each
-              yield parent
-            end
-          else
-            yield({ row2: admin_set.key, csv_message: 'Access denied for admin set', batch_message: "Skipping row [#{index + 2}] due to  admin set permissions: #{admin_set.key}" })
+        admin_set = AdminSet.find_by!(key: row[0])
+        self.admin_set = admin_set.key
+        save!
+        if user.viewer(admin_set) || user.editor(admin_set)
+          ParentObject.where(admin_set_id: admin_set.id).order(:oid).find_each do |parent|
+            # gives most reuse of find_each
+            yield parent
           end
-        rescue ActiveRecord::RecordNotFound
-          yield({ row2: row[0], csv_message: 'Admin Set not found in database', batch_message: "Skipping row [#{index + 2}]  due to Admin Set not found: #{row[0]}" })
+        else
+          yield({ row2: admin_set.key, csv_message: 'Access denied for admin set', batch_message: "Skipping row [#{index + 2}] due to  admin set permissions: #{admin_set.key}" })
         end
+      rescue ActiveRecord::RecordNotFound
+        yield({ row2: row[0], csv_message: 'Admin Set not found in database', batch_message: "Skipping row [#{index + 2}]  due to Admin Set not found: #{row[0]}" })
       end
     else
       admin_set_id.each do |id|
@@ -104,6 +105,7 @@ module CsvExportable
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Lint/UselessAssignment
 
@@ -111,9 +113,11 @@ module CsvExportable
   # Parent Metadata Export
   ########################
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def export_parent_metadata
     return nil unless batch_action == 'export parent metadata'
     csv_rows = []
@@ -164,23 +168,23 @@ module CsvExportable
     save_to_s3(output_csv, self)
     output_csv
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
 
   def parent_objects_export_array
     arr = []
     oids.each_with_index do |oid, index|
-      begin
-        po = ParentObject.find(oid.to_i)
-        if current_ability.can?(:read, po)
-          arr << po
-        else
-          (@error_rows ||= []) << { id: oid, csv_message: 'Access denied for parent object', batch_message: "Skipping row [#{index + 2}] due to parent permissions: #{oid}" }
-        end
-      rescue ActiveRecord::RecordNotFound
-        (@error_rows ||= []) << { id: oid, csv_message: 'Parent Not Found in database', batch_message: "Skipping row [#{index + 2}] due to parent not found: #{oid}" }
+      po = ParentObject.find(oid.to_i)
+      if current_ability.can?(:read, po)
+        arr << po
+      else
+        (@error_rows ||= []) << { id: oid, csv_message: 'Access denied for parent object', batch_message: "Skipping row [#{index + 2}] due to parent permissions: #{oid}" }
       end
+    rescue ActiveRecord::RecordNotFound
+      (@error_rows ||= []) << { id: oid, csv_message: 'Parent Not Found in database', batch_message: "Skipping row [#{index + 2}] due to parent not found: #{oid}" }
     end
     arr
   end
@@ -246,16 +250,14 @@ module CsvExportable
   def child_objects_array
     arr = []
     oids.each_with_index do |oid, index|
-      begin
-        po = ParentObject.find(oid.to_i)
-        if current_ability.can?(:read, po)
-          po.child_objects.each { |co| arr << co }
-        else
-          (@error_rows ||= []) << { id: oid, csv_message: 'Access denied for parent object', batch_message: "Skipping row [#{index + 2}] due to parent permissions: #{oid}" }
-        end
-      rescue ActiveRecord::RecordNotFound
-        (@error_rows ||= []) << { id: oid, csv_message: 'Parent Not Found in database', batch_message: "Skipping row [#{index + 2}] due to parent not found: #{oid}" }
+      po = ParentObject.find(oid.to_i)
+      if current_ability.can?(:read, po)
+        po.child_objects.each { |co| arr << co }
+      else
+        (@error_rows ||= []) << { id: oid, csv_message: 'Access denied for parent object', batch_message: "Skipping row [#{index + 2}] due to parent permissions: #{oid}" }
       end
+    rescue ActiveRecord::RecordNotFound
+      (@error_rows ||= []) << { id: oid, csv_message: 'Parent Not Found in database', batch_message: "Skipping row [#{index + 2}] due to parent not found: #{oid}" }
     end
     arr
   end

@@ -2,24 +2,23 @@
 
 require 'rails_helper'
 
-RSpec.describe ReassociateChildOidsJob, type: :job do
-  def queue_adapter_for_test
-    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_metadata_sources: true do
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
 
   let(:metadata_job) { ReassociateChildOidsJob.new }
 
   it 'increments the job queue by one' do
-    ActiveJob::Base.queue_adapter = :delayed_job
-    expect do
-      ReassociateChildOidsJob.perform_later(metadata_job)
-    end.to change { Delayed::Job.count }.by(1)
+    reassociate_child_oids_job = described_class.perform_later(metadata_job)
+    expect(reassociate_child_oids_job.instance_variable_get(:@successfully_enqueued)).to be true
   end
 
   context 'job fails' do
     let(:user) { FactoryBot.create(:user) }
     let(:batch_process) { FactoryBot.create(:batch_process, batch_action: 'reassociate child oids', user: user) }
-    let(:metadata_source) { FactoryBot.create(:metadata_source) }
+    let(:metadata_source) { MetadataSource.first }
 
     it 'notifies on save failure' do
       allow(batch_process).to receive(:reassociate_child_oids).and_raise('boom!')

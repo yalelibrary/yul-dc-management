@@ -14,15 +14,15 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/admin_sets", type: :request do
-  let(:sysadmin_user) { FactoryBot.create(:sysadmin_user, uid: 'johnsmith2530') }
-  let(:user) { FactoryBot.create(:user, uid: 'martinsmith2530') }
+  let(:sysadmin_user) { FactoryBot.create(:sysadmin_user, uid: 'johnsmith2430') }
+  let(:user) { FactoryBot.create(:user, uid: 'martinsmith2430') }
 
   # AdminSet. As you add validations to AdminSet, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
     {
-      id: 1,
-      key: "brbl",
+      id: 100,
+      key: "key1",
       label: "Beinecke Library",
       homepage: "https://beinecke.library.yale.edu/"
     }

@@ -8,12 +8,12 @@ require "rails_helper"
 #
 # WebMock.allow_net_connect!
 
-RSpec.describe S3Service, type: :has_vcr do
+RSpec.describe S3Service, type: :has_vcr, prep_admin_sets: true, prep_metadata_sources: true do
   let(:etag_manifest_path) { "manifests/etag.tif" }
   let(:etag_data) { Time.current.to_s }
   let(:etag_digest) { "\"#{Digest::MD5.hexdigest(etag_data)}\"" }
   let(:etag_manifest_url) { "https://yul-test-samples.s3.amazonaws.com/manifests/etag.tif" }
-  let(:metadata_source) { FactoryBot.create(:metadata_source) }
+  let(:metadata_source) { MetadataSource.first }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source) }
   let(:child_object) { FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object) }
   let(:child_object) { FactoryBot.create(:child_object, oid: '345678', parent_object: parent_object) }

@@ -3,8 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe ProblemReportJob, type: :job do
-  def queue_adapter_for_test
-    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
 
   describe "jumping ahead one day" do
@@ -18,10 +19,9 @@ RSpec.describe ProblemReportJob, type: :job do
 
     it "increments job queue once per day" do
       now = Time.zone.today
-      ActiveJob::Scheduler.start
       new_time = now + 1.day
       Timecop.travel(new_time)
-      expect(Delayed::Job.where('handler LIKE ?', '%job_class: ProblemReportJob%').count).to eq 1
+      expect(GoodJob::CronEntry.all.last.instance_variable_get(:@params)).to eq({ cron: "15 0 * * *", class: "ProblemReportJob", key: :problem })
     end
   end
 end

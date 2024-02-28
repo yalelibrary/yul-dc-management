@@ -110,7 +110,7 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
     end
     it 'cannot view or access the Permission Requests page' do
       visit '/'
-      expect(page).not_to have_content("Permission Requests")
+      expect(page).not_to have_content("PERMISSION REQUESTS")
       visit '/permission_requests'
       expect(page).to have_content("Access denied")
     end

@@ -20,7 +20,7 @@ RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources
   let(:oid) { "16371272" }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: '16371272') }
   let(:oid_url) { "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/ladybird/oid/#{oid}?include-children=1" }
-  let(:ladybird_source) { FactoryBot.build(:metadata_source) }
+  let(:ladybird_source) { MetadataSource.first }
   let(:response) { ladybird_source.mc_get(oid_url) }
   let(:no_parent_object_url) { "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/ladybird/oid/1?include-children=1" }
   let(:bad_request_response) { ladybird_source.mc_get(no_parent_object_url) }
@@ -55,13 +55,13 @@ RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources
                                   "children", "abstract", "uri", "recordType"].sort
   end
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   it "has the expected sierra fields" do
     data = JSON.parse(sierra_response.body.to_s)
     expect(data.keys.sort).to eq ["bibId", "callNumber", "children", "creationPlace", "creator", "creatorDisplay", "date",
                                   "dateStructured", "dependentUris", "description", "extent", "illustrativeMatter", "itemType", "jsonModelType", "language", "languageCode", "libraryOfCongressClassificationNumber", "orbisBibId", "publisher", "recordType", "source", "subjectHeading", "subjectTopic", "title", "titleStatement", "uri"].sort
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 
   it "gets a successful response from the Metadata Cloud" do
     expect(ladybird_source.fetch_record_on_vpn(parent_object)).to include "Manuscript, on parchment, of the books of the Bible from Proverbs through"

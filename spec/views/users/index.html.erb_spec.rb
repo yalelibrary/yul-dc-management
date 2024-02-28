@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe "users/index.html.erb", type: :view do
+RSpec.describe "users/index", type: :view do
   it "displays the users datatable" do
     render
 

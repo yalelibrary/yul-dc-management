@@ -79,7 +79,11 @@ class ParentObjectsController < ApplicationController
       invalidate_admin_set_edit unless valid_admin_set_edit?
       invalidate_redirect_to_edit unless valid_redirect_to_edit?
 
-      updated = valid_admin_set_edit? ? @parent_object.update(parent_object_params) : false
+      updated = if !parent_object_params[:redirect_to].nil? && !valid_redirect_to_edit?
+                  false
+                else
+                  valid_admin_set_edit? ? @parent_object.update!(parent_object_params) : false
+                end
 
       if updated
         @parent_object.minify if valid_redirect_to_edit?
@@ -121,6 +125,7 @@ class ParentObjectsController < ApplicationController
     end
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def all_metadata_where
     where = { redirect_to: nil }
     admin_set_ids = params[:admin_set]
@@ -139,6 +144,7 @@ class ParentObjectsController < ApplicationController
     where[:authoritative_metadata_source_id] = metadata_source_ids if metadata_source_ids
     where
   end
+  # rubocop:disable Metrics/PerceivedComplexity
 
   def all_metadata
     UpdateAllMetadataJob.perform_later(0, all_metadata_where)
@@ -161,10 +167,10 @@ class ParentObjectsController < ApplicationController
     admin_set = AdminSet.find(admin_set_id)
     if current_user.viewer(admin_set) || current_user.editor(admin_set)
       UpdateManifestsJob.perform_later(admin_set_id)
-      redirect_to admin_set_path(admin_set_id), notice: "IIIF Manifests queued for update. Please check Delayed Job dashboard for status"
+      redirect_to admin_set_path(admin_set_id), notice: "IIIF Manifests queued for update. Please check GoodJob Job dashboard for status"
     else
       redirect_to admin_set_path(admin_set), alert: "User does not have permission to update Admin Set."
-      return false
+      false
     end
   end
 
@@ -202,78 +208,81 @@ class ParentObjectsController < ApplicationController
 
   private
 
-    def queue_parent_metadata_update
-      authorize!(:update, @parent_object)
-      @parent_object.metadata_update = true
-      @parent_object.setup_metadata_job
-    end
+  def queue_parent_metadata_update
+    authorize!(:update, @parent_object)
+    @parent_object.metadata_update = true
+    @parent_object.setup_metadata_job
+  end
 
-    def queue_parent_sync_from_preservica
-      authorize!(:update, @parent_object)
-      @batch_process = BatchProcess.new(user: current_user,
-                                        oid: @parent_object.oid,
-                                        batch_action: 'resync with preservica',
-                                        csv: CSV.generate do |csv|
-                                               csv << ['oid']
-                                               csv << [@parent_object.oid.to_s]
-                                             end)
-      @parent_object.current_batch_connection = @batch_process.batch_connections.build(connectable: @parent_object)
-      @batch_process.save!
-      @parent_object.current_batch_process = @batch_process
-    end
+  def queue_parent_sync_from_preservica
+    authorize!(:update, @parent_object)
+    @batch_process = BatchProcess.new(user: current_user,
+                                      oid: @parent_object.oid,
+                                      batch_action: 'resync with preservica',
+                                      csv: CSV.generate do |csv|
+                                             csv << ['oid']
+                                             csv << [@parent_object.oid.to_s]
+                                           end)
+    @parent_object.current_batch_connection = @batch_process.batch_connections.build(connectable: @parent_object)
+    @batch_process.save!
+    @parent_object.current_batch_process = @batch_process
+  end
 
-    def valid_admin_set_edit?
-      !parent_object_params[:admin_set] || (parent_object_params[:admin_set] && current_user.editor(parent_object_params[:admin_set]))
-    end
+  def valid_admin_set_edit?
+    !parent_object_params[:admin_set] || (parent_object_params[:admin_set] && current_user.editor(parent_object_params[:admin_set]))
+  end
 
-    def invalidate_admin_set_edit
-      @parent_object.errors.add :admin_set, :invalid, message: "cannot be assigned to a set the User cannot edit"
-    end
+  def invalidate_admin_set_edit
+    @parent_object.errors.add :admin_set, :invalid, message: "cannot be assigned to a set the User cannot edit"
+  end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_parent_object
-      @parent_object = ParentObject.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      respond_to do |format|
-        format.html { redirect_to parent_objects_url, notice: "Parent object, oid: #{params[:id]}, was not found in local database." }
-        format.json { head :no_content }
-      end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_parent_object
+    @parent_object = ParentObject.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to parent_objects_url, notice: "Parent object, oid: #{params[:id]}, was not found in local database." }
+      format.json { head :no_content }
     end
+  end
 
-    def set_permission_set
-      permission_sets = OpenWithPermission::PermissionSet.all
-      @visible_permission_sets = permission_sets.order('label ASC').select do |sets|
-        User.with_role(:administrator, sets).include?(current_user) ||
-          User.with_role(:sysadmin, sets).include?(current_user)
-      end
+  def set_permission_set
+    permission_sets = OpenWithPermission::PermissionSet.all
+    @visible_permission_sets = permission_sets.order('label ASC').select do |sets|
+      User.with_role(:administrator, sets).include?(current_user) ||
+        User.with_role(:sysadmin, sets).include?(current_user)
     end
+  end
 
-    def batch_process_of_one
-      @batch_process = BatchProcess.new(user: current_user, oid: @parent_object.oid)
-      @parent_object.current_batch_connection = @batch_process.batch_connections.build(connectable: @parent_object)
-      @batch_process.save!
-      @parent_object.current_batch_process = @batch_process
-    end
+  def batch_process_of_one
+    @batch_process = BatchProcess.new(user: current_user, oid: @parent_object.oid)
+    @parent_object.current_batch_connection = @batch_process.batch_connections.build(connectable: @parent_object)
+    @batch_process.save!
+    @parent_object.current_batch_process = @batch_process
+  end
 
-    # rubocop:disable Metrics/LineLength
-    def valid_redirect_to_edit?
-      !parent_object_params[:redirect_to] || (parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//)) if parent_object_params[:redirect_to].present?
-    end
-    # rubocop:enable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
+  def valid_redirect_to_edit?
+    parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//).present? if parent_object_params[:redirect_to].present?
+    # if parent_object_params[:redirect_to].present?
+    #   parent_object_params[:redirect_to]&.match(/\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//).present?
+    # end
+  end
+  # rubocop:enable Layout/LineLength
 
-    def invalidate_redirect_to_edit
-      @parent_object.errors.add :redirect_to, :invalid, message: "must be in format https://collections.library.yale.edu/catalog/1234567"
-    end
+  def invalidate_redirect_to_edit
+    @parent_object.errors.add :redirect_to, :invalid, message: "must be in format https://collections.library.yale.edu/catalog/1234567"
+  end
 
-    # Only allow a list of trusted parameters through.
-    def parent_object_params
-      cur_params = params.require(:parent_object).permit(:oid, :admin_set, :project_identifier, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
-                                                         :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id,
-                                                         :viewing_direction,
-                                                         :permission_set_id,
-                                                         :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization,
-                                                         :digitization_note, :digitization_funding_source, :redirect_to, :preservica_uri, :digital_object_source, :preservica_representation_type)
-      cur_params[:admin_set] = AdminSet.find_by(key: cur_params[:admin_set]) if cur_params[:admin_set]
-      cur_params
-    end
+  # Only allow a list of trusted parameters through.
+  def parent_object_params
+    cur_params = params.require(:parent_object).permit(:oid, :admin_set, :project_identifier, :bib, :holding, :item, :barcode, :aspace_uri, :last_ladybird_update, :last_voyager_update,
+                                                       :last_aspace_update, :visibility, :last_id_update, :authoritative_metadata_source_id,
+                                                       :viewing_direction,
+                                                       :permission_set_id,
+                                                       :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization,
+                                                       :digitization_note, :digitization_funding_source, :redirect_to, :preservica_uri, :digital_object_source, :preservica_representation_type)
+    cur_params[:admin_set] = AdminSet.find_by(key: cur_params[:admin_set]) if cur_params[:admin_set]
+    cur_params
+  end
 end

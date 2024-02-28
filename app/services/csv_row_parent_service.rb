@@ -42,7 +42,7 @@ class CsvRowParentService
   end
 
   def properties_hash
-    self.class.properties.each_with_object({}) { |p, h| h[p] = send(p); }
+    self.class.properties.index_with { |p| send(p); }
   end
 
   def oid
@@ -86,7 +86,7 @@ class CsvRowParentService
     row['digital_object_source']
   end
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   def extent_of_digitization
     valid_extents = [nil, "Completely digitized", "Partially digitized"]
 
@@ -112,7 +112,7 @@ class CsvRowParentService
 
     admin_set
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 
   def authoritative_metadata_source_id
     ms = row['source']

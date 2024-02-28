@@ -41,9 +41,8 @@ class Ability
     can [:crud, :view_list], OpenWithPermission::PermissionRequest
     can :read, ParentObject
     can :read, ChildObject
-    can :read, PreservicaIngest
     can :read, PermissionRequestDatatable
-    can :read, ReoccurringJobDatatable
+    can :read, PreservicaIngest
     can :reindex_all, ParentObject
     can :update_metadata, ParentObject
     can :sync_from_preservica, ParentObject

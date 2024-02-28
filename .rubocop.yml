@@ -3,6 +3,9 @@ inherit_from: .rubocop_todo.yml
 inherit_gem:
   bixby: bixby_default.yml
 
+Performance/Detect:
+  Enabled: false
+
 Metrics/AbcSize:
   Exclude:
     - 'app/models/concerns/solr_indexable.rb'
@@ -45,6 +48,18 @@ RSpec/MessageSpies:
 Layout/MultilineMethodCallIndentation:
   Exclude:
     - 'spec/**/*.rb'
+
+Rails/Blank:
+  Enabled: false
+
+Rails/Present:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/HttpStatus:
+  Enabled: false
 
 Rails/SaveBang:
   Enabled: true

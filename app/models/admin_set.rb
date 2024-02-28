@@ -39,9 +39,9 @@ class AdminSet < ApplicationRecord
        # and key references username and password with not blank values
        parsed_json[key.to_s]['username'].present? &&
        parsed_json[key.to_s]['password'].present?
-      return true
+      true
     else
-      return false
+      false
     end
   rescue JSON::ParserError
     false

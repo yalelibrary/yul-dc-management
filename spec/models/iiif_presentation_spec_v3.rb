@@ -158,9 +158,9 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     it "has a seeAlso in the manifest" do
       expect(iiif_presentation.manifest["seeAlso"].class).to eq Array
       expect(iiif_presentation.manifest["seeAlso"].first.class).to eq Hash
-      # rubocop:disable Metrics/LineLength
+      # rubocop:disable Layout/LineLength
       expect(iiif_presentation.manifest["seeAlso"].first["id"]).to eq "https://collections.library.yale.edu/catalog/oai?verb=GetRecord&metadataPrefix=oai_mods&identifier=oai:collections.library.yale.edu:#{oid}"
-      # rubocop:enable Metrics/LineLength
+      # rubocop:enable Layout/LineLength
       expect(iiif_presentation.manifest["seeAlso"].first["type"]).to eq "Dataset"
       expect(iiif_presentation.manifest["seeAlso"].first["format"]).to eq "application/mods+xml"
       expect(iiif_presentation.manifest["seeAlso"].first["profile"]).to eq "http://www.loc.gov/mods/v3"

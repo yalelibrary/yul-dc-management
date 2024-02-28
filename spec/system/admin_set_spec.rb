@@ -2,18 +2,19 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin Sets', type: :system, js: true do
-  let(:admin_set) { FactoryBot.create(:admin_set, key: "admin-set-key", label: "admin-set-label", homepage: "http://admin-set-homepage.com") }
-  let(:sysadmin_user) { FactoryBot.create(:sysadmin_user, uid: 'johnsmith2530') }
-  let(:user) { FactoryBot.create(:user, uid: 'martinsmith2530') }
+  let(:admin_set) { FactoryBot.create(:admin_set, key: 'admin-set-key', label: 'admin-set-label', homepage: "http://admin-set-homepage.com") }
+  let(:sysadmin_user) { FactoryBot.create(:sysadmin_user, uid: 'johnsmith2730') }
+  let(:user) { FactoryBot.create(:user, uid: 'martinsmith2730') }
   let(:metadata_source) { FactoryBot.create(:metadata_source, display_name: "test source") }
 
   before do
     admin_set
+    # sysadmin_user.add_role(:editor, admin_set)
   end
 
   context "when user has permission to Sets" do
     before do
-      login_as sysadmin_user
+      login_as(sysadmin_user)
     end
     it "display admin sets" do
       visit admin_sets_path
@@ -56,7 +57,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       within('table', text: 'Viewers') do
         expect(page).to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
       end
-      click_on('X')
+      click_on('X', match: :first)
       expect(page).to have_content("User: #{user.uid} removed as viewer")
       within('table', text: 'Viewers') do
         expect(page).not_to have_css('td', text: "#{user.last_name}, #{user.first_name} (#{user.uid})")
@@ -79,7 +80,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       click_link(admin_set.key.to_s)
       click_on("Update IIIF Manifests")
       page.driver.browser.switch_to.alert.accept
-      expect(page).to have_content "IIIF Manifests queued for update. Please check Delayed Job dashboard for status"
+      expect(page).to have_content "IIIF Manifests queued for update. Please check GoodJob Job dashboard for status"
     end
 
     it 'can send digital objects as sys admin' do
@@ -223,7 +224,7 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
       end
 
       it 'starts job when dialog is submitted' do
-        expect(UpdateAllMetadataJob).to receive(:perform_later).with(0, admin_set_id: ["", admin_set.id.to_s], redirect_to: nil, authoritative_metadata_source_id: ["", metadata_source.id.to_s])
+        expect(UpdateAllMetadataJob).to receive(:perform_later).with(0, { admin_set_id: ["", admin_set.id.to_s], redirect_to: nil, authoritative_metadata_source_id: ["", metadata_source.id.to_s] })
         expect(page).to have_css('input[value="Update Metadata"]')
         page.find("#metadata_source_ids").set [metadata_source.id.to_s]
         click_on('Update Metadata')

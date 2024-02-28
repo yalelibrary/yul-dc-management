@@ -93,13 +93,13 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(page).to have_content "Status Complete"
 
         # displays help text to user
-        # rubocop:disable Metrics/LineLength
+        # rubocop:disable Layout/LineLength
         visit "/batch_processes/#{BatchProcess.last.id}"
         expect(page).to have_content "Invalid Vocabulary Parent 2005512 did not update value for Extent of Digitization. Value: some is invalid. For field Extent of Digitization please use: Completely digitizied, Partially digitizied, or leave column empty\n"
         expect(page).to have_content "Invalid Vocabulary Parent 2005512 did not update value for Viewing Hint. Value: continual is invalid. For field Display Layout / Viewing Hint please use: individuals, paged, continuous, or leave column empty\n"
         expect(page).to have_content "Invalid Vocabulary Parent 2005512 did not update value for Visibility. Value: Yale-Community is invalid. For field Visibility please use: Private, Public, Open with Permission, or Yale Community Only\n"
         expect(page).to have_content "Invalid Vocabulary Parent 2005512 did not update value for Viewing Directions. Value: upside down is invalid. For field Viewing Direction please use: left-to-right, right-to-left, top-to-bottom, bottom-to-top, or leave column empty\n"
-        # rubocop:enable Metrics/LineLength
+        # rubocop:enable Layout/LineLength
       end
     end
   end

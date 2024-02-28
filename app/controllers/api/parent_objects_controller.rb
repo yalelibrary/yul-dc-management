@@ -26,7 +26,7 @@ class Api::ParentObjectsController < ApplicationController
 
   private
 
-    def parent_object_params
-      params.require(:parent_object).permit(:oid)
-    end
+  def parent_object_params
+    params.require(:parent_object).permit(:oid)
+  end
 end

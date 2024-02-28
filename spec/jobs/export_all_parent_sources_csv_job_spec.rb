@@ -2,8 +2,9 @@
 require 'rails_helper'
 
 RSpec.describe ExportAllParentSourcesCsvJob, type: :job do
-  def queue_adapter_for_test
-    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :external)
   end
 
   let(:user) { FactoryBot.create(:user) }
@@ -11,10 +12,8 @@ RSpec.describe ExportAllParentSourcesCsvJob, type: :job do
   let(:export_all_parent_sources_csv_job) { ExportAllParentSourcesCsvJob.new }
 
   it 'increments the job queue by one' do
-    ActiveJob::Base.queue_adapter = :delayed_job
-    expect do
-      described_class.perform_later(batch_process)
-    end.to change { Delayed::Job.count }.by(1)
+    csv_job = described_class.perform_later(batch_process)
+    expect(csv_job.instance_variable_get(:@successfully_enqueued)).to eq true
   end
 
   it "has correct priority" do

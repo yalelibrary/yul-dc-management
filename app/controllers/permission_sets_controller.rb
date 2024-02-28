@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class PermissionSetsController < ApplicationController
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   load_and_authorize_resource class: OpenWithPermission::PermissionSet, except: [:permission_set_terms, :new_term, :post_permission_set_terms, :show_term, :deactivate_permission_set_terms]
   before_action :set_permission_set, only: [:show, :edit, :update, :destroy, :permission_set_terms, :post_permission_set_terms, :new_term, :deactivate_permission_set_terms]
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 
   # GET /permission_sets
   # GET /permission_sets.json
@@ -84,13 +84,13 @@ class PermissionSetsController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_permission_set
-      @permission_set = OpenWithPermission::PermissionSet.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_permission_set
+    @permission_set = OpenWithPermission::PermissionSet.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def permission_set_params
-      params.require(:open_with_permission_permission_set).permit(:key, :label, :max_queue_length, permission_set_terms_attributes: [:id, :title, :body])
-    end
+  # Only allow a list of trusted parameters through.
+  def permission_set_params
+    params.require(:open_with_permission_permission_set).permit(:key, :label, :max_queue_length, permission_set_terms_attributes: [:id, :title, :body])
+  end
 end

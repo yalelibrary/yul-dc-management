@@ -10,9 +10,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_child_object_caption.csv")) }
   let(:csv_blank_value_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_child_object_blank.csv")) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
-  let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "2004548", admin_set_id: admin_set.id) }
-  let(:child_object_2) { FactoryBot.create(:child_object, oid: "67890", caption: "co2 caption", label: "co2 label", parent_object: parent_object_2) }
-  let(:child_object_3) { FactoryBot.create(:child_object, oid: "12", caption: "co3 caption", label: "co3 label", parent_object: parent_object_2) }
+  let(:child_object_2) { FactoryBot.create(:child_object, oid: "67890", caption: "co2 caption", label: "co2 label", parent_object: parent_object) }
+  let(:child_object_3) { FactoryBot.create(:child_object, oid: "12", caption: "co3 caption", label: "co3 label", parent_object: parent_object) }
   let(:child_object) { FactoryBot.create(:child_object, caption: "caption", label: "label", parent_object: parent_object) }
 
   around do |example|
@@ -29,7 +28,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     stub_metadata_cloud("2004548")
     stub_ptiffs_and_manifests
     parent_object
-    parent_object_2
     child_object
     child_object_2
     child_object_3

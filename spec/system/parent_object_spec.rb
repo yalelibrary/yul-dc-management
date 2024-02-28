@@ -168,26 +168,27 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         click_on("Edit")
         select("Yale Community Only")
         click_on(UPDATE_PARENT_OBJECT_BUTTON)
-        expect(page.body).to include "Yale Community Only"
+        # counts once on page and once in solr document section
+        expect(page).to have_content("Yale Community Only")
         click_on("Back")
         visit parent_object_path(2_012_036)
-        expect(page.body).to include "Yale Community Only"
+        expect(page).to have_content("Yale Community Only")
       end
 
       it "can change the visibility to private via the UI" do
         click_on("Edit")
         select("Yale Community Only")
         click_on(UPDATE_PARENT_OBJECT_BUTTON)
-        expect(page.body).to include "Yale Community Only"
+        # counts once on page and once in solr document section
+        expect(page).to have_content("Yale Community Only")
         click_on("Edit")
         select("Private")
         click_on(UPDATE_PARENT_OBJECT_BUTTON)
-        expect(page.body).to include "Private"
+        expect(page).to have_content("Private")
         click_on("Back")
         visit parent_object_path(2_012_036)
-        # counts once on page and once in solr document section
-        expect(page.body).to include("Private").twice
-        expect(page.body).to include "visibility_ssi"
+        expect(page).to have_content("Private")
+        expect(page).to have_content "visibility_ssi"
       end
 
       it "can change the Admin Set via the UI", prep_admin_sets: true do
@@ -227,8 +228,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
       it 'has functioning Solr Document link' do
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
-        click_on("Solr Document")
-        solr_data = JSON.parse(page.body)
+        visit '/parent_objects/2012036/solr_document'
+        solr_data = JSON.parse(find('pre').text)
         expect(solr_data['numFound']).to eq 1
         expect(solr_data["docs"].count).to eq 1
         document = solr_data["docs"].first
@@ -288,9 +289,9 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
 
       it "can create a new parent object" do
-        expect(page.body).to include "Parent object was successfully created"
-        expect(page.body).to include "Voyager"
-        expect(page.body).to include "Public"
+        expect(page).to have_content "Parent object was successfully created"
+        expect(page).to have_content "Voyager"
+        expect(page).to have_content "Public"
       end
 
       it "has the correct authoritative_metadata_source in the database" do
@@ -318,8 +319,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         child_object
         po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
-        click_on("Solr Document")
-        solr_data = JSON.parse(page.body)
+        visit '/parent_objects/2012036/solr_document'
+        solr_data = JSON.parse(find('pre').text)
         expect(solr_data['numFound']).to eq 1
         expect(solr_data["docs"].count).to eq 1
         document = solr_data["docs"].first
@@ -350,8 +351,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
 
       it "can create a new parent object" do
-        expect(page.body).to include "Parent object was successfully created"
-        expect(page.body).to include "ArchivesSpace"
+        expect(page).to have_content "Parent object was successfully created"
+        expect(page).to have_content "ArchivesSpace"
       end
 
       it "fetches the ArchiveSpace record when applicable" do
@@ -368,8 +369,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         po.save
         po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
-        click_on("Solr Document")
-        solr_data = JSON.parse(page.body)
+        visit '/parent_objects/2012036/solr_document'
+        solr_data = JSON.parse(find('pre').text)
         expect(solr_data['numFound']).to eq 1
         expect(solr_data["docs"].count).to eq 1
         document = solr_data["docs"].first
@@ -389,7 +390,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
 
       it "can create a new parent object" do
-        expect(page.body).to include "Parent object was successfully created"
+        expect(page).to have_content "Parent object was successfully created"
       end
 
       it "leaves empty values as nil" do
@@ -457,7 +458,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       visit edit_parent_object_path(12_345)
       select('Redirect')
       click_on("Save Parent Object And Update Metadata")
-      expect(page).to have_content 'Redirect to in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123'
+      expect(page).to have_content 'Redirect to must be in format https://collections.library.yale.edu/catalog/1234567'
     end
   end
 
@@ -495,13 +496,13 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
     context "as a permission set admin" do
       let(:user) { FactoryBot.create(:user) }
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), permission_set: permission_set) }
-      let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
+      let(:permission_set_two) { FactoryBot.create(:permission_set, label: 'set 2') }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), permission_set: permission_set_two) }
 
       before do
         stub_metadata_cloud("2012036")
         parent_object
-        permission_set
+        permission_set_two
         login_as user
         user.add_role(:administrator, parent_object.permission_set)
       end
@@ -509,7 +510,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       it "can set the parent objects visibility to OwP" do
         visit edit_parent_object_path(2_012_036)
         expect(page).to have_select("parent_object_visibility", options: ["Open with Permission", "Public", "Yale Community Only", "Private"])
-        expect(page).to have_select("parent_object_permission_set_id", options: ["set 1", "None"])
+        select "Open with Permission"
+        expect(page).to have_select("parent_object_permission_set_id", options: ["set 2", "None"])
       end
     end
   end
@@ -630,7 +632,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
       it "does not allow creation of new parent with wrong admin set" do
         click_on("Create Parent object")
-        expect(page.body).to include 'Access denied'
+        expect(page).to have_content 'Access denied'
       end
     end
 

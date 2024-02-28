@@ -34,7 +34,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
       preservica_client.login
       expect(preservica_client).to receive(:refresh).once
       now = Time.zone.today
-      ActiveJob::Scheduler.start
       new_time = now + 15.minutes
       Timecop.travel(new_time)
       preservica_client.structural_object_children("7fe35e8c-c21a-444a-a2e2-e3c926b519c4")

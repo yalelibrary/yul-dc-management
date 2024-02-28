@@ -45,7 +45,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
   context "with four child objects", :has_vcr do
     let(:user) { FactoryBot.create(:user) }
-    let(:parent_of_four) { FactoryBot.create(:parent_object, oid: 16_057_779) }
+    let(:parent_of_four) { FactoryBot.create(:parent_object, oid: 16_057_779, visibility: 'Public') }
     let(:child_of_four) { FactoryBot.create(:child_object, oid: 456_789, parent_object: parent_of_four) }
     let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
     around do |example|
@@ -314,7 +314,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
   end
 
   context "a newly created ParentObject with an unexpected authoritative_metadata_source" do
-    let(:unexpected_metadata_source) { FactoryBot.create(:metadata_source, id: 4, metadata_cloud_name: "foo", display_name: "Foo", file_prefix: "F-") }
+    let(:unexpected_metadata_source) { FactoryBot.create(:metadata_source, id: 45, metadata_cloud_name: "foo", display_name: "Foo", file_prefix: "F-") }
     let(:parent_object) { FactoryBot.create(:parent_object, oid: "2004628", authoritative_metadata_source: unexpected_metadata_source) }
     it "raises an error when trying to get the authoritative_json for an unexpected metadata source" do
       expect { parent_object.authoritative_json }.to raise_error(StandardError)
@@ -494,7 +494,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
     end
 
-    # rubocop:disable Metrics/LineLength
+    # rubocop:disable Layout/LineLength
     context 'a newly created ParentObject with Ladybird and multiple rights statements' do
       let(:parent_object) { described_class.create(oid: "17105661", admin_set: FactoryBot.create(:admin_set)) }
       before do
@@ -505,7 +505,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.reload.rights_statement).to include "Copyright Beinecke Rare Book & Manuscript Library.\nThe use of this image may be subject to the copyright law of the United States (Title 17, United States Code) or to site license or other rights management terms and conditions. The person using the image is liable for any infringement."
       end
     end
-    # rubocop:enable Metrics/LineLength
+    # rubocop:enable Layout/LineLength
 
     context "a newly created ParentObject with ArchiveSpace as authoritative_metadata_source" do
       let(:parent_object) do
@@ -618,7 +618,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       context "with the wrong metadata_cloud_version set" do
-        let(:ladybird_source) { FactoryBot.build(:metadata_source) }
+        let(:ladybird_source) { MetadataSource.first }
         around do |example|
           original_vpn = ENV['VPN']
           ENV['VPN'] = "true"

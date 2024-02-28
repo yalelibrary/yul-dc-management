@@ -7,16 +7,15 @@ Capybara.default_driver = :rack_test
 # Capybara.server = :puma, { Silent: false }
 ENV['WEB_HOST'] ||= `hostname -s`.strip
 
-capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-  chromeOptions: {
-    args: %w[disable-gpu no-sandbox whitelisted-ips window-size=1400,1400]
-  }
+options = Selenium::WebDriver::Chrome::Options.new(args: %w[disable-gpu no-sandbox whitelisted-ips window-size=1400,1400])
+options.add_argument(
+  "--enable-features=NetworkService,NetworkServiceInProcess"
 )
 
 Capybara.register_driver :chrome do |app|
   d = Capybara::Selenium::Driver.new(app,
                                      browser: :remote,
-                                     desired_capabilities: capabilities,
+                                     options: options,
                                      url: "http://chrome:4444/wd/hub")
   # Fix for capybara vs remote files. Selenium handles this for us
   d.browser.file_detector = lambda do |args|
@@ -34,7 +33,7 @@ Capybara.javascript_driver = :chrome
 # Setup rspec
 RSpec.configure do |config|
   config.before(:each, type: :system) do
-    driven_by :rack_test
+    driven_by :chrome
   end
 
   config.before(:each, type: :system, js: true) do

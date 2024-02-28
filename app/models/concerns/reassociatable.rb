@@ -146,7 +146,7 @@ module Reassociatable
     po
   end
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   # checks if viewing hint is valid
   def valid_view(viewing_hint, oid)
     if ChildObject.viewing_hints.include? viewing_hint
@@ -156,7 +156,7 @@ module Reassociatable
       nil
     end
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 
   # rubocop:disable Metrics/AbcSize
   # updates count of parent objects and regenerates manifest pdf and reindexes solr.

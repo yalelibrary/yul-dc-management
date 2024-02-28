@@ -27,7 +27,7 @@ class Geojson
       if v.class.equal?(String)
         if v.starts_with?('N', 'S', 'E', 'W')
           p[i] = Float(v[1..3] + '.' + v[4..-1], exception: false)
-        elsif v =~ /[0-9]+[.]?[0-9]*/
+        elsif /[0-9]+[.]?[0-9]*/.match?(v)
           p[i] = Float(v, exception: false)
         end
       end

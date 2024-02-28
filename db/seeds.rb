@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Do all background jobs inline during seeds
-ActiveJob::Base.queue_adapter = :inline
+ActiveJob::Base.queue_adapter = :good_job
 sequence = OidMinterService.initialize_sequence!
 current = ActiveRecord::Base.connection.execute("SELECT last_value from OID_SEQUENCE").first['last_value']
 puts "Oid Minter Initialized, initialization was #{sequence}, current value is #{current}"

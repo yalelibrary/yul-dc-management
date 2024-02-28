@@ -37,14 +37,14 @@ class Preservica::InformationObject
 
   private
 
-    def load_representation(preservica_representation_type)
-      representations.select { |representation| representation.type.include?(preservica_representation_type) }
-    end
+  def load_representation(preservica_representation_type)
+    representations.select { |representation| representation.type.include?(preservica_representation_type) }
+  end
 
-    def load_representations
-      xml = Nokogiri::XML(@preservica_client.information_object_representations(@id)).remove_namespaces!
-      xml.xpath('//Representation/@type').map(&:text).map do |type|
-        Preservica::Representation.new(@preservica_client, @id, type)
-      end
+  def load_representations
+    xml = Nokogiri::XML(@preservica_client.information_object_representations(@id)).remove_namespaces!
+    xml.xpath('//Representation/@type').map(&:text).map do |type|
+      Preservica::Representation.new(@preservica_client, @id, type)
     end
+  end
 end

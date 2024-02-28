@@ -4,23 +4,26 @@ module Delayable
   extend ActiveSupport::Concern
 
   def delayed_jobs
-    Delayed::Job.where("handler LIKE ? or handler LIKE ?", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
+    GoodJob::Job.where("serialized_params->'arguments'->0->>'_aj_globalid' LIKE ? or serialized_params->'arguments'->0->>'_aj_globalid' LIKE ?", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
   end
 
   def setup_metadata_jobs
-    Delayed::Job.where("handler LIKE ? AND (handler LIKE ? or handler LIKE ?)", "%job_class: %SetupMetadataJob%", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
+    GoodJob::Job.where("job_class LIKE ? AND (serialized_params->'arguments'->0->>'_aj_globalid' LIKE ? or serialized_params->'arguments'->0->>'_aj_globalid' LIKE ?)", "%SetupMetadataJob%",
+"%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
   end
 
   def solr_index_jobs
-    Delayed::Job.where("handler LIKE ? AND (handler LIKE ? or handler LIKE ?)", "%job_class: %SolrIndexJob%", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
+    GoodJob::Job.where("job_class LIKE ? AND (serialized_params->'arguments'->0->>'_aj_globalid' LIKE ? or serialized_params->'arguments'->0->>'_aj_globalid' LIKE ?)", "%SolrIndexJob%",
+"%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
   end
 
   def queued_solr_index_jobs
-    Delayed::Job.where("locked_by IS NULL AND handler LIKE ? AND (handler LIKE ? or handler LIKE ?)", "%job_class: %SolrIndexJob%", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
+    GoodJob::Job.where("finished_at IS NULL AND job_class LIKE ? AND (serialized_params->'arguments'->0->>'_aj_globalid' LIKE ? or serialized_params->'arguments'->0->>'_aj_globalid' LIKE ?)",
+"%SolrIndexJob%", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
   end
 
   def solr_reindex_jobs
-    Delayed::Job.where("handler LIKE ?", "%job_class: SolrReindexAllJob%")
+    GoodJob::Job.where("job_class LIKE ?", "%SolrReindexAllJob%")
   end
 
   module_function :solr_reindex_jobs
