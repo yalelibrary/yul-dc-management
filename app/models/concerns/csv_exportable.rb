@@ -17,6 +17,8 @@ module CsvExportable
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def parent_output_csv(*admin_set_id)
     return nil unless batch_action == 'export all parent objects by admin set'
     self.admin_set = ''
@@ -26,10 +28,10 @@ module CsvExportable
       with_each_parent_object(*admin_set_id) do |po|
         case po
         when ParentObject
-        sets << ', ' + po.admin_set.key
-        split_sets = sets.split(',').uniq.reject(&:blank?)
-        self.admin_set = split_sets.join(', ')
-        save!
+          sets << ', ' + po.admin_set.key
+          split_sets = sets.split(',').uniq.reject(&:blank?)
+          self.admin_set = split_sets.join(', ')
+          save!
           csv << [po.oid, po.admin_set.key, po.source_name,
                   po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
                   po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
@@ -71,7 +73,6 @@ module CsvExportable
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Lint/UselessAssignment
   def with_each_parent_object(*admin_set_id)
@@ -161,10 +162,10 @@ module CsvExportable
       find_parent_by_source(sources) do |po|
         case po
         when ParentObject
-        sets << ', ' + po.admin_set.key
-        split_sets = sets.split(',').uniq.reject(&:blank?)
-        self.admin_set = split_sets.join(', ')
-        save!
+          sets << ', ' + po.admin_set.key
+          split_sets = sets.split(',').uniq.reject(&:blank?)
+          self.admin_set = split_sets.join(', ')
+          save!
           csv << [po.oid, po.admin_set.key, po.source_name,
                   po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
                   po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
