@@ -24,7 +24,7 @@ class PermissionRequestsController < ApplicationController
   def update
     respond_to do |format|
       if @permission_request.update(permission_request_params)
-        format.html { redirect_to @permission_request, notice: 'Permission request was successfully updated.' }
+        format.html { redirect_to permission_request_path(@permission_request), notice: 'Changes saved successfully.' }
         format.json { render :show, status: :ok, location: @permission_request }
       else
         format.html { render :edit }
@@ -58,6 +58,6 @@ class PermissionRequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def permission_request_params
-    params.require(:open_with_permission_permission_set).permit(:permission_set, :permission_request_user, :parent_object, :user)
+    params.require(:open_with_permission_permission_request).permit(:permission_set, :permission_request_user, :parent_object, :user, :request_status, :approver_note)
   end
 end
