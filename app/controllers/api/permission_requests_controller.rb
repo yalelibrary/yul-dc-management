@@ -30,6 +30,7 @@ class Api::PermissionRequestsController < ApplicationController
       render json: { "title": "New request created" }, status: 201
     end
   end
+
   # rubocop:enable Metrics/MethodLength
 
   def check_parent_visibility(parent_object)
