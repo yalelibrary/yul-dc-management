@@ -1,0 +1,12 @@
+<p>
+  <%= @access_change_request[:approver_name] %> has requested the following change in the Digital Collections System:</p>
+<p>
+  <strong>Permission Set:</strong> <%= @access_change_request[:permission_set_label] %><br />
+  <strong>Admin Set:</strong> <%= @access_change_request[:admin_set_label] %><br />
+  <strong>Parent OID:</strong> <%= @access_change_request[:parent_object_oid] %><br />
+  <strong>New Visibility:</strong> <%= @access_change_request[:new_visibility] %><br />
+</p>
+<p>Have a great day!</p>
+<small>
+  <pre>This is an automated message.  You are receiving this message because DSC is configured to use your email address.</pre>
+</small>
