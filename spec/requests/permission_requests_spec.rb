@@ -6,7 +6,7 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
   let(:user) { FactoryBot.create(:sysadmin_user) }
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:permission_set) { FactoryBot.create(:permission_set, max_queue_length: 1) }
-  let(:permission_set_2) { FactoryBot.create(:permission_set, max_queue_length: 1) }
+  let(:permission_set_2) { FactoryBot.create(:permission_set, key: 'abc', label: 'Secondary') }
   let(:oid) { 2_034_600 }
   let(:oid_2) { "17105661" }
   let(:oid_3) { "30000016189097" }
@@ -95,6 +95,58 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
       post "/api/permission_requests", params: JSON.pretty_generate(request), headers: headers
       expect(response).to have_http_status(400)
       expect(response.body).to match("{\"title\":\"Parent Object is private\"}")
+    end
+  end
+
+  describe 'update' do
+    let(:updatable_permission_request) { FactoryBot.create(:permission_request, permission_set: permission_set_2) }
+
+    context 'with an authenticated approver' do
+      it 'will change request status' do
+        expect(updatable_permission_request.request_status).to be_nil
+        valid_status_update_params = { open_with_permission_permission_request: 
+          {
+            request_status: true
+          }
+        }
+        patch "/permission_requests/#{updatable_permission_request.id}", params: JSON.pretty_generate(valid_status_update_params), headers: headers
+        expect(response).to have_http_status(302)
+        updatable_permission_request.reload
+        expect(updatable_permission_request.request_status).to eq true
+      end
+
+      it 'will send an email when access type change is requested but does not change visibility of parent object' do
+        expect(updatable_permission_request.parent_object.visibility).to eq 'Private'
+        valid_access_update_params = { open_with_permission_permission_request: 
+          {
+            new_visibility: 'Public'
+          }
+        }
+        expect {
+          patch "/permission_requests/#{updatable_permission_request.id}", params: JSON.pretty_generate(valid_access_update_params), headers: headers
+        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        updatable_permission_request.parent_object.reload
+        expect(updatable_permission_request.parent_object.visibility).to eq 'Private'
+      end
+
+      it 'will change request status and send email' do
+        expect(updatable_permission_request.request_status).to be_nil
+        expect(updatable_permission_request.parent_object.visibility).to eq 'Private'
+        valid_status_and_access_update_params = { open_with_permission_permission_request: 
+          {
+            request_status: true,
+            new_visibility: 'Public'
+          }
+        }
+        expect { 
+          patch "/permission_requests/#{updatable_permission_request.id}", params: JSON.pretty_generate(valid_status_and_access_update_params), headers: headers
+        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        expect(response).to have_http_status(302)
+        updatable_permission_request.reload
+        expect(updatable_permission_request.request_status).to eq true
+        expect(updatable_permission_request.parent_object.visibility).to eq 'Private'
+      end
+
     end
   end
 end

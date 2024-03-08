@@ -2,10 +2,10 @@
 
 require "rails_helper"
 
-RSpec.describe AccessChangeRequestMailer, type: :mailer do
+RSpec.describe AccessChangeRequestMailer, type: :mailer, prep_admin_sets: true, prep_metadata_sources: true do
   describe 'access_change_request_email' do
-    let(:admin_set) { FactoryBot.create(:admin_set) }
-    let(:metadata_source) { FactoryBot.create(:metadata_source) }
+    let(:admin_set) { AdminSet.first }
+    let(:metadata_source) { MetadataSource.first }
     let(:parent_object) { FactoryBot.create(:parent_object, authoritative_metadata_source_id: metadata_source.id, admin_set_id: admin_set.id) }
     let(:permission_set) { FactoryBot.create(:permission_set) }
     let(:user) { FactoryBot.create(:user) }
