@@ -244,8 +244,6 @@ $( document ).on('turbolinks:load', function() {
   )
 });
 
-
-
 //  Delay the redraw so that if more changes trigger a redraw
 //  it will wait and make one request to the server.
 let drawTimer = 0;
@@ -420,3 +418,20 @@ $( document ).on('turbolinks:load', function() {
     }
   });
 });
+
+$( document ).on('turbolinks:load', function() {
+  if($('#open_with_permission_permission_request_request_status_false').val() == 'false' || $('#open_with_permission_permission_request_request_status_false').val() == nil) {
+    $('#open_with_permission_permission_request_access_until').prop('disabled', true);
+  }
+  $('#open_with_permission_permission_request_request_status_true').on('input change', function() {
+    if($(this).val() == 'true') {
+      $('#open_with_permission_permission_request_access_until').prop('disabled', false);
+    }
+  });
+  $('#open_with_permission_permission_request_request_status_false').on('input change', function() {
+    if($(this).val() == 'false') {
+      $('#open_with_permission_permission_request_access_until').prop('disabled', true);
+    }
+  });
+});
+
