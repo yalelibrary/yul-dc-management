@@ -406,6 +406,7 @@ $( document ).on('turbolinks:load', function() {
   })
 })
 
+// Enables/Disabled permission set dropdown based on visibility
 $( document ).on('turbolinks:load', function() {
   if($('#parent_object_visibility').val() != 'Open with Permission') {
     $('#parent_object_permission_set_id').prop('disabled', true);
@@ -419,6 +420,7 @@ $( document ).on('turbolinks:load', function() {
   });
 });
 
+// Enables/disabled permission request datepicker based on selected request_status
 $( document ).on('turbolinks:load', function() {
   if($('#open_with_permission_permission_request_request_status_false').val() == 'false' || $('#open_with_permission_permission_request_request_status_false').val() == nil) {
     $('#open_with_permission_permission_request_access_until').prop('disabled', true);
