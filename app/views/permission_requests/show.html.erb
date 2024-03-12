@@ -51,6 +51,10 @@
             <%= form.radio_button :request_status, 'false', class: 'second-radio' %> Deny
           </td>     
         </tr>
+        <tr class='requests-table-row'>
+          <td class="key">Allow Access Until:</td>
+          <td><%= form.date_field :access_until, min: 0.days.ago %></td>
+        </tr>
       </tbody>
     </table>
   </div>
