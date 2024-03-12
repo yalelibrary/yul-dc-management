@@ -25,7 +25,7 @@ class Ability
     can [:create_set, :crud, :owp_access], OpenWithPermission::PermissionSet if user.has_role?(:administrator, :any)
     can :read, OpenWithPermission::PermissionSet, roles: { name: approver_roles, users: { id: user.id } }
     can :crud, OpenWithPermission::PermissionSet, roles: { name: administrator_roles, users: { id: user.id } }
-    can [:read, :approve], OpenWithPermission::PermissionRequest, permission_set: { roles: { name: approver_roles, users: { id: user.id } } }
+    can [:read, :update, :approve], OpenWithPermission::PermissionRequest, permission_set: { roles: { name: approver_roles, users: { id: user.id } } }
     can [:crud, :approve], OpenWithPermission::PermissionRequest, permission_set: { roles: { name: administrator_roles, users: { id: user.id } } }
     can [:create, :read], ProblemReport if user.has_role?(:sysadmin)
   end
