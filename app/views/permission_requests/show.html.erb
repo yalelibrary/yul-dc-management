@@ -1,61 +1,100 @@
-<%= render partial: "/management/flash_messages" %>
-<h1>Permission Request</h1>
+<%= render partial: '/management/flash_messages' %>
+<h1 id='permission-request-header'>Permission Request</h1>
 <%= form_with(model: [:open_with_permission, @permission_request], url: permission_request_path(@permission_request), local: true) do |form| %>
-  <div id='permission-requests-show'>
+  <div class='permission-requests-show'>
     <table class='metadata-block'>
       <tbody>
-        <tr class='requests-table-row'>
-          <td class="key">Request ID:</td>
+        <tr>
+          <td class='key'>Request ID:</td>
           <td><%= @permission_request.id %></td>
         </tr>
-        <tr class='requests-table-row'>
-          <td class="key">Permission Set Label:</td>
-          <td><%= @permission_request.permission_set.label %></td>
+        <tr>
+          <td class='key'>Permission Set Label:</td>
+          <td class='interior'><%= @permission_request.permission_set.label %></td>
         </tr>
-        <tr class='requests-table-row'>
-          <td class="key">Request Date:</td>
-          <td><%= @permission_request.created_at %></td>
+        <tr>
+          <td class='key'>Request Date:</td>
+          <td class='interior'><%= @permission_request.created_at %></td>
         </tr>
-        <tr class='requests-table-row'>
-          <td class="key">OID:</td>
-          <td><%= @permission_request.parent_object.oid %></td>
+        <tr>
+          <td class='key'>OID:</td>
+          <td class='interior'><%= @permission_request.parent_object.oid %></td>
         </tr>
-        <tr class='requests-table-row'>
-          <td class="key">User Name:</td>
-          <td><%= @permission_request.permission_request_user.name %></td>
+        <tr>
+          <td class='key'>User Name:</td>
+          <td class='interior'><%= @permission_request.permission_request_user.name %></td>
         </tr>
-        <tr class='requests-table-row'>
-          <td class="key">User ID:</td>
-          <td><%= @permission_request.permission_request_user.sub %></td>
+        <tr>
+          <td class='key'>User ID:</td>
+          <td class='interior'><%= @permission_request.permission_request_user.sub %></td>
         </tr>
-        <tr class='requests-table-row'>
-          <td class="key">User Note:</td>
-          <td><%= @permission_request.user_note %></td>
+        <tr>
+          <td class='key'>User Note:</td>
+          <td class='interior'><%= @permission_request.user_note %></td>
         </tr>
-        <tr class='requests-table-row'>
-          <td class="key">Request Status:</td>
-          <td><%= @permission_request.request_status %></td>
+        <tr>
+          <td class='key'>Request Status:</td>
+          <td class='interior'><%= @permission_request.request_status %></td>
         </tr>
-        <tr class='requests-table-row'>
-          <td class="key">Approver:</td>
-          <td><%= "#{@permission_request.user&.first_name} #{@permission_request.user&.last_name}" %></td>
+        <tr>
+          <td class='key'>Approver:</td>
+          <td class='interior'><%= "#{@permission_request.user&.first_name} #{@permission_request.user&.last_name}" %></td>
         </tr>
-        <tr class='requests-table-row'>
-          <td class="key">Approver Note:</td>
-          <td><%= form.text_area :approver_note %></td>
+        <tr>
+          <td class='key'>Approver Note:</td>
+          <td class='interior'><%= form.text_area :approver_note %></td>
         </tr>
-        <tr class='requests-table-row'>
-          <td class="key">Action:</td>
+        <tr>
+          <td class='key'>Action:</td>
           <td>
-            <%= form.radio_button :request_status, "true", class: 'request-true' %>Approve
-            <%= form.radio_button :request_status, "false", class: 'request-false' %>Deny
+            <%= form.radio_button :request_status, 'true' %> Approve
+            <%= form.radio_button :request_status, 'false', class: 'second-radio' %> Deny
           </td>     
         </tr>
       </tbody>
     </table>
   </div>
-  <div class='permission-request-buttons'>
-    <%= link_to 'Cancel', permission_requests_path, class: "btn button secondary-button" %>
-    <%= form.submit("Save", {class: "btn btn-primary"}) %>
+  <h2 id='access-type-header'>Object Access Type</h2>
+  <div class='permission-requests-show'>
+    <table class='metadata-block'>
+      <tbody>
+        <tr>
+          <td class='key'>Change Access Type?</td>
+          <td>
+            <%= form.radio_button :change_access_type, 'No', onchange: 'disableNewVisibility()' %> No
+            <%= form.radio_button :change_access_type, 'Yes', onchange: 'disableNewVisibility()', class: 'second-radio' %> Yes
+          </td>     
+        </tr>
+        <tr>
+          <td class='key'>New Access Type:</td>
+          <td id='new-type'>
+            <%= form.radio_button :new_visibility, 'Yale Community Only' %> Yale Community Only
+            <%= form.radio_button :new_visibility, 'Public', class: 'second-radio' %> Public
+          </td>     
+        </tr>
+        <tr>
+          <td class='key'></td>
+          <td id='permission-request-buttons'>
+            <div>
+              <%= link_to 'Cancel', permission_requests_path, class: 'btn button secondary-button' %>
+              <%= form.submit('Save', {class: 'btn button btn-primary'}) %>
+            </div>
+          </td>     
+        </tr>
+      </tbody>
+    </table>
   </div>
 <% end %>
+
+
+<script>
+  function disableNewVisibility() {
+    if(document.getElementById('open_with_permission_permission_request_change_access_type_no').checked) {
+      document.getElementById('open_with_permission_permission_request_new_visibility_yale_community_only').disabled = true;
+      document.getElementById('open_with_permission_permission_request_new_visibility_public').disabled = true;
+    } else if (document.getElementById('open_with_permission_permission_request_change_access_type_yes').checked) {
+      document.getElementById('open_with_permission_permission_request_new_visibility_yale_community_only').disabled = false;
+      document.getElementById('open_with_permission_permission_request_new_visibility_public').disabled = false;
+    }
+  };
+</script>

@@ -104,11 +104,11 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
     context 'with an authenticated approver' do
       it 'will change request status' do
         expect(updatable_permission_request.request_status).to be_nil
-        valid_status_update_params = { open_with_permission_permission_request: 
+        valid_status_update_params = { open_with_permission_permission_request:
           {
-            request_status: true
-          }
-        }
+            request_status: true,
+            change_access_type: 'No'
+          } }
         patch "/permission_requests/#{updatable_permission_request.id}", params: JSON.pretty_generate(valid_status_update_params), headers: headers
         expect(response).to have_http_status(302)
         updatable_permission_request.reload
@@ -117,36 +117,35 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
 
       it 'will send an email when access type change is requested but does not change visibility of parent object' do
         expect(updatable_permission_request.parent_object.visibility).to eq 'Private'
-        valid_access_update_params = { open_with_permission_permission_request: 
+        valid_access_update_params = { open_with_permission_permission_request:
           {
-            new_visibility: 'Public'
-          }
-        }
-        expect {
+            new_visibility: 'Public',
+            change_access_type: 'Yes'
+          } }
+        expect do
           patch "/permission_requests/#{updatable_permission_request.id}", params: JSON.pretty_generate(valid_access_update_params), headers: headers
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
         updatable_permission_request.parent_object.reload
         expect(updatable_permission_request.parent_object.visibility).to eq 'Private'
       end
 
-      it 'will change request status and send email' do
+      it 'will change request status (but not the visibility of the parent) and send email' do
         expect(updatable_permission_request.request_status).to be_nil
         expect(updatable_permission_request.parent_object.visibility).to eq 'Private'
-        valid_status_and_access_update_params = { open_with_permission_permission_request: 
+        valid_status_and_access_update_params = { open_with_permission_permission_request:
           {
             request_status: true,
-            new_visibility: 'Public'
-          }
-        }
-        expect { 
+            new_visibility: 'Public',
+            change_access_type: 'Yes'
+          } }
+        expect do
           patch "/permission_requests/#{updatable_permission_request.id}", params: JSON.pretty_generate(valid_status_and_access_update_params), headers: headers
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
         expect(response).to have_http_status(302)
         updatable_permission_request.reload
         expect(updatable_permission_request.request_status).to eq true
         expect(updatable_permission_request.parent_object.visibility).to eq 'Private'
       end
-
     end
   end
 end
