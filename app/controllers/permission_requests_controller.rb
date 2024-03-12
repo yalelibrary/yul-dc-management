@@ -58,6 +58,6 @@ class PermissionRequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def permission_request_params
-    params.require(:open_with_permission_permission_request).permit(:permission_set, :permission_request_user, :parent_object, :user, :request_status, :approver_note)
+    params.require(:open_with_permission_permission_request).permit(:permission_set, :permission_request_user, :parent_object, :user, :request_status, :approver_note, :access_until)
   end
 end
