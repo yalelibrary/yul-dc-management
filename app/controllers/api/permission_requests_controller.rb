@@ -27,6 +27,7 @@ class Api::PermissionRequestsController < ApplicationController
         user_note: request['user_note']
       )
       new_request.save!
+      send_new_request_mail(new_request)
       render json: { "title": "New request created" }, status: 201
     end
   end
@@ -70,5 +71,18 @@ class Api::PermissionRequestsController < ApplicationController
     pr_user.oidc_updated_at = Time.zone.now
     pr_user.save!
     pr_user
+  end
+
+  def send_new_request_mail(new_request)
+    new_permission_request = {
+      permission_request_id: new_request.id,
+      permission_set_label: new_request.permission_set.label,
+      parent_object_oid: new_request.parent_object.oid,
+      parent_object_title: new_request.parent_object&.authoritative_json&.[]('title')&.first,
+      requester_name: new_request.permission_request_user.name,
+      requester_email: new_request.permission_request_user.email,
+      requester_note: new_request.user_note
+    }
+    NewPermissionRequestMailer.with(new_permission_request: new_permission_request).new_permission_request_email.deliver_now
   end
 end
