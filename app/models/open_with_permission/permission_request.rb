@@ -9,5 +9,4 @@ class OpenWithPermission::PermissionRequest < ApplicationRecord
   before_save do
     self.approved_or_denied_at = Time.zone.now if request_status_changed?
   end
-
 end
