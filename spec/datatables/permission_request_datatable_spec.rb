@@ -25,6 +25,7 @@ RSpec.describe PermissionRequestDatatable, type: :datatable, prep_metadata_sourc
       sub: pr.permission_request_user.sub,
       net_id: pr.permission_request_user.netid,
       request_status: pr.request_status,
+      approved_or_denied_at: pr.approved_or_denied_at,
       access_until: pr.access_until,
       approver: 'TODO'
     )
@@ -56,6 +57,7 @@ RSpec.describe PermissionRequestDatatable, type: :datatable, prep_metadata_sourc
       request_date: pr_one.created_at,
       request_status: pr_one.request_status,
       access_until: pr_one.access_until,
+      approved_or_denied_at: pr_one.approved_or_denied_at,
       sub: pr_one.permission_request_user.sub,
       user_name: pr_one.permission_request_user.name
     )
