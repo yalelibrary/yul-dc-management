@@ -76,11 +76,14 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
 
   context 'with wrong file' do
     before do
+      # stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content").to_return(
+      #   status: 200, body: "Not the right data"
+      # )
+    end
+    it 'throws exception with file mismatch' do
       stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content").to_return(
         status: 200, body: "Not the right data"
       )
-    end
-    it 'throws exception with file mismatch' do
       structured_object = Preservica::StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
       information_objects = structured_object.information_objects
       representations = information_objects[0].representations
@@ -88,6 +91,19 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
       generations = content_objects[0].active_generations
       bitstreams = generations[0].bitstreams
       expect { bitstreams[0].download_to_file "tmp/testdownload.file" }.to raise_error(/Checksum mismatch/)
+    end
+
+    it 'does not throw an exception when the cases do not match' do
+      stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content").to_return(
+        status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/2/content"), 'rb')
+      )
+      structured_object = Preservica::StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
+      information_objects = structured_object.information_objects
+      representations = information_objects[0].representations
+      content_objects = representations[0].content_objects
+      generations = content_objects[0].active_generations
+      bitstreams = generations[0].bitstreams
+      expect { bitstreams[0].download_to_file "tmp/testdownload.file" }.not_to raise_error(/Checksum mismatch/)
     end
   end
 
