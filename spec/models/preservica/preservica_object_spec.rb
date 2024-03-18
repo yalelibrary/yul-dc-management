@@ -75,11 +75,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
   end
 
   context 'with wrong file' do
-    before do
-      # stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content").to_return(
-      #   status: 200, body: "Not the right data"
-      # )
-    end
     it 'throws exception with file mismatch' do
       stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content").to_return(
         status: 200, body: "Not the right data"
