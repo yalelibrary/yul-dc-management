@@ -74,7 +74,6 @@ class Api::PermissionSetsController < ApplicationController
     # check for valid user
     begin
       request_user = OpenWithPermission::PermissionRequestUser.find_by!(sub: params[:sub])
-      # management_user = User.find_by!(uid: params[:netid])
     rescue ActiveRecord::RecordNotFound
       render(json: { "title": "User not found" }, status: 404) && (return false)
     end
