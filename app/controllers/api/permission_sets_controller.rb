@@ -34,12 +34,13 @@ class Api::PermissionSetsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       render(json: { "title": "Parent Object not found" }, status: 400) && (return false)
     end
+    admin_or_approver_status = "false"
     management_user = User.find_by(uid: params[:uid])
     permission_set = parent_object&.permission_set
     if permission_set.nil?
-      render(json: { "title": "Permission Set not found" }, status: 400) && (return false)
+      render(json: { "is_admin_or_approver?": admin_or_approver_status }, status: 400) && (return false)
     elsif management_user.nil?
-      render(json: { "title": "Management User not found" }, status: 400) && (return false)
+      render(json: { "is_admin_or_approver?": admin_or_approver_status }, status: 400) && (return false)
     elsif management_user.has_role?(:administrator, permission_set) || management_user.has_role?(:approver, permission_set)
       admin_or_approver_status = "true"
     else
