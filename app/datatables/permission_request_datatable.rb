@@ -24,6 +24,7 @@ class PermissionRequestDatatable < ApplicationDatatable
       sub: { source: "OpenWithPermission::PermissionRequestUser.sub", cond: :start_with, searchable: true, orderable: true },
       net_id: { source: "OpenWithPermission::PermissionRequestUser.netid", cond: :start_with, searchable: true, orderable: true },
       request_status: { source: "OpenWithPermission::PermissionRequest.request_status", cond: :start_with, searchable: true, orderable: true },
+      approved_or_denied_at: { source: "OpenWithPermission::PermissionRequest.approved_or_denied_at", cond: :start_with, searchable: true, orderable: true },
       access_until: { source: "OpenWithPermission::PermissionRequest.access_until", cond: :start_with, searchable: true, orderable: true },
       approver: { source: "User.id", cond: :start_with, searchable: true, orderable: true }
     }
@@ -42,6 +43,7 @@ class PermissionRequestDatatable < ApplicationDatatable
         sub: permission_request.permission_request_user.sub,
         net_id: permission_request.permission_request_user.netid,
         request_status: permission_request.request_status,
+        approved_or_denied_at: permission_request.approved_or_denied_at,
         access_until: permission_request.access_until,
         approver: permission_request.user&.uid.presence || 'TODO'
       }

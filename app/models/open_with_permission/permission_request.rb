@@ -5,4 +5,8 @@ class OpenWithPermission::PermissionRequest < ApplicationRecord
   belongs_to :permission_request_user, class_name: "OpenWithPermission::PermissionRequestUser"
   belongs_to :parent_object
   has_one :user
+
+  before_save do
+    self.approved_or_denied_at = Time.zone.now if request_status_changed?
+  end
 end
