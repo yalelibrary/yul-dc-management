@@ -27,6 +27,27 @@ class Api::PermissionSetsController < ApplicationController
   end
   # rubocop:enable Metrics/PerceivedComplexity
 
+  def check_admin_status
+    # check for valid parent object
+    begin
+      parent_object = ParentObject.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render(json: { "title": "Parent Object not found" }, status: 400) && (return false)
+    end
+    management_user = User.find_by(uid: params[:uid])
+    permission_set = parent_object&.permission_set
+    if permission_set.nil?
+      render(json: { "title": "Permission Set not found" }, status: 400) && (return false)
+    elsif management_user.nil?
+      render(json: { "title": "Management User not found" }, status: 400) && (return false)
+    elsif management_user.has_role?(:administrator, permission_set) || management_user.has_role?(:approver, permission_set)
+      admin_or_approver_status = "true"
+    else
+      admin_or_approver_status = "false"
+    end
+    render(json: { "is_admin_or_approver?": admin_or_approver_status })
+  end
+
   def agreement_term
     begin
       term = OpenWithPermission::PermissionSetTerm.find(params[:permission_set_terms_id])
@@ -53,6 +74,7 @@ class Api::PermissionSetsController < ApplicationController
     # check for valid user
     begin
       request_user = OpenWithPermission::PermissionRequestUser.find_by!(sub: params[:sub])
+      # management_user = User.find_by!(uid: params[:netid])
     rescue ActiveRecord::RecordNotFound
       render(json: { "title": "User not found" }, status: 404) && (return false)
     end
