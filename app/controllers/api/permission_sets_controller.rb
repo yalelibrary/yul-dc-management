@@ -5,6 +5,7 @@ class Api::PermissionSetsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
   def terms_api
     # check for valid parent object
     begin
@@ -25,7 +26,6 @@ class Api::PermissionSetsController < ApplicationController
       render json: active_term.to_json
     end
   end
-  # rubocop:enable Metrics/PerceivedComplexity
 
   def check_admin_status
     # check for valid parent object
@@ -47,6 +47,8 @@ class Api::PermissionSetsController < ApplicationController
     end
     render(json: { "is_admin_or_approver?": admin_or_approver_status })
   end
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def agreement_term
     begin
