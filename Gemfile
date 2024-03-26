@@ -37,7 +37,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 5.6'
 # cors support or rack
-gem 'rack-cors'
+gem 'rack-cors', '~> 2.0.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.0.8'
 gem "rails_semantic_logger", ">=4.4.4"
@@ -93,8 +93,7 @@ group :test do
   gem 'coveralls_reborn', require: false
   gem 'database_cleaner-active_record'
   gem 'ffaker'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '~> 4.14.0'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'timecop'
-  gem 'webdrivers', require: false
 end
