@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_sources: true, prep_admin_sets: true do
-  let(:user) { FactoryBot.create(:sysadmin_user) }
+  let(:user) { FactoryBot.create(:sysadmin_user, uid: "uid") }
   let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1', key: 'key 1') }
   let(:permission_set_2) { FactoryBot.create(:permission_set, label: 'set 2', key: 'key 2') }
   let(:permission_set_3) { FactoryBot.create(:permission_set, label: 'set 3', key: 'key 3') }
@@ -118,6 +118,35 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
       get '/api/permission_sets/123456'
       expect(response).to have_http_status(404)
       expect(response.body).to eq("{\"title\":\"User not found\"}")
+    end
+  end
+
+  describe 'get /api/permission_sets/:parent_object/:uid' do
+    it "can find a parent object, permission set, and user access to permission set" do
+      user.add_role(:administrator, permission_set)
+      get '/api/permission_sets/2012036/uid'
+      expect(response).to have_http_status(200)
+      expect(response.body).to eq("{\"is_admin_or_approver?\":\"true\"}")
+    end
+    it "can find a parent object, permission set, and user but returns false for admin or approver access" do
+      get '/api/permission_sets/2012036/uid'
+      expect(response).to have_http_status(200)
+      expect(response.body).to eq("{\"is_admin_or_approver?\":\"false\"}")
+    end
+    it "returns false if user is not found" do
+      get '/api/permission_sets/2012036/invalid_uid'
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq("{\"is_admin_or_approver?\":\"false\"}")
+    end
+    it "throws error if parent object not found" do
+      get '/api/permission_sets/201203600/uid'
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq("{\"title\":\"Parent Object not found\"}")
+    end
+    it "returns false if permission set not found" do
+      get '/api/permission_sets/2012033/uid'
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq("{\"is_admin_or_approver?\":\"false\"}")
     end
   end
   # rubocop:enable Layout/LineLength
