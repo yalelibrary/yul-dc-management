@@ -133,20 +133,20 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
       expect(response).to have_http_status(200)
       expect(response.body).to eq("{\"is_admin_or_approver?\":\"false\"}")
     end
-    it "throws error if user is not found" do
+    it "returns false if user is not found" do
       get '/api/permission_sets/2012036/invalid_uid'
       expect(response).to have_http_status(400)
-      expect(response.body).to eq("{\"title\":\"Management User not found\"}")
+      expect(response.body).to eq("{\"is_admin_or_approver?\":\"false\"}")
     end
     it "throws error if parent object not found" do
       get '/api/permission_sets/201203600/uid'
       expect(response).to have_http_status(400)
       expect(response.body).to eq("{\"title\":\"Parent Object not found\"}")
     end
-    it "throws error if permission set not found" do
+    it "returns false if permission set not found" do
       get '/api/permission_sets/2012033/uid'
       expect(response).to have_http_status(400)
-      expect(response.body).to eq("{\"title\":\"Permission Set not found\"}")
+      expect(response.body).to eq("{\"is_admin_or_approver?\":\"false\"}")
     end
   end
   # rubocop:enable Layout/LineLength
