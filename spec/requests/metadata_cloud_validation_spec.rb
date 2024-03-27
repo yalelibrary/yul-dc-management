@@ -35,31 +35,25 @@ RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources
     expect(response.status.success?).to be true
     expect(response.body.to_str).to include "Manuscript, on parchment"
     expect(response.body.to_str).to include "/ladybird/oid/16565592"
-    expect(response.content_type).to include "application/json"
+    expect(response.content_type.mime_type).to eq "application/json"
   end
 
   it "can connect to the sierra metadata cloud using basic auth" do
     expect(sierra_response.status.success?).to be true
     expect(sierra_response.body.to_str).to include "/sierra/bib/414464"
-    expect(sierra_response.content_type).to include "application/json"
-  end
-
-  it "has the expected fields" do
-    data = JSON.parse(response.body.to_s)
-    expect(data.keys.sort).to eq ["jsonModelType", "source", "callNumber", "title", "extentOfDigitization", "creationPlace",
-                                  "date", "extent", "language", "description", "subjectName", "subjectTopic", "genre",
-                                  "format", "itemType", "partOf", "rights", "orbisBibId", "orbisBarcode",
-                                  "preferredCitation", "itemPermission", "dateStructured", "illustrativeMatter",
-                                  "intStartYear", "intEndYear", "subjectEra", "contributor", "repository", "subjectTitle",
-                                  "subjectTitleDisplay", "contributorDisplay", "dependentUris", "oid", "collectionId",
-                                  "children", "abstract", "uri", "recordType"].sort
+    expect(sierra_response.content_type.mime_type).to eq "application/json"
   end
 
   # rubocop:disable Layout/LineLength
+  it "has the expected fields" do
+    data = JSON.parse(response.body.to_s)
+    # byebug
+    expect(data.keys.sort).to eq ["abstract", "callNumber", "children", "collectionId", "contributor", "contributorDisplay", "creationPlace", "date", "dateStructured", "dependentUris", "description", "extent", "extentOfDigitization", "format", "genre", "illustrativeMatter", "intEndYear", "intStartYear", "itemPermission", "itemType", "jsonModelType", "language", "oid", "orbisBarcode", "orbisBibId", "partOf", "preferredCitation", "projectId", "recordType", "repository", "rights", "source", "subjectEra", "subjectName", "subjectTitle", "subjectTitleDisplay", "subjectTopic", "title", "uri"]
+  end
+
   it "has the expected sierra fields" do
     data = JSON.parse(sierra_response.body.to_s)
-    expect(data.keys.sort).to eq ["bibId", "callNumber", "children", "creationPlace", "creator", "creatorDisplay", "date",
-                                  "dateStructured", "dependentUris", "description", "extent", "illustrativeMatter", "itemType", "jsonModelType", "language", "languageCode", "libraryOfCongressClassificationNumber", "orbisBibId", "publisher", "recordType", "source", "subjectHeading", "subjectTopic", "title", "titleStatement", "uri"].sort
+    expect(data.keys.sort).to eq ["bibId", "children", "creationPlace", "creator", "creatorDisplay", "date", "dateStructured", "dependentUris", "description", "extent", "illustrativeMatter", "itemType", "jsonModelType", "language", "languageCode", "libraryOfCongressClassificationNumber", "orbisBibId", "publisher", "recordType", "source", "subjectHeading", "subjectTopic", "title", "titleStatement", "uri"]
   end
   # rubocop:enable Layout/LineLength
 
