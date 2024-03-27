@@ -47,7 +47,6 @@ RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources
   # rubocop:disable Layout/LineLength
   it "has the expected fields" do
     data = JSON.parse(response.body.to_s)
-    # byebug
     expect(data.keys.sort).to eq ["abstract", "callNumber", "children", "collectionId", "contributor", "contributorDisplay", "creationPlace", "date", "dateStructured", "dependentUris", "description", "extent", "extentOfDigitization", "format", "genre", "illustrativeMatter", "intEndYear", "intStartYear", "itemPermission", "itemType", "jsonModelType", "language", "oid", "orbisBarcode", "orbisBibId", "partOf", "preferredCitation", "projectId", "recordType", "repository", "rights", "source", "subjectEra", "subjectName", "subjectTitle", "subjectTitleDisplay", "subjectTopic", "title", "uri"]
   end
 
