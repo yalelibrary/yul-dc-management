@@ -22,6 +22,7 @@ require("datatables.net-select-bs4/css/select.bootstrap4.min.css")
 require("datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css")
 
 import "@fortawesome/fontawesome-free/js/all.js";
+import '../../assets/stylesheets/application.scss'
 
 //= require jquery3
 //= require popper
