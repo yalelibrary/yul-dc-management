@@ -65,6 +65,6 @@ class PermissionRequestDatatable < ApplicationDatatable
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    OpenWithPermission::PermissionRequest.accessible_by(@current_ability, :read).joins(:permission_set)
+    OpenWithPermission::PermissionRequest.accessible_by(@current_ability, :read).joins(:permission_set, :parent_object, :permission_request_user)
   end
 end
