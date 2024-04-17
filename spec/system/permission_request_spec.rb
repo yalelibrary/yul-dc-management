@@ -12,12 +12,14 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
   let(:permission_set_two) { FactoryBot.create(:permission_set, label: "set 2", key: 'key 2') }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
   let(:parent_object_two) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
+  # rubocop:disable Layout/LineLength
   let(:permission_request) do
     FactoryBot.create(:permission_request, request_status: true, permission_set: permission_set, parent_object: parent_object, permission_request_user: request_user, user_note: 'something', permission_request_user_name: 'name 2')
   end
   let(:permission_request_two) do
     FactoryBot.create(:permission_request, parent_object: parent_object_two, permission_set: permission_set_two, permission_request_user: request_user_two, request_status: true, permission_request_user_name: 'name 3')
   end
+  # rubocop:enable Layout/LineLength
   let(:administrator_user) { FactoryBot.create(:user, uid: 'admin') }
   let(:approver_user) { FactoryBot.create(:user, uid: 'approver') }
 
