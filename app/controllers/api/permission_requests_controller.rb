@@ -24,6 +24,7 @@ class Api::PermissionRequestsController < ApplicationController
         permission_set: permission_set,
         permission_request_user: pr_user,
         parent_object: parent_object,
+        permission_request_user_name: request['user_full_name'],
         user_note: request['user_note']
       )
       new_request.save!
@@ -64,14 +65,7 @@ class Api::PermissionRequestsController < ApplicationController
 
   def find_or_create_user(request)
     pr_user = OpenWithPermission::PermissionRequestUser.find_or_initialize_by(sub: request['user_sub'])
-    # user name gets logged as "new" when they accept their first term agreement
-    if pr_user.name == "new"
-      # record the users user_full_name when submitting their first request_form
-      pr_user.name = request['user_full_name']
-    else
-      # dont update user_full_name after they have submitted their first request_form
-      pr_user.name = request['user_full_name'] unless pr_user.name.present?
-    end
+    pr_user.name = request['user_full_name']
     pr_user.email = request['user_email']
     pr_user.netid = request['user_netid']
     pr_user.email_verified = true
