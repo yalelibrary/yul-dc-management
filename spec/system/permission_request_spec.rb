@@ -13,10 +13,10 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
   let(:parent_object_two) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
   let(:permission_request) do
-    FactoryBot.create(:permission_request, request_status: true, permission_set: permission_set, parent_object: parent_object, permission_request_user: request_user, user_note: 'something')
+    FactoryBot.create(:permission_request, request_status: true, permission_set: permission_set, parent_object: parent_object, permission_request_user: request_user, user_note: 'something', permission_request_user_name: 'name 2')
   end
   let(:permission_request_two) do
-    FactoryBot.create(:permission_request, parent_object: parent_object_two, permission_set: permission_set_two, permission_request_user: request_user_two, request_status: true)
+    FactoryBot.create(:permission_request, parent_object: parent_object_two, permission_set: permission_set_two, permission_request_user: request_user_two, request_status: true, permission_request_user_name: 'name 3')
   end
   let(:administrator_user) { FactoryBot.create(:user, uid: 'admin') }
   let(:approver_user) { FactoryBot.create(:user, uid: 'approver') }
@@ -46,7 +46,7 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
         expect(page).to have_content(permission_request.permission_set.label.to_s)
         expect(page).to have_content(permission_request.parent_object.oid.to_s)
         expect(page).to have_content(permission_request.permission_request_user.sub.to_s)
-        expect(page).to have_content(permission_request.permission_request_user.name.to_s)
+        expect(page).to have_content(permission_request.permission_request_user_name.to_s)
         expect(page).to have_content(permission_request.request_status.to_s)
         expect(page).to have_content(permission_request_two.permission_set.label.to_s)
         expect(page).to have_content(permission_request_two.created_at.to_s)
@@ -72,7 +72,7 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
         expect(page).to have_content(permission_request_two.created_at.to_s)
         expect(page).to have_content(permission_request_two.parent_object.oid.to_s)
         expect(page).to have_content(permission_request_two.permission_request_user.sub.to_s)
-        expect(page).to have_content(permission_request_two.permission_request_user.name.to_s)
+        expect(page).to have_content(permission_request_two.permission_request_user_name.to_s)
         expect(page).to have_content(permission_request_two.request_status.to_s)
 
         expect(page).not_to have_content(permission_request.parent_object.oid.to_s)
@@ -96,7 +96,7 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
         expect(page).to have_content(permission_request_two.created_at.to_s)
         expect(page).to have_content(permission_request_two.parent_object.oid.to_s)
         expect(page).to have_content(permission_request_two.permission_request_user.sub.to_s)
-        expect(page).to have_content(permission_request_two.permission_request_user.name.to_s)
+        expect(page).to have_content(permission_request_two.permission_request_user_name.to_s)
         expect(page).to have_content(permission_request_two.request_status.to_s)
 
         expect(page).not_to have_content(permission_request.parent_object.oid.to_s)
