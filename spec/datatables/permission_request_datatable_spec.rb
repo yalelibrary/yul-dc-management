@@ -21,7 +21,7 @@ RSpec.describe PermissionRequestDatatable, type: :datatable, prep_metadata_sourc
       permission_set: "<a href='/permission_sets/#{pr.permission_set.id}'>#{pr.permission_set.label}</a>",
       request_date: pr.created_at,
       oid: pr.parent_object.oid,
-      user_name: pr.permission_request_user.name,
+      user_name: pr.permission_request_user_name,
       sub: pr.permission_request_user.sub,
       net_id: pr.permission_request_user.netid,
       request_status: pr.request_status,
@@ -59,7 +59,7 @@ RSpec.describe PermissionRequestDatatable, type: :datatable, prep_metadata_sourc
       access_until: pr_one.access_until,
       approved_or_denied_at: pr_one.approved_or_denied_at,
       sub: pr_one.permission_request_user.sub,
-      user_name: pr_one.permission_request_user.name
+      user_name: pr_one.permission_request_user_name
     )
     expect(output).not_to include(pr_two.permission_set.label)
   end

@@ -24,6 +24,7 @@ class Api::PermissionRequestsController < ApplicationController
         permission_set: permission_set,
         permission_request_user: pr_user,
         parent_object: parent_object,
+        permission_request_user_name: request['user_full_name'],
         user_note: request['user_note']
       )
       new_request.save!
