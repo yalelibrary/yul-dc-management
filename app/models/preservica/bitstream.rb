@@ -29,9 +29,11 @@ class Preservica::Bitstream
   end
 
   def download_to_file(file_name)
+    Rails.logger.info "************ bitstream.rb # download_to_file +++ hits download to file method with file: #{file_name} *************"
     data_length = 0
     sha512 = Digest::SHA512. new
     File.open(file_name, 'wb') do |file|
+      Rails.logger.info "************ bitstream.rb # download_to_file +++ File.open works *************"
       preservica_client.get(content_uri) do |chunk|
         data_length += chunk.length
         file.write(chunk)
@@ -40,6 +42,8 @@ class Preservica::Bitstream
     end
     data_sha512 = sha512.hexdigest
     file_size = File.size?(file_name)
+    Rails.logger.info "************ bitstream.rb # download_to_file +++ counts file size (data_length): #{data_length} *************"
+    Rails.logger.info "************ bitstream.rb # download_to_file +++ grabs sha checksum (data_sha512): #{data_sha512} *************"
     raise StandardError, "Checksum mismatch (#{data_sha512} != #{sha512_checksum})" unless data_sha512.casecmp?(sha512_checksum)
     raise StandardError, "Data size did not match (#{data_length} != #{size})" unless data_length == size
     raise StandardError, "File sizes do not match (#{file_size} != #{size})" unless file_size == size
