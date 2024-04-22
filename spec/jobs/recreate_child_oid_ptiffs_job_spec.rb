@@ -52,9 +52,10 @@ RSpec.describe RecreateChildOidPtiffsJob, type: :job, prep_metadata_sources: tru
       recreate_child_oid_ptiffs_job.perform(batch_process)
       expect(GoodJob::Job.where(queue_name: 'ptiff').count).to eq(0)
     end
+    # TODO: revert back to .once instead of count: 2 once need for preservica logging is no more
     it "with recreate batch, will force ptiff creation" do
-      expect(child_object.pyramidal_tiff).to receive(:original_file_exists?).and_return(true).once
-      expect(child_object.pyramidal_tiff).to receive(:generate_ptiff).and_return(true).once
+      expect(child_object.pyramidal_tiff).to receive(:original_file_exists?).and_return(true, count: 2)
+      expect(child_object.pyramidal_tiff).to receive(:generate_ptiff).and_return(true, count: 2)
       generate_ptiff_job.perform(child_object, batch_process)
     end
     it "another type of batch will not force ptiff creation" do

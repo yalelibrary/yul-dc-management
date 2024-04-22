@@ -234,7 +234,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Rails/SkipsModelValidations
 
-  # TODO: remove rubocop disable once need for logging is no more
+  # TODO: remove rubocop disable once need for preservica logging is no more
   # rubocop:disable Lint/UnderscorePrefixedVariableName
   # rubocop:disable Layout/LineLength
   def sync_from_preservica(_local_children_hash, preservica_children_hash)
