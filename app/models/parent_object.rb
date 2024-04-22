@@ -234,7 +234,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Rails/SkipsModelValidations
 
+  # TODO: remove rubocop disable once need for preservica logging is no more
+  # rubocop:disable Lint/UnderscorePrefixedVariableName
+  # rubocop:disable Layout/LineLength
   def sync_from_preservica(_local_children_hash, preservica_children_hash)
+    Rails.logger.info "************ parent_object.rb # sync_from_preservica +++ hits method with local and preservica children - (local_children_hash keys count): #{_local_children_hash.keys.count} && (preservica_children_hash key count): #{preservica_children_hash.keys.count} *************"
     # iterate through local hashes and remove any children no longer found on preservica
     child_objects.each do |co|
       co.destroy! if co.preservica_content_object_uri.nil?
@@ -247,6 +251,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     create_child_records
     sync_from_preservica_update_all_ptiffs
   end
+  # rubocop:enable Lint/UnderscorePrefixedVariableName
+  # rubocop:enable Layout/LineLength
 
   def sync_from_preservica_update_existing_children(preservica_children_hash)
     preservica_children_hash.each_value do |value|
@@ -265,10 +271,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def sync_from_preservica_update_all_ptiffs
+    Rails.logger.info "************ parent_object.rb # sync_from_preservica_update_all_ptiffs +++ hits method *************"
     save! # save last update time
     reload # reload to get the upserted children
     child_objects.each do |child|
       path = Pathname.new(child.access_master_path)
+      Rails.logger.info "************ parent_object.rb # sync_from_preservica_update_all_ptiffs +++ sets path: #{child.access_master_path} for child object: #{child.oid} *************"
+      Rails.logger.info "************ parent_object.rb # sync_from_preservica_update_all_ptiffs +++ does the access master image exist at that path? #{child.access_master_exists?} *************"
       file_size = File.exist?(path) ? File.size(path) : 0
       GeneratePtiffJob.set(queue: :large_ptiff).perform_later(child, current_batch_process) if file_size > FIVE_HUNDRED_MB
       GeneratePtiffJob.perform_later(child, current_batch_process) if file_size <= FIVE_HUNDRED_MB
