@@ -7,6 +7,7 @@ class GeneratePtiffJob < ApplicationJob
     10
   end
 
+  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def perform(child_object, batch_process)
@@ -23,7 +24,7 @@ class GeneratePtiffJob < ApplicationJob
     if child_object.parent_object.from_mets
       raise "Copy to pair tree failed for child object: #{child_object.oid}" unless child_object.copy_to_access_master_pairtree
     end
-    is_recreate_job = child_object.current_batch_process&.batch_action == 'recreate child oid ptiffs'
+    is_recreate_job = child_object.current_batch_process&.batch_action == 'recreate child oid ptiffs' || child_object.current_batch_process&.batch_action == 'resync with preservica'
     success = child_object.convert_to_ptiff!(is_recreate_job)
     raise "Unable to convert to PTIFF and save child object: #{child_object.oid}" unless success
     # Only generate manifest if all children are ready
@@ -31,6 +32,7 @@ class GeneratePtiffJob < ApplicationJob
 
     parent_object.processing_event('Ptiffs recreated', 'ptiffs-recreated') if is_recreate_job && batch_process.are_all_children_complete?(parent_object)
   end
+  # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
 end
