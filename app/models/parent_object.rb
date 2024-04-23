@@ -5,7 +5,7 @@ require 'fileutils'
 
 class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   FIVE_HUNDRED_MB = 524_288_000
-  MAX_ATTEMPTS = 0
+  MAX_ATTEMPTS = 3
   has_paper_trail
   include JsonFile
   include SolrIndexable
