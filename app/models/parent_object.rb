@@ -5,6 +5,7 @@ require 'fileutils'
 
 class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   FIVE_HUNDRED_MB = 524_288_000
+  MAX_ATTEMPTS = 0
   has_paper_trail
   include JsonFile
   include SolrIndexable
@@ -217,15 +218,23 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/MethodLength
 
   def preservica_copy_to_access(child_hash, co_oid)
+    attempt = 0
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(co_oid)
     image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
     directory = format("%02d", pairtree_path.first)
     FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
     access_master_path = File.join(image_mount, directory, pairtree_path, "#{co_oid}.tif")
     child_hash[:bitstream].download_to_file(access_master_path)
-  rescue StandardError => e
-    processing_event(e.to_s, "failed")
-    raise e.to_s
+  rescue => e
+    if attempt < MAX_ATTEMPTS
+      attempt += 1
+      Rails.logger.info "File not downloaded.  Retrying (attempt #{attempt} of #{MAX_ATTEMPTS})"
+      retry
+    else
+      Rails.logger.info "File not downloaded after #{MAX_ATTEMPTS} attempts"
+      processing_event(e.to_s, "failed")
+      raise e.to_s
+    end
   end
 
   # rubocop:disable Rails/SkipsModelValidations
