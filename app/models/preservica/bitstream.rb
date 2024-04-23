@@ -5,12 +5,15 @@ class Preservica::Bitstream
 
   attr_reader :filename
 
+  MAX_ATTEMPTS = 3
+
   def initialize(preservica_client, content_id, generation_id, id, filename)
     @preservica_client = preservica_client
     @id = id
     @content_id = content_id
     @generation_id = generation_id
     @filename = filename
+    @attempt = 0
   end
 
   def sha512_checksum
@@ -28,6 +31,8 @@ class Preservica::Bitstream
     preservica_client.get content_uri
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def download_to_file(file_name)
     Rails.logger.info "************ bitstream.rb # download_to_file +++ hits download to file method with file: #{file_name} *************"
     data_length = 0
@@ -36,8 +41,16 @@ class Preservica::Bitstream
       Rails.logger.info "************ bitstream.rb # download_to_file +++ File.open works *************"
       preservica_client.get(content_uri) do |chunk|
         data_length += chunk.length
-        file.write(chunk)
         sha512 << chunk
+        file.write(chunk)
+      rescue
+        if @attempt < MAX_ATTEMPTS
+          @attempt += 1
+          Rails.logger.info "File not written.  Retrying (attempt #{@attempt} of #{MAX_ATTEMPTS})"
+          retry
+        else
+          Rails.logger.info "File not written after #{MAX_ATTEMPTS} attempts"
+        end
       end
     end
     data_sha512 = sha512.hexdigest
@@ -49,6 +62,8 @@ class Preservica::Bitstream
     raise StandardError, "File sizes do not match (#{file_size} != #{size})" unless file_size == size
     # could also check: Digest::SHA512.file(file_name).hexdigest == sha512_checksum, but probably not necessary
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def xml
     @xml ||= Nokogiri::XML(preservica_client.content_object_generation_bitstream(@content_id, @generation_id, @id)).remove_namespaces!
