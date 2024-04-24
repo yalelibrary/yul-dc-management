@@ -226,7 +226,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     access_master_path = File.join(image_mount, directory, pairtree_path, "#{co_oid}.tif")
     child_hash[:bitstream].download_to_file(access_master_path)
   rescue => e
-    if (attempt += 1) < MAX_ATTEMPTS && !File.exist?(access_master_path)
+    if (attempt += 1) <= MAX_ATTEMPTS && !File.exist?(access_master_path)
       Rails.logger.info "File not downloaded.  Retrying (attempt #{attempt} of #{MAX_ATTEMPTS})"
       retry
     else
