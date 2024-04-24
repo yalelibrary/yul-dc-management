@@ -218,7 +218,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/MethodLength
 
   def preservica_copy_to_access(child_hash, co_oid)
-    attempt ||= 0
+    attempt ||= 1
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(co_oid)
     image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
     directory = format("%02d", pairtree_path.first)
