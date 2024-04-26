@@ -227,10 +227,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     child_hash[:bitstream].download_to_file(access_master_path)
   rescue => e
     if (attempt += 1) <= MAX_ATTEMPTS && !File.exist?(access_master_path)
-      Rails.logger.info "File not downloaded.  Retrying (attempt #{attempt} of #{MAX_ATTEMPTS})"
+      Rails.logger.info "********************* parent_object.rb # preservica_copy_to_access +++ File not downloaded.  Retrying (attempt #{attempt} of #{MAX_ATTEMPTS}) *************"
       retry
     else
-      Rails.logger.info "File not downloaded after #{MAX_ATTEMPTS} attempts"
+      Rails.logger.info "********************* parent_object.rb # preservica_copy_to_access +++ File not downloaded after #{MAX_ATTEMPTS} attempts *************"
       processing_event(e.to_s, "failed")
       raise e.to_s
     end

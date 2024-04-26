@@ -8,6 +8,7 @@
 # rubocop:disable ClassLength
 class ChildObject < ApplicationRecord
   # rubocop:enable ClassLength
+  MAX_ATTEMPTS = 3
   has_paper_trail
   include Statable
   include Delayable
@@ -156,7 +157,13 @@ class ChildObject < ApplicationRecord
     size
   end
 
+  # TODO: remove rubocop ignores and refactor once file not found issue is resolved
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
   def convert_to_ptiff
+    attempt ||= 1
     Rails.logger.info "************ child_object.rb # convert_to_ptiff +++ is the ptiff valid? #{pyramidal_tiff.valid?} *************"
     if pyramidal_tiff.valid?
       if pyramidal_tiff.conversion_information&.[](:width)
@@ -165,15 +172,29 @@ class ChildObject < ApplicationRecord
         # Conversion info is true if the ptiff was skipped as already present
       end
       true
+    elsif !pyramidal_tiff.valid? && parent_object.digital_object_source == 'Preservica'
+      if !access_master_exists && (attempt += 1) <= MAX_ATTEMPTS
+        Rails.logger.info "************ child_object.rb # convert_to_ptiff +++ File not found at access path: #{access_master_path}.  Retrying copy to access (attempt #{attempt} of #{MAX_ATTEMPTS})"
+        PreservicaImageService.new(parent_object.preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_type).map do |child_hash|
+          parent_object.preservica_copy_to_access(child_hash, oid) unless access_master_exists
+        end
+      else
+        Rails.logger.info "************ child_object.rb # convert_to_ptiff +++ File not downloaded after #{MAX_ATTEMPTS} attempts"
+        raise "Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join('\n')}"
+      end
     else
       report_ptiff_generation_error
       raise "Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join('\n')}"
     end
   end
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
 
   def report_ptiff_generation_error
     Rails.logger.info "************ child_object.rb # report_ptiff_generation_error +++ hits method *************"
-    Rails.logger.info "************ child_object.rb # report_ptiff_generation_error +++ ptiff errors: #{pyramidal_tiff.errors} *************"
+    Rails.logger.info "************ child_object.rb # report_ptiff_generation_error +++ ptiff errors: #{pyramidal_tiff.errors.full_messages.join("\n")} *************"
     parent_object&.processing_event("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
     processing_event("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
   end
