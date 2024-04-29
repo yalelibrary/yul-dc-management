@@ -9,6 +9,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_children.csv")) }
   let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_sync.csv")) }
+  # let(:logger_mock) { instance_double('Rails.logger').as_null_object }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -26,6 +27,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   end
 
   before do
+    # allow(Rails.logger).to receive(:info) { :logger_mock }
     login_as(:user)
     batch_process.user_id = user.id
     stub_pdfs
@@ -117,13 +119,15 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(co_first.ptiff_conversion_at.present?).to be_truthy
       expect(po_first.child_objects.count).to eq 3
 
-      # allow(ChildObject).to receive(:access_master_exists?).and_return(false) # .times(2).then.and_return(true)
-      # allow(PyramidalTiff).to receive(:valid?).and_return(false) # .times(2).then.and_return(true)
+      allow(co_first).to receive(:access_master_exists?).and_return(false) # .times(2).then.and_return(true)
+      allow(co_first.pyramidal_tiff).to receive(:valid?).and_return(false) # .times(2).then.and_return(true)
       sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
       expect do
         sync_batch_process.file = preservica_sync
         sync_batch_process.save!
       end.to change { ChildObject.count }.from(3).to(4)
+      # expect(Rails.logger).to have_received(:info)
+
       expect(File.exist?("spec/fixtures/images/access_masters/00/07/20/00/00/00/200000007.tif")).to eq true
       co_first = po_first.child_objects.first
       expect(co_first.order).to eq 1
