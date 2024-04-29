@@ -173,10 +173,10 @@ class ChildObject < ApplicationRecord
       end
       true
     elsif !pyramidal_tiff.valid? && parent_object&.digital_object_source == 'Preservica'
-      if !access_master_exists && (attempt += 1) <= MAX_ATTEMPTS
+      if !access_master_exists? && (attempt += 1) <= MAX_ATTEMPTS
         Rails.logger.info "************ child_object.rb # convert_to_ptiff +++ File not found at access path: #{access_master_path}.  Retrying copy to access (attempt #{attempt} of #{MAX_ATTEMPTS})"
         PreservicaImageService.new(parent_object.preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_type).map do |child_hash|
-          parent_object.preservica_copy_to_access(child_hash, oid) unless access_master_exists
+          parent_object.preservica_copy_to_access(child_hash, oid) unless access_master_exists?
         end
       else
         Rails.logger.info "************ child_object.rb # convert_to_ptiff +++ File not downloaded after #{MAX_ATTEMPTS} attempts"
