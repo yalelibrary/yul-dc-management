@@ -19,7 +19,6 @@ class ChildObject < ApplicationRecord
   has_one :admin_set, through: :parent_object
   self.primary_key = 'oid'
   paginates_per 50
-  attr_accessor :access_master_exists
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
 
