@@ -3,6 +3,8 @@
 class Preservica::Bitstream
   include Preservica::PreservicaObject
 
+  MAX_ATTEMPTS = 3
+
   attr_reader :filename
 
   def initialize(preservica_client, content_id, generation_id, id, filename)
@@ -32,6 +34,7 @@ class Preservica::Bitstream
   # rubocop:disable Metrics/MethodLength
   def download_to_file(file_name)
     Rails.logger.info "************ bitstream.rb # download_to_file +++ hits download to file method with file: #{file_name} *************"
+    attempt ||= 1
     data_length = 0
     sha512 = Digest::SHA512. new
     File.open(file_name, 'wb') do |file|
@@ -39,7 +42,7 @@ class Preservica::Bitstream
       preservica_client.get(content_uri) do |chunk|
         data_length += chunk.length
         no_of_bites = file.write(chunk)
-        redo if no_of_bites < 1
+        redo if no_of_bites < 1 && (attempt += 1) <= MAX_ATTEMPTS
         Rails.logger.info "************ bitstream.rb # download_to_file +++ File.write wrote #{no_of_bites} bites to file *************"
         sha512 << chunk
       end
