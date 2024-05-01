@@ -22,17 +22,10 @@ class PermissionRequestsController < ApplicationController
   # PATCH/PUT /permission_request/1
   # PATCH/PUT /permission_request/1.json
   def update
-    send_mail if permission_request_params.key?('new_visibility')
-    old_request_status = @permission_request.request_status
+    old_visibility = @permission_request.new_visibility
     respond_to do |format|
-      if permission_request_params.key?('new_visibility') && !permission_request_params.key?('request_status')
-        format.html { redirect_to permission_request_path(@permission_request), notice: 'A request to change the access type of this object was sent successfully.' }
-        format.json { render :show, status: :ok, location: @permission_request }
-      elsif @permission_request.update(clean_params)
-        if @permission_request.request_status != old_request_status
-          @permission_request.approver = current_user.uid
-          @permission_request.save
-        end
+      if @permission_request.update(permission_request_params)
+        send_mail if @permission_request.new_visibility != old_visibility
         format.html { redirect_to permission_request_path(@permission_request), notice: 'Changes saved successfully.' }
         format.json { render :show, status: :ok, location: @permission_request }
       else
@@ -67,10 +60,6 @@ class PermissionRequestsController < ApplicationController
       new_visibility: permission_request_params[:new_visibility]
     }
     AccessChangeRequestMailer.with(access_change_request: access_change_request).access_change_request_email.deliver_now
-  end
-
-  def clean_params
-    permission_request_params.except('new_visibility').except('change_access_type')
   end
 
   private
