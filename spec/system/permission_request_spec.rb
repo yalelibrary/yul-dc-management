@@ -151,6 +151,7 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
         click_on 'Save'
         permission_request.reload
         expect(permission_request.request_status).to eq true
+        expect(permission_request.approver).to eq sysadmin.uid
       end
 
       it 'can request a change in access type' do

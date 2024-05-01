@@ -26,7 +26,7 @@ class PermissionRequestDatatable < ApplicationDatatable
       request_status: { source: "OpenWithPermission::PermissionRequest.request_status", cond: :start_with, searchable: true, orderable: true },
       approved_or_denied_at: { source: "OpenWithPermission::PermissionRequest.approved_or_denied_at", cond: :start_with, searchable: true, orderable: true },
       access_until: { source: "OpenWithPermission::PermissionRequest.access_until", cond: :start_with, searchable: true, orderable: true },
-      approver: { source: "User.id", cond: :start_with, searchable: true, orderable: true }
+      approver: { source: "OpenWithPermission::PermissionRequest.approver", cond: :start_with, searchable: true, orderable: true }
     }
   end
 
@@ -45,7 +45,7 @@ class PermissionRequestDatatable < ApplicationDatatable
         request_status: permission_request.request_status,
         approved_or_denied_at: permission_request.approved_or_denied_at,
         access_until: permission_request.access_until,
-        approver: permission_request.user&.uid.presence || 'TODO'
+        approver: permission_request.approver
       }
     end
   end
