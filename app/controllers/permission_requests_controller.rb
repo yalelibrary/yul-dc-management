@@ -22,7 +22,6 @@ class PermissionRequestsController < ApplicationController
   # PATCH/PUT /permission_request/1
   # PATCH/PUT /permission_request/1.json
   def update
-    @permission_request = OpenWithPermission::PermissionRequest.find(params[:id])
     old_visibility = @permission_request.new_visibility
     respond_to do |format|
       if @permission_request.update(permission_request_params)
