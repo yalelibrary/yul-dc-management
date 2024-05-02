@@ -317,7 +317,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_02_202722) do
     t.string "permission_request_user_name"
     t.string "change_access_type"
     t.string "new_visibility"
-    t.string "approver"
     t.string "request_status", default: "Pending"
     t.index ["parent_object_id"], name: "index_permission_requests_on_parent_object_id"
     t.index ["permission_request_user_id"], name: "index_permission_requests_on_permission_request_user_id"
