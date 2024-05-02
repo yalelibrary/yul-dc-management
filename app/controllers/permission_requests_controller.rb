@@ -29,7 +29,7 @@ class PermissionRequestsController < ApplicationController
         send_mail if @permission_request.new_visibility != old_visibility
         if @permission_request.request_status != old_request_status
           @permission_request.approver = current_user.uid
-          @permission_request.save
+          @permission_request.save!
         end
         format.html { redirect_to permission_request_path(@permission_request), notice: 'Changes saved successfully.' }
         format.json { render :show, status: :ok, location: @permission_request }
