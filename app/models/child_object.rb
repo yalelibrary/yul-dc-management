@@ -162,8 +162,7 @@ class ChildObject < ApplicationRecord
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/PerceivedComplexity
   def convert_to_ptiff
-    Rails.logger.info "************ child_object.rb # convert_to_ptiff +++ is the ptiff valid? #{pyramidal_tiff.valid?} *************"
-    if pyramidal_tiff.valid?
+    if pyramidal_tiff.verify_and_generate
       if pyramidal_tiff.conversion_information&.[](:width)
         processing_event("PTIFF ready for #{oid}", 'ptiff-ready')
         width_and_height(pyramidal_tiff.conversion_information)
@@ -181,14 +180,11 @@ class ChildObject < ApplicationRecord
   # rubocop:disable Metrics/PerceivedComplexity
 
   def report_ptiff_generation_error
-    Rails.logger.info "************ child_object.rb # report_ptiff_generation_error +++ hits method *************"
-    Rails.logger.info "************ child_object.rb # report_ptiff_generation_error +++ ptiff errors: #{pyramidal_tiff.errors.full_messages.join("\n")} *************"
     parent_object&.processing_event("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
     processing_event("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
   end
 
   def convert_to_ptiff!(force = false)
-    Rails.logger.info "************ child_object.rb # convert_to_ptiff!(force = false) +++ is the convert method forced? #{force} *************"
     pyramidal_tiff.force_update = force
     convert_to_ptiff && save!
   end

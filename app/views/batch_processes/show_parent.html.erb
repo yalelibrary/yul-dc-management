@@ -142,4 +142,29 @@
   <%= BatchProcessParentDatatable.new(nil).view_columns.map {|key, value| {data: key, orderable: value[:orderable], options: value[:options]} }.to_json %>
 </div>
 
+<div class='row batch-process-heading'>
+  <div class='col'>
+    <h2>Parent Batch Process - All Messages</h2>
+  </div>
+</div>
+
+<% if @notes %>
+<table class='table table-responsive table-bordered table-striped' aria-label='Parent Batch Process Failure'>
+  <thead class='table-head'>
+    <tr>
+      <th scope='col'>Messages</th>
+      <th scope='col'>Time</th>
+    </tr>
+  </thead>
+  <tbody class='datatable-body'>
+  <% @notes.map do |note| %>
+    <tr>
+      <td class='reason'><%= note[:reason] %></td>
+      <td class='time'><%= note[:time] %></td>
+    </tr>
+  <% end %>  
+  </tbody>
+</table>
+<% end %>
+
 <%= link_to 'Back', batch_process_path, class: 'page-actions' %>

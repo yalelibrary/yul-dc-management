@@ -35,6 +35,7 @@ class Preservica::Bitstream
   def download_to_file(file_name)
     Rails.logger.info "************ bitstream.rb # download_to_file +++ hits download to file method with file: #{file_name} *************"
     attempt ||= 1
+    co_oid = file_name.scan(/\d+/).last
     data_length = 0
     sha512 = Digest::SHA512. new
     File.open(file_name, 'wb') do |file|
@@ -43,7 +44,8 @@ class Preservica::Bitstream
         data_length += chunk.length
         no_of_bites = file.write(chunk)
         redo if no_of_bites < 1 && (attempt += 1) <= MAX_ATTEMPTS
-        Rails.logger.info "************ bitstream.rb # download_to_file +++ File.write wrote #{no_of_bites} bites to file *************"
+        Rails.logger.info "************ bitstream.rb # download_to_file +++ file.write wrote #{no_of_bites} bites to file *************"
+        Rails.logger.info "************ bitstream.rb # download_to_file +++ file.write attempt #{attempt} of #{MAX_ATTEMPTS} *************"
         sha512 << chunk
       end
     end
@@ -51,9 +53,9 @@ class Preservica::Bitstream
     file_size = File.size?(file_name)
     Rails.logger.info "************ bitstream.rb # download_to_file +++ counts file size (data_length): #{data_length} *************"
     Rails.logger.info "************ bitstream.rb # download_to_file +++ grabs sha checksum (data_sha512): #{data_sha512} *************"
-    raise StandardError, "Checksum mismatch (#{data_sha512} != #{sha512_checksum})" unless data_sha512.casecmp?(sha512_checksum)
-    raise StandardError, "Data size did not match (#{data_length} != #{size})" unless data_length == size
-    raise StandardError, "File sizes do not match (#{file_size} != #{size})" unless file_size == size
+    raise StandardError, "Checksum mismatch for Child Object: #{co_oid} - #{data_sha512} != #{sha512_checksum})" unless data_sha512.casecmp?(sha512_checksum)
+    raise StandardError, "Data size did not match for Child Object: #{co_oid} - (#{data_length} != #{size})" unless data_length == size
+    raise StandardError, "File sizes do not match for Child Object: #{co_oid} - (#{file_size} != #{size})" unless file_size == size
     # could also check: Digest::SHA512.file(file_name).hexdigest == sha512_checksum, but probably not necessary
   end
   # rubocop:enable Metrics/AbcSize

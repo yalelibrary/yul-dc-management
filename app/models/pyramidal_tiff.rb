@@ -6,7 +6,6 @@ class PyramidalTiff
   include ActiveModel::Validations
 
   attr_accessor :child_object, :conversion_information, :force_update
-  validate :verify_and_generate
   delegate :access_master_path, :mets_access_master_path, :remote_access_master_path, :remote_ptiff_path, :oid, to: :child_object
 
   # This method takes the oid of a child_object and creates a new PyramidalTiff
@@ -50,13 +49,13 @@ class PyramidalTiff
   def original_file_exists?
     if child_object.parent_object&.from_mets == true
       image_exists = File.exist?(mets_access_master_path) || File.exist?(mets_access_master_path.gsub('.tif', '.TIF').gsub('.jpg', '.JPG'))
-      errors.add(:base, "Expected file #{mets_access_master_path} not found.") unless image_exists
+      errors.add(:base, "Expected file #{mets_access_master_path} from mets not found.") unless image_exists
     elsif ENV['ACCESS_MASTER_MOUNT'] == "s3"
       image_exists = S3Service.s3_exists?(remote_access_master_path)
-      errors.add(:base, "Expected file #{remote_access_master_path} not found.") unless image_exists
+      errors.add(:base, "Expected file #{remote_access_master_path} from AWS S3 not found.") unless image_exists
     else
       image_exists = File.exist?(access_master_path)
-      errors.add(:base, "Expected file #{access_master_path} not found.") unless image_exists
+      errors.add(:base, "Expected file #{access_master_path} from shares at Yale not found.") unless image_exists
     end
     image_exists
   end
@@ -73,10 +72,17 @@ class PyramidalTiff
       if download
         child_object.processing_event("Access master retrieved from S3", 'access-master')
         temp_file_path
+        # should this be a retry?
+      else
+        child_object.processing_event("Access master not downloaded from S3", 'access-master')
       end
     else
       FileUtils.cp(access_master_path, tmpdir)
-      child_object.processing_event("Access master retrieved from file system", 'access-master')
+      if File.exist?(tmpdir)
+        child_object.processing_event("Access master retrieved from file system", 'access-master')
+      else
+        child_object.processing_event("Access master not copied from file system", 'access-master')
+      end
       temp_file_path
     end
   end
