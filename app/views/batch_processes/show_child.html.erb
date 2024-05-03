@@ -98,8 +98,8 @@
     <tbody class='datatable-body'>
     <% @notes.map do |note| %>
       <tr>
-        <td class='reason'><%= note[:reason] %></td>
-        <td class='time'><%= note[:time] %></td>
+        <td class='reason'><%= note.first %></td>
+        <td class='time'><%= note.last %></td>
       </tr>
     <% end %>
     </tbody>
