@@ -34,7 +34,7 @@ RSpec.describe Api::PermissionRequest, type: :model, prep_metadata_sources: true
       expect(u.permission_request_user_id).to eq request_user.id
       expect(u.user_id).to eq user.id
       expect(u.user_note).to eq "Note"
-      expect(u.request_status).to eq nil
+      expect(u.request_status).to eq "Pending"
     end
   end
 end

@@ -14,10 +14,10 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
   let(:parent_object_two) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
   # rubocop:disable Layout/LineLength
   let(:permission_request) do
-    FactoryBot.create(:permission_request, request_status: true, permission_set: permission_set, parent_object: parent_object, permission_request_user: request_user, user_note: 'something', permission_request_user_name: 'name 2')
+    FactoryBot.create(:permission_request, request_status: "Approved", permission_set: permission_set, parent_object: parent_object, permission_request_user: request_user, user_note: 'something', permission_request_user_name: 'name 2')
   end
   let(:permission_request_two) do
-    FactoryBot.create(:permission_request, parent_object: parent_object_two, permission_set: permission_set_two, permission_request_user: request_user_two, request_status: true, permission_request_user_name: 'name 3')
+    FactoryBot.create(:permission_request, parent_object: parent_object_two, permission_set: permission_set_two, permission_request_user: request_user_two, request_status: "Approved", permission_request_user_name: 'name 3')
   end
   # rubocop:enable Layout/LineLength
   let(:administrator_user) { FactoryBot.create(:user, uid: 'admin') }
@@ -140,18 +140,19 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
       end
 
       it 'can approve or deny a permission request' do
-        expect(permission_request.request_status).to eq true
+        expect(permission_request.request_status).to eq "Approved"
         visit "/permission_requests/#{permission_request.id}"
-        find('#open_with_permission_permission_request_request_status_false').click
+        find('#open_with_permission_permission_request_request_status_denied').click
         click_on 'Save'
         permission_request.reload
-        expect(permission_request.request_status).to eq false
+        expect(permission_request.request_status).to eq "Denied"
         visit "/permission_requests/#{permission_request.id}"
-        find('#open_with_permission_permission_request_request_status_true').click
+        find('#open_with_permission_permission_request_request_status_approved').click
         click_on 'Save'
         permission_request.reload
         expect(permission_request.request_status).to eq true
         expect(permission_request.approver).to eq sysadmin.uid
+        expect(permission_request.request_status).to eq "Approved"
       end
 
       it 'can request a change in access type' do
@@ -183,17 +184,17 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
       end
 
       it 'can approve or deny a permission request' do
-        expect(permission_request.request_status).to eq true
+        expect(permission_request.request_status).to eq "Approved"
         visit "/permission_requests/#{permission_request.id}"
-        find('#open_with_permission_permission_request_request_status_false').click
+        find('#open_with_permission_permission_request_request_status_denied').click
         click_on 'Save'
         permission_request.reload
-        expect(permission_request.request_status).to eq false
+        expect(permission_request.request_status).to eq "Denied"
         visit "/permission_requests/#{permission_request.id}"
-        find('#open_with_permission_permission_request_request_status_true').click
+        find('#open_with_permission_permission_request_request_status_approved').click
         click_on 'Save'
         permission_request.reload
-        expect(permission_request.request_status).to eq true
+        expect(permission_request.request_status).to eq "Approved"
       end
 
       it 'can request a change in access type' do
@@ -230,16 +231,16 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
       end
 
       it 'can approve or deny a permission request from a set they are an approver for' do
-        expect(permission_request_two.request_status).to eq true
+        expect(permission_request_two.request_status).to eq "Approved"
         visit "/permission_requests/#{permission_request_two.id}"
-        find('#open_with_permission_permission_request_request_status_false').click
+        find('#open_with_permission_permission_request_request_status_denied').click
         click_on 'Save'
         permission_request_two.reload
-        expect(permission_request_two.request_status).to eq false
-        find('#open_with_permission_permission_request_request_status_true').click
+        expect(permission_request_two.request_status).to eq "Denied"
+        find('#open_with_permission_permission_request_request_status_approved').click
         click_on 'Save'
         permission_request_two.reload
-        expect(permission_request_two.request_status).to eq true
+        expect(permission_request_two.request_status).to eq "Approved"
       end
 
       it 'can request a change in access type' do
