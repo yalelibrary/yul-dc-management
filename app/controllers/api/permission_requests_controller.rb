@@ -16,7 +16,7 @@ class Api::PermissionRequestsController < ApplicationController
     return unless valid_json_request(request)
     pr_user = find_or_create_user(request)
     permission_set = OpenWithPermission::PermissionSet.find(parent_object.permission_set_id)
-    current_requests_count = OpenWithPermission::PermissionRequest.where(permission_request_user: pr_user, request_status: nil, permission_set: permission_set).count
+    current_requests_count = OpenWithPermission::PermissionRequest.where(permission_request_user: pr_user, request_status: "Pending", permission_set: permission_set).count
     if current_requests_count >= permission_set.max_queue_length
       render json: { "title": "Too many pending requests" }, status: 403
     else

@@ -422,16 +422,16 @@ $( document ).on('turbolinks:load', function() {
 
 // Enables/disabled permission request datepicker based on selected request_status
 $( document ).on('turbolinks:load', function() {
-  if($('#open_with_permission_permission_request_request_status_false').val() == 'false' || $('#open_with_permission_permission_request_request_status_false').val() == nil) {
+  if($('#open_with_permission_permission_request_request_status_denied').val() == 'Denied' || $('#open_with_permission_permission_request_request_status_denied').val() == nil) {
     $('#open_with_permission_permission_request_access_until').prop('disabled', true);
   }
-  $('#open_with_permission_permission_request_request_status_true').on('input change', function() {
-    if($(this).val() == 'true') {
+  $('#open_with_permission_permission_request_request_status_approved').on('input change', function() {
+    if($(this).val() == 'Approved') {
       $('#open_with_permission_permission_request_access_until').prop('disabled', false);
     }
   });
-  $('#open_with_permission_permission_request_request_status_false').on('input change', function() {
-    if($(this).val() == 'false') {
+  $('#open_with_permission_permission_request_request_status_denied').on('input change', function() {
+    if($(this).val() == 'Denied') {
       $('#open_with_permission_permission_request_access_until').prop('disabled', true);
     }
   });

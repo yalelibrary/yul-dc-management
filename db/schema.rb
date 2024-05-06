@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_30_174608) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_02_202722) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -303,7 +303,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_30_174608) do
   end
 
   create_table "permission_requests", force: :cascade do |t|
-    t.boolean "request_status"
     t.text "approver_note"
     t.boolean "terms_approved"
     t.datetime "access_until", precision: nil
@@ -318,6 +317,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_30_174608) do
     t.string "permission_request_user_name"
     t.string "change_access_type"
     t.string "new_visibility"
+    t.string "request_status", default: "Pending"
     t.index ["parent_object_id"], name: "index_permission_requests_on_parent_object_id"
     t.index ["permission_request_user_id"], name: "index_permission_requests_on_permission_request_user_id"
     t.index ["permission_set_id"], name: "index_permission_requests_on_permission_set_id"
