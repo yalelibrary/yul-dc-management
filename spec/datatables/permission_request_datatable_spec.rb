@@ -27,7 +27,7 @@ RSpec.describe PermissionRequestDatatable, type: :datatable, prep_metadata_sourc
       request_status: pr.request_status,
       approved_or_denied_at: pr.approved_or_denied_at,
       access_until: pr.access_until,
-      approver: 'TODO'
+      approver: nil
     )
   end
 
@@ -49,7 +49,7 @@ RSpec.describe PermissionRequestDatatable, type: :datatable, prep_metadata_sourc
     expect(output.size).to eq(1)
     expect(output).to include(
       DT_RowId: pr_one.id,
-      approver: "TODO",
+      approver: nil,
       id: "<a href='/permission_requests/#{pr_one.id}'>#{pr_one.id}</a> <a href='/permission_requests/#{pr_one.id}'>#{pr_one.id}</a>",
       net_id: pr_one.permission_request_user.netid,
       oid: pr_one.parent_object.oid,

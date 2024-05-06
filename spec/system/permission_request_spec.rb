@@ -150,6 +150,7 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
         find('#open_with_permission_permission_request_request_status_approved').click
         click_on 'Save'
         permission_request.reload
+        expect(permission_request.approver).to eq sysadmin.uid
         expect(permission_request.request_status).to eq "Approved"
       end
 
