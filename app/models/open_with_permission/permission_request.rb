@@ -16,6 +16,6 @@ class OpenWithPermission::PermissionRequest < ApplicationRecord
   def sanitize_user_input
     self.user_note = ActionView::Base.full_sanitizer.sanitize(user_note, tags: [])
     self.permission_request_user_name = ActionView::Base.full_sanitizer.sanitize(permission_request_user_name, tags: [])
-    self.permission_request_user.email = ActionView::Base.full_sanitizer.sanitize(permission_request_user.email, tags: [])
+    permission_request_user.email = ActionView::Base.full_sanitizer.sanitize(permission_request_user.email, tags: [])
   end
 end
