@@ -47,6 +47,7 @@ class PyramidalTiff
   end
 
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/AbcSize
   def original_file_exists?
     Rails.logger.info("mets access master path: #{mets_access_master_path} pyramidal_tiff.rb in original_file_exists?")
     Rails.logger.info("remote access master path: #{remote_access_master_path} pyramidal_tiff.rb in original_file_exists?")
@@ -66,6 +67,7 @@ class PyramidalTiff
     image_exists
   end
   # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/AbcSize
 
   ##
   # Create a temp copy of the input file in TEMP_IMAGE_WORKSPACE
