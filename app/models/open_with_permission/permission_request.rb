@@ -5,8 +5,17 @@ class OpenWithPermission::PermissionRequest < ApplicationRecord
   belongs_to :permission_request_user, class_name: "OpenWithPermission::PermissionRequestUser"
   belongs_to :parent_object
   has_one :user
+  before_validation :sanitize_user_input, on: [:create]
 
   before_save do
     self.approved_or_denied_at = Time.zone.now if request_status_changed?
+  end
+
+  private
+
+  def sanitize_user_input
+    self.user_note = ActionView::Base.full_sanitizer.sanitize(self.user_note, tags: []).gsub('&amp;','&')
+    self.permission_request_user_name = ActionView::Base.full_sanitizer.sanitize(self.permission_request_user_name, tags: []).gsub('&amp;','&')
+    self.permission_request_user.email = ActionView::Base.full_sanitizer.sanitize(self.permission_request_user.email, tags: []).gsub('&amp;','&')
   end
 end
