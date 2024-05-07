@@ -48,6 +48,11 @@ class PyramidalTiff
 
   # rubocop:disable Metrics/PerceivedComplexity
   def original_file_exists?
+    Rails.logger.info("mets access master path: #{mets_access_master_path} pyramidal_tiff.rb in original_file_exists?")
+    Rails.logger.info("remote access master path: #{remote_access_master_path} pyramidal_tiff.rb in original_file_exists?")
+    Rails.logger.info("access master path: #{access_master_path} pyramidal_tiff.rb in original_file_exists?")
+    Rails.logger.info("ENV['ACCESS_MASTER_MOUNT']: #{ENV['ACCESS_MASTER_MOUNT']} pyramidal_tiff.rb in original_file_exists?")
+
     if child_object.parent_object&.from_mets == true
       image_exists = File.exist?(mets_access_master_path) || File.exist?(mets_access_master_path.gsub('.tif', '.TIF').gsub('.jpg', '.JPG'))
       errors.add(:base, "Expected file #{mets_access_master_path} on mets not found.") unless image_exists
