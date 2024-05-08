@@ -4,7 +4,7 @@
   <h1>Permission Sets (TBD)</h1>
 </div>
 <div class="heading">
-  <% if can? :create_set, OpenWithPermission::PermissionSet %>
+  <% if current_user.has_role?(:sysadmin) %>
     <div class='button-list'>
       <%= link_to 'Create New Permission Set', new_permission_set_path, class: "btn button primary-button" %>
     </div>
