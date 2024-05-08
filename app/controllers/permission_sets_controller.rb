@@ -40,6 +40,7 @@ class PermissionSetsController < ApplicationController
   # POST /permission_sets
   # POST /permission_sets.json
   def create
+    authorize!(:create, OpenWithPermission::PermissionSet)
     @permission_set = OpenWithPermission::PermissionSet.new(permission_set_params)
 
     respond_to do |format|

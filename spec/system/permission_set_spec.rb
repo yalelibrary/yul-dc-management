@@ -76,6 +76,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       it 'can view the Permission Sets link' do
         visit '/'
         expect(page).to have_content(sets_all_caps)
+        expect(page).to have_content(create_new_set)
       end
       it 'can view the Permission Sets index' do
         visit '/permission_sets'
@@ -225,7 +226,7 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       end
       it 'can be viewed' do
         visit '/permission_sets'
-        expect(page).to have_content(create_new_set)
+        expect(page).not_to have_content(create_new_set)
         expect(page).to have_link('Edit')
         expect(page).to have_content('Edit').twice
       end
