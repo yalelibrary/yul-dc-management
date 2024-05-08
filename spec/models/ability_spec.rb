@@ -249,7 +249,8 @@ RSpec.describe Ability, type: :model, prep_admin_sets: true, prep_metadata_sourc
     end
     it 'allows administrator to crud Permission Set' do
       ability = Ability.new(user)
-      assert ability.can?(:crud, permission_set)
+      assert ability.can?(:read, permission_set)
+      assert ability.can?(:update, permission_set)
     end
   end
 end
