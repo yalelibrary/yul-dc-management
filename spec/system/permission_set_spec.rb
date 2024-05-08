@@ -76,7 +76,6 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
       it 'can view the Permission Sets link' do
         visit '/'
         expect(page).to have_content(sets_all_caps)
-        expect(page).to have_content(create_new_set)
       end
       it 'can view the Permission Sets index' do
         visit '/permission_sets'
@@ -246,24 +245,9 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         all('a', text: 'X')[0].click
         expect(page).to have_content("User: #{user.uid} removed as approver")
       end
-      it 'can be created' do
+      it 'cannot be created' do
         visit new_set_url
-        expect(page).to have_content(new_set)
-        fill_in('open_with_permission_permission_set_key', with: 'key example')
-        fill_in('open_with_permission_permission_set_label', with: 'label example')
-        fill_in('open_with_permission_permission_set_max_queue_length', with: '10')
-        click_on create_set
-        expect(page).to have_content('Permission set was successfully created.')
-        expect(page).to have_content('key example')
-        expect(page).to have_content('label example')
-      end
-      it 'can validate uniqueness of key and label' do
-        visit new_set_url
-        fill_in('open_with_permission_permission_set_key', with: 'key 1')
-        fill_in('open_with_permission_permission_set_label', with: 'set 1')
-        click_on create_set
-        expect(page).to have_content('Key has already been taken')
-        expect(page).to have_content('Label has already been taken')
+        expect(page).to have_content("Access denied")
       end
     end
 
