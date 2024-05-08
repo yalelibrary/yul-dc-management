@@ -17,7 +17,7 @@ RSpec.describe PermissionRequestDatatable, type: :datatable, prep_metadata_sourc
     expect(output.size).to eq(1)
     expect(output).to include(
       DT_RowId: pr.id,
-      id: "<a href='/permission_requests/#{pr.id}'>#{pr.id}</a> <a href='/permission_requests/#{pr.id}'>#{pr.id}</a>",
+      id: "<a href='/permission_requests/#{pr.id}'>#{pr.id}</a>",
       permission_set: "<a href='/permission_sets/#{pr.permission_set.id}'>#{pr.permission_set.label}</a>",
       request_date: pr.created_at,
       oid: pr.parent_object.oid,
@@ -50,7 +50,7 @@ RSpec.describe PermissionRequestDatatable, type: :datatable, prep_metadata_sourc
     expect(output).to include(
       DT_RowId: pr_one.id,
       approver: nil,
-      id: "<a href='/permission_requests/#{pr_one.id}'>#{pr_one.id}</a> <a href='/permission_requests/#{pr_one.id}'>#{pr_one.id}</a>",
+      id: "<a href='/permission_requests/#{pr_one.id}'>#{pr_one.id}</a>",
       net_id: pr_one.permission_request_user.netid,
       oid: pr_one.parent_object.oid,
       permission_set: "<a href='/permission_sets/#{pr_one.permission_set.id}'>#{pr_one.permission_set.label}</a>",
