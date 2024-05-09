@@ -46,6 +46,7 @@ class PyramidalTiff
     end
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/AbcSize
   def original_file_exists?
@@ -57,7 +58,7 @@ class PyramidalTiff
     if child_object.parent_object&.from_mets == true
       image_exists = File.exist?(mets_access_master_path) || File.exist?(mets_access_master_path.gsub('.tif', '.TIF').gsub('.jpg', '.JPG'))
       errors.add(:base, "Expected file #{mets_access_master_path} on mets not found.") unless image_exists
-    elsif ENV['ACCESS_MASTER_MOUNT'] == "s3"
+    elsif ENV['ACCESS_MASTER_MOUNT'] == "s3" && Rails.env.test?
       image_exists = S3Service.s3_exists?(remote_access_master_path)
       errors.add(:base, "Expected file #{remote_access_master_path} on S3 not found.") unless image_exists
     else
@@ -66,6 +67,7 @@ class PyramidalTiff
     end
     image_exists
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/AbcSize
 
