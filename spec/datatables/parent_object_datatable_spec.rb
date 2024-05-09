@@ -52,6 +52,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       oid: '<a href="/parent_objects/2034600">2034600</a> <a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil"></i></a> <a target="_blank" href="http://localhost:3000/catalog/2034600">1</a>',
       full_text: 'None',
       project_identifier: '67',
+      permission_set: nil,
       visibility: 'Private',
       created_at: po.created_at
     )

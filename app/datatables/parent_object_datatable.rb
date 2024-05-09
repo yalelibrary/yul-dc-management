@@ -37,7 +37,7 @@ class ParentObjectDatatable < ApplicationDatatable
       last_sierra_update: { source: "ParentObject.last_sierra_update", orderable: true },
       last_id_update: { source: "ParentObject.last_id_update", orderable: true },
       visibility: { source: "ParentObject.visibility", cond: :string_eq, searchable: true, options: ["Public", "Yale Community Only", "Private", "Open with Permission"], orderable: true },
-      permission_set: { source: "OpenWithPermission::PermissionSet.label", cond: :string_eq, searchable: true, options: @set_labels, orderable: true },
+      permission_set: { source: "OpenWithPermission::PermissionSet.label", cond: :string_eq, options: @set_labels, searchable: true, orderable: true },
       extent_of_digitization: { source: "ParentObject.extent_of_digitization", cond: :string_eq, searchable: true, options: ["Completely digitized", "Partially digitized"], orderable: true },
       digitization_note: { source: "ParentObject.digitization_note", cond: :like, searchable: true, orderable: true },
       digitization_funding_source: { source: "ParentObject.digitization_funding_source", cond: :like, searchable: true, orderable: true },
@@ -72,7 +72,7 @@ class ParentObjectDatatable < ApplicationDatatable
         last_sierra_update: parent_object.last_sierra_update,
         last_id_update: parent_object.last_id_update,
         visibility: parent_object.visibility,
-        permission_set: parent_object&.permission_set.label,
+        permission_set: parent_object&.permission_set&.label,
         extent_of_digitization: parent_object.extent_of_digitization,
         digitization_note: parent_object.digitization_note,
         digitization_funding_source: parent_object.digitization_funding_source,
@@ -101,7 +101,6 @@ class ParentObjectDatatable < ApplicationDatatable
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    # sql = "LEFT OUTER JOIN parent_objects ON batch_connections.connectable_id = parent_objects.oid AND batch_connections.connectable_type = 'ParentObject'"
-    ParentObject.accessible_by(@current_ability, :read).joins(:authoritative_metadata_source, :admin_set, 'LEFT OUTER JOIN permission_sets ON parent_object.permission_set_id = permission_set.label').where("visibility != 'Redirect'")
+    ParentObject.accessible_by(@current_ability, :read).joins(:authoritative_metadata_source, :admin_set).left_outer_joins(:permission_set).where("visibility != 'Redirect'")
   end
 end
