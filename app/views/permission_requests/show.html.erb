@@ -18,7 +18,7 @@
         </tr>
         <tr>
           <td class='key'>OID:</td>
-          <td class='interior'><%= @permission_request.parent_object.oid %></td>
+          <td class='interior'><%= link_to "#{@permission_request.parent_object.oid}", "#{ENV['BLACKLIGHT_BASE_URL']}/catalog/#{@permission_request.parent_object.oid}", target: :_blank %></td>
         </tr>
         <tr>
           <td class='key'>User Name:</td>
@@ -88,6 +88,7 @@
       </tbody>
     </table>
   </div>
+  <%= link_to 'Back', permission_requests_path %>
 <% end %>
 
 

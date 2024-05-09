@@ -52,10 +52,7 @@ class PermissionRequestDatatable < ApplicationDatatable
   # rubocop:enable Rails/OutputSafety
 
   def id_column(permission_request)
-    result = []
-    result << link_to(permission_request.id, permission_request_path(permission_request))
-    result << with_icon('fa fa-eye', permission_request_path(permission_request))
-    result.join(' ')
+    link_to(permission_request.id, permission_request_path(permission_request))
   end
 
   def with_icon(class_name, path, options = {})

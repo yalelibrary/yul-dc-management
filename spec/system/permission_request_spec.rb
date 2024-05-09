@@ -6,7 +6,7 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
   let(:sysadmin) { FactoryBot.create(:sysadmin_user) }
   let(:user) { FactoryBot.create(:user) }
   let(:admin_set) { FactoryBot.create(:admin_set) }
-  let(:request_user) { FactoryBot.create(:permission_request_user, sub: "sub 1", name: "name 1", netid: "netid") }
+  let(:request_user) { FactoryBot.create(:permission_request_user, sub: "sub 1", name: "<p>name 1</p>", netid: "netid", email: "<h2>email@example.com</h2>") }
   let(:request_user_two) { FactoryBot.create(:permission_request_user, sub: "sub 2", name: "name 2", netid: "net id") }
   let(:permission_set) { FactoryBot.create(:permission_set, label: "set 1", key: 'key 1') }
   let(:permission_set_two) { FactoryBot.create(:permission_set, label: "set 2", key: 'key 2') }
@@ -14,7 +14,7 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
   let(:parent_object_two) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
   # rubocop:disable Layout/LineLength
   let(:permission_request) do
-    FactoryBot.create(:permission_request, request_status: "Approved", permission_set: permission_set, parent_object: parent_object, permission_request_user: request_user, user_note: 'something', permission_request_user_name: 'name 2')
+    FactoryBot.create(:permission_request, request_status: "Approved", permission_set: permission_set, parent_object: parent_object, permission_request_user: request_user, user_note: '<p>something</p>', permission_request_user_name: '<h1>name 2</h1>')
   end
   let(:permission_request_two) do
     FactoryBot.create(:permission_request, parent_object: parent_object_two, permission_set: permission_set_two, permission_request_user: request_user_two, request_status: "Approved", permission_request_user_name: 'name 3')
@@ -137,6 +137,14 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
         expect(page).to have_content(permission_request.permission_request_user.sub.to_s)
         expect(page).to have_content(permission_request.permission_request_user.name.to_s)
         expect(page).to have_content(permission_request.user_note.to_s)
+        expect(permission_request.user_note).to eq "something"
+      end
+
+      it 'has sanitized values for user_note, name, and email' do
+        expect(permission_request.user_note).to eq "something"
+        expect(permission_request.permission_request_user_name).to eq "name 2"
+        expect(permission_request.permission_request_user.name).to eq "name 1"
+        expect(permission_request.permission_request_user.email).to eq "email@example.com"
       end
 
       it 'can approve or deny a permission request' do

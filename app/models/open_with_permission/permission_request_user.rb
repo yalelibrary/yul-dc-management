@@ -7,4 +7,12 @@ class OpenWithPermission::PermissionRequestUser < ApplicationRecord
   validates :email, presence: true
   validates :email_verified, inclusion: { in: [true, false] }
   validates :oidc_updated_at, presence: true
+  before_validation :sanitize_user_input, on: [:create]
+
+  private
+
+  def sanitize_user_input
+    self.email = ActionView::Base.full_sanitizer.sanitize(email, tags: [])
+    self.name = ActionView::Base.full_sanitizer.sanitize(name, tags: [])
+  end
 end
