@@ -29,6 +29,10 @@
           <td class='interior'><%= @permission_request.permission_request_user.sub %></td>
         </tr>
         <tr>
+          <td class='key'>User Email:</td>
+          <td class="copy-email"><%= @permission_request.permission_request_user.email %> <em id="copy-icon" class='fa-regular fa-copy' onclick="copyToClipboard()"></em></td>
+        </tr>
+        <tr>
           <td class='key'>User Note:</td>
           <td class='interior'><%= @permission_request.user_note %></td>
         </tr>
@@ -91,7 +95,6 @@
   <%= link_to 'Back', permission_requests_path %>
 <% end %>
 
-
 <script>
   function disableNewVisibility() {
     if(document.getElementById('open_with_permission_permission_request_change_access_type_no').checked) {
@@ -100,6 +103,16 @@
     } else if (document.getElementById('open_with_permission_permission_request_change_access_type_yes').checked) {
       document.getElementById('open_with_permission_permission_request_new_visibility_yale_community_only').disabled = false;
       document.getElementById('open_with_permission_permission_request_new_visibility_public').disabled = false;
+    }
+  };
+
+  const copyToClipboard = async () => {
+    try {
+      const element = document.querySelector(".copy-email");
+      await navigator.clipboard.writeText(element.textContent);
+      $('#copy-icon').addClass('fa-check');
+    } catch (error) {
+      console.error("Failed to copy to clipboard:", error);
     }
   };
 </script>
