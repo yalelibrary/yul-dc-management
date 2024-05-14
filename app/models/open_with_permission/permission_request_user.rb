@@ -7,7 +7,7 @@ class OpenWithPermission::PermissionRequestUser < ApplicationRecord
   validates :email, presence: true
   validates :email_verified, inclusion: { in: [true, false] }
   validates :oidc_updated_at, presence: true
-  before_validation :sanitize_user_input, on: [:create]
+  before_validation :sanitize_user_input, on: [:create, :update]
 
   private
 
