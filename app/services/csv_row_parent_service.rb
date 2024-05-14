@@ -33,7 +33,7 @@ class CsvRowParentService
   end
 
   row_accessor :aspace_uri, :bib, :holding, :item, :barcode, :oid, :admin_set,
-               :preservica_uri, :visibility, :digital_object_source,
+               :permission_set, :preservica_uri, :visibility, :digital_object_source,
                :authoritative_metadata_source_id, :preservica_representation_type, :extent_of_digitization
 
   def parent_object
@@ -74,9 +74,7 @@ class CsvRowParentService
   end
 
   def visibility
-    visibilities = ['Private', 'Public', 'Redirect', 'Yale Community Only']
-
-    return row['visibility'] if visibilities.include?(row['visibility'])
+    return row['visibility'] if ParentObject.visibilities.include?(row['visibility'])
 
     raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown visibility: #{row['visibility']}", 'Skipped Row')
   end
@@ -88,9 +86,7 @@ class CsvRowParentService
 
   # rubocop:disable Layout/LineLength
   def extent_of_digitization
-    valid_extents = [nil, "Completely digitized", "Partially digitized"]
-
-    return row['extent_of_digitization'] if valid_extents.include?(row['extent_of_digitization'])
+    return row['extent_of_digitization'] if ParentObject.extent_of_digitizations.include?(row['extent_of_digitization'])
 
     raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown extent of digitization: #{row['extent_of_digitization']}. For field Extent of Digitization please use: Completely digitizied, Partially digitizied, or leave column empty", 'Skipped Row')
   end
@@ -111,6 +107,19 @@ class CsvRowParentService
     end
 
     admin_set
+  end
+
+  def permission_set
+    permission_sets_hash = {}
+    permission_set_key = row['permission_set_key']
+    permission_sets_hash[permission_set_key] ||= OpenWithPermission::PermissionSet.find_by(key: permission_set_key)
+    permission_set = permission_sets_hash[permission_set_key]
+
+    raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown Permission Set Key: [#{permission_set_key}] for parent: #{oid}", 'Skipped Row') if permission_set.blank? && row['visibility'] == 'Open with Permission'
+
+    raise BatchProcessingError.new("Skipping row [#{index + 2}] because #{user.uid} does not have permission to update objects in Permission Set: #{permission_set&.label}", 'Permission Denied') unless current_ability.can?(:update, permission_set) && row['visibility'] == 'Open with Permission'
+
+    permission_set
   end
   # rubocop:enable Layout/LineLength
 
