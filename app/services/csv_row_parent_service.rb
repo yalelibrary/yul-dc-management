@@ -115,9 +115,12 @@ class CsvRowParentService
     permission_sets_hash[permission_set_key] ||= OpenWithPermission::PermissionSet.find_by(key: permission_set_key)
     permission_set = permission_sets_hash[permission_set_key]
 
-    raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown Permission Set Key: [#{permission_set_key}] for parent: #{oid}", 'Skipped Row') if permission_set.blank? && row['visibility'] == 'Open with Permission'
-
-    raise BatchProcessingError.new("Skipping row [#{index + 2}] because #{user.uid} does not have permission to update objects in Permission Set: #{permission_set&.label}", 'Permission Denied') unless current_ability.can?(:update, permission_set) && row['visibility'] == 'Open with Permission'
+    if row['visibility'] == 'Open with Permission'
+      raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown Permission Set with Key: [#{permission_set_key}] for parent: #{oid}", 'Skipped Row') if permission_set.nil?
+      raise BatchProcessingError.new("Skipping row [#{index + 2}] because #{user.uid} does not have permission to update objects in Permission Set: #{permission_set&.label}", 'Permission Denied') unless current_ability.can?(:update, permission_set) && permission_set.present?
+    else
+      permission_set = nil
+    end
 
     permission_set
   end

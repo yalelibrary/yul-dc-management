@@ -101,7 +101,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       batch_process.file = preservica_parent_no_permission_set
       batch_process.save
       expect(batch_process.batch_ingest_events.count).to eq(1)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with unknown Permission Set Key: [] for parent: 200000000")
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with unknown Permission Set with Key: [] for parent: 200000000")
     end.not_to change { ParentObject.count }
   end
 

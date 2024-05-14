@@ -193,6 +193,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/BlockLength
+  # rubocop:disable Layout/LineLength
   def create_new_parent_csv
     self.admin_set = ''
     sets = admin_set
@@ -240,39 +241,27 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         parent_object.digitization_funding_source = row['digitization_funding_source']
         parent_object.rights_statement = row['rights_statement']
 
-        # rubocop:disable Layout/LineLength
-        if row['visibility'] == 'Open with Permission' || parent_object&.authoritative_json&.[]('itemPermission') == 'Open with Permission'
-          permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_key'])
-          if permission_set.nil?
-            batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing or nonexistent.", 'Skipped Row')
-            next
-          elsif user.has_role?(:administrator, permission_set) || user.has_role?(:sysadmin)
-            parent_object.visibility = row['visibility']
-            parent_object.permission_set_id = permission_set.id
-          else
-            batch_processing_event("Skipping row [#{index + 2}] because user does not have edit permissions for this Permission Set: #{permission_set.key}", 'Permission Denied')
-            next
-          end
-        end
-
         if ParentObject.viewing_directions.include?(row['viewing_direction'])
           parent_object.viewing_direction = row['viewing_direction']
         else
-          batch_processing_event("Parent #{oid} did not update value for Viewing Directions. Value: #{row['viewing_direction']} is invalid. For field Viewing Direction please use: left-to-right, right-to-left, top-to-bottom, bottom-to-top, or leave column empty", 'Invalid Vocabulary')
+          batch_processing_event(
+            "Parent #{oid} did not update value for Viewing Directions. Value: #{row['viewing_direction']} is invalid. For field Viewing Direction please use: left-to-right, right-to-left, top-to-bottom, bottom-to-top, or leave column empty", 'Invalid Vocabulary'
+          )
         end
 
         if ParentObject.viewing_hints.include?(row['display_layout'])
           parent_object.display_layout = row['display_layout']
         else
-          batch_processing_event("Parent #{oid} did not update value for Display Layout. Value: #{row['display_layout']} is invalid. For field Display Layout / Viewing Hint please use: individuals, paged, continuous, or leave column empty", 'Invalid Vocabulary')
+          batch_processing_event(
+            "Parent #{oid} did not update value for Display Layout. Value: #{row['display_layout']} is invalid. For field Display Layout / Viewing Hint please use: individuals, paged, continuous, or leave column empty", 'Invalid Vocabulary'
+          )
         end
-        # rubocop:enable Layout/LineLength
 
         if metadata_source == 'aspace' && row['extent_of_digitization'].blank?
           batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}.  Parent objects with ASpace as a source must have an Extent of Digitization value.", 'Skipped Row')
           next
         elsif metadata_source == 'aspace' && row['extent_of_digitization'].present?
-          if row['extent_of_digitization'] == 'Completely digitized' || row['extent_of_digitization'] == 'Partially digitized'
+          if ParentObject.extent_of_digitizations.include?(row['extent_of_digitization'])
             parent_object.extent_of_digitization = row['extent_of_digitization']
           else
             batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}.  Extent of Digitization value must be 'Completely digitized' or 'Partially digitized'.", 'Skipped Row')
@@ -289,6 +278,23 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         parent_object.parent_model = model
 
         setup_for_background_jobs(parent_object, metadata_source)
+
+        parent_object.default_fetch
+
+        if row['visibility'] == 'Open with Permission' || parent_object&.authoritative_json&.[]('itemPermission') == 'Open with Permission'
+          permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_key'])
+          if permission_set.nil?
+            batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set with Key: [#{row['permission_set_key']}] missing or nonexistent.", 'Skipped Row')
+            next
+          elsif user.has_role?(:administrator, permission_set) || user.has_role?(:sysadmin)
+            parent_object.visibility = row['visibility']
+            parent_object.permission_set_id = permission_set.id
+          else
+            batch_processing_event("Skipping row [#{index + 2}] because user does not have edit permissions for this Permission Set: #{permission_set.label}", 'Permission Denied')
+            next
+          end
+        end
+
         parent_object.admin_set = admin_set
         # TODO: enable edit action when added to batch actions
       end
@@ -304,6 +310,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/BlockLength
+  # rubocop:enable Layout/LineLength
 
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
   def editable_admin_set(admin_set_key, oid, index)
