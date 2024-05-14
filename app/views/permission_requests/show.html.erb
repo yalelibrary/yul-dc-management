@@ -30,7 +30,7 @@
         </tr>
         <tr>
           <td class='key'>User Email:</td>
-          <td class="copy-email"><%= @permission_request.permission_request_user.email %> <em id="copy-icon" class='fa-regular fa-copy' data-toggle="popover" data-placement="right" data-original-title="" data-content="Copied" aria-describedby="tooltip" onclick="copyToClipboard()"></em></td>
+          <td class="copy-email"><%= @permission_request.permission_request_user.email %> <em id="copy-icon" class='fa-regular fa-copy' onclick="copyToClipboard()"></em></td>
         </tr>
         <tr>
           <td class='key'>User Note:</td>
