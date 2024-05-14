@@ -23,7 +23,7 @@ RSpec.describe AccessChangeRequestMailer, type: :mailer, prep_admin_sets: true, 
 
     it 'renders the expected fields' do
       expect(mail.subject).to eq 'DCS Object Visibility Update Request'
-      expect(mail.to).to eq ['digitalspecialcollections@yale.edu']
+      expect(mail.to).to eq ['summer.shetenhelm@yale.edu']
       expect(mail.from).to eq ['do_not_reply@library.yale.edu']
       expect(mail.body.encoded).to include(approver_name)
       expect(mail.body.encoded).to include(permission_set.label)
