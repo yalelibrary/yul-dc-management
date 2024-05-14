@@ -34,6 +34,7 @@ import "@fortawesome/fontawesome-free/js/all.js";
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 window.JSZip = JSZip;
+global.$ = jQuery;
 
 let dataTable;
 $( document ).on('turbolinks:load', function() {
