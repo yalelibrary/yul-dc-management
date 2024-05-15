@@ -585,6 +585,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
         before do
           allow(S3Service).to receive(:s3_exists?).and_return(false)
+          stub_metadata_cloud('AS-112233', 'aspace')
           stub_ptiffs_and_manifests
           stub_full_text('1032318')
         end
