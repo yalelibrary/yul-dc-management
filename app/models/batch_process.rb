@@ -280,6 +280,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         setup_for_background_jobs(parent_object, metadata_source)
 
         parent_object.default_fetch
+        parent_object.metadata_update = true
 
         if row['visibility'] == 'Open with Permission' || parent_object&.authoritative_json&.[]('itemPermission') == 'Open with Permission'
           permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_key'])

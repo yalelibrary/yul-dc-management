@@ -97,18 +97,18 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       po_original = ParentObject.find_by(oid: 2_034_600)
       expect(po_original.aspace_uri).to be_nil
       expect(po_original.barcode).to be_nil
-      expect(po_original.bib).to be_nil
+      expect(po_original.bib).to eq "752400"
       expect(po_original.digital_object_source).to eq "None"
       expect(po_original.digitization_note).to be_nil
       expect(po_original.display_layout).to be_nil
-      expect(po_original.extent_of_digitization).to be_nil
+      expect(po_original.extent_of_digitization).to eq "Partially digitized"
       expect(po_original.holding).to be_nil
       expect(po_original.item).to be_nil
       expect(po_original.preservica_representation_type).to be_nil
       expect(po_original.preservica_uri).to be_nil
-      expect(po_original.rights_statement).to be_nil
+      expect(po_original.rights_statement).to include "The use of this image may be subject to the copyright law of the United States (Title 17"
       expect(po_original.viewing_direction).to be_nil
-      expect(po_original.visibility).to eq "Private"
+      expect(po_original.visibility).to eq "Public"
 
       pos = ParentObject.all
       pos[0].admin_set = admin_set
@@ -136,6 +136,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_original.preservica_representation_type).to be_nil
       expect(po_original.preservica_uri).to be_nil
       expect(po_updated.rights_statement).to eq "The use of this image may be subject to the copyright law of the United States"
+      expect(po_updated.rights_statement).not_to include "(Title 17"
       expect(po_updated.viewing_direction).to eq "left-to-right"
       expect(po_updated.visibility).to eq "Open with Permission"
       expect(po_updated.permission_set_id).to eq permission_set.id
@@ -151,18 +152,18 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       po_original = ParentObject.find_by(oid: 2_034_600)
       expect(po_original.aspace_uri).to be_nil
       expect(po_original.barcode).to be_nil
-      expect(po_original.bib).to be_nil
+      expect(po_original.bib).to eq "752400"
       expect(po_original.digital_object_source).to eq "None"
       expect(po_original.digitization_note).to be_nil
       expect(po_original.display_layout).to be_nil
-      expect(po_original.extent_of_digitization).to be_nil
+      expect(po_original.extent_of_digitization).to eq "Partially digitized"
       expect(po_original.holding).to be_nil
       expect(po_original.item).to be_nil
       expect(po_original.preservica_representation_type).to be_nil
       expect(po_original.preservica_uri).to be_nil
-      expect(po_original.rights_statement).to be_nil
+      expect(po_original.rights_statement).to include "The use of this image may be subject to the copyright law of the United States (Title 17"
       expect(po_original.viewing_direction).to be_nil
-      expect(po_original.visibility).to eq "Private"
+      expect(po_original.visibility).to eq "Public"
 
       pos = ParentObject.all
       pos[0].admin_set = admin_set
@@ -180,18 +181,18 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
       expect(po_updated.aspace_uri).to be_nil
       expect(po_updated.barcode).to be_nil
-      expect(po_updated.bib).to be_nil
+      expect(po_updated.bib).to eq "752400"
       expect(po_updated.digital_object_source).to eq "None"
       expect(po_updated.digitization_note).to be_nil
       expect(po_updated.display_layout).to be_nil
-      expect(po_updated.extent_of_digitization).to be_nil
+      expect(po_updated.extent_of_digitization).to eq "Partially digitized"
       expect(po_updated.holding).to be_nil
       expect(po_updated.item).to be_nil
       expect(po_updated.preservica_representation_type).to be_nil
       expect(po_updated.preservica_uri).to be_nil
-      expect(po_updated.rights_statement).to be_nil
+      expect(po_updated.rights_statement).to include "The use of this image may be subject to the copyright law of the United States (Title 17"
       expect(po_updated.viewing_direction).to be_nil
-      expect(po_updated.visibility).to eq "Private"
+      expect(po_updated.visibility).to eq "Public"
       expect(update_batch_process.batch_ingest_events.first.reason).to eq "Skipping row [2]. Process failed. Permission Set missing or nonexistent."
       expect(update_batch_process.batch_ingest_events_count).to eq 1
     end
@@ -206,18 +207,18 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       po_original = ParentObject.find_by(oid: 2_034_600)
       expect(po_original.aspace_uri).to be_nil
       expect(po_original.barcode).to be_nil
-      expect(po_original.bib).to be_nil
+      expect(po_original.bib).to eq "752400"
       expect(po_original.digital_object_source).to eq "None"
       expect(po_original.digitization_note).to be_nil
       expect(po_original.display_layout).to be_nil
-      expect(po_original.extent_of_digitization).to be_nil
+      expect(po_original.extent_of_digitization).to eq "Partially digitized"
       expect(po_original.holding).to be_nil
       expect(po_original.item).to be_nil
       expect(po_original.preservica_representation_type).to be_nil
       expect(po_original.preservica_uri).to be_nil
-      expect(po_original.rights_statement).to be_nil
+      expect(po_original.rights_statement).to include "The use of this image may be subject to the copyright law of the United States (Title 17"
       expect(po_original.viewing_direction).to be_nil
-      expect(po_original.visibility).to eq "Private"
+      expect(po_original.visibility).to eq "Public"
 
       pos = ParentObject.all
       pos[0].admin_set = admin_set
@@ -235,18 +236,18 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
       expect(po_updated.aspace_uri).to be_nil
       expect(po_updated.barcode).to be_nil
-      expect(po_updated.bib).to be_nil
+      expect(po_updated.bib).to eq "752400"
       expect(po_updated.digital_object_source).to eq "None"
       expect(po_updated.digitization_note).to be_nil
       expect(po_updated.display_layout).to be_nil
-      expect(po_updated.extent_of_digitization).to be_nil
+      expect(po_updated.extent_of_digitization).to eq "Partially digitized"
       expect(po_updated.holding).to be_nil
       expect(po_updated.item).to be_nil
       expect(po_updated.preservica_representation_type).to be_nil
       expect(po_updated.preservica_uri).to be_nil
-      expect(po_updated.rights_statement).to be_nil
+      expect(po_updated.rights_statement).to include "The use of this image may be subject to the copyright law of the United States (Title 17"
       expect(po_updated.viewing_direction).to be_nil
-      expect(po_updated.visibility).to eq "Private"
+      expect(po_updated.visibility).to eq "Public"
       expect(update_batch_process.batch_ingest_events.first.reason).to eq "Skipping row [2]. Process failed. Permission Set missing from CSV."
       expect(update_batch_process.batch_ingest_events_count).to eq 1
     end
@@ -260,18 +261,18 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       po_original = ParentObject.find_by(oid: 2_034_600)
       expect(po_original.aspace_uri).to be_nil
       expect(po_original.barcode).to be_nil
-      expect(po_original.bib).to be_nil
+      expect(po_original.bib).to eq "752400"
       expect(po_original.digital_object_source).to eq "None"
       expect(po_original.digitization_note).to be_nil
       expect(po_original.display_layout).to be_nil
-      expect(po_original.extent_of_digitization).to be_nil
+      expect(po_original.extent_of_digitization).to eq "Partially digitized"
       expect(po_original.holding).to be_nil
       expect(po_original.item).to be_nil
       expect(po_original.preservica_representation_type).to be_nil
       expect(po_original.preservica_uri).to be_nil
-      expect(po_original.rights_statement).to be_nil
+      expect(po_original.rights_statement).to include "The use of this image may be subject to the copyright law of the United States (Title 17"
       expect(po_original.viewing_direction).to be_nil
-      expect(po_original.visibility).to eq "Private"
+      expect(po_original.visibility).to eq "Public"
 
       pos = ParentObject.all
       pos[0].admin_set = admin_set
@@ -289,18 +290,18 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
       expect(po_updated.aspace_uri).to be_nil
       expect(po_updated.barcode).to be_nil
-      expect(po_updated.bib).to be_nil
+      expect(po_updated.bib).to eq "752400"
       expect(po_updated.digital_object_source).to eq "None"
       expect(po_updated.digitization_note).to be_nil
       expect(po_updated.display_layout).to be_nil
-      expect(po_updated.extent_of_digitization).to be_nil
+      expect(po_updated.extent_of_digitization).to eq "Partially digitized"
       expect(po_updated.holding).to be_nil
       expect(po_updated.item).to be_nil
       expect(po_updated.preservica_representation_type).to be_nil
       expect(po_updated.preservica_uri).to be_nil
-      expect(po_updated.rights_statement).to be_nil
+      expect(po_updated.rights_statement).to include "The use of this image may be subject to the copyright law of the United States (Title 17"
       expect(po_updated.viewing_direction).to be_nil
-      expect(po_updated.visibility).to eq "Private"
+      expect(po_updated.visibility).to eq "Public"
       expect(update_batch_process.batch_ingest_events_count).to eq 1
       expect(update_batch_process.batch_ingest_events.first.reason).to eq "Skipping row [2] because user does not have edit permissions for this Permission Set: PS Key"
     end
@@ -317,15 +318,15 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
       expect(po_original.aspace_uri).to be_nil
       expect(po_original.barcode).to be_nil
-      expect(po_original.bib).to be_nil
+      expect(po_original.bib).to eq "752400"
       expect(po_original.digitization_note).to be_nil
       expect(po_original.display_layout).to be_nil
-      expect(po_original.extent_of_digitization).to be_nil
+      expect(po_original.extent_of_digitization).to eq "Partially digitized"
       expect(po_original.holding).to be_nil
       expect(po_original.item).to be_nil
-      expect(po_original.rights_statement).to be_nil
+      expect(po_original.rights_statement).to include "The use of this image may be subject to the copyright law of the United States (Title 17"
       expect(po_original.viewing_direction).to be_nil
-      expect(po_original.visibility).to eq "Private"
+      expect(po_original.visibility).to eq "Public"
       pos = ParentObject.all
       pos[0].admin_set = admin_set
       pos[1].admin_set = admin_set
@@ -343,13 +344,13 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
       expect(po_updated.aspace_uri).to be_nil
       expect(po_updated.barcode).to be_nil
-      expect(po_updated.bib).to be_nil
+      expect(po_updated.bib).to eq "752400"
       expect(po_updated.digitization_note).to be_nil
       expect(po_updated.display_layout).to eq "paged"
-      expect(po_updated.extent_of_digitization).to be_nil
+      expect(po_updated.extent_of_digitization).to eq "Partially digitized"
       expect(po_updated.holding).to be_nil
       expect(po_updated.item).to be_nil
-      expect(po_updated.rights_statement).to be_nil
+      expect(po_updated.rights_statement).to include "The use of this image may be subject to the copyright law of the United States (Title 17"
       expect(po_updated.viewing_direction).to be_nil
       expect(po_updated.visibility).to eq "Yale Community Only"
     end
@@ -360,7 +361,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         batch_process.create_new_parent_csv
       end.to change { ParentObject.count }.from(0).to(5)
       po_original = ParentObject.find_by(oid: 2_034_600)
-      expect(po_original.visibility).to eq "Private"
+      expect(po_original.visibility).to eq "Public"
       expect(po_original.admin_set.key).to eq "brbl"
       update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
       expect do
@@ -385,15 +386,15 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
       expect(po_original.aspace_uri).to be_nil
       expect(po_original.barcode).to be_nil
-      expect(po_original.bib).to be_nil
+      expect(po_original.bib).to eq "752400"
       expect(po_original.digitization_note).to be_nil
       expect(po_original.display_layout).to be_nil
-      expect(po_original.extent_of_digitization).to be_nil
+      expect(po_original.extent_of_digitization).to eq "Partially digitized"
       expect(po_original.holding).to be_nil
       expect(po_original.item).to be_nil
-      expect(po_original.rights_statement).to be_nil
+      expect(po_original.rights_statement).to include "The use of this image may be subject to the copyright law of the United States (Title 17"
       expect(po_original.viewing_direction).to be_nil
-      expect(po_original.visibility).to eq "Private"
+      expect(po_original.visibility).to eq "Public"
       pos = ParentObject.all
       pos[0].admin_set = admin_set
       pos[1].admin_set = admin_set
@@ -411,15 +412,15 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
       expect(po_updated.aspace_uri).to be_nil
       expect(po_updated.barcode).to be_nil
-      expect(po_updated.bib).to be_nil
+      expect(po_updated.bib).to eq "752400"
       expect(po_updated.digitization_note).to be_nil
       expect(po_updated.display_layout).to be_nil
-      expect(po_updated.extent_of_digitization).to be_nil
+      expect(po_updated.extent_of_digitization).to eq "Partially digitized"
       expect(po_updated.holding).to be_nil
       expect(po_updated.item).to be_nil
-      expect(po_updated.rights_statement).to be_nil
+      expect(po_updated.rights_statement).to include "The use of this image may be subject to the copyright law of the United States (Title 17"
       expect(po_updated.viewing_direction).to be_nil
-      expect(po_updated.visibility).to eq "Private"
+      expect(po_updated.visibility).to eq "Public"
     end
   end
 
