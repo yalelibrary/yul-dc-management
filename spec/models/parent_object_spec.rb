@@ -362,11 +362,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     end
 
     context "a newly created ParentObject with just the oid and default authoritative_metadata_source (Ladybird for now)" do
-      let(:oid) { "2005512" }
-      let(:parent_object) { described_class.create(oid: oid, admin_set: FactoryBot.create(:admin_set)) }
+      let(:parent_object) { described_class.create(oid: "2005512", admin_set: FactoryBot.create(:admin_set)) }
       before do
-        stub_metadata_cloud(oid, "ladybird")
-        stub_metadata_cloud("V-#{oid}", "ils")
+        stub_metadata_cloud("2005512", "ladybird")
+        stub_metadata_cloud("V-2005512", "ils")
       end
 
       it "pulls from the MetadataCloud for Ladybird and not Voyager or ArchiveSpace" do
@@ -408,7 +407,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
       it "creates and has a count of ChildObjects" do
         expect(parent_object.reload.child_object_count).to eq 2
-        expect(ChildObject.where(parent_object_oid: oid).count).to eq 2
+        expect(ChildObject.where(parent_object_oid: "2005512").count).to eq 2
       end
 
       it "generated pdf json correctly" do
