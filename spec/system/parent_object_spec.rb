@@ -58,6 +58,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
     context "setting non-required values" do
       before do
+        allow_any_instance_of(ParentObject).to receive(:ladybird_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "2012036.json"))))
         stub_metadata_cloud("2012036")
         fill_in('Oid', with: "2012036")
         select('Beinecke Library')

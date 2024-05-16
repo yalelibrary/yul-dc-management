@@ -46,24 +46,24 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
     context 'Create Parent Object batch process with a csv' do
       it 'can create a parent object from aspace' do
+        # TODO: determine why aspace_json was nil after save when it was fetched successfully
+        allow_any_instance_of(ParentObject).to receive(:aspace_json).and_return(JSON.parse(File.read(File.join(fixture_path, "aspace", "AS-781086.json"))))
         expect do
           batch_process.file = aspace_parent
           batch_process.save
         end.to change { ParentObject.count }.from(0).to(1)
         po = ParentObject.first
-        # TODO: determine why aspace_json was nil after save when it was fetched successfully
-        allow(po).to receive(:aspace_json).and_return(JSON.parse(File.read(File.join(fixture_path, "aspace", "AS-781086.json"))))
         expect(po.bib).to eq('4320085')
         expect(po.aspace_uri).to eq('/repositories/12/archival_objects/781086')
       end
       it 'can create a parent_object' do
+        # TODO: determine why aspace_json was nil after save when it was fetched successfully
+        allow_any_instance_of(ParentObject).to receive(:aspace_json).and_return(JSON.parse(File.read(File.join(fixture_path, "aspace", "AS-2019479.json"))))
         expect do
           batch_process.file = no_oid_parent
           batch_process.save
         end.to change { ParentObject.count }.from(0).to(1)
         po = ParentObject.first
-        # TODO: determine why aspace_json was nil after save when it was fetched successfully
-        allow(po).to receive(:aspace_json).and_return(JSON.parse(File.read(File.join(fixture_path, "aspace", "AS-2019479.json"))))
         expect(po.oid).not_to be_nil
       end
       context 'with detailed csv data' do
