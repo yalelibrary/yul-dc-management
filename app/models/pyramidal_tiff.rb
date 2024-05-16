@@ -56,7 +56,7 @@ class PyramidalTiff
       image_exists = S3Service.s3_exists?(remote_access_master_path)
       errors.add(:base, "Expected file #{remote_access_master_path} on S3 not found.") unless image_exists
     else
-      access_path = access_master_path.gsub('s3', 'data')
+      access_path = access_master_path.gsub('s3', 'data/02')
       image_exists = File.exist?(access_path)
       errors.add(:base, "Expected file #{access_path} on shares at Yale not found.") unless image_exists
     end
