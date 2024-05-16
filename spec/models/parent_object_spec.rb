@@ -61,7 +61,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         .to_return(status: 200)
     end
     # rubocop:disable RSpec/AnyInstance
-    xit "receives a check for whether it's ready for manifests 4 times, one for each child" do
+    it "receives a check for whether it's ready for manifests 4 times, one for each child" do
       VCR.use_cassette("process csv") do
         allow(S3Service).to receive(:s3_exists?).and_return(false)
         parent_of_four.child_objects.each do |child_object|
@@ -392,8 +392,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.reload.authoritative_metadata_source_id).to eq ladybird
         parent_object.authoritative_metadata_source_id = voyager
         parent_object.save!
-        # TODO: determine why voyager_json was nil after save when it was fetched successfully
-        allow(parent_object).to receive(:voyager_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ils", "V-#{oid}.json"))))
         expect(parent_object.reload.authoritative_metadata_source_id).to eq voyager
         expect(parent_object.voyager_json).not_to be nil
       end

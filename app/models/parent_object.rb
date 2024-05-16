@@ -104,7 +104,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def from_upstream_for_the_first_time?
-    from_ladybird_for_the_first_time? || from_mets_for_the_first_time? || (from_preservica_for_the_first_time? && digital_object_source == "Preservica")
+    from_ladybird_for_the_first_time? || from_mets_for_the_first_time? || (from_preservica_for_the_first_time? && digital_object_source == "Preservica") || from_create_job?
   end
 
   def self.cannot_reindex
@@ -130,6 +130,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # indicating assigning values from the last preservica api call
   def from_preservica_for_the_first_time?
     last_preservica_update.nil?
+  end
+
+  def from_create_job?
+    current_batch_process&.batch_action == 'create parent objects'
   end
 
   def start_states

@@ -54,7 +54,7 @@ class SetupMetadataJob < ApplicationJob
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def setup_child_object_jobs(parent_object, current_batch_process)
-    parent_object.create_child_records
+    parent_object.create_child_records if parent_object.from_upstream_for_the_first_time?
     parent_object.save!
     parent_object.processing_event("Child object records have been created", "child-records-created")
     ptiff_jobs_queued = false

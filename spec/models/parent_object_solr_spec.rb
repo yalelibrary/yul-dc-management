@@ -78,8 +78,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       expect(solr_document[:title_tesim]).to eq ["[Magazine page with various photographs of Leontyne Price]"]
       parent_object.source_name = "ils"
       parent_object.save!
-      # TODO: determine why voyager_json was nil after save when it was fetched successfully
-      allow(parent_object).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ils", "V-#{oid}.json"))))
       solr_document = parent_object.reload.to_solr
       expect(solr_document[:title_tesim]).to eq ["Ebony"]
       response = solr.get 'select', params: { q: 'type_ssi:parent' }
