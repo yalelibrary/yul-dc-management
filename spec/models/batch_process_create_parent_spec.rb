@@ -39,6 +39,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   describe 'with the metadata cloud mocked' do
     before do
       stub_metadata_cloud('AS-781086', 'aspace')
+      stub_metadata_cloud('AS-2019479', 'aspace')
       stub_metadata_cloud('200000045', 'ladybird')
       stub_metadata_cloud('2002826', 'ladybird')
     end
