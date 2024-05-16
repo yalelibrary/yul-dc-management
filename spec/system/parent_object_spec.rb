@@ -148,7 +148,9 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         select("Beinecke Library")
         select('Ladybird')
         # TODO: determine why ladybird_json was nil after save when it was fetched successfully
-        allow(ParentObject).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "2012036.json"))))
+        # rubocop:disable RSpec/AnyInstance
+        allow_any_instance_of(ParentObject).to receive(:ladybird_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "2012036.json"))))
+        # rubocop:enable RSpec/AnyInstance
         click_on("Create Parent object")
       end
 
