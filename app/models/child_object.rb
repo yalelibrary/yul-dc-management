@@ -56,7 +56,7 @@ class ChildObject < ApplicationRecord
 
   def access_master_path
     return @access_master_path if @access_master_path
-    image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
+    image_mount = Rails.env.test? ? ENV['ACCESS_MASTER_MOUNT'] : "data"
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
     directory = format("%02d", pairtree_path.first)
     @access_master_path = File.join(image_mount, directory, pairtree_path, "#{oid}.tif")
@@ -79,7 +79,7 @@ class ChildObject < ApplicationRecord
       processing_event("Original Copy of checksum does not match", 'failed')
       false
     end
-    image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
+    image_mount = Rails.env.test? ? ENV['ACCESS_MASTER_MOUNT'] : "data"
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
     directory = format("%02d", pairtree_path.first)
     # Create path to access master if it doesn't exist
