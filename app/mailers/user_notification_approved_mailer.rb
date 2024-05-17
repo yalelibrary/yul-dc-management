@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class UserNotificationApprovedMailer < ApplicationMailer
-  default from: "do_not_reply@library.yale.edu"
 
   def user_notification_approved_email
     @user_notification = params[:user_notification]
