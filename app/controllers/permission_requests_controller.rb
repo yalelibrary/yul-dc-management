@@ -71,6 +71,7 @@ class PermissionRequestsController < ApplicationController
   def send_user_email(permission_request)
     user_approved_notification = {
       request_user_name: @permission_request.permission_request_user.name,
+      permission_set_label: @permission_request.permission_set.label,
       request_user_email: @permission_request.permission_request_user.email,
       expiration_date: @permission_request.access_until,
       parent_object_oid: @permission_request.parent_object.oid,
@@ -78,6 +79,7 @@ class PermissionRequestsController < ApplicationController
     }
     user_denied_notification = {
       request_user_name: @permission_request.permission_request_user.name,
+      permission_set_label: @permission_request.permission_set.label,
       request_user_email: @permission_request.permission_request_user.email,
       parent_object_title: @permission_request.parent_object&.authoritative_json&.[]('title')&.first,
     }
