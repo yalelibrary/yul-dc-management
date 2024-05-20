@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class UserNotificationApprovedMailer < ApplicationMailer
-
   def user_notification_approved_email
     @user_notification = params[:user_notification]
     if @user_notification[:permission_set_label] == "kiss"

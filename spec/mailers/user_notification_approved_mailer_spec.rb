@@ -9,7 +9,10 @@ RSpec.describe UserNotificationApprovedMailer, type: :mailer, prep_admin_sets: t
     let(:parent_object) { FactoryBot.create(:parent_object, authoritative_metadata_source_id: metadata_source.id, admin_set_id: admin_set.id) }
     let(:permission_set) { FactoryBot.create(:permission_set, label: "PS1") }
     let(:request_user) { FactoryBot.create(:permission_request_user, sub: "sub 1", name: "name 1", netid: "netid", email: "email@example.com") }
-    let(:permission_request) { FactoryBot.create(:permission_request, permission_set_id: permission_set.id, parent_object_id: parent_object.oid, user_note: 'message', permission_request_user: request_user, access_until: "2030-06-10 00:00:00") }
+    let(:permission_request) do
+      FactoryBot.create(:permission_request, permission_set_id: permission_set.id, parent_object_id: parent_object.oid, user_note: 'message', permission_request_user: request_user,
+                                             access_until: "2030-06-10 00:00:00")
+    end
     let(:user_approved_notification) do
       {
         request_user_name: permission_request.permission_request_user.name,
