@@ -14,10 +14,13 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
   let(:parent_object_two) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
   # rubocop:disable Layout/LineLength
   let(:permission_request) do
-    FactoryBot.create(:permission_request, request_status: "Approved", permission_set: permission_set, parent_object: parent_object, permission_request_user: request_user, user_note: '<p>something</p>', permission_request_user_name: '<h1>name 2</h1>')
+    FactoryBot.create(:permission_request, request_status: "Approved", permission_set: permission_set, parent_object: parent_object, permission_request_user: request_user, user_note: '<p>something</p>', permission_request_user_name: '<h1>name 2</h1>', access_until: "2030-06-10 00:00:00")
   end
   let(:permission_request_two) do
     FactoryBot.create(:permission_request, parent_object: parent_object_two, permission_set: permission_set_two, permission_request_user: request_user_two, request_status: "Approved", permission_request_user_name: 'name 3')
+  end
+  let(:permission_request_three) do
+    FactoryBot.create(:permission_request, permission_set: permission_set, parent_object: parent_object, permission_request_user: request_user, user_note: '<p>something</p>', permission_request_user_name: '<h1>name 2</h1>')
   end
   # rubocop:enable Layout/LineLength
   let(:administrator_user) { FactoryBot.create(:user, uid: 'admin') }
@@ -166,6 +169,22 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
         visit "/permission_requests/#{permission_request.id}"
         find('#open_with_permission_permission_request_change_access_type_yes').click
         find('#open_with_permission_permission_request_new_visibility_public').click
+        expect do
+          click_on 'Save'
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
+
+      it 'can notify the request_user of a denied request' do
+        visit "/permission_requests/#{permission_request.id}"
+        find('#open_with_permission_permission_request_request_status_denied').click
+        expect do
+          click_on 'Save'
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
+
+      it 'can notify the request_user of an approved request' do
+        visit "/permission_requests/#{permission_request_three.id}"
+        find('#open_with_permission_permission_request_request_status_approved').click
         expect do
           click_on 'Save'
         end.to change { ActionMailer::Base.deliveries.count }.by(1)
