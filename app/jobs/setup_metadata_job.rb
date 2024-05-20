@@ -4,6 +4,10 @@ class SetupMetadataJob < ApplicationJob
   queue_as :metadata
   FIVE_HUNDRED_MB = 524_288_000
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
   def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
@@ -20,11 +24,26 @@ class SetupMetadataJob < ApplicationJob
       parent_object.processing_event("SetupMetadataJob failed to retrieve authoritative metadata. [#{parent_object.metadata_cloud_url}]", "failed")
       return
     end
+
+    if parent_object.visibility == 'Open with Permission' || parent_object.authoritative_json&.[]('itemPermission') == 'Open with Permission'
+      permission_set = OpenWithPermission::PermissionSet.find_by(key: parent_object.permission_set&.key)
+      if permission_set.nil?
+        parent_object.processing_event("SetupMetadataJob failed. Permission Set missing or nonexistent.", 'failed')
+        return
+      elsif !user.has_role?(:administrator, permission_set) || !user.has_role?(:sysadmin)
+        parent_object.processing_event("SetupMetadataJob failed because user does not have edit permissions for this Permission Set: #{permission_set.label}", 'failed')
+        return
+      end
+    end
     setup_child_object_jobs(parent_object, current_batch_process)
   rescue => e
     parent_object.processing_event("Setup job failed to save: #{e.message}", "failed")
     raise # this reraises the error after we document it
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # index and return true if parent is a redirect
   def redirect(parent_object)
