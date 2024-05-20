@@ -30,6 +30,7 @@ class PermissionRequestsController < ApplicationController
         if @permission_request.request_status != old_request_status
           @permission_request.approver = current_user.uid
           @permission_request.save!
+          send_user_email(@permission_request)
         end
         format.html { redirect_to permission_request_path(@permission_request), notice: 'Changes saved successfully.' }
         format.json { render :show, status: :ok, location: @permission_request }
@@ -62,10 +63,40 @@ class PermissionRequestsController < ApplicationController
       permission_set_label: @permission_request.permission_set.label,
       admin_set_label: @permission_request.parent_object.admin_set.label,
       parent_object_oid: @permission_request.parent_object.oid,
-      new_visibility: permission_request_params[:new_visibility]
+      new_visibility: @permission_request.new_visibility
     }
     AccessChangeRequestMailer.with(access_change_request: access_change_request).access_change_request_email.deliver_now
   end
+
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
+  def send_user_email(permission_request)
+    user_approved_notification = {
+      request_user_name: @permission_request.permission_request_user.name,
+      permission_set_label: @permission_request.permission_set.label,
+      request_user_email: @permission_request.permission_request_user.email,
+      expiration_date: @permission_request.access_until,
+      parent_object_oid: @permission_request.parent_object.oid,
+      parent_object_title: @permission_request.parent_object&.authoritative_json&.[]('title')&.first
+    }
+    user_denied_notification = {
+      request_user_name: @permission_request.permission_request_user.name,
+      permission_set_label: @permission_request.permission_set.label,
+      request_user_email: @permission_request.permission_request_user.email,
+      parent_object_title: @permission_request.parent_object&.authoritative_json&.[]('title')&.first
+    }
+    if permission_request.request_status == "Approved"
+      UserNotificationApprovedMailer.with(user_notification: user_approved_notification).user_notification_approved_email.deliver_now
+    elsif permission_request.request_status == "Denied"
+      UserNotificationDeniedMailer.with(user_notification: user_denied_notification).user_notification_denied_email.deliver_now
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/PerceivedComplexity
 
   private
 
