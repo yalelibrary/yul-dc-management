@@ -59,7 +59,7 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
           } }
         expect do
           patch "/permission_requests/#{updatable_permission_request.id}", params: JSON.pretty_generate(valid_status_and_access_update_params), headers: headers
-        end.to change { ActionMailer::Base.deliveries.count }.by(1)
+        end.to change { ActionMailer::Base.deliveries.count }.by(2)
         expect(response).to have_http_status(302)
         updatable_permission_request.reload
         expect(updatable_permission_request.request_status).to eq "Approved"
