@@ -30,7 +30,7 @@ class SetupMetadataJob < ApplicationJob
       if permission_set.nil?
         parent_object.processing_event("SetupMetadataJob failed. Permission Set missing or nonexistent.", 'failed')
         return
-      elsif !user.has_role?(:administrator, permission_set) || !user.has_role?(:sysadmin)
+      elsif !current_batch_process.user.has_role?(:administrator, permission_set) || !current_batch_process.user.has_role?(:sysadmin)
         parent_object.processing_event("SetupMetadataJob failed because user does not have edit permissions for this Permission Set: #{permission_set.label}", 'failed')
         return
       end
