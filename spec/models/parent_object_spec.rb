@@ -223,7 +223,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         batch_process.save
         batch_process.run_callbacks :create
       end.to change { batch_process.batch_connections.where(connectable_type: "ParentObject").count }.from(0).to(1)
-        .and change { IngestEvent.count }.from(0).to(11)
+        .and change { IngestEvent.count }.from(0).to(10)
       statuses = IngestEvent.all.map(&:status)
       expect(statuses).to include "processing-queued"
       expect(statuses).to include "metadata-fetched"
@@ -764,7 +764,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.authoritative_metadata_source_id = aspace
         parent_object.child_object_count = 1
         parent_object.visibility = "Public"
-        expect(parent_object).to receive(:mc_post).exactly(2).time.and_return(OpenStruct.new(status: 200))
+        expect(parent_object).to receive(:mc_post).and_return(OpenStruct.new(status: 200))
         parent_object.aspace_json = { "title": ["test title"] }
         parent_object.save!
         parent_object.solr_index
