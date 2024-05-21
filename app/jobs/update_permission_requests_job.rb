@@ -8,7 +8,7 @@ class UpdatePermissionRequestsJob < ApplicationJob
     permission_requests.each do |pr|
       if pr.access_until < Time.zone.now
         pr.request_status = "Expired"
-        pr.save
+        pr.save!
       end
     end
   end
