@@ -8,6 +8,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:admin_set_one) { FactoryBot.create(:admin_set, key: 'jss') }
   let(:create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_owp_parent.csv")) }
   let(:create_invalid_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_invalid_owp_parent.csv")) }
+  let(:mini_create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "mini_owp_parent.csv")) }
   let(:permission_set) { FactoryBot.create(:permission_set, key: "PS Key") }
   let(:no_oid_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'parent_no_oid.csv')) }
   let(:no_admin_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'parent_no_admin_set.csv')) }
@@ -38,10 +39,11 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   describe 'with the metadata cloud mocked' do
     before do
       stub_metadata_cloud('AS-781086', 'aspace')
-      stub_metadata_cloud('2002826', 'ladybird')
+      stub_metadata_cloud('200000045')
+      stub_metadata_cloud('2002826')
     end
 
-    context 'Create Parent Object batch process with a csv' do
+    context 'Create Parent Object batch process with a detailed csv' do
       it 'can create a parent object from aspace' do
         expect do
           batch_process.file = aspace_parent
@@ -111,6 +113,17 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.save
         end.not_to change { ParentObject.count }
         expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with parent oid: 200000000.  Extent of Digitization value must be 'Completely digitized' or 'Partially digitized'.")
+      end
+      context 'with minimal csv data and OwP itemPermission' do
+        it 'fails when no Permission Set key is submitted' do
+          expect do
+            batch_process.file = mini_create_owp_parent
+            batch_process.save
+          end.to change { ParentObject.count }.from(0).to(1)
+          po = ParentObject.first
+          expect(po.visibility).to eq "Private"
+          expect(po.events_for_batch_process(batch_process)[1].reason).to include("SetupMetadataJob failed. Permission Set information missing or nonexistent from CSV.")
+        end
       end
     end
   end

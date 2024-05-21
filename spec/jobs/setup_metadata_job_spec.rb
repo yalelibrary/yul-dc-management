@@ -20,7 +20,7 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
   context 'job fails' do
     it 'notifies on save failure' do
       allow(parent_object).to receive(:default_fetch).and_raise('boom!')
-      expect(parent_object).to receive(:processing_event).twice
+      expect(parent_object).to receive(:processing_event)
       expect { metadata_job.perform(parent_object, batch_process) }.to raise_error('boom!')
     end
 
