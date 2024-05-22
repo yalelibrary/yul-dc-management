@@ -8,6 +8,13 @@ class OpenWithPermission::PermissionSetTerm < ApplicationRecord
 
   attr_readonly :title, :body
 
+  before_validation :strip_whitespace
+
+  def strip_whitespace
+    self.title = self.title.strip unless self.title.nil?
+    self.body = self.body.strip unless self.body.nil?
+  end
+
   def activate_by!(user)
     raise "Unable to activate previously activated permission set" unless activated_at.nil?
     raise "User cannot be nil" unless user
