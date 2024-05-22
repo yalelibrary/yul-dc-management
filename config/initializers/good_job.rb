@@ -19,6 +19,10 @@ Rails.application.configure do
     problem: {
       cron: '15 0 * * *',
       class: 'ProblemReportJob'
+    },
+    update_permission_requests: {
+      cron: '15 0 * * *',
+      class: 'UpdatePermissionRequestsJob'
     }
   }
 end
