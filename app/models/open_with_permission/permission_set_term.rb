@@ -11,8 +11,8 @@ class OpenWithPermission::PermissionSetTerm < ApplicationRecord
   before_validation :strip_whitespace
 
   def strip_whitespace
-    self.title = self.title.strip unless self.title.nil?
-    self.body = self.body.strip unless self.body.nil?
+    self.title = title.strip unless title.nil?
+    self.body = body.strip unless body.nil?
   end
 
   def activate_by!(user)
