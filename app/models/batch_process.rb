@@ -193,6 +193,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/BlockLength
+  # rubocop:disable Layout/LineLength
   def create_new_parent_csv
     self.admin_set = ''
     sets = admin_set
@@ -240,7 +241,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         parent_object.digitization_funding_source = row['digitization_funding_source']
         parent_object.rights_statement = row['rights_statement']
 
-        # rubocop:disable Layout/LineLength
         if row['visibility'] == 'Open with Permission'
           permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_key'])
           if permission_set.nil?
@@ -266,13 +266,12 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         else
           batch_processing_event("Parent #{oid} did not update value for Display Layout. Value: #{row['display_layout']} is invalid. For field Display Layout / Viewing Hint please use: individuals, paged, continuous, or leave column empty", 'Invalid Vocabulary')
         end
-        # rubocop:enable Layout/LineLength
 
         if metadata_source == 'aspace' && row['extent_of_digitization'].blank?
           batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}.  Parent objects with ASpace as a source must have an Extent of Digitization value.", 'Skipped Row')
           next
         elsif metadata_source == 'aspace' && row['extent_of_digitization'].present?
-          if row['extent_of_digitization'] == 'Completely digitized' || row['extent_of_digitization'] == 'Partially digitized'
+          if ParentObject.extent_of_digitizations.include?(row['extent_of_digitization'])
             parent_object.extent_of_digitization = row['extent_of_digitization']
           else
             batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}.  Extent of Digitization value must be 'Completely digitized' or 'Partially digitized'.", 'Skipped Row')
@@ -287,7 +286,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         end
 
         parent_object.parent_model = model
-
         setup_for_background_jobs(parent_object, metadata_source)
         parent_object.admin_set = admin_set
         # TODO: enable edit action when added to batch actions
@@ -299,6 +297,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       end
     end
   end
+  # rubocop:enable Layout/LineLength
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/PerceivedComplexity
