@@ -35,7 +35,7 @@ class PermissionRequestsController < ApplicationController
         format.html { redirect_to permission_request_path(@permission_request), notice: 'Changes saved successfully.' }
         format.json { render :show, status: :ok, location: @permission_request }
       else
-        format.html { render :edit }
+        format.html { render :show }
         format.json { render json: @permission_request.errors, status: :unprocessable_entity }
       end
     end
