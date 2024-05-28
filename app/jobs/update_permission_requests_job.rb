@@ -6,6 +6,7 @@ class UpdatePermissionRequestsJob < ApplicationJob
   def perform
     permission_requests = OpenWithPermission::PermissionRequest.all
     permission_requests.each do |pr|
+      return if pr.access_until.nil? || pr.request_status != "Approved"
       if pr.access_until < Time.zone.now
         pr.request_status = "Expired"
         pr.save!
