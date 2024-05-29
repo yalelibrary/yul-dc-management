@@ -26,6 +26,7 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
         valid_status_update_params = { open_with_permission_permission_request:
           {
             request_status: "Approved",
+            access_until: "2080-06-10 00:00:00",
             change_access_type: 'No'
           } }
         patch "/permission_requests/#{updatable_permission_request.id}", params: JSON.pretty_generate(valid_status_update_params), headers: headers
@@ -54,6 +55,7 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
         valid_status_and_access_update_params = { open_with_permission_permission_request:
           {
             request_status: "Approved",
+            access_until: "2080-06-10 00:00:00",
             new_visibility: 'Public',
             change_access_type: 'Yes'
           } }
