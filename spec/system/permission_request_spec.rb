@@ -17,10 +17,10 @@ RSpec.describe "PermissionRequests", type: :system, prep_metadata_sources: true,
     FactoryBot.create(:permission_request, request_status: "Approved", permission_set: permission_set, parent_object: parent_object, permission_request_user: request_user, user_note: '<p>something</p>', permission_request_user_name: '<h1>name 2</h1>', access_until: "2030-06-10 00:00:00")
   end
   let(:permission_request_two) do
-    FactoryBot.create(:permission_request, parent_object: parent_object_two, permission_set: permission_set_two, permission_request_user: request_user_two, request_status: "Approved", permission_request_user_name: 'name 3')
+    FactoryBot.create(:permission_request, parent_object: parent_object_two, permission_set: permission_set_two, permission_request_user: request_user_two, request_status: "Approved", access_until: "2080-06-10 00:00:00", permission_request_user_name: 'name 3')
   end
   let(:permission_request_three) do
-    FactoryBot.create(:permission_request, permission_set: permission_set, parent_object: parent_object, permission_request_user: request_user, user_note: '<p>something</p>', permission_request_user_name: '<h1>name 2</h1>')
+    FactoryBot.create(:permission_request, permission_set: permission_set, parent_object: parent_object, permission_request_user: request_user, user_note: '<p>something</p>', access_until: "2080-06-10 00:00:00", permission_request_user_name: '<h1>name 2</h1>')
   end
   # rubocop:enable Layout/LineLength
   let(:administrator_user) { FactoryBot.create(:user, uid: 'admin') }
