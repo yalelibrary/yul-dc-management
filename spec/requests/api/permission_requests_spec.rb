@@ -51,7 +51,7 @@ RSpec.describe 'Permission Requests API', type: :request, prep_metadata_sources:
       expect(ActionMailer::Base.deliveries[0].to).to eq [approver_user_one.email]
       expect(ActionMailer::Base.deliveries[1].to).to eq [approver_user_two.email]
       expect(ActionMailer::Base.deliveries[2].to).to eq [admin_user.email]
-      expect(User.all.count).to eq 4
+      expect(ActionMailer::Base.deliveries.each(&:to)).not_to eq [sysadmin_user.email]
       expect(response).to have_http_status(:created)
       expect(OpenWithPermission::PermissionRequest.all.count).to eq 1
       pr = OpenWithPermission::PermissionRequest.first

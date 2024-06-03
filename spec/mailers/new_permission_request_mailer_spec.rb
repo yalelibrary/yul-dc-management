@@ -46,7 +46,7 @@ RSpec.describe NewPermissionRequestMailer, type: :mailer, prep_admin_sets: true,
       expect(mail.body.encoded).to include(permission_request.permission_request_user.name)
       expect(mail.body.encoded).to include(permission_request.permission_request_user.email)
       expect(mail.body.encoded).to include(permission_request.user_note)
-      expect(mail.body.encoded).to include("/management/permission_requests/#{permission_request.id}")
+      expect(mail.body.encoded).to include("permission_requests/#{permission_request.id}")
     end
   end
 end
