@@ -74,6 +74,7 @@ class Api::PermissionRequestsController < ApplicationController
     pr_user
   end
 
+  # rubocop:disable Metrics/AbcSize
   def send_new_request_mail(new_request)
     new_permission_request = {
       permission_request_id: new_request.id,
@@ -84,6 +85,14 @@ class Api::PermissionRequestsController < ApplicationController
       requester_email: new_request.permission_request_user.email,
       requester_note: new_request.user_note
     }
-    NewPermissionRequestMailer.with(new_permission_request: new_permission_request).new_permission_request_email.deliver_now
+    admins_and_approvers = []
+    User.all.each do |user|
+      admins_and_approvers << user if user.has_role?(:administrator, new_request.permission_set) || user.has_role?(:approver, new_request.permission_set)
+    end
+    admins_and_approvers.each do |user|
+      new_permission_request[:approver_name] = user.first_name + ' ' + user.last_name
+      NewPermissionRequestMailer.with(new_permission_request: new_permission_request).new_permission_request_email(user.email).deliver_now
+    end
   end
+  # rubocop:enable Metrics/AbcSize
 end

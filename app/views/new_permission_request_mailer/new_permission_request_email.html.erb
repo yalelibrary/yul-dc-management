@@ -2,7 +2,7 @@
   Dear <%= @new_permission_request[:approver_name] %>,
 </p>
 <p>
-  A request for permission to view the object <%= link_to(@new_permission_request[:parent_object_title], "#{ENV['BLACKLIGHT_HOST']}/catalog/#{@new_permission_request[:parent_object_oid]}") %> from permission set <%= @new_permission_request[:permission_set_label] %> has been received. Details about the request are as follows:
+  A request for permission to view the object <%= link_to(@new_permission_request[:parent_object_title], "#{ENV['BLACKLIGHT_BASE_URL']}/catalog/#{@new_permission_request[:parent_object_oid]}") %> from permission set <%= @new_permission_request[:permission_set_label] %> has been received. Details about the request are as follows:
 </p>
 <p>
   <strong>Parent Object OID:</strong> <%= @new_permission_request[:parent_object_oid] %><br />
@@ -10,7 +10,7 @@
   <strong>Requester Email Address:</strong> <%= @new_permission_request[:requester_email] %><br />
   <strong>Reason for Request:</strong> <%= @new_permission_request[:requester_note] %><br />
 </p>
-<p>Please log into the Management App and review the request <%= link_to('here.', "#{ENV['MANAGEMENT_HOST']}/permission_requests/#{@new_permission_request[:permission_request_id]}") %></p>
+<p>Please log into the Management App and review the request <%= link_to('here.', "#{ENV['BLACKLIGHT_BASE_URL']}/management/permission_requests/#{@new_permission_request[:permission_request_id]}") %></p>
 <small>
   <pre>This is an automated message sent by Yale’s Digital Collections System.</pre>
 </small>

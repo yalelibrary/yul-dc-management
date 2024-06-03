@@ -3,16 +3,19 @@
 require 'rails_helper'
 
 RSpec.describe 'Permission Requests API', type: :request, prep_metadata_sources: true, prep_admin_sets: true do
-  let(:user) { FactoryBot.create(:sysadmin_user) }
+  let(:approver_user_one) { FactoryBot.create(:user) }
+  let(:approver_user_two) { FactoryBot.create(:user) }
+  let(:admin_user) { FactoryBot.create(:user) }
+  let(:sysadmin_user) { FactoryBot.create(:sysadmin_user) }
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:permission_set) { FactoryBot.create(:permission_set, max_queue_length: 1) }
-  let(:permission_set_2) { FactoryBot.create(:permission_set, key: 'abc', label: 'Secondary') }
+  let(:permission_set_two) { FactoryBot.create(:permission_set, key: 'abc', label: 'Secondary') }
   let(:oid) { 2_034_600 }
-  let(:oid_2) { "17105661" }
-  let(:oid_3) { "30000016189097" }
+  let(:oid_two) { "17105661" }
+  let(:oid_three) { "30000016189097" }
   let(:parent) { FactoryBot.create(:parent_object, oid: oid, admin_set: admin_set, visibility: "Open with Permission", permission_set_id: permission_set.id) }
-  let(:parent_2) { FactoryBot.create(:parent_object, oid: oid_2, admin_set: admin_set, visibility: "Public", permission_set_id: permission_set.id) }
-  let(:parent_3) { FactoryBot.create(:parent_object, oid: oid_3, admin_set: admin_set, visibility: "Private", permission_set_id: permission_set.id) }
+  let(:parent_two) { FactoryBot.create(:parent_object, oid: oid_two, admin_set: admin_set, visibility: "Public", permission_set_id: permission_set.id) }
+  let(:parent_three) { FactoryBot.create(:parent_object, oid: oid_three, admin_set: admin_set, visibility: "Private", permission_set_id: permission_set.id) }
   let(:json) { File.read(Rails.root.join(fixture_path, 'permission_request.json')) }
   let(:invalid_oid_json) { File.read(Rails.root.join(fixture_path, 'invalid_oid_permission_request.json')) }
   let(:public_visibility_json) { File.read(Rails.root.join(fixture_path, 'public_visibility_permission_request.json')) }
@@ -24,23 +27,31 @@ RSpec.describe 'Permission Requests API', type: :request, prep_metadata_sources:
 
   before do
     stub_metadata_cloud(oid)
-    stub_metadata_cloud(oid_2)
-    stub_metadata_cloud(oid_3)
+    stub_metadata_cloud(oid_two)
+    stub_metadata_cloud(oid_three)
     parent
-    parent_2
-    parent_3
-    parent
-    login_as user
-    user.add_role(:editor, admin_set)
-    user.add_role(:approver, permission_set)
+    parent_two
+    parent_three
+    sysadmin_user
+    approver_user_one.add_role(:editor, admin_set)
+    approver_user_two.add_role(:editor, admin_set)
+    admin_user.add_role(:editor, admin_set)
+    approver_user_one.add_role(:approver, permission_set)
+    approver_user_two.add_role(:approver, permission_set)
+    admin_user.add_role(:administrator, permission_set)
+    login_as approver_user_one
   end
 
   describe '/api/permission_requests' do
-    it 'creates a new permission request' do
+    it 'creates a new permission request and sends emails to approvers and admins but not sysadmins' do
       request = JSON.parse(json)
       expect do
         post "/api/permission_requests", params: JSON.pretty_generate(request), headers: headers
-      end.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end.to change { ActionMailer::Base.deliveries.count }.by(3)
+      expect(ActionMailer::Base.deliveries[0].to).to eq [approver_user_one.email]
+      expect(ActionMailer::Base.deliveries[1].to).to eq [approver_user_two.email]
+      expect(ActionMailer::Base.deliveries[2].to).to eq [admin_user.email]
+      expect(ActionMailer::Base.deliveries.each(&:to)).not_to eq [sysadmin_user.email]
       expect(response).to have_http_status(:created)
       expect(OpenWithPermission::PermissionRequest.all.count).to eq 1
       pr = OpenWithPermission::PermissionRequest.first
