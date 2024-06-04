@@ -11,7 +11,7 @@ RSpec.describe PermissionRequestDatatable, type: :datatable, prep_metadata_sourc
   end
 
   it 'can handle a permission request' do
-    pr = FactoryBot.create(:permission_request, approver_note: "approver note example",)
+    pr = FactoryBot.create(:permission_request, approver_note: "approver note example")
     output = PermissionRequestDatatable.new(datatable_sample_params(columns), view_context: pr_datatable_view_mock(pr.id, pr.permission_set.id), current_ability: Ability.new(user)).data
 
     expect(output.size).to eq(1)
