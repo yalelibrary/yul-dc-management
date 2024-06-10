@@ -37,7 +37,7 @@ class Ability
   def apply_sysadmin_abilities(user)
     can :manage, User
     can :crud, AdminSet
-    can [:view_list, :owp_access, :create_set], OpenWithPermission::PermissionSet
+    can [:view_list, :owp_access, :create], OpenWithPermission::PermissionSet
     can [:crud], OpenWithPermission::PermissionSet, roles: { name: administrator_roles, users: { id: user.id } }
     can [:crud, :view_list], OpenWithPermission::PermissionRequest
     can :read, ParentObject
