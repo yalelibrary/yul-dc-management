@@ -12,7 +12,7 @@ class Ability
     return unless user
     can :create_new, ParentObject if user.roles.find_by(name: :editor)
     if user.has_role? :sysadmin
-      apply_sysadmin_abilities
+      apply_sysadmin_abilities(user)
     else
       can :read, ParentObject, admin_set: { roles: { name: viewer_roles, users: { id: user.id } } }
       can :read, ChildObject, parent_object: { admin_set: { roles: { name: viewer_roles, users: { id: user.id } } } }
@@ -34,10 +34,11 @@ class Ability
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
 
-  def apply_sysadmin_abilities
+  def apply_sysadmin_abilities(user)
     can :manage, User
     can :crud, AdminSet
-    can [:crud, :view_list, :owp_access, :create_set], OpenWithPermission::PermissionSet
+    can [:view_list, :owp_access, :create], OpenWithPermission::PermissionSet
+    can [:crud], OpenWithPermission::PermissionSet, roles: { name: administrator_roles, users: { id: user.id } }
     can [:crud, :view_list], OpenWithPermission::PermissionRequest
     can :read, ParentObject
     can :read, ChildObject

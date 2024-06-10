@@ -123,11 +123,13 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
   end
 
   context 'permission set showpage' do
+    before do
+      login_as approver_user
+    end
     describe 'approvers and administrators' do
       before do
-        login_as approver_user
-        administrator_user
         permission_set.add_approver(approver_user)
+        administrator_user
         permission_set_2
       end
       it 'cannot access permission set showpage theyre not approved for' do
@@ -138,7 +140,6 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
 
     describe 'displays permission sets' do
       before do
-        user.add_role(:sysadmin)
         permission_set.add_approver(approver_user)
         permission_set.add_administrator(administrator_user)
       end
@@ -163,28 +164,14 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         user_2
         user.add_role(:sysadmin)
       end
-      it 'can be viewed' do
+      it 'can view list' do
         visit '/permission_sets'
         expect(page).to have_content(create_new_set)
-        expect(page).to have_link('Edit', count: 2)
-        expect(page).to have_content('Edit', count: 3)
+        expect(page).not_to have_link('Edit')
       end
-      it 'can be accessed' do
+      it 'cannot be edited without being an admin on the set' do
         visit "/permission_sets/#{permission_set.id}/edit"
-        expect(page).to have_content(edit_set)
-      end
-      it 'can be edited' do
-        visit "/permission_sets/#{permission_set.id}/edit"
-        fill_in('open_with_permission_permission_set_label', with: 'label example')
-        click_on 'Update Permission Set'
-        expect(page).to have_content('Permission set was successfully updated.')
-      end
-      it 'can reject invalid params' do
-        visit "/permission_sets/#{permission_set.id}/edit"
-        # permission set must also have label - this leaves that out making the request invalid and causing a render of the edit page
-        fill_in('open_with_permission_permission_set_label', with: '')
-        click_on 'Update Permission Set'
-        expect(page).to have_content(edit_set)
+        expect(page).to have_content(denied)
       end
       it 'can be created' do
         visit new_set_url
@@ -207,13 +194,9 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         click_on create_set
         expect(page).to have_content(new_set)
       end
-      it 'can add and remove user roles to permission set' do
+      it 'cannot add and remove user roles to permission set' do
         visit "/permission_sets/#{permission_set.id}/"
-        fill_in('uid', with: user_2.uid.to_s)
-        click_on 'Save'
-        expect(page).to have_content("User: #{user_2.uid} added as approver")
-        all('a', text: 'X')[0].click
-        expect(page).to have_content("User: #{user_2.uid} removed as approver")
+        expect(page).to have_content(denied)
       end
     end
 

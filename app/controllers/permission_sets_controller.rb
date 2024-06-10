@@ -42,6 +42,7 @@ class PermissionSetsController < ApplicationController
   def create
     authorize!(:create, OpenWithPermission::PermissionSet)
     @permission_set = OpenWithPermission::PermissionSet.new(permission_set_params)
+    current_user&.add_role(:administrator, @permission_set)
 
     respond_to do |format|
       if @permission_set.save
