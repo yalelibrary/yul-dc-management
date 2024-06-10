@@ -32,8 +32,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   before do
     permission_set
     user.add_role(:editor, admin_set)
-    # login_as(:user)
-    # batch_process.user_id = user.id
     stub_pdfs
     stub_preservica_aspace_single
     stub_preservica_login
