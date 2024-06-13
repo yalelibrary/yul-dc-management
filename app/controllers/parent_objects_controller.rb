@@ -77,9 +77,12 @@ class ParentObjectsController < ApplicationController
       authorize!(:owp_access, permission_set_param) if permission_set_param.present?
 
       invalidate_admin_set_edit unless valid_admin_set_edit?
-      invalidate_redirect_to_edit unless valid_redirect_to_edit?
 
-      updated = if !parent_object_params[:redirect_to].nil? && !valid_redirect_to_edit?
+      updated = if parent_object_params[:redirect_to].present? && !valid_redirect_to_edit?
+                  invalidate_redirect_to_edit
+                  false
+                elsif !parent_object_params[:redirect_to].present? && parent_object_params[:visibility] == "Redirect" && !valid_redirect_to_edit?
+                  invalidate_redirect_to_edit
                   false
                 else
                   valid_admin_set_edit? ? @parent_object.update!(parent_object_params) : false
