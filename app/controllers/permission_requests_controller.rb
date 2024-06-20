@@ -36,6 +36,7 @@ class PermissionRequestsController < ApplicationController
         format.json { render :show, status: :ok, location: @permission_request }
       else
         format.html { render :show }
+        flash.now[:message] = @permission_request.errors.full_messages[0]
         format.json { render json: @permission_request.errors, status: :unprocessable_entity }
       end
     end

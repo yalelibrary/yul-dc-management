@@ -423,7 +423,7 @@ $( document ).on('turbolinks:load', function() {
 
 // Enables/disabled permission request datepicker based on selected request_status
 $( document ).on('turbolinks:load', function() {
-  if($('#open_with_permission_permission_request_request_status_denied').val() == 'Denied' || $('#open_with_permission_permission_request_request_status_denied').val() == nil) {
+  if($('#open_with_permission_permission_request_request_status_denied:checked').val() == 'Denied' || $('#open_with_permission_permission_request_request_status_approved:checked').val() == undefined) {
     $('#open_with_permission_permission_request_access_until').prop('disabled', true);
   }
   $('#open_with_permission_permission_request_request_status_approved').on('input change', function() {

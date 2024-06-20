@@ -1,4 +1,5 @@
 <%= render partial: '/management/flash_messages' %>
+
 <h1 id='permission-request-header'>Permission Request</h1>
 <%= form_with(model: [:open_with_permission, @permission_request], url: permission_request_path(@permission_request), local: true) do |form| %>
   <div class='permission-requests-show'>

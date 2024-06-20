@@ -6,7 +6,7 @@ class OpenWithPermission::PermissionRequest < ApplicationRecord
   belongs_to :parent_object
   has_one :user
   before_validation :sanitize_user_input, on: [:create]
-  validates :access_until, presence: { if: -> { request_status == "Approved" } }
+  validates :access_until, presence: { if: -> { request_status == "Approved" }, message: " can't be blank. Please select an Access Until date. This is the date the user's access will expire." }
 
   before_save do
     self.approved_or_denied_at = Time.zone.now if request_status_changed?
