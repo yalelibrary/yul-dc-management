@@ -34,6 +34,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :permission_requests
   resources :preservica_ingests
   resources :redirected_parent_objects
+  resources :activity_stream_logs
   resources :problem_reports, only: [:index, :create]
 
   resources :parent_objects do
