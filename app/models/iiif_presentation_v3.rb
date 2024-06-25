@@ -144,7 +144,6 @@ class IiifPresentationV3
   # rubocop:enable Metrics/PerceivedComplexity
 
   def sanitize_and_wrap(value)
-    # byebug
     if value.is_a?(Array)
       value&.map { |v| wrap_if_html(ActionController::Base.helpers.sanitize(v, tags: ["a", "i", "b"], attributes: %w[href])).gsub('&amp;', '&') }
     elsif value.is_a?(String)
