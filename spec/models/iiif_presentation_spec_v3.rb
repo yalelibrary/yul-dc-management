@@ -170,7 +170,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["metadata"].class).to eq Array
       expect(iiif_presentation.manifest["metadata"].first.class).to eq Hash
       expect(iiif_presentation.manifest["metadata"].first["label"]["en"].first).to eq "Creator"
-      expect(iiif_presentation.manifest["metadata"].first["value"]['none'].first).to include "Morris &amp; Co. (London, England)"
+      expect(iiif_presentation.manifest["metadata"].first["value"]['none'].first).to include "Morris & Co. (London, England)"
       expect(iiif_presentation.manifest["metadata"].last.class).to eq Hash
       expect(iiif_presentation.manifest["metadata"].last["label"]['en'].first).to eq "Object ID (OID)"
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Orbis ID" }).not_to be_empty
