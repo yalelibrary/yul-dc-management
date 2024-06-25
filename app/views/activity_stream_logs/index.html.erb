@@ -1,0 +1,43 @@
+<%= render partial: '/management/flash_messages' %>
+<div class='row datatable-heading'>
+  <div class='col'>
+    <h1>Activity Stream Logs</h1>
+  </div>
+  <div class='col'>
+    <div class='float-right button-list'>
+      <%  if ! @check_status %>
+        <%= link_to 'Check status of the Recurring Job', activity_stream_logs_path(check_status:'true'), method: 'get', class: 'btn button secondary-button' %>
+      <% end %>
+      <% if @check_status %>
+        <% if @expired_logger %>
+          <% if current_user.has_role?(:sysadmin)%>
+            <%= button_to 'Manually Reset', activity_stream_logs_path(reset_log: 'true'), method: 'post', class: 'btn button secondary-button' %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class='row datatable'>
+  <div class='col overflow-auto'>
+    <table id='activity-stream-log-datatable' class='is-datatable table table-responsive table-bordered table-striped' aria-label='Activity Stream Logs' data-source='<%= activity_stream_logs_path(format: :json) %>' data-refresh="true" >
+      <thead class='table-head'>
+        <tr>
+          <th scope='col'>Process ID</th>
+          <th scope='col'>Run Time</th>
+          <th scope='col'>Items</th>
+          <th scope='col'>Status</th>
+          <th scope='col'>Created</th>
+          <th scope='col'>Updated</th>
+          <th scope='col'>Retrieved Records</th>
+        </tr>
+      </thead>
+      <tbody class='datatable-body'>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id='activity-stream-log-data' class='d-none datatable-data'>
+  <%= ActivityStreamLogsDatatable.new(nil).view_columns.map {|key, value| { data: key, orderable: value[:orderable], searchable: value[:searchable], options: value[:options]} }.to_json %>
+</div>
