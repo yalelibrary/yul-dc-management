@@ -145,9 +145,9 @@ class IiifPresentationV3
 
   def sanitize_and_wrap(value)
     if value.is_a?(Array)
-      value&.map { |v| wrap_if_html(ActionController::Base.helpers.sanitize(v, tags: ["a", "i", "b"], attributes: %w[href])) }
+      value&.map { |v| wrap_if_html(ActionController::Base.helpers.sanitize(v, tags: ["a", "i", "b"], attributes: %w[href])).gsub('&amp;', '&') }
     elsif value.is_a?(String)
-      wrap_if_html(ActionController::Base.helpers.sanitize(value, tags: ["a", "i", "b"], attributes: %w[href]))
+      wrap_if_html(ActionController::Base.helpers.sanitize(value, tags: ["a", "i", "b"], attributes: %w[href])).gsub('&amp;', '&')
     else
       value
     end
