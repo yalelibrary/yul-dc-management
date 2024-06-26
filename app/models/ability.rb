@@ -21,6 +21,7 @@ class Ability
     can :reindex_admin_set, AdminSet, roles: { name: editor_roles, users: { id: user.id } }
     can :crud, ChildObject, parent_object: { admin_set: { roles: { name: editor_roles, users: { id: user.id } } } }
     can :crud, ParentObject, admin_set: { roles: { name: editor_roles, users: { id: user.id } } }
+    can :sync_from_preservica, ParentObject, admin_set: { roles: { name: editor_roles, users: { id: user.id } } }
     can :view_list, [OpenWithPermission::PermissionSet, OpenWithPermission::PermissionRequest] if user.has_role?(:approver, :any) || user.has_role?(:administrator, :any)
     can [:read, :update, :owp_access], OpenWithPermission::PermissionSet if user.has_role?(:administrator, :any)
     can :read, OpenWithPermission::PermissionSet, roles: { name: approver_roles, users: { id: user.id } }
