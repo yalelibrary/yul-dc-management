@@ -16,6 +16,10 @@ Rails.application.configure do
       cron: '15 0 * * *',
       class: 'ActivityStreamJob'
     },
+    integrity: {
+      cron: '15 0 * * *',
+      class: 'ChildObjectIntegrityCheckJob'
+    },
     problem: {
       cron: '15 0 * * *',
       class: 'ProblemReportJob'
