@@ -5,6 +5,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include CsvExportable
   # DELETE PARENT / CHILD OBJECTS:
   include Deletable
+  # CHECK IMAGE INTEGRITY:
+  include IntegrityCheckable
   # REASSOCIATE CHILD OIDS:
   include Reassociatable
   include Statable
