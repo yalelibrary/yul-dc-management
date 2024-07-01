@@ -3,7 +3,7 @@
 module IntegrityCheckable
   extend ActiveSupport::Concern
 
-  def integrity_check
+  def integrity_check(child_objects)
     # check for file presence
     # check that file checksum matches what is saved in database
     # mark child object as complete / successful if both checks pass

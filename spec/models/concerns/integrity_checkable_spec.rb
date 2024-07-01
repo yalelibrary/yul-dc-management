@@ -14,6 +14,10 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
 
   before do
     integrity_checkable_bp
+    child_object_one
+    child_object_two
+    child_object_three
+    child_object_four
   end
 
   context 'with failing parameters' do
@@ -34,6 +38,7 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
 
   context 'with successful parameters' do
     it 'reflects complete message as expected' do
+      integrity_checkable_bp.integrity_check(ChildObject.all)
       # when checksum matches and file is present
       # on batch process child object detail page
       # gives success /complete
