@@ -3,50 +3,44 @@
 require 'rails_helper'
 
 RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
-  let(:integrity_checkable_bp) { BatchProcess.new }
   let(:metadata_source) { MetadataSource.first }
   let(:admin_set) { AdminSet.first }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: '222', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
   let(:child_object_one) { FactoryBot.create(:child_object, oid: '1', parent_object: parent_object) }
   let(:child_object_two) { FactoryBot.create(:child_object, oid: '2', parent_object: parent_object) }
   let(:child_object_three) { FactoryBot.create(:child_object, oid: '3', parent_object: parent_object) }
-  let(:child_object_four) { FactoryBot.create(:child_object, oid: '4', parent_object: parent_object) }
-
+    
   before do
-    integrity_checkable_bp
-    child_object_one
-    child_object_two
-    child_object_three
-    child_object_four
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
+    parent_object
+    # set up fixtures for child objects
+    # file not present
+    # file present but checksum does not match
+    # file present and checksum matches
   end
 
-  context 'with failing parameters' do
-    it 'reflects error messages as expected' do
-      # when checksum matches and file is not present
-      # on batch process child object detail page
-      # gives failure message yyyyyyyy
+  it 'reflects messages as expected' do
+    expect { ChildObjectIntegrityCheckJob.new.perform }.to change { IngestEvent.count }.by(1)
+    # when checksum does not match and file is present
+    # on batch process child object detail page
+    # gives failure message xxxxxx
 
-      # when checksum does not match and file is present
-      # on batch process child object detail page
-      # gives failure message xxxxxx
+    # when file is not present
+    # on batch process child object detail page
+    # gives failure message xxxxxx and message yyyyyyy
 
-      # when checksum does not match and file is nor present
-      # on batch process child object detail page
-      # gives failure message xxxxxx and message yyyyyyy
-    end
-  end
-
-  context 'with successful parameters' do
-    it 'reflects complete message as expected' do
-      integrity_checkable_bp.integrity_check(ChildObject.all)
-      # when checksum matches and file is present
-      # on batch process child object detail page
-      # gives success /complete
-    end
+    # when checksum matches and file is present
+    # on batch process child object detail page
+    # gives success /complete
   end
 
   # set up 2500 child objects
   # make sure only grabs 2000
+
+
+
+  # make sure it does not sample preservica parents
 
   # let(:reassociatable) { BatchProcess.new }
   # let(:metadata_source) { MetadataSource.first }
