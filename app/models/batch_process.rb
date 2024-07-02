@@ -138,7 +138,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @current_ability ||= Ability.new(user)
   end
 
-  # ASSIGNS PARENT/CHILD OBJECT TO BATCH PROCESS FOR REASSOCIATE/RECREATE CHILD PTIFF
+  # ASSIGNS PARENT/CHILD OBJECT TO BATCH PROCESS FOR REASSOCIATE/RECREATE CHILD PTIFF 
+  # AND INTEGRITYCHECKABLE
   def attach_item(connectable)
     connectable.current_batch_process = self
     connectable.current_batch_connection = batch_connections.find_or_create_by(connectable: connectable)
