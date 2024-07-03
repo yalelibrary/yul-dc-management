@@ -7,12 +7,10 @@ RSpec.describe ChildObjectIntegrityCheckJob, type: :job do
     ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :external)
   end
 
-  let(:user) { FactoryBot.create(:user) }
-  let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
   let(:child_object_integrity_check_job) { ChildObjectIntegrityCheckJob.new }
 
   it 'increments the job queue by one' do
-    csv_job = described_class.perform_later(batch_process)
+    csv_job = described_class.perform_later
     expect(csv_job.instance_variable_get(:@successfully_enqueued)).to eq true
   end
 
@@ -24,16 +22,15 @@ RSpec.describe ChildObjectIntegrityCheckJob, type: :job do
     expect(child_object_integrity_check_job.queue_name).to eq('default')
   end
 
-  it 'calls integrity_check when performed' do
-    expect(batch_process).to receive(:integrity_check).once
-    described_class.new.perform(batch_process)
+  it 'sets batch action to integrity check when performed' do
+    child_object_integrity_check_job.perform
+    expect(BatchProcess.first.batch_action).to eq 'integrity check'
   end
 
   it 'reports error when integrity_check fails' do
-    allow(batch_process).to receive(:integrity_check).and_raise('boom!')
-    inst = described_class.new
+    allow_any_instance_of(BatchProcess).to receive(:integrity_check).and_raise('boom!')
     expect do
-      inst.perform(batch_process)
+      child_object_integrity_check_job.perform
     end.to raise_error('boom!')
   end
 

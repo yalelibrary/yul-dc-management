@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :child_object do
-    oid { 10_736_292 }
+    oid { FFaker::Number.number(digits: 8) }
     caption { "MyString" }
     width { 1 }
     height { 1 }

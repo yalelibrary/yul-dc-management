@@ -7,83 +7,56 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
   let(:admin_set) { AdminSet.first }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: '222', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
   let(:child_object_one) { FactoryBot.create(:child_object, oid: '1', parent_object: parent_object) }
-  let(:child_object_two) { FactoryBot.create(:child_object, oid: '2', parent_object: parent_object) }
-  let(:child_object_three) { FactoryBot.create(:child_object, oid: '3', parent_object: parent_object) }
-    
+  let(:child_object_two) { FactoryBot.create(:child_object, oid: '356789', parent_object: parent_object, checksum: '78909999999999999') }
+  let(:child_object_three) { FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object, checksum: 'f3755c5d9e086b4522a0d3916e9a0bfcbd47564e') }
+
+  around do |example|
+    original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
+    ENV["ACCESS_MASTER_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
+    example.run
+    ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
+  end
+
   before do
     allow(GoodJob).to receive(:preserve_job_records).and_return(true)
     ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-    parent_object
-    # set up fixtures for child objects
-    # file not present
-    # file present but checksum does not match
-    # file present and checksum matches
   end
 
-  it 'reflects messages as expected' do
-    expect { ChildObjectIntegrityCheckJob.new.perform }.to change { IngestEvent.count }.by(1)
-    # when checksum does not match and file is present
-    # on batch process child object detail page
-    # gives failure message xxxxxx
+  context 'with less than the maximum number of child objects' do
+    before do
+      # file not present
+      stub_request(:get, File.join(child_object_one.access_master_path)).to_return(status: 200, body: '')
+      # file present but checksum does not match
+      stub_request(:get, File.join(child_object_two.access_master_path)).to_return(status: 200, body: File.open(File.join(child_object_two.access_master_path)).read)
+      # file present and checksum matches
+      stub_request(:get, File.join(child_object_three.access_master_path)).to_return(status: 200, body: File.open(File.join(child_object_three.access_master_path)).read)
+    end
 
-    # when file is not present
-    # on batch process child object detail page
-    # gives failure message xxxxxx and message yyyyyyy
-
-    # when checksum matches and file is present
-    # on batch process child object detail page
-    # gives success /complete
+    it 'reflects messages as expected' do
+      expect { ChildObjectIntegrityCheckJob.new.perform }.to change { IngestEvent.count }.by(7)
+      # rubocop:disable Layout/LineLength
+      expect(child_object_one.events_for_batch_process(BatchProcess.first)[0].reason).to eq "Child Object: #{child_object_one.oid} - file not found at #{child_object_one.access_master_path} on #{ENV['ACCESS_MASTER_MOUNT']}.  Checksum could not be compared for the child object."
+      expect(child_object_two.events_for_batch_process(BatchProcess.first)[0].reason).to eq "Child Object: #{child_object_two.oid} - file exists but the file's checksum [#{Digest::SHA1.file(child_object_two.access_master_path)}] does not match what is saved on the child object [#{child_object_two.checksum}]."
+      expect(child_object_three.events_for_batch_process(BatchProcess.first)[0].reason).to eq "Child Object: #{child_object_three.oid} - checksum matches and file exists."
+      # rubocop:enable Layout/LineLength
+    end
   end
 
-  # set up 2500 child objects
-  # make sure only grabs 2000
+  context 'with more than the maximum number of child objects' do
+    let(:total_child_objects) { 2500 }
+    let(:limit) { 2000 }
+    let(:parent_object_two) { FactoryBot.create(:parent_object, oid: '2228888333', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
+    let(:child_objects) { FactoryBot.create_list(:child_object, total_child_objects, parent_object: parent_object_two) }
 
+    before do
+      parent_object_two
+      child_objects
+    end
 
-
-  # make sure it does not sample preservica parents
-
-  # let(:reassociatable) { BatchProcess.new }
-  # let(:metadata_source) { MetadataSource.first }
-  # let(:parent_object) { FactoryBot.create(:parent_object, oid: '222', authoritative_metadata_source: metadata_source) }
-  # let(:child_object) { FactoryBot.create(:child_object, oid: '1', label: 'original label',
-  # caption: 'original caption', viewing_hint: 'original viewing hint', order: 5, parent_object: parent_object) }
-
-  # context 'with more than limit parent objects' do
-  #   before do
-  #     limit = SolrReindexAllJob.job_limit
-  #     solr_limit = SolrReindexAllJob.solr_batch_limit
-  #     total_records = 8000 #  some number > SolrReindexAllJob.job_limit < SolrReindexAllJob.job_limit * 2
-
-  #     # create mocks for everything the job uses
-  #     solr_service = double
-  #     expect(SolrService).to receive(:connection).and_return(solr_service).twice
-  #     expect(SolrService).to receive(:clean_index_orphans).once
-
-  #     # 2 * because of the children
-  #     expect(solr_service).to receive(:add).exactly(2 * total_records / solr_limit).times
-  #     expect(solr_service).to receive(:commit).exactly(2 * total_records / solr_limit).times
-
-  #     doc = double
-  #     expect(doc).to receive(:to_solr_full_text).and_return([nil, [double]]).exactly(total_records).times
-
-  #     parent_object_order = double
-  #     parent_object_order_offset1 = double
-  #     parent_object_order_offset2 = double
-  #     expect(ParentObject).to receive(:order).and_return(parent_object_order).exactly((total_records.to_f / limit).ceil).times
-  #     expect(parent_object_order).to receive(:offset).with(0).and_return parent_object_order_offset1
-  #     expect(parent_object_order).to receive(:offset).with(limit).and_return parent_object_order_offset2
-  #     expect(parent_object_order_offset1).to receive(:limit).with(limit).and_return [*1..limit].map { |_ix| doc }
-  #     expect(parent_object_order_offset2).to receive(:limit).with(limit).and_return [*1..(total_records - limit)].map { |_ix| doc }
-  #   end
-
-  #   around do |example|
-  #     perform_enqueued_jobs do
-  #       example.run
-  #     end
-  #   end
-
-  #   it 'goes through all parents in batches' do
-  #     SolrReindexAllJob.perform_later
-  #   end
-  # end
+    # TODO: make this less resource intensive
+    it 'processes a maximum of 2000 child objects' do
+      ChildObjectIntegrityCheckJob.new.perform
+      expect(IngestEvent.last.reason).to eq "Integrity Check complete. #{limit} Child Object records reviewed."
+    end
+  end
 end
