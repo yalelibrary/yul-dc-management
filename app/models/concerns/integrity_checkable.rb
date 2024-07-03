@@ -27,7 +27,7 @@ module IntegrityCheckable
         co.processing_event("Child Object: #{co.oid} - file not found at #{co.access_master_path} on #{ENV['ACCESS_MASTER_MOUNT']}.  Checksum could not be compared for the child object.",
 'review-complete')
       end
-      co.parent_object.processing_event("Integrity check complete for Child Object: #{co.oid}", 'complete')
+      co.parent_object.processing_event("Integrity check complete for Child Object: #{co.oid}", 'review-complete')
     end
 
     batch_processing_event("Integrity Check complete. #{child_object_sample.count} Child Object records reviewed.", "Complete")
