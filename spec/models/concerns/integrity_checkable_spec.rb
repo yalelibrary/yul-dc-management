@@ -53,7 +53,6 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
       child_objects
     end
 
-    # TODO: make this less resource intensive
     it 'processes a maximum of 2000 child objects' do
       # Don't bother attaching the children, since we don't need messages from them:
       allow_any_instance_of(BatchProcess).to receive(:attach_item).and_return(nil)
