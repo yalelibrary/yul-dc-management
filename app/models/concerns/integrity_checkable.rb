@@ -26,12 +26,12 @@ module IntegrityCheckable
           co.processing_event("Child Object: #{co.oid} - checksum matches and file exists.", 'review-complete')
         else
           co.processing_event(
-            "Child Object: #{co.oid} - file exists but the file's checksum [#{Digest::SHA1.file(co.access_master_path)}] does not match what is saved on the child object [#{co.checksum}].", 'review-complete'
+            "Child Object: #{co.oid} - file exists but the file's checksum [#{Digest::SHA1.file(co.access_master_path)}] does not match what is saved on the child object [#{co.checksum}].", 'failed'
           )
         end
       else
         co.processing_event("Child Object: #{co.oid} - file not found at #{co.access_master_path} on #{ENV['ACCESS_MASTER_MOUNT']}.  Checksum could not be compared for the child object.",
-'review-complete')
+'failed')
       end
       self.admin_set = split_sets.join(', ')
       save!
