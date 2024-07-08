@@ -37,7 +37,7 @@
   </p>
 <% elsif @batch_process.batch_action == "integrity check"  %>
   <p>
-    <strong>Integrity Check Status:</strong> <%= @child_object.events_for_batch_process(@batch_process) %>
+    <strong>Integrity Check Status:</strong> <%= @child_object.events_for_batch_process(@batch_process)[0].reason %>
   </p>
 <% else %>
   <thead class='table-head'>
