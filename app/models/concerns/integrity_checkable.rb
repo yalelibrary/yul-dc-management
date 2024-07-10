@@ -10,9 +10,19 @@ module IntegrityCheckable
     self.admin_set = ''
     sets = admin_set
 
-    child_objects_pool = ChildObject.joins(:parent_object).where.not(parent_object: { digital_object_source: 'Preservica' })
 
-    child_object_sample = child_objects_pool.where(oid: child_objects_pool.ids.sample(2000))
+    # byebug
+    # get ids of 2000 parents
+    random_parent_oids = ParentObject.where.not( digital_object_source: 'Preservica').limit(2000).order("RANDOM()").pluck(:oid)
+    # get random child of each parent
+    child_object_sample = ChildObject.where(parent_object: { oid: random_parent_oids }).limit(2000).order("RANDOM()")
+    # do not retry if unfixable error
+    # add error handling for unexpected errors
+
+    # outdated - too intensive on DB
+    # child_objects_pool = ChildObject.joins(:parent_object).where.not(parent_object: { digital_object_source: 'Preservica' })
+
+    # child_object_sample = child_objects_pool.where(oid: child_objects_pool.ids.sample(2000))
 
     child_object_sample.each do |co|
       attach_item(co.parent_object)
