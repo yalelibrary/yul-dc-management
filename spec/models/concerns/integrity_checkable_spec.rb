@@ -5,10 +5,12 @@ require 'rails_helper'
 RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   let(:metadata_source) { MetadataSource.first }
   let(:admin_set) { AdminSet.first }
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: '222', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
-  let(:child_object_one) { FactoryBot.create(:child_object, oid: '1', parent_object: parent_object) }
-  let(:child_object_two) { FactoryBot.create(:child_object, oid: '356789', parent_object: parent_object, checksum: '78909999999999999') }
-  let(:child_object_three) { FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object, checksum: 'f3755c5d9e086b4522a0d3916e9a0bfcbd47564e') }
+  let(:parent_object_one) { FactoryBot.create(:parent_object, oid: '111', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
+  let(:parent_object_two) { FactoryBot.create(:parent_object, oid: '222', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
+  let(:parent_object_three) { FactoryBot.create(:parent_object, oid: '333', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
+  let(:child_object_one) { FactoryBot.create(:child_object, oid: '1', parent_object: parent_object_one) }
+  let(:child_object_two) { FactoryBot.create(:child_object, oid: '356789', parent_object: parent_object_two, checksum: '78909999999999999') }
+  let(:child_object_three) { FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object_three, checksum: 'f3755c5d9e086b4522a0d3916e9a0bfcbd47564e') }
 
   around do |example|
     original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
@@ -43,14 +45,14 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
   end
 
   context 'with more than the maximum number of child objects' do
-    let(:total_child_objects) { 2500 }
+    let(:total_parent_objects) { 2500 }
     let(:limit) { 2000 }
-    let(:parent_object_two) { FactoryBot.create(:parent_object, oid: '2228888333', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
-    let(:child_objects) { FactoryBot.create_list(:child_object, total_child_objects, parent_object: parent_object_two) }
+    let(:parent_objects) { FactoryBot.create_list(:parent_object_with_random_oid, total_parent_objects, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
 
     before do
-      parent_object_two
-      child_objects
+      parent_objects.each do |po|
+        FactoryBot.create(:child_object, parent_object: po)
+      end
     end
 
     it 'processes a maximum of 2000 child objects' do
