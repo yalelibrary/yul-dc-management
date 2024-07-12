@@ -47,15 +47,21 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
   context 'with more than the maximum number of child objects' do
     let(:total_parent_objects) { 2500 }
     let(:limit) { 2000 }
-    let(:parent_objects) { FactoryBot.create_list(:parent_object_with_random_oid, total_parent_objects, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
+    let(:parent_objects) { FactoryBot.build_list(:parent_object_with_random_oid, total_parent_objects, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
+    let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_objects[0]) }
 
     before do
-      parent_objects.each do |po|
-        FactoryBot.create(:child_object, parent_object: po)
-      end
+      not_clause = double
+      where = double
+      limit_mock = double
+      allow(where).to receive(:not).and_return(not_clause)
+      allow(not_clause).to receive(:limit).with(limit).and_return(limit_mock)
+      allow(limit_mock).to receive(:order).and_return(parent_objects[0..1999])
+      allow(ParentObject).to receive(:where).and_return(where)
     end
 
     it 'processes a maximum of 2000 child objects' do
+      allow_any_instance_of(ParentObject).to receive(:child_objects).and_return([child_object])
       # Don't bother attaching the children, since we don't need messages from them:
       allow_any_instance_of(BatchProcess).to receive(:attach_item).and_return(nil)
       ChildObjectIntegrityCheckJob.new.perform
