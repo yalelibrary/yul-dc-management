@@ -9,10 +9,10 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:role) { FactoryBot.create(:role, name: editor) }
   let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_child_object_caption.csv")) }
   let(:csv_blank_value_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_child_object_blank.csv")) }
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
-  let(:child_object_2) { FactoryBot.create(:child_object, oid: "67890", caption: "co2 caption", label: "co2 label", parent_object: parent_object) }
-  let(:child_object_3) { FactoryBot.create(:child_object, oid: "12", caption: "co3 caption", label: "co3 label", parent_object: parent_object) }
-  let(:child_object) { FactoryBot.create(:child_object, caption: "caption", label: "label", parent_object: parent_object) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_002_826, admin_set_id: admin_set.id) }
+  let(:child_object_2) { FactoryBot.create(:child_object, oid: 67_890, caption: "co2 caption", label: "co2 label", parent_object: parent_object) }
+  let(:child_object_3) { FactoryBot.create(:child_object, oid: 12, caption: "co3 caption", label: "co3 label", parent_object: parent_object) }
+  let(:child_object) { FactoryBot.create(:child_object, oid: 10_736_292, caption: "caption", label: "label", parent_object: parent_object) }
 
   around do |example|
     perform_enqueued_jobs do

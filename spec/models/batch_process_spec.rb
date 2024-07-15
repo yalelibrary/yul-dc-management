@@ -593,7 +593,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.file = csv_upload
           batch_process.save
           expect(ParentObject.count).to eq(1)
-          expect(IngestEvent.count).to eq(10)
+          po = ParentObject.first
+          expect(po.events_for_batch_process(batch_process).count).to eq 6
         end
 
         it "creates a Parent Object with added fields digitization_note, digitization_funding_source, rights_statement, viewing_direction, and display_layout" do

@@ -5,6 +5,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include CsvExportable
   # DELETE PARENT / CHILD OBJECTS:
   include Deletable
+  # CHECK IMAGE INTEGRITY:
+  include IntegrityCheckable
   # REASSOCIATE CHILD OIDS:
   include Reassociatable
   include Statable
@@ -137,6 +139,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   # ASSIGNS PARENT/CHILD OBJECT TO BATCH PROCESS FOR REASSOCIATE/RECREATE CHILD PTIFF
+  # AND INTEGRITYCHECKABLE
   def attach_item(connectable)
     connectable.current_batch_process = self
     connectable.current_batch_connection = batch_connections.find_or_create_by(connectable: connectable)

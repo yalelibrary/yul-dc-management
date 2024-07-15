@@ -137,7 +137,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def finished_states
-    ['solr-indexed', 'pdf-generated', 'ptiffs-recreated', 'update-complete', 'deleted']
+    ['solr-indexed', 'pdf-generated', 'ptiffs-recreated', 'update-complete', 'deleted', 'review-complete']
   end
 
   # Note - the upsert_all method skips ActiveRecord callbacks, and is entirely
