@@ -5,9 +5,9 @@ require 'rails_helper'
 RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   let(:metadata_source) { MetadataSource.first }
   let(:admin_set) { AdminSet.first }
-  let(:parent_object_one) { FactoryBot.create(:parent_object, oid: '111', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
-  let(:parent_object_two) { FactoryBot.create(:parent_object, oid: '222', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
-  let(:parent_object_three) { FactoryBot.create(:parent_object, oid: '333', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
+  let(:parent_object_one) { FactoryBot.create(:parent_object, oid: '111', child_object_count: 1, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
+  let(:parent_object_two) { FactoryBot.create(:parent_object, oid: '222', child_object_count: 1, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
+  let(:parent_object_three) { FactoryBot.create(:parent_object, oid: '333', child_object_count: 1, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
   let(:child_object_one) { FactoryBot.create(:child_object, oid: '1', parent_object: parent_object_one) }
   let(:child_object_two) { FactoryBot.create(:child_object, oid: '356789', parent_object: parent_object_two, checksum: '78909999999999999') }
   let(:child_object_three) { FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object_three, checksum: 'f3755c5d9e086b4522a0d3916e9a0bfcbd47564e') }
@@ -35,6 +35,7 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
     end
 
     it 'reflects messages as expected' do
+      byebug
       expect { ChildObjectIntegrityCheckJob.new.perform }.to change { IngestEvent.count }.by(7)
       # rubocop:disable Layout/LineLength
       expect(child_object_one.events_for_batch_process(BatchProcess.first)[0].reason).to eq "Child Object: #{child_object_one.oid} - file not found at #{child_object_one.access_master_path} on #{ENV['ACCESS_MASTER_MOUNT']}.  Checksum could not be compared for the child object."
