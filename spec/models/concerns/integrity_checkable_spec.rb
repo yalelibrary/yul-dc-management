@@ -54,8 +54,10 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
       not_clause = double
       where = double
       limit_mock = double
+      set_mock = double
       allow(where).to receive(:not).and_return(not_clause)
-      allow(not_clause).to receive(:limit).with(limit).and_return(limit_mock)
+      allow(not_clause).to receive(:and).and_return(set_mock)
+      allow(set_mock).to receive(:limit).with(limit).and_return(limit_mock)
       allow(limit_mock).to receive(:order).and_return(parent_objects[0..1999])
       allow(ParentObject).to receive(:where).and_return(where)
     end
