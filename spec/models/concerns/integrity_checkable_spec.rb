@@ -35,7 +35,6 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
     end
 
     it 'reflects messages as expected' do
-      byebug
       expect { ChildObjectIntegrityCheckJob.new.perform }.to change { IngestEvent.count }.by(7)
       # rubocop:disable Layout/LineLength
       expect(child_object_one.events_for_batch_process(BatchProcess.first)[0].reason).to eq "Child Object: #{child_object_one.oid} - file not found at #{child_object_one.access_master_path} on #{ENV['ACCESS_MASTER_MOUNT']}.  Checksum could not be compared for the child object."
@@ -48,7 +47,7 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
   context 'with more than the maximum number of child objects' do
     let(:total_parent_objects) { 2500 }
     let(:limit) { 2000 }
-    let(:parent_objects) { FactoryBot.build_list(:parent_object_with_random_oid, total_parent_objects, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
+    let(:parent_objects) { FactoryBot.build_list(:parent_object_with_random_oid, total_parent_objects, authoritative_metadata_source: metadata_source, admin_set: admin_set, child_object_count: 1) }
     let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_objects[0]) }
 
     before do
