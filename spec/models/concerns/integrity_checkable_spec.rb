@@ -5,9 +5,9 @@ require 'rails_helper'
 RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   let(:metadata_source) { MetadataSource.first }
   let(:admin_set) { AdminSet.first }
-  let(:parent_object_one) { FactoryBot.create(:parent_object, oid: '111', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
-  let(:parent_object_two) { FactoryBot.create(:parent_object, oid: '222', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
-  let(:parent_object_three) { FactoryBot.create(:parent_object, oid: '333', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
+  let(:parent_object_one) { FactoryBot.create(:parent_object, oid: '111', child_object_count: 1, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
+  let(:parent_object_two) { FactoryBot.create(:parent_object, oid: '222', child_object_count: 1, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
+  let(:parent_object_three) { FactoryBot.create(:parent_object, oid: '333', child_object_count: 1, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
   let(:child_object_one) { FactoryBot.create(:child_object, oid: '1', parent_object: parent_object_one) }
   let(:child_object_two) { FactoryBot.create(:child_object, oid: '356789', parent_object: parent_object_two, checksum: '78909999999999999') }
   let(:child_object_three) { FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object_three, checksum: 'f3755c5d9e086b4522a0d3916e9a0bfcbd47564e') }
@@ -47,15 +47,17 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
   context 'with more than the maximum number of child objects' do
     let(:total_parent_objects) { 2500 }
     let(:limit) { 2000 }
-    let(:parent_objects) { FactoryBot.build_list(:parent_object_with_random_oid, total_parent_objects, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
+    let(:parent_objects) { FactoryBot.build_list(:parent_object_with_random_oid, total_parent_objects, authoritative_metadata_source: metadata_source, admin_set: admin_set, child_object_count: 1) }
     let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_objects[0]) }
 
     before do
       not_clause = double
       where = double
       limit_mock = double
+      set_mock = double
       allow(where).to receive(:not).and_return(not_clause)
-      allow(not_clause).to receive(:limit).with(limit).and_return(limit_mock)
+      allow(not_clause).to receive(:and).and_return(set_mock)
+      allow(set_mock).to receive(:limit).with(limit).and_return(limit_mock)
       allow(limit_mock).to receive(:order).and_return(parent_objects[0..1999])
       allow(ParentObject).to receive(:where).and_return(where)
     end
