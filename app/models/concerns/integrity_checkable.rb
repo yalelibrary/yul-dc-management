@@ -11,7 +11,7 @@ module IntegrityCheckable
     self.admin_set = ''
     sets = admin_set
 
-    random_parents = ParentObject.where.not(digital_object_source: 'Preservica').and(ParentObject.where.not(child_object_count: 0)).limit(2000).order("RANDOM()")
+    random_parents = ParentObject.where.not(digital_object_source: 'Preservica').and(ParentObject.where.not(child_object_count: 0).and(ParentObject.where.not(child_object_count: nil))).limit(2000).order("RANDOM()")
 
     child_object_sample = []
     random_parents.each do |po|
