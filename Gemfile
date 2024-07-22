@@ -22,11 +22,11 @@ gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails', '~> 4.4'
 gem 'kaminari'
 gem 'noticed', '~> 1.2', '>= 1.2.15'
-gem 'omniauth'
+gem 'omniauth', '~> 2.1.0'
 gem 'omniauth-cas'
 # This addresses CVE-2015-9284 https://github.com/advisories/GHSA-ww4x-rwq6-qpgf
 gem 'cancancan'
-gem 'omniauth-rails_csrf_protection', '~> 0.1'
+gem 'omniauth-rails_csrf_protection'
 gem 'rolify'
 # Audit trail for changes to ActiveRecord models
 gem 'paper_trail'
