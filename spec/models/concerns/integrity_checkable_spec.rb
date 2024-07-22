@@ -37,9 +37,9 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
     it 'reflects messages as expected' do
       expect { ChildObjectIntegrityCheckJob.new.perform }.to change { IngestEvent.count }.by(7)
       # rubocop:disable Layout/LineLength
-      expect(child_object_one.events_for_batch_process(BatchProcess.first)[0].reason).to eq "Child Object: #{child_object_one.oid} - file not found at #{child_object_one.access_master_path} on #{ENV['ACCESS_MASTER_MOUNT']}.  Checksum could not be compared for the child object."
-      expect(child_object_two.events_for_batch_process(BatchProcess.first)[0].reason).to eq "Child Object: #{child_object_two.oid} - file exists but the file's checksum [#{Digest::SHA1.file(child_object_two.access_master_path)}] does not match what is saved on the child object [#{child_object_two.checksum}]."
-      expect(child_object_three.events_for_batch_process(BatchProcess.first)[0].reason).to eq "Child Object: #{child_object_three.oid} - checksum matches and file exists."
+      expect(child_object_one.events_for_batch_process(BatchProcess.first)[0].reason).to eq "Child Object: #{child_object_one.oid} - file not found at #{child_object_one.access_master_path} on #{ENV['ACCESS_MASTER_MOUNT']}."
+      expect(child_object_two.events_for_batch_process(BatchProcess.first)[0].reason).to eq "Child Object: #{child_object_two.oid} - file exists."
+      expect(child_object_three.events_for_batch_process(BatchProcess.first)[0].reason).to eq "Child Object: #{child_object_three.oid} - file exists."
       # rubocop:enable Layout/LineLength
     end
   end

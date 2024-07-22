@@ -27,16 +27,9 @@ module IntegrityCheckable
         split_sets = sets.split(',').uniq.reject(&:blank?)
 
         if co.access_master_exists?
-          if co.access_master_checksum_matches?
-            co.processing_event("Child Object: #{co.oid} - checksum matches and file exists.", 'review-complete')
-          else
-            co.processing_event(
-              "Child Object: #{co.oid} - file exists but the file's checksum [#{Digest::SHA1.file(co.access_master_path)}] does not match what is saved on the child object [#{co.checksum}].", 'failed'
-            )
-          end
+          co.processing_event("Child Object: #{co.oid} - file exists.", 'review-complete')
         else
-          co.processing_event("Child Object: #{co.oid} - file not found at #{co.access_master_path} on #{ENV['ACCESS_MASTER_MOUNT']}.  Checksum could not be compared for the child object.",
-  'failed')
+          co.processing_event("Child Object: #{co.oid} - file not found at #{co.access_master_path} on #{ENV['ACCESS_MASTER_MOUNT']}.", 'failed')
         end
         self.admin_set = split_sets.join(', ')
         save!
