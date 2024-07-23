@@ -27,14 +27,14 @@ module IntegrityCheckable
         split_sets = sets.split(',').uniq.reject(&:blank?)
 
         if co.access_master_exists?
+          co.parent_object.processing_event("Integrity check complete for Child Object: #{co.oid}", 'review-complete')
           co.processing_event("Child Object: #{co.oid} - file exists.", 'review-complete')
         else
+          co.parent_object.processing_event("Integrity check complete for Child Object: #{co.oid}", 'failed')
           co.processing_event("Child Object: #{co.oid} - file not found at #{co.access_master_path} on #{ENV['ACCESS_MASTER_MOUNT']}.", 'failed')
         end
         self.admin_set = split_sets.join(', ')
         save!
-
-        co.parent_object.processing_event("Integrity check complete for Child Object: #{co.oid}", 'review-complete')
       end
     rescue StandardError => e
       batch_processing_event("Integrity Check incomplete because of error: #{e.message}", 'Failed')
