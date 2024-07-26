@@ -23,8 +23,8 @@ RSpec.describe 'Permission Requests API', type: :request, prep_metadata_sources:
   let(:invalid_sub_json) { File.read(Rails.root.join(fixture_path, 'invalid_sub_permission_request.json')) }
   let(:invalid_name_json) { File.read(Rails.root.join(fixture_path, 'invalid_name_permission_request.json')) }
   let(:invalid_email_json) { File.read(Rails.root.join(fixture_path, 'invalid_email_permission_request.json')) }
-  let(:headers) { { 'CONTENT_TYPE' => 'application/json', 'OWP_AUTH_TOKEN' => 'valid' } }
-  let(:invalid_headers) { { 'CONTENT_TYPE' => 'application/json', 'OWP_AUTH_TOKEN' => 'invalid' } }
+  let(:headers) { { 'CONTENT_TYPE' => 'application/json', 'Authorization' => "Bearer valid" } }
+  let(:invalid_headers) { { 'CONTENT_TYPE' => 'application/json', 'Authorization' => "Bearer invalid" } }
 
   before do
     stub_metadata_cloud(oid)

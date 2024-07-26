@@ -13,8 +13,8 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
   let(:term_agreement) { FactoryBot.create(:term_agreement, permission_request_user: request_user, permission_set_term: terms) }
   let(:terms) { FactoryBot.create(:permission_set_term, activated_by: user, activated_at: Time.zone.now, permission_set: permission_set) }
   let(:request_user) { FactoryBot.create(:permission_request_user, sub: '1234') }
-  let(:headers) { { 'CONTENT_TYPE' => 'text/html', 'OWP_AUTH_TOKEN' => 'valid' } }
-  let(:invalid_headers) { { 'CONTENT_TYPE' => 'text/html', 'OWP_AUTH_TOKEN' => 'invalid' } }
+  let(:headers) { { 'CONTENT_TYPE' => 'application/json', 'Authorization' => "Bearer valid" } }
+  let(:invalid_headers) { { 'CONTENT_TYPE' => 'application/json', 'Authorization' => "Bearer invalid" } }
   let(:params) do
     {
       'oid': '123',
