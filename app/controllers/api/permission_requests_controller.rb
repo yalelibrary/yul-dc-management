@@ -6,6 +6,7 @@ class Api::PermissionRequestsController < ApplicationController
 
   # rubocop:disable Metrics/MethodLength
   def create
+    return unless request.headers['OWP_AUTH_TOKEN'] == ENV['OWP_AUTH_TOKEN']
     request = params
     begin
       parent_object = ParentObject.find(request['oid'].to_i)

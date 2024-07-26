@@ -23,7 +23,8 @@ RSpec.describe 'Permission Requests API', type: :request, prep_metadata_sources:
   let(:invalid_sub_json) { File.read(Rails.root.join(fixture_path, 'invalid_sub_permission_request.json')) }
   let(:invalid_name_json) { File.read(Rails.root.join(fixture_path, 'invalid_name_permission_request.json')) }
   let(:invalid_email_json) { File.read(Rails.root.join(fixture_path, 'invalid_email_permission_request.json')) }
-  let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
+  let(:headers) { { 'CONTENT_TYPE' => 'application/json', 'OWP_AUTH_TOKEN' => 'valid' } }
+  let(:invalid_headers) { { 'CONTENT_TYPE' => 'application/json', 'OWP_AUTH_TOKEN' => 'invalid' } }
 
   before do
     stub_metadata_cloud(oid)
@@ -40,6 +41,13 @@ RSpec.describe 'Permission Requests API', type: :request, prep_metadata_sources:
     approver_user_two.add_role(:approver, permission_set)
     admin_user.add_role(:administrator, permission_set)
     login_as approver_user_one
+  end
+
+  around do |example|
+    original_token = ENV['OWP_AUTH_TOKEN']
+    ENV['OWP_AUTH_TOKEN'] = 'valid'
+    example.run
+    ENV['OWP_AUTH_TOKEN'] = original_token
   end
 
   describe '/api/permission_requests' do
@@ -108,6 +116,12 @@ RSpec.describe 'Permission Requests API', type: :request, prep_metadata_sources:
       post "/api/permission_requests", params: JSON.pretty_generate(request), headers: headers
       expect(response).to have_http_status(400)
       expect(response.body).to match("{\"title\":\"Parent Object is private\"}")
+    end
+
+    it 'errors if a valid auth token is not present' do
+      request = JSON.parse(json)
+      post "/api/permission_requests", params: JSON.pretty_generate(request), headers: invalid_headers
+      expect(response).to have_http_status(:no_content)
     end
   end
 end
