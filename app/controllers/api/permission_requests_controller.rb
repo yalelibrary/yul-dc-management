@@ -44,7 +44,7 @@ class Api::PermissionRequestsController < ApplicationController
     true
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
+   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def valid_json_request(request)
     if request['user_email'].blank?
