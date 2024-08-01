@@ -51,8 +51,6 @@ class Api::PermissionRequestsController < ApplicationController
       render(json: { "title": "User email is missing" }, status: 400) && (return false)
     elsif request['user_full_name'].blank?
       render(json: { "title": "User name is missing" }, status: 400) && (return false)
-    elsif request['user_netid'].blank?
-      render(json: { "title": "User netid is missing" }, status: 400) && (return false)
     elsif request['user_note'].blank?
       render(json: { "title": "User reason for request is missing" }, status: 400) && (return false)
     elsif request['user_sub'].blank?
