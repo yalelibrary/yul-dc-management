@@ -19,7 +19,9 @@ class PermissionSetsController < ApplicationController
     end
   end
 
-  def show; end
+  def show 
+    authorize!(:view_list, OpenWithPermission::PermissionSet)
+  end
 
   def edit; end
 
