@@ -19,9 +19,7 @@ class PermissionSetsController < ApplicationController
     end
   end
 
-  def show 
-    authorize!(:view_list, OpenWithPermission::PermissionSet)
-  end
+  def show; end
 
   def edit; end
 
@@ -44,10 +42,10 @@ class PermissionSetsController < ApplicationController
   def create
     authorize!(:create, OpenWithPermission::PermissionSet)
     @permission_set = OpenWithPermission::PermissionSet.new(permission_set_params)
-    current_user&.add_role(:administrator, @permission_set)
 
     respond_to do |format|
       if @permission_set.save
+        current_user&.add_role(:administrator, @permission_set)
         format.html { redirect_to permission_set_path(@permission_set), notice: 'Permission set was successfully created.' }
         format.json { render :show, status: :created, location: @permission_set }
       else
