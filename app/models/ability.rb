@@ -41,6 +41,7 @@ class Ability
     can :read, ParentObject
     can :read, ChildObject
     can :read, PermissionRequestDatatable
+    can [:crud, :view_list], OpenWithPermission::PermissionRequest
     can :read, PreservicaIngest
     can :reindex_all, ParentObject
     can :update_metadata, ParentObject
