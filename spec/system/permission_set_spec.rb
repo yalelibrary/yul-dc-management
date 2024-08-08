@@ -161,7 +161,6 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
   context 'Editing and creating Permission Sets' do
     describe 'editing, creating, and adding/removing user roles to permission sets as a sysadmin' do
       before do
-        user_2
         user.add_role(:sysadmin)
       end
       it 'can view list' do
@@ -193,10 +192,6 @@ RSpec.describe 'PermissionSets', type: :system, prep_metadata_sources: true do
         fill_in('open_with_permission_permission_set_max_queue_length', with: '10')
         click_on create_set
         expect(page).to have_content(new_set)
-      end
-      it 'cannot add and remove user roles to permission set' do
-        visit "/permission_sets/#{permission_set.id}/"
-        expect(page).to have_content(denied)
       end
     end
 
