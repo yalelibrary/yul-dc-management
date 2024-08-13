@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ModuleLength
 module CreateParentObject
   extend ActiveSupport::Concern
-
-    # CREATE PARENT OBJECTS: ------------------------------------------------------------------------- #
 
   # CREATES PARENT OBJECTS FROM INGESTED CSV
   # rubocop:disable Metrics/AbcSize
@@ -137,5 +136,4 @@ module CreateParentObject
       admin_set
     end
   end
-  
 end
