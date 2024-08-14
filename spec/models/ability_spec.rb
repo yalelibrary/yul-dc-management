@@ -21,7 +21,9 @@ RSpec.describe Ability, type: :model, prep_admin_sets: true, prep_metadata_sourc
 
     it 'grants crud roles to Permission Set' do
       ability = Ability.new(sysadmin_user)
-      assert ability.can?(:crud, OpenWithPermission::PermissionSet)
+      assert ability.can?(:view_list, OpenWithPermission::PermissionSet)
+      assert ability.can?(:owp_access, OpenWithPermission::PermissionSet)
+      assert ability.can?(:create, OpenWithPermission::PermissionSet)
     end
 
     it 'grants read access to a ParentObject' do
