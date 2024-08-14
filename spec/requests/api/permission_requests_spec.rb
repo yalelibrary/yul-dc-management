@@ -25,6 +25,7 @@ RSpec.describe 'Permission Requests API', type: :request, prep_metadata_sources:
   let(:invalid_email_json) { File.read(Rails.root.join(fixture_path, 'invalid_email_permission_request.json')) }
   let(:headers) { { 'CONTENT_TYPE' => 'application/json', 'Authorization' => "Bearer valid" } }
   let(:invalid_headers) { { 'CONTENT_TYPE' => 'application/json', 'Authorization' => "Bearer invalid" } }
+  let(:empty_headers) { {} }
 
   before do
     stub_metadata_cloud(oid)
@@ -118,10 +119,16 @@ RSpec.describe 'Permission Requests API', type: :request, prep_metadata_sources:
       expect(response.body).to match("{\"title\":\"Parent Object is private\"}")
     end
 
-    it 'errors if a valid auth token is not present' do
+    it 'errors if a valid auth token does not match' do
       request = JSON.parse(json)
       post "/api/permission_requests", params: JSON.pretty_generate(request), headers: invalid_headers
-      expect(response).to have_http_status(:no_content)
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it 'errors if a valid auth token is not present' do
+      request = JSON.parse(json)
+      post "/api/permission_requests", params: JSON.pretty_generate(request), headers: empty_headers
+      expect(response).to have_http_status(:unauthorized)
     end
   end
 end

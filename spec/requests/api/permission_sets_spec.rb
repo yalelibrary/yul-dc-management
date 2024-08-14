@@ -108,7 +108,7 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
     end
     it 'throws error if auth token is invalid' do
       post agreement_term_url(invalid_term_params), headers: invalid_headers
-      expect(response).to have_http_status(204)
+      expect(response).to have_http_status(401)
     end
   end
 
