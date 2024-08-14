@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/ModuleLength
-module FrefeshMet
+module RefreshMet
   extend ActiveSupport::Concern
 
   # METS METADATA CLOUD: ------------------------------------------------------------------------- #
