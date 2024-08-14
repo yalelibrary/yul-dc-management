@@ -52,5 +52,4 @@ module FrefeshMet
     parent_object.digitization_note = mets_doc.dig_note
   end
   # rubocop:enable Metrics/AbcSize
-
 end

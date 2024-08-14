@@ -4,7 +4,7 @@
 module RecreateChildPtiff
   extend ActiveSupport::Concern
 
-    # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
+  # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
 
   # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
   # rubocop:disable Metrics/AbcSize
@@ -68,5 +68,4 @@ module RecreateChildPtiff
 
     parents
   end
-
 end

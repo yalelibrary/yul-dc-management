@@ -4,7 +4,7 @@
 module UpdateFulltextStatus
   extend ActiveSupport::Concern
 
-    # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
@@ -39,5 +39,4 @@ module UpdateFulltextStatus
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
-
 end

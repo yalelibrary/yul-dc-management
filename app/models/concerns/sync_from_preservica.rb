@@ -4,7 +4,7 @@
 module SyncFromPreservica
   extend ActiveSupport::Concern
 
-   # FETCHES CHILD OBJECTS FROM PRESERVICA
+  # FETCHES CHILD OBJECTS FROM PRESERVICA
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
@@ -96,5 +96,4 @@ module SyncFromPreservica
     end
   end
   # rubocop:enable Metrics/MethodLength
-  
 end
