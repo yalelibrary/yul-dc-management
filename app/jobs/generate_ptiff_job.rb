@@ -33,5 +33,4 @@ class GeneratePtiffJob < ApplicationJob
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
-
 end
