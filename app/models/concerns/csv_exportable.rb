@@ -258,6 +258,12 @@ module CsvExportable
     @remote_csv_path ||= "batch/job/#{id}/#{created_file_name}"
   end
 
+  # APPENDS ID TO CSV FILENAME
+  def created_file_name
+    return nil unless file_name
+    "#{file_name.delete_suffix('.csv')}_bp_#{id}.csv"
+  end
+
   def child_objects_array
     arr = []
     oids.each_with_index do |oid, index|
