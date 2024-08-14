@@ -194,6 +194,13 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # SHARED BY DELETE, CREATE, AND UPDATE: --------------------------------------------------------- #
 
+  # SETS COMPLETE STATUS FOR RECREATE JOB
+  def are_all_children_complete?(parent_object)
+    child_objects.where(parent_object: parent_object).all? do |co|
+      co.status_for_batch_process(self) == 'Complete'
+    end
+  end
+
   # ASSIGNS PARENT/CHILD OBJECT TO BATCH PROCESS FOR CREATE/DELETE/UPDATE
   def setup_for_background_jobs(object, metadata_source)
     object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject

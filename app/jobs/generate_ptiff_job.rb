@@ -34,10 +34,4 @@ class GeneratePtiffJob < ApplicationJob
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
 
-  # SETS COMPLETE STATUS FOR RECREATE JOB
-  def are_all_children_complete?(parent_object)
-    child_objects.where(parent_object: parent_object).all? do |co|
-      co.status_for_batch_process(self) == 'Complete'
-    end
-  end
 end
