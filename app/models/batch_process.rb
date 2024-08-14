@@ -192,8 +192,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/PerceivedComplexity
 
-  # SHARED BY DELETE, CREATE, AND UPDATE: --------------------------------------------------------- #
-
   # SETS COMPLETE STATUS FOR RECREATE JOB
   def are_all_children_complete?(parent_object)
     child_objects.where(parent_object: parent_object).all? do |co|
