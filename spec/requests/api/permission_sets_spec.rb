@@ -13,6 +13,8 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
   let(:term_agreement) { FactoryBot.create(:term_agreement, permission_request_user: request_user, permission_set_term: terms) }
   let(:terms) { FactoryBot.create(:permission_set_term, activated_by: user, activated_at: Time.zone.now, permission_set: permission_set) }
   let(:request_user) { FactoryBot.create(:permission_request_user, sub: '1234') }
+  let(:headers) { { 'CONTENT_TYPE' => 'application/json', 'Authorization' => "Bearer valid" } }
+  let(:invalid_headers) { { 'CONTENT_TYPE' => 'application/json', 'Authorization' => "Bearer invalid" } }
   let(:params) do
     {
       'oid': '123',
@@ -55,6 +57,13 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
     term_agreement
   end
 
+  around do |example|
+    original_token = ENV['OWP_AUTH_TOKEN']
+    ENV['OWP_AUTH_TOKEN'] = 'valid'
+    example.run
+    ENV['OWP_AUTH_TOKEN'] = original_token
+  end
+
   describe 'get /api/permission_sets/id/terms' do
     it 'can display the active permission set term' do
       get terms_api_path(parent_object)
@@ -80,7 +89,7 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
   describe 'POST /agreement_term' do
     it 'can POST and create a user agreement' do
       expect(OpenWithPermission::TermsAgreement.count).to eq 1
-      post agreement_term_url(params)
+      post agreement_term_url(params), headers: headers
       expect(response).to have_http_status(201)
       term = OpenWithPermission::TermsAgreement.first
       expect(OpenWithPermission::TermsAgreement.count).to eq 2
@@ -88,14 +97,18 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
       expect(term.permission_set_term).to eq terms
     end
     it 'throws error if user not found' do
-      post agreement_term_url(invalid_user_params)
+      post agreement_term_url(invalid_user_params), headers: headers
       expect(response).to have_http_status(400)
       expect(response.body).to eq("{\"title\":\"User not found.\"}")
     end
     it 'throws error if permission set term not found' do
-      post agreement_term_url(invalid_term_params)
+      post agreement_term_url(invalid_term_params), headers: headers
       expect(response).to have_http_status(400)
       expect(response.body).to eq("{\"title\":\"Term not found.\"}")
+    end
+    it 'throws error if auth token is invalid' do
+      post agreement_term_url(invalid_term_params), headers: invalid_headers
+      expect(response).to have_http_status(401)
     end
   end
 

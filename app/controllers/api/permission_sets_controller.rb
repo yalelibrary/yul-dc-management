@@ -52,6 +52,7 @@ class Api::PermissionSetsController < ApplicationController
   # rubocop:enable Metrics/CyclomaticComplexity
 
   def agreement_term
+    render json: { error: 'unauthorized' }.to_json, status: :unauthorized and return if request.headers['Authorization'] != "Bearer #{ENV['OWP_AUTH_TOKEN']}"
     begin
       term = OpenWithPermission::PermissionSetTerm.find(params[:permission_set_terms_id])
     rescue ActiveRecord::RecordNotFound
