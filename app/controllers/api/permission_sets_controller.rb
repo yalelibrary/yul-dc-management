@@ -7,7 +7,10 @@ class Api::PermissionSetsController < ApplicationController
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def terms_api
+    # check for valid token
+    render(json: { error: 'unauthorized' }.to_json, status: :unauthorized) && (return false) if owp_auth_invalid
     # check for valid parent object
     begin
       parent_object = ParentObject.find(params[:id])
@@ -34,11 +37,15 @@ class Api::PermissionSetsController < ApplicationController
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def check_admin_status
+    # check for valid token
+    render(json: { error: 'unauthorized' }.to_json, status: :unauthorized) && (return false) if owp_auth_invalid
     # check for valid parent object
     begin
       parent_object = ParentObject.find(params[:id])
@@ -66,11 +73,13 @@ class Api::PermissionSetsController < ApplicationController
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   def agreement_term
-    render json: { error: 'unauthorized' }.to_json, status: :unauthorized and return if request.headers['Authorization'] != "Bearer #{ENV['OWP_AUTH_TOKEN']}"
+    # check for valid token
+    render(json: { error: 'unauthorized' }.to_json, status: :unauthorized) && (return false) if owp_auth_invalid
     begin
       term = OpenWithPermission::PermissionSetTerm.find(params[:permission_set_terms_id])
     rescue ActiveRecord::RecordNotFound
@@ -100,6 +109,8 @@ class Api::PermissionSetsController < ApplicationController
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def retrieve_permissions_data
+    # check for valid token
+    render(json: { error: 'unauthorized' }.to_json, status: :unauthorized) && (return false) if owp_auth_invalid
     # check for valid user
     begin
       request_user = OpenWithPermission::PermissionRequestUser.find_by!(sub: params[:sub])
@@ -143,5 +154,9 @@ class Api::PermissionSetsController < ApplicationController
     pr_user.oidc_updated_at = Time.zone.now
     pr_user.save!
     pr_user
+  end
+
+  def owp_auth_invalid
+    request.headers['Authorization'] != "Bearer #{ENV['OWP_AUTH_TOKEN']}" || ENV['OWP_AUTH_TOKEN'].blank? || ENV['OWP_AUTH_TOKEN'].nil?
   end
 end

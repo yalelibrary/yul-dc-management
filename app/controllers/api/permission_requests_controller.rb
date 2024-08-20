@@ -10,7 +10,6 @@ class Api::PermissionRequestsController < ApplicationController
   # rubocop:disable Metrics/PerceivedComplexity
   def create
     if request.headers['Authorization'] != "Bearer #{ENV['OWP_AUTH_TOKEN']}" || ENV['OWP_AUTH_TOKEN'].blank? || ENV['OWP_AUTH_TOKEN'].nil?
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render json: { error: 'unauthorized' }.to_json, status: :unauthorized and return
     end
     request = params
