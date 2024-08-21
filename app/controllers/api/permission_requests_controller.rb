@@ -1,22 +1,16 @@
 # frozen_string_literal: true
 
 class Api::PermissionRequestsController < ApplicationController
+  before_action :check_authorization, only: [:create]
   skip_before_action :authenticate_user!
   skip_before_action :verify_authenticity_token
 
-  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
   def create
-    if request.headers['Authorization'] != "Bearer #{ENV['OWP_AUTH_TOKEN']}" || ENV['OWP_AUTH_TOKEN'].blank? || ENV['OWP_AUTH_TOKEN'].nil?
-      render json: { error: 'unauthorized' }.to_json, status: :unauthorized and return
-    end
     request = params
     begin
       parent_object = ParentObject.find(request['oid'].to_i)
     rescue ActiveRecord::RecordNotFound
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: { "title": "Invalid Parent OID" }, status: 400) && (return false)
     end
     return unless check_parent_visibility(parent_object)
@@ -25,7 +19,6 @@ class Api::PermissionRequestsController < ApplicationController
     permission_set = OpenWithPermission::PermissionSet.find(parent_object.permission_set_id)
     current_requests_count = OpenWithPermission::PermissionRequest.where(permission_request_user: pr_user, request_status: "Pending", permission_set: permission_set).count
     if current_requests_count >= permission_set.max_queue_length
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render json: { "title": "Too many pending requests" }, status: 403
     else
       new_request = OpenWithPermission::PermissionRequest.new(
@@ -37,21 +30,15 @@ class Api::PermissionRequestsController < ApplicationController
       )
       new_request.save!
       send_new_request_mail(new_request)
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render json: { "title": "New request created" }, status: 201
     end
   end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/MethodLength
 
   def check_parent_visibility(parent_object)
     if parent_object.visibility == "Private"
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: { "title": "Parent Object is private" }, status: 400) && (return false)
     elsif parent_object.visibility == "Public"
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: { "title": "Parent Object is public, permission not required" }, status: 400) && (return false)
     end
     true
@@ -61,16 +48,12 @@ class Api::PermissionRequestsController < ApplicationController
   # rubocop:disable Metrics/PerceivedComplexity
   def valid_json_request(request)
     if request['user_email'].blank?
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: { "title": "User email is missing" }, status: 400) && (return false)
     elsif request['user_full_name'].blank?
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: { "title": "User name is missing" }, status: 400) && (return false)
     elsif request['user_note'].blank?
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: { "title": "User reason for request is missing" }, status: 400) && (return false)
     elsif request['user_sub'].blank?
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: { "title": "User subject is missing" }, status: 400) && (return false)
     end
     true

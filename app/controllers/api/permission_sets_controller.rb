@@ -1,66 +1,49 @@
 # frozen_string_literal: true
 
 class Api::PermissionSetsController < ApplicationController
+  before_action :check_authorization, except: [:find_or_create_user]
   skip_before_action :authenticate_user!
   skip_before_action :verify_authenticity_token
 
   # rubocop:disable Metrics/PerceivedComplexity
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
   def terms_api
-    # check for valid token
-    render(json: { error: 'unauthorized' }.to_json, status: :unauthorized) && (return false) if owp_auth_invalid
     # check for valid parent object
     begin
       parent_object = ParentObject.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: { "title": "Parent Object not found" }, status: 400) && (return false)
     end
     # check for permission set
     permission_set = parent_object&.permission_set
     if permission_set.nil?
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: { "title": "Permission Set not found" }, status: 400) && (return false)
     # check for terms on set
     elsif permission_set.permission_set_terms.blank? || !permission_set.active_permission_set_terms
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: {}, status: 204)
     else
       term = permission_set.active_permission_set_terms
       active_term = term.slice(:id, :title, :body)
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: active_term.to_json, status: 200)
     end
   end
   # rubocop:enable Metrics/PerceivedComplexity
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
 
-  # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
   def check_admin_status
-    # check for valid token
-    render(json: { error: 'unauthorized' }.to_json, status: :unauthorized) && (return false) if owp_auth_invalid
     # check for valid parent object
     begin
       parent_object = ParentObject.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: { "title": "Parent Object not found" }, status: 400) && (return false)
     end
     admin_or_approver_status = "false"
     management_user = User.find_by(uid: params[:uid])
     permission_set = parent_object&.permission_set
     if permission_set.nil?
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: { "is_admin_or_approver?": admin_or_approver_status }, status: 400) && (return false)
     elsif management_user.nil?
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: { "is_admin_or_approver?": admin_or_approver_status }, status: 400) && (return false)
     elsif management_user.has_role?(:administrator, permission_set) || management_user.has_role?(:approver, permission_set)
       admin_or_approver_status = "true"
@@ -70,52 +53,36 @@ class Api::PermissionSetsController < ApplicationController
     response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
     render(json: { "is_admin_or_approver?": admin_or_approver_status })
   end
-  # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
 
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
   def agreement_term
-    # check for valid token
-    render(json: { error: 'unauthorized' }.to_json, status: :unauthorized) && (return false) if owp_auth_invalid
     begin
       term = OpenWithPermission::PermissionSetTerm.find(params[:permission_set_terms_id])
     rescue ActiveRecord::RecordNotFound
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: { "title": "Term not found." }, status: 400) && (return false)
     end
     begin
       request_user = find_or_create_user(params)
     rescue ActiveRecord::RecordInvalid
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: { "title": "User not found." }, status: 400) && (return false)
     end
     begin
       term_agreement = OpenWithPermission::TermsAgreement.new(permission_set_term: term, permission_request_user: request_user, agreement_ts: Time.zone.now)
       term_agreement.save!
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render json: { "title": "Success." }, status: 201
     rescue StandardError => e
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render json: { "title": e.to_s }, status: 500
     end
   end
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
 
   # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
   def retrieve_permissions_data
-    # check for valid token
-    render(json: { error: 'unauthorized' }.to_json, status: :unauthorized) && (return false) if owp_auth_invalid
     # check for valid user
     begin
       request_user = OpenWithPermission::PermissionRequestUser.find_by!(sub: params[:sub])
     rescue ActiveRecord::RecordNotFound
-      response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
       render(json: { "title": "User not found" }, status: 404) && (return false)
     end
 
@@ -138,12 +105,9 @@ class Api::PermissionSetsController < ApplicationController
         "user_full_name": request_user.name }
     end
 
-    response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
     render(json: { "timestamp": timestamp, "user": { "sub": request_user.sub }, "permission_set_terms_agreed": terms_agreed, "permissions": set.reverse })
   end
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength
 
   def find_or_create_user(request)
     pr_user = OpenWithPermission::PermissionRequestUser.find_or_initialize_by(sub: request['user_sub'])
@@ -154,9 +118,5 @@ class Api::PermissionSetsController < ApplicationController
     pr_user.oidc_updated_at = Time.zone.now
     pr_user.save!
     pr_user
-  end
-
-  def owp_auth_invalid
-    request.headers['Authorization'] != "Bearer #{ENV['OWP_AUTH_TOKEN']}" || ENV['OWP_AUTH_TOKEN'].blank? || ENV['OWP_AUTH_TOKEN'].nil?
   end
 end
