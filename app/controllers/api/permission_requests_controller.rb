@@ -1,17 +1,12 @@
 # frozen_string_literal: true
 
 class Api::PermissionRequestsController < ApplicationController
+  before_action :check_authorization
   skip_before_action :authenticate_user!
   skip_before_action :verify_authenticity_token
 
-  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
   def create
-    if request.headers['Authorization'] != "Bearer #{ENV['OWP_AUTH_TOKEN']}" || ENV['OWP_AUTH_TOKEN'].blank? || ENV['OWP_AUTH_TOKEN'].nil?
-      render json: { error: 'unauthorized' }.to_json, status: :unauthorized and return
-    end
     request = params
     begin
       parent_object = ParentObject.find(request['oid'].to_i)
@@ -38,10 +33,7 @@ class Api::PermissionRequestsController < ApplicationController
       render json: { "title": "New request created" }, status: 201
     end
   end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/MethodLength
 
   def check_parent_visibility(parent_object)
     if parent_object.visibility == "Private"

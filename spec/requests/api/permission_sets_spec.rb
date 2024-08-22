@@ -66,23 +66,28 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
 
   describe 'get /api/permission_sets/id/terms' do
     it 'can display the active permission set term' do
-      get terms_api_path(parent_object)
+      get terms_api_path(parent_object), headers: headers
       expect(response).to have_http_status(200)
       expect(response.body).to match("[{\"id\":3,\"title\":\"Permission Set Terms\",\"body\":\"These are some terms\"}]")
     end
     it 'can display terms not found' do
-      get terms_api_path(parent_object_no_terms)
+      get terms_api_path(parent_object_no_terms), headers: headers
       expect(response).to have_http_status(204)
     end
     it 'displays parent object not found' do
-      get terms_api_path(9_765_431)
+      get terms_api_path(9_765_431), headers: headers
       expect(response).to have_http_status(400)
       expect(response.body).to eq("{\"title\":\"Parent Object not found\"}")
     end
     it 'displays permission set not found' do
-      get terms_api_path(2_012_033)
+      get terms_api_path(2_012_033), headers: headers
       expect(response).to have_http_status(400)
       expect(response.body).to eq("{\"title\":\"Permission Set not found\"}")
+    end
+    it 'does not display if auth tokin invalid' do
+      get terms_api_path(parent_object), headers: invalid_headers
+      expect(response).to have_http_status(401)
+      expect(response.body).to eq("{\"error\":\"unauthorized\"}")
     end
   end
 
@@ -114,7 +119,7 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
 
   describe 'get /api/permission_sets/id/terms' do
     it "a non-user can access the permission set terms" do
-      get terms_api_path(parent_object)
+      get terms_api_path(parent_object), headers: headers
       expect(response).to have_http_status(200)
       expect(response.body).to match("[{\"id\":3,\"title\":\"Permission Set Terms\",\"body\":\"These are some terms\"}]")
     end
@@ -123,12 +128,12 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
   # rubocop:disable Layout/LineLength
   describe 'get /api/permission_sets/:sub' do
     it "can find a user from sub" do
-      get '/api/permission_sets/1234'
+      get '/api/permission_sets/1234', headers: headers
       expect(response).to have_http_status(200)
       expect(response.body).to match("[{\"user\":{\"sub\":\"#{request_user.sub}\"},\"permission_set_terms_agreed\":[#{term_agreement.id}],\"permissions\":[{\"oid\":2012036,\"permission_set\":#{permission_set.id},\"permission_set_terms\":#{terms.id},\"request_status\":null}]}]")
     end
     it "throws error if user is not found" do
-      get '/api/permission_sets/123456'
+      get '/api/permission_sets/123456', headers: headers
       expect(response).to have_http_status(404)
       expect(response.body).to eq("{\"title\":\"User not found\"}")
     end
@@ -137,27 +142,27 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
   describe 'get /api/permission_sets/:parent_object/:uid' do
     it "can find a parent object, permission set, and user access to permission set" do
       user.add_role(:administrator, permission_set)
-      get '/api/permission_sets/2012036/uid'
+      get '/api/permission_sets/2012036/uid', headers: headers
       expect(response).to have_http_status(200)
       expect(response.body).to eq("{\"is_admin_or_approver?\":\"true\"}")
     end
     it "can find a parent object, permission set, and user but returns false for admin or approver access" do
-      get '/api/permission_sets/2012036/uid'
+      get '/api/permission_sets/2012036/uid', headers: headers
       expect(response).to have_http_status(200)
       expect(response.body).to eq("{\"is_admin_or_approver?\":\"false\"}")
     end
     it "returns false if user is not found" do
-      get '/api/permission_sets/2012036/invalid_uid'
+      get '/api/permission_sets/2012036/invalid_uid', headers: headers
       expect(response).to have_http_status(400)
       expect(response.body).to eq("{\"is_admin_or_approver?\":\"false\"}")
     end
     it "throws error if parent object not found" do
-      get '/api/permission_sets/201203600/uid'
+      get '/api/permission_sets/201203600/uid', headers: headers
       expect(response).to have_http_status(400)
       expect(response.body).to eq("{\"title\":\"Parent Object not found\"}")
     end
     it "returns false if permission set not found" do
-      get '/api/permission_sets/2012033/uid'
+      get '/api/permission_sets/2012033/uid', headers: headers
       expect(response).to have_http_status(400)
       expect(response.body).to eq("{\"is_admin_or_approver?\":\"false\"}")
     end
