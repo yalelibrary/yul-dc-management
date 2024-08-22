@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::PermissionSetsController < ApplicationController
-  before_action :check_authorization, except: [:find_or_create_user]
+  before_action :check_authorization
   skip_before_action :authenticate_user!
   skip_before_action :verify_authenticity_token
 
@@ -50,7 +50,6 @@ class Api::PermissionSetsController < ApplicationController
     else
       admin_or_approver_status = "false"
     end
-    response.set_header('Authorization', "Bearer #{ENV['OWP_AUTH_TOKEN']}")
     render(json: { "is_admin_or_approver?": admin_or_approver_status })
   end
   # rubocop:enable Metrics/CyclomaticComplexity

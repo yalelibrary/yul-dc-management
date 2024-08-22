@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::PermissionRequestsController < ApplicationController
-  before_action :check_authorization, only: [:create]
+  before_action :check_authorization
   skip_before_action :authenticate_user!
   skip_before_action :verify_authenticity_token
 

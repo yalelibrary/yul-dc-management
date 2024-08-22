@@ -2,7 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include JwtWebToken
-  before_action :authenticate_user!, except: [:check_authorization]
+  before_action :authenticate_user!
   rescue_from CanCan::AccessDenied do |exception|
     @error_message = exception.message
     render plain: "Access denied", status: 401
