@@ -23,8 +23,6 @@ module IntegrityCheckable
         attach_item(co.parent_object)
         attach_item(co)
 
-        # sets << ', ' + co.parent_object.admin_set.key
-        # split_sets = sets.split(',').uniq.reject(&:blank?)
         add_admin_set_to_bp(sets, co)
 
         if co.access_master_exists?
@@ -34,7 +32,6 @@ module IntegrityCheckable
           co.parent_object.processing_event("Integrity check complete for Child Object: #{co.oid}", 'failed')
           co.processing_event("Child Object: #{co.oid} - file not found at #{co.access_master_path} on #{ENV['ACCESS_MASTER_MOUNT']}.", 'failed')
         end
-        # self.admin_set = split_sets.join(', ')
         save!
       end
     rescue StandardError => e
@@ -48,9 +45,4 @@ module IntegrityCheckable
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Layout/LineLength
 
-  # def add_admin_set_to_bp(sets, co)
-  #   sets << ', ' + co.parent_object.admin_set.key
-  #   split_sets = sets.split(',').uniq.reject(&:blank?)
-  #   self.admin_set = split_sets.join(', ')
-  # end
 end
