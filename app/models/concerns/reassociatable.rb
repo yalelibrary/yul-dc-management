@@ -29,9 +29,7 @@ module Reassociatable
       po = load_parent(index, row["parent_oid"].to_i)
       next unless co.present? && po.present?
 
-      sets << ', ' + po.admin_set.key
-      split_sets = sets.split(',').uniq.reject(&:blank?)
-      self.admin_set = split_sets.join(', ')
+      add_admin_set_to_bp(sets, po)
       save!
 
       attach_item(po)

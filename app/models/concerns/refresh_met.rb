@@ -20,9 +20,7 @@ module RefreshMet
     ParentObject.create(oid: oid) do |parent_object|
       set_values_from_mets(parent_object, metadata_source)
       if parent_object.admin_set.present?
-        sets << ', ' + parent_object.admin_set.key
-        split_sets = sets.split(',').uniq.reject(&:blank?)
-        self.admin_set = split_sets.join(', ')
+        add_admin_set_to_bp(sets, parent_object)
         save
       end
     end

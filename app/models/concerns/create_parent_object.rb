@@ -38,9 +38,7 @@ module CreateParentObject
         model = row['parent_model'] || 'complex'
         admin_set = editable_admin_set(row['admin_set'], oid, index)
         next unless admin_set
-        sets << ', ' + admin_set&.key
-        split_sets = sets.split(',').uniq.reject(&:blank?)
-        self.admin_set = split_sets.join(', ')
+        add_admin_set_to_bp(sets, admin_set)
         save!
 
         if oid.blank?
