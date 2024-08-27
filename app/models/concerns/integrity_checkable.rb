@@ -44,5 +44,4 @@ module IntegrityCheckable
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Layout/LineLength
-
 end
