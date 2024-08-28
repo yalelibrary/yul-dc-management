@@ -15,9 +15,7 @@ module SyncFromPreservica
     parsed_csv.each_with_index do |row, _index|
       begin
         parent_object = ParentObject.find(row['oid'])
-        sets << ', ' + parent_object.admin_set.key
-        split_sets = sets.split(',').uniq.reject(&:blank?)
-        self.admin_set = split_sets.join(', ')
+        add_admin_set_to_bp(sets, parent_object)
         save!
       rescue
         batch_processing_event("Parent OID: #{row['oid']} not found in database", 'Skipped Import') if parent_object.nil?

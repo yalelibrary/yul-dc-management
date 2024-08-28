@@ -77,9 +77,7 @@ module CsvExportable
       imported_csv = CSV.parse(csv, headers: true).presence
       imported_csv.each_with_index do |row, index|
         admin_set = AdminSet.find_by!(key: row[0])
-        sets << ', ' + admin_set.key
-        split_sets = sets.split(',').uniq.reject(&:blank?)
-        self.admin_set = split_sets.join(', ')
+        add_admin_set_to_bp(sets, admin_set)
         save!
         if user.viewer(admin_set) || user.editor(admin_set)
           ParentObject.where(admin_set_id: admin_set.id).order(:oid).find_each do |parent|
@@ -129,9 +127,7 @@ module CsvExportable
     self.admin_set = ''
     sets = admin_set
     parent_objects_export_array.each do |po|
-      sets << ', ' + po.admin_set.key
-      split_sets = sets.split(',').uniq.reject(&:blank?)
-      self.admin_set = split_sets.join(', ')
+      add_admin_set_to_bp(sets, po)
       save!
       row = [po.oid, po.admin_set.key, po.source_name,
              po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
@@ -160,9 +156,7 @@ module CsvExportable
       find_parent_by_source(sources) do |po|
         case po
         when ParentObject
-          sets << ', ' + po.admin_set.key
-          split_sets = sets.split(',').uniq.reject(&:blank?)
-          self.admin_set = split_sets.join(', ')
+          add_admin_set_to_bp(sets, po)
           save!
           csv << [po.oid, po.admin_set.key, po.source_name,
                   po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
@@ -227,9 +221,7 @@ module CsvExportable
     sets = admin_set
     child_objects_array.each do |co|
       parent_title = lookup_parent_title(co, parent_title_hash)
-      sets << ', ' + co.parent_object.admin_set.key
-      split_sets = sets.split(',').uniq.reject(&:blank?)
-      self.admin_set = split_sets.join(', ')
+      add_admin_set_to_bp(sets, co)
       save!
       row = [co.parent_object.oid, co.oid, co.order, parent_title.presence, co.parent_object.call_number, co.label, co.caption, co.viewing_hint, full_text_status(co)]
       csv_rows << row

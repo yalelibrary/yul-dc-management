@@ -48,9 +48,7 @@ module Updatable
       parent_object = child_object.parent_object
       po_arr << parent_object
       attach_item(parent_object)
-      sets << ', ' + parent_object.admin_set.key
-      split_sets = sets.split(',').uniq.reject(&:blank?)
-      self.admin_set = split_sets.join(', ')
+      add_admin_set_to_bp(sets, parent_object)
       save!
       child_object.caption = row['caption'] unless row['caption'].nil?
       child_object.label = row['label'] unless row['label'].nil?
@@ -75,11 +73,9 @@ module Updatable
       redirect = row['redirect_to'] unless ['redirect_to'].nil?
       parent_object = updatable_parent_object(oid, index)
       next unless parent_object
-      sets << ', ' + parent_object.admin_set.key
-      split_sets = sets.split(',').uniq.reject(&:blank?)
       admin_set = editable_admin_set(row['admin_set'], oid, index) unless row['admin_set'].nil?
       next if admin_set == false
-      self.admin_set = split_sets.join(', ')
+      add_admin_set_to_bp(sets, parent_object)
       save!
       next if redirect.present? && !validate_redirect(redirect)
       next unless check_for_children(redirect, parent_object)

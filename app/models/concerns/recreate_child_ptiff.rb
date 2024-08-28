@@ -23,9 +23,7 @@ module RecreateChildPtiff
       end
       next unless child_object
 
-      sets << ', ' + child_object.parent_object.admin_set.key
-      split_sets = sets.split(',').uniq.reject(&:blank?)
-      self.admin_set = split_sets.join(', ')
+      add_admin_set_to_bp(sets, child_object)
       save!
 
       configure_parent_object(child_object, parents)

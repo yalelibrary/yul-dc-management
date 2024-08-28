@@ -234,6 +234,19 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  # ADDS ADMIN SET KEYS TO BP TABLE
+  def add_admin_set_to_bp(sets, object)
+    if object.class == ChildObject
+      sets << ', ' + object.parent_object.admin_set.key
+    elsif object.class == AdminSet
+      sets << ', ' + object&.key
+    elsif object.class == ParentObject
+      sets << ', ' + object.admin_set.key
+    end
+    split_sets = sets.split(',').uniq.reject(&:blank?)
+    self.admin_set = split_sets.join(', ')
+  end
+
   # GETS LIST OF CONNECTED STATUSES
   def connected_statuses
     @connected_statuses ||= batch_connections.where(connectable_type: "ParentObject").map(&:status)
