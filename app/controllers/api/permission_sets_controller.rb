@@ -30,7 +30,6 @@ class Api::PermissionSetsController < ApplicationController
 
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
-  # rubocop:disable Metrics/MethodLength
   def check_admin_status
     # check for valid parent object
     begin
@@ -54,7 +53,6 @@ class Api::PermissionSetsController < ApplicationController
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
-  # rubocop:enable Metrics/MethodLength
 
   def agreement_term
     begin
