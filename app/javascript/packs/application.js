@@ -293,7 +293,7 @@ function snake_case(string) {
 
 const format_excel = (xlsx) => {
   let sheet = xlsx.xl.worksheets['sheet1.xml'];
-  let headerRowData = $('row[r=2] c is t', sheet);
+  let headerRowData = $('row[r=1] c is t', sheet);
   let columnHeaderArray = [];
   let formattedHeaders = [];
 
