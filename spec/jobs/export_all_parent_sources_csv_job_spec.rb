@@ -17,7 +17,7 @@ RSpec.describe ExportAllParentSourcesCsvJob, type: :job do
   end
 
   it "has correct priority" do
-    expect(export_all_parent_sources_csv_job.default_priority).to eq(-100)
+    expect(export_all_parent_sources_csv_job.default_priority).to eq(50)
   end
 
   it "has correct queue" do
