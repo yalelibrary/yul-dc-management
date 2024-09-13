@@ -4,7 +4,7 @@ class GeneratePdfJob < ApplicationJob
   queue_as :pdf
 
   def default_priority
-    50
+    10
   end
 
   def perform(parent_object, current_batch_process = parent_object.current_batch_process, current_batch_connection = parent_object.current_batch_connection)
