@@ -12,6 +12,16 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Statable
   # UPDATE PARENT OBJECTS:
   include Updatable
+  # CREATE PARENR OBJECTS:
+  include CreateParentObject
+  # SYNC FROM PRESERVICA
+  include SyncFromPreservica
+  # REFRESH METS
+  include RefreshMet
+  # UPDATE FULLTEXT
+  include UpdateFulltextStatus
+  # RECREATE CHILD OID PTIFFS:
+  include RecreateChildPtiff
   attr_reader :file
   after_create :determine_background_jobs
   before_create :mets_oid
@@ -127,12 +137,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @oids ||= [oid]
   end
 
-  # APPENDS ID TO CSV FILENAME
-  def created_file_name
-    return nil unless file_name
-    "#{file_name.delete_suffix('.csv')}_bp_#{id}.csv"
-  end
-
   # FETCHES USERS ABILITIES
   def current_ability
     @current_ability ||= Ability.new(user)
@@ -188,142 +192,12 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/PerceivedComplexity
 
-  # CREATE PARENT OBJECTS: ------------------------------------------------------------------------- #
-
-  # CREATES PARENT OBJECTS FROM INGESTED CSV
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/PerceivedComplexity
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/BlockLength
-  # rubocop:disable Layout/LineLength
-  def create_new_parent_csv
-    self.admin_set = ''
-    sets = admin_set
-    parsed_csv.each_with_index do |row, index|
-      if row['digital_object_source'].present? && row['preservica_uri'].present? && !row['preservica_uri'].blank?
-        begin
-          parent_object = CsvRowParentService.new(row, index, current_ability, user).parent_object
-          setup_for_background_jobs(parent_object, row['source'])
-        rescue CsvRowParentService::BatchProcessingError => e
-          batch_processing_event(e.message, e.kind)
-          next
-        rescue PreservicaImageService::PreservicaImageServiceError => e
-          batch_processing_event("Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
-          next
-        end
-      else
-        oid = row['oid']
-        metadata_source = row['source']
-        set = row['admin_set']
-
-        if metadata_source.blank? && (set.present? && row.count > 2)
-          batch_processing_event("Skipping row [#{index + 2}]. Source cannot be blank.", 'Skipped Row')
-          next
-        end
-        model = row['parent_model'] || 'complex'
-        admin_set = editable_admin_set(row['admin_set'], oid, index)
-        next unless admin_set
-        sets << ', ' + admin_set&.key
-        split_sets = sets.split(',').uniq.reject(&:blank?)
-        self.admin_set = split_sets.join(', ')
-        save!
-
-        if oid.blank?
-          oid = OidMinterService.generate_oids(1)[0]
-          parent_object = ParentObject.new(oid: oid)
-        else
-          parent_object = ParentObject.find_or_initialize_by(oid: oid)
-        end
-
-        parent_object.aspace_uri = row['aspace_uri']
-        parent_object.bib = row['bib']
-        parent_object.holding = row['holding']
-        parent_object.item = row['item']
-        parent_object.digitization_note = row['digitization_note']
-        parent_object.digitization_funding_source = row['digitization_funding_source']
-        parent_object.rights_statement = row['rights_statement']
-
-        if row['visibility'] == 'Open with Permission'
-          permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_key'])
-          if permission_set.nil?
-            batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing or nonexistent.", 'Skipped Row')
-            next
-          elsif user.has_role?(:administrator, permission_set) || user.has_role?(:sysadmin)
-            parent_object.visibility = row['visibility']
-            parent_object.permission_set_id = permission_set.id
-          else
-            batch_processing_event("Skipping row [#{index + 2}] because user does not have edit permissions for this Permission Set: #{permission_set.key}", 'Permission Denied')
-            next
-          end
-        end
-
-        if ParentObject.viewing_directions.include?(row['viewing_direction'])
-          parent_object.viewing_direction = row['viewing_direction']
-        else
-          batch_processing_event("Parent #{oid} did not update value for Viewing Directions. Value: #{row['viewing_direction']} is invalid. For field Viewing Direction please use: left-to-right, right-to-left, top-to-bottom, bottom-to-top, or leave column empty", 'Invalid Vocabulary')
-        end
-
-        if ParentObject.viewing_hints.include?(row['display_layout'])
-          parent_object.display_layout = row['display_layout']
-        else
-          batch_processing_event("Parent #{oid} did not update value for Display Layout. Value: #{row['display_layout']} is invalid. For field Display Layout / Viewing Hint please use: individuals, paged, continuous, or leave column empty", 'Invalid Vocabulary')
-        end
-
-        if metadata_source == 'aspace' && row['extent_of_digitization'].blank?
-          batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}.  Parent objects with ASpace as a source must have an Extent of Digitization value.", 'Skipped Row')
-          next
-        elsif metadata_source == 'aspace' && row['extent_of_digitization'].present?
-          if ParentObject.extent_of_digitizations.include?(row['extent_of_digitization'])
-            parent_object.extent_of_digitization = row['extent_of_digitization']
-          else
-            batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}.  Extent of Digitization value must be 'Completely digitized' or 'Partially digitized'.", 'Skipped Row')
-            next
-          end
-        end
-
-        # Only runs on newly created parent objects
-        unless parent_object.new_record?
-          batch_processing_event("Skipping row [#{index + 2}] with existing parent oid: #{oid}", 'Skipped Row')
-          next
-        end
-
-        parent_object.parent_model = model
-        setup_for_background_jobs(parent_object, metadata_source)
-        parent_object.admin_set = admin_set
-        # TODO: enable edit action when added to batch actions
-      end
-      begin
-        parent_object.save!
-      rescue StandardError => e
-        batch_processing_event("Skipping row [#{index + 2}] Unable to save parent: #{e.message}.", "Skipped Row")
-      end
+  # SETS COMPLETE STATUS FOR RECREATE JOB
+  def are_all_children_complete?(parent_object)
+    child_objects.where(parent_object: parent_object).all? do |co|
+      co.status_for_batch_process(self) == 'Complete'
     end
   end
-  # rubocop:enable Layout/LineLength
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/PerceivedComplexity
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/BlockLength
-
-  # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
-  def editable_admin_set(admin_set_key, oid, index)
-    admin_sets_hash = {}
-    admin_sets_hash[admin_set_key] ||= AdminSet.find_by(key: admin_set_key)
-    admin_set = admin_sets_hash[admin_set_key]
-    if admin_set.blank?
-      batch_processing_event("Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}", 'Skipped Row')
-      false
-    elsif !current_ability.can?(:add_member, admin_set)
-      batch_processing_event("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{oid}", 'Permission Denied')
-      false
-    else
-      admin_set
-    end
-  end
-
-  # SHARED BY DELETE, CREATE, AND UPDATE: --------------------------------------------------------- #
 
   # ASSIGNS PARENT/CHILD OBJECT TO BATCH PROCESS FOR CREATE/DELETE/UPDATE
   def setup_for_background_jobs(object, metadata_source)
@@ -332,271 +206,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     object.current_batch_connection = batch_connections.find_by(connectable: object) || batch_connections.build(connectable: object)
     object.current_batch_connection.save!
   end
-
-  # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
-
-  # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
-  def update_fulltext_status(offset = 0, limit = -1)
-    job_oids = oids
-    job_oids = job_oids.drop(offset) if offset&.positive?
-    job_oids = job_oids.first(limit) if limit&.positive?
-    self.admin_set = ''
-    sets = admin_set
-    job_oids.each_with_index do |parent_oid, index|
-      parent_object = ParentObject.find_by(oid: parent_oid)
-      if parent_object.nil?
-        batch_processing_event("Skipping row [#{index + 2}] because unknown parent: #{parent_oid}", 'Unknown Parent')
-      elsif current_ability.can?(:update, parent_object)
-        attach_item(parent_object)
-
-        sets << ', ' + AdminSet.find(parent_object.admin_set_id).key
-        split_sets = sets.split(',').uniq.reject(&:blank?)
-        self.admin_set = split_sets.join(', ')
-        save!
-
-        parent_object.child_objects.each { |co| attach_item(co) }
-        parent_object.processing_event("Parent #{parent_object.oid} is being processed", 'processing-queued')
-        parent_object.update_fulltext
-        parent_object.processing_event("Parent #{parent_object.oid} has been updated", 'update-complete')
-      else
-        batch_processing_event("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{parent_oid}", 'Permission Denied')
-      end
-    end
-  end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
-
-  # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
-  def validate_metadata_source(metadata_source, index)
-    if MetadataSource.all_metadata_cloud_names.include?(metadata_source)
-      true
-    else
-      batch_processing_event("Skipping row [#{index + 2}] with unknown metadata source: #{metadata_source}.  Accepted values are 'ladybird', 'aspace', 'sierra', or 'ils'.", 'Skipped Row')
-      false
-    end
-  end
-
-  # RECREATE CHILD OID PTIFFS: -------------------------------------------------------------------- #
-
-  # RECREATES CHILD OID PTIFFS FROM INGESTED CSV
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
-  def recreate_child_oid_ptiffs
-    parents = Set[]
-    self.admin_set = ''
-    sets = admin_set
-    oids.each_with_index do |oid, index|
-      child_object = ChildObject.find_by_oid(oid.to_i)
-      unless child_object
-        batch_processing_event("Skipping row [#{index + 2}] with unknown Child: #{oid}", 'Skipped Row')
-        next
-      end
-      next unless child_object
-
-      sets << ', ' + child_object.parent_object.admin_set.key
-      split_sets = sets.split(',').uniq.reject(&:blank?)
-      self.admin_set = split_sets.join(', ')
-      save!
-
-      configure_parent_object(child_object, parents)
-      attach_item(child_object)
-      next unless user_update_child_permission(child_object, child_object.parent_object)
-      path = Pathname.new(child_object.access_master_path)
-      file_size = File.exist?(path) ? File.size(path) : 0
-      GeneratePtiffJob.set(queue: :large_ptiff).perform_later(child_object, self) if file_size > SetupMetadataJob::FIVE_HUNDRED_MB
-      GeneratePtiffJob.perform_later(child_object, self) if file_size <= SetupMetadataJob::FIVE_HUNDRED_MB
-      attach_item(child_object)
-      child_object.processing_event("Ptiff Queued", "ptiff-queued")
-    end
-  end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
-
-  # SETS COMPLETE STATUS FOR RECREATE JOB
-  def are_all_children_complete?(parent_object)
-    child_objects.where(parent_object: parent_object).all? do |co|
-      co.status_for_batch_process(self) == 'Complete'
-    end
-  end
-
-  # CHECKS TO SEE IF USER HAS THE ABILITY TO UPDATE CHILD OBJECTS:
-  def user_update_child_permission(child_object, parent_object)
-    user = self.user
-    unless current_ability.can? :update, child_object
-      batch_processing_event("#{user.uid} does not have permission to update Child: #{child_object.oid} on Parent: #{child_object.parent_object.oid}", 'Permission Denied')
-      child_object.processing_event("#{user.uid} does not have permission to update Child: #{child_object.oid}", 'Permission Denied')
-      parent_object.processing_event("#{user.uid} does not have permission to update Child: #{child_object.oid}", 'Permission Denied')
-      return false
-    end
-
-    true
-  end
-
-  # USED BY RECREATE CHILD OID PTIFF BATCH PROCESS: ----------------------------------------------- #
-
-  # CONNECTS CHILD OIDS BATCH PROCESS TO PARENT OBJECT
-  def configure_parent_object(child_object, parents)
-    parent_object = child_object.parent_object
-    unless parents.include? parent_object.oid
-      attach_item(parent_object)
-      parent_object.processing_event("Connection to batch created", "parent-connection-created")
-      parents.add parent_object.oid
-    end
-
-    parents
-  end
-
-  # METS METADATA CLOUD: ------------------------------------------------------------------------- #
-
-  # MAKES CALL FOR UPDATED DATA
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Rails/SaveBang
-  def refresh_metadata_cloud_mets
-    metadata_source = mets_doc.metadata_source
-    self.admin_set = ''
-    sets = admin_set
-    if ParentObject.exists?(oid: oid)
-      batch_processing_event("Skipping mets import for existing parent: #{oid}", 'Skipped Import')
-      return
-    end
-    ParentObject.create(oid: oid) do |parent_object|
-      set_values_from_mets(parent_object, metadata_source)
-      if parent_object.admin_set.present?
-        sets << ', ' + parent_object.admin_set.key
-        split_sets = sets.split(',').uniq.reject(&:blank?)
-        self.admin_set = split_sets.join(', ')
-        save
-      end
-    end
-    PreservicaIngest.create(parent_oid: oid, preservica_id: mets_doc.parent_uuid, batch_process_id: id, ingest_time: Time.current) unless mets_doc.parent_uuid.nil?
-  end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Rails/SaveBang
-
-  # SETS VALUES FROM METS METADATA
-  # rubocop:disable Metrics/AbcSize
-  def set_values_from_mets(parent_object, metadata_source)
-    parent_object.bib = mets_doc.bib
-    parent_object.barcode = mets_doc.barcode
-    parent_object.holding = mets_doc.holding
-    parent_object.item = mets_doc.item
-    parent_object.visibility = mets_doc.visibility
-    parent_object.rights_statement = mets_doc.rights_statement
-    parent_object.viewing_direction = mets_doc.viewing_direction
-    parent_object.display_layout = mets_doc.viewing_hint
-    parent_object.aspace_uri = mets_doc.aspace_uri if mets_doc.valid_aspace?
-    setup_for_background_jobs(parent_object, metadata_source)
-    parent_object.from_mets = true
-    parent_object.last_mets_update = Time.current
-    parent_object.representative_child_oid = mets_doc.thumbnail_image
-    parent_object.admin_set = mets_doc.admin_set
-    parent_object.extent_of_digitization = mets_doc.extent_of_dig
-    parent_object.digitization_note = mets_doc.dig_note
-  end
-  # rubocop:enable Metrics/AbcSize
-
-  # FETCHES CHILD OBJECTS FROM PRESERVICA
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
-  def sync_from_preservica
-    self.admin_set = ''
-    sets = admin_set
-    parsed_csv.each_with_index do |row, _index|
-      begin
-        parent_object = ParentObject.find(row['oid'])
-        sets << ', ' + parent_object.admin_set.key
-        split_sets = sets.split(',').uniq.reject(&:blank?)
-        self.admin_set = split_sets.join(', ')
-        save!
-      rescue
-        batch_processing_event("Parent OID: #{row['oid']} not found in database", 'Skipped Import') if parent_object.nil?
-        next
-      end
-      next unless validate_preservica_sync(parent_object, row)
-      local_children_hash = {}
-      parent_object.child_objects.each do |local_co|
-        local_children_hash["hash_#{local_co.order}".to_sym] = { order: local_co.order,
-                                                                 content_uri: local_co.preservica_content_object_uri,
-                                                                 generation_uri: local_co.preservica_generation_uri,
-                                                                 bitstream_uri: local_co.preservica_bitstream_uri,
-                                                                 checksum: local_co.sha512_checksum }
-      end
-      begin
-        preservica_children_hash = {}
-        PreservicaImageService.new(parent_object.preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_type).each_with_index do |preservica_co, index|
-          # increment by one so index lines up with order
-          index_plus_one = index + 1
-          preservica_children_hash["hash_#{index_plus_one}".to_sym] = { order: index_plus_one,
-                                                                        content_uri: preservica_co[:preservica_content_object_uri],
-                                                                        generation_uri: preservica_co[:preservica_generation_uri],
-                                                                        bitstream_uri: preservica_co[:preservica_bitstream_uri],
-                                                                        checksum: preservica_co[:sha512_checksum],
-                                                                        bitstream: preservica_co[:bitstream] }
-        end
-      rescue PreservicaImageService::PreservicaImageServiceNetworkError => e
-        batch_processing_event("Parent OID: #{row['oid']} because of #{e.message}", 'Skipped Import')
-        raise
-      rescue PreservicaImageService::PreservicaImageServiceError => e
-        batch_processing_event("Parent OID: #{row['oid']} because of #{e.message}", 'Skipped Import')
-        next
-      end
-      sync_images_preservica(local_children_hash, preservica_children_hash, parent_object)
-    end
-  end
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
-
-  # SYNC IMAGES FROM PRESERVICA
-  def sync_images_preservica(local_children_hash, preservica_children_hash, parent_object)
-    # always update
-    # if local_children_hash != preservica_children_hash
-    setup_for_background_jobs(parent_object, parent_object.source_name)
-    parent_object.sync_from_preservica(local_children_hash, preservica_children_hash)
-    # else
-    #   batch_processing_event("Child object count and order is the same.  No update needed.", "Skipped Row")
-    # end
-  end
-
-  # rubocop:disable Metrics/MethodLength
-  # ERROR HANDLING FOR PRESERVICA SYNC
-  def validate_preservica_sync(parent_object, row)
-    if parent_object.redirect_to.present?
-      batch_processing_event("Parent OID: #{row['oid']} is a redirected parent object", 'Skipped Import')
-      false
-    elsif parent_object.preservica_uri.nil?
-      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica URI", 'Skipped Import')
-      false
-    elsif parent_object.digital_object_source != "Preservica"
-      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica digital object source", 'Skipped Import')
-      false
-    elsif parent_object.preservica_representation_type.nil?
-      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation type", 'Skipped Import')
-      false
-    elsif !parent_object.admin_set.preservica_credentials_verified
-      batch_processing_event("Admin set #{parent_object.admin_set.key} does not have Preservica credentials set", 'Skipped Import')
-      false
-    elsif !current_ability.can?(:update, parent_object)
-      batch_processing_event("Skipping row with parent oid: #{parent_object.oid}, user does not have permission to update", 'Permission Denied')
-      false
-    else
-      true
-    end
-  end
-  # rubocop:enable Metrics/MethodLength
 
   # BATCH STATUSES: ------------------------------------------------------------------------------ #
 
@@ -623,6 +232,19 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     elsif current_status[:failed] / current_status[:total] == 1
       "Batch failed"
     end
+  end
+
+  # ADDS ADMIN SET KEYS TO BP TABLE
+  def add_admin_set_to_bp(sets, object)
+    if object.class == ChildObject
+      sets << ', ' + object.parent_object.admin_set.key
+    elsif object.class == AdminSet
+      sets << ', ' + object&.key
+    elsif object.class == ParentObject
+      sets << ', ' + object.admin_set.key
+    end
+    split_sets = sets.split(',').uniq.reject(&:blank?)
+    self.admin_set = split_sets.join(', ')
   end
 
   # GETS LIST OF CONNECTED STATUSES

@@ -52,7 +52,7 @@ RSpec.describe GeneratePdfJob, type: :job, prep_metadata_sources: true, prep_adm
       end.to raise_error("PDF Java app returned non zero response code for #{parent_object.oid}: stderr output stdout output")
     end
     it "has correct priority" do
-      expect(generate_pdf_job.default_priority).to eq(50)
+      expect(generate_pdf_job.default_priority).to eq(10)
     end
     it "can generate a PDF file" do
       allow(S3Service).to receive(:remote_metadata).and_return(parent_object_with_authoritative_json)

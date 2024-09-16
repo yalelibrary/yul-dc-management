@@ -43,7 +43,7 @@ class ParentObjectDatatable < ApplicationDatatable
       digitization_funding_source: { source: "ParentObject.digitization_funding_source", cond: :like, searchable: true, orderable: true },
       full_text: { source: "ParentObject.extent_of_full_text", searchable: true, orderable: true },
       project_identifier: { source: "ParentObject.project_identifier", searchable: true, orderable: true },
-      created_at: { source: "ParentObject.created_at", searchable: true, orderable: true }
+      created_at: { source: "ParentObject.created_at", searchable: true, orderable: true, cond: :start_with }
     }
   end
   # rubocop: enable Metrics/MethodLength

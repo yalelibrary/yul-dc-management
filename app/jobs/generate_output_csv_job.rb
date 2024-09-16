@@ -4,7 +4,7 @@ class GenerateOutputCsvJob < ApplicationJob
   queue_as :default
 
   def default_priority
-    -100
+    50
   end
 
   def perform(batch_process)

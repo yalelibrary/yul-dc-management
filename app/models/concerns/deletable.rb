@@ -17,9 +17,7 @@ module Deletable
       next unless action == 'delete'
       parent_object = deletable_parent_object(oid, index)
       next unless parent_object
-      sets << ', ' + parent_object.admin_set.key
-      split_sets = sets.split(',').uniq.reject(&:blank?)
-      self.admin_set = split_sets.join(', ')
+      add_admin_set_to_bp(sets, parent_object)
       save!
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.destroy!
@@ -58,9 +56,7 @@ module Deletable
       next unless action == 'delete'
       child_object = deletable_child_object(oid, index)
       next unless child_object
-      sets << ', ' + child_object.parent_object.admin_set.key
-      split_sets = sets.split(',').uniq.reject(&:blank?)
-      self.admin_set = split_sets.join(', ')
+      add_admin_set_to_bp(sets, child_object)
       save!
       parents_needing_update << child_object.parent_object.oid
       setup_for_background_jobs(child_object, metadata_source)

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Api::PermissionRequestsController < ApplicationController
+  before_action :check_authorization
   skip_before_action :authenticate_user!
   skip_before_action :verify_authenticity_token
 
@@ -32,8 +33,7 @@ class Api::PermissionRequestsController < ApplicationController
       render json: { "title": "New request created" }, status: 201
     end
   end
-
-  # rubocop:enable Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength
 
   def check_parent_visibility(parent_object)
     if parent_object.visibility == "Private"

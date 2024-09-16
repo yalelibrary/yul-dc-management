@@ -3,6 +3,10 @@
 class UpdatePermissionRequestsJob < ApplicationJob
   queue_as :default
 
+  def default_priority
+    100
+  end
+
   def perform
     permission_requests = OpenWithPermission::PermissionRequest.all
     permission_requests.each do |pr|

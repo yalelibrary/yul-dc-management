@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class Api::PermissionSetsController < ApplicationController
+  before_action :check_authorization
   skip_before_action :authenticate_user!
   skip_before_action :verify_authenticity_token
 
   # rubocop:disable Metrics/PerceivedComplexity
-  # rubocop:disable Metrics/CyclomaticComplexity
   def terms_api
     # check for valid parent object
     begin
@@ -23,10 +23,14 @@ class Api::PermissionSetsController < ApplicationController
     else
       term = permission_set.active_permission_set_terms
       active_term = term.slice(:id, :title, :body)
-      render json: active_term.to_json
+      render(json: active_term.to_json, status: 200)
     end
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/MethodLength
   def check_admin_status
     # check for valid parent object
     begin
@@ -48,8 +52,9 @@ class Api::PermissionSetsController < ApplicationController
     end
     render(json: { "is_admin_or_approver?": admin_or_approver_status })
   end
-  # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/MethodLength
 
   def agreement_term
     begin
@@ -72,7 +77,6 @@ class Api::PermissionSetsController < ApplicationController
   end
 
   # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
   def retrieve_permissions_data
     # check for valid user
     begin
@@ -102,9 +106,8 @@ class Api::PermissionSetsController < ApplicationController
 
     render(json: { "timestamp": timestamp, "user": { "sub": request_user.sub }, "permission_set_terms_agreed": terms_agreed, "permissions": set.reverse })
   end
+  # rubocop:disable Metrics/MethodLength
 
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
   def find_or_create_user(request)
     pr_user = OpenWithPermission::PermissionRequestUser.find_or_initialize_by(sub: request['user_sub'])
     pr_user.name = request['user_full_name']
