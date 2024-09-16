@@ -185,13 +185,7 @@ $( document ).on('turbolinks:load', function() {
         },
         {
           extend: 'excelHtml5',
-          text: "Excel",
-          exportOptions: {
-            columns: ':visible',
-          },
-          customize: function (xlsx) {
-            return format_excel(xlsx);
-          },
+          title: null
         },
         {
           extend: 'csvHtml5',
@@ -290,29 +284,6 @@ const format_csv = (csv) => {
 function snake_case(string) {
   return string.toLowerCase().replace(/ /g, '_')
 }
-
-const format_excel = (xlsx) => {
-  let sheet = xlsx.xl.worksheets['sheet1.xml'];
-  let headerRowData = $('row[r=2] c is t', sheet);
-  let columnHeaderArray = [];
-  let formattedHeaders = [];
-
-  for (let i = 0; i < headerRowData.length; i++) {
-    columnHeaderArray.push(headerRowData[i].childNodes[0].nodeValue);
-  }
-
-  columnHeaderArray.forEach((label) => {
-    return formattedHeaders.push(snake_case(label));
-  });
-
-  for (let i = 0; i < formattedHeaders.length; i++) {
-    for (let y = 0; y < headerRowData.length; y++) {
-      if (i === y) {
-        $(headerRowData[y]).text(formattedHeaders[i])
-      }
-    }
-  }
-};
 
 $( document ).on('turbolinks:load', function() {
   let show_hide_template_link = function(){
