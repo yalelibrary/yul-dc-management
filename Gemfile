@@ -91,7 +91,7 @@ end
 group :test do
   gem 'capybara', '>= 2.15'
   gem 'coveralls_reborn', require: false
-  gem 'database_cleaner-active_record'
+  gem 'database_cleaner-active_record', '~> 2.2.0'
   gem 'ffaker'
   gem 'selenium-webdriver', '~> 4.14.0'
   gem 'shoulda-matchers', '~> 4.0'
