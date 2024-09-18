@@ -17,7 +17,7 @@ RSpec.describe CreateParentOidCsvJob, type: :job do
   end
 
   it "has correct priority" do
-    expect(create_parent_oid_csv_job.default_priority).to eq(-100)
+    expect(create_parent_oid_csv_job.default_priority).to eq(50)
   end
 
   it "has correct queue" do
