@@ -21,7 +21,7 @@ RSpec.describe ProblemReportJob, type: :job do
       now = Time.zone.today
       new_time = now + 1.day
       Timecop.travel(new_time)
-      expect(GoodJob::CronEntry.all[2].instance_variable_get(:@params)).to eq({ cron: "15 0 * * *", class: "ProblemReportJob", key: :problem })
+      expect(GoodJob::CronEntry.all[1].instance_variable_get(:@params)).to eq({ cron: "15 0 * * *", class: "ProblemReportJob", key: :problem })
     end
   end
 end
