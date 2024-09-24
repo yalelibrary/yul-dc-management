@@ -17,7 +17,7 @@ Rails.application.configure do
       class: 'ActivityStreamJob'
     },
     problem_report: {
-      cron: '16 0 * * *',
+      cron: '15 0 * * *',
       class: 'ProblemReportJob'
     },
     integrity: {
