@@ -5,11 +5,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'activerecord-nulldb-adapter'
-gem 'ajax-datatables-rails', '~> 1.4.0'
+gem 'ajax-datatables-rails', '~> 1.5.0'
 gem "aws-sdk-cloudwatch"
 gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
-gem 'bootstrap', '~> 4.6'
+gem 'bootstrap', '~> 5.0.0'
 gem 'coderay', '~> 1.1', '>= 1.1.3'
 gem 'devise'
 gem 'github_changelog_generator'
