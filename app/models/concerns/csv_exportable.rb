@@ -8,7 +8,7 @@ module CsvExportable
   # Parent Object Export
   ########################
   def parent_headers
-    ['oid', 'admin_set', 'authoritative_source', 'child_object_count', 'title', 'call_number',
+    ['oid', 'admin_set', 'source', 'child_object_count', 'title', 'call_number',
      'container_grouping', 'bib', 'holding', 'item', 'barcode', 'aspace_uri',
      'digital_object_source', 'preservica_uri', 'preservica_representation_type', 'last_ladybird_update',
      'last_voyager_update', 'last_sierra_update', 'last_aspace_update', 'last_id_update', 'visibility', 'permission_set_key',
