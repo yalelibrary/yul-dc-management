@@ -5,22 +5,32 @@
 # See the Securing Rails Applications Guide for more information:
 # https://guides.rubyonrails.org/security.html#content-security-policy-header
 
-# Rails.application.configure do
-#   config.content_security_policy do |policy|
-#     policy.default_src :self, :https
-#     policy.font_src    :self, :https, :data
-#     policy.img_src     :self, :https, :data
-#     policy.object_src  :none
-#     policy.script_src  :self, :https
-#     policy.style_src   :self, :https
-#     # Specify URI for violation reports
-#     # policy.report_uri "/csp-violation-report-endpoint"
-#   end
-#
-#   # Generate session nonces for permitted importmap and inline scripts
-#   config.content_security_policy_nonce_generator = ->(request) { request.session.id.to_s }
-#   config.content_security_policy_nonce_directives = %w(script-src)
-#
-#   # Report violations without enforcing the policy.
-#   # config.content_security_policy_report_only = true
-# end
+Rails.application.configure do
+  config.content_security_policy do |policy|
+    policy.default_src :self, :https
+    policy.font_src    :self, 'static.library.yale.edu'
+    policy.img_src     :self, :https, :data
+    policy.object_src  :none
+    policy.script_src  :self, :https
+    # policy.style_src   :self, :https
+    # policy.style_src   :unsafe_inline
+    # policy.style_src :self, "'sha256-WAyOw4V+FqDc35lQPyRADLBWbuNK8ahvYEaQIYF1+Ps='" # Turbo progress bar stylesheet
+    policy.style_src   :self, "'sha256-165u/al4KxO8KYq3pdXjcUUJwNqLJDnepH3DwyeUdTo='" # https://github.com/webpack-contrib/style-loader/blob/master/src/runtime/insertBySelector.js#L39
+    # policy.style_src_elem   :self, "'sha256-165u/al4KxO8KYq3pdXjcUUJwNqLJDnepH3DwyeUdTo='" # https://github.com/webpack-contrib/style-loader/blob/master/src/runtime/insertBySelector.js#L39
+    # policy.style_src_attr :unsafe_inline
+    # Specify URI for violation reports
+    # policy.report_uri -> { "https://api.honeybadger.io/v1/browser/csp?api_key=#{ENV['HONEYBADGER_API_KEY_MANAGEMENT']}&report_only=true&env=#{ENV['CLUSTER_NAME']}" }
+  end
+
+  # Generate session nonces for permitted importmap and inline scripts
+  config.content_security_policy_nonce_generator = ->(request) { request.session.id.to_s }
+  # config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) } - example from https://kukicola.io/posts/securing-rails-app-with-csp/
+
+  config.content_security_policy_nonce_directives = %w(script-src)
+
+  # Report violations without enforcing the policy.
+  config.content_security_policy_report_only = true
+end
+
+
+
