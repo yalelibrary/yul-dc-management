@@ -29,20 +29,22 @@ class SetupMetadataJob < ApplicationJob
       permission_set = OpenWithPermission::PermissionSet.find_by(key: parent_object.permission_set&.key)
       if permission_set.nil?
         parent_object.processing_event("SetupMetadataJob failed. Permission Set information missing or nonexistent from CSV.  To successfully ingest a Permission Set Key value must be present for any parent objects that have 'Open with Permission' visibility. Parent Object has defaulted to private and no child objects were created.  Please delete parent object and re-attempt ingest with Permission Set Key and Visibility values in CSV.", 'failed')
-        # rubocop:enable Layout/LineLength
         return
       end
     end
     setup_child_object_jobs(parent_object, current_batch_process)
     index_private(parent_object)
-  rescue => e
-    parent_object.processing_event("Metadata Cloud could not access this descriptive record. Please make sure you have entered the correct information, you have included a record source (ils or aspace), and, for aspace records, that you have included the public Archives at Yale address for the record.", "failed")
+  rescue
+    parent_object.processing_event(
+"Metadata Cloud could not access this descriptive record. Please make sure you have entered the correct information, you have included a record source (ils or aspace), and, for aspace records, that you have included the public Archives at Yale address for the record.", "failed"
+)
     raise # this reraises the error after we document it
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Layout/LineLength
 
   # index and return true if parent is a redirect
   def redirect(parent_object)
