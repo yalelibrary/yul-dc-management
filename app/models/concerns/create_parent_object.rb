@@ -23,7 +23,7 @@ module CreateParentObject
           batch_processing_event(e.message, e.kind)
           next
         rescue PreservicaImageService::PreservicaImageServiceError => e
-          batch_processing_event("Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
+          batch_processing_event("#{e.message}.", "Skipped Row")
           next
         end
       else
