@@ -112,7 +112,10 @@ class PreservicaClient
     return get_body(uri) unless block_given?
     authenticated_get URI("#{@host}#{uri}") do |http, request|
       http.request request do |response|
-        raise StandardError, "Request error #{response.code} #{response.body}" unless response.is_a? Net::HTTPSuccess
+        unless response.is_a? Net::HTTPSuccess
+          raise StandardError,
+"The given URI does not match the URI of an entity of this type in Preservica. Please make sure your Preservica URI and object structure type is correct."
+        end
         response.read_body do |chunk|
           yield chunk
         end

@@ -89,16 +89,16 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with unknown source []. Source must be 'ils' or 'aspace'")
       end.not_to change { ParentObject.count }
     end
-
+    # rubocop:disable Layout/LineLength
     it 'can send an error when no admin set is set' do
       expect do
         batch_process.file = preservica_parent_no_admin_set
         batch_process.save
         expect(batch_process.batch_ingest_events.count).to eq(1)
-        expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with unknown admin set [] for parent: 200000000")
+        expect(batch_process.batch_ingest_events[0].reason).to eq("The admin set code is missing or incorrect. Please ensure an admin_set value is in the correct spreadsheet column and that your 3 or 4 letter code is correct.")
       end.not_to change { ParentObject.count }
     end
-
+    # rubocop:enable Layout/LineLength
     it 'can send an error when no permission set is set' do
       expect do
         batch_process.file = preservica_parent_no_permission_set
