@@ -8,6 +8,7 @@ class SetupMetadataJob < ApplicationJob
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Layout/LineLength
   def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
@@ -24,7 +25,6 @@ class SetupMetadataJob < ApplicationJob
       return
     end
 
-    # rubocop:disable Layout/LineLength
     if (parent_object.visibility == 'Open with Permission' && parent_object.permission_set_id.nil?) || (parent_object.authoritative_json&.[]('itemPermission') == 'Open with Permission' && parent_object.permission_set_id.nil?) || (parent_object.authoritative_json&.[]('itemPermission') == 'Open With Permission' && parent_object.permission_set_id.nil?)
       permission_set = OpenWithPermission::PermissionSet.find_by(key: parent_object.permission_set&.key)
       if permission_set.nil?
