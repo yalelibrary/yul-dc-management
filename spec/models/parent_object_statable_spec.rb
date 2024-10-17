@@ -125,7 +125,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
       batch_process_with_failure.batch_connections.first.update_status
       expect(parent_object.latest_failure(batch_process_with_failure)).to be_an_instance_of Hash
-      expect(parent_object.latest_failure(batch_process_with_failure)[:reason]).to eq("Fake failure 2").or eq("SetupMetadataJob failed to retrieve authoritative metadata. [https://metadata-api-uat.library.yale.edu/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1&mediaType=json]")
+      expect(parent_object.latest_failure(batch_process_with_failure)[:reason]).to eq("Fake failure 2").or eq("Metadata Cloud could not access this descriptive record. Please make sure you have entered the correct information and that the descriptive records are public and/or published.")
       expect(parent_object.latest_failure(batch_process_with_failure)[:time]).to be
     end
   end

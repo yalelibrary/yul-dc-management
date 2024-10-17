@@ -20,7 +20,7 @@ class SetupMetadataJob < ApplicationJob
     end
     unless parent_object.default_fetch(current_batch_process, current_batch_connection)
       # Don't retry in this case. default_fetch() will throw an exception if it's a network error and trigger retry
-      parent_object.processing_event("SetupMetadataJob failed to retrieve authoritative metadata. [#{parent_object.metadata_cloud_url}]", "failed")
+      parent_object.processing_event("Metadata Cloud could not access this descriptive record. Please make sure you have entered the correct information and that the descriptive records are public and/or published.", "failed")
       return
     end
 
