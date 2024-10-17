@@ -36,7 +36,7 @@ class SetupMetadataJob < ApplicationJob
     setup_child_object_jobs(parent_object, current_batch_process)
     index_private(parent_object)
   rescue => e
-    parent_object.processing_event("Setup job failed to save: #{e.message}", "failed")
+    parent_object.processing_event("Metadata Cloud could not access this descriptive record. Please make sure you have entered the correct information, you have included a record source (ils or aspace), and, for aspace records, that you have included the public Archives at Yale address for the record.", "failed")
     raise # this reraises the error after we document it
   end
   # rubocop:enable Metrics/AbcSize
