@@ -25,11 +25,10 @@ module CreateParentObject
         rescue PreservicaImageService::PreservicaImageServiceError => e
           if e.message.include?("bad URI")
             batch_processing_event("The given URI does not match the URI of an entity in Preservica. Please make sure your URI is correct, starts with /structure-object/ or /information-object/, and includes no spaces or line breaks.", "Skipped Row")
-            next
           else
             batch_processing_event("Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
-            next
           end
+          next
         end
       else
         oid = row['oid']
