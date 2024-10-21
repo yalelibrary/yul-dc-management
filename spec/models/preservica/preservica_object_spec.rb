@@ -85,7 +85,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
       content_objects = representations[0].content_objects
       generations = content_objects[0].active_generations
       bitstreams = generations[0].bitstreams
-      expect { bitstreams[0].download_to_file "tmp/testdownload.file" }.to raise_error(/Checksum mismatch/)
+      expect { bitstreams[0].download_to_file "tmp/testdownload.file" }.to raise_error(/The checksum for this object is different than the checksum that DCS expected. Please ensure your image folder in Preservica has SHA-512 fixity checksums./)
     end
 
     it 'does not throw an exception when the cases do not match' do
