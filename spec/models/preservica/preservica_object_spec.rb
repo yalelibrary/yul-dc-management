@@ -73,7 +73,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
       expect(Digest::SHA512.file("tmp/testdownload.file").hexdigest).to eq(bitstreams[0].sha512_checksum)
     end
   end
-
+  # rubocop disable:Layout/LineLength
   context 'with wrong file' do
     it 'throws exception with file mismatch' do
       stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content").to_return(
@@ -87,7 +87,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
       bitstreams = generations[0].bitstreams
       expect { bitstreams[0].download_to_file "tmp/testdownload.file" }.to raise_error(/The checksum for this object is different than the checksum that DCS expected. Please ensure your image folder in Preservica has SHA-512 fixity checksums./)
     end
-
+    # rubocop enable:Layout/LineLength
     it 'does not throw an exception when the cases do not match' do
       stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content").to_return(
         status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/2/content"), 'rb')
