@@ -55,7 +55,7 @@ class Preservica::Bitstream
     Rails.logger.info "************ bitstream.rb # download_to_file +++ grabs sha checksum (data_sha512): #{data_sha512} *************"
     unless data_sha512.casecmp?(sha512_checksum)
       raise StandardError,
-"The checksum for this object is different than the checksum that DCS expected. Please ensure your image folder in Preservica has SHA-512 fixity checksums."
+"The checksum for this object is different than the checksum that DCS expected. Please ensure your image folder in Preservica has SHA-512 fixity checksums. Message from System: Checksum mismatch for Child Object: #{co_oid} - (#{data_sha512} != #{sha512_checksum})"
     end
     raise StandardError, "Data size did not match for Child Object: #{co_oid} - (#{data_length} != #{size})" unless data_length == size
     raise StandardError, "File sizes do not match for Child Object: #{co_oid} - (#{file_size} != #{size})" unless file_size == size
