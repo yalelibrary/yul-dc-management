@@ -121,6 +121,7 @@ module Updatable
   # rubocop:enable Metrics/BlockLength
   # rubocop:enable Metrics/MethodLength
 
+  # rubocop:disable Layout/LineLength
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
   def editable_admin_set(admin_set_key, oid, index)
     admin_sets_hash = {}

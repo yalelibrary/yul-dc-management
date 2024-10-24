@@ -161,6 +161,7 @@ class ChildObject < ApplicationRecord
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Layout/LineLength
   def convert_to_ptiff
     Rails.logger.info "************ child_object.rb # convert_to_ptiff +++ is the ptiff valid? #{pyramidal_tiff.valid?} *************"
     if pyramidal_tiff.valid?

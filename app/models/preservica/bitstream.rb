@@ -32,6 +32,7 @@ class Preservica::Bitstream
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Layout/LineLength
   def download_to_file(file_name)
     Rails.logger.info "************ bitstream.rb # download_to_file +++ hits download to file method with file: #{file_name} *************"
     attempt ||= 1
@@ -63,6 +64,7 @@ class Preservica::Bitstream
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Layout/LineLength
 
   def xml
     @xml ||= Nokogiri::XML(preservica_client.content_object_generation_bitstream(@content_id, @generation_id, @id)).remove_namespaces!
