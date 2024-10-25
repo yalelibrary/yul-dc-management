@@ -97,7 +97,7 @@ class CsvRowParentService
     admin_sets_hash[admin_set_key] ||= AdminSet.find_by(key: admin_set_key)
     admin_set = admin_sets_hash[admin_set_key]
 
-    raise BatchProcessingError.new("The admin set code is missing or incorrect. Please ensure an admin_set value is in the correct spreadsheet column and that your 3 or 4 letter code is correct.", 'Skipped Row') if admin_set.blank?
+    raise BatchProcessingError.new("The admin set code is missing or incorrect. Please ensure an admin_set value is in the correct spreadsheet column and that your 3 or 4 letter code is correct. ------------ Message from System: Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}", 'Skipped Row') if admin_set.blank?
 
     raise BatchProcessingError.new("Skipping row [#{index + 2}] with admin set [#{admin_set_key}] for parent: #{oid}. Preservica credentials not set for #{admin_set_key}.", 'Skipped Row') unless admin_set.preservica_credentials_verified
 

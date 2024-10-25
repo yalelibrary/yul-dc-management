@@ -32,6 +32,7 @@ class Preservica::Bitstream
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Layout/LineLength
   def download_to_file(file_name)
     Rails.logger.info "************ bitstream.rb # download_to_file +++ hits download to file method with file: #{file_name} *************"
     attempt ||= 1
@@ -55,7 +56,7 @@ class Preservica::Bitstream
     Rails.logger.info "************ bitstream.rb # download_to_file +++ grabs sha checksum (data_sha512): #{data_sha512} *************"
     unless data_sha512.casecmp?(sha512_checksum)
       raise StandardError,
-"The checksum for this object is different than the checksum that DCS expected. Please ensure your image folder in Preservica has SHA-512 fixity checksums."
+"The checksum for this object is different than the checksum that DCS expected. Please ensure your image folder in Preservica has SHA-512 fixity checksums. ------------ Message from System: Checksum mismatch for Child Object: #{co_oid} - (#{data_sha512} != #{sha512_checksum})"
     end
     raise StandardError, "Data size did not match for Child Object: #{co_oid} - (#{data_length} != #{size})" unless data_length == size
     raise StandardError, "File sizes do not match for Child Object: #{co_oid} - (#{file_size} != #{size})" unless file_size == size
@@ -63,6 +64,7 @@ class Preservica::Bitstream
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Layout/LineLength
 
   def xml
     @xml ||= Nokogiri::XML(preservica_client.content_object_generation_bitstream(@content_id, @generation_id, @id)).remove_namespaces!

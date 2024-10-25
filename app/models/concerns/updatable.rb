@@ -121,13 +121,14 @@ module Updatable
   # rubocop:enable Metrics/BlockLength
   # rubocop:enable Metrics/MethodLength
 
+  # rubocop:disable Layout/LineLength
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
   def editable_admin_set(admin_set_key, oid, index)
     admin_sets_hash = {}
     admin_sets_hash[admin_set_key] ||= AdminSet.find_by(key: admin_set_key)
     admin_set = admin_sets_hash[admin_set_key]
     if admin_set.blank?
-      batch_processing_event("The admin set code is missing or incorrect. Please ensure an admin_set value is in the correct spreadsheet column and that your 3 or 4 letter code is correct.",
+      batch_processing_event("The admin set code is missing or incorrect. Please ensure an admin_set value is in the correct spreadsheet column and that your 3 or 4 letter code is correct. ------------ Message from System: Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}",
 'Skipped Row')
       false
     elsif !current_ability.can?(:add_member, admin_set)

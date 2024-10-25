@@ -24,7 +24,9 @@ module CreateParentObject
           next
         rescue PreservicaImageService::PreservicaImageServiceError => e
           if e.message.include?("bad URI")
-            batch_processing_event("The given URI does not match the URI of an entity in Preservica. Please make sure your URI is correct, starts with /structure-object/ or /information-object/, and includes no spaces or line breaks.", "Skipped Row")
+            batch_processing_event("The given URI does not match the URI of an entity in Preservica. Please make sure your URI is correct, starts with /structure-object/ or /information-object/, and includes no spaces or line breaks. ------------ Message from System: Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
+          elsif e.message.include?("entity.does.not.exist")
+            batch_processing_event("The given URI does not match the URI of an entity of this type in Preservica. Please make sure your Preservica URI and object structure type is correct. ------------ Message from System: Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
           else
             batch_processing_event("Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
           end
@@ -116,7 +118,6 @@ module CreateParentObject
       end
     end
   end
-  # rubocop:enable Layout/LineLength
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/PerceivedComplexity
@@ -129,8 +130,7 @@ module CreateParentObject
     admin_sets_hash[admin_set_key] ||= AdminSet.find_by(key: admin_set_key)
     admin_set = admin_sets_hash[admin_set_key]
     if admin_set.blank?
-      batch_processing_event("The admin set code is missing or incorrect. Please ensure an admin_set value is in the correct spreadsheet column and that your 3 or 4 letter code is correct.",
-'Skipped Row')
+      batch_processing_event("The admin set code is missing or incorrect. Please ensure an admin_set value is in the correct spreadsheet column and that your 3 or 4 letter code is correct. ------------ Message from System: Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}", 'Skipped Row')
       false
     elsif !current_ability.can?(:add_member, admin_set)
       batch_processing_event("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{oid}", 'Permission Denied')
