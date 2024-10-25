@@ -173,7 +173,7 @@ class ChildObject < ApplicationRecord
       true
     else
       report_ptiff_generation_error
-      raise "The child object's image file cannot be found. Please contact the Technical Lead for Digital Collections for assistance. Message from System: Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join('\n')}"
+      raise "The child object's image file cannot be found. Please contact the Technical Lead for Digital Collections for assistance. ------------ Message from System: Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join('\n')}"
     end
   end
   # rubocop:disable Metrics/AbcSize
@@ -184,8 +184,8 @@ class ChildObject < ApplicationRecord
   def report_ptiff_generation_error
     Rails.logger.info "************ child_object.rb # report_ptiff_generation_error +++ hits method *************"
     Rails.logger.info "************ child_object.rb # report_ptiff_generation_error +++ ptiff errors: #{pyramidal_tiff.errors.full_messages.join("\n")} *************"
-    parent_object&.processing_event("The child object's image file cannot be found. Please contact the Technical Lead for Digital Collections for assistance. Message from System: Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
-    processing_event("The child object's image file cannot be found. Please contact the Technical Lead for Digital Collections for assistance. Message from System: Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
+    parent_object&.processing_event("The child object's image file cannot be found. Please contact the Technical Lead for Digital Collections for assistance. ------------ Message from System: Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
+    processing_event("The child object's image file cannot be found. Please contact the Technical Lead for Digital Collections for assistance. ------------ Message from System: Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
   end
 
   def convert_to_ptiff!(force = false)
