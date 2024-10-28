@@ -116,6 +116,8 @@ class ActivityStreamReader
 
   ##
   # Takes a set of parent object refs, sets up a batch job, and queues a SetupMetadataJob
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def refresh_updated_items(parent_object_refs)
     #  Create a single batch for this update
     parent_object_refs.each do |parent_object_array|
@@ -140,6 +142,8 @@ class ActivityStreamReader
       @tally_queued_records += 1
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def batch_process
     @batch_process ||= BatchProcess.create!(batch_action: 'activity stream updates', user: User.system_user)

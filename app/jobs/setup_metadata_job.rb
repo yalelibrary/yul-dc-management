@@ -4,6 +4,11 @@ class SetupMetadataJob < ApplicationJob
   queue_as :metadata
   FIVE_HUNDRED_MB = 524_288_000
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Layout/LineLength
   def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
@@ -14,17 +19,32 @@ class SetupMetadataJob < ApplicationJob
       parent_object.processing_event("SetupMetadataJob failed to find all images.", "failed")
       return
     end
-    index_private(parent_object)
     unless parent_object.default_fetch(current_batch_process, current_batch_connection)
       # Don't retry in this case. default_fetch() will throw an exception if it's a network error and trigger retry
-      parent_object.processing_event("SetupMetadataJob failed to retrieve authoritative metadata. [#{parent_object.metadata_cloud_url}]", "failed")
+      parent_object.processing_event("Metadata Cloud could not access this descriptive record. Please make sure you have entered the correct information and that the descriptive records are public and/or published. ------------ Message from System: SetupMetadataJob failed to retrieve authoritative metadata. [#{parent_object.metadata_cloud_url}]", "failed")
       return
     end
+
+    if (parent_object.visibility == 'Open with Permission' && parent_object.permission_set_id.nil?) || (parent_object.authoritative_json&.[]('itemPermission') == 'Open with Permission' && parent_object.permission_set_id.nil?) || (parent_object.authoritative_json&.[]('itemPermission') == 'Open With Permission' && parent_object.permission_set_id.nil?)
+      permission_set = OpenWithPermission::PermissionSet.find_by(key: parent_object.permission_set&.key)
+      if permission_set.nil?
+        parent_object.processing_event("SetupMetadataJob failed. Permission Set information missing or nonexistent from CSV.  To successfully ingest a Permission Set Key value must be present for any parent objects that have 'Open with Permission' visibility. Parent Object has defaulted to private and no child objects were created.  Please delete parent object and re-attempt ingest with Permission Set Key and Visibility values in CSV.", 'failed')
+        return
+      end
+    end
     setup_child_object_jobs(parent_object, current_batch_process)
+    index_private(parent_object)
   rescue => e
-    parent_object.processing_event("Setup job failed to save: #{e.message}", "failed")
+    parent_object.processing_event(
+"Metadata Cloud could not access this descriptive record. Please make sure you have entered the correct information, you have included a record source (ils or aspace), and, for aspace records, that you have included the public Archives at Yale address for the record. ------------ Message from System: Setup job failed to save: #{e.message}", "failed"
+)
     raise # this reraises the error after we document it
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Layout/LineLength
 
   # index and return true if parent is a redirect
   def redirect(parent_object)

@@ -8,6 +8,7 @@ module SolrIndexable
     end
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def solr_index
     begin
@@ -22,7 +23,7 @@ module SolrIndexable
         solr.add([indexable])
         solr.add(child_solr_documents) unless child_solr_documents.nil?
         result = solr.commit
-        if (result&.[]("responseHeader")&.[]("status"))&.zero?
+        if result&.[]("responseHeader")&.[]("status")&.zero?
           processing_event("Solr index updated", "solr-indexed")
         else
           processing_event("Solr index after manifest generation failed", "failed")
@@ -39,6 +40,7 @@ module SolrIndexable
     end
     result
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
 
   def solr_delete
@@ -49,7 +51,7 @@ module SolrIndexable
   end
 
   def solr_index_job
-    current_batch_connection&.save
+    current_batch_connection&.save!
     return unless queued_solr_index_jobs.empty?
     if full_text?
       SolrIndexJob.set(queue: :intensive_solr_index).perform_later(self, current_batch_process, current_batch_connection)
@@ -70,6 +72,26 @@ module SolrIndexable
     from_the_collections&.uniq
   end
 
+  # Putting this here since it uses from_the_collection from this concern
+  def all_creators
+    return unless authoritative_json
+    all_creators = authoritative_json["creator"] || []
+    all_creators += from_the_collections(authoritative_json)&.map { |v| "<i>From the Collection:</i> #{v}" } || []
+    all_creators.presence
+  end
+
+  def all_contributors
+    return unless authoritative_json
+    contributors = authoritative_json["contributor"] || []
+    if authoritative_json["source"] == "aspace"
+      contributors&.map { |v| "<i>From the Collection:</i> #{v}" } || []
+    else
+      contributors.presence
+    end
+  end
+
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def to_solr(json_to_index = nil)
     if redirect_to.present?
       {
@@ -98,6 +120,8 @@ module SolrIndexable
         box_ssim: extract_container_information(json_to_index),
         callNumber_ssim: json_to_index["callNumber"],
         callNumber_tesim: json_to_index["callNumber"],
+        callNumberWithPublicNote_ssim: json_to_index["source"] == "sierra" ? json_to_index["callNumberWithPublicNote"] : nil,
+        callNumberWithPublicNote_tsim: json_to_index["source"] == "sierra" ? json_to_index["callNumberWithPublicNote"] : nil,
         caption_tesim: child_captions,
         child_oids_ssim: child_oids,
         collection_title_ssi: json_to_index["ancestorTitles"]&.[](-2),
@@ -127,7 +151,7 @@ module SolrIndexable
         digitization_funding_source_tesi: generate_digitization_funding_source(json_to_index["digitization_funding_source"]),
         edition_ssim: json_to_index["edition"],
         extent_ssim: json_to_index["extent"],
-        extentOfDigitization_ssim: extent_of_digitization,
+        extentOfDigitization_ssim: extent_of_digitization_text,
         findingAid_ssim: json_to_index["findingAid"],
         folder_ssim: json_to_index["folder"],
         format: json_to_index["format"],
@@ -136,7 +160,7 @@ module SolrIndexable
         genre_tesim: json_to_index["genre"],
         geoSubject_ssim: json_to_index["geoSubject"],
         hashed_id_ssi: generate_hash,
-        has_fulltext_ssi: "No",
+        has_fulltext_ssi: extent_of_full_text,
         identifierMfhd_ssim: json_to_index["identifierMfhd"],
         imageCount_isi: child_object_count,
         indexedBy_tsim: json_to_index["indexedBy"],
@@ -153,6 +177,7 @@ module SolrIndexable
         preferredCitation_tesim: json_to_index["preferredCitation"],
         project_identifier_tesi: generate_pid(json_to_index["project_identifier"]),
         projection_tesim: json_to_index["projection"],
+        provenanceUncontrolled_tesi: json_to_index["provenanceUncontrolled"],
         public_bsi: true, # TEMPORARY, makes everything public
         publisher_tesim: json_to_index["publisher"],
         publisher_ssim: json_to_index["publisher"],
@@ -198,12 +223,13 @@ module SolrIndexable
       }.delete_if { |_k, v| v.blank? } # Delete nil, [], and empty string values
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def to_solr_full_text(json_to_index = nil)
     solr_document = to_solr(json_to_index)
     child_solr_documents = child_object_solr_documents
     solr_document[:fulltext_tesim] = child_solr_documents.map { |child_solr_document| child_solr_document.try(:[], :child_fulltext_tesim) } unless solr_document.nil? || child_solr_documents.nil?
-    solr_document = append_full_text_status(solr_document)
 
     [solr_document, child_solr_documents]
   end
@@ -231,9 +257,10 @@ module SolrIndexable
     }
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def expand_date_structured(date_structured)
     return nil unless date_structured&.is_a?(Array)
-    date_structured.each_with_object(SortedSet.new) do |date, set|
+    date_structured.each_with_object(Set.new) do |date, set|
       if date.include? '/'
         dates = date.split('/')
         if dates.count == 2
@@ -245,15 +272,9 @@ module SolrIndexable
       else
         set << date.to_i
       end
-    end.to_a
+    end.sort.to_a
   end
-
-  def append_full_text_status(solr_document)
-    return unless solr_document
-    solr_document[:has_fulltext_ssi] = extent_of_full_text
-
-    solr_document
-  end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def ancestor_structure(ancestor_title)
     # Building the hierarchy structure
@@ -289,7 +310,13 @@ module SolrIndexable
     digitization_funding_source.presence || self&.digitization_funding_source || nil
   end
 
+  def extent_of_digitization_text
+    extent_of_digitization.presence || "Unspecified"
+  end
+
   # not ASpace records will use the repository value
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def generate_ancestor_title(ancestor_title)
     ancestor_title = if ancestor_title&.is_a?(Array)
                        ancestor_title.map { |a| a.gsub("&amp;", "&") }
@@ -298,6 +325,8 @@ module SolrIndexable
                      end
     ancestor_title.presence || [self&.admin_set&.label] || nil
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def generate_orbis_id(bib)
     (bib.to_i.positive? && bib.presence) || nil

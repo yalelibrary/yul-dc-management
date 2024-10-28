@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 namespace :parent_oids do
+  # rubocop:disable Rails/RakeEnvironment
   desc "Create list of random selection of parent oids"
   task :random, [:samples] do |_t, args|
     oid_path = Rails.root.join("spec", "fixtures", "csv", "public_oids_comma.csv")
@@ -12,6 +13,7 @@ namespace :parent_oids do
       random_parent_oids.each { |oid| csv << [oid] }
     end
   end
+  # rubocop:enable Rails/RakeEnvironment
 
   desc "Update Ladybird fixtures"
   task update_ladybird_fixtures: :environment do
@@ -52,7 +54,7 @@ namespace :parent_oids do
     end
   end
 
-  desc "Update ArchiveSpace fixtures"
+  desc "Update ArchivesSpace fixtures"
   task update_aspace_fixtures: :environment do
     metadata_source = MetadataSource.find_by(metadata_cloud_name: "aspace")
     oids.each do |oid|
@@ -65,9 +67,9 @@ namespace :parent_oids do
         S3Service.upload("aspace/AS-#{oid}.json", response_text)
         response_text = JSON.parse(response_text)
         File.write("spec/fixtures/aspace/AS-#{oid}.json", JSON.pretty_generate(response_text))
-        puts "ArchiveSpace fixture for #{oid} saved"
+        puts "ArchivesSpace fixture for #{oid} saved"
       else
-        puts "ArchiveSpace record not retrieved for #{oid}"
+        puts "ArchivesSpace record not retrieved for #{oid}"
       end
     end
   end

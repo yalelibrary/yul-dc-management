@@ -4,16 +4,19 @@ require 'rails_helper'
 
 RSpec.describe AdminSetDatatable, type: :datatable, prep_metadata_sources: true do
   columns = ['key', 'label', 'homepage']
-  let(:admin_set) { FactoryBot.create(:admin_set) }
+
+  before do
+    AdminSet.all&.each { |a| a.destroy! } if AdminSet.all.count > 0
+  end
 
   describe 'admin set data tables' do
     it 'can handle an empty model set' do
-      output = AdminSetDatatable.new(datatable_sample_params(columns)).data
-
+      output = AdminSetDatatable.new(datatable_sample_params(columns), view_context: admin_set_datatable_view_mock(nil, nil, nil)).data
       expect(output).to eq([])
     end
 
     it 'can handle a populated set' do
+      admin_set = FactoryBot.create(:admin_set)
       output = AdminSetDatatable.new(datatable_sample_params(columns), view_context: admin_set_datatable_view_mock(admin_set.id, admin_set.key, admin_set.homepage)).data
 
       expect(output).to include(

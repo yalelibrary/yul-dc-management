@@ -64,6 +64,14 @@ class BatchProcessesController < ApplicationController
     end
   end
 
+  def export_parent_sources
+    sources = params[:metadata_source_ids]
+    redirect_to admin_sets_url, notice: "CSV is being generated. Please visit the Batch Process page to download."
+    batch_process = BatchProcess.new(batch_action: 'export all parents by source', user: current_user, file_name: "exported_parent_objects_source.csv")
+    batch_process.save!
+    ExportAllParentSourcesCsvJob.perform_later(batch_process, sources)
+  end
+
   def export_parent_objects
     # RETURNS ADMIN SET KEY:
     admin_set = params.dig(:admin_set)
@@ -111,31 +119,31 @@ class BatchProcessesController < ApplicationController
 
   private
 
-    def set_batch_process
-      @batch_process = BatchProcess.find(params[:id])
-    end
+  def set_batch_process
+    @batch_process = BatchProcess.find(params[:id])
+  end
 
-    def set_parent_object
-      @parent_object = ParentObject.find_by(oid: params[:oid])
-    end
+  def set_parent_object
+    @parent_object = ParentObject.find_by(oid: params[:oid])
+  end
 
-    def set_child_object
-      @child_object = ChildObject.find(params[:child_oid])
-      @notes = @child_object.notes_for_batch_process(@batch_process)
-      # TODO: Find failure related only to child object?
-      @failure = @child_object.latest_failure(@batch_process)
-    end
+  def set_child_object
+    @child_object = ChildObject.find(params[:child_oid])
+    @notes = @child_object.notes_for_batch_process(@batch_process)
+    # TODO: Find failure related only to child object?
+    @failure = @child_object.latest_failure(@batch_process)
+  end
 
-    def find_notes
-      @notes = @parent_object.notes_for_batch_process(@batch_process) if @parent_object
-    end
+  def find_notes
+    @notes = @parent_object.notes_for_batch_process(@batch_process) if @parent_object
+  end
 
-    def latest_failure
-      @latest_failure = @parent_object.latest_failure(@batch_process) if @parent_object
-    end
+  def latest_failure
+    @latest_failure = @parent_object.latest_failure(@batch_process) if @parent_object
+  end
 
-    def batch_process_params
-      params.require(:batch_process).permit(:file, :batch_action)
-    end
+  def batch_process_params
+    params.require(:batch_process).permit(:file, :batch_action)
+  end
 end
 # rubocop:enable Metrics/ClassLength

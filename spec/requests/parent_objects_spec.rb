@@ -34,7 +34,7 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
   let(:invalid_params) do
     {
       oid: "2004628",
-      authoritative_metadata_source_id: 4,
+      authoritative_metadata_source_id: 5,
       visibility: nil,
       admin_set: 'brbl'
     }
@@ -155,10 +155,97 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
     end
 
     context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
-        parent_object = ParentObject.create! valid_attributes
-        patch parent_object_url(parent_object), params: { parent_object: invalid_params }
-        expect(response).to be_successful
+      let(:regular_user) { FactoryBot.create(:user) }
+      let(:parent_object_owp) { FactoryBot.create(:parent_object, oid: "12345", admin_set: AdminSet.find_by_key('brbl'), visibility: "Open with Permission", permission_set: permission_set) }
+      let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
+      let(:invalid_owp_visibility) do
+        {
+          oid: "12345",
+          authoritative_metadata_source_id: 1,
+          admin_set: 'brbl',
+          visibility: "Private"
+        }
+      end
+      let(:invalid_owp_permission_set) do
+        {
+          oid: "12345",
+          authoritative_metadata_source_id: 1,
+          admin_set: 'brbl',
+          permission_set_id: nil
+        }
+      end
+
+      it "unauthorized to change object away from OwP" do
+        login_as regular_user
+        patch parent_object_url(parent_object_owp), params: { parent_object: invalid_owp_visibility }
+        parent_object_owp.reload
+        expect(parent_object_owp.visibility).to eq "Open with Permission"
+        expect(response).to have_http_status(401)
+      end
+
+      it "cannot change object away from a Permission Set" do
+        login_as regular_user
+        patch parent_object_url(parent_object_owp), params: { parent_object: invalid_owp_permission_set }
+        expect(response).to have_http_status(401)
+      end
+
+      it "can change object into a Permission Set" do
+        login_as regular_user
+        patch parent_object_url(parent_object_owp), params: { parent_object: invalid_owp_permission_set }
+        parent_object_owp.reload
+        expect(parent_object_owp.permission_set.label).to eq "set 1"
+        expect(response).to have_http_status(401)
+      end
+    end
+
+    context 'with valid parameters' do
+      let(:regular_user) { FactoryBot.create(:user) }
+      let(:parent_object_owp) { FactoryBot.create(:parent_object, oid: "12345", admin_set: AdminSet.find_by_key('brbl'), visibility: "Open with Permission", permission_set: permission_set) }
+      let(:child_object) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object_owp) }
+      let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), visibility: "Public") }
+      let(:public_visibility) do
+        {
+          visibility: "Public"
+        }
+      end
+      let(:private_visibility) do
+        {
+          visibility: "Private"
+        }
+      end
+      let(:valid_permission_set) do
+        {
+          visibility: "Open with Permission",
+          permission_set_id: permission_set.id
+        }
+      end
+
+      it "can change parent visibility to Private from OwP as a permission_set admin" do
+        login_as regular_user
+        regular_user.add_role(:administrator, permission_set)
+        patch parent_object_url(parent_object_owp), params: { parent_object: private_visibility }
+        expect(response).to have_http_status(302)
+        parent_object_owp.reload
+        expect(parent_object_owp.visibility).to eq "Private"
+      end
+
+      it "can change a parent visibility to Public from OwP as a permission_set admin" do
+        login_as regular_user
+        regular_user.add_role(:administrator, permission_set)
+        patch parent_object_url(parent_object_owp), params: { parent_object: public_visibility }
+        expect(response).to have_http_status(302)
+        parent_object_owp.reload
+        expect(parent_object_owp.visibility).to eq "Public"
+      end
+
+      it "can change a parent visibility to OwP from Public as a permission_set admin" do
+        login_as regular_user
+        regular_user.add_role(:administrator, permission_set)
+        patch parent_object_url(parent_object), params: { parent_object: valid_permission_set }
+        expect(response).to have_http_status(302)
+        parent_object.reload
+        expect(parent_object.visibility).to eq "Open with Permission"
       end
     end
   end
@@ -321,9 +408,10 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
     context "with invalid parameters" do
       it "does not save an improperly formatted url" do
         parent_object = ParentObject.create! valid_attributes
-        expect do
-          patch parent_object_url(parent_object), params: { parent_object: invalid_redirect_params }
-        end.to raise_exception(ActiveRecord::RecordInvalid)
+        patch parent_object_url(parent_object), params: { parent_object: invalid_redirect_params }
+        parent_object.reload
+        expect(parent_object.redirect_to).not_to eq(invalid_redirect_params[:redirect_to])
+        expect(response).to be_successful
       end
     end
   end

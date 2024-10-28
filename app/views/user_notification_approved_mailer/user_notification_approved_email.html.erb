@@ -1,0 +1,15 @@
+<p>
+  Dear <%= @user_notification[:request_user_name] %>,
+</p>
+<p>
+  Your request to view the object <%= @user_notification[:parent_object_title] %> in Yale's Digital Collections System has been approved. Your access will expire on <%= @user_notification[:expiration_date] %>.
+</p>
+<p>
+  You can access the object directly at the following link:
+</p>
+<p>
+  <%= link_to("#{ENV['BLACKLIGHT_BASE_URL']}/catalog/#{@user_notification[:parent_object_oid]}", "#{ENV['BLACKLIGHT_BASE_URL']}/catalog/#{@user_notification[:parent_object_oid]}") %>
+</p>
+<small>
+  <pre>This is an automated message.</pre>
+</small>

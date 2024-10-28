@@ -27,7 +27,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
   let(:aspace_oid) { 123 }
   let(:oid_no_labels) { 2_005_512 }
   let(:logger_mock) { instance_double("Rails.logger").as_null_object }
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, viewing_direction: "left-to-right", display_layout: "individuals", bib: "12834515") }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, viewing_direction: "left-to-right", display_layout: "individuals", bib: "12834515", rights_statement: "This is a test") }
   let(:aspace_parent_object) { FactoryBot.create(:parent_object, oid: aspace_oid, bib: "12834515", aspace_uri: "/repositories/11/archival_objects/214638") }
   let(:aspace_iiif_presentation) { described_class.new(aspace_parent_object) }
   let(:iiif_presentation) { described_class.new(parent_object) }
@@ -90,6 +90,18 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["label"]["none"]).to eq ["Strawberry Thief fabric, made by Morris and Company "]
     end
 
+    it "includes all creators" do
+      creators = aspace_iiif_presentation.manifest["metadata"].select { |v| v["label"]["en"] == ["Creator"] }.first["value"]["none"]
+      expect(creators.length).to eq(2)
+      expect(creators.find { |c| c == "<span><i>From the Collection:</i> The Parent Creator</span>" })
+    end
+
+    it "includes related resources online" do
+      related_resources = iiif_presentation.manifest["metadata"].select { |v| v["label"]["en"] == ["Related Resources Online"] }.first["value"]["none"]
+      expect(related_resources.length).to eq(2)
+      expect(related_resources.find { |r| r == "<span><a href=\"https://pre1600ms.beinecke.library.yale.edu/docs/pre1600.ms314.htm\">View a detailed description.</a></span>" })
+    end
+
     it "has a requiredStatement" do
       expect(iiif_presentation.manifest["requiredStatement"].class).to eq Hash
       expect(iiif_presentation.manifest["requiredStatement"]["label"]["en"].first).to eq "Provider"
@@ -146,9 +158,9 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     it "has a seeAlso in the manifest" do
       expect(iiif_presentation.manifest["seeAlso"].class).to eq Array
       expect(iiif_presentation.manifest["seeAlso"].first.class).to eq Hash
-      # rubocop:disable Metrics/LineLength
+      # rubocop:disable Layout/LineLength
       expect(iiif_presentation.manifest["seeAlso"].first["id"]).to eq "https://collections.library.yale.edu/catalog/oai?verb=GetRecord&metadataPrefix=oai_mods&identifier=oai:collections.library.yale.edu:#{oid}"
-      # rubocop:enable Metrics/LineLength
+      # rubocop:enable Layout/LineLength
       expect(iiif_presentation.manifest["seeAlso"].first["type"]).to eq "Dataset"
       expect(iiif_presentation.manifest["seeAlso"].first["format"]).to eq "application/mods+xml"
       expect(iiif_presentation.manifest["seeAlso"].first["profile"]).to eq "http://www.loc.gov/mods/v3"
@@ -163,6 +175,11 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["metadata"].last["label"]['en'].first).to eq "Object ID (OID)"
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Orbis ID" }).not_to be_empty
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Container / Volume Information" }).not_to be_empty
+    end
+
+    it "uses database field for right statement in the manifest" do
+      expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Rights" }).not_to be_empty
+      expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Rights" }.first["value"]["none"]&.first).to eq("This is a test")
     end
 
     it "has coordinates in metadata" do
@@ -326,6 +343,11 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
         expect(canvas['label']).not_to be_nil
       end
       expect(iiif_presentation_no_labels.manifest.to_json(pretty: true)).to include '"label":{"none":[""'
+    end
+
+    it "wraps values with HTML with spans" do
+      parent_object.extent_of_digitization = 'This is <img src="image" />a <a href="test">Test</a>.'
+      expect(iiif_presentation.manifest["metadata"].select { |v| v["label"]["en"] == ["Extent of Digitization"] }.first["value"]["none"]).to eq(['<span>This is a <a href="test">Test</a>.</span>'])
     end
   end
 

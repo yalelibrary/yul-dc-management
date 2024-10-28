@@ -1,0 +1,46 @@
+# frozen_string_literal: true
+class OpenWithPermission::PermissionSet < ApplicationRecord
+  has_many :permission_requests, class_name: "OpenWithPermission::PermissionRequest"
+  has_many :parent_objects
+  has_many :permission_set_terms, class_name: "OpenWithPermission::PermissionSetTerm"
+  resourcify
+  validates :key, presence: true, uniqueness: true
+  validates :label, presence: true, uniqueness: true
+
+  def add_approver(user)
+    remove_administrator(user) if user.administrator(self)
+    user.add_role(:approver, self)
+  end
+
+  def remove_approver(user)
+    user.remove_role(:approver, self)
+  end
+
+  def add_administrator(user)
+    remove_approver(user) if user.approver(self)
+    user.add_role(:administrator, self)
+  end
+
+  def remove_administrator(user)
+    user.remove_role(:administrator, self)
+  end
+
+  def active_permission_set_terms
+    permission_set_terms.find_by('not(permission_set_terms.activated_at is null) and (permission_set_terms.inactivated_at is null)')
+  end
+
+  def inactivate_terms_by!(user)
+    active_permission_set_terms&.inactivate_by!(user)
+    save!
+  end
+
+  def activate_terms!(user, title, body)
+    new_terms = OpenWithPermission::PermissionSetTerm.create!(permission_set: self, title: title, body: body)
+    new_terms.activate_by!(user)
+    new_terms
+  end
+
+  def terms_and_conditions_warning
+    active_permission_set_terms.present? ? true : false
+  end
+end

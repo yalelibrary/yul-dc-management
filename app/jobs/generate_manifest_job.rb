@@ -41,10 +41,7 @@ class GenerateManifestJob < ApplicationJob
   def parent_has_children_without_dimensions(parent_object)
     status = false
     parent_object.child_objects.each do |child_object|
-      if child_object.width.nil? || child_object.height.nil?
-        parent_object.processing_event("IIIF Manifest not created.  Child object: #{child_object.oid} does not have valid dimensions.", 'failed')
-        status = true
-      end
+      status = true if child_object.width.nil? || child_object.height.nil?
     end
     status
   end

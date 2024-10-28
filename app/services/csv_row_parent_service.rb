@@ -33,8 +33,8 @@ class CsvRowParentService
   end
 
   row_accessor :aspace_uri, :bib, :holding, :item, :barcode, :oid, :admin_set,
-               :preservica_uri, :visibility, :digital_object_source,
-               :authoritative_metadata_source_id, :preservica_representation_type
+               :preservica_uri, :visibility, :digital_object_source, :permission_set,
+               :authoritative_metadata_source_id, :preservica_representation_type, :extent_of_digitization
 
   def parent_object
     PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type)
@@ -42,7 +42,7 @@ class CsvRowParentService
   end
 
   def properties_hash
-    self.class.properties.each_with_object({}) { |p, h| h[p] = send(p); }
+    self.class.properties.index_with { |p| send(p); }
   end
 
   def oid
@@ -74,9 +74,7 @@ class CsvRowParentService
   end
 
   def visibility
-    visibilities = ['Private', 'Public', 'Redirect', 'Yale Community Only']
-
-    return row['visibility'] if visibilities.include?(row['visibility'])
+    return row['visibility'] if ParentObject.visibilities.include?(row['visibility'])
 
     raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown visibility: #{row['visibility']}", 'Skipped Row')
   end
@@ -86,14 +84,20 @@ class CsvRowParentService
     row['digital_object_source']
   end
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
+  def extent_of_digitization
+    return row['extent_of_digitization'] if ParentObject.extent_of_digitizations.include?(row['extent_of_digitization'])
+
+    raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown extent of digitization: #{row['extent_of_digitization']}. For field Extent of Digitization please use: Completely digitizied, Partially digitizied, or leave column empty", 'Skipped Row')
+  end
+
   def admin_set
     admin_sets_hash = {}
     admin_set_key = row['admin_set']
     admin_sets_hash[admin_set_key] ||= AdminSet.find_by(key: admin_set_key)
     admin_set = admin_sets_hash[admin_set_key]
 
-    raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}", 'Skipped Row') if admin_set.blank?
+    raise BatchProcessingError.new("The admin set code is missing or incorrect. Please ensure an admin_set value is in the correct spreadsheet column and that your 3 or 4 letter code is correct. ------------ Message from System: Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}", 'Skipped Row') if admin_set.blank?
 
     raise BatchProcessingError.new("Skipping row [#{index + 2}] with admin set [#{admin_set_key}] for parent: #{oid}. Preservica credentials not set for #{admin_set_key}.", 'Skipped Row') unless admin_set.preservica_credentials_verified
 
@@ -104,7 +108,23 @@ class CsvRowParentService
 
     admin_set
   end
-  # rubocop:enable Metrics/LineLength
+
+  def permission_set
+    permission_sets_hash = {}
+    permission_set_key = row['permission_set_key']
+    permission_sets_hash[permission_set_key] ||= OpenWithPermission::PermissionSet.find_by(key: permission_set_key)
+    permission_set = permission_sets_hash[permission_set_key]
+
+    if row['visibility'] == 'Open with Permission'
+      raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown Permission Set with Key: [#{permission_set_key}] for parent: #{oid}", 'Skipped Row') if permission_set.nil?
+      raise BatchProcessingError.new("Skipping row [#{index + 2}] because #{user.uid} does not have permission to update objects in Permission Set: #{permission_set&.label}", 'Permission Denied') unless current_ability.can?(:update, permission_set) && permission_set.present?
+    else
+      permission_set = nil
+    end
+
+    permission_set
+  end
+  # rubocop:enable Layout/LineLength
 
   def authoritative_metadata_source_id
     ms = row['source']
@@ -113,6 +133,8 @@ class CsvRowParentService
       ms = 2
     elsif ms == "aspace"
       ms = 3
+    elsif ms == "sierra"
+      ms = 4
     end
     ms
   end

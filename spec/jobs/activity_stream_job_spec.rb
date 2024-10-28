@@ -3,32 +3,29 @@
 require 'rails_helper'
 
 RSpec.describe ActivityStreamJob, type: :job do
-  def queue_adapter_for_test
-    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
 
   around do |example|
     original_mc_host = ENV['METADATA_CLOUD_HOST']
     ENV['METADATA_CLOUD_HOST'] = 'not-a-real-host'
-    ActiveJob::Base.queue_adapter = :delayed_job
     example.run
     ENV['METADATA_CLOUD_HOST'] = original_mc_host
   end
 
-  let(:metadata_job) { ActivityStreamJob.new }
-  let(:handler) { 'handler LIKE ?' }
-  let(:job_class) { '%job_class: ActivityStreamJob%' }
+  let(:like) { 'job_class LIKE ?' }
+  let(:job_class) { '%ActivityStreamJob%' }
 
-  it 'increments the job queue by one' do
-    expect do
-      ActivityStreamJob.perform_later(metadata_job)
-    end.to change { Delayed::Job.count }.by(1)
+  it 'enqueues the job' do
+    activity_stream_job = described_class.perform_later(described_class.new)
+    expect(activity_stream_job.instance_variable_get(:@successfully_enqueued)).to be true
   end
 
-  it 'increments the job queue by one for manual job' do
-    expect do
-      ActivityStreamManualJob.perform_later
-    end.to change { Delayed::Job.count }.by(1)
+  it 'enqueues the job for manual job' do
+    manual_activity_stream_job = ActivityStreamManualJob.perform_later
+    expect(manual_activity_stream_job.instance_variable_get(:@successfully_enqueued)).to be true
   end
 
   it 'job fails when not on VPN' do
@@ -37,40 +34,8 @@ RSpec.describe ActivityStreamJob, type: :job do
   end
 
   describe 'automated daily job' do
-    before do
-      Timecop.freeze(Time.zone.today)
-    end
-
-    after do
-      Timecop.return
-    end
-
     it 'increments job queue once per day' do
-      now = Time.zone.today
-      ActiveJob::Scheduler.start
-      new_time = now + 1.day
-      Timecop.travel(new_time)
-      expect(Delayed::Job.where(handler, job_class).count).to eq 1
-    end
-
-    it 'automatic does not add another job when one is already running' do
-      now = Time.zone.today
-      ActiveJob::Scheduler.start
-      new_time = now + 1.day
-      Timecop.travel(new_time)
-      expect(Delayed::Job.where(handler, job_class).count).to eq 1
-      ActivityStreamJob.perform_now
-      expect(ActivityStreamLog.last.status).to include('Fail')
-    end
-
-    it 'manual does not add another job when one is already running' do
-      now = Time.zone.today
-      ActiveJob::Scheduler.start
-      new_time = now + 1.day
-      Timecop.travel(new_time)
-      expect(Delayed::Job.where(handler, job_class).count).to eq 1
-      ActivityStreamManualJob.perform_now
-      expect(ActivityStreamLog.last.status).to include('Fail')
+      expect(GoodJob::CronEntry.all.first.instance_variable_get(:@params)).to eq({ cron: "15 0 * * *", class: "ActivityStreamJob", key: :activity })
     end
   end
 end

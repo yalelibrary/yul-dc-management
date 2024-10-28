@@ -79,7 +79,7 @@ def parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
                                                   .and_return('<a href="/parent_objects/2034600">2034600</a>')
   allow(@datatable_view_mock).to receive(:link_to).with('/parent_objects/2034600/edit', {})
                                                   .and_return('<a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil"></i></a>')
-  allow(@datatable_view_mock).to receive(:link_to).with('http://localhost:3000/catalog/2034600', target: :_blank)
+  allow(@datatable_view_mock).to receive(:link_to).with('http://localhost:3000/catalog/2034600', { target: :_blank })
                                                   .and_return('<a target="_blank" href="http://localhost:3000/catalog/2034600">1</a>')
   @datatable_view_mock
 end
@@ -92,7 +92,7 @@ def redirected_parent_object_datatable_view_mock # rubocop:disable Metrics/AbcSi
                                                   .and_return('<a href="/parent_objects/2034600">2034600</a>')
   allow(@datatable_view_mock).to receive(:link_to).with('/parent_objects/2034600/edit', {})
                                                   .and_return('<a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil"></i></a>')
-  allow(@datatable_view_mock).to receive(:link_to).with('http://localhost:3000/catalog/2034600', target: :_blank)
+  allow(@datatable_view_mock).to receive(:link_to).with('http://localhost:3000/catalog/2034600', { target: :_blank })
                                                   .and_return('<a target="_blank" href="http://localhost:3000/catalog/2034600">1</a>')
   @datatable_view_mock
 end
@@ -103,7 +103,7 @@ def child_object_datatable_view_mock # rubocop:disable Metrics/AbcSize
   allow(@datatable_view_mock).to receive(:edit_child_object_path).and_return('/child_objects/1/edit')
   allow(@datatable_view_mock).to receive(:link_to).with('/child_objects/1/edit', {})
   .and_return('<a href="/management/child_objects/10736292/edit"><i class="fa fa-pencil"></i></a>')
-  allow(@datatable_view_mock).to receive(:link_to).with('/child_objects/1', method: :delete, data: { confirm: 'Are you sure?' })
+  allow(@datatable_view_mock).to receive(:link_to).with('/child_objects/1', { method: :delete, data: { confirm: 'Are you sure?' } })
   .and_return('<a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/management/child_objects/10736292"><i class="fa fa-trash"></i></a>')
   allow(@datatable_view_mock).to receive(:link_to).with(anything, '/child_objects/1')
                                                   .and_return('<a href="/child_objects/1">1</a>')
@@ -145,6 +145,19 @@ def admin_set_datatable_view_mock(id, key, homepage) # rubocop:disable Metrics/A
   allow(@datatable_view_mock).to receive(:link_to).with(anything, "/admin_sets/#{id}").and_return("<a href='/admin_sets/#{id}'>#{key}</a>")
   allow(@datatable_view_mock).to receive(:link_to).with(homepage.to_s, homepage.to_s).and_return("<a href=#{homepage}>#{homepage}</a>")
   allow(@datatable_view_mock).to receive(:link_to).with("/admin_sets/#{id}/edit", {}).and_return("<a href='/admin_sets/#{id}/edit'><i class=\"fa fa-pencil></i>\"</a>")
+  @datatable_view_mock
+end
+
+def pr_datatable_view_mock(pr_id, ps_id) # rubocop:disable Metrics/AbcSize
+  @datatable_view_mock ||= double
+  allow(@datatable_view_mock).to receive(:permission_request_path).and_return("/permission_requests/#{pr_id}")
+  allow(@datatable_view_mock).to receive(:link_to).with(anything, "/permission_requests/#{pr_id}").and_return("<a href='/permission_requests/#{pr_id}'>#{pr_id}</a>")
+  allow(@datatable_view_mock).to receive(:link_to).with("/permission_requests/#{pr_id}", {}).and_return("<a href='/permission_requests/#{pr_id}'>#{pr_id}</a>")
+  allow(@datatable_view_mock).to receive(:permission_set_path).and_return("/permission_sets/#{ps_id}")
+  allow(@datatable_view_mock).to receive(:link_to).with(anything, "/permission_sets/#{ps_id}")
+    .and_return("<a href='/permission_sets/#{ps_id}'>#{OpenWithPermission::PermissionSet.find(ps_id).label}</a>")
+  allow(@datatable_view_mock).to receive(:link_to).with("/permission_sets/#{ps_id}", {})
+    .and_return("<a href='/permission_sets/#{ps_id}'>#{OpenWithPermission::PermissionSet.find(ps_id).label}</a>")
   @datatable_view_mock
 end
 

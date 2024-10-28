@@ -2,7 +2,7 @@
 require "rails_helper"
 require "support/time_helpers"
 
-RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
+RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_sets: true do
   around do |example|
     original_metadata_cloud_host = ENV['METADATA_CLOUD_HOST']
     ENV['METADATA_CLOUD_HOST'] = 'metadata-api-test.library.yale.edu'
@@ -10,14 +10,17 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
     ENV['METADATA_CLOUD_HOST'] = original_metadata_cloud_host
   end
 
-  def queue_adapter_for_test
-    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
 
   let(:asr) { described_class.new }
   let(:relevant_parent_object) do
     FactoryBot.create(
       :parent_object_with_bib,
+      authoritative_metadata_source: MetadataSource.first,
+      admin_set: AdminSet.first,
       oid: "2004628",
       bib: "3163155",
       last_ladybird_update: "2020-06-10 17:38:27".to_datetime,
@@ -59,6 +62,8 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
   let(:relevant_parent_object_two) do
     FactoryBot.create(
       :parent_object_with_bib,
+      authoritative_metadata_source: MetadataSource.first,
+      admin_set: AdminSet.first,
       oid: "16685691",
       bib: "13881242",
       holding: "13895201",
@@ -79,6 +84,8 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
   let(:parent_object_with_aspace_uri) do
     FactoryBot.create(
       :parent_object_with_aspace_uri,
+      authoritative_metadata_source: MetadataSource.first,
+      admin_set: AdminSet.first,
       oid: "16854285",
       bib: "12307100",
       barcode: "39002102340669",
@@ -258,7 +265,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
       parent_object_with_aspace_uri.default_fetch
       parent_object_with_aspace_uri.last_aspace_update = 5.years.ago
       parent_object_with_aspace_uri.save!
-      Delayed::Job.delete(parent_object_with_aspace_uri.setup_metadata_jobs)
+      GoodJob::Job.delete(parent_object_with_aspace_uri.setup_metadata_jobs)
 
       relevant_parent_object.default_fetch
       relevant_parent_object.metadata_update = false
@@ -266,7 +273,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
       relevant_parent_object.default_fetch
       relevant_parent_object.last_voyager_update = 5.years.ago
       relevant_parent_object.save!
-      Delayed::Job.delete(relevant_parent_object.setup_metadata_jobs)
+      GoodJob::Job.delete(relevant_parent_object.setup_metadata_jobs)
 
       asl_old_success
     end
@@ -276,11 +283,9 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true do
     end
 
     it "queues objects to be updated" do
+      # 2 parent objects so received twice
+      expect(SetupMetadataJob).to receive(:perform_later).twice
       described_class.update
-      po_ils = ParentObject.find_by(oid: relevant_oid)
-      po_aspace = ParentObject.find_by(aspace_uri: "/repositories/11/archival_objects/515305")
-      expect(po_ils.setup_metadata_jobs.count).to eq 1
-      expect(po_aspace.setup_metadata_jobs.count).to eq 1
     end
 
     # There are ~1837 total items from the relevant time period, but only 3 of them

@@ -7,11 +7,11 @@ module PdfRepresentable
 
   NORMALIZED_COVER_FIELDS = %w[
     callNumber
-    creator
+    all_creators
     date
     sourceTitle
-    rights
-    extent_of_digitization
+    rights_statement
+    extent_of_digitization_text
   ].freeze
 
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
@@ -86,80 +86,86 @@ module PdfRepresentable
 
   private
 
-    def child_pages(child_page_file)
-      pages = []
-      child_objects = ChildObject.where(parent_object: self).order(:order)
-      child_objects.map do |child|
-        page = {
-          "caption" => child['label'] || "",
-          "file" => send(child_page_file, child)
-        }
-        properties = []
-        properties << { 'name' => 'Caption:', 'value' => child.caption } if child.caption.present?
-        properties << { 'name' => 'Image ID:', 'value' => child.oid.to_s }
-        page['properties'] = properties if properties.present?
-        pages << page
-      end
-      pages
-    end
-
-    def s3_presigned_url(child)
-      S3Service.presigned_url(child.remote_ptiff_path, 24_000)
-    end
-
-    def child_modification(child)
-      child.updated_at.to_s
-    end
-
-    def pdf_properties(title, generated)
-      properties = {
-        "Title" => title
+  def child_pages(child_page_file)
+    pages = []
+    child_objects = ChildObject.where(parent_object: self).order(:order)
+    child_objects.map do |child|
+      page = {
+        "caption" => child['label'] || "",
+        "file" => send(child_page_file, child)
       }
-      properties = cover_page(properties, generated)
-      reshape_properties properties
+      properties = []
+      properties << { 'name' => 'Caption:', 'value' => child.caption } if child.caption.present?
+      properties << { 'name' => 'Image ID:', 'value' => child.oid.to_s }
+      page['properties'] = properties if properties.present?
+      pages << page
+    end
+    pages
+  end
+
+  def s3_presigned_url(child)
+    S3Service.presigned_url(child.remote_ptiff_path, 24_000)
+  end
+
+  def child_modification(child)
+    child.updated_at.to_s
+  end
+
+  def pdf_properties(title, generated)
+    properties = {
+      "Title" => title
+    }
+    properties = cover_page(properties, generated)
+    reshape_properties properties
+  end
+
+  def reshape_properties(properties)
+    properties.keys.map do |key|
+      value = properties[key]
+      {
+        "name" => key,
+        "value" => value
+      }
+    end
+  end
+
+  def cover_page(properties, generated)
+    # for normalized fields
+    NORMALIZED_COVER_FIELDS.each do |field|
+      hash = METADATA_FIELDS[field.to_sym]
+      properties = add_field_if_present(authoritative_json, field, hash, properties)
     end
 
-    def reshape_properties(properties)
-      properties.keys.map do |key|
-        value = properties[key]
-        {
-          "name" => key,
-          "value" => value
-        }
-      end
-    end
+    container_information = extract_container_information(authoritative_json)
+    properties["Container information"] = container_information if container_information.present?
+    properties["Digitization Note"] = digitization_note if digitization_note.present?
+    properties["Generated"] = generated
+    properties["Terms of Use"] = "https://guides.library.yale.edu/about/policies/access"
+    properties["View in DL"] = "https://collections.library.yale.edu/catalog/#{oid}"
 
-    def cover_page(properties, generated)
-      # for normalized fields
-      NORMALIZED_COVER_FIELDS.each do |field|
-        hash = METADATA_FIELDS[field.to_sym]
-        properties = add_field_if_present(authoritative_json, field, hash[:label], properties)
-      end
+    properties
+  end
 
-      container_information = extract_container_information(authoritative_json)
-      properties["Container information"] = container_information if container_information.present?
-      properties["Digitization Note"] = digitization_note if digitization_note.present?
-      properties["Generated"] = generated
-      properties["Terms of Use"] = "https://guides.library.yale.edu/about/policies/access"
-      properties["View in DL"] = "https://collections.library.yale.edu/catalog/#{oid}"
-
-      properties
-    end
-
-    def add_field_if_present(json, field_name, hash_field, hash)
+  def add_field_if_present(json, field_name, hash, properties)
+    if hash[:digital_only]
+      value = send(field_name)
+      value = Array(value).reject { |v| !keep_value?(v) }.join(", ")
+    else
       value = extract_flat_field_value(json, field_name, nil)
-      hash[hash_field] = value if value
-
-      hash
     end
+    value = ActionController::Base.helpers.sanitize(value, tags: [], attributes: []) if value
+    properties[hash[:label]] = value if value
 
-    def extract_flat_field_value(json, field_name, default)
-      return default unless json && json[field_name].present?
-      Array(json[field_name]).reject { |value| !keep_value?(value) }.join(", ")
-    end
+    properties
+  end
 
-    def keep_value?(value)
-      @direction_detector ||= StringDirection::Detector.new
-      !value.empty? && @direction_detector.direction(value) == "ltr" # rtl and bidi will be rejected
-    end
+  def extract_flat_field_value(json, field_name, default)
+    return default unless json && json[field_name].present?
+    Array(json[field_name]).reject { |value| !keep_value?(value) }.join(", ")
+  end
+
+  def keep_value?(value)
+    @direction_detector ||= StringDirection::Detector.new
+    !value.empty? && @direction_detector.direction(value) == "ltr" # rtl and bidi will be rejected
+  end
 end

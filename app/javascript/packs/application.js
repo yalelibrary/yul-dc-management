@@ -34,6 +34,7 @@ import "@fortawesome/fontawesome-free/js/all.js";
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 window.JSZip = JSZip;
+global.$ = jQuery;
 
 let dataTable;
 $( document ).on('turbolinks:load', function() {
@@ -184,13 +185,7 @@ $( document ).on('turbolinks:load', function() {
         },
         {
           extend: 'excelHtml5',
-          text: "Excel",
-          exportOptions: {
-            columns: ':visible',
-          },
-          customize: function (xlsx) {
-            return format_excel(xlsx);
-          },
+          title: null
         },
         {
           extend: 'csvHtml5',
@@ -244,8 +239,6 @@ $( document ).on('turbolinks:load', function() {
   )
 });
 
-
-
 //  Delay the redraw so that if more changes trigger a redraw
 //  it will wait and make one request to the server.
 let drawTimer = 0;
@@ -291,29 +284,6 @@ const format_csv = (csv) => {
 function snake_case(string) {
   return string.toLowerCase().replace(/ /g, '_')
 }
-
-const format_excel = (xlsx) => {
-  let sheet = xlsx.xl.worksheets['sheet1.xml'];
-  let headerRowData = $('row[r=2] c is t', sheet);
-  let columnHeaderArray = [];
-  let formattedHeaders = [];
-
-  for (let i = 0; i < headerRowData.length; i++) {
-    columnHeaderArray.push(headerRowData[i].childNodes[0].nodeValue);
-  }
-
-  columnHeaderArray.forEach((label) => {
-    return formattedHeaders.push(snake_case(label));
-  });
-
-  for (let i = 0; i < formattedHeaders.length; i++) {
-    for (let y = 0; y < headerRowData.length; y++) {
-      if (i === y) {
-        $(headerRowData[y]).text(formattedHeaders[i])
-      }
-    }
-  }
-};
 
 $( document ).on('turbolinks:load', function() {
   let show_hide_template_link = function(){
@@ -407,3 +377,35 @@ $( document ).on('turbolinks:load', function() {
     })
   })
 })
+
+// Enables/Disabled permission set dropdown based on visibility
+$( document ).on('turbolinks:load', function() {
+  if($('#parent_object_visibility').val() != 'Open with Permission') {
+    $('#parent_object_permission_set_id').prop('disabled', true);
+  }
+  $('#parent_object_visibility').on('input change', function() {
+    if($(this).val() != 'Open with Permission') {
+      $('#parent_object_permission_set_id').prop('disabled', true);
+    } else {
+      $('#parent_object_permission_set_id').prop('disabled', false);
+    }
+  });
+});
+
+// Enables/disabled permission request datepicker based on selected request_status
+$( document ).on('turbolinks:load', function() {
+  if($('#open_with_permission_permission_request_request_status_denied:checked').val() == 'Denied' || $('#open_with_permission_permission_request_request_status_approved:checked').val() == undefined) {
+    $('#open_with_permission_permission_request_access_until').prop('disabled', true);
+  }
+  $('#open_with_permission_permission_request_request_status_approved').on('input change', function() {
+    if($(this).val() == 'Approved') {
+      $('#open_with_permission_permission_request_access_until').prop('disabled', false);
+    }
+  });
+  $('#open_with_permission_permission_request_request_status_denied').on('input change', function() {
+    if($(this).val() == 'Denied') {
+      $('#open_with_permission_permission_request_access_until').prop('disabled', true);
+    }
+  });
+});
+

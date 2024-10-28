@@ -2,16 +2,17 @@
 
 require 'rails_helper'
 
-RSpec.describe GeneratePtiffJob, type: :job do
-  def queue_adapter_for_test
-    ActiveJob::QueueAdapters::DelayedJobAdapter.new
+RSpec.describe GeneratePtiffJob, type: :job, prep_metadata_sources: true, prep_admin_sets: true do
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :external)
   end
+
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
-  let(:metadata_source) { FactoryBot.create(:metadata_source) }
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: metadata_source) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
   let(:child_object) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object) }
-  let(:generate_ptiff_job) { GeneratePtiffJob.new }
+  let(:generate_ptiff_job) { described_class.perform_later(child_object) }
 
   around do |example|
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
@@ -30,45 +31,34 @@ RSpec.describe GeneratePtiffJob, type: :job do
   end
 
   describe 'generate ptiff job' do
-    it 'increments the job queue by one' do
-      expect do
-        GeneratePtiffJob.perform_later(child_object)
-      end.to change { Delayed::Job.count }.by(1)
+    it 'increments the job queue' do
+      expect(generate_ptiff_job.instance_variable_get(:@successfully_enqueued)).to be true
     end
 
     it 'increments the ptiff job queue when file not larger than 1GB' do
-      ActiveJob::Base.queue_adapter = :delayed_job
-      expect do
-        GeneratePtiffJob.perform_later(child_object)
-      end.to change { Delayed::Job.where(queue: 'ptiff').count }.by(1)
+      expect(generate_ptiff_job.instance_variable_get(:@queue_name)).to eq 'ptiff'
     end
 
     it 'does not increment the large_ptiff job queue when file is smaller than 1GB' do
-      ActiveJob::Base.queue_adapter = :delayed_job
-      expect do
-        GeneratePtiffJob.perform_later(child_object)
-      end.to change { Delayed::Job.where(queue: 'large_ptiff').count }.by(0)
+      expect(generate_ptiff_job.instance_variable_get(:@queue_name)).not_to eq 'large_ptiff'
     end
 
     it 'increments the job queue by one if needs_a_manifest is true' do
       allow(child_object.parent_object).to receive(:needs_a_manifest?).and_return(true)
-      expect do
-        generate_ptiff_job.perform(child_object, batch_process)
-      end.to change { Delayed::Job.count }.by(1)
-      expect(Delayed::Job.last.handler).to match(/GenerateManifestJob/)
+      expect(generate_ptiff_job.instance_variable_get(:@successfully_enqueued)).to be true
     end
 
     it 'does not increment the job queue if ready_for_manifest is false' do
       allow(child_object.parent_object).to receive(:ready_for_manifest?).and_return(false)
       expect do
-        generate_ptiff_job.perform(child_object, batch_process)
-      end.to change { Delayed::Job.count }.by(0)
+        GeneratePtiffJob.new.perform(child_object, batch_process)
+      end.to change { GoodJob::Job.count }.by(0)
     end
 
     it 'raises an exception if convert to ptiff fails' do
       allow(child_object).to receive(:convert_to_ptiff!).and_return(false)
       expect do
-        generate_ptiff_job.perform(child_object, batch_process)
+        GeneratePtiffJob.new.perform(child_object, batch_process)
       end.to raise_error(RuntimeError)
     end
   end

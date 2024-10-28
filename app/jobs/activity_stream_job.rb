@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ActivityStreamJob < ApplicationJob
-  repeat 'every day at 1am'
-
+  # rubocop:disable Rails/SaveBang
   def perform
     ActivityStreamReader.update unless ActivityStreamLog.where(status: "Running").exists?
   end
+  # rubocop:enable Rails/SaveBang
 end

@@ -35,7 +35,7 @@ class ChildObject < ApplicationRecord
   end
 
   def finished_states
-    ['deleted', 'ptiff-ready-skipped', 'ptiff-ready', 'reassociate-complete', 'update-complete']
+    ['deleted', 'ptiff-ready-skipped', 'ptiff-ready', 'reassociate-complete', 'review-complete', 'update-complete']
   end
 
   def check_for_size_and_file
@@ -63,7 +63,7 @@ class ChildObject < ApplicationRecord
   end
 
   # rubocop:disable  Metrics/MethodLength
-  # rubocop:disable  Metrics/LineLength
+  # rubocop:disable  Layout/LineLength
   def copy_to_access_master_pairtree
     # Don't copy over existing access masters if they already exist
     # TODO: Determine what happens if it's an intentional re-shoot of a child image
@@ -94,7 +94,7 @@ class ChildObject < ApplicationRecord
     end
   end
   # rubocop:enable  Metrics/MethodLength
-  # rubocop:enable  Metrics/LineLength
+  # rubocop:enable  Layout/LineLength
 
   def access_master_checksum_matches?
     access_master_checksum = Digest::SHA1.file(access_master_path).to_s
@@ -156,7 +156,14 @@ class ChildObject < ApplicationRecord
     size
   end
 
+  # TODO: remove rubocop ignores and refactor once file not found issue is resolved
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Layout/LineLength
   def convert_to_ptiff
+    Rails.logger.info "************ child_object.rb # convert_to_ptiff +++ is the ptiff valid? #{pyramidal_tiff.valid?} *************"
     if pyramidal_tiff.valid?
       if pyramidal_tiff.conversion_information&.[](:width)
         processing_event("PTIFF ready for #{oid}", 'ptiff-ready')
@@ -166,16 +173,23 @@ class ChildObject < ApplicationRecord
       true
     else
       report_ptiff_generation_error
-      raise "Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join('\n')}"
+      raise "The child object's image file cannot be found. Please contact the Technical Lead for Digital Collections for assistance. ------------ Message from System: Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join('\n')}"
     end
   end
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
 
   def report_ptiff_generation_error
-    parent_object&.processing_event("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
-    processing_event("Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
+    Rails.logger.info "************ child_object.rb # report_ptiff_generation_error +++ hits method *************"
+    Rails.logger.info "************ child_object.rb # report_ptiff_generation_error +++ ptiff errors: #{pyramidal_tiff.errors.full_messages.join("\n")} *************"
+    parent_object&.processing_event("The child object's image file cannot be found. Please contact the Technical Lead for Digital Collections for assistance. ------------ Message from System: Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
+    processing_event("The child object's image file cannot be found. Please contact the Technical Lead for Digital Collections for assistance. ------------ Message from System: Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join("\n")}", "failed")
   end
 
   def convert_to_ptiff!(force = false)
+    Rails.logger.info "************ child_object.rb # convert_to_ptiff!(force = false) +++ is the convert method forced? #{force} *************"
     pyramidal_tiff.force_update = force
     convert_to_ptiff && save!
   end

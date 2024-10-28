@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Do all background jobs inline during seeds
-ActiveJob::Base.queue_adapter = :inline
+ActiveJob::Base.queue_adapter = :good_job
 sequence = OidMinterService.initialize_sequence!
 current = ActiveRecord::Base.connection.execute("SELECT last_value from OID_SEQUENCE").first['last_value']
 puts "Oid Minter Initialized, initialization was #{sequence}, current value is #{current}"
@@ -25,8 +25,13 @@ puts "Oid Minter Initialized, initialization was #{sequence}, current value is #
   },
   {
     metadata_cloud_name: "aspace",
-    display_name: "ArchiveSpace",
+    display_name: "ArchivesSpace",
     file_prefix: "AS-"
+  },
+  {
+    metadata_cloud_name: "sierra",
+    display_name: "Sierra",
+    file_prefix: "S-"
   }
 ].each do |obj|
   MetadataSource.where(metadata_cloud_name: obj[:metadata_cloud_name]).first_or_create do |ms|

@@ -3,25 +3,41 @@
 module DigitalObjectManagement
   extend ActiveSupport::Concern
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Layout/LineLength
   def digital_object_json_available?
+    return false unless authoritative_metadata_source && (authoritative_metadata_source.metadata_cloud_name == "aspace" || (authoritative_metadata_source.metadata_cloud_name == "ils" && ENV["FEATURE_FLAGS"]&.include?("|DO-ENABLE-ILS|")))
     return false unless child_object_count&.positive?
-    return false unless authoritative_metadata_source && authoritative_metadata_source.metadata_cloud_name == "aspace"
     return false unless ['Public', 'Yale Community Only', 'Private'].include? visibility
     return false unless digital_object_title
     return false if redirect_to.present?
     true
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Layout/LineLength
 
   def generate_digital_object_json
     return nil unless digital_object_json_available?
     # create digital object from data and return JSON
-    {   oid: oid,
-        title: digital_object_title,
-        thumbnailOid: representative_child && representative_child.oid || nil,
-        thumbnailCaption: representative_child && representative_child.label || nil,
-        archivesSpaceUri: aspace_uri,
-        childCount: child_object_count,
-        visibility: visibility }.to_json
+    json = {   oid: oid,
+               title: digital_object_title,
+               thumbnailOid: representative_child&.oid || nil,
+               thumbnailCaption: representative_child&.label || nil,
+               archivesSpaceUri: aspace_uri,
+               barcode: barcode,
+               bibId: bib,
+               childCount: child_object_count,
+               holdingId: holding,
+               itemId: item,
+               source: authoritative_metadata_source.metadata_cloud_name,
+               visibility: visibility }
+    if json[:source] == "ils" && authoritative_json
+      json[:volumeEnumeration] = authoritative_json["volumeEnumeration"]
+      json[:callNumber] = authoritative_json["callNumber"]
+    end
+    json.to_json
   end
 
   def digital_object_title
@@ -30,15 +46,15 @@ module DigitalObjectManagement
 
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
-  def digital_object_check
+  def digital_object_check(force = false)
     new_digital_object = generate_digital_object_json
-    return unless (digital_object_json && digital_object_json.json || nil) != new_digital_object
+    return unless force || (digital_object_json&.json || nil) != new_digital_object
     #  There has been a change that needs to be reported to metadata cloud
     if send_digital_object_update(
       priorDigitalObject: digital_object_json&.json.present? && JSON.parse(digital_object_json.json) || nil,
       digitalObject: new_digital_object.present? && JSON.parse(new_digital_object) || nil
     )
-      # Only update the database is the update was sent to MC successfully.
+      # Only update the database if the update was sent to MC successfully.
       # This will cause unsuccessful sends to MC to be resent when the ParentObject is next updated.
       apply_new_digital_object_json(new_digital_object)
     end
@@ -73,6 +89,7 @@ module DigitalObjectManagement
 
   def send_digital_object_update(digital_object_update)
     return false unless ENV["VPN"] == "true" && ENV["FEATURE_FLAGS"]&.include?("|DO-SEND|")
+    return false if digital_object_update[:digitalObject].nil? && digital_object_update[:priorDigitalObject].nil?
     full_response = mc_post("https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates", digital_object_update)
     case full_response.status
     when 200

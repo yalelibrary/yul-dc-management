@@ -45,7 +45,7 @@
     <Bitstream filename="mss_29_s03_b092_f0019.pdf">
       /home/app/webapp/spec/fixtures/preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/2
     </Bitstream>
-    <Bitstream filename="mss_29_s03_b092_f0019.tif">
+    <Bitstream filename="mss_29_s03_b092_f0019.TIF">
       /home/app/webapp/spec/fixtures/preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1
     </Bitstream>
   </Bitstreams>

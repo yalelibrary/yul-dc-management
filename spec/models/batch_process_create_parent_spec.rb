@@ -6,6 +6,10 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: 'mk2525') }
   let(:admin_set_one) { FactoryBot.create(:admin_set, key: 'jss') }
+  let(:create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_owp_parent.csv")) }
+  let(:create_invalid_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_invalid_owp_parent.csv")) }
+  let(:mini_create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "mini_owp_parent.csv")) }
+  let(:permission_set) { FactoryBot.create(:permission_set, key: "PS Key") }
   let(:no_oid_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'parent_no_oid.csv')) }
   let(:no_admin_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'parent_no_admin_set.csv')) }
   let(:no_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'parent_no_source.csv')) }
@@ -29,14 +33,17 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     user.add_role(:editor, admin_set_one)
     login_as(:user)
     batch_process.user_id = user.id
+    permission_set
   end
 
   describe 'with the metadata cloud mocked' do
     before do
       stub_metadata_cloud('AS-781086', 'aspace')
+      stub_metadata_cloud('200000045')
+      stub_metadata_cloud('2002826')
     end
 
-    context 'Create Parent Object batch process with a csv' do
+    context 'Create Parent Object batch process with a detailed csv' do
       it 'can create a parent object from aspace' do
         expect do
           batch_process.file = aspace_parent
@@ -54,13 +61,40 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         po = ParentObject.first
         expect(po.oid).not_to be_nil
       end
+      it 'can create an OwP parent_object' do
+        permission_set.add_administrator(user)
+        expect do
+          batch_process.file = create_owp_parent
+          batch_process.save
+        end.to change { ParentObject.count }.from(0).to(1)
+        po = ParentObject.first
+        expect(po.visibility).to eq('Open with Permission')
+        expect(po.permission_set).to eq(permission_set)
+      end
+      it 'fails creating an OwP parent_object with invalid Permission Set key' do
+        permission_set.add_administrator(user)
+        expect do
+          batch_process.file = create_invalid_owp_parent
+          batch_process.save
+        end.not_to change { ParentObject.count }
+        expect(batch_process.batch_ingest_events[0].reason).to eq('Skipping row [2]. Process failed. Permission Set missing or nonexistent.')
+      end
+      it 'fails creating an OwP parent_object if user does not have admin privelages' do
+        expect do
+          batch_process.file = create_owp_parent
+          batch_process.save
+        end.not_to change { ParentObject.count }
+        expect(batch_process.batch_ingest_events[0].reason).to eq('Skipping row [2] because user does not have edit permissions for this Permission Set: PS Key')
+      end
+      # rubocop:disable Layout/LineLength
       it 'can fail when csv has no admin set' do
         expect do
           batch_process.file = no_admin_set
           batch_process.save
         end.not_to change { ParentObject.count }
-        expect(batch_process.batch_ingest_events[0].reason).to eq('Skipping row [2] with unknown admin set [] for parent: ')
+        expect(batch_process.batch_ingest_events[0].reason).to eq('The admin set code is missing or incorrect. Please ensure an admin_set value is in the correct spreadsheet column and that your 3 or 4 letter code is correct. ------------ Message from System: Skipping row [2] with unknown admin set [] for parent: ')
       end
+      # rubocop:enable Layout/LineLength
       it 'can fail when csv has no source' do
         expect do
           batch_process.file = no_source
@@ -81,6 +115,17 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.save
         end.not_to change { ParentObject.count }
         expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with parent oid: 200000000.  Extent of Digitization value must be 'Completely digitized' or 'Partially digitized'.")
+      end
+      context 'with minimal csv data and OwP itemPermission' do
+        it 'fails when no Permission Set key is submitted' do
+          expect do
+            batch_process.file = mini_create_owp_parent
+            batch_process.save
+          end.to change { ParentObject.count }.from(0).to(1)
+          po = ParentObject.first
+          expect(po.visibility).to eq "Private"
+          expect(po.events_for_batch_process(batch_process)[1].reason).to include("SetupMetadataJob failed. Permission Set information missing or nonexistent from CSV.")
+        end
       end
     end
   end

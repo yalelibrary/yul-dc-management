@@ -10,10 +10,10 @@ module Updatable
     parent_object = ParentObject.find_by(oid: oid)
     if parent_object.blank?
       batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid} because it was not found in local database", 'Skipped Row')
-      return false
+      false
     elsif !current_ability.can?(:update, parent_object)
       batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{oid}, user does not have permission to update.", 'Permission Denied')
-      return false
+      false
     else
       parent_object
     end
@@ -23,10 +23,10 @@ module Updatable
     child_object = ChildObject.find_by(oid: oid)
     if child_object.blank?
       batch_processing_event("Skipping row [#{index + 2}] with child oid: #{oid} because it was not found in local database", 'Skipped Row')
-      return false
+      false
     elsif !current_ability.can?(:update, child_object)
       batch_processing_event("Skipping row [#{index + 2}] with child oid: #{oid}, user does not have permission to update.", 'Permission Denied')
-      return false
+      false
     else
       child_object
     end
@@ -48,9 +48,7 @@ module Updatable
       parent_object = child_object.parent_object
       po_arr << parent_object
       attach_item(parent_object)
-      sets << ', ' + parent_object.admin_set.key
-      split_sets = sets.split(',').uniq.reject(&:blank?)
-      self.admin_set = split_sets.join(', ')
+      add_admin_set_to_bp(sets, parent_object)
       save!
       child_object.caption = row['caption'] unless row['caption'].nil?
       child_object.label = row['label'] unless row['label'].nil?
@@ -65,6 +63,7 @@ module Updatable
     end
   end
 
+  # rubocop:disable Metrics/BlockLength
   def update_parent_objects
     self.admin_set = ''
     sets = admin_set
@@ -74,11 +73,9 @@ module Updatable
       redirect = row['redirect_to'] unless ['redirect_to'].nil?
       parent_object = updatable_parent_object(oid, index)
       next unless parent_object
-      sets << ', ' + parent_object.admin_set.key
-      split_sets = sets.split(',').uniq.reject(&:blank?)
       admin_set = editable_admin_set(row['admin_set'], oid, index) unless row['admin_set'].nil?
       next if admin_set == false
-      self.admin_set = split_sets.join(', ')
+      add_admin_set_to_bp(sets, parent_object)
       save!
       next if redirect.present? && !validate_redirect(redirect)
       next unless check_for_children(redirect, parent_object)
@@ -89,9 +86,31 @@ module Updatable
       next unless validate_metadata_source(metadata_source, index)
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.admin_set = admin_set unless admin_set.nil?
+
+      if row['visibility'] == "Open with Permission" && row['permission_set_key'].blank?
+        batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing from CSV.", 'Skipped Row')
+        next
+      elsif row['visibility'] == "Open with Permission" && row['permission_set_key'] != parent_object&.permission_set&.key
+        permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_key'])
+        if permission_set.nil?
+          batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing or nonexistent.", 'Skipped Row')
+          next
+        elsif user.has_role?(:administrator, permission_set) || user.has_role?(:sysadmin)
+          if parent_object.permission_set && !(user.has_role?(:administrator, parent_object.permission_set) || user.has_role?(:sysadmin))
+            batch_processing_event("Skipping row [#{index + 2}] because user does not have edit permissions for the currently assigned Permission Set", 'Permission Denied')
+            next
+          else
+            parent_object.permission_set = permission_set
+          end
+        else
+          batch_processing_event("Skipping row [#{index + 2}] because user does not have edit permissions for this Permission Set: #{permission_set.key}", 'Permission Denied')
+          next
+        end
+      end
+
       parent_object.update!(processed_fields)
       trigger_setup_metadata(parent_object)
-      parent_object.create_child_records if row['preservica_uri'].present?
+      sync_from_preservica if parent_object.digital_object_source == 'Preservica'
 
       processing_event_for_parent(parent_object)
     end
@@ -99,19 +118,22 @@ module Updatable
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/BlockLength
   # rubocop:enable Metrics/MethodLength
 
+  # rubocop:disable Layout/LineLength
   # CHECKS TO SEE IF USER HAS ABILITY TO EDIT AN ADMIN SET:
   def editable_admin_set(admin_set_key, oid, index)
     admin_sets_hash = {}
     admin_sets_hash[admin_set_key] ||= AdminSet.find_by(key: admin_set_key)
     admin_set = admin_sets_hash[admin_set_key]
     if admin_set.blank?
-      batch_processing_event("Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}", 'Skipped Row')
-      return false
+      batch_processing_event("The admin set code is missing or incorrect. Please ensure an admin_set value is in the correct spreadsheet column and that your 3 or 4 letter code is correct. ------------ Message from System: Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}",
+'Skipped Row')
+      false
     elsif !current_ability.can?(:add_member, admin_set)
       batch_processing_event("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{oid}", 'Permission Denied')
-      return false
+      false
     else
       admin_set
     end
@@ -233,7 +255,7 @@ module Updatable
     end
   end
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   def process_invalid_vocab_event(column_name, row_value, oid)
     case column_name
     when 'display_layout'
@@ -243,10 +265,10 @@ module Updatable
     when 'viewing_direction'
       batch_processing_event("Parent #{oid} did not update value for Viewing Directions. Value: #{row_value} is invalid. For field Viewing Direction please use: left-to-right, right-to-left, top-to-bottom, bottom-to-top, or leave column empty", 'Invalid Vocabulary')
     when 'visibility'
-      batch_processing_event("Parent #{oid} did not update value for Visibility. Value: #{row_value} is invalid. For field Visibility please use: Private, Public, or Yale Community Only", 'Invalid Vocabulary')
+      batch_processing_event("Parent #{oid} did not update value for Visibility. Value: #{row_value} is invalid. For field Visibility please use: Private, Public, Open with Permission, or Yale Community Only", 'Invalid Vocabulary')
     end
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 
   def trigger_setup_metadata(parent_object)
     parent_object.current_batch_process = self
@@ -268,10 +290,20 @@ module Updatable
   end
 
   def validate_redirect(redirect)
-    if redirect =~ /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//
+    if /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//.match?(redirect)
       true
     else
       batch_processing_event("Skipping row with redirect to: #{redirect}. Redirect to must be in format https://collections.library.yale.edu/catalog/1234567.", 'Skipped Row')
+      false
+    end
+  end
+
+  # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
+  def validate_metadata_source(metadata_source, index)
+    if MetadataSource.all_metadata_cloud_names.include?(metadata_source)
+      true
+    else
+      batch_processing_event("Skipping row [#{index + 2}] with unknown metadata source: #{metadata_source}.  Accepted values are 'ladybird', 'aspace', 'sierra', or 'ils'.", 'Skipped Row')
       false
     end
   end

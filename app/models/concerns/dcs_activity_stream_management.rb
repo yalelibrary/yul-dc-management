@@ -26,12 +26,13 @@ module DcsActivityStreamManagement
         "container_grouping": container_grouping.to_s,
         "redirect_to": redirect_to.to_s,
         "iiif_manifest": "#{ENV['BLACKLIGHT_BASE_URL']}/manifests/#{oid}",
+        "full_text_available": extent_of_full_text.to_s,
         "children": !child_objects.empty? && child_info
       },
       "metadata": authoritative_json
     }
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
   # rubocop:enable Metrics/AbcSize
 
   def mc_activity_stream_check
@@ -84,6 +85,7 @@ module DcsActivityStreamManagement
     return "Ladybird" if authoritative_metadata_source_id == 1
     return "Voyager" if authoritative_metadata_source_id == 2
     return "ArchivesSpace" if authoritative_metadata_source_id == 3
+    return "Sierra" if authoritative_metadata_source_id == 4
     "Metadata Source name not found"
   end
 end

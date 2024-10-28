@@ -1,0 +1,10 @@
+Dear <%= @new_permission_request[:approver_name] %>,
+
+A request for permission to view the object <%= link_to(@new_permission_request[:parent_object_title], "#{ENV['BLACKLIGHT_BASE_URL']}/catalog/#{@new_permission_request[:parent_object_oid]}") %> from permission set <%= @new_permission_request[:permission_set_label] %> has been received. Details about the request are as follows:
+  Parent Object OID: <%= @new_permission_request[:parent_object_oid] %>
+  Requester Name: <%= @new_permission_request[:requester_name] %>
+  Requester Email Address: <%= @new_permission_request[:requester_email] %>
+  Reason for Request: <%= @new_permission_request[:requester_note] %>
+
+Please log into the Management App and review the request <%= link_to('here.', "#{ENV['BLACKLIGHT_BASE_URL']}/management/permission_requests/#{@new_permission_request[:permission_request_id]}") %>
+This is an automated message sent by Yale’s Digital Collections System.

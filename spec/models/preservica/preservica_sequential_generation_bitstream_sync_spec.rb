@@ -53,20 +53,20 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       File.delete(third_tif) if File.exist?(third_tif)
 
       allow(S3Service).to receive(:s3_exists?).and_return(false)
-      expect(File.exist?(first_tif)).to be false
-      expect(File.exist?(second_tif)).to be false
-      expect(File.exist?(third_tif)).to be false
+      expect(File.exist?(first_tif)).to eq false
+      expect(File.exist?(second_tif)).to eq false
+      expect(File.exist?(third_tif)).to eq false
       expect do
         batch_process.file = preservica_parent_with_children
         batch_process.save
       end.to change { ChildObject.count }.from(0).to(3)
-      expect(File.exist?(first_tif)).to be true
-      expect(File.exist?(second_tif)).to be true
-      expect(File.exist?(third_tif)).to be true
+      expect(File.exist?(first_tif)).to eq true
+      expect(File.exist?(second_tif)).to eq true
+      expect(File.exist?(third_tif)).to eq true
 
       po_first = ParentObject.first
       co_first = po_first.child_objects.first
-      expect(po_first.last_preservica_update).not_to be nil
+      expect(po_first.last_preservica_update).not_to eq nil
       expect(co_first.preservica_generation_uri).to eq 'https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1'
       expect(co_first.preservica_bitstream_uri).to eq 'https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1'
       expect(co_first.ptiff_conversion_at.present?).to be_truthy
@@ -90,7 +90,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(co_first.preservica_generation_uri).to eq 'https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/2'
       expect(co_first.preservica_bitstream_uri).to eq 'https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/2/bitstreams/1'
       expect(co_first.caption).to eq 'test1'
-      expect(File.exist?(new_first_tif)).to be true
+      expect(File.exist?(new_first_tif)).to eq true
       File.delete(first_tif) if File.exist?(first_tif)
       File.delete(new_first_tif) if File.exist?(new_first_tif)
       File.delete(second_tif) if File.exist?(second_tif)

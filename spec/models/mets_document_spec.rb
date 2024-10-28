@@ -87,7 +87,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
     end
   end
 
-  describe "determining if the image files described are available to the application" do
+  describe "determining if the image files described are available to the application", skip_db_cleaner: true do
     describe "setting the environment to production" do
       around do |example|
         original_env = ENV["RAILS_ENV"]

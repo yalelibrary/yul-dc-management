@@ -21,6 +21,8 @@ class SolrService
   # ==== Returns
   #
   # Array:: Collection of IDs that exist in Solr but not in the database
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def self.solr_index_orphans(opts = {})
     batch_size = opts[:batch_size] || 500
 
@@ -35,6 +37,8 @@ class SolrService
 
     solr_ids - ParentObject.pluck(:oid)
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # Heavily influenced by https://github.com/sunspot/sunspot
   # Find IDs of records of this class that are indexed in Solr but do not
@@ -100,6 +104,30 @@ class SolrService
         "stored": stored
       }
     )
+  end
+
+  # Creates a new copy field type to update managed schema
+  def self.add_copy_field(source, dest)
+    post_to_schema(
+      "add-copy-field": {
+        "source": source,
+        "dest": dest
+      }
+    )
+  end
+
+  # Deletes a copy field type to update managed schema
+  def self.delete_copy_field(source, dest)
+    post_to_schema(
+      "delete-copy-field": {
+        "source": source,
+        "dest": dest
+      }
+    )
+  end
+
+  def self.get_file(file)
+    connection.connection.get("admin/file?file=#{file}")
   end
 
   def self.post_to_schema(data)

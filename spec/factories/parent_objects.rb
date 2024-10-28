@@ -15,5 +15,8 @@ FactoryBot.define do
       barcode { "39002102340669" }
       aspace_uri { "/repositories/11/archival_objects/515305" }
     end
+    factory :parent_object_with_random_oid do
+      oid { FFaker::Number.number(digits: 8) }
+    end
   end
 end

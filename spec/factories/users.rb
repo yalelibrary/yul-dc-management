@@ -9,6 +9,8 @@ FactoryBot.define do
     email { FFaker::Internet.email }
     first_name { FFaker::Name.first_name }
     last_name { FFaker::Name.last_name }
+    created_at { Time.zone.now }
+    updated_at { Time.zone.now }
     provider { "cas" }
     after(:create) do |user|
       brbl = AdminSet.find_by_key('brbl')

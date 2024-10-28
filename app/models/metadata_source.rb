@@ -71,6 +71,10 @@ class MetadataSource < ApplicationRecord
     "#{file_prefix}#{parent_object.oid}.json"
   end
 
+  def self.all_metadata_cloud_names
+    MetadataSource.distinct.pluck(:metadata_cloud_name)
+  end
+
   def url_type
     case metadata_cloud_name
     when "ladybird"
@@ -79,6 +83,8 @@ class MetadataSource < ApplicationRecord
       "voyager_cloud_url"
     when "aspace"
       "aspace_cloud_url"
+    when "sierra"
+      "sierra_cloud_url"
     end
   end
 
@@ -94,6 +100,6 @@ class MetadataSource < ApplicationRecord
   end
 
   def self.metadata_cloud_host
-    ENV['METADATA_CLOUD_HOST'].present? ? ENV['METADATA_CLOUD_HOST'] : 'metadata-api-uat.library.yale.edu'
+    ENV['METADATA_CLOUD_HOST'].presence || 'metadata-api-uat.library.yale.edu'
   end
 end

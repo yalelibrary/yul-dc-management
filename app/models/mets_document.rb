@@ -88,7 +88,7 @@ class MetsDocument
 
   def all_images_have_checksum?
     files.each_with_index do |file, index|
-      raise "#{file[:checksum]}, index: #{index} invalid checksum, check the checksum in mets xml" unless file[:checksum] =~ /^([a-f0-9]{40})$/
+      raise "#{file[:checksum]}, index: #{index} invalid checksum, check the checksum in mets xml" unless /^([a-f0-9]{40})$/.match?(file[:checksum])
     end
   end
 

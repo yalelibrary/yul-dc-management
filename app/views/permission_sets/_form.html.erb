@@ -1,4 +1,4 @@
-<%= form_with(model: permission_set, local: true) do |form| %>
+<%= form_with(model: [:open_with_permission, permission_set], url: @permission_set.new_record? ? permission_sets_path : permission_set_path(@permission_set), local: true) do |form| %>
   <% if permission_set.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(permission_set.errors.count, "error") %> prohibited this permission_set from being saved:</h2>
@@ -13,7 +13,7 @@
 
   <div class="field form-group">
     <%= form.label :key %>
-    <%= form.text_field(:key, required: true, class: "form-control") %>
+    <%= form.text_field(:key, required: true, class: "form-control", disabled: !form.object.new_record?) %>
   </div>
 
   <div class="field form-group">

@@ -4,7 +4,7 @@ class SaveOriginalToS3Job < ApplicationJob
   queue_as :default
 
   def default_priority
-    100
+    -125
   end
 
   # rubocop:disable Metrics/AbcSize

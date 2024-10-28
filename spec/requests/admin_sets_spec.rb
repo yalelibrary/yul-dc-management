@@ -14,15 +14,15 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/admin_sets", type: :request do
-  let(:sysadmin_user) { FactoryBot.create(:sysadmin_user, uid: 'johnsmith2530') }
-  let(:user) { FactoryBot.create(:user, uid: 'martinsmith2530') }
+  let(:sysadmin_user) { FactoryBot.create(:sysadmin_user, uid: 'johnsmith2430') }
+  let(:user) { FactoryBot.create(:user, uid: 'martinsmith2430') }
 
   # AdminSet. As you add validations to AdminSet, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
     {
-      id: 1,
-      key: "brbl",
+      id: 100,
+      key: "key1",
       label: "Beinecke Library",
       homepage: "https://beinecke.library.yale.edu/"
     }
@@ -127,6 +127,14 @@ RSpec.describe "/admin_sets", type: :request do
           expect(response).to be_successful
         end
       end
+
+      describe "POST /send_digital_objects" do
+        it 'can send digital objects as sys admin' do
+          admin_set = AdminSet.create! valid_attributes
+          post update_digital_objects_parent_objects_url(admin_set_id: admin_set.id)
+          expect(response).to redirect_to(admin_set_url(admin_set))
+        end
+      end
     end
 
     describe "DELETE /destroy" do
@@ -161,6 +169,14 @@ RSpec.describe "/admin_sets", type: :request do
       it "renders an unauthorized message" do
         admin_set = AdminSet.create! valid_attributes
         get admin_set_url(admin_set)
+        expect(response).to be_unauthorized
+      end
+    end
+
+    describe "POST /send_digital_objects" do
+      it 'cannot send digital objects as non sys admin' do
+        admin_set = AdminSet.create! valid_attributes
+        post update_digital_objects_parent_objects_url(admin_set_id: admin_set.id)
         expect(response).to be_unauthorized
       end
     end

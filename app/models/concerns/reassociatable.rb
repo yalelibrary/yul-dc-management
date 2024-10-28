@@ -29,9 +29,7 @@ module Reassociatable
       po = load_parent(index, row["parent_oid"].to_i)
       next unless co.present? && po.present?
 
-      sets << ', ' + po.admin_set.key
-      split_sets = sets.split(',').uniq.reject(&:blank?)
-      self.admin_set = split_sets.join(', ')
+      add_admin_set_to_bp(sets, po)
       save!
 
       attach_item(po)
@@ -79,9 +77,9 @@ module Reassociatable
         # should not update parent title or call number
       elsif values_to_update.include? h
         if h == 'label'
-          co.label = check_for_blank(row[h])
+          co.label = check_for_blank(row[h]) if row[h].present?
         elsif h == 'caption'
-          co.caption = check_for_blank(row[h])
+          co.caption = check_for_blank(row[h]) if row[h].present?
         elsif h == 'order'
           order = extract_order(index, row)
           return false if order == :invalid_order # message says skipping row, returning
@@ -146,7 +144,7 @@ module Reassociatable
     po
   end
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   # checks if viewing hint is valid
   def valid_view(viewing_hint, oid)
     if ChildObject.viewing_hints.include? viewing_hint
@@ -156,7 +154,7 @@ module Reassociatable
       nil
     end
   end
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 
   # rubocop:disable Metrics/AbcSize
   # updates count of parent objects and regenerates manifest pdf and reindexes solr.

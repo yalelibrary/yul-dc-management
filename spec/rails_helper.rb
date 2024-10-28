@@ -10,6 +10,7 @@ require 'rspec/rails'
 require 'paper_trail/frameworks/rspec'
 
 # Add additional requires below this line. Rails is not loaded until this point!
+require 'database_cleaner/active_record'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -37,10 +38,11 @@ end
 RSpec.configure do |config|
   config.include(ActiveJob::TestHelper)
   config.include(MetdataSourcesHelper)
-  config.include(DelayedJobsHelper)
   config.include(AdminSetsHelper)
   config.include(SolrHelper)
   config.include(StubRequestHelper)
+  # config.include(SystemHelper)
+  # config.include(AjaxHelper)
   config.include(Devise::Test::IntegrationHelpers)
   config.include Warden::Test::Helpers
   config.include(ParentChildObjectHelper)
@@ -51,7 +53,42 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, type: :system) do
+    # :rack_test driver's Rack app under test shares database connection
+    # with the specs, so continue to use transaction strategy for speed.
+    driver_shares_db_connection_with_specs = Capybara.current_driver == :rack_test
+
+    unless driver_shares_db_connection_with_specs
+      # Driver is probably for an external browser with an app
+      # under test that does *not* share a database connection with the
+      # specs, so use truncation strategy.
+      DatabaseCleaner.strategy = :truncation
+    end
+  end
+
+  config.before(:each) do |example|
+    DatabaseCleaner.start unless example.metadata[:skip_db_cleaner]
+  end
+
+  config.append_after(:each) do |example|
+    DatabaseCleaner.clean unless example.metadata[:skip_db_cleaner]
+    Warden.test_reset!
+    # ensure no parent object straglers
+    ParentObject.all&.each { |x| x.destroy! } if ParentObject.all.count > 0
+    # Set initial oid # to 200_000_000
+    ActiveRecord::Base.connection.execute("DROP SEQUENCE IF EXISTS OID_SEQUENCE;")
+    OidMinterService.initialize_sequence!
+  end
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
@@ -77,16 +114,16 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 end
 
-class ActiveJob::QueueAdapters::DelayedJobAdapter
+class ActiveJob::QueueAdapters::GoodJobAdapter
   class EnqueuedJobs
     def clear
-      Delayed::Job.where(failed_at: nil).map(&:destroy)
+      GoodJob::Job.where(failed_at: nil).map(&:destroy)
     end
   end
 
   class PerformedJobs
     def clear
-      Delayed::Job.where.not(failed_at: nil).map(&:destroy)
+      GoodJob::Job.where.not(failed_at: nil).map(&:destroy)
     end
   end
 

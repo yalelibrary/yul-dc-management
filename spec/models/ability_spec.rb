@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe Ability, type: :model do
+RSpec.describe Ability, type: :model, prep_admin_sets: true, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:user) }
   let(:viewer_user) { FactoryBot.create(:user) }
   let(:sysadmin_user) { FactoryBot.create(:sysadmin_user) }
-  let(:metadata_source) { FactoryBot.create(:metadata_source) }
-  let(:admin_set) { FactoryBot.create(:admin_set) }
+  let(:metadata_source) { MetadataSource.first }
+  let(:admin_set) { FactoryBot.create(:admin_set, key: 'test') }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 16_057_779, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
   let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_object) }
   let(:child_object2) { FactoryBot.create(:child_object, oid: 900_000_000, parent_object: parent_object) }
@@ -21,7 +21,9 @@ RSpec.describe Ability, type: :model do
 
     it 'grants crud roles to Permission Set' do
       ability = Ability.new(sysadmin_user)
-      assert ability.can?(:crud, PermissionSet)
+      assert ability.can?(:view_list, OpenWithPermission::PermissionSet)
+      assert ability.can?(:owp_access, OpenWithPermission::PermissionSet)
+      assert ability.can?(:create, OpenWithPermission::PermissionSet)
     end
 
     it 'grants read access to a ParentObject' do
@@ -237,10 +239,6 @@ RSpec.describe Ability, type: :model do
       ability = Ability.new(user)
       assert ability.can?(:read, permission_set)
     end
-    it 'allows approver to approve Permission Set' do
-      ability = Ability.new(user)
-      assert ability.can?(:approve, permission_set)
-    end
     it 'does not allow approver to crud Permission Set' do
       ability = Ability.new(user)
       assert ability.cannot?(:crud, permission_set)
@@ -253,11 +251,8 @@ RSpec.describe Ability, type: :model do
     end
     it 'allows administrator to crud Permission Set' do
       ability = Ability.new(user)
-      assert ability.can?(:crud, permission_set)
-    end
-    it 'allows administrator to approve Permission Set' do
-      ability = Ability.new(user)
-      assert ability.can?(:approve, permission_set)
+      assert ability.can?(:read, permission_set)
+      assert ability.can?(:update, permission_set)
     end
   end
 end

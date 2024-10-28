@@ -1,0 +1,62 @@
+@import 'theme/colors', 'theme/typography', 'theme/breakpoints';
+
+#permission-request-header {
+  margin-top: 1%;
+  margin-bottom: 2%;
+}
+
+.permission-requests-show {
+  width: 100%;
+  padding-top: 3%;
+  display: flex;
+}
+
+.permission-requests-show table {
+  border: none;
+}
+
+.permission-requests-show td {
+  font-size: 1rem;
+}
+
+.permission-requests-show .key {
+  text-align: right;
+  background-color: $white;
+  border: none;
+}
+
+.permission-requests-show td:nth-of-type(even) {
+  border: 1px solid $medium_grey;
+}
+
+.interior {
+  border-top: none;
+  border-bottom: none;
+  border-left: 1px solid $medium_grey;
+  border-right: 1px solid $medium_grey;
+}
+
+.second-radio {
+  margin-left: 2rem;
+}
+
+#access-type-header {
+  margin-top: 4%;
+  margin-bottom: 2%;
+}
+
+#new-type {
+  background-color: $white;
+}
+
+#permission-request-buttons {
+  padding-top: 1%;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+}
+
+#permission-request-buttons .btn {
+  margin-left: -.3rem;
+  margin-right: 1.5rem;
+}

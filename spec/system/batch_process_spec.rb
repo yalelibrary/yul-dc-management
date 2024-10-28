@@ -66,7 +66,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     it "errors batch if CSV does not contain any row data" do
       page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/no_data.csv")
       click_button("Submit")
-      click_link(BatchProcess.last.id.to_s)
+      click_link(BatchProcess.last.id.to_s, match: :first)
       expect(page).to have_content("Process failed. The CSV does not contain any data.")
     end
 
@@ -107,7 +107,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Reassociate Child Oids")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        click_link(BatchProcess.last.id.to_s)
+        click_link(BatchProcess.last.id.to_s, match: :first)
         expect(page).to have_link("2002826")
         click_link("2002826")
         expect(page).to have_link("1021925")
@@ -121,7 +121,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Reassociate Child Oids")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        click_link(BatchProcess.last.id.to_s)
+        click_link(BatchProcess.last.id.to_s, match: :first)
         expect(page).to have_content("Batch Messages")
         expect(page).to have_content("Skipped Row").twice
       end
@@ -132,7 +132,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
         within("td:first-child") do
-          click_link(BatchProcess.last.id.to_s)
+          click_link(BatchProcess.last.id.to_s, match: :first)
         end
         expect(page).to have_content("Batch Messages")
         expect(page).to have_content("Skipped Row").once
@@ -167,10 +167,12 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     context "outputting csv" do
       let(:brbl) { AdminSet.find_by_key("brbl") }
       let(:other_admin_set) { FactoryBot.create(:admin_set) }
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: brbl, digital_object_source: "Preservica", preservica_uri: "/preservica_uri") }
+      # rubocop:disable Layout/LineLength
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: brbl, digital_object_source: "Preservica", preservica_uri: "/preservica_uri", preservica_representation_type: "Access") }
       let(:parent_object2) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: other_admin_set) }
       let(:parent_object3) { FactoryBot.create(:parent_object, oid: 2_004_548, admin_set: brbl) }
       let(:user) { FactoryBot.create(:user) }
+      # rubocop:enable Layout/LineLength
 
       before do
         stub_metadata_cloud("2004548")
@@ -198,6 +200,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.export_parent_metadata).to include "/preservica_uri"
         expect(BatchProcess.last.export_parent_metadata).to include "brbl"
         expect(BatchProcess.last.export_parent_metadata).to include "full_text"
+        expect(BatchProcess.last.export_parent_metadata).to include "last_sierra_update"
       end
 
       it "uploads a CSV of parent objects in order to create export of parent objects metadata fails 2005512 row due to admin set permissions" do
@@ -227,6 +230,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.parent_output_csv).to include "/preservica_uri"
         expect(BatchProcess.last.parent_output_csv).to include "brbl"
         expect(BatchProcess.last.parent_output_csv).to include "full_text"
+        expect(BatchProcess.last.parent_output_csv).to include "last_sierra_update"
         expect(BatchProcess.last.parent_output_csv).not_to include "2005512"
       end
 
@@ -330,7 +334,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Recreate Child Oid Ptiffs")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        click_link(BatchProcess.last.id.to_s)
+        click_link(BatchProcess.last.id.to_s, match: :first)
         expect(page).to have_link("2002826")
         click_link("2002826")
         expect(page).to have_link("1011398")
@@ -342,7 +346,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         select("Recreate Child Oid Ptiffs")
         click_button("Submit")
         expect(page).to have_content("Your job is queued for processing in the background")
-        click_link(BatchProcess.last.id.to_s)
+        click_link(BatchProcess.last.id.to_s, match: :first)
         expect(page).to have_content("Batch Messages")
         expect(page).to have_content("Skipped Row")
       end
@@ -370,7 +374,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         po.delete
         expect(po.destroyed?).to be true
         visit batch_processes_path
-        click_on(BatchProcess.last.id.to_s)
+        click_on(BatchProcess.last.id.to_s, match: :first)
         expect(page.body).to have_link(BatchProcess.last.id.to_s, href: "/batch_processes/#{BatchProcess.last.id}")
       end
     end

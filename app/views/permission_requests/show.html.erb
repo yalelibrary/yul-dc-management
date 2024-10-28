@@ -1,0 +1,119 @@
+<%= render partial: '/management/flash_messages' %>
+
+<h1 id='permission-request-header'>Permission Request</h1>
+<%= form_with(model: [:open_with_permission, @permission_request], url: permission_request_path(@permission_request), local: true) do |form| %>
+  <div class='permission-requests-show'>
+    <table class='metadata-block'>
+      <tbody>
+        <tr>
+          <td class='key'>Request ID:</td>
+          <td><%= @permission_request.id %></td>
+        </tr>
+        <tr>
+          <td class='key'>Permission Set Label:</td>
+          <td class='interior'><%= @permission_request.permission_set.label %></td>
+        </tr>
+        <tr>
+          <td class='key'>Request Date:</td>
+          <td class='interior'><%= @permission_request.created_at %></td>
+        </tr>
+        <tr>
+          <td class='key'>OID:</td>
+          <td class='interior'><%= link_to "#{@permission_request.parent_object.oid}", "#{ENV['BLACKLIGHT_BASE_URL']}/catalog/#{@permission_request.parent_object.oid}", target: :_blank %></td>
+        </tr>
+        <tr>
+          <td class='key'>User Name:</td>
+          <td class='interior'><%= @permission_request.permission_request_user.name %></td>
+        </tr>
+        <tr>
+          <td class='key'>User ID:</td>
+          <td class='interior'><%= @permission_request.permission_request_user.sub %></td>
+        </tr>
+        <tr>
+          <td class='key'>User Email:</td>
+          <td class="copy-email"><%= @permission_request.permission_request_user.email %> <em id="copy-icon" class='fa-regular fa-copy' onclick="copyToClipboard()"></em></td>
+        </tr>
+        <tr>
+          <td class='key'>User Note:</td>
+          <td class='interior'><%= @permission_request.user_note %></td>
+        </tr>
+        <tr>
+          <td class='key'>Request Status:</td>
+          <td class='interior'><%= @permission_request.request_status %></td>
+        </tr>
+        <tr>
+          <td class='key'>Approver:</td>
+          <td class='interior'><%= "#{@permission_request.approver}" %></td>
+        </tr>
+        <tr>
+          <td class='key'>Approver Note:</td>
+          <td class='interior'><%= form.text_area :approver_note %></td>
+        </tr>
+        <tr>
+          <td class='key'>Action:</td>
+          <td>
+            <%= form.radio_button :request_status, 'Approved' %> Approve
+            <%= form.radio_button :request_status, 'Denied', class: 'second-radio' %> Deny
+          </td>     
+        </tr>
+        <tr class='requests-table-row'>
+          <td class="key">Allow Access Until:</td>
+          <td><%= form.date_field :access_until, min: 0.days.ago %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <h2 id='access-type-header'>Suggest Change to Object Access Type</h2>
+  <div class='permission-requests-show'>
+    <table class='metadata-block'>
+      <tbody>
+        <tr>
+          <td class='key'>Change Access Type?</td>
+          <td>
+            <%= form.radio_button :change_access_type, 'No', onchange: 'disableNewVisibility()' %> No
+            <%= form.radio_button :change_access_type, 'Yes', onchange: 'disableNewVisibility()', class: 'second-radio' %> Yes
+          </td>     
+        </tr>
+        <tr>
+          <td class='key'>New Access Type:</td>
+          <td id='new-type'>
+            <%= form.radio_button :new_visibility, 'Yale Community Only' %> Yale Community Only
+            <%= form.radio_button :new_visibility, 'Public', class: 'second-radio' %> Public
+          </td>     
+        </tr>
+        <tr>
+          <td class='key'></td>
+          <td id='permission-request-buttons'>
+            <div>
+              <%= link_to 'Cancel', permission_requests_path, class: 'btn button secondary-button' %>
+              <%= form.submit('Save', {class: 'btn button btn-primary'}) %>
+            </div>
+          </td>     
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <%= link_to 'Back', permission_requests_path %>
+<% end %>
+
+<script>
+  function disableNewVisibility() {
+    if(document.getElementById('open_with_permission_permission_request_change_access_type_no').checked) {
+      document.getElementById('open_with_permission_permission_request_new_visibility_yale_community_only').disabled = true;
+      document.getElementById('open_with_permission_permission_request_new_visibility_public').disabled = true;
+    } else if (document.getElementById('open_with_permission_permission_request_change_access_type_yes').checked) {
+      document.getElementById('open_with_permission_permission_request_new_visibility_yale_community_only').disabled = false;
+      document.getElementById('open_with_permission_permission_request_new_visibility_public').disabled = false;
+    }
+  };
+
+  const copyToClipboard = async () => {
+    try {
+      const element = document.querySelector(".copy-email");
+      await navigator.clipboard.writeText(element.textContent);
+      $('#copy-icon').addClass('fa-check');
+    } catch (error) {
+      console.error("Failed to copy to clipboard:", error);
+    }
+  };
+</script>

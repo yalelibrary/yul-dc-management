@@ -7,12 +7,20 @@ METADATA_FIELDS = {
       'alternativeTitle_tesim'
     ]
   },
-  creator: {
+  all_creators: {
     label: 'Creator',
     solr_fields: [
       'creator_ssim',
       'creator_tesim'
-    ]
+    ],
+    digital_only: true
+  },
+  all_contributors: {
+    label: 'Contributor',
+    solr_fields: [
+      'contributor_tsim'
+    ],
+    digital_only: true
   },
   date: {
     label: 'Published/Created Date',
@@ -50,6 +58,12 @@ METADATA_FIELDS = {
     label: 'Description',
     solr_fields: [
       'description_tesim'
+    ]
+  },
+  provenanceUncontrolled: {
+    label: 'Provenance',
+    solr_fields: [
+      'provenanceUncontrolled_tesi'
     ]
   },
   digitization_note: {
@@ -113,6 +127,12 @@ METADATA_FIELDS = {
       'language_ssim'
     ]
   },
+  repository: {
+    label: "Repository",
+    solr_fields: [
+      'repository_ssi'
+    ]
+  },
   callNumber: {
     label: 'Call Number',
     solr_fields: [
@@ -160,7 +180,7 @@ METADATA_FIELDS = {
     ],
     digital_only: true
   },
-  extent_of_digitization: {
+  extent_of_digitization_text: {
     label: 'Extent of Digitization',
     solr_fields: [
       'extentOfDigitization_ssim'
@@ -188,6 +208,13 @@ METADATA_FIELDS = {
       'format_tesim',
       'format'
     ]
+  },
+  related_resource_online_links: {
+    label: 'Related Resources Online',
+    solr_fields: [
+      'relatedResourceOnline_ssim'
+    ],
+    digital_only: true
   },
   genre: {
     label: 'Genre',
@@ -248,12 +275,13 @@ METADATA_FIELDS = {
       'caption_tesim'
     ]
   },
-  rights: {
+  rights_statement: {
     label: 'Rights',
     solr_fields: [
       'rights_ssim',
       'rights_tesim'
-    ]
+    ],
+    digital_only: true
   },
   preferredCitation: {
     label: 'Citation',

@@ -9,6 +9,7 @@ class ParentObjectDatatable < ApplicationDatatable
     @view = opts[:view_context]
     @current_ability = opts[:current_ability]
     @set_keys = AdminSet.order(:key).distinct.pluck(:key)
+    @set_labels = OpenWithPermission::PermissionSet.order(:label).distinct.pluck(:label)
     super
   end
 
@@ -19,7 +20,7 @@ class ParentObjectDatatable < ApplicationDatatable
     @view_columns ||= {
       oid: { source: "ParentObject.oid", cond: :start_with, searchable: true, orderable: true },
       admin_set: { source: "AdminSet.key", cond: :string_eq, searchable: true, options: @set_keys, orderable: true },
-      authoritative_source: { source: "MetadataSource.metadata_cloud_name", cond: :string_eq, searchable: true, options: ["ladybird", "aspace", "ils"], orderable: true },
+      authoritative_source: { source: "MetadataSource.metadata_cloud_name", cond: :string_eq, searchable: true, options: MetadataSource.all_metadata_cloud_names, orderable: true },
       child_object_count: { source: "ParentObject.child_object_count", orderable: true },
       call_number: { source: "ParentObject.call_number", searchable: true, orderable: true },
       container_grouping: { source: "ParentObject.container_grouping", searchable: true, orderable: true },
@@ -33,14 +34,16 @@ class ParentObjectDatatable < ApplicationDatatable
       last_ladybird_update: { source: "ParentObject.last_ladybird_update", orderable: true },
       last_voyager_update: { source: "ParentObject.last_voyager_update", orderable: true },
       last_aspace_update: { source: "ParentObject.last_aspace_update", orderable: true },
+      last_sierra_update: { source: "ParentObject.last_sierra_update", orderable: true },
       last_id_update: { source: "ParentObject.last_id_update", orderable: true },
-      visibility: { source: "ParentObject.visibility", cond: :string_eq, searchable: true, options: ["Public", "Yale Community Only", "Private"], orderable: true },
+      visibility: { source: "ParentObject.visibility", cond: :string_eq, searchable: true, options: ["Public", "Yale Community Only", "Private", "Open with Permission"], orderable: true },
+      permission_set: { source: "OpenWithPermission::PermissionSet.label", cond: :string_eq, options: @set_labels, searchable: true, orderable: true },
       extent_of_digitization: { source: "ParentObject.extent_of_digitization", cond: :string_eq, searchable: true, options: ["Completely digitized", "Partially digitized"], orderable: true },
       digitization_note: { source: "ParentObject.digitization_note", cond: :like, searchable: true, orderable: true },
       digitization_funding_source: { source: "ParentObject.digitization_funding_source", cond: :like, searchable: true, orderable: true },
-      full_text: { source: "ChildObject.full_text", searchable: true, orderable: true },
+      full_text: { source: "ParentObject.extent_of_full_text", searchable: true, orderable: true },
       project_identifier: { source: "ParentObject.project_identifier", searchable: true, orderable: true },
-      created_at: { source: "ParentObject.created_at", searchable: true, orderable: true }
+      created_at: { source: "ParentObject.created_at", searchable: true, orderable: true, cond: :start_with }
     }
   end
   # rubocop: enable Metrics/MethodLength
@@ -66,13 +69,15 @@ class ParentObjectDatatable < ApplicationDatatable
         last_ladybird_update: parent_object.last_ladybird_update,
         last_voyager_update: parent_object.last_voyager_update,
         last_aspace_update: parent_object.last_aspace_update,
+        last_sierra_update: parent_object.last_sierra_update,
         last_id_update: parent_object.last_id_update,
         visibility: parent_object.visibility,
+        permission_set: parent_object&.permission_set&.label,
         extent_of_digitization: parent_object.extent_of_digitization,
         digitization_note: parent_object.digitization_note,
         digitization_funding_source: parent_object.digitization_funding_source,
         DT_RowId: parent_object.oid,
-        full_text: extent_of_full_text(parent_object),
+        full_text: parent_object.extent_of_full_text,
         project_identifier: parent_object.project_identifier,
         created_at: parent_object.created_at
       }
@@ -80,25 +85,6 @@ class ParentObjectDatatable < ApplicationDatatable
   end
   # rubocop:enable Rails/OutputSafety,Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
-
-  def extent_of_full_text(parent_object)
-    children_with_ft = false
-    children_without_ft = false
-
-    parent_object.child_objects.each do |object|
-      if object.full_text
-        children_with_ft = true
-      else
-        children_without_ft = true
-      end
-
-      break if children_with_ft && children_without_ft
-    end
-
-    return "Partial" if children_with_ft && children_without_ft # if some children have full text and others dont
-    return "None" unless children_with_ft # if none of children have full_text
-    "Yes"
-  end
 
   def oid_column(parent_object)
     result = []
@@ -115,6 +101,6 @@ class ParentObjectDatatable < ApplicationDatatable
   end
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
-    ParentObject.includes(:child_objects).accessible_by(@current_ability, :read).joins(:authoritative_metadata_source, :admin_set).where("visibility != 'Redirect'").references(:child_objects)
+    ParentObject.accessible_by(@current_ability, :read).joins(:authoritative_metadata_source, :admin_set).left_outer_joins(:permission_set).where("visibility != 'Redirect'")
   end
 end
