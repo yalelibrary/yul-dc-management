@@ -256,7 +256,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def sync_from_preservica_update_existing_children(preservica_children_hash)
     preservica_children_hash.each_value do |value|
-      co = find_child_for_sync(batch_action, value)
+      co = ChildObject.find_by(parent_object_oid: oid, preservica_content_object_uri: value[:content_uri])
       next if co.nil?
       co.pyramidal_tiff.force_update = true
       co.order = value[:order]
