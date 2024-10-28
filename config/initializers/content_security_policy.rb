@@ -12,10 +12,11 @@ Rails.application.configure do
     policy.img_src     :self, :https, :data
     policy.object_src  :none
     policy.script_src  :self, :https
-    # policy.style_src   :self, :https
-    # policy.style_src   :unsafe_inline
+    # policy.script_src  :self, 'http://0.0.0.0:3001/management/packs/js/application-0491e1d712b80214aafb.js', 'application-0491e1d712b80214aafb.js'
+    policy.style_src   :self, :https
+    # policy.style_src   :self, :unsafe_inline
     # policy.style_src :self, "'sha256-WAyOw4V+FqDc35lQPyRADLBWbuNK8ahvYEaQIYF1+Ps='" # Turbo progress bar stylesheet
-    policy.style_src   :self, "'sha256-165u/al4KxO8KYq3pdXjcUUJwNqLJDnepH3DwyeUdTo='" # https://github.com/webpack-contrib/style-loader/blob/master/src/runtime/insertBySelector.js#L39
+    # policy.style_src   :self, "'sha256-165u/al4KxO8KYq3pdXjcUUJwNqLJDnepH3DwyeUdTo='" # https://github.com/webpack-contrib/style-loader/blob/master/src/runtime/insertBySelector.js#L39
     # policy.style_src_elem   :self, "'sha256-165u/al4KxO8KYq3pdXjcUUJwNqLJDnepH3DwyeUdTo='" # https://github.com/webpack-contrib/style-loader/blob/master/src/runtime/insertBySelector.js#L39
     # policy.style_src_attr :unsafe_inline
     # Specify URI for violation reports
