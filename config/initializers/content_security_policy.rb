@@ -8,19 +8,21 @@
 Rails.application.configure do
   config.content_security_policy do |policy|
     policy.default_src :self, :https
-    policy.font_src    :self, 'static.library.yale.edu'
+    policy.font_src    :self, 'static.library.yale.edu'#, 'ka-p.fontawesome.com'
     policy.img_src     :self, :https, :data
     policy.object_src  :none
-    policy.script_src  :self, :https
+    policy.script_src  :self, :https#'cdn.datatables.net', 'datatables.net-bs4'
     # policy.script_src  :self, 'http://0.0.0.0:3001/management/packs/js/application-0491e1d712b80214aafb.js', 'application-0491e1d712b80214aafb.js'
     policy.style_src   :self, :https
     # policy.style_src   :self, :unsafe_inline
+    # policy.style_src   :self, 'kit.fontawesome.com'
+    # policy.style_src   :self, 'maxcdn.bootstrapcdn.com'
     # policy.style_src :self, "'sha256-WAyOw4V+FqDc35lQPyRADLBWbuNK8ahvYEaQIYF1+Ps='" # Turbo progress bar stylesheet
     # policy.style_src   :self, "'sha256-165u/al4KxO8KYq3pdXjcUUJwNqLJDnepH3DwyeUdTo='" # https://github.com/webpack-contrib/style-loader/blob/master/src/runtime/insertBySelector.js#L39
     # policy.style_src_elem   :self, "'sha256-165u/al4KxO8KYq3pdXjcUUJwNqLJDnepH3DwyeUdTo='" # https://github.com/webpack-contrib/style-loader/blob/master/src/runtime/insertBySelector.js#L39
     # policy.style_src_attr :unsafe_inline
     # Specify URI for violation reports
-    # policy.report_uri -> { "https://api.honeybadger.io/v1/browser/csp?api_key=#{ENV['HONEYBADGER_API_KEY_MANAGEMENT']}&report_only=true&env=#{ENV['CLUSTER_NAME']}" }
+    policy.report_uri -> { "https://api.honeybadger.io/v1/browser/csp?api_key=#{ENV['HONEYBADGER_API_KEY_MANAGEMENT']}&report_only=true&env=#{ENV['CLUSTER_NAME']}" } unless ENV['CLUSTER_NAME'] == 'local'
   end
 
   # Generate session nonces for permitted importmap and inline scripts
