@@ -8,6 +8,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:admin_set_sml) { FactoryBot.create(:admin_set, key: 'sml') }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:aspace_parent) { FactoryBot.create(:parent_object, oid: 200_000_000, admin_set: AdminSet.find_by_key('brbl')) }
+  # let(:sml_parent) { FactoryBot.create(:parent_object, oid: 12_345, admin_set: AdminSet.find_by_key('sml')) }
   let(:co_1) { FactoryBot.create(:child_object, oid: 1_002_533, parent_object: aspace_parent, order: 1, label: 'original label', caption: 'original caption') }
   let(:co_2) { FactoryBot.create(:child_object, oid: 1_002_534, parent_object: aspace_parent, order: 2, label: 'original label', caption: 'original caption') }
   let(:co_3) { FactoryBot.create(:child_object, oid: 1_002_535, parent_object: aspace_parent, order: 3, label: 'original label', caption: 'original caption') }
@@ -140,6 +141,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     end
 
     it 'can throw an error if user does not have permission on parent object' do
+      # byebug
       allow(S3Service).to receive(:s3_exists?).and_return(false)
       parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('brbl'))
       parent_object.save
