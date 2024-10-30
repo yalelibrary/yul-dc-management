@@ -4,18 +4,9 @@
   <title>YulDcManagement</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload', nonce: true %>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  <%
-=begin%>
- <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', 'nonce': true %> 
- not sure if the above is the right way to do the nonce stuff
-<%
-=end%>
-
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', nonce: true %>
   <%= render 'layouts/header' %>
-
 </head>
 
 <body>
