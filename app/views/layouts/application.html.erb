@@ -4,8 +4,14 @@
   <title>YulDcManagement</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload', nonce: true %>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', nonce: true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%
+=begin%>
+ <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload', nonce: true %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', nonce: true %> 
+<%
+=end%>
   <%= render 'layouts/header' %>
 </head>
 
