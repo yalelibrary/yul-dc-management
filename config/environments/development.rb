@@ -98,11 +98,9 @@ Rails.application.configure do
 
   config.web_console.allowed_ips = ["172.0.0.0/8", '192.168.0.0/16', '127.0.0.1']
 
-  config.serve_static_assets = true
-
   config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins ['https://iiif_tools.collections.library.yale.edu', 'https://static.library.yale.edu', 'https://static.library.yale.edu/fonts/mallory/Mallory-Light.woff2', /\Ahttp.*/]
+      origins ['https://iiif_tools.collections.library.yale.edu', /\Ahttp.*/]
       resource '*', headers: :any, methods: [:get, :post, :delete, :options], credentials: true
     end
   end
