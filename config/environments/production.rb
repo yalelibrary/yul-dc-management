@@ -128,8 +128,7 @@ Rails.application.configure do
 
   config.middleware.insert_before 0, Rack::Cors do
     allow do
-      # origins ['https://iiif_tools.collections.library.yale.edu', /\Ahttp.*/]
-      origins ['https://iiif_tools.collections.library.yale.edu', 'https://static.library.yale.edu/fonts/yalenew/YaleNew-normal-normal/yalenew-roman-webfont.woff2', /\Ahttp.*/]
+      origins ['https://iiif_tools.collections.library.yale.edu', /\Ahttp.*/]
       resource '*', headers: :any, methods: [:get, :post, :delete, :options], credentials: true
     end
   end
