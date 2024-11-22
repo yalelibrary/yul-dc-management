@@ -2,14 +2,20 @@
 namespace :child_objects do
   desc "Read ladybird checksums from TSV"
   task :load_ladybird_checksums, [:files_glob] => :environment do |_, args|
-    Rails.logger.level = Logger::DEBUG
     headers = ['child_oid', 'md5', 'sha256', 'file_name', 'file_size', 'label']
     processed_child_objects_count = 0
     child_objects_not_found = []
-    Dir[args[:files_glob]].each do |file|
+    # if connection breaks between files restart from last file
+    # if connection breaks between child objects restart from last child object
+
+    # will need
+    # way to start from a certain index
+    # to store the index prior to failure 
+
+    Dir[args[:files_glob]].each_with_index do |file, index|
       Rails.logger.info("Number of child objects in file: #{File.read(file).each_line.count}")
       open(file) do |f|
-        f.each do |line|
+        f.each_with_index do |line, index|
           fields = Hash[headers.zip(line.strip.split("\t"))]
           child_object = ChildObject.find_by(oid: fields['child_oid'])
           child_objects_not_found << fields['child_oid'] if child_object.nil?
