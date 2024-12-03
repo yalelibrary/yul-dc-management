@@ -9,6 +9,7 @@ namespace :child_objects do
       Rails.logger.info("Number of child objects in file: #{File.read(file).each_line.count}")
       open(file) do |f|
         f.each do |line|
+          Rails.logger.info("Number of processed children: #{processed_child_objects_count}")
           fields = Hash[headers.zip(line.strip.split("\t"))]
           child_object = ChildObject.find_by(oid: fields['child_oid'])
           child_objects_not_found << fields['child_oid'] if child_object.nil?
@@ -22,7 +23,7 @@ namespace :child_objects do
       end
     end
     Rails.logger.info("Number of child objects in files processed: #{processed_child_objects_count}")
-    Rails.logger.info("Number of child objects not found: #{child_objects_not_found.size}")
+    Rails.logger.info("Number of child objects not found: #{child_objects_not_found&.size}")
     Rails.logger.info("OIDs of child objects not found: #{child_objects_not_found}")
   end
 end
