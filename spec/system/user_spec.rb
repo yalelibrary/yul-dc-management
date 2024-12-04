@@ -75,7 +75,7 @@ RSpec.describe 'Users', type: :system, js: true do
   describe 'are editable' do
     it 'and require an email to be present' do
       visit users_path
-      page.find(:css, 'svg.fa-pencil').click
+      click_link("Edit User")
       expect(page).to have_content('Email')
       fill_in('Email', with: '')
       click_on('Update User')
