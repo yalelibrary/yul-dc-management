@@ -38,7 +38,7 @@ class UserDatatable < ApplicationDatatable
 
   def with_icon(class_name, path, options = {})
     link_to(path, options) do
-      content_tag(:i, '', class: class_name, title: "Edit User")
+      content_tag(:i, '', class: class_name)
     end
   end
 
