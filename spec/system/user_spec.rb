@@ -86,7 +86,7 @@ RSpec.describe 'Users', type: :system, js: true do
     end
 
     it 'and require their full name to be present' do
-      edit_user_path(user.id)
+      visit edit_user_path(user.id)
       expect(page).to have_content('First name')
       fill_in('First name', with: '')
       click_on('Update User')
