@@ -194,6 +194,8 @@ GEM
       rake
     fiber-annotation (0.2.0)
     fiber-local (1.0.0)
+    font-awesome-rails (4.7.0.9)
+      railties (>= 3.2, < 9.0)
     fugit (1.11.1)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
@@ -531,6 +533,7 @@ DEPENDENCIES
   devise
   factory_bot_rails
   ffaker
+  font-awesome-rails (~> 4.7, >= 4.7.0.8)
   github_changelog_generator
   good_job (~> 3.17)
   honeybadger (~> 4.0)
