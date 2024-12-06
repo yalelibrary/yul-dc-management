@@ -11,8 +11,8 @@ if ENV["RAILS_ENV"] == 'production' || ENV["RAILS_ENV"] == 'staging'
       policy.font_src    :self, 'static.library.yale.edu'
       policy.img_src     :self, :https, :data
       policy.object_src  :none
-      policy.script_src  :self, 'siteimproveanalytics.com'
-      policy.style_src   :self
+      policy.script_src  :self, :unsafe_inline, 'siteimproveanalytics.com'
+      policy.style_src   :self, :unsafe_inline
       policy.connect_src :self
       # Specify URI for violation reports
       unless ENV['CLUSTER_NAME'] == 'local'
@@ -24,7 +24,7 @@ if ENV["RAILS_ENV"] == 'production' || ENV["RAILS_ENV"] == 'staging'
 
     config.content_security_policy_nonce_generator = ->(request) { request.session.id.to_s }
 
-    config.content_security_policy_nonce_directives = %w[script-src style-src]
+    # config.content_security_policy_nonce_directives = %w[script-src style-src]
 
     # Report violations without enforcing the policy.
     # config.content_security_policy_report_only = true
