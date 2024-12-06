@@ -6,13 +6,14 @@ namespace :child_objects do
     processed_child_objects_count = 0
     child_objects_not_found = []
     Dir[args[:files_glob]].each do |file|
-      Rails.logger.info("Number of child objects in file: #{File.read(file).each_line.count}")
+      line_count = File.read(file).each_line.count
+      Rails.logger.info("Number of child objects in file: #{line_count}")
       open(file) do |f|
         f.each do |line|
           Rails.logger.info("Number of processed children: #{processed_child_objects_count}")
           fields = Hash[headers.zip(line.strip.split("\t"))]
           child_object = ChildObject.find_by(oid: fields['child_oid'])
-          child_objects_not_found << fields['child_oid'] if child_object.nil?
+          child_objects_not_found << fields['child_oid'].to_s if child_object.nil?
           next unless child_object
           child_object.md5_checksum = fields['md5']
           child_object.sha256_checksum = fields['sha256']
