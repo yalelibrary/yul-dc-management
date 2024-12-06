@@ -23,7 +23,7 @@ namespace :child_objects do
       end
     end
     Rails.logger.info("Number of child objects in files processed: #{processed_child_objects_count}")
-    Rails.logger.info("Number of child objects not found: #{child_objects_not_found&.size}")
+    Rails.logger.info("Number of child objects not found: #{child_objects_not_found&.count}")
     Rails.logger.info("OIDs of child objects not found: #{child_objects_not_found}")
   end
 end
