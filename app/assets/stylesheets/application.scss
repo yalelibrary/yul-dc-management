@@ -17,8 +17,9 @@
 // TODO(alishaevn): figure out how to import all files in theme once, instead of in every file ;
 // @import 'theme/*';
 
-@import 'theme/typography';
 @import "font-awesome";
+@import 'theme/typography';
+
 
 .main-content{
   min-height: 90vh;

@@ -12,7 +12,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap', '~> 4.6'
 gem 'coderay', '~> 1.1', '>= 1.1.3'
 gem 'devise'
-gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.8'
+gem "font-awesome-sass", "~> 6.5.2"
 gem 'github_changelog_generator'
 gem 'good_job', '~> 3.17'
 gem 'honeybadger', '~> 4.0'
