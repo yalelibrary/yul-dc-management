@@ -23,13 +23,13 @@ module CreateParentObject
           batch_processing_event(e.message, e.kind)
           next
         rescue PreservicaImageService::PreservicaImageServiceError => e
-          if e.message.include?("bad URI")
-            batch_processing_event("The given URI does not match the URI of an entity in Preservica. Please make sure your URI is correct, starts with /structure-object/ or /information-object/, and includes no spaces or line breaks. ------------ Message from System: Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
-          elsif e.message.include?("entity.does.not.exist")
-            batch_processing_event("The given URI does not match the URI of an entity of this type in Preservica. Please make sure your Preservica URI and object structure type is correct. ------------ Message from System: Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
-          else
+          # if e.message.include?("bad URI")
+          #   batch_processing_event("The given URI does not match the URI of an entity in Preservica. Please make sure your URI is correct, starts with /structure-object/ or /information-object/, and includes no spaces or line breaks. ------------ Message from System: Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
+          # elsif e.message.include?("entity.does.not.exist")
+          #   batch_processing_event("The given URI does not match the URI of an entity of this type in Preservica. Please make sure your Preservica URI and object structure type is correct. ------------ Message from System: Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
+          # else
             batch_processing_event("Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
-          end
+          # end
           next
         end
       else
