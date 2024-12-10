@@ -30,11 +30,11 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
     before do
       # file not present
       stub_request(:get, File.join(child_object_one.access_master_path)).to_return(status: 200, body: '')
-      # file present but file size is greater than 0
+      # file present but file size is less than 0
       stub_request(:get, File.join(child_object_two.access_master_path)).to_return(status: 200, body: File.open(File.join(child_object_two.access_master_path)).read)
       # file present and checksum matches
       stub_request(:get, File.join(child_object_three.access_master_path)).to_return(status: 200, body: File.open(File.join(child_object_three.access_master_path)).read)
-      # file present but checksum does not match
+      # file present and file size greater than 0 but checksum does not match
       stub_request(:get, File.join(child_object_four.access_master_path)).to_return(status: 200, body: File.open(File.join(child_object_three.access_master_path)).read)
     end
 
