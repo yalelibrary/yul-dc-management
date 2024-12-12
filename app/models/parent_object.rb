@@ -43,7 +43,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Layout/LineLength
   validate :validate_visibility
   before_save :check_for_redirect
-  before_save :check_permission_set
 
   def check_for_redirect
     minify if redirect_to.present?
@@ -92,10 +91,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       return true
     end
     self.visibility = 'Private'
-  end
-
-  def check_permission_set
-    self.permission_set = nil if visibility != "Open with Permission"
   end
 
   def initialize(attributes = nil)
