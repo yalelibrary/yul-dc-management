@@ -5,6 +5,7 @@ module IntegrityCheckable
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Layout/LineLength
   def integrity_check
@@ -26,8 +27,18 @@ module IntegrityCheckable
         add_admin_set_to_bp(sets, co)
 
         if co.access_master_exists?
-          co.parent_object.processing_event("Integrity check complete for Child Object: #{co.oid}", 'review-complete')
-          co.processing_event("Child Object: #{co.oid} - file exists.", 'review-complete')
+          if co&.file_size&.positive?
+            if co&.access_master_checksum_matches?
+              co.parent_object.processing_event("Integrity check complete for Child Object: #{co.oid}", 'review-complete')
+              co.processing_event("Child Object: #{co.oid} - file exists and checksum matches.", 'review-complete')
+            else
+              co.parent_object.processing_event("Integrity check complete for Child Object: #{co.oid}", 'failed')
+              co.processing_event("The Child Object: #{co.oid} - has a checksum mismatch. The checksum of the image file saved to this child oid does not match the checksum of the image file in the database. This may mean that the image has been corrupted. Please verify integrity of image for Child Object: #{co.oid} - by manually comparing the checksum values and update record as necessary.", 'failed')
+            end
+          else
+            co.parent_object.processing_event("Integrity check complete for Child Object: #{co.oid}", 'failed')
+            co.processing_event("Child Object: #{co.oid} - has a file size of 0. Please verify image for Child Object: #{co.oid}.", 'failed')
+          end
         else
           co.parent_object.processing_event("Integrity check complete for Child Object: #{co.oid}", 'failed')
           co.processing_event("Child Object: #{co.oid} - file not found at #{co.access_master_path} on #{ENV['ACCESS_MASTER_MOUNT']}.", 'failed')
@@ -42,6 +53,7 @@ module IntegrityCheckable
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Layout/LineLength
 end
