@@ -25,7 +25,7 @@ class SetupMetadataJob < ApplicationJob
       return
     end
 
-    if (parent_object.visibility == 'Open with Permission' && parent_object.permission_set_id.nil?) || (parent_object.authoritative_json&.[]('itemPermission') == 'Open with Permission' && parent_object.permission_set_id.nil?) || (parent_object.authoritative_json&.[]('itemPermission') == 'Open With Permission' && parent_object.permission_set_id.nil?)
+    if (parent_object.visibility == 'Open with Permission' && parent_object.permission_set_id.nil?) || (parent_object.authoritative_json&.[]('itemPermission') == 'Open with Permission' && parent_object.permission_set_id.nil?)
       permission_set = OpenWithPermission::PermissionSet.find_by(key: parent_object.permission_set&.key)
       if permission_set.nil?
         parent_object.processing_event("SetupMetadataJob failed. Permission Set information missing or nonexistent from CSV.  To successfully ingest a Permission Set Key value must be present for any parent objects that have 'Open with Permission' visibility. Parent Object has defaulted to private and no child objects were created.  Please delete parent object and re-attempt ingest with Permission Set Key and Visibility values in CSV.", 'failed')
