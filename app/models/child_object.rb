@@ -97,7 +97,6 @@ class ChildObject < ApplicationRecord
   # rubocop:enable  Layout/LineLength
 
   def checksum_matches?
-    access_sha512_checksum = Digest::SHA512.file(access_master_path).to_s
     access_sha256_checksum = Digest::SHA256.file(access_master_path).to_s
     access_sha1_checksum = Digest::SHA1.file(access_master_path).to_s
     access_md5_checksum = Digest::MD5.file(access_master_path).to_s
@@ -121,6 +120,10 @@ class ChildObject < ApplicationRecord
 
   def access_master_exists?
     File.exist?(access_master_path)
+  end
+
+  def access_sha512_checksum
+    Digest::SHA512.file(access_master_path).to_s
   end
 
   def remote_access_master_path
