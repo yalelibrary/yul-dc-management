@@ -9,10 +9,14 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
   let(:parent_object_two) { FactoryBot.create(:parent_object, oid: '222', child_object_count: 1, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
   let(:parent_object_three) { FactoryBot.create(:parent_object, oid: '333', child_object_count: 1, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
   let(:parent_object_four) { FactoryBot.create(:parent_object, oid: '444', child_object_count: 1, authoritative_metadata_source: metadata_source, admin_set: admin_set) }
-  let(:child_object_one) { FactoryBot.create(:child_object, oid: '1', parent_object: parent_object_one) }
-  let(:child_object_two) { FactoryBot.create(:child_object, oid: '356789', parent_object: parent_object_two, checksum: '78909999999999999') }
-  let(:child_object_three) { FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object_three, file_size: 1234, checksum: 'f3755c5d9e086b4522a0d3916e9a0bfcbd47564e') }
-  let(:child_object_four) { FactoryBot.create(:child_object, oid: '567890', parent_object: parent_object_four, file_size: 1234, checksum: 'f3755c5d9e086b4522a0d3916e9a0bfcbd47564et') }
+
+  let(:child_object_one) { FactoryBot.create(:child_object, oid: '1', parent_object: parent_object_one, sha256_checksum: '08a76890fcf6c7f9fa27a1191a53dcfdb198461b1ffff9435198b7b86a6d392a') }
+  let(:child_object_two) { FactoryBot.create(:child_object, oid: '356789', parent_object: parent_object_two, md5_checksum: '1c7ebd11e1060b4e2c9476950086556bz') }
+  let(:child_object_three) do
+    FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object_three, file_size: 1234,
+                                     sha512_checksum: 'd6e3926fbe14fedbf3a568b6a5dbdb3e8b2312f217daa460a743559d41a688af4a7c701e7bac908fc7e3fd51c505fa01dad9eee96fcfd2666e92c648249edf02')
+  end
+  let(:child_object_four) { FactoryBot.create(:child_object, oid: '567890', parent_object: parent_object_four, file_size: 1234, checksum: 'f3755c5d9e086b4522a0d3916e9a0bfcbd47564ef') }
 
   around do |example|
     original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
