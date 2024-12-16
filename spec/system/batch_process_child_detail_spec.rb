@@ -5,7 +5,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
   context 'with expected success with a csv import', skip_db_cleaner: true do
     let(:user) { FactoryBot.create(:user, uid: 'johnsmith2531') }
     let(:brbl) { AdminSet.find_by_key('brbl')  }
-    let(:sml) { AdminSet.find_by_key('sml') }
+    let(:sml) { AdminSet.find_by_key('sml') }  
     let(:batch_process) do
       FactoryBot.create(
         :batch_process,
@@ -27,6 +27,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
       ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
     end
+  
     before do
       stub_metadata_cloud('2005512')
       stub_ptiffs_and_manifests
@@ -50,6 +51,32 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       expect(page).to have_content('Complete')
       # shows the duration of the batch process
       expect(page).to have_content('seconds')
+    end
+  end
+
+  context 'with expected failure with an integrity check job' do
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: '444', child_object_count: 1, authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
+    let(:child_object) { FactoryBot.create(:child_object, oid: '567890', parent_object: parent_object, file_size: 1234, checksum: 'f3755c5d9e086b4522a0d3916e9a0bfcbd47564ef') }
+
+    around do |example|
+      access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
+      ENV["ACCESS_MASTER_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
+      perform_enqueued_jobs do
+        example.run
+      end  
+      ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
+    end
+
+    before do
+      allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+      ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
+      stub_request(:get, File.join(child_object.access_master_path)).to_return(status: 200, body: File.open(File.join(child_object.access_master_path)).read)
+    end
+
+    it 'will allow user to update the child object checksum' do
+      expect { ChildObjectIntegrityCheckJob.new.perform }.to change { IngestEvent.count }.by(3)
+      # byebug
+      expect(child_object.events_for_batch_process(BatchProcess.where(batch_action: 'integrity check'))[0].reason).to eq "The Child Object: #{child_object.oid} - has a checksum mismatch. The checksum of the image file saved to this child oid does not match the checksum of the image file in the database. This may mean that the image has been corrupted. Please verify integrity of image for Child Object: #{child_object.oid} - by manually comparing the checksum values and update record as necessary."
     end
   end
 end
