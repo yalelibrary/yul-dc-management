@@ -88,8 +88,8 @@
       <td class='time'><%= @failure[:time] %></td>
     </tr>
     </tbody>
-    <% if @failure[:reason].include? 'file not found' %>
-      <%= button_to 'Update Checksum' , update_child_object_path(sha512_checksum: @child_object.access_sha512_checksum), :title=> "Update the checksum stored in the database for this child object to the image's current SHA512 checksum", :confirm => 'Are you sure you want to update the checksum stored in the database for this child object?' %>
+    <% if @failure[:reason].include? 'checksum mismatch' %>
+      <%= button_to 'Update Checksum', child_object_path(sha512_checksum: @child_object.access_sha512_checksum), method: :put, :title=> "Update the checksum stored in the database for this child object to the image's current SHA512 checksum" %>
     <% end %>
   </table>
 <% end %>
