@@ -86,5 +86,3 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
     end
   end
 end
-
-# s3/05/54/16/42/43/54/16424354.tif

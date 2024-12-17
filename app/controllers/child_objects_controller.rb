@@ -69,7 +69,7 @@ class ChildObjectsController < ApplicationController
   def update_checksum
     respond_to do |format|
       if @child_object.update(sha512_checksum: @child_object&.access_sha512_checksum)
-        format.html { redirect_to @child_object, notice: 'Child object was successfully updated.' }
+        format.html { redirect_to request.referrer, notice: 'Child object was successfully updated.' }
         format.json { render :show, status: :ok, location: @child_object }
       else
         format.html { render :edit }
