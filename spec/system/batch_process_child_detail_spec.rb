@@ -81,8 +81,8 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       expect(child_object.events_for_batch_process(BatchProcess.where(batch_action: 'integrity check'))[0].reason).to eq "The Child Object: #{child_object.oid} - has a checksum mismatch. The checksum of the image file saved to this child oid does not match the checksum of the image file in the database. This may mean that the image has been corrupted. Please verify integrity of image for Child Object: #{child_object.oid} - by manually comparing the checksum values and update record as necessary."
       visit show_child_batch_process_path(child_oid: child_object.oid, id: BatchProcess.where(batch_action: 'integrity check')[0].id, oid: parent_object.oid)
       expect(page).to have_button('Update Checksum')
-      # click_on 'Update Checksum'
-      # expect(child_object.sha512_checksum).to eq("d6e3926fbe14fedbf3a568b6a5dbdb3e8b2312f217daa460a743559d41a688af4a7c701e7bac908fc7e3fd51c505fa01dad9eee96fcfd2666e92c648249edf02")
+      click_on 'Update Checksum'
+      expect(child_object.reload.sha512_checksum).to eq("d6e3926fbe14fedbf3a568b6a5dbdb3e8b2312f217daa460a743559d41a688af4a7c701e7bac908fc7e3fd51c505fa01dad9eee96fcfd2666e92c648249edf02")
     end
   end
 end
