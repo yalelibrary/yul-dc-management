@@ -5,7 +5,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
   context 'with expected success with a csv import', skip_db_cleaner: true do
     let(:user) { FactoryBot.create(:user, uid: 'johnsmith2531') }
     let(:brbl) { AdminSet.find_by_key('brbl')  }
-    let(:sml) { AdminSet.find_by_key('sml') }  
+    let(:sml) { AdminSet.find_by_key('sml') }
     let(:batch_process) do
       FactoryBot.create(
         :batch_process,
@@ -27,7 +27,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
       ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
     end
-  
+
     before do
       stub_metadata_cloud('2005512')
       stub_ptiffs_and_manifests
@@ -64,7 +64,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       ENV["ACCESS_MASTER_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
       perform_enqueued_jobs do
         example.run
-      end  
+      end
       ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
     end
 
@@ -74,7 +74,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
       stub_request(:get, File.join(child_object.access_master_path)).to_return(status: 200, body: File.open(File.join(child_object.access_master_path)).read)
     end
-
+    # rubocop:disable Layout/LineLength
     it 'will allow user to update the child object checksum' do
       expect(child_object.sha512_checksum).to be_nil
       expect { ChildObjectIntegrityCheckJob.new.perform }.to change { IngestEvent.count }.by(3)
@@ -84,5 +84,6 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       click_on 'Update Checksum'
       expect(child_object.reload.sha512_checksum).to eq("d6e3926fbe14fedbf3a568b6a5dbdb3e8b2312f217daa460a743559d41a688af4a7c701e7bac908fc7e3fd51c505fa01dad9eee96fcfd2666e92c648249edf02")
     end
+    # rubocop:enable Layout/LineLength
   end
 end
