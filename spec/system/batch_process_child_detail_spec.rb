@@ -55,7 +55,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
   end
 
   context 'with expected failure with an integrity check job' do
-    let(:user) { FactoryBot.create(:user, uid: 'johnsmith2531') }
+    let(:user) { FactoryBot.create(:user, uid: 'johnsmith25312') }
     let(:parent_object) { FactoryBot.create(:parent_object, oid: '444', child_object_count: 1, authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
     let(:child_object) { FactoryBot.create(:child_object, oid: '567890', parent_object: parent_object, file_size: 1234, checksum: 'f3755c5d9e086b4522a0d3916e9a0bfcbd47564ef') }
 
