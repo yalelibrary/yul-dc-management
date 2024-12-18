@@ -22,7 +22,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   end
 
   resources :users, only: [:index, :edit, :update, :show, :new, :create]
-  resources :child_objects
+  resources :child_objects do
+    post :update_checksum, on: :member
+  end
   resources :admin_sets
   resources :permission_sets do
     get 'permission_set_terms', on: :member

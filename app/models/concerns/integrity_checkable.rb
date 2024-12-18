@@ -28,7 +28,7 @@ module IntegrityCheckable
 
         if co.access_master_exists?
           if co&.file_size&.positive?
-            if co&.access_master_checksum_matches?
+            if co&.checksum_matches?
               co.parent_object.processing_event("Integrity check complete for Child Object: #{co.oid}", 'review-complete')
               co.processing_event("Child Object: #{co.oid} - file exists and checksum matches.", 'review-complete')
             else
