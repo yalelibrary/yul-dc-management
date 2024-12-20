@@ -68,11 +68,17 @@ class ChildObjectsController < ApplicationController
 
   def update_checksum
     respond_to do |format|
-      if @child_object.update(sha512_checksum: @child_object&.access_sha512_checksum)
+      if @child_object.update(
+          sha512_checksum: @child_object&.access_sha512_checksum,
+          file_size: @child_object&.access_file_size,
+          checksum: nil,
+          md5_checksum: nil,
+          sha256_checksum: nil
+        )
         format.html { redirect_to request.referer, notice: 'Child object was successfully updated.' }
         format.json { render :show, status: :ok, location: @child_object }
       else
-        format.html { render :edit }
+        format.html { redirect_to request.referer, notice: @child_object.errors }
         format.json { render json: @child_object.errors, status: :unprocessable_entity }
       end
     end

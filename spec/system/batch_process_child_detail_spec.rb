@@ -77,12 +77,20 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
     # rubocop:disable Layout/LineLength
     it 'will allow user to update the child object checksum' do
       expect(child_object.sha512_checksum).to be_nil
+      expect(child_object.reload.sha256_checksum).to be_nil
+      expect(child_object.reload.md5_checksum).to be_nil
+      expect(child_object.checksum).to eq("f3755c5d9e086b4522a0d3916e9a0bfcbd47564ef")
+      expect(child_object.file_size).to eq(1234)
       expect { ChildObjectIntegrityCheckJob.new.perform }.to change { IngestEvent.count }.by(3)
       expect(child_object.events_for_batch_process(BatchProcess.where(batch_action: 'integrity check'))[0].reason).to eq "The Child Object: #{child_object.oid} - has a checksum mismatch. The checksum of the image file saved to this child oid does not match the checksum of the image file in the database. This may mean that the image has been corrupted. Please verify integrity of image for Child Object: #{child_object.oid} - by manually comparing the checksum values and update record as necessary."
       visit show_child_batch_process_path(child_oid: child_object.oid, id: BatchProcess.where(batch_action: 'integrity check')[0].id, oid: parent_object.oid)
       expect(page).to have_button('Update Checksum')
       click_on 'Update Checksum'
       expect(child_object.reload.sha512_checksum).to eq("d6e3926fbe14fedbf3a568b6a5dbdb3e8b2312f217daa460a743559d41a688af4a7c701e7bac908fc7e3fd51c505fa01dad9eee96fcfd2666e92c648249edf02")
+      expect(child_object.reload.checksum).to be_nil
+      expect(child_object.reload.sha256_checksum).to be_nil
+      expect(child_object.reload.md5_checksum).to be_nil
+      expect(child_object.file_size).to eq(1_131_966)
     end
     # rubocop:enable Layout/LineLength
   end

@@ -97,17 +97,18 @@ class ChildObject < ApplicationRecord
   # rubocop:enable  Layout/LineLength
 
   def checksum_matches?
-    access_sha256_checksum = Digest::SHA256.file(access_master_path).to_s
-    access_sha1_checksum = Digest::SHA1.file(access_master_path).to_s
-    access_md5_checksum = Digest::MD5.file(access_master_path).to_s
-    if checksum.present?
-      checksum == access_sha1_checksum
-    elsif md5_checksum.present?
-      md5_checksum == access_md5_checksum
-    elsif sha256_checksum.present?
-      sha256_checksum == access_sha256_checksum
-    elsif sha512_checksum.present?
+    # preservica or manually updated by user
+    if sha512_checksum.present?
       sha512_checksum == access_sha512_checksum
+    # goobi
+    elsif checksum.present?
+      checksum == Digest::SHA1.file(access_master_path).to_s
+    # ladybird
+    elsif sha256_checksum.present?
+      sha256_checksum == Digest::SHA256.file(access_master_path).to_s
+    # ladybird
+    elsif md5_checksum.present?
+      md5_checksum == Digest::MD5.file(access_master_path).to_s
     else
       false
     end
@@ -124,6 +125,10 @@ class ChildObject < ApplicationRecord
 
   def access_sha512_checksum
     Digest::SHA512.file(access_master_path).to_s
+  end
+
+  def access_file_size
+    File.size(access_master_path)
   end
 
   def remote_access_master_path
