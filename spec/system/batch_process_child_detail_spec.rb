@@ -91,6 +91,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       expect(child_object.reload.sha256_checksum).to be_nil
       expect(child_object.reload.md5_checksum).to be_nil
       expect(child_object.file_size).to eq(1_131_966)
+      expect(page).to have_content('Child object was successfully updated.')
     end
     # rubocop:enable Layout/LineLength
   end
