@@ -73,8 +73,8 @@ class ChildObjectsController < ApplicationController
         format.html { redirect_to request.referer, notice: 'Child object was successfully updated.' }
         format.json { render :show, status: :ok, location: @child_object }
       else
-        format.html { redirect_to request.referer, notice: 'Error. Child object was not successfully updated.' }
-        format.json { render :show, status: :ok, location: @child_object }
+        format.html { render :show }
+        format.json { render json: @child_object.errors, status: :unprocessable_entity }
       end
     end
   end
