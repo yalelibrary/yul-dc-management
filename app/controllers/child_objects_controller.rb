@@ -67,7 +67,7 @@ class ChildObjectsController < ApplicationController
   end
 
   def update_checksum
-    Update512ChecksumJob.perform_now(@child_object)
+    Update512ChecksumJob.perform_later(@child_object)
     respond_to do |format|
       if @child_object.save
         format.html { redirect_to request.referer, notice: 'Child object was successfully updated.' }

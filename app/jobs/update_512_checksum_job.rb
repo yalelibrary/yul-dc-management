@@ -7,5 +7,6 @@ class Update512ChecksumJob < ApplicationJob
     child_object.checksum = nil
     child_object.md5_checksum = nil
     child_object.sha256_checksum = nil
+    child_object.save
   end
 end
