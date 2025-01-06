@@ -71,7 +71,7 @@ class ChildObject < ApplicationRecord
     #  2. We assume that there is only one access master at a time - BUT we only have one access master pair-tree
     #     across *all* environments (no separation of dev, test, uat, production)
     #     how do we ensure we don't accidentally overwrite something we want to keep?
-    if access_master_exists? && access_master_checksum_matches?
+    if access_master_exists? && checksum_matches?
       processing_event("Not copied from Goobi package to access master pair-tree, already exists", 'access-master-exists')
       return true
     end
@@ -85,7 +85,7 @@ class ChildObject < ApplicationRecord
     # Create path to access master if it doesn't exist
     FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
     File.exist?(mets_access_master_path) ? FileUtils.cp(mets_access_master_path, access_master_path) : FileUtils.cp(mets_access_master_path.gsub('.tif', '.TIF').gsub('.jpg', '.JPG'), access_master_path)
-    if access_master_checksum_matches?
+    if checksum_matches?
       processing_event("Copied from Goobi package to access master pair-tree", 'goobi-copied')
       true
     else
@@ -96,9 +96,22 @@ class ChildObject < ApplicationRecord
   # rubocop:enable  Metrics/MethodLength
   # rubocop:enable  Layout/LineLength
 
-  def access_master_checksum_matches?
-    access_master_checksum = Digest::SHA1.file(access_master_path).to_s
-    checksum == access_master_checksum
+  def checksum_matches?
+    # preservica or manually updated by user
+    if sha512_checksum.present?
+      sha512_checksum == access_sha512_checksum
+    # goobi
+    elsif checksum.present?
+      checksum == Digest::SHA1.file(access_master_path).to_s
+    # ladybird
+    elsif sha256_checksum.present?
+      sha256_checksum == Digest::SHA256.file(access_master_path).to_s
+    # ladybird
+    elsif md5_checksum.present?
+      md5_checksum == Digest::MD5.file(access_master_path).to_s
+    else
+      false
+    end
   end
 
   def mets_access_master_checksum_matches?
@@ -108,6 +121,14 @@ class ChildObject < ApplicationRecord
 
   def access_master_exists?
     File.exist?(access_master_path)
+  end
+
+  def access_sha512_checksum
+    Digest::SHA512.file(access_master_path).to_s
+  end
+
+  def access_file_size
+    File.size(access_master_path)
   end
 
   def remote_access_master_path

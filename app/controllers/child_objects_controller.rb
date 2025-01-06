@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ChildObjectsController < ApplicationController
-  before_action :set_child_object, only: [:show, :edit, :update, :destroy]
+  before_action :set_child_object, only: [:show, :edit, :update, :destroy, :update_checksum]
   before_action :set_paper_trail_whodunnit
-  load_and_authorize_resource except: [:new, :create]
+  load_and_authorize_resource except: [:new, :create, :update_checksum]
 
   # GET /child_objects
   # GET /child_objects.json
@@ -66,6 +66,14 @@ class ChildObjectsController < ApplicationController
     end
   end
 
+  def update_checksum
+    Update512ChecksumJob.perform_later(@child_object)
+    respond_to do |format|
+      format.html { redirect_to request.referer, notice: 'Child object has been queued for update.' }
+      format.json { render :show, status: :ok, location: @child_object }
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -81,6 +89,6 @@ class ChildObjectsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def child_object_params
     params.require(:child_object).permit(:oid, :caption, :label, :width, :height, :order, :viewing_hint,
-                                         :parent_object_oid, :preservica_content_object_uri, :preservica_generation_uri, :preservica_bitstream_uri)
+                                         :parent_object_oid, :preservica_content_object_uri, :preservica_generation_uri, :preservica_bitstream_uri, :sha512_checksum)
   end
 end
