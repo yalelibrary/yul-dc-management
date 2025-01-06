@@ -6,6 +6,15 @@ class PermissionSetsController < ApplicationController
   before_action :set_permission_set, only: [:show, :edit, :update, :destroy, :permission_set_terms, :post_permission_set_terms, :new_term, :deactivate_permission_set_terms]
   # rubocop:enable Layout/LineLength
 
+  # Allows FontAwesome icons to render on all permission set and permission set terms pages
+  content_security_policy do |policy|
+    policy.script_src :self, :unsafe_inline
+    policy.script_src_attr  :self, :unsafe_inline
+    policy.script_src_elem  :self, :unsafe_inline
+    policy.style_src :self, :unsafe_inline
+    policy.style_src_elem :self, :unsafe_inline
+  end
+
   # GET /permission_sets
   # GET /permission_sets.json
   def index

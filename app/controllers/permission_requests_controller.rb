@@ -4,19 +4,19 @@ class PermissionRequestsController < ApplicationController
   load_and_authorize_resource class: OpenWithPermission::PermissionRequest
   before_action :set_permission_request, only: [:show, :edit, :update, :destroy]
 
-  # Allows inline JS to function
-  content_security_policy(only: :show) do |policy|
-    # policy.script_src  :self, :unsafe_inline
-    # policy.script_src_attr  :self, :unsafe_inline
-    # policy.script_src_elem  :self, :unsafe_inline
-    # policy.style_src :self, :unsafe_inline
-    # policy.style_src_elem :self, :unsafe_inline
+  # Allows inline JS to function on show/edit page and allows FontAwesome icons to render on datatable
+  content_security_policy do |policy|
+    policy.script_src :self, :unsafe_inline
+    policy.script_src_attr  :self, :unsafe_inline
+    policy.script_src_elem  :self, :unsafe_inline
+    policy.style_src :self, :unsafe_inline
+    policy.style_src_elem :self, :unsafe_inline
 
     config.content_security_policy_nonce_generator = ->(request) { request.session.id.to_s }
 
     config.content_security_policy_nonce_directives = %w[script-src]
   end
-  
+
   # GET /permission_requests
   # GET /permission_requests.json
   def index
