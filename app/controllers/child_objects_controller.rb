@@ -67,10 +67,14 @@ class ChildObjectsController < ApplicationController
   end
 
   def update_checksum
-    Update512ChecksumJob.perform_later(@child_object)
     respond_to do |format|
-      format.html { redirect_to request.referer, notice: 'Child object has been queued for update.' }
-      format.json { render :show, status: :ok, location: @child_object }
+      if Update512ChecksumJob.perform_later(@child_object)
+        format.html { redirect_to request.referer, notice: 'Child object has been queued for update.' }
+        format.json { render :show, status: :ok, location: @child_object }
+      else
+        format.html { render :show }
+        format.json { render json: @child_object.errors, status: :unprocessable_entity }
+      end
     end
   end
 
