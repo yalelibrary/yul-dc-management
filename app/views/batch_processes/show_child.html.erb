@@ -76,7 +76,7 @@
 
 <% if @failure %>
   <% if @failure[:reason].include? 'checksum mismatch' %>
-    <%= button_to 'Update Checksum', update_checksum_child_object_path(@child_object), method: :post, :title=> "Update the checksum and file size stored in the database for this child object to the image's current SHA512 checksum and file size", class: 'btn btn-primary' %>
+    <%= link_to 'Update Checksum', update_checksum_child_object_path(@child_object), method: :post, :title=> "Update the checksum and file size stored in the database for this child object to the image's current SHA512 checksum and file size", class: 'btn btn-primary' %>
   <% end %>
   <table class='table table-responsive table-bordered table-striped' aria-label='Child Batch Process Failure'>
     <thead class='table-head'>
