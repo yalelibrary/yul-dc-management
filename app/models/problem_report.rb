@@ -9,16 +9,15 @@ class ProblemReport < ApplicationRecord
     start_generating
     csv_rows = problem_children_csv
     parent_oids = Set.new
-    child_cnt = 0
     output_csv = CSV.generate do |csv|
       csv << child_problem_headers
       csv_rows.each do |row|
         csv << row
-        child_cnt += 1
         parent_oids << row[1]
       end
     end
-    save_results(parent_oids.count, child_cnt)
+    total_child_cnt = ChildObject.select(:oid).where('height is NULL or height = 0 or width is NULL or width = 0').count
+    save_results(parent_oids.count, total_child_cnt)
     report_complete(output_csv, send_email)
   rescue => e
     report_error("CSV generation failed due to #{e.message}")

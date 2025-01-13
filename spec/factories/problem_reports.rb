@@ -6,5 +6,6 @@ FactoryBot.define do
     parent_count { 1 }
     problem_parent_count { 1 }
     problem_child_count { 1 }
+    updated_at { "test" }
   end
 end
