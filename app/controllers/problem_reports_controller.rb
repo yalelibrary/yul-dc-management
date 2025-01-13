@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 class ProblemReportsController < ApplicationController
+  # Allows FontAwesome icons to render on datatable
+  content_security_policy(only: :index) do |policy|
+    policy.script_src :self, :unsafe_inline
+    policy.script_src_attr  :self, :unsafe_inline
+    policy.script_src_elem  :self, :unsafe_inline
+    policy.style_src :self, :unsafe_inline
+    policy.style_src_elem :self, :unsafe_inline
+  end
+
   # GET /problem_reports
   # GET /problem_reports.json
   def index

@@ -5,6 +5,15 @@ class ChildObjectsController < ApplicationController
   before_action :set_paper_trail_whodunnit
   load_and_authorize_resource except: [:new, :create, :update_checksum]
 
+  # Allows FontAwesome icons to render on child object datatable
+  content_security_policy(only: :index) do |policy|
+    policy.script_src :self, :unsafe_inline
+    policy.script_src_attr  :self, :unsafe_inline
+    policy.script_src_elem  :self, :unsafe_inline
+    policy.style_src :self, :unsafe_inline
+    policy.style_src_elem :self, :unsafe_inline
+  end
+
   # GET /child_objects
   # GET /child_objects.json
   def index
