@@ -8,6 +8,9 @@ This report is for the DCS site: <%= ENV['BLACKLIGHT_BASE_URL'] %>.
   Total Child Count: <%= @problem_report.child_count %>
   Problem Parent Count: <%= @problem_report.problem_parent_count %>
   Problem Child Count: <%= @problem_report.problem_child_count %>
+<% if @problem_report.problem_child_count > 1000 %>
+  Warning: Only the first 1000 problem children will be in the spreadsheet.
+<% end %>
 
 Have a great day!
 This is an automated message.

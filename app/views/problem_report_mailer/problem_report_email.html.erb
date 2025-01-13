@@ -9,6 +9,9 @@
   <strong>Total Child Count:</strong> <%= @problem_report.child_count %><br />
   <strong>Problem Parent Count:</strong> <%= @problem_report.problem_parent_count %><br />
   <strong>Problem Child Count:</strong> <%= @problem_report.problem_child_count %><br />
+  <% if @problem_report.problem_child_count > 1000 %>
+    <strong>Warning: Only the first 1000 problem children will be in the spreadsheet.</strong>
+  <% end %>
 </p>
 <p>Have a great day!</p>
 <small>
