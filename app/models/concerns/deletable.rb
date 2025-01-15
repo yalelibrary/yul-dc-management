@@ -6,7 +6,7 @@ module Deletable
   # DELETE PARENT OBJECTS: ------------------------------------------------------------------------ #
 
   # DELETES PARENT OBJECTS FROM INGESTED CSV
-  def delete_parent_objects
+  def delete_parent_objects(start_index = 0)
     self.admin_set = ''
     sets = admin_set
     parsed_csv.each_with_index do |row, index|
@@ -22,7 +22,11 @@ module Deletable
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.destroy!
       parent_object.processing_event("Parent #{parent_object.oid} has been deleted", 'deleted')
+      if index + 1 - start_index > 50
+        return index + 1
+      end
     end
+    return -1
   end
 
   # CHECKS TO SEE IF USER HAS ABILITY TO DELETE OBJECTS:

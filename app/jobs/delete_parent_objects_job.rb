@@ -7,7 +7,10 @@ class DeleteParentObjectsJob < ApplicationJob
     -50
   end
 
-  def perform(batch_process)
-    batch_process.delete_parent_objects
+  def perform(batch_process, start_index = 0)
+    index = batch_process.delete_parent_objects(start_index)
+    if index > 50
+      DeleteParentObjectsJob.perform_later(batch_process, index)
+    end
   end
 end
