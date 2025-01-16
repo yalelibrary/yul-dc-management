@@ -11,7 +11,7 @@ module RecreateChildPtiff
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
-  def recreate_child_oid_ptiffs
+  def recreate_child_oid_ptiffs(start_index = 0)
     parents = Set[]
     self.admin_set = ''
     sets = admin_set
@@ -35,7 +35,11 @@ module RecreateChildPtiff
       GeneratePtiffJob.perform_later(child_object, self) if file_size <= SetupMetadataJob::FIVE_HUNDRED_MB
       attach_item(child_object)
       child_object.processing_event("Ptiff Queued", "ptiff-queued")
+      if index + 1 - start_index > 50
+        return index + 1
+      end
     end
+    return -1
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength

@@ -7,7 +7,10 @@ class RecreateChildOidPtiffsJob < ApplicationJob
     9
   end
 
-  def perform(batch_process)
-    batch_process.recreate_child_oid_ptiffs
+  def perform(batch_process, start_index = 0)
+    index = batch_process.recreate_child_oid_ptiffs(start_index)
+    if index > 50
+      RecreateChildOidPtiffsJob.perform_later(batch_process, index)
+    end
   end
 end
