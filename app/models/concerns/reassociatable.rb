@@ -7,16 +7,16 @@ module Reassociatable
   BLANK_VALUE = "_blank_"
 
   # triggers the reassociate process
-  def reassociate_child_oids
+  def reassociate_child_oids(start_index = 0)
     return unless batch_action == "reassociate child oids"
-    parents_needing_update, parent_destination_map = update_child_objects
+    parents_needing_update, parent_destination_map = update_child_objects(start_index)
     update_related_parent_objects(parents_needing_update, parent_destination_map)
   end
 
   # finds which parents are needed to update
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
-  def update_child_objects
+  def update_child_objects(start_index)
     self.admin_set = ''
     sets = admin_set
     return unless batch_action == "reassociate child oids"
@@ -45,8 +45,12 @@ module Reassociatable
 
       values_to_update = check_headers(child_headers, row)
       update_child_values(values_to_update, co, row, index)
+      if index + 1 - start_index > 50
+        return index + 1
+      end
     end
     [parents_needing_update, parent_destination_map]
+    return -1
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
