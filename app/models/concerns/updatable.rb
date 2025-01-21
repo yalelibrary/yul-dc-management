@@ -64,7 +64,7 @@ module Updatable
   end
 
   # rubocop:disable Metrics/BlockLength
-  def update_parent_objects
+  def update_parent_objects(start_index = 0)
     self.admin_set = ''
     sets = admin_set
     return unless batch_action == "update parent objects"
@@ -113,7 +113,11 @@ module Updatable
       sync_from_preservica if parent_object.digital_object_source == 'Preservica'
 
       processing_event_for_parent(parent_object)
+      if index + 1 - start_index > 50
+        return index + 1
+      end
     end
+    return -1
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
