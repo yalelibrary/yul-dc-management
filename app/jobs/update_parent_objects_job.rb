@@ -11,8 +11,6 @@ class UpdateParentObjectsJob < ApplicationJob
 
   def perform(batch_process, start_index = 0)
     index = batch_process.update_parent_objects(start_index)
-    if index > 50
-      UpdateParentObjectsJob.perform_later(batch_process, index)
-    end
+    UpdateParentObjectsJob.perform_later(batch_process, index) if index > 50
   end
 end

@@ -35,11 +35,9 @@ module RecreateChildPtiff
       GeneratePtiffJob.perform_later(child_object, self) if file_size <= SetupMetadataJob::FIVE_HUNDRED_MB
       attach_item(child_object)
       child_object.processing_event("Ptiff Queued", "ptiff-queued")
-      if index + 1 - start_index > 50
-        return index + 1
-      end
+      return index + 1 if index + 1 - start_index > 50
     end
-    return -1
+    -1
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength

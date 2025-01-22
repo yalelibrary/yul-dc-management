@@ -113,11 +113,9 @@ module Updatable
       sync_from_preservica if parent_object.digital_object_source == 'Preservica'
 
       processing_event_for_parent(parent_object)
-      if index + 1 - start_index > 50
-        return index + 1
-      end
+      return index + 1 if index + 1 - start_index > 50
     end
-    return -1
+    -1
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
