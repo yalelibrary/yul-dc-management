@@ -7,11 +7,9 @@ module Deletable
 
   # DELETES PARENT OBJECTS FROM INGESTED CSV
   def delete_parent_objects(start_index = 0)
-    # byebug
     self.admin_set = ''
     sets = admin_set
     parsed_csv.each_with_index do |row, index|
-      # byebug if index == 49
       oid = row['oid']
       action = row['action']
       metadata_source = row['source']
