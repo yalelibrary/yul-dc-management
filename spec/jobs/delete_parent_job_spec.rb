@@ -27,7 +27,7 @@ RSpec.describe DeleteParentObjectsJob, type: :job, prep_metadata_sources: true, 
       user.add_role(:editor, admin_set)
       login_as(:user)
       create_batch_process.save
-      total_parent_object_count = 51
+      total_parent_object_count = 53
       expect(ParentObject.all.count).to eq total_parent_object_count
       expect(delete_batch_process).to receive(:delete_parent_objects).with(0).exactly(1).times
     end
