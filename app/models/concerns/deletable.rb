@@ -4,7 +4,7 @@ module Deletable
   extend ActiveSupport::Concern
 
   # DELETE PARENT OBJECTS: ------------------------------------------------------------------------ #
-
+  JOB_LIMIT = 50
   # DELETES PARENT OBJECTS FROM INGESTED CSV
   # rubocop:disable Metrics/MethodLength
   def delete_parent_objects(start_index = 0)
@@ -24,7 +24,7 @@ module Deletable
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.destroy!
       parent_object.processing_event("Parent #{parent_object.oid} has been deleted", 'deleted')
-      return index + 1 if index + 1 - start_index > 50
+      return index + 1 if index + 1 - start_index > JOB_LIMIT
     end
     -1
   end
