@@ -32,6 +32,7 @@ RSpec.describe DeleteParentObjectsJob, type: :job, prep_metadata_sources: true, 
       total_parent_object_count = 4
       expect(ParentObject.all.count).to eq total_parent_object_count
       expect(delete_batch_process).to receive(:delete_parent_objects).with(0).exactly(1).times
+      # expect(DeleteParentObjectsJob).to receive(:perform_later).with(delete_batch_process, 3).exactly(1).times
     end
 
     around do |example|
@@ -43,7 +44,9 @@ RSpec.describe DeleteParentObjectsJob, type: :job, prep_metadata_sources: true, 
     it 'goes through all parents in batches once' do
       DeleteParentObjectsJob.perform_now(delete_batch_process)
       expect(IngestEvent.where(status: 'deleted').and(IngestEvent.where(reason: 'Parent 2005512 has been deleted')).count).to eq 1
+      expect(IngestEvent.where(status: 'Skipped Row').and(IngestEvent.where(reason: 'Skipping row [2] with parent oid: 2005512 because it was not found in local database')).count).to eq 0
       expect(IngestEvent.where(status: 'deleted').and(IngestEvent.where(reason: 'Parent 2005513 has been deleted')).count).to eq 1
+      expect(IngestEvent.where(status: 'Skipped Row').and(IngestEvent.where(reason: 'Skipping row [3] with parent oid: 2005513 because it was not found in local database')).count).to eq 0
       expect(IngestEvent.where(status: 'deleted').and(IngestEvent.where(reason: 'Parent 2005514 has been deleted')).count).to eq 1
       expect(IngestEvent.where(status: 'deleted').and(IngestEvent.where(reason: 'Parent 2005515 has been deleted')).count).to eq 1
       expect(ParentObject.all.count).to eq 0
