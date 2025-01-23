@@ -10,6 +10,7 @@ module Deletable
     self.admin_set = ''
     sets = admin_set
     parsed_csv.each_with_index do |row, index|
+      next if start_index > index
       oid = row['oid']
       action = row['action']
       metadata_source = row['source']
