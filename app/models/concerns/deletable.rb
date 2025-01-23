@@ -6,6 +6,7 @@ module Deletable
   # DELETE PARENT OBJECTS: ------------------------------------------------------------------------ #
 
   # DELETES PARENT OBJECTS FROM INGESTED CSV
+  # rubocop:disable Metrics/MethodLength
   def delete_parent_objects(start_index = 0)
     self.admin_set = ''
     sets = admin_set
@@ -27,6 +28,7 @@ module Deletable
     end
     -1
   end
+  # rubocop:enable Metrics/MethodLength
 
   # CHECKS TO SEE IF USER HAS ABILITY TO DELETE OBJECTS:
   def deletable_parent_object(oid, index)
