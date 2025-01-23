@@ -32,7 +32,6 @@ RSpec.describe DeleteParentObjectsJob, type: :job, prep_metadata_sources: true, 
       total_parent_object_count = 4
       expect(ParentObject.all.count).to eq total_parent_object_count
       expect(delete_batch_process).to receive(:delete_parent_objects).with(0).exactly(1).times
-      # expect(DeleteParentObjectsJob).to receive(:perform_later).with(delete_batch_process, 3)
     end
 
     around do |example|
@@ -41,9 +40,12 @@ RSpec.describe DeleteParentObjectsJob, type: :job, prep_metadata_sources: true, 
       end
     end
 
-    it 'goes through all parents in batches' do
+    it 'goes through all parents in batches once' do
       DeleteParentObjectsJob.perform_now(delete_batch_process)
-      # byebug
+      expect(IngestEvent.where(status: 'deleted').and(IngestEvent.where(reason: 'Parent 2005512 has been deleted')).count).to eq 1
+      expect(IngestEvent.where(status: 'deleted').and(IngestEvent.where(reason: 'Parent 2005513 has been deleted')).count).to eq 1
+      expect(IngestEvent.where(status: 'deleted').and(IngestEvent.where(reason: 'Parent 2005514 has been deleted')).count).to eq 1
+      expect(IngestEvent.where(status: 'deleted').and(IngestEvent.where(reason: 'Parent 2005515 has been deleted')).count).to eq 1
       expect(ParentObject.all.count).to eq 0
     end
   end
