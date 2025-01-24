@@ -32,6 +32,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :child_objects, through: :batch_connections, source_type: "ChildObject", source: :connectable
 
   CSV_MAXIMUM_ENTRIES = 10_000
+  BATCH_LIMIT = 50
 
   # SHARED BY ALL BATCH ACTIONS: ------------------------------------------------------------------- #
 

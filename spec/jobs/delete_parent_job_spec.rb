@@ -24,7 +24,7 @@ RSpec.describe DeleteParentObjectsJob, type: :job, prep_metadata_sources: true, 
 
   context 'with more than limit parent objects' do
     before do
-      Deletable::BATCH_LIMIT = 2
+      BatchProcess::BATCH_LIMIT = 2
       expect(ParentObject.all.count).to eq 0
       user.add_role(:editor, admin_set)
       login_as(:user)

@@ -45,7 +45,7 @@ module Reassociatable
 
       values_to_update = check_headers(child_headers, row)
       update_child_values(values_to_update, co, row, index)
-      return index + 1 if index + 1 - start_index > Deletable::BATCH_LIMIT
+      return index + 1 if index + 1 - start_index > BatchProcess::BATCH_LIMIT
     end
     [parents_needing_update, parent_destination_map, -1]
   end
