@@ -43,6 +43,7 @@ RSpec.describe DeleteParentObjectsJob, type: :job, prep_metadata_sources: true, 
     end
 
     it 'goes through all parents in batches once' do
+      # DeleteParentObjectsJob.perform_now(delete_batch_process)
       expect(IngestEvent.where(status: 'deleted').and(IngestEvent.where(reason: 'Parent 2005512 has been deleted')).count).to eq 1
       expect(IngestEvent.where(status: 'Skipped Row').and(IngestEvent.where(reason: 'Skipping row [2] with parent oid: 2005512 because it was not found in local database')).count).to eq 0
       expect(IngestEvent.where(status: 'deleted').and(IngestEvent.where(reason: 'Parent 2005513 has been deleted')).count).to eq 1
