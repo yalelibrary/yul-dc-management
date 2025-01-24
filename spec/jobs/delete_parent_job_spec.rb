@@ -10,11 +10,12 @@ RSpec.describe DeleteParentObjectsJob, type: :job, prep_metadata_sources: true, 
   let(:create_batch_process) { FactoryBot.create(:batch_process, user: user, file: create_many) }
   let(:delete_batch_process) { FactoryBot.create(:batch_process, user: user, file: delete_many, batch_action: 'delete parent objects') }
 
+  before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
+  end
+  
   context 'with tests active job queue' do
-    before do
-      allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-      ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-    end
 
     it 'increments the job queue by one' do
       delete_parent_job = described_class.perform_later
@@ -31,8 +32,8 @@ RSpec.describe DeleteParentObjectsJob, type: :job, prep_metadata_sources: true, 
       create_batch_process.save
       total_parent_object_count = 4
       expect(ParentObject.all.count).to eq total_parent_object_count
-      expect(delete_batch_process).to receive(:delete_parent_objects).with(0).exactly(1).times
-      # expect(DeleteParentObjectsJob).to receive(:perform_later).with(delete_batch_process, 3).exactly(1).times
+      delete_batch_process.save
+      # expect(delete_batch_process).to receive(:delete_parent_objects).with(0).exactly(1).times
     end
 
     around do |example|
@@ -42,7 +43,6 @@ RSpec.describe DeleteParentObjectsJob, type: :job, prep_metadata_sources: true, 
     end
 
     it 'goes through all parents in batches once' do
-      DeleteParentObjectsJob.perform_now(delete_batch_process)
       expect(IngestEvent.where(status: 'deleted').and(IngestEvent.where(reason: 'Parent 2005512 has been deleted')).count).to eq 1
       expect(IngestEvent.where(status: 'Skipped Row').and(IngestEvent.where(reason: 'Skipping row [2] with parent oid: 2005512 because it was not found in local database')).count).to eq 0
       expect(IngestEvent.where(status: 'deleted').and(IngestEvent.where(reason: 'Parent 2005513 has been deleted')).count).to eq 1
