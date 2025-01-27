@@ -40,6 +40,9 @@ RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_
     before do
       BatchProcess::BATCH_LIMIT = 2
       expect(ParentObject.all.count).to eq 0
+      stub_metadata_cloud("2005512", "ladybird")
+      stub_metadata_cloud("2002826", "ladybird")
+      stub_ptiffs_and_manifests
       user.add_role(:editor, admin_set)
       login_as(:user)
       create_batch_process.save
@@ -49,7 +52,9 @@ RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_
       expect(ParentObject.all.count).to eq total_parent_object_count
       expect(ChildObject.all.count).to eq total_child_object_count
       po_one = ParentObject.find(2_005_512)
+      po_five = ParentObject.find(2_002_826)
       expect(po_one.child_object_count).to eq 2
+      expect(po_five.child_object_count).to eq 1
       expect(described_class).to receive(:perform_later).exactly(1).times.and_call_original
     end
 
@@ -61,11 +66,6 @@ RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_
 
     it 'goes through all parents in batches once' do
       reassociate_batch_process.save
-      expect(IngestEvent.where(batch_connection_id: 1).and(IngestEvent.where(reason: 'Processing has been queued')).count).to eq 1
-      expect(IngestEvent.where(batch_connection_id: 2).and(IngestEvent.where(reason: "PTIFF exists on S3, not converting: {\"oid\":\"1030368\"}")).count).to eq 2
-      expect(IngestEvent.where(batch_connection_id: 3).and(IngestEvent.where(reason: "PTIFF exists on S3, not converting: {\"oid\":\"1032318\"}")).count).to eq 2
-      expect(IngestEvent.where(batch_connection_id: 5).and(IngestEvent.where(reason: 'S3 did not return json for ladybird/2005514.json')).count).to eq 1
-      expect(IngestEvent.where(batch_connection_id: 6).and(IngestEvent.where(reason: 'S3 did not return json for ladybird/2005515.json')).count).to eq 1
       po_one = ParentObject.find(2_005_512)
       po_two = ParentObject.find(2_005_513)
       po_three = ParentObject.find(2_005_514)
@@ -74,6 +74,17 @@ RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_
       co_one = ChildObject.find(1_030_368)
       co_two = ChildObject.find(1_032_318)
       co_three = ChildObject.find(1_011_398)
+      expect(IngestEvent.where(batch_connection_id: 1).and(IngestEvent.where(reason: 'Processing has been queued')).count).to eq 1
+      expect(IngestEvent.where(batch_connection_id: 2).and(IngestEvent.where(reason: "PTIFF ready for #{co_one.oid}")).count).to eq 1
+      expect(IngestEvent.where(batch_connection_id: 3).and(IngestEvent.where(reason: "PTIFF ready for #{co_two.oid}")).count).to eq 1
+      expect(IngestEvent.where(batch_connection_id: 4).and(IngestEvent.where(reason: "S3 did not return json for ladybird/#{po_two.oid}.json")).count).to eq 1
+      expect(IngestEvent.where(batch_connection_id: 5).and(IngestEvent.where(reason: "S3 did not return json for ladybird/#{po_three.oid}.json")).count).to eq 1
+      expect(IngestEvent.where(batch_connection_id: 6).and(IngestEvent.where(reason: "S3 did not return json for ladybird/#{po_four.oid}.json")).count).to eq 1
+      expect(IngestEvent.where(batch_connection_id: 7).and(IngestEvent.where(reason: 'Solr index updated')).count).to eq 1
+      # four rows in csv
+      expect(IngestEvent.where(status: 'update-complete').count).to eq 4
+      # parent create and two parent updates
+      expect(IngestEvent.where(status: 'manifest-saved').count).to eq 3
       expect(po_one.child_object_count).to eq(0).or be_nil
       expect(po_two.child_object_count).to eq(0).or be_nil
       expect(po_three.child_object_count).to eq(0).or be_nil

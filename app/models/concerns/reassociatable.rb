@@ -16,6 +16,8 @@ module Reassociatable
   # finds which parents are needed to update
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def update_child_objects(start_index)
     self.admin_set = ''
     sets = admin_set
@@ -25,7 +27,7 @@ module Reassociatable
     parent_destination_map = {}
 
     parsed_csv.each_with_index do |row, index|
-      next if start_index > index 
+      next if start_index > index
       co = load_child(index, row["child_oid"].to_i)
       po = load_parent(index, row["parent_oid"].to_i)
       next unless co.present? && po.present?
@@ -52,6 +54,8 @@ module Reassociatable
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # verifies headers are included. child headers found in csv_exportable:90
   def check_headers(headers, row)
