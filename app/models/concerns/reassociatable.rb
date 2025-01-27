@@ -25,6 +25,7 @@ module Reassociatable
     parent_destination_map = {}
 
     parsed_csv.each_with_index do |row, index|
+      next if start_index > index 
       co = load_child(index, row["child_oid"].to_i)
       po = load_parent(index, row["parent_oid"].to_i)
       next unless co.present? && po.present?
