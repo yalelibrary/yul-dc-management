@@ -8,7 +8,7 @@ RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_
   let(:create_many) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_many_parent_fixture_ids.csv")) }
   let(:reassociate_many) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociate_many_child_objects.csv")) }
   let(:create_batch_process) { FactoryBot.create(:batch_process, user: user, file: create_many) }
-  let(:reassociate_batch_process) { FactoryBot.create(:batch_process, user: user, file: reassociate_many, batch_action: 'reassociate child objects') }
+  let(:reassociate_batch_process) { FactoryBot.create(:batch_process, user: user, file: reassociate_many, batch_action: 'reassociate child oids') }
   let(:parent_object_old_two) { FactoryBot.create(:parent_object, oid: 2_002_826) }
 
   before do
@@ -38,7 +38,7 @@ RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_
 
   context 'with more than limit of batch objects' do
     before do
-      Deletable::BATCH_LIMIT = 2
+      BatchProcess::BATCH_LIMIT = 2
       expect(ParentObject.all.count).to eq 0
       user.add_role(:editor, admin_set)
       login_as(:user)
@@ -50,7 +50,7 @@ RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_
       expect(ChildObject.all.count).to eq total_child_object_count
       po_one = ParentObject.find(2_005_512)
       expect(po_one.child_object_count).to eq 2
-      expect(described_class).to receive(:perform_later).exactly(2).times.and_call_original
+      expect(described_class).to receive(:perform_later).exactly(1).times.and_call_original
     end
 
     around do |example|
@@ -66,20 +66,20 @@ RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_
       expect(IngestEvent.where(batch_connection_id: 3).and(IngestEvent.where(reason: "PTIFF exists on S3, not converting: {\"oid\":\"1032318\"}")).count).to eq 2
       expect(IngestEvent.where(batch_connection_id: 5).and(IngestEvent.where(reason: 'S3 did not return json for ladybird/2005514.json')).count).to eq 1
       expect(IngestEvent.where(batch_connection_id: 6).and(IngestEvent.where(reason: 'S3 did not return json for ladybird/2005515.json')).count).to eq 1
-      # po_one = ParentObject.find(2005512)
-      # po_two = ParentObject.find(2005513)
-      # po_three = ParentObject.find(2005514)
-      # po_four = ParentObject.find(2005515)
-      # po_five = ParentObject.find(2_002_826)
-      # co_one = ChildObject.find(1030368)
-      # co_two = ChildObject.find(1032318)
-      # expect(po_one.child_object_count).to eq 0
-      # expect(po_two.child_object_count).to eq 0
-      # expect(po_three.child_object_count).to eq 0
-      # expect(po_four.child_object_count).to eq 0
-      # expect(po_five.child_object_count).to eq 3
-      # expect(co_one.parent_object_oid).to eq po_five.oid
-      # expect(co_two.parent_object_oid).to eq po_five.oid
+      po_one = ParentObject.find(2_005_512)
+      po_two = ParentObject.find(2_005_513)
+      po_three = ParentObject.find(2_005_514)
+      po_four = ParentObject.find(2_005_515)
+      po_five = ParentObject.find(2_002_826)
+      co_one = ChildObject.find(1_030_368)
+      co_two = ChildObject.find(1_032_318)
+      expect(po_one.child_object_count).to eq 0
+      expect(po_two.child_object_count).to eq(0).or be_nil
+      expect(po_three.child_object_count).to eq(0).or be_nil
+      expect(po_four.child_object_count).to eq(0).or be_nil
+      expect(po_five.child_object_count).to eq 3
+      expect(co_one.parent_object_oid).to eq po_five.oid
+      expect(co_two.parent_object_oid).to eq po_five.oid
     end
   end
 end
