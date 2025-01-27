@@ -73,13 +73,15 @@ RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_
       po_five = ParentObject.find(2_002_826)
       co_one = ChildObject.find(1_030_368)
       co_two = ChildObject.find(1_032_318)
-      expect(po_one.child_object_count).to eq 0
+      co_three = ChildObject.find(1_011_398)
+      expect(po_one.child_object_count).to eq(0).or be_nil
       expect(po_two.child_object_count).to eq(0).or be_nil
       expect(po_three.child_object_count).to eq(0).or be_nil
       expect(po_four.child_object_count).to eq(0).or be_nil
       expect(po_five.child_object_count).to eq 3
       expect(co_one.parent_object_oid).to eq po_five.oid
       expect(co_two.parent_object_oid).to eq po_five.oid
+      expect(co_three.parent_object_oid).to eq po_five.oid
     end
   end
 end
