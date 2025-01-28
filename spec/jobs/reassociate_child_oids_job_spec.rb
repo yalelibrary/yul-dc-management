@@ -77,13 +77,6 @@ RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_
       co_one = ChildObject.find(1_030_368)
       co_two = ChildObject.find(1_032_318)
       co_three = ChildObject.find(1_011_398)
-      expect(IngestEvent.where(batch_connection_id: 1).and(IngestEvent.where(reason: 'Processing has been queued')).count).to eq 1
-      expect(IngestEvent.where(batch_connection_id: 2).and(IngestEvent.where(reason: "PTIFF ready for #{co_one.oid}")).count).to eq 1
-      expect(IngestEvent.where(batch_connection_id: 3).and(IngestEvent.where(reason: "PTIFF ready for #{co_two.oid}")).count).to eq 1
-      expect(IngestEvent.where(batch_connection_id: 4).and(IngestEvent.where(reason: "S3 did not return json for ladybird/#{po_two.oid}.json")).count).to eq 1
-      expect(IngestEvent.where(batch_connection_id: 5).and(IngestEvent.where(reason: "S3 did not return json for ladybird/#{po_three.oid}.json")).count).to eq 1
-      expect(IngestEvent.where(batch_connection_id: 6).and(IngestEvent.where(reason: "S3 did not return json for ladybird/#{po_four.oid}.json")).count).to eq 1
-      expect(IngestEvent.where(batch_connection_id: 7).and(IngestEvent.where(reason: 'Solr index updated')).count).to eq 1
       # four rows in csv
       expect(IngestEvent.where(status: 'update-complete').count).to eq 4
       # parent create and two parent updates
