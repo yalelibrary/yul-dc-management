@@ -31,7 +31,7 @@ RSpec.describe DeleteParentObjectsJob, type: :job, prep_metadata_sources: true, 
       create_batch_process.save
       total_parent_object_count = 4
       expect(ParentObject.all.count).to eq total_parent_object_count
-      expect(described_class).to receive(:perform_later).exactly(2).times.and_call_original
+      expect(described_class).to receive(:perform_later).exactly(1).times.and_call_original
     end
 
     around do |example|

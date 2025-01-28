@@ -24,7 +24,7 @@ module Deletable
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.destroy!
       parent_object.processing_event("Parent #{parent_object.oid} has been deleted", 'deleted')
-      return index + 1 if index + 1 - start_index > BatchProcess::BATCH_LIMIT
+      index + 1 if index + 1 - start_index > BatchProcess::BATCH_LIMIT
     end
     -1
   end
