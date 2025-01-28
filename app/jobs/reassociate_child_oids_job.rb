@@ -9,7 +9,7 @@ class ReassociateChildOidsJob < ApplicationJob
 
   def perform(batch_process, start_index = 0)
     index = batch_process.reassociate_child_oids(start_index)
-    ReassociateChildOidsJob.perform_later(batch_process, index) if index > BatchProcess::BATCH_LIMIT
+    ReassociateChildOidsJob.perform_later(batch_process, index) if !index.nil? && index != -1 && index > BatchProcess::BATCH_LIMIT
   rescue => e
     batch_process.batch_processing_event("ReassociateChildOidsJob failed due to #{e.message}", "failed")
   end
