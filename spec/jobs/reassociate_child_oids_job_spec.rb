@@ -60,7 +60,10 @@ RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_
 
     around do |example|
       perform_enqueued_jobs do
+        original_image_bucket = ENV['ACCESS_MASTER_MOUNT']
+        ENV['ACCESS_MASTER_MOUNT'] = File.join('spec', 'fixtures', 'images', 'ptiff_images')
         example.run
+        ENV['ACCESS_MASTER_MOUNT'] = original_image_bucket
       end
     end
 
