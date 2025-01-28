@@ -12,12 +12,10 @@ module RecreateChildPtiff
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def recreate_child_oid_ptiffs(start_index = 0)
-    # byebug
     parents = Set[]
     self.admin_set = ''
     sets = admin_set
     oids.each_with_index do |oid, index|
-      # byebug
       child_object = ChildObject.find_by_oid(oid.to_i)
       unless child_object
         batch_processing_event("Skipping row [#{index + 2}] with unknown Child: #{oid}", 'Skipped Row')
