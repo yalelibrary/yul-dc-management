@@ -70,8 +70,8 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
-    ajax-datatables-rails (1.4.0)
-      rails (>= 5.2)
+    ajax-datatables-rails (1.5.0)
+      rails (>= 6.0)
       zeitwerk
     amazing_print (1.5.0)
     ast (2.4.2)
@@ -515,7 +515,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-nulldb-adapter
-  ajax-datatables-rails (~> 1.4.0)
+  ajax-datatables-rails (~> 1.5.0)
   amazing_print (>= 1.2.1)
   aws-sdk-cloudwatch
   aws-sdk-s3
