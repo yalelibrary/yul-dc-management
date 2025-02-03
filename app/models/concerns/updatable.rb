@@ -114,7 +114,7 @@ module Updatable
       sync_from_preservica if parent_object.digital_object_source == 'Preservica'
 
       processing_event_for_parent(parent_object)
-      index + 1 if index + 1 - start_index > BatchProcess::BATCH_LIMIT
+      return index + 1 if index + 1 - start_index > BatchProcess::BATCH_LIMIT
     end
     -1
   end

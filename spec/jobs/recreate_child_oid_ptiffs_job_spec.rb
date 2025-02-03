@@ -96,7 +96,7 @@ RSpec.describe RecreateChildOidPtiffsJob, type: :job, prep_metadata_sources: tru
         stub_ptiffs_and_manifests
         BatchProcess::BATCH_LIMIT = 2
         user.add_role(:editor, admin_set)
-        expect(described_class).to receive(:perform_later).exactly(1).times.and_call_original
+        expect(described_class).to receive(:perform_later).exactly(2).times.and_call_original
       end
 
       it 'can process each record once' do

@@ -9,8 +9,9 @@ module Reassociatable
   # triggers the reassociate process
   def reassociate_child_oids(start_index = 0)
     return unless batch_action == "reassociate child oids"
-    parents_needing_update, parent_destination_map, denote_continue = update_child_objects(start_index)
-    update_related_parent_objects(parents_needing_update, parent_destination_map, denote_continue)
+    parents_needing_update, parent_destination_map, index = update_child_objects(start_index)
+    update_related_parent_objects(parents_needing_update, parent_destination_map)
+    index
   end
 
   # finds which parents are needed to update
@@ -48,7 +49,7 @@ module Reassociatable
 
       values_to_update = check_headers(child_headers, row)
       update_child_values(values_to_update, co, row, index)
-      index + 1 if index + 1 - start_index > BatchProcess::BATCH_LIMIT
+      return [parents_needing_update, parent_destination_map, index + 1] if index + 1 - start_index > BatchProcess::BATCH_LIMIT
     end
     [parents_needing_update, parent_destination_map, -1]
   end
@@ -164,7 +165,7 @@ module Reassociatable
 
   # rubocop:disable Metrics/AbcSize
   # updates count of parent objects and regenerates manifest pdf and reindexes solr.
-  def update_related_parent_objects(parents_needing_update, parent_destination_map, _denote_continue)
+  def update_related_parent_objects(parents_needing_update, parent_destination_map)
     return unless batch_action == "reassociate child oids" || batch_action == "delete child objects"
     parents_needing_update.uniq.each do |oid|
       po = ParentObject.find(oid)

@@ -117,7 +117,7 @@ module CreateParentObject
       rescue StandardError => e
         batch_processing_event("Skipping row [#{index + 2}] Unable to save parent: #{e.message}.", "Skipped Row")
       end
-      index + 1 if index + 1 - start_index > BatchProcess::BATCH_LIMIT
+      return index + 1 if index + 1 - start_index > BatchProcess::BATCH_LIMIT
     end
     -1
   end

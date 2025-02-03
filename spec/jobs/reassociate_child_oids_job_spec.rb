@@ -55,7 +55,7 @@ RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_
       po_five = ParentObject.find(2_002_826)
       expect(po_one.child_object_count).to eq 2
       expect(po_five.child_object_count).to eq 1
-      expect(described_class).to receive(:perform_later).exactly(1).times.and_call_original
+      expect(described_class).to receive(:perform_later).exactly(2).times.and_call_original
     end
 
     around do |example|
@@ -79,8 +79,8 @@ RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_
       co_three = ChildObject.find(1_011_398)
       # four rows in csv
       expect(IngestEvent.where(status: 'update-complete').count).to eq 4
-      # parent create and two parent updates
-      expect(IngestEvent.where(status: 'manifest-saved').count).to eq 3
+      # parent create and four parent updates
+      expect(IngestEvent.where(status: 'manifest-saved').count).to eq 5
       expect(po_one.child_object_count).to eq(0).or be_nil
       expect(po_two.child_object_count).to eq(0).or be_nil
       expect(po_three.child_object_count).to eq(0).or be_nil
