@@ -64,11 +64,12 @@ module Updatable
   end
 
   # rubocop:disable Metrics/BlockLength
-  def update_parent_objects
+  def update_parent_objects(start_index = 0)
     self.admin_set = ''
     sets = admin_set
-    return unless batch_action == "update parent objects"
+    return unless batch_action == 'update parent objects'
     parsed_csv.each_with_index do |row, index|
+      next if start_index > index
       oid = row['oid'] unless ['oid'].nil?
       redirect = row['redirect_to'] unless ['redirect_to'].nil?
       parent_object = updatable_parent_object(oid, index)
@@ -87,10 +88,10 @@ module Updatable
       setup_for_background_jobs(parent_object, metadata_source)
       parent_object.admin_set = admin_set unless admin_set.nil?
 
-      if row['visibility'] == "Open with Permission" && row['permission_set_key'].blank?
+      if row['visibility'] == 'Open with Permission' && row['permission_set_key'].blank?
         batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing from CSV.", 'Skipped Row')
         next
-      elsif row['visibility'] == "Open with Permission" && row['permission_set_key'] != parent_object&.permission_set&.key
+      elsif row['visibility'] == 'Open with Permission' && row['permission_set_key'] != parent_object&.permission_set&.key
         permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_key'])
         if permission_set.nil?
           batch_processing_event("Skipping row [#{index + 2}]. Process failed. Permission Set missing or nonexistent.", 'Skipped Row')
@@ -113,7 +114,9 @@ module Updatable
       sync_from_preservica if parent_object.digital_object_source == 'Preservica'
 
       processing_event_for_parent(parent_object)
+      return index + 1 if index + 1 - start_index > BatchProcess::BATCH_LIMIT
     end
+    -1
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity

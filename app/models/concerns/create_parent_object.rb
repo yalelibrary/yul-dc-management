@@ -11,10 +11,11 @@ module CreateParentObject
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/BlockLength
   # rubocop:disable Layout/LineLength
-  def create_new_parent_csv
+  def create_new_parent_csv(start_index = 0)
     self.admin_set = ''
     sets = admin_set
     parsed_csv.each_with_index do |row, index|
+      next if start_index > index
       if row['digital_object_source'].present? && row['preservica_uri'].present? && !row['preservica_uri'].blank?
         begin
           parent_object = CsvRowParentService.new(row, index, current_ability, user).parent_object
@@ -116,7 +117,9 @@ module CreateParentObject
       rescue StandardError => e
         batch_processing_event("Skipping row [#{index + 2}] Unable to save parent: #{e.message}.", "Skipped Row")
       end
+      return index + 1 if index + 1 - start_index > BatchProcess::BATCH_LIMIT
     end
+    -1
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength

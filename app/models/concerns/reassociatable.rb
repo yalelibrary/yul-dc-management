@@ -7,16 +7,19 @@ module Reassociatable
   BLANK_VALUE = "_blank_"
 
   # triggers the reassociate process
-  def reassociate_child_oids
+  def reassociate_child_oids(start_index = 0)
     return unless batch_action == "reassociate child oids"
-    parents_needing_update, parent_destination_map = update_child_objects
+    parents_needing_update, parent_destination_map, index = update_child_objects(start_index)
     update_related_parent_objects(parents_needing_update, parent_destination_map)
+    index
   end
 
   # finds which parents are needed to update
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
-  def update_child_objects
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
+  def update_child_objects(start_index)
     self.admin_set = ''
     sets = admin_set
     return unless batch_action == "reassociate child oids"
@@ -25,6 +28,7 @@ module Reassociatable
     parent_destination_map = {}
 
     parsed_csv.each_with_index do |row, index|
+      next if start_index > index
       co = load_child(index, row["child_oid"].to_i)
       po = load_parent(index, row["parent_oid"].to_i)
       next unless co.present? && po.present?
@@ -45,11 +49,14 @@ module Reassociatable
 
       values_to_update = check_headers(child_headers, row)
       update_child_values(values_to_update, co, row, index)
+      return [parents_needing_update, parent_destination_map, index + 1] if index + 1 - start_index > BatchProcess::BATCH_LIMIT
     end
-    [parents_needing_update, parent_destination_map]
+    [parents_needing_update, parent_destination_map, -1]
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # verifies headers are included. child headers found in csv_exportable:90
   def check_headers(headers, row)
