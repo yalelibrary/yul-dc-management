@@ -3,12 +3,14 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+//= require jquery3
+//= require popper
+
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
-import * as bootstrap from 'bootstrap';
 import jszip from 'jszip';
 import pdfmake from 'pdfmake';
 import DataTable from 'datatables.net-bs5';
@@ -17,14 +19,6 @@ import 'datatables.net-buttons/js/buttons.html5.mjs';
 import 'datatables.net-buttons/js/buttons.print.mjs';
 
 import "@fortawesome/fontawesome-free/js/all.js";
-//= require jquery3
-//= require popper
-
-window.DataTable = DataTable();
-Buttons();
-DataTable.use(bootstrap);
-DataTable.Buttons.jszip(jszip);
-DataTable.Buttons.pdfMake(pdfmake);
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
@@ -32,10 +26,17 @@ DataTable.Buttons.pdfMake(pdfmake);
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-window.JSZip = jszip;
-global.$ = jQuery;
-
 let dataTable;
+DataTable(window, $);
+
+global.$ = jQuery;
+window.JSZip = jszip;
+window.DataTable = DataTable();
+Buttons();
+DataTable.use(bootstrap);
+DataTable.Buttons.jszip(jszip);
+DataTable.Buttons.pdfMake(pdfmake);
+
 $( document ).on('turbolinks:load', function() {
   let initialColumnSearchValues = [];
   if($('.is-datatable').length > 0 && !$('.is-datatable').hasClass('dataTable')){
