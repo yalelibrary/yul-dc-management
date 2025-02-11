@@ -29,6 +29,10 @@ DEFAULT DESKTOP STYLING
   border-color: $secondary_button;
 }
 
+.float-right {
+  float: right;
+}
+
 .datatable {
   margin: 0;
 }
@@ -51,7 +55,7 @@ DEFAULT DESKTOP STYLING
   }
 }
 
-.table-head {
+.table-head th {
   background-color: $table_head;
   color: $white;
   font-family: $standard_font_family;
@@ -118,6 +122,10 @@ DEFAULT DESKTOP STYLING
 
 .clear-filters-button {
   margin-right: 8px
+}
+
+select.form-select {
+  width: 7rem;
 }
 
 table.dataTable {
