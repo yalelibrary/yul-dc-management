@@ -8,7 +8,7 @@
   <div class='col'>
     <div class='float-right button-list'>
     <% if current_user&.sysadmin %>
-      <a href="#ExportAllParents" role="button" class="export-parents-source btn btn-large btn-secondary" data-toggle="modal">Export all parents</a>
+      <a href="#ExportAllParents" role="button" class="export-parents-source btn btn-large btn-secondary" data-bs-toggle="modal">Export all parents</a>
     <% end %>
       <%= link_to 'New Admin Set', new_admin_set_path, class: "btn button primary-button" %>
     </div>

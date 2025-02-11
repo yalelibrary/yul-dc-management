@@ -7,21 +7,22 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
-const JSZip = require('jszip')
-require('datatables.net-bs4')(window, $)
-require('datatables.net-buttons-bs4')(window, $)
-require('datatables.net-buttons/js/buttons.colVis.js')(window, $)
-require('datatables.net-buttons/js/buttons.html5.js')(window, $)
-require('datatables.net-buttons/js/buttons.print.js')(window, $)
-require('datatables.net-responsive-bs4')(window, $)
-require('datatables.net-select')(window, $)
-import 'bootstrap';
-require("datatables.net-bs4/css/dataTables.bootstrap4.min.css")
-require("datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css")
-require("datatables.net-select-bs4/css/select.bootstrap4.min.css")
-require("datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css")
+import * as bootstrap from 'bootstrap';
+import jszip from 'jszip';
+import pdfmake from 'pdfmake';
+import DataTable from 'datatables.net-bs5';
+import "datatables.net-buttons-bs5"
+import "datatables.net-buttons/js/buttons.colVis.js"
+import "datatables.net-buttons/js/buttons.html5.js"
+import "datatables.net-buttons/js/buttons.print.js"
+import "datatables.net-select-bs5"
 
 import "@fortawesome/fontawesome-free/js/all.js";
+
+window.DataTable = DataTable
+DataTable.use(bootstrap);
+DataTable.Buttons.jszip(jszip);
+DataTable.Buttons.pdfMake(pdfmake);
 
 //= require jquery3
 //= require popper
@@ -33,7 +34,6 @@ import "@fortawesome/fontawesome-free/js/all.js";
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-window.JSZip = JSZip;
 global.$ = jQuery;
 
 let dataTable;

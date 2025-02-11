@@ -16,7 +16,10 @@
 
 // TODO(alishaevn): figure out how to import all files in theme once, instead of in every file ;
 // @import 'theme/*';
-
+@import url('bootstrap');
+@import url('datatables.net-bs5');
+@import url('datatables.net-buttons-bs5');
+@import url('datatables.net-select-bs5');
 @import 'theme/typography';
 
 .main-content{

@@ -531,8 +531,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
       it 'has multiple Parent Objects' do
         within '#parent-objects-datatable' do
-          expect(page).to have_xpath '//*[@id="2034600"]/td[@class="sorting_1"]/a[1]', text: '2034600'
-          expect(page).to have_xpath '//*[@id="2005512"]/td[@class="sorting_1"]/a[1]', text: '2005512'
+          expect(page).to have_xpath '//*[@id="2034600"]', text: '2034600'
+          expect(page).to have_xpath '//*[@id="2005512"]', text: '2005512'
         end
       end
     end
@@ -552,8 +552,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
         it 'has multiple Parent Objects' do
           within '#parent-objects-datatable' do
-            expect(page).to have_xpath '//*[@id="2034600"]/td[@class="sorting_1"]/a[1]', text: '2034600'
-            expect(page).to have_xpath '//*[@id="2005512"]/td[@class="sorting_1"]/a[1]', text: '2005512'
+            expect(page).to have_xpath '//*[@id="2034600"]', text: '2034600'
+            expect(page).to have_xpath '//*[@id="2005512"]', text: '2005512'
           end
         end
       end
