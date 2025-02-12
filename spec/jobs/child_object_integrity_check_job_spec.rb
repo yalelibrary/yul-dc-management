@@ -24,7 +24,7 @@ RSpec.describe ChildObjectIntegrityCheckJob, type: :job do
 
   it 'sets batch action to integrity check when performed' do
     child_object_integrity_check_job.perform
-    expect(BatchProcess.first.batch_action).to eq 'integrity check'
+    expect(BatchProcess.last.batch_action).to eq 'integrity check'
   end
 
   it 'reports error when integrity_check fails' do
