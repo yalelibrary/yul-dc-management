@@ -57,7 +57,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       ENV['VPN'] = original_vpn
     end
     before do
-      stub_request(:post, "#{ENV['SOLR_BASE_URL']}/blacklight-test/update?wt=json")
+      stub_request(:post, "#{ENV['SOLR_URL']}/blacklight-test/update?wt=json")
         .to_return(status: 200)
     end
     # rubocop:disable RSpec/AnyInstance
