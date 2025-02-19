@@ -76,7 +76,7 @@ Camerata is a gem which is used to orchestrate and deploy the Yale DC suite of a
 
 ### Install Camerata
 
-Clone the yul-dc-camerata repo and install the gem. If you are using an application for gem and ruby management, such as rvm or rbenv, be sure to use the same gemset when installing the Camerata gem as you use to bring up the management application (or the blacklight application, etc.).
+Clone the yul-dc-camerata repo and install the gem. If you are using an application for gem and ruby management, such as rvm or rbenv, be sure to use the same gemset when installing the Camerata gem as you use to bring up the management application (or the blacklight application, etc.)
 
 Note: Clone Camerata in your project directory (not inside your management repo)
 
