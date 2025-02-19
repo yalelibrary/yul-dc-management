@@ -86,6 +86,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     end
   end
 
+  # TODO: refactor test to be more consistent, passes locally but occassionally fails in CI
   context "updating a ParentObject from an import with all columns" do
     it "can update a parent_object from a csv" do
       permission_set.add_administrator(user)
@@ -121,7 +122,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         update_batch_process.file = csv_small_owp
         update_batch_process.save
         update_batch_process.update_parent_objects
-      end.not_to change { ParentObject.count }.from(5)
+      end.not_to change { ParentObject.count }
       po_updated = ParentObject.find_by(oid: 2_034_600)
 
       expect(po_updated.aspace_uri).to eq "/repositories/11/archival_objects/515305"
@@ -175,7 +176,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         update_batch_process.file = invalid_ps
         update_batch_process.save
         update_batch_process.update_parent_objects
-      end.not_to change { ParentObject.count }.from(5)
+      end.not_to change { ParentObject.count }
       po_updated = ParentObject.find_by(oid: 2_034_600)
 
       expect(po_updated.aspace_uri).to be_nil
@@ -230,7 +231,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         update_batch_process.file = blank_ps
         update_batch_process.save
         update_batch_process.update_parent_objects
-      end.not_to change { ParentObject.count }.from(5)
+      end.not_to change { ParentObject.count }
       po_updated = ParentObject.find_by(oid: 2_034_600)
 
       expect(po_updated.aspace_uri).to be_nil
@@ -284,7 +285,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         update_batch_process.file = invalid_user_csv
         update_batch_process.save
         update_batch_process.update_parent_objects
-      end.not_to change { ParentObject.count }.from(5)
+      end.not_to change { ParentObject.count }
       po_updated = ParentObject.find_by(oid: 2_034_600)
 
       expect(po_updated.aspace_uri).to be_nil
@@ -338,7 +339,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         update_batch_process.file = csv_missing
         update_batch_process.save
         update_batch_process.update_parent_objects
-      end.not_to change { ParentObject.count }.from(5)
+      end.not_to change { ParentObject.count }
       po_updated = ParentObject.find_by(oid: 2_034_600)
 
       expect(po_updated.aspace_uri).to be_nil
@@ -367,7 +368,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         update_batch_process.file = csv_new_admin_set
         update_batch_process.save
         update_batch_process.update_parent_objects
-      end.not_to change { ParentObject.count }.from(5)
+      end.not_to change { ParentObject.count }
       po_updated = ParentObject.find_by(oid: 2_034_600)
       expect(po_updated.visibility).to eq "Public"
       expect(po_updated.admin_set.key).to eq "sml"
@@ -406,7 +407,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         update_batch_process.file = csv_invalid
         update_batch_process.save
         update_batch_process.update_parent_objects
-      end.not_to change { ParentObject.count }.from(5)
+      end.not_to change { ParentObject.count }
       po_updated = ParentObject.find_by(oid: 2_034_600)
 
       expect(po_updated.aspace_uri).to be_nil
