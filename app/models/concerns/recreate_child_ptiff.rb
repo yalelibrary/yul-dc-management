@@ -11,12 +11,11 @@ module RecreateChildPtiff
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
-  def recreate_child_oid_ptiffs(start_index = 0)
+  def recreate_child_oid_ptiffs
     parents = Set[]
     self.admin_set = ''
     sets = admin_set
     oids.each_with_index do |oid, index|
-      next if start_index > index
       child_object = ChildObject.find_by_oid(oid.to_i)
       unless child_object
         batch_processing_event("Skipping row [#{index + 2}] with unknown Child: #{oid}", 'Skipped Row')
@@ -36,9 +35,7 @@ module RecreateChildPtiff
       GeneratePtiffJob.perform_later(child_object, self) if file_size <= SetupMetadataJob::FIVE_HUNDRED_MB
       attach_item(child_object)
       child_object.processing_event("Ptiff Queued", "ptiff-queued")
-      return index + 1 if index + 1 - start_index > BatchProcess::BATCH_LIMIT
     end
-    -1
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
