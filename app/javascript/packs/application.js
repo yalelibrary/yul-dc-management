@@ -201,6 +201,8 @@ $( document ).on('turbolinks:load', function() {
       // Check dataTables documentation to learn more about
       // available options.
       initComplete: function () {
+        $('.dt-info').appendTo('.main-content');
+        $('.dt-paging').appendTo('.main-content');
         if (hasSearch) onColumnsUpdate(this);
       },
       stateLoaded: function (e, setting, data) {
