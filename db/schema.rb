@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_13_160329) do
+ActiveRecord::Schema[7.0].define(version: 2025_03_11_204157) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -280,6 +280,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_13_160329) do
     t.text "extent_of_full_text", default: "None"
     t.jsonb "sierra_json"
     t.datetime "last_sierra_update", precision: nil
+    t.jsonb "alma_json"
+    t.datetime "last_alma_update"
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
     t.index ["aspace_uri"], name: "index_parent_objects_on_aspace_uri"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
