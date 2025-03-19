@@ -488,6 +488,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       aspace_json
     when "sierra"
       sierra_json
+    when "alma"
+      alma_json
     else
       raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
