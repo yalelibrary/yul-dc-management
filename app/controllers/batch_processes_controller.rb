@@ -16,7 +16,7 @@ class BatchProcessesController < ApplicationController
     policy.style_src :self, :unsafe_inline
     policy.style_src_elem :self, :unsafe_inline
   end
-  
+
   def index
     @batch_process = BatchProcess.new
     # force user to choose action in form
