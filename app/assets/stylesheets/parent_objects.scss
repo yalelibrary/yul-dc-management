@@ -119,3 +119,9 @@ DEFAULT DESKTOP STYLING
 .update-item-button {
   color: $black;
 }
+
+.form-row {
+  display: flex;
+  flex-flow: nowrap;
+  column-gap: 10px;
+}
