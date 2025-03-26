@@ -55,6 +55,11 @@ DEFAULT DESKTOP STYLING
   }
 }
 
+.table-head {
+  position: sticky;
+  top: 50px;
+}
+
 .table-head th {
   background-color: $table_head;
   color: $white;
