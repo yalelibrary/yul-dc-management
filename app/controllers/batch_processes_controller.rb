@@ -8,6 +8,15 @@ class BatchProcessesController < ApplicationController
   before_action :latest_failure, only: [:show_parent]
   before_action :set_child_object, only: [:show_child]
 
+  # Allows FontAwesome icons to render in header
+  content_security_policy(only: [:index, :show]) do |policy|
+    policy.script_src :self, :unsafe_inline
+    policy.script_src_attr  :self, :unsafe_inline
+    policy.script_src_elem  :self, :unsafe_inline
+    policy.style_src :self, :unsafe_inline
+    policy.style_src_elem :self, :unsafe_inline
+  end
+
   def index
     @batch_process = BatchProcess.new
     # force user to choose action in form
