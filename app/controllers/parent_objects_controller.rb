@@ -7,7 +7,7 @@ class ParentObjectsController < ApplicationController
   load_and_authorize_resource except: [:solr_document, :new, :create, :update_metadata, :all_metadata, :reindex, :select_thumbnail, :update_manifests, :update_digital_objects]
 
   # Allows FontAwesome icons to render on datatable and show pages
-  content_security_policy(only: [:index, :show]) do |policy|
+  content_security_policy(only: [:index, :show, :edit]) do |policy|
     policy.script_src :self, :unsafe_inline
     policy.script_src_attr  :self, :unsafe_inline
     policy.script_src_elem  :self, :unsafe_inline
