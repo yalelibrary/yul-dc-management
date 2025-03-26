@@ -132,8 +132,8 @@ select.form-select {
   width: 7rem;
 }
 
-table.dataTable {
-  max-height: calc(100vh - 360px);
+.dt-container {
+  max-height: calc(100vh - 225px);
 }
 
 table#batch-processes-datatable {
