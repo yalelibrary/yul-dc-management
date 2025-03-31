@@ -535,7 +535,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_original.preservica_representation_type).to be_nil
       expect(po_original.preservica_uri).to be_nil
       expect(po_original.child_objects.count).to eq 0
-    
+
       update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
       update_batch_process.file = csv_lowercase_preservica
       update_batch_process.save
