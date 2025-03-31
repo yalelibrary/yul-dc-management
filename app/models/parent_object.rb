@@ -38,8 +38,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :digitization_funding_source, length: { maximum: 255 }
   # rubocop:disable Layout/LineLength
   validates :redirect_to, format: { with: /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//, message: " in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123", presence: true, if: proc { visibility == "Redirect" } }
-  validates :preservica_uri, presence: true, format: { with: %r{\A/}, message: " in incorrect format. URI must start with a /" }, if: proc { digital_object_source == "Preservica" }
-  validates :preservica_representation_type, format: { with: /\A(Preservation|Access)/, message: "can't be None when Digital Object Source is Preservica" }, if: proc { digital_object_source == "Preservica" }
+  validates :preservica_uri, presence: true, format: { with: %r{\A/}, message: " in incorrect format. URI must start with a /" }, if: proc { digital_object_source == "Preservica" || digital_object_source == "preservica" }
+  validates :preservica_representation_type, format: { with: /\A(Preservation|Access)/, message: "can't be None when Digital Object Source is Preservica" }, if: proc { digital_object_source == "Preservica" || digital_object_source == "preservica" }
   # rubocop:enable Layout/LineLength
   validate :validate_visibility
   before_save :check_for_redirect
@@ -104,7 +104,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def from_upstream_for_the_first_time?
-    from_ladybird_for_the_first_time? || from_mets_for_the_first_time? || (from_preservica_for_the_first_time? && digital_object_source == "Preservica")
+    from_ladybird_for_the_first_time? || from_mets_for_the_first_time? || (from_preservica_for_the_first_time? && (digital_object_source == "Preservica" || digital_object_source == "preservica"))
   end
 
   def self.cannot_reindex
@@ -150,7 +150,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
       upsert_preservica_ingest_child_objects(array_preservica_hashes_from_mets) unless array_preservica_hashes_from_mets.nil?
-    elsif digital_object_source == "Preservica"
+    elsif digital_object_source == "Preservica" || digital_object_source == "preservica"
       child_hashes = array_of_child_hashes_from_preservica # only call array_of_child_hashes_from_preservica once since it causes all images to be downloaded
       if child_hashes.present?
         valid_child_hashes = validate_child_hashes(child_hashes)
