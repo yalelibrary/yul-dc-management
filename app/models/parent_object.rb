@@ -39,7 +39,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Layout/LineLength
   validates :redirect_to, format: { with: /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//, message: " in incorrect format. Please enter DCS url https://collections.library.yale.edu/catalog/123", presence: true, if: proc { visibility == "Redirect" } }
   validates :preservica_uri, presence: true, format: { with: %r{\A/}, message: " in incorrect format. URI must start with a /" }, if: proc { digital_object_source == "Preservica" || digital_object_source == "preservica" }
-  validates :preservica_representation_type, format: { with: /\A(Preservation|Access)/, message: "can't be None when Digital Object Source is Preservica" }, if: proc { digital_object_source == "Preservica" || digital_object_source == "preservica" }
+  validates :preservica_representation_type, format: { with: /\A(Preservation|preservation|Access)/, message: "can't be None when Digital Object Source is Preservica" }, if: proc { digital_object_source == "Preservica" || digital_object_source == "preservica" }
   # rubocop:enable Layout/LineLength
   validate :validate_visibility
   before_save :check_for_redirect
