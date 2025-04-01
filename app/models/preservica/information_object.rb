@@ -28,6 +28,7 @@ class Preservica::InformationObject
 
   # returns all representations with a type matching preservica_representation_type
   def fetch_by_representation_type(preservica_representation_type)
+    preservica_representation_type = preservica_representation_type.capitalize if preservica_representation_type == "preservation"
     @representation_hash[preservica_representation_type] ||= load_representation(preservica_representation_type)
   end
 
