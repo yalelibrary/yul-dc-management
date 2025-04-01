@@ -97,6 +97,8 @@ $( document ).on('turbolinks:load', function() {
       return colVisibilityMap;
     }
 
+    console.log(columns);
+    console.log(columns.slice(1).map((x, index) => index + 1));
     var oldExportAction = function (self, e, dt, button, config) {
       if (button[0].className.indexOf('buttons-csv') >= 0) {
         if ($.fn.dataTable.ext.buttons.csvHtml5.available(dt, config)) {
@@ -152,6 +154,10 @@ $( document ).on('turbolinks:load', function() {
       },
       "pagingType": "full_numbers",
       "bAutoWidth": false, // AutoWidth has issues with hiding and showing columns as startup
+      columnDefs: [
+        { "width": "250px", "targets": [0] },
+        { "width": "200px", "targets": columns.slice(1).map((x, index) => index + 1) } // every column except the first one
+      ],
       "columns": columns,
       "order": columnOrder(columns),
       "lengthMenu": [[50, 100, 500], [50, 100, 500]],

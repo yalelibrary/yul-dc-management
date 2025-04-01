@@ -37,6 +37,11 @@ DEFAULT DESKTOP STYLING
   margin: 0;
 }
 
+#parent-objects-datatable {
+  table-layout: fixed !important;
+  word-wrap: break-word;
+}
+
 .col.overflow-auto {
   padding: 0;
 }
@@ -69,7 +74,7 @@ DEFAULT DESKTOP STYLING
 }
 
 .is-datatable .row > th {
-  width: 170px;
+  width: 200px;
 }
 
 .is-datatable #search-row {
