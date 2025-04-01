@@ -135,6 +135,24 @@
   </div>
   <br>
 
+  <h6 class="form-subgroup-title">Alma identifiers</h6>
+  <div class="voyager_identifiers, form-row">
+    <div class="col-med-3">
+      <%= form.label :mms_id, "MMS ID" %>
+      <%= form.text_field :mms_id %>
+    </div>
+
+    <div class="col-med-3">
+      <%= form.label "Holding (optional)" %>
+      <%= form.text_field :alma_holding %>
+    </div>
+
+    <div class="col-med-3">
+      <%= form.label "Item (optional)" %>
+      <%= form.text_field :alma_item %>
+    </div>
+  </div>
+  <br>
 
   <h6 class="form-subgroup-title">Voyager identifiers</h6>
   <div class="voyager_identifiers, form-row">
