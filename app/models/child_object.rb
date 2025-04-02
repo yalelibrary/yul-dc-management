@@ -128,7 +128,7 @@ class ChildObject < ApplicationRecord
   end
 
   def access_file_size
-    File.size(access_master_path)
+    File.exist?(access_master_path) ? File&.size(access_master_path) : nil
   end
 
   def remote_access_master_path

@@ -22,6 +22,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:csv_new_admin_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_new_admin_set.csv")) }
   let(:pre_preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_pre_preservica.csv")) }
   let(:csv_preservica) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_preservica.csv")) }
+  let(:csv_lowercase_preservica) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_lowercase_preservica.csv")) }
 
   before do
     stub_metadata_cloud("2034600")
@@ -519,6 +520,29 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       po_updated = ParentObject.find_by(oid: 200_000_000)
       expect(po_updated.digital_object_source).to eq "Preservica"
       expect(po_updated.preservica_representation_type).to eq "Preservation"
+      expect(po_updated.preservica_uri).to eq "/preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5"
+      expect(po_updated.child_objects.count).to eq 3
+    end
+
+    it "can update preservica fields and get new children from preservica with a lowercase preservica and preservation" do
+      expect do
+        batch_process.file = pre_preservica_parent
+        batch_process.save
+        batch_process.create_new_parent_csv
+      end.to change { ParentObject.count }.from(0).to(1)
+      po_original = ParentObject.find_by(oid: 200_000_000)
+      expect(po_original.digital_object_source).to eq "None"
+      expect(po_original.preservica_representation_type).to be_nil
+      expect(po_original.preservica_uri).to be_nil
+      expect(po_original.child_objects.count).to eq 0
+
+      update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
+      update_batch_process.file = csv_lowercase_preservica
+      update_batch_process.save
+      update_batch_process.update_parent_objects
+      po_updated = ParentObject.find_by(oid: 200_000_000)
+      expect(po_updated.digital_object_source).to eq "preservica"
+      expect(po_updated.preservica_representation_type).to eq "preservation"
       expect(po_updated.preservica_uri).to eq "/preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5"
       expect(po_updated.child_objects.count).to eq 3
     end

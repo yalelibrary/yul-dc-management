@@ -80,7 +80,10 @@ class CsvRowParentService
   end
 
   def digital_object_source
-    raise BatchProcessingError.new("Skipping row [#{index + 2}]. Digital Object Source must be 'Preservica'", 'Skipped Row') if row['digital_object_source'] != "Preservica"
+    if row['digital_object_source'] != "Preservica" && row['digital_object_source'] != "preservica"
+      raise BatchProcessingError.new("Skipping row [#{index + 2}]. Digital Object Source must be 'Preservica'",
+'Skipped Row')
+    end
     row['digital_object_source']
   end
 

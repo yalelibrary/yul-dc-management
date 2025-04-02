@@ -37,6 +37,15 @@ DEFAULT DESKTOP STYLING
   margin: 0;
 }
 
+#parent-objects-datatable, #child-objects-datatable {
+  table-layout: fixed !important;
+  word-wrap: break-word;
+}
+
+#batch-process-datatable {
+  width: 100%;
+}
+
 .col.overflow-auto {
   padding: 0;
 }
@@ -55,6 +64,11 @@ DEFAULT DESKTOP STYLING
   }
 }
 
+.table-head {
+  position: sticky;
+  top: 0;
+}
+
 .table-head th {
   background-color: $table_head;
   color: $white;
@@ -64,7 +78,7 @@ DEFAULT DESKTOP STYLING
 }
 
 .is-datatable .row > th {
-  width: 170px;
+  width: 200px;
 }
 
 .is-datatable #search-row {
@@ -132,8 +146,8 @@ select.form-select {
   width: 7rem;
 }
 
-table.dataTable {
-  max-height: calc(100vh - 360px);
+.dt-container {
+  max-height: calc(100vh - 225px);
 }
 
 table#batch-processes-datatable {
