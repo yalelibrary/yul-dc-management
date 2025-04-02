@@ -125,3 +125,9 @@ DEFAULT DESKTOP STYLING
   flex-flow: nowrap;
   column-gap: 10px;
 }
+
+.pre-scrollable {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
