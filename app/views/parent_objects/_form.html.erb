@@ -136,7 +136,7 @@
   <br>
 
   <h6 class="form-subgroup-title">Alma identifiers</h6>
-  <div class="voyager_identifiers, form-row">
+  <div class="alma_identifiers form-row">
     <div class="col-med-3">
       <%= form.label :mms_id, "MMS ID" %>
       <%= form.text_field :mms_id %>
@@ -155,7 +155,7 @@
   <br>
 
   <h6 class="form-subgroup-title">Voyager identifiers</h6>
-  <div class="voyager_identifiers, form-row">
+  <div class="voyager_identifiers form-row">
     <div class="col-med-3">
       <%= form.label :bib %>
       <%= form.text_field :bib %>
@@ -174,7 +174,7 @@
 
   <br>
   <h6 class="form-subgroup-title">Other identifiers</h6>
-  <div class="other_identifiers, form-row">
+  <div class="other_identifiers form-row">
     <div class="col-med-3">
       <%= form.label :barcode %>
       <%= form.text_field :barcode %>
@@ -188,7 +188,7 @@
 
   <br>
   <h6 class="form-subgroup-title">Digital Object Identifiers</h6>
-  <div class="digital_object_identifiers, form-row">
+  <div class="digital_object_identifiers form-row">
     <div class="col-med-3">
       <%= form.label :digital_object_source %>
       <%= form.select(:digital_object_source, ['None', 'Preservica'], {}, style: "width:178px;" ) %>
@@ -207,7 +207,7 @@
   <br>
 
   <h6 class="form-subgroup-title">IIIF Values</h6>
-  <div class="other_identifiers, form-row">
+  <div class="other_identifiers form-row">
     <div class="col-med-3">
       <%= form.label :viewing_direction %>
       <%= link_to("IIIF viewing direction details", "https://iiif.io/api/presentation/2.1/#viewingdirection") %><br>
@@ -216,7 +216,7 @@
 
     <div class="col-med-3">
       <%= form.label :display_layout %>
-      <%= link_to("IIIF viewing hints details", "https://iiif.io/api/presentation/2.1/#viewinghint") %><br>
+      <%= link_to("IIIF viewing hints details" "https://iiif.io/api/presentation/2.1/#viewinghint") %><br>
       <%= form.select(:display_layout, ParentObject.viewing_hints) %>
     </div>
   </div>
