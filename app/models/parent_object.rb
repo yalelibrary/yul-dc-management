@@ -546,6 +546,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.last_sierra_update = DateTime.current
   end
 
+  def alma_json=(a_record)
+    super(a_record)
+    return a_record if a_record.blank?
+    self.mms_id = a_record["mmsId"]
+    self.alma_item = a_record["pid"]
+    self.alma_holding = a_record["holdingId"]
+  end
+
   def ladybird_cloud_url
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/ladybird/oid/#{oid}?include-children=1"
   end
