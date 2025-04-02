@@ -547,7 +547,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def alma_json=(a_record)
-    byebug
     super(a_record)
     return a_record if a_record.blank?
     self.mms_id = a_record["mmsId"]
