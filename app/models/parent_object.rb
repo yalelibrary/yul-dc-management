@@ -488,6 +488,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       aspace_json
     when "sierra"
       sierra_json
+    when "alma"
+      alma_json
     else
       raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
@@ -542,6 +544,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.last_id_update = DateTime.current
     self.bib = s_record["bibId"].to_s
     self.last_sierra_update = DateTime.current
+  end
+
+  def alma_json=(a_record)
+    super(a_record)
+    return a_record if a_record.blank?
+    self.mms_id = a_record["mmsId"]
+    self.alma_item = a_record["pid"]
+    self.alma_holding = a_record["holdingId"]
   end
 
   def ladybird_cloud_url

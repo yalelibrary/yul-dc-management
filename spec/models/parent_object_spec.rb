@@ -1048,6 +1048,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     let(:json_integers) { { "bibId" => 500, "holdingId" => 10, "itemId" => 30 } }
     let(:json_integers_0_item) { { "bibId" => 500, "holdingId" => 10, "itemId" => 0 } }
     let(:json_strings) { { "bibId" => "500", "holdingId" => "10", "itemId" => "30" } }
+    let(:alma_json_strings) { { "mmsId" => "123456789", "holdingId" => "987654321", "pid" => "12345" } }
     let(:json_strings_0_item) { { "bibId" => "500", "holdingId" => "10", "itemId" => "0" } }
     it 'accepts integer ids for sierra' do
       parent_object.sierra_json = json_integers
@@ -1056,6 +1057,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     it 'accepts string ids for sierra' do
       parent_object.sierra_json = json_strings
       expect(parent_object.item).to eq('30')
+    end
+    it 'accepts string ids for alma' do
+      parent_object.alma_json = alma_json_strings
+      expect(parent_object.alma_item).to eq('12345')
+      expect(parent_object.alma_holding).to eq('987654321')
+      expect(parent_object.mms_id).to eq('123456789')
     end
     it 'accepts string ids with 0 item for sierra' do
       parent_object.sierra_json = json_strings_0_item
