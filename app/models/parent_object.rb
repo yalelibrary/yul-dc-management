@@ -556,14 +556,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.mms_id = a_record["mmsId"]
     self.alma_item = a_record["pid"]
     self.alma_holding = a_record["holdingId"]
-    self.barcode = json['barcode']
+    self.barcode = a_record['barcode']
   end
 
   def ladybird_cloud_url
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/ladybird/oid/#{oid}?include-children=1"
   end
 
-  def sierra_cloud_url
+  def sierra_cloud_url    
     raise StandardError, "Bib id required to build Sierra url" unless bib.present?
     identifier_block = if barcode.present?
                          "/barcode/#{barcode}?bib=#{bib}"
@@ -576,13 +576,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def alma_cloud_url
-    raise StandardError, "Bib id or holding id required to build Alma url" unless bib.present? || alma_holding.present?
+    raise StandardError, "Alma item, Alma holding, Alma barcode, or Alma MMS ID is required to build Alma url" unless alma_item.present? || alma_holding.present? || barcode.present? || mms_id.present?
     identifier_block = if alma_item.present?
-                          "/item/#{alma_item}.json?bib=#{mms_id}"          
+                          "/item/#{alma_item}"          
                         elsif barcode.present?
-                          "/barcode/#{barcode}.json?bib=#{mms_id}"
+                          "/barcode/#{barcode}"
                         elsif alma_holding.present?
-                          "/holding/#{alma_holding}.json?bib=#{mms_id}"
+                          "/holding/#{alma_holding}"
                         else
                           "/bib/#{mms_id}.json"
                         end

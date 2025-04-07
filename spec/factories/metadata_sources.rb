@@ -28,7 +28,7 @@ FactoryBot.define do
       id { 5 }
       metadata_cloud_name { "alma" }
       display_name { "Alma" }
-      file_prefix { "Al-" }
+      file_prefix { "A-" }
     end
   end
 end
