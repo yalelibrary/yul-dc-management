@@ -172,3 +172,29 @@ table#batch-processes-datatable {
 #parent-object-versions-table .fa-external-link-alt {
   margin-left: 10px;
 }
+
+span.dt-column-order::before, span.dt-column-order::after {
+  opacity: 0.125;
+  line-height: 9px;
+  font-size: 0.8em;
+}
+
+span.dt-column-order::after {
+  content: "\25BC";
+  content: "\25BC"/"";
+  float: right;
+}
+
+span.dt-column-order::before {
+  content: "\25B2";
+  content: "\25B2"/"";
+  float: right;
+}
+
+.dt-orderable-desc[aria-sort="descending"] span.dt-column-order::after {
+  opacity: 1;
+}
+
+.dt-orderable-desc[aria-sort="ascending"] span.dt-column-order::before {
+  opacity: 1;
+}
