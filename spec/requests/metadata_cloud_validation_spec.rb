@@ -49,7 +49,6 @@ RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources
   end
 
   it "can connect to the alma metadata cloud using basic auth" do
-    byebug
     expect(alma_response.status.success?).to be true
     expect(alma_response.body.to_str).to include "/alma/item/2325391950008651"
     expect(alma_response.content_type.mime_type).to eq "application/json"
