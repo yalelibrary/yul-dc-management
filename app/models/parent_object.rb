@@ -576,20 +576,32 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
   def alma_cloud_url
     raise StandardError, "Alma item, Alma holding, Alma barcode, or Alma MMS ID is required to build Alma url" unless alma_item.present? || alma_holding.present? || barcode.present? || mms_id.present?
-    identifier_block = if alma_item.present?
+    identifier_block = if mms_id.present?
+                         if alma_item.present?
+                           "/item/#{alma_item}.json?bib=#{mms_id}"
+                         elsif barcode.present?
+                           "/barcode/#{barcode}.json?bib=#{mms_id}"
+                         elsif alma_holding.present?
+                           "/holding/#{alma_holding}.json?bib=#{mms_id}"
+                         else
+                           "/bib/#{mms_id}.json"
+                         end
+                       elsif alma_item.present?
                          "/item/#{alma_item}"
                        elsif barcode.present?
                          "/barcode/#{barcode}"
                        elsif alma_holding.present?
                          "/holding/#{alma_holding}"
-                       else
-                         "/bib/#{mms_id}.json"
                        end
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/alma#{identifier_block}"
   end
   # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
 
   def voyager_cloud_url
     raise StandardError, "Bib id required to build Voyager url" unless bib.present?
