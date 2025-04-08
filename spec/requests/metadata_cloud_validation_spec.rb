@@ -30,8 +30,8 @@ RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources
   let(:sierra_url) { "https://metadata-api-test.library.yale.edu/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/sierra/bib/#{sierra_parent_object.bib}" }
   let(:sierra_source) { FactoryBot.build(:metadata_source_sierra) }
   let(:sierra_response) { sierra_source.mc_get(sierra_url) }
-  let(:alma_parent_object) { FactoryBot.create(:parent_object, oid: '54321', alma_item: '2325391950008651') }
   let(:alma_source) { FactoryBot.build(:metadata_source_alma) }
+  let(:alma_parent_object) { FactoryBot.create(:parent_object, oid: '54321', authoritative_metadata_source_id: alma_source.id, alma_item: '2325391950008651') }
   let(:alma_url) { "https://metadata-api-test.library.yale.edu/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/alma/item/#{alma_parent_object.alma_item}" }
   let(:alma_response) { alma_source.mc_get(alma_url) }
 
@@ -49,6 +49,7 @@ RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources
   end
 
   it "can connect to the alma metadata cloud using basic auth" do
+    byebug
     expect(alma_response.status.success?).to be true
     expect(alma_response.body.to_str).to include "/alma/item/2325391950008651"
     expect(alma_response.content_type.mime_type).to eq "application/json"
