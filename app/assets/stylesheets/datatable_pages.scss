@@ -103,6 +103,11 @@ DEFAULT DESKTOP STYLING
   a {
     font-family: $standard_font_family;
     font-size: 18px;
+    text-decoration: none;
+  }
+
+  a:active, a:focus, a:hover {
+    text-decoration: underline;
   }
 }
 
