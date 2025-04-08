@@ -578,6 +578,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def alma_cloud_url
     raise StandardError, "Alma item, Alma holding, Alma barcode, or Alma MMS ID is required to build Alma url" unless alma_item.present? || alma_holding.present? || barcode.present? || mms_id.present?
     identifier_block = if mms_id.present?
@@ -602,6 +603,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   def voyager_cloud_url
     raise StandardError, "Bib id required to build Voyager url" unless bib.present?
