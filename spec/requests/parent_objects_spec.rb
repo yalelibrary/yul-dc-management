@@ -34,7 +34,7 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
   let(:invalid_params) do
     {
       oid: "2004628",
-      authoritative_metadata_source_id: 5,
+      authoritative_metadata_source_id: 6,
       visibility: nil,
       admin_set: 'brbl'
     }
