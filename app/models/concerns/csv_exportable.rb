@@ -27,7 +27,7 @@ module CsvExportable
         case po
         when ParentObject
           csv << [po.oid, po.admin_set.key, po.source_name,
-                  po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+                  po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.mms_id, po.alma_holding, po.alma_item, po.bib, po.holding, po.item,
                   po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri, po.preservica_representation_type,
                   po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
                   po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po.extent_of_digitization,
