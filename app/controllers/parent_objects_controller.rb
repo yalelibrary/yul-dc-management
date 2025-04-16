@@ -96,9 +96,6 @@ class ParentObjectsController < ApplicationController
                 else
                   valid_admin_set_edit? ? @parent_object.update!(parent_object_params) : false
                 end
-    rescue ActiveRecord::RecordInvalid
-      format.html { render :edit }
-      format.json { render json: @parent_object.errors, status: :unprocessable_entity }
 
       if updated
         @parent_object.minify if valid_redirect_to_edit?
