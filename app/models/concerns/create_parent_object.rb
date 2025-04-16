@@ -58,6 +58,7 @@ module CreateParentObject
         parent_object.bib = row['bib']
         parent_object.holding = row['holding']
         parent_object.item = row['item']
+        parent_object.barcode = row['barcode']
         parent_object.digitization_note = row['digitization_note']
         parent_object.digitization_funding_source = row['digitization_funding_source']
         parent_object.rights_statement = row['rights_statement']
