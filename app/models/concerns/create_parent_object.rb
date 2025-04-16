@@ -61,6 +61,7 @@ module CreateParentObject
         parent_object.mms_id = row['mms_id']
         parent_object.alma_holding = row['alma_holding']
         parent_object.alma_item = row['alma_item']
+        parent_object.barcode = row['barcode']
         parent_object.digitization_note = row['digitization_note']
         parent_object.digitization_funding_source = row['digitization_funding_source']
         parent_object.rights_statement = row['rights_statement']

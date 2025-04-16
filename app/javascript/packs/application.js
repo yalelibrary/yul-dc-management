@@ -146,6 +146,7 @@ $( document ).on('turbolinks:load', function() {
 
     dataTable = $('.is-datatable').dataTable({
       "deferLoading":true,
+      "ordering": true,
       "processing": true,
       "serverSide": true,
       "stateSave": true,
