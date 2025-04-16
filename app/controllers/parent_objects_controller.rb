@@ -94,7 +94,7 @@ class ParentObjectsController < ApplicationController
                   invalidate_redirect_to_edit
                   false
                 else
-                  valid_admin_set_edit? ? @parent_object.update!(parent_object_params) : false
+                  valid_admin_set_edit? ? @parent_object.update(parent_object_params) : false
                 end
 
       if updated
