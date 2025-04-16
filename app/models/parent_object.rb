@@ -41,7 +41,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :preservica_uri, presence: true, format: { with: %r{\A/}, message: " in incorrect format. URI must start with a /" }, if: proc { digital_object_source == "Preservica" || digital_object_source == "preservica" }
   validates :preservica_representation_type, format: { with: /\A(Preservation|preservation|Access)/, message: "can't be None when Digital Object Source is Preservica" }, if: proc { digital_object_source == "Preservica" || digital_object_source == "preservica" }
   # rubocop:enable Layout/LineLength
-  validates :mms_id, uniqueness: true
+  validates :mms_id, uniqueness: true, allow_nil: true, allow_blank: true
   validate :validate_visibility
   before_save :check_for_redirect
   before_save :check_permission_set

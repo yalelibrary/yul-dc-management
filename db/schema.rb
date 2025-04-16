@@ -286,8 +286,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_01_200653) do
     t.string "alma_holding"
     t.string "alma_item"
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
-    t.index ["alma_holding"], name: "index_parent_objects_on_alma_holding"
-    t.index ["alma_item"], name: "index_parent_objects_on_alma_item"
     t.index ["aspace_uri"], name: "index_parent_objects_on_aspace_uri"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["barcode"], name: "index_parent_objects_on_barcode"
@@ -296,7 +294,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_01_200653) do
     t.index ["created_at"], name: "index_parent_objects_on_created_at"
     t.index ["holding"], name: "index_parent_objects_on_holding"
     t.index ["item"], name: "index_parent_objects_on_item"
-    t.index ["mms_id"], name: "index_parent_objects_on_mms_id", unique: true, where: "((mms_id IS NOT NULL) OR ((mms_id)::text <> ''::text))"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
     t.index ["permission_set_id"], name: "index_parent_objects_on_permission_set_id"
     t.index ["project_identifier"], name: "index_parent_objects_on_project_identifier"
