@@ -45,6 +45,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validate :validate_visibility
   before_save :check_for_redirect
   before_save :check_permission_set
+  before_save :check_mms_id
 
   def check_for_redirect
     minify if redirect_to.present?
@@ -97,6 +98,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def check_permission_set
     self.permission_set = nil if visibility != "Open with Permission"
+  end
+
+  def check_mms_id
+    self.mms_id = nil if mms_id == ""
   end
 
   def initialize(attributes = nil)
