@@ -88,14 +88,14 @@ class ParentObjectsController < ApplicationController
       invalidate_admin_set_edit unless valid_admin_set_edit?
 
       valid_update = if parent_object_params[:redirect_to].present? && !valid_redirect_to_edit?
-                  invalidate_redirect_to_edit
-                  false
-                elsif !parent_object_params[:redirect_to].present? && parent_object_params[:visibility] == "Redirect" && !valid_redirect_to_edit?
-                  invalidate_redirect_to_edit
-                  false
-                else
-                  valid_admin_set_edit? ? true : false
-                end
+                       invalidate_redirect_to_edit
+                       false
+                     elsif !parent_object_params[:redirect_to].present? && parent_object_params[:visibility] == "Redirect" && !valid_redirect_to_edit?
+                       invalidate_redirect_to_edit
+                       false
+                     else
+                       valid_admin_set_edit? ? true : false
+                     end
 
       if valid_update && @parent_object.update(parent_object_params)
         @parent_object.minify if valid_redirect_to_edit?
