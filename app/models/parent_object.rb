@@ -41,9 +41,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :preservica_uri, presence: true, format: { with: %r{\A/}, message: " in incorrect format. URI must start with a /" }, if: proc { digital_object_source == "Preservica" || digital_object_source == "preservica" }
   validates :preservica_representation_type, format: { with: /\A(Preservation|preservation|Access)/, message: "can't be None when Digital Object Source is Preservica" }, if: proc { digital_object_source == "Preservica" || digital_object_source == "preservica" }
   # rubocop:enable Layout/LineLength
+  validates :mms_id, uniqueness: true, allow_blank: true
   validate :validate_visibility
   before_save :check_for_redirect
   before_save :check_permission_set
+  before_save :check_mms_id
 
   def check_for_redirect
     minify if redirect_to.present?
@@ -96,6 +98,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def check_permission_set
     self.permission_set = nil if visibility != "Open with Permission"
+  end
+
+  def check_mms_id
+    self.mms_id = nil if mms_id == ""
   end
 
   def initialize(attributes = nil)
