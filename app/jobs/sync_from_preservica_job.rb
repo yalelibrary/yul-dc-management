@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class SyncFromPreservicaJob < ApplicationJob
+  retry_on RuntimeError, Net::ReadTimeout, attempts: 3
   queue_as :default
 
   def default_priority
