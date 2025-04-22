@@ -20,7 +20,7 @@ RSpec.describe SyncFromPreservicaJob, type: :job, prep_metadata_sources: true, p
   it 'is configured to retry on errors' do
     # Verify the job class has retry configuration by inspecting the class directly
     expect(described_class.ancestors).to include(ActiveJob::Exceptions::ClassMethods)
-    
+
     # Verify retry configuration in the job code
     job_file = File.read(Rails.root.join('app', 'jobs', 'sync_from_preservica_job.rb'))
     expect(job_file).to include('retry_on RuntimeError')
@@ -35,5 +35,4 @@ RSpec.describe SyncFromPreservicaJob, type: :job, prep_metadata_sources: true, p
       SyncFromPreservicaJob.perform_later(batch_process)
     end
   end
-
-end 
+end
