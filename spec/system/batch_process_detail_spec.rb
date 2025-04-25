@@ -133,6 +133,26 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
     end
   end
 
+  context "when uploading a valid alma xml doc" do
+    let(:batch_process) do
+      FactoryBot.create(
+        :batch_process,
+        user: user,
+        mets_xml: File.open(fixture_path + '/goobi/metadata/30000317_20201203_140947/valid_alma_mets.xml').read,
+        file_name: "valid_alma_mets.xml",
+        created_at: "2025-04-23 16:17:01"
+      )
+    end
+    it "can see the details of the import" do
+      visit batch_process_path(batch_process)
+      expect(page).to have_content(batch_process.id.to_s)
+      expect(page).to have_content("johnsmith2530")
+      expect(page).to have_link("valid_alma_mets.xml", href: "/batch_processes/#{batch_process.id}/download")
+      expect(page).to have_link('800054805', href: "/batch_processes/#{batch_process.id}/parent_objects/800054805")
+      expect(page).to have_content("2025-04-23 16:17:01")
+    end
+  end
+
   context "when uploading an xml doc without intranda information" do
     let(:batch_process) do
       FactoryBot.create(
