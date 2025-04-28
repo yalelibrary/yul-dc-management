@@ -108,6 +108,8 @@ module SolrIndexable
         abstract_tesim: json_to_index["abstract"],
         accessionNumber_ssi: json_to_index["accessionNumber"],
         accessRestrictions_tesim: json_to_index["accessRestrictions"],
+        alma_holding_ssim: json_to_index["holdingId"],
+        alma_item_ssim: json_to_index["pid"],
         alternativeTitle_tesim: json_to_index["alternativeTitle"],
         alternativeTitleDisplay_tesim: json_to_index["alternativeTitleDisplay"],
         ancestorDisplayStrings_tesim: json_to_index["ancestorDisplayStrings"],
@@ -169,6 +171,7 @@ module SolrIndexable
         languageCode_ssim: json_to_index["languageCode"],
         localRecordNumber_ssim: json_to_index["localRecordNumber"],
         material_tesim: json_to_index["material"],
+        mms_id_ssim: json_to_index["mmsId"],
         number_of_pages_ss: json_to_index["numberOfPages"],
         oid_ssi: oid,
         orbisBarcode_ssi: barcode,
@@ -329,6 +332,7 @@ module SolrIndexable
   # rubocop:enable Metrics/PerceivedComplexity
 
   def generate_orbis_id(bib)
+    return nil if mms_id.present?
     (bib.to_i.positive? && bib.presence) || nil
   end
 
