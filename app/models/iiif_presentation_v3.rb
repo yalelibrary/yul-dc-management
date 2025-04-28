@@ -164,6 +164,7 @@ class IiifPresentationV3
     METADATA_FIELDS.each do |field, hash|
       next if skip_field(field)
       next if skip_extent(field)
+      next if skip_bib(field)
       value = extract_value(field, hash)
       if value.is_a?(Array)
         value = process_metadata_array value, hash
@@ -431,5 +432,10 @@ class IiifPresentationV3
   def skip_extent(field)
     field == :extent_of_digitization && (@parent_object.extent_of_digitization == '' || @parent_object.extent_of_digitization == 'Unspecified')
   end
+
+  def skip_bib(field)
+    field == :bib if @parent_object.mms_id.present?
+  end
+  
 end
 # rubocop:enable Metrics/ClassLength

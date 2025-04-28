@@ -90,10 +90,6 @@ module SolrIndexable
     end
   end
 
-  def bib
-    return nil if authoritative_json["mmsId"].present?
-  end
-
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def to_solr(json_to_index = nil)
@@ -336,7 +332,6 @@ module SolrIndexable
   # rubocop:enable Metrics/PerceivedComplexity
 
   def generate_orbis_id(bib)
-    return nil if mms_id.present?
     (bib.to_i.positive? && bib.presence) || nil
   end
 
