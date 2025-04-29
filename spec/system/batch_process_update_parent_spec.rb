@@ -52,7 +52,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(p_o_a.barcode).to eq("39002102340669")
         expect(p_o_a.project_identifier).to eq("Beinecke")
         expect(p_o_a.digitization_funding_source).to eq("This is the Digitization Funding Source")
-        visit "/parent_objects/2005512/manifest"
         visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/2005512"
         expect(page).to have_content "Status Complete"
       end
