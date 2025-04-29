@@ -232,6 +232,7 @@ $( document ).on('turbolinks:load', function() {
       $( '.is-datatable' ).data("destroying", "true");
       dataTable.api().destroy();
       $('#search-row').remove();
+      $('.dt-info, .dt-paging').remove(); // Remove pagination elements
     })
   }
 
