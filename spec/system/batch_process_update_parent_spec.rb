@@ -52,9 +52,26 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(p_o_a.barcode).to eq("39002102340669")
         expect(p_o_a.project_identifier).to eq("Beinecke")
         expect(p_o_a.digitization_funding_source).to eq("This is the Digitization Funding Source")
-
+        visit "/parent_objects/2005512/manifest"
         visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/2005512"
         expect(page).to have_content "Status Complete"
+      end
+
+      it "updates the parent with a mms_id and manifest does not include Orbis ID" do
+        visit "/parent_objects/2005512/manifest"
+        expect(page.body).not_to have_content("MMS ID")
+        expect(page.body).to have_content("Orbis ID")
+
+        # perform batch update
+        visit batch_processes_path
+        select("Update Parent Objects")
+        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/update_example_mms_id.csv")
+        click_button("Submit")
+        expect(page).to have_content "Your job is queued for processing in the background"
+
+        visit "/parent_objects/2005512/manifest"
+        expect(page.body).to have_content("MMS ID")
+        expect(page.body).not_to have_content("Orbis ID")
       end
     end
   end
