@@ -18,7 +18,7 @@ ix/mix.xsd">
           <mods:titleInfo>
             <mods:title>Dnevnik</mods:title>
           </mods:titleInfo>
-          <mods:identifier type="PPNanalog">/alma/item/2325391950008651</mods:identifier>
+          <mods:identifier type="PPNanalog">/alma/item/2325391950008651?bib=890425673459853409</mods:identifier>
           <mods:recordInfo>
             <mods:recordIdentifier source="gbv-ppn">800054805</mods:recordIdentifier>
           </mods:recordInfo>

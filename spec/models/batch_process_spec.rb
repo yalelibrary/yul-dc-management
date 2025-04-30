@@ -124,9 +124,10 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       batch_process.file = alma_xml_upload
       batch_process.save!
       po = ParentObject.find(800_054_805)
-      expect(po.mms_id).to be_nil
+      expect(po.mms_id).to eq "890425673459853409"
       expect(po.alma_item).to eq "2325391950008651"
       expect(po.alma_holding).to be_nil
+      expect(po.metadata_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/alma/item/#{po.alma_item}.json?bib=#{po.mms_id}&mediaType=json"
     end
 
     it "creates a preservica ingest with parent uuid from the METs document" do
