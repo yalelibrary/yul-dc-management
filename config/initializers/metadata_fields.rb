@@ -292,7 +292,7 @@ METADATA_FIELDS = {
   mms_id: {
     label: 'Alma MMS ID',
     solr_fields: [
-      'mms_id_ssim'
+      'mmsId_ssi'
     ],
     digital_only: true
   },
