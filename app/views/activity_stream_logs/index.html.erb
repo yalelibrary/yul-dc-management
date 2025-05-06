@@ -10,9 +10,12 @@
       <% end %>
       <% if @check_status %>
         <% if @expired_logger %>
-          <% if current_user.has_role?(:sysadmin)%>
-            <%= button_to 'Manually Reset', activity_stream_logs_path(reset_log: 'true'), method: 'post', class: 'btn button secondary-button' %>
-          <% end %>
+          The last Activity Stream Log is still in a "Running" state and more than 12 hours old. 
+        <% else %>
+          There are no expired Activity Stream Logs older than 12 hours.
+        <% end %>
+        <% if current_user.has_role?(:sysadmin)%>
+          <%= button_to 'Manually Reset', activity_stream_logs_path(reset_log: 'true'), method: 'post', class: 'btn button secondary-button' %>
         <% end %>
       <% end %>
     </div>
