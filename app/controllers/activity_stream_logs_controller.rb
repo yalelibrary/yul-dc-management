@@ -9,7 +9,7 @@ class ActivityStreamLogsController < ApplicationController
     policy.style_src :self, :unsafe_inline
     policy.style_src_elem :self, :unsafe_inline
   end
- 
+
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable SafeNavigationChain
   def index
