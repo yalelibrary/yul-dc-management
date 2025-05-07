@@ -5,7 +5,7 @@ class AdminSetsController < ApplicationController
   before_action :set_admin_set, only: [:show, :edit, :update, :destroy]
 
   # Allows FontAwesome icons to render
-  content_security_policy(only: :index) do |policy|
+  content_security_policy(only: [:index, :show]) do |policy|
     policy.script_src :self, :unsafe_inline
     policy.script_src_attr  :self, :unsafe_inline
     policy.script_src_elem  :self, :unsafe_inline
