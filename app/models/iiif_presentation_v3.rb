@@ -159,11 +159,13 @@ class IiifPresentationV3
   end
 
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
   def metadata
     values = []
     METADATA_FIELDS.each do |field, hash|
       next if skip_field(field)
       next if skip_extent(field)
+      next if skip_bib(field)
       value = extract_value(field, hash)
       if value.is_a?(Array)
         value = process_metadata_array value, hash
@@ -179,6 +181,7 @@ class IiifPresentationV3
     values
   end
   # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def metadata_url(url, hash)
     return unless url
@@ -430,6 +433,10 @@ class IiifPresentationV3
 
   def skip_extent(field)
     field == :extent_of_digitization && (@parent_object.extent_of_digitization == '' || @parent_object.extent_of_digitization == 'Unspecified')
+  end
+
+  def skip_bib(field)
+    field == :bib if @parent_object.mms_id.present?
   end
 end
 # rubocop:enable Metrics/ClassLength

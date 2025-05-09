@@ -35,6 +35,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
   let(:has_digitized) { File.open("spec/fixtures/goobi/metadata/eodig.xml") }
   let(:has_digitized_note) { File.open("spec/fixtures/goobi/metadata/digitizationnote.xml") }
   let(:bad_checksum_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_checksum_mets.xml") }
+  let(:valid_alma_xml) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/valid_alma_mets.xml") }
 
   it "can be instantiated with xml from the DB instead of a file" do
     described_class.new(batch_process.mets_xml)
@@ -154,6 +155,24 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
     allow(mets_doc).to receive(:metadata_source_path).and_return("/ils/item/9136055?bib=1169354")
     expect(mets_doc.bib).to eq "1169354"
     expect(mets_doc.item).to eq "9136055"
+  end
+
+  it "can identify the bib if present" do
+    mets_doc = described_class.new(valid_alma_xml)
+    allow(mets_doc).to receive(:metadata_source_path).and_return("/alma/bib/992004673408651")
+    expect(mets_doc.bib).to eq "992004673408651"
+  end
+
+  it "can identify the alma item if present" do
+    mets_doc = described_class.new(valid_alma_xml)
+    allow(mets_doc).to receive(:metadata_source_path).and_return("/alma/item/992004673408651")
+    expect(mets_doc.item).to eq "992004673408651"
+  end
+
+  it "can identify the alma holding if present" do
+    mets_doc = described_class.new(valid_alma_xml)
+    allow(mets_doc).to receive(:metadata_source_path).and_return("/alma/holding/992004673408651")
+    expect(mets_doc.holding).to eq "992004673408651"
   end
 
   it "returns nil if there is no oid field in the METs document" do

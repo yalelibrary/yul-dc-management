@@ -86,6 +86,7 @@ module DcsActivityStreamManagement
     return "Voyager" if authoritative_metadata_source_id == 2
     return "ArchivesSpace" if authoritative_metadata_source_id == 3
     return "Sierra" if authoritative_metadata_source_id == 4
+    return "Alma" if authoritative_metadata_source_id == 5
     "Metadata Source name not found"
   end
 end

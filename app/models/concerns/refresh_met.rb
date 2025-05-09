@@ -31,11 +31,18 @@ module RefreshMet
 
   # SETS VALUES FROM METS METADATA
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def set_values_from_mets(parent_object, metadata_source)
-    parent_object.bib = mets_doc.bib
+    if metadata_source == 'alma'
+      parent_object.mms_id = mets_doc.bib
+      parent_object.alma_holding = mets_doc.holding
+      parent_object.alma_item = mets_doc.item
+    else
+      parent_object.bib = mets_doc.bib
+      parent_object.holding = mets_doc.holding
+      parent_object.item = mets_doc.item
+    end
     parent_object.barcode = mets_doc.barcode
-    parent_object.holding = mets_doc.holding
-    parent_object.item = mets_doc.item
     parent_object.visibility = mets_doc.visibility
     parent_object.rights_statement = mets_doc.rights_statement
     parent_object.viewing_direction = mets_doc.viewing_direction
@@ -50,4 +57,5 @@ module RefreshMet
     parent_object.digitization_note = mets_doc.dig_note
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 end
