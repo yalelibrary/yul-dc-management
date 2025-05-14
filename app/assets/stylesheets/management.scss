@@ -44,6 +44,26 @@ td.actions {
   content: "✓";
   color: inherit;
 }
+
+// Add styles for colvis dropdown
+.dt-button-collection .dropdown-item {
+  position: relative;
+  padding-left: 2rem;
+  cursor: pointer;
+}
+
+.dt-button-collection .dropdown-item::before {
+  position: absolute;
+  left: 0.5rem;
+  content: "□";
+  color: #888888;
+}
+
+.dt-button-collection .dropdown-item.active::before {
+  content: "■";
+  color: #495057;
+}
+
 dt.represent-thumb{
   position: relative;
 }

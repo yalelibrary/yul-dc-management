@@ -178,7 +178,8 @@ $( document ).on('turbolinks:load', function() {
         },
         {
           extend: 'colvis',
-          text: "\u25EB"
+          text: "\u25EB",
+          className: 'buttons-colvis'
         },
         {
           extend: 'csvHtml5',
@@ -211,6 +212,11 @@ $( document ).on('turbolinks:load', function() {
         $('.dt-info').appendTo('.main-content');
         $('.dt-paging').appendTo('.main-content');
         if (hasSearch) onColumnsUpdate(this);
+        
+        // Add handler for column visibility changes
+        $(document).on('click', '.dt-button-collection .dropdown-item', function() {
+          $(this).toggleClass('active');
+        });
       },
       stateLoaded: function (e, setting, data) {
         // load the search settings when state is loaded by the datatable to fill in the inputs.
