@@ -56,7 +56,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         expect(po.aspace_uri).to eq('/repositories/12/archival_objects/781086')
       end
       it 'can create a parent object from alma' do
-        allow(S3Service).to receive(:s3_exists?).and_return(true)
         expect do
           batch_process.file = alma_parent
           batch_process.save
