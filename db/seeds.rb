@@ -32,6 +32,11 @@ puts "Oid Minter Initialized, initialization was #{sequence}, current value is #
     metadata_cloud_name: "sierra",
     display_name: "Sierra",
     file_prefix: "S-"
+  },
+  {
+    metadata_cloud_name: "alma",
+    display_name: "Alma",
+    file_prefix: "A-"
   }
 ].each do |obj|
   MetadataSource.where(metadata_cloud_name: obj[:metadata_cloud_name]).first_or_create do |ms|

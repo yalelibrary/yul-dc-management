@@ -15,6 +15,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent.csv")) }
   let(:invalid_preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "invalid_preservica_parent.csv")) }
   let(:delete_child) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_child_fixture_ids.csv")) }
+  let(:alma_xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/valid_alma_mets.xml')) }
   let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
   let(:xml_upload_two) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml')) }
   let(:aspace_xml_upload) { Rack::Test::UploadedFile.new("spec/fixtures/goobi/metadata/30000317_20201203_140947/good_aspace.xml") }
@@ -116,6 +117,17 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po.admin_set).not_to be_nil
       expect(po.admin_set.key).to eq "brbl"
       expect(batch_process.admin_set).to eq " brbl"
+    end
+
+    it "creates a parent object with alma values from the METs document" do
+      admin_set_three
+      batch_process.file = alma_xml_upload
+      batch_process.save!
+      po = ParentObject.find(800_054_805)
+      expect(po.mms_id).to eq "890425673459853409"
+      expect(po.alma_item).to eq "2325391950008651"
+      expect(po.alma_holding).to be_nil
+      expect(po.metadata_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/alma/item/#{po.alma_item}.json?bib=#{po.mms_id}&mediaType=json"
     end
 
     it "creates a preservica ingest with parent uuid from the METs document" do

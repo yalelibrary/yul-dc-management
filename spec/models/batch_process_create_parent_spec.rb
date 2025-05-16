@@ -16,6 +16,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:no_extent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'aspace_parent_no_extent.csv')) }
   let(:typo_extent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'aspace_parent_typo_extent.csv')) }
   let(:aspace_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'aspace_parent.csv')) }
+  let(:alma_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'create_alma_parent.csv')) }
 
   around do |example|
     original_image_bucket = ENV['S3_SOURCE_BUCKET_NAME']
@@ -52,6 +53,16 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         po = ParentObject.first
         expect(po.bib).to eq('4320085')
         expect(po.aspace_uri).to eq('/repositories/12/archival_objects/781086')
+      end
+      it 'can create a parent object from alma' do
+        expect do
+          batch_process.file = alma_parent
+          batch_process.save
+        end.to change { ParentObject.count }.from(0).to(1)
+        po = ParentObject.first
+        expect(po.mms_id).to eq('123')
+        expect(po.alma_item).to eq('789')
+        expect(po.alma_holding).to eq('321')
       end
       it 'can create a parent_object' do
         expect do
