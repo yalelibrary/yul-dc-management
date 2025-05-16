@@ -153,8 +153,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     elsif digital_object_source == "Preservica" || digital_object_source == "preservica"
       child_hashes = array_of_child_hashes_from_preservica # only call array_of_child_hashes_from_preservica once since it causes all images to be downloaded
       if child_hashes.present?
-        valid_child_hashes = validate_child_hashes(child_hashes)
-        invalid_child_hashes = child_hashes - valid_child_hashes
+        unique_child_hashes = child_hashes.uniq { |h| h[:preservica_content_object_uri] }
+        valid_child_hashes = validate_child_hashes(unique_child_hashes)
+        invalid_child_hashes = unique_child_hashes - valid_child_hashes
         cleanup_child_artifacts(invalid_child_hashes)
         upsert_child_objects(valid_child_hashes) unless valid_child_hashes.empty?
         self.last_preservica_update = Time.current
