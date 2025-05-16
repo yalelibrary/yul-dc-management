@@ -127,6 +127,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po.mms_id).to eq "890425673459853409"
       expect(po.alma_item).to eq "2325391950008651"
       expect(po.alma_holding).to be_nil
+      expect(po.last_alma_update).not_to be_nil
       expect(po.metadata_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/alma/item/#{po.alma_item}.json?bib=#{po.mms_id}&mediaType=json"
     end
 
