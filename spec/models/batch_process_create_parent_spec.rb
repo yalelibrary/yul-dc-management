@@ -42,7 +42,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       stub_metadata_cloud('AS-781086', 'aspace')
       stub_metadata_cloud('200000045')
       stub_metadata_cloud('2002826')
-      stub_metadata_cloud('15821166', 'alma')
+      stub_metadata_cloud('A-15821166', 'alma')
     end
 
     context 'Create Parent Object batch process with a detailed csv' do
