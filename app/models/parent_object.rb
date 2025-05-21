@@ -557,6 +557,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.alma_item = a_record["pid"]
     self.alma_holding = a_record["holdingId"]
     self.barcode = a_record['barcode']
+    self.last_alma_update = DateTime.current
   end
 
   def ladybird_cloud_url

@@ -37,6 +37,7 @@ module RefreshMet
       parent_object.mms_id = mets_doc.bib
       parent_object.alma_holding = mets_doc.holding
       parent_object.alma_item = mets_doc.item
+      parent_object.last_alma_update = Time.current
     else
       parent_object.bib = mets_doc.bib
       parent_object.holding = mets_doc.holding

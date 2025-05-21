@@ -42,6 +42,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       stub_metadata_cloud('AS-781086', 'aspace')
       stub_metadata_cloud('200000045')
       stub_metadata_cloud('2002826')
+      stub_metadata_cloud('A-15821166', 'alma')
     end
 
     context 'Create Parent Object batch process with a detailed csv' do
@@ -60,9 +61,10 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.save
         end.to change { ParentObject.count }.from(0).to(1)
         po = ParentObject.first
-        expect(po.mms_id).to eq('123')
-        expect(po.alma_item).to eq('789')
-        expect(po.alma_holding).to eq('321')
+        expect(po.mms_id).to eq('9981952153408651')
+        expect(po.alma_item).to eq('23233086230008651')
+        expect(po.alma_holding).to eq('22233086240008651')
+        expect(po.last_alma_update).not_to be_nil
       end
       it 'can create a parent_object' do
         expect do
