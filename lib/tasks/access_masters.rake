@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-namespace :access_masters do
+namespace :access_primaries do
   desc "Copy fixtures to S3"
-  task copy_access_masters: :environment do
+  task copy_access_primaries: :environment do
     ParentObject.all.each do |parent_object|
       parent_object.child_objects.each do |child|
         oid = child.oid

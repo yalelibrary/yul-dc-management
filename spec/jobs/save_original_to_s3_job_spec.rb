@@ -27,14 +27,14 @@ RSpec.describe SaveOriginalToS3Job, type: :job, prep_metadata_sources: true, pre
   around do |example|
     original_image_bucket = ENV['S3_SOURCE_BUCKET_NAME']
     original_download_bucket = ENV['S3_DOWNLOAD_BUCKET_NAME']
-    original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
+    original_access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
     ENV['S3_SOURCE_BUCKET_NAME'] = 'not-a-real-bucket'
     ENV['S3_DOWNLOAD_BUCKET_NAME'] = 'fake-download-bucket'
-    ENV["ACCESS_MASTER_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
+    ENV["ACCESS_PRIMARY_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
     example.run
     ENV['S3_SOURCE_BUCKET_NAME'] = original_image_bucket
     ENV['S3_DOWNLOAD_BUCKET_NAME'] = original_download_bucket
-    ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
+    ENV["ACCESS_PRIMARY_MOUNT"] = original_access_primary_mount
   end
 
   before do

@@ -23,24 +23,24 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
   around do |example|
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
-    original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
+    original_access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
     original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
-    ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "images", "access_masters")
+    ENV["ACCESS_PRIMARY_MOUNT"] = File.join("spec", "fixtures", "images", "access_primaries")
     ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     preservica_host = ENV['PRESERVICA_HOST']
     preservica_creds = ENV['PRESERVICA_CREDENTIALS']
     ENV['PRESERVICA_HOST'] = "testpreservica"
     ENV['PRESERVICA_CREDENTIALS'] = '{"brbl": {"username":"xxxxx", "password":"xxxxx"}}'
-    access_host = ENV['ACCESS_MASTER_MOUNT']
-    ENV['ACCESS_MASTER_MOUNT'] = File.join("spec", "fixtures", "images", "access_masters")
+    access_host = ENV['ACCESS_PRIMARY_MOUNT']
+    ENV['ACCESS_PRIMARY_MOUNT'] = File.join("spec", "fixtures", "images", "access_primaries")
     example.run
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
-    ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
+    ENV["ACCESS_PRIMARY_MOUNT"] = original_access_primary_mount
     ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
     ENV['PRESERVICA_HOST'] = preservica_host
     ENV['PRESERVICA_CREDENTIALS'] = preservica_creds
-    ENV['ACCESS_MASTER_MOUNT'] = access_host
+    ENV['ACCESS_PRIMARY_MOUNT'] = access_host
   end
 
   before do
@@ -274,8 +274,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         batch_process.save!
         expect(batch_process.oid).to eq 30_000_317
         # TODO: This test is not testing the file copy, update so that it doesn't copy file
-        file_path = "spec/fixtures/images/access_masters/01/18/30/00/03/18/30000318.tif"
-        File.delete("spec/fixtures/images/access_masters/01/18/30/00/03/18/30000318.tif") if File.exist?(file_path)
+        file_path = "spec/fixtures/images/access_primaries/01/18/30/00/03/18/30000318.tif"
+        File.delete("spec/fixtures/images/access_primaries/01/18/30/00/03/18/30000318.tif") if File.exist?(file_path)
       end
 
       it "has a mets document associated with it that is not saved to the database" do
@@ -310,9 +310,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         # Doing one large test here, because with copying images, etc., it is an expensive one
         it "creates a parent object with the expected values and child objects with expected values" do
           admin_set_two
-          expect(File.exist?("spec/fixtures/images/access_masters/00/02/30/00/04/02/30000402.tif")).to be false
-          expect(File.exist?("spec/fixtures/images/access_masters/00/03/30/00/04/03/30000403.tif")).to be false
-          expect(File.exist?("spec/fixtures/images/access_masters/00/04/30/00/04/04/30000404.tif")).to be false
+          expect(File.exist?("spec/fixtures/images/access_primaries/00/02/30/00/04/02/30000402.tif")).to be false
+          expect(File.exist?("spec/fixtures/images/access_primaries/00/03/30/00/04/03/30000403.tif")).to be false
+          expect(File.exist?("spec/fixtures/images/access_primaries/00/04/30/00/04/04/30000404.tif")).to be false
           expect(batch_process.batch_action).to eq "create parent objects"
           expect do
             batch_process.file = xml_upload_two
@@ -336,14 +336,14 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect(po.representative_child_oid).to eq 30_000_403
           # child object expectations
           expect(co.checksum).to eq "c314697a5b0fd444e26e7c12a1d8d487545dacfc"
-          expect(co.mets_access_master_path).to eq "/home/app/webapp/spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_media/30000404.tif"
-          expect(File.exist?("spec/fixtures/images/access_masters/00/02/30/00/04/02/30000402.tif")).to be true
-          expect(File.exist?("spec/fixtures/images/access_masters/00/03/30/00/04/03/30000403.tif")).to be true
-          expect(File.exist?("spec/fixtures/images/access_masters/00/04/30/00/04/04/30000404.tif")).to be true
+          expect(co.mets_access_primary_path).to eq "/home/app/webapp/spec/fixtures/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_media/30000404.tif"
+          expect(File.exist?("spec/fixtures/images/access_primaries/00/02/30/00/04/02/30000402.tif")).to be true
+          expect(File.exist?("spec/fixtures/images/access_primaries/00/03/30/00/04/03/30000403.tif")).to be true
+          expect(File.exist?("spec/fixtures/images/access_primaries/00/04/30/00/04/04/30000404.tif")).to be true
           expect(co.ptiff_conversion_at.present?).to be_truthy
-          File.delete("spec/fixtures/images/access_masters/00/02/30/00/04/02/30000402.tif")
-          File.delete("spec/fixtures/images/access_masters/00/03/30/00/04/03/30000403.tif")
-          File.delete("spec/fixtures/images/access_masters/00/04/30/00/04/04/30000404.tif")
+          File.delete("spec/fixtures/images/access_primaries/00/02/30/00/04/02/30000402.tif")
+          File.delete("spec/fixtures/images/access_primaries/00/03/30/00/04/03/30000403.tif")
+          File.delete("spec/fixtures/images/access_primaries/00/04/30/00/04/04/30000404.tif")
         end
       end
     end

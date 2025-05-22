@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-# This class takes a child_object's oid, retrieves the access_master for that child object, creates a pyramidal tiff from the access master,
+# This class takes a child_object's oid, retrieves the access_primary for that child object, creates a pyramidal tiff from the access primary,
 # and saves that pyramidal tiff to an S3 bucket.
 class PyramidalTiff
   include ActiveModel::Validations
 
   attr_accessor :child_object, :conversion_information, :force_update
   validate :verify_and_generate
-  delegate :access_master_path, :mets_access_master_path, :remote_access_master_path, :remote_ptiff_path, :oid, to: :child_object
+  delegate :access_primary_path, :mets_access_primary_path, :remote_access_primary_path, :remote_ptiff_path, :oid, to: :child_object
 
   # This method takes the oid of a child_object and creates a new PyramidalTiff
   def initialize(child_object)
@@ -18,10 +18,10 @@ class PyramidalTiff
   def generate_ptiff
     # this adds the height and width to the object
     Dir.mktmpdir do |swing_tmpdir|
-      tiff_input_path = copy_access_master_to_working_directory(swing_tmpdir)
+      tiff_input_path = copy_access_primary_to_working_directory(swing_tmpdir)
       Dir.mktmpdir do |ptiff_tmpdir|
         @conversion_information = convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
-        save_to_s3(File.join(ptiff_tmpdir, File.basename(access_master_path)), @conversion_information) unless @conversion_information.empty?
+        save_to_s3(File.join(ptiff_tmpdir, File.basename(access_primary_path)), @conversion_information) unless @conversion_information.empty?
       end
     end
     conversion_information
@@ -49,14 +49,14 @@ class PyramidalTiff
   # rubocop:disable Metrics/PerceivedComplexity
   def original_file_exists?
     if child_object.parent_object&.from_mets == true
-      image_exists = File.exist?(mets_access_master_path) || File.exist?(mets_access_master_path.gsub('.tif', '.TIF').gsub('.jpg', '.JPG'))
-      errors.add(:base, "Expected file #{mets_access_master_path} on mets not found.") unless image_exists
-    elsif ENV['ACCESS_MASTER_MOUNT'] == "s3"
-      image_exists = S3Service.s3_exists?(remote_access_master_path)
-      errors.add(:base, "Expected file #{remote_access_master_path} on S3 not found.") unless image_exists
+      image_exists = File.exist?(mets_access_primary_path) || File.exist?(mets_access_primary_path.gsub('.tif', '.TIF').gsub('.jpg', '.JPG'))
+      errors.add(:base, "Expected file #{mets_access_primary_path} on mets not found.") unless image_exists
+    elsif ENV['ACCESS_PRIMARY_MOUNT'] == "s3"
+      image_exists = S3Service.s3_exists?(remote_access_primary_path)
+      errors.add(:base, "Expected file #{remote_access_primary_path} on S3 not found.") unless image_exists
     else
-      image_exists = File.exist?(access_master_path)
-      errors.add(:base, "Expected file #{access_master_path} on shares at Yale not found.") unless image_exists
+      image_exists = File.exist?(access_primary_path)
+      errors.add(:base, "Expected file #{access_primary_path} on shares at Yale not found.") unless image_exists
     end
     image_exists
   end
@@ -66,17 +66,17 @@ class PyramidalTiff
   # Create a temp copy of the input file in TEMP_IMAGE_WORKSPACE
   # @param [String] tmpdir - the tmpdir location where the file should be written
   # @return [String] the full path where the file was downloaded
-  def copy_access_master_to_working_directory(tmpdir)
-    temp_file_path = File.join(tmpdir, File.basename(access_master_path))
-    if ENV['ACCESS_MASTER_MOUNT'] == "s3"
-      download = S3Service.download_image(remote_access_master_path, temp_file_path)
+  def copy_access_primary_to_working_directory(tmpdir)
+    temp_file_path = File.join(tmpdir, File.basename(access_primary_path))
+    if ENV['ACCESS_PRIMARY_MOUNT'] == "s3"
+      download = S3Service.download_image(remote_access_primary_path, temp_file_path)
       if download
-        child_object.processing_event("Access master retrieved from S3", 'access-master')
+        child_object.processing_event("Access primary retrieved from S3", 'access-primary')
         temp_file_path
       end
     else
-      FileUtils.cp(access_master_path, tmpdir)
-      child_object.processing_event("Access master retrieved from file system", 'access-master')
+      FileUtils.cp(access_primary_path, tmpdir)
+      child_object.processing_event("Access primary retrieved from file system", 'access-primary')
       temp_file_path
     end
   end
@@ -86,7 +86,7 @@ class PyramidalTiff
   end
 
   def convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
-    ptiff_output_path = File.join(ptiff_tmpdir, File.basename(access_master_path))
+    ptiff_output_path = File.join(ptiff_tmpdir, File.basename(access_primary_path))
     stdout, stderr, status = Open3.capture3(build_command(ptiff_tmpdir, tiff_input_path, ptiff_output_path))
     errors.add(:base, "Conversion script exited with error code #{status.exitstatus}. ---\n#{stdout}---\n#{stderr}") if status.exitstatus != 0
     return {} if status.exitstatus != 0
