@@ -54,42 +54,42 @@ class ChildObject < ApplicationRecord
     S3Service.full_text_exists?(remote_ocr_path)
   end
 
-  def access_master_path
-    return @access_master_path if @access_master_path
-    image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
+  def access_primary_path
+    return @access_primary_path if @access_primary_path
+    image_mount = ENV['ACCESS_PRIMARY_MOUNT'] || "data"
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
     directory = format("%02d", pairtree_path.first)
-    @access_master_path = File.join(image_mount, directory, pairtree_path, "#{oid}.tif")
+    @access_primary_path = File.join(image_mount, directory, pairtree_path, "#{oid}.tif")
   end
 
   # rubocop:disable  Metrics/MethodLength
   # rubocop:disable  Layout/LineLength
-  def copy_to_access_master_pairtree
-    # Don't copy over existing access masters if they already exist
+  def copy_to_access_primary_pairtree
+    # Don't copy over existing access primaries if they already exist
     # TODO: Determine what happens if it's an intentional re-shoot of a child image
     #  1. How is that signalled? (ensure that it's an intentional re-shoot, not accidental duplication)
-    #  2. We assume that there is only one access master at a time - BUT we only have one access master pair-tree
+    #  2. We assume that there is only one access primary at a time - BUT we only have one access primary pair-tree
     #     across *all* environments (no separation of dev, test, uat, production)
     #     how do we ensure we don't accidentally overwrite something we want to keep?
-    if access_master_exists? && checksum_matches?
-      processing_event("Not copied from Goobi package to access master pair-tree, already exists", 'access-master-exists')
+    if access_primary_exists? && checksum_matches?
+      processing_event("Not copied from Goobi package to access primary pair-tree, already exists", 'access-primary-exists')
       return true
     end
-    unless mets_access_master_checksum_matches?
+    unless mets_access_primary_checksum_matches?
       processing_event("Original Copy of checksum does not match", 'failed')
       false
     end
-    image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
+    image_mount = ENV['ACCESS_PRIMARY_MOUNT'] || "data"
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
     directory = format("%02d", pairtree_path.first)
-    # Create path to access master if it doesn't exist
+    # Create path to access primary if it doesn't exist
     FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
-    File.exist?(mets_access_master_path) ? FileUtils.cp(mets_access_master_path, access_master_path) : FileUtils.cp(mets_access_master_path.gsub('.tif', '.TIF').gsub('.jpg', '.JPG'), access_master_path)
+    File.exist?(mets_access_primary_path) ? FileUtils.cp(mets_access_primary_path, access_primary_path) : FileUtils.cp(mets_access_primary_path.gsub('.tif', '.TIF').gsub('.jpg', '.JPG'), access_primary_path)
     if checksum_matches?
-      processing_event("Copied from Goobi package to access master pair-tree", 'goobi-copied')
+      processing_event("Copied from Goobi package to access primary pair-tree", 'goobi-copied')
       true
     else
-      processing_event("Copy from Goobi to access master failed checksum check", 'failed')
+      processing_event("Copy from Goobi to access primary failed checksum check", 'failed')
       false
     end
   end
@@ -102,46 +102,46 @@ class ChildObject < ApplicationRecord
       sha512_checksum == access_sha512_checksum
     # goobi
     elsif checksum.present?
-      checksum == Digest::SHA1.file(access_master_path).to_s
+      checksum == Digest::SHA1.file(access_primary_path).to_s
     # ladybird
     elsif sha256_checksum.present?
-      sha256_checksum == Digest::SHA256.file(access_master_path).to_s
+      sha256_checksum == Digest::SHA256.file(access_primary_path).to_s
     # ladybird
     elsif md5_checksum.present?
-      md5_checksum == Digest::MD5.file(access_master_path).to_s
+      md5_checksum == Digest::MD5.file(access_primary_path).to_s
     else
       false
     end
   end
 
-  def mets_access_master_checksum_matches?
-    mets_master_checksum = Digest::SHA1.file(mets_access_master_path).to_s
-    checksum == mets_master_checksum
+  def mets_access_primary_checksum_matches?
+    mets_primary_checksum = Digest::SHA1.file(mets_access_primary_path).to_s
+    checksum == mets_primary_checksum
   end
 
-  def access_master_exists?
-    File.exist?(access_master_path)
+  def access_primary_exists?
+    File.exist?(access_primary_path)
   end
 
   def access_sha512_checksum
-    Digest::SHA512.file(access_master_path).to_s
+    Digest::SHA512.file(access_primary_path).to_s
   end
 
   def access_file_size
-    File.exist?(access_master_path) ? File&.size(access_master_path) : nil
+    File.exist?(access_primary_path) ? File&.size(access_primary_path) : nil
   end
 
-  def remote_access_master_path
-    return @remote_access_master_path if @remote_access_master_path
+  def remote_access_primary_path
+    return @remote_access_primary_path if @remote_access_primary_path
     image_bucket = "originals"
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
-    @remote_access_master_path = File.join(image_bucket, pairtree_path, "#{oid}.tif")
+    @remote_access_primary_path = File.join(image_bucket, pairtree_path, "#{oid}.tif")
   end
 
   def remote_ptiff_path
     return @remote_ptiff_path if @remote_ptiff_path
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
-    @remote_ptiff_path = File.join("ptiffs", pairtree_path, File.basename(access_master_path))
+    @remote_ptiff_path = File.join("ptiffs", pairtree_path, File.basename(access_primary_path))
   end
 
   def remote_ocr_path

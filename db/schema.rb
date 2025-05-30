@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_13_160329) do
+ActiveRecord::Schema[7.0].define(version: 2025_05_22_205537) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -73,7 +73,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_13_160329) do
     t.string "checksum"
     t.string "viewing_hint"
     t.datetime "ptiff_conversion_at", precision: nil
-    t.string "mets_access_master_path"
+    t.string "mets_access_primary_path"
     t.boolean "full_text", default: false
     t.integer "original_oid"
     t.text "preservica_content_object_uri"

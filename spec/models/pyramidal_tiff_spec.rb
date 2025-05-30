@@ -22,12 +22,12 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
   end
 
   around do |example|
-    original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
-    ENV["ACCESS_MASTER_MOUNT"] = 'spec/fixtures/images/access_masters'
+    original_access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
+    ENV["ACCESS_PRIMARY_MOUNT"] = 'spec/fixtures/images/access_primaries'
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
     example.run
-    ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
+    ENV["ACCESS_PRIMARY_MOUNT"] = original_access_primary_mount
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
   end
 
@@ -56,8 +56,8 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     expect(ptf.oid).to eq oid
   end
 
-  it "can find the access master, given an oid" do
-    expect(ptf.access_master_path).to eq "spec/fixtures/images/access_masters/03/33/10/02/53/1002533.tif"
+  it "can find the access primary, given an oid" do
+    expect(ptf.access_primary_path).to eq "spec/fixtures/images/access_primaries/03/33/10/02/53/1002533.tif"
   end
 
   it "builds a command with args" do
@@ -69,7 +69,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     ptiff_tmpdir = "spec/fixtures/images/ptiff_images/"
     expected_file = "#{ptiff_tmpdir}1002533.tif"
     expect(File.exist?(expected_file)).to eq false
-    tiff_input_path = ptf.copy_access_master_to_working_directory(swing_temp_dir)
+    tiff_input_path = ptf.copy_access_primary_to_working_directory(swing_temp_dir)
     conversion_information = ptf.convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
     expect(conversion_information).to eq(height: "434", width: "650")
     expect(File.exist?(expected_file)).to eq true
@@ -101,11 +101,11 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     expect(ptf.errors.full_messages.first).to match(/Conversion script exited with error code .*/)
   end
 
-  it "copies the local access master to a swing directory" do
+  it "copies the local access primary to a swing directory" do
     tmpdir = "spec/fixtures/images/temp_images/"
     expected_file = "#{tmpdir}1002533.tif"
     expect(File.exist?(expected_file)).to eq false
-    expect(ptf.copy_access_master_to_working_directory(tmpdir)).to eq expected_file
+    expect(ptf.copy_access_primary_to_working_directory(tmpdir)).to eq expected_file
     expect(File.exist?(expected_file)).to eq true
     File.delete(expected_file)
   end
@@ -117,12 +117,12 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     ptf.original_file_exists?
   end
 
-  context "when using s3 access master mount" do
+  context "when using s3 access primary mount" do
     around do |example|
-      original_mount = ENV['ACCESS_MASTER_MOUNT']
-      ENV['ACCESS_MASTER_MOUNT'] = 's3'
+      original_mount = ENV['ACCESS_PRIMARY_MOUNT']
+      ENV['ACCESS_PRIMARY_MOUNT'] = 's3'
       example.run
-      ENV['ACCESS_MASTER_MOUNT'] = original_mount
+      ENV['ACCESS_PRIMARY_MOUNT'] = original_mount
     end
 
     it "original_file_exists? responds correctly s3" do
@@ -132,7 +132,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     end
   end
 
-  context "when pulling access masters from S3" do
+  context "when pulling access primaries from S3" do
     let(:oid) { 1_014_543 }
     let(:oid_with_remote_ptiff) { 111_111 }
     let(:parent_object_with_remote_ptiff) { FactoryBot.create(:parent_object, oid: 111_000) }
@@ -144,17 +144,17 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
 
     around do |example|
-      original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
-      ENV["ACCESS_MASTER_MOUNT"] = "s3"
+      original_access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
+      ENV["ACCESS_PRIMARY_MOUNT"] = "s3"
       example.run
-      ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
+      ENV["ACCESS_PRIMARY_MOUNT"] = original_access_primary_mount
     end
 
     before do
       stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/43/10/14/54/1014543.tif")
         .to_return(status: 200, body: "", headers: {})
       stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/43/10/14/54/1014543.tif")
-        .to_return(status: 200, body: File.open('spec/fixtures/images/access_masters/1002533.tif', 'rb'))
+        .to_return(status: 200, body: File.open('spec/fixtures/images/access_primaries/1002533.tif', 'rb'))
       stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/43/10/14/54/1014543.tif")
         .to_return(status: 200, body: "", headers: {})
       stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/43/10/14/54/1014543.tif")
@@ -169,8 +169,8 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
       expect(ptf.remote_ptiff_path).to eq "ptiffs/43/10/14/54/1014543.tif"
     end
 
-    it "uses the Yale pairtree algorithm to fetch access masters from S3" do
-      expect(ptf.remote_access_master_path).to eq "originals/43/10/14/54/1014543.tif"
+    it "uses the Yale pairtree algorithm to fetch access primaries from S3" do
+      expect(ptf.remote_access_primary_path).to eq "originals/43/10/14/54/1014543.tif"
     end
 
     it "does not perform conversion if remote PTIFF exists" do
@@ -185,12 +185,12 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
       end.to change { IngestEvent.count }.by(1)
     end
 
-    it "copies the remote access master to a swing directory" do
+    it "copies the remote access primary to a swing directory" do
       tmpdir = "spec/fixtures/images/temp_images/"
       expected_path = "#{tmpdir}1014543.tif"
       expect(File.exist?(expected_path)).to eq false
       VCR.use_cassette("download image 1014543") do
-        expect(ptf.copy_access_master_to_working_directory(tmpdir)).to eq expected_path
+        expect(ptf.copy_access_primary_to_working_directory(tmpdir)).to eq expected_path
       end
       expect(File.exist?(expected_path)).to eq true
       File.delete(expected_path)

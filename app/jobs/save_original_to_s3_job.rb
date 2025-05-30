@@ -28,7 +28,7 @@ class SaveOriginalToS3Job < ApplicationJob
     end
     # copy original to downloads bucket
     metadata = { 'width': child_object.width.to_s, 'height': child_object.height.to_s }
-    S3Service.upload_image_for_download(Pathname.new(child_object.access_master_path), remote_download_path(child_object_oid), "image/tiff", metadata)
+    S3Service.upload_image_for_download(Pathname.new(child_object.access_primary_path), remote_download_path(child_object_oid), "image/tiff", metadata)
   end
   # rubocop:enable Metrics/AbcSize
 

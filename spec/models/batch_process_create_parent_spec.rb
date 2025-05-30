@@ -19,14 +19,14 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
   around do |example|
     original_image_bucket = ENV['S3_SOURCE_BUCKET_NAME']
-    original_access_master_mount = ENV['ACCESS_MASTER_MOUNT']
+    original_access_primary_mount = ENV['ACCESS_PRIMARY_MOUNT']
     ENV['S3_SOURCE_BUCKET_NAME'] = 'yale-test-image-samples'
-    ENV['ACCESS_MASTER_MOUNT'] = File.join('spec', 'fixtures', 'images', 'access_masters')
+    ENV['ACCESS_PRIMARY_MOUNT'] = File.join('spec', 'fixtures', 'images', 'access_primaries')
     perform_enqueued_jobs do
       example.run
     end
     ENV['S3_SOURCE_BUCKET_NAME'] = original_image_bucket
-    ENV['ACCESS_MASTER_MOUNT'] = original_access_master_mount
+    ENV['ACCESS_PRIMARY_MOUNT'] = original_access_primary_mount
   end
 
   before do
