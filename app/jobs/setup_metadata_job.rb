@@ -84,7 +84,7 @@ class SetupMetadataJob < ApplicationJob
       if child.pyramidal_tiff.height_and_width? && !child.pyramidal_tiff.force_update && S3Service.s3_exists?(child.remote_ptiff_path)
         child.processing_event("PTIFF exists on S3, not converting: #{child.oid}", 'ptiff-ready-skipped')
       else
-        path = Pathname.new(child.access_master_path)
+        path = Pathname.new(child.access_primary_path)
         file_size = File.exist?(path) ? File.size(path) : 0
         GeneratePtiffJob.set(queue: :large_ptiff).perform_later(child, current_batch_process) if file_size > FIVE_HUNDRED_MB
         GeneratePtiffJob.perform_later(child, current_batch_process) if file_size <= FIVE_HUNDRED_MB

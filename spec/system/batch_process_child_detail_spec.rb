@@ -17,14 +17,14 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
     end
 
     around do |example|
-      access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
-      ENV["ACCESS_MASTER_MOUNT"] = "/data"
+      access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
+      ENV["ACCESS_PRIMARY_MOUNT"] = "/data"
       original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
       ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
       perform_enqueued_jobs do
         example.run
       end
-      ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
+      ENV["ACCESS_PRIMARY_MOUNT"] = access_primary_mount
       ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
     end
 
@@ -60,19 +60,19 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
     let(:child_object) { FactoryBot.create(:child_object, oid: '567890', parent_object: parent_object, file_size: 1234, checksum: 'f3755c5d9e086b4522a0d3916e9a0bfcbd47564ef') }
 
     around do |example|
-      access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
-      ENV["ACCESS_MASTER_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
+      access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
+      ENV["ACCESS_PRIMARY_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
       perform_enqueued_jobs do
         example.run
       end
-      ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
+      ENV["ACCESS_PRIMARY_MOUNT"] = access_primary_mount
     end
 
     before do
       login_as user
       allow(GoodJob).to receive(:preserve_job_records).and_return(true)
       ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-      stub_request(:get, File.join(child_object.access_master_path)).to_return(status: 200, body: File.open(File.join(child_object.access_master_path)).read)
+      stub_request(:get, File.join(child_object.access_primary_path)).to_return(status: 200, body: File.open(File.join(child_object.access_primary_path)).read)
     end
     # rubocop:disable Layout/LineLength
     it 'will allow user to update the child object checksum' do

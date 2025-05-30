@@ -8,45 +8,45 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
   let(:child_object) { described_class.create(oid: "456789", parent_object: parent_object) }
 
   around do |example|
-    access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
+    access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
     original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
-    ENV["ACCESS_MASTER_MOUNT"] = "s3"
+    ENV["ACCESS_PRIMARY_MOUNT"] = "s3"
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
     ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
     example.run
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
-    ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
+    ENV["ACCESS_PRIMARY_MOUNT"] = access_primary_mount
     ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
   end
 
-  describe "with a mounted directory for access masters" do
+  describe "with a mounted directory for access primaries" do
     around do |example|
-      access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
-      ENV["ACCESS_MASTER_MOUNT"] = "/data"
+      access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
+      ENV["ACCESS_PRIMARY_MOUNT"] = "/data"
       example.run
-      ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
+      ENV["ACCESS_PRIMARY_MOUNT"] = access_primary_mount
     end
     before do
       stub_ptiffs
     end
-    it "can return the access_master_path" do
+    it "can return the access_primary_path" do
       co_two = described_class.create(oid: "1080001", parent_object: parent_object)
       co_three = described_class.create(oid: "15239530", parent_object: parent_object)
       co_four = described_class.create(oid: "15239590", parent_object: parent_object)
-      expect(child_object.access_master_path).to eq "/data/08/89/45/67/89/456789.tif"
-      expect(co_two.access_master_path).to eq "/data/00/01/10/80/00/1080001.tif"
-      expect(co_three.access_master_path).to eq "/data/03/30/15/23/95/30/15239530.tif"
-      expect(co_four.access_master_path).to eq "/data/09/90/15/23/95/90/15239590.tif"
+      expect(child_object.access_primary_path).to eq "/data/08/89/45/67/89/456789.tif"
+      expect(co_two.access_primary_path).to eq "/data/00/01/10/80/00/1080001.tif"
+      expect(co_three.access_primary_path).to eq "/data/03/30/15/23/95/30/15239530.tif"
+      expect(co_four.access_primary_path).to eq "/data/09/90/15/23/95/90/15239590.tif"
     end
   end
 
   describe "a child object that already has a remote ptiff" do
     around do |example|
-      access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
-      ENV["ACCESS_MASTER_MOUNT"] = "s3"
+      access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
+      ENV["ACCESS_PRIMARY_MOUNT"] = "s3"
       example.run
-      ENV["ACCESS_MASTER_MOUNT"] = access_master_mount
+      ENV["ACCESS_PRIMARY_MOUNT"] = access_primary_mount
     end
     let(:child_object) { described_class.create(oid: "456789", parent_object: parent_object, width: 200, height: 200) }
     before do
@@ -98,13 +98,13 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     end
   end
 
-  describe "when access master exist and checksum matches" do
+  describe "when access primary exist and checksum matches" do
     let(:child_object) { described_class.new }
-    it "copy_to_access_master_pairtree notifies and returns true" do
+    it "copy_to_access_primary_pairtree notifies and returns true" do
       expect(child_object).to receive(:checksum_matches?).and_return(true).once
-      expect(child_object).to receive(:access_master_exists?).and_return(true).once
-      expect(child_object).to receive(:processing_event).with("Not copied from Goobi package to access master pair-tree, already exists", 'access-master-exists').once
-      child_object.copy_to_access_master_pairtree
+      expect(child_object).to receive(:access_primary_exists?).and_return(true).once
+      expect(child_object).to receive(:processing_event).with("Not copied from Goobi package to access primary pair-tree, already exists", 'access-primary-exists').once
+      child_object.copy_to_access_primary_pairtree
     end
   end
 
@@ -152,8 +152,8 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       expect(child_object.parent_object).to be_instance_of ParentObject
     end
 
-    it "can return a the remote access master path" do
-      expect(child_object.remote_access_master_path).to eq "originals/89/45/67/89/456789.tif"
+    it "can return a the remote access primary path" do
+      expect(child_object.remote_access_primary_path).to eq "originals/89/45/67/89/456789.tif"
     end
 
     it "can return a the remote ptiff path" do

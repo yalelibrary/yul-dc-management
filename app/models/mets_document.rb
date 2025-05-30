@@ -78,12 +78,12 @@ class MetsDocument
   # ensure we don't accidentally upload tiny fixture images in production
   def fixture_images_in_production?
     production_environment = ENV.fetch("RAILS_ENV") != "test" && ENV.fetch("RAILS_ENV") != "development"
-    has_fixtures = files.any? { |file| file[:mets_access_master_path].include?("spec/fixtures") }
+    has_fixtures = files.any? { |file| file[:mets_access_primary_path].include?("spec/fixtures") }
     production_environment && has_fixtures
   end
 
   def all_images_present?
-    files.all? { |file| (File.exist?(file[:mets_access_master_path]) || File.exist?(file[:mets_access_master_path].gsub('.tif', '.TIF').gsub('.jpg', '.JPG'))) }
+    files.all? { |file| (File.exist?(file[:mets_access_primary_path]) || File.exist?(file[:mets_access_primary_path].gsub('.tif', '.TIF').gsub('.jpg', '.JPG'))) }
   end
 
   def all_images_have_checksum?
@@ -204,7 +204,7 @@ class MetsDocument
     {
       thumbnail_flag: thumbnail_flag,
       checksum: file.xpath('@CHECKSUM').inner_text,
-      mets_access_master_path: mets_image_name
+      mets_access_primary_path: mets_image_name
     }
   end
   # rubocop:enable Metrics/ClassLength
