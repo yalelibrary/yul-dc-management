@@ -14,7 +14,6 @@ module CreateParentObject
   def create_new_parent_csv
     self.admin_set = ''
     sets = admin_set
-    attempt_count = 0
     parsed_csv.each_with_index do |row, index|
       if row['digital_object_source'].present? && row['preservica_uri'].present? && !row['preservica_uri'].blank?
         begin
@@ -22,11 +21,6 @@ module CreateParentObject
           setup_for_background_jobs(parent_object, row['source'])
         rescue CsvRowParentService::BatchProcessingError => e
           batch_processing_event(e.message, e.kind)
-          next
-        rescue PreservicaImageService::PreservicaImageServiceNetworkError => e
-          batch_processing_event("Retrying row [#{index + 2}] #{e.message}.", "Retrying Row")
-          attempt_count += 1
-          retry if attempt_count < 4
           next
         rescue PreservicaImageService::PreservicaImageServiceError => e
           if e.message.include?("bad URI")
