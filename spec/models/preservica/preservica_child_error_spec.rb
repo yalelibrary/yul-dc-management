@@ -240,15 +240,4 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     end.to change { ChildObject.count }.by(0)
   end
   # rubocop:enable Layout/LineLength
-
-  it 'can retry on Net::ReadTimeout with pattern 1' do
-    allow_any_instance_of(PreservicaImageService).to receive(:image_list).with('Preservation').and_raise(PreservicaImageService::PreservicaImageServiceNetworkError.new('Net::ReadTimeout',
-'sample.com/uri'))
-    expect do
-      batch_process.file = preservica_parent_with_children
-      batch_process.save
-      expect(batch_process.batch_ingest_events.count).to eq(4)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Retrying row [2] Net::ReadTimeout for sample.com/uri.")
-    end.to change { ChildObject.count }.by(0)
-  end
 end

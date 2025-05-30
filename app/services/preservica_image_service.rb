@@ -27,31 +27,19 @@ class PreservicaImageService
 
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def image_list(representation_type)
     @images = []
-    attempt_count = 0
     begin
       if @pattern == :pattern_one
         structural_object = Preservica::StructuralObject.where(admin_set_key: @admin_set_key, id: (@uri.split('/')[-1]).to_s)
         begin
           @information_objects = structural_object.information_objects
-        rescue Net::ReadTimeout => e
-          attempt_count += 1
-          retry if attempt_count < 4
-          raise PreservicaImageServiceNetworkError.new(e.to_s, @uri.to_s)
         rescue Net::OpenTimeout, Errno::ECONNREFUSED => e
           raise PreservicaImageServiceNetworkError.new(e.to_s, @uri.to_s)
         end
       elsif @pattern == :pattern_two
-        begin
-          @information_objects = [Preservica::InformationObject.where(admin_set_key: @admin_set_key, id: (@uri.split('/')[-1]).to_s)]
-        rescue Net::ReadTimeout => e
-          attempt_count += 1
-          retry if attempt_count < 4
-          raise PreservicaImageServiceNetworkError.new(e.to_s, @uri.to_s)
-        end
+        @information_objects = [Preservica::InformationObject.where(admin_set_key: @admin_set_key, id: (@uri.split('/')[-1]).to_s)]
       end
     rescue StandardError => e
       # raise PreservicaImageServiceError.new("Unable to log in to Preservica", @uri.to_s)
@@ -69,7 +57,6 @@ class PreservicaImageService
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
 
   # rubocop:disable Layout/LineLength
