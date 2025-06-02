@@ -4,7 +4,7 @@ module MetadataCloudUrlParsable
   extend ActiveSupport::Concern
 
   def parsed_metadata_source_path
-    @parsed_metadata_source_path ||= metadata_source_path.match(/\/(\w*)\/(\w*)\/(\d*)\W(\w*)\W(\w*)/)
+    @parsed_metadata_source_path ||= metadata_source_path.match(/\/(\w*)\/(\w*)\/(\d*)\W(\w*)\W(\w*)/).presence || metadata_source_path.match(/\/(\w*)\/(\w*)\/(\w*)/)
   end
 
   def full_metadata_cloud_url
@@ -16,7 +16,7 @@ module MetadataCloudUrlParsable
   end
 
   def bib
-    parsed_metadata_source_path.captures.last if metadata_source == "ils"
+    parsed_metadata_source_path.captures.last if parsed_metadata_source_path.captures.include?("bib")
   end
 
   def barcode
@@ -42,7 +42,7 @@ module MetadataCloudUrlParsable
 
   def valid_metadata_source_path?
     return false unless parsed_metadata_source_path
-    return false unless valid_ils? || valid_aspace?
+    return false unless valid_ils? || valid_aspace? || valid_alma?
     true
   end
 
@@ -52,6 +52,10 @@ module MetadataCloudUrlParsable
 
   def valid_ils?
     metadata_source == 'ils' && (valid_bib? && (valid_item? || valid_holding? || valid_barcode?))
+  end
+
+  def valid_alma?
+    metadata_source == 'alma' && (valid_bib? || valid_item? || valid_holding?)
   end
 
   def valid_barcode?

@@ -280,7 +280,14 @@ ActiveRecord::Schema[7.0].define(version: 2025_05_22_205537) do
     t.text "extent_of_full_text", default: "None"
     t.jsonb "sierra_json"
     t.datetime "last_sierra_update", precision: nil
+    t.jsonb "alma_json"
+    t.datetime "last_alma_update"
+    t.string "mms_id"
+    t.string "alma_holding"
+    t.string "alma_item"
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
+    t.index ["alma_holding"], name: "index_parent_objects_on_alma_holding"
+    t.index ["alma_item"], name: "index_parent_objects_on_alma_item"
     t.index ["aspace_uri"], name: "index_parent_objects_on_aspace_uri"
     t.index ["authoritative_metadata_source_id"], name: "index_parent_objects_on_authoritative_metadata_source_id"
     t.index ["barcode"], name: "index_parent_objects_on_barcode"
@@ -289,6 +296,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_05_22_205537) do
     t.index ["created_at"], name: "index_parent_objects_on_created_at"
     t.index ["holding"], name: "index_parent_objects_on_holding"
     t.index ["item"], name: "index_parent_objects_on_item"
+    t.index ["mms_id"], name: "index_parent_objects_on_mms_id"
     t.index ["oid"], name: "index_parent_objects_on_oid", unique: true
     t.index ["permission_set_id"], name: "index_parent_objects_on_permission_set_id"
     t.index ["project_identifier"], name: "index_parent_objects_on_project_identifier"
