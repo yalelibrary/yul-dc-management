@@ -141,6 +141,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_updated.viewing_direction).to eq "left-to-right"
       expect(po_updated.visibility).to eq "Open with Permission"
       expect(po_updated.permission_set_id).to eq permission_set.id
+      expect(po_updated.sensitive_materials).to eq "Yes"
     end
 
     it "does not update successfully if permission set is invalid" do
