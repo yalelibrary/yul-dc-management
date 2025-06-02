@@ -241,10 +241,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def sync_from_preservica(_local_children_hash, preservica_children_hash)
     Rails.logger.info "************ parent_object.rb # sync_from_preservica +++ hits method with local and preservica children - (local_children_hash keys count): #{_local_children_hash.keys.count} && (preservica_children_hash key count): #{preservica_children_hash.keys.count} *************"
     # iterate through local hashes and remove any children no longer found on preservica
-    child_objects.each do |co|
-      co.destroy! if co.preservica_content_object_uri.nil?
-      co.destroy! unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
-    end
     # iterate through preservica and update when local version found
     sync_from_preservica_update_existing_children(preservica_children_hash)
 
