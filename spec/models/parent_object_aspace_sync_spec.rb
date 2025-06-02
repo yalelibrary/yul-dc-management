@@ -11,12 +11,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     ENV['SAMPLE_BUCKET'] = "yul-dc-development-samples"
     original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
     ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
-    original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
-    ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "images", "access_masters")
+    original_access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
+    ENV["ACCESS_PRIMARY_MOUNT"] = File.join("spec", "fixtures", "images", "access_primaries")
     example.run
     ENV['SAMPLE_BUCKET'] = original_metadata_sample_bucket
     ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
-    ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
+    ENV["ACCESS_PRIMARY_MOUNT"] = original_access_primary_mount
   end
 
   context "a newly created ParentObject with ArchiveSpace as authoritative_metadata_source" do

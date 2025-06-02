@@ -18,10 +18,10 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
   let(:child_object_four) { FactoryBot.create(:child_object, oid: '567890', parent_object: parent_object_four, file_size: 1234, checksum: 'f3755c5d9e086b4522a0d3916e9a0bfcbd47564ef') }
 
   around do |example|
-    original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
-    ENV["ACCESS_MASTER_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
+    original_access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
+    ENV["ACCESS_PRIMARY_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
     example.run
-    ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
+    ENV["ACCESS_PRIMARY_MOUNT"] = original_access_primary_mount
   end
 
   before do
@@ -32,17 +32,17 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
   context 'with less than the maximum number of child objects' do
     before do
       # file not present
-      stub_request(:get, File.join(child_object_one.access_master_path)).to_return(status: 200, body: '')
+      stub_request(:get, File.join(child_object_one.access_primary_path)).to_return(status: 200, body: '')
       # file present and checksum matches
-      stub_request(:get, File.join(child_object_three.access_master_path)).to_return(status: 200, body: File.open(File.join(child_object_three.access_master_path)).read)
+      stub_request(:get, File.join(child_object_three.access_primary_path)).to_return(status: 200, body: File.open(File.join(child_object_three.access_primary_path)).read)
       # file present and file size greater than 0 but checksum does not match
-      stub_request(:get, File.join(child_object_four.access_master_path)).to_return(status: 200, body: File.open(File.join(child_object_three.access_master_path)).read)
+      stub_request(:get, File.join(child_object_four.access_primary_path)).to_return(status: 200, body: File.open(File.join(child_object_three.access_primary_path)).read)
     end
 
     it 'reflects messages as expected' do
       expect { ChildObjectIntegrityCheckJob.new.perform }.to change { IngestEvent.count }.by(7)
       # rubocop:disable Layout/LineLength
-      expect(child_object_one.events_for_batch_process(BatchProcess.first)[0].reason).to eq "Child Object: #{child_object_one.oid} - file not found at #{child_object_one.access_master_path} on #{ENV['ACCESS_MASTER_MOUNT']}."
+      expect(child_object_one.events_for_batch_process(BatchProcess.first)[0].reason).to eq "Child Object: #{child_object_one.oid} - file not found at #{child_object_one.access_primary_path} on #{ENV['ACCESS_PRIMARY_MOUNT']}."
       expect(child_object_three.events_for_batch_process(BatchProcess.first)[0].reason).to eq "Child Object: #{child_object_three.oid} - file exists and checksum matches."
       expect(child_object_four.events_for_batch_process(BatchProcess.first)[0].reason).to eq "The Child Object: #{child_object_four.oid} - has a checksum mismatch. The checksum of the image file saved to this child oid does not match the checksum of the image file in the database. This may mean that the image has been corrupted. Please verify integrity of image for Child Object: #{child_object_four.oid} - by manually comparing the checksum values and update record as necessary."
       # rubocop:enable Layout/LineLength
