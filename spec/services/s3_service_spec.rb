@@ -26,7 +26,7 @@ RSpec.describe S3Service, type: :has_vcr, prep_admin_sets: true, prep_metadata_s
     stub_request(:get, "https://yul-test-samples.s3.amazonaws.com/testing_test/test.txt")
       .to_return(status: 200, body: "these are some test words")
     stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/1014543.tif")
-      .to_return(status: 200, body: File.open("spec/fixtures/images/access_masters/test_image.tif"))
+      .to_return(status: 200, body: File.open("spec/fixtures/images/access_primaries/test_image.tif"))
     stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/1014543.tif")
       .with do |request|
         expect(request.headers).to include(width => '100',
@@ -59,7 +59,7 @@ RSpec.describe S3Service, type: :has_vcr, prep_admin_sets: true, prep_metadata_s
     original_metadata_sample_bucket = ENV['SAMPLE_BUCKET']
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
     original_download_bucket = ENV['S3_DOWNLOAD_BUCKET_NAME']
-    original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
+    original_access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
     original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
     ENV['SAMPLE_BUCKET'] = "yul-test-samples"
     ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
@@ -70,7 +70,7 @@ RSpec.describe S3Service, type: :has_vcr, prep_admin_sets: true, prep_metadata_s
     ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
     ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
     ENV['S3_DOWNLOAD_BUCKET_NAME'] = original_download_bucket
-    ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
+    ENV["ACCESS_PRIMARY_MOUNT"] = original_access_primary_mount
   end
 
   it "can upload metadata to a given bucket" do
@@ -84,7 +84,7 @@ RSpec.describe S3Service, type: :has_vcr, prep_admin_sets: true, prep_metadata_s
   it "can download an image from a given image bucket" do
     child_object_oid = "1014543"
     remote_path = "originals/43/10/14/54/#{child_object_oid}.tif"
-    local_path = "spec/fixtures/images/access_masters/#{child_object_oid}.tif"
+    local_path = "spec/fixtures/images/access_primaries/#{child_object_oid}.tif"
     VCR.use_cassette("download image 1014543 small") do
       expect(File.exist?(local_path)).to eq false
       described_class.download_image(remote_path, local_path)

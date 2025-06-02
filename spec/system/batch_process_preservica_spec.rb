@@ -8,23 +8,23 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_sync.csv")) }
   let(:preservica_parent_with_two_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_two_children.csv")) }
-  let(:first_tif) { "spec/fixtures/images/access_masters/00/01/20/00/00/00/200000001.tif" }
-  let(:second_tif) { "spec/fixtures/images/access_masters/00/02/20/00/00/00/200000002.tif" }
-  let(:third_tif) { "spec/fixtures/images/access_masters/00/03/20/00/00/00/200000003.tif" }
+  let(:first_tif) { "spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif" }
+  let(:second_tif) { "spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif" }
+  let(:third_tif) { "spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif" }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
     preservica_creds = ENV['PRESERVICA_CREDENTIALS']
     ENV['PRESERVICA_HOST'] = "testpreservica"
     ENV['PRESERVICA_CREDENTIALS'] = '{"brbl": {"username":"xxxxx", "password":"xxxxx"}}'
-    access_host = ENV['ACCESS_MASTER_MOUNT']
-    ENV['ACCESS_MASTER_MOUNT'] = File.join("spec", "fixtures", "images", "access_masters")
+    access_host = ENV['ACCESS_PRIMARY_MOUNT']
+    ENV['ACCESS_PRIMARY_MOUNT'] = File.join("spec", "fixtures", "images", "access_primaries")
     perform_enqueued_jobs do
       example.run
     end
     ENV['PRESERVICA_HOST'] = preservica_host
     ENV['PRESERVICA_CREDENTIALS'] = preservica_creds
-    ENV['ACCESS_MASTER_MOUNT'] = access_host
+    ENV['ACCESS_PRIMARY_MOUNT'] = access_host
   end
 
   before do

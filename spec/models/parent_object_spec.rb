@@ -14,12 +14,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     ENV['SAMPLE_BUCKET'] = "yul-dc-development-samples"
     original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
     ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
-    original_access_master_mount = ENV["ACCESS_MASTER_MOUNT"]
-    ENV["ACCESS_MASTER_MOUNT"] = File.join("spec", "fixtures", "images", "access_masters")
+    original_access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
+    ENV["ACCESS_PRIMARY_MOUNT"] = File.join("spec", "fixtures", "images", "access_primaries")
     example.run
     ENV['SAMPLE_BUCKET'] = original_metadata_sample_bucket
     ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
-    ENV["ACCESS_MASTER_MOUNT"] = original_access_master_mount
+    ENV["ACCESS_PRIMARY_MOUNT"] = original_access_primary_mount
   end
 
   before do
@@ -581,14 +581,14 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/608223"
       end
 
-      context "imported as a simple  object, with parent oid access master tif in place" do
+      context "imported as a simple  object, with parent oid access primary tif in place" do
         let(:parent_object) { described_class.create(oid: "2038133", parent_model: 'simple', admin_set: FactoryBot.create(:admin_set)) }
 
         around do |example|
-          FileUtils.mkdir_p("spec/fixtures/images/access_masters/03/33/20/38/13/")
-          FileUtils.touch("spec/fixtures/images/access_masters/03/33/20/38/13/2038133.tif")
+          FileUtils.mkdir_p("spec/fixtures/images/access_primaries/03/33/20/38/13/")
+          FileUtils.touch("spec/fixtures/images/access_primaries/03/33/20/38/13/2038133.tif")
           example.run
-          FileUtils.remove("spec/fixtures/images/access_masters/00/00/20/00/00/00/200000000.tif")
+          FileUtils.remove("spec/fixtures/images/access_primaries/00/00/20/00/00/00/200000000.tif")
         end
 
         before do
@@ -610,10 +610,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           expect(child_object.original_oid).to eq(2_038_133)
         end
 
-        it "will move the access master tiff" do
+        it "will move the access primary tiff" do
           parent_object.reload
-          expect(File.exist?("spec/fixtures/images/access_masters/00/00/20/00/00/00/200000000.tif")).to be_truthy
-          expect(File.exist?("spec/fixtures/images/access_masters/03/33/20/38/13/2038133.tif")).to be_falsey
+          expect(File.exist?("spec/fixtures/images/access_primaries/00/00/20/00/00/00/200000000.tif")).to be_truthy
+          expect(File.exist?("spec/fixtures/images/access_primaries/03/33/20/38/13/2038133.tif")).to be_falsey
         end
       end
 

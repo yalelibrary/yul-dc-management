@@ -27,7 +27,7 @@ class GenerateManifestJob < ApplicationJob
       parent_object.generate_manifest = false
       # Once we have successfully created all the ptiffs & created the manifest,
       # we should no longer need access to the original Goobi package, and should create any further
-      # artifacts from the more persistent data available through the MetadataCloud, database, and access masters
+      # artifacts from the more persistent data available through the MetadataCloud, database, and access primaries
       parent_object.from_mets = false
       parent_object.save!
     else

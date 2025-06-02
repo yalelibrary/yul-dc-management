@@ -185,11 +185,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def cleanup_child_artifacts(invalid_child_hashes)
     invalid_child_hashes.each do |child_hash|
       pairtree_path = Partridge::Pairtree.oid_to_pairtree(child_hash[:oid])
-      image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
+      image_mount = ENV['ACCESS_PRIMARY_MOUNT'] || "data"
       directory = format("%02d", pairtree_path.first)
       FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
-      access_master_path = File.join(image_mount, directory, pairtree_path, "#{child_hash[:oid]}.tif")
-      File.delete(access_master_path)
+      access_primary_path = File.join(image_mount, directory, pairtree_path, "#{child_hash[:oid]}.tif")
+      File.delete(access_primary_path)
     end
   end
 
@@ -219,11 +219,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def preservica_copy_to_access(child_hash, co_oid)
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(co_oid)
-    image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
+    image_mount = ENV['ACCESS_PRIMARY_MOUNT'] || "data"
     directory = format("%02d", pairtree_path.first)
     FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
-    access_master_path = File.join(image_mount, directory, pairtree_path, "#{co_oid}.tif")
-    child_hash[:bitstream].download_to_file(access_master_path)
+    access_primary_path = File.join(image_mount, directory, pairtree_path, "#{co_oid}.tif")
+    child_hash[:bitstream].download_to_file(access_primary_path)
   rescue StandardError => e
     processing_event(e.to_s, "failed")
     raise e.to_s
@@ -272,9 +272,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     save! # save last update time
     reload # reload to get the upserted children
     child_objects.each do |child|
-      path = Pathname.new(child.access_master_path)
-      Rails.logger.info "************ parent_object.rb # sync_from_preservica_update_all_ptiffs +++ sets path: #{child.access_master_path} for child object: #{child.oid} *************"
-      Rails.logger.info "************ parent_object.rb # sync_from_preservica_update_all_ptiffs +++ does the access master image exist at that path? #{child.access_master_exists?} *************"
+      path = Pathname.new(child.access_primary_path)
+      Rails.logger.info "************ parent_object.rb # sync_from_preservica_update_all_ptiffs +++ sets path: #{child.access_primary_path} for child object: #{child.oid} *************"
+      Rails.logger.info "************ parent_object.rb # sync_from_preservica_update_all_ptiffs +++ does the access primary image exist at that path? #{child.access_primary_exists?} *************"
       file_size = File.exist?(path) ? File.size(path) : 0
       GeneratePtiffJob.set(queue: :large_ptiff).perform_later(child, current_batch_process) if file_size > FIVE_HUNDRED_MB
       GeneratePtiffJob.perform_later(child, current_batch_process) if file_size <= FIVE_HUNDRED_MB
@@ -336,9 +336,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   # rubocop:disable Metrics/MethodLength
-  # Mint new oid for child, rename access master tif to the new oid filename
+  # Mint new oid for child, rename access primary tif to the new oid filename
   def process_simple_object
-    image_mount = ENV['ACCESS_MASTER_MOUNT'] || "data"
+    image_mount = ENV['ACCESS_PRIMARY_MOUNT'] || "data"
     new_oid = OidMinterService.generate_oids(1)[0]
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
     new_pairtree_path = Partridge::Pairtree.oid_to_pairtree(new_oid)
@@ -349,16 +349,16 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     else
       begin
         directory = format("%02d", pairtree_path.first)
-        parent_access_master_path = File.join(image_mount, directory, pairtree_path, "#{oid}.tif")
+        parent_access_primary_path = File.join(image_mount, directory, pairtree_path, "#{oid}.tif")
 
         new_directory = format("%02d", new_pairtree_path.first)
         FileUtils.mkdir_p(File.join(image_mount, new_directory, new_pairtree_path))
-        child_access_master_path = File.join(image_mount, new_directory, new_pairtree_path, "#{new_oid}.tif")
+        child_access_primary_path = File.join(image_mount, new_directory, new_pairtree_path, "#{new_oid}.tif")
 
-        FileUtils.move parent_access_master_path, child_access_master_path
+        FileUtils.move parent_access_primary_path, child_access_primary_path
       rescue => e
-        processing_event("Moving parent access master to child failed: #{e}", "failed")
-        Rails.logger.error("Unable to rename simple parent access master for parent_oid: #{oid} and new child: #{new_oid}: #{e}")
+        processing_event("Moving parent access primary to child failed: #{e}", "failed")
+        Rails.logger.error("Unable to rename simple parent access primary for parent_oid: #{oid} and new child: #{new_oid}: #{e}")
       end
     end
 
