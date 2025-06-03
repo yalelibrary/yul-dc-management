@@ -293,7 +293,7 @@ class ParentObjectsController < ApplicationController
                                                        :viewing_direction,
                                                        :permission_set_id,
                                                        :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization,
-                                                       :digitization_note, :digitization_funding_source, :redirect_to, :preservica_uri, :digital_object_source, :preservica_representation_type)
+                                                       :digitization_note, :digitization_funding_source, :redirect_to, :preservica_uri, :digital_object_source, :preservica_representation_type, :sensitive_materials)
     cur_params[:admin_set] = AdminSet.find_by(key: cur_params[:admin_set]) if cur_params[:admin_set]
     cur_params
   end
