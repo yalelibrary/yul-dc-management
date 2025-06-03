@@ -168,7 +168,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       let(:brbl) { AdminSet.find_by_key("brbl") }
       let(:other_admin_set) { FactoryBot.create(:admin_set) }
       # rubocop:disable Layout/LineLength
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: brbl, digital_object_source: "Preservica", preservica_uri: "/preservica_uri", preservica_representation_type: "Access") }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: brbl, digital_object_source: "Preservica", preservica_uri: "/preservica_uri", preservica_representation_type: "Access", sensitive_materials: "Yes") }
       let(:parent_object2) { FactoryBot.create(:parent_object, oid: 2_005_512, admin_set: other_admin_set) }
       let(:parent_object3) { FactoryBot.create(:parent_object, oid: 2_004_548, admin_set: brbl) }
       let(:user) { FactoryBot.create(:user) }
@@ -201,6 +201,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.export_parent_metadata).to include "brbl"
         expect(BatchProcess.last.export_parent_metadata).to include "full_text"
         expect(BatchProcess.last.export_parent_metadata).to include "last_sierra_update"
+        expect(BatchProcess.last.export_parent_metadata).to include "Yes"
       end
 
       it "uploads a CSV of parent objects in order to create export of parent objects metadata fails 2005512 row due to admin set permissions" do
@@ -231,6 +232,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         expect(BatchProcess.last.parent_output_csv).to include "brbl"
         expect(BatchProcess.last.parent_output_csv).to include "full_text"
         expect(BatchProcess.last.parent_output_csv).to include "last_sierra_update"
+        expect(BatchProcess.last.parent_output_csv).to include "Yes"
         expect(BatchProcess.last.parent_output_csv).not_to include "2005512"
       end
 
