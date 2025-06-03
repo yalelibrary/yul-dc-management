@@ -62,6 +62,7 @@ module CreateParentObject
         parent_object.digitization_note = row['digitization_note']
         parent_object.digitization_funding_source = row['digitization_funding_source']
         parent_object.rights_statement = row['rights_statement']
+        parent_object.sensitive_materials = row['sensitive_materials']
 
         if row['visibility'] == 'Open with Permission'
           permission_set = OpenWithPermission::PermissionSet.find_by(key: row['permission_set_key'])
