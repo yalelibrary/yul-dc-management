@@ -259,7 +259,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def sync_from_preservica_update_existing_children(_local_children_hash, preservica_children_hash)
-    local_children_hash.each_value do |value|
+    _local_children_hash.each_value do |value|
       co = ChildObject.find_by(parent_object_oid: oid, order: value[:order])
       if !value[:checksum].present? && co.checksum.present?
         co.sha512_checksum = co.access_sha512_checksum
