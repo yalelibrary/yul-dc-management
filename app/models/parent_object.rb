@@ -256,6 +256,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Lint/UnderscorePrefixedVariableName
   # rubocop:enable Layout/LineLength
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def sync_from_preservica_update_existing_children(_local_children_hash, preservica_children_hash)
     local_children_hash.each_value do |value|
       co = ChildObject.find_by(parent_object_oid: oid, order: value[:order])
@@ -279,6 +281,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       co.save!
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def sync_from_preservica_update_all_ptiffs
     Rails.logger.info "************ parent_object.rb # sync_from_preservica_update_all_ptiffs +++ hits method *************"
