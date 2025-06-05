@@ -242,7 +242,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     Rails.logger.info "************ parent_object.rb # sync_from_preservica +++ hits method with local and preservica children - (local_children_hash keys count): #{_local_children_hash.keys.count} && (preservica_children_hash key count): #{preservica_children_hash.keys.count} *************"
 
     # iterate through preservica and update when local version found
-    sync_from_preservica_update_existing_children(_local_children_hash, preservica_children_hash)
+    sync_from_preservica_update_existing_children(local_children_hash, preservica_children_hash)
 
     # iterate through local hashes and remove any children no longer found on preservica
     child_objects.each do |co|
@@ -258,8 +258,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
-  def sync_from_preservica_update_existing_children(_local_children_hash, preservica_children_hash)
-    _local_children_hash.each_value do |value|
+  def sync_from_preservica_update_existing_children(local_children_hash, preservica_children_hash)
+    local_children_hash.each_value do |value|
       co = ChildObject.find_by(parent_object_oid: oid, order: value[:order])
       if !value[:checksum].present? && co.checksum.present?
         co.sha512_checksum = co.access_sha512_checksum
