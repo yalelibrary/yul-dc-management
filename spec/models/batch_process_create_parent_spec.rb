@@ -8,6 +8,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:admin_set_one) { FactoryBot.create(:admin_set, key: 'jss') }
   let(:create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_owp_parent.csv")) }
   let(:create_invalid_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_invalid_owp_parent.csv")) }
+  let(:create_invalid_sensitive_materials_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_invalid_sensitive_materials_parent.csv")) }
   let(:mini_create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "mini_owp_parent.csv")) }
   let(:permission_set) { FactoryBot.create(:permission_set, key: "PS Key") }
   let(:no_oid_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'parent_no_oid.csv')) }
@@ -52,6 +53,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         po = ParentObject.first
         expect(po.bib).to eq('4320085')
         expect(po.aspace_uri).to eq('/repositories/12/archival_objects/781086')
+        expect(po.sensitive_materials).to eq('Yes')
       end
       it 'can create a parent_object' do
         expect do
@@ -60,6 +62,14 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         end.to change { ParentObject.count }.from(0).to(1)
         po = ParentObject.first
         expect(po.oid).not_to be_nil
+      end
+      it 'fails creating a parent_object with invalid Sensitive Materials value' do
+        permission_set.add_administrator(user)
+        expect do
+          batch_process.file = create_invalid_sensitive_materials_parent
+          batch_process.save
+        end.not_to change { ParentObject.count }
+        expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] Unable to save parent: Validation failed: Sensitive materials must be 'Yes' or 'No'.")
       end
       it 'can create an OwP parent_object' do
         permission_set.add_administrator(user)
