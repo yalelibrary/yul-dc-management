@@ -192,6 +192,7 @@ module SolrIndexable
         rights_ssim: rights_statement,
         rights_tesim: rights_statement,
         scale_tesim: json_to_index["scale"],
+        sensitive_materials_ssi: sensitive_materials_text,
         series_ssi: json_to_index["series"],
         series_sort_ssi: series_sort(json_to_index),
         source_ssim: json_to_index["source"], # refers to source of metadata, e.g. Ladybird, Voyager, etc.
@@ -312,6 +313,10 @@ module SolrIndexable
 
   def extent_of_digitization_text
     extent_of_digitization.presence || "Unspecified"
+  end
+
+  def sensitive_materials_text
+    sensitive_materials.presence
   end
 
   # not ASpace records will use the repository value
