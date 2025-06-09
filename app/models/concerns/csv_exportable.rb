@@ -9,7 +9,7 @@ module CsvExportable
   ########################
   def parent_headers
     ['oid', 'admin_set', 'source', 'child_object_count', 'title', 'call_number',
-     'container_grouping', 'bib', 'holding', 'item', 'barcode', 'aspace_uri',
+     'container_grouping', 'mms_id', 'alma_holding', 'alma_item', 'bib', 'holding', 'item', 'barcode', 'aspace_uri',
      'digital_object_source', 'preservica_uri', 'preservica_representation_type', 'last_ladybird_update',
      'last_voyager_update', 'last_sierra_update', 'last_aspace_update', 'last_id_update', 'visibility', 'permission_set_key',
      'extent_of_digitization', 'digitization_note', 'digitization_funding_source', 'rights_statement', 'project_identifier', 'full_text']
@@ -27,7 +27,7 @@ module CsvExportable
         case po
         when ParentObject
           csv << [po.oid, po.admin_set.key, po.source_name,
-                  po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+                  po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.mms_id, po.alma_holding, po.alma_item, po.bib, po.holding, po.item,
                   po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri, po.preservica_representation_type,
                   po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
                   po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po.extent_of_digitization,
@@ -130,7 +130,8 @@ module CsvExportable
       add_admin_set_to_bp(sets, po)
       save!
       row = [po.oid, po.admin_set.key, po.source_name,
-             po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+             po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping,
+             po.mms_id, po.alma_holding, po.alma_item, po.bib, po.holding, po.item,
              po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri, po.preservica_representation_type,
              po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
              po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po.extent_of_digitization,
@@ -159,7 +160,8 @@ module CsvExportable
           add_admin_set_to_bp(sets, po)
           save!
           csv << [po.oid, po.admin_set.key, po.source_name,
-                  po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping, po.bib, po.holding, po.item,
+                  po.child_object_count, po.authoritative_json&.[]('title')&.first, po.call_number, po.container_grouping,
+                  po.mms_id, po.alma_holding, po.alma_item, po.bib, po.holding, po.item,
                   po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
                   po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
                   po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po.extent_of_digitization,
