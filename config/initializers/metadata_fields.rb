@@ -289,6 +289,13 @@ METADATA_FIELDS = {
       'preferredCitation_tesim'
     ]
   },
+  mms_id: {
+    label: 'Alma MMS ID',
+    solr_fields: [
+      'mmsId_ssi'
+    ],
+    digital_only: true
+  },
   bib: {
     label: 'Orbis ID',
     solr_fields: [

@@ -188,7 +188,7 @@ module Updatable
   end
 
   def validate_field(parent_object, row)
-    fields = ['aspace_uri', 'barcode', 'bib', 'digital_object_source', 'digitization_funding_source', 'digitization_note', 'holding', 'item',
+    fields = ['aspace_uri', 'barcode', 'bib', 'digital_object_source', 'digitization_funding_source', 'digitization_note', 'holding', 'item', 'mms_id', 'alma_holding', 'alma_item',
               'preservica_representation_type', 'preservica_uri', 'project_identifier', 'rights_statement', 'redirect_to', 'sensitive_materials']
     validation_fields = { "display_layout" => 'viewing_hints', "extent_of_digitization" => 'extent_of_digitizations', "viewing_direction" => 'viewing_directions', "visibility" => 'visibilities' }
     row, blanks = remove_blanks(row, parent_object)

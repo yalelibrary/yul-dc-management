@@ -87,17 +87,17 @@ class ParentObjectsController < ApplicationController
 
       invalidate_admin_set_edit unless valid_admin_set_edit?
 
-      updated = if parent_object_params[:redirect_to].present? && !valid_redirect_to_edit?
-                  invalidate_redirect_to_edit
-                  false
-                elsif !parent_object_params[:redirect_to].present? && parent_object_params[:visibility] == "Redirect" && !valid_redirect_to_edit?
-                  invalidate_redirect_to_edit
-                  false
-                else
-                  valid_admin_set_edit? ? @parent_object.update!(parent_object_params) : false
-                end
+      valid_update = if parent_object_params[:redirect_to].present? && !valid_redirect_to_edit?
+                       invalidate_redirect_to_edit
+                       false
+                     elsif !parent_object_params[:redirect_to].present? && parent_object_params[:visibility] == "Redirect" && !valid_redirect_to_edit?
+                       invalidate_redirect_to_edit
+                       false
+                     else
+                       valid_admin_set_edit? ? true : false
+                     end
 
-      if updated
+      if valid_update && @parent_object.update(parent_object_params)
         @parent_object.minify if valid_redirect_to_edit?
         @parent_object.save!
         queue_parent_metadata_update
@@ -294,7 +294,8 @@ class ParentObjectsController < ApplicationController
                                                        :permission_set_id,
                                                        :display_layout, :representative_child_oid, :rights_statement, :extent_of_digitization,
                                                        :digitization_note, :digitization_funding_source, :redirect_to, :preservica_uri, :digital_object_source,
-                                                       :preservica_representation_type, :sensitive_materials)
+                                                       :preservica_representation_type, :sensitive_materials,
+                                                       :mms_id, :alma_holding, :alma_item)
     cur_params[:admin_set] = AdminSet.find_by(key: cur_params[:admin_set]) if cur_params[:admin_set]
     cur_params
   end

@@ -42,6 +42,8 @@ class FixtureParsingService
 
   def self.file_prefix(metadata_source)
     case metadata_source
+    when "alma"
+      "A-"
     when "ladybird"
       ""
     when "ils"

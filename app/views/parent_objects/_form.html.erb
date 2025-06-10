@@ -49,7 +49,7 @@
   <div class="form-row">
     <div class="col-med-3">
       <%= form.label "Metadata Source" %>
-      <%= form.select(:authoritative_metadata_source_id, [['Ladybird', 1], ['Voyager', 2], ['ArchivesSpace', 3], ['Sierra', 4]]) %>
+      <%= form.select(:authoritative_metadata_source_id, [['Ladybird', 1], ['Voyager', 2], ['ArchivesSpace', 3], ['Sierra', 4], ['Alma', 5]]) %>
     </div>
 
     <% if parent_object.child_object_ids.count == 0 %>
@@ -143,9 +143,27 @@
   </div>
   <br>
 
+  <h6 class="form-subgroup-title">Alma identifiers</h6>
+  <div class="alma_identifiers form-row">
+    <div class="col-med-3">
+      <%= form.label :mms_id, "MMS ID" %>
+      <%= form.text_field :mms_id %>
+    </div>
+
+    <div class="col-med-3">
+      <%= form.label "Holding (optional)" %>
+      <%= form.text_field :alma_holding %>
+    </div>
+
+    <div class="col-med-3">
+      <%= form.label "Item (optional)" %>
+      <%= form.text_field :alma_item %>
+    </div>
+  </div>
+  <br>
 
   <h6 class="form-subgroup-title">Voyager identifiers</h6>
-  <div class="voyager_identifiers, form-row">
+  <div class="voyager_identifiers form-row">
     <div class="col-med-3">
       <%= form.label :bib %>
       <%= form.text_field :bib %>
@@ -164,7 +182,7 @@
 
   <br>
   <h6 class="form-subgroup-title">Other identifiers</h6>
-  <div class="other_identifiers, form-row">
+  <div class="other_identifiers form-row">
     <div class="col-med-3">
       <%= form.label :barcode %>
       <%= form.text_field :barcode %>
@@ -178,7 +196,7 @@
 
   <br>
   <h6 class="form-subgroup-title">Digital Object Identifiers</h6>
-  <div class="digital_object_identifiers, form-row">
+  <div class="digital_object_identifiers form-row">
     <div class="col-med-3">
       <%= form.label :digital_object_source %>
       <%= form.select(:digital_object_source, ['None', 'Preservica'], {}, style: "width:178px;" ) %>
@@ -197,7 +215,7 @@
   <br>
 
   <h6 class="form-subgroup-title">IIIF Values</h6>
-  <div class="other_identifiers, form-row">
+  <div class="other_identifiers form-row">
     <div class="col-med-3">
       <%= form.label :viewing_direction %>
       <%= link_to("IIIF viewing direction details", "https://iiif.io/api/presentation/2.1/#viewingdirection") %><br>
