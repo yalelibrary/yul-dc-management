@@ -131,7 +131,7 @@ class CsvRowParentService
 
   def authoritative_metadata_source_id
     ms = row['source']
-    raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown source [#{ms}]. Source must be 'ils' or 'aspace'", 'Skipped Row') if ms != "ils" && ms != "aspace"
+    raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown source [#{ms}]. Source must be 'ils', 'aspace' or 'sierra", 'Skipped Row') if ms != "ils" && ms != "aspace" && ms != "sierra"
     if ms == "ils"
       ms = 2
     elsif ms == "aspace"
