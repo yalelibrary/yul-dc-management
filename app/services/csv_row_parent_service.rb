@@ -132,7 +132,8 @@ class CsvRowParentService
   # rubocop:disable Metrics/PerceivedComplexity
   def authoritative_metadata_source_id
     ms = row['source']
-    if ms != "ils" && ms != "aspace" && ms != "sierra"
+    # Add alma to error message when alma goes live
+    if ms != "ils" && ms != "aspace" && ms != "sierra" && ms != "alma"
       raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown source [#{ms}]. Source must be 'ils', 'aspace' or 'sierra'",
 'Skipped Row')
     end
