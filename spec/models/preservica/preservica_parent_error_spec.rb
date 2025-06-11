@@ -86,7 +86,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         batch_process.file = preservica_parent_no_source
         batch_process.save
         expect(batch_process.batch_ingest_events.count).to eq(1)
-        expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with unknown source []. Source must be 'ils', 'aspace' or 'sierra")
+        expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with unknown source []. Source must be 'ils', 'aspace' or 'sierra'")
       end.not_to change { ParentObject.count }
     end
     # rubocop:disable Layout/LineLength
