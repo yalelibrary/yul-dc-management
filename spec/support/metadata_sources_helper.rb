@@ -8,6 +8,7 @@ module MetdataSourcesHelper
       FactoryBot.create(:metadata_source_voyager) if MetadataSource.count < 2
       FactoryBot.create(:metadata_source_aspace) if MetadataSource.count < 3
       FactoryBot.create(:metadata_source_sierra) if MetadataSource.count < 4
+      FactoryBot.create(:metadata_source_alma) if MetadataSource.count < 5
     end
   end
 end

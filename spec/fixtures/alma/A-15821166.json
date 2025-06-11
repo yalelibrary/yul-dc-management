@@ -1,0 +1,110 @@
+{
+  "pid": "23233086230008651",
+  "uri": "/alma/item/23233086230008651?bib=9981952153408651",
+  "date": [
+    "[ca. 1630]"
+  ],
+  "bibId": [
+    "9981952153408651"
+  ],
+  "genre": [
+    "Maps",
+    "Early works to 1800"
+  ],
+  "mmsId": "9981952153408651",
+  "scale": "Scale [ca. 1:5 250 000]",
+  "title": [
+    "Chili [cartographic material]."
+  ],
+  "extent": [
+    "1 map ; 33.7 x 45.4 cm."
+  ],
+  "source": "alma",
+  "barcode": "39002090385585",
+  "creator": [
+    "Blaeu, Willem Janszoon, 1571-1638"
+  ],
+  "children": [
+
+  ],
+  "language": [
+    "Latin"
+  ],
+  "suppress": false,
+  "holdingId": "22233086240008651",
+  "indexedBy": [
+    "Koeman's Atlantes Neerlandici, http://www.wikidata.org/entity/Q107391443 II, p. 604 (map 9920:2)"
+  ],
+  "publisher": [
+    "Guiljelmus Blaeuw excudit"
+  ],
+  "callNumber": "96 1667",
+  "coordinate": [
+    "-076.000000 -071.000000 -025.000000 -046.166667"
+  ],
+  "createDate": "2025-01-06T21:11:51.600+00:00",
+  "genreFocus": [
+    "Maps"
+  ],
+  "recordType": "bib",
+  "repository": "Beinecke Library",
+  "updateDate": "2025-01-14T21:12:29.341+00:00",
+  "contributor": [
+    "Blaeu, Willem Janszoon, 1571-1638."
+  ],
+  "description": [
+    "BEIN 96 1667: Mounted on linen. Sheet measures 45.3 x 55 cm.",
+    "Relief shown pictorially.",
+    "Oriented with north to the left.",
+    "Bar scales in \"Milliaria Gallica communia,\" \"Leucae Hispanicae,\" and \"Milliaria Germanica communia.\"",
+    "From Blaeu's Atlantis appendix (1630 or 1631 eds.)."
+  ],
+  "languageCode": [
+    "lat"
+  ],
+  "relatedTitle": [
+    "Atlantis appendix."
+  ],
+  "creationPlace": [
+    "Amstelodami"
+  ],
+  "dependentUris": [
+    "/alma/bib/9981952153408651",
+    "/alma/holding/22233086240008651",
+    "/alma/item/23233086230008651"
+  ],
+  "jsonModelType": "BibSolrRecord",
+  "coordinateEast": "-071.000000",
+  "coordinateWest": "-076.000000",
+  "creatorDisplay": [
+    "Blaeu, Willem Janszoon, 1571-1638"
+  ],
+  "dateStructured": [
+    "1630"
+  ],
+  "subjectHeading": [
+    "Chile > Maps > Early works to 1800"
+  ],
+  "titleStatement": [
+    "Chili [cartographic material]."
+  ],
+  "coordinateNorth": "-025.000000",
+  "coordinateSouth": "-046.166667",
+  "coordinateDisplay": [
+    "(W 76⁰00ʹ00ʺ--W 71⁰00ʹ00ʺ/S 25⁰00ʹ00ʺ--S 46⁰10ʹ00ʺ)."
+  ],
+  "subjectGeographic": [
+    "Chile"
+  ],
+  "contributorDisplay": [
+    "Blaeu, Willem Janszoon, 1571-1638."
+  ],
+  "illustrativeMatter": "i   ",
+  "relatedTitleDisplay": [
+    "Blaeu, Willem Janszoon, 1571-1638. Atlantis appendix"
+  ],
+  "resourceVersionOnline": [
+    "View a digital version in the Beinecke Library's Digital Images Online database|http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=15823818"
+  ],
+  "callNumberWithPublicNote": "96 1667"
+}

@@ -395,6 +395,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
                     when "sierra"
                       self.sierra_json = MetadataSource.find_by(metadata_cloud_name: "sierra").fetch_record(self)
+                    when "alma"
+                      self.alma_json = MetadataSource.find_by(metadata_cloud_name: "alma").fetch_record(self)
                     when "ils"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless bib.present?
                       self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
@@ -472,6 +474,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       add_media_type aspace_cloud_url
     when "sierra"
       add_media_type sierra_cloud_url
+    when "alma"
+      add_media_type alma_cloud_url
     else
       raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
@@ -489,6 +493,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       aspace_json
     when "sierra"
       sierra_json
+    when "alma"
+      alma_json
     else
       raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
     end
@@ -545,6 +551,16 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.last_sierra_update = DateTime.current
   end
 
+  def alma_json=(a_record)
+    super(a_record)
+    return a_record if a_record.blank?
+    self.mms_id = a_record["mmsId"]
+    self.alma_item = a_record["pid"]
+    self.alma_holding = a_record["holdingId"]
+    self.barcode = a_record['barcode']
+    self.last_alma_update = DateTime.current
+  end
+
   def ladybird_cloud_url
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/ladybird/oid/#{oid}?include-children=1"
   end
@@ -560,6 +576,36 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                        end
     "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/sierra#{identifier_block}"
   end
+
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
+  def alma_cloud_url
+    raise StandardError, "Alma item, Alma holding, Alma barcode, or Alma MMS ID is required to build Alma url" unless alma_item.present? || alma_holding.present? || barcode.present? || mms_id.present?
+    identifier_block = if mms_id.present?
+                         if alma_item.present?
+                           "/item/#{alma_item}.json?bib=#{mms_id}"
+                         elsif barcode.present?
+                           "/barcode/#{barcode}.json?bib=#{mms_id}"
+                         elsif alma_holding.present?
+                           "/holding/#{alma_holding}.json?bib=#{mms_id}"
+                         else
+                           "/bib/#{mms_id}.json"
+                         end
+                       elsif alma_item.present?
+                         "/item/#{alma_item}"
+                       elsif barcode.present?
+                         "/barcode/#{barcode}"
+                       elsif alma_holding.present?
+                         "/holding/#{alma_holding}"
+                       end
+    "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/alma#{identifier_block}"
+  end
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   def voyager_cloud_url
     raise StandardError, "Bib id required to build Voyager url" unless bib.present?

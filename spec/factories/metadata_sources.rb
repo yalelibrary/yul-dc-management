@@ -24,5 +24,11 @@ FactoryBot.define do
       display_name { "Sierra" }
       file_prefix { "S-" }
     end
+    factory :metadata_source_alma do
+      id { 5 }
+      metadata_cloud_name { "alma" }
+      display_name { "Alma" }
+      file_prefix { "A-" }
+    end
   end
 end

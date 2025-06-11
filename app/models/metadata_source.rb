@@ -85,6 +85,8 @@ class MetadataSource < ApplicationRecord
       "aspace_cloud_url"
     when "sierra"
       "sierra_cloud_url"
+    when "alma"
+      "alma_cloud_url"
     end
   end
 

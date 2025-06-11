@@ -129,17 +129,27 @@ class CsvRowParentService
   end
   # rubocop:enable Layout/LineLength
 
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
   def authoritative_metadata_source_id
     ms = row['source']
-    raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown source [#{ms}]. Source must be 'ils' or 'aspace'", 'Skipped Row') if ms != "ils" && ms != "aspace"
+    # Add alma to error message when alma goes live
+    if ms != "ils" && ms != "aspace" && ms != "sierra" && ms != "alma"
+      raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown source [#{ms}]. Source must be 'ils', 'aspace' or 'sierra'",
+'Skipped Row')
+    end
     if ms == "ils"
       ms = 2
     elsif ms == "aspace"
       ms = 3
     elsif ms == "sierra"
       ms = 4
+    elsif ms == "alma"
+      ms = 5
     end
     ms
   end
 end
 # rubocop:enable Metrics/ClassLength
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/CyclomaticComplexity
