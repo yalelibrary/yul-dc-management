@@ -6,8 +6,8 @@ module DigitalObjectManagement
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Layout/LineLength
-  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def digital_object_json_available?
     return false unless authoritative_metadata_source && (authoritative_metadata_source.metadata_cloud_name == "aspace" ||
       (authoritative_metadata_source.metadata_cloud_name == "ils" && ENV["FEATURE_FLAGS"]&.include?("|DO-ENABLE-ILS|")) ||
@@ -44,8 +44,8 @@ module DigitalObjectManagement
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Layout/LineLength
-  # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   def digital_object_title
     authoritative_json && authoritative_json["title"] && authoritative_json["title"][0]
