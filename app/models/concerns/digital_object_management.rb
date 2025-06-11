@@ -7,7 +7,9 @@ module DigitalObjectManagement
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Layout/LineLength
   def digital_object_json_available?
-    return false unless authoritative_metadata_source && (authoritative_metadata_source.metadata_cloud_name == "aspace" || (authoritative_metadata_source.metadata_cloud_name == "ils" && ENV["FEATURE_FLAGS"]&.include?("|DO-ENABLE-ILS|")))
+    return false unless authoritative_metadata_source && (authoritative_metadata_source.metadata_cloud_name == "aspace"
+       || (authoritative_metadata_source.metadata_cloud_name == "ils" && ENV["FEATURE_FLAGS"]&.include?("|DO-ENABLE-ILS|"))
+       || (authoritative_metadata_source.metadata_cloud_name == "alma" && ENV["FEATURE_FLAGS"]&.include?("|DO-ENABLE-ALMA|")))
     return false unless child_object_count&.positive?
     return false unless ['Public', 'Yale Community Only', 'Private'].include? visibility
     return false unless digital_object_title
@@ -20,6 +22,7 @@ module DigitalObjectManagement
 
   def generate_digital_object_json
     return nil unless digital_object_json_available?
+    is_alma = authoritative_metadata_source.metadata_cloud_name == "alma"
     # create digital object from data and return JSON
     json = {   oid: oid,
                title: digital_object_title,
@@ -27,10 +30,10 @@ module DigitalObjectManagement
                thumbnailCaption: representative_child&.label || nil,
                archivesSpaceUri: aspace_uri,
                barcode: barcode,
-               bibId: bib,
+               bibId: is_alma ? mms_id : bib,
                childCount: child_object_count,
-               holdingId: holding,
-               itemId: item,
+               holdingId: is_alma ? alma_holding : holding,
+               itemId: is_alma ? alma_item : item,
                source: authoritative_metadata_source.metadata_cloud_name,
                visibility: visibility }
     if json[:source] == "ils" && authoritative_json
