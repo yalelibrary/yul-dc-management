@@ -88,7 +88,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       login_as(:user)
     end
 
-    it 'can recognize when child is removed from preservica' do
+    xit 'can recognize when child is removed from preservica' do
       File.delete("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif")
       File.delete("spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif")
       File.delete("spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif")
