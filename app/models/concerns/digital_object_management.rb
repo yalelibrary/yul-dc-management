@@ -6,19 +6,18 @@ module DigitalObjectManagement
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Layout/LineLength
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def digital_object_json_available?
-    return false unless authoritative_metadata_source && (authoritative_metadata_source.metadata_cloud_name == "aspace"
-       || (authoritative_metadata_source.metadata_cloud_name == "ils" && ENV["FEATURE_FLAGS"]&.include?("|DO-ENABLE-ILS|"))
-       || (authoritative_metadata_source.metadata_cloud_name == "alma" && ENV["FEATURE_FLAGS"]&.include?("|DO-ENABLE-ALMA|")))
+    return false unless authoritative_metadata_source && (authoritative_metadata_source.metadata_cloud_name == "aspace" ||
+      (authoritative_metadata_source.metadata_cloud_name == "ils" && ENV["FEATURE_FLAGS"]&.include?("|DO-ENABLE-ILS|")) ||
+      (authoritative_metadata_source.metadata_cloud_name == "alma" && ENV["FEATURE_FLAGS"]&.include?("|DO-ENABLE-ALMA|")))
     return false unless child_object_count&.positive?
     return false unless ['Public', 'Yale Community Only', 'Private'].include? visibility
     return false unless digital_object_title
     return false if redirect_to.present?
     true
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
-  # rubocop:enable Layout/LineLength
 
   def generate_digital_object_json
     return nil unless digital_object_json_available?
@@ -42,6 +41,11 @@ module DigitalObjectManagement
     end
     json.to_json
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Layout/LineLength
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def digital_object_title
     authoritative_json && authoritative_json["title"] && authoritative_json["title"][0]
