@@ -130,6 +130,7 @@ class CsvRowParentService
   # rubocop:enable Layout/LineLength
 
   # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
   def authoritative_metadata_source_id
     ms = row['source']
     # Add alma to error message when alma goes live
@@ -151,3 +152,4 @@ class CsvRowParentService
 end
 # rubocop:enable Metrics/ClassLength
 # rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/CyclomaticComplexity
