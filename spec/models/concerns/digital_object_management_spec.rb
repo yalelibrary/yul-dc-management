@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe DigitalObjectManagement, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   let(:aspace) { 3 }
   let(:voyager) { 2 }
-  let(:alma) { 4 }
+  let(:alma) { 5 }
 
   it "has digital object json with expected fields" do
     full_parent_object = FactoryBot.build(:parent_object,

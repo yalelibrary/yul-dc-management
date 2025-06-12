@@ -35,7 +35,7 @@ module DigitalObjectManagement
                itemId: is_alma ? alma_item : item,
                source: authoritative_metadata_source.metadata_cloud_name,
                visibility: visibility }
-    if json[:source] == "ils" && authoritative_json
+    if (json[:source] == "ils" || json[:source] == "alma") && authoritative_json
       json[:volumeEnumeration] = authoritative_json["volumeEnumeration"]
       json[:callNumber] = authoritative_json["callNumber"]
     end
