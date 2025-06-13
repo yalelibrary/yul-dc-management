@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_05_22_205537) do
+
+ActiveRecord::Schema[7.0].define(version: 2025_05_28_222739) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -280,6 +282,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_05_22_205537) do
     t.text "extent_of_full_text", default: "None"
     t.jsonb "sierra_json"
     t.datetime "last_sierra_update", precision: nil
+    t.string "sensitive_materials"
     t.jsonb "alma_json"
     t.datetime "last_alma_update"
     t.string "mms_id"
