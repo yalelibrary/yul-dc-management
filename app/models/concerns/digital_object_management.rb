@@ -6,20 +6,22 @@ module DigitalObjectManagement
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Layout/LineLength
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def digital_object_json_available?
-    return false unless authoritative_metadata_source && (authoritative_metadata_source.metadata_cloud_name == "aspace" || (authoritative_metadata_source.metadata_cloud_name == "ils" && ENV["FEATURE_FLAGS"]&.include?("|DO-ENABLE-ILS|")))
+    return false unless authoritative_metadata_source && (authoritative_metadata_source.metadata_cloud_name == "aspace" ||
+      (authoritative_metadata_source.metadata_cloud_name == "ils" && ENV["FEATURE_FLAGS"]&.include?("|DO-ENABLE-ILS|")) ||
+      (authoritative_metadata_source.metadata_cloud_name == "alma" && ENV["FEATURE_FLAGS"]&.include?("|DO-ENABLE-ALMA|")))
     return false unless child_object_count&.positive?
     return false unless ['Public', 'Yale Community Only', 'Private'].include? visibility
     return false unless digital_object_title
     return false if redirect_to.present?
     true
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
-  # rubocop:enable Layout/LineLength
 
   def generate_digital_object_json
     return nil unless digital_object_json_available?
+    is_alma = authoritative_metadata_source.metadata_cloud_name == "alma"
     # create digital object from data and return JSON
     json = {   oid: oid,
                title: digital_object_title,
@@ -27,18 +29,23 @@ module DigitalObjectManagement
                thumbnailCaption: representative_child&.label || nil,
                archivesSpaceUri: aspace_uri,
                barcode: barcode,
-               bibId: bib,
+               bibId: is_alma ? mms_id : bib,
                childCount: child_object_count,
-               holdingId: holding,
-               itemId: item,
+               holdingId: is_alma ? alma_holding : holding,
+               itemId: is_alma ? alma_item : item,
                source: authoritative_metadata_source.metadata_cloud_name,
                visibility: visibility }
-    if json[:source] == "ils" && authoritative_json
+    if (json[:source] == "ils" || json[:source] == "alma") && authoritative_json
       json[:volumeEnumeration] = authoritative_json["volumeEnumeration"]
       json[:callNumber] = authoritative_json["callNumber"]
     end
     json.to_json
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Layout/LineLength
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   def digital_object_title
     authoritative_json && authoritative_json["title"] && authoritative_json["title"][0]
