@@ -34,7 +34,8 @@ class CsvRowParentService
 
   row_accessor :aspace_uri, :bib, :holding, :item, :barcode, :oid, :admin_set,
                :preservica_uri, :visibility, :digital_object_source, :permission_set,
-               :authoritative_metadata_source_id, :preservica_representation_type, :extent_of_digitization
+               :authoritative_metadata_source_id, :preservica_representation_type, :extent_of_digitization,
+               :digitization_note, :digitization_funding_source, :rights_statement
 
   def parent_object
     PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type)
@@ -92,6 +93,18 @@ class CsvRowParentService
     return row['extent_of_digitization'] if ParentObject.extent_of_digitizations.include?(row['extent_of_digitization'])
 
     raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown extent of digitization: #{row['extent_of_digitization']}. For field Extent of Digitization please use: Completely digitizied, Partially digitizied, or leave column empty", 'Skipped Row')
+  end
+
+  def digitization_note
+    row['digitization_note']
+  end
+
+  def digitization_funding_source
+    row['digitization_funding_source']
+  end
+
+  def rights_statement
+    row['rights_statement']
   end
 
   def admin_set
