@@ -93,6 +93,18 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
       last_aspace_update: "2020-06-10 17:38:27".to_datetime
     )
   end
+  let(:parent_object_with_alma_source) do
+    FactoryBot.create(
+      :parent_object_with_aspace_uri,
+      authoritative_metadata_source: MetadataSource.find_by(display_name: 'Alma'),
+      admin_set: AdminSet.first,
+      oid: "15821166",
+      mms_id: "9981952153408651",
+      alma_holding: "22233086240008651",
+      alma_item: "23233086230008651",
+      last_alma_update: "2020-06-10 17:38:27".to_datetime
+    )
+  end
   let(:dependent_object_aspace_repository) do
     FactoryBot.create(
       :dependent_object,
@@ -107,6 +119,14 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
       parent_object_id: "16854285",
       metadata_source: "aspace",
       dependent_uri: "/aspace/agents/corporate_entities/2251"
+    )
+  end
+  let(:dependent_object_alma_agent) do
+    FactoryBot.create(
+      :dependent_object,
+      parent_object_id: "15821166",
+      metadata_source: "alma",
+      dependent_uri: "/alma/item/15821166?bib=9981952153408651"
     )
   end
 
@@ -186,6 +206,16 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
       "type" => relevant_activity_type
     }
   end
+  let(:relevant_item_from_alma_dependent_uri) do
+    {
+      "endTime" => relevant_time,
+      "object" => {
+        "id" => "http://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/alma/item/15821166",
+        "type" => "Document"
+      },
+      "type" => relevant_activity_type
+    }
+  end
   let(:irrelevant_item_not_in_db) do
     {
       "endTime" => relevant_time,
@@ -232,6 +262,8 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
     stub_metadata_cloud("16854285", "ladybird")
     stub_metadata_cloud("V-16854285", "ils")
     stub_metadata_cloud("AS-16854285", "aspace")
+    # OID 15821166
+    stub_metadata_cloud("A-15821166", "alma")
     # Activity Stream - stub requests to MetadataCloud activity stream with fixture objects that represent single activity_stream json pages
     stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity")
       .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read)
@@ -256,6 +288,9 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
       dependent_object_ladybird_two
       parent_object_with_aspace_uri
       dependent_object_aspace_repository
+      parent_object_with_alma_source
+      dependent_object_alma_agent
+      relevant_item_from_alma_dependent_uri
 
       # This is to prime these objects so they have the default json,
       # This is necessary because these tests do not perform all jobs synchronously to fully create the object.
@@ -274,6 +309,14 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
       relevant_parent_object.last_voyager_update = 5.years.ago
       relevant_parent_object.save!
       GoodJob::Job.delete(relevant_parent_object.setup_metadata_jobs)
+
+      parent_object_with_alma_source.default_fetch
+      parent_object_with_alma_source.metadata_update = false
+      parent_object_with_alma_source.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'alma')
+      parent_object_with_alma_source.default_fetch
+      parent_object_with_alma_source.last_alma_update = 5.years.ago
+      parent_object_with_alma_source.save!
+      GoodJob::Job.delete(parent_object_with_alma_source.setup_metadata_jobs)
 
       asl_old_success
     end
@@ -305,6 +348,8 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
         parent_object_with_aspace_uri.save!
         relevant_parent_object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'ils')
         relevant_parent_object.save!
+        parent_object_with_alma_source.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'alma')
+        parent_object_with_alma_source.save!
       end
 
       # only processes the first page, and all are out of date.
@@ -379,6 +424,13 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
       parent_object_with_aspace_uri
       dependent_object_aspace_agent
       expect(asr.relevant?(relevant_item_from_aspace_dependent_uri)).to be_truthy
+    end
+
+    it "can confirm that an Alma item is relevant based on its dependent URI" do
+      asl_old_success
+      parent_object_with_alma_source
+      dependent_object_alma_agent
+      expect(asr.relevant?(relevant_item_from_alma_dependent_uri)).to be_truthy
     end
 
     it "does not confirm that an irrelevant item is relevant - not update" do
