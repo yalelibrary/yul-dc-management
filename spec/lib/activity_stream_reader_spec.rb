@@ -145,8 +145,8 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
 
   let(:relevant_oid) { "2004628" }
   let(:irrelevant_oid) { "not_in_db" }
-  let(:relevant_time) { "2020-06-12T21:06:53.000+0000" }
-  let(:irrelevant_time) { "2020-06-12T21:04:53.000+0000" }
+  let(:relevant_time) { "2024-06-12T21:06:53.000+0000" }
+  let(:irrelevant_time) { "2024-06-12T21:04:53.000+0000" }
   let(:relevant_activity_type) { "Update" }
   let(:irrelevant_activity_type) { "Create" }
   let(:relevant_item_from_ladybird) do
@@ -261,7 +261,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
   end
   let(:irrelevant_not_an_update) do
     {
-      "endTime" => "2020-06-12T21:06:53.000+0000",
+      "endTime" => "2024-06-12T21:06:53.000+0000",
       "object" => {
         "id" => "http://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/ladybird/oid/#{relevant_oid}",
         "type" => "Document"
@@ -270,7 +270,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
     }
   end
 
-  let(:asl_old_success) { FactoryBot.create(:successful_activity_stream_log, run_time: "2020-06-12T21:05:53.000+0000".to_datetime) }
+  let(:asl_old_success) { FactoryBot.create(:successful_activity_stream_log, run_time: "2024-06-12T21:05:53.000+0000".to_datetime) }
 
   before do
     # Part of ActiveSupport, see support/time_helpers.rb, behaves similarly to old TimeCop gem
@@ -352,7 +352,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
 
     it "queues objects to be updated" do
       # 3 parent objects
-      expect(SetupMetadataJob).to receive(:perform_later)
+      expect(SetupMetadataJob).to receive(:perform_later).thrice
       described_class.update
     end
 
@@ -365,7 +365,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
       expect(ActivityStreamLog.last.retrieved_records).to eq 4 # 4 relevant records
       asr.process_activity_stream
       expect(ActivityStreamLog.count).to eq 2
-      expect(ActivityStreamLog.last.retrieved_records).to eq 1
+      expect(ActivityStreamLog.last.retrieved_records).to eq 3
     end
 
     context "with records setup for aspace, ils and alma" do
@@ -384,7 +384,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
         described_class.update
         expect(ActivityStreamLog.count).to eq 2
         expect(ActivityStreamLog.last.activity_stream_items).to be > 2000
-        expect(ActivityStreamLog.last.retrieved_records).to eq 1
+        expect(ActivityStreamLog.last.retrieved_records).to eq 3
       end
     end
 
@@ -415,7 +415,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
     let(:asl_old_success) do
       FactoryBot.create(
         :successful_activity_stream_log,
-        run_time: "2020-06-12T21:05:53.000+0000".to_datetime
+        run_time: "2024-06-12T21:05:53.000+0000".to_datetime
       )
     end
 
