@@ -4,10 +4,13 @@ require "support/time_helpers"
 
 RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_sets: true do
   around do |example|
+    original_flags = ENV['FEATURE_FLAGS']
     original_metadata_cloud_host = ENV['METADATA_CLOUD_HOST']
     ENV['METADATA_CLOUD_HOST'] = 'metadata-api-test.library.yale.edu'
+    ENV['FEATURE_FLAGS'] = "#{ENV['FEATURE_FLAGS']}|DO-ENABLE-ALMA|" unless original_flags&.include?("|DO-ENABLE-ALMA|")
     example.run
     ENV['METADATA_CLOUD_HOST'] = original_metadata_cloud_host
+    ENV['FEATURE_FLAGS'] = original_flags
   end
 
   before do
@@ -93,15 +96,17 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
       last_aspace_update: "2020-06-10 17:38:27".to_datetime
     )
   end
-  let(:parent_object_with_alma_source) do
+  let(:relevant_parent_object_with_alma_source) do
     FactoryBot.create(
-      :parent_object_with_aspace_uri,
+      :parent_object,
       authoritative_metadata_source: MetadataSource.find_by(display_name: 'Alma'),
       admin_set: AdminSet.first,
       oid: "15821166",
       mms_id: "9981952153408651",
       alma_holding: "22233086240008651",
       alma_item: "23233086230008651",
+      child_object_count: 1,
+      alma_json: { "title": ["test"], "volumeEnumeration": "v. 59", "callNumber": "MSS GQT" },
       last_alma_update: "2020-06-10 17:38:27".to_datetime
     )
   end
@@ -121,12 +126,20 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
       dependent_uri: "/aspace/agents/corporate_entities/2251"
     )
   end
-  let(:dependent_object_alma_agent) do
+  let(:dependent_object_alma_item) do
     FactoryBot.create(
       :dependent_object,
       parent_object_id: "15821166",
       metadata_source: "alma",
-      dependent_uri: "/alma/item/15821166?bib=9981952153408651"
+      dependent_uri: "/alma/item/23233086230008651"
+    )
+  end
+  let(:dependent_object_alma_holding) do
+    FactoryBot.create(
+      :dependent_object,
+      parent_object_id: "15821166",
+      metadata_source: "alma",
+      dependent_uri: "/alma/holding/22233086240008651"
     )
   end
 
@@ -206,11 +219,21 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
       "type" => relevant_activity_type
     }
   end
-  let(:relevant_item_from_alma_dependent_uri) do
+  let(:relevant_item_from_alma_item) do
     {
       "endTime" => relevant_time,
       "object" => {
-        "id" => "http://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/alma/item/15821166",
+        "id" => "http://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/alma/item/23233086230008651",
+        "type" => "Document"
+      },
+      "type" => relevant_activity_type
+    }
+  end
+  let(:relevant_item_from_alma_holding) do
+    {
+      "endTime" => relevant_time,
+      "object" => {
+        "id" => "http://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/alma/holding/22233086240008651",
         "type" => "Document"
       },
       "type" => relevant_activity_type
@@ -288,9 +311,11 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
       dependent_object_ladybird_two
       parent_object_with_aspace_uri
       dependent_object_aspace_repository
-      parent_object_with_alma_source
-      dependent_object_alma_agent
-      relevant_item_from_alma_dependent_uri
+      relevant_parent_object_with_alma_source
+      dependent_object_alma_item
+      dependent_object_alma_holding
+      relevant_item_from_alma_item
+      relevant_item_from_alma_holding
 
       # This is to prime these objects so they have the default json,
       # This is necessary because these tests do not perform all jobs synchronously to fully create the object.
@@ -310,13 +335,13 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
       relevant_parent_object.save!
       GoodJob::Job.delete(relevant_parent_object.setup_metadata_jobs)
 
-      parent_object_with_alma_source.default_fetch
-      parent_object_with_alma_source.metadata_update = false
-      parent_object_with_alma_source.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'alma')
-      parent_object_with_alma_source.default_fetch
-      parent_object_with_alma_source.last_alma_update = 5.years.ago
-      parent_object_with_alma_source.save!
-      GoodJob::Job.delete(parent_object_with_alma_source.setup_metadata_jobs)
+      relevant_parent_object_with_alma_source.default_fetch
+      relevant_parent_object_with_alma_source.metadata_update = false
+      relevant_parent_object_with_alma_source.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'alma')
+      relevant_parent_object_with_alma_source.default_fetch
+      relevant_parent_object_with_alma_source.last_alma_update = 5.years.ago
+      relevant_parent_object_with_alma_source.save!
+      GoodJob::Job.delete(relevant_parent_object_with_alma_source.setup_metadata_jobs)
 
       asl_old_success
     end
@@ -326,30 +351,31 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
     end
 
     it "queues objects to be updated" do
-      # 2 parent objects so received twice
-      expect(SetupMetadataJob).to receive(:perform_later).twice
+      # 3 parent objects
+      expect(SetupMetadataJob).to receive(:perform_later)
       described_class.update
     end
 
-    # There are ~1837 total items from the relevant time period, but only 3 of them
-    # are unique Ladybird, Voyager, or ArchiveSpace updates
+    # There are ~1838 total items from the relevant time period, but only 4 of them
+    # are unique Ladybird, Voyager, Alma or ArchiveSpace updates
     # with the oid that has been added to the database in our before block
     it "can process the partial activity stream if there is a previous successful run" do
       expect(ActivityStreamLog.count).to eq 1
       expect(ActivityStreamLog.last.retrieved_records).to eq asl_old_success.retrieved_records
+      expect(ActivityStreamLog.last.retrieved_records).to eq 4 # 4 relevant records
       asr.process_activity_stream
       expect(ActivityStreamLog.count).to eq 2
-      expect(ActivityStreamLog.last.retrieved_records).to eq 2 # skipping lb so 2
+      expect(ActivityStreamLog.last.retrieved_records).to eq 1
     end
 
-    context "with records setup for aspace and ils" do
+    context "with records setup for aspace, ils and alma" do
       before do
         parent_object_with_aspace_uri.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'aspace')
         parent_object_with_aspace_uri.save!
         relevant_parent_object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'ils')
         relevant_parent_object.save!
-        parent_object_with_alma_source.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'alma')
-        parent_object_with_alma_source.save!
+        relevant_parent_object_with_alma_source.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'alma')
+        relevant_parent_object_with_alma_source.save!
       end
 
       # only processes the first page, and all are out of date.
@@ -358,7 +384,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
         described_class.update
         expect(ActivityStreamLog.count).to eq 2
         expect(ActivityStreamLog.last.activity_stream_items).to be > 2000
-        expect(ActivityStreamLog.last.retrieved_records).to eq 2
+        expect(ActivityStreamLog.last.retrieved_records).to eq 1
       end
     end
 
@@ -377,6 +403,10 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
         expect(asr.updated_uris.size).to eq 4
         asr.process_item(relevant_item_from_aspace)
         expect(asr.updated_uris.size).to eq 5
+        asr.process_item(relevant_item_from_alma_holding)
+        expect(asr.updated_uris.size).to eq 6
+        asr.process_item(relevant_item_from_alma_item)
+        expect(asr.updated_uris.size).to eq 7
       end
     end
   end
@@ -428,9 +458,13 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
 
     it "can confirm that an Alma item is relevant based on its dependent URI" do
       asl_old_success
-      parent_object_with_alma_source
-      dependent_object_alma_agent
-      expect(asr.relevant?(relevant_item_from_alma_dependent_uri)).to be_truthy
+      relevant_parent_object_with_alma_source
+      dependent_object_alma_item
+      dependent_object_alma_holding
+      relevant_item_from_alma_item
+      relevant_item_from_alma_holding
+      expect(asr.relevant?(relevant_item_from_alma_item)).to be_truthy
+      expect(asr.relevant?(relevant_item_from_alma_holding)).to be_truthy
     end
 
     it "does not confirm that an irrelevant item is relevant - not update" do

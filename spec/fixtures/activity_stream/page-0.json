@@ -6,12 +6,28 @@
     "id": "http://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/collection",
     "type": "OrderedCollection"
   },
-  "totalItems": 939920,
+  "totalItems": 939921,
   "orderedItems": [
     {
       "endTime": "2020-06-12T21:05:20.000+0000",
       "object": {
         "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/aspace/repositories/11/archival_objects/515305",
+        "type": "Document"
+      },
+      "type": "Update"
+    },
+    {
+      "endTime": "2020-06-12T21:05:20.000+0000",
+      "object": {
+        "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/alma/item/23233086230008651",
+        "type": "Document"
+      },
+      "type": "Update"
+    },
+    {
+      "endTime": "2020-06-12T21:05:20.000+0000",
+      "object": {
+        "id": "http://metadata-api-test.library.yale.edu/metadatacloud/api/alma/holding/22233086240008651",
         "type": "Document"
       },
       "type": "Update"
