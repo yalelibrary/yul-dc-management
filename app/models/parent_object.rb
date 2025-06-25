@@ -42,6 +42,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :preservica_representation_type, format: { with: /\A(Preservation|preservation|Access)/, message: "can't be None when Digital Object Source is Preservica" }, if: proc { digital_object_source == "Preservica" || digital_object_source == "preservica" }
   # rubocop:enable Layout/LineLength
   validate :validate_visibility
+  validate :validate_sensitive_materials
   before_save :check_for_redirect
   before_save :check_permission_set
 
@@ -771,5 +772,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def should_create_manifest_and_pdf?
     !redirect_to.present?
+  end
+
+  def validate_sensitive_materials
+    return if sensitive_materials.blank? || sensitive_materials == 'Yes' || sensitive_materials == 'No'
+    errors.add(:sensitive_materials, "must be 'Yes' or 'No'")
   end
 end
