@@ -27,6 +27,7 @@ class PreservicaImageService
 
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def image_list(representation_type)
     @images = []
@@ -68,6 +69,7 @@ class PreservicaImageService
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
 
   # rubocop:disable Layout/LineLength

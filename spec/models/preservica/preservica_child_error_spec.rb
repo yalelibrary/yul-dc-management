@@ -247,29 +247,45 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expect do
       batch_process.file = preservica_parent_with_children
       batch_process.save
-      expect(batch_process.batch_ingest_events.count).to eq(4)
+      expect(batch_process.batch_ingest_events.count).to eq(3)
       expect(batch_process.batch_ingest_events[0].reason).to eq("Retrying row [2] Net::ReadTimeout for sample.com/uri.")
     end.to change { ChildObject.count }.by(0)
   end
 
   it 'can retry on Net::ReadTimeout with pattern 1 and suceed with expected data from csv' do
     images = [
-      { preservica_content_object_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486", preservica_generation_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1", preservica_bitstream_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1", sha512_checksum: "1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7", bitstream: Preservica::Bitstream.new("Preservica Client", "ae328d84-e429-4d46-a865-9ee11157b486", "1", "1", "mss_29_s03_b092_f0019.TIF"), caption: "mss_29_s03_b092_f0019.TIF" }, { preservica_content_object_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489", preservica_generation_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1", preservica_bitstream_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1", sha512_checksum: "1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7", bitstream: Preservica::Bitstream.new("Preservica Client", "ae328d84-e429-4d46-a865-9ee11157b489", "1", "1", "mss_29_s03_b092_f0019.TIF"), caption: "mss_29_s03_b092_f0019.tif" }, { preservica_content_object_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487", preservica_generation_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1", preservica_bitstream_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1", sha512_checksum: "1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7", bitstream: Preservica::Bitstream.new("Preservica Client", "ae328d84-e429-4d46-a865-9ee11157b488", "1", "1", "mss_29_s03_b092_f0019.TIF"), caption: "mss_29_s03_b092_f0019.tif" }
+      { preservica_content_object_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486",
+        preservica_generation_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1",
+        preservica_bitstream_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1",
+        sha512_checksum: "1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7",
+        bitstream: Preservica::Bitstream.new("Preservica Client", "ae328d84-e429-4d46-a865-9ee11157b486", "1", "1", "mss_29_s03_b092_f0019.TIF"),
+        caption: "mss_29_s03_b092_f0019.TIF" },
+      { preservica_content_object_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489",
+        preservica_generation_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1",
+        preservica_bitstream_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1",
+        sha512_checksum: "1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7",
+        bitstream: Preservica::Bitstream.new("Preservica Client", "ae328d84-e429-4d46-a865-9ee11157b489", "1", "1", "mss_29_s03_b092_f0019.TIF"),
+        caption: "mss_29_s03_b092_f0019.tif" },
+      { preservica_content_object_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487",
+        preservica_generation_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1",
+        preservica_bitstream_uri: "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1",
+        sha512_checksum: "1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7",
+        bitstream: Preservica::Bitstream.new("Preservica Client", "ae328d84-e429-4d46-a865-9ee11157b488", "1", "1", "mss_29_s03_b092_f0019.TIF"),
+        caption: "mss_29_s03_b092_f0019.tif" }
     ]
     call_count ||= 1
     allow(S3Service).to receive(:s3_exists?).and_return(false)
     allow_any_instance_of(PreservicaImageService).to receive(:image_list).with('Preservation') do
-      byebug
       call_count += 1
-      call_count < 2 ? raise(PreservicaImageService::PreservicaImageServiceNetworkError.new('Net::ReadTimeout', 'sample.com/uri')) : images
+      call_count <= 2 ? raise(PreservicaImageService::PreservicaImageServiceNetworkError.new('Net::ReadTimeout', 'sample.com/uri')) : images
     end
     expect do
       batch_process.file = preservica_parent_with_children_and_data
       batch_process.save
       expect(batch_process.batch_ingest_events[0].reason).to eq("Retrying row [2] Net::ReadTimeout for sample.com/uri.")
     end.to change { ChildObject.count }.by(0)
+    expect(call_count).to eq(4) # 3 retries and then eventual success
     po = ParentObject.find(200_000_000)
-    # byebug
     expect(po.digitization_note).to eq 'A note about digitization'
     expect(po.digitization_funding_source).to eq 'Digitization Funding Source'
     expect(po.rights_statement).to eq 'A rights statement.'
