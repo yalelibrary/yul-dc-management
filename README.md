@@ -124,10 +124,6 @@ This starts all of the applications, as they are all dependencies of yul-blackli
 ### Troubleshooting
 - See the [wiki](https://github.com/yalelibrary/yul-dc-documentation/wiki/Management-Development-Setup#troubleshooting) for further troubleshooting topics
 
-### Dynatrace
-- We've integrated Dynatrace OneAgent for monitoring our Docker container environments.
-  - Instructions on configuring OneAgent can be found [here](https://github.com/yalelibrary/yul-dc-camerata/tree/main/base)
-
 ## Running the rake tasks
 - See the [wiki](https://github.com/yalelibrary/yul-dc-documentation/wiki/Management-Development-Setup#running-the-rake-tasks) for further information on rake tasks.
   
