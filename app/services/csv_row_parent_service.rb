@@ -34,7 +34,8 @@ class CsvRowParentService
 
   row_accessor :aspace_uri, :bib, :holding, :item, :barcode, :oid, :admin_set,
                :preservica_uri, :visibility, :digital_object_source, :permission_set,
-               :authoritative_metadata_source_id, :preservica_representation_type, :extent_of_digitization
+               :authoritative_metadata_source_id, :preservica_representation_type, :extent_of_digitization,
+               :digitization_note, :digitization_funding_source, :rights_statement
 
   def parent_object
     PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type)
@@ -94,6 +95,18 @@ class CsvRowParentService
     raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown extent of digitization: #{row['extent_of_digitization']}. For field Extent of Digitization please use: Completely digitizied, Partially digitizied, or leave column empty", 'Skipped Row')
   end
 
+  def digitization_note
+    row['digitization_note']
+  end
+
+  def digitization_funding_source
+    row['digitization_funding_source']
+  end
+
+  def rights_statement
+    row['rights_statement']
+  end
+
   def admin_set
     admin_sets_hash = {}
     admin_set_key = row['admin_set']
@@ -129,9 +142,15 @@ class CsvRowParentService
   end
   # rubocop:enable Layout/LineLength
 
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
   def authoritative_metadata_source_id
     ms = row['source']
-    raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown source [#{ms}]. Source must be 'ils' or 'aspace'", 'Skipped Row') if ms != "ils" && ms != "aspace"
+    # Add alma to error message when alma goes live
+    if ms != "ils" && ms != "aspace" && ms != "sierra" && ms != "alma"
+      raise BatchProcessingError.new("Skipping row [#{index + 2}] with unknown source [#{ms}]. Source must be 'ils', 'aspace' or 'sierra'",
+'Skipped Row')
+    end
     if ms == "ils"
       ms = 2
     elsif ms == "aspace"
@@ -145,3 +164,5 @@ class CsvRowParentService
   end
 end
 # rubocop:enable Metrics/ClassLength
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/CyclomaticComplexity
