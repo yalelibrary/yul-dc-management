@@ -9,6 +9,7 @@ class SyncFromPreservicaJob < ApplicationJob
   end
 
   def perform(batch_process)
+    # byebug
     batch_process.sync_from_preservica
   end
 end
