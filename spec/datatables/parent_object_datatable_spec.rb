@@ -24,6 +24,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
                            alma_item: "34",
                            project_identifier: '67',
                            digital_object_source: "Preservica",
+                           sensitive_materials: "Yes",
                            preservica_representation_type: "Access",
                            preservica_uri: "/preservica_uri")
     output = ParentObjectDatatable.new(datatable_sample_params(columns), view_context: parent_object_datatable_view_mock, current_ability: Ability.new(user)).data
@@ -47,6 +48,7 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       preservica_uri: "/preservica_uri",
       digitization_note: nil,
       digitization_funding_source: nil,
+      sensitive_materials: "Yes",
       extent_of_digitization: nil,
       holding: nil,
       item: nil,

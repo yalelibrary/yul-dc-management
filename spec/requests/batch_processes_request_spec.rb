@@ -173,7 +173,8 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       get download_template_batch_processes_url(batch_action: "create parent objects")
       expect(response).to have_http_status(:success)
       expect(response.content_type).to eq("text/csv; charset=utf-8")
-      expect(response.body.to_s).to eq("\xEF\xBB\xBFoid,admin_set,source,aspace_uri,mms_id,alma_holding,alma_item,bib,holding,item,barcode,visibility,permission_set_key,digital_object_source,preservica_uri,preservica_representation_type,extent_of_digitization,digitization_note,digitization_funding_source,rights_statement,viewing_direction,display_layout")
+      # byebug
+      expect(response.body.to_s).to eq("\xEF\xBB\xBFoid,admin_set,source,aspace_uri,mms_id,alma_holding,alma_item,bib,holding,item,barcode,visibility,permission_set_key,digital_object_source,preservica_uri,preservica_representation_type,extent_of_digitization,digitization_note,digitization_funding_source,sensitive_materials,rights_statement,viewing_direction,display_layout\n")
     end
     # rubocop:enable Layout/LineLength
 

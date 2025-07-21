@@ -195,6 +195,7 @@ module SolrIndexable
         rights_ssim: rights_statement,
         rights_tesim: rights_statement,
         scale_tesim: json_to_index["scale"],
+        sensitive_materials_ssi: sensitive_materials.presence,
         series_ssi: json_to_index["series"],
         series_sort_ssi: series_sort(json_to_index),
         source_ssim: json_to_index["source"], # refers to source of metadata, e.g. Ladybird, Voyager, etc.
