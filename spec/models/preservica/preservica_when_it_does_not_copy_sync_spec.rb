@@ -8,7 +8,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:admin_set_sml) { FactoryBot.create(:admin_set, key: 'sml') }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_children.csv")) }
-  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_sync.csv")) }
+  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_reingest.csv")) }
   let(:logger_mock) { instance_double('Rails.logger').as_null_object }
 
   around do |example|
@@ -128,7 +128,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       end.to change { ChildObject.count }.from(3).to(4)
       # expect(Rails.logger).to have_received(:info).with("************ bitstream.rb # download_to_file +++ File.write wrote 310202 bites to file *************")
 
-      expect(File.exist?("spec/fixtures/images/access_primaries/00/07/20/00/00/00/200000007.tif")).to eq true
+      expect(File.exist?("spec/fixtures/images/access_primaries/00/04/20/00/00/00/200000004.tif")).to eq true
       co_first = po_first.child_objects.first
       expect(co_first.order).to eq 1
       expect(co_first.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486"

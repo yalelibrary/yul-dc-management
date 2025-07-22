@@ -10,7 +10,6 @@ class SetupMetadataJob < ApplicationJob
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Layout/LineLength
   def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
-    # byebug
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
     return if redirect(parent_object)
@@ -76,7 +75,6 @@ class SetupMetadataJob < ApplicationJob
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def setup_child_object_jobs(parent_object, current_batch_process)
-    # byebug
     parent_object.create_child_records if parent_object.from_upstream_for_the_first_time?
     parent_object.save!
     parent_object.processing_event("Child object records have been created", "child-records-created")

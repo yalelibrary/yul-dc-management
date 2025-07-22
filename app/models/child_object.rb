@@ -65,7 +65,6 @@ class ChildObject < ApplicationRecord
   # rubocop:disable  Metrics/MethodLength
   # rubocop:disable  Layout/LineLength
   def copy_to_access_primary_pairtree
-    # byebug
     # Don't copy over existing access primaries if they already exist
     # TODO: Determine what happens if it's an intentional re-shoot of a child image
     #  1. How is that signalled? (ensure that it's an intentional re-shoot, not accidental duplication)

@@ -10,7 +10,6 @@ module SyncFromPreservica
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def sync_from_preservica
-    # byebug
     self.admin_set = ''
     sets = admin_set
     parsed_csv.each_with_index do |row, _index|
@@ -74,12 +73,14 @@ module SyncFromPreservica
   # rubocop:disable Metrics/MethodLength
   # ERROR HANDLING FOR PRESERVICA SYNC
   def validate_preservica_sync(parent_object, row)
-    # byebug
     if parent_object.redirect_to.present?
       batch_processing_event("Parent OID: #{row['oid']} is a redirected parent object", 'Skipped Import')
       false
     elsif !current_ability.can?(:update, parent_object)
       batch_processing_event("Skipping row with parent oid: #{parent_object.oid}, user does not have permission to update", 'Permission Denied')
+      false
+    elsif !parent_object.admin_set.preservica_credentials_verified
+      batch_processing_event("Admin set #{parent_object.admin_set.key} does not have Preservica credentials set", 'Skipped Import')
       false
     elsif parent_object.preservica_uri.nil? && row['preservica_uri'].nil?
       batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica URI.  Please ensure Preservica URI is saved to parent or included in CSV.", 'Skipped Import')
@@ -91,9 +92,6 @@ module SyncFromPreservica
     elsif parent_object.preservica_representation_type.nil? && row['preservica_representation_type'].nil?
       batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation type.  Please ensure Preservica representation type is saved to parent or included in CSV.",
 'Skipped Import')
-      false
-    elsif !parent_object.admin_set.preservica_credentials_verified
-      batch_processing_event("Admin set #{parent_object.admin_set.key} does not have Preservica credentials set", 'Skipped Import')
       false
     else
       true

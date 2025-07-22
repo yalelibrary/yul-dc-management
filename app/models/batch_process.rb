@@ -155,7 +155,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/MethodLength
   def determine_background_jobs
-    # byebug
     if csv.present? && check_csv_size && check_csv_row_data
       case batch_action
       when 'create parent objects'

@@ -15,11 +15,11 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   end
   let(:co_2) do
     FactoryBot.create(:child_object, oid: 1_002_534, parent_object: aspace_parent, order: 2, label: 'original second label', caption: 'original second caption',
-                                     sha512_checksum: '1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f79')
+                                     sha512_checksum: '271e6e911a859151b063b9c8ab06861c566160ae1f6ea13e08fb17ff5b94982f226a9557e86560a2aaa1a8cc808e9fe8fe640880c3f6d13e69d6f636c3a5e2b0')
   end
   let(:co_3) do
     FactoryBot.create(:child_object, oid: 1_002_535, parent_object: aspace_parent, order: 3, label: 'original third label', caption: 'original third caption',
-                                     sha512_checksum: '1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f77')
+                                     sha512_checksum: 'd6e3926fbe14fedbf3a568b6a5dbdb3e8b2312f217daa460a743559d41a688af4a7c701e7bac908fc7e3fd51c505fa01dad9eee96fcfd2666e92c648249edf02')
   end
   let(:ptf_1) { PyramidalTiff.new(co_1) }
   let(:ptf_2) { PyramidalTiff.new(co_2) }
@@ -105,16 +105,11 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     end
 
     it 'can reingest child objects and keep oids, captions and labels but replace image source location' do
-      File.delete("spec/fixtures/images/access_primaries/03/33/10/02/53/1002533.tif") if File.exist?("spec/fixtures/images/access_primaries/03/33/10/02/53/1002533.tif")
-      File.delete("spec/fixtures/images/access_primaries/03/34/10/02/53/1002534.tif") if File.exist?("spec/fixtures/images/access_primaries/03/34/10/02/53/1002534.tif")
-      File.delete("spec/fixtures/images/access_primaries/03/35/10/02/53/1002535.tif") if File.exist?("spec/fixtures/images/access_primaries/03/35/10/02/53/1002535.tif")
       allow(S3Service).to receive(:s3_exists?).and_return(false)
       expect(ParentObject.count).to eq 1
       expect(ChildObject.count).to eq 3
       po_first = ParentObject.first
       co_first = ChildObject.first
-      # co_second = ChildObject.all[1]
-      # co_third = ChildObject.last
       expect(co_first.oid).to eq 1_002_533
       expect(co_first.caption).to eq 'original first caption'
       expect(co_first.label).to eq 'original first label'
@@ -140,19 +135,16 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(co_first.oid).to eq 1_002_533
       expect(co_first.caption).to eq 'original first caption'
       expect(co_first.label).to eq 'original first label'
-      expect(co_first.order).to eq 3
+      expect(co_first.order).to eq 1
       ptf_1_post = PyramidalTiff.new(co_first)
       ptf_2_post = PyramidalTiff.new(co_second)
       ptf_3_post = PyramidalTiff.new(co_third)
       expect(ptf_1_post.access_primary_path).to eq "spec/fixtures/images/access_primaries/03/33/10/02/53/1002533.tif"
       expect(ptf_2_post.access_primary_path).to eq "spec/fixtures/images/access_primaries/03/34/10/02/53/1002534.tif"
       expect(ptf_3_post.access_primary_path).to eq "spec/fixtures/images/access_primaries/03/35/10/02/53/1002535.tif"
-      # expect(File.exist?("spec/fixtures/images/access_primaries/03/33/10/02/53/1002533.tif")).to be true
-      # expect(File.exist?("spec/fixtures/images/access_primaries/03/34/10/02/53/1002534.tif")).to be true
-      # expect(File.exist?("spec/fixtures/images/access_primaries/03/35/10/02/53/1002535.tif")).to be true
-      File.delete("spec/fixtures/images/access_primaries/03/33/10/02/53/1002533.tif") if File.exist?("spec/fixtures/images/access_primaries/03/33/10/02/53/1002533.tif")
-      File.delete("spec/fixtures/images/access_primaries/03/34/10/02/53/1002534.tif") if File.exist?("spec/fixtures/images/access_primaries/03/34/10/02/53/1002534.tif")
-      File.delete("spec/fixtures/images/access_primaries/03/35/10/02/53/1002535.tif") if File.exist?("spec/fixtures/images/access_primaries/03/35/10/02/53/1002535.tif")
+      expect(File.exist?("spec/fixtures/images/access_primaries/03/33/10/02/53/1002533.tif")).to be true
+      expect(File.exist?("spec/fixtures/images/access_primaries/03/34/10/02/53/1002534.tif")).to be true
+      expect(File.exist?("spec/fixtures/images/access_primaries/03/35/10/02/53/1002535.tif")).to be true
     end
   end
 
