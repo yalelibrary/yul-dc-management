@@ -70,6 +70,7 @@ module SyncFromPreservica
     # end
   end
 
+  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   # ERROR HANDLING FOR PRESERVICA SYNC
   def validate_preservica_sync(parent_object, row)
@@ -83,11 +84,13 @@ module SyncFromPreservica
     elsif parent_object.preservica_uri.nil? && row['preservica_uri'].nil?
       batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica URI.  Please ensure Preservica URI is saved to parent or included in CSV.", 'Skipped Import')
       false
-    elsif ( parent_object.digital_object_source != 'Preservica' || parent_object.digital_object_source != 'preservica') && row['digital_object_source'].nil?
-      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica digital object source.  Please ensure Digital Object Source is saved to parent or included in CSV.", 'Skipped Import')
+    elsif (parent_object.digital_object_source != 'Preservica' || parent_object.digital_object_source != 'preservica') && row['digital_object_source'].nil?
+      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica digital object source.  Please ensure Digital Object Source is saved to parent or included in CSV.",
+'Skipped Import')
       false
     elsif parent_object.preservica_representation_type.nil? && row['preservica_representation_type'].nil?
-      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation type.  Please ensure Preservica representation type is saved to parent or included in CSV.", 'Skipped Import')
+      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation type.  Please ensure Preservica representation type is saved to parent or included in CSV.",
+'Skipped Import')
       false
     elsif !parent_object.admin_set.preservica_credentials_verified
       batch_processing_event("Admin set #{parent_object.admin_set.key} does not have Preservica credentials set", 'Skipped Import')
@@ -96,5 +99,6 @@ module SyncFromPreservica
       true
     end
   end
+  # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
 end

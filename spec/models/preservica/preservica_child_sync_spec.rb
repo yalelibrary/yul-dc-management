@@ -9,9 +9,18 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:aspace_parent) { FactoryBot.create(:parent_object, oid: 200_000_000, admin_set: AdminSet.find_by_key('brbl')) }
   let(:sml_parent) { FactoryBot.create(:parent_object, oid: 12_345, admin_set: AdminSet.find_by_key('sml')) }
-  let(:co_1) { FactoryBot.create(:child_object, oid: 1_002_533, parent_object: aspace_parent, order: 1, label: 'original first label', caption: 'original first caption', sha512_checksum: '1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7') }
-  let(:co_2) { FactoryBot.create(:child_object, oid: 1_002_534, parent_object: aspace_parent, order: 2, label: 'original second label', caption: 'original second caption', sha512_checksum: '1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f79') }
-  let(:co_3) { FactoryBot.create(:child_object, oid: 1_002_535, parent_object: aspace_parent, order: 3, label: 'original third label', caption: 'original third caption', sha512_checksum: '1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f77') }
+  let(:co_1) do
+    FactoryBot.create(:child_object, oid: 1_002_533, parent_object: aspace_parent, order: 1, label: 'original first label', caption: 'original first caption',
+                                     sha512_checksum: '1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7')
+  end
+  let(:co_2) do
+    FactoryBot.create(:child_object, oid: 1_002_534, parent_object: aspace_parent, order: 2, label: 'original second label', caption: 'original second caption',
+                                     sha512_checksum: '1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f79')
+  end
+  let(:co_3) do
+    FactoryBot.create(:child_object, oid: 1_002_535, parent_object: aspace_parent, order: 3, label: 'original third label', caption: 'original third caption',
+                                     sha512_checksum: '1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f77')
+  end
   let(:ptf_1) { PyramidalTiff.new(co_1) }
   let(:ptf_2) { PyramidalTiff.new(co_2) }
   let(:ptf_3) { PyramidalTiff.new(co_3) }
