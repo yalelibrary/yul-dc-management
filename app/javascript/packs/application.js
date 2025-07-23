@@ -97,8 +97,6 @@ $( document ).on('turbolinks:load', function() {
       return colVisibilityMap;
     }
 
-    console.log(columns);
-    console.log(columns.slice(1).map((x, index) => index + 1));
     var oldExportAction = function (self, e, dt, button, config) {
       if (button[0].className.indexOf('buttons-csv') >= 0) {
         if ($.fn.dataTable.ext.buttons.csvHtml5.available(dt, config)) {
@@ -172,8 +170,8 @@ $( document ).on('turbolinks:load', function() {
           text: "Clear Filters",
           className: "clear-filters-button",
           action: () => {
-            dataTable.api().columns().search('').visible( true, true ).order('asc' ).state.clear().draw() ;
-            $(".datatable-search-row input").val("");
+            dataTable.api().state.clear();
+            location.reload();
           }
         },
         {
