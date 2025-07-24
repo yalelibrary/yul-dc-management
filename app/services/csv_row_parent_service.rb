@@ -35,7 +35,7 @@ class CsvRowParentService
   row_accessor :aspace_uri, :bib, :holding, :item, :barcode, :oid, :admin_set,
                :preservica_uri, :visibility, :digital_object_source, :permission_set,
                :authoritative_metadata_source_id, :preservica_representation_type, :extent_of_digitization,
-               :digitization_note, :digitization_funding_source, :rights_statement
+               :digitization_note, :digitization_funding_source, :rights_statement, :sensitive_materials
 
   def parent_object
     PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type)
@@ -57,6 +57,11 @@ class CsvRowParentService
   def bib
     raise BatchProcessingError.new("Skipping row [#{index + 2}]. BIB must be present if 'ils' metadata source", 'Skipped Row') if row['source'] == "ils" && !row['bib'].present?
     row['bib']
+  end
+
+  def sensitive_materials
+    raise BatchProcessingError.new("Skipping row [#{index + 2}]. Sensitive Materials must be 'Yes' or 'No'", 'Skipped Row') if row['sensitive_materials'] != 'Yes' && row['sensitive_materials'] != 'No'
+    row['sensitive_materials']
   end
 
   def preservica_representation_type
@@ -115,7 +120,7 @@ class CsvRowParentService
 
     raise BatchProcessingError.new("The admin set code is missing or incorrect. Please ensure an admin_set value is in the correct spreadsheet column and that your 3 or 4 letter code is correct. ------------ Message from System: Skipping row [#{index + 2}] with unknown admin set [#{admin_set_key}] for parent: #{oid}", 'Skipped Row') if admin_set.blank?
 
-    raise BatchProcessingError.new("Skipping row [#{index + 2}] with admin set [#{admin_set_key}] for parent: #{oid}. Preservica credentials not set for #{admin_set_key}.", 'Skipped Row') unless admin_set.preservica_credentials_verified
+    # raise BatchProcessingError.new("Skipping row [#{index + 2}] with admin set [#{admin_set_key}] for parent: #{oid}. Preservica credentials not set for #{admin_set_key}.", 'Skipped Row') unless admin_set.preservica_credentials_verified
 
     unless current_ability.can?(:add_member, admin_set)
       raise BatchProcessingError.new("Skipping row [#{index + 2}] because #{user.uid} does not have permission to create or update parent: #{oid}",
