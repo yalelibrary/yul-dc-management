@@ -35,7 +35,7 @@ class CsvRowParentService
   row_accessor :aspace_uri, :bib, :holding, :item, :barcode, :oid, :admin_set,
                :preservica_uri, :visibility, :digital_object_source, :permission_set,
                :authoritative_metadata_source_id, :preservica_representation_type, :extent_of_digitization,
-               :digitization_note, :digitization_funding_source, :rights_statement
+               :digitization_note, :digitization_funding_source, :rights_statement, :sensitive_materials
 
   def parent_object
     PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type)
@@ -57,6 +57,14 @@ class CsvRowParentService
   def bib
     raise BatchProcessingError.new("Skipping row [#{index + 2}]. BIB must be present if 'ils' metadata source", 'Skipped Row') if row['source'] == "ils" && !row['bib'].present?
     row['bib']
+  end
+
+  def sensitive_materials
+    if row['sensitive_materials'] != 'Yes' && row['sensitive_materials'] != 'No' && !row['sensitive_materials'].blank?
+      raise BatchProcessingError.new("Skipping row [#{index + 2}]. Sensitive Materials must be 'Yes' or 'No'",
+'Skipped Row')
+    end
+    row['sensitive_materials']
   end
 
   def preservica_representation_type
