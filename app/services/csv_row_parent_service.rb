@@ -60,7 +60,10 @@ class CsvRowParentService
   end
 
   def sensitive_materials
-    raise BatchProcessingError.new("Skipping row [#{index + 2}]. Sensitive Materials must be 'Yes' or 'No'", 'Skipped Row') if row['sensitive_materials'] != 'Yes' && row['sensitive_materials'] != 'No' && !row['sensitive_materials'].blank?
+    if row['sensitive_materials'] != 'Yes' && row['sensitive_materials'] != 'No' && !row['sensitive_materials'].blank?
+      raise BatchProcessingError.new("Skipping row [#{index + 2}]. Sensitive Materials must be 'Yes' or 'No'",
+'Skipped Row')
+    end
     row['sensitive_materials']
   end
 
