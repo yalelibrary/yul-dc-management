@@ -243,8 +243,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     Rails.logger.info "************ parent_object.rb # sync_from_preservica +++ hits method with local and preservica children - (local_children_hash keys count): #{_local_children_hash.keys.count} && (preservica_children_hash key count): #{preservica_children_hash.keys.count} *************"
     # iterate through local hashes and remove any children no longer found on preservica
     child_objects.each do |co|
-      co.destroy! if co.preservica_content_object_uri.nil?
-      co.destroy! unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
+      co.destroy! unless found_in_preservica(co.sha512_checksum, preservica_children_hash)
     end
     # iterate through preservica and update when local version found
     sync_from_preservica_update_existing_children(preservica_children_hash)
@@ -258,7 +257,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def sync_from_preservica_update_existing_children(preservica_children_hash)
     preservica_children_hash.each_value do |value|
-      co = ChildObject.find_by(parent_object_oid: oid, preservica_content_object_uri: value[:content_uri])
+      co = ChildObject.find_by(parent_object_oid: oid, sha512_checksum: value[:checksum])
       next if co.nil?
       co.pyramidal_tiff.force_update = true
       co.order = value[:order]
@@ -286,9 +285,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def found_in_preservica(local_preservica_content_object_uri, preservica_children_hash)
+  def found_in_preservica(local_checksum, preservica_children_hash)
     preservica_children_hash.any? do |_, value|
-      value[:content_uri] == local_preservica_content_object_uri
+      value[:checksum] == local_checksum
     end
   end
 

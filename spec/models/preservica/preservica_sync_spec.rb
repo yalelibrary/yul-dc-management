@@ -9,7 +9,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_children.csv")) }
   let(:preservica_sync_invalid) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_sync_invalid.csv")) }
-  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_sync.csv")) }
+  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_reingest.csv")) }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -241,7 +241,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         sync_batch_process.save!
       end.not_to change { ChildObject.count }
       expect(sync_batch_process.batch_ingest_events_count).to eq 1
-      expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Parent OID: 12345 does not have a Preservica URI')
+      expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Parent OID: 12345 does not have a Preservica URI.  Please ensure Preservica URI is saved to parent or included in CSV.')
     end
 
     it 'can throw an error if parent object does not have a digital object source' do
@@ -255,13 +255,16 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         sync_batch_process.save!
       end.not_to change { ChildObject.count }
       expect(sync_batch_process.batch_ingest_events_count).to eq 1
-      expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Parent OID: 12345 does not have a Preservica digital object source')
+      # rubocop:disable Layout/LineLength
+      expect(sync_batch_process.batch_ingest_events.last.reason).to eq('Parent OID: 12345 does not have a Preservica digital object source.  Please ensure Digital Object Source is saved to parent or included in CSV.')
+      # rubocop:enable Layout/LineLength
     end
 
     it 'can throw an error if parent object does not have an admin set with preservica credentials' do
       allow(S3Service).to receive(:s3_exists?).and_return(false)
       parent_object = ParentObject.new(oid: 12_345, admin_set: AdminSet.find_by_key('sml'), preservica_uri: "/", digital_object_source: "Preservica", preservica_representation_type: "Preservation")
-      parent_object.save
+      parent_object.save!
+      parent_object.reload
 
       sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
       expect do

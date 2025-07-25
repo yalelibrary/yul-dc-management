@@ -7,7 +7,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl') }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_children.csv")) }
-  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_sync.csv")) }
+  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_reingest.csv")) }
   let(:first_tif) { "spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif" }
   let(:new_first_tif) { "spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif" }
   let(:second_tif) { "spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif" }
