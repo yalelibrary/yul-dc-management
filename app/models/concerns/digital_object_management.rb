@@ -33,6 +33,7 @@ module DigitalObjectManagement
                childCount: child_object_count,
                holdingId: is_alma ? alma_holding : holding,
                itemId: is_alma ? alma_item : item,
+               sensitiveMaterials: sensitive_materials,
                source: authoritative_metadata_source.metadata_cloud_name,
                visibility: visibility }
     if (json[:source] == "ils" || json[:source] == "alma") && authoritative_json
