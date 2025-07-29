@@ -11,15 +11,15 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:sml_parent) { FactoryBot.create(:parent_object, oid: 12_345, admin_set: AdminSet.find_by_key('sml')) }
   let(:co_1) do
     FactoryBot.create(:child_object, oid: 1_002_533, parent_object: aspace_parent, order: 1, label: 'original first label', caption: 'original first caption',
-                                     sha512_checksum: '1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7')
+                                     checksum: 'c314697a5b0fd444e26e7c12a1d8d487545dacfc')
   end
   let(:co_2) do
     FactoryBot.create(:child_object, oid: 1_002_534, parent_object: aspace_parent, order: 2, label: 'original second label', caption: 'original second caption',
-                                     sha512_checksum: '271e6e911a859151b063b9c8ab06861c566160ae1f6ea13e08fb17ff5b94982f226a9557e86560a2aaa1a8cc808e9fe8fe640880c3f6d13e69d6f636c3a5e2b0')
+                                     checksum: '466727ad4851a2586ad9979613a56c7c137d7e8b')
   end
   let(:co_3) do
     FactoryBot.create(:child_object, oid: 1_002_535, parent_object: aspace_parent, order: 3, label: 'original third label', caption: 'original third caption',
-                                     sha512_checksum: 'd6e3926fbe14fedbf3a568b6a5dbdb3e8b2312f217daa460a743559d41a688af4a7c701e7bac908fc7e3fd51c505fa01dad9eee96fcfd2666e92c648249edf02')
+                                     checksum: 'f3755c5d9e086b4522a0d3916e9a0bfcbd47564e')
   end
   let(:ptf_1) { PyramidalTiff.new(co_1) }
   let(:ptf_2) { PyramidalTiff.new(co_2) }
@@ -113,7 +113,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(co_first.oid).to eq 1_002_533
       expect(co_first.caption).to eq 'original first caption'
       expect(co_first.label).to eq 'original first label'
-      expect(co_first.sha512_checksum).to eq '1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7'
+      expect(co_first.checksum).to eq 'c314697a5b0fd444e26e7c12a1d8d487545dacfc'
       expect(po_first.last_preservica_update).to be nil
       expect(ptf_1.access_primary_path).to eq "spec/fixtures/images/access_primaries/03/33/10/02/53/1002533.tif"
       expect(ptf_2.access_primary_path).to eq "spec/fixtures/images/access_primaries/03/34/10/02/53/1002534.tif"
