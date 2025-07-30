@@ -3,14 +3,12 @@ require 'aws-sdk-s3'
 require 'rails_helper'
 
 RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
-  let(:user) { FactoryBot.create(:user) }
   let(:oid) { 1_002_532 }
   let(:parent_object) { FactoryBot.build_stubbed(:parent_object) }
   let(:child_object) { FactoryBot.build_stubbed(:child_object, oid: oid) }
   let(:ptf) { described_class.new(child_object) }
 
   before do
-    login_as(:user)
     stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/1002532.tif")
       .to_return(status: 200, body: File.open('spec/fixtures/images/sample.tiff', 'rb'))
     stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/1002532.tif")
@@ -71,7 +69,6 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     swing_temp_dir = "spec/fixtures/images/temp_images/"
     ptiff_tmpdir = "spec/fixtures/images/ptiff_images/"
     expected_file = "#{ptiff_tmpdir}1002532.tif"
-    File.delete(expected_file) if File.exist?(expected_file)
     expect(File.exist?(expected_file)).to eq false
     tiff_input_path = ptf.copy_access_primary_to_working_directory(swing_temp_dir)
     conversion_information = ptf.convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
