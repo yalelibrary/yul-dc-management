@@ -199,7 +199,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
 
     it "can call a wrapper method" do
       allow(described_class).to receive(:new).and_return(ptf)
-      expect(ptf).to receive(:save_to_s3).with(anything, { height: "480", width: "640" })
+      expect(ptf).to receive(:save_to_s3).with(anything, { height: "434", width: "650" })
       VCR.use_cassette("download image 1014543") do
         expect(described_class.new(child_object).generate_ptiff)
       end
