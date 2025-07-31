@@ -32,7 +32,8 @@ module SyncFromPreservica
       end
       begin
         preservica_children_hash = {}
-        PreservicaImageService.new(parent_object.preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_type).each_with_index do |preservica_co, index|
+        parent_preservica_uri = parent_object.preservica_uri.presence || row['preservica_uri'].presence || nil
+        PreservicaImageService.new(parent_preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_type).each_with_index do |preservica_co, index|
           # increment by one so index lines up with order
           index_plus_one = index + 1
           preservica_children_hash["hash_#{index_plus_one}".to_sym] = { order: index_plus_one,
@@ -68,30 +69,34 @@ module SyncFromPreservica
     # end
   end
 
+  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   # ERROR HANDLING FOR PRESERVICA SYNC
   def validate_preservica_sync(parent_object, row)
     if parent_object.redirect_to.present?
       batch_processing_event("Parent OID: #{row['oid']} is a redirected parent object", 'Skipped Import')
       false
-    elsif parent_object.preservica_uri.nil?
-      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica URI", 'Skipped Import')
-      false
-    elsif parent_object.digital_object_source != "Preservica" && parent_object.digital_object_source != "preservica"
-      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica digital object source", 'Skipped Import')
-      false
-    elsif parent_object.preservica_representation_type.nil?
-      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation type", 'Skipped Import')
+    elsif !current_ability.can?(:update, parent_object)
+      batch_processing_event("Skipping row with parent oid: #{parent_object.oid}, user does not have permission to update", 'Permission Denied')
       false
     elsif !parent_object.admin_set.preservica_credentials_verified
       batch_processing_event("Admin set #{parent_object.admin_set.key} does not have Preservica credentials set", 'Skipped Import')
       false
-    elsif !current_ability.can?(:update, parent_object)
-      batch_processing_event("Skipping row with parent oid: #{parent_object.oid}, user does not have permission to update", 'Permission Denied')
+    elsif parent_object.preservica_uri.nil? && row['preservica_uri'].nil?
+      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica URI.  Please ensure Preservica URI is saved to parent or included in CSV.", 'Skipped Import')
+      false
+    elsif (parent_object.digital_object_source != 'Preservica' || parent_object.digital_object_source != 'preservica') && row['digital_object_source'].nil?
+      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica digital object source.  Please ensure Digital Object Source is saved to parent or included in CSV.",
+'Skipped Import')
+      false
+    elsif parent_object.preservica_representation_type.nil? && row['preservica_representation_type'].nil?
+      batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation type.  Please ensure Preservica representation type is saved to parent or included in CSV.",
+'Skipped Import')
       false
     else
       true
     end
   end
+  # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
 end

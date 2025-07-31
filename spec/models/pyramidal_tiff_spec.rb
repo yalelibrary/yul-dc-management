@@ -3,22 +3,22 @@ require 'aws-sdk-s3'
 require 'rails_helper'
 
 RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
-  let(:oid) { 1_002_533 }
+  let(:oid) { 1_002_532 }
   let(:parent_object) { FactoryBot.build_stubbed(:parent_object) }
   let(:child_object) { FactoryBot.build_stubbed(:child_object, oid: oid) }
   let(:ptf) { described_class.new(child_object) }
 
   before do
-    stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/1002533.tif")
+    stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/originals/1002532.tif")
       .to_return(status: 200, body: File.open('spec/fixtures/images/sample.tiff', 'rb'))
-    stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/1002533.tif")
+    stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/1002532.tif")
       .to_return(status: 200)
-    stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/33/10/02/53/1002533.tif")
+    stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/32/10/02/53/1002532.tif")
       .to_return(status: 200)
-    stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/33/10/02/53/1002533.tif")
-      .to_return(status: 404)
-    stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/01/10/01/1001.tif")
-      .to_return(status: 404)
+    stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/32/10/02/53/1002532.tif")
+      .to_return(status: 200)
+    stub_request(:get, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/01/10/01/1001.tif")
+      .to_return(status: 200, body: File.open('spec/fixtures/images/access_primaries/03/33/10/02/53/1002533.tif', 'rb'))
   end
 
   around do |example|
@@ -37,6 +37,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
     let(:invalid_ptf) { described_class.new(child_object_has_ptiff) }
 
     it "logs errors if the job is not valid" do
+      allow(S3Service).to receive(:s3_exists?).and_return(false)
       expect(ptf).to receive(:generate_ptiff).and_return(height: 100, width: 100)
       expected_file_one = "spec/fixtures/images/temp_images/1001.tif"
       expect(File.exist?(expected_file_one)).to eq false
@@ -57,7 +58,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
   end
 
   it "can find the access primary, given an oid" do
-    expect(ptf.access_primary_path).to eq "spec/fixtures/images/access_primaries/03/33/10/02/53/1002533.tif"
+    expect(ptf.access_primary_path).to eq "spec/fixtures/images/access_primaries/03/32/10/02/53/1002532.tif"
   end
 
   it "builds a command with args" do
@@ -67,7 +68,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
   it "converts the file in the swing directory to a ptiff" do
     swing_temp_dir = "spec/fixtures/images/temp_images/"
     ptiff_tmpdir = "spec/fixtures/images/ptiff_images/"
-    expected_file = "#{ptiff_tmpdir}1002533.tif"
+    expected_file = "#{ptiff_tmpdir}1002532.tif"
     expect(File.exist?(expected_file)).to eq false
     tiff_input_path = ptf.copy_access_primary_to_working_directory(swing_temp_dir)
     conversion_information = ptf.convert_to_ptiff(tiff_input_path, ptiff_tmpdir)
@@ -83,7 +84,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
   end
 
   it "bails if the shell script fails" do
-    stub_request(:get, "https://yale-image-samples.s3.amazonaws.com/originals/1002533.tif")
+    stub_request(:get, "https://yale-image-samples.s3.amazonaws.com/originals/1002532.tif")
       .to_return(status: 200, body: File.open('spec/fixtures/images/sample_cmyk.tiff', 'rb'))
     ptiff_tmpdir = "spec/fixtures/images/ptiff_images/"
     ptf.convert_to_ptiff(__FILE__, ptiff_tmpdir)
@@ -91,7 +92,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
   end
 
   it "doesn't try to save to S3 if the shell script fails" do
-    stub_request(:get, "https://yale-image-samples.s3.amazonaws.com/originals/1002533.tif")
+    stub_request(:get, "https://yale-image-samples.s3.amazonaws.com/originals/1002532.tif")
       .to_return(status: 200, body: File.open('spec/fixtures/images/sample_cmyk.tiff', 'rb'))
     ptiff_tmpdir = "spec/fixtures/images/ptiff_images/"
     allow(described_class).to receive(:new).and_return(ptf)
@@ -103,7 +104,7 @@ RSpec.describe PyramidalTiff, prep_metadata_sources: true, type: :has_vcr do
 
   it "copies the local access primary to a swing directory" do
     tmpdir = "spec/fixtures/images/temp_images/"
-    expected_file = "#{tmpdir}1002533.tif"
+    expected_file = "#{tmpdir}1002532.tif"
     expect(File.exist?(expected_file)).to eq false
     expect(ptf.copy_access_primary_to_working_directory(tmpdir)).to eq expected_file
     expect(File.exist?(expected_file)).to eq true

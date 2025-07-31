@@ -2,12 +2,12 @@
 <BitstreamResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3">
   <xip:Bitstream>
     <xip:Filename>mss_29_s03_b092_f0019.tif</xip:Filename>
-    <xip:FileSize>310202</xip:FileSize>
+    <xip:FileSize>849760</xip:FileSize>
     <xip:Fixities>
       <xip:Fixity>
         <xip:FixityAlgorithmRef>SHA512</xip:FixityAlgorithmRef>
         <xip:FixityValue>
-          1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7
+          07a5d9885fffa302ef754a7c9bc2977fa4bc854cd2ebb4a122871084f1b82c7ec5346980db029d9a160c8b4f44bbdae8d370b99fe82dc5d8ca99aa7d67e4f0e6
         </xip:FixityValue>
       </xip:Fixity>
     </xip:Fixities>

@@ -7,7 +7,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl') }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_children.csv")) }
-  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_sync.csv")) }
+  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_reingest.csv")) }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']

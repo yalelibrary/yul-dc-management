@@ -8,7 +8,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:admin_set_sml) { FactoryBot.create(:admin_set, key: 'sml') }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_children.csv")) }
-  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_sync.csv")) }
+  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_reingest.csv")) }
   let(:logger_mock) { instance_double('Rails.logger').as_null_object }
 
   around do |example|
@@ -131,15 +131,19 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(File.exist?("spec/fixtures/images/access_primaries/00/07/20/00/00/00/200000007.tif")).to eq true
       co_first = po_first.child_objects.first
       expect(co_first.order).to eq 1
+      expect(co_first.oid).to eq 200_000_001
       expect(co_first.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486"
       co_second = po_first.child_objects[1]
       expect(co_second.order).to eq 2
+      expect(co_second.oid).to eq 200_000_002
       expect(co_second.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489"
       co_third = po_first.child_objects[2]
       expect(co_third.order).to eq 3
+      expect(co_third.oid).to eq 200_000_003
       expect(co_third.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487"
       co_last = po_first.child_objects.last
       expect(co_last.order).to eq 4
+      expect(co_last.oid).to eq 200_000_007
       expect(co_last.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b485"
 
       File.delete("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif")

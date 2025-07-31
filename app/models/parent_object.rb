@@ -176,9 +176,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # rubocop:disable Layout/LineLength
   def validate_child_hashes(child_hashes)
+    check_for_sha512_checksum
     child_hashes.reject do |h|
-      co = ChildObject.find_by(parent_object_oid: oid, preservica_content_object_uri: h[:preservica_content_object_uri])
-      co.present? && h[:preservica_content_object_uri] == co.preservica_content_object_uri && h[:preservica_generation_uri] == co.preservica_generation_uri && h[:preservica_bitstream_uri] == co.preservica_bitstream_uri
+      co = ChildObject.find_by(parent_object_oid: oid, sha512_checksum: h[:sha512_checksum])
+      co.present? && h[:preservica_content_object_uri] == co.preservica_content_object_uri && h[:preservica_generation_uri] == co.preservica_generation_uri && h[:preservica_bitstream_uri] == co.preservica_bitstream_uri && h[:sha512_checksum] == co.sha512_checksum
     end
   end
   # rubocop:enable Layout/LineLength
@@ -204,8 +205,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def array_of_child_hashes_from_preservica
+    check_for_sha512_checksum
     PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type).map.with_index(1) do |child_hash, index|
-      co_oid = OidMinterService.generate_oids(1)[0]
+      co_oid = ChildObject.find_by(parent_object_oid: oid, sha512_checksum: child_hash[:checksum])&.oid.presence || OidMinterService.generate_oids(1)[0]
       preservica_copy_to_access(child_hash, co_oid)
       child_hash.delete(:bitstream)
       child_hash[:oid] = co_oid
@@ -240,11 +242,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Lint/UnderscorePrefixedVariableName
   # rubocop:disable Layout/LineLength
   def sync_from_preservica(_local_children_hash, preservica_children_hash)
+    check_for_sha512_checksum
     Rails.logger.info "************ parent_object.rb # sync_from_preservica +++ hits method with local and preservica children - (local_children_hash keys count): #{_local_children_hash.keys.count} && (preservica_children_hash key count): #{preservica_children_hash.keys.count} *************"
     # iterate through local hashes and remove any children no longer found on preservica
     child_objects.each do |co|
-      co.destroy! if co.preservica_content_object_uri.nil?
-      co.destroy! unless found_in_preservica(co.preservica_content_object_uri, preservica_children_hash)
+      co.destroy! unless found_in_preservica(co.sha512_checksum, preservica_children_hash)
     end
     # iterate through preservica and update when local version found
     sync_from_preservica_update_existing_children(preservica_children_hash)
@@ -257,8 +259,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Layout/LineLength
 
   def sync_from_preservica_update_existing_children(preservica_children_hash)
+    check_for_sha512_checksum
     preservica_children_hash.each_value do |value|
-      co = ChildObject.find_by(parent_object_oid: oid, preservica_content_object_uri: value[:content_uri])
+      co = ChildObject.find_by(parent_object_oid: oid, sha512_checksum: value[:checksum])
       next if co.nil?
       co.pyramidal_tiff.force_update = true
       co.order = value[:order]
@@ -286,9 +289,20 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def found_in_preservica(local_preservica_content_object_uri, preservica_children_hash)
+  def found_in_preservica(local_checksum, preservica_children_hash)
     preservica_children_hash.any? do |_, value|
-      value[:content_uri] == local_preservica_content_object_uri
+      value[:checksum] == local_checksum
+    end
+  end
+
+  def check_for_sha512_checksum
+    child_objects.each do |co|
+      if co.access_primary_exists?
+        co.sha512_checksum = co.access_sha512_checksum
+        co.save!
+      else
+        processing_event("Access primary original image not found for Child OID: #{co.oid} at expected location: #{co.access_primary_path}.")
+      end
     end
   end
 

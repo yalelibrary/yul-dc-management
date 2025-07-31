@@ -9,7 +9,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_children.csv")) }
   let(:preservica_sync_invalid) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_sync_invalid.csv")) }
-  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_sync.csv")) }
+  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_reingest.csv")) }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -109,12 +109,12 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         sync_batch_process.save!
       end.not_to change { ChildObject.count }
       expect(po_first.iiif_manifest['items'].count).to eq 3
-      expect(po_first.iiif_manifest['items'][0]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000004"
-      expect(po_first.iiif_manifest['items'][1]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000005"
-      expect(po_first.iiif_manifest['items'][2]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000006"
-      expect(File.exist?("spec/fixtures/images/access_primaries/00/04/20/00/00/00/200000004.tif")).to be true
-      expect(File.exist?("spec/fixtures/images/access_primaries/00/05/20/00/00/00/200000005.tif")).to be true
-      expect(File.exist?("spec/fixtures/images/access_primaries/00/06/20/00/00/00/200000006.tif")).to be true
+      expect(po_first.iiif_manifest['items'][0]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000001"
+      expect(po_first.iiif_manifest['items'][1]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000002"
+      expect(po_first.iiif_manifest['items'][2]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000003"
+      expect(File.exist?("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif")).to be true
+      expect(File.exist?("spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif")).to be true
+      expect(File.exist?("spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif")).to be true
 
       File.delete("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif")
       File.delete("spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif")

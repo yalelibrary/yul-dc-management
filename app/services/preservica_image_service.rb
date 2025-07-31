@@ -3,10 +3,19 @@
 class PreservicaImageService
   class PreservicaImageServiceError < StandardError
     attr_reader :id
+    # rubocop:disable Layout/LineLength
     def initialize(msg, id)
       @id = id
-      super("#{msg} for #{id}")
+      friendly_msg = if msg.include?("bad URI")
+                       "The given URI does not match the URI of an entity in Preservica. Please make sure your URI is correct, starts with /structure-object/ or /information-object/, and includes no spaces or line breaks. ------------ Message from System: Skipping row [#{index + 2}] #{msg}."
+                     elsif msg.include?("entity.does.not.exist")
+                       "The given URI does not match the URI of an entity of this type in Preservica. Please make sure your Preservica URI and object structure type is correct. ------------ Message from System: Skipping row [#{index + 2}] #{msg}."
+                     else
+                       msg
+                     end
+      super("#{friendly_msg} for #{id}")
     end
+    # rubocop:enable Layout/LineLength
   end
 
   class PreservicaImageServiceNetworkError < PreservicaImageServiceError
