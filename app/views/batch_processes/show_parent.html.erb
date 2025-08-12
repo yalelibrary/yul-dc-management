@@ -122,19 +122,24 @@
 </table>
 <% end %>
 
-<div class='row batch-process-subheading'>
-  <div class='col'>
-    <table id='parent-batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' aria-label='Parent Batch Process Status' data-source='<%= show_parent_batch_process_path(format: :json) %>'>
-      <thead class='table-head'>
-        <tr>
-          <th scope='col'>Child OID</th>
-          <th scope='col'>Time</th>
-          <th scope='col'>Status</th>
-        </tr>
-      </thead>
-      <tbody class='datatable-body'>
-      </tbody>
-    </table>
+<div class='row'>
+  <div class='col overflow-auto'>
+    <div class='row batch-process-subheading'>
+      <div class='col'>
+        <h1>Batch Child Objects:</h1>
+      </div>
+      <table id='parent-batch-process-datatable' class='is-datatable table table-responsive table-bordered table-striped' aria-label='Parent Batch Process Status' data-source='<%= show_parent_batch_process_path(format: :json) %>'>
+        <thead class='table-head'>
+          <tr>
+            <th scope='col'>Child OID</th>
+            <th scope='col'>Time</th>
+            <th scope='col'>Status</th>
+          </tr>
+        </thead>
+        <tbody class='datatable-body'>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
