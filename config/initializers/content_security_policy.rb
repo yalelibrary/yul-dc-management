@@ -12,6 +12,7 @@ if ENV["RAILS_ENV"] == 'production' || ENV["RAILS_ENV"] == 'staging'
       policy.img_src     :self, :https, :data, "#{ENV['IIIF_IMAGE_BASE_URL']}/"
       policy.object_src  :none
       policy.script_src  :self, 'siteimproveanalytics.com'
+      policy.script_src_elem :self, 'siteimproveanalytics.com'
       policy.style_src :self
       policy.style_src_elem :self, "#{ENV['IIIF_IMAGE_BASE_URL']}/"
       policy.connect_src :self, "#{ENV['IIIF_IMAGE_BASE_URL']}/"
