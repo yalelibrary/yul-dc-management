@@ -9,6 +9,7 @@ class ManagementController < ApplicationController
     policy.script_src_attr  :self, :unsafe_inline
     policy.script_src_elem  :self, :unsafe_inline
     policy.style_src :self, :unsafe_inline
+    policy.style_src_attr :self, :unsafe_inline
     policy.style_src_elem :self, :unsafe_inline
   end
 
