@@ -29,4 +29,8 @@ Rails.application.configure do
       class: 'UpdatePermissionRequestsJob'
     }
   }
+  # Allows es_module_shims to render
+  config.content_security_policy do |policy|
+    policy.script_src_elem :self, :unsafe_inline
+  end
 end
