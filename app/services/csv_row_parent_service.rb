@@ -35,7 +35,7 @@ class CsvRowParentService
   row_accessor :aspace_uri, :bib, :holding, :item, :barcode, :oid, :admin_set,
                :preservica_uri, :visibility, :digital_object_source, :permission_set,
                :authoritative_metadata_source_id, :preservica_representation_type, :extent_of_digitization,
-               :digitization_note, :digitization_funding_source, :rights_statement, :sensitive_materials
+               :digitization_note, :digitization_funding_source, :rights_statement, :sensitive_materials, :alma_item, :alma_holding, :mms_id
 
   def parent_object
     PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type)
@@ -113,6 +113,18 @@ class CsvRowParentService
 
   def rights_statement
     row['rights_statement']
+  end
+
+  def alma_item
+    row['alma_item']
+  end
+
+  def alma_holding
+    row['alma_holding']
+  end
+
+  def mms_id
+    row['mms_id']
   end
 
   def admin_set
