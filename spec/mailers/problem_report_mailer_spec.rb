@@ -19,7 +19,7 @@ RSpec.describe ProblemReportMailer, type: :mailer do
     it 'renders the expected fields' do
       expect(mail.subject).to eq 'Digital Collections Daily Report'
       expect(mail.to).to eq ['not_real_address@yale.edu']
-      expect(mail.from).to eq ['do_not_reply@library.yale.edu']
+      expect(mail.from).to eq ['do_not_reply@yale.edu']
       expect(mail.body.encoded).to include('Problem Parent Count: 4')
     end
   end

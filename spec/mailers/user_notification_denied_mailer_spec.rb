@@ -36,7 +36,7 @@ RSpec.describe UserNotificationDeniedMailer, type: :mailer, prep_admin_sets: tru
     it 'renders the expected fields' do
       expect(mail.subject).to eq 'Your request to view Title has been denied'
       expect(mail.to).to eq ["email@example.com"]
-      expect(mail.from).to eq ['do_not_reply@library.yale.edu']
+      expect(mail.from).to eq ['do_not_reply@yale.edu']
       expect(mail.body.encoded).to include(permission_request.permission_request_user.name)
     end
 
