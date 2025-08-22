@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ProblemReportMailer < ApplicationMailer
-  default from: "do_not_reply@library.yale.edu"
+  default from: "do_not_reply@yale.edu"
 
   def problem_report_email(email, csv)
     @problem_report = params[:problem_report]

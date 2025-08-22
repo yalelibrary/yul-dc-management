@@ -39,7 +39,7 @@ RSpec.describe UserNotificationApprovedMailer, type: :mailer, prep_admin_sets: t
     it 'renders the expected fields' do
       expect(mail.subject).to eq 'Your request to view Title has been approved'
       expect(mail.to).to eq ["email@example.com"]
-      expect(mail.from).to eq ['do_not_reply@library.yale.edu']
+      expect(mail.from).to eq ['do_not_reply@yale.edu']
       expect(mail.body.encoded).to include(permission_request.permission_request_user.name)
       expect(mail.body.encoded).to include("2030-06-10 00:00:00")
     end
