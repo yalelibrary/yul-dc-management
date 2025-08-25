@@ -109,6 +109,7 @@ module Updatable
       end
 
       parent_object.update!(processed_fields)
+      parent_object.reload
       trigger_setup_metadata(parent_object)
 
       sync_from_preservica if parent_object.digital_object_source == 'Preservica' || parent_object.digital_object_source == 'preservica'
