@@ -37,7 +37,7 @@ RSpec.describe NewPermissionRequestMailer, type: :mailer, prep_admin_sets: true,
     it 'renders the expected fields' do
       expect(mail.subject).to eq "New Permission Request for #{permission_set.label}"
       expect(mail.to).to eq [user.email]
-      expect(mail.from).to eq ['do_not_reply@library.yale.edu']
+      expect(mail.from).to eq ['do_not_reply@yale.edu']
       expect(mail.body.encoded).to include(permission_set.label)
       expect(mail.body.encoded).to include(approver_name)
       expect(mail.body.encoded).to include(parent_object.oid.to_s)
