@@ -3,6 +3,8 @@
 Rails.application.configure do
   # Configure options individually...
   config.good_job.preserve_job_records = true
+  config.good_job.cleanup_preserved_jobs_before_seconds_ago = 30.days.to_i
+  config.good_job.cleanup_discarded_jobs = false
   config.good_job.retry_on_unhandled_error = false
   config.good_job.on_thread_error = ->(exception) { Raven.capture_exception(exception) }
   config.good_job.execution_mode = :external
