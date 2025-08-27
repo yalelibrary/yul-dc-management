@@ -245,12 +245,12 @@ module SolrIndexable
 
         child_object_to_solr_full_text(child_object, child_object_full_text) unless child_object_full_text.nil?
       end
-      return full_text_array.compact
+      full_text_array.compact
     else
       child_object_array = child_objects.map do |child_object|
         child_object_to_solr(child_object)
       end
-      return child_object_array.compact
+      child_object_array.compact
     end
   end
 
