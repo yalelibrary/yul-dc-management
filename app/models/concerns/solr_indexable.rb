@@ -243,20 +243,35 @@ module SolrIndexable
       full_text_array = child_objects.map do |child_object|
         child_object_full_text = S3Service.download_full_text(child_object.remote_ocr_path)
 
-        child_object_to_solr(child_object, child_object_full_text) unless child_object_full_text.nil?
+        child_object_to_solr_full_text(child_object, child_object_full_text) unless child_object_full_text.nil?
       end
       return full_text_array.compact
+    else
+      child_object_array = child_objects.map do |child_object|
+        child_object_to_solr(child_object)
+      end
+      return child_object_array.compact
     end
-    nil
   end
 
-  def child_object_to_solr(child_object, child_object_full_text)
+  def child_object_to_solr_full_text(child_object, child_object_full_text)
     parent_object = child_object.parent_object
     {
       id: child_object.oid,
       parent_ssi: parent_object.oid,
       child_fulltext_tesim: child_object_full_text,
       child_fulltext_wstsim: child_object_full_text,
+      caption_tesim: child_object.caption,
+      type_ssi: 'child'
+    }
+  end
+
+  def child_object_to_solr(child_object)
+    parent_object = child_object.parent_object
+    {
+      id: child_object.oid,
+      parent_ssi: parent_object.oid,
+      caption_tesim: child_object.caption,
       type_ssi: 'child'
     }
   end
