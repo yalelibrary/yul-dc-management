@@ -112,7 +112,7 @@ module Updatable
       parent_object.reload
       trigger_setup_metadata(parent_object)
 
-      sync_from_preservica if parent_object.digital_object_source == 'Preservica' || parent_object.digital_object_source == 'preservica'
+      sync_from_preservica if /preservica/i.match?(parent_object.digital_object_source)
 
       processing_event_for_parent(parent_object)
     end
