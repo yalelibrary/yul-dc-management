@@ -85,7 +85,7 @@ module SyncFromPreservica
     elsif parent_object.preservica_uri.nil? && (row.present? && row['preservica_uri'].nil?)
       batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica URI.  Please ensure Preservica URI is saved to parent or included in CSV.", 'Skipped Import')
       false
-    elsif !parent_object.digital_object_source.match(/preservica/i) && (row.present? && row['digital_object_source'].nil?)
+    elsif !parent_object.digital_object_source&.match(/preservica/i) && (row.present? && row['digital_object_source'].nil?)
       batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica digital object source.  Please ensure Digital Object Source is saved to parent or included in CSV.",
 'Skipped Import')
       false
