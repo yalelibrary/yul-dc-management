@@ -262,6 +262,7 @@ module SolrIndexable
       child_fulltext_tesim: child_object_full_text,
       child_fulltext_wstsim: child_object_full_text,
       caption_tesim: child_object.caption,
+      caption_wstsim: child_object.caption,
       type_ssi: 'child'
     }
   end
@@ -272,6 +273,7 @@ module SolrIndexable
       id: child_object.oid,
       parent_ssi: parent_object.oid,
       caption_tesim: child_object.caption,
+      caption_wstsim: child_object.caption,
       type_ssi: 'child'
     }
   end
