@@ -82,14 +82,14 @@ module SyncFromPreservica
     elsif !parent_object.admin_set.preservica_credentials_verified
       batch_processing_event("Admin set #{parent_object.admin_set.key} does not have Preservica credentials set", 'Skipped Import')
       false
-    elsif parent_object.preservica_uri.nil? && row['preservica_uri'].nil?
+    elsif parent_object.preservica_uri.nil? && (row.present? && row['preservica_uri'].nil?)
       batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica URI.  Please ensure Preservica URI is saved to parent or included in CSV.", 'Skipped Import')
       false
-    elsif (parent_object.digital_object_source != 'Preservica' || parent_object.digital_object_source != 'preservica') && row['digital_object_source'].nil?
+    elsif !parent_object.digital_object_source&.match(/preservica/i) && (row.present? && row['digital_object_source'].nil?)
       batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica digital object source.  Please ensure Digital Object Source is saved to parent or included in CSV.",
 'Skipped Import')
       false
-    elsif parent_object.preservica_representation_type.nil? && row['preservica_representation_type'].nil?
+    elsif parent_object.preservica_representation_type.nil? && (row.present? && row['preservica_representation_type'].nil?)
       batch_processing_event("Parent OID: #{row['oid']} does not have a Preservica representation type.  Please ensure Preservica representation type is saved to parent or included in CSV.",
 'Skipped Import')
       false
