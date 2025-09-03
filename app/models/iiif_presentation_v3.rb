@@ -348,6 +348,7 @@ class IiifPresentationV3
       }
       canvas['id'] = File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{child.oid}")
       canvas['label'] = { "none" => [child.label || ''] }
+      canvas['caption'] = { "none" => [child.caption || ''] }
       add_image_to_canvas(child, canvas)
       add_renderings_to_canvas(child, canvas)
       image_anno = canvas["items"].first["items"].first["body"]
