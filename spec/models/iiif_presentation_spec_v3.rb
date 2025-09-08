@@ -28,7 +28,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
   let(:oid_no_labels) { 2_005_512 }
   let(:logger_mock) { instance_double("Rails.logger").as_null_object }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, viewing_direction: "left-to-right", display_layout: "individuals", bib: "12834515", rights_statement: "This is a test") }
-  let(:aspace_parent_object) { FactoryBot.create(:parent_object, oid: aspace_oid, bib: "12834515", aspace_uri: "/repositories/11/archival_objects/214638") }
+  let(:aspace_parent_object) { FactoryBot.create(:parent_object, oid: aspace_oid, bib: "12834515", aspace_uri: "/repositories/11/archival_objects/214638", authoritative_metadata_source_id: 3) }
   let(:aspace_iiif_presentation) { described_class.new(aspace_parent_object) }
   let(:iiif_presentation) { described_class.new(parent_object) }
   let(:iiif_presentation_no_labels) { described_class.new(parent_object_no_labels) }
@@ -175,6 +175,10 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["metadata"].last["label"]['en'].first).to eq "Object ID (OID)"
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Orbis ID" }).not_to be_empty
       expect(iiif_presentation.manifest["metadata"].select { |k| true if k["label"]["en"].first == "Container / Volume Information" }).not_to be_empty
+    end
+
+    it "not to have IIIF rights in the manifest" do
+      expect(iiif_presentation.manifest["rights"]).to be_nil
     end
 
     it "uses database field for right statement in the manifest" do
@@ -472,6 +476,14 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       scaled_rendering = iiif_presentation.jpeg_rendering(oid, 90_345, 2908)
       expect(scaled_rendering["label"]["en"].first).to eq "Reduced size 55738 x 1794"
       expect(scaled_rendering["id"]).to eq "#{ENV['IIIF_IMAGE_BASE_URL']}/2/#{oid}/full/55738,/0/default.jpg"
+    end
+  end
+
+  describe "IIIF rights" do
+    it "are CC1 for an ASpace item" do
+      expect(aspace_parent_object.source_name).to eq "aspace"
+      rights_presentation = described_class.new(aspace_parent_object)
+      expect(rights_presentation.manifest['rights']).to eq "https://creativecommons.org/publicdomain/zero/1.0/"
     end
   end
 end
