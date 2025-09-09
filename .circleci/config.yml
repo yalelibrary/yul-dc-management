@@ -16,16 +16,17 @@ commands:
 
 jobs:
   build-and-push:
+    docker:
+      - image: yalelibraryit/dc-management
     executor: docker/docker
     steps:
       - setup_remote_docker
       - checkout
       - docker/check
-      - docker/build:
-          image: yalelibraryit/dc-management
-          cache_from: yalelibraryit/dc-management:main
-      - docker/push:
-          image: yalelibraryit/dc-management
+      - run: >
+          docker build <<parameters.image>>:<<parameters.from_tag>> <<parameters.image>>:<<parameters.to_tag>>
+      - run: >
+          docker push <<parameters.image>>:<<parameters.from_tag>> <<parameters.image>>:<<parameters.to_tag>>
   run-tests:
     docker:
       # Image pulled from registry
