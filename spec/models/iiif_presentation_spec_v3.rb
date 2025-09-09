@@ -483,7 +483,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     it "are CC1 for an ASpace item" do
       expect(aspace_parent_object.source_name).to eq "aspace"
       rights_presentation = described_class.new(aspace_parent_object)
-      expect(rights_presentation.manifest['rights']).to eq "https://creativecommons.org/publicdomain/zero/1.0/"
+      expect(rights_presentation.manifest['rights']).to eq "http://creativecommons.org/publicdomain/zero/1.0/"
     end
   end
 end
