@@ -116,6 +116,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(File.exist?("spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif")).to eq true
       expect(co_first.ptiff_conversion_at.present?).to be_truthy
       expect(po_first.child_objects.count).to eq 3
+      expect(po_first.child_object_count).to eq 3
 
       sync_batch_process = BatchProcess.new(batch_action: 'resync with preservica', user: user)
       expect do

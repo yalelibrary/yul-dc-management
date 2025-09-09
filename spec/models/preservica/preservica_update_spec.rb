@@ -97,10 +97,14 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       co_first.preservica_content_object_uri = nil
       co_second.preservica_content_object_uri = nil
       co_third.preservica_content_object_uri = nil
+      co_first.sha512_checksum = '1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7'
+      co_second.sha512_checksum = '271e6e911a859151b063b9c8ab06861c566160ae1f6ea13e08fb17ff5b94982f226a9557e86560a2aaa1a8cc808e9fe8fe640880c3f6d13e69d6f636c3a5e2b0'
+      co_third.sha512_checksum = 'd6e3926fbe14fedbf3a568b6a5dbdb3e8b2312f217daa460a743559d41a688af4a7c701e7bac908fc7e3fd51c505fa01dad9eee96fcfd2666e92c648249edf02'
       co_first.save
       co_second.save
       co_third.save
       expect(po_first.last_preservica_update).not_to be nil
+      expect(po_first.child_object_count).to eq 3
       expect(co_first.preservica_content_object_uri).to be nil
 
       sync_batch_process = BatchProcess.new(batch_action: 'update parent objects', user: user)
@@ -108,6 +112,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         sync_batch_process.file = preservica_sync
         sync_batch_process.save!
       end.not_to change { ChildObject.count }
+      expect(po_first.child_object_count).to eq 3
       expect(po_first.iiif_manifest['items'].count).to eq 3
       expect(po_first.iiif_manifest['items'][0]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000001"
       expect(po_first.iiif_manifest['items'][1]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000002"
