@@ -6,7 +6,7 @@ class IiifPresentationV3
 
   THUMBNAIL_MAX_WH = 300
   MAX_PIXELS = 100_000_000
-  CC1_URI = "https://creativecommons.org/publicdomain/zero/1.0/"
+  CC1_URI = "http://creativecommons.org/publicdomain/zero/1.0/"
 
   def image_base_url
     @image_base_url ||= (ENV["IIIF_IMAGE_BASE_URL"] || "http://localhost:8182/iiif")
