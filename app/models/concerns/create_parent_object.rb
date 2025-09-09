@@ -29,7 +29,7 @@ module CreateParentObject
           retry if attempt_count < 4
           next
         rescue PreservicaImageService::PreservicaImageServiceError => e
-          batch_processing_event("Skipping row [#{index + 2}] #{e.message}.", "Skipped Row")
+          batch_processing_event("Skipping row [#{(index.presence || 0) + 2}] #{e.message}.", "Skipped Row")
           next
         end
       else
