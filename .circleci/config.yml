@@ -16,17 +16,16 @@ commands:
 
 jobs:
   build-and-push:
-    docker:
-      - image: yalelibraryit/dc-management
     executor: docker/docker
     steps:
       - setup_remote_docker
       - checkout
       - docker/check
-      - run: >
-          docker build <<parameters.image>>:<<parameters.from_tag>> <<parameters.image>>:<<parameters.to_tag>>
-      - run: >
-          docker push <<parameters.image>>:<<parameters.from_tag>> <<parameters.image>>:<<parameters.to_tag>>
+      - docker/build:
+          image: yalelibraryit/dc-blacklight
+          cache_from: yalelibraryit/dc-blacklight:main
+      - docker/push:
+          image: yalelibraryit/dc-blacklight
   run-tests:
     docker:
       # Image pulled from registry
@@ -129,7 +128,7 @@ jobs:
           tag: $CIRCLE_TAG
 
 orbs:
-  docker: circleci/docker@1.0.1
+  docker: circleci/docker@3.0.1
 version: 2.1
 workflows:
   commit:
