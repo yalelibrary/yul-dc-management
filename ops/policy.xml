@@ -52,8 +52,8 @@
   <!-- <policy domain="resource" name="temporary-path" value="/tmp"/> -->
   <policy domain="resource" name="memory" value="4GiB"/>
   <policy domain="resource" name="map" value="4GiB"/>
-  <policy domain="resource" name="width" value="300KP"/>
-  <policy domain="resource" name="height" value="300KP"/>
+  <policy domain="resource" name="width" value="210KP"/>
+  <policy domain="resource" name="height" value="210KP"/>
   <policy domain="resource" name="area" value="4GiB"/>
   <!-- <policy domain="resource" name="disk" value="100GiB"/> -->
   <!-- <policy domain="resource" name="file" value="768"/> -->
