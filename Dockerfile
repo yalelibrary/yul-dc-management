@@ -13,6 +13,7 @@ RUN apt-get update --allow-releaseinfo-change && apt-get install -y wget libtiff
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY ops/policy.xml /etc/ImageMagick-6/policy.xml
+COPY ops/policy.xml /etc/ImageMagick-7/policy.xml
 
 # Compile and install vips 8.10.6
 # TODO building new packages is broken in this version of 20.04, once an update is released
