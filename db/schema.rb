@@ -10,9 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema[7.0].define(version: 2025_05_28_222739) do
-
+ActiveRecord::Schema[7.0].define(version: 2025_09_15_190649) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -169,6 +167,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_05_28_222739) do
     t.datetime "finished_at", precision: nil
     t.text "error"
     t.integer "error_event", limit: 2
+    t.text "error_backtrace", array: true
     t.index ["active_job_id", "created_at"], name: "index_good_job_executions_on_active_job_id_and_created_at"
   end
 
@@ -216,6 +215,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_05_28_222739) do
     t.index ["cron_key", "cron_at"], name: "index_good_jobs_on_cron_key_and_cron_at_cond", unique: true, where: "(cron_key IS NOT NULL)"
     t.index ["finished_at"], name: "index_good_jobs_jobs_on_finished_at", where: "((retried_good_job_id IS NULL) AND (finished_at IS NOT NULL))"
     t.index ["labels"], name: "index_good_jobs_on_labels", where: "(labels IS NOT NULL)", using: :gin
+    t.index ["priority", "created_at"], name: "index_good_job_jobs_for_candidate_lookup", where: "(finished_at IS NULL)"
     t.index ["priority", "created_at"], name: "index_good_jobs_jobs_on_priority_created_at_when_unfinished", order: { priority: "DESC NULLS LAST" }, where: "(finished_at IS NULL)"
     t.index ["queue_name", "scheduled_at"], name: "index_good_jobs_on_queue_name_and_scheduled_at", where: "(finished_at IS NULL)"
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
@@ -282,12 +282,12 @@ ActiveRecord::Schema[7.0].define(version: 2025_05_28_222739) do
     t.text "extent_of_full_text", default: "None"
     t.jsonb "sierra_json"
     t.datetime "last_sierra_update", precision: nil
-    t.string "sensitive_materials"
     t.jsonb "alma_json"
     t.datetime "last_alma_update"
     t.string "mms_id"
     t.string "alma_holding"
     t.string "alma_item"
+    t.string "sensitive_materials"
     t.index ["admin_set_id"], name: "index_parent_objects_on_admin_set_id"
     t.index ["alma_holding"], name: "index_parent_objects_on_alma_holding"
     t.index ["alma_item"], name: "index_parent_objects_on_alma_item"
