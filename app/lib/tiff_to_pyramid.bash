@@ -53,14 +53,14 @@ if [ -z "${savefiles}" ]; then rm -f $outprefix*; fi
 set +e
 CHANNELS=$(identify -format "%[channels]\n" ${input}[0] 2>/dev/null)
 status=$?
-[ $status -ne 0 ] && vips tiffsave $input ${tmpfix} && input=${tmpfix}
+[ $status -ne 0 ] && vips tiffsave $input ${tmpfix} -m 1024 && input=${tmpfix}
 set -e
 [ $status -ne 0 ] && CHANNELS=$(identify -format "%[channels]\n" ${input}[0] 2>/dev/null)
 echo "channels: ${CHANNELS}"
 if [ ${CHANNELS} = "srgba" ]; then
     # we have to flatten the image to remove the alpha channel / trasparency before proceeding
     echo "removing alpha channel from $input"
-    vips im_extract_bands $input ${input}.noalpha.tif 0 3   2>&1
+    vips im_extract_bands $input ${input}.noalpha.tif 0 3 -m 1024 2>&1
     if [ -z "${savefiles}" ]; then rm $input; fi
     mv ${input}.noalpha.tif $input
 elif [[ ${CHANNELS} != "srgb" && ${CHANNELS} != "gray" && ${CHANNELS} != "cmyk" ]]; then
@@ -78,7 +78,7 @@ if [[ ${CHANNELS} == "gray" ]]; then
     if [ -z "${ICCPROFILE}" ] || [ "${ICCPROFILE}" == "sRGB "* ]; then #handle fancy sRGB profiles like 'sRGB IEC61966-2.1'
         W2=$(vipsheader -f width ${input}[0] 2>/dev/null)
         H2=$(vipsheader -f height ${input}[0] 2>/dev/null)
-        vipsthumbnail $input[0] --eprofile=app/lib/sRGB.icc --size ${W2}x${H2} -o ${tmpprefix}.tif[compression=none,strip] 2>&1
+        vipsthumbnail $input[0] --eprofile=app/lib/sRGB.icc --size ${W2}x${H2} -o ${tmpprefix}.tif[compression=none,strip] -m 1024 2>&1
         # note that in the above operation, vipsthumbnail doesn't embed the profile by default, so there won't be one in the result since we didn't start with one
     fi
 fi
@@ -88,12 +88,12 @@ if [ -z "${W2}" ]; then
     # next, run an icc_transform to convert the original to sRGB (assume sRGB if no profile and otherwise use the embedded one)
     # and strip all metadata from the file; --embedded intructs vips to use embedded and --input-profile is only used as a fallback
     # if a profile isn't embedded
-    vips icc_transform $input ${tmpprefix}.tif[compression=none,strip] app/lib/sRGB.icc --embedded --input-profile app/lib/sRGB.icc --intent perceptual 2>&1 || echo "icc_transform failed, continuing..." && cp $input ${tmpprefix}.tif
+    vips icc_transform $input ${tmpprefix}.tif[compression=none,strip] app/lib/sRGB.icc --embedded --input-profile app/lib/sRGB.icc --intent perceptual -m 1024 2>&1 || echo "icc_transform failed, continuing..." && cp $input ${tmpprefix}.tif
 fi
 
 # now, embed an sRGB ICC profile in the resulting uncompressed tiff since we stripped out the profile above using the strip metadata directive
 # it would be nice if there was a way to do this during the icc_transform step, but there doesn't seem to be
-vips tiffsave ${tmpprefix}.tif ${outprefix}_0.tif --compression none --profile app/lib/sRGB.icc 2>&1
+vips tiffsave ${tmpprefix}.tif ${outprefix}_0.tif --compression none --profile app/lib/sRGB.icc -m 1024 2>&1
 
 # read the width and height of the transformed file
 W=$(vipsheader -f width ${outprefix}_0.tif)
@@ -108,7 +108,7 @@ while [ 1 ]; do
     # is twice the resolution as the one are about to create, use that
     # one instead of the original when resizing which will save quite
     # a bit of processing time
-    vipsthumbnail ${outprefix}_$c.tif --size ${W}x${H}\! -o srgb_${pid}_$(( c + 1 )).tif[compression=none]
+    vipsthumbnail ${outprefix}_$c.tif --size ${W}x${H}\! -o srgb_${pid}_$(( c + 1 )).tif[compression=none] -m 1024
 
     # reduce height and width by half and repeat process until small enough
     if (( W < 1 || H < 1 || (( W < 129 && H < 129 )) )); then
