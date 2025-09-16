@@ -11,9 +11,10 @@ gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap', '~> 5.3'
 gem 'coderay', '~> 1.1', '>= 1.1.3'
+# can remove concurrent-ruby pin after upgrade to Rails 7.1 - fixes https://stackoverflow.com/questions/79360526/uninitialized-constant-activesupportloggerthreadsafelevellogger-nameerror
+gem 'concurrent-ruby', '1.3.4'
 gem 'devise'
 gem 'github_changelog_generator'
-gem 'good_job', '~> 3.17'
 gem 'honeybadger', '~> 4.0'
 gem 'http', '~> 5.1'
 gem 'iiif-presentation', '~> 1.0'
@@ -97,3 +98,5 @@ group :test do
   gem 'shoulda-matchers', '~> 4.0'
   gem 'timecop'
 end
+
+gem "good_job", "= 3.28.0"
