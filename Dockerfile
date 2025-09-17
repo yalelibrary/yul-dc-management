@@ -9,24 +9,25 @@ RUN chmod +x /etc/service/nginx/run
 RUN rm -f /etc/service/nginx/down
 # these are used for image and pdf processing, and may not be required for an image not running delayed jobs
 RUN apt-get update --allow-releaseinfo-change && apt-get install -y wget libtiff-tools liblcms2-dev libexif-dev libmagickcore-dev imagemagick libexpat-dev libtiff5-dev libgsf-1-dev libjpeg-turbo8-dev vim openjdk-11-jre-headless \
+  meson ninja-build pkg-config \
   &&  apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY ops/policy.xml /etc/ImageMagick-6/policy.xml
 COPY ops/policy.xml /etc/ImageMagick-7/policy.xml
 
-# Compile and install vips 8.10.6
+# Compile and install vips 8.15.3
 # TODO building new packages is broken in this version of 20.04, once an update is released
 # the faster pre built package version can be brought back
 COPY --chown=app ops/vips $APP_HOME/ops/vips
 RUN bash -l -c " \
-  wget https://github.com/libvips/libvips/releases/download/v8.10.6/vips-8.10.6.tar.gz && \
-  tar zxfv vips-8.10.6.tar.gz && \
-  cd vips-8.10.6 && \
-  ./configure && \
-  make && \
-  make install && \
-  ldconfig"
+  wget https://github.com/libvips/libvips/releases/download/v8.17.0/vips-8.17.0.tar.xz && \
+  tar xf vips-8.17.0.tar.xz && \
+  cd vips-8.17.0 && \
+  meson setup build --prefix $APP_HOME/ops/vips && \
+  cd build && \
+  meson compile && \
+  meson install"
 # COPY vips_8.10.2-1_amd64.deb $APP_HOME
 # RUN dpkg -i ./vips_8.10.2-1_amd64.deb
 # RUN vips --version

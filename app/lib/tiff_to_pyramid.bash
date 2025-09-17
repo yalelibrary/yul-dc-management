@@ -1,15 +1,6 @@
 #!/bin/bash
 
 #NOTE: This script requires libvips > 8.10.* to support --intent flags etc
-# Set VIPS memory threshold to 4GB to handle large images
-export VIPS_DISC_THRESHOLD=4294967296
-
-# Set ImageMagick memory limits to match policy.xml settings
-export MAGICK_MEMORY_LIMIT=4GiB
-export MAGICK_MAP_LIMIT=4GiB
-export MAGICK_AREA_LIMIT=4GiB
-export MAGICK_WIDTH_LIMIT=300KP
-export MAGICK_HEIGHT_LIMIT=300KP
 function handle_error() {
     echo "Script exited with status ${2} at line ${1}"
     if [ -z "${savefiles}" ] && [ -d $tmpprefix ]; then rm -f $tmpprefix*; fi
