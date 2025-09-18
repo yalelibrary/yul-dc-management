@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Set the memory limit in KB (2GB in this example)
+MEMORY_LIMIT_KB=3000000
+
+echo "Setting virtual memory limit to $MEMORY_LIMIT_KB KB"
+
+# Apply the virtual memory limit (`-v`)
+ulimit -v "$MEMORY_LIMIT_KB"
+
 #NOTE: This script requires libvips > 8.10.* to support --intent flags etc
 function handle_error() {
     echo "Script exited with status ${2} at line ${1}"
@@ -124,9 +132,9 @@ done
 # chroma subsampling so by default it produces JPEGs about 3x smaller with ycbcr
 # vs. when photometric interpretation is set to rgb
 # e.g. -c jpeg:r:90 vs. -c jpeg:90
-if ! tiffcp -a -c jpeg:90 -t -w 3072 -l 3072 -M ${outprefix}_*.tif ${outfile}; then
+if ! tiffcp -a -c jpeg:90 -t -w 256 -l 256 -M ${outprefix}_*.tif ${outfile}; then
   rm -f ${outfile}
-  tiffcp -a -c zip -t -w 3072 -l 3072 -M ${outprefix}_*.tif ${outfile}
+  tiffcp -a -c zip -t -w 256 -l 256 -M ${outprefix}_*.tif ${outfile}
 fi
 
 # cleanup temp files but leave the outputput file in place
