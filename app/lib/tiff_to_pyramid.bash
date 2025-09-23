@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Set the memory limit in KB (2GB in this example)
+MEMORY_LIMIT_KB=3000000
+
+echo "Setting virtual memory limit to $MEMORY_LIMIT_KB KB"
+
+# Apply the virtual memory limit (`-v`)
+ulimit -v "$MEMORY_LIMIT_KB"
+
 #NOTE: This script requires libvips > 8.10.* to support --intent flags etc
 function handle_error() {
     echo "Script exited with status ${2} at line ${1}"
