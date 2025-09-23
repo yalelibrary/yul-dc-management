@@ -6,7 +6,6 @@ class IiifPresentationV3
 
   THUMBNAIL_MAX_WH = 300
   MAX_PIXELS = 100_000_000
-  CC1_URI = "http://creativecommons.org/publicdomain/zero/1.0/"
 
   def image_base_url
     @image_base_url ||= (ENV["IIIF_IMAGE_BASE_URL"] || "http://localhost:8182/iiif")
@@ -53,8 +52,6 @@ class IiifPresentationV3
   # Build the actual manifest object
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable  Metrics/PerceivedComplexity
   def manifest
     return @manifest if @manifest
     @manifest = {}
@@ -63,7 +60,6 @@ class IiifPresentationV3
     @manifest['type'] = "Manifest"
     manifest_descriptive_properties
     @manifest['provider'] = [provider]
-    @manifest['rights'] = CC1_URI if @parent_object.source_name == 'aspace'
     @manifest["viewingDirection"] = @parent_object.viewing_direction unless @parent_object.viewing_direction.nil? || @parent_object.viewing_direction.empty?
     @manifest["behavior"] = [@parent_object.display_layout] unless @parent_object.display_layout.nil? || @parent_object.display_layout.empty?
     @manifest["items"] = []
