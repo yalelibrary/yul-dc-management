@@ -227,7 +227,7 @@ class ChildObject < ApplicationRecord
   def queue_parent_metadata_update
     return unless parent_object.present?
     return unless caption_previously_changed? || label_previously_changed? || order_previously_changed?
-    
+
     parent_object.metadata_update = true
     parent_object.setup_metadata_job
   end
