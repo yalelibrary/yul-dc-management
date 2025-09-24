@@ -41,6 +41,37 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     end
   end
 
+  describe "updating a child object" do
+    it "queues parent metadata update when caption changes" do
+      expect(parent_object).to receive(:setup_metadata_job)
+      child_object.update(caption: "Updated caption")
+      expect(parent_object.metadata_update).to be true
+    end
+
+    it "queues parent metadata update when label changes" do
+      expect(parent_object).to receive(:setup_metadata_job)
+      child_object.update(label: "Updated label")
+      expect(parent_object.metadata_update).to be true
+    end
+
+    it "queues parent metadata update when order changes" do
+      expect(parent_object).to receive(:setup_metadata_job)
+      child_object.update(order: 5)
+      expect(parent_object.metadata_update).to be true
+    end
+
+    it "does not queue parent metadata update when other fields change" do
+      expect(parent_object).not_to receive(:setup_metadata_job)
+      child_object.update(width: 500)
+      expect(parent_object.metadata_update).to be_falsy
+    end
+
+    it "does not queue parent metadata update when parent is missing" do
+      child_without_parent = described_class.new(oid: "999999")
+      expect { child_without_parent.update(caption: "Updated caption") }.not_to raise_error
+    end
+  end
+
   describe "a child object that already has a remote ptiff" do
     around do |example|
       access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
