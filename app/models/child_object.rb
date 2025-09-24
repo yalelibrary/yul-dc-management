@@ -23,7 +23,7 @@ class ChildObject < ApplicationRecord
 
   # Does not get called because we use upsert to create children
   # before_create :check_for_size_and_file
-  
+
   # Queue parent metadata update when child object is successfully updated
   after_update :queue_parent_metadata_update
 
@@ -226,7 +226,7 @@ class ChildObject < ApplicationRecord
 
   def queue_parent_metadata_update
     return unless parent_object.present?
-    
+
     parent_object.metadata_update = true
     parent_object.setup_metadata_job
   end
