@@ -227,7 +227,7 @@ class ChildObject < ApplicationRecord
   def queue_parent_manifest_update
     return unless parent_object.present?
     return unless caption_previously_changed? || label_previously_changed? || order_previously_changed?
-    
+
     GenerateManifestJob.perform_later(parent_object, nil, nil)
   end
 end # rubocop:enable  Metrics/ClassLength
