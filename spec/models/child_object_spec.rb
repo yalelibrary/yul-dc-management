@@ -67,6 +67,13 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       expect(GenerateManifestJob).not_to receive(:perform_later)
       expect { child_without_parent.update(caption: "Updated caption") }.not_to raise_error
     end
+
+    it "does not queue parent manifest update during batch operations" do
+      batch_process = FactoryBot.create(:batch_process, batch_action: 'update child objects caption and label')
+      child_object.current_batch_process = batch_process
+      expect(GenerateManifestJob).not_to receive(:perform_later)
+      child_object.update(caption: "Updated caption")
+    end
   end
 
   describe "a child object that already has a remote ptiff" do
