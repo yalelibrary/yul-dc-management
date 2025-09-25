@@ -42,32 +42,29 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
   end
 
   describe "updating a child object" do
-    it "queues parent metadata update when caption changes" do
-      expect(parent_object).to receive(:setup_metadata_job)
+    it "queues parent manifest update when caption changes" do
+      expect(GenerateManifestJob).to receive(:perform_later).with(parent_object, nil, nil)
       child_object.update(caption: "Updated caption")
-      expect(parent_object.metadata_update).to be true
     end
 
-    it "queues parent metadata update when label changes" do
-      expect(parent_object).to receive(:setup_metadata_job)
+    it "queues parent manifest update when label changes" do
+      expect(GenerateManifestJob).to receive(:perform_later).with(parent_object, nil, nil)
       child_object.update(label: "Updated label")
-      expect(parent_object.metadata_update).to be true
     end
 
-    it "queues parent metadata update when order changes" do
-      expect(parent_object).to receive(:setup_metadata_job)
+    it "queues parent manifest update when order changes" do
+      expect(GenerateManifestJob).to receive(:perform_later).with(parent_object, nil, nil)
       child_object.update(order: 5)
-      expect(parent_object.metadata_update).to be true
     end
 
-    it "does not queue parent metadata update when other fields change" do
-      expect(parent_object).not_to receive(:setup_metadata_job)
+    it "does not queue parent manifest update when other fields change" do
+      expect(GenerateManifestJob).not_to receive(:perform_later)
       child_object.update(width: 500)
-      expect(parent_object.metadata_update).to be_falsy
     end
 
-    it "does not queue parent metadata update when parent is missing" do
+    it "does not queue parent manifest update when parent is missing" do
       child_without_parent = described_class.new(oid: "999999")
+      expect(GenerateManifestJob).not_to receive(:perform_later)
       expect { child_without_parent.update(caption: "Updated caption") }.not_to raise_error
     end
   end
