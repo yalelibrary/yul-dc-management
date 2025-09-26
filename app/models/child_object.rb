@@ -228,7 +228,7 @@ class ChildObject < ApplicationRecord
     return unless parent_object.present?
     return unless caption_previously_changed? || label_previously_changed? || order_previously_changed?
 
-    # Don't trigger during batch operations - they handle manifest generation separately
+    # return if we are already in a BP.
     return if current_batch_process.present?
 
     GenerateManifestJob.perform_later(parent_object, nil, nil)
