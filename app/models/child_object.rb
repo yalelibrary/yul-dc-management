@@ -24,6 +24,9 @@ class ChildObject < ApplicationRecord
   # Does not get called because we use upsert to create children
   # before_create :check_for_size_and_file
 
+  # Queue parent manifest update when child object is successfully updated
+  after_update :queue_parent_manifest_update
+
   # Options from iiif presentation api 2.1 - see https://iiif.io/api/presentation/2.1/#viewinghint
   # These are added to the manifest on the canvas level
   def self.viewing_hints
@@ -217,5 +220,17 @@ class ChildObject < ApplicationRecord
 
   def batch_connections_for(batch_process)
     batch_connections.where(batch_process: batch_process)
+  end
+
+  private
+
+  def queue_parent_manifest_update
+    return unless parent_object.present?
+    return unless caption_previously_changed? || label_previously_changed? || order_previously_changed?
+
+    # return if we are already in a BP.
+    return if current_batch_process.present?
+
+    GenerateManifestJob.perform_later(parent_object, nil, nil)
   end
 end # rubocop:enable  Metrics/ClassLength
