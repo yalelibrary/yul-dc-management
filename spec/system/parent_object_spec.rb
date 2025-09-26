@@ -358,6 +358,11 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         expect(page).to have_content "ArchivesSpace"
       end
 
+      it "has the correct metadata cloud link" do
+        po = ParentObject.find_by(oid: "2012036")
+        expect(po.metadata_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace/repositories/11/archival_objects/555049?mediaType=json"
+      end
+
       it "fetches the ArchiveSpace record when applicable" do
         po = ParentObject.find_by(oid: "2012036")
         expect(po.aspace_json).not_to be nil
