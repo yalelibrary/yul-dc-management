@@ -194,7 +194,7 @@ class ChildObject < ApplicationRecord
       true
     else
       report_ptiff_generation_error
-      raise "The child object's image file cannot be found. Please contact the Technical Lead for Digital Collections for assistance. ------------ Message from System: Child Object #{oid} failed to convert PTIFF due to #{pyramidal_tiff.errors.full_messages.join('\n')}"
+      false
     end
   end
   # rubocop:disable Metrics/AbcSize
