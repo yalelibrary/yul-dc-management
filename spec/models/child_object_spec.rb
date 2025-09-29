@@ -110,13 +110,12 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
 
   describe "a child object that has doesn't have a valid ptiff" do
     let(:child_object) { described_class.new }
-    it "raises error on convert_to_ptiff" do
+    it "returns false on convert_to_ptiff" do
       # rubocop:disable RSpec/AnyInstance
       allow_any_instance_of(PyramidalTiff).to receive(:valid?).and_return(false)
+      allow(child_object).to receive(:report_ptiff_generation_error)
       # rubocop:enable RSpec/AnyInstance
-      expect do
-        child_object.convert_to_ptiff
-      end.to raise_error(RuntimeError)
+      expect(child_object.convert_to_ptiff).to be false
     end
   end
 
