@@ -41,6 +41,42 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     end
   end
 
+  describe "updating a child object" do
+    it "queues parent manifest update when caption changes" do
+      expect(GenerateManifestJob).to receive(:perform_later).with(parent_object, nil, nil)
+      child_object.update(caption: "Updated caption")
+    end
+
+    it "queues parent manifest update when label changes" do
+      expect(GenerateManifestJob).to receive(:perform_later).with(parent_object, nil, nil)
+      child_object.update(label: "Updated label")
+    end
+
+    it "queues parent manifest update when order changes" do
+      expect(GenerateManifestJob).to receive(:perform_later).with(parent_object, nil, nil)
+      child_object.update(order: 5)
+    end
+
+    it "does not queue parent manifest update when other fields change" do
+      expect(GenerateManifestJob).not_to receive(:perform_later)
+      child_object.update(width: 500)
+    end
+
+    it "does not queue parent manifest update when parent is missing" do
+      child_without_parent = described_class.new(oid: "999999")
+      expect(GenerateManifestJob).not_to receive(:perform_later)
+      expect { child_without_parent.update(caption: "Updated caption") }.not_to raise_error
+    end
+
+    it "does not queue parent manifest update during batch operations" do
+      user = FactoryBot.create(:user)
+      batch_process = FactoryBot.create(:batch_process, batch_action: 'update child objects caption and label', user: user)
+      child_object.current_batch_process = batch_process
+      expect(GenerateManifestJob).not_to receive(:perform_later)
+      child_object.update(caption: "Updated caption")
+    end
+  end
+
   describe "a child object that already has a remote ptiff" do
     around do |example|
       access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
