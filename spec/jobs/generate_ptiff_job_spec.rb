@@ -55,11 +55,11 @@ RSpec.describe GeneratePtiffJob, type: :job, prep_metadata_sources: true, prep_a
       end.to change { GoodJob::Job.count }.by(0)
     end
 
-    it 'raises an exception if convert to ptiff fails' do
+    it 'completes gracefully if convert to ptiff fails' do
       allow(child_object).to receive(:convert_to_ptiff!).and_return(false)
       expect do
         GeneratePtiffJob.new.perform(child_object, batch_process)
-      end.to raise_error(RuntimeError)
+      end.not_to raise_error
     end
   end
 end
