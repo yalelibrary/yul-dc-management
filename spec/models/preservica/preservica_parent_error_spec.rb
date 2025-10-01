@@ -116,6 +116,31 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] because mk2525 does not have permission to update objects in Permission Set: Permission Label")
       end.not_to change { ParentObject.count }
     end
+    # rubocop:disable Layout/LineLength
+    context 'with some credentials' do
+      before do
+        user.add_role(:administrator, permission_set)
+        allow_any_instance_of(BatchProcess).to receive(:create_new_parent_csv).and_raise(PreservicaImageService::PreservicaImageServiceError.new(
+"Request error 404 <?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Error><ExtendedMessage>No Information Object with ref but there another type of entity with the ref</ExtendedMessage><MessageKey>entity.does.not.exist</MessageKey></Error> for /structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5.", "/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5"
+))
+        # expect(batch_process).to receive(:create_new_parent_csv).and_raise(PreservicaImageService::PreservicaImageServiceError.new("Request error 404 <?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Error><ExtendedMessage>No Information Object with ref but there another type of entity with the ref</ExtendedMessage><MessageKey>entity.does.not.exist</MessageKey></Error> for /structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5.", "/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5"))
+      end
+      after do
+        user.remove_role(:administrator, permission_set)
+      end
+      xit 'can send an error when the structural object id points to a folder containing a single folder NOT the expected folder containing TIFFs' do
+        expect(batch_process).to receive(:create_new_parent_csv).and_raise(PreservicaImageService::PreservicaImageServiceError.new(
+"Request error 404 <?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Error><ExtendedMessage>No Information Object with ref but there another type of entity with the ref</ExtendedMessage><MessageKey>entity.does.not.exist</MessageKey></Error> for /structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5.", "/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5"
+))
+        expect do
+          batch_process.file = preservica_parent_with_permission_set
+          batch_process.save
+          expect(batch_process.batch_ingest_events.count).to eq(1)
+          expect(batch_process.batch_ingest_events[0].reason).to eq("Unable to create parent. Please check that the Preservica UUID is correct and points to a single directory in Preservica that contains only TIFF files. ------------ Message from System: Skipping row [2] Request error 404 <?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Error><ExtendedMessage>No Information Object with ref but there another type of entity with the ref</ExtendedMessage><MessageKey>entity.does.not.exist</MessageKey></Error> for /structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c5.")
+        end.not_to change { ParentObject.count }
+      end
+    end
+    # rubocop:enable Layout/LineLength
   end
 
   context 'with sysadmin user' do

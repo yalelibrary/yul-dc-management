@@ -30,9 +30,11 @@ module CreateParentObject
           next
         rescue PreservicaImageService::PreservicaImageServiceError => e
           friendly_msg = if e.message.include?("bad URI")
-                           "The given URI does not match the URI of an entity in Preservica. Please make sure your URI is correct, starts with /structure-object/ or /information-object/, and includes no spaces or line breaks. ------------ Message from System: Skipping row [#{index + 2}] #{e.message}."
+                           "Unable to create parent. The given URI does not match the URI of an entity in Preservica. Please make sure your URI is correct, starts with /structure-object/ or /information-object/, and includes no spaces or line breaks. ------------ Message from System: Skipping row [#{index + 2}] #{e.message}."
+                         elsif e.message.include?("No Information Object with ref but there another type of entity with the ref")
+                           "Unable to create parent. Please check that the Preservica UUID is correct and points to a single directory in Preservica that contains only TIFF files. ------------ Message from System: Skipping row [#{index + 2}] #{e.message}."
                          elsif e.message.include?("entity.does.not.exist")
-                           "The given URI does not match the URI of an entity of this type in Preservica. Please make sure your Preservica URI and object structure type is correct. ------------ Message from System: Skipping row [#{index + 2}] #{e.message}."
+                           "Unable to create parent. The given URI does not match the URI of an entity of this type in Preservica. Please make sure your Preservica URI and object structure type is correct. ------------ Message from System: Skipping row [#{index + 2}] #{e.message}."
                          else
                            e.message
                          end
