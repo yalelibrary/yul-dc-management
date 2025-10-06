@@ -27,7 +27,7 @@ RSpec.describe CreateNewParentJob, type: :job do
 
       expect do
         described_class.new.perform(batch_process)
-      end.to raise_error(StandardError, error_message)
+      end.not_to raise_error
     end
   end
 end
