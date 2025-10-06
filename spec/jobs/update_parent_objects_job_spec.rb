@@ -31,5 +31,4 @@ RSpec.describe UpdateParentObjectsJob, type: :job do
       end.not_to raise_error
     end
   end
-
 end
