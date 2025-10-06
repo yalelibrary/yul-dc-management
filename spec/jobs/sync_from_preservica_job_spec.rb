@@ -6,7 +6,7 @@ RSpec.describe SyncFromPreservicaJob, type: :job, prep_metadata_sources: true, p
   include ActiveSupport::Testing::TaggedLogging
   before do
     allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :external)
   end
 
   let(:user) { FactoryBot.create(:user) }
@@ -33,6 +33,25 @@ RSpec.describe SyncFromPreservicaJob, type: :job, prep_metadata_sources: true, p
     expect_any_instance_of(SyncFromPreservicaJob).to receive(:retry_job)
     perform_enqueued_jobs do
       SyncFromPreservicaJob.perform_later(batch_process)
+    end
+  end
+
+  context 'when sync_from_preservica raises an exception' do
+    let(:error_message) { 'Something went wrong' }
+    let(:error) { StandardError.new(error_message) }
+
+    before do
+      allow(batch_process).to receive(:sync_from_preservica).and_raise(error)
+      allow(batch_process).to receive(:batch_processing_event)
+    end
+
+    it 'logs the error with batch_processing_event' do
+      expect(batch_process).to receive(:batch_processing_event)
+        .with("Setup job failed to save: #{error_message}", "failed")
+
+      expect do
+        described_class.new.perform(batch_process)
+      end.not_to raise_error
     end
   end
 end
