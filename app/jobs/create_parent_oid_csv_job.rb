@@ -9,5 +9,7 @@ class CreateParentOidCsvJob < ApplicationJob
 
   def perform(batch_process, *admin_set_id)
     batch_process.parent_output_csv(*admin_set_id)
+  rescue => e
+    batch_process.batch_processing_event("Setup job failed to save: #{e.message}", "failed")
   end
 end
