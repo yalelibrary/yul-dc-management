@@ -34,8 +34,8 @@ jobs:
           IIIF_IMAGE_BASE_URL: http://localhost:8182/iiif
           POSTGRES_HOST: localhost
           POSTGRES_DB: management_yul_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
+          POSTGRES_USER: $POSTGRES_USER
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD
           SOLR_CORE: blacklight-test
           SOLR_BASE_URL: http://localhost:8983/solr
       - image: yalelibraryit/dc-solr:v1.0.9
@@ -45,8 +45,8 @@ jobs:
       - image: cimg/postgres:9.6
         environment:
           POSTGRES_DB: management_yul_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
+          POSTGRES_USER: $POSTGRES_USER
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD
       - image: seleniarm/standalone-chromium:latest
         name: chrome    
     parallelism: 4
