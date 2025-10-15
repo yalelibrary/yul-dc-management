@@ -900,7 +900,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
       let(:parent_object) { FactoryBot.create(:parent_object, oid: '2012143', authoritative_metadata_source_id: ladybird) }
       it "returns an array of the child object's caption and label" do
-        expect(parent_object.reload.child_captions).to eq ["This is a caption"]
+        expect(parent_object.reload.child_captions).to eq ["1052971: This is a caption"]
         expect(parent_object.reload.child_labels).to eq ["This is a label"]
         expect(parent_object.reload.child_oids).to contain_exactly(1_052_971, 1_052_972, 1_052_973, 1_052_974)
       end
@@ -909,7 +909,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         parent_object.child_objects.second.update(label: "This is another label")
 
         expect(parent_object.reload.child_captions.size).to eq 2
-        expect(parent_object.reload.child_captions).to contain_exactly("This is a caption", "This is another caption")
+        expect(parent_object.reload.child_captions).to contain_exactly("1052971: This is a caption", "1052972: This is another caption")
         expect(parent_object.reload.child_labels.size).to eq 2
         expect(parent_object.reload.child_labels).to contain_exactly("This is a label", "This is another label")
         expect(parent_object.reload.child_oids).to contain_exactly(1_052_971, 1_052_972, 1_052_973, 1_052_974)
