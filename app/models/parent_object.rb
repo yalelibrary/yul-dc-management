@@ -685,7 +685,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def child_captions
-    child_objects.map(&:caption).compact
+    child_objects.map { |child| child.caption.present? ? "#{child.oid}: #{child.caption}" : nil }.compact
   end
 
   def child_labels
