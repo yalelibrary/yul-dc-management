@@ -404,7 +404,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
   def default_fetch(_current_batch_process = current_batch_process, _current_batch_connection = current_batch_connection)
-    # Skip metadata fetch for Sierra and ILS (Voyager) - they use existing metadata
+    # Skip metadata fetch for Sierra and ILS (Voyager)
     if ["sierra", "ils"].include?(authoritative_metadata_source&.metadata_cloud_name)
       processing_event("Metadata fetch skipped for #{authoritative_metadata_source.metadata_cloud_name} data source", "metadata-fetch-skipped")
       return true
