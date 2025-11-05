@@ -11,7 +11,8 @@ class SolrReindexAllJob < ApplicationJob
     500
   end
 
-  def perform(start_position = 0)
+  # rubocop:disable Metrics/MethodLength
+  def perform(start_position = 0, current_batch_process = BatchProcess.new)
     solr = SolrService.connection
     # Groups of limit
     parent_objects = ParentObject.order(:oid).offset(start_position).limit(SolrReindexAllJob.job_limit)
@@ -30,7 +31,10 @@ class SolrReindexAllJob < ApplicationJob
       SolrReindexAllJob.perform_later(start_position + parent_objects.count) unless last_job
     end
     SolrService.clean_index_orphans if last_job
+  rescue => e
+    current_batch_process.batch_processing_event("SolrReindexAllJob failed due to #{e.message}", "failed")
   end
+  # rubocop:enable Metrics/MethodLength
 
   def reindex_child_documents(solr, child_documents)
     child_documents.each_slice(SolrReindexAllJob.solr_batch_limit) do |child_documents_group|

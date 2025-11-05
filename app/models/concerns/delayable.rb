@@ -22,11 +22,11 @@ module Delayable
 "%SolrIndexJob%", "%#{self.class}/#{oid}", "%#{self.class}/#{oid}\n%")
   end
 
-  def solr_reindex_jobs
-    GoodJob::Job.where("job_class LIKE ?", "%SolrReindexAllJob%")
+  def active_solr_reindex_jobs
+    GoodJob::Job.where("finished_at IS NULL AND job_class LIKE ?", "%SolrReindexAllJob%")
   end
 
-  module_function :solr_reindex_jobs
+  module_function :active_solr_reindex_jobs
 
   def delayed_jobs_deletion
     delayed_jobs.destroy_all
