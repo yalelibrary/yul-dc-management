@@ -302,12 +302,10 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         expect(po.authoritative_metadata_source_id).to eq 2
       end
 
-      it "has the record and ids from the Voyager record" do
+      it "skips metadata fetch for Voyager/ILS source" do
         po = ParentObject.find_by(oid: "2012036")
-        expect(po.voyager_json).not_to be nil
-        expect(po.voyager_json).not_to be_empty
-        expect(po.holding).to eq "7397126"
-        expect(po.item).to eq "8200460"
+        # ILS (Voyager) metadata fetch is explicitly skipped in default_fetch method
+        expect(po.voyager_json).to be_nil
       end
 
       it "adds the visibility for public objects" do
@@ -318,8 +316,12 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         po = ParentObject.find_by(oid: "2012036")
         po.child_object_count = 1
         po.visibility = "Public"
+        # Manually set voyager_json since ILS metadata fetch is skipped. Acts like an ils object thats already in the system.
+        voyager_response = JSON.parse(File.read(File.join(fixture_path, "ils", "V-2012036.json")))
+        po.voyager_json = voyager_response
         po.save
         child_object
+        po.reload  # Reload to ensure child_objects association is fresh
         po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
         visit '/parent_objects/2012036/solr_document'
@@ -375,6 +377,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         po.visibility = "Public"
         child_object
         po.save
+        po.reload  # Reload to ensure child_objects association is fresh
         po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
         visit '/parent_objects/2012036/solr_document'
