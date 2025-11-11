@@ -32,4 +32,57 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
       metadata_job.perform(parent_object, batch_process)
     end
   end
+
+  context 'metadata fetch skipping for Voyager and Sierra' do
+    let(:sierra_source) { MetadataSource.find_by(metadata_cloud_name: 'sierra') || FactoryBot.create(:metadata_source, metadata_cloud_name: 'sierra') }
+    let(:ils_source) { MetadataSource.find_by(metadata_cloud_name: 'ils') || FactoryBot.create(:metadata_source, metadata_cloud_name: 'ils') }
+    let(:alma_source) { MetadataSource.find_by(metadata_cloud_name: 'alma') || FactoryBot.create(:metadata_source, metadata_cloud_name: 'alma') }
+
+    it 'skips metadata fetch for Sierra data source' do
+      parent_object.authoritative_metadata_source = sierra_source
+      parent_object.save!
+
+      allow(parent_object).to receive(:processing_event).and_call_original
+      allow(metadata_job).to receive(:setup_child_object_jobs)
+
+      metadata_job.perform(parent_object, batch_process)
+
+      expect(parent_object).to have_received(:processing_event).with("Metadata fetch skipped for sierra data source", "metadata-fetch-skipped")
+    end
+
+    it 'skips metadata fetch for ILS (Voyager) data source' do
+      parent_object.authoritative_metadata_source = ils_source
+      parent_object.save!
+
+      allow(parent_object).to receive(:processing_event).and_call_original
+      allow(metadata_job).to receive(:setup_child_object_jobs)
+
+      metadata_job.perform(parent_object, batch_process)
+
+      expect(parent_object).to have_received(:processing_event).with("Metadata fetch skipped for ils data source", "metadata-fetch-skipped")
+    end
+
+    it 'does not skip metadata fetch for other data sources like Alma' do
+      parent_object.authoritative_metadata_source = alma_source
+      parent_object.save!
+
+      expect(parent_object).not_to receive(:processing_event).with(/Metadata fetch skipped/, "metadata-fetch-skipped")
+      allow(metadata_job).to receive(:setup_child_object_jobs)
+
+      metadata_job.perform(parent_object, batch_process)
+    end
+
+    it 'continues with normal job flow when metadata fetch is skipped' do
+      parent_object.authoritative_metadata_source = sierra_source
+      parent_object.save!
+
+      allow(parent_object).to receive(:processing_event).and_call_original
+      allow(metadata_job).to receive(:setup_child_object_jobs).and_call_original
+
+      metadata_job.perform(parent_object, batch_process)
+
+      expect(parent_object).to have_received(:processing_event).with("Metadata fetch skipped for sierra data source", "metadata-fetch-skipped")
+      expect(metadata_job).to have_received(:setup_child_object_jobs).with(parent_object, batch_process)
+    end
+  end
 end

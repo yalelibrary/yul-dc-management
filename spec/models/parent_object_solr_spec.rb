@@ -70,15 +70,22 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
     before do
       stub_metadata_cloud(oid)
-      parent_object
+      stub_metadata_cloud("V-#{oid}", "ils")
+      # Manually load both metadata sources since ils skips fetch even on source change
+      ladybird_response = JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{oid}.json")))
+      voyager_response = JSON.parse(File.read(File.join(fixture_path, "ils", "V-#{oid}.json")))
+      parent_object.ladybird_json = ladybird_response
+      parent_object.voyager_json = voyager_response
+      parent_object.save!
     end
-    it "indexes the ladybird_json then overwrites with the Voyager json" do
+    it "indexes the ladybird_json then switches to voyager_json when source changed to ils" do
       solr_document = parent_object.reload.to_solr
       expect(solr_document[:title_tesim]).to eq ["[Magazine page with various photographs of Leontyne Price]"]
       parent_object.source_name = "ils"
       parent_object.save!
-      solr_document = parent_object.reload.to_solr
-      expect(solr_document[:title_tesim]).to eq ["Ebony"]
+      ils_solr_document = parent_object.reload.to_solr
+      # Source changed to ils, authoritative_json now returns the pre-loaded voyager_json
+      expect(ils_solr_document[:title_tesim]).to eq ["Ebony"]
       response = solr.get 'select', params: { q: 'type_ssi:parent' }
       expect(response["response"]["numFound"]).to eq 1
     end
@@ -279,9 +286,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         ENV['IIIF_IMAGE_BASE_URL'] = original_image_url
       end
       before do
+        # Since ils skips metadata fetch, manually load the fixture data
         stub_metadata_cloud(oid.to_s)
-        stub_metadata_cloud("V-#{oid}", "ils")
-        stub_metadata_cloud("AS-#{oid}", "aspace")
+        ladybird_response = JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{oid}.json")))
+        voyager_response = JSON.parse(File.read(File.join(fixture_path, "ils", "V-#{oid}.json")))
+        parent_object_with_public_visibility.ladybird_json = ladybird_response
+        parent_object_with_public_visibility.voyager_json = voyager_response
+        parent_object_with_public_visibility.save!
       end
 
       it "can create a Solr document for a record, including visibility" do
@@ -310,8 +321,12 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         let(:parent_object_with_private_visibility) { FactoryBot.create(:parent_object, oid: priv_oid, visibility: "Private", source_name: 'ils') }
 
         before do
-          stub_metadata_cloud(priv_oid)
-          stub_metadata_cloud("V-#{priv_oid}", 'ils')
+          # Since ils skips metadata fetch, manually load the fixture data
+          ladybird_response = JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{priv_oid}.json")))
+          voyager_response = JSON.parse(File.read(File.join(fixture_path, "ils", "V-#{priv_oid}.json")))
+          parent_object_with_private_visibility.ladybird_json = ladybird_response
+          parent_object_with_private_visibility.voyager_json = voyager_response
+          parent_object_with_private_visibility.save!
         end
 
         it "assigns private visibility from Ladybird data" do

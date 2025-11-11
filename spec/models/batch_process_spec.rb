@@ -339,7 +339,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect(po.visibility).to eq "Public"
           expect(po.rights_statement).to include "The use of this image may be subject to"
           expect(po.authoritative_metadata_source.display_name).to eq "Voyager"
-          expect(po.voyager_json.present?).to be_truthy
+          # Metadata fetch is skipped for ils (voyager)
+          expect(po.voyager_json).to be_nil
           expect(po.bib).to eq "1188135"
           expect(po.holding).to eq "1330141"
           expect(po.item).to eq nil

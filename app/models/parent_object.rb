@@ -404,16 +404,17 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
   def default_fetch(_current_batch_process = current_batch_process, _current_batch_connection = current_batch_connection)
+    # Skip metadata fetch for Sierra and ILS (Voyager)
+    if ["sierra", "ils"].include?(authoritative_metadata_source&.metadata_cloud_name)
+      processing_event("Metadata fetch skipped for #{authoritative_metadata_source.metadata_cloud_name} data source", "metadata-fetch-skipped")
+      return true
+    end
+
     fetch_results = case authoritative_metadata_source&.metadata_cloud_name
                     when "ladybird"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
-                    when "sierra"
-                      self.sierra_json = MetadataSource.find_by(metadata_cloud_name: "sierra").fetch_record(self)
                     when "alma"
                       self.alma_json = MetadataSource.find_by(metadata_cloud_name: "alma").fetch_record(self)
-                    when "ils"
-                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless bib.present?
-                      self.voyager_json = MetadataSource.find_by(metadata_cloud_name: "ils").fetch_record(self)
                     when "aspace"
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless aspace_uri.present?
                       begin

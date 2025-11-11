@@ -387,22 +387,53 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         expect(parent_object.container_grouping).to eq "Box 3 | Folder 24"
       end
 
-      it "pulls Voyager record from the MetadataCloud when the authoritative_metadata_source is changed to Voyager" do
+      it "skips Voyager metadata fetch when the authoritative_metadata_source is changed to Voyager" do
         expect(parent_object.reload.authoritative_metadata_source_id).to eq ladybird
         parent_object.authoritative_metadata_source_id = voyager
         parent_object.save!
         expect(parent_object.reload.authoritative_metadata_source_id).to eq voyager
-        expect(parent_object.voyager_json).not_to be nil
+        # Metadata fetch is skipped for ils (voyager)
+        expect(parent_object.voyager_json).to be nil
       end
 
-      it "updates DependentObjects when the authoritative_metadata_source is changed to Voyager" do
+      it "preserves Solr record and manifest when changing from Ladybird to ILS", solr: true do
+        # Ensure parent has ladybird metadata, child objects, and has been indexed
+        parent_object.reload
+        expect(parent_object.ladybird_json).not_to be_nil
+        expect(parent_object.child_object_count).to eq 2
+
+        # Index to Solr
+        parent_object.solr_index
+        solr = SolrService.connection
+        response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
+        expect(response["response"]["numFound"]).to eq 1
+        original_solr_doc = response["response"]["docs"].first
+        original_title = original_solr_doc["title_tesim"]
+        expect(original_title).to eq(["The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion, Washington, D.C., 1863 Jan 1"])
+
+        # Generate manifest
+        allow(parent_object).to receive(:manifest_completed?).and_return(true)
+        parent_object.iiif_presentation.save
+        manifest_content = S3Service.download(parent_object.iiif_presentation.manifest_path)
+        expect(manifest_content).not_to be_nil
+
+        # Change source to ils - fetch is skipped but existing data should remain
         parent_object.authoritative_metadata_source_id = voyager
         parent_object.save!
-        expected_uris = ['/ils/bib/4113177', '/ils/holding/4482860', '/ils/item/8090926', '/ils/barcode/39002093768050'].to_set
-        expect(parent_object.reload.dependent_objects.count).to eq expected_uris.count
-        expect(parent_object.dependent_objects.all? { |dobj| dobj.metadata_source == 'ils' }).to be_truthy
-        uris = parent_object.dependent_objects.map(&:dependent_uri).to_set
-        expect(uris).to eq expected_uris
+
+        # Verify source changed
+        expect(parent_object.reload.authoritative_metadata_source_id).to eq voyager
+
+        # Verify Solr record still exists with ladybird data (unchanged)
+        response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
+        expect(response["response"]["numFound"]).to eq 1
+        updated_solr_doc = response["response"]["docs"].first
+        expect(updated_solr_doc["title_tesim"]).to eq(original_title)
+
+        # Verify manifest still exists
+        manifest_content_after = S3Service.download(parent_object.iiif_presentation.manifest_path)
+        expect(manifest_content_after).not_to be_nil
+        expect(manifest_content_after).to eq(manifest_content)
       end
 
       it "creates and has a count of ChildObjects" do
@@ -481,11 +512,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     context "a newly created ParentObject with Voyager as authoritative_metadata_source" do
       let(:parent_object) { described_class.create(oid: "2004628", bib: '3163155', authoritative_metadata_source_id: voyager, admin_set: FactoryBot.create(:admin_set)) }
 
-      it "pulls from the MetadataCloud for Voyager" do
+      it "skips metadata fetch for Voyager (ils) source" do
         expect(parent_object.reload.authoritative_metadata_source_id).to eq voyager
         expect(parent_object.ladybird_json).to be nil
-        expect(parent_object.voyager_json).not_to be nil
-        expect(parent_object.voyager_json).not_to be_empty
+        expect(parent_object.voyager_json).to be nil
         expect(parent_object.aspace_json).to be nil
       end
 
