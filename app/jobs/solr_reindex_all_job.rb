@@ -43,6 +43,7 @@ class SolrReindexAllJob < ApplicationJob
     end
     SolrService.clean_index_orphans if last_job
   rescue => e
+    SolrReindexAllJob.perform_later(start_position + parent_objects.count) unless last_job
     current_batch_process.batch_processing_event("SolrReindexAllJob failed due to #{e.message}", "failed")
   end
   # rubocop:enable Metrics/AbcSize
