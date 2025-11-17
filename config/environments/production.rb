@@ -122,7 +122,17 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
   # Set the initial value for the OID sequence
-  config.oid_sequence_initial_value = 30_000_000
+  if ENV['CLUSTER_NAME'] == 'yul-dc-test'
+    config.oid_sequence_initial_value = 40_000_000
+  elsif ENV['CLUSTER_NAME'] == 'yul-dc-uat'
+    config.oid_sequence_initial_value = 50_000_000
+  elsif ENV['CLUSTER_NAME'] == 'yul-dc-demo'
+    config.oid_sequence_initial_value = 20_000_000
+  elsif ENV['CLUSTER_NAME'] == 'yul-dc-prod'
+    config.oid_sequence_initial_value = 30_000_000
+  else
+    config.oid_sequence_initial_value = 60_000_000
+  end
 
   config.active_job.queue_adapter = :good_job
 
