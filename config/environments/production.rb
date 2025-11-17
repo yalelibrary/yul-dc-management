@@ -4,6 +4,7 @@ require 'rack'
 require 'rack/cors'
 require "active_support/core_ext/integer/time"
 
+# rubocop:disable Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -122,17 +123,18 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
   # Set the initial value for the OID sequence
-  if ENV['CLUSTER_NAME'] == 'yul-dc-test'
-    config.oid_sequence_initial_value = 40_000_000
-  elsif ENV['CLUSTER_NAME'] == 'yul-dc-uat'
-    config.oid_sequence_initial_value = 50_000_000
-  elsif ENV['CLUSTER_NAME'] == 'yul-dc-demo'
-    config.oid_sequence_initial_value = 20_000_000
-  elsif ENV['CLUSTER_NAME'] == 'yul-dc-prod'
-    config.oid_sequence_initial_value = 30_000_000
-  else
-    config.oid_sequence_initial_value = 60_000_000
-  end
+  config.oid_sequence_initial_value = if ENV['CLUSTER_NAME'] == 'yul-dc-test'
+                                        40_000_000
+                                      elsif ENV['CLUSTER_NAME'] == 'yul-dc-uat'
+                                        50_000_000
+                                      elsif ENV['CLUSTER_NAME'] == 'yul-dc-demo'
+                                        20_000_000
+                                      elsif ENV['CLUSTER_NAME'] == 'yul-dc-prod'
+                                        30_000_000
+                                      else
+                                        60_000_000
+                                      end
+  # rubocop:enable Metrics/BlockLength
 
   config.active_job.queue_adapter = :good_job
 
@@ -158,3 +160,4 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.deliver_later_queue_name = 'default'
 end
+# rubocop:enable Metrics/BlockLength
