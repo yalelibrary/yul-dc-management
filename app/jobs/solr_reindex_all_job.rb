@@ -25,23 +25,24 @@ class SolrReindexAllJob < ApplicationJob
     if parent_objects.count.positive?
       parent_objects.each_slice(SolrReindexAllJob.solr_batch_limit) do |parent_objects_group|
         child_documents = []
-        solr.add(parent_objects_group.map do |parent_object|
+        parent_documents = []
+
+        solr.add(parent_objects_group.reject { |po| !po.should_index? }.map do |parent_object|
           results, child_results = parent_object.to_solr_full_text
           child_documents += child_results unless child_results.nil?
+          parent_documents += [results] unless results.nil?
           results
                  rescue => e
-                   # rubocop:disable Lint/UselessAssignment
-                   current_batch_connection = parent_object.current_batch_connection
-                   # rubocop:enable Lint/UselessAssignment
-                   parent_object.processing_event("SolrReindexAllJob failed due to #{e.message} for parent object OID: #{parent_object.oid}.")
+                   current_batch_process.batch_processing_event("SolrReindexAllJob failed due to #{e.message} for parent object OID: #{parent_object.oid}.")
                    return nil # if errors will convert parent to nil and compact later removes them
         end.compact)
         solr.commit
-        reindex_child_documents(solr, child_documents)
+        reindex_child_documents(solr, child_documents) unless parent_documents.empty?
       end
       SolrReindexAllJob.perform_later(start_position + parent_objects.count) unless last_job
     end
     SolrService.clean_index_orphans if last_job
+    current_batch_process.batch_processing_event("SolrReindexAllJob successfully completed evaluating #{parent_objects.count} parent objects for indexing.", "complete")
   rescue => e
     SolrReindexAllJob.perform_later(start_position + parent_objects.count) unless last_job
     current_batch_process.batch_processing_event("SolrReindexAllJob failed due to #{e.message}", "failed")

@@ -779,10 +779,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   # rubocop:enable Metrics/PerceivedComplexity
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def should_index?
-    return false if redirect_to.blank? && (child_object_count&.zero? || child_objects.empty?)
+    return false if (redirect_to.blank? && (child_object_count&.zero? || child_objects.empty?)) || (child_object_count&.zero? || child_objects.empty?)
     ['Public', 'Redirect', 'Yale Community Only', 'Open with Permission'].include?(visibility) || redirect_to.present?
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def should_create_manifest_and_pdf?
     !redirect_to.present?
