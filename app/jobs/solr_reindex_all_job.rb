@@ -15,7 +15,7 @@ class SolrReindexAllJob < ApplicationJob
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/PerceivedComplexity
-  def perform(start_position = 0, current_batch_process = BatchProcess.new)
+  def perform(start_position = 0, current_batch_process = BatchProcess.new(batch_action: 'reindex all parents'))
     solr = SolrService.connection
     current_batch_process.user = User.system_user
     current_batch_process.save!
