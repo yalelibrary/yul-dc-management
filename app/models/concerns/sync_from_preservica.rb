@@ -33,7 +33,8 @@ module SyncFromPreservica
       begin
         preservica_children_hash = {}
         parent_preservica_uri = parent_object.preservica_uri.presence || row['preservica_uri'].presence || nil
-        PreservicaImageService.new(parent_preservica_uri, parent_object.admin_set.key).image_list(parent_object.preservica_representation_type).each_with_index do |preservica_co, index|
+        parent_preservica_representation_type = parent_object.preservica_representation_type.presence || row['preservica_representation_type'].presence || nil
+        PreservicaImageService.new(parent_preservica_uri, parent_object.admin_set.key).image_list(parent_preservica_representation_type).each_with_index do |preservica_co, index|
           # increment by one so index lines up with order
           index_plus_one = index + 1
           preservica_children_hash["hash_#{index_plus_one}".to_sym] = { order: index_plus_one,
