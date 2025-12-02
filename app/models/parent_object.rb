@@ -161,11 +161,12 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         upsert_child_objects(valid_child_hashes) unless valid_child_hashes.empty?
         self.last_preservica_update = Time.current
       end
-    else
+    else # why are we only looking at ladybird json?
       return unless ladybird_json
       return self.child_object_count = 0 if ladybird_json["children"].empty? && parent_model != 'simple'
       upsert_child_objects(array_of_child_hashes)
     end
+    gather_technical_image_metadata
     self.child_object_count = ChildObject.where(parent_object_oid: oid).count
   end
   # rubocop:enable Metrics/PerceivedComplexity
@@ -739,6 +740,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return json["containerGrouping"] unless json["containerGrouping"].nil? || json["containerGrouping"].empty?
     return [(json["box"] && (json['box']).to_s), (json["folder"] && (json['folder']).to_s)].join(", ") if json["box"] || json["folder"]
     json["volumeEnumeration"]
+  end
+
+  def gather_technical_image_metadata
+    child_objects.each(&:save_image_metadata)
   end
 
   def dl_show_url

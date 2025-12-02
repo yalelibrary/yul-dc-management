@@ -180,6 +180,33 @@ class ChildObject < ApplicationRecord
     size
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
+  def save_image_metadata
+    begin
+      cmd = "exiftool -s #{access_primary_path}"
+      stdout, stderr, status = Open3.capture3(cmd)
+    rescue stderr
+      # rubocop:disable Layout/LineLength
+      parent_object&.processing_event("The child object's image file could not be read. Please contact the Technical Lead for Digital Collections for assistance. ------------ Message from System: Child Object #{oid} failed to gather technical image metadata due to #{stderr} and exited with status: #{status}.", "failed")
+      processing_event("The child object's image file could not be read. Please contact the Technical Lead for Digital Collections for assistance. ------------ Message from System: Child Object #{oid} failed to gather technical image metadata due to #{stderr} and exited with status: #{status}.", "failed")
+      # rubocop:enable Layout/LineLength
+    end
+    formatted_stdout = stdout.split(/\n/).map { |a| a.split('  : ') }.map { |a| [a.first.strip, a.last] }.to_h
+    self.x_resolution = formatted_stdout["XResolution"]
+    self.y_resolution = formatted_stdout["YResolution"]
+    self.resolution_unit = formatted_stdout["ResolutionUnit"]
+    self.color_space = formatted_stdout["ColorSpaceData"]
+    self.compression = formatted_stdout["Compression"]
+    self.creator = formatted_stdout["Artist"]
+    self.date_and_time_captured = formatted_stdout["CreateDate"]
+    self.make = formatted_stdout["Make"]
+    self.model = formatted_stdout["Model"]
+    save!
+  end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
+
   # TODO: remove rubocop ignores and refactor once file not found issue is resolved
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
