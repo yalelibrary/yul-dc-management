@@ -21,38 +21,52 @@ module SyncFromPreservica
         batch_processing_event("Parent OID: #{row['oid']} not found in database", 'Skipped Import') if parent_object.nil?
         next
       end
-      next unless validate_preservica_sync(parent_object, row)
-      local_children_hash = {}
-      parent_object.child_objects.each do |local_co|
-        local_children_hash["hash_#{local_co.order}".to_sym] = { order: local_co.order,
-                                                                 content_uri: local_co.preservica_content_object_uri,
-                                                                 generation_uri: local_co.preservica_generation_uri,
-                                                                 bitstream_uri: local_co.preservica_bitstream_uri,
-                                                                 checksum: local_co.sha512_checksum }
-      end
-      begin
-        preservica_children_hash = {}
-        parent_preservica_uri = parent_object.preservica_uri.presence || row['preservica_uri'].presence || nil
-        parent_preservica_representation_type = parent_object.preservica_representation_type.presence || row['preservica_representation_type'].presence || nil
-        PreservicaImageService.new(parent_preservica_uri, parent_object.admin_set.key).image_list(parent_preservica_representation_type).each_with_index do |preservica_co, index|
-          # increment by one so index lines up with order
-          index_plus_one = index + 1
-          preservica_children_hash["hash_#{index_plus_one}".to_sym] = { order: index_plus_one,
-                                                                        content_uri: preservica_co[:preservica_content_object_uri],
-                                                                        generation_uri: preservica_co[:preservica_generation_uri],
-                                                                        bitstream_uri: preservica_co[:preservica_bitstream_uri],
-                                                                        checksum: preservica_co[:sha512_checksum],
-                                                                        bitstream: preservica_co[:bitstream] }
-        end
-      rescue PreservicaImageService::PreservicaImageServiceNetworkError => e
-        batch_processing_event("Parent OID: #{row['oid']} because of #{e.message}", 'Skipped Import')
-        raise
-      rescue PreservicaImageService::PreservicaImageServiceError => e
-        batch_processing_event("Parent OID: #{row['oid']} because of #{e.message}", 'Skipped Import')
-        next
-      end
-      sync_images_preservica(local_children_hash, preservica_children_hash, parent_object)
+      sync_single_parent_from_preservica(parent_object, row)
     end
+  end
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
+
+  # SYNCS A SINGLE PARENT OBJECT FROM PRESERVICA
+  # Can be called directly from updatable for efficiency
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
+  def sync_single_parent_from_preservica(parent_object, row = {})
+    return unless validate_preservica_sync(parent_object, row)
+    local_children_hash = {}
+    parent_object.child_objects.each do |local_co|
+      local_children_hash["hash_#{local_co.order}".to_sym] = { order: local_co.order,
+                                                               content_uri: local_co.preservica_content_object_uri,
+                                                               generation_uri: local_co.preservica_generation_uri,
+                                                               bitstream_uri: local_co.preservica_bitstream_uri,
+                                                               checksum: local_co.sha512_checksum }
+    end
+    begin
+      preservica_children_hash = {}
+      parent_preservica_uri = parent_object.preservica_uri.presence || row['preservica_uri'].presence || nil
+      parent_preservica_representation_type = parent_object.preservica_representation_type.presence || row['preservica_representation_type'].presence || nil
+      PreservicaImageService.new(parent_preservica_uri, parent_object.admin_set.key).image_list(parent_preservica_representation_type).each_with_index do |preservica_co, index|
+        # increment by one so index lines up with order
+        index_plus_one = index + 1
+        preservica_children_hash["hash_#{index_plus_one}".to_sym] = { order: index_plus_one,
+                                                                      content_uri: preservica_co[:preservica_content_object_uri],
+                                                                      generation_uri: preservica_co[:preservica_generation_uri],
+                                                                      bitstream_uri: preservica_co[:preservica_bitstream_uri],
+                                                                      checksum: preservica_co[:sha512_checksum],
+                                                                      bitstream: preservica_co[:bitstream] }
+      end
+    rescue PreservicaImageService::PreservicaImageServiceNetworkError => e
+      batch_processing_event("Parent OID: #{parent_object.oid} because of #{e.message}", 'Skipped Import')
+      raise
+    rescue PreservicaImageService::PreservicaImageServiceError => e
+      batch_processing_event("Parent OID: #{parent_object.oid} because of #{e.message}", 'Skipped Import')
+      return
+    end
+    sync_images_preservica(local_children_hash, preservica_children_hash, parent_object)
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
