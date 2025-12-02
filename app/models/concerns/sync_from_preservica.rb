@@ -24,17 +24,7 @@ module SyncFromPreservica
       sync_single_parent_from_preservica(parent_object, row)
     end
   end
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
 
-  # SYNCS A SINGLE PARENT OBJECT FROM PRESERVICA
-  # Can be called directly from updatable for efficiency
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
   def sync_single_parent_from_preservica(parent_object, row = {})
     return unless validate_preservica_sync(parent_object, row)
     local_children_hash = {}
