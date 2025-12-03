@@ -142,6 +142,7 @@ module Updatable
   end
 
   def remove_child_blanks(row, child_object)
+    row = row.to_h.dup # Convert frozen CSV::Row to mutable hash
     blankable = %w[caption label]
     blanks = {}
     row.delete_if do |k, v|
@@ -171,6 +172,7 @@ module Updatable
   end
 
   def remove_blanks(row, parent_object)
+    row = row.to_h.dup # Convert frozen CSV::Row to mutable hash
     blankable = %w[aspace_uri barcode bib digitization_note holding item project_identifier rights_statement redirect_to display_layout extent_of_digitization viewing_direction]
     blanks = {}
     row.delete_if do |k, v|
