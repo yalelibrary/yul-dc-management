@@ -8,7 +8,7 @@ COPY ops/nginx.sh /etc/service/nginx/run
 RUN chmod +x /etc/service/nginx/run
 RUN rm -f /etc/service/nginx/down
 # these are used for image and pdf processing, and may not be required for an image not running delayed jobs
-RUN apt-get update --allow-releaseinfo-change && apt-get install -y wget libtiff-tools liblcms2-dev libexif-dev libmagickcore-dev imagemagick libexpat-dev libtiff5-dev libgsf-1-dev libjpeg-turbo8-dev vim openjdk-11-jre-headless \
+RUN apt-get update --allow-releaseinfo-change && apt-get install -y wget libtiff-tools liblcms2-dev libexif-dev libmagickcore-dev imagemagick libexpat-dev libtiff5-dev libgsf-1-dev libjpeg-turbo8-dev vim openjdk-11-jre-headless exiftool \
   &&  apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

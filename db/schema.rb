@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_09_15_190649) do
+ActiveRecord::Schema[7.0].define(version: 2025_12_02_145345) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -85,6 +85,15 @@ ActiveRecord::Schema[7.0].define(version: 2025_09_15_190649) do
     t.string "sha256_checksum"
     t.string "md5_checksum"
     t.bigint "file_size"
+    t.string "x_resolution"
+    t.string "y_resolution"
+    t.string "resolution_unit"
+    t.string "color_space"
+    t.string "compression"
+    t.string "creator"
+    t.datetime "date_and_time_captured"
+    t.string "make"
+    t.string "model"
     t.index ["caption"], name: "index_child_objects_on_caption"
     t.index ["label"], name: "index_child_objects_on_label"
     t.index ["oid"], name: "index_child_objects_on_oid", unique: true
