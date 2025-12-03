@@ -161,7 +161,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         upsert_child_objects(valid_child_hashes) unless valid_child_hashes.empty?
         self.last_preservica_update = Time.current
       end
-    else # why are we only looking at ladybird json?
+    else
       return unless ladybird_json
       return self.child_object_count = 0 if ladybird_json["children"].empty? && parent_model != 'simple'
       upsert_child_objects(array_of_child_hashes)
