@@ -1,5 +1,6 @@
 class AddMetadataToChildObject < ActiveRecord::Migration[7.0]
   def change
+    add_column :child_objects, :image_metadata, :jsonb
     add_column :child_objects, :x_resolution, :string
     add_column :child_objects, :y_resolution, :string
     add_column :child_objects, :resolution_unit, :string
