@@ -85,6 +85,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_12_02_145345) do
     t.string "sha256_checksum"
     t.string "md5_checksum"
     t.bigint "file_size"
+    t.jsonb "image_metadata"
     t.string "x_resolution"
     t.string "y_resolution"
     t.string "resolution_unit"
