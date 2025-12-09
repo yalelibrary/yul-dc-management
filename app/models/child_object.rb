@@ -198,7 +198,9 @@ class ChildObject < ApplicationRecord
     formatted_stdout = stdout.split(/\n/).map { |a| a.split('  : ') }.map { |a| [a.first.strip, a.last] }.to_h
     self.x_resolution = formatted_stdout["XResolution"].presence || formatted_stdout["WidthResolution"]
     self.y_resolution = formatted_stdout["YResolution"].presence || formatted_stdout["HeightResolution"]
+    # rubocop:disable Layout/LineLength
     self.resolution_unit = formatted_stdout["ResolutionUnit"].presence || formatted_stdout["FocalPlaneResolutionUnit"].presence || formatted_stdout["ResolutionXUnit"].presence || formatted_stdout["ResolutionXLengthUnit"]
+    # rubocop:enable Layout/LineLength
     self.color_space = formatted_stdout["ColorSpaceData"].presence || formatted_stdout["ColorSpace"]
     self.compression = formatted_stdout["Compression"]
     self.creator = formatted_stdout["Artist"].presence || formatted_stdout["XPAuthor"]
