@@ -47,7 +47,7 @@ jobs:
           POSTGRES_DB: management_yul_test
           POSTGRES_USER: $POSTGRES_USER
           POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-      - image: seleniarm/standalone-chromium:latest
+      - image: seleniarm/standalone-chromium:4.14.0
         name: chrome    
     parallelism: 4
     executor: docker/docker
