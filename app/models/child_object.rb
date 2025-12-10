@@ -196,6 +196,7 @@ class ChildObject < ApplicationRecord
       # rubocop:enable Layout/LineLength
     end
     formatted_stdout = stdout.split(/\n/).map { |a| a.split('  : ') }.map { |a| [a.first.strip, a.last] }.to_h
+    self.image_metadata = formatted_stdout
     self.x_resolution = formatted_stdout["XResolution"].presence || formatted_stdout["WidthResolution"]
     self.y_resolution = formatted_stdout["YResolution"].presence || formatted_stdout["HeightResolution"]
     # rubocop:disable Layout/LineLength
