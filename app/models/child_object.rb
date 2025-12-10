@@ -180,8 +180,11 @@ class ChildObject < ApplicationRecord
     size
   end
 
+  # rubocop:disable Layout/LineLength
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
   def save_image_metadata
     begin
       cmd = "exiftool -s #{access_primary_path}"
@@ -193,19 +196,25 @@ class ChildObject < ApplicationRecord
       # rubocop:enable Layout/LineLength
     end
     formatted_stdout = stdout.split(/\n/).map { |a| a.split('  : ') }.map { |a| [a.first.strip, a.last] }.to_h
-    self.x_resolution = formatted_stdout["XResolution"]
-    self.y_resolution = formatted_stdout["YResolution"]
-    self.resolution_unit = formatted_stdout["ResolutionUnit"]
-    self.color_space = formatted_stdout["ColorSpaceData"]
+    self.image_metadata = formatted_stdout
+    self.x_resolution = formatted_stdout["XResolution"].presence || formatted_stdout["WidthResolution"]
+    self.y_resolution = formatted_stdout["YResolution"].presence || formatted_stdout["HeightResolution"]
+    # rubocop:disable Layout/LineLength
+    self.resolution_unit = formatted_stdout["ResolutionUnit"].presence || formatted_stdout["FocalPlaneResolutionUnit"].presence || formatted_stdout["ResolutionXUnit"].presence || formatted_stdout["ResolutionXLengthUnit"]
+    # rubocop:enable Layout/LineLength
+    self.color_space = formatted_stdout["ColorSpaceData"].presence || formatted_stdout["ColorSpace"]
     self.compression = formatted_stdout["Compression"]
-    self.creator = formatted_stdout["Artist"]
-    self.date_and_time_captured = formatted_stdout["CreateDate"]
+    self.creator = formatted_stdout["Artist"].presence || formatted_stdout["XPAuthor"]
+    self.date_and_time_captured = formatted_stdout["CreateDate"].presence || formatted_stdout["DateTime"].presence || formatted_stdout["DateTimeDigitized"]
     self.make = formatted_stdout["Make"]
-    self.model = formatted_stdout["Model"]
+    self.model = formatted_stdout["Model"].presence || formatted_stdout["Model2"].presence || formatted_stdout["UniqueCameraModel"].presence || formatted_stdout["LocalizedCameraModel"]
     save!
   end
+  # rubocop:enable Layout/LineLength
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # TODO: remove rubocop ignores and refactor once file not found issue is resolved
   # rubocop:disable Metrics/AbcSize
