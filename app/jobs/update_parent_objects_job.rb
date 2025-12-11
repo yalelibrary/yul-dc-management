@@ -13,7 +13,7 @@ class UpdateParentObjectsJob < ApplicationJob
     batch_process.update_parent_objects
   rescue ArgumentError => e
     if e.message.include?("invalid byte sequence in UTF-8")
-      batch_process.batch_processing_event("Setup job failed: Invalid UTF-8 encoding detected in metadata.", "failed")
+      batch_process.batch_processing_event("Setup job failed: Invalid UTF-8 encoding detected in metadata for parent OID: #{batch_process.current_oid}.", "failed")
     else
       batch_process.batch_processing_event("Setup job failed to save: #{e.message}", "failed")
     end

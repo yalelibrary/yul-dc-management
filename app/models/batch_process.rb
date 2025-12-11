@@ -23,6 +23,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # RECREATE CHILD OID PTIFFS:
   include RecreateChildPtiff
   attr_reader :file
+  attr_accessor :current_oid
   after_create :determine_background_jobs
   before_create :mets_oid
   validate :validate_import
