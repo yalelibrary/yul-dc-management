@@ -41,7 +41,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     end
 
     with_versioning do
-      it "can update child and parent object relationships based on csv import" do
+      it "can update child caption and label based on csv import" do
         expect(child_object.caption).to eq "caption"
         expect(child_object.label).to eq "label"
         expect(child_object_2.caption).to eq "co2 caption"
@@ -73,7 +73,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
     end
   end
 
-  describe "reassociation as a user without an editor role" do
+  describe "updating child object as a user without an editor role" do
     before do
       user.add_role(:viewer, admin_set)
       batch_process.user_id = user.id
