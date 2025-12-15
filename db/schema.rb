@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_12_02_145345) do
+ActiveRecord::Schema[7.0].define(version: 2025_12_10_191822) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -94,6 +94,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_12_02_145345) do
     t.datetime "date_and_time_captured"
     t.string "make"
     t.string "model"
+    t.jsonb "image_metadata"
     t.index ["caption"], name: "index_child_objects_on_caption"
     t.index ["label"], name: "index_child_objects_on_label"
     t.index ["oid"], name: "index_child_objects_on_oid", unique: true
