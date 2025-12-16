@@ -210,7 +210,8 @@ module CsvExportable
   ########################
 
   def child_headers
-    ['parent_oid', 'child_oid', 'order', 'parent_title', 'call_number', 'label', 'caption', 'viewing_hint', 'full_text']
+    ['parent_oid', 'child_oid', 'order', 'parent_title', 'call_number', 'label', 'caption', 'viewing_hint', 'full_text',
+     'x_resolution', 'y_resolution', 'resolution_unit', 'color_space', 'compression', 'creator', 'date_and_time_captured', 'make', 'model']
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -225,7 +226,8 @@ module CsvExportable
       parent_title = lookup_parent_title(co, parent_title_hash)
       add_admin_set_to_bp(sets, co)
       save!
-      row = [co.parent_object.oid, co.oid, co.order, parent_title.presence, co.parent_object.call_number, co.label, co.caption, co.viewing_hint, full_text_status(co)]
+      row = [co.parent_object.oid, co.oid, co.order, parent_title.presence, co.parent_object.call_number, co.label, co.caption, co.viewing_hint, full_text_status(co),
+             co.x_resolution, co.y_resolution, co.resolution_unit, co.color_space, co.compression, co.creator, co.date_and_time_captured, co.make, co.model]
       csv_rows << row
     end
     add_error_rows(csv_rows)
