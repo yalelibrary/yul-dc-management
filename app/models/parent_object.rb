@@ -166,7 +166,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       return self.child_object_count = 0 if ladybird_json["children"].empty? && parent_model != 'simple'
       upsert_child_objects(array_of_child_hashes)
     end
-    gather_technical_image_metadata
+    # gather_technical_image_metadata
     self.child_object_count = ChildObject.where(parent_object_oid: oid).count
   end
   # rubocop:enable Metrics/PerceivedComplexity
