@@ -44,6 +44,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       stub_metadata_cloud('200000045')
       stub_metadata_cloud('2002826')
       stub_metadata_cloud('A-15821166', 'alma')
+      stub_metadata_cloud('2004628')
+      stub_pdfs
+      stub_ptiffs
     end
 
     context 'Create Parent Object batch process with a detailed csv' do
@@ -59,9 +62,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       it 'can create a parent object from ladybird with children and gathers technical image metadata' do
-        stub_metadata_cloud('2004628')
-        stub_pdfs
-        stub_ptiffs
         ladybird_csv = Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'ladybird_parent_with_children.csv'))
         expect do
           batch_process.file = ladybird_csv
