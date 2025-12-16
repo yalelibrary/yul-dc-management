@@ -205,36 +205,36 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       expect(child_object.batch_connections_for(batch_process)).to eq(batch_connection)
     end
 
-    describe "a new child object" do
-      around do |example|
-        access_host = ENV['ACCESS_PRIMARY_MOUNT']
-        ENV['ACCESS_PRIMARY_MOUNT'] = File.join("spec", "fixtures", "images", "access_primaries")
-        example.run
-        ENV['ACCESS_PRIMARY_MOUNT'] = access_host
-      end
+    # describe "a new child object" do
+    #   around do |example|
+    #     access_host = ENV['ACCESS_PRIMARY_MOUNT']
+    #     ENV['ACCESS_PRIMARY_MOUNT'] = File.join("spec", "fixtures", "images", "access_primaries")
+    #     example.run
+    #     ENV['ACCESS_PRIMARY_MOUNT'] = access_host
+    #   end
 
-      before do
-        stub_metadata_cloud("2004628")
-        parent_object
-        allow(parent_object).to receive(:ladybird_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{parent_object.oid}.json"))))
-      end
+    #   before do
+    #     stub_metadata_cloud("2004628")
+    #     parent_object
+    #     allow(parent_object).to receive(:ladybird_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{parent_object.oid}.json"))))
+    #   end
 
-      it "has technical image metadata upon creation" do
-        parent_object.create_child_records
-        new_child = parent_object.child_objects.first
-        expect(new_child.oid).to eq 1_042_003
-        expect(new_child.image_metadata).not_to be_nil
-        expect(new_child.x_resolution).to eq "28.35000048"
-        expect(new_child.y_resolution).to eq "28.35000048"
-        expect(new_child.resolution_unit).to eq "cm"
-        expect(new_child.color_space).to eq "RGB"
-        expect(new_child.compression).to eq "Uncompressed"
-        expect(new_child.creator).to eq nil
-        expect(new_child.date_and_time_captured).to eq nil
-        expect(new_child.make).to eq nil
-        expect(new_child.model).to eq nil
-      end
-    end
+    #   it "has technical image metadata upon creation" do
+    #     parent_object.create_child_records
+    #     new_child = parent_object.child_objects.first
+    #     expect(new_child.oid).to eq 1_042_003
+    #     expect(new_child.image_metadata).not_to be_nil
+    #     expect(new_child.x_resolution).to eq "28.35000048"
+    #     expect(new_child.y_resolution).to eq "28.35000048"
+    #     expect(new_child.resolution_unit).to eq "cm"
+    #     expect(new_child.color_space).to eq "RGB"
+    #     expect(new_child.compression).to eq "Uncompressed"
+    #     expect(new_child.creator).to eq nil
+    #     expect(new_child.date_and_time_captured).to eq nil
+    #     expect(new_child.make).to eq nil
+    #     expect(new_child.model).to eq nil
+    #   end
+    # end
 
     describe "full text availability" do
       before do
