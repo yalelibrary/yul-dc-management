@@ -68,7 +68,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.save
         end.to change { ParentObject.count }.from(0).to(1)
         po = ParentObject.first
-        puts po.events_for_batch_process(batch_process).map(&:reason).join("\n")
         expect(po.oid).to eq 2_004_628
         expect(po.child_objects).not_to be_empty
         child = ChildObject.find_by(parent_object_oid: po.oid)
