@@ -186,14 +186,14 @@ class ChildObject < ApplicationRecord
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/PerceivedComplexity
   def save_image_metadata
-    cmd = "exiftool -s #{access_primary_path}"
-    stdout, stderr, status = Open3.capture3(cmd)
-    unless status.success?
+    begin
+      cmd = "exiftool -s #{access_primary_path}"
+      stdout, stderr, status = Open3.capture3(cmd)
+    rescue stderr
       # rubocop:disable Layout/LineLength
       parent_object&.processing_event("The child object's image file could not be read. Please contact the Technical Lead for Digital Collections for assistance. ------------ Message from System: Child Object #{oid} failed to gather technical image metadata due to #{stderr} and exited with status: #{status}.", "failed")
       processing_event("The child object's image file could not be read. Please contact the Technical Lead for Digital Collections for assistance. ------------ Message from System: Child Object #{oid} failed to gather technical image metadata due to #{stderr} and exited with status: #{status}.", "failed")
       # rubocop:enable Layout/LineLength
-      return
     end
     formatted_stdout = stdout.split(/\n/).map { |a| a.split('  : ') }.map { |a| [a.first.strip, a.last] }.to_h
     self.image_metadata = formatted_stdout
