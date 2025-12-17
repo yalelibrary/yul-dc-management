@@ -190,5 +190,12 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       expect(response.content_type).to eq("text/csv; charset=utf-8")
       expect(response.body).to match("\xEF\xBB\xBFchild_oid,parent_oid,order,label,caption,viewing_hint")
     end
+
+    it "downloads templates for child object checksum" do
+      get download_template_batch_processes_url(batch_action: "update child objects checksum")
+      expect(response).to have_http_status(:success)
+      expect(response.content_type).to eq("text/csv; charset=utf-8")
+      expect(response.body).to match("\xEF\xBB\xBFoid,sha512,sha256,sha1,md5")
+    end
   end
 end

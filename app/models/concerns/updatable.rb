@@ -6,6 +6,7 @@ module Updatable
 
   BLANK_VALUE = "_blank_"
 
+  # CHECKS PRESENCE AND PERMISSION FOR PARENT OBJECT
   def updatable_parent_object(oid, index)
     parent_object = ParentObject.find_by(oid: oid)
     if parent_object.blank?
@@ -19,6 +20,7 @@ module Updatable
     end
   end
 
+  # CHECKS PRESENCE AND PERMISSION FOR CHILD OBJECT
   def updatable_child_object(oid, index)
     child_object = ChildObject.find_by(oid: oid)
     if child_object.blank?
@@ -36,6 +38,7 @@ module Updatable
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # UPDATE CHILD OBJECT CAPTION AND LABEL WITH VALIDATION
   def update_child_objects_caption
     return unless batch_action == "update child objects caption and label"
     self.admin_set = ''
@@ -64,6 +67,7 @@ module Updatable
   end
 
   # rubocop:disable Metrics/BlockLength
+  # UPDATE PARENT OBJECT ATTRIBUTES WITH VALIDATION
   def update_parent_objects
     self.admin_set = ''
     sets = admin_set
@@ -141,6 +145,7 @@ module Updatable
     end
   end
 
+  # PROCESS BLANK VALUES FOR CHILD OBJECT
   def remove_child_blanks(row, child_object)
     blankable = %w[caption label]
     blanks = {}
@@ -159,8 +164,9 @@ module Updatable
     [row, blanks]
   end
 
+  # CHECKS CHILD OBJECT ATTRIBUTES
   def validate_child_field(child_object, row)
-    fields = ['caption', 'label']
+    fields = ['caption', 'label', 'sha512_checksum', 'sha256_checksum', 'checksum', 'md5_checksum']
     row, blanks = remove_child_blanks(row, child_object)
     processed_fields = {}
     fields.each do |f|
@@ -170,6 +176,7 @@ module Updatable
     processed_fields
   end
 
+  # PROCESS BLANK VALUES FOR PARENT OBJECT
   def remove_blanks(row, parent_object)
     blankable = %w[aspace_uri barcode bib digitization_note holding item project_identifier rights_statement redirect_to display_layout extent_of_digitization viewing_direction]
     blanks = {}
@@ -188,6 +195,7 @@ module Updatable
     [row, blanks]
   end
 
+  # CHECKS PARENT OBJECT ATTRIBUTES
   def validate_field(parent_object, row)
     fields = ['aspace_uri', 'barcode', 'bib', 'digital_object_source', 'digitization_funding_source', 'digitization_note', 'holding', 'item', 'mms_id', 'alma_holding', 'alma_item',
               'preservica_representation_type', 'preservica_uri', 'project_identifier', 'rights_statement', 'redirect_to', 'sensitive_materials']
@@ -204,6 +212,52 @@ module Updatable
     processed_fields
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
+  # UPDATES CHECKSUM ATTRIBUTES FOR CHILD OBJECT
+  def update_child_objects_checksum
+    return unless batch_action == "update child objects checksum"
+    self.admin_set = ''
+    sets = admin_set
+    po_arr = []
+    processed_child_objects_count = 0
+    child_objects_not_updated = []
+    parsed_csv.each_with_index do |row, index|
+      oid = row['oid'] unless ['oid'].nil?
+      child_object = updatable_child_object(oid, index)
+      child_objects_not_updated << row['oid'].to_s if child_object == false
+      next unless child_object
+      attach_item(child_object)
+      parent_object = child_object.parent_object
+      po_arr << parent_object
+      attach_item(parent_object)
+      add_admin_set_to_bp(sets, parent_object)
+      save!
+      child_object.sha512_checksum = row['sha512'] unless row['sha512'].nil?
+      child_object.sha256_checksum = row['sha256'] unless row['sha256'].nil?
+      child_object.checksum = row['sha1'] unless row['sha1'].nil?
+      child_object.md5_checksum = row['md5'] unless row['md5'].nil?
+      processed_fields = validate_child_field(child_object, row)
+      child_object.update!(processed_fields)
+      processing_event_for_child(child_object)
+      processed_child_objects_count += 1
+    end
+    unique_po = po_arr.uniq(&:oid)
+    unique_po.each do |parent_object|
+      trigger_setup_metadata(parent_object)
+      processing_event_for_parent(parent_object)
+    end
+    batch_processing_event("#{processed_child_objects_count} child objects updated.", "Complete")
+    batch_processing_event("Child objects that were not updated: [#{child_objects_not_updated}].", "Complete")
+  end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/PerceivedComplexity
+
+  # SENDS USER MESSAGE IF PARENT OBJECT UPDATE SUCCESSFUL
   def processing_event_for_parent(parent_object)
     parent_object.current_batch_process = self
     parent_object.current_batch_connection = batch_connections.find_or_create_by(connectable: parent_object)
@@ -211,6 +265,7 @@ module Updatable
     parent_object.processing_event("Parent #{parent_object.oid} has been updated", 'update-complete')
   end
 
+  # SENDS USER MESSAGE IF CHILD OBJECT UPDATE SUCCESSFUL
   def processing_event_for_child(child_object)
     child_object.current_batch_process = self
     child_object.current_batch_connection = batch_connections.find_or_create_by(connectable: child_object)
@@ -218,18 +273,22 @@ module Updatable
     child_object.processing_event("Child #{child_object.oid} has been updated", 'update-complete')
   end
 
+  # SENDS USER MESSAGE IF PARENT OBJECT ATTRIBUTE CANNOT BE BLANKED
   def processing_event_invalid_blank(parent_object, field)
     batch_processing_event("Parent #{parent_object.oid} did not update value for #{field} because it can not be blanked.", 'Invalid Blank')
   end
 
+  # SENDS USER MESSAGE IF CHILD OBJECT ATTRIBUTE CANNOT BE BLANKED
   def processing_event_invalid_child_blank(child_object, field)
     batch_processing_event("Child #{child_object.oid} did not update value for #{field} because it can not be blanked.", 'Invalid Blank')
   end
 
+  # CREATES PATH FOR REMOTE PARENT OBJECT JSON
   def remote_po_path(oid, metadata_source)
     "#{metadata_source}/#{oid}.json"
   end
 
+  # CHECKS PARENT OBJECT PERMITTED ATTRIBUTES
   def valid_regular_fields(row, field_value, parent_object)
     if row[field_value].present? && row[field_value] != parent_object.send(field_value)
       row[field_value]
@@ -238,6 +297,7 @@ module Updatable
     end
   end
 
+  # CHECKS CHILD OBJECT PERMITTED ATTRIBUTES
   def valid_regular_child_fields(row, field_value, child_object)
     if row[field_value].present? && row[field_value] != child_object.send(field_value)
       row[field_value]
@@ -246,6 +306,7 @@ module Updatable
     end
   end
 
+  # CHECKS CONTROLLED VOCABULARY
   def valid_controlled_vocab_fields(row, column_name, vocab, parent_object)
     if row[column_name].present? && row[column_name] != parent_object.send(column_name) && (ParentObject.send(vocab).include? row[column_name])
       row[column_name]
@@ -258,6 +319,7 @@ module Updatable
   end
 
   # rubocop:disable Layout/LineLength
+  # SENDS USER MESSAGE IF ERRORS PRESENT WITH CONTROLLED VOCABULARY
   def process_invalid_vocab_event(column_name, row_value, oid)
     case column_name
     when 'display_layout'
@@ -272,6 +334,7 @@ module Updatable
   end
   # rubocop:enable Layout/LineLength
 
+  # KICKS OFF SETUP METADATA JOB AND ATTACHES BATCH PROCESS TO PARENT
   def trigger_setup_metadata(parent_object)
     parent_object.current_batch_process = self
     parent_object.current_batch_connection = batch_connections.find_or_create_by(connectable: parent_object)
@@ -280,6 +343,7 @@ module Updatable
     SetupMetadataJob.perform_later(parent_object, self, parent_object.current_batch_connection)
   end
 
+  # CHECKS IF PARENT HAS CHILDREN BEFORE REDIRECT CONVERSION
   def check_for_children(redirect, parent_object)
     if redirect.nil?
       true
@@ -291,6 +355,7 @@ module Updatable
     end
   end
 
+  # CHECKS THAT REDIRECT URL MATCHES EXPECTED FORMAT
   def validate_redirect(redirect)
     if /\A((http|https):\/\/)?(collections-test.|collections-uat.|collections.)?library.yale.edu\/catalog\//.match?(redirect)
       true
