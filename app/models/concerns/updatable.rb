@@ -70,6 +70,7 @@ module Updatable
     return unless batch_action == "update parent objects"
     parsed_csv.each_with_index do |row, index|
       oid = row['oid'] unless ['oid'].nil?
+      self.current_oid = oid
       redirect = row['redirect_to'] unless ['redirect_to'].nil?
       parent_object = updatable_parent_object(oid, index)
       next unless parent_object
