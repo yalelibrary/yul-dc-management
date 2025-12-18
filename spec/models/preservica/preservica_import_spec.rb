@@ -87,6 +87,11 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     end.to change { ChildObject.count }.from(0).to(3)
     po_first = ParentObject.first
     co_first = ChildObject.first
+    expect(co_first.image_metadata).not_to be_nil
+    expect(co_first.x_resolution).to eq "72"
+    expect(co_first.y_resolution).to eq "72"
+    expect(co_first.resolution_unit).to eq "inches"
+    expect(co_first.compression).to eq "PackBits"
     expect(co_first.oid).to eq 200_000_001
     expect(co_first.parent_object_oid).to eq 200_000_000
     expect(co_first.order).to eq 1
