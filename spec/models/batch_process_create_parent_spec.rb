@@ -44,6 +44,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       stub_metadata_cloud('200000045')
       stub_metadata_cloud('2002826')
       stub_metadata_cloud('A-15821166', 'alma')
+      stub_metadata_cloud('2004628')
+      stub_pdfs
+      stub_ptiffs
     end
 
     context 'Create Parent Object batch process with a detailed csv' do
@@ -57,6 +60,24 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         expect(po.aspace_uri).to eq('/repositories/12/archival_objects/781086')
         expect(po.sensitive_materials).to eq('Yes')
       end
+
+      it 'can create a parent object from ladybird with children and gathers technical image metadata' do
+        ladybird_csv = Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'ladybird_parent_with_children.csv'))
+        expect do
+          batch_process.file = ladybird_csv
+          batch_process.save
+        end.to change { ParentObject.count }.from(0).to(1)
+        po = ParentObject.first
+        expect(po.oid).to eq 2_004_628
+        expect(po.child_objects).not_to be_empty
+        child = ChildObject.find_by(parent_object_oid: po.oid)
+        expect(child).not_to be_nil
+        expect(child.oid).to eq 1_042_003
+        expect(child.image_metadata).not_to be_nil
+        expect(child.x_resolution).to eq "28.35000048"
+        expect(child.y_resolution).to eq "28.35000048"
+      end
+
       it 'can create a parent object from alma' do
         expect do
           batch_process.file = alma_parent
