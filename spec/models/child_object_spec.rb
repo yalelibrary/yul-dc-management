@@ -221,6 +221,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
 
       it "has technical image metadata upon creation" do
         parent_object.create_child_records
+        parent_object.gather_technical_image_metadata
         new_child = parent_object.child_objects.first
         expect(new_child.oid).to eq 1_042_003
         expect(new_child.image_metadata).not_to be_nil

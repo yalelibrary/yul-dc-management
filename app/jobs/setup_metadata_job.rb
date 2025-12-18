@@ -78,6 +78,7 @@ class SetupMetadataJob < ApplicationJob
     parent_object.create_child_records if parent_object.from_upstream_for_the_first_time?
     parent_object.save!
     parent_object.reload
+    parent_object.gather_technical_image_metadata
     parent_object.processing_event("Child object records have been created", "child-records-created")
     ptiff_jobs_queued = false
     parent_object.child_objects.each do |child|
