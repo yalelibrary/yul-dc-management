@@ -118,6 +118,11 @@
 </p>
 
 <p>
+  <strong>Technical Image Metadata:</strong>
+  <%= render 'tech_metadata_json', child_object: @child_object %>
+</p>
+
+<p>
   <strong>PTiff Download:</strong>
   <%= link_to 'Click to Download', S3Service.presigned_url(@child_object.remote_ptiff_path, 600) %>
 </p>
