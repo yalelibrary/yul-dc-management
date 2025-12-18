@@ -7,6 +7,7 @@ class GeneratePdfJob < ApplicationJob
     10
   end
 
+  # rubocop:disable Metrics/MethodLength
   def perform(parent_object, current_batch_process = parent_object.current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     return unless parent_object.should_create_manifest_and_pdf?
     parent_object.current_batch_process = current_batch_process
@@ -29,3 +30,4 @@ class GeneratePdfJob < ApplicationJob
     raise
   end
 end
+# rubocop:enable Metrics/MethodLength
