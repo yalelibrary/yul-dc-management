@@ -16,6 +16,10 @@ class GeneratePdfJob < ApplicationJob
   rescue RuntimeError => e
     if e.message.include?("Can not read scanlines from a tiled image")
       parent_object.processing_event("Unable to generate PDF: source image is in tiled format and cannot be processed.", "pdf-generation-failed")
+      current_batch_process&.batch_processing_event("Unable to generate PDF: source image is in tiled format and cannot be processed.", "pdf-generation-failed")
+    elsif e.message.include?("Invalid tile byte count")
+      parent_object.processing_event("Unable to generate PDF: source image has invalid tile byte count and cannot be processed. Please regenerate the PTIFF.", "pdf-generation-failed")
+      current_batch_process&.batch_processing_event("Unable to generate PDF for parent #{parent_object.oid}: source image has invalid tile byte count. Please regenerate the PTIFF.", "failed")
     else
       parent_object.processing_event("Unable to generate PDF, #{e.message}", "failed")
       raise
