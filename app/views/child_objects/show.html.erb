@@ -73,6 +73,56 @@
 <% end %>
 
 <p>
+  <strong>X Resolution:</strong>
+  <%= @child_object.x_resolution %>
+</p>
+
+<p>
+  <strong>Y Resolution:</strong>
+  <%= @child_object.y_resolution %>
+</p>
+
+<p>
+  <strong>Resolution Unit:</strong>
+  <%= @child_object.resolution_unit %>
+</p>
+
+<p>
+  <strong>Color Space:</strong>
+  <%= @child_object.color_space %>
+</p>
+
+<p>
+  <strong>Compression:</strong>
+  <%= @child_object.compression %>
+</p>
+
+<p>
+  <strong>Artist:</strong>
+  <%= @child_object.creator %>
+</p>
+
+<p>
+  <strong>Date and Time Captured:</strong>
+  <%= @child_object.date_and_time_captured %>
+</p>
+
+<p>
+  <strong>Make:</strong>
+  <%= @child_object.make %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @child_object.model %>
+</p>
+
+<p>
+  <strong>Technical Image Metadata:</strong>
+  <%= render 'tech_metadata_json', child_object: @child_object %>
+</p>
+
+<p>
   <strong>PTiff Download:</strong>
   <%= link_to 'Click to Download', S3Service.presigned_url(@child_object.remote_ptiff_path, 600) %>
 </p>
