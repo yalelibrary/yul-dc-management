@@ -417,6 +417,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_12_18_224707) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["id"], name: "index_structures_on_id", unique: true
+    t.index ["resource_id"], name: "index_structures_on_resource_id", unique: true
   end
 
   create_table "terms_agreements", force: :cascade do |t|
