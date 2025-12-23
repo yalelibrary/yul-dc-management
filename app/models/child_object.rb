@@ -105,13 +105,13 @@ class ChildObject < ApplicationRecord
       sha512_checksum == access_sha512_checksum
     # goobi
     elsif checksum.present?
-      checksum == Digest::SHA1.file(access_primary_path).to_s
+      checksum == access_sha1_checksum
     # ladybird
     elsif sha256_checksum.present?
-      sha256_checksum == Digest::SHA256.file(access_primary_path).to_s
+      sha256_checksum == access_sha256_checksum
     # ladybird
     elsif md5_checksum.present?
-      md5_checksum == Digest::MD5.file(access_primary_path).to_s
+      md5_checksum == access_md5_checksum
     else
       false
     end
@@ -128,6 +128,18 @@ class ChildObject < ApplicationRecord
 
   def access_sha512_checksum
     Digest::SHA512.file(access_primary_path).to_s
+  end
+
+  def access_sha256_checksum
+    Digest::SHA256.file(access_primary_path).to_s
+  end
+
+  def access_sha1_checksum
+    Digest::SHA1.file(access_primary_path).to_s
+  end
+
+  def access_md5_checksum
+    Digest::MD5.file(access_primary_path).to_s
   end
 
   def access_file_size

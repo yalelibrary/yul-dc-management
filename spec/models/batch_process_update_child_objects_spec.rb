@@ -10,10 +10,12 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:role) { FactoryBot.create(:role, name: editor) }
   let(:caption_label_csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_child_object_caption.csv")) }
   let(:caption_label_csv_blank_value_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_child_object_blank.csv")) }
-  let(:checksum_csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "checksum_child_object.csv")) }
+  let(:checksum_csv_valid_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "checksum_child_object_valid.csv")) }
+  let(:checksum_csv_invalid_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "checksum_child_object_invalid.csv")) }
   let(:checksum_csv_blank_value_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "checksum_child_object_blank.csv")) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_002_826, admin_set_id: admin_set.id) }
   let(:initial_fixity_value) { FFaker::Number.number(digits: 20) }
+  let(:tif_sha512_fixity_value) { "ddfcbb8f70ba901e979acbe0c5a716e2cb1784dae560ea396471a277caa4ce58f796adb6d64cbbdb3be3d2a2c436bc26c45b878e33a7f083c3b72272e01595b0" }
   let(:child_object) { FactoryBot.create(:child_object, oid: 10_736_292, caption: "caption", label: "label", parent_object: parent_object, sha512_checksum: initial_fixity_value) }
   let(:child_object_2) { FactoryBot.create(:child_object, oid: 67_890, caption: "co2 caption", label: "co2 label", parent_object: parent_object, sha512_checksum: initial_fixity_value) }
   let(:child_object_3) { FactoryBot.create(:child_object, oid: 12, caption: "co3 caption", label: "co3 label", parent_object: parent_object, sha512_checksum: initial_fixity_value) }
@@ -21,9 +23,12 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   around do |example|
     perform_enqueued_jobs do
       original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
+      access_host = ENV['ACCESS_PRIMARY_MOUNT']
       ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
+      ENV['ACCESS_PRIMARY_MOUNT'] = File.join("spec", "fixtures", "images", "access_primaries")
       example.run
       ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
+      ENV['ACCESS_PRIMARY_MOUNT'] = access_host
     end
   end
 
@@ -105,18 +110,60 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
 
       with_versioning do
         it "can update child checksum based on csv import" do
+          # begin test with incorrect fixity values saved to the child object
           expect(child_object.sha512_checksum).to eq initial_fixity_value.to_s
           expect(child_object_2.sha512_checksum).to eq initial_fixity_value.to_s
           expect(child_object_3.sha512_checksum).to eq initial_fixity_value.to_s
-          checksum_batch_process.file = checksum_csv_upload
+          checksum_batch_process.file = checksum_csv_valid_upload
           checksum_batch_process.save
           updated_child_object = ChildObject.find(10_736_292)
           updated_child_object_two = ChildObject.find(67_890)
           updated_child_object_three = ChildObject.find(12)
-          expect(updated_child_object.sha512_checksum).to eq "6fe314934e4623e61084b7f590ddee5cb259db13d45901c96ac74e14a7c771164feaa3a4cdb087c0f5c1eb39d671f1040eb8c092cfd1743d07f24c081d1fcd75"
-          expect(updated_child_object_two.sha512_checksum).to eq "b04e233da2e3b76fcfe2928f73e58f61351fec489d112acba1616f4d809f83722d07fb6fe62bf21a6b1ebcc4097b64458b39ee1e35235e3604234c0b3d9840ca"
-          expect(updated_child_object_three.sha512_checksum).to eq "8ac52a77a818780d29fe390f9b69cebe5a64c06559161e2e5ba7b6f425e7cbf785b50172f5795d1fcd5c63fc99c46774eb6c470f8ca453063bf98f4470ce81b0"
+          # all tifs are the same image so matching checksums is expected
+          expect(updated_child_object.sha512_checksum).to eq tif_sha512_fixity_value
+          expect(updated_child_object_two.sha512_checksum).to eq tif_sha512_fixity_value
+          expect(updated_child_object_three.sha512_checksum).to eq tif_sha512_fixity_value
+          expect(checksum_batch_process.batch_ingest_events.count).to eq 2
+          expect(checksum_batch_process.batch_ingest_events.first.reason).to eq "3 child objects updated."
+          expect(checksum_batch_process.batch_ingest_events.last.reason).to eq "Child objects that were not updated: []."
+          expect(updated_child_object.events_for_batch_process(checksum_batch_process).count).to eq 1
+          expect(updated_child_object.events_for_batch_process(checksum_batch_process).first.reason).to eq "Child 10736292 has been updated"
+          expect(updated_child_object_two.events_for_batch_process(checksum_batch_process).count).to eq 1
+          expect(updated_child_object_two.events_for_batch_process(checksum_batch_process).first.reason).to eq "Child 67890 has been updated"
+          expect(updated_child_object_three.events_for_batch_process(checksum_batch_process).count).to eq 1
+          expect(updated_child_object_three.events_for_batch_process(checksum_batch_process).first.reason).to eq "Child 12 has been updated"
         end
+
+        # rubocop:disable Layout/LineLength
+        it "cannot update child checksum with incorrect values" do
+          # begin test with incorrect fixity values saved to the child object
+          expect(child_object.sha512_checksum).to eq initial_fixity_value.to_s
+          expect(child_object_2.sha512_checksum).to eq initial_fixity_value.to_s
+          expect(child_object_3.sha512_checksum).to eq initial_fixity_value.to_s
+          checksum_batch_process.file = checksum_csv_invalid_upload
+          checksum_batch_process.save
+          updated_child_object = ChildObject.find(10_736_292)
+          updated_child_object_two = ChildObject.find(67_890)
+          updated_child_object_three = ChildObject.find(12)
+          # ensure child object page has message to user on what succeeded or failed
+          # all tifs are the same image so matching checksums is expected
+          expect(updated_child_object.sha512_checksum).to eq tif_sha512_fixity_value
+          expect(updated_child_object_two.sha512_checksum).to eq tif_sha512_fixity_value
+          expect(updated_child_object_three.sha512_checksum).to eq tif_sha512_fixity_value
+          expect(checksum_batch_process.batch_ingest_events.count).to eq 2
+          expect(checksum_batch_process.batch_ingest_events.first.reason).to eq "3 child objects updated."
+          expect(checksum_batch_process.batch_ingest_events.last.reason).to eq "Child objects that were not updated: []."
+          expect(updated_child_object.events_for_batch_process(checksum_batch_process).count).to eq 2
+          expect(updated_child_object.events_for_batch_process(checksum_batch_process).first.reason).to eq "Child 10736292 was updated with the sha512 checksum value, read from the access primary original image file."
+          expect(updated_child_object.events_for_batch_process(checksum_batch_process).last.reason).to eq "Child 10736292 has been updated"
+          expect(updated_child_object_two.events_for_batch_process(checksum_batch_process).count).to eq 2
+          expect(updated_child_object_two.events_for_batch_process(checksum_batch_process).first.reason).to eq "Child 67890 was updated with the sha512 checksum value, read from the access primary original image file."
+          expect(updated_child_object_two.events_for_batch_process(checksum_batch_process).last.reason).to eq "Child 67890 has been updated"
+          expect(updated_child_object_three.events_for_batch_process(checksum_batch_process).count).to eq 2
+          expect(updated_child_object_three.events_for_batch_process(checksum_batch_process).first.reason).to eq "Child 12 was updated with the sha512 checksum value, read from the access primary original image file."
+          expect(updated_child_object_three.events_for_batch_process(checksum_batch_process).last.reason).to eq "Child 12 has been updated"
+        end
+        # rubocop:enable Layout/LineLength
 
         it "cannot update child checksum with _blank_ values" do
           expect(child_object_2.sha512_checksum).to eq initial_fixity_value.to_s
@@ -132,7 +179,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
       before do
         user.add_role(:viewer, admin_set)
         checksum_batch_process.user_id = user.id
-        checksum_batch_process.file = checksum_csv_upload
+        checksum_batch_process.file = checksum_csv_valid_upload
         checksum_batch_process.save
       end
 
@@ -141,7 +188,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
           child_object = ChildObject.find(10_736_292)
           expect(child_object.sha512_checksum).to eq initial_fixity_value.to_s
           expect(checksum_batch_process.batch_ingest_events.first.reason).to eq "Skipping row [2] with child oid: 10736292, user does not have permission to update."
-          expect(checksum_batch_process.batch_ingest_events.last.reason).to eq "Child objects that were not updated: [[\"10736292\", \"67890\", \"12\"]]."
+          expect(checksum_batch_process.batch_ingest_events.last.reason).to eq "Child objects that were not updated: [\"10736292\", \"67890\", \"12\"]."
         end
       end
     end

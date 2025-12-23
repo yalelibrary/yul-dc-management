@@ -53,8 +53,6 @@ module Updatable
       attach_item(parent_object)
       add_admin_set_to_bp(sets, parent_object)
       save!
-      child_object.caption = row['caption'] unless row['caption'].nil?
-      child_object.label = row['label'] unless row['label'].nil?
       processed_fields = validate_child_field(child_object, row)
       child_object.update!(processed_fields)
       processing_event_for_child(child_object)
@@ -166,11 +164,15 @@ module Updatable
 
   # CHECKS CHILD OBJECT ATTRIBUTES
   def validate_child_field(child_object, row)
-    fields = ['caption', 'label', 'sha512_checksum', 'sha256_checksum', 'checksum', 'md5_checksum']
+    fields = ['caption', 'label']
+    checksum_fields = { 'sha512' => 'sha512_checksum', 'sha256' => 'sha256_checksum', 'sha1' => 'checksum', 'md5' => 'md5_checksum' }
     row, blanks = remove_child_blanks(row, child_object)
     processed_fields = {}
     fields.each do |f|
       processed_fields[f.to_sym] = valid_regular_child_fields(row, f, child_object)
+    end
+    checksum_fields.each do |k, v|
+      processed_fields[v.to_sym] = valid_checksum_child_fields(row, k, v, child_object)
     end
     processed_fields.merge!(blanks)
     processed_fields
@@ -235,22 +237,13 @@ module Updatable
       attach_item(parent_object)
       add_admin_set_to_bp(sets, parent_object)
       save!
-      child_object.sha512_checksum = row['sha512'] unless row['sha512'].nil?
-      child_object.sha256_checksum = row['sha256'] unless row['sha256'].nil?
-      child_object.checksum = row['sha1'] unless row['sha1'].nil?
-      child_object.md5_checksum = row['md5'] unless row['md5'].nil?
       processed_fields = validate_child_field(child_object, row)
       child_object.update!(processed_fields)
       processing_event_for_child(child_object)
       processed_child_objects_count += 1
     end
-    unique_po = po_arr.uniq(&:oid)
-    unique_po.each do |parent_object|
-      trigger_setup_metadata(parent_object)
-      processing_event_for_parent(parent_object)
-    end
     batch_processing_event("#{processed_child_objects_count} child objects updated.", "Complete")
-    batch_processing_event("Child objects that were not updated: [#{child_objects_not_updated}].", "Complete")
+    batch_processing_event("Child objects that were not updated: #{child_objects_not_updated}.", "Complete")
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity
@@ -288,7 +281,7 @@ module Updatable
     "#{metadata_source}/#{oid}.json"
   end
 
-  # CHECKS PARENT OBJECT PERMITTED ATTRIBUTES
+  # CHECKS PARENT OBJECT REGULAR FIELDS
   def valid_regular_fields(row, field_value, parent_object)
     if row[field_value].present? && row[field_value] != parent_object.send(field_value)
       row[field_value]
@@ -297,12 +290,24 @@ module Updatable
     end
   end
 
-  # CHECKS CHILD OBJECT PERMITTED ATTRIBUTES
+  # CHECKS CHILD OBJECT REGULAR FIELDS
   def valid_regular_child_fields(row, field_value, child_object)
     if row[field_value].present? && row[field_value] != child_object.send(field_value)
       row[field_value]
     else
       child_object.send(field_value)
+    end
+  end
+
+  # CHECKS CHILD OBJECT CHECKSUM FIELDS
+  def valid_checksum_child_fields(row, column_name, attribute, child_object)
+    if row[column_name].present? && row[column_name] != child_object.send(attribute) && (child_object.send("access_#{attribute}") == row[column_name])
+      row[column_name]
+    elsif row[column_name].present? && row[column_name] != child_object.send(attribute) && (child_object.send("access_#{attribute}") != row[column_name])
+      process_invalid_checksum_event(column_name, child_object)
+      child_object.send("access_#{attribute}")
+    else
+      child_object.send(attribute)
     end
   end
 
@@ -333,6 +338,13 @@ module Updatable
     end
   end
   # rubocop:enable Layout/LineLength
+
+  def process_invalid_checksum_event(column_name, child_object)
+    child_object.current_batch_process = self
+    child_object.current_batch_connection = batch_connections.find_or_create_by(connectable: child_object)
+    child_object.current_batch_connection.save!
+    child_object.processing_event("Child #{child_object.oid} was updated with the #{column_name} checksum value, read from the access primary original image file.", 'update-complete')
+  end
 
   # KICKS OFF SETUP METADATA JOB AND ATTACHES BATCH PROCESS TO PARENT
   def trigger_setup_metadata(parent_object)
