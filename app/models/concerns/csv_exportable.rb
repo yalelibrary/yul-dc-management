@@ -211,7 +211,7 @@ module CsvExportable
 
   def child_headers
     ['parent_oid', 'child_oid', 'order', 'parent_title', 'call_number', 'label', 'caption', 'viewing_hint', 'full_text',
-     'x_resolution', 'y_resolution', 'resolution_unit', 'color_space', 'compression', 'creator', 'date_and_time_captured', 'make', 'model']
+     'x_resolution', 'y_resolution', 'resolution_unit', 'color_space', 'compression', 'iptc_creator', 'date_and_time_captured', 'make', 'model']
   end
 
   # rubocop:disable Metrics/AbcSize
