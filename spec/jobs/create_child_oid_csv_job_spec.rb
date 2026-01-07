@@ -10,6 +10,10 @@ RSpec.describe CreateChildOidCsvJob, type: :job do
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
   let(:create_child_oid_csv_job) { CreateChildOidCsvJob.new }
+  let(:expected_child_headers) do
+    ['parent_oid', 'child_oid', 'order', 'parent_title', 'call_number', 'label', 'caption', 'viewing_hint', 'full_text',
+     'x_resolution', 'y_resolution', 'resolution_unit', 'color_space', 'compression', 'iptc_creator', 'date_and_time_captured', 'make', 'model']
+  end
 
   it 'increments the job queue by one' do
     create_child_oid_csv_job = described_class.perform_later(batch_process)
@@ -45,6 +49,21 @@ RSpec.describe CreateChildOidCsvJob, type: :job do
       expect do
         described_class.new.perform(batch_process)
       end.not_to raise_error
+    end
+  end
+
+  context 'when exporting child oids', prep_metadata_sources: true, prep_admin_sets: true do
+    let(:batch_process) { FactoryBot.create(:batch_process, user: user, batch_action: 'export child oids') }
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: '2002826', admin_set: AdminSet.first) }
+    let!(:child_object) { FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object) }
+
+    it 'includes child_headers in the CSV output' do
+      described_class.new.perform(batch_process)
+      output_csv = batch_process.child_output_csv
+      csv_rows = CSV.parse(output_csv)
+      header_row = csv_rows.first
+
+      expect(header_row).to eq(expected_child_headers)
     end
   end
 end
