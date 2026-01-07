@@ -213,7 +213,7 @@ class ChildObject < ApplicationRecord
     self.y_resolution = formatted_stdout["YResolution"].presence || formatted_stdout["HeightResolution"]
     # rubocop:disable Layout/LineLength
     self.resolution_unit = formatted_stdout["ResolutionUnit"].presence || formatted_stdout["FocalPlaneResolutionUnit"].presence || formatted_stdout["ResolutionXUnit"].presence || formatted_stdout["ResolutionXLengthUnit"]
-    self.color_space = formatted_stdout["ColorSpace"] || formatted_stdout["ColorSpaceData"].presence
+    self.color_space = formatted_stdout["ColorSpace"].presence || formatted_stdout["ColorSpaceData"].presence || formatted_stdout["ColorMode"].presence
     self.compression = formatted_stdout["Compression"]
     self.creator = formatted_stdout["Artist"].presence || formatted_stdout["XPAuthor"]
     self.date_and_time_captured = formatted_stdout["DateTimeOriginal"].presence || formatted_stdout["CreateDate"].presence || formatted_stdout["DateTime"].presence || formatted_stdout["DateTimeDigitized"]
