@@ -22,6 +22,8 @@ class GeneratePtiffJob < ApplicationJob
     # mocks there to see if it passes
     if child_object.parent_object.from_mets
       raise "Copy to pair tree failed for child object: #{child_object.oid}" unless child_object.copy_to_access_primary_pairtree
+      # Gather technical metadata now that the image is at access_primary_path
+      child_object.save_image_metadata
     end
     is_recreate_job = child_object.current_batch_process&.batch_action == 'recreate child oid ptiffs'
     success = child_object.convert_to_ptiff!(is_recreate_job)
