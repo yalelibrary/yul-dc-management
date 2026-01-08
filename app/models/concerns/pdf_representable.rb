@@ -76,7 +76,7 @@ module PdfRepresentable
       "header" => "Yale University Library Digital Collections",
       "properties" => properties,
       "pages" => children,
-      "imageProcessingCommand" => "convert -resize 2000x2000 %s[0] %s"
+      "imageProcessingCommand" => "vipsthumbnail %s --size 2000x2000 -o %s"
     }
     # Don't adjust the processing command to add color space because it was causing problems.  Adjust and uncomment if
     # there is a command change for preprocessing needed:
