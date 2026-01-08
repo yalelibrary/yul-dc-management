@@ -213,11 +213,11 @@ class ChildObject < ApplicationRecord
     self.y_resolution = formatted_stdout["YResolution"].presence || formatted_stdout["HeightResolution"]
     # rubocop:disable Layout/LineLength
     self.resolution_unit = formatted_stdout["ResolutionUnit"].presence || formatted_stdout["FocalPlaneResolutionUnit"].presence || formatted_stdout["ResolutionXUnit"].presence || formatted_stdout["ResolutionXLengthUnit"]
-    # rubocop:enable Layout/LineLength
-    self.color_space = formatted_stdout["ColorSpaceData"].presence || formatted_stdout["ColorSpace"]
+    self.color_space = formatted_stdout["ColorSpace"].presence || formatted_stdout["ColorSpaceData"].presence || formatted_stdout["ColorMode"].presence
     self.compression = formatted_stdout["Compression"]
     self.creator = formatted_stdout["Artist"].presence || formatted_stdout["XPAuthor"]
-    self.date_and_time_captured = formatted_stdout["CreateDate"].presence || formatted_stdout["DateTime"].presence || formatted_stdout["DateTimeDigitized"]
+    self.date_and_time_captured = formatted_stdout["DateTimeOriginal"].presence || formatted_stdout["CreateDate"].presence || formatted_stdout["DateTime"].presence || formatted_stdout["DateTimeDigitized"]
+    # rubocop:enable Layout/LineLength
     self.make = formatted_stdout["Make"]
     self.model = formatted_stdout["Model"].presence || formatted_stdout["Model2"].presence || formatted_stdout["UniqueCameraModel"].presence || formatted_stdout["LocalizedCameraModel"]
     save!
