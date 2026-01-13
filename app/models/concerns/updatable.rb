@@ -243,7 +243,8 @@ module Updatable
       processed_child_objects_count += 1
     end
     batch_processing_event("#{processed_child_objects_count} child objects updated.", "Complete")
-    batch_processing_event("Child objects that were not updated: #{child_objects_not_updated}.", "Complete")
+    batch_processing_event("Child objects that were not updated: #{child_objects_not_updated}.", "Complete") if child_objects_not_updated.any?
+    batch_processing_event("All child objects from csv were updated.", "Complete") if child_objects_not_updated.empty?
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity
@@ -343,6 +344,7 @@ module Updatable
     child_object.current_batch_process = self
     child_object.current_batch_connection = batch_connections.find_or_create_by(connectable: child_object)
     child_object.current_batch_connection.save!
+    batch_processing_event("Child #{child_object.oid} was updated with the #{column_name} checksum value, read from the access primary original image file.", 'update-complete')
     child_object.processing_event("Child #{child_object.oid} was updated with the #{column_name} checksum value, read from the access primary original image file.", 'update-complete')
   end
 
