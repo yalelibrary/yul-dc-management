@@ -150,8 +150,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
           expect(updated_child_object.sha512_checksum).to eq tif_sha512_fixity_value
           expect(updated_child_object_two.sha512_checksum).to eq tif_sha512_fixity_value
           expect(updated_child_object_three.sha512_checksum).to eq tif_sha512_fixity_value
-          expect(checksum_batch_process.batch_ingest_events.count).to eq 2
-          expect(checksum_batch_process.batch_ingest_events.first.reason).to eq "3 child objects updated."
+          expect(checksum_batch_process.batch_ingest_events.count).to eq 5
+          expect(checksum_batch_process.batch_ingest_events.first.reason).to eq "Child 10736292 was updated with the sha512 checksum value, read from the access primary original image file."
+          expect(checksum_batch_process.batch_ingest_events[3].reason).to eq "3 child objects updated."
           expect(checksum_batch_process.batch_ingest_events.last.reason).to eq "All child objects from csv were updated."
           expect(updated_child_object.events_for_batch_process(checksum_batch_process).count).to eq 2
           expect(updated_child_object.events_for_batch_process(checksum_batch_process).first.reason).to eq "Child 10736292 was updated with the sha512 checksum value, read from the access primary original image file."
