@@ -223,6 +223,7 @@ $( document ).on('turbolinks:load', function() {
 
     })
     dataTable.api().draw();
+    dataTable.fn.dataTable.ext.errMode = 'throw';
 
     $('.is-datatable').on( 'column-visibility.dt', function ( e, settings, column, state ) {
       // Check for data-destroying because this gets called after turbo links updates document.location and the
