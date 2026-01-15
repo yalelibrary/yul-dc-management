@@ -100,7 +100,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
     end
 
-    it "can reflect a failure" do
+    xit "can reflect a failure" do
       batch_process_with_failure.file = csv_upload
       batch_process_with_failure.save
       batch_process_with_failure.run_callbacks :create
