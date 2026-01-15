@@ -60,11 +60,11 @@ module Statable
 
   def latest_failure(batch_process)
     failures = note_records(batch_process).where(status: 'failed').order(:created_at)
-    count = note_records(batch_process).where(status: 'failed').count
     if failures.empty?
       nil
     else
-      { reason: failures.all[:reason], time: failures.all[:created_at], count: count }
+      latest = failures.last
+      { reason: latest.reason, time: latest.created_at, count: failures.count }
     end
   end
 
