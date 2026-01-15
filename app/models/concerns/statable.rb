@@ -63,8 +63,8 @@ module Statable
     if failures.empty?
       nil
     else
-      latest = failures.last
-      { reason: latest.reason, time: latest.created_at, count: failures.count }
+      # latest = failures.last
+      { reason: failures.all.map(&:reason).join(', '), time: failures.count, count: failures.count }
     end
   end
 
