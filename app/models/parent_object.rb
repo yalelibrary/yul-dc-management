@@ -247,8 +247,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     child_objects.each do |co|
       co.destroy! unless found_in_preservica(co.sha512_checksum, preservica_children_hash)
     end
-    # reload to clear destroyed children
-    child_objects.reload
     # iterate through preservica and update when local version found
     sync_from_preservica_update_existing_children(preservica_children_hash)
 
@@ -680,7 +678,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def representative_child
     @representative_child = (child_objects.find_by(oid: representative_child_oid) if representative_child_oid)
-    @representative_child ||= child_objects&.first
+    @representative_child ||= child_objects&.order(:order, :oid)&.first
   end
 
   def representative_thumbnail_url
