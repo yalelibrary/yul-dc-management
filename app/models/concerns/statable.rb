@@ -59,7 +59,7 @@ module Statable
   end
 
   def latest_failure(batch_process)
-    failures = note_records(batch_process).where(status: 'failed')
+    failures = note_records(batch_process).where(status: 'failed').order(:created_at)
     if failures.empty?
       nil
     else
