@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe UpdateDigitalObjectsJob, type: :job, prep_metadata_sources: true, solr: true do
-  let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
+  let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069', authoritative_metadata_source_id: 2) }
   let(:admin_set_1) { FactoryBot.create(:admin_set) }
 
   before do
@@ -38,7 +38,7 @@ RSpec.describe UpdateDigitalObjectsJob, type: :job, prep_metadata_sources: true,
     end
 
     context 'without digital object json' do
-      let(:po1) { FactoryBot.create(:parent_object, oid: '000000001', admin_set_id: admin_set_1.id) }
+      let(:po1) { FactoryBot.create(:parent_object, oid: '000000001', admin_set_id: admin_set_1.id, authoritative_metadata_source_id: 2) }
       before do
         allow(UpdateDigitalObjectsJob).to receive(:job_limit).and_return(2)
         allow(SetupMetadataJob).to receive(:perform_later) # this is just to prevent errors trying to get metadata
@@ -50,7 +50,7 @@ RSpec.describe UpdateDigitalObjectsJob, type: :job, prep_metadata_sources: true,
       end
     end
     context 'with digital object json' do
-      let(:po1) { FactoryBot.create(:parent_object, oid: '000000001', admin_set_id: admin_set_1.id) }
+      let(:po1) { FactoryBot.create(:parent_object, oid: '000000001', admin_set_id: admin_set_1.id, authoritative_metadata_source_id: 2) }
       let(:digital_object_json1) { FactoryBot.create(:digital_object_json, parent_object: po1) }
       before do
         allow(UpdateDigitalObjectsJob).to receive(:job_limit).and_return(2)
@@ -68,9 +68,9 @@ RSpec.describe UpdateDigitalObjectsJob, type: :job, prep_metadata_sources: true,
   end
 
   context 'with more than limit parent objects' do
-    let(:po1) { FactoryBot.create(:parent_object, oid: '000000001', admin_set_id: admin_set_1.id) }
-    let(:po2) { FactoryBot.create(:parent_object, oid: '000000002', admin_set_id: admin_set_1.id) }
-    let(:po3) { FactoryBot.create(:parent_object, oid: '000000003', admin_set_id: admin_set_1.id) }
+    let(:po1) { FactoryBot.create(:parent_object, oid: '000000001', admin_set_id: admin_set_1.id, authoritative_metadata_source_id: 2) }
+    let(:po2) { FactoryBot.create(:parent_object, oid: '000000002', admin_set_id: admin_set_1.id, authoritative_metadata_source_id: 2) }
+    let(:po3) { FactoryBot.create(:parent_object, oid: '000000003', admin_set_id: admin_set_1.id, authoritative_metadata_source_id: 2) }
     let(:digital_object_json1) { FactoryBot.create(:digital_object_json, parent_object: po1) }
     let(:digital_object_json2) { FactoryBot.create(:digital_object_json, parent_object: po2) }
     let(:digital_object_json3) { FactoryBot.create(:digital_object_json, parent_object: po3) }
