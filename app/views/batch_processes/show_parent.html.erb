@@ -105,7 +105,7 @@
   </div>
 </div>
 
-<% if @latest_failure %>
+<% if @latest_failures %>
 <table class='table table-responsive table-bordered table-striped' aria-label='Parent Batch Process Failure'>
   <thead class='table-head'>
     <tr>
@@ -115,8 +115,8 @@
   </thead>
   <tbody class='datatable-body'>
     <tr>
-      <td class='reason'><%= @latest_failure[:reason] %></td>
-      <td class='time'><%= @latest_failure[:time] %></td>
+      <td class='reason'><%= @latest_failures[:reason] %></td>
+      <td class='time'><%= @latest_failures[:time] %></td>
     </tr>
   </tbody>
 </table>

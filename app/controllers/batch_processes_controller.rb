@@ -5,7 +5,7 @@ class BatchProcessesController < ApplicationController
   before_action :set_batch_process, only: [:show, :edit, :update, :destroy, :download, :download_csv, :download_xml, :download_created, :show_parent, :show_child]
   before_action :set_parent_object, only: [:show_parent, :show_child]
   before_action :find_notes, only: [:show_parent]
-  before_action :latest_failure, only: [:show_parent]
+  before_action :latest_failures, only: [:show_parent]
   before_action :set_child_object, only: [:show_child]
 
   # Allows FontAwesome icons to render in header
@@ -140,15 +140,15 @@ class BatchProcessesController < ApplicationController
     @child_object = ChildObject.find(params[:child_oid])
     @notes = @child_object.notes_for_batch_process(@batch_process)
     # TODO: Find failure related only to child object?
-    @failure = @child_object.latest_failure(@batch_process)
+    @failure = @child_object.latest_failures(@batch_process)
   end
 
   def find_notes
     @notes = @parent_object.notes_for_batch_process(@batch_process) if @parent_object
   end
 
-  def latest_failure
-    @latest_failure = @parent_object.latest_failure(@batch_process) if @parent_object
+  def latest_failures
+    @latest_failures = @parent_object.latest_failures(@batch_process) if @parent_object
   end
 
   def batch_process_params
