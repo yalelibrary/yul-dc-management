@@ -28,9 +28,9 @@ module Statable
       "Pending"
     elsif finished_note(notes)
       "Complete"
-    elsif latest_failure(batch_process).nil?
+    elsif latest_failures(batch_process).nil?
       "In progress - no failures"
-    elsif latest_failure(batch_process)
+    elsif latest_failures(batch_process)
       "Failed"
     else
       "Unknown status"
@@ -58,12 +58,12 @@ module Statable
     end
   end
 
-  def latest_failure(batch_process)
-    failures = note_records(batch_process).where(status: 'failed')
+  def latest_failures(batch_process)
+    failures = note_records(batch_process).where(status: 'failed').order(:created_at)
     if failures.empty?
       nil
     else
-      { reason: failures.last[:reason], time: failures.last[:created_at] }
+      { reason: failures.pluck(:reason).join(', '), time: failures.pluck(:created_at).join(', ') }
     end
   end
 
