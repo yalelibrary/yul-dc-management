@@ -49,3 +49,9 @@ DEFAULT DESKTOP STYLING
 .download_batch_process_template {
   display: none;
 }
+
+// Failure table styles
+td.reason,
+td.time {
+  white-space: pre-line;
+}

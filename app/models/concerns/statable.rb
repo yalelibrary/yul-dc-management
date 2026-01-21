@@ -63,7 +63,7 @@ module Statable
     if failures.empty?
       nil
     else
-      { reason: failures.pluck(:reason).join("\n"), time: failures.pluck(:created_at).join("\n") }
+      { reason: failures.pluck(:reason).join("\n\n"), time: failures.pluck(:created_at).join("\n\n") }
     end
   end
 
