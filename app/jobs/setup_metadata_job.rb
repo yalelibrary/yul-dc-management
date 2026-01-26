@@ -100,7 +100,7 @@ class SetupMetadataJob < ApplicationJob
       GenerateManifestJob.perform_later(parent_object, parent_object.current_batch_process, parent_object.current_batch_connection) if parent_object.needs_a_manifest?
     end
   rescue => child_create_error
-    parent_object.processing_event(child_create_error.message, "failed")
+    parent_object.processing_event("UTF error test: #{child_create_error.message}", "failed")
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
