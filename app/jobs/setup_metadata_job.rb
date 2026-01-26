@@ -75,6 +75,7 @@ class SetupMetadataJob < ApplicationJob
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def setup_child_object_jobs(parent_object, current_batch_process)
+    current_child_oid = nil
     parent_object.create_child_records if parent_object.from_upstream_for_the_first_time?
     parent_object.save!
     parent_object.reload
@@ -84,6 +85,7 @@ class SetupMetadataJob < ApplicationJob
     parent_object.processing_event("Child object records have been created", "child-records-created")
     ptiff_jobs_queued = false
     parent_object.child_objects.each do |child|
+      current_child_oid = child.oid
       parent_object.current_batch_process&.setup_for_background_jobs(child, nil)
       if child.pyramidal_tiff.height_and_width? && !child.pyramidal_tiff.force_update && S3Service.s3_exists?(child.remote_ptiff_path)
         child.processing_event("PTIFF exists on S3, not converting: #{child.oid}", 'ptiff-ready-skipped')
@@ -96,11 +98,13 @@ class SetupMetadataJob < ApplicationJob
         ptiff_jobs_queued = true
       end
     end
+    current_child_oid = nil
     unless ptiff_jobs_queued
       GenerateManifestJob.perform_later(parent_object, parent_object.current_batch_process, parent_object.current_batch_connection) if parent_object.needs_a_manifest?
     end
   rescue => child_create_error
-    parent_object.processing_event("UTF error test: #{child_create_error.message}", "failed")
+    child_info = current_child_oid ? " (child oid: #{current_child_oid})" : ""
+    parent_object.processing_event("UTF error test#{child_info}: #{child_create_error.message}", "failed")
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
