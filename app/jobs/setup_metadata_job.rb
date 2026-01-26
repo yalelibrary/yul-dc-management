@@ -76,14 +76,20 @@ class SetupMetadataJob < ApplicationJob
   # rubocop:disable Metrics/PerceivedComplexity
   def setup_child_object_jobs(parent_object, current_batch_process)
     current_child_oid = nil
+    error_location = "create_child_records"
     parent_object.create_child_records if parent_object.from_upstream_for_the_first_time?
+    error_location = "save"
     parent_object.save!
+    error_location = "reload"
     parent_object.reload
     # For METS ingests, technical metadata is gathered after GeneratePtiffJob copies
     # the images from Goobi's location to the pairtree
+    error_location = "gather_technical_image_metadata"
     parent_object.gather_technical_image_metadata unless parent_object.from_mets
+    error_location = "processing_event"
     parent_object.processing_event("Child object records have been created", "child-records-created")
     ptiff_jobs_queued = false
+    error_location = "child_loop"
     parent_object.child_objects.each do |child|
       current_child_oid = child.oid
       parent_object.current_batch_process&.setup_for_background_jobs(child, nil)
@@ -99,12 +105,13 @@ class SetupMetadataJob < ApplicationJob
       end
     end
     current_child_oid = nil
+    error_location = "generate_manifest"
     unless ptiff_jobs_queued
       GenerateManifestJob.perform_later(parent_object, parent_object.current_batch_process, parent_object.current_batch_connection) if parent_object.needs_a_manifest?
     end
   rescue => child_create_error
     child_info = current_child_oid ? " (child oid: #{current_child_oid})" : ""
-    parent_object.processing_event("UTF error test#{child_info}: #{child_create_error.message}", "failed")
+    parent_object.processing_event("UTF error test [#{error_location}]#{child_info}: #{child_create_error.message}", "failed")
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
