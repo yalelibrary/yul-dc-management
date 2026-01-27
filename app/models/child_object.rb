@@ -207,7 +207,9 @@ class ChildObject < ApplicationRecord
       processing_event("The child object's image file could not be read. Please contact the Technical Lead for Digital Collections for assistance. ------------ Message from System: Child Object #{oid} failed to gather technical image metadata due to #{stderr} and exited with status: #{status}.", "failed")
       # rubocop:enable Layout/LineLength
     end
-    formatted_stdout = stdout.split(/\n/).map { |a| a.split('  : ') }.map { |a| [a.first.strip, a.last] }.to_h
+    # Scrub invalid UTF-8 bytes from exiftool output (EXIF metadata can contain non-UTF-8 characters)
+    sanitized_stdout = stdout.encode('UTF-8', invalid: :replace, undef: :replace, replace: "\uFFFD")
+    formatted_stdout = sanitized_stdout.split(/\n/).map { |a| a.split('  : ') }.map { |a| [a.first.strip, a.last] }.to_h
     self.image_metadata = formatted_stdout
     self.x_resolution = formatted_stdout["XResolution"].presence || formatted_stdout["WidthResolution"]
     self.y_resolution = formatted_stdout["YResolution"].presence || formatted_stdout["HeightResolution"]
