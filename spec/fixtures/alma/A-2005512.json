@@ -1,0 +1,106 @@
+{
+  "pid": "23233086230008652",
+  "uri": "/alma/item/23233086230008652?bib=9981952153408652",
+  "date": [
+    "[ca. 1965]"
+  ],
+  "bibId": [
+    "9981952153408652"
+  ],
+  "genre": [
+    "Oversize",
+    "Objects"
+  ],
+  "mmsId": "9981952153408652",
+  "scale": "Scale [ca. 1:5 250 000]",
+  "title": [
+    "The gold pen used by Lincoln to sign the Emancipation Proclamation"
+  ],
+  "extent": [
+    "Gift, 1965"
+  ],
+  "source": "alma",
+  "barcode": "390020903855856",
+  "creator": [
+    "Lincoln, Abraham, 1809-1865"
+  ],
+  "children": [
+
+  ],
+  "language": [
+    "English"
+  ],
+  "suppress": false,
+  "holdingId": "22233086240008652",
+  "indexedBy": [
+    "Koeman's Atlantes Neerlandici, http://www.wikidata.org/entity/Q107391443 II, p. 604 (map 9920:2)"
+  ],
+  "publisher": [
+    "Guiljelmus Blaeuw excudit"
+  ],
+  "callNumber": "GEN MSS 257",
+  "coordinate": [
+    "-076.000000 -071.000000 -025.000000 -046.166667"
+  ],
+  "createDate": "2025-01-06T21:11:51.600+00:00",
+  "genreFocus": [
+    "mixed materials digital object"
+  ],
+  "recordType": "bib",
+  "repository": "Beinecke Library",
+  "updateDate": "2025-01-14T21:12:29.341+00:00",
+  "contributor": [
+    "Lincoln, Abraham, 1809-1865"
+  ],
+  "description": [
+    "Gift, 1965"
+  ],
+  "languageCode": [
+    "eng"
+  ],
+  "relatedTitle": [
+    "Atlantis appendix."
+  ],
+  "creationPlace": [
+    "Amstelodami"
+  ],
+  "dependentUris": [
+    "/alma/bib/9981952153408652",
+    "/alma/holding/22233086240008652",
+    "/alma/item/23233086230008652"
+  ],
+  "jsonModelType": "BibSolrRecord",
+  "coordinateEast": "-071.000000",
+  "coordinateWest": "-076.000000",
+  "creatorDisplay": [
+    "Lincoln, Abraham, 1809-1865"
+  ],
+  "dateStructured": [
+    "1965"
+  ],
+  "subjectHeading": [
+    "Chile > Maps > Early works to 1800"
+  ],
+  "titleStatement": [
+    "The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion, Washington, D.C., 1863 Jan 1."
+  ],
+  "coordinateNorth": "-025.000000",
+  "coordinateSouth": "-046.166667",
+  "coordinateDisplay": [
+    "(W 76⁰00ʹ00ʺ--W 71⁰00ʹ00ʺ/S 25⁰00ʹ00ʺ--S 46⁰10ʹ00ʺ)."
+  ],
+  "subjectGeographic": [
+    "Chile"
+  ],
+  "contributorDisplay": [
+    "Lincoln, Abraham, 1809-1865"
+  ],
+  "illustrativeMatter": "i   ",
+  "relatedTitleDisplay": [
+    "Lincoln, Abraham, 1809-1865. The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion, Washington, D.C., 1863 Jan 1."
+  ],
+  "resourceVersionOnline": [
+    "View a digital version in the Beinecke Library's Digital Images Online database|http://beinecke.library.yale.edu/dl_crosscollex/brbldl_getrec.asp?fld=img&id=15823818"
+  ],
+  "callNumberWithPublicNote": "GEN MSS 257"
+}

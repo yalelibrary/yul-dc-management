@@ -7,7 +7,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
   around do |example|
     perform_enqueued_jobs do
       original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
-      ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
+      ENV['OCR_DOWNLOAD_BUCKET'] = 'yul-dc-ocr-test'
       example.run
       ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
     end
@@ -21,142 +21,160 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     stub_full_text('1032318')
   end
 
-  describe "ParentObject without some values for solr mapping" do
-    let(:oid) { "2034600" }
-    let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
-    before do
-      stub_metadata_cloud(oid)
-      parent_object
+  describe 'ParentObject without some values for solr mapping' do
+    let(:oid) { '2005512' }
+    let(:parent_object) do
+      FactoryBot.create(:parent_object, oid: oid, source_name: 'aspace', visibility: 'Public', authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/214638',
+                                        child_object_count: 1)
     end
-    it "does not have null values in to_solr hash" do
+    let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_object, oid: '1126257') }
+
+    before do
+      stub_metadata_cloud("AS-#{oid}", 'aspace')
+      parent_object
+      child_object
+    end
+    it 'does not have null values in to_solr hash' do
       solr_document = parent_object.reload.to_solr
       expect(solr_document.values).not_to include(nil)
     end
 
-    it "does not have empty strings in to_solr hash" do
-      parent_object.bib = ""
+    it 'does not have empty strings in to_solr hash' do
+      parent_object.bib = ''
       parent_object.save!
       solr_document = parent_object.reload.to_solr
-      expect(solr_document.values).not_to include("")
+      expect(solr_document.values).not_to include('')
     end
 
-    it "does not have empty arrays in to_solr hash" do
+    it 'does not have empty arrays in to_solr hash' do
       parent_object.bib = []
       parent_object.save!
       solr_document = parent_object.reload.to_solr
       expect(solr_document.values).not_to include([])
     end
 
-    it "will index the count of child objects" do
+    it 'will index the count of child objects' do
       solr_document = parent_object.reload.to_solr
       expect(solr_document[:imageCount_isi]).to eq 1
     end
 
-    it "can index a thumbnail path to Solr" do
+    it 'can index a thumbnail path to Solr' do
       solr_document = parent_object.reload.to_solr
-      expect(solr_document[:thumbnail_path_ss]).to eq "http://localhost:8182/iiif/2/1126257/full/!200,200/0/default.jpg"
+      expect(solr_document[:thumbnail_path_ss]).to eq 'http://localhost:8182/iiif/2/1126257/full/!200,200/0/default.jpg'
     end
 
-    it "can index project identifier" do
-      parent_object.project_identifier = "Library"
+    it 'can index project identifier' do
+      parent_object.project_identifier = 'Library'
       parent_object.save!
       solr_document = parent_object.reload.to_solr
-      expect(solr_document[:project_identifier_tesi]).to eq "Library"
+      expect(solr_document[:project_identifier_tesi]).to eq 'Library'
     end
   end
 
-  describe "changing the authoritative metadata source", solr: true do
-    let(:oid) { "2034600" }
-    let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
-    before do
-      stub_metadata_cloud(oid)
-      stub_metadata_cloud("V-#{oid}", "ils")
-      # Manually load both metadata sources since ils skips fetch even on source change
-      ladybird_response = JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{oid}.json")))
-      voyager_response = JSON.parse(File.read(File.join(fixture_path, "ils", "V-#{oid}.json")))
-      parent_object.ladybird_json = ladybird_response
-      parent_object.voyager_json = voyager_response
-      parent_object.save!
+  describe 'changing the authoritative metadata source', solr: true do
+    let(:oid) { '2005512' }
+    let(:parent_object) do
+      FactoryBot.create(:parent_object, oid: oid, source_name: 'aspace', visibility: 'Public', authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/214638',
+                                        child_object_count: 1)
     end
-    it "indexes the ladybird_json then switches to voyager_json when source changed to ils" do
-      solr_document = parent_object.reload.to_solr
-      expect(solr_document[:title_tesim]).to eq ["[Magazine page with various photographs of Leontyne Price]"]
-      parent_object.source_name = "ils"
-      parent_object.save!
-      ils_solr_document = parent_object.reload.to_solr
-      # Source changed to ils, authoritative_json now returns the pre-loaded voyager_json
-      expect(ils_solr_document[:title_tesim]).to eq ["Ebony"]
-      response = solr.get 'select', params: { q: 'type_ssi:parent' }
-      expect(response["response"]["numFound"]).to eq 1
-    end
-  end
 
-  describe "removing the authoritative metadata source", solr: true do
-    let(:oid) { "2034600" }
-    let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
     before do
-      parent_object
-    end
-    it "indexes the parent when metadata is not found" do
-      solr_document = parent_object.reload.to_solr
-      expect(solr_document[:visibility_ssi]).to eq "Public"
-      parent_object.visibility = "Private"
-      parent_object.save!
-      solr_document = parent_object.reload.to_solr
-      expect(solr_document[:visibility_ssi]).to eq "Private"
-    end
-  end
-
-  describe "changing the parent to redirected", solr: true do
-    let(:oid) { "2034600" }
-    let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
-    before do
-      stub_metadata_cloud(oid)
+      stub_metadata_cloud("AS-#{oid}", 'aspace')
+      stub_metadata_cloud("A-#{oid}", 'alma')
       parent_object
     end
 
-    it "indexes the smaller record" do
+    it 'indexes the aspace_json then switches to alma_json when source changed to alma' do
       solr_document = parent_object.reload.to_solr
-      expect(solr_document[:visibility_ssi]).to eq "Public"
-      parent_object.redirect_to = "https://collections.library.yale.edu/catalog/138048"
+      expect(solr_document[:title_tesim]).to eq ['The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion, Washington, D.C., 1863 Jan 1']
+      parent_object.source_name = 'alma'
       parent_object.save!
-      solr_document = parent_object.reload.to_solr
-      parent_object.save!
-      expect(solr_document[:redirect_to_tesi]).to eq "https://collections.library.yale.edu/catalog/138048"
-      expect(solr_document[:visibility_ssi]).to eq "Redirect"
+      alma_solr_document = parent_object.reload.to_solr
+      # Source changed to alma, authoritative_json now returns the pre-loaded alma_json
+      expect(alma_solr_document[:title_tesim]).to eq ['The gold pen used by Lincoln to sign the Emancipation Proclamation']
     end
   end
 
-  describe "changing the parent from public to private", solr: true do
-    let(:oid) { "2034600" }
-    let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird', visibility: "Public") }
+  describe 'removing the authoritative metadata source', solr: true do
+    let(:oid) { '2005512' }
+    let(:parent_object) do
+      FactoryBot.create(:parent_object, oid: oid, source_name: 'aspace', visibility: 'Public', authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/214638',
+                                        child_object_count: 1)
+    end
+
     before do
-      stub_metadata_cloud(oid)
+      parent_object
+    end
+    it 'indexes the parent when metadata is not found' do
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document[:visibility_ssi]).to eq 'Public'
+      parent_object.visibility = 'Private'
+      parent_object.save!
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document[:visibility_ssi]).to eq 'Private'
+    end
+  end
+
+  describe 'changing the parent to redirected', solr: true do
+    let(:oid) { '2005512' }
+    let(:parent_object) do
+      FactoryBot.create(:parent_object, oid: oid, source_name: 'aspace', visibility: 'Public', authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/214638',
+                                        child_object_count: 1)
+    end
+
+    before do
+      stub_metadata_cloud("AS-#{oid}", 'aspace')
       parent_object
     end
 
-    it "indexes the new visibility in solr" do
+    it 'indexes the smaller record' do
+      solr_document = parent_object.reload.to_solr
+      expect(solr_document[:visibility_ssi]).to eq 'Public'
+      parent_object.redirect_to = 'https://collections.library.yale.edu/catalog/138048'
+      parent_object.save!
+      solr_document = parent_object.reload.to_solr
+      parent_object.save!
+      expect(solr_document[:redirect_to_tesi]).to eq 'https://collections.library.yale.edu/catalog/138048'
+      expect(solr_document[:visibility_ssi]).to eq 'Redirect'
+    end
+  end
+
+  describe 'changing the parent from public to private', solr: true do
+    let(:oid) { '2005512' }
+    let(:parent_object) do
+      FactoryBot.create(:parent_object, oid: oid, source_name: 'aspace', visibility: 'Public', authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/214638',
+                                        child_object_count: 1)
+    end
+    let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_object, oid: '1030368') }
+
+    before do
+      stub_metadata_cloud("AS-#{oid}", 'aspace')
+      parent_object
+      child_object
+    end
+
+    it 'indexes the new visibility in solr' do
       solr = SolrService.connection
 
-      parent_object.visibility = "Public"
+      parent_object.visibility = 'Public'
       parent_object.save
       parent_object.solr_index_job
       response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
       solr_document = response['response']['docs'][0]
-      expect(solr_document['visibility_ssi']).to eq "Public"
+      expect(solr_document['visibility_ssi']).to eq 'Public'
 
-      parent_object.visibility = "Yale Community Only"
+      parent_object.visibility = 'Yale Community Only'
       parent_object.save
       parent_object.solr_index_job
       response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
       solr_document = response['response']['docs'][0]
-      expect(solr_document['visibility_ssi']).to eq "Yale Community Only"
+      expect(solr_document['visibility_ssi']).to eq 'Yale Community Only'
 
       # rubocop:disable RSpec/AnyInstance
       # ParentObject will return false to manifest_complete if there are no children, so simulating no children with:
       allow_any_instance_of(ParentObject).to receive(:manifest_completed?).and_return(false)
       # rubocop:enable RSpec/AnyInstance
-      parent_object.visibility = "Private"
+      parent_object.visibility = 'Private'
       parent_object.save
       parent_object.solr_index_job
       response = solr.get 'select', params: { q: "oid_ssi:#{parent_object.oid}" }
@@ -165,150 +183,137 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     end
   end
 
-  context "indexing to Solr from the database with Ladybird ParentObjects", solr: true do
-    it "can index the 5 parent objects in the database to Solr and can remove those items", undelayed: true do
-      response = solr.get 'select', params: { q: 'type_ssi:parent' }
-      existing_solr_count = response["response"]["numFound"].to_i
+  describe 'indexing to Solr from the database with ASpace ParentObjects', solr: true do
+    let(:oid) { '2005512' }
+    let(:parent_object) do
+      FactoryBot.create(:parent_object, oid: oid, source_name: 'aspace', visibility: 'Public', authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/214638',
+                                        child_object_count: 1)
+    end
+    let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_object, oid: '1030368') }
 
-      expect do
-        [
-          '2005512'
-        ].each do |oid|
-          stub_metadata_cloud(oid)
-          FactoryBot.create(:parent_object, oid: oid)
-        end
-      end.to change { ParentObject.count }.by(1)
+    before do
+      stub_metadata_cloud("AS-#{oid}", 'aspace')
+      parent_object
+      child_object
+      # rubocop:disable Lint/UselessAssignment
+      solr = SolrService.connection
+      # rubocop:enable Lint/UselessAssignment
+    end
 
+    it 'can index parent objects in the database to Solr and can remove those items', undelayed: true do
+      expect(ParentObject.count).to eq 1
+      parent_object.solr_index_job
       response = solr.get 'select', params: { q: 'type_ssi:parent' }
-      expect(response["response"]["numFound"]).to eq(1 + existing_solr_count)
+      expect(response['response']['numFound']).to eq(1)
 
       expect(SolrService.delete_all).to be
       response = solr.get 'select', params: { q: '*:*' }
-      expect(response["response"]["numFound"]).to eq 0
+      expect(response['response']['numFound']).to eq 0
     end
 
-    it "can reindex all the parent objects in a background job" do
+    it 'can reindex all the parent objects in a background job' do
+      expect(ParentObject.count).to eq 1
+      expect(SolrReindexAllJob.perform_now).to be
       response = solr.get 'select', params: { q: 'type_ssi:parent' }
-      expect(response["response"]["numFound"]).to eq 0
+      expect(response['response']['numFound']).to eq 1
+    end
+
+    it 'can remove an item from Solr' do
+      expect(ParentObject.count).to eq 1
+      parent_object.solr_index_job
+      response = solr.get 'select', params: { q: 'type_ssi:parent' }
+      expect(response['response']['numFound']).to eq 1
 
       expect do
         [
           '2005512'
-        ].each do |oid|
-          stub_metadata_cloud(oid)
-          FactoryBot.create(:parent_object, oid: oid)
-        end
-      end.to change { ParentObject.count }.by(1)
-      expect(SolrReindexAllJob.perform_now).to be
-      response = solr.get 'select', params: { q: 'type_ssi:parent' }
-      expect(response["response"]["numFound"]).to eq 1
-    end
-
-    it 'can remove an item from Solr' do
-      response = solr.get 'select', params: { q: 'type_ssi:parent' }
-      expect(response["response"]["numFound"]).to eq 0
-
-      expect do
-        [
-          '2034600'
-        ].each do |oid|
-          stub_metadata_cloud(oid)
-          FactoryBot.create(:parent_object, oid: oid)
-        end
-      end.to change { ParentObject.count }.by(1)
-      response = solr.get 'select', params: { q: 'type_ssi:parent' }
-      expect(response["response"]["numFound"]).to eq 1
-
-      expect do
-        [
-          '2034600'
         ].each do |oid|
           ParentObject.find(oid).destroy
         end
       end.to change { ParentObject.count }.by(-1)
 
       response = solr.get 'select', params: { q: 'type_ssi:parent' }
-      expect(response["response"]["numFound"]).to eq 0
+      expect(response['response']['numFound']).to eq 0
     end
   end
 
-  context "with Archival fixture data" do
-    let(:oid) { "2005512" }
-    let(:metadata_source) { "aspace" }
-    let(:id_prefix) { "AS-" }
+  context 'with Archival fixture data' do
+    let(:oid) { '2005512' }
+    let(:metadata_source) { 'aspace' }
+    let(:id_prefix) { 'AS-' }
 
-    context "with a public item" do
-      let(:parent_object_with_public_visibility) { FactoryBot.create(:parent_object, oid: oid, bib: "4113177", barcode: "39002093768050", source_name: metadata_source, visibility: "Public") }
+    context 'with a public item' do
+      let(:parent_object_with_public_visibility) { FactoryBot.create(:parent_object, oid: oid, bib: '4113177', barcode: '39002093768050', source_name: metadata_source, visibility: 'Public') }
       around do |example|
         original_image_url = ENV['IIIF_IMAGE_BASE_URL']
-        ENV['IIIF_IMAGE_BASE_URL'] = "http://localhost:8182/iiif"
+        ENV['IIIF_IMAGE_BASE_URL'] = 'http://localhost:8182/iiif'
         example.run
         ENV['IIIF_IMAGE_BASE_URL'] = original_image_url
       end
       before do
         stub_metadata_cloud(oid.to_s)
-        stub_metadata_cloud("AS-#{oid}", "aspace")
+        stub_metadata_cloud("AS-#{oid}", 'aspace')
       end
 
-      it "can create a Solr document for a record, including visibility" do
+      it 'can create a Solr document for a record, including visibility' do
         solr_document = parent_object_with_public_visibility.reload.to_solr
-        expect(parent_object_with_public_visibility.admin_set.label).to eq "MyString"
-        expect(solr_document[:repository_ssim]).to eq "MyString"
-        expect(solr_document[:repository_ssi]).to eq "MyString"
-        expect(solr_document[:archivalSort_ssi]).to include "00002.00000"
-        expect(solr_document[:ancestorTitles_tesim]).to include "Oversize",
-                                                                "Savage & Ottinger",
-                                                                "Abraham Lincoln collection (GEN MSS 257)",
-                                                                "Beinecke Rare Book and Manuscript Library"
-        expect(solr_document[:ancestor_titles_hierarchy_ssim].first).to eq "Beinecke Rare Book and Manuscript Library"
-        expect(solr_document[:ancestor_titles_hierarchy_ssim][1]).to eq "Beinecke Rare Book and Manuscript Library > Abraham Lincoln collection (GEN MSS 257)"
-        expect(solr_document[:ancestor_titles_hierarchy_ssim].last).to eq "Beinecke Rare Book and Manuscript Library > Abraham Lincoln collection (GEN MSS 257) > Savage & Ottinger > Oversize"
-        expect(solr_document[:collection_title_ssi]).to include "Abraham Lincoln collection (GEN MSS 257)"
-        expect(solr_document[:series_ssi]).to include "Oversize"
-        expect(solr_document[:ancestorDisplayStrings_tesim]).to include "Oversize, n.d.",
-                                                                        "Abraham Lincoln collection",
-                                                                        "Beinecke Rare Book and Manuscript Library"
+        expect(parent_object_with_public_visibility.admin_set.label).to eq 'MyString'
+        expect(solr_document[:repository_ssim]).to eq 'MyString'
+        expect(solr_document[:repository_ssi]).to eq 'MyString'
+        expect(solr_document[:archivalSort_ssi]).to include '00002.00000'
+        expect(solr_document[:ancestorTitles_tesim]).to include 'Oversize',
+                                                                'Savage & Ottinger',
+                                                                'Abraham Lincoln collection (GEN MSS 257)',
+                                                                'Beinecke Rare Book and Manuscript Library'
+        expect(solr_document[:ancestor_titles_hierarchy_ssim].first).to eq 'Beinecke Rare Book and Manuscript Library'
+        expect(solr_document[:ancestor_titles_hierarchy_ssim][1]).to eq 'Beinecke Rare Book and Manuscript Library > Abraham Lincoln collection (GEN MSS 257)'
+        expect(solr_document[:ancestor_titles_hierarchy_ssim].last).to eq 'Beinecke Rare Book and Manuscript Library > Abraham Lincoln collection (GEN MSS 257) > Savage & Ottinger > Oversize'
+        expect(solr_document[:collection_title_ssi]).to include 'Abraham Lincoln collection (GEN MSS 257)'
+        expect(solr_document[:series_ssi]).to include 'Oversize'
+        expect(solr_document[:ancestorDisplayStrings_tesim]).to include 'Oversize, n.d.',
+                                                                        'Abraham Lincoln collection',
+                                                                        'Beinecke Rare Book and Manuscript Library'
       end
     end
   end
 
-  context "with Voyager fixture data" do
-    let(:oid) { "2012036" }
-    let(:metadata_source) { "ils" }
-    let(:id_prefix) { "V-" }
+  context 'with Voyager fixture data' do
+    let(:oid) { '2012036' }
+    let(:metadata_source) { 'ils' }
+    let(:id_prefix) { 'V-' }
 
-    context "with a public item" do
-      let(:parent_object_with_public_visibility) { FactoryBot.create(:parent_object, oid: oid, bib: "6805375", barcode: "39002091459793", source_name: 'ils', visibility: "Public") }
+    context 'with a public item' do
+      let(:parent_object_with_public_visibility) { FactoryBot.create(:parent_object, oid: oid, bib: '6805375', barcode: '39002091459793', source_name: 'ils', visibility: 'Public') }
       around do |example|
         original_image_url = ENV['IIIF_IMAGE_BASE_URL']
-        ENV['IIIF_IMAGE_BASE_URL'] = "http://localhost:8182/iiif"
+        ENV['IIIF_IMAGE_BASE_URL'] = 'http://localhost:8182/iiif'
         example.run
         ENV['IIIF_IMAGE_BASE_URL'] = original_image_url
       end
       before do
         # Since ils skips metadata fetch, manually load the fixture data
         stub_metadata_cloud(oid.to_s)
-        ladybird_response = JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{oid}.json")))
-        voyager_response = JSON.parse(File.read(File.join(fixture_path, "ils", "V-#{oid}.json")))
+        ladybird_response = JSON.parse(File.read(File.join(fixture_path, 'ladybird', "#{oid}.json")))
+        voyager_response = JSON.parse(File.read(File.join(fixture_path, 'ils', "V-#{oid}.json")))
         parent_object_with_public_visibility.ladybird_json = ladybird_response
         parent_object_with_public_visibility.voyager_json = voyager_response
         parent_object_with_public_visibility.save!
       end
 
-      it "can create a Solr document for a record, including visibility" do
+      it 'can create a Solr document for a record, including visibility' do
         solr_document = parent_object_with_public_visibility.reload.to_solr
-        expect(solr_document[:title_tesim]).to eq ["Walt Whitman collection, 1842-1949"]
-        expect(solr_document[:visibility_ssi]).to include "Public"
+        expect(solr_document[:title_tesim]).to eq ['Walt Whitman collection, 1842-1949']
+        expect(solr_document[:visibility_ssi]).to include 'Public'
       end
 
-      it "can generate ancestor titles" do
+      it 'can generate ancestor titles' do
         solr_document = parent_object_with_public_visibility.reload.to_solr
-        expect(solr_document[:ancestorTitles_tesim]).to eq ["MyString"]
-        expect(solr_document[:ancestor_titles_hierarchy_ssim]).to eq ["MyString"]
+        expect(solr_document[:ancestorTitles_tesim]).to eq ['MyString']
+        expect(solr_document[:ancestor_titles_hierarchy_ssim]).to eq ['MyString']
       end
     end
 
-    context "with mocked items without a metadatacloud equivalent" do
+    context 'with mocked items without a metadatacloud equivalent' do
       around do |example|
         original_vpn = ENV['VPN']
         ENV['VPN'] = 'false'
@@ -316,113 +321,121 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
         ENV['VPN'] = original_vpn
       end
 
-      context "with a private item" do
-        let(:priv_oid) { "10000016189097" }
-        let(:parent_object_with_private_visibility) { FactoryBot.create(:parent_object, oid: priv_oid, visibility: "Private", source_name: 'ils') }
+      context 'with a private item' do
+        let(:priv_oid) { '10000016189097' }
+        let(:parent_object_with_private_visibility) { FactoryBot.create(:parent_object, oid: priv_oid, visibility: 'Private', source_name: 'ils') }
 
         before do
           # Since ils skips metadata fetch, manually load the fixture data
-          ladybird_response = JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{priv_oid}.json")))
-          voyager_response = JSON.parse(File.read(File.join(fixture_path, "ils", "V-#{priv_oid}.json")))
+          ladybird_response = JSON.parse(File.read(File.join(fixture_path, 'ladybird', "#{priv_oid}.json")))
+          voyager_response = JSON.parse(File.read(File.join(fixture_path, 'ils', "V-#{priv_oid}.json")))
           parent_object_with_private_visibility.ladybird_json = ladybird_response
           parent_object_with_private_visibility.voyager_json = voyager_response
           parent_object_with_private_visibility.save!
         end
 
-        it "assigns private visibility from Ladybird data" do
+        it 'assigns private visibility from Ladybird data' do
           solr_document = parent_object_with_private_visibility.reload.to_solr
-          expect(solr_document[:title_tesim].first).to include "Dai Min kyūhen bankoku jinseki rotei zenzu"
-          expect(solr_document[:visibility_ssi]).to include "Private"
+          expect(solr_document[:title_tesim].first).to include 'Dai Min kyūhen bankoku jinseki rotei zenzu'
+          expect(solr_document[:visibility_ssi]).to include 'Private'
         end
-      end
-    end
-
-    describe "changing the visibility" do
-      let(:oid) { "2034600" }
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird') }
-      it "commits data to solr if it is changed on the object" do
-        expect do
-          parent_object.setup_metadata_job
-          perform_enqueued_jobs
-          parent_object.reload
-        end.to change(parent_object, :visibility).from("Private").to("Public")
-
-        expect do
-          # rubocop:disable Layout/LineLength
-          parent_object.visibility = "Yale Community Only"
-          parent_object.bib = "123321xx"
-          parent_object.call_number = "JWJ A +Eb74"
-          parent_object.child_object_count = 985_555
-          parent_object.barcode = "3200000000000"
-          parent_object.aspace_uri = "/repository/12345/archiveobject/566666"
-          parent_object.holding = "555555555"
-          parent_object.item = "33333333333"
-          parent_object.viewing_direction = "left to right"
-          parent_object.display_layout = "book"
-          parent_object.save!
-          parent_object.solr_index_job
-          parent_object.reload
-        end.to change(parent_object, :visibility).from("Public").to("Yale Community Only")
-                                                 .and change(parent_object, :holding).from(nil).to("555555555")
-                                                                                     .and change(parent_object, :item).from(nil).to("33333333333")
-                                                                                                                      .and change(parent_object, :viewing_direction).from(nil).to("left to right")
-                                                                                                                                                                    .and change(parent_object, :display_layout).from(nil).to("book")
-        response = solr.get 'select', params: { q: 'oid_ssi:2034600' }
-        expect(response["response"]["docs"].first["visibility_ssi"]).to eq "Yale Community Only"
-        expect(response["response"]["docs"].first["orbisBibId_ssi"]).to eq "123321xx"
-        expect(response["response"]["docs"].first["imageCount_isi"]).to eq 985_555
-        expect(response["response"]["docs"].first["orbisBarcode_ssi"]).to eq "3200000000000"
-        expect(response["response"]["docs"].first["archiveSpaceUri_ssi"]).to eq "/repository/12345/archiveobject/566666"
-        # rubocop:enable Layout/LineLength
       end
     end
   end
 
-  describe "expand_date_structured" do
-    let(:oid) { "2034600" }
+  describe 'changing the visibility' do
+    let(:oid) { '2005512' }
+    let(:parent_object) do
+      FactoryBot.create(:parent_object, oid: oid, source_name: 'aspace', visibility: 'Public', authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/214638',
+                                        child_object_count: 1)
+    end
+    let(:child_object) { FactoryBot.create(:child_object, parent_object: parent_object, oid: '1030368') }
+
+    before do
+      stub_metadata_cloud("AS-#{oid}", 'aspace')
+      parent_object
+      child_object
+      # rubocop:disable Lint/UselessAssignment
+      solr = SolrService.connection
+      # rubocop:enable Lint/UselessAssignment
+    end
+
+    it 'commits data to solr if it is changed on the object' do
+      expect do
+        # rubocop:disable Layout/LineLength
+        parent_object.visibility = 'Yale Community Only'
+        parent_object.bib = '123321xx'
+        parent_object.call_number = 'JWJ A +Eb74'
+        parent_object.child_object_count = 985_555
+        parent_object.barcode = '3200000000000'
+        parent_object.aspace_uri = '/repository/12345/archiveobject/566666'
+        parent_object.holding = '555555555'
+        parent_object.item = '33333333333'
+        parent_object.viewing_direction = 'left to right'
+        parent_object.display_layout = 'book'
+        parent_object.save!
+        parent_object.solr_index_job
+        parent_object.reload
+      end.to change(parent_object, :visibility).from('Public').to('Yale Community Only')
+                                               .and change(parent_object, :holding).from(nil).to('555555555')
+                                                                                   .and change(parent_object, :item).from(nil).to('33333333333')
+                                                                                                                    .and change(parent_object, :viewing_direction).from(nil).to('left to right')
+                                                                                                                                                                  .and change(parent_object, :display_layout).from(nil).to('book')
+      response = solr.get 'select', params: { q: "oid_ssi:#{oid}" }
+      expect(response['response']['docs'].first['visibility_ssi']).to eq 'Yale Community Only'
+      expect(response['response']['docs'].first['orbisBibId_ssi']).to eq '123321xx'
+      expect(response['response']['docs'].first['imageCount_isi']).to eq 985_555
+      expect(response['response']['docs'].first['orbisBarcode_ssi']).to eq '3200000000000'
+      expect(response['response']['docs'].first['archiveSpaceUri_ssi']).to eq '/repository/12345/archiveobject/566666'
+      # rubocop:enable Layout/LineLength
+    end
+  end
+
+  describe 'expand_date_structured' do
+    let(:oid) { '2034600' }
     let(:parent_object) { described_class.new }
-    let(:subject_heading) { ["Animals > Canines > Dogs", "Creatures > Four Legged"] }
-    let(:facets) { ["Animals", "Animals > Canines", "Animals > Canines > Dogs", "Creatures", "Creatures > Four Legged"] }
-    it "expands dates with explicit ranges" do
-      expect(parent_object.expand_date_structured(["2000/2005"])).to eq [2000, 2001, 2002, 2003, 2004, 2005]
+    let(:subject_heading) { ['Animals > Canines > Dogs', 'Creatures > Four Legged'] }
+    let(:facets) { ['Animals', 'Animals > Canines', 'Animals > Canines > Dogs', 'Creatures', 'Creatures > Four Legged'] }
+    it 'expands dates with explicit ranges' do
+      expect(parent_object.expand_date_structured(['2000/2005'])).to eq [2000, 2001, 2002, 2003, 2004, 2005]
     end
-    it "expands dates with open ended ranges" do
+    it 'expands dates with open ended ranges' do
       expected_result = (2000..Time.now.utc.year).to_a
-      expect(parent_object.expand_date_structured(["2000/9999"])).to eq expected_result
+      expect(parent_object.expand_date_structured(['2000/9999'])).to eq expected_result
     end
-    it "expands dates without ranges" do
-      expect(parent_object.expand_date_structured(["2000", "2010"])).to eq [2000, 2010]
+    it 'expands dates without ranges' do
+      expect(parent_object.expand_date_structured(['2000', '2010'])).to eq [2000, 2010]
     end
-    it "expands empty array to empty array" do
+    it 'expands empty array to empty array' do
       expect(parent_object.expand_date_structured([])).to eq []
     end
-    it "expands nil to nil" do
+    it 'expands nil to nil' do
       expect(parent_object.expand_date_structured(nil)).to eq nil
     end
-    it "returns nil if not an array" do
-      expect(parent_object.expand_date_structured("non-array")).to eq nil
-      expect(parent_object.expand_date_structured("1995")).to eq nil
+    it 'returns nil if not an array' do
+      expect(parent_object.expand_date_structured('non-array')).to eq nil
+      expect(parent_object.expand_date_structured('1995')).to eq nil
       expect(parent_object.expand_date_structured(parent_object)).to eq nil
     end
-    it "expands range and non-ranges combined" do
-      expect(parent_object.expand_date_structured(["2000/2004", "1945"])).to eq [1945, 2000, 2001, 2002, 2003, 2004]
+    it 'expands range and non-ranges combined' do
+      expect(parent_object.expand_date_structured(['2000/2004', '1945'])).to eq [1945, 2000, 2001, 2002, 2003, 2004]
     end
-    it "expands overlapping ranges with dedup" do
-      expect(parent_object.expand_date_structured(["2000/2004", "1945", "2002/2006"])).to eq [1945, 2000, 2001, 2002, 2003, 2004, 2005, 2006]
+    it 'expands overlapping ranges with dedup' do
+      expect(parent_object.expand_date_structured(['2000/2004', '1945', '2002/2006'])).to eq [1945, 2000, 2001, 2002, 2003, 2004, 2005, 2006]
     end
-    it "dedups non-range values" do
-      expect(parent_object.expand_date_structured(["1945", "2002", "1945"])).to eq [1945, 2002]
+    it 'dedups non-range values' do
+      expect(parent_object.expand_date_structured(['1945', '2002', '1945'])).to eq [1945, 2002]
     end
-    it "responds correctly with invalid ranges" do
-      expect(parent_object.expand_date_structured(["1945/1935"])).to eq []
-      expect(parent_object.expand_date_structured(["9999/1935"])).to eq []
-      expect(parent_object.expand_date_structured(["9999/1935", "1955"])).to eq [1955]
-      expect(parent_object.expand_date_structured(["1935/2021/1953", "1975"])).to eq [1975]
+    it 'responds correctly with invalid ranges' do
+      expect(parent_object.expand_date_structured(['1945/1935'])).to eq []
+      expect(parent_object.expand_date_structured(['9999/1935'])).to eq []
+      expect(parent_object.expand_date_structured(['9999/1935', '1955'])).to eq [1955]
+      expect(parent_object.expand_date_structured(['1935/2021/1953', '1975'])).to eq [1975]
     end
-    it "creates subject headings facet by expanding subject headings" do
+    it 'creates subject headings facet by expanding subject headings' do
       expect(parent_object.subject_headings_to_facet(subject_heading)).to eq facets
     end
-    it "creates nil facet from nil subject headings" do
+    it 'creates nil facet from nil subject headings' do
       expect(parent_object.subject_headings_to_facet(nil)).to be_nil
     end
   end

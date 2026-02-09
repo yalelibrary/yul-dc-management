@@ -1,9 +1,11 @@
 # frozen_string_literal: true
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe JsonFile, prep_metadata_sources: true do
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: '16685691') }
-  let(:path_to_example_file) { Rails.root.join("spec", "fixtures", "ladybird", "16685691.json") }
+RSpec.describe JsonFile, prep_metadata_sources: true, prep_admin_sets: true do
+  let(:parent_object) do
+    FactoryBot.create(:parent_object, oid: '2005512', admin_set: AdminSet.find_by_key('brbl'), authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/214638')
+  end
+  let(:path_to_example_file) { Rails.root.join('spec', 'fixtures', 'aspace', 'AS-2005512.json') }
   around do |example|
     original_ocr_path = ENV['OCR_DOWNLOAD_BUCKET']
     ENV['OCR_DOWNLOAD_BUCKET'] = 'yul-dc-ocr-test'
@@ -14,8 +16,7 @@ RSpec.describe JsonFile, prep_metadata_sources: true do
   end
 
   before do
-    stub_metadata_cloud("16685691")
-    stub_full_text_not_found("16686253")
+    stub_metadata_cloud('AS-2005512', 'aspace')
     stub_ptiffs_and_manifests
   end
 

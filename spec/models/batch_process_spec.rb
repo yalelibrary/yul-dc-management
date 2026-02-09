@@ -203,9 +203,10 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
       before do
         admin_set_two
-        stub_metadata_cloud("V-30000317", "ils")
+        stub_metadata_cloud('AS-30000317', 'aspace')
         stub_ptiffs_and_manifests
-        batch_process.file = xml_upload
+        batch_process.file = aspace_xml_upload
+        batch_process.batch_action = 'recreate child oid ptiffs'
         batch_process.save!
         parent_object.admin_set_id = admin_set_two.id
         parent_object.save!
@@ -458,7 +459,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
       context "deleting a ChildObject from an import" do
         before do
-          stub_metadata_cloud("2005512")
+          stub_metadata_cloud('AS-2005512', 'aspace')
           allow(S3Service).to receive(:delete).and_return(true)
           allow(S3Service).to receive(:s3_exists?).and_return(false)
         end
@@ -506,7 +507,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect do
             batch_process.file = csv_upload
             batch_process.save
-          end.to change { batch_process.batch_connections.size }.from(0).to(3)
+          end.to change { batch_process.batch_connections.size }.from(0).to(1)
 
           expect(ParentObject.count).to eq 1
         end

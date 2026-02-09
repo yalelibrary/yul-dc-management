@@ -5,40 +5,46 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   let(:user) { FactoryBot.create(:user) }
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
   # parent object has two child objects
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: "2005512", admin_set_id: admin_set.id) }
+  let(:parent_object) do
+    FactoryBot.create(:parent_object, oid: '2005512', admin_set_id: admin_set.id, authoritative_metadata_source: MetadataSource.find(3), aspace_uri: '/repositories/11/archival_objects/214638')
+  end
+  let(:child_object_one) { FactoryBot.create(:child_object, oid: '1030368', parent_object: parent_object) }
+  let(:child_object_two) { FactoryBot.create(:child_object, oid: '1032318', parent_object: parent_object) }
 
   before do
     stub_manifests
-    stub_metadata_cloud("2005512")
+    stub_metadata_cloud('AS-2005512', 'aspace')
     parent_object
+    child_object_one
+    child_object_two
   end
 
   around do |example|
     perform_enqueued_jobs do
       original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
-      ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
+      ENV['OCR_DOWNLOAD_BUCKET'] = 'yul-dc-ocr-test'
       example.run
       ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
     end
   end
 
-  context "with a user with edit permissions", solr: true do
-    context "deleting a batch of parent objects" do
+  context 'with a user with edit permissions', solr: true do
+    context 'deleting a batch of parent objects' do
       before do
         login_as user
         user.add_role(:editor, admin_set)
       end
 
-      it "deletes the parent and artifacts except for full text" do
+      it 'deletes the parent and artifacts except for full text' do
         expect(ParentObject.count).to eq 1
         expect(ChildObject.count).to eq 2
 
         # perform batch delete
         visit batch_processes_path
-        select("Delete Parent Objects")
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/delete_parent_fixture_ids.csv")
-        click_button("Submit")
-        expect(page).to have_content "Your job is queued for processing in the background"
+        select('Delete Parent Objects')
+        page.attach_file('batch_process_file', Rails.root + 'spec/fixtures/csv/delete_parent_fixture_ids.csv')
+        click_button('Submit')
+        expect(page).to have_content 'Your job is queued for processing in the background'
 
         # parent/child object delete
         expect(ParentObject.count).to eq 0
@@ -52,31 +58,31 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
         # solr document delete
         response = solr.get 'select', params: { q: '*:*' }
-        expect(response["response"]["numFound"]).to eq 0
+        expect(response['response']['numFound']).to eq 0
 
         # ptiff and pdf deletion checked in spec/requests/batch_processes_request_spec.rb:134
 
         # can still display a show_parent batch process page
         visit "/batch_processes/#{BatchProcess.last.id}/parent_objects/2005512"
-        expect(page).to have_content "Status 2005512 deleted"
+        expect(page).to have_content 'Status 2005512 deleted'
       end
     end
   end
 
-  context "with a user without edit permissions" do
+  context 'with a user without edit permissions' do
     let(:admin_user) { FactoryBot.create(:sysadmin_user) }
 
-    context "deleting a batch of parent objects" do
+    context 'deleting a batch of parent objects' do
       before do
         login_as admin_user
         admin_user.remove_role(:editor)
         visit batch_processes_path
       end
 
-      it "does not permit parent to be deleted" do
-        select("Delete Parent Objects")
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/delete_parent_fixture_ids.csv")
-        click_button("Submit")
+      it 'does not permit parent to be deleted' do
+        select('Delete Parent Objects')
+        page.attach_file('batch_process_file', Rails.root + 'spec/fixtures/csv/delete_parent_fixture_ids.csv')
+        click_button('Submit')
         expect(ParentObject.count).to eq 1
       end
     end
