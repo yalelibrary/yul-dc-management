@@ -4,40 +4,40 @@ require 'rails_helper'
 
 RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   subject(:batch_process) { described_class.new }
-  let(:user) { FactoryBot.create(:user, uid: "mk2525") }
+  let(:user) { FactoryBot.create(:user, uid: 'mk2525') }
   let(:admin_set_one) { FactoryBot.create(:admin_set) }
   let(:admin_set_two) { FactoryBot.create(:admin_set) }
   let(:admin_set_three) { FactoryBot.create(:admin_set) }
-  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
-  let(:create_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_parent.csv")) }
-  let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids_with_source.csv")) }
-  let(:delete_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_parent_fixture_ids.csv")) }
-  let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent.csv")) }
-  let(:invalid_preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "invalid_preservica_parent.csv")) }
-  let(:delete_child) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_child_fixture_ids.csv")) }
+  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'shorter_fixture_ids.csv')) }
+  let(:create_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'create_parent.csv')) }
+  let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'short_fixture_ids_with_source.csv')) }
+  let(:delete_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'delete_parent_fixture_ids.csv')) }
+  let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'preservica', 'preservica_parent.csv')) }
+  let(:invalid_preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'invalid_preservica_parent.csv')) }
+  let(:delete_child) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'delete_child_fixture_ids.csv')) }
   let(:alma_xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/valid_alma_mets.xml')) }
   let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
   let(:xml_upload_two) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml')) }
-  let(:aspace_xml_upload) { Rack::Test::UploadedFile.new("spec/fixtures/goobi/metadata/30000317_20201203_140947/good_aspace.xml") }
+  let(:aspace_xml_upload) { Rack::Test::UploadedFile.new('spec/fixtures/goobi/metadata/30000317_20201203_140947/good_aspace.xml') }
   let(:xml_upload_three) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/noeodig.xml')) }
   let(:xml_upload_four) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/dignote_met.xml')) }
 
   around do |example|
-    original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
-    original_access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
+    original_image_bucket = ENV['S3_SOURCE_BUCKET_NAME']
+    original_access_primary_mount = ENV['ACCESS_PRIMARY_MOUNT']
     original_path_ocr = ENV['OCR_DOWNLOAD_BUCKET']
-    ENV["S3_SOURCE_BUCKET_NAME"] = "yale-test-image-samples"
-    ENV["ACCESS_PRIMARY_MOUNT"] = File.join("spec", "fixtures", "images", "access_primaries")
-    ENV['OCR_DOWNLOAD_BUCKET'] = "yul-dc-ocr-test"
+    ENV['S3_SOURCE_BUCKET_NAME'] = 'yale-test-image-samples'
+    ENV['ACCESS_PRIMARY_MOUNT'] = File.join('spec', 'fixtures', 'images', 'access_primaries')
+    ENV['OCR_DOWNLOAD_BUCKET'] = 'yul-dc-ocr-test'
     preservica_host = ENV['PRESERVICA_HOST']
     preservica_creds = ENV['PRESERVICA_CREDENTIALS']
-    ENV['PRESERVICA_HOST'] = "testpreservica"
+    ENV['PRESERVICA_HOST'] = 'testpreservica'
     ENV['PRESERVICA_CREDENTIALS'] = '{"brbl": {"username":"xxxxx", "password":"xxxxx"}}'
     access_host = ENV['ACCESS_PRIMARY_MOUNT']
-    ENV['ACCESS_PRIMARY_MOUNT'] = File.join("spec", "fixtures", "images", "access_primaries")
+    ENV['ACCESS_PRIMARY_MOUNT'] = File.join('spec', 'fixtures', 'images', 'access_primaries')
     example.run
-    ENV["S3_SOURCE_BUCKET_NAME"] = original_image_bucket
-    ENV["ACCESS_PRIMARY_MOUNT"] = original_access_primary_mount
+    ENV['S3_SOURCE_BUCKET_NAME'] = original_image_bucket
+    ENV['ACCESS_PRIMARY_MOUNT'] = original_access_primary_mount
     ENV['OCR_DOWNLOAD_BUCKET'] = original_path_ocr
     ENV['PRESERVICA_HOST'] = preservica_host
     ENV['PRESERVICA_CREDENTIALS'] = preservica_creds
@@ -49,32 +49,32 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     batch_process.user_id = user.id
   end
 
-  describe "not running the background jobs" do
-    it "creates a parent object with values only from the METs document" do
+  describe 'not running the background jobs' do
+    it 'creates a parent object with values only from the METs document' do
       admin_set_two
-      expect(batch_process.batch_action).to eq "create parent objects"
+      expect(batch_process.batch_action).to eq 'create parent objects'
       expect do
         batch_process.file = xml_upload_two
         batch_process.save!
       end.to change { ParentObject.count }.from(0).to(1)
       po = ParentObject.find(30_000_401)
-      expect(po.visibility).to eq "Public"
-      expect(po.rights_statement).to include "The use of this image may be subject to"
-      expect(po.authoritative_metadata_source.display_name).to eq "Voyager"
+      expect(po.visibility).to eq 'Public'
+      expect(po.rights_statement).to include 'The use of this image may be subject to'
+      expect(po.authoritative_metadata_source.display_name).to eq 'Voyager'
       expect(po.voyager_json.present?).to be_falsy
-      expect(po.bib).to eq "1188135"
-      expect(po.holding).to eq "1330141"
-      expect(po.extent_of_digitization).to eq "Completely digitized"
+      expect(po.bib).to eq '1188135'
+      expect(po.holding).to eq '1330141'
+      expect(po.extent_of_digitization).to eq 'Completely digitized'
       expect(po.digitization_note).to eq nil
       expect(po.item).to eq nil
       expect(po.barcode).to eq nil
-      expect(po.viewing_direction).to eq "left-to-right"
-      expect(po.display_layout).to eq "individuals"
+      expect(po.viewing_direction).to eq 'left-to-right'
+      expect(po.display_layout).to eq 'individuals'
       expect(po.representative_child_oid).to eq 30_000_403
       expect(po.metadata_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/ils/holding/1330141?bib=1188135&mediaType=json"
     end
 
-    it "creates a parent object with extent of digitization empty" do
+    it 'creates a parent object with extent of digitization empty' do
       admin_set_two
       batch_process.file = xml_upload_three
       batch_process.save!
@@ -82,69 +82,69 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po.extent_of_digitization).to eq nil
     end
 
-    it "creates a parent object with extent of digitization note" do
+    it 'creates a parent object with extent of digitization note' do
       admin_set_two
       batch_process.file = xml_upload_four
       batch_process.save!
       po = ParentObject.find(30_000_401)
-      expect(po.digitization_note).to eq "Test digitization note"
+      expect(po.digitization_note).to eq 'Test digitization note'
     end
 
-    it "creates a parent object with barcode from the METs document" do
+    it 'creates a parent object with barcode from the METs document' do
       admin_set_two
       batch_process.file = xml_upload
       batch_process.save!
       po = ParentObject.find(30_000_317)
-      expect(po.barcode).to eq "39002091118928"
+      expect(po.barcode).to eq '39002091118928'
     end
 
-    it "creates a parent object with aspace uri from the METs document" do
+    it 'creates a parent object with aspace uri from the METs document' do
       admin_set_three
       batch_process.file = aspace_xml_upload
       batch_process.save!
-      po = ParentObject.find(30_000_557)
-      expect(po.aspace_uri).to eq "/repositories/11/archival_objects/329771"
+      po = ParentObject.find(30_000_317)
+      expect(po.aspace_uri).to eq '/repositories/11/archival_objects/329771'
       expect(po.metadata_cloud_url).to eq(
         "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/aspace/repositories/11/archival_objects/329771?mediaType=json"
       )
     end
 
-    it "creates a parent object with admin set from the METs document" do
+    it 'creates a parent object with admin set from the METs document' do
       admin_set_three
       batch_process.file = aspace_xml_upload
       batch_process.save!
-      po = ParentObject.find(30_000_557)
+      po = ParentObject.find(30_000_317)
       expect(po.admin_set).not_to be_nil
-      expect(po.admin_set.key).to eq "brbl"
-      expect(batch_process.admin_set).to eq " brbl"
+      expect(po.admin_set.key).to eq 'brbl'
+      expect(batch_process.admin_set).to eq ' brbl'
     end
 
-    it "creates a parent object with alma values from the METs document" do
+    it 'creates a parent object with alma values from the METs document' do
       admin_set_three
       batch_process.file = alma_xml_upload
       batch_process.save!
       po = ParentObject.find(800_054_805)
-      expect(po.mms_id).to eq "890425673459853409"
-      expect(po.alma_item).to eq "2325391950008651"
+      expect(po.mms_id).to eq '890425673459853409'
+      expect(po.alma_item).to eq '2325391950008651'
       expect(po.alma_holding).to be_nil
       expect(po.last_alma_update).not_to be_nil
       expect(po.metadata_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/#{MetadataSource.metadata_cloud_version}/alma/item/#{po.alma_item}.json?bib=#{po.mms_id}&mediaType=json"
     end
 
-    it "creates a preservica ingest with parent uuid from the METs document" do
+    it 'creates a preservica ingest with parent uuid from the METs document' do
       admin_set_three
       batch_process.file = aspace_xml_upload
       batch_process.save!
-      pj = PreservicaIngest.find_by_parent_oid(30_000_557)
-      expect(pj.preservica_id).to eq "c91ce4e1-10d2-4e33-8df3-83f081ff0125"
+      pj = PreservicaIngest.find_by_parent_oid(30_000_317)
+      expect(pj.preservica_id).to eq 'c91ce4e1-10d2-4e33-8df3-83f081ff0125'
       expect(pj.batch_process_id).to eq batch_process.id
-      expect(batch_process.admin_set).to eq " brbl"
+      expect(batch_process.admin_set).to eq ' brbl'
     end
 
-    context "when parent object already exists" do
-      let(:parent_object) { FactoryBot.create(:parent_object, oid: 30_000_557) }
+    context 'when parent object already exists' do
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: 30_000_317) }
 
-      it "does not change parent object and reports error" do
+      it 'does not change parent object and reports error' do
         original_updated_at = parent_object.reload.updated_at
         expect do
           batch_process.file = aspace_xml_upload
@@ -172,7 +172,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       # rubocop:enable RSpec/AnyInstance
     end
 
-    describe "with a parent object with a failure" do
+    describe 'with a parent object with a failure' do
       let(:batch_process_with_failure) { FactoryBot.create(:batch_process, user: user) }
       let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_005_512) }
       let(:batch_connection) do
@@ -180,7 +180,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
                           connectable: parent_object, batch_process: batch_process_with_failure)
       end
       # rubocop:disable RSpec/AnyInstance
-      it "can reflect a failure" do
+      it 'can reflect a failure' do
         batch_process_with_failure.file = csv_upload
         batch_process_with_failure.save
         batch_process_with_failure.run_callbacks :create
@@ -191,7 +191,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           unknown: 0,
           total: 1
         )
-        expect(batch_process_with_failure.batch_status).to eq "Batch failed"
+        expect(batch_process_with_failure.batch_status).to eq 'Batch failed'
       end
       # rubocop:enable RSpec/AnyInstance
     end
@@ -217,6 +217,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         expect do
           batch_process.configure_parent_object(child_object, parents)
         end.to change { IngestEvent.count }.by(1)
+        expect(batch_process).to have_received(:configure_parent_object).with(child_object, parents)
         expect(parents.size).to equal(1)
         expect(parent_object.batch_processes).to include(batch_process)
       end
