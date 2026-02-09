@@ -155,6 +155,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         self.last_preservica_update = Time.current
       end
     else # TODO: refactor this into an error because we should not be pulling from ladybird anymore
+      # processing_event("Error creating child records: unsupported digital object source #{digital_object_source}", "failed")
       return unless ladybird_json
       return self.child_object_count = 0 if ladybird_json["children"].empty? && parent_model != 'simple'
       upsert_child_objects(array_of_child_hashes)
