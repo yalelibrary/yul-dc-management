@@ -74,7 +74,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       let(:admin_set) { FactoryBot.create(:admin_set) }
       let(:role) { FactoryBot.create(:role, name: editor) }
       let(:parent_object) { FactoryBot.create(:parent_object, oid: '2012036', admin_set_id: admin_set.id, authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/555049') }
-      let(:parent_object_old_one) { FactoryBot.create(:parent_object, oid: '2004548', admin_set_id: admin_set.id) }
+      let(:parent_object_old_one) { FactoryBot.create(:parent_object, oid: '2005512', admin_set_id: admin_set.id) }
       let(:parent_object_old_two) { FactoryBot.create(:parent_object, oid: '2004549', admin_set_id: admin_set.id) }
       let(:child_object) { FactoryBot.create(:child_object, oid: '1021925', parent_object: parent_object_old_one) }
       let(:child_object_unchanged) { FactoryBot.create(:child_object, oid: 1_011_398, parent_object: parent_object_old_two) }
@@ -86,7 +86,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
       before do
         stub_metadata_cloud('AS-2012036', 'aspace')
-        stub_metadata_cloud('2004548')
+        stub_metadata_cloud('2005512')
         stub_metadata_cloud('2004549')
         parent_object
         parent_object_old_one
@@ -106,7 +106,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
 
       it 'displays children in batch parent details' do
-        expect(ChildObject.find_by_oid(1_021_925).parent_object.oid).to eq(2_004_548)
+        expect(ChildObject.find_by_oid(1_021_925).parent_object.oid).to eq(2_005_512)
         page.attach_file('batch_process_file', Rails.root + 'spec/fixtures/csv/reassociation_example_smaller.csv')
         select('Reassociate Child Oids')
         click_button('Submit')
