@@ -105,14 +105,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def from_upstream_for_the_first_time?
-    from_ladybird_for_the_first_time? || from_mets_for_the_first_time? || (from_preservica_for_the_first_time? && (digital_object_source == "Preservica" || digital_object_source == "preservica"))
+    from_mets_for_the_first_time? || (from_preservica_for_the_first_time? && (digital_object_source == "Preservica" || digital_object_source == "preservica"))
   end
 
   def self.cannot_reindex
     return true unless Delayable.active_solr_reindex_jobs.empty?
   end
 
-    # Returns true if last_ladybird_update has changed from nil to some value, indicating initial ladybird fetch
+  # Returns true if last_ladybird_update has changed from nil to some value, indicating initial ladybird fetch
   def from_ladybird_for_the_first_time?
     return true if changes["last_ladybird_update"] &&
                    !changes["last_ladybird_update"][0] &&
