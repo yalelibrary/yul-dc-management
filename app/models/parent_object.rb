@@ -104,18 +104,33 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.use_ladybird = true
   end
 
-  def from_upstream_for_the_first_time?(metadata_source = authoritative_metadata_source&.metadata_cloud_name)
-    from_source_for_the_first_time?(metadata_source) || (from_preservica_for_the_first_time? && (digital_object_source == "Preservica" || digital_object_source == "preservica"))
+  def from_upstream_for_the_first_time?
+    from_ladybird_for_the_first_time? || from_mets_for_the_first_time? || (from_preservica_for_the_first_time? && (digital_object_source == "Preservica" || digital_object_source == "preservica"))
   end
 
   def self.cannot_reindex
     return true unless Delayable.active_solr_reindex_jobs.empty?
   end
 
+    # Returns true if last_ladybird_update has changed from nil to some value, indicating initial ladybird fetch
+  def from_ladybird_for_the_first_time?
+    return true if changes["last_ladybird_update"] &&
+                   !changes["last_ladybird_update"][0] &&
+                   changes["last_ladybird_update"][1]
+    false
+  end
+
+  # Returns true if last_mets_update has changed from nil to some value,
+  # indicating assigning values from the mets document
+  def from_mets_for_the_first_time?
+    return true if last_mets_update_before_last_save.nil? && !last_mets_update.nil?
+    false
+  end
+
   # Returns true if last_preservica_update has changed from nil to some value,
   # indicating assigning values from the last preservica api call
   def from_preservica_for_the_first_time?
-    from_source_for_the_first_time?('preservica')
+    last_preservica_update.nil?
   end
 
   # Returns true if last_<source>_update has changed from nil to some value recently
