@@ -39,8 +39,8 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
 
     it 'has a link to the batch process detail page' do
       batch_process.save!
-      parent_oid = batch_process.parent_objects.last&.oid.presence || parent_object.oid
-      child_oid = batch_process.parent_objects.last&.child_objects&.first&.oid.presence || child_object_one.oid
+      parent_oid = parent_object.oid
+      child_oid = child_object_one.oid
 
       expect(BatchProcess.all.count).to eq 1
       visit show_child_batch_process_path(child_oid: child_oid, id: batch_process.id, oid: parent_oid)
