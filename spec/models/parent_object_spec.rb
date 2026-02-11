@@ -624,9 +624,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           ENV['VPN'] = original_vpn
         end
         it 'raises an error with wrong version' do
-          stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/aspace/repositories/11/archival_objects/214638")
-              .to_return(status: 400, body: File.open(File.join(fixture_path, 'metadata_cloud_wrong_version.json')))
           allow(MetadataSource).to receive(:metadata_cloud_version).and_return('clearly_fake_version')
+          stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/aspace/repositories/11/archival_objects/214638")
+              .to_return(status: 400, body: File.read(File.join(fixture_path, 'metadata_cloud_wrong_version.json')))
           expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/aspace/repositories/11/archival_objects/214638"
           expect do
             aspace_source.fetch_record_on_vpn(parent_object)
