@@ -260,7 +260,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/03/30/00/04/03/30000403.tif").to_return(status: 200)
           stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/04/30/00/04/04/30000404.tif").to_return(status: 200)
         end
-        
+
         around do |example|
           perform_enqueued_jobs do
             example.run
