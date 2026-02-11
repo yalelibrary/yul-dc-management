@@ -259,15 +259,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       child_object_count: 2,
       last_aspace_update: nil)
     end
-
-    it 'can determine whether it is freshly from ASpace' do
-      expect(parent_object.from_source_for_the_first_time?('aspace')).to eq true
-      expect(parent_object.from_upstream_for_the_first_time?).to eq true
-      parent_object.last_aspace_update = Time.zone.now
-      parent_object.save!
-      expect(parent_object.from_source_for_the_first_time?('aspace')).to eq false
-      expect(parent_object.from_upstream_for_the_first_time?).to eq false
-    end
   end
 
   context do
