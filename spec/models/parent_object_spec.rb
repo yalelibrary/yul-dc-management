@@ -625,7 +625,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       context 'with the wrong metadata_cloud_version set' do
-        let(:ladybird_source) { MetadataSource.first }
+        let(:aspace_source) { MetadataSource.find(aspace) }
         around do |example|
           original_vpn = ENV['VPN']
           ENV['VPN'] = 'true'
@@ -633,34 +633,34 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
           ENV['VPN'] = original_vpn
         end
         it 'raises an error with wrong version' do
-          stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/ladybird/oid/2005512?include-children=1")
+          stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/aspace/repositories/11/archival_objects/214638")
               .to_return(status: 400, body: File.open(File.join(fixture_path, 'metadata_cloud_wrong_version.json')))
           allow(MetadataSource).to receive(:metadata_cloud_version).and_return('clearly_fake_version')
-          expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/ladybird/oid/2005512?include-children=1"
+          expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/aspace/repositories/11/archival_objects/214638"
           expect do
-            ladybird_source.fetch_record_on_vpn(parent_object)
+            aspace_source.fetch_record_on_vpn(parent_object)
           end.to raise_error(MetadataSource::MetadataCloudVersionError, 'MetadataCloud is not responding to requests for version: clearly_fake_version')
         end
         it 'raises an error with 500 response' do
-          stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1")
+          stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/214638")
               .to_return(status: 500, body: { error: 'fake error' }.to_json)
-          expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
+          expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/214638"
           expect do
-            ladybird_source.fetch_record_on_vpn(parent_object)
+            aspace_source.fetch_record_on_vpn(parent_object)
           end.to raise_error(MetadataSource::MetadataCloudServerError, 'MetadataCloud is responding with 5XX error')
         end
         it 'returns false on out of range response' do
-          stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1")
+          stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/214638")
               .to_return(status: 700, body: { error: 'fake error' }.to_json)
-          expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
-          expect(ladybird_source.fetch_record_on_vpn(parent_object)).to be_falsey
+          expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/214638"
+          expect(aspace_source.fetch_record_on_vpn(parent_object)).to be_falsey
         end
         it 'returns response' do
-          stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1")
+          stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/214638")
               .to_return(status: 200, body: { data: 'fake data' }.to_json)
-          expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
+          expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/214638"
           allow(S3Service).to receive(:upload_if_changed).and_return true
-          record = ladybird_source.fetch_record(parent_object)
+          record = aspace_source.fetch_record(parent_object)
           expect(record['data']).to eq('fake data')
         end
       end
