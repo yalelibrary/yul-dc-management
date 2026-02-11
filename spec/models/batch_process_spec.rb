@@ -632,18 +632,26 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       describe "uploading a csv of oids to create parent objects" do
         let(:admin_set_upload) { AdminSet.first }
 
+        around do |example|
+          perform_enqueued_jobs do
+            example.run
+          end
+        end
+
         before do
           allow(S3Service).to receive(:s3_exists?).and_return(false)
           stub_ptiffs_and_manifests
+          stub_metadata_cloud("V-30000317", "ils")
           stub_full_text('1032318')
         end
 
         it "succeeds if the user is an editor on the admin set of the parent object" do
-          batch_process.file = csv_upload
+          batch_process.file = xml_upload
           batch_process.save
           expect(ParentObject.count).to eq(1)
           po = ParentObject.first
-          expect(po.events_for_batch_process(batch_process).count).to eq 6
+          expect(po.child_objects.count).to eq(3)
+          expect(po.events_for_batch_process(batch_process).count).to eq 4
         end
 
         it "creates a Parent Object with added fields digitization_note, digitization_funding_source, rights_statement, viewing_direction, and display_layout" do
