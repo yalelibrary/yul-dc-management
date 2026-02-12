@@ -63,6 +63,7 @@ RSpec.describe 'ParentObjects', type: :system, prep_metadata_sources: true, prep
         fill_in('Oid', with: '2012036')
         select('Beinecke Library')
         select('ArchivesSpace')
+        fill_in('parent_object_aspace_uri', with: '/repositories/11/archival_objects/555049')
       end
 
       it 'includes reference to documentation for IIIF values' do

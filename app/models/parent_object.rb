@@ -561,11 +561,14 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.last_aspace_update = DateTime.current if a_record.present?
     self.bib = a_record["orbisBibId"]
     self.barcode = a_record["orbisBarcode"]
-    self.rights_statement = if a_record["rights"].is_a?(Array)
-                              a_record["rights"].join("\n")
-                            else
-                              a_record["rights"]
-                            end
+    # Only set rights_statement on first aspace update (when last_aspace_update_was is nil)
+    if last_aspace_update_was.nil?
+      self.rights_statement = if a_record["rights"].is_a?(Array)
+                                a_record["rights"].join("\n")
+                              else
+                                a_record["rights"]
+                              end
+    end
   end
 
   def sierra_json=(s_record)
