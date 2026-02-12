@@ -39,7 +39,7 @@ RSpec.describe 'ParentObjects', type: :system, prep_metadata_sources: true, prep
       expect(po.visibility).to eq 'Private'
       expect(po.child_object_count).to be nil
       expect(po.representative_child_oid).to be nil
-      expect(po.rights_statement).to be_empty
+      expect(po.rights_statement).to eq "The George Eliot and George Henry Lewes Collection is the physical property of the Beinecke Rare Book and Manuscript Library, Yale University. Literary rights, including copyright, belong to the authors or their legal heirs and assigns. For further information, consult the appropriate curator.\nThis collection is open for research."
       expect(po.extent_of_digitization).to be_empty
     end
 
