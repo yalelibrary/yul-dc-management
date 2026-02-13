@@ -7,7 +7,9 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl') }
   let(:admin_set_sml) { FactoryBot.create(:admin_set, key: 'sml') }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
-  let(:aspace_parent) { FactoryBot.create(:parent_object, oid: 200_000_000, admin_set: AdminSet.find_by_key('brbl')) }
+  let(:aspace_parent) do
+    FactoryBot.create(:parent_object, oid: 200_000_000, authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/214638', admin_set: AdminSet.find_by_key('brbl'))
+  end
   let(:sml_parent) { FactoryBot.create(:parent_object, oid: 12_345, admin_set: AdminSet.find_by_key('sml')) }
   let(:co_1) do
     FactoryBot.create(:child_object, oid: 1_002_533, parent_object: aspace_parent, order: 1, label: 'original first label', caption: 'original first caption',
@@ -118,7 +120,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(ptf_1.access_primary_path).to eq "spec/fixtures/images/access_primaries/03/33/10/02/53/1002533.tif"
       expect(ptf_2.access_primary_path).to eq "spec/fixtures/images/access_primaries/03/34/10/02/53/1002534.tif"
       expect(ptf_3.access_primary_path).to eq "spec/fixtures/images/access_primaries/03/35/10/02/53/1002535.tif"
-
       reingest_batch_process = BatchProcess.new(batch_action: 'update parent objects', user: user)
       expect do
         reingest_batch_process.file = preservica_reingest
