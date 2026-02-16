@@ -634,7 +634,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         end
         it 'raises an error with 500 response' do
           stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/214638")
-              .to_return(status: 500, body: { error: 'fake error' }.to_json)
+              .to_return(status: 500, body: { error: "fake error" }.to_json)
           expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/214638"
           expect do
             aspace_source.fetch_record_on_vpn(parent_object)
@@ -642,13 +642,13 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         end
         it 'returns false on out of range response' do
           stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/214638")
-              .to_return(status: 700, body: { error: 'fake error' }.to_json)
+              .to_return(status: 700, body: { error: "fake error" }.to_json)
           expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/214638"
           expect(aspace_source.fetch_record_on_vpn(parent_object)).to be_falsey
         end
         it 'returns response' do
           stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/214638")
-              .to_return(status: 200, body: { data: 'fake data' }.to_json)
+              .to_return(status: 200, body: { data: "fake data" }.to_json)
           expect(parent_object.aspace_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/214638"
           allow(S3Service).to receive(:upload_if_changed).and_return true
           record = aspace_source.fetch_record(parent_object)
@@ -671,9 +671,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       before do
         stub_full_text_not_found('2005512')
         stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1")
-            .to_return(status: 200, body: { 'title' => ['data'] }.to_json)
+            .to_return(status: 200, body: { "title" => ["data"] }.to_json)
         stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/515305")
-            .to_return(status: 200, body: { 'title' => ['data'] }.to_json)
+            .to_return(status: 200, body: { "title" => ["data"] }.to_json)
         allow(S3Service).to receive(:upload_if_changed).and_return(true)
       end
 
@@ -740,7 +740,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
       it 'posts digital object changes when parent is deleted' do
         stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
-            .to_return(status: 200, body: { data: 'fake data' }.to_json)
+            .to_return(status: 200, body: { data: "fake data" }.to_json)
         expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
         parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
         parent_object.authoritative_metadata_source_id = aspace
@@ -756,7 +756,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
       it 'deletes DigitalObjectJson on delete' do
         stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
-            .to_return(status: 200, body: { data: 'fake data' }.to_json)
+            .to_return(status: 200, body: { data: "fake data" }.to_json)
         expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/ladybird/oid/2005512?include-children=1"
         parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
         parent_object.authoritative_metadata_source_id = aspace
@@ -778,7 +778,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
 
       it 'posts digital object changes when source changes, and continues if post fails' do
         stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
-            .to_return(status: 200, body: { data: 'fake data' }.to_json)
+            .to_return(status: 200, body: { data: "fake data" }.to_json)
         stub_full_text_not_found('2005512')
         allow(parent_object).to receive(:mc_post).and_raise('boom!')
         parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
@@ -791,7 +791,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       it 'posts digital object changes when source changes, and continues if MC doesn not return 200' do
         stub_full_text_not_found('2005512')
         stub_request(:post, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/digital_object_updates")
-            .to_return(status: 404, body: { data: 'fake data' }.to_json)
+            .to_return(status: 404, body: { data: "fake data" }.to_json)
         parent_object.aspace_uri = '/repositories/11/archival_objects/515305'
         parent_object.authoritative_metadata_source_id = aspace
         parent_object.child_object_count = 1
@@ -814,9 +814,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       before do
         stub_full_text_not_found('2005512')
         stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/214638")
-            .to_return(status: 200, body: { 'title' => ['data'] }.to_json)
+            .to_return(status: 200, body: { "title" => ["data"] }.to_json)
         stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/1.0.1/aspace/repositories/11/archival_objects/515305")
-            .to_return(status: 200, body: { 'title' => ['data'] }.to_json)
+            .to_return(status: 200, body: { "title" => ["data"] }.to_json)
         allow(S3Service).to receive(:upload_if_changed).and_return(true)
       end
 
