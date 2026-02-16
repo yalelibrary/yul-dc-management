@@ -619,7 +619,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         let(:aspace_source) { MetadataSource.find(aspace) }
         around do |example|
           original_vpn = ENV['VPN']
-          ENV['VPN'] = 'true'
+          ENV['VPN'] = "true"
           example.run
           ENV['VPN'] = original_vpn
         end
@@ -660,7 +660,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     context 'with vpn true' do
       around do |example|
         original_vpn = ENV['VPN']
-        ENV['VPN'] = 'true'
+        ENV['VPN'] = "true"
         original_flags = ENV['FEATURE_FLAGS']
         ENV['FEATURE_FLAGS'] = "#{ENV['FEATURE_FLAGS']}|DO-SEND|" unless original_flags&.include?('|DO-SEND|')
         example.run
@@ -803,7 +803,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     context 'with vpn true' do
       around do |example|
         original_vpn = ENV['VPN']
-        ENV['VPN'] = 'true'
+        ENV['VPN'] = "true"
         original_flags = ENV['FEATURE_FLAGS']
         ENV['FEATURE_FLAGS'] = "#{ENV['FEATURE_FLAGS']}|ACTIVITY-SEND|" unless original_flags&.include?('|ACTIVITY-SEND|')
         example.run
