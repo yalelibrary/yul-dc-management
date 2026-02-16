@@ -9,13 +9,14 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
     let(:batch_process) do
       FactoryBot.create(
         :batch_process,
+        batch_action: 'export child oids',
         user_id: user.id,
         csv: File.open(fixture_path + '/csv/shorter_fixture_ids.csv').read,
         file_name: 'shorter_fixture_ids.csv',
         created_at: '2020-10-08 14:17:01'
       )
     end
-    let(:parent_object) { FactoryBot.create(:parent_object, admin_set_id: brbl.id, authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/214638') }
+    let(:parent_object) { FactoryBot.create(:parent_object, admin_set_id: brbl.id, authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/214638', child_object_count: 2) }
     let(:child_object_one) { FactoryBot.create(:child_object, oid: '1030368', parent_object: parent_object) }
     let(:child_object_two) { FactoryBot.create(:child_object, oid: '1032318', parent_object: parent_object) }
 
@@ -35,6 +36,9 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       stub_metadata_cloud('AS-2005512', 'aspace')
       stub_ptiffs_and_manifests
       login_as user
+      parent_object
+      child_object_one
+      child_object_two
     end
 
     it 'has a link to the batch process detail page' do

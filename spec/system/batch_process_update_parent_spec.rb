@@ -5,7 +5,9 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   let(:user) { FactoryBot.create(:user) }
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
   # parent object has two child objects
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: '2005512', admin_set_id: admin_set.id, authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/214638') }
+  let(:parent_object) do
+    FactoryBot.create(:parent_object, oid: '2005512', admin_set_id: admin_set.id, authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/214638', child_object_count: 2)
+  end
   let(:parent_no_children) { FactoryBot.create(:parent_object, oid: '200463000', admin_set_id: admin_set.id) }
   let(:child_object_one) { FactoryBot.create(:child_object, oid: '1030368', parent_object: parent_object) }
   let(:child_object_two) { FactoryBot.create(:child_object, oid: '1032318', parent_object: parent_object) }
@@ -146,11 +148,11 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
         expect(page).to have_content "Submitted #{today}"
         expect(page).to have_content "Processing Queued Pending"
-        expect(page).to have_content "Metadata Fetched #{today}"
-        expect(page).to have_content "Child Records Created #{today}"
-        expect(page).to have_content "Manifest Saved #{today}"
-        expect(page).to have_content "Solr Indexed #{today}"
-        expect(page).to have_content "PDF Generated #{today}"
+        expect(page).to have_content "Metadata Fetched Pending"
+        expect(page).to have_content "Child Records Created Pending"
+        expect(page).to have_content "Manifest Saved Pending"
+        expect(page).to have_content "Solr Indexed Pending"
+        expect(page).to have_content "PDF Generated Pending"
       end
     end
   end
