@@ -103,6 +103,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
     end
 
     before do
+      stub_metadata_cloud("AS-#{oid}", 'aspace')
       parent_object
     end
     it 'indexes the parent when metadata is not found' do
