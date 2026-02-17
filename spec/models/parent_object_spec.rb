@@ -662,7 +662,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         original_vpn = ENV['VPN']
         ENV['VPN'] = "true"
         original_flags = ENV['FEATURE_FLAGS']
-        ENV['FEATURE_FLAGS'] = "#{ENV['FEATURE_FLAGS']}|DO-SEND|" unless original_flags&.include?('|DO-SEND|')
+        ENV['FEATURE_FLAGS'] = "#{ENV['FEATURE_FLAGS']}|DO-SEND|" unless original_flags&.include?("|DO-SEND|")
         example.run
         ENV['VPN'] = original_vpn
         ENV['FEATURE_FLAGS'] = original_flags
@@ -805,7 +805,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         original_vpn = ENV['VPN']
         ENV['VPN'] = "true"
         original_flags = ENV['FEATURE_FLAGS']
-        ENV['FEATURE_FLAGS'] = "#{ENV['FEATURE_FLAGS']}|ACTIVITY-SEND|" unless original_flags&.include?('|ACTIVITY-SEND|')
+        ENV['FEATURE_FLAGS'] = "#{ENV['FEATURE_FLAGS']}|ACTIVITY-SEND|" unless original_flags&.include?("|ACTIVITY-SEND|")
         example.run
         ENV['VPN'] = original_vpn
         ENV['FEATURE_FLAGS'] = original_flags

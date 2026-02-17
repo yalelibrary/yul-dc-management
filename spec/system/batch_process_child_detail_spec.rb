@@ -17,8 +17,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       )
     end
     let(:parent_object) do
-      FactoryBot.create(:parent_object, admin_set_id: brbl.id, authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/214638', child_object_count: 2,
-                                        aspace_json: JSON.parse(File.read(File.join(fixture_path, "aspace", "AS-2005512.json"))))
+      FactoryBot.create(:parent_object, admin_set_id: brbl.id, authoritative_metadata_source_id: 3, aspace_uri: '/repositories/11/archival_objects/214638', child_object_count: 2)
     end
     let(:child_object_one) { FactoryBot.create(:child_object, oid: '1030368', parent_object: parent_object) }
     let(:child_object_two) { FactoryBot.create(:child_object, oid: '1032318', parent_object: parent_object) }
@@ -38,6 +37,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
     before do
       stub_metadata_cloud('AS-2005512', 'aspace')
       stub_ptiffs_and_manifests
+      user.add_role(:editor, brbl)
       login_as user
       parent_object
       child_object_one
