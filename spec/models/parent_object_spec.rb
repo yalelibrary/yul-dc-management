@@ -381,7 +381,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         stub_metadata_cloud('AS-2005512', 'aspace')
         stub_metadata_cloud('2005512', 'ladybird')
         stub_metadata_cloud('V-2005512', 'ils')
-        parent_object
+        aspace_response = JSON.parse(File.read(File.join(fixture_path, 'aspace', 'AS-2005512.json')))
+        parent_object.aspace_json = aspace_response
+        parent_object.save!
         child_object_one
         child_object_two
       end

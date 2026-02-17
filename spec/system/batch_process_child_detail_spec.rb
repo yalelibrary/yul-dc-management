@@ -39,7 +39,10 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
       stub_ptiffs_and_manifests
       user.add_role(:editor, brbl)
       login_as user
+      aspace_response = JSON.parse(File.read(File.join(fixture_path, 'aspace', 'AS-2005512.json')))
       parent_object
+      parent_object.aspace_json = aspace_response
+      parent_object.save!
       child_object_one
       child_object_two
     end
