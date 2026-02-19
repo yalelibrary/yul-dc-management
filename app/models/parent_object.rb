@@ -412,9 +412,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def default_fetch(_current_batch_process = current_batch_process, _current_batch_connection = current_batch_connection)
-    # Skip metadata fetch for Sierra, ILS (Voyager), and Ladybird records
-    if ["sierra", "ils", "ladybird"].include?(authoritative_metadata_source&.metadata_cloud_name)
+    # TODO: refactor environment dependent clauses once need to create ladybird records for testing purposes is no longer present
+    # Skip metadata fetch for Sierra, ILS (Voyager), and eventually Ladybird records
+    if ["sierra", "ils"].include?(authoritative_metadata_source&.metadata_cloud_name)
       processing_event("Metadata fetch skipped for #{authoritative_metadata_source.metadata_cloud_name} data source", "metadata-fetch-skipped")
       return true
     end
@@ -434,6 +436,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                         force_private
                         false
                       end
+                    when "ladybird"
+                      processing_event("Metadata fetch skipped for Ladybird data source", "metadata-fetch-skipped") if ENV.fetch("RAILS_ENV") != "test"
+                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) if ENV.fetch("RAILS_ENV") == "test"
+                    else
+                      raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
                     end
     if fetch_results
       assign_dependent_objects
@@ -445,6 +452,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def force_private
     self.visibility = "Private"
