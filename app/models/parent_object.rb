@@ -105,7 +105,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def from_upstream_for_the_first_time?
-    from_ladybird_for_the_first_time? || from_mets_for_the_first_time? || (from_preservica_for_the_first_time? && (digital_object_source == "Preservica" || digital_object_source == "preservica"))
+    from_mets_for_the_first_time? || (from_preservica_for_the_first_time? && (digital_object_source == "Preservica" || digital_object_source == "preservica"))
   end
 
   def self.cannot_reindex
@@ -133,6 +133,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     last_preservica_update.nil?
   end
 
+  # Returns true if last_<source>_update has changed from nil to some value recently
+  # indicating initial fetch from that source
+  def from_source_for_the_first_time?(metadata_source)
+    return true if send("last_#{metadata_source}_update").nil?
+    return false unless send("last_#{metadata_source}_update").nil?
+  end
+
   def start_states
     ['processing-queued']
   end
@@ -148,6 +155,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/AbcSize
   def create_child_records
+    # from_mets includes records from aspace and alma
     if from_mets
       upsert_child_objects(array_of_child_hashes_from_mets)
       upsert_preservica_ingest_child_objects(array_preservica_hashes_from_mets) unless array_preservica_hashes_from_mets.nil?
@@ -161,7 +169,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         upsert_child_objects(valid_child_hashes) unless valid_child_hashes.empty?
         self.last_preservica_update = Time.current
       end
-    else
+    else # TODO: refactor this into an error because we should not be pulling from ladybird anymore
+      # processing_event("Error creating child records: unsupported digital object source #{digital_object_source}", "failed")
       return unless ladybird_json
       return self.child_object_count = 0 if ladybird_json["children"].empty? && parent_model != 'simple'
       upsert_child_objects(array_of_child_hashes)
@@ -403,20 +412,19 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def default_fetch(_current_batch_process = current_batch_process, _current_batch_connection = current_batch_connection)
-    # Skip metadata fetch for Sierra and ILS (Voyager)
+    # TODO: refactor environment dependent clauses once need to create ladybird records for testing purposes is no longer present
+    # Skip metadata fetch for Sierra, ILS (Voyager), and eventually Ladybird records
     if ["sierra", "ils"].include?(authoritative_metadata_source&.metadata_cloud_name)
       processing_event("Metadata fetch skipped for #{authoritative_metadata_source.metadata_cloud_name} data source", "metadata-fetch-skipped")
       return true
     end
 
     fetch_results = case authoritative_metadata_source&.metadata_cloud_name
-                    when "ladybird"
-                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
                     when "alma"
                       self.alma_json = MetadataSource.find_by(metadata_cloud_name: "alma").fetch_record(self)
                     when "aspace"
-                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless aspace_uri.present?
                       begin
                         self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
                       rescue MetadataSource::MetadataCloudNotFoundError
@@ -428,6 +436,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                         force_private
                         false
                       end
+                    when "ladybird"
+                      processing_event("Metadata fetch skipped for Ladybird data source", "metadata-fetch-skipped") if ENV.fetch("RAILS_ENV") != "test"
+                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) if ENV.fetch("RAILS_ENV") == "test"
+                    else
+                      raise StandardError, "Unexpected metadata cloud name: #{authoritative_metadata_source.metadata_cloud_name}"
                     end
     if fetch_results
       assign_dependent_objects
@@ -439,6 +452,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def force_private
     self.visibility = "Private"
@@ -452,7 +466,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def setup_metadata_job(current_batch_connection = self.current_batch_connection)
-    if (created_at_previously_changed? && ladybird_json.blank?) ||
+    if created_at_previously_changed? ||
        previous_changes["authoritative_metadata_source_id"].present? ||
        metadata_update.present?
       current_batch_connection&.save! unless current_batch_connection&.persisted?
@@ -555,6 +569,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.last_aspace_update = DateTime.current if a_record.present?
     self.bib = a_record["orbisBibId"]
     self.barcode = a_record["orbisBarcode"]
+    # Only set rights_statement on first aspace update (when last_aspace_update_was is nil)
+    return unless last_aspace_update_was.nil?
+    self.rights_statement = if a_record["rights"].is_a?(Array)
+                              a_record["rights"].join("\n")
+                            else
+                              a_record["rights"]
+                            end
   end
 
   def sierra_json=(s_record)

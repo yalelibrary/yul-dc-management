@@ -6,11 +6,11 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: 'mk2525') }
   let(:admin_set_one) { FactoryBot.create(:admin_set, key: 'jss') }
-  let(:create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_owp_parent.csv")) }
-  let(:create_invalid_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_invalid_owp_parent.csv")) }
-  let(:create_invalid_sensitive_materials_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_invalid_sensitive_materials_parent.csv")) }
-  let(:mini_create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "mini_owp_parent.csv")) }
-  let(:permission_set) { FactoryBot.create(:permission_set, key: "PS Key") }
+  let(:create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'create_owp_parent.csv')) }
+  let(:create_invalid_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'create_invalid_owp_parent.csv')) }
+  let(:create_invalid_sensitive_materials_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'create_invalid_sensitive_materials_parent.csv')) }
+  let(:mini_create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'mini_owp_parent.csv')) }
+  let(:permission_set) { FactoryBot.create(:permission_set, key: 'PS Key') }
   let(:no_oid_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'parent_no_oid.csv')) }
   let(:no_admin_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'parent_no_admin_set.csv')) }
   let(:no_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'parent_no_source.csv')) }
@@ -41,7 +41,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   describe 'with the metadata cloud mocked' do
     before do
       stub_metadata_cloud('AS-781086', 'aspace')
-      stub_metadata_cloud('200000045')
       stub_metadata_cloud('2002826')
       stub_metadata_cloud('A-15821166', 'alma')
       stub_metadata_cloud('2004628')
@@ -59,23 +58,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         expect(po.bib).to eq('4320085')
         expect(po.aspace_uri).to eq('/repositories/12/archival_objects/781086')
         expect(po.sensitive_materials).to eq('Yes')
-      end
-
-      it 'can create a parent object from ladybird with children and gathers technical image metadata' do
-        ladybird_csv = Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'ladybird_parent_with_children.csv'))
-        expect do
-          batch_process.file = ladybird_csv
-          batch_process.save
-        end.to change { ParentObject.count }.from(0).to(1)
-        po = ParentObject.first
-        expect(po.oid).to eq 2_004_628
-        expect(po.child_objects).not_to be_empty
-        child = ChildObject.find_by(parent_object_oid: po.oid)
-        expect(child).not_to be_nil
-        expect(child.oid).to eq 1_042_003
-        expect(child.image_metadata).not_to be_nil
-        expect(child.x_resolution).to eq "28.35000048"
-        expect(child.y_resolution).to eq "28.35000048"
       end
 
       it 'can create a parent object from alma' do
@@ -159,17 +141,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.save
         end.not_to change { ParentObject.count }
         expect(batch_process.batch_ingest_events[0].reason).to eq("Skipping row [2] with parent oid: 200000000.  Extent of Digitization value must be 'Completely digitized' or 'Partially digitized'.")
-      end
-      context 'with minimal csv data and OwP itemPermission' do
-        it 'fails when no Permission Set key is submitted' do
-          expect do
-            batch_process.file = mini_create_owp_parent
-            batch_process.save
-          end.to change { ParentObject.count }.from(0).to(1)
-          po = ParentObject.first
-          expect(po.visibility).to eq "Private"
-          expect(po.events_for_batch_process(batch_process)[1].reason).to include("SetupMetadataJob failed. Permission Set information missing or nonexistent from CSV.")
-        end
       end
     end
   end

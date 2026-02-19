@@ -33,9 +33,10 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
     end
   end
 
-  context 'metadata fetch skipping for Voyager and Sierra' do
+  context 'metadata fetch skipping for Voyager, Sierra, and Ladybird' do
     let(:sierra_source) { MetadataSource.find_by(metadata_cloud_name: 'sierra') || FactoryBot.create(:metadata_source, metadata_cloud_name: 'sierra') }
     let(:ils_source) { MetadataSource.find_by(metadata_cloud_name: 'ils') || FactoryBot.create(:metadata_source, metadata_cloud_name: 'ils') }
+    let(:ladybird_source) { MetadataSource.find_by(metadata_cloud_name: 'ladybird') || FactoryBot.create(:metadata_source, metadata_cloud_name: 'ladybird') }
     let(:alma_source) { MetadataSource.find_by(metadata_cloud_name: 'alma') || FactoryBot.create(:metadata_source, metadata_cloud_name: 'alma') }
 
     it 'skips metadata fetch for Sierra data source' do
@@ -60,6 +61,18 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
       metadata_job.perform(parent_object, batch_process)
 
       expect(parent_object).to have_received(:processing_event).with("Metadata fetch skipped for ils data source", "metadata-fetch-skipped")
+    end
+
+    it 'skips metadata fetch for Ladybird data source' do
+      parent_object.authoritative_metadata_source = ladybird_source
+      parent_object.save!
+
+      allow(parent_object).to receive(:processing_event).and_call_original
+      allow(metadata_job).to receive(:setup_child_object_jobs)
+
+      metadata_job.perform(parent_object, batch_process)
+
+      expect(parent_object).to have_received(:processing_event).with("Metadata fetch skipped for ladybird data source", "metadata-fetch-skipped")
     end
 
     it 'does not skip metadata fetch for other data sources like Alma' do
