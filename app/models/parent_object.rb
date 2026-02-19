@@ -18,6 +18,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :batch_connections, as: :connectable
   has_many :batch_processes, through: :batch_connections
   has_many :permission_requests, class_name: "OpenWithPermission::PermissionRequest"
+  has_many versions_association_name, as: :item, order: "created_at ASC", foreign_key: :item_id, class_name: 'Version'
   belongs_to :authoritative_metadata_source, class_name: "MetadataSource"
   belongs_to :admin_set
   belongs_to :permission_set, class_name: "OpenWithPermission::PermissionSet", optional: true
