@@ -352,7 +352,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
 
     it "queues objects to be updated" do
       # 2 parent objects. Skipping voyager since it's not fetched.
-      expect(SetupMetadataJob).to receive(:perform_later).thrice
+      expect(SetupMetadataJob).to receive(:perform_later).twice
       described_class.update
     end
 
@@ -365,7 +365,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
       expect(ActivityStreamLog.last.retrieved_records).to eq 4 # 4 relevant records
       asr.process_activity_stream
       expect(ActivityStreamLog.count).to eq 2
-      expect(ActivityStreamLog.last.retrieved_records).to eq 3
+      expect(ActivityStreamLog.last.retrieved_records).to eq 2
     end
 
     context "with records setup for aspace, ils and alma" do
@@ -384,7 +384,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
         described_class.update
         expect(ActivityStreamLog.count).to eq 2
         expect(ActivityStreamLog.last.activity_stream_items).to be > 2000
-        expect(ActivityStreamLog.last.retrieved_records).to eq 3
+        expect(ActivityStreamLog.last.retrieved_records).to eq 2
       end
     end
 

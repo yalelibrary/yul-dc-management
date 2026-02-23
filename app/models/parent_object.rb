@@ -105,7 +105,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def from_upstream_for_the_first_time?
-    from_mets_for_the_first_time? || (from_preservica_for_the_first_time? && (digital_object_source == "Preservica" || digital_object_source == "preservica"))
+    from_ladybird_for_the_first_time? || from_mets_for_the_first_time? || (from_preservica_for_the_first_time? && (digital_object_source == "Preservica" || digital_object_source == "preservica"))
   end
 
   def self.cannot_reindex
