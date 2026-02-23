@@ -412,11 +412,15 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     fetch_results = case authoritative_metadata_source&.metadata_cloud_name
                     when "ladybird"
+                      unless ENV.fetch("RAILS_ENV") == "test"
+                        processing_event("Metadata fetch failed: Ladybird is not available as a metadata source in this environment. Please update the authoritative metadata source.", "failed")
+                        return false
+                      end
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
                     when "alma"
                       self.alma_json = MetadataSource.find_by(metadata_cloud_name: "alma").fetch_record(self)
                     when "aspace"
-                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) unless aspace_uri.present?
+                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) if ENV.fetch("RAILS_ENV") == "test" && !aspace_uri.present?
                       begin
                         self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
                       rescue MetadataSource::MetadataCloudNotFoundError

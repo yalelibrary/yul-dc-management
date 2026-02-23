@@ -11,6 +11,7 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
   let(:parent_object) { FactoryBot.create(:parent_object, admin_set: AdminSet.first, authoritative_metadata_source: MetadataSource.first) }
   let(:metadata_job) { SetupMetadataJob.new }
+  let(:non_test_env) { "production" }
 
   it 'enqueues the job successfully' do
     active_job = described_class.perform_later(parent_object, batch_process)
@@ -83,6 +84,90 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
 
       expect(parent_object).to have_received(:processing_event).with("Metadata fetch skipped for sierra data source", "metadata-fetch-skipped")
       expect(metadata_job).to have_received(:setup_child_object_jobs).with(parent_object, batch_process)
+    end
+  end
+
+  context 'Ladybird metadata fetch environment gating' do
+    let(:ladybird_source) { MetadataSource.find_by(metadata_cloud_name: 'ladybird') || FactoryBot.create(:metadata_source) }
+
+    before do
+      parent_object.authoritative_metadata_source = ladybird_source
+      parent_object.save!
+      stub_metadata_cloud(parent_object.oid.to_s, "ladybird")
+    end
+
+    context 'in test environment' do
+      it 'performs the Ladybird fetch' do
+        allow(parent_object).to receive(:processing_event).and_call_original
+        allow(metadata_job).to receive(:setup_child_object_jobs)
+
+        metadata_job.perform(parent_object, batch_process)
+
+        expect(parent_object).not_to have_received(:processing_event).with(/Ladybird is not available/, "failed")
+        expect(parent_object.ladybird_json).not_to be_nil
+      end
+    end
+
+    context 'in non-test environment' do
+      before do
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with("RAILS_ENV").and_return(non_test_env)
+        allow(parent_object).to receive(:processing_event).and_call_original
+      end
+
+      it 'fails with a descriptive message' do
+        metadata_job.perform(parent_object, batch_process)
+
+        expect(parent_object).to have_received(:processing_event).with(
+          "Metadata fetch failed: Ladybird is not available as a metadata source in this environment. Please update the authoritative metadata source.", "failed"
+        )
+        expect(parent_object.ladybird_json).to be_nil
+      end
+
+      it 'does not continue job processing' do
+        allow(metadata_job).to receive(:setup_child_object_jobs)
+
+        metadata_job.perform(parent_object, batch_process)
+
+        expect(metadata_job).not_to have_received(:setup_child_object_jobs)
+      end
+    end
+  end
+
+  context 'ArchiveSpace Ladybird fetch environment gating' do
+    let(:aspace_source) { MetadataSource.find_by(metadata_cloud_name: 'aspace') || FactoryBot.create(:metadata_source_aspace) }
+    let(:parent_object_without_aspace_uri) do
+      FactoryBot.create(:parent_object, oid: "2005512", admin_set: AdminSet.first,
+                                        authoritative_metadata_source: aspace_source, aspace_uri: nil)
+    end
+
+    before do
+      stub_metadata_cloud("2005512", "ladybird")
+      stub_metadata_cloud("AS-2005512", "aspace")
+    end
+
+    context 'in test environment' do
+      it 'fetches Ladybird data when aspace_uri is blank' do
+        allow(parent_object_without_aspace_uri).to receive(:processing_event).and_call_original
+        fetch_result = parent_object_without_aspace_uri.default_fetch
+
+        expect(parent_object_without_aspace_uri.ladybird_json).not_to be_nil
+        expect(fetch_result).to be_truthy
+      end
+    end
+
+    context 'in non-test environment' do
+      before do
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with("RAILS_ENV").and_return(non_test_env)
+      end
+
+      it 'skips Ladybird fetch when aspace_uri is blank' do
+        allow(parent_object_without_aspace_uri).to receive(:processing_event).and_call_original
+        parent_object_without_aspace_uri.default_fetch
+
+        expect(parent_object_without_aspace_uri.ladybird_json).to be_nil
+      end
     end
   end
 end
