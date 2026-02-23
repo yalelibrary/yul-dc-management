@@ -403,6 +403,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def default_fetch(_current_batch_process = current_batch_process, _current_batch_connection = current_batch_connection)
     # Skip metadata fetch for Sierra and ILS (Voyager)
     if ["sierra", "ils"].include?(authoritative_metadata_source&.metadata_cloud_name)
@@ -443,6 +444,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def force_private
     self.visibility = "Private"
