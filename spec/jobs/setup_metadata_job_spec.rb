@@ -103,7 +103,7 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
 
         metadata_job.perform(parent_object, batch_process)
 
-        expect(parent_object).not_to have_received(:processing_event).with(/Ladybird is not available/, "failed")
+        expect(parent_object).not_to have_received(:processing_event).with("Metadata fetch skipped for Ladybird data source. Ladybird is not available as a metadata source in this environment.", "metadata-fetch-skipped")
         expect(parent_object.ladybird_json).not_to be_nil
       end
     end
@@ -115,21 +115,21 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
         allow(parent_object).to receive(:processing_event).and_call_original
       end
 
-      it 'fails with a descriptive message' do
-        metadata_job.perform(parent_object, batch_process)
-
-        expect(parent_object).to have_received(:processing_event).with(
-          "Metadata fetch failed: Ladybird is not available as a metadata source in this environment. Please update the authoritative metadata source.", "failed"
-        )
-        expect(parent_object.ladybird_json).to be_nil
-      end
-
-      it 'does not continue job processing' do
+      it 'skips Ladybird fetch with a skip event' do
         allow(metadata_job).to receive(:setup_child_object_jobs)
 
         metadata_job.perform(parent_object, batch_process)
 
-        expect(metadata_job).not_to have_received(:setup_child_object_jobs)
+        expect(parent_object).to have_received(:processing_event).with("Metadata fetch skipped for Ladybird data source. Ladybird is not available as a metadata source in this environment.", "metadata-fetch-skipped")
+        expect(parent_object.ladybird_json).to be_nil
+      end
+
+      it 'continues with normal job flow' do
+        allow(metadata_job).to receive(:setup_child_object_jobs)
+
+        metadata_job.perform(parent_object, batch_process)
+
+        expect(metadata_job).to have_received(:setup_child_object_jobs).with(parent_object, batch_process)
       end
     end
   end

@@ -414,8 +414,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     fetch_results = case authoritative_metadata_source&.metadata_cloud_name
                     when "ladybird"
                       unless ENV.fetch("RAILS_ENV") == "test"
-                        processing_event("Metadata fetch failed: Ladybird is not available as a metadata source in this environment. Please update the authoritative metadata source.", "failed")
-                        return false
+                        processing_event("Metadata fetch skipped for Ladybird data source. Ladybird is not available as a metadata source in this environment.", "metadata-fetch-skipped")
+                        return true
                       end
                       self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self)
                     when "alma"
