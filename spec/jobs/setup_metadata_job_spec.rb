@@ -103,7 +103,8 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
 
         metadata_job.perform(parent_object, batch_process)
 
-        expect(parent_object).not_to have_received(:processing_event).with("Metadata fetch skipped for Ladybird data source. Ladybird is not available as a metadata source in this environment.", "metadata-fetch-skipped")
+        expect(parent_object).not_to have_received(:processing_event).with("Metadata fetch skipped for Ladybird data source. Ladybird is not available as a metadata source in this environment.",
+"metadata-fetch-skipped")
         expect(parent_object.ladybird_json).not_to be_nil
       end
     end
@@ -120,7 +121,8 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
 
         metadata_job.perform(parent_object, batch_process)
 
-        expect(parent_object).to have_received(:processing_event).with("Metadata fetch skipped for Ladybird data source. Ladybird is not available as a metadata source in this environment.", "metadata-fetch-skipped")
+        expect(parent_object).to have_received(:processing_event).with("Metadata fetch skipped for Ladybird data source. Ladybird is not available as a metadata source in this environment.",
+"metadata-fetch-skipped")
         expect(parent_object.ladybird_json).to be_nil
       end
 
