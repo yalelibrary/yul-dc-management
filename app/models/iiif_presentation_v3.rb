@@ -176,7 +176,7 @@ class IiifPresentationV3
         end
       end
 
-      values << metadata_pair(hash[:label], value) if value
+      values << metadata_pair(hash[:label], value) if value.present?
     end
     values
   end
