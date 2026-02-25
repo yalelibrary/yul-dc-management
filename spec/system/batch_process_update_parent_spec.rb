@@ -141,11 +141,11 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
         expect(page).to have_content "Submitted #{today}"
         expect(page).to have_content "Processing Queued Pending"
-        expect(page).to have_content "Metadata Fetched Pending"
-        expect(page).to have_content "Child Records Created Pending"
-        expect(page).to have_content "Manifest Saved Pending"
-        expect(page).to have_content "Solr Indexed Pending"
-        expect(page).to have_content "PDF Generated Pending"
+        expect(page).to have_content "Metadata Fetched #{today}"
+        expect(page).to have_content "Child Records Created #{today}"
+        expect(page).to have_content "Manifest Saved #{today}"
+        expect(page).to have_content "Solr Indexed #{today}"
+        expect(page).to have_content "PDF Generated #{today}"
       end
     end
   end
