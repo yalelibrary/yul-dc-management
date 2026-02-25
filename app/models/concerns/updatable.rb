@@ -112,6 +112,7 @@ module Updatable
 
       parent_object.update!(processed_fields)
       parent_object.reload
+      trigger_setup_metadata(parent_object) unless /preservica/i.match?(parent_object.digital_object_source)
 
       sync_single_parent_from_preservica(parent_object, row) if /preservica/i.match?(parent_object.digital_object_source)
 
