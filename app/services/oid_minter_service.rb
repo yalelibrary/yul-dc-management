@@ -12,13 +12,13 @@ class OidMinterService
   end
 
   def self.initialize_sequence!
-    initial_value = if ENV['CLUSTER_NAME'] == 'yul-dc-demo'
+    initial_value = if ENV['CLUSTER_NAME'] == 'yul-dc-demo' && ENV['RAILS_ENV'] == 'production'
                       20_000_000
-                    elsif ENV['CLUSTER_NAME'] == 'yul-dc-test'
+                    elsif ENV['CLUSTER_NAME'] == 'yul-dc-test' && ENV['RAILS_ENV'] == 'production'
                       40_000_000
-                    elsif ENV['CLUSTER_NAME'] == 'yul-dc-uat'
+                    elsif ENV['CLUSTER_NAME'] == 'yul-dc-uat' && ENV['RAILS_ENV'] == 'production'
                       50_000_000
-                    elsif ENV['CLUSTER_NAME'] == 'yul-dc-prod' || ENV['RAILS_ENV'] == 'development' || ENV['RAILS_ENV'] == 'test'
+                    elsif (ENV['CLUSTER_NAME'] == 'yul-dc-prod' && ENV['RAILS_ENV'] == 'production') || ENV['RAILS_ENV'] == 'development' || ENV['RAILS_ENV'] == 'test'
                       Rails.application.config.oid_sequence_initial_value
                     else
                       60_000_000
