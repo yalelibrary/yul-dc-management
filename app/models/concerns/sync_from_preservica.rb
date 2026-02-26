@@ -67,8 +67,8 @@ module SyncFromPreservica
   def sync_images_preservica(local_children_hash, preservica_children_hash, parent_object)
     # always update
     # if local_children_hash != preservica_children_hash
-    setup_for_background_jobs(parent_object, parent_object.source_name)
     parent_object.sync_from_preservica(local_children_hash, preservica_children_hash)
+    setup_for_background_jobs(parent_object, parent_object.source_name)
     # else
     #   batch_processing_event("Child object count and order is the same.  No update needed.", "Skipped Row")
     # end
