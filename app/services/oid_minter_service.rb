@@ -11,6 +11,8 @@ class OidMinterService
     oids
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def self.initialize_sequence!
     initial_value = if ENV['CLUSTER_NAME'] == 'yul-dc-demo' && ENV['RAILS_ENV'] == 'production'
                       20_000_000
@@ -27,4 +29,6 @@ class OidMinterService
     ActiveRecord::Base.connection.execute("CREATE SEQUENCE IF NOT EXISTS OID_SEQUENCE START WITH #{initial_value};")
     initial_value
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 end
