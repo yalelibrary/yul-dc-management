@@ -247,6 +247,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     child_objects.each do |co|
       co.destroy! unless found_in_preservica(co.sha512_checksum, preservica_children_hash)
     end
+    child_objects.reset
     # iterate through preservica and update when local version found
     sync_from_preservica_update_existing_children(preservica_children_hash)
 
@@ -413,7 +414,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     fetch_results = case authoritative_metadata_source&.metadata_cloud_name
                     when "ladybird"
-                      unless ENV.fetch("RAILS_ENV") == "test"
+                      unless ENV.fetch("RAILS_ENV", "development") == "test"
                         processing_event("Metadata fetch skipped for Ladybird data source. Ladybird is not available as a metadata source in this environment.", "metadata-fetch-skipped")
                         return true
                       end
@@ -421,7 +422,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
                     when "alma"
                       self.alma_json = MetadataSource.find_by(metadata_cloud_name: "alma").fetch_record(self)
                     when "aspace"
-                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) if ENV.fetch("RAILS_ENV") == "test" && !aspace_uri.present?
+                      self.ladybird_json = MetadataSource.find_by(metadata_cloud_name: "ladybird").fetch_record(self) if ENV.fetch("RAILS_ENV", "development") == "test" && !aspace_uri.present?
                       begin
                         self.aspace_json = MetadataSource.find_by(metadata_cloud_name: "aspace").fetch_record(self)
                       rescue MetadataSource::MetadataCloudNotFoundError
