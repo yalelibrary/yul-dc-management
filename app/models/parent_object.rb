@@ -291,7 +291,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def found_in_preservica(local_checksum, preservica_children_hash)
     preservica_children_hash.any? do |_, value|
-      value[:checksum]&.casecmp(local_checksum)&.zero?
+      value[:checksum]&.downcase == local_checksum&.downcase
     end
   end
 
