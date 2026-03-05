@@ -247,6 +247,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     child_objects.each do |co|
       co.destroy! unless found_in_preservica(co.sha512_checksum, preservica_children_hash)
     end
+    child_objects.reset
     # iterate through preservica and update when local version found
     sync_from_preservica_update_existing_children(preservica_children_hash)
 
@@ -290,7 +291,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def found_in_preservica(local_checksum, preservica_children_hash)
     preservica_children_hash.any? do |_, value|
-      value[:checksum] == local_checksum
+      value[:checksum]&.downcase == local_checksum&.downcase
     end
   end
 
