@@ -31,7 +31,6 @@ class PreservicaImageService
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
-  # rubocop:disable Lint/UselessAssignment
   def image_list(representation_type)
     @images = []
     attempt_count ||= 1
@@ -54,6 +53,7 @@ class PreservicaImageService
           @information_objects = [Preservica::InformationObject.where(admin_set_key: @admin_set_key, id: (@uri.split('/')[-1]).to_s)]
         rescue Net::HTTPFatalError, Net::ReadTimeout => e
           sleep 30
+          retry if attempt_count < 4
           raise PreservicaImageServiceNetworkError.new(e.to_s, @uri.to_s)
         end
       end
@@ -75,7 +75,6 @@ class PreservicaImageService
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
-  # rubocop:enable Lint/UselessAssignment
 
   # rubocop:disable Layout/LineLength
   # rubocop:disable Metrics/AbcSize
