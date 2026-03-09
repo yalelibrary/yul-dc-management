@@ -34,7 +34,8 @@ describe OidMinterService do
     end
     it 'initializes the sequence with the expected value' do
       oids = described_class.generate_oids(1)
-      expect(oids[0]).to be >= 20_000_000
+      byebug
+      expect(oids[0]).to be >= 2_000_000_000
     end
   end
   context 'when in yul-dc-test cluster environment' do
@@ -46,7 +47,7 @@ describe OidMinterService do
     end
     it 'initializes the sequence with the expected value' do
       oids = described_class.generate_oids(1)
-      expect(oids[0]).to be >= 40_000_000
+      expect(oids[0]).to be >= 4_000_000_000
     end
   end
   context 'when in yul-dc-uat cluster environment' do
@@ -58,7 +59,7 @@ describe OidMinterService do
     end
     it 'initializes the sequence with the expected value' do
       oids = described_class.generate_oids(1)
-      expect(oids[0]).to be >= 50_000_000
+      expect(oids[0]).to be >= 5_000_000_000
     end
   end
   context 'when in yul-dc-prod cluster environment' do
