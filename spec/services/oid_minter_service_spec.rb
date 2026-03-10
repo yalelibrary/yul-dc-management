@@ -25,48 +25,60 @@ describe OidMinterService do
       expect(oids.length).to equal oids.uniq.length
     end
   end
-  context 'when in yul-dc-demo cluster environment' do
+  context 'when in yul-dc-demo cluster environment', skip_db_cleaner: true do
     around do |example|
       original_cluster_name = ENV['CLUSTER_NAME']
       ENV['CLUSTER_NAME'] = 'yul-dc-demo'
+      original_environment_name = ENV['RAILS_ENV']
+      ENV['RAILS_ENV'] = 'production'
       example.run
       ENV['CLUSTER_NAME'] = original_cluster_name
+      ENV['RAILS_ENV'] = original_environment_name
     end
     it 'initializes the sequence with the expected value' do
       oids = described_class.generate_oids(1)
       expect(oids[0]).to be >= 2_000_000_000
     end
   end
-  context 'when in yul-dc-test cluster environment' do
+  context 'when in yul-dc-test cluster environment', skip_db_cleaner: true do
     around do |example|
       original_cluster_name = ENV['CLUSTER_NAME']
       ENV['CLUSTER_NAME'] = 'yul-dc-test'
+      original_environment_name = ENV['RAILS_ENV']
+      ENV['RAILS_ENV'] = 'production'
       example.run
       ENV['CLUSTER_NAME'] = original_cluster_name
+      ENV['RAILS_ENV'] = original_environment_name
     end
     it 'initializes the sequence with the expected value' do
       oids = described_class.generate_oids(1)
       expect(oids[0]).to be >= 4_000_000_000
     end
   end
-  context 'when in yul-dc-uat cluster environment' do
+  context 'when in yul-dc-uat cluster environment', skip_db_cleaner: true do
     around do |example|
       original_cluster_name = ENV['CLUSTER_NAME']
       ENV['CLUSTER_NAME'] = 'yul-dc-uat'
+      original_environment_name = ENV['RAILS_ENV']
+      ENV['RAILS_ENV'] = 'production'
       example.run
       ENV['CLUSTER_NAME'] = original_cluster_name
+      ENV['RAILS_ENV'] = original_environment_name
     end
     it 'initializes the sequence with the expected value' do
       oids = described_class.generate_oids(1)
       expect(oids[0]).to be >= 5_000_000_000
     end
   end
-  context 'when in yul-dc-prod cluster environment' do
+  context 'when in yul-dc-prod cluster environment', skip_db_cleaner: true do
     around do |example|
       original_cluster_name = ENV['CLUSTER_NAME']
       ENV['CLUSTER_NAME'] = 'yul-dc-prod'
+      original_environment_name = ENV['RAILS_ENV']
+      ENV['RAILS_ENV'] = 'production'
       example.run
       ENV['CLUSTER_NAME'] = original_cluster_name
+      ENV['RAILS_ENV'] = original_environment_name
     end
     it 'initializes the sequence with the expected value' do
       oids = described_class.generate_oids(1)
