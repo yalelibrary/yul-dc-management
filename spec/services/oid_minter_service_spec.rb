@@ -34,7 +34,6 @@ describe OidMinterService do
     end
     it 'initializes the sequence with the expected value' do
       oids = described_class.generate_oids(1)
-      byebug
       expect(oids[0]).to be >= 2_000_000_000
     end
   end
