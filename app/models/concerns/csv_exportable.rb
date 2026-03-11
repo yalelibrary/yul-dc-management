@@ -12,7 +12,8 @@ module CsvExportable
      'container_grouping', 'mms_id', 'alma_holding', 'alma_item', 'bib', 'holding', 'item', 'barcode', 'aspace_uri',
      'digital_object_source', 'preservica_uri', 'preservica_representation_type', 'last_ladybird_update',
      'last_voyager_update', 'last_sierra_update', 'last_aspace_update', 'last_id_update', 'visibility', 'permission_set_key',
-     'sensitive_materials', 'extent_of_digitization', 'digitization_note', 'digitization_funding_source', 'rights_statement', 'project_identifier', 'full_text']
+     'sensitive_materials', 'extent_of_digitization', 'digitization_note', 'digitization_funding_source', 'rights_statement',
+     'project_identifier', 'full_text', 'date_created']
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -31,7 +32,7 @@ module CsvExportable
                   po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri, po.preservica_representation_type,
                   po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
                   po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po&.sensitive_materials, po.extent_of_digitization,
-                  po.digitization_note, po.digitization_funding_source, po.rights_statement, po.project_identifier, extent_of_full_text(po)]
+                  po.digitization_note, po.digitization_funding_source, po.rights_statement, po.project_identifier, extent_of_full_text(po), po.created_at]
         else
           csv << [po[:id], po[:row2], '-', po[:csv_message], '', '']
           batch_processing_event(po[:batch_message], 'Skipped Row') unless batch_ingest_events_count.positive?
@@ -135,7 +136,7 @@ module CsvExportable
              po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri, po.preservica_representation_type,
              po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
              po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po.sensitive_materials, po.extent_of_digitization,
-             po.digitization_note, po.digitization_funding_source, po.rights_statement, po.project_identifier, extent_of_full_text(po)]
+             po.digitization_note, po.digitization_funding_source, po.rights_statement, po.project_identifier, extent_of_full_text(po), po.created_at]
       csv_rows << row
     end
     add_error_rows(csv_rows)
@@ -165,7 +166,7 @@ module CsvExportable
                   po.barcode, po.aspace_uri, po.digital_object_source, po.preservica_uri,
                   po.last_ladybird_update, po.last_voyager_update, po.last_sierra_update,
                   po.last_aspace_update, po.last_id_update, po.visibility, po&.permission_set&.key, po.extent_of_digitization,
-                  po.digitization_note, po.digitization_funding_source, po.rights_statement, po.project_identifier, extent_of_full_text(po)]
+                  po.digitization_note, po.digitization_funding_source, po.rights_statement, po.project_identifier, extent_of_full_text(po), po.created_at]
         else
           csv << [po[:id], po[:row2], '-', po[:csv_message], '', '']
           batch_processing_event(po[:batch_message], 'Skipped Row') unless batch_ingest_events_count.positive?
