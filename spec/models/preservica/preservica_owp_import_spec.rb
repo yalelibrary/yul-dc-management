@@ -72,13 +72,13 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expect do
       batch_process.file = preservica_owp_parent_with_children
       batch_process.save
-    end.to change { ChildObject.count }.from(0).to(3)
-    po_first = ParentObject.first
-    co_first = ChildObject.first
+    end.to change { ChildObject.count }.by(3)
+    po_first = ParentObject.find(200_000_000)
+    co_first = po_first.child_objects.order(:order).first
     expect(co_first.oid).to eq 200_000_001
     expect(co_first.parent_object_oid).to eq 200_000_000
     expect(co_first.order).to eq 1
-    co_last = ChildObject.last
+    co_last = po_first.child_objects.order(:order).last
     expect(co_last.order).to eq 3
     expect(po_first.last_preservica_update).not_to eq nil
     expect(po_first.visibility).to eq "Open with Permission"
