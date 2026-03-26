@@ -106,15 +106,12 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
 
     it 'can reingest child objects and keep oids, captions and labels but replace image source location' do
       allow(S3Service).to receive(:s3_exists?).and_return(false)
-      expect(ParentObject.count).to eq 1
-      expect(ChildObject.count).to eq 3
-      po_first = ParentObject.first
-      co_first = ChildObject.first
-      expect(co_first.oid).to eq 1_002_533
-      expect(co_first.caption).to eq 'original first caption'
-      expect(co_first.label).to eq 'original first label'
-      expect(co_first.checksum).to eq 'c314697a5b0fd444e26e7c12a1d8d487545dacfc'
-      expect(po_first.last_preservica_update).to be nil
+      expect(aspace_parent.child_objects.count).to eq 3
+      expect(co_1.oid).to eq 1_002_533
+      expect(co_1.caption).to eq 'original first caption'
+      expect(co_1.label).to eq 'original first label'
+      expect(co_1.checksum).to eq 'c314697a5b0fd444e26e7c12a1d8d487545dacfc'
+      expect(aspace_parent.last_preservica_update).to be nil
       expect(ptf_1.access_primary_path).to eq "spec/fixtures/images/access_primaries/03/33/10/02/53/1002533.tif"
       expect(ptf_2.access_primary_path).to eq "spec/fixtures/images/access_primaries/03/34/10/02/53/1002534.tif"
       expect(ptf_3.access_primary_path).to eq "spec/fixtures/images/access_primaries/03/35/10/02/53/1002535.tif"
@@ -124,12 +121,12 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         reingest_batch_process.file = preservica_reingest
         reingest_batch_process.save!
       end.not_to change { ChildObject.count }
-      po_first = ParentObject.first
-      co_first = ChildObject.first
-      co_second = ChildObject.all[1]
-      co_third = ChildObject.last
+      aspace_parent.reload
+      co_first = co_1.reload
+      co_second = co_2.reload
+      co_third = co_3.reload
 
-      expect(po_first.last_preservica_update).not_to be nil
+      expect(aspace_parent.last_preservica_update).not_to be nil
       expect(co_first.last_preservica_update).not_to be nil
       expect(co_first.sha512_checksum).to eq '1932c08c4670d5010fac6fa363ad5d9be7a4e7d743757ba5eefbbe8e3f9b2fb89b1604c1e527cfae6f47a91a60845268e91d2723aa63a90dd4735f75017569f7'
       expect(co_first.oid).to eq 1_002_533

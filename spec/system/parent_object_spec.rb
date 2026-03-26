@@ -82,8 +82,10 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         expect(page.body).to include "continuous"
       end
 
+      # adds an additional expectation to ensure capybara does not visit the showpage before the update has posted. Classic race condition.
       it "can set the rights statement via the UI" do
         click_on("Create Parent object")
+        expect(page).to have_content("Parent object was successfully created")
         click_on("Edit")
         expect(page).to have_field("Rights statement")
         fill_in("Rights statement", with: "This is a rights statement")
@@ -199,6 +201,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         click_on("Edit")
         select 'Sterling', from: "parent_object[admin_set]"
         click_on(UPDATE_PARENT_OBJECT_BUTTON)
+        # adds an additional expectation to ensure capybara does not visit the showpage before the update has posted. Classic race condition.
+        expect(page).to have_content("Parent object was successfully saved")
 
         visit parent_object_path(2_012_036)
         expect(page).to have_content "Sterling"

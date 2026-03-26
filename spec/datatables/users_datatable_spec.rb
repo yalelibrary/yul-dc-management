@@ -8,6 +8,9 @@ RSpec.describe UserDatatable, type: :datatable do
   columns = ['netid', 'email', 'deactivated']
 
   describe 'user data tables' do
+    # Datatables get_raw_records returns User.all, any stale User records from other tests in the suite will cause flaky specs.
+    before { User.destroy_all }
+
     it 'can handle an empty model set' do
       output = UserDatatable.new(datatable_sample_params(columns)).data
 
