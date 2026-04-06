@@ -219,17 +219,40 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def preservica_copy_to_access(child_hash, co_oid)
+    attempt_count ||= 1
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(co_oid)
     image_mount = ENV['ACCESS_PRIMARY_MOUNT'] || "data"
     directory = format("%02d", pairtree_path.first)
     FileUtils.mkdir_p(File.join(image_mount, directory, pairtree_path))
     access_primary_path = File.join(image_mount, directory, pairtree_path, "#{co_oid}.tif")
-    child_hash[:bitstream].download_to_file(access_primary_path)
-  rescue StandardError => e
-    processing_event(e.to_s, "failed")
-    raise e.to_s
+    begin
+      attempt_count += 1
+      child_hash[:bitstream].download_to_file(access_primary_path)
+    rescue StandardError => e
+      if e.message.include?("404") ||
+         e.message.include?("408") ||
+         e.message.include?("502") ||
+         e.message.include?("504") ||
+         e.message.include?("Net::HTTPNotFound") ||
+         e.message.include?("Net::HTTPFatalError") ||
+         e.message.include?("Net::ReadTimeout")
+        retry if attempt_count < 4
+        processing_event("Retrying Child OID: #{co_oid} #{e.message}", "Retrying Row")
+      else
+        processing_event(e.to_s, "failed")
+        raise e.to_s
+      end
+    end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # rubocop:disable Rails/SkipsModelValidations
   def upsert_preservica_ingest_child_objects(preservica_ingest_hash)

@@ -40,7 +40,7 @@ class PreservicaImageService
         begin
           attempt_count += 1
           @information_objects = structural_object.information_objects
-        rescue Net::HTTPFatalError, Net::ReadTimeout => e
+        rescue Net::HTTPFatalError, Net::HTTPNotFound, Net::ReadTimeout => e
           sleep 30
           retry if attempt_count < 4
           raise PreservicaImageServiceNetworkError.new(e.to_s, @uri.to_s)
@@ -51,7 +51,7 @@ class PreservicaImageService
         begin
           attempt_count += 1
           @information_objects = [Preservica::InformationObject.where(admin_set_key: @admin_set_key, id: (@uri.split('/')[-1]).to_s)]
-        rescue Net::HTTPFatalError, Net::ReadTimeout => e
+        rescue Net::HTTPFatalError, Net::HTTPNotFound, Net::ReadTimeout => e
           sleep 30
           retry if attempt_count < 4
           raise PreservicaImageServiceNetworkError.new(e.to_s, @uri.to_s)
