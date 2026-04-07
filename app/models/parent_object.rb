@@ -251,6 +251,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     # iterate through preservica and update when local version found, collect unmatched as new
     new_children_data = sync_from_preservica_update_existing_children(preservica_children_hash)
     create_new_preservica_children(new_children_data) if new_children_data.present?
+    self.last_preservica_update = Time.current
     sync_from_preservica_update_all_ptiffs
   end
   # rubocop:enable Lint/UnderscorePrefixedVariableName
@@ -298,7 +299,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
     ChildObject.insert_all(child_hashes) unless child_hashes.empty?
     self.child_object_count = ChildObject.where(parent_object_oid: oid).count
-    self.last_preservica_update = Time.current
   end
   # rubocop:enable Rails/SkipsModelValidations
   # rubocop:enable Metrics/MethodLength
