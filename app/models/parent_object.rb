@@ -484,7 +484,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def setup_metadata_job(current_batch_connection = self.current_batch_connection)
-    Rails.logger.info("previous_changes? #{previous_changes["authoritative_metadata_source_id"].present?}")
     if (created_at_previously_changed? && ladybird_json.blank?) ||
        previous_changes["authoritative_metadata_source_id"].present? ||
        metadata_update.present?
