@@ -278,6 +278,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   # rubocop:disable Rails/SkipsModelValidations
+  # rubocop:disable Metrics/MethodLength
   def create_new_preservica_children(new_children_data)
     new_children_data = new_children_data.uniq { |h| h[:content_uri] }
     child_hashes = new_children_data.map do |child_data|
@@ -300,6 +301,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.last_preservica_update = Time.current
   end
   # rubocop:enable Rails/SkipsModelValidations
+  # rubocop:enable Metrics/MethodLength
 
   def sync_from_preservica_update_all_ptiffs
     Rails.logger.info "************ parent_object.rb # sync_from_preservica_update_all_ptiffs +++ hits method *************"
