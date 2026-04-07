@@ -279,6 +279,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # rubocop:disable Rails/SkipsModelValidations
   def create_new_preservica_children(new_children_data)
+    new_children_data = new_children_data.uniq { |h| h[:content_uri] }
     child_hashes = new_children_data.map do |child_data|
       co_oid = OidMinterService.generate_oids(1)[0]
       preservica_copy_to_access(child_data, co_oid)
