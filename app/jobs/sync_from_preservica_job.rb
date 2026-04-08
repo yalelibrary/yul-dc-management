@@ -12,9 +12,7 @@ class SyncFromPreservicaJob < ApplicationJob
     batch_process.sync_from_preservica
   rescue FrozenError => e
     batch_process.batch_processing_event("Frozen error: #{e.message} at #{e.backtrace.first}", "failed")
-    raise
   rescue => e
     batch_process.batch_processing_event("Setup job failed to save: #{e.message}", "failed")
-    raise
   end
 end

@@ -45,13 +45,13 @@ RSpec.describe SyncFromPreservicaJob, type: :job, prep_metadata_sources: true, p
       allow(batch_process).to receive(:batch_processing_event)
     end
 
-    it 'logs the error with batch_processing_event and re-raises' do
+    it 'logs the error with batch_processing_event' do
       expect(batch_process).to receive(:batch_processing_event)
         .with("Setup job failed to save: #{error_message}", "failed")
 
       expect do
         described_class.new.perform(batch_process)
-      end.to raise_error(StandardError, error_message)
+      end.not_to raise_error
     end
   end
 end
