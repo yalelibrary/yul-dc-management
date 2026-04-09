@@ -5,6 +5,10 @@ class CreatePreservicaChildrenJob < ApplicationJob
   retry_on RuntimeError, Net::HTTPFatalError, Net::ReadTimeout, attempts: 3
   queue_as :default
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
   def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)
     parent_object.current_batch_process = current_batch_process
     parent_object.current_batch_connection = current_batch_connection
@@ -34,4 +38,8 @@ class CreatePreservicaChildrenJob < ApplicationJob
     parent_object.processing_event("Preservica child creation failed: #{e.message}", "failed")
     raise
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/PerceivedComplexity
 end
