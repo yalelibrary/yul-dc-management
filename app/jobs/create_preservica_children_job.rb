@@ -2,7 +2,6 @@
 
 class CreatePreservicaChildrenJob < ApplicationJob
   FIVE_HUNDRED_MB = 524_288_000
-  retry_on RuntimeError, Net::HTTPFatalError, Net::ReadTimeout, attempts: 3
   queue_as :default
 
   # rubocop:disable Metrics/AbcSize
@@ -36,7 +35,6 @@ class CreatePreservicaChildrenJob < ApplicationJob
     end
   rescue => e
     parent_object.processing_event("Preservica child creation failed: #{e.message}", "failed")
-    raise
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity
