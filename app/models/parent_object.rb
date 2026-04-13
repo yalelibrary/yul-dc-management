@@ -271,21 +271,23 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       co.destroy! unless found_in_preservica(co.sha512_checksum, preservica_children_hash)
     end
     child_objects.reset
-    # iterate through preservica and update when local version found
-    sync_from_preservica_update_existing_children(preservica_children_hash)
-
-    # create child records for any new items in preservica
-    create_child_records
+    # iterate through preservica and update when local version found, collect unmatched as new
+    new_children_data = sync_from_preservica_update_existing_children(preservica_children_hash)
+    create_new_preservica_children(new_children_data) if new_children_data.present?
+    self.last_preservica_update = Time.current
     sync_from_preservica_update_all_ptiffs
   end
   # rubocop:enable Lint/UnderscorePrefixedVariableName
   # rubocop:enable Layout/LineLength
 
   def sync_from_preservica_update_existing_children(preservica_children_hash)
-    check_for_sha512_checksum
+    new_children = []
     preservica_children_hash.each_value do |value|
       co = ChildObject.find_by(parent_object_oid: oid, sha512_checksum: value[:checksum])
-      next if co.nil?
+      if co.nil?
+        new_children << value
+        next
+      end
       co.pyramidal_tiff.force_update = true
       co.order = value[:order]
       co.preservica_content_object_uri = value[:content_uri]
@@ -296,7 +298,33 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       preservica_copy_to_access(value, co.oid)
       co.save!
     end
+    new_children
   end
+
+  # rubocop:disable Rails/SkipsModelValidations
+  # rubocop:disable Metrics/MethodLength
+  def create_new_preservica_children(new_children_data)
+    new_children_data = new_children_data.uniq { |h| h[:content_uri] }
+    child_hashes = new_children_data.map do |child_data|
+      co_oid = OidMinterService.generate_oids(1)[0]
+      preservica_copy_to_access(child_data, co_oid)
+      {
+        oid: co_oid,
+        parent_object_oid: oid,
+        order: child_data[:order],
+        preservica_content_object_uri: child_data[:content_uri],
+        preservica_generation_uri: child_data[:generation_uri],
+        preservica_bitstream_uri: child_data[:bitstream_uri],
+        sha512_checksum: child_data[:checksum],
+        caption: child_data[:bitstream]&.filename,
+        last_preservica_update: Time.current
+      }
+    end
+    ChildObject.insert_all(child_hashes) unless child_hashes.empty?
+    self.child_object_count = ChildObject.where(parent_object_oid: oid).count
+  end
+  # rubocop:enable Rails/SkipsModelValidations
+  # rubocop:enable Metrics/MethodLength
 
   def sync_from_preservica_update_all_ptiffs
     Rails.logger.info "************ parent_object.rb # sync_from_preservica_update_all_ptiffs +++ hits method *************"

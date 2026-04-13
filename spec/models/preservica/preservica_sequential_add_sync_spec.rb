@@ -123,7 +123,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         sync_batch_process.file = preservica_sync
         sync_batch_process.save!
       end.to change { ChildObject.count }.from(3).to(4)
-      expect(File.exist?("spec/fixtures/images/access_primaries/00/07/20/00/00/00/200000007.tif")).to eq true
+      expect(File.exist?("spec/fixtures/images/access_primaries/00/04/20/00/00/00/200000004.tif")).to eq true
       co_first = po_first.child_objects.first
       expect(co_first.order).to eq 1
       expect(co_first.oid).to eq 200_000_001
@@ -138,16 +138,13 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(co_third.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487"
       co_last = po_first.child_objects.last
       expect(co_last.order).to eq 4
-      expect(co_last.oid).to eq 200_000_007
+      expect(co_last.oid).to eq 200_000_004
       expect(co_last.preservica_content_object_uri).to eq "https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b485"
 
       File.delete("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif")
       File.delete("spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif")
       File.delete("spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif")
       File.delete("spec/fixtures/images/access_primaries/00/04/20/00/00/00/200000004.tif") if File.exist?("spec/fixtures/images/access_primaries/00/04/20/00/00/00/200000004.tif")
-      File.delete("spec/fixtures/images/access_primaries/00/05/20/00/00/00/200000005.tif") if File.exist?("spec/fixtures/images/access_primaries/00/05/20/00/00/00/200000005.tif")
-      File.delete("spec/fixtures/images/access_primaries/00/06/20/00/00/00/200000006.tif") if File.exist?("spec/fixtures/images/access_primaries/00/06/20/00/00/00/200000006.tif")
-      File.delete("spec/fixtures/images/access_primaries/00/07/20/00/00/00/200000007.tif") if File.exist?("spec/fixtures/images/access_primaries/00/07/20/00/00/00/200000007.tif")
     end
   end
 end
