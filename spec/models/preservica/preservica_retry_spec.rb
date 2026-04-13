@@ -81,7 +81,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       end.to change { ChildObject.count }.from(0).to(3)
       expect(batch_process.batch_status).to eq "Batch failed"
       po_first = ParentObject.first
-      expect(po_first.events_for_batch_process(batch_process).count).to eq 8
+      expect(po_first.events_for_batch_process(batch_process).count).to eq 9
       expect(po_first.events_for_batch_process(batch_process)[1].reason).to eq("Retrying Child OID: 200000001 Request error 404 Content object bitstreams cannot be downloaded.")
       expect(po_first.last_preservica_update).not_to eq nil
       expect(po_first.child_objects.count).to eq 3

@@ -87,6 +87,41 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
     end
   end
 
+  context 'first-time Preservica parent object' do
+    let(:preservica_parent) do
+      FactoryBot.create(:parent_object,
+                        oid: 2_034_600,
+                        admin_set: AdminSet.first,
+                        authoritative_metadata_source: MetadataSource.first,
+                        digital_object_source: "Preservica",
+                        preservica_uri: "/structural-objects/test-uuid",
+                        preservica_representation_type: "Access")
+    end
+
+    before do
+      allow(preservica_parent).to receive(:default_fetch).and_return(true)
+      allow(preservica_parent).to receive(:processing_event)
+      allow(preservica_parent).to receive(:from_upstream_for_the_first_time?).and_return(true)
+      allow(preservica_parent).to receive(:save!)
+      allow(CreatePreservicaChildrenJob).to receive(:perform_later)
+    end
+
+    it 'queues CreatePreservicaChildrenJob instead of creating children inline' do
+      metadata_job.perform(preservica_parent, batch_process)
+      expect(CreatePreservicaChildrenJob).to have_received(:perform_later).with(preservica_parent, batch_process, anything)
+    end
+
+    it 'saves metadata before queuing the child creation job' do
+      metadata_job.perform(preservica_parent, batch_process)
+      expect(preservica_parent).to have_received(:save!).at_least(:once)
+    end
+
+    it 'does not call create_child_records inline' do
+      expect(preservica_parent).not_to receive(:create_child_records)
+      metadata_job.perform(preservica_parent, batch_process)
+    end
+  end
+
   context 'Ladybird metadata fetch environment gating' do
     let(:ladybird_source) { MetadataSource.find_by(metadata_cloud_name: 'ladybird') || FactoryBot.create(:metadata_source) }
 

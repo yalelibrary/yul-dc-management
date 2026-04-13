@@ -75,6 +75,14 @@ class SetupMetadataJob < ApplicationJob
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def setup_child_object_jobs(parent_object, current_batch_process)
+    if parent_object.from_upstream_for_the_first_time? &&
+       (parent_object.digital_object_source == "Preservica" || parent_object.digital_object_source == "preservica")
+      parent_object.metadata_update = nil # Clear to prevent after_save from re-queuing SetupMetadataJob
+      parent_object.save! # Save metadata from default_fetch before deferring to separate job
+      CreatePreservicaChildrenJob.perform_later(parent_object, current_batch_process, parent_object.current_batch_connection)
+      parent_object.processing_event("Preservica child object creation has been queued", "processing-queued")
+      return
+    end
     parent_object.create_child_records if parent_object.from_upstream_for_the_first_time?
     parent_object.save!
     parent_object.reload
