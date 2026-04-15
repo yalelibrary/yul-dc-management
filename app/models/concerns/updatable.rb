@@ -113,7 +113,7 @@ module Updatable
       parent_object.update!(processed_fields)
       metadata_source_changed = parent_object.saved_changes.key?("authoritative_metadata_source_id")
       parent_object.reload
-      trigger_setup_metadata(parent_object) unless /preservica/i.match?(parent_object.digital_object_source) || metadata_source_changed
+      trigger_setup_metadata(parent_object) unless metadata_source_changed
 
       sync_single_parent_from_preservica(parent_object, row) if /preservica/i.match?(parent_object.digital_object_source)
 
