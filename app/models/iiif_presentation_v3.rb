@@ -390,7 +390,7 @@ class IiifPresentationV3
     metadata_values <<  metadata_pair('Image Caption', child.caption) if child.caption
     if child.oid
       metadata_values << metadata_pair('Link to this Image',
-"<span><a href='https://collections.library.yale.edu/catalog/#{@oid}?child_oid=#{child.oid}' aria-label='Link to this image'>#{child.oid}</a></span>")
+"<span><a href='https://collections.library.yale.edu/catalog/#{@oid}?child_oid=#{child.oid}' aria-label='Link to this image'>https://collections.library.yale.edu/catalog/#{@oid}?child_oid=#{child.oid}</a></span>")
     end
     canvas['metadata'] = metadata_values
     canvas
