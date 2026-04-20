@@ -64,8 +64,9 @@ class IiifPresentationV3
     @manifest["behavior"] = [@parent_object.display_layout] unless @parent_object.display_layout.nil? || @parent_object.display_layout.empty?
     @manifest["items"] = []
     add_canvases_to_manifest(@manifest['items'])
+    @manifest["service"] ||= []
+    @manifest["service"] << download_service
     if parent_object.full_text?
-      @manifest["service"] ||= []
       @manifest["service"] << search_service
     end
     add_structures_to_manifest(@manifest["structures"] = [])
@@ -131,6 +132,13 @@ class IiifPresentationV3
         "profile": "http://iiif.io/api/search/1/autocomplete"
       }
     }
+  end
+
+  def download_service
+    {
+      "@context": "http://universalviewer.io/context.json",
+			"profile": "http://universalviewer.io/download-extensions-profile",
+			"selectionEnabled": true    }
   end
 
   # rubocop:disable Metrics/PerceivedComplexity
