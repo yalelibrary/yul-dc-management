@@ -68,9 +68,6 @@ module Statable
   end
 
   def current_batch_connection
-    if @current_batch_connection && current_batch_process && @current_batch_connection.batch_process_id != current_batch_process.id
-      @current_batch_connection = nil
-    end
     @current_batch_connection ||= current_batch_process&.batch_connections&.find_or_create_by!(connectable: self)
   end
 
