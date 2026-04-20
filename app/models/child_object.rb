@@ -19,7 +19,7 @@ class ChildObject < ApplicationRecord
   self.primary_key = 'oid'
   paginates_per 50
   attr_accessor :current_batch_process
-  attr_accessor :current_batch_connection
+  attr_writer :current_batch_connection
 
   # Does not get called because we use upsert to create children
   # before_create :check_for_size_and_file

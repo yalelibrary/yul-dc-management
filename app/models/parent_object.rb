@@ -24,7 +24,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_one :digital_object_json
   attr_accessor :metadata_update
   attr_accessor :current_batch_process
-  attr_accessor :current_batch_connection
+  attr_writer :current_batch_connection
   self.primary_key = 'oid'
   after_save :setup_metadata_job
   # after_update :solr_index_job # we index from the fetch job on create
