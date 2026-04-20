@@ -66,9 +66,7 @@ class IiifPresentationV3
     add_canvases_to_manifest(@manifest['items'])
     @manifest["service"] ||= []
     @manifest["service"] << download_service
-    if parent_object.full_text?
-      @manifest["service"] << search_service
-    end
+    @manifest["service"] << search_service if parent_object.full_text?
     add_structures_to_manifest(@manifest["structures"] = [])
     manifest_navdate
     manifest_navplace
@@ -137,8 +135,9 @@ class IiifPresentationV3
   def download_service
     {
       "@context": "http://universalviewer.io/context.json",
-			"profile": "http://universalviewer.io/download-extensions-profile",
-			"selectionEnabled": true    }
+      "profile": "http://universalviewer.io/download-extensions-profile",
+      "selectionEnabled": true
+    }
   end
 
   # rubocop:disable Metrics/PerceivedComplexity
