@@ -222,7 +222,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       expect(iiif_presentation.manifest["items"][0]["metadata"].select { |k| true if k["label"]["en"][0] == "Link to this Image" }).not_to be_empty
       values = iiif_presentation.manifest["items"][0]["metadata"].select { |k| true if k["label"]["en"][0] == "Link to this Image" }.first["value"]
       expect(values).not_to be_empty
-      expect(values['none'].first).to include("<span><a href='https://collections.library.yale.edu/catalog/16172421?child_oid=16188699' aria-label='Link to this image'>16188699</a></span>")
+      expect(values['none'].first).to include("<span><a href='https://collections.library.yale.edu/catalog/16172421?child_oid=16188699' aria-label='Link to this image'>https://collections.library.yale.edu/catalog/16172421?child_oid=16188699</a></span>")
     end
 
     it "includes behavior on the canvas when included on the child_object" do
