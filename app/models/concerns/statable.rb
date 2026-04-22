@@ -72,17 +72,7 @@ module Statable
   end
 
   def processing_event(message, status = 'info')
-    unless current_batch_connection
-      Rails.logger.warn(
-        "[Statable] processing_event dropped (no batch connection): " \
-        "#{self.class}##{try(:id) || try(:oid)} status=#{status} " \
-        "current_bp=#{try(:current_batch_process)&.id.inspect} " \
-        "last_batch_connection=#{try(:batch_connections)&.order(created_at: :desc)&.limit(1)&.pluck(:id, :batch_process_id).inspect} " \
-        "message=#{message.to_s.truncate(200)} " \
-        "caller=#{caller(1, 6).inspect}"
-      )
-      return "no batch connection"
-    end
+    return "no batch connection" unless current_batch_connection
     IngestEvent.create!(
       status: status,
       reason: message,
