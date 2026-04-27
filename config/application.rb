@@ -32,6 +32,13 @@ module YulDcManagement
     config.rails_semantic_logger.add_file_appender = false # turn off regular file appenders
     config.semantic_logger.add_appender(io: STDOUT, level: config.log_level, formatter: config.rails_semantic_logger.format)
 
+    # TODO: remove the line below when load_defaults 7.0 is enacted
+    config.autoloader = :zeitwerk
+    # TODO: remove the line below when load_defaults 7.0 is enacted
+    config.active_support.cache_format_version = 7.0
+    # TODO: remove the line below when load_defaults 7.0 is enacted
+    config.active_support.disable_to_s_conversion = true
+
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
