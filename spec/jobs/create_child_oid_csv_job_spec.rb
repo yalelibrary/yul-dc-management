@@ -44,7 +44,7 @@ RSpec.describe CreateChildOidCsvJob, type: :job do
 
     it 'logs the error with batch_processing_event' do
       expect(batch_process).to receive(:batch_processing_event)
-        .with("Setup job failed to save: #{error_message}", "failed")
+        .with("CreateChildOidCsvJob failed to save: #{error_message}", "failed")
 
       expect do
         described_class.new.perform(batch_process)
