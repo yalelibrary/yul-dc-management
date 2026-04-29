@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class CreateChildOidCsvJob < ApplicationJob
-  retry_on GoodJob::InterruptError, StandardError, attempts: 3 do |job, exception|
-    job.arguments.first.batch_processing_event("CreateChildOidCsvJob errored.  Job will be attempted 3 times. Error: #{exception.message}", "error")
-  end
+  retry_on GoodJob::InterruptError, attempts: 3
   queue_as :default
 
   def default_priority
