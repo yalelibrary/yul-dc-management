@@ -233,6 +233,10 @@ module CsvExportable
           yielder << row
         end
       end
+      # Add error children rows at the end
+      error_rows = []
+      add_error_rows(error_rows)
+      error_rows.each { |row| yielder << row }
     end
     output_csv = CSV.generate do |csv|
       csv << child_headers
@@ -264,15 +268,17 @@ module CsvExportable
 
   def child_objects_array
     arr = []
-    oids.each_with_index do |oid, index|
-      po = ParentObject.find(oid.to_i)
-      if current_ability.can?(:read, po)
-        po.child_objects.each { |co| arr << co }
-      else
-        (@error_rows ||= []) << { id: oid, csv_message: 'Access denied for parent object', batch_message: "Skipping row [#{index + 2}] due to parent permissions: #{oid}" }
+    oids.each_slice(100) do |batch|
+      batch.each_with_index do |oid, index|
+        po = ParentObject.find(oid.to_i)
+        if current_ability.can?(:read, po)
+          po.child_objects.each { |co| arr << co }
+        else
+          (@error_rows ||= []) << { id: oid, csv_message: 'Access denied for parent object', batch_message: "Skipping row [#{index + 2}] due to parent permissions: #{oid}" }
+        end
+      rescue ActiveRecord::RecordNotFound
+        (@error_rows ||= []) << { id: oid, csv_message: 'Parent Not Found in database', batch_message: "Skipping row [#{index + 2}] due to parent not found: #{oid}" }
       end
-    rescue ActiveRecord::RecordNotFound
-      (@error_rows ||= []) << { id: oid, csv_message: 'Parent Not Found in database', batch_message: "Skipping row [#{index + 2}] due to parent not found: #{oid}" }
     end
     arr
   end
