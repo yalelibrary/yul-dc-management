@@ -8,7 +8,7 @@ RSpec.describe NewPermissionRequestMailer, type: :mailer, prep_admin_sets: true,
     let(:metadata_source) { MetadataSource.first }
     let(:parent_object) do
       FactoryBot.create(:parent_object, authoritative_metadata_source_id: metadata_source.id, admin_set_id: admin_set.id, oid: '2005512',
-                                        ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "2005512.json"))))
+                                        ladybird_json: JSON.parse(File.read(File.join(fixture_paths[0], "ladybird", "2005512.json"))))
     end
     let(:permission_set) { FactoryBot.create(:permission_set, key: 'xyz', label: 'Primary') }
     let(:permission_request) { FactoryBot.create(:permission_request, permission_set_id: permission_set.id, parent_object_id: parent_object.oid, user_note: 'message') }

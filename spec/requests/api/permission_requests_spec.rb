@@ -16,13 +16,13 @@ RSpec.describe 'Permission Requests API', type: :request, prep_metadata_sources:
   let(:parent) { FactoryBot.create(:parent_object, oid: oid, admin_set: admin_set, visibility: "Open with Permission", permission_set_id: permission_set.id) }
   let(:parent_two) { FactoryBot.create(:parent_object, oid: oid_two, admin_set: admin_set, visibility: "Public", permission_set_id: permission_set.id) }
   let(:parent_three) { FactoryBot.create(:parent_object, oid: oid_three, admin_set: admin_set, visibility: "Private", permission_set_id: permission_set.id) }
-  let(:json) { File.read(Rails.root.join(fixture_path, 'permission_request.json')) }
-  let(:invalid_oid_json) { File.read(Rails.root.join(fixture_path, 'invalid_oid_permission_request.json')) }
-  let(:public_visibility_json) { File.read(Rails.root.join(fixture_path, 'public_visibility_permission_request.json')) }
-  let(:private_visibility_json) { File.read(Rails.root.join(fixture_path, 'private_visibility_permission_request.json')) }
-  let(:invalid_sub_json) { File.read(Rails.root.join(fixture_path, 'invalid_sub_permission_request.json')) }
-  let(:invalid_name_json) { File.read(Rails.root.join(fixture_path, 'invalid_name_permission_request.json')) }
-  let(:invalid_email_json) { File.read(Rails.root.join(fixture_path, 'invalid_email_permission_request.json')) }
+  let(:json) { File.read(Rails.root.join(fixture_paths[0], 'permission_request.json')) }
+  let(:invalid_oid_json) { File.read(Rails.root.join(fixture_paths[0], 'invalid_oid_permission_request.json')) }
+  let(:public_visibility_json) { File.read(Rails.root.join(fixture_paths[0], 'public_visibility_permission_request.json')) }
+  let(:private_visibility_json) { File.read(Rails.root.join(fixture_paths[0], 'private_visibility_permission_request.json')) }
+  let(:invalid_sub_json) { File.read(Rails.root.join(fixture_paths[0], 'invalid_sub_permission_request.json')) }
+  let(:invalid_name_json) { File.read(Rails.root.join(fixture_paths[0], 'invalid_name_permission_request.json')) }
+  let(:invalid_email_json) { File.read(Rails.root.join(fixture_paths[0], 'invalid_email_permission_request.json')) }
   let(:headers) { { 'CONTENT_TYPE' => 'application/json', 'Authorization' => "Bearer valid" } }
   let(:invalid_headers) { { 'CONTENT_TYPE' => 'application/json', 'Authorization' => "Bearer invalid" } }
   let(:empty_headers) { {} }

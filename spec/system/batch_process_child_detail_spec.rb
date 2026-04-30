@@ -61,7 +61,7 @@ RSpec.describe 'Batch Process Child detail page', type: :system, prep_metadata_s
 
     around do |example|
       access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
-      ENV["ACCESS_PRIMARY_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
+      ENV["ACCESS_PRIMARY_MOUNT"] = File.join(fixture_paths[0], "images/ptiff_images")
       perform_enqueued_jobs do
         example.run
       end

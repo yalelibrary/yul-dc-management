@@ -6,9 +6,9 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   subject(:batch_process) { BatchProcess.new }
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl') }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
-  let(:preservica_parent_with_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_children_pattern_2.csv")) }
-  let(:preservica_parent_with_2_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_2_children_pattern_2.csv")) }
-  let(:preservica_parent_with_3_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_3_children_pattern_2.csv")) }
+  let(:preservica_parent_with_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_parent_with_children_pattern_2.csv")) }
+  let(:preservica_parent_with_2_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_parent_with_2_children_pattern_2.csv")) }
+  let(:preservica_parent_with_3_children_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_parent_with_3_children_pattern_2.csv")) }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -63,26 +63,26 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
 
     fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
+        status: 200, body: File.open(File.join(fixture_paths[0], "#{fixture}.xml"))
       )
     end
     stub_request(:get, "https://testpreservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b500/generations/1/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b500/generations/1/bitstreams/1/content.tif"), 'rb')
+      status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b500/generations/1/bitstreams/1/content.tif"), 'rb')
     )
     stub_request(:get, "https://testpreservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b501/generations/1/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b501/generations/1/bitstreams/1/content.tif"), 'rb')
+      status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b501/generations/1/bitstreams/1/content.tif"), 'rb')
     )
     stub_request(:get, "https://testpreservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b502/generations/1/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b502/generations/1/bitstreams/1/content.tif"), 'rb')
+      status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b502/generations/1/bitstreams/1/content.tif"), 'rb')
     )
     stub_request(:get, "https://testpreservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b503/generations/1/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b503/generations/1/bitstreams/1/content.tif"), 'rb')
+      status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b503/generations/1/bitstreams/1/content.tif"), 'rb')
     )
     stub_request(:get, "https://testpreservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b504/generations/1/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b504/generations/1/bitstreams/1/content.tif"), 'rb')
+      status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b504/generations/1/bitstreams/1/content.tif"), 'rb')
     )
     stub_request(:get, "https://testpreservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b505/generations/1/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b505/generations/1/bitstreams/1/content.tif"), 'rb')
+      status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/2e328d84-e429-4d46-a865-9ee11157b505/generations/1/bitstreams/1/content.tif"), 'rb')
     )
   end
 

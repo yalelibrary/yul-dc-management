@@ -6,23 +6,23 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:admin_set) { AdminSet.where(key: "brbl").first }
-  let(:create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_owp_parent.csv")) }
-  let(:create_invalid_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_invalid_owp_parent.csv")) }
+  let(:create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "create_owp_parent.csv")) }
+  let(:create_invalid_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "create_invalid_owp_parent.csv")) }
   let(:permission_set) { FactoryBot.create(:permission_set, key: "PS Key") }
-  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids.csv")) }
-  let(:csv_small) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example.csv")) }
-  let(:csv_small_owp) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_owp.csv")) }
-  let(:invalid_ps) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_invalid_ps.csv")) }
-  let(:blank_ps) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_blank_ps.csv")) }
-  let(:invalid_user_csv) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_invalid_user.csv")) }
-  let(:csv_missing) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_missing.csv")) }
-  let(:csv_invalid) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_invalid.csv")) }
-  let(:csv_blanks) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_blanks.csv")) }
-  let(:csv_invalid_blanks) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_invalid_blanks.csv")) }
-  let(:csv_new_admin_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_new_admin_set.csv")) }
-  let(:pre_preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_pre_preservica.csv")) }
-  let(:csv_preservica) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_preservica.csv")) }
-  let(:csv_lowercase_preservica) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_example_lowercase_preservica.csv")) }
+  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "short_fixture_ids.csv")) }
+  let(:csv_small) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example.csv")) }
+  let(:csv_small_owp) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_owp.csv")) }
+  let(:invalid_ps) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_invalid_ps.csv")) }
+  let(:blank_ps) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_blank_ps.csv")) }
+  let(:invalid_user_csv) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_invalid_user.csv")) }
+  let(:csv_missing) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_missing.csv")) }
+  let(:csv_invalid) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_invalid.csv")) }
+  let(:csv_blanks) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_blanks.csv")) }
+  let(:csv_invalid_blanks) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_invalid_blanks.csv")) }
+  let(:csv_new_admin_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_new_admin_set.csv")) }
+  let(:pre_preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_pre_preservica.csv")) }
+  let(:csv_preservica) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_preservica.csv")) }
+  let(:csv_lowercase_preservica) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_lowercase_preservica.csv")) }
 
   before do
     stub_metadata_cloud("2034600")
@@ -58,7 +58,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
     fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
+        status: 200, body: File.open(File.join(fixture_paths[0], "#{fixture}.xml"))
       )
     end
     stub_preservica_tifs_set_of_three

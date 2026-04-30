@@ -8,19 +8,19 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:admin_set_one) { FactoryBot.create(:admin_set) }
   let(:admin_set_two) { FactoryBot.create(:admin_set) }
   let(:admin_set_three) { FactoryBot.create(:admin_set) }
-  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
-  let(:create_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_parent.csv")) }
-  let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "short_fixture_ids_with_source.csv")) }
-  let(:delete_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_parent_fixture_ids.csv")) }
-  let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent.csv")) }
-  let(:invalid_preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "invalid_preservica_parent.csv")) }
-  let(:delete_child) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "delete_child_fixture_ids.csv")) }
-  let(:alma_xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/valid_alma_mets.xml')) }
-  let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
-  let(:xml_upload_two) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml')) }
+  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "shorter_fixture_ids.csv")) }
+  let(:create_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "create_parent.csv")) }
+  let(:csv_upload_with_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "short_fixture_ids_with_source.csv")) }
+  let(:delete_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "delete_parent_fixture_ids.csv")) }
+  let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_parent.csv")) }
+  let(:invalid_preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "invalid_preservica_parent.csv")) }
+  let(:delete_child) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "delete_child_fixture_ids.csv")) }
+  let(:alma_xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0] + '/goobi/metadata/30000317_20201203_140947/valid_alma_mets.xml')) }
+  let(:xml_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0] + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')) }
+  let(:xml_upload_two) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0] + '/goobi/metadata/30000401_20201204_193140/IkSw55739ve_RA_mets.xml')) }
   let(:aspace_xml_upload) { Rack::Test::UploadedFile.new("spec/fixtures/goobi/metadata/30000317_20201203_140947/good_aspace.xml") }
-  let(:xml_upload_three) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/noeodig.xml')) }
-  let(:xml_upload_four) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path + '/goobi/metadata/dignote_met.xml')) }
+  let(:xml_upload_three) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0] + '/goobi/metadata/noeodig.xml')) }
+  let(:xml_upload_four) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0] + '/goobi/metadata/dignote_met.xml')) }
 
   around do |example|
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]
@@ -263,7 +263,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           expect(ParentObject.count).to eq 0
           expect(ChildObject.count).to eq 0
           expect do
-            batch_process.file = Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "small_short_fixture_ids.csv"))
+            batch_process.file = Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "small_short_fixture_ids.csv"))
             batch_process.save
           end.to change { batch_process.batch_connections.count }.from(0).to(11)
           expect(ParentObject.count).to eq 4

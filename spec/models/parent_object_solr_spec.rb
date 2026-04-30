@@ -72,8 +72,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       stub_metadata_cloud(oid)
       stub_metadata_cloud("V-#{oid}", "ils")
       # Manually load both metadata sources since ils skips fetch even on source change
-      ladybird_response = JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{oid}.json")))
-      voyager_response = JSON.parse(File.read(File.join(fixture_path, "ils", "V-#{oid}.json")))
+      ladybird_response = JSON.parse(File.read(File.join(fixture_paths[0], "ladybird", "#{oid}.json")))
+      voyager_response = JSON.parse(File.read(File.join(fixture_paths[0], "ils", "V-#{oid}.json")))
       parent_object.ladybird_json = ladybird_response
       parent_object.voyager_json = voyager_response
       parent_object.save!
@@ -288,8 +288,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       before do
         # Since ils skips metadata fetch, manually load the fixture data
         stub_metadata_cloud(oid.to_s)
-        ladybird_response = JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{oid}.json")))
-        voyager_response = JSON.parse(File.read(File.join(fixture_path, "ils", "V-#{oid}.json")))
+        ladybird_response = JSON.parse(File.read(File.join(fixture_paths[0], "ladybird", "#{oid}.json")))
+        voyager_response = JSON.parse(File.read(File.join(fixture_paths[0], "ils", "V-#{oid}.json")))
         parent_object_with_public_visibility.ladybird_json = ladybird_response
         parent_object_with_public_visibility.voyager_json = voyager_response
         parent_object_with_public_visibility.save!
@@ -322,8 +322,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
 
         before do
           # Since ils skips metadata fetch, manually load the fixture data
-          ladybird_response = JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{priv_oid}.json")))
-          voyager_response = JSON.parse(File.read(File.join(fixture_path, "ils", "V-#{priv_oid}.json")))
+          ladybird_response = JSON.parse(File.read(File.join(fixture_paths[0], "ladybird", "#{priv_oid}.json")))
+          voyager_response = JSON.parse(File.read(File.join(fixture_paths[0], "ils", "V-#{priv_oid}.json")))
           parent_object_with_private_visibility.ladybird_json = ladybird_response
           parent_object_with_private_visibility.voyager_json = voyager_response
           parent_object_with_private_visibility.save!

@@ -289,13 +289,13 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
     stub_metadata_cloud("A-15821166", "alma")
     # Activity Stream - stub requests to MetadataCloud activity stream with fixture objects that represent single activity_stream json pages
     stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read)
+      .to_return(status: 200, body: File.open(File.join(fixture_paths[0], "activity_stream", "page-3.json")).read)
     stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity/page-2")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-2.json")).read)
+      .to_return(status: 200, body: File.open(File.join(fixture_paths[0], "activity_stream", "page-2.json")).read)
     stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity/page-1")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-1.json")).read)
+      .to_return(status: 200, body: File.open(File.join(fixture_paths[0], "activity_stream", "page-1.json")).read)
     stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity/page-0")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-0.json")).read)
+      .to_return(status: 200, body: File.open(File.join(fixture_paths[0], "activity_stream", "page-0.json")).read)
   end
 
   # There will be a automated job that fetches updates from the MetadataCloud on some configured schedule.
@@ -474,7 +474,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
 
   context "getting the uri for the previous page" do
     let(:json_parsed_page) { JSON.parse(latest_activity_stream_page) }
-    let(:latest_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read }
+    let(:latest_activity_stream_page) { File.open(File.join(fixture_paths[0], "activity_stream", "page-3.json")).read }
 
     it "can get the uri for the previous page" do
       expect(asr.previous_page_link(json_parsed_page)).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-2"

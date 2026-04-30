@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'activerecord-nulldb-adapter', '~> 1.0.1'
+gem 'activerecord-nulldb-adapter', '~> 1.2.2'
 gem 'ajax-datatables-rails', '~> 1.4.0'
 gem "aws-sdk-cloudwatch", "~> 1.84"
 gem 'aws-sdk-s3', '~> 1.208'
@@ -40,7 +40,7 @@ gem 'puma', '~> 5.6'
 # cors support or rack
 gem 'rack-cors', '~> 2.0.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.8'
+gem 'rails', '~> 7.2.3.1'
 gem "rails_semantic_logger", ">=4.4.4"
 # Use rsolr to connect to Solr
 gem 'rsolr', '~> 2.3'
@@ -75,7 +75,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails', '~> 6.4'
-  gem 'rspec-rails', '~> 5.0.0'
+  gem 'rspec-rails', '~> 8.0.4'
   gem 'vcr', '~> 6.0'
   gem 'webmock', '~> 3.8', '>= 3.8.3'
 end

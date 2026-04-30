@@ -6,10 +6,10 @@ RSpec.describe IiifRangeBuilder, type: :model, prep_metadata_sources: true, prep
   context 'Deserializiation' do
     let(:parent) { FactoryBot.create(:parent_object, oid: 2_034_600, source_name: 'ladybird', visibility: "Public") }
     let(:child) { FactoryBot.create(:child_object, parent_object: parent, oid: 12_345_678) }
-    let(:json) { File.read(Rails.root.join(fixture_path, 'v3_spec_manifest.json')) }
+    let(:json) { File.read(Rails.root.join(fixture_paths[0], 'v3_spec_manifest.json')) }
     let(:jsonf) { format(json, parent_id: parent.oid, child_id: child.oid) }
     let(:manifest) { JSON.parse(jsonf) }
-    let(:json2) { File.read(Rails.root.join(fixture_path, 'v3_spec_manifest_changed_labels.json')) }
+    let(:json2) { File.read(Rails.root.join(fixture_paths[0], 'v3_spec_manifest_changed_labels.json')) }
     let(:jsonf2) { format(json2, parent_id: parent.oid, child_id: child.oid) }
     let(:manifest2) { JSON.parse(jsonf2) }
     let(:rb) { IiifRangeBuilder.new }
@@ -62,7 +62,7 @@ RSpec.describe IiifRangeBuilder, type: :model, prep_metadata_sources: true, prep
     it 'maintains the current data in case of error' do
       rb.parse_structures(manifest)
       expect(Structure.where(parent_object_oid: parent.oid).length).to eq(3)
-      manifest2 = JSON.parse(File.read(Rails.root.join(fixture_path, 'v3_spec_manifest_bad_child_id.json')))
+      manifest2 = JSON.parse(File.read(Rails.root.join(fixture_paths[0], 'v3_spec_manifest_bad_child_id.json')))
       begin
         rb.parse_structures(manifest2)
       rescue ActiveRecord::RecordNotFound
@@ -78,7 +78,7 @@ RSpec.describe IiifRangeBuilder, type: :model, prep_metadata_sources: true, prep
       rb = IiifRangeBuilder.new
       parent = FactoryBot.create(:parent_object, oid: 2_034_600, source_name: 'ladybird', visibility: "Public")
       child = FactoryBot.create(:child_object, parent_object: parent, oid: 23_456_789)
-      json = File.read(Rails.root.join(fixture_path, 'v3_spec_manifest.json'))
+      json = File.read(Rails.root.join(fixture_paths[0], 'v3_spec_manifest.json'))
       json = format(json, parent_id: parent.oid, child_id: child.oid)
       manifest = JSON.parse(json)
       structures = rb.parse_structures(manifest)
