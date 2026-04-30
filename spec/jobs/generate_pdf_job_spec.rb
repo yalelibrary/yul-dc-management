@@ -12,7 +12,7 @@ RSpec.describe GeneratePdfJob, type: :job, prep_metadata_sources: true, prep_adm
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
   let(:child_object) { FactoryBot.create(:child_object, oid: "456789", parent_object: parent_object) }
   let(:generate_pdf_job) { GeneratePdfJob.new }
-  let(:parent_object_with_authoritative_json) { FactoryBot.build(:parent_object, oid: '16712419', ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16712419.json")))) }
+  let(:parent_object_with_authoritative_json) { FactoryBot.build(:parent_object, oid: '16712419', ladybird_json: JSON.parse(File.read(File.join(fixture_paths[0], "ladybird", "16712419.json")))) }
 
   around do |example|
     original_image_bucket = ENV["S3_SOURCE_BUCKET_NAME"]

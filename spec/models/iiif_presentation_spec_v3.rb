@@ -37,7 +37,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
   let(:third_to_last_canvas) { iiif_presentation.manifest['items'].third_to_last }
   before do
     stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/21/16/17/24/21/16172421.json")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "manifests", "16172421.json")).read)
+      .to_return(status: 200, body: File.open(File.join(fixture_paths[0], "manifests", "16172421.json")).read)
     stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/manifests/21/16/17/24/21/16172421.json")
       .to_return(status: 200)
     stub_metadata_cloud("16172421")
@@ -47,8 +47,8 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
     parent_object
     # The parent object gets its metadata populated via a background job, and we can't assume that has run,
     # so stub the part of the metadata we need for the iiif_presentation
-    allow(parent_object).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{oid}.json"))))
-    allow(aspace_parent_object).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "aspace", "AS-2005512.json"))))
+    allow(parent_object).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_paths[0], "ladybird", "#{oid}.json"))))
+    allow(aspace_parent_object).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_paths[0], "aspace", "AS-2005512.json"))))
   end
 
   describe 'building a manifest' do
@@ -370,7 +370,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       parent_object_rep
       # The parent object gets its metadata populated via a background job, and we can't assume that has run,
       # so stub the part of the metadata we need for the iiif_presentation
-      allow(parent_object_rep).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{oid}.json"))))
+      allow(parent_object_rep).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_paths[0], "ladybird", "#{oid}.json"))))
     end
 
     it 'sets thumbnail to the representative child' do
@@ -412,7 +412,7 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       stub_ptiffs
       stub_pdfs
       parent_object_geojson
-      allow(parent_object_geojson).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ils", "V-#{oid_geojson}.json"))))
+      allow(parent_object_geojson).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_paths[0], "ils", "V-#{oid_geojson}.json"))))
     end
 
     it 'is produced when an ILS item has coordinates' do
@@ -445,9 +445,9 @@ RSpec.describe IiifPresentationV3, prep_metadata_sources: true do
       parent_object_single_date
       parent_object_split_date
       parent_object_empty_date
-      allow(parent_object_single_date).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{single_date_oid}.json"))))
-      allow(parent_object_split_date).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{split_date_oid}.json"))))
-      allow(parent_object_empty_date).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{empty_date_oid}.json"))))
+      allow(parent_object_single_date).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_paths[0], "ladybird", "#{single_date_oid}.json"))))
+      allow(parent_object_split_date).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_paths[0], "ladybird", "#{split_date_oid}.json"))))
+      allow(parent_object_empty_date).to receive(:authoritative_json).and_return(JSON.parse(File.read(File.join(fixture_paths[0], "ladybird", "#{empty_date_oid}.json"))))
     end
 
     it 'has navDate in the manifest for a single date' do

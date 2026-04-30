@@ -19,7 +19,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
     fixtures.each do |fixture|
       fixture.chomp!
       stub_request(:get, "https://test#{fixture}").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
+        status: 200, body: File.open(File.join(fixture_paths[0], "#{fixture}.xml"))
       )
     end
   end

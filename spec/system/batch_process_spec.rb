@@ -358,7 +358,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     it "uploads and increases xml count and gives a success message" do
       admin_set_two
       expect(BatchProcess.count).to eq 0
-      page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
+      page.attach_file("batch_process_file", fixture_paths[0] + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
       click_button("Submit")
       expect(BatchProcess.count).to eq 1
       expect(page).to have_content("Your job is queued for processing in the background")
@@ -368,7 +368,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
     context "deleting a parent object" do
       before do
         admin_set_two
-        page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
+        page.attach_file("batch_process_file", fixture_paths[0] + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
         click_button("Submit")
       end
       it "can still load the batch_process page" do
@@ -402,7 +402,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       allow_any_instance_of(ParentObject).to receive(:default_fetch).and_return(true)
       # rubocop:enable RSpec/AnyInstance check_mets_images
       expect(BatchProcess.count).to eq 0
-      page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
+      page.attach_file("batch_process_file", fixture_paths[0] + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml')
       click_button("Submit")
       pj = PreservicaIngest.find_by_child_oid(30_000_319)
       expect(pj.preservica_child_id).to eq "1234d3360-bf78-4e35-9850-44ef7f832100"
@@ -416,7 +416,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       allow_any_instance_of(ParentObject).to receive(:default_fetch).and_return(true)
       # rubocop:enable RSpec/AnyInstance check_mets_images
       expect(BatchProcess.count).to eq 0
-      page.attach_file("batch_process_file", fixture_path + '/goobi/metadata/30000317_20201203_140947/no_uuid.xml')
+      page.attach_file("batch_process_file", fixture_paths[0] + '/goobi/metadata/30000317_20201203_140947/no_uuid.xml')
       click_button("Submit")
       pj = PreservicaIngest.find_by_child_oid(30_000_322)
       expect(pj.nil?).to be_truthy

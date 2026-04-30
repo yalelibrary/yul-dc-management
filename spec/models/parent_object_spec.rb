@@ -141,7 +141,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
   end
 
   context "with a parent object with many pages" do
-    let(:fixture_json) { JSON.parse(File.open(File.join(fixture_path, "ladybird", "2003431.json")).read) }
+    let(:fixture_json) { JSON.parse(File.open(File.join(fixture_paths[0], "ladybird", "2003431.json")).read) }
     let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_003_431, ladybird_json: fixture_json) }
 
     around do |example|
@@ -215,7 +215,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       end
     end
     let(:batch_process) { FactoryBot.create(:batch_process, user: user_one) }
-    let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
+    let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "shorter_fixture_ids.csv")) }
 
     it 'returns a processing_event message' do
       expect do
@@ -596,7 +596,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     context 'with ladybird_json' do
       let(:parent_object) do
         FactoryBot.build(:parent_object, oid: '16797069', bib: '3435140', barcode: '39002075038423',
-                                         ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16797069.json"))))
+                                         ladybird_json: JSON.parse(File.read(File.join(fixture_paths[0], "ladybird", "16797069.json"))))
       end
 
       it 'returns a ladybird url' do
@@ -657,7 +657,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         end
         it "raises an error with wrong version" do
           stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/ladybird/oid/16797069?include-children=1")
-              .to_return(status: 400, body: File.open(File.join(fixture_path, "metadata_cloud_wrong_version.json")))
+              .to_return(status: 400, body: File.open(File.join(fixture_paths[0], "metadata_cloud_wrong_version.json")))
           allow(MetadataSource).to receive(:metadata_cloud_version).and_return("clearly_fake_version")
           expect(parent_object.ladybird_cloud_url).to eq "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/api/clearly_fake_version/ladybird/oid/16797069?include-children=1"
           expect do
@@ -1036,7 +1036,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       let(:parent_object) do
         FactoryBot.build(:parent_object, oid: '16797069', bib: '3435140', item: '8114701',
                                          authoritative_metadata_source_id: voyager,
-                                         voyager_json: JSON.parse(File.read(File.join(fixture_path, "ils", "V-16797069.json"))))
+                                         voyager_json: JSON.parse(File.read(File.join(fixture_paths[0], "ils", "V-16797069.json"))))
       end
 
       it 'returns a voyager url' do
@@ -1059,7 +1059,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
         FactoryBot.build(:parent_object, oid: '2012036', bib: '3435140', barcode: '39002075038423',
                                          authoritative_metadata_source_id: aspace,
                                          aspace_uri: '/repositories/11/archival_objects/555049',
-                                         aspace_json: JSON.parse(File.read(File.join(fixture_path, "aspace", "AS-2012036.json"))))
+                                         aspace_json: JSON.parse(File.read(File.join(fixture_paths[0], "aspace", "AS-2012036.json"))))
       end
 
       it 'returns an aspace url' do

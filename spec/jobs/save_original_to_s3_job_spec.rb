@@ -18,7 +18,7 @@ RSpec.describe SaveOriginalToS3Job, type: :job, prep_metadata_sources: true, pre
                      authoritative_metadata_source: MetadataSource.first,
                      admin_set: AdminSet.first,
                      visibility: 'Public',
-                     ladybird_json: JSON.parse(File.read(File.join(fixture_path, 'ladybird', '16712419.json'))))
+                     ladybird_json: JSON.parse(File.read(File.join(fixture_paths[0], 'ladybird', '16712419.json'))))
   end
   let(:child_object_with_authoritative_json) { FactoryBot.create(:child_object, oid: '345678', parent_object: parent_object_with_authoritative_json) }
   let(:child_object_without_width) { FactoryBot.create(:child_object, oid: '234567', parent_object: parent_object_with_authoritative_json, width: nil) }
@@ -30,7 +30,7 @@ RSpec.describe SaveOriginalToS3Job, type: :job, prep_metadata_sources: true, pre
     original_access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
     ENV['S3_SOURCE_BUCKET_NAME'] = 'not-a-real-bucket'
     ENV['S3_DOWNLOAD_BUCKET_NAME'] = 'fake-download-bucket'
-    ENV["ACCESS_PRIMARY_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
+    ENV["ACCESS_PRIMARY_MOUNT"] = File.join(fixture_paths[0], "images/ptiff_images")
     example.run
     ENV['S3_SOURCE_BUCKET_NAME'] = original_image_bucket
     ENV['S3_DOWNLOAD_BUCKET_NAME'] = original_download_bucket

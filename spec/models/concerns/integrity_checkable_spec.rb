@@ -19,7 +19,7 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
 
   around do |example|
     original_access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
-    ENV["ACCESS_PRIMARY_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
+    ENV["ACCESS_PRIMARY_MOUNT"] = File.join(fixture_paths[0], "images/ptiff_images")
     example.run
     ENV["ACCESS_PRIMARY_MOUNT"] = original_access_primary_mount
   end

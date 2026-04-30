@@ -216,7 +216,7 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       before do
         stub_metadata_cloud("2004628")
         parent_object
-        allow(parent_object).to receive(:ladybird_json).and_return(JSON.parse(File.read(File.join(fixture_path, "ladybird", "#{parent_object.oid}.json"))))
+        allow(parent_object).to receive(:ladybird_json).and_return(JSON.parse(File.read(File.join(fixture_paths[0], "ladybird", "#{parent_object.oid}.json"))))
       end
 
       it "has technical image metadata upon creation" do

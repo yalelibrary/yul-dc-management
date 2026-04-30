@@ -10,7 +10,7 @@ RSpec.describe JsonHelper, type: :helper, prep_admin_sets: true, prep_metadata_s
       oid: '16712419',
       authoritative_metadata_source: metadata_source,
       admin_set: admin_set,
-      ladybird_json: JSON.parse(File.read(File.join(fixture_path, "ladybird", "16712419.json")))
+      ladybird_json: JSON.parse(File.read(File.join(fixture_paths[0], "ladybird", "16712419.json")))
     )
   end
 

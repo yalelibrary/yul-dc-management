@@ -14,7 +14,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:role) { FactoryBot.create(:role, name: editor) }
-  let(:redirect) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_redirect.csv")) }
+  let(:redirect) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "reassociation_example_redirect.csv")) }
   let(:parent_to_receive_children) { FactoryBot.create(:parent_object, oid: "2004550", admin_set_id: admin_set.id) }
   let(:parent_to_redirect) { FactoryBot.create(:parent_object, oid: "2004551", admin_set_id: admin_set.id, bib: "34567", call_number: "MSS MS 345") }
   let(:child_one) { FactoryBot.create(:child_object, oid: "12345", parent_object: parent_to_redirect) }

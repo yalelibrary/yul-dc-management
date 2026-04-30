@@ -43,7 +43,7 @@ RSpec.describe SolrReindexAllJob, type: :job, prep_metadata_sources: true, solr:
         public_parent_object_with_well_formed_json = FactoryBot.create(:parent_object,
           oid: 2_005_512,
           visibility: 'Public',
-          aspace_json: JSON.parse(File.read(File.join(fixture_path, "aspace", "AS-2005512.json"))),
+          aspace_json: JSON.parse(File.read(File.join(fixture_paths[0], "aspace", "AS-2005512.json"))),
           authoritative_metadata_source_id: 3)
         allow_any_instance_of(ParentObject).to receive(:manifest_completed?).and_return(true)
         public_parent_object_with_well_formed_json.save!
@@ -70,7 +70,7 @@ RSpec.describe SolrReindexAllJob, type: :job, prep_metadata_sources: true, solr:
         parent_object_with_malformed_json = FactoryBot.create(:parent_object,
           oid: 781_087,
           visibility: 'Public',
-          aspace_json: File.read(File.join(fixture_path, "aspace", "AS-781087.json")),
+          aspace_json: File.read(File.join(fixture_paths[0], "aspace", "AS-781087.json")),
           authoritative_metadata_source_id: 3)
         allow_any_instance_of(ParentObject).to receive(:manifest_completed?).and_return(true)
         parent_object_with_malformed_json.save!

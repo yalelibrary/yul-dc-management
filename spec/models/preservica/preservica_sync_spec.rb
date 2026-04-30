@@ -7,9 +7,9 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl') }
   let(:admin_set_sml) { FactoryBot.create(:admin_set, key: 'sml') }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
-  let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_children.csv")) }
-  let(:preservica_sync_invalid) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_sync_invalid.csv")) }
-  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_reingest.csv")) }
+  let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_parent_with_children.csv")) }
+  let(:preservica_sync_invalid) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_sync_invalid.csv")) }
+  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_reingest.csv")) }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -54,7 +54,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
 
     fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
+        status: 200, body: File.open(File.join(fixture_paths[0], "#{fixture}.xml"))
       )
     end
     stub_preservica_tifs_set_of_three

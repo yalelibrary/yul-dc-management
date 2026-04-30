@@ -24,8 +24,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:ptf_1) { PyramidalTiff.new(co_1) }
   let(:ptf_2) { PyramidalTiff.new(co_2) }
   let(:ptf_3) { PyramidalTiff.new(co_3) }
-  let(:preservica_reingest_invalid) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_reingest_invalid.csv")) }
-  let(:preservica_reingest) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_reingest.csv")) }
+  let(:preservica_reingest_invalid) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_reingest_invalid.csv")) }
+  let(:preservica_reingest) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_reingest.csv")) }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -74,7 +74,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
 
     fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
+        status: 200, body: File.open(File.join(fixture_paths[0], "#{fixture}.xml"))
       )
     end
     stub_preservica_tifs_set_of_three

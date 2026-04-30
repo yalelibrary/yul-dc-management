@@ -29,7 +29,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
 
     fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
+        status: 200, body: File.open(File.join(fixture_paths[0], "#{fixture}.xml"))
       )
     end
   end
@@ -58,7 +58,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
   context "with the file matching size and checksum" do
     before do
       stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content"), 'rb')
+        status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content"), 'rb')
       )
     end
     it 'downloads bits to file' do
@@ -92,7 +92,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
     # rubocop enable:Layout/LineLength
     it 'does not throw an exception when the cases do not match' do
       stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/1/content").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/2/content"), 'rb')
+        status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b488/generations/1/bitstreams/2/content"), 'rb')
       )
       structured_object = Preservica::StructuralObject.where(admin_set_key: 'brbl', id: "7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
       information_objects = structured_object.information_objects
@@ -168,10 +168,10 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
   context 'with paginated information objects' do
     before do
       stub_request(:get, "https://testpreservica/api/entity/structural-objects/35713feb-6845-437f-a269-5f2ac09c7e46/children").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/structural-objects/35713feb-6845-437f-a269-5f2ac09c7e46/children.xml"))
+        status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/structural-objects/35713feb-6845-437f-a269-5f2ac09c7e46/children.xml"))
       )
       stub_request(:get, "https://testpreservica/api/entity/structural-objects/35713feb-6845-437f-a269-5f2ac09c7e46/children?start=100").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/structural-objects/35713feb-6845-437f-a269-5f2ac09c7e46/children_page_2.xml"))
+        status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/structural-objects/35713feb-6845-437f-a269-5f2ac09c7e46/children_page_2.xml"))
       )
     end
 

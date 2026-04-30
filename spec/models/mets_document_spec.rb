@@ -6,7 +6,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
   let(:valid_goobi_xml) { File.open(goobi_path).read }
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
-  let(:min_valid_xml_file) { File.open(File.join(fixture_path, "goobi", "min_valid_xml.xml")).read }
+  let(:min_valid_xml_file) { File.open(File.join(fixture_paths[0], "goobi", "min_valid_xml.xml")).read }
 
   around do |example|
     original_path = ENV["GOOBI_MOUNT"]
@@ -18,11 +18,11 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
   let(:goobi_path) { "spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml" }
   let(:no_oid_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/no_oid_mets.xml").read }
   let(:blank_oid_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/empty_oid_mets.xml").read }
-  let(:image_missing_file) { File.open(File.join(fixture_path, "goobi", "metadata", "16172421", "missing_image.xml")).read }
+  let(:image_missing_file) { File.open(File.join(fixture_paths[0], "goobi", "metadata", "16172421", "missing_image.xml")).read }
   let(:no_admin_set_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/no_admin_set.xml").read }
   let(:unknown_admin_set_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/unknown_admin_set.xml").read }
   let(:no_rights_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/no_rights_mets.xml") }
-  let(:no_image_files_path) { File.join(fixture_path, "goobi", "metadata", "16172421", "no_image_files.xml") }
+  let(:no_image_files_path) { File.join(fixture_paths[0], "goobi", "metadata", "16172421", "no_image_files.xml") }
   let(:bad_bib_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_bib.xml") }
   let(:bad_aspace_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_aspace.xml") }
   let(:bad_voyager_uri_file) { File.open("spec/fixtures/goobi/metadata/30000317_20201203_140947/bad_voyager_uri.xml") }
