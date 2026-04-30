@@ -26,7 +26,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       FactoryBot.create(
         :batch_process,
         user: user,
-        mets_xml: File.open(fixture_path + '/goobi/metadata/16172421/meta.xml').read,
+        mets_xml: File.open(fixture_paths[0] + '/goobi/metadata/16172421/meta.xml').read,
         file_name: "meta.xml"
       )
     end
@@ -43,7 +43,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       FactoryBot.create(
         :batch_process,
         user: user,
-        csv: File.open(fixture_path + '/csv/short_fixture_ids.csv').read,
+        csv: File.open(fixture_paths[0] + '/csv/short_fixture_ids.csv').read,
         file_name: "short_fixture_ids.csv"
       )
     end
@@ -59,7 +59,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       FactoryBot.create(
         :batch_process,
         user: user,
-        csv: File.open(fixture_path + '/csv/short_fixture_ids.csv').read,
+        csv: File.open(fixture_paths[0] + '/csv/short_fixture_ids.csv').read,
         file_name: "short_fixture_ids.csv"
       )
     end
