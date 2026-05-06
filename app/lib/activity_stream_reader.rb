@@ -130,6 +130,7 @@ class ActivityStreamReader
       # skip it if the metadata source does not match (This should never happen after dependent uris are updating properly)
       next unless po&.authoritative_metadata_source&.metadata_cloud_name == metadata_source
 
+      # TODO: update to check last alma update instead of voyager since we no longer fetch ils
       #  if po was updated after the most recent update of one of all the dependent uris, skip it
       last_update = metadata_source == 'aspace' ? po.last_aspace_update : po.last_voyager_update
       most_recent_dependend_object_update = update_time_oid_map[oid]
