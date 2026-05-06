@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe UpdateDigitalObjectsJob, type: :job, prep_metadata_sources: true, solr: true do
-  let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
+RSpec.describe UpdateDigitalObjectsJob, type: :job, prep_metadata_sources: true, prep_admin_sets: true, solr: true do
   let(:admin_set_1) { FactoryBot.create(:admin_set) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: '2005512', authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
 
   before do
     allow(GoodJob).to receive(:preserve_job_records).and_return(true)
@@ -13,8 +13,8 @@ RSpec.describe UpdateDigitalObjectsJob, type: :job, prep_metadata_sources: true,
 
   context 'with tests active job queue' do
     it 'increments the job queue by one' do
-      parent_object
-      digital_job = described_class.perform_later
+      parent_object.save!
+      digital_job = described_class.perform_later(AdminSet.first.id)
       expect(digital_job.instance_variable_get(:@successfully_enqueued)).to eq true
     end
   end

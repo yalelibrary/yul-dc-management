@@ -8,14 +8,17 @@ RSpec.describe UpdateFulltextStatusJob, type: :job, prep_metadata_sources: true,
     ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
 
+  let(:user) { FactoryBot.create(:user) }
+  let(:role) { FactoryBot.create(:role, name: editor) }
   let(:admin_set) { AdminSet.first }
   let(:metadata_source) { MetadataSource.first }
   let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069', authoritative_metadata_source: metadata_source, admin_set: admin_set) }
+  let(:batch_process) { FactoryBot.create(:batch_process, user: user, batch_action: 'update fulltext status') }
 
   context 'with test active job queue' do
     it 'increments the job queue by one' do
       parent_object
-      fulltext_job = described_class.perform_later
+      fulltext_job = described_class.perform_later(batch_process)
       expect(fulltext_job.instance_variable_get(:@successfully_enqueued)).to eq true
     end
   end

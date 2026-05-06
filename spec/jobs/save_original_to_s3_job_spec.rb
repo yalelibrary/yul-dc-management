@@ -9,7 +9,7 @@ RSpec.describe SaveOriginalToS3Job, type: :job, prep_metadata_sources: true, pre
   end
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
-  let(:parent_object_private) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first, visibility: 'Private') }
+  let(:parent_object_private) { FactoryBot.create(:parent_object, oid: 2_004_627, authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first, visibility: 'Private') }
   let(:child_object) { FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object_private) }
   let(:save_to_s3_job) { SaveOriginalToS3Job.new }
   let(:parent_object_with_authoritative_json) do
@@ -62,7 +62,7 @@ RSpec.describe SaveOriginalToS3Job, type: :job, prep_metadata_sources: true, pre
     it 'logs an error with Private or Redirect visibility' do
       save_to_s3_job.perform(child_object.oid)
       expect(Rails.logger).to have_received(:error)
-        .with('Not copying image from 2004628. Parent object must have Public or Yale Community Only visibility.')
+        .with('Not copying image from 2004627. Parent object must have Public or Yale Community Only visibility.')
     end
     it 'logs an error when file is already in S3' do
       save_to_s3_job.perform(child_object_with_authoritative_json.oid)

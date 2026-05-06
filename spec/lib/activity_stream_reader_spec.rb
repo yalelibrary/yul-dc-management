@@ -319,19 +319,27 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
 
       # This is to prime these objects so they have the default json,
       # This is necessary because these tests do not perform all jobs synchronously to fully create the object.
+      # Set last_aspace_update and last_alma_update to just before the activity stream's endTime (2024-06-12T21:06:53.000+0000)
+      # rubocop:disable Rails/SkipsModelValidations
+      aspace_update_time = Time.zone.parse('2024-06-11T21:06:53.000+0000')
+      alma_update_time = Time.zone.parse('2024-06-11T21:06:53.000+0000')
+      voyager_update_time = Time.zone.parse('2024-06-11T21:06:53.000+0000')
+
       parent_object_with_aspace_uri.default_fetch
       parent_object_with_aspace_uri.metadata_update = false
       parent_object_with_aspace_uri.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'aspace')
       parent_object_with_aspace_uri.default_fetch
-      parent_object_with_aspace_uri.last_aspace_update = 5.years.ago
       parent_object_with_aspace_uri.save!
+      # Set last_aspace_update directly in the DB to avoid callbacks overwriting it
+      parent_object_with_aspace_uri.update_column(:last_aspace_update, aspace_update_time)
       GoodJob::Job.delete(parent_object_with_aspace_uri.setup_metadata_jobs)
 
       relevant_parent_object.default_fetch
       relevant_parent_object.metadata_update = false
       relevant_parent_object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'ils')
       relevant_parent_object.default_fetch
-      relevant_parent_object.last_voyager_update = 5.years.ago
+      # Set last_voyager_update directly in the DB to avoid callbacks overwriting it
+      relevant_parent_object.update_column(:last_voyager_update, voyager_update_time)
       relevant_parent_object.save!
       GoodJob::Job.delete(relevant_parent_object.setup_metadata_jobs)
 
@@ -339,9 +347,11 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
       relevant_parent_object_with_alma_source.metadata_update = false
       relevant_parent_object_with_alma_source.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'alma')
       relevant_parent_object_with_alma_source.default_fetch
-      relevant_parent_object_with_alma_source.last_alma_update = 5.years.ago
       relevant_parent_object_with_alma_source.save!
+      # Set last_alma_update directly in the DB to avoid callbacks overwriting it
+      relevant_parent_object_with_alma_source.update_column(:last_alma_update, alma_update_time)
       GoodJob::Job.delete(relevant_parent_object_with_alma_source.setup_metadata_jobs)
+      # rubocop:enable Rails/SkipsModelValidations
 
       asl_old_success
     end

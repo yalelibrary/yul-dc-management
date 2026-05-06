@@ -8,20 +8,21 @@ RSpec.describe GenerateManifestJob, type: :job, prep_admin_sets: true, prep_meta
     ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
 
-  let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069', authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: '2005512', authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
   let(:generate_manifest_job) { GenerateManifestJob.new }
 
   describe 'generate manifests job' do
-    it 'increments the job queu' do
-      generate_manifest_job = described_class.perform_later(parent_object)
+    it 'increments the job queue' do
+      parent_object.save!
+      generate_manifest_job = described_class.perform_later(parent_object, batch_process)
       expect(generate_manifest_job.instance_variable_get(:@successfully_enqueued)).to be true
     end
 
     context 'job fails' do
-      let(:user) { FactoryBot.create(:user) }
       let(:parent_object) { FactoryBot.create(:parent_object, authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
       let(:child_object) { FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object) }
-      let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
 
       it 'notifies on Solr index failure' do
         allow(parent_object).to receive(:solr_index_job).and_raise('boom!')
