@@ -104,10 +104,13 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     describe "but does not have width and height in the database" do
       let(:parent_without_size) { FactoryBot.create(:parent_object, oid: 2_030_006) }
       before do
-        stub_metadata_cloud("2030006")
-        parent_without_size
-        stub_ptiffs_and_manifests
-        perform_enqueued_jobs
+        allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+        ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
+        perform_enqueued_jobs do
+          stub_metadata_cloud("2030006")
+          parent_without_size
+          stub_ptiffs_and_manifests
+        end
       end
       it "gets the width and height from the S3 metadata" do
         first_child_object = parent_without_size.child_objects.first

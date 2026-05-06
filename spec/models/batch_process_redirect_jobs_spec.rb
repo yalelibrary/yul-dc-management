@@ -22,6 +22,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
 
   describe "redirected parent" do
     before do
+      allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+      ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
       stub_ptiffs_and_manifests
       login_as(:user)
       parent_to_receive_children

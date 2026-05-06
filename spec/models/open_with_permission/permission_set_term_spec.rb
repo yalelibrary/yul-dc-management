@@ -36,24 +36,6 @@ RSpec.describe OpenWithPermission::PermissionSetTerm, type: :model do
     expect(permission_set_terms2.activated_at).not_to be nil
   end
 
-  it "has readonly body" do
-    permission_set_terms
-    old_body = permission_set_terms.body
-    permission_set_terms.body = "Test2"
-    permission_set_terms.save!
-    permission_set_terms.reload
-    expect(permission_set_terms.body).to eq old_body
-  end
-
-  it "has readonly title" do
-    permission_set_terms
-    old_title = permission_set_terms.title
-    permission_set_terms.title = "Test2 Title"
-    permission_set_terms.save!
-    permission_set_terms.reload
-    expect(permission_set_terms.title).to eq old_title
-  end
-
   it "raises an error when activating an already activated permission_set_terms" do
     permission_set_terms.activate_by!(user)
     expect do

@@ -14,6 +14,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
   end
 
   before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
     stub_ptiffs_and_manifests
     # rubocop:disable RSpec/AnyInstance
     allow_any_instance_of(ParentObject).to receive(:manifest_completed?).and_return(true)
@@ -342,9 +344,10 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
       let(:parent_object) { FactoryBot.create(:parent_object, oid: oid, source_name: 'ladybird') }
       it "commits data to solr if it is changed on the object" do
         expect do
-          parent_object.setup_metadata_job
-          perform_enqueued_jobs
-          parent_object.reload
+          perform_enqueued_jobs do
+            parent_object.setup_metadata_job
+            parent_object.reload
+          end
         end.to change(parent_object, :visibility).from("Private").to("Public")
 
         expect do
