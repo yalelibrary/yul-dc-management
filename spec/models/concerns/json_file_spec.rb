@@ -14,8 +14,6 @@ RSpec.describe JsonFile, prep_metadata_sources: true do
   end
 
   before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
     stub_metadata_cloud("16685691")
     stub_full_text_not_found("16686253")
     stub_ptiffs_and_manifests

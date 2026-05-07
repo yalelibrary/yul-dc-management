@@ -12,11 +12,6 @@ RSpec.describe UpdateManifestsJob, type: :job, prep_metadata_sources: true, prep
   end
 
   context 'with tests active job queue' do
-    before do
-      allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-      ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-    end
-
     it 'increments the job queue by one' do
       parent_object.save!
       manifests_job = described_class.perform_later(admin_set_1.id)

@@ -13,11 +13,6 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
     ENV['FEATURE_FLAGS'] = original_flags
   end
 
-  before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-  end
-
   let(:asr) { described_class.new }
   let(:relevant_parent_object) do
     FactoryBot.create(

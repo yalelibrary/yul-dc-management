@@ -24,11 +24,6 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
     ENV["ACCESS_PRIMARY_MOUNT"] = original_access_primary_mount
   end
 
-  before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-  end
-
   context 'with less than the maximum number of child objects' do
     before do
       # file not present

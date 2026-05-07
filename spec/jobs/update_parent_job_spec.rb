@@ -3,10 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe UpdateParentObjectsJob, type: :job do
-  before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-  end
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, batch_action: 'update parent objects', user: user) }
 

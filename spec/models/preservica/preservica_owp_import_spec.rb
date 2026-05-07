@@ -25,8 +25,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   end
 
   before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
     user.add_role(:editor, admin_set)
     user.add_role(:administrator, permission_set)
     login_as(:user)

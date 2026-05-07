@@ -14,8 +14,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, solr: tr
   end
 
   before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
     stub_ptiffs_and_manifests
     # rubocop:disable RSpec/AnyInstance
     allow_any_instance_of(ParentObject).to receive(:manifest_completed?).and_return(true)

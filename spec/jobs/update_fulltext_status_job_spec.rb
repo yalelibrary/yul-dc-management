@@ -3,11 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe UpdateFulltextStatusJob, type: :job, prep_metadata_sources: true, prep_admin_sets: true, solr: true do
-  before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-  end
-
   let(:user) { FactoryBot.create(:user) }
   let(:role) { FactoryBot.create(:role, name: editor) }
   let(:admin_set) { AdminSet.first }

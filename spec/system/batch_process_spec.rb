@@ -16,8 +16,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   end
 
   before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
     stub_ptiffs_and_manifests
     stub_metadata_cloud("2034600")
     stub_metadata_cloud("2005512")

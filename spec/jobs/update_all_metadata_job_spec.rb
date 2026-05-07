@@ -3,11 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe UpdateAllMetadataJob, type: :job, prep_metadata_sources: true, prep_admin_sets: true, solr: true do
-  before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-  end
-
   let(:parent_object) { FactoryBot.create(:parent_object, oid: '2005512', authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
 
   context 'with tests active job queue' do

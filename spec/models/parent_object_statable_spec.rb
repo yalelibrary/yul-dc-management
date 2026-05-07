@@ -11,8 +11,6 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
   let(:brbl) { AdminSet.find_by_key('brbl') }
 
   before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
     stub_full_text("1032318")
     stub_full_text("1030368")
   end

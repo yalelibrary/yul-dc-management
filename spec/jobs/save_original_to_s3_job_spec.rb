@@ -3,10 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe SaveOriginalToS3Job, type: :job, prep_metadata_sources: true, prep_admin_sets: true do
-  before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-  end
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
   let(:parent_object_private) { FactoryBot.create(:parent_object, oid: 2_004_627, authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first, visibility: 'Private') }

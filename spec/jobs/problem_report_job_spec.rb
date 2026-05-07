@@ -3,11 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe ProblemReportJob, type: :job do
-  before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-  end
-
   describe "jumping ahead one day" do
     before do
       Timecop.freeze(Time.zone.today)

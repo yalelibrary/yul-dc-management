@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe SyncFromPreservicaJob, type: :job, prep_metadata_sources: true, prep_admin_sets: true do
   include ActiveSupport::Testing::TaggedLogging
   before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
     ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :external)
   end
 

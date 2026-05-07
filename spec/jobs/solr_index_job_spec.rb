@@ -6,8 +6,6 @@ RSpec.describe SolrIndexJob, type: :job, prep_metadata_sources: true, prep_admin
   let(:parent_object) { FactoryBot.create(:parent_object, oid: '2005512', authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
 
   before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
     parent_object.save!
   end
 
