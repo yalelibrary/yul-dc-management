@@ -12,6 +12,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   let(:child_object_1) { FactoryBot.create(:child_object, oid: "12345", parent_object: parent_object_2) }
 
   before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
     stub_metadata_cloud("2005512")
     stub_ptiffs_and_manifests
     parent_object

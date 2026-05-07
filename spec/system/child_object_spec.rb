@@ -3,6 +3,8 @@ require 'rails_helper'
 
 RSpec.describe "ChildObjects", type: :system, prep_metadata_sources: true, prep_admin_sets: true do
   before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
     stub_metadata_cloud("2004628")
     stub_ptiffs_and_manifests
   end
