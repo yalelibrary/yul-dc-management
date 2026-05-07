@@ -16,6 +16,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   end
 
   before do
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
     stub_ptiffs_and_manifests
     stub_metadata_cloud("2034600")
     stub_metadata_cloud("2005512")
@@ -373,7 +375,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       end
       it "can still load the batch_process page" do
         po = ParentObject.find(30_000_317)
-        po.delete
+        po.destroy
         expect(po.destroyed?).to be true
         visit batch_processes_path
         click_on(BatchProcess.last.id.to_s, match: :first)
