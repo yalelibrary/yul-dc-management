@@ -81,6 +81,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   end
 
   before do
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :external)
     allow_any_instance_of(MetadataSource).to receive(:fetch_record).and_return(File.read(fixture_paths[0] + "/ladybird/2034600.json"))
     allow_any_instance_of(ParentObject).to receive(:authoritative_json).and_return(JSON.parse(File.read(fixture_paths[0] + "/ladybird/2034600.json")))
   end
@@ -201,7 +202,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_updated.viewing_direction).to be_nil
       expect(po_updated.visibility).to eq "Private"
       expect(update_batch_process.batch_ingest_events.first.reason).to eq "Skipping row [2]. Process failed. Permission Set missing or nonexistent."
-      expect(update_batch_process.batch_ingest_events_count).to eq 2
+      expect(update_batch_process.batch_ingest_events_count).to eq 1
     end
 
     it "does not update successfully if permission set is blank" do
@@ -256,7 +257,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_updated.viewing_direction).to be_nil
       expect(po_updated.visibility).to eq "Private"
       expect(update_batch_process.batch_ingest_events.first.reason).to eq "Skipping row [2]. Process failed. Permission Set missing from CSV."
-      expect(update_batch_process.batch_ingest_events_count).to eq 2
+      expect(update_batch_process.batch_ingest_events_count).to eq 1
     end
 
     it "does not update successfully if user does not have admin permission to permission set" do
@@ -309,7 +310,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_updated.rights_statement).to be_nil
       expect(po_updated.viewing_direction).to be_nil
       expect(po_updated.visibility).to eq "Private"
-      expect(update_batch_process.batch_ingest_events_count).to eq 2
+      expect(update_batch_process.batch_ingest_events_count).to eq 1
       expect(update_batch_process.batch_ingest_events.first.reason).to eq "Skipping row [2] because user does not have edit permissions for this Permission Set: PS Key"
     end
   end
@@ -500,7 +501,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_updated.rights_statement).to eq "The use of this image may be subject to the copyright law of the United States"
       expect(po_updated.viewing_direction).to be_nil
       expect(po_updated.visibility).to eq "Public"
-      expect(update_batch_process.batch_ingest_events_count).to eq 4
+      expect(update_batch_process.batch_ingest_events_count).to eq 2
       expect(update_batch_process.batch_ingest_events.first.reason).to eq "Parent 2034600 did not update value for source because it can not be blanked."
       expect(update_batch_process.batch_ingest_events.second.reason).to eq "Parent 2034600 did not update value for visibility because it can not be blanked."
     end

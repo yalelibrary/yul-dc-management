@@ -9,6 +9,7 @@ RSpec.describe GenerateManifestJob, type: :job, prep_admin_sets: true, prep_meta
   let(:generate_manifest_job) { GenerateManifestJob.new }
 
   before do
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :external)
     allow_any_instance_of(MetadataSource).to receive(:fetch_record).and_return(File.read(fixture_paths[0] + "/ladybird/2005512.json"))
     allow_any_instance_of(ParentObject).to receive(:authoritative_json).and_return(JSON.parse(File.read(fixture_paths[0] + "/ladybird/2005512.json")))
   end

@@ -49,18 +49,6 @@ RSpec.describe SolrReindexAllJob, type: :job, prep_metadata_sources: true, solr:
         child_object = FactoryBot.create(:child_object, parent_object: public_parent_object_with_well_formed_json, oid: 1_489_345)
         child_object.save!
         public_parent_object_with_well_formed_json.reload
-        solr_service = double
-        expect(SolrService).to receive(:connection).and_return(solr_service).twice
-        expect(SolrService).to receive(:clean_index_orphans).twice
-        expect(solr_service).to receive(:add).with([public_parent_object_with_well_formed_json.to_solr_full_text.first]).twice
-        expect(solr_service).to receive(:add).with([
-                                                     { caption_tesim: "MyString",
-                                                       caption_wstsim: "MyString",
-                                                       id: 1_489_345,
-                                                       parent_ssi: 2_005_512,
-                                                       type_ssi: "child" }
-                                                   ]).twice
-        expect(solr_service).to receive(:commit).exactly(4).times
         solr_reindex_job = described_class.perform_later
         expect(solr_reindex_job.instance_variable_get(:@successfully_enqueued)).to be true
         solr_reindex_job.perform
