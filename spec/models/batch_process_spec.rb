@@ -304,6 +304,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
 
       describe "running the background jobs" do
         before do
+          File.delete("spec/fixtures/images/access_primaries/00/02/30/00/04/02/30000402.tif") if File.exist?("spec/fixtures/images/access_primaries/00/02/30/00/04/02/30000402.tif")
+          File.delete("spec/fixtures/images/access_primaries/00/03/30/00/04/03/30000403.tif") if File.exist?("spec/fixtures/images/access_primaries/00/03/30/00/04/03/30000403.tif")
+          File.delete("spec/fixtures/images/access_primaries/00/04/30/00/04/04/30000404.tif") if File.exist?("spec/fixtures/images/access_primaries/00/04/30/00/04/04/30000404.tif")
           stub_metadata_cloud("V-30000317", "ils")
           stub_pdfs
           stub_request(:put, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/02/30/00/04/02/30000402.tif").to_return(status: 200)

@@ -5,8 +5,14 @@ require 'rails_helper'
 RSpec.describe Reassociatable, type: :model, prep_metadata_sources: true do
   let(:reassociatable) { BatchProcess.new }
   let(:metadata_source) { MetadataSource.first }
-  let(:parent_object) { FactoryBot.create(:parent_object, oid: '222', authoritative_metadata_source: metadata_source) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: '781086', authoritative_metadata_source: MetadataSource.find_by(metadata_cloud_name: 'aspace')) }
   let(:child_object) { FactoryBot.create(:child_object, oid: "1", label: "original label", caption: "original caption", viewing_hint: "original viewing hint", order: 5, parent_object: parent_object) }
+
+  before do
+    allow_any_instance_of(MetadataSource).to receive(:fetch_record).and_return(File.read(fixture_paths[0] + "/aspace/AS-781086.json"))
+    allow_any_instance_of(ParentObject).to receive(:authoritative_json).and_return(JSON.parse(File.read(fixture_paths[0] + "/aspace/AS-781086.json")))
+    allow(GeneratePdfJob).to receive(:perform_later).and_return(true)
+  end
 
   it "blanks out fields which can be blanked" do
     values = { "label" => "_blank_", "caption" => "_blank_", "viewing_hint" => "_blank_" }

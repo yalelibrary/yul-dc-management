@@ -16,6 +16,8 @@ RSpec.describe 'Manifests', type: :request, prep_metadata_sources: true, prep_ad
   let(:headers) { { "Authorization": "Bearer " + token } }
 
   before do
+    allow_any_instance_of(MetadataSource).to receive(:fetch_record).and_return(File.read(fixture_paths[0] + "/ladybird/2034600.json"))
+    allow_any_instance_of(ParentObject).to receive(:authoritative_json).and_return(JSON.parse(File.read(fixture_paths[0] + "/ladybird/2034600.json")))
     stub_metadata_cloud(oid)
     user.add_role(:editor, admin_set)
   end

@@ -8,6 +8,11 @@ RSpec.describe GenerateManifestJob, type: :job, prep_admin_sets: true, prep_meta
   let(:parent_object) { FactoryBot.create(:parent_object, oid: '2005512', authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
   let(:generate_manifest_job) { GenerateManifestJob.new }
 
+  before do
+    allow_any_instance_of(MetadataSource).to receive(:fetch_record).and_return(File.read(fixture_paths[0] + "/ladybird/2005512.json"))
+    allow_any_instance_of(ParentObject).to receive(:authoritative_json).and_return(JSON.parse(File.read(fixture_paths[0] + "/ladybird/2005512.json")))
+  end
+
   describe 'generate manifests job' do
     it 'increments the job queue' do
       parent_object.save!

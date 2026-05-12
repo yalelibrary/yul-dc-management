@@ -17,6 +17,7 @@ RSpec.describe UpdatePermissionRequestsJob, type: :job, prep_metadata_sources: t
 
   describe "update permission requests job" do
     it "will update request_status to expired" do
+      permission_request
       expect(OpenWithPermission::PermissionRequest.first.request_status).to eq "Approved"
       UpdatePermissionRequestsJob.perform_now
       expect(OpenWithPermission::PermissionRequest.first.request_status).to eq "Expired"

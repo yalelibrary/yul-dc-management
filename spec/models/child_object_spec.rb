@@ -93,7 +93,11 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
                                            'Content-Type' => 'image/tiff' })
       stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/89/45/67/89/456789.tif")
         .to_return(status: 200)
+      allow_any_instance_of(MetadataSource).to receive(:fetch_record).and_return(File.read(fixture_paths[0] + "/ladybird/2004628.json"))
+      allow_any_instance_of(ParentObject).to receive(:authoritative_json).and_return(JSON.parse(File.read(fixture_paths[0] + "/ladybird/2004628.json")))
+      allow(parent_object).to receive(:ready_for_manifest?).and_return(true)
       parent_object
+      child_object
     end
     it "does not try to generate the ptiff if it already has height & width and remote ptiff already exists" do
       expect(child_object.pyramidal_tiff.valid?).to eq true
@@ -102,15 +106,23 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
     end
 
     describe "but does not have width and height in the database" do
-      let(:parent_without_size) { FactoryBot.create(:parent_object, oid: 2_030_006) }
+      let(:parent_without_size) do
+        FactoryBot.create(:parent_object, oid: 781_086, authoritative_metadata_source_id: MetadataSource.find_by(metadata_cloud_name: "aspace").id, admin_set_id: AdminSet.first.id)
+      end
+      let(:first_child_object) { described_class.create(oid: "1112693", parent_object: parent_without_size) }
       before do
-        allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-        ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-        perform_enqueued_jobs do
-          stub_metadata_cloud("2030006")
-          parent_without_size
-          stub_ptiffs_and_manifests
-        end
+        stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/ptiffs/93/11/12/69/93/1112693.tif")
+          .to_return(status: 200, headers: { 'X-Amz-Meta-Width' => '2591',
+                                             'X-Amz-Meta-Height' => '4056',
+                                             'Content-Type' => 'image/tiff' })
+        stub_request(:head, "https://yale-test-image-samples.s3.amazonaws.com/originals/93/11/12/69/93/1112693.tif")
+          .to_return(status: 200)
+        stub_metadata_cloud("AS-781086", "aspace")
+        parent_without_size
+        first_child_object
+        stub_ptiffs_and_manifests
+        allow_any_instance_of(MetadataSource).to receive(:fetch_record).and_return(File.read(fixture_paths[0] + "/aspace/AS-781086.json"))
+        allow_any_instance_of(ParentObject).to receive(:authoritative_json).and_return(JSON.parse(File.read(fixture_paths[0] + "/aspace/AS-781086.json")))
       end
       it "gets the width and height from the S3 metadata" do
         first_child_object = parent_without_size.child_objects.first
@@ -219,11 +231,12 @@ RSpec.describe ChildObject, type: :model, prep_metadata_sources: true do
       before do
         stub_metadata_cloud("2004628")
         parent_object
+        allow_any_instance_of(MetadataSource).to receive(:fetch_record).and_return(File.read(fixture_paths[0] + "/ladybird/2004628.json"))
+        allow_any_instance_of(ParentObject).to receive(:authoritative_json).and_return(JSON.parse(File.read(fixture_paths[0] + "/ladybird/2004628.json")))
         allow(parent_object).to receive(:ladybird_json).and_return(JSON.parse(File.read(File.join(fixture_paths[0], "ladybird", "#{parent_object.oid}.json"))))
       end
 
       it "has technical image metadata upon creation" do
-        parent_object.create_child_records
         parent_object.gather_technical_image_metadata
         new_child = parent_object.child_objects.first
         expect(new_child.oid).to eq 1_042_003

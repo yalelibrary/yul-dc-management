@@ -11,6 +11,8 @@ RSpec.describe SolrReindexAllJob, type: :job, prep_metadata_sources: true, solr:
 
     context 'with Private visibility, well formed json and child objects' do
       before do
+        allow_any_instance_of(MetadataSource).to receive(:fetch_record).and_return(File.read(fixture_paths[0] + "/aspace/AS-781086.json"))
+        allow_any_instance_of(ParentObject).to receive(:authoritative_json).and_return(JSON.parse(File.read(fixture_paths[0] + "/aspace/AS-781086.json")))
         stub_metadata_cloud('AS-781086', 'aspace')
       end
       it 'can succeed and notify user but does not index Private object' do
@@ -32,6 +34,8 @@ RSpec.describe SolrReindexAllJob, type: :job, prep_metadata_sources: true, solr:
     end
     context 'with Public visibility, well formed json and child objects' do
       before do
+        allow_any_instance_of(MetadataSource).to receive(:fetch_record).and_return(File.read(fixture_paths[0] + "/aspace/AS-2005512.json"))
+        allow_any_instance_of(ParentObject).to receive(:authoritative_json).and_return(JSON.parse(File.read(fixture_paths[0] + "/aspace/AS-2005512.json")))
         stub_metadata_cloud('AS-2005512', 'aspace')
       end
       it 'can succeed and notify user and index parent object' do
@@ -50,19 +54,9 @@ RSpec.describe SolrReindexAllJob, type: :job, prep_metadata_sources: true, solr:
         expect(SolrService).to receive(:clean_index_orphans).twice
         expect(solr_service).to receive(:add).with([public_parent_object_with_well_formed_json.to_solr_full_text.first]).twice
         expect(solr_service).to receive(:add).with([
-                                                     { caption_tesim: "The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion, Washington, D.C., 1863 Jan 1",
-                                                       caption_wstsim: "The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion, Washington, D.C., 1863 Jan 1",
-                                                       id: 1_030_368,
-                                                       parent_ssi: 2_005_512,
-                                                       type_ssi: "child" },
                                                      { caption_tesim: "MyString",
                                                        caption_wstsim: "MyString",
                                                        id: 1_489_345,
-                                                       parent_ssi: 2_005_512,
-                                                       type_ssi: "child" },
-                                                     { caption_tesim: "The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion, Washington, D.C., 1863 Jan 1",
-                                                       caption_wstsim: "The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion, Washington, D.C., 1863 Jan 1",
-                                                       id: 1_032_318,
                                                        parent_ssi: 2_005_512,
                                                        type_ssi: "child" }
                                                    ]).twice

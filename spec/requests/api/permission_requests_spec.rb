@@ -31,6 +31,9 @@ RSpec.describe 'Permission Requests API', type: :request, prep_metadata_sources:
     stub_metadata_cloud(oid)
     stub_metadata_cloud(oid_two)
     stub_metadata_cloud(oid_three)
+    allow(parent).to receive(:authoritative_json).and_return(JSON.parse(File.read(fixture_paths[0] + "/ladybird/2034600.json")))
+    allow(parent_two).to receive(:authoritative_json).and_return(JSON.parse(File.read(fixture_paths[0] + "/ladybird/17105661.json")))
+    allow(parent_three).to receive(:authoritative_json).and_return(JSON.parse(File.read(fixture_paths[0] + "/ladybird/30000016189097.json")))
     parent
     parent_two
     parent_three
