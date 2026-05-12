@@ -380,7 +380,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       raise "Can not import a Parent as simple if it has Children" if ladybird_json["children"].present?
       array_of_child_hashes_for_simple
     else
-      ladybird_json["children"].map.with_index(1) do |child_record, index|
+      Array(ladybird_json["children"]).map.with_index(1) do |child_record, index|
         {
           oid: child_record["oid"],
           # Ladybird has only one field for both order label (7v, etc.), and descriptive captions ("Mozart at the Keyboard")
@@ -441,7 +441,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     metadata_source = authoritative_metadata_source&.metadata_cloud_name
     dep_objs = []
     DependentObject.delete(dependent_objects)
-    json["dependentUris"]&.each do |uri|
+    Array(json["dependentUris"])&.each do |uri|
       dep_objs << DependentObject.create(
         dependent_uri: uri,
         metadata_source: metadata_source,
@@ -583,7 +583,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.barcode = lb_record["orbisBarcode"]
     self.aspace_uri = lb_record["archiveSpaceUri"]
     self.visibility = lb_record["itemPermission"].nil? ? "Private" : lb_record["itemPermission"]
-    self.rights_statement = lb_record["rights"]&.join("\n")
+    self.rights_statement = Array(lb_record["rights"])&.join("\n")
     self.extent_of_digitization = normalize_extent_of_digitization
     self.project_identifier = lb_record["projectId"]
     self.use_ladybird = false
