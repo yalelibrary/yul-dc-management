@@ -38,7 +38,7 @@ jobs:
           POSTGRES_PASSWORD: $POSTGRES_PASSWORD
           SOLR_CORE: blacklight-test
           SOLR_BASE_URL: http://localhost:8983/solr
-          SE_NODE_SESSION_TIMEOUT:1000
+          SE_NODE_SESSION_TIMEOUT: 1000
       - image: yalelibraryit/dc-solr:v1.0.9
         environment:
           SOLR_HEAP: 4G
