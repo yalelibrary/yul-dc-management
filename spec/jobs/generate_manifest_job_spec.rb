@@ -17,6 +17,11 @@ RSpec.describe GenerateManifestJob, type: :job, prep_admin_sets: true, prep_meta
       expect(generate_manifest_job.instance_variable_get(:@successfully_enqueued)).to be true
     end
 
+    it "has correct priority" do
+      generate_manifest_job = described_class.new
+      expect(generate_manifest_job.default_priority).to eq(30)
+    end
+
     context 'job fails' do
       let(:user) { FactoryBot.create(:user) }
       let(:parent_object) { FactoryBot.create(:parent_object, authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }

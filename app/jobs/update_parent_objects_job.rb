@@ -6,7 +6,7 @@ class UpdateParentObjectsJob < ApplicationJob
   discard_on StandardError, Net::OpenTimeout
 
   def default_priority
-    50
+    60
   end
 
   def perform(batch_process)

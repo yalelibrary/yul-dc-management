@@ -5,7 +5,7 @@ class CreateChildOidCsvJob < ApplicationJob
   queue_as :default
 
   def default_priority
-    -100
+    10
   end
 
   def perform(batch_process)

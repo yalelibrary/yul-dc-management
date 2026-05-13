@@ -18,6 +18,11 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
     expect(active_job.instance_variable_get(:@successfully_enqueued)).to be true
   end
 
+  it "has correct priority" do
+    metadata_job = described_class.new
+    expect(metadata_job.default_priority).to eq(40)
+  end
+
   context 'job fails' do
     it 'notifies on save failure' do
       allow(parent_object).to receive(:default_fetch).and_raise('boom!')

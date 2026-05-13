@@ -5,7 +5,7 @@ class SyncFromPreservicaJob < ApplicationJob
   queue_as :default
 
   def default_priority
-    10
+    50
   end
 
   def perform(batch_process)

@@ -4,7 +4,7 @@ class UpdatePermissionRequestsJob < ApplicationJob
   queue_as :default
 
   def default_priority
-    100
+    70
   end
 
   def perform

@@ -3,6 +3,10 @@
 class UpdateDigitalObjectsJob < ApplicationJob
   queue_as :metadata
 
+  def default_priority
+    40
+  end
+
   def self.job_limit
     5000
   end

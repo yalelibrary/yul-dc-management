@@ -4,7 +4,7 @@ class GenerateManifestJob < ApplicationJob
   queue_as :manifest
 
   def default_priority
-    -30
+    30
   end
 
   def perform(parent_object, current_batch_process, current_batch_connection = parent_object.current_batch_connection)

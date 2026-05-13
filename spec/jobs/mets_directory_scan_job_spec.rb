@@ -20,7 +20,7 @@ RSpec.describe MetsDirectoryScanJob, type: :job do
   end
 
   it "has correct priority" do
-    expect(mets_directory_scan_job.default_priority).to eq(100)
+    expect(mets_directory_scan_job.default_priority).to eq(70)
   end
 
   it "has correct queue" do

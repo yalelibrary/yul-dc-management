@@ -4,7 +4,7 @@ class UpdateFulltextStatusJob < ApplicationJob
   queue_as :default
 
   def default_priority
-    50
+    60
   end
 
   # rubocop:disable Metrics/MethodLength

@@ -35,6 +35,10 @@ RSpec.describe GeneratePtiffJob, type: :job, prep_metadata_sources: true, prep_a
       expect(generate_ptiff_job.instance_variable_get(:@successfully_enqueued)).to be true
     end
 
+    it "has correct priority" do
+      expect(generate_ptiff_job.default_priority).to eq(50)
+    end
+
     it 'increments the ptiff job queue when file not larger than 1GB' do
       expect(generate_ptiff_job.instance_variable_get(:@queue_name)).to eq 'ptiff'
     end

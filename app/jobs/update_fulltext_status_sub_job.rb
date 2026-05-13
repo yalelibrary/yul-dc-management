@@ -4,7 +4,7 @@ class UpdateFulltextStatusSubJob < ApplicationJob
   queue_as :default
 
   def default_priority
-    50
+    60
   end
 
   def perform(batch_process, offset, limit)

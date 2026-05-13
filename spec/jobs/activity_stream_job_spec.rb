@@ -23,6 +23,11 @@ RSpec.describe ActivityStreamJob, type: :job do
     expect(activity_stream_job.instance_variable_get(:@successfully_enqueued)).to be true
   end
 
+  it "has correct priority" do
+    activity_stream_job = described_class.new
+    expect(activity_stream_job.default_priority).to eq(40)
+  end
+
   it 'enqueues the job for manual job' do
     manual_activity_stream_job = ActivityStreamManualJob.perform_later
     expect(manual_activity_stream_job.instance_variable_get(:@successfully_enqueued)).to be true

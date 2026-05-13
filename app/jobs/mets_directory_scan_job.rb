@@ -6,7 +6,7 @@ class MetsDirectoryScanJob < ApplicationJob
 
   # Low priority, TODO: reconsider priority
   def default_priority
-    100
+    70
   end
 
   def perform

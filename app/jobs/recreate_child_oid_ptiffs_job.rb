@@ -4,7 +4,7 @@ class RecreateChildOidPtiffsJob < ApplicationJob
   queue_as :default
 
   def default_priority
-    9
+    50
   end
 
   def perform(batch_process)
