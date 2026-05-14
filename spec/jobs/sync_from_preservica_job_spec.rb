@@ -17,6 +17,11 @@ RSpec.describe SyncFromPreservicaJob, type: :job, prep_metadata_sources: true, p
     expect(resync_preservica_job.instance_variable_get(:@successfully_enqueued)).to eq true
   end
 
+  it "has correct priority" do
+    sync_from_preservica_job = described_class.new
+    expect(sync_from_preservica_job.default_priority).to eq(50)
+  end
+
   it 'is configured to retry on errors' do
     # Verify the job class has retry configuration by inspecting the class directly
     expect(described_class.ancestors).to include(ActiveJob::Exceptions::ClassMethods)

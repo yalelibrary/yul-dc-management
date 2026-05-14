@@ -14,4 +14,9 @@ RSpec.describe UpdateParentObjectsJob, type: :job do
     update_parent_job = described_class.perform_later(batch_process)
     expect(update_parent_job.instance_variable_get(:@successfully_enqueued)).to eq true
   end
+
+  it "has correct priority" do
+    update_parent_job = described_class.new
+    expect(update_parent_job.default_priority).to eq(60)
+  end
 end

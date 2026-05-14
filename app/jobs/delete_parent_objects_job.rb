@@ -4,7 +4,7 @@ class DeleteParentObjectsJob < ApplicationJob
   queue_as :default
 
   def default_priority
-    -50
+    20
   end
 
   def perform(batch_process)

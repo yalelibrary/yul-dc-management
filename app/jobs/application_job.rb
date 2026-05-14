@@ -10,7 +10,7 @@ class ApplicationJob < ActiveJob::Base
   # Override default_priority  to set the default priority for a job w/o sacrificing the ability
   # to set priority at run time via `Job.set(priority: 55).perform_later`
   def default_priority
-    0
+    40
   end
 
   def priority

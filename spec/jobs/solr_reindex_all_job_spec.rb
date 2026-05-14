@@ -14,6 +14,11 @@ RSpec.describe SolrReindexAllJob, type: :job, prep_metadata_sources: true, solr:
       expect(solr_reindex_job.instance_variable_get(:@successfully_enqueued)).to be true
     end
 
+    it "has correct priority" do
+      solr_reindex_job = described_class.new
+      expect(solr_reindex_job.default_priority).to eq(40)
+    end
+
     context 'with Private visibility, well formed json and child objects' do
       before do
         stub_metadata_cloud('AS-781086', 'aspace')

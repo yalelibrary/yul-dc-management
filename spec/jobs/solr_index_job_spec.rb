@@ -15,6 +15,11 @@ RSpec.describe SolrIndexJob, type: :job, prep_metadata_sources: true, prep_admin
     expect(solr_job.instance_variable_get(:@successfully_enqueued)).to be true
   end
 
+  it "has correct priority" do
+    solr_index_job = described_class.new
+    expect(solr_index_job.default_priority).to eq(20)
+  end
+
   it 'increments the job queue by just one with multiple calls to solr_index_job' do
     expect(SolrIndexJob).to receive(:perform_later).once
     parent_object.solr_index_job

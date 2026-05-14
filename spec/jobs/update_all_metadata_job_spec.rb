@@ -16,6 +16,11 @@ RSpec.describe UpdateAllMetadataJob, type: :job, prep_metadata_sources: true, pr
       update_metadata_job = described_class.perform_later
       expect(update_metadata_job.instance_variable_get(:@successfully_enqueued)).to eq true
     end
+
+    it "has correct priority" do
+      update_all_metadata_job = described_class.new
+      expect(update_all_metadata_job.default_priority).to eq(40)
+    end
   end
 
   context 'with more than limit parent objects' do

@@ -4,7 +4,7 @@ class SolrIndexJob < ApplicationJob
   queue_as :solr_index
 
   def default_priority
-    -50
+    20
   end
 
   def perform(parent_object, current_batch_process = nil, current_batch_connection = parent_object.current_batch_connection)

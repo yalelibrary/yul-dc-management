@@ -99,4 +99,4 @@ group :test do
   gem 'timecop', '~> 0.9'
 end
 
-gem "good_job", "= 3.28.0"
+gem "good_job", "~> 4.18.2" # ~> 3.99.1 then 4.18.2
