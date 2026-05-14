@@ -21,7 +21,7 @@ RSpec.describe 'Download Original API', type: :request, prep_admin_sets: true, p
     original_access_primary_mount = ENV['ACCESS_PRIMARY_MOUNT']
     ENV['S3_SOURCE_BUCKET_NAME'] = 'not-a-real-bucket'
     ENV['S3_DOWNLOAD_BUCKET_NAME'] = 'fake-download-bucket'
-    ENV['ACCESS_PRIMARY_MOUNT'] = File.join(fixture_path, 'images/ptiff_images')
+    ENV['ACCESS_PRIMARY_MOUNT'] = File.join(fixture_paths[0], 'images/ptiff_images')
     example.run
     ENV['S3_SOURCE_BUCKET_NAME'] = original_image_bucket
     ENV['S3_DOWNLOAD_BUCKET_NAME'] = original_download_bucket

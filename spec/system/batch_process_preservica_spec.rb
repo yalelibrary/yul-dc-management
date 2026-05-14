@@ -6,8 +6,8 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
   subject(:batch_process) { BatchProcess.new }
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl') }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
-  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_sync.csv")) }
-  let(:preservica_parent_with_two_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_two_children.csv")) }
+  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_sync.csv")) }
+  let(:preservica_parent_with_two_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_parent_with_two_children.csv")) }
   let(:first_tif) { "spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif" }
   let(:second_tif) { "spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif" }
   let(:third_tif) { "spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif" }
@@ -50,14 +50,14 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
     fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
+        status: 200, body: File.open(File.join(fixture_paths[0], "#{fixture}.xml"))
       ).then.to_return(status: 500, body: 'mock error')
     end
     stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1/content.tif"), 'rb')
+      status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1/content.tif"), 'rb')
     ).then.to_return(status: 500, body: 'mock error')
     stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1/content.tif"), 'rb')
+      status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1/content.tif"), 'rb')
     ).then.to_return(status: 500, body: 'mock error')
   end
 

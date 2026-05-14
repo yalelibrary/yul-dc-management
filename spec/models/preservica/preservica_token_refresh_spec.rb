@@ -16,7 +16,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
   before do
     stub_preservica_login
     stub_request(:get, "https://testpreservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c4/children").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c4/children.xml"))
+      status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/structural-objects/7fe35e8c-c21a-444a-a2e2-e3c926b519c4/children.xml"))
     )
   end
 

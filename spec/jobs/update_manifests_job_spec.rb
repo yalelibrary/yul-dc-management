@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe UpdateManifestsJob, type: :job, prep_metadata_sources: true, prep_admin_sets: true, solr: true do
-  let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069') }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: '2005512', authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
   let(:user) { FactoryBot.create(:user) }
   let(:admin_set_1) { AdminSet.first }
 
@@ -12,13 +12,9 @@ RSpec.describe UpdateManifestsJob, type: :job, prep_metadata_sources: true, prep
   end
 
   context 'with tests active job queue' do
-    before do
-      allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-      ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-    end
-
     it 'increments the job queue by one' do
-      manifests_job = described_class.perform_later
+      parent_object.save!
+      manifests_job = described_class.perform_later(admin_set_1.id)
       expect(manifests_job.instance_variable_get(:@successfully_enqueued)).to eq true
     end
   end

@@ -9,7 +9,7 @@ RSpec.describe 'Ranges', type: :request, prep_metadata_sources: true, prep_admin
   let(:oid) { 2_034_600 }
   let(:parent) { FactoryBot.create(:parent_object, oid: oid, admin_set: admin_set, visibility: "Public") }
   let(:child) { FactoryBot.create(:child_object, parent_object: parent, oid: 12_345_678) }
-  let(:json) { File.read(Rails.root.join(fixture_path, 'v3_spec_range1.json')) }
+  let(:json) { File.read(Rails.root.join(fixture_paths[0], 'v3_spec_range1.json')) }
   let(:formatted_json) { format(json, parent_id: parent.oid, child_id: child.oid) }
   let(:manifest) { JSON.parse(formatted_json) }
   let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }

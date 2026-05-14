@@ -30,6 +30,14 @@ Capybara.always_include_port = true
 Capybara.app_host = "http://#{ENV['WEB_HOST']}:#{Capybara.server_port}"
 Capybara.javascript_driver = :chrome
 
+Capybara.configure do |config|
+  config.default_driver = :chrome
+  config.javascript_driver = :chrome
+
+  # Forces Capybara to handle server configurations isolatively per thread
+  config.reuse_server = false
+end
+
 # Setup rspec
 RSpec.configure do |config|
   config.before(:each, type: :system) do
@@ -40,5 +48,9 @@ RSpec.configure do |config|
     # rails system specs reset app_host each time so needs to be forced on each test
     Capybara.app_host = "http://#{ENV['WEB_HOST']}:#{Capybara.server_port}"
     driven_by :chrome
+  end
+
+  config.after(:each) do
+    Capybara.reset_sessions!
   end
 end

@@ -52,6 +52,9 @@ RSpec.describe S3Service, type: :has_vcr, prep_admin_sets: true, prep_metadata_s
         .to_return(status: 200, body: '', headers: { width => '100',
                                                      height => '200',
                                                      'Content-Type' => 'image/tiff' })
+    allow_any_instance_of(MetadataSource).to receive(:fetch_record).and_return(File.read(fixture_paths[0] + "/ladybird/2004628.json"))
+    allow_any_instance_of(ParentObject).to receive(:authoritative_json).and_return(JSON.parse(File.read(fixture_paths[0] + "/ladybird/2004628.json")))
+    parent_object
     child_object
   end
 

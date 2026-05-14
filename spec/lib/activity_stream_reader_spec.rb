@@ -13,11 +13,6 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
     ENV['FEATURE_FLAGS'] = original_flags
   end
 
-  before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-  end
-
   let(:asr) { described_class.new }
   let(:relevant_parent_object) do
     FactoryBot.create(
@@ -289,13 +284,13 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
     stub_metadata_cloud("A-15821166", "alma")
     # Activity Stream - stub requests to MetadataCloud activity stream with fixture objects that represent single activity_stream json pages
     stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read)
+      .to_return(status: 200, body: File.open(File.join(fixture_paths[0], "activity_stream", "page-3.json")).read)
     stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity/page-2")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-2.json")).read)
+      .to_return(status: 200, body: File.open(File.join(fixture_paths[0], "activity_stream", "page-2.json")).read)
     stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity/page-1")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-1.json")).read)
+      .to_return(status: 200, body: File.open(File.join(fixture_paths[0], "activity_stream", "page-1.json")).read)
     stub_request(:get, "https://#{MetadataSource.metadata_cloud_host}/metadatacloud/streams/activity/page-0")
-      .to_return(status: 200, body: File.open(File.join(fixture_path, "activity_stream", "page-0.json")).read)
+      .to_return(status: 200, body: File.open(File.join(fixture_paths[0], "activity_stream", "page-0.json")).read)
   end
 
   # There will be a automated job that fetches updates from the MetadataCloud on some configured schedule.
@@ -319,19 +314,27 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
 
       # This is to prime these objects so they have the default json,
       # This is necessary because these tests do not perform all jobs synchronously to fully create the object.
+      # Set last_aspace_update and last_alma_update to just before the activity stream's endTime (2024-06-12T21:06:53.000+0000)
+      # rubocop:disable Rails/SkipsModelValidations
+      aspace_update_time = Time.zone.parse('2024-06-11T21:06:53.000+0000')
+      alma_update_time = Time.zone.parse('2024-06-11T21:06:53.000+0000')
+      voyager_update_time = Time.zone.parse('2024-06-11T21:06:53.000+0000')
+
       parent_object_with_aspace_uri.default_fetch
       parent_object_with_aspace_uri.metadata_update = false
       parent_object_with_aspace_uri.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'aspace')
       parent_object_with_aspace_uri.default_fetch
-      parent_object_with_aspace_uri.last_aspace_update = 5.years.ago
       parent_object_with_aspace_uri.save!
+      # Set last_aspace_update directly in the DB to avoid callbacks overwriting it
+      parent_object_with_aspace_uri.update_column(:last_aspace_update, aspace_update_time)
       GoodJob::Job.delete(parent_object_with_aspace_uri.setup_metadata_jobs)
 
       relevant_parent_object.default_fetch
       relevant_parent_object.metadata_update = false
       relevant_parent_object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'ils')
       relevant_parent_object.default_fetch
-      relevant_parent_object.last_voyager_update = 5.years.ago
+      # Set last_voyager_update directly in the DB to avoid callbacks overwriting it
+      relevant_parent_object.update_column(:last_voyager_update, voyager_update_time)
       relevant_parent_object.save!
       GoodJob::Job.delete(relevant_parent_object.setup_metadata_jobs)
 
@@ -339,9 +342,11 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
       relevant_parent_object_with_alma_source.metadata_update = false
       relevant_parent_object_with_alma_source.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: 'alma')
       relevant_parent_object_with_alma_source.default_fetch
-      relevant_parent_object_with_alma_source.last_alma_update = 5.years.ago
       relevant_parent_object_with_alma_source.save!
+      # Set last_alma_update directly in the DB to avoid callbacks overwriting it
+      relevant_parent_object_with_alma_source.update_column(:last_alma_update, alma_update_time)
       GoodJob::Job.delete(relevant_parent_object_with_alma_source.setup_metadata_jobs)
+      # rubocop:enable Rails/SkipsModelValidations
 
       asl_old_success
     end
@@ -474,7 +479,7 @@ RSpec.describe ActivityStreamReader, prep_metadata_sources: true, prep_admin_set
 
   context "getting the uri for the previous page" do
     let(:json_parsed_page) { JSON.parse(latest_activity_stream_page) }
-    let(:latest_activity_stream_page) { File.open(File.join(fixture_path, "activity_stream", "page-3.json")).read }
+    let(:latest_activity_stream_page) { File.open(File.join(fixture_paths[0], "activity_stream", "page-3.json")).read }
 
     it "can get the uri for the previous page" do
       expect(asr.previous_page_link(json_parsed_page)).to eq "https://metadata-api-test.library.yale.edu/metadatacloud/streams/activity/page-2"

@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe RecreateChildOidPtiffsJob, type: :job, prep_metadata_sources: true, prep_admin_sets: true do
   before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
     ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :external)
   end
 
@@ -48,6 +47,7 @@ RSpec.describe RecreateChildOidPtiffsJob, type: :job, prep_metadata_sources: tru
       expect(recreate_job.instance_variable_get(:@successfully_enqueued)).to be true
     end
     it 'fails if the user does not have the udpate permission' do
+      user.remove_role(:editor, admin_set) if user.has_role?(:editor, admin_set)
       expect(GoodJob::Job.where(queue_name: 'ptiff').count).to eq(0)
       recreate_child_oid_ptiffs_job.perform(batch_process)
       expect(GoodJob::Job.where(queue_name: 'ptiff').count).to eq(0)

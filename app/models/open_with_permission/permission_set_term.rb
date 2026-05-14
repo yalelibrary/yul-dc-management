@@ -6,8 +6,6 @@ class OpenWithPermission::PermissionSetTerm < ApplicationRecord
   belongs_to :inactivated_by, primary_key: 'id', class_name: 'User', optional: true
   belongs_to :activated_by, primary_key: 'id', class_name: 'User', optional: true
 
-  attr_readonly :title, :body
-
   before_validation :strip_whitespace
 
   def strip_whitespace

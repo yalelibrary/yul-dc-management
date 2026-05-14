@@ -35,6 +35,7 @@ class Api::PermissionRequestsController < ApplicationController
   end
   # rubocop:disable Metrics/MethodLength
 
+  # TODO: Add logic for YCO and OWP visibilities
   def check_parent_visibility(parent_object)
     if parent_object.visibility == "Private"
       render(json: { "title": "Parent Object is private" }, status: 400) && (return false)
@@ -46,6 +47,7 @@ class Api::PermissionRequestsController < ApplicationController
 
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
+  # TODO: Add logic for when format is ['user']['email']
   def valid_json_request(request)
     if request['user_email'].blank?
       render(json: { "title": "User email is missing" }, status: 400) && (return false)

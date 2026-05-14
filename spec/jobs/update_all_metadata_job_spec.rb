@@ -3,16 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe UpdateAllMetadataJob, type: :job, prep_metadata_sources: true, prep_admin_sets: true, solr: true do
-  before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-  end
-
-  let(:parent_object) { FactoryBot.build(:parent_object, oid: '16797069', authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
+  let(:parent_object) { FactoryBot.create(:parent_object, oid: '2005512', authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first) }
 
   context 'with tests active job queue' do
     it 'increments the job queue by one' do
-      parent_object
+      parent_object.save!
       update_metadata_job = described_class.perform_later
       expect(update_metadata_job.instance_variable_get(:@successfully_enqueued)).to eq true
     end
@@ -47,7 +42,7 @@ RSpec.describe UpdateAllMetadataJob, type: :job, prep_metadata_sources: true, pr
     end
 
     it 'processes all parents in batches' do
-      expect(ParentObject).to receive(:where).with('redirect_to: nil').and_return(parent_object_where).exactly(expected_call_count).times
+      expect(ParentObject).to receive(:where).with({ redirect_to: nil }).and_return(parent_object_where).exactly(expected_call_count).times
       UpdateAllMetadataJob.perform_later
     end
 

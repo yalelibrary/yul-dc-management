@@ -11,6 +11,7 @@ Rails.application.configure do
   config.good_job.queues = ENV['WORKER_QUEUES']
   config.good_job.shutdown_timeout = 60 # seconds
   config.good_job.poll_interval = 5
+  config.good_job.smaller_number_is_higher_priority = false
   config.good_job.enable_cron = true
   config.good_job.cron = {
     activity: {

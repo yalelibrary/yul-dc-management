@@ -19,14 +19,9 @@ RSpec.describe IntegrityCheckable, type: :model, prep_metadata_sources: true, pr
 
   around do |example|
     original_access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
-    ENV["ACCESS_PRIMARY_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
+    ENV["ACCESS_PRIMARY_MOUNT"] = File.join(fixture_paths[0], "images/ptiff_images")
     example.run
     ENV["ACCESS_PRIMARY_MOUNT"] = original_access_primary_mount
-  end
-
-  before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
 
   context 'with less than the maximum number of child objects' do

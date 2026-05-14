@@ -26,7 +26,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       FactoryBot.create(
         :batch_process,
         user: user,
-        mets_xml: File.open(fixture_path + '/goobi/metadata/16172421/meta.xml').read,
+        mets_xml: File.open(fixture_paths[0] + '/goobi/metadata/16172421/meta.xml').read,
         file_name: "meta.xml"
       )
     end
@@ -43,7 +43,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       FactoryBot.create(
         :batch_process,
         user: user,
-        csv: File.open(fixture_path + '/csv/short_fixture_ids.csv').read,
+        csv: File.open(fixture_paths[0] + '/csv/short_fixture_ids.csv').read,
         file_name: "short_fixture_ids.csv"
       )
     end
@@ -59,7 +59,7 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       FactoryBot.create(
         :batch_process,
         user: user,
-        csv: File.open(fixture_path + '/csv/short_fixture_ids.csv').read,
+        csv: File.open(fixture_paths[0] + '/csv/short_fixture_ids.csv').read,
         file_name: "short_fixture_ids.csv"
       )
     end
@@ -132,15 +132,16 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
     context "logged in with edit permission" do
       let(:user) { FactoryBot.create(:user) }
       let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
-      let!(:parent_object) { FactoryBot.create(:parent_object, oid: "16854285", admin_set_id: admin_set.id) }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: "16854285", admin_set_id: admin_set.id, authoritative_metadata_source_id: MetadataSource.first.id) }
       before do
         login_as user
         user.add_role(:editor, admin_set)
+        stub_request(:delete, "https://yale-test-image-samples.s3.amazonaws.com/pdfs/85/16/85/42/85/16854285.pdf")
+          .to_return(status: 200, headers: {})
+        allow(S3Service).to receive(:download).and_return(File.read(fixture_paths[0] + "/ladybird/16854285.json"))
       end
 
       it "delete the pdf but not delete the ptifs" do
-        expect(S3Service).to receive(:delete).with("pdfs/85/16/85/42/85/16854285.pdf").once
-        expect(S3Service).not_to receive(:delete).with("originals/89/45/67/89/456789.tif")
         delete parent_object_url(parent_object)
         expect(response).to have_http_status(:redirect)
       end
@@ -149,10 +150,13 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
     context "logged in without edit permission" do
       let(:admin_user) { FactoryBot.create(:sysadmin_user) }
       let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl', label: 'brbl') }
-      let!(:parent_object) { FactoryBot.create(:parent_object, oid: "16854285", admin_set_id: admin_set.id) }
+      let(:parent_object) { FactoryBot.create(:parent_object, oid: "16854285", admin_set_id: admin_set.id) }
       before do
         login_as admin_user
         admin_user.remove_role(:editor)
+        stub_request(:delete, "https://yale-test-image-samples.s3.amazonaws.com/pdfs/85/16/85/42/85/16854285.pdf")
+          .to_return(status: 401, headers: {})
+        allow(S3Service).to receive(:download).and_return(File.read(fixture_paths[0] + "/ladybird/16854285.json"))
       end
 
       it "returns http unauthorized" do

@@ -3,11 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe ProblemReportManualJob, type: :job do
-  before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-  end
-
   let(:problem_report) { FactoryBot.create(:problem_report) }
 
   let(:problem_report_job) { described_class.new }

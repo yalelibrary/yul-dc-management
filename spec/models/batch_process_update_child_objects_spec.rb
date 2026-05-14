@@ -8,11 +8,11 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:role) { FactoryBot.create(:role, name: editor) }
-  let(:caption_label_csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_child_object_caption.csv")) }
-  let(:caption_label_csv_blank_value_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "update_child_object_blank.csv")) }
-  let(:checksum_csv_valid_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "checksum_child_object_valid.csv")) }
-  let(:checksum_csv_invalid_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "checksum_child_object_invalid.csv")) }
-  let(:checksum_csv_blank_value_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "checksum_child_object_blank.csv")) }
+  let(:caption_label_csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_child_object_caption.csv")) }
+  let(:caption_label_csv_blank_value_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_child_object_blank.csv")) }
+  let(:checksum_csv_valid_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "checksum_child_object_valid.csv")) }
+  let(:checksum_csv_invalid_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "checksum_child_object_invalid.csv")) }
+  let(:checksum_csv_blank_value_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "checksum_child_object_blank.csv")) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_002_826, admin_set_id: admin_set.id) }
   let(:initial_fixity_value) { FFaker::Number.number(digits: 20) }
   let(:tif_sha512_fixity_value) { "ddfcbb8f70ba901e979acbe0c5a716e2cb1784dae560ea396471a277caa4ce58f796adb6d64cbbdb3be3d2a2c436bc26c45b878e33a7f083c3b72272e01595b0" }
