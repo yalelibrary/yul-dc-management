@@ -55,6 +55,10 @@ jobs:
     steps:
       - setup_remote_docker
       - run:
+          name: Run database migrations
+          command: |
+            cd /home/app/webapp && bundle exec rails db:migrate
+      - run:
           name: Rubocop
           command: |
             cd /home/app/webapp && bundle exec rubocop --parallel
