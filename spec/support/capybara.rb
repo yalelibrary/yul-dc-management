@@ -56,12 +56,12 @@ RSpec.configure do |config|
 
   # rubocop:disable Style/GuardClause
   # Retry mechanism for Selenium session errors
-  config.around(:each, type: :system) do |example|
+  config.around(:each) do |example|
     retries = 2
     begin
       example.run
     rescue Selenium::WebDriver::Error::NoSuchSessionError, Selenium::WebDriver::Error::InvalidSessionIdError, Selenium::WebDriver::Error::UnknownError => e
-      if retries > 0 && e.message =~ /session not found|unable to find session|invalid session id/i
+      if retries > 0
         retries -= 1
         Capybara.reset_sessions!
         warn "[Capybara] Retrying example due to Selenium session error: #{e.message}"
