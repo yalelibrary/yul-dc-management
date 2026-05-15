@@ -57,7 +57,7 @@ jobs:
       - run:
           name: Run database migrations
           command: |
-            cd /home/app/webapp && bundle exec rails db:migrate
+            cd /home/app/webapp && bundle exec rails db:migrate RAILS_ENV=test
       - run:
           name: Rubocop
           command: |
