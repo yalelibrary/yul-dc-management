@@ -54,6 +54,7 @@ RSpec.configure do |config|
     Capybara.reset_sessions!
   end
 
+  # rubocop:disable Style/GuardClause
   # Retry mechanism for Selenium session errors
   config.around(:each, type: :system) do |example|
     retries = 2
@@ -70,4 +71,5 @@ RSpec.configure do |config|
       end
     end
   end
+  # rubocop:enable Style/GuardClause
 end
