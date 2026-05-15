@@ -20,7 +20,7 @@ RSpec.describe CreateChildOidCsvJob, type: :job do
   end
 
   it "has correct priority" do
-    expect(create_child_oid_csv_job.default_priority).to eq(-100)
+    expect(create_child_oid_csv_job.default_priority).to eq(10)
   end
 
   it "has correct queue" do
@@ -43,7 +43,7 @@ RSpec.describe CreateChildOidCsvJob, type: :job do
 
     it 'logs the error with batch_processing_event' do
       expect(batch_process).to receive(:batch_processing_event)
-        .with("Setup job failed to save: #{error_message}", "failed")
+        .with("CreateChildOidCsvJob failed to save: #{error_message}", "failed")
 
       expect do
         described_class.new.perform(batch_process)

@@ -28,5 +28,10 @@ RSpec.describe CreateNewParentJob, type: :job do
         described_class.new.perform(batch_process)
       end.not_to raise_error
     end
+
+    it "has correct priority" do
+      create_new_parent_job = described_class.new
+      expect(create_new_parent_job.default_priority).to eq(20)
+    end
   end
 end

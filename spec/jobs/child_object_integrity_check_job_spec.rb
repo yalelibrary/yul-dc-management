@@ -14,7 +14,7 @@ RSpec.describe ChildObjectIntegrityCheckJob, type: :job do
   end
 
   it "has correct priority" do
-    expect(child_object_integrity_check_job.default_priority).to eq(-100)
+    expect(child_object_integrity_check_job.default_priority).to eq(10)
   end
 
   it "has correct queue" do

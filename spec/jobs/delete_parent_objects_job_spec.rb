@@ -28,5 +28,10 @@ RSpec.describe DeleteParentObjectsJob, type: :job do
         described_class.new.perform(batch_process)
       end.not_to raise_error
     end
+
+    it "has correct priority" do
+      delete_parent_objects_job = described_class.new
+      expect(delete_parent_objects_job.default_priority).to eq(20)
+    end
   end
 end

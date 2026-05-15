@@ -16,6 +16,11 @@ RSpec.describe UpdateFulltextStatusJob, type: :job, prep_metadata_sources: true,
       fulltext_job = described_class.perform_later(batch_process)
       expect(fulltext_job.instance_variable_get(:@successfully_enqueued)).to eq true
     end
+
+    it "has correct priority" do
+      update_fulltext_status_job = described_class.new
+      expect(update_fulltext_status_job.default_priority).to eq(60)
+    end
   end
 
   context 'batch process' do

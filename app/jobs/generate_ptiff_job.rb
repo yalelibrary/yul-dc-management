@@ -4,7 +4,7 @@ class GeneratePtiffJob < ApplicationJob
   queue_as :ptiff
 
   def default_priority
-    10
+    50
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity

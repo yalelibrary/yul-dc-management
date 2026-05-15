@@ -3,6 +3,10 @@
 class SolrReindexAllJob < ApplicationJob
   queue_as :solr_index
 
+  def default_priority
+    40
+  end
+
   def self.job_limit
     5000
   end

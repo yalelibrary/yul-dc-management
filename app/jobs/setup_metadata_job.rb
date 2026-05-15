@@ -4,6 +4,10 @@ class SetupMetadataJob < ApplicationJob
   queue_as :metadata
   FIVE_HUNDRED_MB = 524_288_000
 
+  def default_priority
+    40
+  end
+
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/MethodLength

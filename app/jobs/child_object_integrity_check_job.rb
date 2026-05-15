@@ -4,7 +4,7 @@ class ChildObjectIntegrityCheckJob < ApplicationJob
   queue_as :default
 
   def default_priority
-    -100
+    10
   end
 
   def perform

@@ -25,6 +25,11 @@ RSpec.describe CreatePreservicaChildrenJob, type: :job, prep_admin_sets: true, p
     expect(described_class.new.queue_name).to eq('default')
   end
 
+  it "has correct priority" do
+    create_preservica_children_job = described_class.new
+    expect(create_preservica_children_job.default_priority).to eq(40)
+  end
+
   context 'when performing' do
     before do
       allow(parent_object).to receive(:create_child_records)

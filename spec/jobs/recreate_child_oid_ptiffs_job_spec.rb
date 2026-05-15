@@ -35,7 +35,7 @@ RSpec.describe RecreateChildOidPtiffsJob, type: :job, prep_metadata_sources: tru
 
   describe 'recreate ptiff job' do
     it "has correct priority" do
-      expect(recreate_child_oid_ptiffs_job.default_priority).to eq(9)
+      expect(recreate_child_oid_ptiffs_job.default_priority).to eq(50)
     end
     it "has correct queue" do
       expect(recreate_child_oid_ptiffs_job.queue_name).to eq('default')

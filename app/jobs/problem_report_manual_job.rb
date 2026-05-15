@@ -4,7 +4,7 @@ class ProblemReportManualJob < ApplicationJob
   queue_as :default
 
   def default_priority
-    50
+    60
   end
 
   def perform(problem_report)

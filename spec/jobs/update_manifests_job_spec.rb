@@ -17,6 +17,11 @@ RSpec.describe UpdateManifestsJob, type: :job, prep_metadata_sources: true, prep
       manifests_job = described_class.perform_later(admin_set_1.id)
       expect(manifests_job.instance_variable_get(:@successfully_enqueued)).to eq true
     end
+
+    it "has correct priority" do
+      update_manifests_job = described_class.new
+      expect(update_manifests_job.default_priority).to eq(40)
+    end
   end
 
   context 'with more than limit parent objects' do

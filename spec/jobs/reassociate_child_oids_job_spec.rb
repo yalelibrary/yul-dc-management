@@ -12,6 +12,11 @@ RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_
     expect(reassociate_child_oids_job.instance_variable_get(:@successfully_enqueued)).to be true
   end
 
+  it "has correct priority" do
+    reassociate_child_oids_job = described_class.new
+    expect(reassociate_child_oids_job.default_priority).to eq(60)
+  end
+
   context 'job fails' do
     let(:metadata_source) { MetadataSource.first }
 

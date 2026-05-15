@@ -12,6 +12,11 @@ RSpec.describe UpdateDigitalObjectsJob, type: :job, prep_metadata_sources: true,
       digital_job = described_class.perform_later(AdminSet.first.id)
       expect(digital_job.instance_variable_get(:@successfully_enqueued)).to eq true
     end
+
+    it "has correct priority" do
+      update_digital_objects_job = described_class.new
+      expect(update_digital_objects_job.default_priority).to eq(40)
+    end
   end
 
   context 'with feature flag on' do

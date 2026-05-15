@@ -28,5 +28,10 @@ RSpec.describe UpdateChildObjectsJob, type: :job do
         described_class.new.perform(batch_process)
       end.not_to raise_error
     end
+
+    it "has correct priority" do
+      update_child_objects_job = described_class.new
+      expect(update_child_objects_job.default_priority).to eq(60)
+    end
   end
 end

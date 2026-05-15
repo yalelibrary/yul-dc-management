@@ -4,7 +4,7 @@ class GeneratePdfJob < ApplicationJob
   queue_as :pdf
 
   def default_priority
-    10
+    50
   end
 
   # rubocop:disable Metrics/MethodLength

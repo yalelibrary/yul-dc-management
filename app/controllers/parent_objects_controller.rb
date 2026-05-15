@@ -269,8 +269,8 @@ class ParentObjectsController < ApplicationController
   def batch_process_of_one
     @batch_process = BatchProcess.new(user: current_user, oid: @parent_object.oid)
     @parent_object.current_batch_connection = @batch_process.batch_connections.build(connectable: @parent_object)
-    @batch_process.save!
     @parent_object.current_batch_process = @batch_process
+    @batch_process.save!
   end
 
   # rubocop:disable Layout/LineLength

@@ -9,6 +9,11 @@ RSpec.describe SolrReindexAllJob, type: :job, prep_metadata_sources: true, solr:
       expect(solr_reindex_job.instance_variable_get(:@successfully_enqueued)).to be true
     end
 
+    it "has correct priority" do
+      solr_reindex_job = described_class.new
+      expect(solr_reindex_job.default_priority).to eq(40)
+    end
+
     context 'with Private visibility, well formed json and child objects' do
       before do
         allow_any_instance_of(MetadataSource).to receive(:fetch_record).and_return(File.read(fixture_paths[0] + "/aspace/AS-781086.json"))

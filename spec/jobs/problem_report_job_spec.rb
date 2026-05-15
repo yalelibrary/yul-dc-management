@@ -3,6 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe ProblemReportJob, type: :job do
+  it "has correct priority" do
+    problem_report_job = described_class.new
+    expect(problem_report_job.default_priority).to eq(40)
+  end
+
   describe "jumping ahead one day" do
     before do
       Timecop.freeze(Time.zone.today)

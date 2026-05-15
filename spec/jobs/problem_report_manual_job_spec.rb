@@ -12,6 +12,11 @@ RSpec.describe ProblemReportManualJob, type: :job do
     expect(problem_report_job.instance_variable_get(:@successfully_enqueued)).to be true
   end
 
+  it "has correct priority" do
+    problem_report_job = described_class.new
+    expect(problem_report_job.default_priority).to eq(60)
+  end
+
   it 'generates the report when run' do
     expect(problem_report).to receive(:generate_child_problem_csv).once
     described_class.new.perform(problem_report)
