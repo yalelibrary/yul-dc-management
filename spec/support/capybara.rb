@@ -60,7 +60,7 @@ RSpec.configure do |config|
     begin
       example.run
     rescue Selenium::WebDriver::Error::NoSuchSessionError, Selenium::WebDriver::Error::InvalidSessionIdError, Selenium::WebDriver::Error::UnknownError => e
-      if retries > 0 && e.message =~ /session not found|invalid session id/i
+      if retries > 0 && e.message =~ /session not found|unable to find session|invalid session id/i
         retries -= 1
         Capybara.reset_sessions!
         warn "[Capybara] Retrying example due to Selenium session error: #{e.message}"
