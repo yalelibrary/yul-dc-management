@@ -90,7 +90,7 @@ group :development do
 end
 
 group :test do
-  gem 'capybara', '>= 2.15'
+  gem 'capybara', '~> 3.40.0'
   gem 'coveralls_reborn', '~> 0.28', require: false
   gem 'database_cleaner-active_record', '~> 2.2.0'
   gem 'ffaker', '~> 2.23'
