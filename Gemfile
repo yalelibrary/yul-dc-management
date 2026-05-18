@@ -58,7 +58,7 @@ gem 'webpacker', '~> 5.4'
 
 gem 'daemons', '~> 1.4'
 
-gem 'jwt', '~> 2.7'
+gem 'jwt', '~> 3.2'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
