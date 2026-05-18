@@ -94,7 +94,7 @@ group :test do
   gem 'coveralls_reborn', '~> 0.28', require: false
   gem 'database_cleaner-active_record', '~> 2.2.0'
   gem 'ffaker', '~> 2.23'
-  gem 'selenium-webdriver', '~> 4.14.0'
+  gem 'selenium-webdriver', '~> 4.44.0'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'timecop', '~> 0.9'
 end
