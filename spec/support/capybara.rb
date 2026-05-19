@@ -61,7 +61,7 @@ RSpec.configure do |config|
   # rubocop:disable Style/GuardClause
   # Retry mechanism for Selenium session errors
   config.around(:each) do |example|
-    retries = 2
+    retries = 3
     begin
       example.run
     rescue Selenium::WebDriver::Error::WebDriverError, Selenium::WebDriver::Error::InvalidSessionIdError => e
