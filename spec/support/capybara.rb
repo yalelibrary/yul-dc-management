@@ -50,8 +50,12 @@ RSpec.configure do |config|
     driven_by :chrome
   end
 
-  config.after(:each) do
+  config.after(:each, type: :system) do
     Capybara.reset_sessions!
+  rescue Selenium::WebDriver::Error::InvalidSessionIdError,
+         Selenium::WebDriver::Error::WebDriverError => e
+    warn "[Capybara] Stale Selenium session on reset, clearing pool: #{e.message}"
+    Capybara.send(:session_pool).clear
   end
 
   # rubocop:disable Style/GuardClause
@@ -64,7 +68,7 @@ RSpec.configure do |config|
       if retries > 0
         retries -= 1
         Capybara.default_driver = :chrome
-        Capybara.reset_sessions!
+        Capybara.send(:session_pool).clear
         warn "[Capybara] Retrying example due to Selenium session error: #{e.message}"
         retry
       else
