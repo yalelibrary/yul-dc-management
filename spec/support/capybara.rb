@@ -63,6 +63,7 @@ RSpec.configure do |config|
     rescue Selenium::WebDriver::Error::WebDriverError, Selenium::WebDriver::Error::InvalidSessionIdError => e
       if retries > 0
         retries -= 1
+        Capybara.default_driver = :chrome
         Capybara.reset_sessions!
         warn "[Capybara] Retrying example due to Selenium session error: #{e.message}"
         retry
