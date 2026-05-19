@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CreateChildOidCsvJob < ApplicationJob
+  include GoodJob::ActiveJobExtensions::InterruptErrors
   retry_on GoodJob::InterruptError, attempts: 3
   queue_as :default
 
