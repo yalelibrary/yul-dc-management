@@ -140,24 +140,6 @@ METADATA_FIELDS = {
       'callNumber_tesim'
     ]
   },
-  acquisitionSource: {
-    label: 'Acquisition Source',
-    solr_fields: [
-      'acquisitionSource_tesim'
-    ]
-  },
-  copyDescription: {
-    label: 'Copy Description',
-    solr_fields: [
-      'copyDescription_tesim'
-    ]
-  },
-  bindingInfo: {
-    label: 'Binding Information',
-    solr_fields: [
-      'bindingInfo_tesim'
-    ]
-  },
   sourceTitle: {
     label: 'Collection Title',
     solr_fields: [
