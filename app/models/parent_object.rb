@@ -283,7 +283,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def sync_from_preservica_update_existing_children(preservica_children_hash)
     new_children = []
     preservica_children_hash.each_value do |value|
-      co = ChildObject.find_by(parent_object_oid: oid, sha512_checksum: value[:checksum])
+      co = ChildObject.where(parent_object_oid: oid).where("LOWER(sha512_checksum) = ?", value[:checksum]&.downcase).first
       if co.nil?
         new_children << value
         next
@@ -293,7 +293,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       co.preservica_content_object_uri = value[:content_uri]
       co.preservica_generation_uri = value[:generation_uri]
       co.preservica_bitstream_uri = value[:bitstream_uri]
-      co.sha512_checksum = value[:checksum]
+      co.sha512_checksum = value[:checksum]&.downcase
       co.last_preservica_update = Time.current
       preservica_copy_to_access(value, co.oid)
       co.save!
@@ -315,7 +315,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         preservica_content_object_uri: child_data[:content_uri],
         preservica_generation_uri: child_data[:generation_uri],
         preservica_bitstream_uri: child_data[:bitstream_uri],
-        sha512_checksum: child_data[:checksum],
+        sha512_checksum: child_data[:checksum]&.downcase,
         caption: child_data[:bitstream]&.filename,
         last_preservica_update: Time.current
       }
