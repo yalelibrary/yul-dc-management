@@ -144,17 +144,17 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
       user.add_role(:administrator, permission_set)
       get '/api/permission_sets/2012036/uid', headers: headers
       expect(response).to have_http_status(200)
-      expect(response.body).to eq("{\"is_admin_or_approver?\":true}")
+      expect(response.body).to eq("{\"is_admin_or_approver?\":\"true\"}")
     end
     it "can find a parent object, permission set, and user but returns false for admin or approver access" do
       get '/api/permission_sets/2012036/uid', headers: headers
       expect(response).to have_http_status(200)
-      expect(response.body).to eq("{\"is_admin_or_approver?\":false}")
+      expect(response.body).to eq("{\"is_admin_or_approver?\":\"false\"}")
     end
     it "returns false if user is not found" do
       get '/api/permission_sets/2012036/invalid_uid', headers: headers
       expect(response).to have_http_status(400)
-      expect(response.body).to eq("{\"is_admin_or_approver?\":false}")
+      expect(response.body).to eq("{\"is_admin_or_approver?\":\"false\"}")
     end
     it "throws error if parent object not found" do
       get '/api/permission_sets/201203600/uid', headers: headers
@@ -164,7 +164,7 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
     it "returns false if permission set not found" do
       get '/api/permission_sets/2012033/uid', headers: headers
       expect(response).to have_http_status(400)
-      expect(response.body).to eq("{\"is_admin_or_approver?\":false}")
+      expect(response.body).to eq("{\"is_admin_or_approver?\":\"false\"}")
     end
   end
   # rubocop:enable Layout/LineLength
