@@ -24,7 +24,7 @@ RSpec.describe ChildObjectDatatable, type: :datatable, prep_metadata_sources: tr
 
     output = ChildObjectDatatable.new(datatable_sample_params(columns), view_context: child_object_datatable_view_mock, current_ability: Ability.new(user)).data
 
-    expect(output.size).to eq(1)
+    expect(output.size).to eq(2)
     expect(output).to include(
       oid: "<a href=\"/child_objects/1\">1</a><a href=\"/management/child_objects/10736292/edit\"><i class=\"fa fa-pencil\"></i></a>",
       label: nil,

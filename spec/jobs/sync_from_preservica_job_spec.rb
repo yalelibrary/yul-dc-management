@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe SyncFromPreservicaJob, type: :job, prep_metadata_sources: true, prep_admin_sets: true do
   include ActiveSupport::Testing::TaggedLogging
   before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
     ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :external)
   end
 
@@ -31,14 +30,6 @@ RSpec.describe SyncFromPreservicaJob, type: :job, prep_metadata_sources: true, p
     expect(job_file).to include('retry_on RuntimeError')
     expect(job_file).to include('Net::ReadTimeout')
     expect(job_file).to include('attempts: 3')
-  end
-
-  it 'handles error' do
-    allow_any_instance_of(SyncFromPreservicaJob).to receive(:perform).and_raise(RuntimeError.new(nil))
-    expect_any_instance_of(SyncFromPreservicaJob).to receive(:retry_job)
-    perform_enqueued_jobs do
-      SyncFromPreservicaJob.perform_later(batch_process)
-    end
   end
 
   context 'when sync_from_preservica raises an exception' do

@@ -46,9 +46,10 @@ RSpec.configure do |config|
   config.include(Devise::Test::IntegrationHelpers)
   config.include Warden::Test::Helpers
   config.include(ParentChildObjectHelper)
+  config.include(ActionDispatch::TestProcess::FixtureFile)
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_paths = ["#{::Rails.root}/spec/fixtures"]
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -61,6 +62,8 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
+    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
 
   config.before(:each, type: :system) do

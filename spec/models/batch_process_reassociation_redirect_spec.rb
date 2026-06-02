@@ -7,9 +7,9 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true do
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:role) { FactoryBot.create(:role, name: editor) }
-  let(:redirect) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_redirect.csv")) }
-  let(:do_not_redirect) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_do_not_redirect.csv")) }
-  let(:do_not_reassociate) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "reassociation_example_do_not_reassociate.csv")) }
+  let(:redirect) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "reassociation_example_redirect.csv")) }
+  let(:do_not_redirect) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "reassociation_example_do_not_redirect.csv")) }
+  let(:do_not_reassociate) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "reassociation_example_do_not_reassociate.csv")) }
   let(:parent_object) { FactoryBot.create(:parent_object, oid: "2002826", admin_set_id: admin_set.id) }
   let(:parent_object_2) { FactoryBot.create(:parent_object, oid: "2004550", admin_set_id: admin_set.id) }
   let(:parent_object_redirect) { FactoryBot.create(:parent_object, oid: "2004554", admin_set_id: admin_set.id, redirect_to: "https://collections.library.yale.edu/catalog/#{parent_object_2.oid}") }

@@ -34,7 +34,7 @@ COPY jpegs2pdf-1.3.jar $APP_HOME
 
 ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
 BUNDLE_JOBS=4
-RUN /sbin/setuser app bash -l -c "gem install bundler -v 2.3.8"
+RUN /sbin/setuser app bash -l -c "gem install bundler -v 4.0.11"
 
 COPY --chown=app Gemfile* $APP_HOME/
 RUN /sbin/setuser app bash -l -c "bundle check || bundle install"

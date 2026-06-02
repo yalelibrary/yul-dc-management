@@ -3,15 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_metadata_sources: true do
-  before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-  end
-
   let(:metadata_job) { ReassociateChildOidsJob.new }
+  let(:user) { FactoryBot.create(:user) }
+  let(:batch_process) { FactoryBot.create(:batch_process, batch_action: 'reassociate child oids', user: user) }
 
   it 'increments the job queue by one' do
-    reassociate_child_oids_job = described_class.perform_later(metadata_job)
+    reassociate_child_oids_job = described_class.perform_later(batch_process)
     expect(reassociate_child_oids_job.instance_variable_get(:@successfully_enqueued)).to be true
   end
 
@@ -21,8 +18,6 @@ RSpec.describe ReassociateChildOidsJob, type: :job, prep_admin_sets: true, prep_
   end
 
   context 'job fails' do
-    let(:user) { FactoryBot.create(:user) }
-    let(:batch_process) { FactoryBot.create(:batch_process, batch_action: 'reassociate child oids', user: user) }
     let(:metadata_source) { MetadataSource.first }
 
     it 'notifies on save failure' do

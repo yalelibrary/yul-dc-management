@@ -11,12 +11,16 @@ RSpec.describe 'Manifests', type: :request, prep_metadata_sources: true, prep_ad
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:oid) { 2_034_600 }
   let(:parent) { FactoryBot.create(:parent_object, oid: oid, admin_set: admin_set, visibility: "Public") }
-  let(:child) { FactoryBot.create(:child_object, parent_object: parent, oid: 12_345_678) }
+  let(:child) { FactoryBot.create(:child_object, parent_object: parent, oid: 12_345_678, height: 100, width: 100) }
   let(:token) { MockToken.new.jwt_encode(user_id: user&.id) }
   let(:headers) { { "Authorization": "Bearer " + token } }
 
   before do
+    allow_any_instance_of(MetadataSource).to receive(:fetch_record).and_return(File.read(fixture_paths[0] + "/ladybird/2034600.json"))
+    allow_any_instance_of(ParentObject).to receive(:authoritative_json).and_return(JSON.parse(File.read(fixture_paths[0] + "/ladybird/2034600.json")))
     stub_metadata_cloud(oid)
+    parent.child_objects.last&.destroy # ensure only one child object for testing
+    child
     user.add_role(:editor, admin_set)
   end
 

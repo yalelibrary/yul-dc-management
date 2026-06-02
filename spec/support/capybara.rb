@@ -7,7 +7,7 @@ Capybara.default_driver = :rack_test
 # Capybara.server = :puma, { Silent: false }
 ENV['WEB_HOST'] ||= `hostname -s`.strip
 
-options = Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu no-sandbox whitelisted-ips window-size=1400,1400 disable-dev-shm-usage])
+options = Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu no-sandbox whitelisted-ips window-size=1200,1200 disable-dev-shm-usage shm-size=2gb])
 options.add_argument(
   "--enable-features=NetworkService,NetworkServiceInProcess"
 )
@@ -30,6 +30,14 @@ Capybara.always_include_port = true
 Capybara.app_host = "http://#{ENV['WEB_HOST']}:#{Capybara.server_port}"
 Capybara.javascript_driver = :chrome
 
+Capybara.configure do |config|
+  config.default_driver = :chrome
+  config.javascript_driver = :chrome
+
+  # Forces Capybara to handle server configurations isolatively per thread
+  config.reuse_server = false
+end
+
 # Setup rspec
 RSpec.configure do |config|
   config.before(:each, type: :system) do
@@ -41,4 +49,32 @@ RSpec.configure do |config|
     Capybara.app_host = "http://#{ENV['WEB_HOST']}:#{Capybara.server_port}"
     driven_by :chrome
   end
+
+  config.after(:each) do
+    Capybara.reset_sessions!
+  rescue Selenium::WebDriver::Error::InvalidSessionIdError,
+         Selenium::WebDriver::Error::WebDriverError => e
+    warn "[Capybara] Stale Selenium session on reset, clearing pool: #{e.message}"
+    Capybara.send(:session_pool).clear
+  end
+
+  # rubocop:disable Style/GuardClause
+  # Retry mechanism for Selenium session errors
+  config.around(:each) do |example|
+    retries = 3
+    begin
+      example.run
+    rescue Selenium::WebDriver::Error::WebDriverError, Selenium::WebDriver::Error::InvalidSessionIdError => e
+      if retries > 0
+        retries -= 1
+        Capybara.default_driver = :chrome
+        Capybara.send(:session_pool).clear
+        warn "[Capybara] Retrying example due to Selenium session error: #{e.message}"
+        retry
+      else
+        raise
+      end
+    end
+  end
+  # rubocop:enable Style/GuardClause
 end

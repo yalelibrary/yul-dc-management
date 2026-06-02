@@ -27,7 +27,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       FactoryBot.create(
         :batch_process,
         user: user,
-        csv: File.open(fixture_path + '/csv/small_short_fixture_ids.csv').read,
+        csv: File.open(fixture_paths[0] + '/csv/small_short_fixture_ids.csv').read,
         file_name: "small_short_fixture_ids.csv",
         created_at: "2020-10-08 14:17:01"
       )
@@ -37,7 +37,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       FactoryBot.create(
         :batch_process,
         user: user,
-        csv: File.open(fixture_path + '/csv/short_fixture_bad_admin_set.csv').read,
+        csv: File.open(fixture_paths[0] + '/csv/short_fixture_bad_admin_set.csv').read,
         file_name: "short_fixture_bad_admin_set.csv",
         created_at: "2020-10-08 14:17:01"
       )
@@ -118,7 +118,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       FactoryBot.create(
         :batch_process,
         user: user,
-        mets_xml: File.open(fixture_path + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml').read,
+        mets_xml: File.open(fixture_paths[0] + '/goobi/metadata/30000317_20201203_140947/111860A_8394689_mets.xml').read,
         file_name: "111860A_8394689_mets.xml",
         created_at: "2020-10-08 16:17:01"
       )
@@ -138,7 +138,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       FactoryBot.create(
         :batch_process,
         user: user,
-        mets_xml: File.open(fixture_path + '/goobi/metadata/30000317_20201203_140947/valid_alma_mets.xml').read,
+        mets_xml: File.open(fixture_paths[0] + '/goobi/metadata/30000317_20201203_140947/valid_alma_mets.xml').read,
         file_name: "valid_alma_mets.xml",
         created_at: "2025-04-23 16:17:01"
       )
@@ -158,7 +158,7 @@ RSpec.describe "Batch Process detail page", type: :system, prep_metadata_sources
       FactoryBot.create(
         :batch_process,
         user: user,
-        mets_xml: File.open(fixture_path + '/goobi/metadata/30000317_20201203_140947/no_intranda_namespace_mets.xml').read,
+        mets_xml: File.open(fixture_paths[0] + '/goobi/metadata/30000317_20201203_140947/no_intranda_namespace_mets.xml').read,
         file_name: "111860A_8394689_no_intranda_mets.xml",
         created_at: "2020-10-08 16:17:01"
       )

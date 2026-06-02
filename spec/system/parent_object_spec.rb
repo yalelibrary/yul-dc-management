@@ -321,7 +321,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         po.child_object_count = 1
         po.visibility = "Public"
         # Manually set voyager_json since ILS metadata fetch is skipped. Acts like an ils object thats already in the system.
-        voyager_response = JSON.parse(File.read(File.join(fixture_path, "ils", "V-2012036.json")))
+        voyager_response = JSON.parse(File.read(File.join(fixture_paths[0], "ils", "V-2012036.json")))
         po.voyager_json = voyager_response
         po.save
         child_object

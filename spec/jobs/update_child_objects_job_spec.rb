@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe UpdateChildObjectsJob, type: :job do
   before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
     ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :external)
   end
 

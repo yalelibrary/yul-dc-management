@@ -6,8 +6,8 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
   let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: brbl) }
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
-  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "shorter_fixture_ids.csv")) }
-  let(:bad_oid_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "bad_oid.csv")) }
+  let(:csv_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "shorter_fixture_ids.csv")) }
+  let(:bad_oid_upload) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "bad_oid.csv")) }
   let(:brbl) { AdminSet.find_by_key('brbl') }
 
   before do
@@ -35,7 +35,7 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       before do
         stub_ptiffs_and_manifests
         stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/ladybird/#{parent_object.oid}.json")
-          .to_return(status: 400, body: File.open(File.join(fixture_path, "metadata_cloud_no_record.json")))
+          .to_return(status: 400, body: File.open(File.join(fixture_paths[0], "metadata_cloud_no_record.json")))
       end
 
       around do |example|

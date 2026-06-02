@@ -3,13 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe SaveOriginalToS3Job, type: :job, prep_metadata_sources: true, prep_admin_sets: true do
-  before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-  end
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
-  let(:parent_object_private) { FactoryBot.create(:parent_object, oid: 2_004_628, authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first, visibility: 'Private') }
+  let(:parent_object_private) { FactoryBot.create(:parent_object, oid: 2_004_627, authoritative_metadata_source: MetadataSource.first, admin_set: AdminSet.first, visibility: 'Private') }
   let(:child_object) { FactoryBot.create(:child_object, oid: '456789', parent_object: parent_object_private) }
   let(:save_to_s3_job) { SaveOriginalToS3Job.new }
   let(:parent_object_with_authoritative_json) do
@@ -18,7 +14,7 @@ RSpec.describe SaveOriginalToS3Job, type: :job, prep_metadata_sources: true, pre
                      authoritative_metadata_source: MetadataSource.first,
                      admin_set: AdminSet.first,
                      visibility: 'Public',
-                     ladybird_json: JSON.parse(File.read(File.join(fixture_path, 'ladybird', '16712419.json'))))
+                     ladybird_json: JSON.parse(File.read(File.join(fixture_paths[0], 'ladybird', '16712419.json'))))
   end
   let(:child_object_with_authoritative_json) { FactoryBot.create(:child_object, oid: '345678', parent_object: parent_object_with_authoritative_json) }
   let(:child_object_without_width) { FactoryBot.create(:child_object, oid: '234567', parent_object: parent_object_with_authoritative_json, width: nil) }
@@ -30,7 +26,7 @@ RSpec.describe SaveOriginalToS3Job, type: :job, prep_metadata_sources: true, pre
     original_access_primary_mount = ENV["ACCESS_PRIMARY_MOUNT"]
     ENV['S3_SOURCE_BUCKET_NAME'] = 'not-a-real-bucket'
     ENV['S3_DOWNLOAD_BUCKET_NAME'] = 'fake-download-bucket'
-    ENV["ACCESS_PRIMARY_MOUNT"] = File.join(fixture_path, "images/ptiff_images")
+    ENV["ACCESS_PRIMARY_MOUNT"] = File.join(fixture_paths[0], "images/ptiff_images")
     example.run
     ENV['S3_SOURCE_BUCKET_NAME'] = original_image_bucket
     ENV['S3_DOWNLOAD_BUCKET_NAME'] = original_download_bucket
@@ -62,7 +58,7 @@ RSpec.describe SaveOriginalToS3Job, type: :job, prep_metadata_sources: true, pre
     it 'logs an error with Private or Redirect visibility' do
       save_to_s3_job.perform(child_object.oid)
       expect(Rails.logger).to have_received(:error)
-        .with('Not copying image from 2004628. Parent object must have Public or Yale Community Only visibility.')
+        .with('Not copying image from 2004627. Parent object must have Public or Yale Community Only visibility.')
     end
     it 'logs an error when file is already in S3' do
       save_to_s3_job.perform(child_object_with_authoritative_json.oid)

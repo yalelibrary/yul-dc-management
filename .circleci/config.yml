@@ -38,6 +38,7 @@ jobs:
           POSTGRES_PASSWORD: $POSTGRES_PASSWORD
           SOLR_CORE: blacklight-test
           SOLR_BASE_URL: http://localhost:8983/solr
+          SE_NODE_SESSION_TIMEOUT: 1000
       - image: yalelibraryit/dc-solr:v1.0.9
         environment:
           SOLR_HEAP: 4G
@@ -49,10 +50,14 @@ jobs:
           POSTGRES_PASSWORD: $POSTGRES_PASSWORD
       - image: seleniarm/standalone-chromium:latest
         name: chrome    
-    parallelism: 4
+    parallelism: 6
     executor: docker/docker
     steps:
       - setup_remote_docker
+      - run:
+          name: Run database migrations
+          command: |
+            cd /home/app/webapp && bundle exec rails db:migrate RAILS_ENV=test
       - run:
           name: Rubocop
           command: |

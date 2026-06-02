@@ -17,8 +17,6 @@ RSpec.describe UpdatePermissionRequestsJob, type: :job, prep_metadata_sources: t
 
   before do
     permission_request
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
   end
 
   it "has correct priority" do
@@ -28,6 +26,7 @@ RSpec.describe UpdatePermissionRequestsJob, type: :job, prep_metadata_sources: t
 
   describe "update permission requests job" do
     it "will update request_status to expired" do
+      permission_request
       expect(OpenWithPermission::PermissionRequest.first.request_status).to eq "Approved"
       UpdatePermissionRequestsJob.perform_now
       expect(OpenWithPermission::PermissionRequest.first.request_status).to eq "Expired"

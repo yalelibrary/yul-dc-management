@@ -6,8 +6,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   subject(:batch_process) { BatchProcess.new }
   let(:admin_set) { FactoryBot.create(:admin_set, key: 'brbl') }
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
-  let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_with_children.csv")) }
-  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_reingest.csv")) }
+  let(:preservica_parent_with_children) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_parent_with_children.csv")) }
+  let(:preservica_sync) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_reingest.csv")) }
   let(:first_tif) { "spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif" }
   let(:new_first_tif) { "spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif" }
   let(:second_tif) { "spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif" }
@@ -37,7 +37,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     stub_preservica_fixtures_set_of_three_changing_generation
     stub_preservica_tifs_set_of_three
     stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/2/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/2/bitstreams/1/content.tif"), 'rb')
+      status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/2/bitstreams/1/content.tif"), 'rb')
     )
   end
 

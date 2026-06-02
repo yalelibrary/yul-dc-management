@@ -8,11 +8,11 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:user) { FactoryBot.create(:user, uid: "mk2525") }
   let(:sysadmin_user) { FactoryBot.create(:sysadmin_user) }
   let(:permission_set) { FactoryBot.create(:permission_set, key: 'psKey') }
-  let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent.csv")) }
-  let(:preservica_parent_no_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_no_source.csv")) }
-  let(:preservica_parent_no_admin_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_parent_no_admin_set.csv")) }
-  let(:preservica_parent_no_permission_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_owp_parent_no_permission_set.csv")) }
-  let(:preservica_parent_with_permission_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "preservica", "preservica_owp_parent_with_permission_set.csv")) }
+  let(:preservica_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_parent.csv")) }
+  let(:preservica_parent_no_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_parent_no_source.csv")) }
+  let(:preservica_parent_no_admin_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_parent_no_admin_set.csv")) }
+  let(:preservica_parent_no_permission_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_owp_parent_no_permission_set.csv")) }
+  let(:preservica_parent_with_permission_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_owp_parent_with_permission_set.csv")) }
 
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
@@ -57,7 +57,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
 
     fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
+        status: 200, body: File.open(File.join(fixture_paths[0], "#{fixture}.xml"))
       )
     end
     stub_preservica_tifs_set_of_three

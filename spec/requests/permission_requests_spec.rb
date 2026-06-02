@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: true, prep_admin_sets: true do
   let(:user) { FactoryBot.create(:sysadmin_user) }
-  let(:json) { File.read(Rails.root.join(fixture_path, 'permission_request.json')) }
+  let(:json) { File.read(Rails.root.join(fixture_paths[0], 'permission_request.json')) }
   let(:admin_set) { AdminSet.first }
   let(:oid) { '2034600' }
   let(:parent_object) { FactoryBot.create(:parent_object, admin_set_id: admin_set.id, oid: oid) }

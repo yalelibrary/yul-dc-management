@@ -9,7 +9,7 @@ module StubRequestHelper
       stub_request(:put, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/#{source_name}/#{oid}.json").to_return(status: 200)
     else
       stub_request(:get, "https://#{ENV['SAMPLE_BUCKET']}.s3.amazonaws.com/#{source_name}/#{oid}.json")
-        .to_return(status: 200, body: File.open(File.join(fixture_path, source_name, "#{oid}.json")))
+        .to_return(status: 200, body: File.open(File.join(fixture_paths[0], source_name, "#{oid}.json")))
     end
   end
 
@@ -42,7 +42,7 @@ module StubRequestHelper
   def stub_full_text(oid)
     pairtree_path = Partridge::Pairtree.oid_to_pairtree(oid)
     stub_request(:get, "https://#{ENV['OCR_DOWNLOAD_BUCKET']}.s3.amazonaws.com/fulltext/#{pairtree_path}/#{oid}.txt")
-        .to_return(status: 200, body: File.exist?(File.join(fixture_path, "full_text", "#{oid}.txt")) ? File.open(File.join(fixture_path, "full_text", "#{oid}.txt")) : "#{oid} full text")
+        .to_return(status: 200, body: File.exist?(File.join(fixture_paths[0], "full_text", "#{oid}.txt")) ? File.open(File.join(fixture_paths[0], "full_text", "#{oid}.txt")) : "#{oid} full text")
     stub_request(:head, "https://#{ENV['OCR_DOWNLOAD_BUCKET']}.s3.amazonaws.com/fulltext/#{pairtree_path}/#{oid}.txt")
         .to_return(status: 200, headers: { 'Content-Type' => 'text/plain' })
   end
@@ -89,28 +89,28 @@ module StubRequestHelper
 
     fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
-        status: 200, body: File.open(File.join(fixture_path, "#{fixture}.xml"))
+        status: 200, body: File.open(File.join(fixture_paths[0], "#{fixture}.xml"))
       )
     end
 
     # changing fixtures
     stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations.xml"))
+      status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations.xml"))
     ).times(2).then.to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations_2.xml"))
+      status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations_2.xml"))
     )
   end
   # rubocop:enable Metrics/MethodLength
 
   def stub_preservica_tifs_set_of_three
     stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1/content.tif"), 'rb')
+      status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b487/generations/1/bitstreams/1/content.tif"), 'rb')
     )
     stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1/content.tif"), 'rb')
+      status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b486/generations/1/bitstreams/1/content.tif"), 'rb')
     )
     stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1/content").to_return(
-      status: 200, body: File.open(File.join(fixture_path, "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1/content.tif"), 'rb')
+      status: 200, body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157b489/generations/1/bitstreams/1/content.tif"), 'rb')
     )
   end
 end

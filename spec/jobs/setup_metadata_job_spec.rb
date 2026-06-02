@@ -3,10 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadata_sources: true do
-  before do
-    allow(GoodJob).to receive(:preserve_job_records).and_return(true)
-    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-  end
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
   let(:parent_object) { FactoryBot.create(:parent_object, admin_set: AdminSet.first, authoritative_metadata_source: MetadataSource.first) }

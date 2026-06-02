@@ -6,18 +6,18 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   subject(:batch_process) { described_class.new }
   let(:user) { FactoryBot.create(:user, uid: 'mk2525') }
   let(:admin_set_one) { FactoryBot.create(:admin_set, key: 'jss') }
-  let(:create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_owp_parent.csv")) }
-  let(:create_invalid_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_invalid_owp_parent.csv")) }
-  let(:create_invalid_sensitive_materials_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "create_invalid_sensitive_materials_parent.csv")) }
-  let(:mini_create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, "csv", "mini_owp_parent.csv")) }
+  let(:create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "create_owp_parent.csv")) }
+  let(:create_invalid_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "create_invalid_owp_parent.csv")) }
+  let(:create_invalid_sensitive_materials_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "create_invalid_sensitive_materials_parent.csv")) }
+  let(:mini_create_owp_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "mini_owp_parent.csv")) }
   let(:permission_set) { FactoryBot.create(:permission_set, key: "PS Key") }
-  let(:no_oid_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'parent_no_oid.csv')) }
-  let(:no_admin_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'parent_no_admin_set.csv')) }
-  let(:no_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'parent_no_source.csv')) }
-  let(:no_extent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'aspace_parent_no_extent.csv')) }
-  let(:typo_extent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'aspace_parent_typo_extent.csv')) }
-  let(:aspace_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'aspace_parent.csv')) }
-  let(:alma_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'create_alma_parent.csv')) }
+  let(:no_oid_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], 'csv', 'parent_no_oid.csv')) }
+  let(:no_admin_set) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], 'csv', 'parent_no_admin_set.csv')) }
+  let(:no_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], 'csv', 'parent_no_source.csv')) }
+  let(:no_extent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], 'csv', 'aspace_parent_no_extent.csv')) }
+  let(:typo_extent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], 'csv', 'aspace_parent_typo_extent.csv')) }
+  let(:aspace_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], 'csv', 'aspace_parent.csv')) }
+  let(:alma_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], 'csv', 'create_alma_parent.csv')) }
 
   around do |example|
     original_image_bucket = ENV['S3_SOURCE_BUCKET_NAME']
@@ -62,7 +62,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       end
 
       it 'can create a parent object from ladybird with children and gathers technical image metadata' do
-        ladybird_csv = Rack::Test::UploadedFile.new(Rails.root.join(fixture_path, 'csv', 'ladybird_parent_with_children.csv'))
+        ladybird_csv = Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], 'csv', 'ladybird_parent_with_children.csv'))
         expect do
           batch_process.file = ladybird_csv
           batch_process.save
