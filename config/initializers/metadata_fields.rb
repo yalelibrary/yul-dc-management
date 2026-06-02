@@ -60,10 +60,22 @@ METADATA_FIELDS = {
       'description_tesim'
     ]
   },
+  copyDescription: {
+    label: 'Notes on this Copy',
+    solr_fields: [
+      'copyDescription_tesim'
+    ]
+  },
   provenanceUncontrolled: {
     label: 'Provenance',
     solr_fields: [
       'provenanceUncontrolled_tesi'
+    ]
+  },
+  acquisitionSource: {
+    label: 'Source of Acquisition',
+    solr_fields: [
+      'acquisitionSource_tesim'
     ]
   },
   digitization_note: {
@@ -76,6 +88,12 @@ METADATA_FIELDS = {
     label: 'Digitization Funding Source',
     solr_fields: [
       'digitization_funding_source_tesi'
+    ]
+  },
+  bindingInfo: {
+    label: 'Binding',
+    solr_fields: [
+      'bindingInfo_tesim'
     ]
   },
   extent: {
