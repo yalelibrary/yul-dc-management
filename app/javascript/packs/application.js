@@ -209,8 +209,7 @@ $( document ).on('turbolinks:load', function() {
       initComplete: function () {
         $('.dt-info').appendTo('.main-content');
         $('.dt-paging').appendTo('.main-content');
-        if (hasSearch) onColumnsUpdate(this);
-        
+
         // Add handler for column visibility changes
         $(document).on('click', '.dt-button-collection .dropdown-item', function() {
           $(this).toggleClass('active');
@@ -222,6 +221,8 @@ $( document ).on('turbolinks:load', function() {
       }
 
     })
+
+    if (hasSearch) onColumnsUpdate(dataTable);
     dataTable.api().draw();
     $.fn.dataTable.ext.errMode = 'throw';
 

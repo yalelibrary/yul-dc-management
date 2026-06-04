@@ -43,4 +43,45 @@ RSpec.describe ChildObjectDatatable, type: :datatable, prep_metadata_sources: tr
       DT_RowId: 10_736_292
     )
   end
+
+  describe 'record count optimizations' do
+    let(:ability) { Ability.new(user) }
+    let(:view_mock) { child_object_datatable_view_mock }
+
+    before do
+      stub_metadata_cloud('2004628')
+      admin_set = AdminSet.find_by_key('brbl')
+      @parent_object = FactoryBot.create(:parent_object, admin_set: admin_set)
+      FactoryBot.create(:child_object, oid: 10_736_292, parent_object: @parent_object, caption: 'MyString')
+    end
+
+    it 'reuses the total count for the filtered count when no search is active' do
+      json = ChildObjectDatatable.new(datatable_sample_params(columns), view_context: view_mock, current_ability: ability).as_json
+
+      expect(json[:recordsTotal]).to eq(2)
+      expect(json[:recordsFiltered]).to eq(json[:recordsTotal])
+    end
+
+    it 'computes a reduced filtered count when a search is active, leaving the total intact' do
+      FactoryBot.create(:child_object, oid: 22_222_222, parent_object: @parent_object, caption: 'UniqueCaptionXYZ')
+      searching_params = datatable_sample_params(columns)
+      searching_params['search']['value'] = 'UniqueCaptionXYZ'
+
+      json = ChildObjectDatatable.new(searching_params, view_context: view_mock, current_ability: ability).as_json
+
+      expect(json[:recordsTotal]).to eq(3)
+      expect(json[:recordsFiltered]).to eq(1)
+    end
+
+    it 'serves the total count from cache, independent of new records within the TTL window' do
+      allow(Rails).to receive(:cache).and_return(ActiveSupport::Cache::MemoryStore.new)
+      build_count = -> { ChildObjectDatatable.new(datatable_sample_params(columns), view_context: view_mock, current_ability: ability).as_json[:recordsTotal] }
+
+      expect(build_count.call).to eq(2)
+      FactoryBot.create(:child_object, oid: 33_333_333, parent_object: @parent_object)
+
+      # A new row now exists, but the cached count is served until the entry expires.
+      expect(build_count.call).to eq(2)
+    end
+  end
 end
