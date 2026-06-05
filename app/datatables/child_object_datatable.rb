@@ -70,4 +70,20 @@ class ChildObjectDatatable < ApplicationDatatable
   def get_raw_records
     ChildObject.accessible_by(@current_ability, :read)
   end
+  # rubocop:enable Naming/AccessorMethodName
+
+  # How long to cache the total record count.
+  TOTAL_COUNT_CACHE_TTL = 10.minutes
+
+  private
+
+  def records_total_count
+    Rails.cache.fetch(total_count_cache_key, expires_in: TOTAL_COUNT_CACHE_TTL) do
+      super
+    end
+  end
+
+  def total_count_cache_key
+    ['child_object_datatable/total_count', Digest::MD5.hexdigest(get_raw_records.to_sql)].join('/')
+  end
 end
