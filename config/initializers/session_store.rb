@@ -11,16 +11,14 @@ raw_host = ENV["MANAGEMENT_HOST"].to_s
 normalized_host = raw_host.sub(%r{\Ahttps?://}i, '').split(':').first
 
 session_store_options = {
-    expire_after: 30.days,
-    key: key,
-    threadsafe: true,
-    secure: secure,
-    same_site: :lax,
-    httponly: true
+  expire_after: 30.days,
+  key: key,
+  threadsafe: true,
+  secure: secure,
+  same_site: :lax,
+  httponly: true
 }
 
-if normalized_host.present? && normalized_host != 'localhost' && !Rails.env.test?
-    session_store_options[:domain] = normalized_host
-end
+session_store_options[:domain] = normalized_host if normalized_host.present? && normalized_host != 'localhost' && !Rails.env.test?
 
 Rails.application.config.session_store :cookie_store, **session_store_options
