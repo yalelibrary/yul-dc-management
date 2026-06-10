@@ -1,14 +1,26 @@
 # frozen_string_literal: true
 
 secure = Rails.env.production?
-key = Rails.env.production? ? "_app_session" : "_app_session_#{Rails.env}"
-domain = ENV.fetch("MANAGEMENT_HOST", "localhost")
+default_key = Rails.env.production? ? "_app_session" : "_management_yul_session"
+key = ENV.fetch("SESSION_COOKIE_KEY", default_key)
 
-Rails.application.config.session_store :cookie_store,
-                                       expire_after: 30.days,
-                                       key: key,
-                                       domain: domain,
-                                       threadsafe: true,
-                                       secure: secure,
-                                       same_site: :lax,
-                                       httponly: true
+# Do not force a cookie domain in local/test environments.
+# Capybara/request hosts are often not localhost, and a mismatched domain
+# prevents the cookie from being sent, which drops session state.
+raw_host = ENV["MANAGEMENT_HOST"].to_s
+normalized_host = raw_host.sub(%r{\Ahttps?://}i, '').split(':').first
+
+session_store_options = {
+    expire_after: 30.days,
+    key: key,
+    threadsafe: true,
+    secure: secure,
+    same_site: :lax,
+    httponly: true
+}
+
+if normalized_host.present? && normalized_host != 'localhost' && !Rails.env.test?
+    session_store_options[:domain] = normalized_host
+end
+
+Rails.application.config.session_store :cookie_store, **session_store_options
