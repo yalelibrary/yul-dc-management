@@ -19,7 +19,7 @@
     <%= link_to 'Batch Process', batch_processes_path, class: 'list-group-item list-group-item-action bg-light' %>
     <%= link_to 'Preservation', preservica_ingests_path, class: 'list-group-item list-group-item-action bg-light' %>
     <% if current_user&.sysadmin %>
-      <%= link_to 'GoodJob Job Dashboard', jobs_path, class: 'list-group-item list-group-item-action bg-light' %>
+      <%= link_to 'GoodJob Job Dashboard', jobs_path, class: 'list-group-item list-group-item-action bg-light', data: { turbolinks: false } %>
       <%= link_to 'Problem Reports', problem_reports_path, class: 'list-group-item list-group-item-action bg-light' %>
       <%= link_to 'Activity Stream Logs', activity_stream_logs_path, class: 'list-group-item list-group-item-action bg-light' %>
     <% end %>
