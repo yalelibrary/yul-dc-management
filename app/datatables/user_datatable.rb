@@ -18,7 +18,7 @@ class UserDatatable < ApplicationDatatable
       email: { source: "User.email", cond: :like, searchable: true, orderable: true },
       first_name: { source: "User.first_name", cond: :like, searchable: true, orderable: true },
       last_name: { source: "User.last_name", cond: :like, searchable: true, orderable: true },
-      system_admin: { source: "User.id", cond: :null_value, searchable: false, orderable: false },
+      system_admin: { source: "User.id", cond: sysadmin_filter, searchable: true, orderable: false, options: [{ value: true, label: "True" }, { value: false, label: "False" }] },
       deactivated: { source: "User.deactivated", cond: :like, searchable: true, orderable: true, options: [{ value: true, label: "Inactive" }, { value: false, label: "Active", selected: true }] }
     }
   end
@@ -44,5 +44,16 @@ class UserDatatable < ApplicationDatatable
 
   def get_raw_records # rubocop:disable Naming/AccessorMethodName
     User.all
+  end
+
+  private
+
+  # System admin status is stored as a rolify role rather than a column on users
+  def sysadmin_filter
+    lambda do |_column, value|
+      admin_ids = User.joins(:roles).where(roles: { name: 'sysadmin' }).select(:id).arel
+      node = User.arel_table[:id].in(admin_ids)
+      ActiveModel::Type::Boolean.new.cast(value) ? node : node.not
+    end
   end
 end
