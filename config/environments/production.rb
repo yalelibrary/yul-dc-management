@@ -4,7 +4,6 @@ require 'rack'
 require 'rack/cors'
 require "active_support/core_ext/integer/time"
 
-# rubocop:disable Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -51,7 +50,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ "http://example.com", /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  # config.force_ssl = true
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
@@ -149,4 +148,3 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.deliver_later_queue_name = 'default'
 end
-# rubocop:enable Metrics/BlockLength
