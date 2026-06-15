@@ -47,6 +47,7 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers
   config.include(ParentChildObjectHelper)
   config.include(ActionDispatch::TestProcess::FixtureFile)
+  config.include(GoodJobAdapterHelper)
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = ["#{::Rails.root}/spec/fixtures"]
