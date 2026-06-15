@@ -21,6 +21,23 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:preservica_parent_no_sha_pattern_2) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_parent_no_sha_pattern_2.csv")) }
   let(:preservica_parent_with_children_and_data) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_parent_with_children_and_data.csv")) }
 
+  def with_good_job_external_mode
+    original_queue_adapter = ActiveJob::Base.queue_adapter
+    ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :external)
+    yield
+  ensure
+    ActiveJob::Base.queue_adapter = original_queue_adapter
+  end
+
+  def run_create_preservica_children_retry_jobs
+    GoodJob.perform_inline
+    GoodJob::Job.where(job_class: 'CreatePreservicaChildrenJob')
+                .where(finished_at: nil)
+                .where("scheduled_at > ?", Time.current)
+                .find_each { |job| job.update!(scheduled_at: Time.current) }
+    GoodJob.perform_inline
+  end
+
   around do |example|
     preservica_host = ENV['PRESERVICA_HOST']
     preservica_creds = ENV['PRESERVICA_CREDENTIALS']
@@ -247,8 +264,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expect do
       batch_process.file = preservica_parent_with_children
       batch_process.save
-      expect(batch_process.batch_ingest_events.count).to eq(3)
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Retrying row [2] Net::ReadTimeout for sample.com/uri.")
+      expect(batch_process.batch_ingest_events.count).to eq(1)
+      expect(batch_process.batch_ingest_events[0].reason).to eq("Problem with network connection for row [2] - Net::ReadTimeout for sample.com/uri.")
     end.to change { ChildObject.count }.by(0)
   end
 
@@ -273,21 +290,33 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
         bitstream: Preservica::Bitstream.new("Preservica Client", "ae328d84-e429-4d46-a865-9ee11157b488", "1", "1", "mss_29_s03_b092_f0019.TIF"),
         caption: "mss_29_s03_b092_f0019.tif" }
     ]
-    call_count ||= 1
+    call_count = 0
+    retry_failures = 0
     allow(S3Service).to receive(:s3_exists?).and_return(false)
     allow_any_instance_of(PreservicaImageService).to receive(:image_list).with('Preservation') do
       call_count += 1
-      call_count <= 2 ? raise(PreservicaImageService::PreservicaImageServiceNetworkError.new('Net::ReadTimeout', 'sample.com/uri')) : images
+      if ParentObject.exists?(200_000_000) && retry_failures < 2
+        retry_failures += 1
+        raise(PreservicaImageService::PreservicaImageServiceNetworkError.new('Net::ReadTimeout', 'sample.com/uri'))
+      end
+
+      images
     end
-    expect do
-      batch_process.file = preservica_parent_with_children_and_data
-      batch_process.save
-      expect(batch_process.batch_ingest_events[0].reason).to eq("Retrying row [2] Net::ReadTimeout for sample.com/uri.")
-    end.to change { ChildObject.count }.by(0)
-    expect(call_count).to eq(4) # 3 retries and then eventual success
-    po = ParentObject.find(200_000_000)
-    expect(po.digitization_note).to eq 'A note about digitization'
-    expect(po.digitization_funding_source).to eq 'Digitization Funding Source'
-    expect(po.rights_statement).to eq 'A rights statement.'
+    with_good_job_external_mode do
+      expect do
+        batch_process.file = preservica_parent_with_children_and_data
+        batch_process.save
+      end.to change { ChildObject.count }.by(0)
+
+      run_create_preservica_children_retry_jobs
+
+      expect(call_count).to be >= 3
+      po = ParentObject.find(200_000_000)
+      reasons = po.events_for_batch_process(batch_process).map(&:reason)
+      expect(reasons).to include("Preservica child creation failed: Net::ReadTimeout for sample.com/uri")
+      expect(po.digitization_note).to eq 'A note about digitization'
+      expect(po.digitization_funding_source).to eq 'Digitization Funding Source'
+      expect(po.rights_statement).to eq 'A rights statement.'
+    end
   end
 end

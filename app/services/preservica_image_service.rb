@@ -33,27 +33,18 @@ class PreservicaImageService
   # rubocop:disable Metrics/PerceivedComplexity
   def image_list(representation_type)
     @images = []
-    attempt_count ||= 1
     begin
       if @pattern == :pattern_one
         structural_object = Preservica::StructuralObject.where(admin_set_key: @admin_set_key, id: (@uri.split('/')[-1]).to_s)
         begin
-          attempt_count += 1
           @information_objects = structural_object.information_objects
-        rescue Net::HTTPFatalError, Net::HTTPNotFound, Net::ReadTimeout => e
-          sleep 30
-          retry if attempt_count < 4
-          raise PreservicaImageServiceNetworkError.new(e.to_s, @uri.to_s)
         rescue Net::OpenTimeout, Errno::ECONNREFUSED => e
           raise PreservicaImageServiceNetworkError.new(e.to_s, @uri.to_s)
         end
       elsif @pattern == :pattern_two
         begin
-          attempt_count += 1
           @information_objects = [Preservica::InformationObject.where(admin_set_key: @admin_set_key, id: (@uri.split('/')[-1]).to_s)]
         rescue Net::HTTPFatalError, Net::HTTPNotFound, Net::ReadTimeout => e
-          sleep 30
-          retry if attempt_count < 4
           raise PreservicaImageServiceNetworkError.new(e.to_s, @uri.to_s)
         end
       end

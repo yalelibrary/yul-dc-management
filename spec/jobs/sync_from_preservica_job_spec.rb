@@ -47,7 +47,7 @@ RSpec.describe SyncFromPreservicaJob, type: :job, prep_metadata_sources: true, p
 
       expect do
         described_class.new.perform(batch_process)
-      end.not_to raise_error
+      end.to raise_error(StandardError, error_message)
     end
   end
 end
