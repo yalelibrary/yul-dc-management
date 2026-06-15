@@ -22,11 +22,11 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   let(:preservica_parent_with_children_and_data) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "preservica", "preservica_parent_with_children_and_data.csv")) }
 
   def with_good_job_external_mode
-    original_queue_adapter = ActiveJob::Base.queue_adapter
+    original_queue_adapter = described_class.queue_adapter
     ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :external)
     yield
   ensure
-    ActiveJob::Base.queue_adapter = original_queue_adapter
+    described_class.queue_adapter = original_queue_adapter
   end
 
   def run_create_preservica_children_retry_jobs

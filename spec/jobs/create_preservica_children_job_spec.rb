@@ -3,6 +3,27 @@
 require 'rails_helper'
 
 RSpec.describe CreatePreservicaChildrenJob, type: :job, prep_admin_sets: true, prep_metadata_sources: true do
+  def with_good_job_external_mode
+    original_queue_adapter = described_class.queue_adapter
+    described_class.queue_adapter = GoodJob::Adapter.new(execution_mode: :external)
+    yield
+  ensure
+    described_class.queue_adapter = original_queue_adapter
+  end
+
+  def run_create_preservica_children_retry_jobs
+    GoodJob.perform_inline
+    3.times do
+      scheduled_jobs = GoodJob::Job.where(job_class: 'CreatePreservicaChildrenJob')
+                                   .where(finished_at: nil)
+                                   .where("scheduled_at > ?", Time.current)
+      break if scheduled_jobs.none?
+
+      scheduled_jobs.find_each { |job| job.update!(scheduled_at: Time.current) }
+      GoodJob.perform_inline
+    end
+  end
+
   let(:user) { FactoryBot.create(:user) }
   let(:batch_process) { FactoryBot.create(:batch_process, user: user) }
   let(:parent_object) do
@@ -60,6 +81,45 @@ RSpec.describe CreatePreservicaChildrenJob, type: :job, prep_admin_sets: true, p
     it 'logs a child-records-created event' do
       job.perform(parent_object, batch_process)
       expect(parent_object).to have_received(:processing_event).with("Child object records have been created", "child-records-created")
+    end
+  end
+
+  it 'logs failed processing event on first retryable failure' do
+    allow(parent_object).to receive(:create_child_records).and_raise(StandardError, 'Something went wrong')
+    allow(parent_object).to receive(:processing_event)
+    allow(parent_object).to receive(:child_objects).and_return([])
+    allow(parent_object).to receive(:needs_a_manifest?).and_return(false)
+
+    expect do
+      described_class.perform_now(parent_object, batch_process)
+    end.not_to raise_error
+
+    expect(parent_object).to have_received(:processing_event)
+      .with('Preservica child creation failed: Something went wrong', 'failed')
+  end
+
+  it 'logs retry callback message when retries are exhausted' do
+    with_good_job_external_mode do
+      GoodJob::Job.where(job_class: 'CreatePreservicaChildrenJob').delete_all
+      batch_connection = batch_process.batch_connections.find_or_create_by!(connectable: parent_object)
+      parent_object.current_batch_process = batch_process
+      parent_object.current_batch_connection = batch_connection
+
+      allow_any_instance_of(ParentObject).to receive(:create_child_records).and_raise(StandardError, 'Something went wrong')
+      allow_any_instance_of(ParentObject).to receive(:gather_technical_image_metadata)
+      allow_any_instance_of(ParentObject).to receive(:child_objects).and_return([])
+      allow_any_instance_of(ParentObject).to receive(:needs_a_manifest?).and_return(false)
+      allow(ParentObject).to receive(:find_by).with(oid: parent_object.oid).and_return(parent_object)
+
+      described_class.perform_later(parent_object, batch_process, batch_connection)
+      run_create_preservica_children_retry_jobs
+
+      reasons = parent_object.reload
+                             .events_for_batch_process(batch_process)
+                             .where(status: 'retry')
+                             .pluck(:reason)
+
+      expect(reasons).to include('Retrying Child Object Creation - Request error Something went wrong')
     end
   end
 end
