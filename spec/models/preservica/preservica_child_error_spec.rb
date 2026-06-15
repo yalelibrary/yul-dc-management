@@ -213,22 +213,34 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
   end
 
   it 'can send an error when there is a checksum mismatch with pattern 1' do
+    stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157c600/generations/1/bitstreams/1/content").to_return(
+      status: 200,
+      body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157c600/generations/1/bitstreams/1/content.tiff"), 'rb')
+    )
+
     expect do
       batch_process.file = preservica_parent_checksum_mismatch_pattern_1
       batch_process.save
       po = ParentObject.find(200_000_000)
       expect(po.events_for_batch_process(batch_process).count).to be > 1
-      expect(po.events_for_batch_process(batch_process)[1].reason).to eq("execution expired").or eq("Failed to open TCP connection to testpreservica:443 (Connection refused - connect(2) for \"testpreservica\" port 443)").or eq("Failed to open TCP connection to testpreservica:443 (getaddrinfo: Name or service not known)").or eq("Failed to open TCP connection to testpreservica:443 (execution expired)")
+      reason = po.events_for_batch_process(batch_process)[1].reason
+      expect(reason).to start_with("The checksum for this object is different than the checksum that DCS expected. Please ensure your image folder in Preservica has SHA-512 fixity checksums. ------------ Message from System: Checksum mismatch for Child Object:")
     end.to change { ChildObject.count }.by(0)
   end
 
   it 'can send an error when there is a checksum mismatch with pattern 2' do
+    stub_request(:get, "https://testpreservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157c600/generations/1/bitstreams/1/content").to_return(
+      status: 200,
+      body: File.open(File.join(fixture_paths[0], "preservica/api/entity/content-objects/ae328d84-e429-4d46-a865-9ee11157c600/generations/1/bitstreams/1/content.tiff"), 'rb')
+    )
+
     expect do
       batch_process.file = preservica_parent_checksum_mismatch_pattern_2
       batch_process.save
       po = ParentObject.find(200_000_000)
       expect(po.events_for_batch_process(batch_process).count).to be > 1
-      expect(po.events_for_batch_process(batch_process)[1].reason).to eq("execution expired").or eq("Failed to open TCP connection to testpreservica:443 (Connection refused - connect(2) for \"testpreservica\" port 443)").or eq("Failed to open TCP connection to testpreservica:443 (getaddrinfo: Name or service not known)").or eq("Failed to open TCP connection to testpreservica:443 (execution expired)")
+      reason = po.events_for_batch_process(batch_process)[1].reason
+      expect(reason).to start_with("The checksum for this object is different than the checksum that DCS expected. Please ensure your image folder in Preservica has SHA-512 fixity checksums. ------------ Message from System: Checksum mismatch for Child Object:")
     end.to change { ChildObject.count }.by(0)
   end
 
