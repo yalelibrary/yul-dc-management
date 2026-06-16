@@ -14,13 +14,13 @@ class Ability
     if user.has_role? :sysadmin
       apply_sysadmin_abilities
     else
-      can :read, ParentObject, admin_set: { roles: { name: viewer_roles, users: { id: user.id } } }
-      can :read, ChildObject, parent_object: { admin_set: { roles: { name: viewer_roles, users: { id: user.id } } } }
+      can :read, ParentObject, admin_set_id: viewer_admin_set_ids(user)
+      can :read, ChildObject, parent_object: { admin_set_id: viewer_admin_set_ids(user) }
     end
     can :add_member, AdminSet, roles: { name: editor_roles, users: { id: user.id } }
     can :reindex_admin_set, AdminSet, roles: { name: editor_roles, users: { id: user.id } }
-    can :crud, ChildObject, parent_object: { admin_set: { roles: { name: editor_roles, users: { id: user.id } } } }
-    can [:crud, :sync_from_preservica], ParentObject, admin_set: { roles: { name: editor_roles, users: { id: user.id } } }
+    can :crud, ChildObject, parent_object: { admin_set_id: editor_admin_set_ids(user) }
+    can [:crud, :sync_from_preservica], ParentObject, admin_set_id: editor_admin_set_ids(user)
     can :view_list, [OpenWithPermission::PermissionSet, OpenWithPermission::PermissionRequest] if user.has_role?(:approver, :any) || user.has_role?(:administrator, :any)
     can [:read, :update, :owp_access], OpenWithPermission::PermissionSet if user.has_role?(:administrator, :any)
     can :read, OpenWithPermission::PermissionSet, roles: { name: approver_roles, users: { id: user.id } }
@@ -47,6 +47,18 @@ class Ability
     can :update_metadata, ParentObject
     can :sync_from_preservica, ParentObject
     can :trigger_mets_scan, ParentObject
+  end
+
+  def viewer_admin_set_ids(user)
+    @viewer_admin_set_ids ||= admin_set_ids_for(user, viewer_roles)
+  end
+
+  def editor_admin_set_ids(user)
+    @editor_admin_set_ids ||= admin_set_ids_for(user, editor_roles)
+  end
+
+  def admin_set_ids_for(user, role_names)
+    user.roles.where(name: role_names, resource_type: 'AdminSet').pluck(:resource_id)
   end
 
   def viewer_roles

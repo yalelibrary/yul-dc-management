@@ -68,7 +68,7 @@ class ChildObjectDatatable < ApplicationDatatable
 
   # rubocop:disable Naming/AccessorMethodName
   def get_raw_records
-    ChildObject.accessible_by(@current_ability, :read)
+    ChildObject.accessible_by(@current_ability, :read).includes(:parent_object)
   end
   # rubocop:enable Naming/AccessorMethodName
 
