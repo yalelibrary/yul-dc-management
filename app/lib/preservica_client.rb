@@ -15,11 +15,15 @@ class PreservicaClient
   def initialize(args)
     @host = args[:base_url] || "https://#{ENV['PRESERVICA_HOST']}"
     if args[:admin_set_key]
-      credentials = JSON.parse(ENV['PRESERVICA_CREDENTIALS'])[args[:admin_set_key]]
+      raw_credentials = ENV['PRESERVICA_CREDENTIALS']
+      parsed_credentials = raw_credentials.present? ? JSON.parse(raw_credentials) : {}
+      credentials = parsed_credentials[args[:admin_set_key]] || {}
       @username = credentials['username']
       @password = credentials['password']
     end
     login
+  rescue JSON::ParserError
+    raise StandardError, 'Preservica credentials are not valid JSON'
   end
 
   def login
