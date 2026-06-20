@@ -54,7 +54,7 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-middleware": "5.3.4",
     "webpack-dev-server": "^5.2.4",
-    "ws": "^6.2.3"
+    "ws": "^6.2.4"
   },
   "version": "0.1.0",
   "devDependencies": {
