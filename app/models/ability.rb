@@ -8,6 +8,7 @@ class Ability
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def initialize(user)
+    @user = user
     alias_action :create, :read, :update, :destroy, to: :crud
     return unless user
     can :create_new, ParentObject if user.roles.find_by(name: :editor)
@@ -47,6 +48,13 @@ class Ability
     can :update_metadata, ParentObject
     can :sync_from_preservica, ParentObject
     can :trigger_mets_scan, ParentObject
+  end
+
+  def readable_child_objects
+    return ChildObject.none unless @user
+    return ChildObject.all if @user.has_role?(:sysadmin)
+
+    ChildObject.joins(:parent_object).where(parent_objects: { admin_set_id: viewer_admin_set_ids(@user) })
   end
 
   def viewer_admin_set_ids(user)
