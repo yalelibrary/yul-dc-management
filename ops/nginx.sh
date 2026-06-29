@@ -16,7 +16,13 @@ declare -p | grep -Ev 'BASHOPTS|PWD|BASH_VERSINFO|EUID|PPID|SHELLOPTS|UID' > /co
 
 if [[ $PASSENGER_APP_ENV == "development" ]] || [[ $PASSENGER_APP_ENV == "test" ]]
 then
-    /sbin/setuser app /bin/bash -l -c 'cd /home/app/webapp && yarn && bundle exec rails db:migrate db:seed db:test:prepare'
+    /sbin/setuser app /bin/bash -l -c 'cd /home/app/webapp && yarn && yarn build && bundle exec rails db:migrate db:seed db:test:prepare'
+fi
+
+if [[ $PASSENGER_APP_ENV == "development" ]]
+then
+    # Rebuild the esbuild JS bundle on change (replaces Webpacker's compile-on-request)
+    /sbin/setuser app /bin/bash -l -c 'cd /home/app/webapp && nohup yarn build --watch >> log/esbuild.log 2>&1 &'
 fi
 
 if [[ $PASSENGER_APP_ENV == "production" ]] || [[ $PASSENGER_APP_ENV == "staging" ]]
@@ -25,10 +31,7 @@ then
     if [ -d /home/app/webapp/public/assets-new ]; then
         /sbin/setuser app /bin/bash -l -c 'cd /home/app/webapp && rsync -aP public/assets-new/ public/assets/'
     fi
-    if [ -d /home/app/webapp/public/packs-new ]; then
-        /sbin/setuser app /bin/bash -l -c 'cd /home/app/webapp && rsync -aP public/packs-new/ public/packs/'
-    fi
-    ls -l /home/app/webapp/public/packs
+    ls -l /home/app/webapp/public/assets
 fi
 
 exec /usr/sbin/nginx

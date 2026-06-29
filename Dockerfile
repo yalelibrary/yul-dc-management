@@ -51,7 +51,6 @@ RUN /sbin/setuser app bash -l -c " \
     SECRET_KEY_BASE=thisisfakesoassetscompile RAILS_ENV=production RAILS_RELATIVE_URL_ROOT=/management DB_ADAPTER=nulldb yarn install --ignore-scripts --frozen-lockfile && \
     yarn run structure-editor-install && \
     bundle exec rake assets:precompile && \
-    mv ./public/assets ./public/assets-new && \
-    mv ./public/packs ./public/packs-new"
+    mv ./public/assets ./public/assets-new"
 
 EXPOSE 3001

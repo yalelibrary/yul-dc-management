@@ -53,8 +53,8 @@ gem 'string-direction', '~> 1.2'
 gem 'turbolinks', '~> 5'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.4'
+# Bundle and transpile JavaScript with esbuild. Read more: https://github.com/rails/jsbundling-rails
+gem 'jsbundling-rails', '~> 1.3'
 
 gem 'daemons', '~> 1.4'
 
