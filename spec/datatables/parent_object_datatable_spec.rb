@@ -55,8 +55,6 @@ RSpec.describe ParentObjectDatatable, type: :datatable, prep_metadata_sources: t
       last_aspace_update: nil,
       last_id_update: nil,
       last_ladybird_update: within(1.minute).of(po.created_at),
-      last_sierra_update: nil,
-      last_voyager_update: nil,
       mms_id: "123",
       oid: '<a href="/parent_objects/2034600">2034600</a> <a href="/management/parent_objects/2034600/edit"><i class="fa fa-pencil"></i></a> <a target="_blank" href="http://localhost:3000/catalog/2034600">1</a>',
       permission_set: nil,
