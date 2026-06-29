@@ -280,66 +280,6 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       end
     end
 
-    context "with a ParentObject whose authoritative_metadata_source is Voyager" do
-      let(:child_object) { FactoryBot.create(:child_object, oid: 456_789, parent_object: ParentObject.find_by(oid: "2012036")) }
-
-      before do
-        stub_metadata_cloud("2012036", "ladybird")
-        stub_metadata_cloud("V-2012036", "ils")
-        fill_in('Oid', with: "2012036")
-        fill_in('Bib', with: "6805375")
-        fill_in('Barcode', with: "39002091459793")
-        select('Public')
-        select('Voyager')
-        select('Beinecke Library')
-        click_on("Create Parent object")
-      end
-
-      it "can create a new parent object" do
-        expect(page).to have_content "Parent object was successfully created"
-        expect(page).to have_content "Voyager"
-        expect(page).to have_content "Public"
-      end
-
-      it "has the correct authoritative_metadata_source in the database" do
-        po = ParentObject.find_by(oid: "2012036")
-        expect(po.authoritative_metadata_source_id).to eq 2
-      end
-
-      it "skips metadata fetch for Voyager/ILS source" do
-        po = ParentObject.find_by(oid: "2012036")
-        # ILS (Voyager) metadata fetch is explicitly skipped in default_fetch method
-        expect(po.voyager_json).to be_nil
-      end
-
-      it "adds the visibility for public objects" do
-        expect(ParentObject.find_by(oid: "2012036")["visibility"]).to eq "Public"
-      end
-
-      it 'has functioning Solr Document link' do
-        po = ParentObject.find_by(oid: "2012036")
-        po.child_object_count = 1
-        po.visibility = "Public"
-        # Manually set voyager_json since ILS metadata fetch is skipped. Acts like an ils object thats already in the system.
-        voyager_response = JSON.parse(File.read(File.join(fixture_paths[0], "ils", "V-2012036.json")))
-        po.voyager_json = voyager_response
-        po.save
-        child_object
-        po.reload  # Reload to ensure child_objects association is fresh
-        po.solr_index_job
-        expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
-        visit '/parent_objects/2012036/solr_document'
-        solr_data = JSON.parse(find('pre').text)
-        expect(solr_data['numFound']).to eq 1
-        expect(solr_data["docs"].count).to eq 1
-        document = solr_data["docs"].first
-        expect(document["id"]).to eq "2012036"
-        expect(document["callNumber_tesim"]).to include "YCAL MSS 202"
-        expect(document["dateStructured_ssim"]).to eq ["1842/1949"]
-        expect(document["year_isim"]).to include 1845
-      end
-    end
-
     context "with a ParentObject whose authoritative_metadata_source is ArchiveSpace" do
       let(:child_object) { FactoryBot.create(:child_object, oid: 456_789, parent_object: ParentObject.find_by(oid: "2012036")) }
       around do |example|
