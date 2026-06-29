@@ -15,6 +15,10 @@ module CreateParentObject
     self.admin_set = ''
     sets = admin_set
     parsed_csv.each_with_index do |row, index|
+      if invalid_metadata_source?(row['source'])
+        batch_processing_event("Skipping row [#{index + 2}]. #{self.class::INVALID_METADATA_SOURCE_MESSAGE}", 'Skipped Row')
+        next
+      end
       if row['digital_object_source'].present? && row['preservica_uri'].present? && !row['preservica_uri'].blank?
         begin
           parent_object = CsvRowParentService.new(row, index, current_ability, user).parent_object

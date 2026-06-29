@@ -13,6 +13,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:csv_small) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example.csv")) }
   let(:csv_small_owp) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_owp.csv")) }
   let(:invalid_ps) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_invalid_ps.csv")) }
+  let(:invalid_metadata_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_invalid_metadata_source.csv")) }
   let(:blank_ps) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_blank_ps.csv")) }
   let(:invalid_user_csv) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_invalid_user.csv")) }
   let(:csv_missing) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], "csv", "update_example_missing.csv")) }
@@ -258,6 +259,24 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(po_updated.visibility).to eq "Private"
       expect(update_batch_process.batch_ingest_events.first.reason).to eq "Skipping row [2]. Process failed. Permission Set missing from CSV."
       expect(update_batch_process.batch_ingest_events_count).to eq 1
+    end
+
+    it "does not accept a source of ils or sierra and reports the error" do
+      expect do
+        batch_process.file = csv_upload
+        batch_process.save
+        batch_process.create_new_parent_csv
+      end.to change { ParentObject.count }.from(0).to(5).or change { ParentObject.count }.from(0).to(3)
+
+      update_batch_process = described_class.new(batch_action: "update parent objects", user_id: user.id)
+      expect do
+        update_batch_process.file = invalid_metadata_source
+        update_batch_process.save
+        update_batch_process.update_parent_objects
+      end.not_to change { ParentObject.count }
+      reasons = update_batch_process.batch_ingest_events.map(&:reason)
+      expect(reasons).to include('Skipping row [2]. Voyager and Sierra are not valid data sources. Please use a source of alma or aspace and the appropriate alma or aspace identifiers.')
+      expect(reasons).to include('Skipping row [3]. Voyager and Sierra are not valid data sources. Please use a source of alma or aspace and the appropriate alma or aspace identifiers.')
     end
 
     it "does not update successfully if user does not have admin permission to permission set" do

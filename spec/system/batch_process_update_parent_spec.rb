@@ -166,7 +166,7 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
         visit "/batch_processes/#{BatchProcess.last.id}/"
         expect(page).to have_content "View Messages"
-        expect(page).to have_content "Skipping row [2] with unknown metadata source: bird. Accepted values are 'ladybird', 'aspace', 'sierra', or 'ils'."
+        expect(page).to have_content "Skipping row [2] with unknown metadata source: bird. Accepted values are 'ladybird', 'aspace', or 'alma'."
       end
     end
   end

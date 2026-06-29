@@ -18,6 +18,7 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
   let(:typo_extent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], 'csv', 'aspace_parent_typo_extent.csv')) }
   let(:aspace_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], 'csv', 'aspace_parent.csv')) }
   let(:alma_parent) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], 'csv', 'create_alma_parent.csv')) }
+  let(:invalid_metadata_source) { Rack::Test::UploadedFile.new(Rails.root.join(fixture_paths[0], 'csv', 'create_invalid_metadata_source.csv')) }
 
   around do |example|
     original_image_bucket = ENV['S3_SOURCE_BUCKET_NAME']
@@ -145,6 +146,15 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.save
         end.not_to change { ParentObject.count }
         expect(batch_process.batch_ingest_events[0].reason).to eq('Skipping row [2]. Source cannot be blank.')
+      end
+      it 'does not accept a source of ils or sierra and reports the error' do
+        expect do
+          batch_process.file = invalid_metadata_source
+          batch_process.save
+        end.not_to change { ParentObject.count }
+        reasons = batch_process.batch_ingest_events.map(&:reason)
+        expect(reasons).to include('Skipping row [2]. Voyager and Sierra are not valid data sources. Please use a source of alma or aspace and the appropriate alma or aspace identifiers.')
+        expect(reasons).to include('Skipping row [3]. Voyager and Sierra are not valid data sources. Please use a source of alma or aspace and the appropriate alma or aspace identifiers.')
       end
       it 'can fail when aspace is source but no extent of digitization is provided' do
         expect do

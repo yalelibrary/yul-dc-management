@@ -277,7 +277,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
         batch_process.file = csv_upload_with_source
         batch_process.save!
         expect(ParentObject.find(2_034_600).authoritative_metadata_source_id).to eq 1
-        expect(ParentObject.find(2_030_006).authoritative_metadata_source_id).to eq 2
         expect(ParentObject.find(2_012_036).authoritative_metadata_source_id).to eq 3
       end
 
@@ -518,7 +517,6 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
           batch_process.file = csv_upload_with_source
           batch_process.save
           expect(ParentObject.find(2_034_600).authoritative_metadata_source_id).to eq 1
-          expect(ParentObject.find(2_030_006).authoritative_metadata_source_id).to eq 2
           expect(ParentObject.find(2_012_036).authoritative_metadata_source_id).to eq 3
         end
 
