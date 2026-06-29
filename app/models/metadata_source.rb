@@ -75,6 +75,12 @@ class MetadataSource < ApplicationRecord
     MetadataSource.distinct.pluck(:metadata_cloud_name)
   end
 
+  EXCLUDED_BATCH_CLOUD_NAMES = %w[sierra ils].freeze
+
+  def self.selectable_for_batch
+    MetadataSource.where.not(metadata_cloud_name: EXCLUDED_BATCH_CLOUD_NAMES)
+  end
+
   def url_type
     case metadata_cloud_name
     when "ladybird"
