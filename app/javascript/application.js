@@ -32,7 +32,11 @@ DataTable.Buttons.pdfMake(pdfmake);
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-global.$ = jQuery;
+// Expose jQuery on window for inline view scripts and Bootstrap's jQuery
+// integration. (Webpacker polyfilled `global`; esbuild targets the browser,
+// where `global` is undefined — use `window`.)
+window.$ = jQuery;
+window.jQuery = jQuery;
 
 let dataTable;
 $( document ).on('turbolinks:load', function() {
