@@ -1,6 +1,3 @@
-// Entry point for the build script in package.json (bundled by esbuild).
-// Place application logic under app/javascript and import it here.
-
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
@@ -32,9 +29,6 @@ DataTable.Buttons.pdfMake(pdfmake);
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-// Expose jQuery on window for inline view scripts and Bootstrap's jQuery
-// integration. (Webpacker polyfilled `global`; esbuild targets the browser,
-// where `global` is undefined — use `window`.)
 window.$ = jQuery;
 window.jQuery = jQuery;
 

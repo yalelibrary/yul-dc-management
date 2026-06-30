@@ -1,16 +1,11 @@
 // esbuild build script for the application JS bundle.
 // Replaces Webpacker; output is written to app/assets/builds where Sprockets
 // fingerprints and serves it via javascript_include_tag.
-//
-//   node esbuild.config.js            # one-off build (used by assets:precompile)
-//   node esbuild.config.js --watch    # rebuild on change (used in dev/test)
 const esbuild = require("esbuild")
 const path = require("path")
 
 const watch = process.argv.includes("--watch")
 
-// Stub Node core modules that browser-targeted deps reference conditionally.
-// Mirrors the Webpacker `resolve.fallback: { fs: false, ... }` config.
 const stubNodeBuiltins = {
   name: "stub-node-builtins",
   setup(build) {
