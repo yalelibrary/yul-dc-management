@@ -187,6 +187,7 @@ module SolrIndexable
         quicksearchId_ssi: generate_quicksearch_id(bib),
         recordType_ssi: json_to_index["recordType"],
         relatedResourceOnline_ssim: json_to_index["relatedResourceOnline"],
+        reparativeDescription_tesim: json_to_index["reparativeDescription"],
         repository_ssi: self&.admin_set&.label,
         repository_ssim: self&.admin_set&.label,
         resourceType_ssim: json_to_index["itemType"],
