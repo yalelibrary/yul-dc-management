@@ -127,6 +127,12 @@ METADATA_FIELDS = {
       'language_ssim'
     ]
   },
+  reparativeDescription: {
+    label: 'Reparative Description',
+    solr_fields: [
+      'reparativeDescription_tesim'
+    ]
+  },
   repository: {
     label: "Repository",
     solr_fields: [
