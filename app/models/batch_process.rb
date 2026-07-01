@@ -33,7 +33,14 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   CSV_MAXIMUM_ENTRIES = 10_000
 
+  INVALID_BATCH_METADATA_SOURCES = %w[ils sierra].freeze
+  INVALID_METADATA_SOURCE_MESSAGE = "Voyager and Sierra are not valid data sources. Please use a source of alma or aspace and the appropriate alma or aspace identifiers."
+
   # SHARED BY ALL BATCH ACTIONS: ------------------------------------------------------------------- #
+
+  def invalid_metadata_source?(metadata_source)
+    INVALID_BATCH_METADATA_SOURCES.include?(metadata_source)
+  end
 
   # LISTS AVAILABLE BATCH ACTIONS
   # rubocop:disable Layout/LineLength

@@ -382,10 +382,13 @@ module Updatable
 
   # CHECKS THAT METADATA SOURCE IS VALID - USED BY UPDATE
   def validate_metadata_source(metadata_source, index)
-    if MetadataSource.all_metadata_cloud_names.include?(metadata_source)
+    if invalid_metadata_source?(metadata_source)
+      batch_processing_event("Skipping row [#{index + 2}]. #{self.class::INVALID_METADATA_SOURCE_MESSAGE}", 'Skipped Row')
+      false
+    elsif MetadataSource.all_metadata_cloud_names.include?(metadata_source)
       true
     else
-      batch_processing_event("Skipping row [#{index + 2}] with unknown metadata source: #{metadata_source}.  Accepted values are 'ladybird', 'aspace', 'sierra', or 'ils'.", 'Skipped Row')
+      batch_processing_event("Skipping row [#{index + 2}] with unknown metadata source: #{metadata_source}.  Accepted values are 'ladybird', 'aspace', or 'alma'.", 'Skipped Row')
       false
     end
   end
