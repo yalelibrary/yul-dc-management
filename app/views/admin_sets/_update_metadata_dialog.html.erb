@@ -28,14 +28,14 @@
             <%= link_to('Select All', "#", {class: 'select-all-btn', data: { target_select:'#metadata_source_ids'}}) %>
             <br />
             <%= form.select(:metadata_source_ids,
-                            options_from_collection_for_select(MetadataSource.all,
+                            options_from_collection_for_select(MetadataSource.selectable_for_batch,
                                                                :id, :display_name, []),
                             {},
                             {
                                 class: 'select',
                                 required: true,
                                 multiple: true,
-                                size: [MetadataSource.all.count,5].min}
+                                size: [MetadataSource.selectable_for_batch.count,5].min}
                 )
             %>
           </div>
