@@ -87,7 +87,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
       bitstreams = generations[0].bitstreams
       expect do
         bitstreams[0].download_to_file "tmp/testdownload.file"
-      end .to raise_error(/The checksum for this object is different than the checksum that DCS expected. Please ensure your image folder in Preservica has SHA-512 fixity checksums./)
+      end .to raise_error(/Data size did not match for Child Object/)
     end
     # rubocop enable:Layout/LineLength
     it 'does not throw an exception when the cases do not match' do
