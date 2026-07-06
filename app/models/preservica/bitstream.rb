@@ -60,12 +60,12 @@ class Preservica::Bitstream
     file_size = File.size?(temp_file_name)
     Rails.logger.info "************ bitstream.rb # download_to_file +++ counts file size (data_length): #{data_length} *************"
     Rails.logger.info "************ bitstream.rb # download_to_file +++ grabs sha checksum (data_sha512): #{data_sha512} *************"
+    raise StandardError, "Data size did not match for Child Object: #{co_oid} - (#{data_length} != #{expected_size})" unless data_length == expected_size
+    raise StandardError, "File sizes do not match for Child Object: #{co_oid} - (#{file_size} != #{expected_size})" unless file_size == expected_size
     unless data_sha512.casecmp?(expected_sha512)
       raise StandardError,
 "The checksum for this object is different than the checksum that DCS expected. Please ensure your image folder in Preservica has SHA-512 fixity checksums. ------------ Message from System: Checksum mismatch for Child Object: #{co_oid} - (#{data_sha512} != #{expected_sha512})"
     end
-    raise StandardError, "Data size did not match for Child Object: #{co_oid} - (#{data_length} != #{expected_size})" unless data_length == expected_size
-    raise StandardError, "File sizes do not match for Child Object: #{co_oid} - (#{file_size} != #{expected_size})" unless file_size == expected_size
 
     File.delete(file_name) if File.exist?(file_name)
     File.rename(temp_file_name, file_name)
