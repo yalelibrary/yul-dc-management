@@ -76,6 +76,21 @@ RSpec.describe SolrIndexable, type: :model do
   end
   # rubocop:enable Lint/ParenthesesAsGroupedExpression
 
+  it "indexes acquisitionSource for keyword search" do
+    solr_document = solr_indexable.to_solr('acquisitionSource' => ['Gift of Jane Doe'])
+    expect(solr_document[:acquisitionSource_tesim]).to eq(['Gift of Jane Doe'])
+  end
+
+  it "indexes copyDescription for keyword search" do
+    solr_document = solr_indexable.to_solr('copyDescription' => ['First edition, cloth binding'])
+    expect(solr_document[:copyDescription_tesim]).to eq(['First edition, cloth binding'])
+  end
+
+  it "indexes bindingInfo for keyword search" do
+    solr_document = solr_indexable.to_solr('bindingInfo' => ['Full leather binding with gold lettering'])
+    expect(solr_document[:bindingInfo_tesim]).to eq(['Full leather binding with gold lettering'])
+  end
+
   it "indexes coordinateDisplay" do
     solr_document = solr_indexable.to_solr("coordinate" => ["do not index"], "coordinateDisplay" => ["(N90, S90, E90, W90)"])
     expect(solr_document[:coordinateDisplay_ssim]).to eq(["(N90, S90, E90, W90)"])
