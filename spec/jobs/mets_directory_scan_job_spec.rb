@@ -21,4 +21,9 @@ RSpec.describe MetsDirectoryScanJob, type: :job do
   it "has correct queue" do
     expect(mets_directory_scan_job.queue_name).to eq('default')
   end
+
+  it "is scheduled to run nightly at 7:00 pm ET (23:00 UTC)" do
+    entry = GoodJob::CronEntry.all.find { |e| e.key == :mets_directory_scan }
+    expect(entry.instance_variable_get(:@params)).to eq({ cron: "0 23 * * *", class: "MetsDirectoryScanJob", key: :mets_directory_scan })
+  end
 end
