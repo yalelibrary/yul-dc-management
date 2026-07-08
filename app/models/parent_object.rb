@@ -47,7 +47,11 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_save :check_permission_set
 
   def check_for_redirect
-    minify if redirect_to.present?
+    if visibility != "Redirect" && will_save_change_to_visibility? && !will_save_change_to_redirect_to?
+      self.redirect_to = nil
+    elsif redirect_to.present?
+      minify
+    end
   end
 
   def minify
