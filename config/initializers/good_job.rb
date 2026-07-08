@@ -27,6 +27,10 @@ Rails.application.configure do
       cron: '15 0 * * *',
       class: 'ChildObjectIntegrityCheckJob'
     },
+    mets_directory_scan: {
+      cron: '0 23 * * *',
+      class: 'MetsDirectoryScanJob'
+    },
     update_permission_requests: {
       cron: '15 0 * * *',
       class: 'UpdatePermissionRequestsJob'
