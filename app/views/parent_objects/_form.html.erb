@@ -77,6 +77,7 @@
         <%= form.select(:visibility, ["Private", "Public", "Yale Community Only"]) %>
       </div>
     <% end %>
+      <% unless parent_object.visibility == "Redirect" %>
       <div class="col-med-3">
         <% if @visible_permission_sets.present? && (current_user.has_role?(:administrator, parent_object.permission_set) || current_user.has_role?(:sysadmin) || parent_object.permission_set.nil?) %>
           <%= form.label "Permission Set" %>
@@ -96,13 +97,15 @@
             {
             required: false
             },
-            disabled: true) 
+            disabled: true)
           %>
         <% end %>
       </div>
+      <% end %>
   </div>
   <br>
 
+  <% unless parent_object.visibility == "Redirect" %>
   <div class="form-row">
     <div class="col-med-9">
       <%= form.label :sensitive_materials, "Sensitive Materials" %>
@@ -229,6 +232,7 @@
     </div>
   </div>
   <br>
+  <% end %>
   <div class="actions" id="submit-parent">
     <%= form.submit(@parent_object.new_record? ? 'Create Parent object' : 'Save Parent Object And Update Metadata') %>
   </div>

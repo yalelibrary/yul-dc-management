@@ -405,6 +405,18 @@ RSpec.describe "/parent_objects", type: :request, prep_metadata_sources: true, p
       expect(response).to redirect_to(parent_object_url(parent_object))
     end
 
+    it 'can change a redirected object back to a normal visibility' do
+      parent_object = ParentObject.create! valid_attributes
+      patch parent_object_url(parent_object), params: { parent_object: redirect_attributes }
+      parent_object.reload
+      expect(parent_object.visibility).to eq 'Redirect'
+
+      patch parent_object_url(parent_object), params: { parent_object: { visibility: 'Public' } }
+      parent_object.reload
+      expect(parent_object.visibility).to eq 'Public'
+      expect(parent_object.redirect_to).to be_nil
+    end
+
     context "with invalid parameters" do
       it "does not save an improperly formatted url" do
         parent_object = ParentObject.create! valid_attributes

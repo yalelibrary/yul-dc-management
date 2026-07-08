@@ -98,7 +98,7 @@ class ParentObjectsController < ApplicationController
                      end
 
       if valid_update && @parent_object.update(parent_object_params)
-        @parent_object.minify if valid_redirect_to_edit?
+        @parent_object.minify if valid_redirect_to_edit? && @parent_object.visibility == "Redirect"
         @parent_object.save!
         queue_parent_metadata_update
         format.html { redirect_to @parent_object, notice: 'Parent object was successfully saved, a full update has been queued.' }

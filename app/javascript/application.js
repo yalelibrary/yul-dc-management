@@ -344,7 +344,7 @@ $( document ).on('turbolinks:load', function() {
 // This will trigger a modal when adding redirect
 $( document ).on('turbolinks:load', function() {
   $('.parent-edit').on('submit', function() {
-    if ( $("#parent_object_redirect_to").val() !== '' && $("#parent_object_redirect_to").length ) {
+    if ( $("#parent_object_redirect_to").val() !== '' && $("#parent_object_redirect_to").length && $("#parent_object_visibility").val() === 'Redirect' ) {
       return confirm('Adding Redirect To information will remove that object from public view.  Do you wish to continue?');
     }
   })
