@@ -51,6 +51,28 @@ RSpec.describe CreateChildOidCsvJob, type: :job do
     end
   end
 
+  context 'when the job is interrupted' do
+    let(:job) { described_class.new(batch_process) }
+
+    before do
+      allow(GoodJob::CurrentThread).to receive(:execution_interrupted).and_return(Time.current)
+    end
+
+    it 'records a failed batch_processing_event when retry attempts are exhausted' do
+      job.exception_executions = { '[GoodJob::InterruptError]' => 2 }
+      expect { job.perform_now }.not_to raise_error
+      failed_events = batch_process.batch_ingest_events.where(status: 'failed')
+      expect(failed_events).to exist
+      expect(failed_events.first.reason).to include('retry attempts were exhausted')
+    end
+
+    it 'retries without recording a failed event when attempts remain' do
+      job.exception_executions = { '[GoodJob::InterruptError]' => 0 }
+      expect { job.perform_now }.not_to raise_error
+      expect(batch_process.batch_ingest_events.where(status: 'failed')).not_to exist
+    end
+  end
+
   context 'when exporting child oids', prep_metadata_sources: true, prep_admin_sets: true do
     let(:batch_process) { FactoryBot.create(:batch_process, user: user, batch_action: 'export child oids') }
     let(:parent_object) { FactoryBot.create(:parent_object, oid: '2002826', admin_set: AdminSet.first) }
@@ -63,6 +85,16 @@ RSpec.describe CreateChildOidCsvJob, type: :job do
       header_row = csv_rows.first
 
       expect(header_row).to eq(expected_child_headers)
+    end
+
+    it 'saves the batch process once per newly seen admin set rather than once per child object' do
+      second_parent = FactoryBot.create(:parent_object, oid: '2004628', admin_set: AdminSet.first)
+      FactoryBot.create(:child_object, oid: '456790', parent_object: second_parent)
+      allow(batch_process).to receive(:oids).and_return([parent_object.oid.to_s, second_parent.oid.to_s])
+
+      expect(batch_process).to receive(:save!).once.and_call_original
+      batch_process.child_output_csv
+      expect(batch_process.reload.admin_set).to include(AdminSet.first.key)
     end
   end
 end

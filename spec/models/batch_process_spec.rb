@@ -49,6 +49,29 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     batch_process.user_id = user.id
   end
 
+  describe "batch_status for export child oids" do
+    let(:export_batch_process) { FactoryBot.create(:batch_process, user: user, batch_action: 'export child oids') }
+
+    it "displays 'Batch failed' when a failed event has been recorded" do
+      export_batch_process.batch_processing_event("CreateChildOidCsvJob failed: retry attempts were exhausted", 'failed')
+      expect(export_batch_process.batch_status).to eq "Batch failed"
+    end
+
+    it "displays 'Batch failed' when an error event has been recorded" do
+      export_batch_process.batch_processing_event("CSV contains too many entries. The job was not started.", 'error')
+      expect(export_batch_process.batch_status).to eq "Batch failed"
+    end
+
+    it "displays 'Batch complete' when the csv has been saved" do
+      export_batch_process.batch_processing_event("CSV saved to S3", 'csv-saved')
+      expect(export_batch_process.batch_status).to eq "Batch complete"
+    end
+
+    it "displays 'Batch in progress - no failures' when there are no terminal events" do
+      expect(export_batch_process.batch_status).to eq "Batch in progress - no failures"
+    end
+  end
+
   describe "not running the background jobs" do
     it "creates a parent object with values only from the METs document" do
       admin_set_two

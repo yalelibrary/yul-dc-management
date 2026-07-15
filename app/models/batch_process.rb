@@ -220,6 +220,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # SETS BATCH STATUS BASED ON CURRENT STATUS
   def batch_status
+    return child_oid_export_status if batch_action == 'export child oids'
     current_status = status_hash
     if single_status(current_status)
       single_status(current_status)
@@ -243,17 +244,36 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
+  # SETS STATUS FOR CHILD OID EXPORTS BASED ON THE BATCH PROCESS' OWN INGEST EVENTS
+  def child_oid_export_status
+    connection = batch_connections.find_by(connectable: self)
+    statuses = connection ? IngestEvent.where(batch_connection: connection).pluck(:status) : []
+    if statuses.include?('failed') || statuses.include?('error')
+      'Batch failed'
+    elsif statuses.include?('csv-saved')
+      'Batch complete'
+    else
+      'Batch in progress - no failures'
+    end
+  end
+
   # ADDS ADMIN SET KEYS TO BP TABLE
   def add_admin_set_to_bp(sets, object)
-    if object.class == ChildObject
-      sets << ', ' + object.parent_object.admin_set.key
-    elsif object.class == AdminSet
-      sets << ', ' + object&.key
-    elsif object.class == ParentObject
-      sets << ', ' + object.admin_set.key
+    key = admin_set_key_for(object)
+    sets << ', ' + key if key.present? && !sets.split(',').include?(' ' + key)
+    self.admin_set = sets.split(',').uniq.reject(&:blank?).join(', ')
+  end
+
+  # LOOKS UP THE ADMIN SET KEY FOR AN OBJECT
+  def admin_set_key_for(object)
+    case object
+    when ChildObject
+      object.parent_object.admin_set.key
+    when AdminSet
+      object.key
+    when ParentObject
+      object.admin_set.key
     end
-    split_sets = sets.split(',').uniq.reject(&:blank?)
-    self.admin_set = split_sets.join(', ')
   end
 
   # GETS LIST OF CONNECTED STATUSES
