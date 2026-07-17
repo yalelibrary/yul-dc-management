@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<GenerationsResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3">
+  <Generations>
+    <Generation active="true">
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/cccc0005-0000-4000-8000-000000000005/generations/1
+    </Generation>
+  </Generations>
+  <Paging>
+    <TotalResults>1</TotalResults>
+  </Paging>
+  <AdditionalInformation>
+    <Self>
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/cccc0005-0000-4000-8000-000000000005/generations
+    </Self>
+  </AdditionalInformation>
+</GenerationsResponse>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ChildrenResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3">
+  <Children>
+    <Child title="[Preservica] ms_0664_s02_b016_f0269" ref="aaaa0002-0000-4000-8000-000000000002" type="IO">
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/aaaa0002-0000-4000-8000-000000000002
+    </Child>
+    <Child title="[Preservica] ms_0664_s02_b016_f0268" ref="aaaa0001-0000-4000-8000-000000000001" type="IO">
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/aaaa0001-0000-4000-8000-000000000001
+    </Child>
+  </Children>
+  <Paging>
+    <TotalResults>2</TotalResults>
+  </Paging>
+  <AdditionalInformation>
+    <Self>
+      https://preservica-dev-v6.library.yale.edu/api/entity/structural-objects/eeee0001-0000-4000-8000-000000000001/children
+    </Self>
+  </AdditionalInformation>
+</ChildrenResponse>

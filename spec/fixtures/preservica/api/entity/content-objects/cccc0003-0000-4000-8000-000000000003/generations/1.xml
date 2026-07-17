@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<GenerationResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3">
+  <xip:Generation original="true" active="true">
+    <xip:ContentObject>cccc0003-0000-4000-8000-000000000003</xip:ContentObject>
+    <xip:FormatGroup>tiff</xip:FormatGroup>
+    <xip:EffectiveDate>2025-02-21T00:00:00.000-05:00</xip:EffectiveDate>
+    <xip:Bitstreams>
+      <xip:Bitstream>ms_0664_s02_b016_f0268_0003.tif</xip:Bitstream>
+    </xip:Bitstreams>
+    <xip:Formats>
+      <xip:Format valid="true">
+        <xip:PUID>fmt/353</xip:PUID>
+        <xip:Priority>1</xip:Priority>
+        <xip:IdentificationMethod>Signature</xip:IdentificationMethod>
+        <xip:FormatName>Tagged Image File Format</xip:FormatName>
+      </xip:Format>
+    </xip:Formats>
+    <xip:Properties/>
+  </xip:Generation>
+  <Bitstreams>
+    <Bitstream filename="ms_0664_s02_b016_f0268_0003.tif">
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/cccc0003-0000-4000-8000-000000000003/generations/1/bitstreams/1
+    </Bitstream>
+  </Bitstreams>
+  <AdditionalInformation>
+    <Self>
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/cccc0003-0000-4000-8000-000000000003/generations/1
+    </Self>
+  </AdditionalInformation>
+</GenerationResponse>

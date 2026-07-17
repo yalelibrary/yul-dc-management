@@ -29,12 +29,18 @@ class Preservica::StructuralObject
     total_results = structural_object_children.at("Paging")&.at("TotalResults")&.text.to_i
     loop do
       structural_object_children.xpath('/ChildrenResponse/Children/Child').each do |child_ref|
-        information_object_id = child_ref.xpath('@ref').text
-        children << Preservica::InformationObject.new(@preservica_client, information_object_id)
+        children << information_object_from_child(child_ref)
       end
       break if children.count >= total_results || !structural_object_children.xpath('/ChildrenResponse/Children/Child').count.positive?
       structural_object_children = Nokogiri::XML(@preservica_client.structural_object_children(id, children.count)).remove_namespaces!
     end
     children
+  end
+
+  def information_object_from_child(child_ref)
+    information_object = Preservica::InformationObject.new(@preservica_client, child_ref.xpath('@ref').text)
+    information_object.title = child_ref.xpath('@title').text
+    information_object.structural_object_child_type = child_ref.xpath('@type').text
+    information_object
   end
 end
