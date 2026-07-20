@@ -66,6 +66,7 @@ RSpec.describe SyncFromPreservicaJob, type: :job, prep_metadata_sources: true, p
 
     expect(batch_process).to have_received(:batch_processing_event)
       .with('Setup job failed to save: Something went wrong', 'failed')
+    expect(batch_process.batch_status).to eq('View Messages')
   end
 
   it 'logs retry batch processing event when retries are exhausted' do
@@ -80,6 +81,7 @@ RSpec.describe SyncFromPreservicaJob, type: :job, prep_metadata_sources: true, p
 
       reasons = batch_process.batch_ingest_events.where(status: 'retry').pluck(:reason)
       expect(reasons).to include('Retrying Sync from Preservica - Request error Net::ReadTimeout for sample.com/uri')
+      expect(batch_process.batch_status).to eq('1 batch process has begun the retry process.')
     end
   end
 
@@ -96,6 +98,7 @@ RSpec.describe SyncFromPreservicaJob, type: :job, prep_metadata_sources: true, p
       .with("Setup job failed to save: #{error.message}", 'failed')
     expect(batch_process).not_to have_received(:batch_processing_event)
       .with(a_string_starting_with('Retrying Sync from Preservica - Request error'), 'retry')
+    expect(batch_process.batch_status).to eq('View Messages')
   end
 
   context 'when sync_from_preservica raises an exception' do
@@ -115,6 +118,7 @@ RSpec.describe SyncFromPreservicaJob, type: :job, prep_metadata_sources: true, p
       expect do
         described_class.new.perform(batch_process)
       end.to raise_error(RuntimeError, error_message)
+      expect(batch_process.batch_status).to eq('View Messages')
     end
   end
 end
