@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RepresentationResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3">
+  <xip:Representation>
+    <xip:InformationObject>aaaa0002-0000-4000-8000-000000000002</xip:InformationObject>
+    <xip:Name>Preservation-1</xip:Name>
+    <xip:Type>Preservation</xip:Type>
+    <xip:ContentObjects>
+      <xip:ContentObject>cccc0004-0000-4000-8000-000000000004</xip:ContentObject>
+      <xip:ContentObject>cccc0005-0000-4000-8000-000000000005</xip:ContentObject>
+      <xip:ContentObject>dddd0001-0000-4000-8000-000000000001</xip:ContentObject>
+    </xip:ContentObjects>
+    <xip:RepresentationFormats/>
+    <xip:RepresentationProperties/>
+  </xip:Representation>
+  <ContentObjects>
+    <ContentObject title="ms_0664_s02_b016_f0269_0002" ref="cccc0004-0000-4000-8000-000000000004" type="CO">
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/cccc0004-0000-4000-8000-000000000004
+    </ContentObject>
+    <ContentObject title="ms_0664_s02_b016_f0269_0001" ref="cccc0005-0000-4000-8000-000000000005" type="CO">
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/cccc0005-0000-4000-8000-000000000005
+    </ContentObject>
+    <ContentObject title="ms_0664_s02_b016_f0269" ref="dddd0001-0000-4000-8000-000000000001" type="CO">
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/dddd0001-0000-4000-8000-000000000001
+    </ContentObject>
+  </ContentObjects>
+  <AdditionalInformation>
+    <Self>
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/aaaa0002-0000-4000-8000-000000000002/representations/Preservation/1
+    </Self>
+  </AdditionalInformation>
+</RepresentationResponse>
