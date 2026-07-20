@@ -2,11 +2,6 @@
 
 require 'rails_helper'
 
-# Use Case 1: an Archival Object folder (structural object) contains multiple information
-# objects (one per physical folder), each with multiple TIFF content objects in its
-# Preservation representation and a PDF in its Access representation. A single parent
-# is created with the TIFFs from every information object, ordered by information object
-# title and then by filename.
 RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   subject(:batch_process) { BatchProcess.new }
   let(:admin_set) { AdminSet.find_by(key: 'sml') }
@@ -19,8 +14,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
      "ms_0664_s02_b016_f0269_0001.tif",
      "ms_0664_s02_b016_f0269_0002.tif"]
   end
-  # content objects are listed out of filename order in the representation fixtures;
-  # the URI at each position must stay paired with the caption at that position
   let(:expected_content_object_uris) do
     %w[cccc0002-0000-4000-8000-000000000002
        cccc0001-0000-4000-8000-000000000001
@@ -53,8 +46,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     stub_pdfs
     stub_preservica_aspace_single
     stub_preservica_login
-    # the Access representations and the PDF content object's bitstream details are
-    # intentionally NOT stubbed - WebMock will error if the ingest ever requests them
     fixtures = %w[preservica/api/entity/structural-objects/eeee0001-0000-4000-8000-000000000001/children
                   preservica/api/entity/structural-objects/88e52625-0000-4000-8000-00000000bad1/children
                   preservica/api/entity/information-objects/aaaa0001-0000-4000-8000-000000000001/representations
