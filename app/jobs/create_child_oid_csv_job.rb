@@ -2,7 +2,12 @@
 
 class CreateChildOidCsvJob < ApplicationJob
   include GoodJob::ActiveJobExtensions::InterruptErrors
-  retry_on GoodJob::InterruptError, attempts: 3
+  retry_on GoodJob::InterruptError, attempts: 3 do |job, error|
+    batch_process = job.arguments.first
+    batch_process&.batch_processing_event(
+      "CreateChildOidCsvJob failed: interrupted #{job.executions} times and retry attempts were exhausted: #{error.message}", "failed"
+    )
+  end
   queue_as :default
 
   def default_priority

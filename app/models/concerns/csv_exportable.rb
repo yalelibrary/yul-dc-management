@@ -219,29 +219,26 @@ module CsvExportable
   # rubocop:disable Metrics/MethodLength
   def child_output_csv
     return nil unless batch_action == 'export child oids'
-    parent_title_hash = {}
     self.admin_set = ''
     sets = admin_set
-    rows_enum = Enumerator.new do |yielder|
-      child_objects_array.each_slice(1000) do |batch|
-        batch.each do |co|
-          parent_title = lookup_parent_title(co, parent_title_hash)
-          add_admin_set_to_bp(sets, co)
-          save!
-          row = [co.parent_object.oid, co.oid, co.order, parent_title.presence, co.parent_object.call_number, co.label, co.caption, co.viewing_hint, full_text_status(co),
-                 co.x_resolution, co.y_resolution, co.resolution_unit, co.color_space, co.compression, co.creator, co.date_and_time_captured, co.make, co.model]
-          yielder << row
+    output_csv = CSV.generate do |csv|
+      csv << child_headers
+      each_readable_parent_object do |po|
+        add_admin_set_to_bp(sets, po)
+        # persist admin set keys as they are discovered so they display on the batch process index while the export runs
+        save! if admin_set_changed?
+        parent_title = po.authoritative_json&.[]('title')&.first
+        po.child_objects.each do |co|
+          csv << [po.oid, co.oid, co.order, parent_title.presence, po.call_number, co.label, co.caption, co.viewing_hint, full_text_status(co),
+                  co.x_resolution, co.y_resolution, co.resolution_unit, co.color_space, co.compression, co.creator, co.date_and_time_captured, co.make, co.model]
         end
       end
       # Add error children rows at the end
       error_rows = []
       add_error_rows(error_rows)
-      error_rows.each { |row| yielder << row }
+      error_rows.each { |row| csv << row }
     end
-    output_csv = CSV.generate do |csv|
-      csv << child_headers
-      rows_enum.each { |row| csv << row }
-    end
+    save! if changed?
     save_to_s3(output_csv, self)
     output_csv
   end
@@ -250,10 +247,6 @@ module CsvExportable
 
   def full_text_status(child_object)
     child_object.full_text == true ? "Yes" : "No"
-  end
-
-  def lookup_parent_title(co, parent_title_hash)
-    parent_title_hash[co.parent_object.oid] ||= co.parent_object.authoritative_json&.[]('title')&.first
   end
 
   def remote_csv_path
@@ -266,21 +259,19 @@ module CsvExportable
     "#{file_name.delete_suffix('.csv')}_bp_#{id}.csv"
   end
 
-  def child_objects_array
-    arr = []
-    oids.each_slice(100) do |batch|
-      batch.each_with_index do |oid, index|
-        po = ParentObject.find(oid.to_i)
-        if current_ability.can?(:read, po)
-          po.child_objects.each { |co| arr << co }
-        else
-          (@error_rows ||= []) << { id: oid, csv_message: 'Access denied for parent object', batch_message: "Skipping row [#{index + 2}] due to parent permissions: #{oid}" }
-        end
-      rescue ActiveRecord::RecordNotFound
-        (@error_rows ||= []) << { id: oid, csv_message: 'Parent Not Found in database', batch_message: "Skipping row [#{index + 2}] due to parent not found: #{oid}" }
+  # Yields each parent object from the input oids that the user can read,
+  # collecting error rows for missing or unauthorized parents
+  def each_readable_parent_object
+    oids.each_with_index do |oid, index|
+      po = ParentObject.find(oid.to_i)
+      if current_ability.can?(:read, po)
+        yield po
+      else
+        (@error_rows ||= []) << { id: oid, csv_message: 'Access denied for parent object', batch_message: "Skipping row [#{index + 2}] due to parent permissions: #{oid}" }
       end
+    rescue ActiveRecord::RecordNotFound
+      (@error_rows ||= []) << { id: oid, csv_message: 'Parent Not Found in database', batch_message: "Skipping row [#{index + 2}] due to parent not found: #{oid}" }
     end
-    arr
   end
 
   ########################

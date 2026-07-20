@@ -201,13 +201,6 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/PerceivedComplexity
 
-  # SETS COMPLETE STATUS FOR RECREATE JOB
-  def are_all_children_complete?(parent_object)
-    child_objects.where(parent_object: parent_object).all? do |co|
-      co.status_for_batch_process(self) == 'Complete'
-    end
-  end
-
   # ASSIGNS PARENT/CHILD OBJECT TO BATCH PROCESS FOR CREATE/DELETE/UPDATE
   def setup_for_background_jobs(object, metadata_source)
     object.authoritative_metadata_source = MetadataSource.find_by(metadata_cloud_name: (metadata_source.presence || 'ladybird')) if object.class == ParentObject
@@ -219,10 +212,15 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # BATCH STATUSES: ------------------------------------------------------------------------------ #
 
   # SETS BATCH STATUS BASED ON CURRENT STATUS
+  # rubocop:disable Metrics/PerceivedComplexity
   def batch_status
+    return child_oid_export_status if batch_action == 'export child oids'
     current_status = status_hash
     if single_status(current_status)
       single_status(current_status)
+    elsif current_status[:retry] != 0
+      "#{current_status[:retry]} batch processes have begun the retry process." if current_status[:retry] > 1
+      "#{current_status[:retry]} batch process has begun the retry process." if current_status[:retry] == 1
     elsif current_status[:failed] != 0
       "#{current_status[:failed]} out of #{current_status[:total].to_i} parent objects have a failure."
     elsif current_status[:in_progress] != 0
@@ -231,6 +229,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       "View Messages"
     end
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   # SETS BATCH SINGLE STATUS
   def single_status(current_status)
@@ -243,32 +242,67 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  # ADDS ADMIN SET KEYS TO BP TABLE
-  def add_admin_set_to_bp(sets, object)
-    if object.class == ChildObject
-      sets << ', ' + object.parent_object.admin_set.key
-    elsif object.class == AdminSet
-      sets << ', ' + object&.key
-    elsif object.class == ParentObject
-      sets << ', ' + object.admin_set.key
+  # SETS STATUS FOR CHILD OID EXPORTS BASED ON THE BATCH PROCESS' OWN INGEST EVENTS
+  def child_oid_export_status
+    connection = batch_connections.find_by(connectable: self)
+    statuses = connection ? IngestEvent.where(batch_connection: connection).pluck(:status) : []
+    if statuses.include?('failed') || statuses.include?('error')
+      'Batch failed'
+    elsif statuses.include?('csv-saved')
+      'Batch complete'
+    else
+      'Batch in progress - no failures'
     end
-    split_sets = sets.split(',').uniq.reject(&:blank?)
-    self.admin_set = split_sets.join(', ')
   end
 
-  # GETS LIST OF CONNECTED STATUSES
-  def connected_statuses
-    @connected_statuses ||= batch_connections.where(connectable_type: "ParentObject").map(&:status)
+  # SETS COMPLETE STATUS FOR RECREATE JOB
+  def are_all_children_complete?(parent_object)
+    child_objects.where(parent_object: parent_object).all? do |co|
+      co.status_for_batch_process(self) == 'Complete'
+    end
+  end
+
+  # GETS LIST OF CONNECTED STATUSES FOR PARENT OBJECTS
+  def connected_parent_statuses
+    @connected_parent_statuses ||= batch_connections.where(connectable_type: "ParentObject").map(&:status)
+  end
+
+  # GETS LIST OF CONNECTED STATUSES FOR BATCH PROCESS' OWN INGEST EVENTS
+  def connected_batch_statuses
+    connection = batch_connections.find_by(connectable: self)
+    @connected_batch_statuses ||= IngestEvent.where(batch_connection: connection).pluck(:status)
   end
 
   # COUNTS CURRENT STATUSES
   def status_hash
     @status_hash ||= {
-      complete: connected_statuses.count("Complete") + connected_statuses.count("Parent object deleted successfully"),
-      in_progress: connected_statuses.count("In progress - no failures"),
-      failed: connected_statuses.count("Failed"),
-      unknown: connected_statuses.count("Unknown"),
-      total: connected_statuses.count.to_f
+      complete: connected_parent_statuses.count("Complete") + connected_parent_statuses.count("Parent object deleted successfully"),
+      in_progress: connected_parent_statuses.count("In progress - no failures"),
+      failed: connected_parent_statuses.count("Failed"),
+      retry: connected_batch_statuses.count("retry"),
+      unknown: connected_parent_statuses.count("Unknown"),
+      total: connected_parent_statuses.count.to_f
     }
+  end
+
+  # END OF BATCH STATUSES: ------------------------------------------------------------------------------ #
+
+  # ADDS ADMIN SET KEYS TO BP TABLE
+  def add_admin_set_to_bp(sets, object)
+    key = admin_set_key_for(object)
+    sets << ', ' + key if key.present? && !sets.split(',').include?(' ' + key)
+    self.admin_set = sets.split(',').uniq.reject(&:blank?).join(', ')
+  end
+
+  # LOOKS UP THE ADMIN SET KEY FOR AN OBJECT
+  def admin_set_key_for(object)
+    case object
+    when ChildObject
+      object.parent_object.admin_set.key
+    when AdminSet
+      object.key
+    when ParentObject
+      object.admin_set.key
+    end
   end
 end
