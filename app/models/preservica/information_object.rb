@@ -3,6 +3,8 @@
 class Preservica::InformationObject
   include Preservica::PreservicaObject
 
+  attr_accessor :title, :structural_object_child_type
+
   def self.where(options)
     preservica_client = options[:preservica_client] || PreservicaClient.new(admin_set_key: options[:admin_set_key])
     Preservica::InformationObject.new(preservica_client, options[:id])
