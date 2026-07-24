@@ -110,7 +110,6 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     iiif_manifest = po_first.iiif_manifest
     # manifest should exist
     expect(iiif_manifest).not_to be_nil
-    # byebug
     expect(iiif_manifest['id']).to eq "http://localhost/manifests/200000000"
     expect(iiif_manifest['type']).to eq "Manifest"
     expect(iiif_manifest['label']['none'].first).to eq "The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion, Washington, D.C., 1863 Jan 1"
@@ -124,16 +123,5 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     File.delete("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif")
     File.delete("spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif")
     File.delete("spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif")
-  end
-
-  # when import pattern one, with a folder architecture, the structure should have one range per folder with the title of the folder and the canvases that are in that folder
-  xit 'can create child objects with folder architecture' do
-    expect(iiif_manifest['structures'].first['ranges'].first['label']).to eq "mss_29_s03_b092_f0019"
-    expect(iiif_manifest['structures'].first['ranges'].count).to eq 1
-    expect(iiif_manifest['structures'].first['ranges'].first['@id']).to eq "https://brbl-dl.library.yale.edu/iiif/manifest/200000000/range/200000000"
-    expect(iiif_manifest['structures'].first['ranges'].first['canvases'].count).to eq 3
-    expect(iiif_manifest['structures'].first['ranges'].first['canvases'].first).to eq "https://brbl-dl.library.yale.edu/iiif/manifest/200000000/canvas/200000001"
-    expect(iiif_manifest['structures'].first['ranges'].first['canvases'].second).to eq "https://brbl-dl.library.yale.edu/iiif/manifest/200000000/canvas/200000002"
-    expect(iiif_manifest['structures'].first['ranges'].first['canvases'].last).to eq "https://brbl-dl.library.yale.edu/iiif/manifest/200000000/canvas/200000003"
   end
 end
