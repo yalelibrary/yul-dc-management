@@ -256,8 +256,6 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/MethodLength
   def preservica_copy_canvases_to_range(child_hashes)
     child_hashes.each do |child_hash|
-      # parent_object_oid / child_object_oid are passed to the find_or_create so the created record
-      # satisfies the required belongs_to associations (find_or_create_by! validates on create).
       range = StructureRange.find_or_create_by!(
         resource_id: IiifRangeBuilder.uuid_to_uri(child_hash[:preservica_information_object_id]),
         parent_object_oid: oid
