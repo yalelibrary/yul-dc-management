@@ -39,7 +39,8 @@ module SyncFromPreservica
       preservica_children_hash = {}
       parent_preservica_uri = parent_object.preservica_uri.presence || row['preservica_uri'].presence || nil
       parent_preservica_representation_type = parent_object.preservica_representation_type.presence || row['preservica_representation_type'].presence || nil
-      PreservicaImageService.new(parent_preservica_uri, parent_object.admin_set.key).image_list(parent_preservica_representation_type).each_with_index do |preservica_co, index|
+      image_service = PreservicaImageService.new(parent_preservica_uri, parent_object.admin_set.key)
+      image_service.image_list(parent_preservica_representation_type).each_with_index do |preservica_co, index|
         # increment by one so index lines up with order
         index_plus_one = index + 1
         preservica_children_hash["hash_#{index_plus_one}".to_sym] = { order: index_plus_one,
@@ -54,6 +55,7 @@ module SyncFromPreservica
                                                                       preservica_folder_index: preservica_co[:preservica_folder_index],
                                                                       preservica_content_object_index: preservica_co[:preservica_content_object_index] }
       end
+      parent_object.preservica_folder_architecture = image_service.folder_architecture?
     rescue PreservicaImageService::PreservicaImageServiceNetworkError => e
       batch_processing_event("Parent OID: #{parent_object.oid} because of #{e.message}", 'Skipped Import')
       raise

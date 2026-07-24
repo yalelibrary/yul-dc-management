@@ -9,6 +9,10 @@ require 'rails_helper'
 RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_admin_sets: true do
   let(:parent) { FactoryBot.create(:parent_object, oid: 200_000_000) }
 
+  # Every scenario here is a genuine folder (one information object grouping multiple images), so
+  # the folder-architecture flag PreservicaImageService sets during a resync is true.
+  before { parent.preservica_folder_architecture = true }
+
   # A folder maps to a Preservica information object (a StructureRange); the content object index is
   # the canvas position within that folder.
   let(:folder_a) { 'aaaa0001-0000-4000-8000-000000000001' }
