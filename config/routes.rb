@@ -98,6 +98,5 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  # fall back if not authenticated
-  get '/jobs', to: redirect('users/auth/cas')
+  get '/jobs', to: redirect('/', status: 302)
 end
