@@ -163,6 +163,8 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         invalid_child_hashes = unique_child_hashes - valid_child_hashes
         cleanup_child_artifacts(invalid_child_hashes)
         upsert_child_objects(valid_child_hashes) unless valid_child_hashes.empty?
+        preservica_copy_canvases_to_range(valid_child_hashes) unless valid_child_hashes.empty?
+        preservica_add_structure_to_manifest(valid_child_hashes) unless valid_child_hashes.empty?
         self.last_preservica_update = Time.current
       end
     else
@@ -245,6 +247,50 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
 
+  # rubocop:disable Metrics/MethodLength
+  def preservica_copy_canvases_to_range(child_hashes)
+    child_hashes.each do |child_hash|
+      # parent_object_oid / child_object_oid are passed to the find_or_create so the created record
+      # satisfies the required belongs_to associations (find_or_create_by! validates on create).
+      range = StructureRange.find_or_create_by!(
+        resource_id: IiifRangeBuilder.uuid_to_uri(child_hash[:preservica_information_object_id]),
+        parent_object_oid: oid
+      )
+      range.update!(
+        label: child_hash[:preservica_folder_label],
+        position: child_hash[:preservica_folder_index]
+      )
+      canvas = StructureCanvas.find_or_create_by!(
+        resource_id: IiifRangeBuilder.child_id_to_uri(child_hash[:oid], oid),
+        parent_object_oid: oid,
+        child_object_oid: child_hash[:oid]
+      )
+      canvas.update!(
+        label: child_hash[:caption],
+        position: child_hash[:preservica_content_object_index],
+        structure_id: range.id
+      )
+      range.structures << canvas
+      range.save!
+    end
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  def preservica_add_structure_to_manifest(child_hashes)
+    ranges = child_hashes.filter_map do |child_hash|
+      StructureRange.find_by(
+        resource_id: IiifRangeBuilder.uuid_to_uri(child_hash[:preservica_information_object_id]),
+        parent_object_oid: oid
+      )
+    end.uniq
+
+    wrapper = StructureRange.find_or_create_by!(
+      parent_object_oid: oid,
+      resource_id: IiifRangeBuilder.parent_uri_from_id(oid) # unique per parent, ≠ any range/canvas
+    )
+    wrapper.update!(top_level: true, structures: ranges)
+  end
+
   # rubocop:disable Rails/SkipsModelValidations
   def upsert_preservica_ingest_child_objects(preservica_ingest_hash)
     PreservicaIngest.insert_all(preservica_ingest_hash)
@@ -267,10 +313,39 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     create_new_preservica_children(new_children_data) if new_children_data.present?
     self.last_preservica_update = Time.current
     sync_from_preservica_update_all_ptiffs
+    preservica_rebuild_structure
   end
   # rubocop:enable Lint/UnderscorePrefixedVariableName
   # rubocop:enable Layout/LineLength
 
+  # Rebuilds the entire IIIF structure (ranges/canvases) from the current child objects.
+  # Called after a resync so added/removed/reordered children are reflected and any
+  # orphaned structure records are cleared. Wiping first mirrors ManifestController#save.
+  #
+  # The child hash only carries the keys consumed by preservica_copy_canvases_to_range and
+  # preservica_add_structure_to_manifest (the folder/canvas structure fields, oid, and caption);
+  # the child objects themselves are already persisted by this point, so no other fields are needed.
+  def preservica_rebuild_structure
+    child_objects.reset
+    child_hashes = child_objects.order(:order).filter_map do |co|
+      next if co.preservica_information_object_id.blank?
+
+      { oid: co.oid,
+        caption: co.caption,
+        preservica_information_object_id: co.preservica_information_object_id,
+        preservica_folder_label: co.preservica_folder_label,
+        preservica_folder_index: co.preservica_folder_index,
+        preservica_content_object_index: co.preservica_content_object_index }
+    end
+    IiifRangeBuilder.new.destroy_existing_structure_by_parent_oid(oid)
+    return if child_hashes.empty?
+
+    preservica_copy_canvases_to_range(child_hashes)
+    preservica_add_structure_to_manifest(child_hashes)
+  end
+
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def sync_from_preservica_update_existing_children(preservica_children_hash)
     new_children = []
     preservica_children_hash.each_value do |value|
@@ -285,12 +360,18 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       co.preservica_generation_uri = value[:generation_uri]
       co.preservica_bitstream_uri = value[:bitstream_uri]
       co.sha512_checksum = value[:checksum]&.downcase
+      co.preservica_information_object_id = value[:preservica_information_object_id]
+      co.preservica_folder_label = value[:preservica_folder_label]
+      co.preservica_folder_index = value[:preservica_folder_index]
+      co.preservica_content_object_index = value[:preservica_content_object_index]
       co.last_preservica_update = Time.current
       preservica_copy_to_access(value, co.oid)
       co.save!
     end
     new_children
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   # rubocop:disable Rails/SkipsModelValidations
   # rubocop:disable Metrics/MethodLength
@@ -308,6 +389,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         preservica_bitstream_uri: child_data[:bitstream_uri],
         sha512_checksum: child_data[:checksum]&.downcase,
         caption: child_data[:bitstream]&.filename,
+        preservica_information_object_id: child_data[:preservica_information_object_id],
+        preservica_folder_label: child_data[:preservica_folder_label],
+        preservica_folder_index: child_data[:preservica_folder_index],
+        preservica_content_object_index: child_data[:preservica_content_object_index],
         last_preservica_update: Time.current
       }
     end

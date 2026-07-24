@@ -84,7 +84,7 @@ class PreservicaImageService
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def process_information_objects(representation_type)
-    @information_objects.each do |information_object|
+    @information_objects.each_with_index do |information_object, information_object_index|
       representation = information_object.fetch_by_representation_type(representation_type)[0]
       raise PreservicaImageServiceError.new("No matching representation found in Preservica", @uri.to_s) if representation.nil?
       content_objects = representation.content_objects
@@ -104,7 +104,11 @@ class PreservicaImageService
                                        preservica_bitstream_uri: tif_bitstream.uri,
                                        sha512_checksum: tif_bitstream.sha512_checksum,
                                        bitstream: tif_bitstream,
-                                       caption: tif_bitstream.filename }
+                                       caption: tif_bitstream.filename,
+                                       preservica_information_object_id: information_object.id,
+                                       preservica_folder_label: information_object.title.to_s,
+                                       preservica_folder_index: information_object_index,
+                                       preservica_content_object_index: index }
       end
       @images.concat(information_object_images.sort_by { |image| image[:caption].to_s })
     end

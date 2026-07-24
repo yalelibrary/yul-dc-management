@@ -375,9 +375,9 @@ class IiifPresentationV3
   def add_child_structures(structures, parents_to_children)
     structures = structures&.map do |structure|
       children = add_child_structures(parents_to_children[structure.id], parents_to_children)
-      r = { "type": structure.type.gsub("Structure", ""), "id": structure.resource_id }
+      r = { "type" => structure.type.gsub("Structure", ""), "id" => structure.resource_id }
       r["items"] = children if children && !children.empty?
-      r["label"] = { "en": [structure.label] } if r[:type] == "Range"
+      r["label"] = { "en" => [structure.label] } if r["type"] == "Range"
       r
     end
     structures || []

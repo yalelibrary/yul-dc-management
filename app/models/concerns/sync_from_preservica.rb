@@ -47,7 +47,12 @@ module SyncFromPreservica
                                                                       generation_uri: preservica_co[:preservica_generation_uri],
                                                                       bitstream_uri: preservica_co[:preservica_bitstream_uri],
                                                                       checksum: preservica_co[:sha512_checksum],
-                                                                      bitstream: preservica_co[:bitstream] }
+                                                                      bitstream: preservica_co[:bitstream],
+                                                                      caption: preservica_co[:caption],
+                                                                      preservica_information_object_id: preservica_co[:preservica_information_object_id],
+                                                                      preservica_folder_label: preservica_co[:preservica_folder_label],
+                                                                      preservica_folder_index: preservica_co[:preservica_folder_index],
+                                                                      preservica_content_object_index: preservica_co[:preservica_content_object_index] }
       end
     rescue PreservicaImageService::PreservicaImageServiceNetworkError => e
       batch_processing_event("Parent OID: #{parent_object.oid} because of #{e.message}", 'Skipped Import')
