@@ -23,11 +23,11 @@ gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails', '~> 4.4'
 gem 'kaminari', '~> 1.2'
 gem 'noticed', '~> 1.2', '>= 1.2.15'
-gem 'omniauth', '~> 1.9'
-gem 'omniauth-cas', '~> 2.0'
+gem 'omniauth', '~> 2.1'
+gem 'omniauth-cas', '~> 3.0'
 # This addresses CVE-2015-9284 https://github.com/advisories/GHSA-ww4x-rwq6-qpgf
 gem 'cancancan', '~> 3.5'
-gem 'omniauth-rails_csrf_protection', '~> 0.1'
+gem 'omniauth-rails_csrf_protection', '~> 2.0'
 gem 'rolify', '~> 6.0'
 # Audit trail for changes to ActiveRecord models
 gem 'paper_trail', '~> 15.1'
@@ -38,6 +38,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 7.2'
 # cors support or rack
+gem 'rack', '>= 3.0.13'
 gem 'rack-cors', '~> 2.0.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.2.3.1'
