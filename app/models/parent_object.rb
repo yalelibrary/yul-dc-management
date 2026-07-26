@@ -288,11 +288,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       )
     end.uniq
 
-    wrapper = StructureRange.find_or_create_by!(
-      parent_object_oid: oid,
-      resource_id: IiifRangeBuilder.parent_uri_from_id(oid) # unique per parent, ≠ any range/canvas
-    )
-    wrapper.update!(top_level: true, structures: ranges)
+    ranges.each { |range| range.update!(top_level: true) }
   end
 
   # rubocop:disable Rails/SkipsModelValidations

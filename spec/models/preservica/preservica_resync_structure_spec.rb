@@ -40,9 +40,9 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
     structures
   end
 
-  # Canvas ids for each range, in order, under the top-level wrapper.
+  # Canvas ids for each top-level folder range, in order (structures are the folder ranges directly).
   def range_canvas_ids
-    (manifest_structures.first&.fetch('items', []) || []).map do |range|
+    manifest_structures.map do |range|
       (range['items'] || []).map { |canvas| canvas['id'] }
     end
   end

@@ -131,11 +131,12 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expected_oids.each do |oid|
       expect(File.exist?(access_primary_path(oid))).to eq true
     end
-    # when import pattern one, with a folder architecture, the v3 structures should contain one Range per folder
-    # (information object), labeled with the folder title, whose items are the Canvases for the child objects in that folder.
+    # when import pattern one, with a folder architecture, the v3 structures should contain one top-level Range per
+    # folder (information object) directly (no wrapper range, matching the structure-editor format), labeled with the
+    # folder title, whose items are the Canvases for the child objects in that folder.
     # This fixture has two information objects (f0268 with three images, f0269 with two), so there are two ranges.
     iiif_manifest = parent_object.iiif_manifest
-    ranges = iiif_manifest['structures'].first['items']
+    ranges = iiif_manifest['structures']
 
     expect(ranges.count).to eq 2
     expect(ranges.map { |range| range['type'] }).to all(eq("Range"))
