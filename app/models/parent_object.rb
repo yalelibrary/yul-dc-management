@@ -257,7 +257,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def preservica_copy_canvases_to_range(child_hashes)
     child_hashes.each do |child_hash|
       range = StructureRange.find_or_create_by!(
-        resource_id: IiifRangeBuilder.uuid_to_uri(child_hash[:preservica_information_object_id]),
+        resource_id: child_hash[:preservica_information_object_id],
         parent_object_oid: oid
       )
       range.update!(
@@ -283,7 +283,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def preservica_add_structure_to_manifest(child_hashes)
     ranges = child_hashes.filter_map do |child_hash|
       StructureRange.find_by(
-        resource_id: IiifRangeBuilder.uuid_to_uri(child_hash[:preservica_information_object_id]),
+        resource_id: child_hash[:preservica_information_object_id],
         parent_object_oid: oid
       )
     end.uniq

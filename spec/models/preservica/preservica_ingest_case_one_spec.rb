@@ -142,10 +142,11 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expect(ranges.map { |range| range['type'] }).to all(eq("Range"))
 
     # ranges are ordered by folder index and labeled with the information object title
+    # range ids are the bare information-object UUID, matching the structure editor (no /range/ URI wrapper)
     expect(ranges.first['label']).to eq({ "en" => ["[Preservica] ms_0664_s02_b016_f0268"] })
-    expect(ranges.first['id']).to eq "https://collections.library.yale.edu/manifests/range/aaaa0001-0000-4000-8000-000000000001"
+    expect(ranges.first['id']).to eq "aaaa0001-0000-4000-8000-000000000001"
     expect(ranges.second['label']).to eq({ "en" => ["[Preservica] ms_0664_s02_b016_f0269"] })
-    expect(ranges.second['id']).to eq "https://collections.library.yale.edu/manifests/range/aaaa0002-0000-4000-8000-000000000002"
+    expect(ranges.second['id']).to eq "aaaa0002-0000-4000-8000-000000000002"
 
     # each Range's items are the Canvases for the child objects in that folder, ordered the same way they appear in the
     # Preservica folder (preservica_content_object_index), which is independent of the caption-based page ordering. The
