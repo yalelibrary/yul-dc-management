@@ -1,7 +1,16 @@
 # frozen_string_literal: true
 
 class IiifRangeBuilder
-  PREFIX = 'https://collections.library.yale.edu/manifests'
+  # Fallback when IIIF_MANIFESTS_BASE_URL is unset. Must stay in sync with the manifest itself --
+  # IiifPresentationV3#manifest_base_url delegates here so the ids this class mints for ranges and
+  # canvases always match the ids IiifPresentationV3 mints for the manifest and its canvases. When
+  # they disagree, Universal Viewer cannot resolve a Range's items to the Canvases in the manifest
+  # and the range renders but is not navigable.
+  DEFAULT_BASE_URL = 'http://localhost/manifests'
+
+  def self.manifest_base_url
+    (ENV['IIIF_MANIFESTS_BASE_URL'].presence || DEFAULT_BASE_URL).sub(%r{/+\z}, '')
+  end
 
   def parse_structures(manifest)
     raise 'Not a Manifest' unless manifest['type'] == 'Manifest'
@@ -67,8 +76,11 @@ class IiifRangeBuilder
     )
   end
 
+  # Range ids arrive either as a bare uuid (what IiifPresentationV3 emits today) or as a
+  # "<base>/range/<uuid>" uri (older manifests). Deliberately base-url agnostic so a manifest
+  # generated under one IIIF_MANIFESTS_BASE_URL still parses under another.
   def uuid_from_uri(uri)
-    uri.sub("#{PREFIX}/range/", '')
+    uri.split('/').last
   end
 
   def parent_object_from_uri(uri)
@@ -76,16 +88,18 @@ class IiifRangeBuilder
     ParentObject.find(parent_oid)
   end
 
+  # Manifest ids come as "<base>/<oid>" (what IiifPresentationV3 emits) or "<base>/oid/<oid>"
+  # (older manifests). The oid is the last path segment in both.
   def parent_oid_from_uri(uri)
-    uri.sub("#{PREFIX}/oid/", '').sub(/.*manifests\//, '')
+    uri.split('/').last
   end
 
   def self.parent_uri_from_id(id)
-    "#{PREFIX}/#{id}"
+    File.join(manifest_base_url, id.to_s)
   end
 
   def self.uuid_to_uri(uuid)
-    "#{PREFIX}/range/#{uuid}"
+    File.join(manifest_base_url, 'range', uuid.to_s)
   end
 
   def child_id_from_uri(uri, parent_oid)
@@ -93,7 +107,7 @@ class IiifRangeBuilder
   end
 
   def self.child_id_to_uri(child_oid, parent_oid)
-    "#{PREFIX}/oid/#{parent_oid}/canvas/#{child_oid}"
+    File.join(manifest_base_url, "oid/#{parent_oid}/canvas/#{child_oid}")
   end
 
   def destroy_existing_structure(resource_id)

@@ -151,20 +151,28 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     # each Range's items are the Canvases for the child objects in that folder, ordered the same way they appear in the
     # Preservica folder (preservica_content_object_index), which is independent of the caption-based page ordering. The
     # oids therefore are not sequential: the page order is caption-sorted while the range preserves the Preservica order.
+    base_url = IiifRangeBuilder.manifest_base_url
     first_folder_canvases = ranges.first['items']
     expect(first_folder_canvases.map { |canvas| canvas['type'] }).to all(eq("Canvas"))
     expect(first_folder_canvases.map { |canvas| canvas['id'] }).to eq [
-      "https://collections.library.yale.edu/manifests/oid/200000000/canvas/200000002",
-      "https://collections.library.yale.edu/manifests/oid/200000000/canvas/200000001",
-      "https://collections.library.yale.edu/manifests/oid/200000000/canvas/200000003"
+      "#{base_url}/oid/200000000/canvas/200000002",
+      "#{base_url}/oid/200000000/canvas/200000001",
+      "#{base_url}/oid/200000000/canvas/200000003"
     ]
 
     second_folder_canvases = ranges.second['items']
     expect(second_folder_canvases.map { |canvas| canvas['type'] }).to all(eq("Canvas"))
     expect(second_folder_canvases.map { |canvas| canvas['id'] }).to eq [
-      "https://collections.library.yale.edu/manifests/oid/200000000/canvas/200000005",
-      "https://collections.library.yale.edu/manifests/oid/200000000/canvas/200000004"
+      "#{base_url}/oid/200000000/canvas/200000005",
+      "#{base_url}/oid/200000000/canvas/200000004"
     ]
+
+    # Universal Viewer resolves a Range's items by matching ids against the Canvases in the manifest, so every canvas
+    # id referenced from `structures` must appear verbatim in `items`. A mismatch (e.g. a hardcoded base url that
+    # disagrees with IIIF_MANIFESTS_BASE_URL) renders a structure that looks correct but cannot be navigated.
+    manifest_canvas_ids = iiif_manifest['items'].map { |canvas| canvas['id'] }
+    structure_canvas_ids = (first_folder_canvases + second_folder_canvases).map { |canvas| canvas['id'] }
+    expect(manifest_canvas_ids).to include(*structure_canvas_ids)
   ensure
     expected_oids&.each do |oid|
       File.delete(access_primary_path(oid)) if File.exist?(access_primary_path(oid))

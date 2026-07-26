@@ -11,8 +11,10 @@ class IiifPresentationV3
     @image_base_url ||= (ENV["IIIF_IMAGE_BASE_URL"] || "http://localhost:8182/iiif")
   end
 
+  # Shared with IiifRangeBuilder so the canvas ids in `items` and the canvas ids stored on
+  # StructureCanvas records always agree; Universal Viewer matches ranges to canvases by id.
   def manifest_base_url
-    @manifest_base_url ||= (ENV["IIIF_MANIFESTS_BASE_URL"] || "http://localhost/manifests")
+    @manifest_base_url ||= IiifRangeBuilder.manifest_base_url
   end
 
   def pdf_base_url
