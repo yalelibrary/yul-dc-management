@@ -374,15 +374,31 @@ class IiifPresentationV3
     structures.concat(add_child_structures(root_structures, parents_to_children))
   end
 
+  # UV matches a Range's Canvas ids against the ids in `items` with a strict string comparison
+  # (Manifesto#getCanvasIndexById), so build them the same way add_canvases_to_manifest does
+  # rather than trusting resource_id, which is frozen at whatever it was when the record was saved.
   def add_child_structures(structures, parents_to_children)
-    structures = structures&.map do |structure|
+    structures = structures&.filter_map do |structure|
+      type = structure.type.gsub("Structure", "")
+      # a Canvas whose child has left the parent has no counterpart in `items`
+      next if type == "Canvas" && !manifest_child_oids.include?(structure.child_object_oid)
+
       children = add_child_structures(parents_to_children[structure.id], parents_to_children)
-      r = { "type" => structure.type.gsub("Structure", ""), "id" => structure.resource_id }
+      r = { "type" => type, "id" => structure_resource_id(structure, type) }
       r["items"] = children if children && !children.empty?
-      r["label"] = { "en" => [structure.label] } if r["type"] == "Range"
+      r["label"] = { "en" => [structure.label] } if type == "Range"
       r
     end
     structures || []
+  end
+
+  def structure_resource_id(structure, type)
+    return structure.resource_id unless type == "Canvas"
+    File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{structure.child_object_oid}")
+  end
+
+  def manifest_child_oids
+    @manifest_child_oids ||= parent_object.child_objects.map(&:oid).to_set
   end
 
   def add_metadata_to_canvas(canvas, child)
