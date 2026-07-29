@@ -42,15 +42,14 @@ RSpec.describe RecreateChildOidPtiffsJob, type: :job, prep_metadata_sources: tru
     end
     it 'succeeds if the user has the udpate permission' do
       user.add_role(:editor, admin_set)
-      expect(GoodJob::Job.where(queue_name: 'ptiff').count).to eq(0)
       recreate_job = described_class.perform_later(batch_process)
       expect(recreate_job.instance_variable_get(:@successfully_enqueued)).to be true
     end
     it 'fails if the user does not have the udpate permission' do
       user.remove_role(:editor, admin_set) if user.has_role?(:editor, admin_set)
-      expect(GoodJob::Job.where(queue_name: 'ptiff').count).to eq(0)
-      recreate_child_oid_ptiffs_job.perform(batch_process)
-      expect(GoodJob::Job.where(queue_name: 'ptiff').count).to eq(0)
+      expect {
+        recreate_child_oid_ptiffs_job.perform(batch_process)
+      }.not_to change { GoodJob::Job.where(queue_name: 'ptiff').count }
     end
     # TODO: revert back to .once instead of count: 2 once need for preservica logging is no more
     it "with recreate batch, will force ptiff creation" do
