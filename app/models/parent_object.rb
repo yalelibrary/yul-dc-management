@@ -165,6 +165,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         cleanup_child_artifacts(invalid_child_hashes)
         upsert_child_objects(valid_child_hashes) unless valid_child_hashes.empty?
         if preservica_folder_architecture && !valid_child_hashes.empty?
+          IiifRangeBuilder.new.destroy_existing_structure_by_parent_oid(oid)
           preservica_copy_canvases_to_range(valid_child_hashes)
           preservica_add_structure_to_manifest(valid_child_hashes)
         end
