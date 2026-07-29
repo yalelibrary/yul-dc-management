@@ -374,6 +374,8 @@ class IiifPresentationV3
     structures.concat(add_child_structures(root_structures, parents_to_children))
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def add_child_structures(structures, parents_to_children)
     structures = structures&.filter_map do |structure|
       type = structure.type.gsub("Structure", "")
@@ -387,6 +389,8 @@ class IiifPresentationV3
     end
     structures || []
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def structure_resource_id(structure, type)
     return structure.resource_id unless type == "Canvas"
