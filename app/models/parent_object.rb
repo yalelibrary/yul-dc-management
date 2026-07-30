@@ -253,7 +253,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/MethodLength
   def preservica_copy_canvases_to_range(child_hashes)
     child_hashes.each do |child_hash|
-      range = StructureRange.find_or_create_by!(
+      range = StructureRange.preservica_built.find_or_create_by!(
         resource_id: child_hash[:preservica_information_object_id],
         parent_object_oid: oid
       )
@@ -261,7 +261,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         label: child_hash[:preservica_folder_label],
         position: child_hash[:preservica_folder_index]
       )
-      canvas = StructureCanvas.find_or_create_by!(
+      canvas = StructureCanvas.preservica_built.find_or_create_by!(
         resource_id: IiifRangeBuilder.child_id_to_uri(child_hash[:oid], oid),
         parent_object_oid: oid,
         child_object_oid: child_hash[:oid]
@@ -279,13 +279,13 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def preservica_add_structure_to_manifest(child_hashes)
     ranges = child_hashes.filter_map do |child_hash|
-      StructureRange.find_by(
+      StructureRange.preservica_built.find_by(
         resource_id: child_hash[:preservica_information_object_id],
         parent_object_oid: oid
       )
     end.uniq
 
-    ranges.each { |range| range.update!(top_level: true) }
+    ranges.each { |range| range.update!(top_level: range.structure_id.nil?) }
   end
 
   # rubocop:disable Rails/SkipsModelValidations
@@ -320,8 +320,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Building from the children rather than from a hash of just-changed ones keeps the structure
   # complete when only a subset of children is new.
   def preservica_rebuild_structure
-    # Always wipe first so a change from a folder to a flat object clears any prior structure.
-    IiifRangeBuilder.new.destroy_existing_structure_by_parent_oid(oid)
+    placements = preservica_range_placements
+    # Only ever clear rows this flow owns; structures built in the editor are left alone. Wiping
+    # first still lets a change from a folder to a flat object drop the Preservica ranges.
+    IiifRangeBuilder.new.destroy_existing_structure_by_parent_oid(oid, source: Structure::PRESERVICA)
     return unless preservica_folder_architecture
 
     child_objects.reset
@@ -338,7 +340,25 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return if child_hashes.empty?
 
     preservica_copy_canvases_to_range(child_hashes)
+    preservica_restore_range_placements(placements)
     preservica_add_structure_to_manifest(child_hashes)
+  end
+
+  # Where the editor put each Preservica range, so a rebuild regenerates the range's label and
+  # canvases without yanking it back out of the hand-built range it was filed under.
+  def preservica_range_placements
+    StructureRange.preservica_built.where(parent_object_oid: oid).where.not(structure_id: nil)
+                  .pluck(:resource_id, :structure_id, :position)
+                  .to_h { |resource_id, structure_id, position| [resource_id, [structure_id, position]] }
+  end
+
+  def preservica_restore_range_placements(placements)
+    placements.each do |resource_id, (structure_id, position)|
+      next unless Structure.exists?(id: structure_id)
+
+      range = StructureRange.preservica_built.find_by(parent_object_oid: oid, resource_id: resource_id)
+      range&.update!(structure_id: structure_id, position: position)
+    end
   end
 
   # rubocop:disable Metrics/AbcSize

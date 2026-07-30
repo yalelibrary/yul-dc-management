@@ -101,4 +101,99 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       expect(range_canvas_ids).to eq [[canvas_uri(200_000_002), canvas_uri(200_000_001)]]
     end
   end
+
+  # Preservica owns the ranges it generates and reasserts them on every resync; the editor owns
+  # everything it built. Neither flow may clear the other's rows.
+  context 'when a structure was hand built in the structure editor' do
+    let(:hand_built) do
+      StructureRange.create!(resource_id: SecureRandom.uuid, label: 'Hand Built Section', position: 5,
+                             parent_object_oid: parent.oid, top_level: true, source: Structure::EDITOR)
+    end
+
+    def editor_save(structures)
+      builder = IiifRangeBuilder.new
+      manifest = { 'type' => 'Manifest', 'id' => "#{IiifRangeBuilder.manifest_base_url}/#{parent.oid}",
+                   'structures' => structures }
+      builder.prune_structures_for_editor_save(parent.oid, manifest)
+      builder.parse_structures(manifest) if structures.any?
+    end
+
+    def range_json(structure, items = [])
+      { 'type' => 'Range', 'id' => structure.resource_id,
+        'label' => { 'en' => [structure.label] }, 'items' => items }
+    end
+
+    def canvas_json(oid)
+      { 'type' => 'Canvas', 'id' => canvas_uri(oid) }
+    end
+
+    # An editor save destroys and recreates its own rows, so the hand built range comes back with a
+    # new primary key. Identity across a save is the resource_id, not the id.
+    def saved_hand_built
+      StructureRange.editor_built.find_by(parent_object_oid: parent.oid, resource_id: hand_built.resource_id)
+    end
+
+    def two_children
+      add_child(oid: 200_000_001, content_index: 0, order: 1)
+      add_child(oid: 200_000_002, content_index: 1, order: 2)
+    end
+
+    def preservica_range
+      StructureRange.preservica_built.find_by(parent_object_oid: parent.oid)
+    end
+
+    it 'survives a Preservica rebuild' do
+      two_children
+      hand_built
+      parent.preservica_rebuild_structure
+
+      expect(Structure.exists?(hand_built.id)).to be true
+      expect(manifest_structures.map { |r| r['label']&.[]('en')&.first }).to include('Hand Built Section')
+    end
+
+    it 'keeps its own canvases when the same child is also in a Preservica range' do
+      two_children
+      parent.preservica_rebuild_structure
+
+      editor_save([range_json(hand_built, [canvas_json(200_000_001)]),
+                   range_json(preservica_range, [canvas_json(200_000_001), canvas_json(200_000_002)])])
+
+      expect(StructureCanvas.where(parent_object_oid: parent.oid, child_object_oid: 200_000_001).count).to eq 2
+      expect(StructureCanvas.editor_built.where(child_object_oid: 200_000_001).count).to eq 1
+      expect(StructureCanvas.preservica_built.where(child_object_oid: 200_000_001).count).to eq 1
+    end
+
+    it 'does not clear Preservica rows on save, and keeps a Preservica range the editor nested' do
+      two_children
+      parent.preservica_rebuild_structure
+      nested_json = range_json(preservica_range, [canvas_json(200_000_001), canvas_json(200_000_002)])
+
+      # the editor files the Preservica range underneath the hand built one
+      editor_save([range_json(hand_built, [nested_json])])
+
+      expect(preservica_range.structure_id).to eq saved_hand_built.id
+      expect(preservica_range.structures.count).to eq 2
+
+      # a later resync regenerates the range but leaves it where the editor filed it
+      parent.preservica_rebuild_structure
+
+      expect(preservica_range.structure_id).to eq saved_hand_built.id
+      expect(preservica_range.structures.count).to eq 2
+      expect(saved_hand_built).to be_present
+    end
+
+    it 'lets the editor delete a Preservica range, and resync brings it back' do
+      two_children
+      parent.preservica_rebuild_structure
+
+      editor_save([range_json(hand_built)])
+      expect(StructureRange.preservica_built.where(parent_object_oid: parent.oid)).to be_empty
+      expect(saved_hand_built).to be_present
+
+      parent.preservica_rebuild_structure
+
+      expect(StructureRange.preservica_built.where(parent_object_oid: parent.oid).count).to eq 1
+      expect(saved_hand_built).to be_present
+    end
+  end
 end

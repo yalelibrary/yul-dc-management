@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
 class IiifRangeBuilder
-  # Fallback when IIIF_MANIFESTS_BASE_URL is unset. Must stay in sync with the manifest itself --
-  # IiifPresentationV3#manifest_base_url delegates here so the ids this class mints for ranges and
-  # canvases always match the ids IiifPresentationV3 mints for the manifest and its canvases. When
-  # they disagree, Universal Viewer cannot resolve a Range's items to the Canvases in the manifest
-  # and the range renders but is not navigable.
+  # IiifPresentationV3#manifest_base_url delegates here; if the two disagree UV cannot resolve a
+  # Range to its Canvases and the range renders but will not navigate.
   DEFAULT_BASE_URL = 'http://localhost/manifests'
 
   def self.manifest_base_url
@@ -24,6 +21,7 @@ class IiifRangeBuilder
       structures.each_with_index do |structure, index|
         top_level_range = parse_range(parent, structure, index)
         top_level_range.top_level = true
+        top_level_range.structure_id = nil
         top_level_range.save!
         results.push top_level_range
       end
@@ -39,12 +37,16 @@ class IiifRangeBuilder
 
     uri = range['id']
     id = uuid_from_uri(uri)
-    destroy_existing_structure(id)
+    reused = reuse_preservica_range(parent.oid, id, position)
+    return reused if reused
+
+    destroy_existing_structure(id, parent.oid)
     result = StructureRange.create!(
       resource_id: id,
       label: range&.[]('label')&.[]('en')&.[](0) || range['label'].to_s,
       position: position,
-      parent_object_oid: parent.oid
+      parent_object_oid: parent.oid,
+      source: Structure::EDITOR
     )
     items = range['items']
 
@@ -72,13 +74,19 @@ class IiifRangeBuilder
       label: child.label,
       position: position,
       parent_object_oid: parent.oid,
-      child_object_oid: child.oid
+      child_object_oid: child.oid,
+      source: Structure::EDITOR
     )
   end
 
-  # Range ids arrive either as a bare uuid (what IiifPresentationV3 emits today) or as a
-  # "<base>/range/<uuid>" uri (older manifests). Deliberately base-url agnostic so a manifest
-  # generated under one IIIF_MANIFESTS_BASE_URL still parses under another.
+  # Preservica owns a range's label and canvases; the editor only gets to say where it sits.
+  def reuse_preservica_range(parent_oid, resource_id, position)
+    range = StructureRange.preservica_built.find_by(parent_object_oid: parent_oid, resource_id: resource_id)
+    range&.update!(position: position)
+    range
+  end
+
+  # A bare uuid, or a "<base>/range/<uuid>" uri from an older manifest.
   def uuid_from_uri(uri)
     uri.split('/').last
   end
@@ -88,8 +96,7 @@ class IiifRangeBuilder
     ParentObject.find(parent_oid)
   end
 
-  # Manifest ids come as "<base>/<oid>" (what IiifPresentationV3 emits) or "<base>/oid/<oid>"
-  # (older manifests). The oid is the last path segment in both.
+  # Manifest ids come as "<base>/<oid>" or, in older manifests, "<base>/oid/<oid>".
   def parent_oid_from_uri(uri)
     uri.split('/').last
   end
@@ -110,11 +117,36 @@ class IiifRangeBuilder
     File.join(manifest_base_url, "oid/#{parent_oid}/canvas/#{child_oid}")
   end
 
-  def destroy_existing_structure(resource_id)
-    Structure.where(resource_id: resource_id).destroy_all
+  def destroy_existing_structure(resource_id, parent_oid)
+    Structure.editor_built.where(resource_id: resource_id, parent_object_oid: parent_oid).destroy_all
   end
 
-  def destroy_existing_structure_by_parent_oid(parent_oid)
-    Structure.where(parent_object_oid: parent_oid).destroy_all
+  def destroy_existing_structure_by_parent_oid(parent_oid, source:)
+    remove_structures(parent_oid, Structure.where(parent_object_oid: parent_oid, source: source))
+  end
+
+  # The posted tree is authoritative for presence, so a Preservica row the user dropped goes too.
+  def prune_structures_for_editor_save(parent_oid, manifest)
+    kept = Structure.preservica_built
+                    .where(parent_object_oid: parent_oid, resource_id: posted_resource_ids(manifest))
+    remove_structures(parent_oid, Structure.where(parent_object_oid: parent_oid).where.not(id: kept.select(:id)))
+  end
+
+  def posted_resource_ids(manifest, ids = [])
+    (manifest['structures'] || manifest['items'] || []).each do |node|
+      ids << (node['type'] == 'Range' ? uuid_from_uri(node['id']) : node['id'])
+      posted_resource_ids(node, ids)
+    end
+    ids
+  end
+
+  private
+
+  def remove_structures(parent_oid, removable)
+    # dependent: :destroy would take the other flow's rows down with the range they are filed under
+    Structure.where(parent_object_oid: parent_oid, structure_id: removable.select(:id))
+             .where.not(id: removable.select(:id))
+             .update_all(structure_id: nil) # rubocop:disable Rails/SkipsModelValidations
+    removable.destroy_all
   end
 end
