@@ -313,8 +313,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     new_children_data = sync_from_preservica_update_existing_children(preservica_children_hash)
     create_new_preservica_children(new_children_data) if new_children_data.present?
     self.last_preservica_update = Time.current
-    sync_from_preservica_update_all_ptiffs
     preservica_rebuild_structure
+    self.generate_manifest = true
+    sync_from_preservica_update_all_ptiffs
   end
   # rubocop:enable Lint/UnderscorePrefixedVariableName
   # rubocop:enable Layout/LineLength
