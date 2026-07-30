@@ -164,11 +164,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         invalid_child_hashes = unique_child_hashes - valid_child_hashes
         cleanup_child_artifacts(invalid_child_hashes)
         upsert_child_objects(valid_child_hashes) unless valid_child_hashes.empty?
-        if preservica_folder_architecture && !valid_child_hashes.empty?
-          IiifRangeBuilder.new.destroy_existing_structure_by_parent_oid(oid)
-          preservica_copy_canvases_to_range(valid_child_hashes)
-          preservica_add_structure_to_manifest(valid_child_hashes)
-        end
+        preservica_rebuild_structure
         self.last_preservica_update = Time.current
       end
     else
@@ -320,13 +316,9 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Lint/UnderscorePrefixedVariableName
   # rubocop:enable Layout/LineLength
 
-  # Rebuilds the entire IIIF structure (ranges/canvases) from the current child objects.
-  # Called after a resync so added/removed/reordered children are reflected and any
-  # orphaned structure records are cleared. Wiping first mirrors ManifestController#save.
-  #
-  # The child hash only carries the keys consumed by preservica_copy_canvases_to_range and
-  # preservica_add_structure_to_manifest (the folder/canvas structure fields, oid, and caption);
-  # the child objects themselves are already persisted by this point, so no other fields are needed.
+  # Rebuilds the IIIF structure from the persisted child objects, for both ingest and resync.
+  # Building from the children rather than from a hash of just-changed ones keeps the structure
+  # complete when only a subset of children is new.
   def preservica_rebuild_structure
     # Always wipe first so a change from a folder to a flat object clears any prior structure.
     IiifRangeBuilder.new.destroy_existing_structure_by_parent_oid(oid)
