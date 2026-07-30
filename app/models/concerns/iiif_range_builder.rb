@@ -29,60 +29,52 @@ class IiifRangeBuilder
     results
   end
 
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
   def parse_range(parent, range, position)
     raise 'Not a Range' unless range['type'] == 'Range'
 
-    uri = range['id']
-    id = uuid_from_uri(uri)
-    reused = reuse_preservica_range(parent.oid, id, position)
-    return reused if reused
-
-    destroy_existing_structure(id, parent.oid)
-    result = StructureRange.create!(
-      resource_id: id,
-      label: range&.[]('label')&.[]('en')&.[](0) || range['label'].to_s,
-      position: position,
-      parent_object_oid: parent.oid,
-      source: Structure::EDITOR
-    )
-    items = range['items']
-
-    items.each_with_index do |item, index|
-      if item['type'] == 'Range'
-        result.structures << parse_range(parent, item, index)
-      elsif item['type'] == 'Canvas'
-        result.structures << parse_canvas(parent, item, index)
-      else
-        raise 'Unexpected type for item in Range'
-      end
-    end
-    result.save!
+    id = uuid_from_uri(range['id'])
+    label = range&.[]('label')&.[]('en')&.[](0) || range['label'].to_s
+    result = reuse_preservica_range(parent.oid, id, position, label) ||
+             create_editor_range(parent, id, label, position)
+    parse_range_items(parent, range, result)
     result
   end
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
 
-  def parse_canvas(parent, item, position)
-    child_id = child_id_from_uri(item['id'], parent.id)
-    child = ChildObject.find(child_id)
-    StructureCanvas.create!(
-      resource_id: item['id'],
-      label: child.label,
-      position: position,
-      parent_object_oid: parent.oid,
-      child_object_oid: child.oid,
-      source: Structure::EDITOR
-    )
+  def create_editor_range(parent, id, label, position)
+    destroy_existing_structure(id, parent.oid)
+    StructureRange.create!(resource_id: id, label: label, position: position,
+                           parent_object_oid: parent.oid, source: Structure::EDITOR)
   end
 
-  # Preservica owns a range's label and canvases; the editor only gets to say where it sits.
-  def reuse_preservica_range(parent_oid, resource_id, position)
+  # Canvases are rebuilt from the post so an add, a removal or a reorder all take effect. They
+  # inherit the range's source: inside a Preservica range they must stay Preservica owned, or the
+  # next rebuild would orphan them to the top of the tree instead of clearing them.
+  def parse_range_items(parent, range, result)
+    result.structures.where(type: 'StructureCanvas').destroy_all
+    (range['items'] || []).each_with_index do |item, index|
+      raise 'Unexpected type for item in Range' unless %w[Range Canvas].include?(item['type'])
+
+      result.structures << if item['type'] == 'Range'
+                             parse_range(parent, item, index)
+                           else
+                             parse_canvas(parent, item, index, result.source)
+                           end
+    end
+    result.save!
+  end
+
+  def parse_canvas(parent, item, position, source = Structure::EDITOR)
+    child_id = child_id_from_uri(item['id'], parent.id)
+    child = ChildObject.find(child_id)
+    StructureCanvas.create!(resource_id: item['id'], label: child.label, position: position,
+                            parent_object_oid: parent.oid, child_object_oid: child.oid, source: source)
+  end
+
+  # An edit to a Preservica range sticks until the next resync, which reasserts Preservica's own
+  # label. The row stays Preservica owned so that rebuild still claims it.
+  def reuse_preservica_range(parent_oid, resource_id, position, label)
     range = StructureRange.preservica_built.find_by(parent_object_oid: parent_oid, resource_id: resource_id)
-    range&.update!(position: position)
+    range&.update!(position: position, label: label)
     range
   end
 

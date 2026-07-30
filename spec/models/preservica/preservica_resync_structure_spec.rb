@@ -182,6 +182,54 @@ RSpec.describe ParentObject, type: :model, prep_metadata_sources: true, prep_adm
       expect(saved_hand_built).to be_present
     end
 
+    it 'keeps a Preservica range renamed in the editor until the next resync' do
+      two_children
+      parent.preservica_rebuild_structure
+      preservica_label = preservica_range.label
+      renamed = range_json(preservica_range, [canvas_json(200_000_001), canvas_json(200_000_002)])
+                .merge('label' => { 'en' => ['A Better Name'] })
+
+      editor_save([renamed])
+
+      expect(preservica_range.label).to eq 'A Better Name'
+      expect(preservica_range.source).to eq Structure::PRESERVICA
+
+      parent.preservica_rebuild_structure
+
+      expect(preservica_range.label).to eq preservica_label
+      expect(preservica_range.structures.count).to eq 2
+      expect(StructureRange.where(parent_object_oid: parent.oid).count).to eq 1
+    end
+
+    it 'keeps canvases removed from a Preservica range in the editor until the next resync' do
+      two_children
+      parent.preservica_rebuild_structure
+
+      editor_save([range_json(preservica_range, [canvas_json(200_000_002)])])
+
+      expect(preservica_range.structures.count).to eq 1
+      expect(preservica_range.structures.first.child_object_oid).to eq 200_000_002
+
+      parent.preservica_rebuild_structure
+
+      expect(preservica_range.structures.map(&:child_object_oid)).to eq [200_000_001, 200_000_002]
+    end
+
+    it 'keeps canvases reordered in a Preservica range until the next resync' do
+      two_children
+      parent.preservica_rebuild_structure
+
+      editor_save([range_json(preservica_range, [canvas_json(200_000_002), canvas_json(200_000_001)])])
+
+      reordered = preservica_range.structures.order(:position).map(&:child_object_oid)
+      expect(reordered).to eq [200_000_002, 200_000_001]
+      expect(preservica_range.structures.pluck(:source).uniq).to eq [Structure::PRESERVICA]
+
+      parent.preservica_rebuild_structure
+
+      expect(preservica_range.structures.order(:position).map(&:child_object_oid)).to eq [200_000_001, 200_000_002]
+    end
+
     it 'lets the editor delete a Preservica range, and resync brings it back' do
       two_children
       parent.preservica_rebuild_structure
