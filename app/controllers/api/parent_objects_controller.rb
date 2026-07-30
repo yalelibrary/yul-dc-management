@@ -20,7 +20,7 @@ class Api::ParentObjectsController < ApplicationController
 
   def parent_visibility_valid(parent_object)
     render(json: { "title": "Parent Object is restricted." }, status: 403) && (return false) unless
-    parent_object.visibility == "Public" || parent_object.visibility == "Yale Community Only"
+    parent_object.visibility == "Public" || parent_object.visibility == "Yale Community Only" || parent_object.visibility == "Open with Permission"
     true
   end
 
