@@ -75,6 +75,8 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       File.delete("spec/fixtures/images/access_primaries/00/06/20/00/00/00/200000006.tif") if File.exist?("spec/fixtures/images/access_primaries/00/06/20/00/00/00/200000006.tif")
 
       allow(S3Service).to receive(:s3_exists?).and_return(false)
+      allow(GenerateManifestJob).to receive(:perform_later).and_call_original
+
       expect(File.exist?("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif")).to eq false
       expect(File.exist?("spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif")).to eq false
       expect(File.exist?("spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif")).to eq false
@@ -115,6 +117,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
       expect(po_first.iiif_manifest['items'][1]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000002"
       expect(po_first.iiif_manifest['items'][2]['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000004"
       expect(File.exist?("spec/fixtures/images/access_primaries/00/04/20/00/00/00/200000004.tif")).to eq true
+      expect(GenerateManifestJob).to have_received(:perform_later).with(po_first, anything, anything).twice
       File.delete("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif")
       File.delete("spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif")
       File.delete("spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif")
