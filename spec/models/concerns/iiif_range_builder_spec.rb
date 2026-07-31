@@ -83,8 +83,9 @@ RSpec.describe IiifRangeBuilder, type: :model, prep_metadata_sources: true, prep
       manifest = JSON.parse(json)
       structures = rb.parse_structures(manifest)
       json = JSON.pretty_generate(structures.first.to_iiif)
-      expect(json).to match("\"id\": \"https://collections.library.yale.edu/manifests/oid/#{parent.oid}/canvas/#{child.oid}\"")
-      expect(json).to match("\"id\": \"https://collections.library.yale.edu/manifests/range/r0\"")
+      base_url = IiifRangeBuilder.manifest_base_url
+      expect(json).to match("\"id\": \"#{base_url}/oid/#{parent.oid}/canvas/#{child.oid}\"")
+      expect(json).to match("\"id\": \"#{base_url}/range/r0\"")
     end
   end
 end

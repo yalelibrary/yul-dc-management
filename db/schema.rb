@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_05_13_225724) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_30_153000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -95,6 +95,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_05_13_225724) do
     t.string "make"
     t.string "model"
     t.jsonb "image_metadata"
+    t.string "preservica_information_object_id"
+    t.string "preservica_folder_label"
+    t.integer "preservica_folder_index"
+    t.integer "preservica_content_object_index"
     t.index ["caption"], name: "index_child_objects_on_caption"
     t.index ["label"], name: "index_child_objects_on_label"
     t.index ["oid"], name: "index_child_objects_on_oid", unique: true
@@ -436,8 +440,11 @@ ActiveRecord::Schema[7.2].define(version: 2026_05_13_225724) do
     t.integer "child_object_oid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "source", default: "editor", null: false
     t.index ["id"], name: "index_structures_on_id", unique: true
-    t.index ["resource_id"], name: "index_structures_on_resource_id", unique: true
+    t.index ["parent_object_oid", "resource_id"], name: "index_structure_ranges_on_parent_and_resource_id", unique: true, where: "((type)::text = 'StructureRange'::text)"
+    t.index ["parent_object_oid", "source"], name: "index_structures_on_parent_object_oid_and_source"
+    t.index ["structure_id", "resource_id"], name: "index_structure_canvases_on_range_and_resource_id", unique: true, where: "((type)::text = 'StructureCanvas'::text)"
   end
 
   create_table "terms_agreements", force: :cascade do |t|

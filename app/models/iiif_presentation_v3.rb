@@ -11,8 +11,10 @@ class IiifPresentationV3
     @image_base_url ||= (ENV["IIIF_IMAGE_BASE_URL"] || "http://localhost:8182/iiif")
   end
 
+  # Shared with IiifRangeBuilder so the canvas ids in `items` and the canvas ids stored on
+  # StructureCanvas records always agree; Universal Viewer matches ranges to canvases by id.
   def manifest_base_url
-    @manifest_base_url ||= (ENV["IIIF_MANIFESTS_BASE_URL"] || "http://localhost/manifests")
+    @manifest_base_url ||= IiifRangeBuilder.manifest_base_url
   end
 
   def pdf_base_url
@@ -56,7 +58,7 @@ class IiifPresentationV3
     return @manifest if @manifest
     @manifest = {}
     @manifest["@context"] = %w[http://iiif.io/api/search/1/context.json http://iiif.io/api/extension/navplace/context.json http://iiif.io/api/presentation/3/context.json]
-    @manifest['id'] = File.join((ENV['IIIF_MANIFESTS_BASE_URL']).to_s, oid.to_s)
+    @manifest['id'] = File.join(manifest_base_url.to_s, oid.to_s)
     @manifest['type'] = "Manifest"
     manifest_descriptive_properties
     @manifest['provider'] = [provider]
@@ -372,15 +374,31 @@ class IiifPresentationV3
     structures.concat(add_child_structures(root_structures, parents_to_children))
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def add_child_structures(structures, parents_to_children)
-    structures = structures&.map do |structure|
+    structures = structures&.filter_map do |structure|
+      type = structure.type.gsub("Structure", "")
+      next if type == "Canvas" && !manifest_child_oids.include?(structure.child_object_oid)
+
       children = add_child_structures(parents_to_children[structure.id], parents_to_children)
-      r = { "type": structure.type.gsub("Structure", ""), "id": structure.resource_id }
+      r = { "type" => type, "id" => structure_resource_id(structure, type) }
       r["items"] = children if children && !children.empty?
-      r["label"] = { "en": [structure.label] } if r[:type] == "Range"
+      r["label"] = { "en" => [structure.label] } if type == "Range"
       r
     end
     structures || []
+  end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
+
+  def structure_resource_id(structure, type)
+    return structure.resource_id unless type == "Canvas"
+    File.join(manifest_base_url.to_s, "oid/#{oid}/canvas/#{structure.child_object_oid}")
+  end
+
+  def manifest_child_oids
+    @manifest_child_oids ||= parent_object.child_objects.map(&:oid).to_set
   end
 
   def add_metadata_to_canvas(canvas, child)

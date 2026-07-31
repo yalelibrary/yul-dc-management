@@ -107,6 +107,19 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expect(File.exist?("spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif")).to eq true
     expect(File.exist?("spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif")).to eq true
     expect(co_first.ptiff_conversion_at.present?).to be_truthy
+    iiif_manifest = po_first.iiif_manifest
+    # manifest should exist
+    expect(iiif_manifest).not_to be_nil
+    expect(iiif_manifest['id']).to eq "http://localhost/manifests/200000000"
+    expect(iiif_manifest['type']).to eq "Manifest"
+    expect(iiif_manifest['label']['none'].first).to eq "The gold pen used by Lincoln to sign the Emancipation Proclamation in the Executive Mansion, Washington, D.C., 1863 Jan 1"
+    # should have correct sequences
+    expect(iiif_manifest['items'].count).to eq 3
+    expect(iiif_manifest['items'].first['id']).to eq "http://localhost/manifests/oid/200000000/canvas/200000001"
+    expect(iiif_manifest['items'].first['items'].first['items'].first['body']['id']).to eq "http://localhost:8182/iiif/2/200000001/full/full/0/default.jpg"
+    # should have correct structures and ranges
+    # when import pattern one, with no folder architecture, the behavior should be that no structure or range are created
+    expect(iiif_manifest['structures']).to eq []
     File.delete("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif") if File.exist?("spec/fixtures/images/access_primaries/00/01/20/00/00/00/200000001.tif")
     File.delete("spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif") if File.exist?("spec/fixtures/images/access_primaries/00/02/20/00/00/00/200000002.tif")
     File.delete("spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif") if File.exist?("spec/fixtures/images/access_primaries/00/03/20/00/00/00/200000003.tif")

@@ -21,7 +21,7 @@ class ManifestController < ApplicationController
     if @token_ability.can? :update, @parent_object
       manifest = JSON.parse(request.raw_post)
       builder = IiifRangeBuilder.new
-      builder.destroy_existing_structure_by_parent_oid(@parent_object.oid)
+      builder.prune_structures_for_editor_save(@parent_object.oid, manifest)
       IiifRangeBuilder.new.parse_structures manifest if manifest["structures"] && !manifest["structures"].empty?
       GenerateManifestJob.perform_later(@parent_object, nil, nil)
       respond_to do |format|

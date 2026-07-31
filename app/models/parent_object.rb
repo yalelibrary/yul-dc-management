@@ -25,6 +25,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   attr_accessor :metadata_update
   attr_accessor :current_batch_process
   attr_accessor :current_batch_connection
+  attr_accessor :preservica_folder_architecture
   self.primary_key = 'oid'
   after_save :setup_metadata_job
   # after_update :solr_index_job # we index from the fetch job on create
@@ -163,6 +164,7 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         invalid_child_hashes = unique_child_hashes - valid_child_hashes
         cleanup_child_artifacts(invalid_child_hashes)
         upsert_child_objects(valid_child_hashes) unless valid_child_hashes.empty?
+        preservica_rebuild_structure
         self.last_preservica_update = Time.current
       end
     else
@@ -209,7 +211,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:disable Metrics/MethodLength
   def array_of_child_hashes_from_preservica
     check_for_sha512_checksum
-    PreservicaImageService.new(preservica_uri, admin_set.key).image_list(preservica_representation_type).map.with_index(1) do |child_hash, index|
+    service = PreservicaImageService.new(preservica_uri, admin_set.key)
+    images = service.image_list(preservica_representation_type)
+    self.preservica_folder_architecture = service.folder_architecture?
+    images.map.with_index(1) do |child_hash, index|
       co_oid = ChildObject.find_by(parent_object_oid: oid, sha512_checksum: child_hash[:checksum])&.oid.presence || OidMinterService.generate_oids(1)[0]
       preservica_copy_to_access(child_hash, co_oid)
       child_hash.delete(:bitstream)
@@ -245,6 +250,44 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
 
+  # rubocop:disable Metrics/MethodLength
+  def preservica_copy_canvases_to_range(child_hashes)
+    child_hashes.each do |child_hash|
+      range = StructureRange.preservica_built.find_or_create_by!(
+        resource_id: child_hash[:preservica_information_object_id],
+        parent_object_oid: oid
+      )
+      range.update!(
+        label: child_hash[:preservica_folder_label],
+        position: child_hash[:preservica_folder_index]
+      )
+      canvas = StructureCanvas.preservica_built.find_or_create_by!(
+        resource_id: IiifRangeBuilder.child_id_to_uri(child_hash[:oid], oid),
+        parent_object_oid: oid,
+        child_object_oid: child_hash[:oid]
+      )
+      canvas.update!(
+        label: child_hash[:caption],
+        position: child_hash[:preservica_content_object_index],
+        structure_id: range.id
+      )
+      range.structures << canvas
+      range.save!
+    end
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  def preservica_add_structure_to_manifest(child_hashes)
+    ranges = child_hashes.filter_map do |child_hash|
+      StructureRange.preservica_built.find_by(
+        resource_id: child_hash[:preservica_information_object_id],
+        parent_object_oid: oid
+      )
+    end.uniq
+
+    ranges.each { |range| range.update!(top_level: range.structure_id.nil?) }
+  end
+
   # rubocop:disable Rails/SkipsModelValidations
   def upsert_preservica_ingest_child_objects(preservica_ingest_hash)
     PreservicaIngest.insert_all(preservica_ingest_hash)
@@ -266,11 +309,60 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     new_children_data = sync_from_preservica_update_existing_children(preservica_children_hash)
     create_new_preservica_children(new_children_data) if new_children_data.present?
     self.last_preservica_update = Time.current
+    preservica_rebuild_structure
+    self.generate_manifest = true
     sync_from_preservica_update_all_ptiffs
   end
   # rubocop:enable Lint/UnderscorePrefixedVariableName
   # rubocop:enable Layout/LineLength
 
+  # Rebuilds the IIIF structure from the persisted child objects, for both ingest and resync.
+  # Building from the children rather than from a hash of just-changed ones keeps the structure
+  # complete when only a subset of children is new.
+  def preservica_rebuild_structure
+    placements = preservica_range_placements
+    # Only ever clear rows this flow owns; structures built in the editor are left alone. Wiping
+    # first still lets a change from a folder to a flat object drop the Preservica ranges.
+    IiifRangeBuilder.new.destroy_existing_structure_by_parent_oid(oid, source: Structure::PRESERVICA)
+    return unless preservica_folder_architecture
+
+    child_objects.reset
+    child_hashes = child_objects.order(:order).filter_map do |co|
+      next if co.preservica_information_object_id.blank?
+
+      { oid: co.oid,
+        caption: co.caption,
+        preservica_information_object_id: co.preservica_information_object_id,
+        preservica_folder_label: co.preservica_folder_label,
+        preservica_folder_index: co.preservica_folder_index,
+        preservica_content_object_index: co.preservica_content_object_index }
+    end
+    return if child_hashes.empty?
+
+    preservica_copy_canvases_to_range(child_hashes)
+    preservica_restore_range_placements(placements)
+    preservica_add_structure_to_manifest(child_hashes)
+  end
+
+  # Where the editor put each Preservica range, so a rebuild regenerates the range's label and
+  # canvases without yanking it back out of the hand-built range it was filed under.
+  def preservica_range_placements
+    StructureRange.preservica_built.where(parent_object_oid: oid).where.not(structure_id: nil)
+                  .pluck(:resource_id, :structure_id, :position)
+                  .to_h { |resource_id, structure_id, position| [resource_id, [structure_id, position]] }
+  end
+
+  def preservica_restore_range_placements(placements)
+    placements.each do |resource_id, (structure_id, position)|
+      next unless Structure.exists?(id: structure_id)
+
+      range = StructureRange.preservica_built.find_by(parent_object_oid: oid, resource_id: resource_id)
+      range&.update!(structure_id: structure_id, position: position)
+    end
+  end
+
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def sync_from_preservica_update_existing_children(preservica_children_hash)
     new_children = []
     preservica_children_hash.each_value do |value|
@@ -285,12 +377,18 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
       co.preservica_generation_uri = value[:generation_uri]
       co.preservica_bitstream_uri = value[:bitstream_uri]
       co.sha512_checksum = value[:checksum]&.downcase
+      co.preservica_information_object_id = value[:preservica_information_object_id]
+      co.preservica_folder_label = value[:preservica_folder_label]
+      co.preservica_folder_index = value[:preservica_folder_index]
+      co.preservica_content_object_index = value[:preservica_content_object_index]
       co.last_preservica_update = Time.current
       preservica_copy_to_access(value, co.oid)
       co.save!
     end
     new_children
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   # rubocop:disable Rails/SkipsModelValidations
   # rubocop:disable Metrics/MethodLength
@@ -308,6 +406,10 @@ class ParentObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
         preservica_bitstream_uri: child_data[:bitstream_uri],
         sha512_checksum: child_data[:checksum]&.downcase,
         caption: child_data[:bitstream]&.filename,
+        preservica_information_object_id: child_data[:preservica_information_object_id],
+        preservica_folder_label: child_data[:preservica_folder_label],
+        preservica_folder_index: child_data[:preservica_folder_index],
+        preservica_content_object_index: child_data[:preservica_content_object_index],
         last_preservica_update: Time.current
       }
     end

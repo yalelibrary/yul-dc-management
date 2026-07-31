@@ -27,12 +27,20 @@ class PreservicaImageService
     @admin_set_key = admin_set_key
   end
 
+  # True once image_list has run if the object has a real folder architecture, i.e. at least one
+  # information object groups more than one image. Flat objects (each information object holding a
+  # single image) are not considered folders and get no IIIF structure.
+  def folder_architecture?
+    @folder_architecture == true
+  end
+
   # rubocop:disable Metrics/MethodLength
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def image_list(representation_type)
     @images = []
+    @folder_architecture = false
     begin
       if @pattern == :pattern_one
         structural_object = Preservica::StructuralObject.where(admin_set_key: @admin_set_key, id: (@uri.split('/')[-1]).to_s)
@@ -84,7 +92,7 @@ class PreservicaImageService
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
   def process_information_objects(representation_type)
-    @information_objects.each do |information_object|
+    @information_objects.each_with_index do |information_object, information_object_index|
       representation = information_object.fetch_by_representation_type(representation_type)[0]
       raise PreservicaImageServiceError.new("No matching representation found in Preservica", @uri.to_s) if representation.nil?
       content_objects = representation.content_objects
@@ -104,8 +112,13 @@ class PreservicaImageService
                                        preservica_bitstream_uri: tif_bitstream.uri,
                                        sha512_checksum: tif_bitstream.sha512_checksum,
                                        bitstream: tif_bitstream,
-                                       caption: tif_bitstream.filename }
+                                       caption: tif_bitstream.filename,
+                                       preservica_information_object_id: information_object.id,
+                                       preservica_folder_label: information_object.title.to_s,
+                                       preservica_folder_index: information_object_index,
+                                       preservica_content_object_index: index }
       end
+      @folder_architecture = true if information_object_images.size > 1
       @images.concat(information_object_images.sort_by { |image| image[:caption].to_s })
     end
   end

@@ -131,6 +131,48 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expected_oids.each do |oid|
       expect(File.exist?(access_primary_path(oid))).to eq true
     end
+    # when import pattern one, with a folder architecture, the v3 structures should contain one top-level Range per
+    # folder (information object) directly (no wrapper range, matching the structure-editor format), labeled with the
+    # folder title, whose items are the Canvases for the child objects in that folder.
+    # This fixture has two information objects (f0268 with three images, f0269 with two), so there are two ranges.
+    iiif_manifest = parent_object.iiif_manifest
+    ranges = iiif_manifest['structures']
+
+    expect(ranges.count).to eq 2
+    expect(ranges.map { |range| range['type'] }).to all(eq("Range"))
+
+    # ranges are ordered by folder index and labeled with the information object title
+    # range ids are the bare information-object UUID, matching the structure editor (no /range/ URI wrapper)
+    expect(ranges.first['label']).to eq({ "en" => ["[Preservica] ms_0664_s02_b016_f0268"] })
+    expect(ranges.first['id']).to eq "aaaa0001-0000-4000-8000-000000000001"
+    expect(ranges.second['label']).to eq({ "en" => ["[Preservica] ms_0664_s02_b016_f0269"] })
+    expect(ranges.second['id']).to eq "aaaa0002-0000-4000-8000-000000000002"
+
+    # each Range's items are the Canvases for the child objects in that folder, ordered the same way they appear in the
+    # Preservica folder (preservica_content_object_index), which is independent of the caption-based page ordering. The
+    # oids therefore are not sequential: the page order is caption-sorted while the range preserves the Preservica order.
+    base_url = IiifRangeBuilder.manifest_base_url
+    first_folder_canvases = ranges.first['items']
+    expect(first_folder_canvases.map { |canvas| canvas['type'] }).to all(eq("Canvas"))
+    expect(first_folder_canvases.map { |canvas| canvas['id'] }).to eq [
+      "#{base_url}/oid/200000000/canvas/200000002",
+      "#{base_url}/oid/200000000/canvas/200000001",
+      "#{base_url}/oid/200000000/canvas/200000003"
+    ]
+
+    second_folder_canvases = ranges.second['items']
+    expect(second_folder_canvases.map { |canvas| canvas['type'] }).to all(eq("Canvas"))
+    expect(second_folder_canvases.map { |canvas| canvas['id'] }).to eq [
+      "#{base_url}/oid/200000000/canvas/200000005",
+      "#{base_url}/oid/200000000/canvas/200000004"
+    ]
+
+    # Universal Viewer resolves a Range's items by matching ids against the Canvases in the manifest, so every canvas
+    # id referenced from `structures` must appear verbatim in `items`. A mismatch (e.g. a hardcoded base url that
+    # disagrees with IIIF_MANIFESTS_BASE_URL) renders a structure that looks correct but cannot be navigated.
+    manifest_canvas_ids = iiif_manifest['items'].map { |canvas| canvas['id'] }
+    structure_canvas_ids = (first_folder_canvases + second_folder_canvases).map { |canvas| canvas['id'] }
+    expect(manifest_canvas_ids).to include(*structure_canvas_ids)
   ensure
     expected_oids&.each do |oid|
       File.delete(access_primary_path(oid)) if File.exist?(access_primary_path(oid))
