@@ -49,8 +49,14 @@ Devise.setup do |config|
   # config.authentication_keys = [:email]
   require "omniauth-cas"
 
+  cas_host = if Rails.env.development? || Rails.env.test?
+               'secure-tst.its.yale.edu'
+             else
+               'secure.its.yale.edu'
+             end
+
   config.omniauth :cas,
-                  host: 'secure.its.yale.edu',
+                  host: cas_host,
                   login_url: '/cas/login',
                   service_validate_url: '/cas/serviceValidate',
                   disable_ssl_verification: true
