@@ -8,26 +8,30 @@ COPY ops/nginx.sh /etc/service/nginx/run
 RUN chmod +x /etc/service/nginx/run
 RUN rm -f /etc/service/nginx/down
 # these are used for image and pdf processing, and may not be required for an image not running delayed jobs
-RUN apt-get update --allow-releaseinfo-change && apt-get install -y wget libtiff-tools liblcms2-dev libexif-dev libmagickcore-dev imagemagick libexpat-dev libtiff5-dev libgsf-1-dev libjpeg-turbo8-dev vim openjdk-11-jre-headless exiftool \
+RUN apt-get update --allow-releaseinfo-change && apt-get install -y wget libtiff-tools liblcms2-dev libexif-dev libmagickcore-dev imagemagick libexpat-dev libtiff5-dev libarchive-dev libgsf-1-dev libjpeg-turbo8-dev vim openjdk-11-jre-headless exiftool \
   &&  apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY ops/policy.xml /etc/ImageMagick-6/policy.xml
 
-# Compile and install vips 8.10.6
-# TODO building new packages is broken in this version of 20.04, once an update is released
-# the faster pre built package version can be brought back
+# Install meson and ninja for building vips
+RUN apt-get update --allow-releaseinfo-change && apt-get install -y python3-pip
+RUN pip3 install meson ninja --break-system-packages
+
+# Compile and install vips 8.18.5
+# add 'meson test' after 'meson compile' to run tests 
 COPY --chown=app ops/vips $APP_HOME/ops/vips
 RUN bash -l -c " \
-  wget https://github.com/libvips/libvips/releases/download/v8.10.6/vips-8.10.6.tar.gz && \
-  tar zxfv vips-8.10.6.tar.gz && \
-  cd vips-8.10.6 && \
-  ./configure && \
-  make && \
-  make install && \
-  ldconfig"
-# COPY vips_8.10.2-1_amd64.deb $APP_HOME
-# RUN dpkg -i ./vips_8.10.2-1_amd64.deb
+  wget https://github.com/libvips/libvips/archive/refs/tags/v8.18.5.tar.gz && \
+  tar zxfv v8.18.5.tar.gz && \
+  cd libvips-8.18.5 && \
+  meson setup build --prefix /usr/local && \
+  cd build && \
+  meson compile && \
+  meson install && \
+  ldconfig && \
+  cd ../.. && \
+  rm -rf libvips-8.18.5 v8.18.5.tar.gz"
 # RUN vips --version
 
 COPY jpegs2pdf-1.3.jar $APP_HOME
