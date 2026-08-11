@@ -15,7 +15,7 @@ gem 'coderay', '~> 1.1', '>= 1.1.3'
 gem 'concurrent-ruby', '1.3.7'
 gem 'devise', '~> 5.0'
 gem 'github_changelog_generator', '~> 1.16'
-gem 'honeybadger', '~> 4.0'
+gem 'honeybadger', '~> 5.29'
 gem 'http', '~> 5.1'
 gem 'iiif-presentation', '~> 1.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

@@ -235,7 +235,9 @@ GEM
       thor (>= 1.0.0)
     hashdiff (1.1.0)
     hashie (5.0.0)
-    honeybadger (4.12.2)
+    honeybadger (5.30.0)
+      logger
+      ostruct
     http (5.1.1)
       addressable (~> 2.8)
       http-cookie (~> 1.0)
@@ -337,6 +339,7 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
+    ostruct (0.6.3)
     paper_trail (15.2.0)
       activerecord (>= 6.1)
       request_store (~> 1.4)
@@ -585,7 +588,7 @@ DEPENDENCIES
   ffaker (~> 2.23)
   github_changelog_generator (~> 1.16)
   good_job (~> 4.18.2)
-  honeybadger (~> 4.0)
+  honeybadger (~> 5.29)
   http (~> 5.1)
   iiif-presentation (~> 1.0)
   jbuilder (~> 2.7)
