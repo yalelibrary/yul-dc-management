@@ -52,7 +52,7 @@ RUN groupadd -g 117 goobi && usermod -aG goobi app
 # cached pages / assets to be kept and cleaned the way Rails expects them to be while keeping deployment very fast.
 # The assets/packs get copied back by rsync on app load (see ops/nginx.sh)
 RUN /sbin/setuser app bash -l -c " \
-    SECRET_KEY_BASE=thisisfakesoassetscompile RAILS_ENV=production RAILS_RELATIVE_URL_ROOT=/management DB_ADAPTER=nulldb yarn install --ignore-scripts --frozen-lockfile && \
+    SECRET_KEY_BASE=thisisfakesoassetscompile RAILS_ENV=production RAILS_RELATIVE_URL_ROOT=/management DB_ADAPTER=nulldb YARN_ENABLE_SCRIPTS=false yarn install --immutable && \
     yarn run structure-editor-install && \
     bundle exec rake assets:precompile && \
     mv ./public/assets ./public/assets-new"
