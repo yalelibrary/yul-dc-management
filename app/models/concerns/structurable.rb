@@ -173,7 +173,6 @@ module Structurable
     ActiveRecord::Base.transaction do
       IiifRangeBuilder.new.destroy_existing_structure_by_parent_oid(po.oid, source: Structure::EDITOR)
 
-      # sort_by is not stable, so first_row / row break ties by order of appearance in the CSV
       ranges.sort_by { |_name, r| [r[:range_order], r[:first_row]] }.each_with_index do |(name, r), range_index|
         range = StructureRange.create!(resource_id: SecureRandom.uuid, label: name, position: range_index,
                                        parent_object_oid: po.oid, top_level: true, structure_id: nil,
