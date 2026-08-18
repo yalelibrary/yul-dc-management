@@ -29,7 +29,7 @@
   },
   "version": "0.1.0",
   "scripts": {
-    "preinstall": "rm -rf ./public/structure-editor/*",
+    "preinstall": "rm -rf ./public/structure-editor/* || true",
     "postinstall": "yarn run structure-editor-install",
     "structure-editor-install": "cp -r ./node_modules/@yalelibrary/yul-dc-structure-editor/build/* ./public/structure-editor",
     "build": "node esbuild.config.js"
