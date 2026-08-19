@@ -290,12 +290,18 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       upload("structure_ranges_example.csv")
     end
 
-    it "reindexes rather than regenerating when the parent is redirected" do
+    it "rejects a redirected parent, whose manifest could never carry the structure" do
+      existing = StructureRange.create!(resource_id: SecureRandom.uuid, label: "Untouched", position: 0,
+                                        top_level: true, parent_object_oid: 2_002_826, source: Structure::EDITOR)
       parent_object.update!(redirect_to: "https://collections.library.yale.edu/catalog/2004548")
       expect(GenerateManifestJob).not_to receive(:perform_later)
       upload("structure_ranges_example.csv")
 
-      expect(ranges_for(2_002_826).pluck(:label)).to eq ["Folder 1", "Folder 2"]
+      expect(ranges_for(2_002_826).pluck(:label)).to eq [existing.label]
+      expect(batch_process.batch_ingest_events.pluck(:reason)).to include(
+        "Skipping row [2] with parent oid: 2002826 because it is redirected to https://collections.library.yale.edu/catalog/2004548",
+        "Skipping parent oid: 2002826 because one or more of its rows were invalid. No structure was changed for this parent."
+      )
     end
   end
 end

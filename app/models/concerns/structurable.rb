@@ -79,13 +79,20 @@ module Structurable
 
   def structure_parent_for(oid, index, parents, sets)
     unless parents.key?(oid)
-      parents[oid] = updatable_parent_object(oid, index)
+      po = updatable_parent_object(oid, index)
+      parents[oid] = po && structure_writable_parent(po, index)
       if parents[oid]
         add_admin_set_to_bp(sets, parents[oid])
         save!
       end
     end
     parents[oid]
+  end
+
+  def structure_writable_parent(po, index)
+    return po if po.should_create_manifest_and_pdf?
+    batch_processing_event("Skipping row [#{index + 2}] with parent oid: #{po.oid} because it is redirected to #{po.redirect_to}", 'Skipped Row')
+    false
   end
 
   def structure_row_to_canvas(row, po, index)
@@ -187,13 +194,10 @@ module Structurable
     end
   end
 
+  # Redirected parents were rejected in pass 1, so everything that reaches here wants a manifest.
   def regenerate_structure_manifests(applied)
     applied.uniq(&:oid).each do |po|
-      if po.should_create_manifest_and_pdf?
-        GenerateManifestJob.perform_later(po, self, po.current_batch_connection)
-      else
-        po.solr_index_job
-      end
+      GenerateManifestJob.perform_later(po, self, po.current_batch_connection)
     end
   end
 end
