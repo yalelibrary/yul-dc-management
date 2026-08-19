@@ -128,22 +128,48 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(ranges_for(2_002_826).pluck(:label)).to eq ["Folder 1", "Folder 2"]
     end
 
-    it "leaves preservica built structure alone" do
+    it "removes a preservica range the csv does not name" do
       preservica_canvas = StructureCanvas.create!(resource_id: IiifRangeBuilder.child_id_to_uri(9_021_926, 2_002_826),
                                                   position: 0, parent_object_oid: 2_002_826,
                                                   child_object_oid: 9_021_926, structure_id: preservica_range.id,
                                                   source: Structure::PRESERVICA)
       upload("structure_ranges_example.csv")
 
-      expect(preservica_range.reload.label).to eq "Preservica Folder"
-      expect(preservica_canvas.reload.structure_id).to eq preservica_range.id
+      expect(StructureRange.where(id: preservica_range.id)).to be_empty
+      expect(StructureCanvas.where(id: preservica_canvas.id)).to be_empty
+      expect(ranges_for(2_002_826).pluck(:label)).to eq ["Folder 1", "Folder 2"]
     end
 
-    it "returns a preservica range nested in a removed editor range to the top level" do
+    it "reuses a preservica range whose label the csv repeats, so a resync will not duplicate it" do
+      preservica_range.update!(label: "Folder 1")
+      upload("structure_ranges_example.csv")
+
+      folder_one, folder_two = ranges_for(2_002_826).to_a
+      expect(folder_one.id).to eq preservica_range.id
+      expect(folder_one.resource_id).to eq "b8b8-preservica"
+      expect(folder_one.source).to eq Structure::PRESERVICA
+      expect(folder_one.position).to eq 0
+      expect(canvas_oids_for(folder_one)).to eq [9_011_398, 9_021_925]
+      expect(folder_one.structures.pluck(:source).uniq).to eq [Structure::PRESERVICA]
+      expect(folder_two.source).to eq Structure::EDITOR
+    end
+
+    it "rebuilds the canvases of a reused preservica range from the csv" do
+      preservica_range.update!(label: "Folder 1")
+      StructureCanvas.create!(resource_id: IiifRangeBuilder.child_id_to_uri(9_030_368, 2_002_826), position: 0,
+                              parent_object_oid: 2_002_826, child_object_oid: 9_030_368,
+                              structure_id: preservica_range.id, source: Structure::PRESERVICA)
+      upload("structure_ranges_example.csv")
+
+      expect(canvas_oids_for(ranges_for(2_002_826).first)).to eq [9_011_398, 9_021_925]
+    end
+
+    it "leaves nothing behind when preservica and editor ranges were nested" do
       preservica_range.update!(structure_id: stale_range.id, top_level: false)
       upload("structure_ranges_example.csv")
 
-      expect(preservica_range.reload.structure_id).to be_nil
+      expect(Structure.where(parent_object_oid: 2_002_826).pluck(:source).uniq).to eq [Structure::EDITOR]
+      expect(ranges_for(2_002_826).pluck(:label)).to eq ["Folder 1", "Folder 2"]
     end
 
     it "produces the same structure when the same csv is uploaded twice" do

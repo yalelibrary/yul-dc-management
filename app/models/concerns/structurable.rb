@@ -178,20 +178,36 @@ module Structurable
 
   def build_structure_ranges_for(po, ranges)
     ActiveRecord::Base.transaction do
-      IiifRangeBuilder.new.destroy_existing_structure_by_parent_oid(po.oid, source: Structure::EDITOR)
+      reused = reusable_preservica_ranges(po, ranges.keys)
+      IiifRangeBuilder.new.prune_structures_for_parent(po.oid, reused.values.map(&:id))
 
       ranges.sort_by { |_name, r| [r[:range_order], r[:first_row]] }.each_with_index do |(name, r), range_index|
-        range = StructureRange.create!(resource_id: SecureRandom.uuid, label: name, position: range_index,
-                                       parent_object_oid: po.oid, top_level: true, structure_id: nil,
-                                       source: Structure::EDITOR)
+        range = structure_range_for(po, name, range_index, reused[name])
         r[:canvases].sort_by { |c| [c[:position], c[:row]] }.each_with_index do |c, canvas_index|
           StructureCanvas.create!(resource_id: IiifRangeBuilder.child_id_to_uri(c[:child_oid], po.oid),
                                   label: c[:label], position: canvas_index, parent_object_oid: po.oid,
                                   child_object_oid: c[:child_oid], structure_id: range.id,
-                                  source: Structure::EDITOR)
+                                  source: range.source)
         end
       end
     end
+  end
+
+  def reusable_preservica_ranges(po, range_names)
+    StructureRange.preservica_built.where(parent_object_oid: po.oid, label: range_names)
+                  .order(:position, :id).each_with_object({}) do |range, claimed|
+      claimed[range.label] ||= range
+    end
+  end
+
+  def structure_range_for(po, name, position, reused)
+    if reused
+      reused.update!(label: name, position: position, top_level: true, structure_id: nil)
+      return reused
+    end
+    StructureRange.create!(resource_id: SecureRandom.uuid, label: name, position: position,
+                           parent_object_oid: po.oid, top_level: true, structure_id: nil,
+                           source: Structure::EDITOR)
   end
 
   # Redirected parents were rejected in pass 1, so everything that reaches here wants a manifest.
