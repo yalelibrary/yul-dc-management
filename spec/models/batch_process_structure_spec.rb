@@ -128,16 +128,18 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(ranges_for(2_002_826).pluck(:label)).to eq ["Folder 1", "Folder 2"]
     end
 
-    it "removes a preservica range the csv does not name" do
+    it "keeps a preservica range the csv does not name, and files it after the csv's ranges" do
       preservica_canvas = StructureCanvas.create!(resource_id: IiifRangeBuilder.child_id_to_uri(9_021_926, 2_002_826),
                                                   position: 0, parent_object_oid: 2_002_826,
                                                   child_object_oid: 9_021_926, structure_id: preservica_range.id,
                                                   source: Structure::PRESERVICA)
       upload("structure_ranges_example.csv")
 
-      expect(StructureRange.where(id: preservica_range.id)).to be_empty
-      expect(StructureCanvas.where(id: preservica_canvas.id)).to be_empty
-      expect(ranges_for(2_002_826).pluck(:label)).to eq ["Folder 1", "Folder 2"]
+      expect(ranges_for(2_002_826).pluck(:label)).to eq ["Folder 1", "Folder 2", "Preservica Folder"]
+      expect(preservica_range.reload.position).to eq 2
+      expect(preservica_range.source).to eq Structure::PRESERVICA
+      expect(canvas_oids_for(preservica_range)).to eq [9_021_926]
+      expect(preservica_canvas.reload.source).to eq Structure::PRESERVICA
     end
 
     it "reuses a preservica range whose label the csv repeats, so a resync will not duplicate it" do
@@ -164,12 +166,14 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
       expect(canvas_oids_for(ranges_for(2_002_826).first)).to eq [9_011_398, 9_021_925]
     end
 
-    it "leaves nothing behind when preservica and editor ranges were nested" do
+    it "returns a preservica range to the top level when the editor range holding it is replaced" do
       preservica_range.update!(structure_id: stale_range.id, top_level: false)
       upload("structure_ranges_example.csv")
 
-      expect(Structure.where(parent_object_oid: 2_002_826).pluck(:source).uniq).to eq [Structure::EDITOR]
-      expect(ranges_for(2_002_826).pluck(:label)).to eq ["Folder 1", "Folder 2"]
+      expect(StructureRange.where(id: stale_range.id)).to be_empty
+      expect(preservica_range.reload.structure_id).to be_nil
+      expect(preservica_range.top_level).to be true
+      expect(ranges_for(2_002_826).pluck(:label)).to eq ["Folder 1", "Folder 2", "Preservica Folder"]
     end
 
     it "produces the same structure when the same csv is uploaded twice" do

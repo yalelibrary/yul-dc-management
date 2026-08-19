@@ -179,7 +179,7 @@ module Structurable
   def build_structure_ranges_for(po, ranges)
     ActiveRecord::Base.transaction do
       reused = reusable_preservica_ranges(po, ranges.keys)
-      IiifRangeBuilder.new.prune_structures_for_parent(po.oid, reused.values.map(&:id))
+      IiifRangeBuilder.new.prune_structures_for_parent(po.oid, structure_rows_to_keep(po, reused))
 
       ranges.sort_by { |_name, r| [r[:range_order], r[:first_row]] }.each_with_index do |(name, r), range_index|
         range = structure_range_for(po, name, range_index, reused[name])
@@ -190,13 +190,27 @@ module Structurable
                                   source: range.source)
         end
       end
+
+      append_untouched_preservica_ranges(po, ranges.size, reused.values.map(&:id))
     end
+  end
+
+  def structure_rows_to_keep(po, reused)
+    kept = Structure.preservica_built.where(parent_object_oid: po.oid).pluck(:id)
+    kept - StructureCanvas.where(structure_id: reused.values.map(&:id)).pluck(:id)
   end
 
   def reusable_preservica_ranges(po, range_names)
     StructureRange.preservica_built.where(parent_object_oid: po.oid, label: range_names)
                   .order(:position, :id).each_with_object({}) do |range, claimed|
       claimed[range.label] ||= range
+    end
+  end
+
+  def append_untouched_preservica_ranges(po, offset, reused_ids)
+    StructureRange.preservica_built.where(parent_object_oid: po.oid, structure_id: nil)
+                  .where.not(id: reused_ids).order(:position, :id).each_with_index do |range, index|
+      range.update!(position: offset + index, top_level: true)
     end
   end
 
