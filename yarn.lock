@@ -252,21 +252,9 @@ __metadata:
   linkType: hard
 
 "@fortawesome/fontawesome-free@npm:^6.4.0":
-  version: 6.7.2
-  resolution: "@fortawesome/fontawesome-free@npm:6.7.2"
-  checksum: 10c0/e27fb8b846f0bcf40c904acc210829a640329fc7b7ec4e42a7c43cb53739ed6052d78df90810f555a5c80bc608fee5a5174db3fa6da617f582d6210009a19278
   version: 6.4.0
   resolution: "@fortawesome/fontawesome-free@npm:6.4.0"
   checksum: 10c0/f15752bbadc8f857acc73d58f652d23629e7b7a5b9979c42153d5925f8b6d6754cd64dfcbe4126531a6187108652e043f6637ba9455bec71f0bbc3c950fb6490
-  languageName: node
-  linkType: hard
-
-"@fullhuman/postcss-purgecss@npm:^3.1.3":
-  version: 3.1.3
-  resolution: "@fullhuman/postcss-purgecss@npm:3.1.3"
-  dependencies:
-    purgecss: "npm:^3.1.3"
-  checksum: 10c0/f6cb291fb7925468b1cce10d370f134d162ecdf458381c9b38e6c3625ff4c93c5e642a99fa79c7ec6aa0f46e4887f311b14168802a68b6f44f4e2669c03674cd
   languageName: node
   linkType: hard
 
