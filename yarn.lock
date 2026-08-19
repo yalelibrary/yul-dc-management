@@ -678,13 +678,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net-buttons@npm:3.2.1, datatables.net-buttons@npm:^3.2.1":
+"datatables.net-buttons@npm:3.2.1":
   version: 3.2.1
   resolution: "datatables.net-buttons@npm:3.2.1"
   dependencies:
     datatables.net: "npm:^2"
     jquery: "npm:>=1.7"
   checksum: 10c0/ee73ab878906c426a5779ba1de0e2bb6ccadc056db3b0cdbc70cae89424ac4460ff2ca641e8b41d38c447644cda31abbc20f02f6ef6f0d4e82934ad4e0d4f908
+  languageName: node
+  linkType: hard
+
+"datatables.net-buttons@npm:^3.2.6":
+  version: 3.2.6
+  resolution: "datatables.net-buttons@npm:3.2.6"
+  dependencies:
+    datatables.net: "npm:^2"
+    jquery: "npm:>=1.7"
+  checksum: 10c0/ac8919d7c9abb2be440327aaf982b930b1e1e15f509abd98515e6814bc36d1cbd280858aab02fc2d0da241751fba1a7721a303d3e3a97fe7f5c60a7b79d12b62
   languageName: node
   linkType: hard
 
@@ -2217,7 +2227,7 @@ __metadata:
     bootstrap: "npm:5.3.3"
     datatables.net: "npm:^2.2.2"
     datatables.net-bs5: "npm:^2.2.2"
-    datatables.net-buttons: "npm:^3.2.1"
+    datatables.net-buttons: "npm:^3.2.6"
     datatables.net-buttons-bs5: "npm:^3.2.1"
     datatables.net-responsive: "npm:^3.0.3"
     datatables.net-select: "npm:^3.0.0"
