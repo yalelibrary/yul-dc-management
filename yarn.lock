@@ -688,13 +688,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net-responsive@npm:^3.0.3":
-  version: 3.0.3
-  resolution: "datatables.net-responsive@npm:3.0.3"
+"datatables.net-responsive@npm:^3.0.8":
+  version: 3.0.8
+  resolution: "datatables.net-responsive@npm:3.0.8"
   dependencies:
     datatables.net: "npm:^2"
     jquery: "npm:>=1.7"
-  checksum: 10c0/a2ff479a4ac02e2dbe1c3fecc3f84682b2525efe0375b7f2c957fe11e45805c15edac743882ad550df3c07cd30547e3ae50487bb65bb1905445abd4ea5e7feb3
+  checksum: 10c0/b863ce2b30a6fa76579d6535252d4eb8d914180c36d73ee147e3065a933eb7ad2cb4d5d952d05971bf9c3c84293592c3c9f6f8ddb989da7eb00b60c468b7aa4e
   languageName: node
   linkType: hard
 
@@ -2219,7 +2219,7 @@ __metadata:
     datatables.net-bs5: "npm:^2.2.2"
     datatables.net-buttons: "npm:^3.2.1"
     datatables.net-buttons-bs5: "npm:^3.2.1"
-    datatables.net-responsive: "npm:^3.0.3"
+    datatables.net-responsive: "npm:^3.0.8"
     datatables.net-select: "npm:^3.0.0"
     datatables.net-select-bs5: "npm:^3.0.0"
     esbuild: "npm:^0.25.0"
