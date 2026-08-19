@@ -38,7 +38,7 @@ COPY jpegs2pdf-1.3.jar $APP_HOME
 
 ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
 BUNDLE_JOBS=4
-RUN /sbin/setuser app bash -l -c "gem install bundler -v 4.0.11"
+RUN /sbin/setuser app bash -l -c "gem install bundler -v 4.0.13"
 
 COPY --chown=app Gemfile* $APP_HOME/
 RUN /sbin/setuser app bash -l -c "bundle check || bundle install"
@@ -52,7 +52,7 @@ RUN groupadd -g 117 goobi && usermod -aG goobi app
 # cached pages / assets to be kept and cleaned the way Rails expects them to be while keeping deployment very fast.
 # The assets/packs get copied back by rsync on app load (see ops/nginx.sh)
 RUN /sbin/setuser app bash -l -c " \
-    SECRET_KEY_BASE=thisisfakesoassetscompile RAILS_ENV=production RAILS_RELATIVE_URL_ROOT=/management DB_ADAPTER=nulldb yarn install --ignore-scripts --frozen-lockfile && \
+    SECRET_KEY_BASE=thisisfakesoassetscompile RAILS_ENV=production RAILS_RELATIVE_URL_ROOT=/management DB_ADAPTER=nulldb YARN_ENABLE_SCRIPTS=false yarn install --immutable && \
     yarn run structure-editor-install && \
     bundle exec rake assets:precompile && \
     mv ./public/assets ./public/assets-new"

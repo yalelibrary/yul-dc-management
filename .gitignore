@@ -30,6 +30,7 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+.yarn/install-state.gz
 /.idea
 /public/assets
 .byebug_history
