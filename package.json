@@ -20,7 +20,7 @@
     "jquery": "^3.7.1",
     "jszip": "^3.10.1",
     "pdfmake": "^0.2.18",
-    "tailwindcss": "^2.1.2",
+    "tailwindcss": "^4.3.3",
     "turbolinks": "^5.2.0"
   },
   "resolutions": {
