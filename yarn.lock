@@ -308,12 +308,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rails/activestorage@npm:^7.0.7":
-  version: 7.2.301
-  resolution: "@rails/activestorage@npm:7.2.301"
+"@rails/activestorage@npm:^8.1.300":
+  version: 8.1.300
+  resolution: "@rails/activestorage@npm:8.1.300"
   dependencies:
     spark-md5: "npm:^3.0.1"
-  checksum: 10c0/469b8e116fd7712223878ec3e59896ea29779aaf5ff5097ab803cd758ed298e89c2401596388ac4c6decf5fd3134c8474987a6057332481f7a18744c8a665cff
+  checksum: 10c0/eacb07a0bccc98c4586cc34d933e481dd8c0c6c3be155816ea5bd8c1e805c78f4bbb8ad65920760888d881a3aa0d2dd9036b50299cc3d1036ce6b4571387a1fa
   languageName: node
   linkType: hard
 
@@ -2255,7 +2255,7 @@ __metadata:
     "@fortawesome/fontawesome-free": "npm:^6.4.0"
     "@popperjs/core": "npm:^2.11.8"
     "@rails/actioncable": "npm:^7.0.7"
-    "@rails/activestorage": "npm:^7.0.7"
+    "@rails/activestorage": "npm:^8.1.300"
     "@rails/ujs": "npm:^7.0.7"
     "@yalelibrary/yul-dc-structure-editor": "npm:^0.1.1"
     bootstrap: "npm:5.3.3"
