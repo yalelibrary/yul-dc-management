@@ -22,6 +22,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include UpdateFulltextStatus
   # RECREATE CHILD OID PTIFFS:
   include RecreateChildPtiff
+  # UPDATE STRUCTURE RANGES:
+  include Structurable
   attr_reader :file
   after_create :determine_background_jobs
   before_create :mets_oid
@@ -45,7 +47,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # LISTS AVAILABLE BATCH ACTIONS
   # rubocop:disable Layout/LineLength
   def self.batch_actions
-    ['create parent objects', 'update parent objects', 'update child objects caption and label', 'update child objects checksum', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set', 'export parent metadata', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'reindex all parents', 'update fulltext status', 'resync with preservica', 'activity stream updates']
+    ['create parent objects', 'update parent objects', 'update child objects caption and label', 'update child objects checksum', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set', 'export parent metadata', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'reindex all parents', 'update fulltext status', 'update structure ranges', 'resync with preservica', 'activity stream updates']
   end
   # rubocop:enable Layout/LineLength
 
@@ -190,6 +192,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
         RecreateChildOidPtiffsJob.perform_later(self)
       when 'update fulltext status'
         UpdateFulltextStatusJob.perform_later(self)
+      when 'update structure ranges'
+        UpdateStructureRangesJob.perform_later(self)
       when 'resync with preservica'
         SyncFromPreservicaJob.perform_later(self)
       end

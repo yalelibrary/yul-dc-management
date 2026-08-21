@@ -121,7 +121,11 @@ class IiifRangeBuilder
   def prune_structures_for_editor_save(parent_oid, manifest)
     kept = Structure.preservica_built
                     .where(parent_object_oid: parent_oid, resource_id: posted_resource_ids(manifest))
-    remove_structures(parent_oid, Structure.where(parent_object_oid: parent_oid).where.not(id: kept.select(:id)))
+    prune_structures_for_parent(parent_oid, kept.select(:id))
+  end
+
+  def prune_structures_for_parent(parent_oid, kept_ids)
+    remove_structures(parent_oid, Structure.where(parent_object_oid: parent_oid).where.not(id: kept_ids))
   end
 
   def posted_resource_ids(manifest, ids = [])

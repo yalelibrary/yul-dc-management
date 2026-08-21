@@ -201,5 +201,12 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       expect(response.content_type).to eq("text/csv; charset=utf-8")
       expect(response.body).to match("\xEF\xBB\xBFoid,sha512,sha256,sha1,md5")
     end
+
+    it "downloads templates for update structure ranges" do
+      get download_template_batch_processes_url(batch_action: "update structure ranges")
+      expect(response).to have_http_status(:success)
+      expect(response.content_type).to eq("text/csv; charset=utf-8")
+      expect(response.body).to match("\xEF\xBB\xBFoid,child_oid,order_in_range,range_name,range_order")
+    end
   end
 end
