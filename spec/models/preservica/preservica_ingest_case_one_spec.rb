@@ -47,6 +47,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     stub_preservica_aspace_single
     stub_preservica_login
     fixtures = %w[preservica/api/entity/structural-objects/eeee0001-0000-4000-8000-000000000001/children
+                  preservica/api/entity/structural-objects/eeee0002-0000-4000-8000-000000000002/children
                   preservica/api/entity/structural-objects/88e52625-0000-4000-8000-00000000bad1/children
                   preservica/api/entity/information-objects/aaaa0001-0000-4000-8000-000000000001/representations
                   preservica/api/entity/information-objects/aaaa0001-0000-4000-8000-000000000001/representations/Preservation
@@ -68,7 +69,15 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
                   preservica/api/entity/content-objects/cccc0005-0000-4000-8000-000000000005/generations/1
                   preservica/api/entity/content-objects/cccc0005-0000-4000-8000-000000000005/generations/1/bitstreams/1
                   preservica/api/entity/content-objects/dddd0001-0000-4000-8000-000000000001/generations
-                  preservica/api/entity/content-objects/dddd0001-0000-4000-8000-000000000001/generations/1]
+                  preservica/api/entity/content-objects/dddd0001-0000-4000-8000-000000000001/generations/1
+                  preservica/api/entity/information-objects/aaaa0003-0000-4000-8000-000000000003/representations
+                  preservica/api/entity/information-objects/aaaa0003-0000-4000-8000-000000000003/representations/Preservation
+                  preservica/api/entity/content-objects/cccc0006-0000-4000-8000-000000000006/generations
+                  preservica/api/entity/content-objects/cccc0006-0000-4000-8000-000000000006/generations/1
+                  preservica/api/entity/content-objects/cccc0006-0000-4000-8000-000000000006/generations/1/bitstreams/1
+                  preservica/api/entity/content-objects/cccc0007-0000-4000-8000-000000000007/generations
+                  preservica/api/entity/content-objects/cccc0007-0000-4000-8000-000000000007/generations/1
+                  preservica/api/entity/content-objects/cccc0007-0000-4000-8000-000000000007/generations/1/bitstreams/1]
 
     fixtures.each do |fixture|
       stub_request(:get, "https://test#{fixture}").to_return(
@@ -98,6 +107,17 @@ RSpec.describe Preservica::PreservicaObject, type: :model, prep_metadata_sources
     expect(image_list.count).to eq 5
     expect(image_list.map { |image| image[:caption] }).to eq expected_captions
     expect(image_list.map { |image| image[:preservica_content_object_uri] }).to eq expected_content_object_uris
+  end
+
+  it 'orders folders and their files without giving weight to case' do
+    image_service = PreservicaImageService.new("/structural-objects/eeee0002-0000-4000-8000-000000000002", "sml")
+    image_list = image_service.image_list("Preservation")
+    expect(image_list.map { |image| image[:preservica_folder_label] }).to eq(
+      (["[Preservica] ms_0664_s02-m-b016_f0268"] * 3) +
+      (["[Preservica] ms_0664_s02-M-b016_f0269"] * 2) +
+      (["[Preservica] ms_0664_s02-m-b016_f0270"] * 2)
+    )
+    expect(image_list.map { |image| image[:caption] }).to eq expected_captions + ["ms_0664_s02_b016_f0270_a001.tif", "ms_0664_s02_b016_f0270_A002.tif"]
   end
 
   it 'raises a clear error when the structural object contains nested folders' do

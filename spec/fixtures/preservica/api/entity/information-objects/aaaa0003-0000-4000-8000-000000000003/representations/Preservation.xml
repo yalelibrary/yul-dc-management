@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RepresentationResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3">
+  <xip:Representation>
+    <xip:InformationObject>aaaa0003-0000-4000-8000-000000000003</xip:InformationObject>
+    <xip:Name>Preservation-1</xip:Name>
+    <xip:Type>Preservation</xip:Type>
+    <xip:ContentObjects>
+      <xip:ContentObject>cccc0006-0000-4000-8000-000000000006</xip:ContentObject>
+      <xip:ContentObject>cccc0007-0000-4000-8000-000000000007</xip:ContentObject>
+    </xip:ContentObjects>
+    <xip:RepresentationFormats/>
+    <xip:RepresentationProperties/>
+  </xip:Representation>
+  <ContentObjects>
+    <ContentObject title="ms_0664_s02_b016_f0270_A002" ref="cccc0006-0000-4000-8000-000000000006" type="CO">
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/cccc0006-0000-4000-8000-000000000006
+    </ContentObject>
+    <ContentObject title="ms_0664_s02_b016_f0270_a001" ref="cccc0007-0000-4000-8000-000000000007" type="CO">
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/cccc0007-0000-4000-8000-000000000007
+    </ContentObject>
+  </ContentObjects>
+  <AdditionalInformation>
+    <Self>
+      https://preservica-dev-v6.library.yale.edu/api/entity/information-objects/aaaa0003-0000-4000-8000-000000000003/representations/Preservation/1
+    </Self>
+  </AdditionalInformation>
+</RepresentationResponse>
