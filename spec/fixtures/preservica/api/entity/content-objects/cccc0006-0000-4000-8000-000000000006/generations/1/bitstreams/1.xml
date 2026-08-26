@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<BitstreamResponse xmlns="http://preservica.com/EntityAPI/v6.3" xmlns:xip="http://preservica.com/XIP/v6.3">
+  <xip:Bitstream>
+    <xip:Filename>ms_0664_s02_b016_f0270_A002.tif</xip:Filename>
+    <xip:FileSize>1131966</xip:FileSize>
+    <xip:Fixities>
+      <xip:Fixity>
+        <xip:FixityAlgorithmRef>SHA512</xip:FixityAlgorithmRef>
+        <xip:FixityValue>
+          d6e3926fbe14fedbf3a568b6a5dbdb3e8b2312f217daa460a743559d41a688af4a7c701e7bac908fc7e3fd51c505fa01dad9eee96fcfd2666e92c648249edf06
+        </xip:FixityValue>
+      </xip:Fixity>
+    </xip:Fixities>
+  </xip:Bitstream>
+  <AdditionalInformation>
+    <Self>
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/cccc0006-0000-4000-8000-000000000006/generations/1/bitstreams/1
+    </Self>
+    <IntegrityCheckHistory>
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/cccc0006-0000-4000-8000-000000000006/generations/1/bitstreams/1/integrity-check-history
+    </IntegrityCheckHistory>
+    <Content>
+      https://preservica-dev-v6.library.yale.edu/api/entity/content-objects/cccc0006-0000-4000-8000-000000000006/generations/1/bitstreams/1/content
+    </Content>
+  </AdditionalInformation>
+</BitstreamResponse>
