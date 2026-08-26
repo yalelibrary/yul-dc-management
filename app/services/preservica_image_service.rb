@@ -45,7 +45,7 @@ class PreservicaImageService
       if @pattern == :pattern_one
         structural_object = Preservica::StructuralObject.where(admin_set_key: @admin_set_key, id: (@uri.split('/')[-1]).to_s)
         begin
-          @information_objects = structural_object.information_objects.sort_by { |io| io.title.to_s }
+          @information_objects = structural_object.information_objects.sort_by { |io| [io.title.to_s.downcase, io.title.to_s] }
         rescue Net::OpenTimeout, Errno::ECONNREFUSED => e
           raise PreservicaImageServiceNetworkError.new(e.to_s, @uri.to_s)
         end
@@ -119,7 +119,7 @@ class PreservicaImageService
                                        preservica_content_object_index: index }
       end
       @folder_architecture = true if information_object_images.size > 1
-      @images.concat(information_object_images.sort_by { |image| image[:caption].to_s })
+      @images.concat(information_object_images.sort_by { |image| [image[:caption].to_s.downcase, image[:caption].to_s] })
     end
   end
   # rubocop:enable Metrics/MethodLength
