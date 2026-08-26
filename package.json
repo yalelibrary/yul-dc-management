@@ -4,7 +4,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.3.1",
     "@popperjs/core": "^2.11.8",
-    "@rails/actioncable": "^7.0.7",
+    "@rails/actioncable": "^8.1.300",
     "@rails/activestorage": "^7.0.7",
     "@rails/ujs": "^7.0.7",
     "@yalelibrary/yul-dc-structure-editor": "^0.1.1",
