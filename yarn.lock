@@ -371,12 +371,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net@npm:2.3.8, datatables.net@npm:^2, datatables.net@npm:^2.2.2":
+"datatables.net@npm:2.3.8, datatables.net@npm:^2":
   version: 2.3.8
   resolution: "datatables.net@npm:2.3.8"
   dependencies:
     jquery: "npm:>=1.7"
   checksum: 10c0/3b82b4a47cbe053c8a8ad9eca41db4facb1e5c576e54b589102dacd0b7ab7b727c760534dcc5e4be7f34ec1b47424fed2cfd32a0bec82b728cca7732689eb748
+  languageName: node
+  linkType: hard
+
+"datatables.net@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "datatables.net@npm:3.0.0"
+  checksum: 10c0/55463eb768ca8cb299165d8c45a1b7c7cbc26fe181642a54c31bbdab40e82ff01325706debf5e4459c313774a77fd3a0745707cf1365dcd5baba2327a4e0a87c
   languageName: node
   linkType: hard
 
@@ -748,7 +755,7 @@ __metadata:
     "@rails/ujs": "npm:^7.0.7"
     "@yalelibrary/yul-dc-structure-editor": "npm:^0.1.1"
     bootstrap: "npm:5.3.3"
-    datatables.net: "npm:^2.2.2"
+    datatables.net: "npm:^3.0.0"
     datatables.net-bs5: "npm:^2.2.2"
     datatables.net-buttons: "npm:^3.2.1"
     datatables.net-buttons-bs5: "npm:^3.2.1"
