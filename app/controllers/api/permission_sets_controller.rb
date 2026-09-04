@@ -91,7 +91,8 @@ class Api::PermissionSetsController < ApplicationController
     terms_agreed = term_agreements.map do |term_agreement|
       term_agreement.permission_set_term.id
     end
-    permissions = OpenWithPermission::PermissionRequest.where(permission_request_user: request_user)
+
+    permissions = OpenWithPermission::PermissionRequest.where(permission_request_user: request_user).order(created_at: :desc, id: :desc)
 
     set = permissions.map do |permission|
       { "oid": permission.parent_object_id,
@@ -104,7 +105,7 @@ class Api::PermissionSetsController < ApplicationController
         "user_full_name": request_user.name }
     end
 
-    render(json: { "timestamp": timestamp, "user": { "sub": request_user.sub }, "permission_set_terms_agreed": terms_agreed, "permissions": set.reverse })
+    render(json: { "timestamp": timestamp, "user": { "sub": request_user.sub }, "permission_set_terms_agreed": terms_agreed, "permissions": set })
   end
   # rubocop:disable Metrics/MethodLength
 
