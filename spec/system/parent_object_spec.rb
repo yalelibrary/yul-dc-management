@@ -471,6 +471,36 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     end
   end
 
+  describe "adding a redirect to a ParentObject", js: true do
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), visibility: "Public") }
+    let(:confirm_text) { 'Adding Redirect To information will remove that object from public view.  Do you wish to continue?' }
+
+    before do
+      stub_metadata_cloud("2012036")
+      parent_object
+      # the Redirect To field and the Redirect visibility are only offered for a parent with no children
+      parent_object.child_objects.destroy_all
+      visit edit_parent_object_path(2_012_036)
+    end
+
+    it "confirms even when the visibility is not switched to Redirect" do
+      fill_in('Redirect to', with: "https://collections.library.yale.edu/catalog/12345")
+      click_on(UPDATE_PARENT_OBJECT_BUTTON)
+      expect(page.driver.browser.switch_to.alert.text).to eq(confirm_text)
+      page.driver.browser.switch_to.alert.accept
+      expect(page).to have_content("Parent object was successfully saved")
+    end
+
+    it "confirms when the visibility is switched to Redirect" do
+      fill_in('Redirect to', with: "https://collections.library.yale.edu/catalog/12345")
+      select("Redirect")
+      click_on(UPDATE_PARENT_OBJECT_BUTTON)
+      expect(page.driver.browser.switch_to.alert.text).to eq(confirm_text)
+      page.driver.browser.switch_to.alert.accept
+      expect(page).to have_content("Parent object was successfully saved")
+    end
+  end
+
   describe "index page", js: true do
     context 'datatable' do
       let(:parent_object1) { FactoryBot.create(:parent_object, oid: 2_034_600, admin_set: AdminSet.find_by_key('brbl')) }
