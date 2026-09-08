@@ -321,7 +321,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         po.visibility = "Public"
         child_object
         po.save
-        po.reload  # Reload to ensure child_objects association is fresh
+        po.reload # Reload to ensure child_objects association is fresh
         po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
         visit '/parent_objects/2012036/solr_document'
