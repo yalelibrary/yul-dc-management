@@ -137,6 +137,22 @@ RSpec.describe '/api/permission_sets/po/terms', type: :request, prep_metadata_so
       expect(response).to have_http_status(404)
       expect(response.body).to eq("{\"title\":\"User not found\"}")
     end
+
+    it "lists a user's newest requests first" do
+      request.update!(created_at: 3.years.ago, user_note: 'the oldest note')
+      FactoryBot.create(:permission_request, permission_request_user: request_user, permission_set: permission_set,
+                                             parent_object: parent_object, user_note: 'the new note', created_at: 1.minute.ago)
+      old_request = FactoryBot.create(:permission_request, permission_request_user: request_user, permission_set: permission_set,
+                                                           parent_object: parent_object, user_note: 'the old note', created_at: 2.years.ago)
+      old_request.update!(request_status: 'Expired', access_until: 1.year.ago)
+
+      get '/api/permission_sets/1234', headers: headers
+      expect(response).to have_http_status(200)
+
+      permissions = JSON.parse(response.body)['permissions']
+      expect(permissions.first['user_note']).to eq 'the new note'
+      expect(permissions.map { |permission| permission['user_note'] }).to eq ['the new note', 'the old note', 'the oldest note']
+    end
   end
 
   describe 'get /api/permission_sets/:parent_object/:uid' do
