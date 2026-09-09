@@ -321,7 +321,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         po.visibility = "Public"
         child_object
         po.save
-        po.reload  # Reload to ensure child_objects association is fresh
+        po.reload # Reload to ensure child_objects association is fresh
         po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
         visit '/parent_objects/2012036/solr_document'
@@ -673,6 +673,34 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
     it "has column visibility button" do
       expect(page).to have_css(".buttons-colvis")
+    end
+
+    context "the export all button tooltip" do
+      it "swaps the label in and out on hover when the button is disabled" do
+        # wait for the datatable's first draw to finish so that fnDrawCallback
+        # does not reset the disabled attribute out from under the test
+        expect(page).to have_content("Showing")
+        # fnDrawCallback disables this button when there are more than 12,000
+        # records, which is not practical to set up in a spec
+        page.execute_script("$('.export-all').attr('disabled', true)")
+
+        # the hover is on the wrapper, not the button, because Bootstrap sets
+        # pointer-events: none on disabled buttons
+        find(".export-all-tooltip").hover
+        expect(page).to have_css(".export-all span", text: "Please use all parents batch job")
+
+        find(".buttons-colvis").hover
+        expect(page).to have_css(".export-all span", text: "All Matching Entries")
+      end
+
+      it "leaves the label alone on hover when the button is enabled" do
+        expect(page).to have_content("Showing")
+        expect(page).to have_css(".export-all:not([disabled])")
+
+        find(".export-all-tooltip").hover
+        expect(page).to have_css(".export-all span", text: "All Matching Entries")
+        expect(page).not_to have_content("Please use all parents batch job")
+      end
     end
   end
 end
