@@ -709,6 +709,9 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     before do
       stub_metadata_cloud("2012036")
       parent_object
+      # the metadata job fills most of these fields in from the Ladybird
+      # fixture, so pin one row filled and one row blank to test against
+      parent_object.update_columns(call_number: "AB 123", project_identifier: nil)
       visit parent_object_path(2_012_036)
     end
 
@@ -730,6 +733,38 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
       expect(page).to have_css("#filter-icon .fa-filter")
       expect(page).not_to have_css("#filter-icon .fa-filter-circle-xmark")
+    end
+
+    it "hides the metadata rows that have no value" do
+      expect(page).to have_css("tr.table-row", text: "Call Number:")
+      expect(page).not_to have_css("tr.table-row", text: "Project ID:")
+    end
+
+    it "shows the blank rows again when the filter icon is clicked, and re-hides them on a second click" do
+      hidden_count = page.all("tr.table-row.hidden", visible: :all).size
+      expect(hidden_count).to be > 0
+
+      find("#filter-icon").click
+
+      expect(page).to have_css("tr.table-row", text: "Project ID:")
+      expect(page).to have_no_css("tr.table-row.hidden", visible: :all)
+
+      find("#filter-icon").click
+
+      expect(page).to have_css("tr.table-row.hidden", visible: :all, count: hidden_count)
+      expect(page).not_to have_css("tr.table-row", text: "Project ID:")
+    end
+
+    it "keeps the striping correct once the blank rows are shown" do
+      find("#filter-icon").click
+      expect(page).to have_no_css("tr.table-row.hidden", visible: :all)
+
+      colors = page.evaluate_script(
+        "Array.from(document.querySelectorAll('tr:not(.hidden)')).map(function(r) { return r.style.backgroundColor })"
+      )
+
+      expect(colors.reject.with_index { |_c, i| i.odd? }.uniq).to eq ["rgb(255, 255, 255)"]
+      expect(colors.reject.with_index { |_c, i| i.even? }.uniq).to eq ["rgb(242, 242, 242)"]
     end
   end
 end
