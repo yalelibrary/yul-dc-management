@@ -3,7 +3,7 @@
 class ParentObjectsController < ApplicationController
   before_action :set_parent_object, only: [:show, :edit, :update, :destroy, :update_metadata, :select_thumbnail, :solr_document]
   before_action :set_paper_trail_whodunnit
-  before_action :set_permission_set, only: [:edit, :update]
+  before_action :set_permission_set, only: [:new, :create, :edit, :update]
   load_and_authorize_resource except: [:solr_document, :new, :create, :update_metadata, :all_metadata, :reindex, :select_thumbnail, :update_manifests, :update_digital_objects]
 
   # Allows FontAwesome icons to render on datatable and show pages
