@@ -321,7 +321,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         po.visibility = "Public"
         child_object
         po.save
-        po.reload  # Reload to ensure child_objects association is fresh
+        po.reload # Reload to ensure child_objects association is fresh
         po.solr_index_job
         expect(page).to have_link("Solr Document", href: solr_document_parent_object_path("2012036"))
         visit '/parent_objects/2012036/solr_document'
@@ -673,6 +673,63 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
 
     it "has column visibility button" do
       expect(page).to have_css(".buttons-colvis")
+    end
+
+    context "the export all button tooltip on parent object datatable" do
+      it "swaps the label in and out on hover when the button is disabled" do
+        # wait for the datatable's first draw to finish so that fnDrawCallback
+        # does not reset the disabled attribute out from under the test
+        expect(page).to have_content("Showing")
+        # fnDrawCallback disables this button when there are more than 12,000
+        # records, which is not practical to set up in a spec
+        page.execute_script("$('.export-all').attr('disabled', true)")
+
+        # the hover is on the wrapper, not the button, because Bootstrap sets
+        # pointer-events: none on disabled buttons
+        find(".export-all-tooltip").hover
+        expect(page).to have_css(".export-all span", text: "Please use all parents batch job")
+
+        find(".buttons-colvis").hover
+        expect(page).to have_css(".export-all span", text: "All Matching Entries")
+      end
+
+      it "leaves the label alone on hover when the button is enabled" do
+        expect(page).to have_content("Showing")
+        expect(page).to have_css(".export-all:not([disabled])")
+
+        find(".export-all-tooltip").hover
+        expect(page).to have_css(".export-all span", text: "All Matching Entries")
+        expect(page).not_to have_content("Please use all parents batch job")
+      end
+    end
+  end
+
+  context "parent object show page", js: true do
+    let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl')) }
+    before do
+      stub_metadata_cloud("2012036")
+      parent_object
+      visit parent_object_path(2_012_036)
+    end
+
+    it "zebra stripes the visible rows, starting with white" do
+      expect(page).to have_css(".metadata-block tr")
+      colors = page.evaluate_script(
+        "Array.from(document.querySelectorAll('tr:not(.hidden)')).map(function(r) { return r.style.backgroundColor })"
+      )
+
+      expect(colors.length).to be > 1
+      expect(colors.reject.with_index { |_c, i| i.odd? }.uniq).to eq ["rgb(255, 255, 255)"]
+      expect(colors.reject.with_index { |_c, i| i.even? }.uniq).to eq ["rgb(242, 242, 242)"]
+    end
+
+    it "toggles the filter icon when it is clicked" do
+      expect(page).to have_css("#filter-icon .fa-filter-circle-xmark")
+
+      find("#filter-icon").click
+
+      expect(page).to have_css("#filter-icon .fa-filter")
+      expect(page).not_to have_css("#filter-icon .fa-filter-circle-xmark")
     end
   end
 end
