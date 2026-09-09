@@ -711,7 +711,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       parent_object
       # the metadata job fills most of these fields in from the Ladybird
       # fixture, so pin one row filled and one row blank to test against
-      parent_object.update_columns(call_number: "AB 123", project_identifier: nil)
+      parent_object.reload.update(call_number: "AB 123", project_identifier: nil)
       visit parent_object_path(2_012_036)
     end
 
