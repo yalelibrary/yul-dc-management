@@ -238,17 +238,17 @@ $( document ).on('turbolinks:load', function() {
     })
   }
 
-  $('.export-all span').hover(
-      function() {
-        if ($(this).parent("button").attr('disabled')) {
-          $(this).html("Please use all parents batch job");
-        }
-      }, function() {
-        if ($(this).parent("button").attr('disabled')) {
-          $( this ).html("All Matching Entries");
-        }
-      }
-  )
+  // Export all button tooltip to explain why it is disabled when there are more than 12K records
+  $('.export-all').not('.export-all-tooltip > .export-all').wrap('<div class="btn-group export-all-tooltip"></div>');
+
+  $('.export-all-tooltip').off('mouseenter mouseleave').on('mouseenter mouseleave', function(event) {
+    let label = $(this).find('.export-all[disabled] span');
+    if (event.type === 'mouseenter') {
+      label.html("Please use all parents batch job");
+    } else if (event.type === 'mouseleave') {
+      label.html("All Matching Entries");
+    }
+  });
 });
 
 //  Delay the redraw so that if more changes trigger a redraw
@@ -313,7 +313,7 @@ $( document ).on('turbolinks:load', function() {
 
 
 $( document ).on('turbolinks:load', function() {
-  $('.select-all-btn').click( function(e) {
+  $('.select-all-btn').on('click', function(e) {
     select_all($(this).data('target-select'));
     e.preventDefault();
     return false;
@@ -368,26 +368,29 @@ $( document ).on('turbolinks:load', function() {
 })
 
 // This will change the filter icon on the parent object show page
+// The zebra striping filters by index in the matched set rather than using the
+// deprecated :odd / :even. CSS :nth-child is not equivalent here -- it counts
+// DOM siblings, which would include the rows hidden by the filter.
 $( document ).on('turbolinks:load', function() {
-  var values = $('.table-row').find('td:eq(1)');
+  var values = $('.table-row').find('td:nth-child(2)');
   values.each(function() {
     var value = $(this).text()
     if (value == '') {
       $(this).closest('tr').toggleClass('hidden');
     }
-    $('tr:not(.hidden):odd').css('background-color', '#F2F2F2');
-    $('tr:not(.hidden):even').css('background-color', '#FFFFFF');
+    $('tr:not(.hidden)').filter(function(i) { return i % 2 === 1; }).css('background-color', '#F2F2F2');
+    $('tr:not(.hidden)').filter(function(i) { return i % 2 === 0; }).css('background-color', '#FFFFFF');
   })
-  $('#filter-icon').click(function() {
+  $('#filter-icon').on('click', function() {
     $(this).find('svg').toggleClass('fa-filter-circle-xmark fa-filter ');
-    var values = $('.table-row').find('td:eq(1)');
+    var values = $('.table-row').find('td:nth-child(2)');
     values.each(function() {
       var value = $(this).text()
       if (value == '') {
         $(this).closest('tr').toggleClass('hidden');
       }
-      $('tr:not(.hidden):odd').css('background-color', '#F2F2F2');
-      $('tr:not(.hidden):even').css('background-color', '#FFFFFF');
+      $('tr:not(.hidden)').filter(function(i) { return i % 2 === 1; }).css('background-color', '#F2F2F2');
+      $('tr:not(.hidden)').filter(function(i) { return i % 2 === 0; }).css('background-color', '#FFFFFF');
     })
   })
 })
