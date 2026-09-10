@@ -758,5 +758,33 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     it "has column visibility button" do
       expect(page).to have_css(".buttons-colvis")
     end
+
+    context "the export all button tooltip" do
+      it "swaps the label in and out on hover when the button is disabled" do
+        # wait for the datatable's first draw to finish so that fnDrawCallback
+        # does not reset the disabled attribute out from under the test
+        expect(page).to have_content("Showing")
+        # fnDrawCallback disables this button when there are more than 12,000
+        # records, which is not practical to set up in a spec
+        page.execute_script("$('.export-all').attr('disabled', true)")
+
+        # the hover is on the wrapper, not the button, because Bootstrap sets
+        # pointer-events: none on disabled buttons
+        find(".export-all-tooltip").hover
+        expect(page).to have_css(".export-all span", text: "Please use all parents batch job")
+
+        find(".buttons-colvis").hover
+        expect(page).to have_css(".export-all span", text: "All Matching Entries")
+      end
+
+      it "leaves the label alone on hover when the button is enabled" do
+        expect(page).to have_content("Showing")
+        expect(page).to have_css(".export-all:not([disabled])")
+
+        find(".export-all-tooltip").hover
+        expect(page).to have_css(".export-all span", text: "All Matching Entries")
+        expect(page).not_to have_content("Please use all parents batch job")
+      end
+    end
   end
 end

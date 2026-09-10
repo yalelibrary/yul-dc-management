@@ -238,17 +238,17 @@ $( document ).on('turbolinks:load', function() {
     })
   }
 
-  $('.export-all span').hover(
-      function() {
-        if ($(this).parent("button").attr('disabled')) {
-          $(this).html("Please use all parents batch job");
-        }
-      }, function() {
-        if ($(this).parent("button").attr('disabled')) {
-          $( this ).html("All Matching Entries");
-        }
-      }
-  )
+  // Export all button tooltip to explain why it is disabled when there are more than 12K records
+  $('.export-all').not('.export-all-tooltip > .export-all').wrap('<div class="btn-group export-all-tooltip"></div>');
+
+  $('.export-all-tooltip').off('mouseenter mouseleave').on('mouseenter mouseleave', function(event) {
+    let label = $(this).find('.export-all[disabled] span');
+    if (event.type === 'mouseenter') {
+      label.html("Please use all parents batch job");
+    } else if (event.type === 'mouseleave') {
+      label.html("All Matching Entries");
+    }
+  });
 });
 
 //  Delay the redraw so that if more changes trigger a redraw
