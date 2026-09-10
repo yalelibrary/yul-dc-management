@@ -52,7 +52,16 @@
       <%= form.select(:authoritative_metadata_source_id, [['Ladybird', 1], ['ArchivesSpace', 3], ['Alma', 5]]) %>
     </div>
 
-    <% if parent_object.child_object_ids.count == 0 %>
+    <% if parent_object.new_record? %>
+      <div class="col-med-3">
+        <%= form.label :visibility %>
+        <% if current_ability.can?(:owp_access, OpenWithPermission::PermissionSet) || current_user.has_role?(:sysadmin) %>
+          <%= form.select(:visibility, ["Open with Permission", "Private", "Public", "Yale Community Only"]) %>
+        <% else %>
+          <%= form.select(:visibility, ["Private", "Public", "Yale Community Only"]) %>
+        <% end %>
+      </div>
+    <% elsif parent_object.child_object_ids.count == 0 %>
       <div class="col-med-3">
         <%= form.label :visibility %>
         <%= form.select(:visibility, ['Private', 'Public', 'Redirect', 'Yale Community Only']) %>
@@ -89,7 +98,7 @@
             selected: parent_object.permission_set_id || ["None", nil],
             required: false
             },
-            disabled: !current_user.has_role?(:administrator, parent_object.permission_set) && !current_user.has_role?(:sysadmin))
+            disabled: !parent_object.new_record? && !current_user.has_role?(:administrator, parent_object.permission_set) && !current_user.has_role?(:sysadmin))
           %>
         <% else %>
           <%= form.label "Permission Set" %>

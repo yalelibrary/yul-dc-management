@@ -471,6 +471,60 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
     end
   end
 
+  describe "the visibility options on the New Parent Object page" do
+    context "as a sysadmin" do
+      let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
+
+      it "has an Open with Permission option and does not have a Redirect option" do
+        visit new_parent_object_path
+        expect(page).to have_select("parent_object_visibility", options: ["Open with Permission", "Private", "Public", "Yale Community Only"])
+      end
+
+      it "can create a parent object that is Open with Permission" do
+        permission_set
+        stub_metadata_cloud("10001192")
+        visit new_parent_object_path
+        fill_in('Oid', with: "10001192")
+        select('Beinecke Library')
+        select('Ladybird')
+        select("Open with Permission", from: "parent_object_visibility")
+        select("set 1", from: "parent_object_permission_set_id")
+        click_on("Create Parent object")
+        expect(page).to have_content "Parent object was successfully created"
+        parent_object = ParentObject.find(10_001_192)
+        expect(parent_object.visibility).to eq "Open with Permission"
+        expect(parent_object.permission_set).to eq permission_set
+      end
+    end
+
+    context "as a permission set admin" do
+      let(:user) { FactoryBot.create(:user) }
+      let(:permission_set) { FactoryBot.create(:permission_set, label: 'set 1') }
+
+      before do
+        login_as user
+        user.add_role(:administrator, permission_set)
+      end
+
+      it "has an Open with Permission option and a selectable permission set" do
+        visit new_parent_object_path
+        expect(page).to have_select("parent_object_visibility", options: ["Open with Permission", "Private", "Public", "Yale Community Only"])
+        expect(page).to have_select("parent_object_permission_set_id", disabled: true)
+        select "Open with Permission", from: "parent_object_visibility"
+        expect(page).to have_select("parent_object_permission_set_id", disabled: false, options: ["set 1", "None"])
+      end
+    end
+
+    context "as a user who does not administer a permission set" do
+      let(:user) { FactoryBot.create(:user) }
+
+      it "offers neither Open with Permission nor Redirect" do
+        visit new_parent_object_path
+        expect(page).to have_select("parent_object_visibility", options: ["Private", "Public", "Yale Community Only"])
+      end
+    end
+  end
+
   describe "adding a redirect to a ParentObject", js: true do
     let(:parent_object) { FactoryBot.create(:parent_object, oid: 2_012_036, admin_set: AdminSet.find_by_key('brbl'), visibility: "Public") }
     let(:confirm_text) { 'Adding Redirect To information will remove that object from public view.  Do you wish to continue?' }
