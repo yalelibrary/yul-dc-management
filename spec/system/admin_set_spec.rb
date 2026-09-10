@@ -231,6 +231,53 @@ RSpec.describe 'Admin Sets', type: :system, js: true do
     end
   end
 
+  context "the Select All links", prep_metadata_sources: true do
+    let(:second_admin_set) { FactoryBot.create(:admin_set, key: 'second-set-key', label: 'second-set-label') }
+
+    before do
+      second_admin_set
+      login_as(sysadmin_user)
+    end
+
+    it "selects every admin set and metadata source in the batch update dialog" do
+      visit admin_set_path(admin_set)
+      click_on("Batch Update Metadata")
+      expect(page).to have_css("#BatchUpdateMetadata", visible: :visible)
+
+      within("#BatchUpdateMetadata") do
+        # the admin set the page is scoped to starts selected, the other does not
+        expect(page).to have_css("#admin_set option", minimum: 2)
+        expect(page.all("#admin_set option").map(&:selected?)).to include(false)
+
+        within(".form-group", text: "Admin Sets:") { click_on("Select All") }
+        expect(page.all("#admin_set option").reject(&:selected?)).to be_empty
+
+        within(".form-group", text: "Metadata Sources:") { click_on("Select All") }
+        expect(page.all("#metadata_source_ids option").reject(&:selected?)).to be_empty
+      end
+
+      # the handler cancels the anchor's default action, so the dialog stays open
+      expect(page).to have_css("#BatchUpdateMetadata", visible: :visible)
+    end
+
+    it "selects every metadata source in the export all parents dialog" do
+      visit admin_sets_path
+      click_on("Export all parents")
+      expect(page).to have_css("#ExportAllParents", visible: :visible)
+
+      within("#ExportAllParents") do
+        expect(page).to have_css("#metadata_source_ids option", minimum: 2)
+        expect(page.all("#metadata_source_ids option").select(&:selected?)).to be_empty
+
+        click_on("Select All")
+
+        expect(page.all("#metadata_source_ids option").reject(&:selected?)).to be_empty
+      end
+
+      expect(page).to have_css("#ExportAllParents", visible: :visible)
+    end
+  end
+
   context "when user does not have permission to Sets" do
     before do
       admin_set
