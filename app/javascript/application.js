@@ -7,14 +7,15 @@ import jszip from 'jszip';
 import pdfmake from 'pdfmake';
 import DataTable from 'datatables.net-bs5';
 import "datatables.net-buttons-bs5"
-import "datatables.net-buttons/js/buttons.colVis.js"
-import "datatables.net-buttons/js/buttons.html5.js"
-import "datatables.net-buttons/js/buttons.print.js"
 import "datatables.net-select-bs5"
 
 import "@fortawesome/fontawesome-free/js/all.js";
 
 window.DataTable = DataTable
+// DataTables 3 only attaches itself to jQuery if jQuery is already on `window` when it
+// loads, which it is not once esbuild hoists these imports. Register it explicitly so
+// DataTables keeps firing its events through jQuery and handlers below get their args.
+DataTable.use(jQuery);
 DataTable.use(bootstrap);
 DataTable.Buttons.jszip(jszip);
 DataTable.Buttons.pdfMake(pdfmake);
@@ -52,7 +53,7 @@ $( document ).on('turbolinks:load', function() {
       let searchRow = $("<tr role='row' id='search-row'></tr>");
       let index = 0;
       let colVisibilityMap = {}
-      dataTable.api().columns().every(function () {
+      dataTable.columns().every(function () {
         let column = this;
         let searchInit = initialColumnSearchValues[index];
         let colDef = columns[index++];
@@ -88,27 +89,24 @@ $( document ).on('turbolinks:load', function() {
           searchRow.append("<th />");
         }
       });
-      $(dataTable.api().table().header()).append(searchRow);
+      $(dataTable.table().header()).append(searchRow);
       // store the information about which columns are visible for this page
       return colVisibilityMap;
     }
 
     var oldExportAction = function (self, e, dt, button, config) {
       if (button[0].className.indexOf('buttons-csv') >= 0) {
-        if ($.fn.dataTable.ext.buttons.csvHtml5.available(dt, config)) {
-          $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config);
-        }
-        else {
-          $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
+        if (DataTable.ext.buttons.csvHtml5.available(dt, config)) {
+          DataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config);
         }
       } else if (button[0].className.indexOf('buttons-print') >= 0) {
-        $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+        DataTable.ext.buttons.print.action(e, dt, button, config);
       }
     };
 
     var newExportAction = function (e, dt, button, config) {
       var self = this;
-      var oldStart = dt.settings()[0]._iDisplayStart;
+      var oldStart = dt.settings()[0].displayStart;
 
       dt.one('preXhr', function (e, s, data) {
         // Just this once, load all data from the server...
@@ -122,7 +120,7 @@ $( document ).on('turbolinks:load', function() {
           dt.one('preXhr', function (e, s, data) {
             // DataTables thinks the first item displayed is index 0, but we're not drawing that.
             // Set the property to what it was before exporting.
-            settings._iDisplayStart = oldStart;
+            settings.displayStart = oldStart;
             data.start = oldStart;
           });
 
@@ -138,7 +136,7 @@ $( document ).on('turbolinks:load', function() {
       dt.ajax.reload();
     };
 
-    dataTable = $('.is-datatable').dataTable({
+    dataTable = new DataTable('.is-datatable', {
       "deferLoading":true,
       "ordering": true,
       "processing": true,
@@ -148,7 +146,7 @@ $( document ).on('turbolinks:load', function() {
         "url": $('.is-datatable').data('source')
       },
       "pagingType": "full_numbers",
-      "bAutoWidth": false, // AutoWidth has issues with hiding and showing columns as startup
+      "autoWidth": false, // AutoWidth has issues with hiding and showing columns as startup
       columnDefs: [
         { "width": "250px", "targets": [0] },
         { "width": "200px", "targets": columns.slice(1).map((x, index) => index + 1) } // every column except the first one
@@ -157,16 +155,16 @@ $( document ).on('turbolinks:load', function() {
       "order": columnOrder(columns),
       "lengthMenu": [[50, 100, 500], [50, 100, 500]],
       // This will disable the export all button when there are more than 12K records
-      "fnDrawCallback": function( oSettings ) {
-        $('.export-all').attr('disabled', oSettings.fnRecordsDisplay() > 12000)
+      "drawCallback": function () {
+        $('.export-all').attr('disabled', this.api().page.info().recordsDisplay > 12000)
       },
-      "sDom":hasSearch?'Blrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
+      "dom":hasSearch?'Blrtip':'<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
       buttons: [
         {
           text: "Clear Filters",
           className: "clear-filters-button",
           action: () => {
-            dataTable.api().state.clear();
+            dataTable.state.clear();
             location.reload();
           }
         },
@@ -219,20 +217,20 @@ $( document ).on('turbolinks:load', function() {
     })
 
     if (hasSearch) onColumnsUpdate(dataTable);
-    dataTable.api().draw();
-    $.fn.dataTable.ext.errMode = 'throw';
+    dataTable.draw();
+    DataTable.ext.errMode = 'throw';
 
     $('.is-datatable').on( 'column-visibility.dt', function ( e, settings, column, state ) {
       // Check for data-destroying because this gets called after turbo links updates document.location and the
       // datatable is destroyed in turbolinks:before-cache. In that case, don't create the search row or
       // write the column information to localStorage using the wrong document.location.href
-      if (hasSearch && "true" !== $( '.is-datatable' ).data("destroying")) onColumnsUpdate($( '.is-datatable' ).dataTable());
+      if (hasSearch && "true" !== $( '.is-datatable' ).data("destroying")) onColumnsUpdate(dataTable);
     } );
 
 
     $(document).on('turbolinks:before-cache', function(){
       $( '.is-datatable' ).data("destroying", "true");
-      dataTable.api().destroy();
+      dataTable.destroy();
       $('#search-row').remove();
       $('.dt-info, .dt-paging').remove(); // Remove pagination elements
     })
@@ -261,7 +259,7 @@ let scheduleDraw = function() {
 let triggerDraw = function() {
   clearInterval(drawTimer);
   drawTimer = 0;
-  dataTable.api().draw();
+  dataTable.draw();
 }
 
 // This will order all datatables by the first column descending
@@ -329,7 +327,7 @@ $( document ).on('turbolinks:load', function() {
   if ( dataTable && $(".is-datatable").data("refresh")) {
     let interval = setTimeout( function() { // do the first refresh quickly,
       let reload = function() { //then start the regular refresh every 60s, after the reload completes
-        dataTable.api().ajax.reload(function(data) {
+        dataTable.ajax.reload(function(data) {
           interval = setTimeout(reload, 60000);
         });
       }
