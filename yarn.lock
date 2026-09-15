@@ -215,10 +215,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rails/actioncable@npm:^7.0.7":
-  version: 7.2.301
-  resolution: "@rails/actioncable@npm:7.2.301"
-  checksum: 10c0/22706e6c701832254fc5511120d7af1cf586dd89994139cc1ef75bb04f464a5ae2406058e7600b062e02cd093b16dd31f2d1e82d8bfa984fe29c037e5c871c92
+"@rails/actioncable@npm:^7.2.302":
+  version: 7.2.302
+  resolution: "@rails/actioncable@npm:7.2.302"
+  checksum: 10c0/c7e8efc2ed8af5991f26aa2f5056fb09f060f2ffcda4fbadd253c546a85e195d3e3d31506cfbe6b6d30ecbf3a82cbe536a569cd9eaf5cf3a0676fdcfb04dee6b
   languageName: node
   linkType: hard
 
@@ -743,7 +743,7 @@ __metadata:
   dependencies:
     "@fortawesome/fontawesome-free": "npm:^7.3.1"
     "@popperjs/core": "npm:^2.11.8"
-    "@rails/actioncable": "npm:^7.0.7"
+    "@rails/actioncable": "npm:^7.2.302"
     "@rails/activestorage": "npm:^7.0.7"
     "@rails/ujs": "npm:^7.0.7"
     "@yalelibrary/yul-dc-structure-editor": "npm:^0.1.1"
