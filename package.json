@@ -16,7 +16,7 @@
     "datatables.net-responsive": "^4.0.0",
     "datatables.net-select": "^4.0.0",
     "datatables.net-select-bs5": "^4.0.0",
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.28.2",
     "jquery": "^4.0.0",
     "jszip": "^3.10.1",
     "pdfmake": "^0.3.11",
