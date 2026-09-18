@@ -2,6 +2,11 @@
 DEFAULT DESKTOP STYLING
 ********************************************************/
 // styles are in order from the top to the bottom of the page
+//
+// NOTE: the DataTables CSS is not loaded from the npm packages. The package
+// stylesheets never make it into our compiled CSS (application.scss imports them
+// with `@import url(...)`, which resolves to a 404 at runtime), so all DataTables
+// styling — including the sort arrows below — has always been hand-rolled here.
 @import 'theme/colors', 'theme/typography', 'theme/breakpoints';
 
 .datatable-heading {
@@ -94,6 +99,40 @@ DEFAULT DESKTOP STYLING
   }
 }
 
+// sort arrows
+.is-datatable {
+  th .dt-column-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  th.dt-orderable-asc .dt-column-order,
+  th.dt-orderable-desc .dt-column-order {
+    flex: 0 0 auto;
+    line-height: 0.8;
+    text-align: center;
+    cursor: pointer;
+
+    &::before,
+    &::after {
+      display: block;
+      font-size: 0.7em;
+      opacity: 0.4;
+    }
+
+    &::before { content: "\25B2"; } // ▲ ascending
+    &::after  { content: "\25BC"; } // ▼ descending
+  }
+
+  // Highlight the active sort direction (DataTables adds these classes on sort)
+  th.dt-ordering-asc .dt-column-order::before,
+  th.dt-ordering-desc .dt-column-order::after {
+    opacity: 1;
+  }
+}
+
 .datatable-body {
   td {
     font-family: $mallory_light, Arial, Helvetica, sans-serif;
@@ -171,30 +210,4 @@ table#batch-processes-datatable {
 
 #parent-object-versions-table .fa-external-link-alt {
   margin-left: 10px;
-}
-
-span.dt-column-order::before, span.dt-column-order::after {
-  opacity: 0.125;
-  line-height: 9px;
-  font-size: 0.8em;
-}
-
-span.dt-column-order::after {
-  content: "\25BC";
-  content: "\25BC"/"";
-  float: right;
-}
-
-span.dt-column-order::before {
-  content: "\25B2";
-  content: "\25B2"/"";
-  float: right;
-}
-
-.dt-orderable-desc[aria-sort="descending"] span.dt-column-order::after {
-  opacity: 1;
-}
-
-.dt-orderable-desc[aria-sort="ascending"] span.dt-column-order::before {
-  opacity: 1;
 }
