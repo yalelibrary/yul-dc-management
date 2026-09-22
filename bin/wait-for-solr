@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Blocks until the Solr core finishes loading. Solr returns 503 from its core
+# endpoints while a core is still initializing; running db:migrate before the
+# core is ready intermittently aborts CreateSolrOcrFieldType (which POSTs to the
+# schema API). A GET against the core is 503 while loading and 200 once ready.
+
+SOLR_BASE_URL="${SOLR_BASE_URL:-http://localhost:8983/solr}"
+SOLR_CORE="${SOLR_CORE:-blacklight-core}"
+READY_URL="${SOLR_BASE_URL}/${SOLR_CORE}/select?q=*:*&rows=0"
+
+echo "waiting for solr core '${SOLR_CORE}' at ${SOLR_BASE_URL}"
+
+LOOP_COUNT=0
+until [ $LOOP_COUNT -gt 60 ]
+do
+  if curl --silent -f "$READY_URL" > /dev/null; then
+    echo "Solr core is ready"
+    exit 0
+  fi
+  echo "Solr core not ready yet (attempt ${LOOP_COUNT})"
+  sleep 2
+  ((LOOP_COUNT=LOOP_COUNT+1))
+done
+
+echo "Timed out waiting for solr core '${SOLR_CORE}'"
+exit 1
