@@ -3,7 +3,9 @@
 class CreatePreservicaChildrenJob < ApplicationJob
   FIVE_HUNDRED_MB = 524_288_000
   queue_as :default
-  retry_on RuntimeError, Net::HTTPFatalError, Net::HTTPNotFound, Net::ReadTimeout, PreservicaImageService::PreservicaImageServiceNetworkError, attempts: 3 do |job, exception|
+  retry_on RuntimeError, Net::HTTPFatalError, Net::HTTPNotFound, Net::ReadTimeout, PreservicaImageService::PreservicaImageServiceNetworkError, wait: lambda { |executions|
+                                                                                                                                                       [30, 180, 10_800][executions - 1 || 10_800]
+                                                                                                                                                     }, attempts: 3 do |job, exception|
     parent_arg = job.arguments.first
     parent_oid = parent_arg&.respond_to?(:oid) ? parent_arg.oid : parent_arg&._aj_globalid&.split('/')&.last&.to_i
     parent_object = ParentObject.find_by(oid: parent_oid)
