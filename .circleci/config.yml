@@ -60,6 +60,10 @@ jobs:
     steps:
       - setup_remote_docker
       - run:
+          name: Wait for Solr core to be ready
+          command: |
+            cd /home/app/webapp && ./bin/wait-for-solr
+      - run:
           name: Run database migrations
           command: |
             cd /home/app/webapp && bundle exec rails db:migrate RAILS_ENV=test
