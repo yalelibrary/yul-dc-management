@@ -5,7 +5,7 @@
     "@fortawesome/fontawesome-free": "^7.3.1",
     "@popperjs/core": "^2.11.8",
     "@rails/actioncable": "^7.0.7",
-    "@rails/activestorage": "^7.0.7",
+    "@rails/activestorage": "^7.2.302",
     "@rails/ujs": "^7.0.7",
     "@yalelibrary/yul-dc-structure-editor": "^0.1.1",
     "bootstrap": "5.3.3",
