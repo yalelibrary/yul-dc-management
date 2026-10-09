@@ -1,5 +1,8 @@
 class CreateSolrOcrFieldType < ActiveRecord::Migration[6.0]
   def change
+    # Solr 9 ships text_ocr and *_wstsim in its read-only schema, so skip when already present
+    return if text_ocr_exists?
+
     indexAnalyzer = {
         "tokenizer": {
             class: "solr.WhitespaceTokenizerFactory"
@@ -28,6 +31,12 @@ class CreateSolrOcrFieldType < ActiveRecord::Migration[6.0]
     rescue Faraday::BadRequestError
       # the field may have already been created, so update
       SolrService.replace_dynamic_field("*_wstsim", "text_ocr", true, true, true)
-    end        
+    end
+  end
+
+  def text_ocr_exists?
+    SolrService.connection.connection.get('schema/fieldtypes/text_ocr').success?
+  rescue Faraday::Error
+    false
   end
 end
