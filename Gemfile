@@ -13,6 +13,7 @@ gem 'bootstrap', '~> 5.3'
 gem 'coderay', '~> 1.1', '>= 1.1.3'
 # can remove concurrent-ruby pin after upgrade to Rails 7.1 - fixes https://stackoverflow.com/questions/79360526/uninitialized-constant-activesupportloggerthreadsafelevellogger-nameerror
 gem 'concurrent-ruby', '1.3.7'
+gem 'csv', '~> 3.3.6'
 gem 'devise', '~> 5.0'
 gem 'github_changelog_generator', '~> 1.16'
 gem 'honeybadger', '~> 5.29'

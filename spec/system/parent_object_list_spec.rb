@@ -42,5 +42,26 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       expect(page).to have_content("2002826")
       expect(page).to have_content("2004548")
     end
+
+    it "renders sortable column headers and re-sorts rows when a header is clicked" do
+      visit parent_objects_path
+      first_row_oid = "#parent-objects-datatable tbody tr:first-child td:first-child"
+      all_oids = "#parent-objects-datatable tbody tr td:first-child"
+      expect(page).to have_css(all_oids, count: 2)
+
+      # DataTables marks orderable columns and injects the sort-arrow element into the header
+      oid_header = find("#parent-objects-datatable thead th", text: "OID", match: :first)
+      expect(oid_header[:class]).to include("dt-orderable")
+      expect(oid_header).to have_css(".dt-column-order")
+
+      # The table defaults to first-column (OID) descending
+      expect(page).to have_css(first_row_oid, text: "2004548")
+      expect(all(all_oids).map(&:text)).to eq(%w[2004548 2002826])
+
+      # Clicking the OID header re-sorts the rows ascending
+      oid_header.click
+      expect(page).to have_css(first_row_oid, text: "2002826")
+      expect(all(all_oids).map(&:text)).to eq(%w[2002826 2004548])
+    end
   end
 end

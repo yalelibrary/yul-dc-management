@@ -51,13 +51,14 @@ if [ -z "${savefiles}" ]; then rm -f $outprefix*; fi
 
 # first, use vipsheader to read the bands
 set +e
-CHANNELS=$(identify -format "%[channels]\n" ${input}[0] 2>/dev/null)
+# ImageMagick 7's %[channels] appends the channel count (e.g. "srgb 3.0"), so take the colorspace word only
+CHANNELS=$(identify -format "%[channels]\n" ${input}[0] 2>/dev/null | awk '{print $1}')
 status=$?
 [ $status -ne 0 ] && vips tiffsave $input ${tmpfix} && input=${tmpfix}
 set -e
-[ $status -ne 0 ] && CHANNELS=$(identify -format "%[channels]\n" ${input}[0] 2>/dev/null)
+[ $status -ne 0 ] && CHANNELS=$(identify -format "%[channels]\n" ${input}[0] 2>/dev/null | awk '{print $1}')
 echo "channels: ${CHANNELS}"
-if [ ${CHANNELS} = "srgba" ]; then
+if [ "${CHANNELS}" = "srgba" ]; then
     # we have to flatten the image to remove the alpha channel / trasparency before proceeding
     echo "removing alpha channel from $input"
     vips im_extract_bands $input ${input}.noalpha.tif 0 3   2>&1

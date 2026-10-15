@@ -64,7 +64,11 @@
     <% elsif parent_object.child_object_ids.count == 0 %>
       <div class="col-med-3">
         <%= form.label :visibility %>
-        <%= form.select(:visibility, ['Private', 'Public', 'Redirect', 'Yale Community Only']) %>
+        <% if current_ability.can?(:owp_access, OpenWithPermission::PermissionSet) || current_user.has_role?(:sysadmin) %>
+          <%= form.select(:visibility, ['Open with Permission', 'Private', 'Public', 'Redirect', 'Yale Community Only']) %>
+        <% else %>
+          <%= form.select(:visibility, ['Private', 'Public', 'Redirect', 'Yale Community Only']) %>
+        <% end %>
       </div>
     <% elsif current_ability.can?(:owp_access, OpenWithPermission::PermissionSet) || current_user.has_role?(:sysadmin) %>
       <div class="col-med-3">

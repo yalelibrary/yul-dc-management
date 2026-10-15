@@ -59,6 +59,15 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'system user' do
+    it 'returns the system user with the correct attributes' do
+      system_user = User.system_user
+      expect(system_user.uid).to eq('System')
+      expect(system_user.first_name).to eq('System')
+      expect(system_user.last_name).to eq('User')
+    end
+  end
+
   describe 'with validations' do
     it 'verifies that a new user has an email' do
       user2 = described_class.new(email: nil)
