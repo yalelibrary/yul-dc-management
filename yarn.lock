@@ -355,17 +355,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net-select-bs5@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "datatables.net-select-bs5@npm:4.0.0"
+"datatables.net-select-bs5@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "datatables.net-select-bs5@npm:4.0.1"
   dependencies:
     datatables.net-bs5: "npm:^3"
-    datatables.net-select: "npm:4.0.0"
-  checksum: 10c0/6c3055d65416e4ed2c31865dc64f1bb9121cd5384f03072ba750e7856169c1e4a7ccb834771b04a83d72b0902fcb3adf7d15821a79afa4bb1d12b038e9cd0956
+    datatables.net-select: "npm:4.0.1"
+  checksum: 10c0/ba80e93c7341e1ce7686177a9cb1937476b56ad0bec7c785696ad50105123703943f3972485b0f51b415ce56fb78f04226c29baa493b3dfc9c89d5e84a9419c0
   languageName: node
   linkType: hard
 
-"datatables.net-select@npm:4.0.0, datatables.net-select@npm:^4.0.0":
+"datatables.net-select@npm:4.0.1":
+  version: 4.0.1
+  resolution: "datatables.net-select@npm:4.0.1"
+  dependencies:
+    datatables.net: "npm:^3"
+  checksum: 10c0/a1fa098a486b4c8eb72a54893a397ded481978274f88710c4bc1c2834793ba5aaae2782d594bdfcf29bfa70292d18c9d90790893ffd0d79ce0c59a86487fd1c0
+  languageName: node
+  linkType: hard
+
+"datatables.net-select@npm:^4.0.0":
   version: 4.0.0
   resolution: "datatables.net-select@npm:4.0.0"
   dependencies:
@@ -755,7 +764,7 @@ __metadata:
     datatables.net-buttons-bs5: "npm:^4.0.2"
     datatables.net-responsive: "npm:^4.0.0"
     datatables.net-select: "npm:^4.0.0"
-    datatables.net-select-bs5: "npm:^4.0.0"
+    datatables.net-select-bs5: "npm:^4.0.1"
     esbuild: "npm:^0.28.2"
     jquery: "npm:^4.0.0"
     jszip: "npm:^3.10.1"
