@@ -83,7 +83,14 @@ class MetsDocument
   end
 
   def all_images_present?
-    files.all? { |file| (File.exist?(file[:mets_access_primary_path]) || File.exist?(file[:mets_access_primary_path].gsub('.tif', '.TIF').gsub('.jpg', '.JPG'))) }
+    missing_images.empty?
+  end
+
+  # mets image paths that do not exist on disk, e.g. when Goobi has not renamed images with child oids
+  def missing_images
+    files.map { |file| file[:mets_access_primary_path] }.reject do |path|
+      File.exist?(path) || File.exist?(path.gsub('.tif', '.TIF').gsub('.jpg', '.JPG'))
+    end
   end
 
   def all_images_have_checksum?

@@ -26,12 +26,24 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
       expect { metadata_job.perform(parent_object, batch_process) }.to raise_error('boom!')
     end
 
-    it 'notifies if all images are not present' do
-      # rubocop:disable RSpec/AnyInstance
-      allow_any_instance_of(SetupMetadataJob).to receive(:check_mets_images).and_return(false)
-      # rubocop:enable RSpec/AnyInstance
-      expect(parent_object).to receive(:processing_event).with("SetupMetadataJob failed to find all images.", "failed").once
-      metadata_job.perform(parent_object, batch_process)
+    context 'when Goobi images are not named with child oids' do
+      let(:missing_paths) { Array.new(12) { |i| "missing_#{i}.tif" } }
+      let(:expected_message) do
+        "#{SetupMetadataJob::GOOBI_IMAGES_MESSAGE}. Parent #{parent_object.oid} is missing 12 images"
+      end
+
+      before do
+        allow(metadata_job).to receive(:check_mets_images).and_return(false)
+        allow(batch_process).to receive(:mets_doc).and_return(instance_double(MetsDocument, missing_images: missing_paths))
+      end
+
+      it 'fails the job and documents the failure on the parent and batch process' do
+        allow(parent_object).to receive(:processing_event)
+        expect { metadata_job.perform(parent_object, batch_process) }.to raise_error(SetupMetadataJob::GoobiImagesMissingError, expected_message)
+        expect(parent_object).to have_received(:processing_event).with(expected_message, "failed").once
+        expect(parent_object).not_to have_received(:processing_event).with(/Metadata Cloud could not access/, "failed")
+        expect(batch_process.batch_ingest_events.pluck(:reason, :status)).to include(["Ingest failed. Please ensure images on Goobi server are named with object identifier", "failed"])
+      end
     end
   end
 
