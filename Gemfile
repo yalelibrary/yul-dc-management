@@ -11,8 +11,6 @@ gem 'aws-sdk-s3', '~> 1.208'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bootstrap', '~> 5.3'
 gem 'coderay', '~> 1.1', '>= 1.1.3'
-# can remove concurrent-ruby pin after upgrade to Rails 7.1 - fixes https://stackoverflow.com/questions/79360526/uninitialized-constant-activesupportloggerthreadsafelevellogger-nameerror
-gem 'concurrent-ruby', '1.3.7'
 gem 'csv', '~> 3.3.6'
 gem 'devise', '~> 5.0'
 gem 'github_changelog_generator', '~> 1.16'
@@ -31,7 +29,7 @@ gem 'cancancan', '~> 3.5'
 gem 'omniauth-rails_csrf_protection', '~> 2.0'
 gem 'rolify', '~> 6.0'
 # Audit trail for changes to ActiveRecord models
-gem 'paper_trail', '~> 15.1'
+gem 'paper_trail', '~> 16.0'
 # Yale-specific pairtree gem
 gem 'partridge', '~> 0.1.2'
 # Use postgresql as the database for Active Record
@@ -42,7 +40,7 @@ gem 'puma', '~> 7.2'
 gem 'rack', '>= 3.0.13'
 gem 'rack-cors', '~> 2.0.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.2.3.1'
+gem 'rails', '~> 8.0.5'
 gem "rails_semantic_logger", "~> 4.20"
 # Use rsolr to connect to Solr
 gem 'rsolr', '~> 2.3'
@@ -76,6 +74,8 @@ group :development, :test do
   gem 'bixby', '~> 5.0'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  # vcr calls CGI.parse, which Ruby 4 no longer bundles; Rails 7.2 pulled this in transitively but Rails 8 does not
+  gem 'cgi', '~> 0.5'
   gem 'factory_bot_rails', '~> 6.5.1'
   gem 'rspec-rails', '~> 8.0.4'
   gem 'vcr', '~> 6.0'

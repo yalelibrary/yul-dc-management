@@ -215,19 +215,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rails/actioncable@npm:^7.2.302":
-  version: 7.2.302
-  resolution: "@rails/actioncable@npm:7.2.302"
-  checksum: 10c0/c7e8efc2ed8af5991f26aa2f5056fb09f060f2ffcda4fbadd253c546a85e195d3e3d31506cfbe6b6d30ecbf3a82cbe536a569cd9eaf5cf3a0676fdcfb04dee6b
+"@rails/actioncable@npm:^8.0.501":
+  version: 8.1.301
+  resolution: "@rails/actioncable@npm:8.1.301"
+  checksum: 10c0/50d395e012f23b7cbdd18ad42077baaf8f15fd2b3e55cdc93e0ae771c7d24ec0deeea97062e7e9549f0ebeae3f90d6a32ef7de909389d957f87e3384fe23501e
   languageName: node
   linkType: hard
 
-"@rails/activestorage@npm:^7.2.302":
-  version: 7.2.302
-  resolution: "@rails/activestorage@npm:7.2.302"
+"@rails/activestorage@npm:^8.0.501":
+  version: 8.1.301
+  resolution: "@rails/activestorage@npm:8.1.301"
   dependencies:
     spark-md5: "npm:^3.0.1"
-  checksum: 10c0/555146ab330b27e0a3d3b24efc7cd814f8ab728586c201b6adc01e5784305947607c731a4612f35614aa9f5dc489d521a11c84e653fbe9ae326fb47b181a58ed
+  checksum: 10c0/4bbbf7918b9a92c51a5b8f5a1d38be260bb4a27b651bb90232a11ba8c867b7d1c1ad6a82ca68c31c9f5c9aeffce5a21f0adf01427e2b172d8b61716b2a3cc006
   languageName: node
   linkType: hard
 
@@ -744,8 +744,8 @@ __metadata:
   dependencies:
     "@fortawesome/fontawesome-free": "npm:^7.3.1"
     "@popperjs/core": "npm:^2.11.8"
-    "@rails/actioncable": "npm:^7.2.302"
-    "@rails/activestorage": "npm:^7.2.302"
+    "@rails/actioncable": "npm:^8.0.501"
+    "@rails/activestorage": "npm:^8.0.501"
     "@rails/ujs": "npm:^7.0.7"
     "@yalelibrary/yul-dc-structure-editor": "npm:^0.1.1"
     bootstrap: "npm:5.3.3"

@@ -107,7 +107,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :sendmail
   config.action_mailer.perform_deliveries = false
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.preview_path = Rails.root.join("spec", "mailers", "previews")
+  config.action_mailer.preview_paths << Rails.root.join("spec", "mailers", "previews").to_s
   config.action_mailer.deliver_later_queue_name = 'default'
 
   # for open with permission testing
