@@ -148,6 +148,7 @@ $( document ).on('turbolinks:load', function() {
       "pagingType": "full_numbers",
       "autoWidth": false, // AutoWidth has issues with hiding and showing columns as startup
       columnDefs: [
+        { "orderSequence": ["asc", "desc"], "targets": "_all" },
         { "width": "250px", "targets": [0] },
         { "width": "200px", "targets": columns.slice(1).map((x, index) => index + 1) } // every column except the first one
       ],
