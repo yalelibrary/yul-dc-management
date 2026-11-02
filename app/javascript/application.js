@@ -205,7 +205,7 @@ $( document ).on('turbolinks:load', function() {
         $('.dt-paging').appendTo('.main-content');
 
         // Add handler for column visibility changes
-        $(document).on('click', '.dt-button-collection .dropdown-item', function() {
+        $(document).off('click.datatable').on('click.datatable', '.dt-button-collection .dropdown-item', function() {
           $(this).toggleClass('active');
         });
       },
@@ -227,8 +227,7 @@ $( document ).on('turbolinks:load', function() {
       if (hasSearch && "true" !== $( '.is-datatable' ).data("destroying")) onColumnsUpdate(dataTable);
     } );
 
-
-    $(document).on('turbolinks:before-cache', function(){
+    $(document).off('turbolinks:before-cache.datatable').one('turbolinks:before-cache.datatable', function(){
       $( '.is-datatable' ).data("destroying", "true");
       dataTable.destroy();
       $('#search-row').remove();
