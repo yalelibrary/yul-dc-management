@@ -3,6 +3,9 @@
 class SetupMetadataJob < ApplicationJob
   queue_as :metadata
   FIVE_HUNDRED_MB = 524_288_000
+  GOOBI_IMAGES_MESSAGE = "Ingest failed. Please ensure images on Goobi server are named with object identifier"
+
+  class GoobiImagesMissingError < StandardError; end
 
   def default_priority
     40
@@ -19,10 +22,7 @@ class SetupMetadataJob < ApplicationJob
     return if redirect(parent_object)
     parent_object.generate_manifest = true
     mets_images_present = check_mets_images(parent_object, current_batch_process, current_batch_connection)
-    unless mets_images_present
-      parent_object.processing_event("SetupMetadataJob failed to find all images.", "failed")
-      return
-    end
+    report_missing_mets_images(parent_object, current_batch_process) unless mets_images_present
     unless parent_object.default_fetch(current_batch_process, current_batch_connection)
       # Don't retry in this case. default_fetch() will throw an exception if it's a network error and trigger retry
       parent_object.processing_event("Metadata Cloud could not access this descriptive record. Please make sure you have entered the correct information and that the descriptive records are public and/or published. ------------ Message from System: SetupMetadataJob failed to retrieve authoritative metadata. [#{parent_object.metadata_cloud_url}]", "failed")
@@ -39,6 +39,8 @@ class SetupMetadataJob < ApplicationJob
     end
     setup_child_object_jobs(parent_object, current_batch_process)
     index_private(parent_object)
+  rescue GoobiImagesMissingError
+    raise # already documented on the parent and batch process
   rescue => e
     parent_object.processing_event(
 "Metadata Cloud could not access this descriptive record. Please make sure you have entered the correct information, you have included a record source (alma or aspace), and, for aspace records, that you have included the public Archives at Yale address for the record. ------------ Message from System: Setup job failed to save: #{e.message}", "failed"
@@ -67,6 +69,15 @@ class SetupMetadataJob < ApplicationJob
     else
       true
     end
+  end
+
+  # documents missing Goobi images on the parent and batch process, then fails the job so it shows in GoodJob Dashboard
+  def report_missing_mets_images(parent_object, current_batch_process)
+    missing_count = current_batch_process.mets_doc.missing_images.size
+    message = "#{GOOBI_IMAGES_MESSAGE}. Parent #{parent_object.oid} is missing #{missing_count} #{'image'.pluralize(missing_count)}"
+    parent_object.processing_event(message, "failed")
+    current_batch_process.batch_processing_event(GOOBI_IMAGES_MESSAGE, "failed")
+    raise GoobiImagesMissingError, message
   end
 
   # even if metadata is missing we want to index data to solr so the object can be removed from blacklight

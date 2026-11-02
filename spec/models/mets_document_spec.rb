@@ -121,6 +121,13 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
     it "returns false for a valid METs file that points to images that are not available on the file system" do
       mets_doc = described_class.new(image_missing_file)
       expect(mets_doc.all_images_present?).to be_falsey
+      expect(mets_doc.missing_images).not_to be_empty
+      expect(mets_doc.missing_images).to all(satisfy { |path| !File.exist?(path) })
+    end
+
+    it "lists no missing images when all images are available on the file system" do
+      mets_doc = described_class.new(valid_goobi_xml)
+      expect(mets_doc.missing_images).to be_empty
     end
 
     it "returns true for a valid METs file that points to images that are all available on the file system" do

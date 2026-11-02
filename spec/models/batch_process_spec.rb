@@ -124,7 +124,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     it "creates a parent object with aspace uri from the METs document" do
       admin_set_three
       batch_process.file = aspace_xml_upload
-      batch_process.save!
+      # aspace fixture images are not on disk, so keep SetupMetadataJob from failing the save
+      with_good_job_external_mode { batch_process.save! }
       po = ParentObject.find(30_000_557)
       expect(po.aspace_uri).to eq "/repositories/11/archival_objects/329771"
       expect(po.metadata_cloud_url).to eq(
@@ -135,7 +136,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     it "creates a parent object with admin set from the METs document" do
       admin_set_three
       batch_process.file = aspace_xml_upload
-      batch_process.save!
+      # aspace fixture images are not on disk, so keep SetupMetadataJob from failing the save
+      with_good_job_external_mode { batch_process.save! }
       po = ParentObject.find(30_000_557)
       expect(po.admin_set).not_to be_nil
       expect(po.admin_set.key).to eq "brbl"
@@ -157,7 +159,8 @@ RSpec.describe BatchProcess, type: :model, prep_metadata_sources: true, prep_adm
     it "creates a preservica ingest with parent uuid from the METs document" do
       admin_set_three
       batch_process.file = aspace_xml_upload
-      batch_process.save!
+      # aspace fixture images are not on disk, so keep SetupMetadataJob from failing the save
+      with_good_job_external_mode { batch_process.save! }
       pj = PreservicaIngest.find_by_parent_oid(30_000_557)
       expect(pj.preservica_id).to eq "c91ce4e1-10d2-4e33-8df3-83f081ff0125"
       expect(pj.batch_process_id).to eq batch_process.id
