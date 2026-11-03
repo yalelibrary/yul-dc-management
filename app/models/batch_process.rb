@@ -237,6 +237,8 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # SETS BATCH SINGLE STATUS
   def single_status(current_status)
+    # e.g. a mets file that failed validation before any parent objects were created
+    return "Batch failed" if current_status[:total].zero? && current_status[:retry].zero? && connected_batch_statuses.include?('failed')
     if current_status[:in_progress] / current_status[:total] == 1
       "Batch in progress - no failures"
     elsif current_status[:complete] / current_status[:total] == 1
