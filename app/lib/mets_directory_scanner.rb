@@ -4,13 +4,19 @@ require 'fcntl'
 
 # performs scans on directories for XML files and processes them if they are not already done or in progress
 class MetsDirectoryScanner
+  # raised at the end of a scan so failed mets files show in GoodJob
+  class ScanError < StandardError; end
+
   def self.perform_scan # rubocop:disable Metrics/AbcSize
+    failures = []
     MetsDirectoryScanner.scan_directories.each do |directory|
       Dir.glob(File.join(directory, '*/*_mets.xml')) do |path|
         next unless path =~ /.*_mets\.xml$/ && path !~ /.*xslt_result_mets\.xml$/
-        check_file(path)
+        failure = check_file(path)
+        failures << failure if failure
       end
     end
+    raise ScanError, "#{failures.count} mets #{'file'.pluralize(failures.count)} failed to ingest:\n#{failures.join("\n")}" if failures.any?
   end
 
   def self.indicator_file_prefix
@@ -23,6 +29,7 @@ class MetsDirectoryScanner
     ENV['GOOBI_SCAN_DIRECTORIES']&.split(',') || scans_by_goobi_mount || ['/brbl-dsu/dcs', '/brbl-dsu/jss_export']
   end
 
+  # returns an error message if the mets file failed to process, otherwise nil
   def self.check_file(path)
     is_done = File.exist?(File.join(File.dirname(path), "#{indicator_file_prefix}.done"))
     progress_file = File.join(File.dirname(path), "#{indicator_file_prefix}.progress")
@@ -41,7 +48,8 @@ class MetsDirectoryScanner
     end
   end
 
-  def self.process_file(xml_file_path)
+  # returns an error message if the mets file failed to process, otherwise nil
+  def self.process_file(xml_file_path) # rubocop:disable Metrics/MethodLength
     file = ActionDispatch::Http::UploadedFile.new(
       filename: File.basename(xml_file_path),
       type: 'text/xml',
@@ -63,8 +71,32 @@ class MetsDirectoryScanner
         File.new(done_file, "w")
         File.delete(progress_file) if File.exist?(progress_file)
       end
+      nil
+    # the progress file is left in place on failure, so the mets file will be retried once it is a day old
+    rescue ActiveRecord::RecordInvalid => e
+      report_invalid_mets(xml_file_path, batch_process, e)
     rescue => e
       Rails.logger.error("Error processing mets #{xml_file_path} #{e}")
+      "#{xml_file_path}: #{e.message}"
     end
+  end
+
+  # creates a failed batch process for a mets file that fails validation
+  def self.report_invalid_mets(xml_file_path, batch_process, error)
+    Rails.logger.error("Error processing mets #{xml_file_path} #{error}")
+    message = invalid_mets_message(batch_process.mets_doc, error)
+    failed_batch_process = BatchProcess.create!(batch_action: 'create parent objects', user: User.system_user, file_name: File.basename(xml_file_path),
+                                                oid: batch_process.mets_doc&.oid.presence&.to_i)
+    failed_batch_process.batch_processing_event(message, 'failed')
+    "#{xml_file_path}: #{error.message}"
+  end
+
+  def self.invalid_mets_message(mets_doc, error)
+    mets_doc&.valid_mets?
+    "Ingest failed. #{error.message}"
+  rescue MetsDocument::ImageError
+    SetupMetadataJob::GOOBI_IMAGES_MESSAGE
+  rescue StandardError => e
+    "Ingest failed. #{e.message}"
   end
 end

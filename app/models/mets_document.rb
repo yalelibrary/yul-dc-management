@@ -3,6 +3,10 @@
 class MetsDocument
   include MetadataCloudUrlParsable
   attr_reader :source_xml
+
+  # raised by valid_mets? for problems with the mets images, as opposed to its metadata
+  class ImageError < RuntimeError; end
+
   # Takes a path to the mets file
   def initialize(mets_xml)
     @source_xml = mets_xml
@@ -65,10 +69,10 @@ class MetsDocument
   def valid_mets?
     raise "no mets xml" unless @mets.xml?
     raise "no mets namespace in mets file" unless @mets.collect_namespaces.include?("xmlns:mets")
-    raise "no mets file in the mets xml" unless @mets.xpath("//mets:file").count >= 1
+    raise ImageError, "no mets file in the mets xml" unless @mets.xpath("//mets:file").count >= 1
     raise "no right statement found in the mets xml" if rights_statement.blank?
     raise "not valid metadata source" unless valid_metadata_source_path?
-    raise "no image path" if fixture_images_in_production?
+    raise ImageError, "no image path" if fixture_images_in_production?
     raise "no admin set in mets xml" unless admin_set.present?
     all_images_have_checksum?
     true
@@ -95,7 +99,7 @@ class MetsDocument
 
   def all_images_have_checksum?
     files.each_with_index do |file, index|
-      raise "#{file[:checksum]}, index: #{index} invalid checksum, check the checksum in mets xml" unless /^([a-f0-9]{40})$/.match?(file[:checksum])
+      raise ImageError, "#{file[:checksum]}, index: #{index} invalid checksum, check the checksum in mets xml" unless /^([a-f0-9]{40})$/.match?(file[:checksum])
     end
   end
 
