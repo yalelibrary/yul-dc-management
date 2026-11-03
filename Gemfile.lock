@@ -167,7 +167,7 @@ GEM
       tins (~> 1.32)
     crack (0.4.5)
       rexml
-    crass (1.0.7)
+    crass (1.0.8)
     csv (3.3.6)
     daemons (1.4.1)
     database_cleaner-active_record (2.2.2)
