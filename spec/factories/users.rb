@@ -5,7 +5,7 @@ FactoryBot.define do
   # The only field we get is uid. All user objects are given the
   # provider "cas"
   factory :user do
-    uid { FFaker::Internet.user_name }
+    sequence(:uid) { |number| "#{FFaker::Internet.user_name}#{number}" }
     email { FFaker::Internet.email }
     first_name { FFaker::Name.first_name }
     last_name { FFaker::Name.last_name }
