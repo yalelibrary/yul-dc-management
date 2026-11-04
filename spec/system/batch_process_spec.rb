@@ -177,7 +177,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       before do
         stub_metadata_cloud("2004548")
         user.add_role(:viewer, brbl)
-        login_as user
         parent_object
         parent_object2
         parent_object3
