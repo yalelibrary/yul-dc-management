@@ -82,15 +82,28 @@ RSpec.configure do |config|
 
   config.before(:each) do |example|
     DatabaseCleaner.start unless example.metadata[:skip_db_cleaner]
+    # Drop any login_as callback left over from a previous spec
+    Warden.test_reset!
   end
 
   config.append_after(:each) do |example|
     DatabaseCleaner.clean unless example.metadata[:skip_db_cleaner]
+    # Drop any login_as callback left over from this spec
     Warden.test_reset!
-    # ensure no straglers
-    ParentObject.all&.each { |x| x.destroy! } if ParentObject.all.count > 0
-    MetadataSource.all&.each { |x| x.destroy! } if MetadataSource.all.count > 0
-    AdminSet.all&.each { |x| x.destroy! } if AdminSet.all.count > 0
+    # ensure no stragglers, in one db commit, rolls back deletes if fails
+    if BatchProcess.exists? || User.exists? || ParentObject.exists? || AdminSet.exists? || MetadataSource.exists?
+      ActiveRecord::Base.transaction do
+        # clear foreign key relationship - batch process -> user - before clearing other records
+        IngestEvent.delete_all
+        BatchConnection.delete_all
+        BatchProcess.delete_all
+        User.find_each(batch_size: 500, &:destroy!)
+        # parent object destroy also destroys all child objects through dependent: :destroy
+        ParentObject.find_each(batch_size: 500, &:destroy!)
+        AdminSet.find_each(batch_size: 500, &:destroy!)
+        MetadataSource.find_each(batch_size: 500, &:destroy!)
+      end
+    end
     # Set initial oid # to 200_000_000
     ActiveRecord::Base.connection.execute("DROP SEQUENCE IF EXISTS OID_SEQUENCE;")
     OidMinterService.initialize_sequence!
