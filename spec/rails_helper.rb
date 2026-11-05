@@ -61,49 +61,29 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
+  # prepend_before so this runs ahead of every other before hook, including the prep_admin_sets /
+  # prep_metadata_sources hooks in spec/support, which are registered earlier (support files load
+  # above). Otherwise their rows are created before the transaction opens, commit for real, and
+  # leak into later specs.
+  config.prepend_before(:each) do |example|
     allow(GoodJob).to receive(:preserve_job_records).and_return(true)
     ActiveJob::Base.queue_adapter = GoodJob::Adapter.new(execution_mode: :inline)
-  end
-
-  config.before(:each, type: :system) do
-    # :rack_test driver's Rack app under test shares database connection
-    # with the specs, so continue to use transaction strategy for speed.
-    driver_shares_db_connection_with_specs = Capybara.current_driver == :rack_test
-
-    unless driver_shares_db_connection_with_specs
-      # Driver is probably for an external browser with an app
-      # under test that does *not* share a database connection with the
-      # specs, so use truncation strategy.
-      DatabaseCleaner.strategy = :truncation
-    end
-  end
-
-  config.before(:each) do |example|
+    # System specs drive a real browser against a server on another thread and DB connection,
+    # so a transaction can't see or undo its writes; truncate instead.
+    DatabaseCleaner.strategy = example.metadata[:type] == :system ? :truncation : :transaction
     DatabaseCleaner.start unless example.metadata[:skip_db_cleaner]
     # Drop any login_as callback left over from a previous spec
     Warden.test_reset!
   end
 
+  # Undo any time travel or freeze after every spec. Rails only does this itself in Rails-typed
+  # groups, so a freeze_time in e.g. a spec/lib spec would otherwise stay frozen into later specs.
+  config.after(:each) { travel_back }
+
   config.append_after(:each) do |example|
     DatabaseCleaner.clean unless example.metadata[:skip_db_cleaner]
     # Drop any login_as callback left over from this spec
     Warden.test_reset!
-    # ensure no stragglers, in one db commit, rolls back deletes if fails
-    if BatchProcess.exists? || User.exists? || ParentObject.exists? || AdminSet.exists? || MetadataSource.exists?
-      ActiveRecord::Base.transaction do
-        # clear foreign key relationship - batch process -> user - before clearing other records
-        IngestEvent.delete_all
-        BatchConnection.delete_all
-        BatchProcess.delete_all
-        User.find_each(batch_size: 500, &:destroy!)
-        # parent object destroy also destroys all child objects through dependent: :destroy
-        ParentObject.find_each(batch_size: 500, &:destroy!)
-        AdminSet.find_each(batch_size: 500, &:destroy!)
-        MetadataSource.find_each(batch_size: 500, &:destroy!)
-      end
-    end
     # Set initial oid # to 200_000_000
     ActiveRecord::Base.connection.execute("DROP SEQUENCE IF EXISTS OID_SEQUENCE;")
     OidMinterService.initialize_sequence!

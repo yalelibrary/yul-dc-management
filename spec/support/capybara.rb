@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 # TODO  Webdrivers.cache_time = 3
 Capybara.default_max_wait_time = 8
-Capybara.default_driver = :rack_test
 
 # Setup chrome headless driver
 # Capybara.server = :puma, { Silent: false }
@@ -38,13 +37,13 @@ Capybara.configure do |config|
   config.default_driver = :chrome
   config.javascript_driver = :chrome
 
-  # Forces Capybara to handle server configurations isolatively per thread
+  # Start a separate server for each app instance instead of sharing one across sessions
   config.reuse_server = false
 end
 
 # Quit browsers before dropping them from the pool. A browser that is dropped without quitting keeps
-# its page and JS timers running in the Selenium container, and its requests can consume a pending
-# Warden login_as callback meant for the next spec.
+# its page and JS timers running in the Selenium container, and its requests keep hitting the test
+# server during later specs.
 def quit_and_clear_capybara_sessions
   Capybara.send(:session_pool).each_value do |session|
     session.driver.quit
@@ -52,6 +51,14 @@ def quit_and_clear_capybara_sessions
     warn "[Capybara] Unable to quit stale session: #{e.message}"
   end
   Capybara.send(:session_pool).clear
+end
+
+# Every Selenium retry during the run, reported at the end so a retry that ends in a pass can't
+# hide a recurring problem.
+module CapybaraRetryLog
+  def self.entries
+    @entries ||= []
+  end
 end
 
 # Setup rspec
@@ -63,7 +70,6 @@ RSpec.configure do |config|
   config.before(:each, type: :system, js: true) do
     # rails system specs reset app_host each time so needs to be forced on each test
     Capybara.app_host = "http://#{ENV['WEB_HOST']}:#{Capybara.server_port}"
-    driven_by :chrome
   end
 
   config.after(:each) do
@@ -86,6 +92,7 @@ RSpec.configure do |config|
 
       retries -= 1
       warn "[Capybara] Retrying example due to Selenium session error: #{error.message}"
+      CapybaraRetryLog.entries << "#{example.location} (#{error.class})"
       Capybara.default_driver = :chrome
       quit_and_clear_capybara_sessions
       # Forget the failed attempt so the retry is judged on its own result
@@ -94,5 +101,12 @@ RSpec.configure do |config|
       # Memoized lets from the failed attempt point at records the cleaner already removed
       example.example_group_instance.send(:__init_memoized)
     end
+  end
+
+  config.after(:suite) do
+    entries = CapybaraRetryLog.entries
+    next if entries.empty?
+    # NOTE: an example retried more than once is listed once per retry
+    warn "[Capybara] #{entries.size} Selenium retr#{entries.size == 1 ? 'y' : 'ies'} during this run:\n  #{entries.join("\n  ")}"
   end
 end

@@ -14,6 +14,8 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
 
   before do
     stub_metadata_cloud(oid)
+    # Keep the parent's metadata job from loading fixture metadata, which would change its visibility
+    allow(SetupMetadataJob).to receive(:perform_later)
     login_as user
   end
 
@@ -30,7 +32,8 @@ RSpec.describe 'Permission Requests', type: :request, prep_metadata_sources: tru
             change_access_type: 'No'
           } }
         patch "/permission_requests/#{updatable_permission_request.id}", params: JSON.pretty_generate(valid_status_update_params), headers: headers
-        expect(response).to have_http_status(302)
+        # redirect_to, not just 302, so a sign-in or access-denied redirect fails with a clear message
+        expect(response).to redirect_to(permission_request_path(updatable_permission_request))
         updatable_permission_request.reload
         expect(updatable_permission_request.request_status).to eq "Approved"
       end

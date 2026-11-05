@@ -2,15 +2,17 @@
 
 require 'rails_helper'
 
-WebMock.allow_net_connect!
-
 RSpec.describe "MetadataCloud validation", type: :request, prep_metadata_sources: true, vpn_only: true do
   around do |example|
     original_vpn = ENV['VPN']
     original_metadata_cloud_host = ENV['METADATA_CLOUD_HOST']
     ENV['METADATA_CLOUD_HOST'] = "metadata-api.library.yale.edu"
     ENV['VPN'] = 'true'
+    # Real network only for these examples. Allowing it at file load opened it for every spec in the run.
+    WebMock.allow_net_connect!
     example.run
+  ensure
+    WebMock.disable_net_connect!(allow: ["solr", "localhost"])
     ENV['VPN'] = original_vpn
     ENV['METADATA_CLOUD_HOST'] = original_metadata_cloud_host
   end

@@ -13,6 +13,11 @@ RSpec.describe Ability, type: :model, prep_admin_sets: true, prep_metadata_sourc
   let(:child_object2) { FactoryBot.create(:child_object, oid: 900_000_000, parent_object: parent_object) }
   let(:permission_set) { FactoryBot.create(:permission_set) }
 
+  # Keep the parent's metadata job from loading fixture children, which would change the child counts
+  before do
+    allow(SetupMetadataJob).to receive(:perform_later)
+  end
+
   describe 'for a sysadmin' do
     it 'grants manage role to User' do
       ability = Ability.new(sysadmin_user)
