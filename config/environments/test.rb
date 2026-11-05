@@ -23,6 +23,10 @@ Rails.application.configure do
     "Cache-Control" => "public, max-age=#{1.hour.to_i}"
   }
 
+  # Always serve assets from the current build. Without this, Sprockets prefers a leftover
+  # precompiled manifest in public/assets, and specs silently run stale JavaScript.
+  config.assets.resolve_with = [:environment]
+
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
