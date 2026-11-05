@@ -22,11 +22,11 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
 
   context "when there token has expired" do
     before do
-      Timecop.freeze(Time.zone.today)
+      travel_to(Time.zone.today)
     end
 
     after do
-      Timecop.return
+      travel_back
     end
 
     it "refresh the token" do
@@ -35,7 +35,7 @@ RSpec.describe Preservica::PreservicaObject, type: :model do
       expect(preservica_client).to receive(:refresh).once
       now = Time.zone.today
       new_time = now + 15.minutes
-      Timecop.travel(new_time)
+      travel_to(new_time)
       preservica_client.structural_object_children("7fe35e8c-c21a-444a-a2e2-e3c926b519c4")
     end
   end
