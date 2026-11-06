@@ -98,7 +98,6 @@ group :test do
   gem 'ffaker', '~> 2.23'
   gem 'selenium-webdriver', '~> 4.44.0'
   gem 'shoulda-matchers', '~> 4.0'
-  gem 'timecop', '~> 0.9'
 end
 
 gem "good_job", "~> 4.18.2" # ~> 3.99.1 then 4.18.2

@@ -31,6 +31,9 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
 
   context "when uploading a csv" do
     it "uploads and increases csv count and gives a success message" do
+      # Jobs run inline, so without this the whole import runs inside the Submit click and can outlast
+      # Selenium's 60s read timeout. This spec only checks the upload, not the import.
+      allow(CreateNewParentJob).to receive(:perform_later)
       expect(BatchProcess.count).to eq 0
       page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/short_fixture_ids.csv")
       click_button("Submit")
@@ -177,7 +180,6 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
       before do
         stub_metadata_cloud("2004548")
         user.add_role(:viewer, brbl)
-        login_as user
         parent_object
         parent_object2
         parent_object3
@@ -305,11 +307,13 @@ RSpec.describe BatchProcess, type: :system, prep_metadata_sources: true, prep_ad
         end
       end
       before do
-        page.attach_file("batch_process_file", Rails.root + "spec/fixtures/csv/short_fixture_ids.csv")
-        click_button("Submit")
+        # Run the import outside the browser. Through the Submit click it runs inside the request and
+        # can outlast Selenium's 60s read timeout. The upload form is covered by the spec above.
+        BatchProcess.create!(batch_action: "create parent objects", user: user,
+                             file: fixture_file_upload(Rails.root.join("spec", "fixtures", "csv", "short_fixture_ids.csv"), "text/csv"))
         po = ParentObject.find(16_854_285)
         po.destroy
-        page.refresh
+        visit batch_processes_path
       end
 
       it "can still see the details of the import" do

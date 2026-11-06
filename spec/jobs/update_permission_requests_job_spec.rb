@@ -35,17 +35,17 @@ RSpec.describe UpdatePermissionRequestsJob, type: :job, prep_metadata_sources: t
 
   describe "jumping ahead one day" do
     before do
-      Timecop.freeze(Time.zone.today)
+      travel_to(Time.zone.today)
     end
 
     after do
-      Timecop.return
+      travel_back
     end
 
     it "increments job queue once per day" do
       now = Time.zone.today
       new_time = now + 1.day
-      Timecop.travel(new_time)
+      travel_to(new_time)
       expect(GoodJob::CronEntry.all.last.instance_variable_get(:@params)).to eq({ cron: "15 0 * * *", class: "UpdatePermissionRequestsJob", key: :update_permission_requests })
     end
   end

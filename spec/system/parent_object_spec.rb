@@ -87,18 +87,21 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         click_on("Create Parent object")
         expect(page).to have_content("Parent object was successfully created")
         click_on("Edit")
+        expect(page).to have_content("Editing Parent Object")
         expect(page).to have_field("Rights statement")
         fill_in("Rights statement", with: "This is a rights statement")
-        click_on(UPDATE_PARENT_OBJECT_BUTTON)
+        save_parent_object
         expect(page).to have_content("This is a rights statement")
       end
 
       it "can set the Project ID via the UI" do
         click_on("Create Parent object")
+        expect(page).to have_content("Parent object was successfully created")
         click_on("Edit")
+        expect(page).to have_content("Editing Parent Object")
         expect(page).to have_field("Project ID")
         fill_in("Project ID", with: "This is the Project ID")
-        click_on(UPDATE_PARENT_OBJECT_BUTTON)
+        save_parent_object
         expect(page).to have_content("This is the Project ID")
       end
 
@@ -200,9 +203,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         visit parent_object_path(2_012_036)
         click_on("Edit")
         select 'Sterling', from: "parent_object[admin_set]"
-        click_on(UPDATE_PARENT_OBJECT_BUTTON)
-        # adds an additional expectation to ensure capybara does not visit the showpage before the update has posted. Classic race condition.
-        expect(page).to have_content("Parent object was successfully saved")
+        # waits for the save to post before visiting the show page
+        save_parent_object
 
         visit parent_object_path(2_012_036)
         expect(page).to have_content "Sterling"
@@ -552,7 +554,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       click_on(UPDATE_PARENT_OBJECT_BUTTON)
       expect(page.driver.browser.switch_to.alert.text).to eq(confirm_text)
       page.driver.browser.switch_to.alert.accept
-      expect(page).to have_content("Parent object was successfully saved")
+      expect(page).to have_content("Parent object was successfully saved", wait: ParentChildObjectHelper::PARENT_OBJECT_SAVE_WAIT)
     end
 
     it "confirms when the visibility is switched to Redirect" do
@@ -561,7 +563,7 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
       click_on(UPDATE_PARENT_OBJECT_BUTTON)
       expect(page.driver.browser.switch_to.alert.text).to eq(confirm_text)
       page.driver.browser.switch_to.alert.accept
-      expect(page).to have_content("Parent object was successfully saved")
+      expect(page).to have_content("Parent object was successfully saved", wait: ParentChildObjectHelper::PARENT_OBJECT_SAVE_WAIT)
     end
   end
 

@@ -10,17 +10,17 @@ RSpec.describe ProblemReportJob, type: :job do
 
   describe "jumping ahead one day" do
     before do
-      Timecop.freeze(Time.zone.today)
+      travel_to(Time.zone.today)
     end
 
     after do
-      Timecop.return
+      travel_back
     end
 
     it "increments job queue once per day" do
       now = Time.zone.today
       new_time = now + 1.day
-      Timecop.travel(new_time)
+      travel_to(new_time)
       expect(GoodJob::CronEntry.all[1].instance_variable_get(:@params)).to eq({ cron: "15 0 * * *", class: "ProblemReportJob", key: :problem_report })
     end
   end

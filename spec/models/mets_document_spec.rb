@@ -88,33 +88,43 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
     end
   end
 
-  describe "determining if the image files described are available to the application", skip_db_cleaner: true do
+  describe "determining if the image files described are available to the application" do
     describe "setting the environment to production" do
-      around do |example|
+      # Set RAILS_ENV only around the code under test. Setting it for the whole example (hooks
+      # included) trips DatabaseCleaner's production safeguard, which is why this group used to
+      # skip the cleaner.
+      def with_rails_env(env)
         original_env = ENV["RAILS_ENV"]
-        ENV["RAILS_ENV"] = "production"
-        example.run
+        ENV["RAILS_ENV"] = env
+        yield
+      ensure
         ENV["RAILS_ENV"] = original_env
       end
 
       it "returns false with fixture paths in non-dev and non-test environments" do
-        mets_doc = described_class.new(valid_goobi_xml)
-        expect(mets_doc.all_images_present?).to be_truthy
-        expect(mets_doc.fixture_images_in_production?).to be_truthy
-        expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "no image path")
+        with_rails_env("production") do
+          mets_doc = described_class.new(valid_goobi_xml)
+          expect(mets_doc.all_images_present?).to be_truthy
+          expect(mets_doc.fixture_images_in_production?).to be_truthy
+          expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "no image path")
+        end
       end
 
       it "return ture if all images present no mater the captalized extension of image file" do
-        mets_doc = described_class.new(valid_goobi_xml)
-        expect(mets_doc.files.first[:mets_access_primary_path]).to eq "/home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000318.tif"
-        expect(mets_doc.files.last[:mets_access_primary_path]).to eq "/home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000320.tif"
-        expect(mets_doc.all_images_present?).to be_truthy
+        with_rails_env("production") do
+          mets_doc = described_class.new(valid_goobi_xml)
+          expect(mets_doc.files.first[:mets_access_primary_path]).to eq "/home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000318.tif"
+          expect(mets_doc.files.last[:mets_access_primary_path]).to eq "/home/app/webapp/spec/fixtures/goobi/metadata/30000317_20201203_140947/111860A_8394689_media/30000320.tif"
+          expect(mets_doc.all_images_present?).to be_truthy
+        end
       end
 
       it "returns true with non-fixture paths in non-dev and non-test environments" do
-        mets_doc = described_class.new(production_mets_file)
-        expect(mets_doc.all_images_present?).to be_falsey
-        expect(mets_doc.fixture_images_in_production?).to be_falsey
+        with_rails_env("production") do
+          mets_doc = described_class.new(production_mets_file)
+          expect(mets_doc.all_images_present?).to be_falsey
+          expect(mets_doc.fixture_images_in_production?).to be_falsey
+        end
       end
     end
 

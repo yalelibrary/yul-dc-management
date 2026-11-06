@@ -528,7 +528,6 @@ GEM
       tins (~> 1.0)
     thor (1.5.0)
     tilt (2.4.0)
-    timecop (0.9.8)
     timeout (0.6.1)
     timers (4.3.5)
     tins (1.32.1)
@@ -622,7 +621,6 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.1)
   sprockets-rails (~> 3.4)
   string-direction (~> 1.2)
-  timecop (~> 0.9)
   turbolinks (~> 5)
   tzinfo-data
   vcr (~> 6.0)

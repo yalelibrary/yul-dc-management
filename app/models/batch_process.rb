@@ -69,7 +69,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # GETS LISTS OF INGEST EVENTS
   def batch_ingest_events
     current_batch_connection = batch_connections.find_or_create_by!(connectable: self)
-    IngestEvent.where(batch_connection: current_batch_connection)
+    IngestEvent.where(batch_connection: current_batch_connection).order(:created_at, :id)
   end
 
   # GETS COUNT OF INGEST EVENTS

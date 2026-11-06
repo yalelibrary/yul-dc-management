@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep_admin_sets: true, skip_db_cleaner: true do
+RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep_admin_sets: true do
   context "parent objects datatable page", js: true do
     let(:user) { FactoryBot.create(:user) }
     let(:admin_set) { FactoryBot.create(:admin_set, key: "adminset") }
