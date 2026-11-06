@@ -346,12 +346,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net-responsive@npm:^4.0.0":
-  version: 4.0.1
-  resolution: "datatables.net-responsive@npm:4.0.1"
+"datatables.net-responsive@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "datatables.net-responsive@npm:4.1.1"
   dependencies:
-    datatables.net: "npm:^3"
-  checksum: 10c0/7c86abfe8df661305a64de051457b91511594e92dc187f8b8b422269ce44c5ada13631bb15016fa6bd44d7d04d578762c8e9b4148e1b9911ada2eda00b12e3f2
+    datatables.net: "npm:^3.1"
+  checksum: 10c0/c46829dfff471582ed0dcf70e3291eec72d71f62054b3307defa0547816c78e85c65e368e907d965b5874d81605063a2f0ed7ad20a88a28a840bd46724b6364c
   languageName: node
   linkType: hard
 
@@ -753,7 +753,7 @@ __metadata:
     datatables.net-bs5: "npm:^3.0.1"
     datatables.net-buttons: "npm:^4.1.2"
     datatables.net-buttons-bs5: "npm:^4.0.2"
-    datatables.net-responsive: "npm:^4.0.0"
+    datatables.net-responsive: "npm:^4.1.1"
     datatables.net-select: "npm:^4.0.0"
     datatables.net-select-bs5: "npm:^4.0.0"
     esbuild: "npm:^0.28.2"
