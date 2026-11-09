@@ -18,7 +18,7 @@
     "datatables.net-select-bs5": "^4.1.1",
     "esbuild": "^0.28.2",
     "jquery": "^4.0.0",
-    "jszip": "^3.10.1",
+    "jszip": "^3.10.2",
     "pdfmake": "^0.3.11",
     "turbolinks": "^5.2.0"
   },
