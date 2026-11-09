@@ -309,12 +309,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net-bs5@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "datatables.net-bs5@npm:3.0.1"
+"datatables.net-bs5@npm:^3.1.3":
+  version: 3.1.3
+  resolution: "datatables.net-bs5@npm:3.1.3"
   dependencies:
-    datatables.net: "npm:3.0.1"
-  checksum: 10c0/d68a30fcba880f6c1497e09b401f6388b59721b7bf8745253c6d14428db27ab521c4fd049360edb9654175b25570a77c325d64ca2795674d285b5354edd64cfc
+    datatables.net: "npm:3.1.3"
+  checksum: 10c0/df064c445558756e8aebe1de05b5765eac96e454d29c1aafbc862b1ad4568bea60f8816d534daba8270b4580bdfb5c2d04c61786d1a7c49a3af3fe01a58e57d3
   languageName: node
   linkType: hard
 
@@ -750,7 +750,7 @@ __metadata:
     "@yalelibrary/yul-dc-structure-editor": "npm:^0.1.1"
     bootstrap: "npm:5.3.8"
     datatables.net: "npm:^3.1.3"
-    datatables.net-bs5: "npm:^3.0.1"
+    datatables.net-bs5: "npm:^3.1.3"
     datatables.net-buttons: "npm:^4.1.2"
     datatables.net-buttons-bs5: "npm:^4.0.2"
     datatables.net-responsive: "npm:^4.1.1"
