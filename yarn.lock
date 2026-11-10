@@ -365,21 +365,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net-select@npm:4.1.1":
+"datatables.net-select@npm:4.1.1, datatables.net-select@npm:^4.1.1":
   version: 4.1.1
   resolution: "datatables.net-select@npm:4.1.1"
   dependencies:
     datatables.net: "npm:^3.1"
   checksum: 10c0/c329b1988dcf8058bc5109902490faafbdb816a97387cafacf74546788d62b9342e6712f43aa60d1da690ab0d27d232fe512f296cf895151aeb3935553a9fa1f
-  languageName: node
-  linkType: hard
-
-"datatables.net-select@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "datatables.net-select@npm:4.0.0"
-  dependencies:
-    datatables.net: "npm:^3"
-  checksum: 10c0/88535994b310a17319aafdb1cc0d97b7b5f0132bca776a97839789b8314ab7afa968ab3baa1ca2e11fe83d7d0a30040dc3996eed86e81b25768a97916452c83e
   languageName: node
   linkType: hard
 
@@ -763,7 +754,7 @@ __metadata:
     datatables.net-buttons: "npm:^4.1.2"
     datatables.net-buttons-bs5: "npm:^4.0.2"
     datatables.net-responsive: "npm:^4.1.1"
-    datatables.net-select: "npm:^4.0.0"
+    datatables.net-select: "npm:^4.1.1"
     datatables.net-select-bs5: "npm:^4.1.1"
     esbuild: "npm:^0.28.2"
     jquery: "npm:^4.0.0"
