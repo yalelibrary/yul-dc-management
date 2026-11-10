@@ -22,7 +22,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails', '~> 4.4'
 gem 'kaminari', '~> 1.2'
 gem 'noticed', '~> 1.2', '>= 1.2.15'
-gem 'omniauth', '~> 2.1'
+gem 'omniauth', '~> 2.2'
 gem 'omniauth-cas', '~> 3.0'
 # This addresses CVE-2015-9284 https://github.com/advisories/GHSA-ww4x-rwq6-qpgf
 gem 'cancancan', '~> 3.5'
