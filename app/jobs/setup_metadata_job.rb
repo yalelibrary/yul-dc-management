@@ -73,8 +73,8 @@ class SetupMetadataJob < ApplicationJob
 
   # documents missing Goobi images on the parent and batch process, then fails the job so it shows in GoodJob Dashboard
   def report_missing_mets_images(parent_object, current_batch_process)
-    missing_count = current_batch_process.mets_doc.missing_images.size
-    message = "#{GOOBI_IMAGES_MESSAGE}. Parent #{parent_object.oid} is missing #{missing_count} #{'image'.pluralize(missing_count)}"
+    missing_images = current_batch_process.mets_doc.missing_images.map { |path| File.basename(path) }
+    message = "#{GOOBI_IMAGES_MESSAGE}. Parent #{parent_object.oid} is missing #{missing_images.size} #{'image'.pluralize(missing_images.size)}: #{missing_images.join(', ')}"
     parent_object.processing_event(message, "failed")
     current_batch_process.batch_processing_event(GOOBI_IMAGES_MESSAGE, "failed")
     raise GoobiImagesMissingError, message

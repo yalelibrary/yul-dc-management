@@ -109,7 +109,7 @@ RSpec.describe MetsDirectoryScanner do
     it "fails the scan with every mets file that failed" do
       expect { described_class.perform_scan }.to raise_error(MetsDirectoryScanner::ScanError) { |error|
         expect(error.message).to start_with("2 mets files failed to ingest:")
-        expect(error.message).to include("#{checksum_package}/checksum_mets.xml: Validation failed: File 4e870f62d9b11c7cd93520d1aa5fe3def9ad, index: 0 invalid checksum")
+        expect(error.message).to include("#{checksum_package}/checksum_mets.xml: Validation failed: File 30000318.tif 4e870f62d9b11c7cd93520d1aa5fe3def9ad, index: 0 invalid checksum")
         expect(error.message).to include("#{rights_package}/rights_mets.xml: Validation failed: File no right statement found in the mets xml")
       }
     end
@@ -118,7 +118,8 @@ RSpec.describe MetsDirectoryScanner do
       expect { described_class.perform_scan }.to raise_error(MetsDirectoryScanner::ScanError).and change(BatchProcess, :count).by(2)
       checksum_batch = BatchProcess.find_by(file_name: "checksum_mets.xml")
       rights_batch = BatchProcess.find_by(file_name: "rights_mets.xml")
-      expect(checksum_batch.batch_ingest_events.pluck(:reason, :status)).to eq([[SetupMetadataJob::GOOBI_IMAGES_MESSAGE, "failed"]])
+      checksum_message = "#{SetupMetadataJob::GOOBI_IMAGES_MESSAGE}. 30000318.tif 4e870f62d9b11c7cd93520d1aa5fe3def9ad, index: 0 invalid checksum, check the checksum in mets xml"
+      expect(checksum_batch.batch_ingest_events.pluck(:reason, :status)).to eq([[checksum_message, "failed"]])
       expect(rights_batch.batch_ingest_events.pluck(:reason, :status)).to eq([["Ingest failed. no right statement found in the mets xml", "failed"]])
       expect(checksum_batch.batch_status).to eq("Batch failed")
       expect(ParentObject.count).to eq(0)
