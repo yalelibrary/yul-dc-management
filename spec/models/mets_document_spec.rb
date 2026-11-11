@@ -84,7 +84,7 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
 
     it "raise error message with bad checksum(s)" do
       mets_doc = described_class.new(bad_checksum_file)
-      expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "4e870f62d9b11c7cd93520d1aa5fe3def9ad, index: 0 invalid checksum, check the checksum in mets xml")
+      expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "30000318.tif 4e870f62d9b11c7cd93520d1aa5fe3def9ad, index: 0 invalid checksum, check the checksum in mets xml")
     end
   end
 
