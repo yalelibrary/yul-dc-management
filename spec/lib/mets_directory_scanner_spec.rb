@@ -118,7 +118,8 @@ RSpec.describe MetsDirectoryScanner do
       expect { described_class.perform_scan }.to raise_error(MetsDirectoryScanner::ScanError).and change(BatchProcess, :count).by(2)
       checksum_batch = BatchProcess.find_by(file_name: "checksum_mets.xml")
       rights_batch = BatchProcess.find_by(file_name: "rights_mets.xml")
-      expect(checksum_batch.batch_ingest_events.pluck(:reason, :status)).to eq([["#{SetupMetadataJob::GOOBI_IMAGES_MESSAGE}. 30000318.tif 4e870f62d9b11c7cd93520d1aa5fe3def9ad, index: 0 invalid checksum, check the checksum in mets xml", "failed"]])
+      checksum_message = "#{SetupMetadataJob::GOOBI_IMAGES_MESSAGE}. 30000318.tif 4e870f62d9b11c7cd93520d1aa5fe3def9ad, index: 0 invalid checksum, check the checksum in mets xml"
+      expect(checksum_batch.batch_ingest_events.pluck(:reason, :status)).to eq([[checksum_message, "failed"]])
       expect(rights_batch.batch_ingest_events.pluck(:reason, :status)).to eq([["Ingest failed. no right statement found in the mets xml", "failed"]])
       expect(checksum_batch.batch_status).to eq("Batch failed")
       expect(ParentObject.count).to eq(0)
