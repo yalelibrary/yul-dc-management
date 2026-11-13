@@ -81,7 +81,7 @@ class MetsDocument
 
   # ensure we don't accidentally upload tiny fixture images in production
   def fixture_images_in_production?
-    production_environment = ENV.fetch("RAILS_ENV") != "test" && ENV.fetch("RAILS_ENV") != "development"
+    production_environment = !Rails.env.test? && !Rails.env.development?
     has_fixtures = files.any? { |file| file[:mets_access_primary_path].include?("spec/fixtures") }
     production_environment && has_fixtures
   end
