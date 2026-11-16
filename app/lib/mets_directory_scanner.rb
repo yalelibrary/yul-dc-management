@@ -94,8 +94,8 @@ class MetsDirectoryScanner
   def self.invalid_mets_message(mets_doc, error)
     mets_doc&.valid_mets?
     "Ingest failed. #{error.message}"
-  rescue MetsDocument::ImageError
-    SetupMetadataJob::GOOBI_IMAGES_MESSAGE
+  rescue MetsDocument::ImageError => e
+    "#{SetupMetadataJob::GOOBI_IMAGES_MESSAGE}. #{e.message}"
   rescue StandardError => e
     "Ingest failed. #{e.message}"
   end
