@@ -129,7 +129,7 @@ This starts all of the applications, as they are all dependencies of yul-blackli
   
 ## Data Loading
 
-In development mode, the database and solr are seeded / loaded with information from 1 sample object. You can see the oids for this object in `db/parent_oids_short.csv` and `db/seeds.rb`.
+In development mode, the database and solr are seeded / loaded with 1 fully ingested sample object (oid 2005512, ArchivesSpace record `/repositories/11/archival_objects/214638`) with 2 child objects, ptiffs, and fulltext.
 
 In production and development mode, you can add objects either individually, either by creating a new parent_object at `https://[hostname]/parent_objects/new` or using the CSV import of a sheet of oids (this file should be structured the same as `db/parent_oids_short.csv`). If you have access to DCE or Yale AWS S3 buckets, you can add any of the oids in the `db/parent_oids.csv` file, and the parent and child objects should be created correctly. If you are on the VPN, you should be able to add any pre-existing valid oid from Ladybird, and it will bring in the correct data from the MetadataCloud.
 
