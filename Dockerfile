@@ -12,7 +12,7 @@ RUN apt-get update --allow-releaseinfo-change && apt-get install -y wget libtiff
   &&  apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY ops/policy.xml /etc/ImageMagick-6/policy.xml
+COPY ops/policy.xml /etc/ImageMagick-7/policy.xml
 
 # Install meson and ninja for building vips
 RUN apt-get update --allow-releaseinfo-change && apt-get install -y python3-pip
