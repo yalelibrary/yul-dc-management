@@ -159,7 +159,8 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
 
     context 'in non-test environment' do
       before do
-        allow(Rails).to receive(:env).and_return(ActiveSupport::EnvironmentInquirer.new(non_test_env))
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with("RAILS_ENV").and_return(non_test_env)
         allow(parent_object).to receive(:processing_event).and_call_original
       end
 
@@ -207,7 +208,8 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
 
     context 'in non-test environment' do
       before do
-        allow(Rails).to receive(:env).and_return(ActiveSupport::EnvironmentInquirer.new(non_test_env))
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with("RAILS_ENV").and_return(non_test_env)
       end
 
       it 'skips Ladybird fetch when aspace_uri is blank' do
