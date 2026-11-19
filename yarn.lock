@@ -194,14 +194,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/ciphers@npm:^1.3.0":
+"@noble/ciphers@npm:^1.0.0":
   version: 1.3.0
   resolution: "@noble/ciphers@npm:1.3.0"
   checksum: 10c0/3ba6da645ce45e2f35e3b2e5c87ceba86b21dfa62b9466ede9edfb397f8116dae284f06652c0cd81d99445a2262b606632e868103d54ecc99fd946ae1af8cd37
   languageName: node
   linkType: hard
 
-"@noble/hashes@npm:^1.8.0":
+"@noble/hashes@npm:^1.6.0":
   version: 1.8.0
   resolution: "@noble/hashes@npm:1.8.0"
   checksum: 10c0/06a0b52c81a6fa7f04d67762e08b2c476a00285858150caeaaff4037356dd5e119f45b2a530f638b77a5eeca013168ec1b655db41bae3236cb2e9d511484fc77
@@ -286,6 +286,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"browserify-zlib@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "browserify-zlib@npm:0.2.0"
+  dependencies:
+    pako: "npm:~1.0.5"
+  checksum: 10c0/9ab10b6dc732c6c5ec8ebcbe5cb7fe1467f97402c9b2140113f47b5f187b9438f93a8e065d8baf8b929323c18324fbf1105af479ee86d9d36cab7d7ef3424ad9
+  languageName: node
+  linkType: hard
+
 "clone@npm:^2.1.2":
   version: 2.1.2
   resolution: "clone@npm:2.1.2"
@@ -309,17 +318,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net-buttons-bs5@npm:^4.1.2":
-  version: 4.1.2
-  resolution: "datatables.net-buttons-bs5@npm:4.1.2"
+"datatables.net-buttons-bs5@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "datatables.net-buttons-bs5@npm:4.0.2"
   dependencies:
-    datatables.net-bs5: "npm:^3.1"
-    datatables.net-buttons: "npm:4.1.2"
-  checksum: 10c0/b633ea1fcfdf053f91bf375da20baaf8612a09d88df397ae2c0f1622a0c7c8688f13c1dc9877affb02c81408327c36058508b3969133dda2b903bfb21ccc07cf
+    datatables.net-bs5: "npm:^3"
+    datatables.net-buttons: "npm:4.0.2"
+  checksum: 10c0/9ab1a6ffa59f92eb7ce6d0a864b0c4ae277d6bd300e9987b582bbf3d5ee2d408e66ce193e27669a54784fd377036c5a2befd94588c40f15436d154877d8059e6
   languageName: node
   linkType: hard
 
-"datatables.net-buttons@npm:4.1.2, datatables.net-buttons@npm:^4.1.2":
+"datatables.net-buttons@npm:4.0.2":
+  version: 4.0.2
+  resolution: "datatables.net-buttons@npm:4.0.2"
+  dependencies:
+    datatables.net: "npm:^3"
+  checksum: 10c0/c52ac78df408efb5b225e0aa3670b5787d86c7bd7224d165de04715e6a600124f8c19db6f950ef156a14049e522ecb679851bf20bab987457660976ebf73b47d
+  languageName: node
+  linkType: hard
+
+"datatables.net-buttons@npm:^4.1.2":
   version: 4.1.2
   resolution: "datatables.net-buttons@npm:4.1.2"
   dependencies:
@@ -356,10 +374,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"datatables.net@npm:^3.1.4":
-  version: 3.1.4
-  resolution: "datatables.net@npm:3.1.4"
-  checksum: 10c0/5ddc5f94cb9fed95efbe1810cd02ddb2c9ca7e51025f014dcb7fa9fa45f580a1048ea12b19b216de81101bf8d7601f2f6a79e501798eaa5a500e815d6e0b1ca8
+"datatables.net@npm:^3.1.3":
+  version: 3.1.3
+  resolution: "datatables.net@npm:3.1.3"
+  checksum: 10c0/0166cb0275211392a6b00367141726de30be7d6dadf0da1ff88c66b09129ee71936b515f3851ed865aa82ed8c16ace38915d5be5065c040425b35c2cf14890ce
   languageName: node
   linkType: hard
 
@@ -466,13 +484,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fflate@npm:^0.8.2, fflate@npm:^0.8.3":
-  version: 0.8.3
-  resolution: "fflate@npm:0.8.3"
-  checksum: 10c0/eab181ca37f5348ae76d4b6f840e0026e30220e33153289ac942222d8b9638237d486507dbcc09878d724095bd354993a2ee48bbee99c8f2c6440d4448719aa7
-  languageName: node
-  linkType: hard
-
 "fontkit@npm:^2.0.4":
   version: 2.0.4
   resolution: "fontkit@npm:2.0.4"
@@ -518,6 +529,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-md5@npm:^0.8.3":
+  version: 0.8.3
+  resolution: "js-md5@npm:0.8.3"
+  checksum: 10c0/f7e41e95f8e5eb5eeb43085bec3832ae3dfe0020c42fcca5a4efe571213391a9e9594db31bd34624b7280af4f1f12c751b6a50074a15346ecf40a0d54115d77f
+  languageName: node
+  linkType: hard
+
 "jszip@npm:^3.10.2":
   version: 3.10.2
   resolution: "jszip@npm:3.10.2"
@@ -556,44 +574,44 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pako@npm:~1.0.2":
+"pako@npm:~1.0.2, pako@npm:~1.0.5":
   version: 1.0.11
   resolution: "pako@npm:1.0.11"
   checksum: 10c0/86dd99d8b34c3930345b8bbeb5e1cd8a05f608eeb40967b293f72fe469d0e9c88b783a8777e4cc7dc7c91ce54c5e93d88ff4b4f060e6ff18408fd21030d9ffbe
   languageName: node
   linkType: hard
 
-"pdfkit@npm:^0.20.2":
-  version: 0.20.2
-  resolution: "pdfkit@npm:0.20.2"
+"pdfkit@npm:^0.19.1":
+  version: 0.19.1
+  resolution: "pdfkit@npm:0.19.1"
   dependencies:
-    "@noble/ciphers": "npm:^1.3.0"
-    "@noble/hashes": "npm:^1.8.0"
-    fflate: "npm:^0.8.3"
+    "@noble/ciphers": "npm:^1.0.0"
+    "@noble/hashes": "npm:^1.6.0"
     fontkit: "npm:^2.0.4"
+    js-md5: "npm:^0.8.3"
     linebreak: "npm:^1.1.0"
-    png-js: "npm:^2.0.0"
-  checksum: 10c0/4607b8056acbb12a33530e096bd9c40a4c6561e7c9be836f009ae5fdce0d4bbb8989d77d9fbcc33e60bb6b62297820568963e5d85e94f9ed4132af9f5518fa93
+    png-js: "npm:^1.1.0"
+  checksum: 10c0/1483b07842f5ca184e8834cbf6bb9cb1eeef3664505aa9a47488181db134fe3f97ebef395144e9f60a92a752afc5e4251fce118a79c414beea50d5d2a604346a
   languageName: node
   linkType: hard
 
-"pdfmake@npm:^0.3.12":
-  version: 0.3.12
-  resolution: "pdfmake@npm:0.3.12"
+"pdfmake@npm:^0.3.11":
+  version: 0.3.11
+  resolution: "pdfmake@npm:0.3.11"
   dependencies:
     linebreak: "npm:^1.1.0"
-    pdfkit: "npm:^0.20.2"
+    pdfkit: "npm:^0.19.1"
     xmldoc: "npm:^2.0.3"
-  checksum: 10c0/a7ef340b3f3ec12c0ee27dcc7d6903f70cb83afa69c706713c068faeb425cfa0276f14ffd828b3444d4ca2f7e5379e874516716ec47f70730b28e35371583e5c
+  checksum: 10c0/ecea71cdc143036af23ad3aff4dafcf260345b5a001763901574160316439ab09ee54516034a37edfcd3fd99112578838593a82a760b970eaf4cb81d41b2cdd1
   languageName: node
   linkType: hard
 
-"png-js@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "png-js@npm:2.0.0"
+"png-js@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "png-js@npm:1.1.0"
   dependencies:
-    fflate: "npm:^0.8.2"
-  checksum: 10c0/69f44790c64b99ca7f44280ed13643e7700bc91406842a096471951227e7dfb52e21924dc3691bf65877c0411d8ced63bebaba1d2da17bf45fefed92a229f1a6
+    browserify-zlib: "npm:^0.2.0"
+  checksum: 10c0/61e275cb424b914fbc01c2a1b0096857f214c5fee45054c713dec1ad320760f4dd61f28bb0b3b0c139bd8c49def8891b02ca4018238e7b5f14bb671cd1ca7874
   languageName: node
   linkType: hard
 
@@ -731,17 +749,17 @@ __metadata:
     "@rails/ujs": "npm:^7.0.7"
     "@yalelibrary/yul-dc-structure-editor": "npm:^0.1.1"
     bootstrap: "npm:5.3.8"
-    datatables.net: "npm:^3.1.4"
+    datatables.net: "npm:^3.1.3"
     datatables.net-bs5: "npm:^3.1.3"
     datatables.net-buttons: "npm:^4.1.2"
-    datatables.net-buttons-bs5: "npm:^4.1.2"
+    datatables.net-buttons-bs5: "npm:^4.0.2"
     datatables.net-responsive: "npm:^4.1.1"
     datatables.net-select: "npm:^4.1.1"
     datatables.net-select-bs5: "npm:^4.0.0"
     esbuild: "npm:^0.28.2"
     jquery: "npm:^4.0.0"
     jszip: "npm:^3.10.2"
-    pdfmake: "npm:^0.3.12"
+    pdfmake: "npm:^0.3.11"
     turbolinks: "npm:^5.2.0"
   languageName: unknown
   linkType: soft

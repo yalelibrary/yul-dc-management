@@ -81,7 +81,7 @@ class MetsDocument
 
   # ensure we don't accidentally upload tiny fixture images in production
   def fixture_images_in_production?
-    production_environment = !Rails.env.test? && !Rails.env.development?
+    production_environment = ENV.fetch("RAILS_ENV") != "test" && ENV.fetch("RAILS_ENV") != "development"
     has_fixtures = files.any? { |file| file[:mets_access_primary_path].include?("spec/fixtures") }
     production_environment && has_fixtures
   end
@@ -99,8 +99,7 @@ class MetsDocument
 
   def all_images_have_checksum?
     files.each_with_index do |file, index|
-      next if /^([a-f0-9]{40})$/.match?(file[:checksum])
-      raise ImageError, "#{File.basename(file[:mets_access_primary_path])} #{file[:checksum]}, index: #{index} invalid checksum, check the checksum in mets xml"
+      raise ImageError, "#{file[:checksum]}, index: #{index} invalid checksum, check the checksum in mets xml" unless /^([a-f0-9]{40})$/.match?(file[:checksum])
     end
   end
 

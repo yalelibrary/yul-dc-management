@@ -27,9 +27,9 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
     end
 
     context 'when Goobi images are not named with child oids' do
-      let(:missing_paths) { ["/goobi/media/missing_1.tif", "/goobi/media/missing_2.tif"] }
+      let(:missing_paths) { Array.new(12) { |i| "missing_#{i}.tif" } }
       let(:expected_message) do
-        "#{SetupMetadataJob::GOOBI_IMAGES_MESSAGE}. Parent #{parent_object.oid} is missing 2 images: missing_1.tif, missing_2.tif"
+        "#{SetupMetadataJob::GOOBI_IMAGES_MESSAGE}. Parent #{parent_object.oid} is missing 12 images"
       end
 
       before do
@@ -159,7 +159,8 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
 
     context 'in non-test environment' do
       before do
-        allow(Rails).to receive(:env).and_return(ActiveSupport::EnvironmentInquirer.new(non_test_env))
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with("RAILS_ENV").and_return(non_test_env)
         allow(parent_object).to receive(:processing_event).and_call_original
       end
 
@@ -207,7 +208,8 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
 
     context 'in non-test environment' do
       before do
-        allow(Rails).to receive(:env).and_return(ActiveSupport::EnvironmentInquirer.new(non_test_env))
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with("RAILS_ENV").and_return(non_test_env)
       end
 
       it 'skips Ladybird fetch when aspace_uri is blank' do
