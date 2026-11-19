@@ -241,7 +241,7 @@ $( document ).on('turbolinks:load', function() {
 
   $('.export-all-tooltip').off('mouseenter mouseleave').on('mouseenter mouseleave', function(event) {
     let label = $(this).find('.export-all[disabled] span');
-    if (event.type === 'mouseenter' && $('#child-objects-datatable').length) {
+    if (event.type === 'mouseenter' && $('#child-objects-datatable').length == 1) {
       label.html("Please use Export Child OIDs batch job");
     } else if (event.type === 'mouseenter') {
       label.html("Please use all parents batch job");
