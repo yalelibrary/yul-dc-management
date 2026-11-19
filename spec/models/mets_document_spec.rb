@@ -90,13 +90,15 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
 
   describe "determining if the image files described are available to the application" do
     describe "setting the environment to production" do
-      # Stub Rails.env only around the code under test, leaving ENV["RAILS_ENV"] alone so
-      # DatabaseCleaner's production safeguard isn't tripped.
+      # Set RAILS_ENV only around the code under test. Setting it for the whole example (hooks
+      # included) trips DatabaseCleaner's production safeguard, which is why this group used to
+      # skip the cleaner.
       def with_rails_env(env)
-        allow(Rails).to receive(:env).and_return(ActiveSupport::EnvironmentInquirer.new(env))
+        original_env = ENV["RAILS_ENV"]
+        ENV["RAILS_ENV"] = env
         yield
       ensure
-        allow(Rails).to receive(:env).and_call_original
+        ENV["RAILS_ENV"] = original_env
       end
 
       it "returns false with fixture paths in non-dev and non-test environments" do
