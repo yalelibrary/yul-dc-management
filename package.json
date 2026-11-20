@@ -19,7 +19,7 @@
     "esbuild": "^0.28.2",
     "jquery": "^4.0.0",
     "jszip": "^3.10.2",
-    "pdfmake": "^0.3.11",
+    "pdfmake": "^0.3.12",
     "turbolinks": "^5.2.0"
   },
   "resolutions": {
