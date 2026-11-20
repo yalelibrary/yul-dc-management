@@ -1,10 +1,10 @@
 FROM yalelibraryit/dc-base:v1.4.11
 ENV NODE_OPTIONS="--openssl-legacy-provider"
 
-COPY ops/webapp.conf /etc/nginx/sites-enabled/webapp.conf
-COPY ops/env.conf /etc/nginx/main.d/env.conf
+COPY --chown=101:101 ops/webapp.conf /etc/nginx/sites-enabled/webapp.conf
+COPY --chown=101:101 ops/env.conf /etc/nginx/main.d/env.conf
 # Asset compile and migrate if prod, otherwise just start nginx
-COPY ops/nginx.sh /etc/service/nginx/run
+COPY --chown=101:101 ops/nginx.sh /etc/service/nginx/run
 RUN chmod +x /etc/service/nginx/run
 RUN rm -f /etc/service/nginx/down
 # these are used for image and pdf processing, and may not be required for an image not running delayed jobs
@@ -12,7 +12,7 @@ RUN apt-get update --allow-releaseinfo-change && apt-get install -y wget libtiff
   &&  apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY ops/policy.xml /etc/ImageMagick-6/policy.xml
+COPY --chown=101:101 ops/policy.xml /etc/ImageMagick-6/policy.xml
 
 # Install meson and ninja for building vips
 RUN apt-get update --allow-releaseinfo-change && apt-get install -y python3-pip
@@ -34,7 +34,7 @@ RUN bash -l -c " \
   rm -rf libvips-8.18.5 v8.18.5.tar.gz"
 # RUN vips --version
 
-COPY jpegs2pdf-1.3.jar $APP_HOME
+COPY --chown=101:101 jpegs2pdf-1.3.jar $APP_HOME
 
 ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
 BUNDLE_JOBS=4 \
