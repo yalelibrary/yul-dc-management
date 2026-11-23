@@ -40,7 +40,7 @@ gem 'puma', '~> 7.2'
 gem 'rack', '>= 3.0.13'
 gem 'rack-cors', '~> 2.0.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '8.0.5.1'
+gem 'rails', '~> 8.0.5'
 gem "rails_semantic_logger", "~> 4.20"
 # Use rsolr to connect to Solr
 gem 'rsolr', '~> 2.3'
