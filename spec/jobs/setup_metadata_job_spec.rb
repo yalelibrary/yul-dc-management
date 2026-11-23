@@ -27,9 +27,9 @@ RSpec.describe SetupMetadataJob, type: :job, prep_admin_sets: true, prep_metadat
     end
 
     context 'when Goobi images are not named with child oids' do
-      let(:missing_paths) { Array.new(12) { |i| "missing_#{i}.tif" } }
+      let(:missing_paths) { ["/goobi/media/missing_1.tif", "/goobi/media/missing_2.tif"] }
       let(:expected_message) do
-        "#{SetupMetadataJob::GOOBI_IMAGES_MESSAGE}. Parent #{parent_object.oid} is missing 12 images"
+        "#{SetupMetadataJob::GOOBI_IMAGES_MESSAGE}. Parent #{parent_object.oid} is missing 2 images: missing_1.tif, missing_2.tif"
       end
 
       before do
