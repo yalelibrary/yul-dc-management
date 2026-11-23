@@ -5,8 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require 'csv'
 
-# Do all background jobs inline during seeds
+# Background jobs queued during seeds are run by the good_job worker
 ActiveJob::Base.queue_adapter = :good_job
 sequence = OidMinterService.initialize_sequence!
 current = ActiveRecord::Base.connection.execute("SELECT last_value from OID_SEQUENCE").first['last_value']
@@ -74,19 +75,34 @@ ParentObject.where(admin_set_id: nil).update_all(admin_set_id: admin_set.id)
 puts "AdminSets verified"
 
 if Rails.env.development?
-  require 'csv'
+  [
+    {
+      oid: 2_005_512,
+      admin_set_key: "brbl",
+      aspace_uri: "/repositories/11/archival_objects/214638",
+      child_source: Rails.root.join("spec", "fixtures", "ladybird", "2005512.json")
+    }
+  ].each do |seed|
+    existing = ParentObject.find_by(oid: seed[:oid])
+    next if existing&.child_objects&.any?
 
-  oid_path = Rails.root.join("db", "parent_oids_short.csv")
-  fixture_ids_table = CSV.read(oid_path, headers: true)
-  oids = fixture_ids_table.by_col[0]
+    # Earlier seeds created this object from Ladybird without any children; replace it
+    existing&.destroy!
 
-  oids.each do |row|
-    ParentObject.where(oid: row).first_or_create do |po|
-      po.oid = row
+    ActiveRecord::Base.transaction do
+      po = ParentObject.new(oid: seed[:oid], admin_set: AdminSet.find_by_key(seed[:admin_set_key]))
+      po.ladybird_json = JSON.parse(File.read(seed[:child_source]))
+      po.source_name = "aspace"
+      po.aspace_uri = seed[:aspace_uri]
       po.visibility = "Public"
-      po.admin_set = AdminSet.find_by_key("brbl")
-      puts "Parent Object created #{po.oid}"
+      # Queues SetupMetadataJob, which is committed with the children created below
+      po.save!
+      po.create_child_records
+      po.save!
+      # Fulltext status is otherwise only set by the "Update Fulltext Status" batch process
+      po.update_fulltext
     end
+    puts "Parent Object created #{seed[:oid]} with #{ChildObject.where(parent_object_oid: seed[:oid]).count} children; ingest queued"
   end
   puts "There are now #{ParentObject.count} rows in the parent object table"
 end
