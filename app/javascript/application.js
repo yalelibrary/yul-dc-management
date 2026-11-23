@@ -218,7 +218,7 @@ $( document ).on('turbolinks:load', function() {
     })
 
     if (hasSearch) onColumnsUpdate(dataTable);
-    dataTable.draw();
+    dataTable.draw('page');
     DataTable.ext.errMode = 'throw';
 
     $('.is-datatable').on( 'column-visibility.dt', function ( e, settings, column, state ) {
