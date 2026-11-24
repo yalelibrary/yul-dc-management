@@ -86,6 +86,20 @@ RSpec.describe MetsDocument, type: :model, prep_metadata_sources: true, prep_adm
       mets_doc = described_class.new(bad_checksum_file)
       expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, "30000318.tif 4e870f62d9b11c7cd93520d1aa5fe3def9ad, index: 0 invalid checksum, check the checksum in mets xml")
     end
+
+    it "reports every problem in the mets xml instead of only the first" do
+      mets_xml = bad_checksum_file.read
+                                  .sub(/<mods:accessCondition[^>]*type="use and reproduction">.*?<\/mods:accessCondition>/m, "")
+                                  .sub(">brbl</mods:note>", ">not_an_admin_set</mods:note>")
+                                  .sub('CHECKSUM="4e870f62d9b11c7cd93520d1aa5fe3def9ad3565"', 'CHECKSUM="bad"')
+      mets_doc = described_class.new(mets_xml)
+      expect(mets_doc.metadata_validation_errors).to eq(["no right statement found in the mets xml", "no admin set in mets xml"])
+      expect(mets_doc.image_validation_errors).to eq([
+                                                       "30000318.tif 4e870f62d9b11c7cd93520d1aa5fe3def9ad, index: 0 invalid checksum, check the checksum in mets xml",
+                                                       "30000319.tif bad, index: 1 invalid checksum, check the checksum in mets xml"
+                                                     ])
+      expect { mets_doc.valid_mets? }.to raise_error(RuntimeError, mets_doc.validation_errors.join(", "))
+    end
   end
 
   describe "determining if the image files described are available to the application" do

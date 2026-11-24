@@ -4,9 +4,6 @@ class MetsDocument
   include MetadataCloudUrlParsable
   attr_reader :source_xml
 
-  # raised by valid_mets? for problems with the mets images, as opposed to its metadata
-  class ImageError < RuntimeError; end
-
   # Takes a path to the mets file
   def initialize(mets_xml)
     @source_xml = mets_xml
@@ -65,19 +62,39 @@ class MetsDocument
     child_img&.[](:oid)&.to_i
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
   def valid_mets?
-    raise "no mets xml" unless @mets.xml?
-    raise "no mets namespace in mets file" unless @mets.collect_namespaces.include?("xmlns:mets")
-    raise ImageError, "no mets file in the mets xml" unless @mets.xpath("//mets:file").count >= 1
-    raise "no right statement found in the mets xml" if rights_statement.blank?
-    raise "not valid metadata source" unless valid_metadata_source_path?
-    raise ImageError, "no image path" if fixture_images_in_production?
-    raise "no admin set in mets xml" unless admin_set.present?
-    all_images_have_checksum?
+    errors = validation_errors
+    raise errors.join(", ") if errors.any?
     true
   end
-  # rubocop:enable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+
+  # every problem found in the mets xml, so they can all be reported at once
+  def validation_errors
+    metadata_validation_errors + image_validation_errors
+  end
+
+  def metadata_validation_errors
+    return ["no mets xml"] unless @mets.xml?
+    return ["no mets namespace in mets file"] unless mets_namespace?
+    errors = []
+    errors << "no right statement found in the mets xml" if rights_statement.blank?
+    errors << "not valid metadata source" unless valid_metadata_source_path?
+    errors << "no admin set in mets xml" unless admin_set.present?
+    errors
+  end
+
+  # problems with the mets images, as opposed to its metadata
+  def image_validation_errors
+    return [] unless @mets.xml? && mets_namespace?
+    errors = []
+    errors << "no mets file in the mets xml" unless @mets.xpath("//mets:file").count >= 1
+    errors << "no image path" if fixture_images_in_production?
+    errors + invalid_checksum_errors
+  end
+
+  def mets_namespace?
+    @mets.collect_namespaces.include?("xmlns:mets")
+  end
 
   # ensure we don't accidentally upload tiny fixture images in production
   def fixture_images_in_production?
@@ -97,10 +114,10 @@ class MetsDocument
     end
   end
 
-  def all_images_have_checksum?
-    files.each_with_index do |file, index|
+  def invalid_checksum_errors
+    files.each_with_index.filter_map do |file, index|
       next if /^([a-f0-9]{40})$/.match?(file[:checksum])
-      raise ImageError, "#{File.basename(file[:mets_access_primary_path])} #{file[:checksum]}, index: #{index} invalid checksum, check the checksum in mets xml"
+      "#{File.basename(file[:mets_access_primary_path])} #{file[:checksum]}, index: #{index} invalid checksum, check the checksum in mets xml"
     end
   end
 

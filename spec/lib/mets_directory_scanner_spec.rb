@@ -125,6 +125,19 @@ RSpec.describe MetsDirectoryScanner do
       expect(ParentObject.count).to eq(0)
     end
 
+    it "reports every problem in a mets file" do
+      checksum_mets = File.join(checksum_package, "checksum_mets.xml")
+      File.write(checksum_mets, File.read(checksum_mets).sub(/<mods:accessCondition[^>]*type="use and reproduction">.*?<\/mods:accessCondition>/m, ""))
+      expect { described_class.perform_scan }.to raise_error(MetsDirectoryScanner::ScanError) { |error|
+        expect(error.message).to include("#{checksum_mets}: Validation failed: File no right statement found in the mets xml, File 30000318.tif")
+      }
+      checksum_message = "#{SetupMetadataJob::GOOBI_IMAGES_MESSAGE}. 30000318.tif 4e870f62d9b11c7cd93520d1aa5fe3def9ad, index: 0 invalid checksum, check the checksum in mets xml"
+      expect(BatchProcess.find_by(file_name: "checksum_mets.xml").batch_ingest_events.pluck(:reason, :status)).to eq([
+                                                                                                                       ["Ingest failed. no right statement found in the mets xml", "failed"],
+                                                                                                                       [checksum_message, "failed"]
+                                                                                                                     ])
+    end
+
     it "leaves the progress file so the mets files are skipped until it is a day old" do
       expect { described_class.perform_scan }.to raise_error(MetsDirectoryScanner::ScanError)
       expect(File.exist?(indicator_file(rights_package, "progress"))).to be true

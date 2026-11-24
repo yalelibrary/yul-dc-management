@@ -81,22 +81,24 @@ class MetsDirectoryScanner
     end
   end
 
-  # creates a failed batch process for a mets file that fails validation
+  # creates a failed batch process for a mets file that fails validation, with a message for each problem found
   def self.report_invalid_mets(xml_file_path, batch_process, error)
     Rails.logger.error("Error processing mets #{xml_file_path} #{error}")
-    message = invalid_mets_message(batch_process.mets_doc, error)
     failed_batch_process = BatchProcess.create!(batch_action: 'create parent objects', user: User.system_user, file_name: File.basename(xml_file_path),
                                                 oid: batch_process.mets_doc&.oid.presence&.to_i)
-    failed_batch_process.batch_processing_event(message, 'failed')
+    invalid_mets_messages(batch_process.mets_doc, error).each do |message|
+      failed_batch_process.batch_processing_event(message, 'failed')
+    end
     "#{xml_file_path}: #{error.message}"
   end
 
-  def self.invalid_mets_message(mets_doc, error)
-    mets_doc&.valid_mets?
-    "Ingest failed. #{error.message}"
-  rescue MetsDocument::ImageError => e
-    "#{SetupMetadataJob::GOOBI_IMAGES_MESSAGE}. #{e.message}"
+  # image problems get the Goobi images message, everything else shows the actual error
+  def self.invalid_mets_messages(mets_doc, error)
+    return ["Ingest failed. #{error.message}"] if mets_doc.nil?
+    messages = mets_doc.metadata_validation_errors.map { |message| "Ingest failed. #{message}" } +
+               mets_doc.image_validation_errors.map { |message| "#{SetupMetadataJob::GOOBI_IMAGES_MESSAGE}. #{message}" }
+    messages.presence || ["Ingest failed. #{error.message}"]
   rescue StandardError => e
-    "Ingest failed. #{e.message}"
+    ["Ingest failed. #{e.message}"]
   end
 end
