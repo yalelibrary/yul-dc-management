@@ -577,14 +577,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pdfmake@npm:^0.3.12":
-  version: 0.3.12
-  resolution: "pdfmake@npm:0.3.12"
+"pdfmake@npm:^0.3.13":
+  version: 0.3.13
+  resolution: "pdfmake@npm:0.3.13"
   dependencies:
     linebreak: "npm:^1.1.0"
     pdfkit: "npm:^0.20.2"
     xmldoc: "npm:^2.0.3"
-  checksum: 10c0/a7ef340b3f3ec12c0ee27dcc7d6903f70cb83afa69c706713c068faeb425cfa0276f14ffd828b3444d4ca2f7e5379e874516716ec47f70730b28e35371583e5c
+  checksum: 10c0/c8043ab6b836d3701d9ba7bf248eec6779d8bb061050ddfa39966fbb6afaffdbca670d5b86041060cbc94629d7472560d531bc303da315f5c7bec7de187d0656
   languageName: node
   linkType: hard
 
@@ -741,7 +741,7 @@ __metadata:
     esbuild: "npm:^0.28.2"
     jquery: "npm:^4.0.0"
     jszip: "npm:^3.10.2"
-    pdfmake: "npm:^0.3.12"
+    pdfmake: "npm:^0.3.13"
     turbolinks: "npm:^5.2.0"
   languageName: unknown
   linkType: soft
