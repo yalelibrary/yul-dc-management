@@ -47,7 +47,7 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # LISTS AVAILABLE BATCH ACTIONS
   # rubocop:disable Layout/LineLength
   def self.batch_actions
-    ['create parent objects', 'update parent objects', 'update child objects caption and label', 'update child objects checksum', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set', 'export parent metadata', 'export child oids', 'reassociate child oids', 'recreate child oid ptiffs', 'reindex all parents', 'update fulltext status', 'update structure ranges', 'resync with preservica', 'activity stream updates']
+    ['create parent objects', 'update parent objects', 'update child objects caption and label', 'update child objects checksum', 'delete parent objects', 'delete child objects', 'export all parent objects by admin set', 'export parent metadata', 'export child oids', 'reassociate child oids', 'sidecar file ingest', 'recreate child oid ptiffs', 'reindex all parents', 'update fulltext status', 'update structure ranges', 'resync with preservica', 'activity stream updates']
   end
   # rubocop:enable Layout/LineLength
 

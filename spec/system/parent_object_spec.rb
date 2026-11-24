@@ -154,6 +154,8 @@ RSpec.describe "ParentObjects", type: :system, prep_metadata_sources: true, prep
         select("Beinecke Library")
         select('Ladybird')
         click_on("Create Parent object")
+        # waits for the create (and its inline jobs) to finish so later saves don't race it
+        expect(page).to have_content("Parent object was successfully created", wait: ParentChildObjectHelper::PARENT_OBJECT_SAVE_WAIT)
       end
 
       around do |example|
