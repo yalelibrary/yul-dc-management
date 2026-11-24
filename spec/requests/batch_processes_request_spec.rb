@@ -188,21 +188,28 @@ RSpec.describe "BatchProcesses", type: :request, prep_metadata_sources: true do
       expect(response.body.to_s).to eq("\xEF\xBB\xBFoid,admin_set,action")
     end
 
-    it "downloads templates for reassociate" do
+    it "downloads template for reassociate" do
       get download_template_batch_processes_url(batch_action: "reassociate child oids")
       expect(response).to have_http_status(:success)
       expect(response.content_type).to eq("text/csv; charset=utf-8")
       expect(response.body).to match("\xEF\xBB\xBFchild_oid,parent_oid,order,label,caption,viewing_hint")
     end
 
-    it "downloads templates for child object checksum" do
+    it "downloads template for child object checksum" do
       get download_template_batch_processes_url(batch_action: "update child objects checksum")
       expect(response).to have_http_status(:success)
       expect(response.content_type).to eq("text/csv; charset=utf-8")
       expect(response.body).to match("\xEF\xBB\xBFoid,sha512,sha256,sha1,md5")
     end
 
-    it "downloads templates for update structure ranges" do
+    xit "downloads template for sidecar file ingest" do
+      get download_template_batch_processes_url(batch_action: "sidecar file ingest")
+      expect(response).to have_http_status(:success)
+      expect(response.content_type).to eq("text/csv; charset=utf-8")
+      expect(response.body).to match("\xEF\xBB\xBFoid,file_type,file_notes")
+    end
+
+    it "downloads template for update structure ranges" do
       get download_template_batch_processes_url(batch_action: "update structure ranges")
       expect(response).to have_http_status(:success)
       expect(response.content_type).to eq("text/csv; charset=utf-8")
