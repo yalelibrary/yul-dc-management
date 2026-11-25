@@ -85,10 +85,10 @@ class BatchProcess < ApplicationRecord # rubocop:disable Metrics/ClassLength
       errors.add(:file, 'must be a csv') if CSV.read(file).blank?
     elsif File.extname(file) == '.xml'
       begin
-          mets_doc.valid_mets?
+        mets_doc.validation_errors.each { |error| errors.add(:file, error) }
       rescue => error
         errors.add(:file, error)
-        end
+      end
     else
       errors.add(:file, 'not a valid file type. Must be a CSV or XML.')
     end
